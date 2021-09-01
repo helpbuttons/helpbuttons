@@ -7,8 +7,6 @@ export default function FakeFilters() {
     const networks = useSelector((state) => state);
     const dispatch = useDispatch();
 
-    console.log(networks.length, networks[0].netLocation);
-
     return (
         <>
             <h1>Fakes filters: </h1>
