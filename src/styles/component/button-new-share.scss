@@ -1,0 +1,155 @@
+.button-new-share {
+  height: calc(100% - 48px);
+  overflow-y: auto;
+  margin-top: rem(48px);
+  border-radius: rem(8px);
+  background: $color-corporative;
+  &-mobile {
+    max-height: none !important;
+  }
+  &__button-file {
+    margin-top: 0;
+    padding-top: 0;
+    height: 100%;
+    border-radius: .5rem !important;
+    max-height: rem(700px);
+  }
+  &__content {
+    height: auto;
+    background: $color-corporative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 50;
+    & > div {
+      margin-top: 2rem;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: rem(500px);
+      width: 100%;
+    }
+  }
+  &__content-mobile {
+    height: 100vh;
+    padding-bottom: 3rem;
+    background: $color-corporative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 50;
+    & > div {
+      margin-top: 2rem;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: rem(500px);
+      width: 100%;
+    }
+  }
+  &__tag-container {
+    height: rem(300px);
+    width: rem(450px);
+  }
+  &__close-container {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    border: none;
+    background: none;
+    padding: 0;
+    top: 5vh;
+    left: 0;
+  }
+  &__body {
+    overflow-y: auto;
+    &-buttons {
+      height: auto;
+      background: $color-corporative;
+      border-radius: 0 0 .5rem .5rem;
+    }
+    &-svg-image {
+      height: 100%;
+      width: 100%;
+      max-width: rem(250px);
+      max-height: rem(250px);
+    }
+    &-svg-container {
+      height: 100%;
+      background: $color-corporative;
+      min-height: rem(100px);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+  }
+
+  &__text {
+    font-size: $font-size-medium;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    text-align: center;
+    font-weight: bold;
+  }
+  &__social-share-buttons-container {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  &__share-link {
+    display: inline-block;
+    height: rem(70px);
+    width: rem(70px);
+    padding: 0 rem(15px);
+    border: rem(2px) solid $color-black;
+    border-radius: rem(5px);
+    margin: rem(6px) rem(3px) 0 rem(3px);
+    .icon {
+      width: 100%;
+      height: 100%;
+      fill: $color-black;
+    }
+  }
+  &__conv-link {
+    display: inline-block;
+    height: rem(70px);
+    width: rem(70px);
+    padding: 0 rem(15px);
+    border: rem(2px) solid $color-corporative;
+    border-radius: rem(5px);
+    margin: rem(6px) rem(3px) 0 rem(3px);
+    .icon {
+      width: 100%;
+      height: 100%;
+      fill: $color-black;
+    }
+  }
+  &__next-btn {
+    border-radius: 0 0 .5rem .5rem;
+  }
+}
+
+
+@media #{$breakpoints-medium} {
+  .button-new-share {
+    height: calc(90vh - 48px);
+    max-height: calc(700px - 48px);
+    background: none;
+    &__button-file {
+      margin-top: 0;
+      padding-top: 0;
+      height: 100%;
+      border-radius: .5rem;
+      max-height: rem(700px);
+    }
+    &__content {
+      max-width: 500px;
+      margin-left: calc((100vw - 500px) / 2);
+      border-radius: 0 0 .5rem .5rem;
+      overflow-y: auto;
+      &--left-align {
+        margin-left: 0;
+      }
+    }
+  }
+}

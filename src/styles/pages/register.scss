@@ -1,0 +1,11 @@
+.register {
+  &__container {
+    min-height: calc((var(--vh, 1vh) * 100) - 0);
+  }
+  &__header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+  }
+}

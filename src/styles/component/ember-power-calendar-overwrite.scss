@@ -1,0 +1,40 @@
+.demo-calendar-small {//se usa
+  
+    @include ember-power-calendar($cell-size: 30px); 
+    width: 100%;
+
+    .ember-power-calendar-nav {//se usa
+      margin-bottom: $margin-small;
+
+      .ember-power-calendar-nav-control{//se usa
+        cursor: pointer;
+        color: $color-gray;
+      }
+    }
+
+    .ember-power-calendar-days button {//se usa
+      color: $color-black;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .ember-power-calendar-day--selected {//se usa
+      background: $color-corporative;
+    }
+
+    .ember-power-calendar-day--selected:not([disabled]):hover{//se usa
+      background: $color-corporative;
+    }
+
+    .ember-power-calendar-day--focused{//se usa
+      box-shadow: none;
+    }
+}
+
+.demo-calendar-medium {
+  @include ember-power-calendar($cell-size: 50px);
+}
+
+.demo-calendar-big {
+  @include ember-power-calendar($cell-size: 70px);
+}

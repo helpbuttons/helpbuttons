@@ -1,0 +1,32 @@
+.card-chat {
+  &__unread {
+    border-radius: 50%;
+    position: absolute;
+    margin-top: 0;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 0;
+    color: #fff;
+    font-weight: bold;
+    font-size: $font-size-general;
+    text-align: center;
+    vertical-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    background: #18AAD2;
+    pointer-events: none;
+    line-height: 20px;
+  }
+  &__radius {
+    border-radius: 6px;
+    &--left {
+      border-radius: 0 0 0 6px;
+    }
+    &--right {
+      border-radius: 0 0 6px 0;
+    }
+  }
+}

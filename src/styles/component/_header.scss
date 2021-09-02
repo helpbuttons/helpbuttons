@@ -1,0 +1,103 @@
+$header-background: transparent;
+$header-center-width: 100%;
+$header-nav-width: 50px;
+$header-nav-icon-width: 25px;
+$header-button-icon-size: 25px;
+
+.header {
+  &--font-white {
+    color: $color-white;
+
+    & g,
+    & path {
+      fill: $color-white;
+    }
+  }
+}
+
+.header__button {
+  background-color: transparent;
+  border-style: none;
+  border:none;
+  outline:none;
+  cursor: pointer;
+
+  &:active,
+  &:focus,
+  &:hover {
+    text-decoration: none;
+    outline: none;
+  }
+
+  .icon {
+    width: $header-button-icon-size;
+    height: auto;
+    max-height: $header-button-icon-size;
+    border-radius: 10rem;
+
+    &:active,
+    &:focus,
+    &:hover
+    {
+      fill: $color-corporative;
+      background: $color-black;
+    }
+  }
+  & .icon-white {
+    fill: white;
+  }
+}
+
+.header__center {
+  flex: 0 1 $header-center-width;
+  text-align: center;
+  padding: 0 rem(10px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  & .small-header-icon {
+    max-height: rem(19px);
+  }
+  .icon {
+    max-width: 100%;
+    max-height: 25px;
+    height: auto;
+  }
+}
+
+.header__nav {
+  background-color: transparent;
+  flex: 0 1 $header-nav-width;
+  text-decoration: none;
+  text-align: center;
+}
+
+.header__link {
+  background-color: transparent;
+
+  height: 100%;
+  width: 100%;
+}
+
+.header__title {
+  font-size: $font-size-general;
+  font-weight: bold;
+  letter-spacing: .05px;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+.header--black {
+  background: $color-black;
+}
+
+.header--white {
+  background: transparent;
+}
+
+.header__search {
+  .header-desktop_form {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+}

@@ -1,0 +1,52 @@
+$search-map-height: 0; // Altura del header
+
+.search-map {
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: $z-index-base;
+
+  .leaflet-container {
+    height: 100%;
+  }
+
+  &__localize-user {
+    background-color: $color-white;
+    padding: rem(4px);
+    border: rem(1px) solid #e5e5e5;
+    display: none; // inline-block Revise
+    z-index: 450;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    & .icon {
+      max-height: 80%;
+      fill: $color-black;
+    }
+    &:hover {
+      background-color: $color-black;
+      border: rem(2px) solid $color-black;
+      & .icon {
+        fill: $color-white;
+      }
+    }
+    &--selected {
+      &:hover {
+        background-color: $color-white;
+        border: rem(1px) solid #e5e5e5;
+        & .icon {
+          max-height: 80%;
+          fill: $color-black;
+        }
+      }
+      background-color: $color-black;
+      border: rem(2px) solid $color-black;
+      & .icon {
+        fill: $color-white;
+      }
+    }
+  }
+}

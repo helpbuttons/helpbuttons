@@ -1,0 +1,7 @@
+$avatar-border-radius: $border-radius-circle;
+$avatar-max-width: 80px;
+
+.avatar {
+  border-radius: $avatar-border-radius;
+  max-width: $avatar-max-width;
+}

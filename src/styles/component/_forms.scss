@@ -1,0 +1,273 @@
+$form-input-height: 54px;
+$form-input-width: 100%;
+$form-input-padding: $padding-medium;
+$form-input-font-size: $font-size-medium;
+
+.form {
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.form__label {
+  z-index: $z-index-base;
+  top: 7px;
+  left: 24px;
+  font-size: $font-size-general;
+  font-weight: bold;
+
+}
+
+.form__search {
+
+  color: $color-gray-02;
+  font-size: $font-size-general;
+  margin: 0;
+  line-height: 0;
+  width: auto;
+  display: block;
+  padding: 1.75rem 1rem .45rem 1rem;
+  border: 0;
+  // border-radius: 0;
+  transition: $transition-default;
+
+  &:focus {
+    // box-shadow: $box-shadow-input;
+  }
+
+  &:hover {
+    background: $color-ligth-gray;
+  }
+
+  & span {
+    display: none;
+  }
+}
+
+.form__search--time,
+.form__search--tags,
+.form__search--localization {
+  // text-indent: 4px;
+}
+
+
+.form-field {
+  max-width: 100%;
+  font-size: $font-size-medium;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.form-field--chat {
+  display: flex;
+  max-width: 100%;
+  padding: .5rem .5rem;
+  font-size: $font-size-medium;
+}
+
+.form-field--chat button {
+  background: $color-corporative;
+  border: none;
+  width: 69px;
+  //height: 47px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form__input,
+.form__label {
+  display: block;
+  width: 100%;
+}
+
+.form__label {
+  margin-bottom: .6rem;
+
+}
+
+//REVISE DE LAS CLASES DEL INPUT
+.form__input {
+
+  background: $color-white;
+  border: 1px solid $color-gray-border;
+  border-radius: 42px !important;
+  box-sizing: border-box;
+  color: $color-black;
+  padding: $padding-big $padding-big;
+  font-size: $font-size-general;
+  height: $form-input-height;
+
+  & ul {
+    width: 100%;
+  }
+
+}
+
+.form__input-tags {
+
+  @extend .form__input;
+
+  & ul {
+    // overflow-x: scroll;
+    // overflow-y: hidden;
+    // white-space: nowrap;
+
+    display: flex;
+    flex-flow: row wrap;
+    padding: .25rem 0 0 0;
+  }
+
+  & li {
+    @extend .hashtag;
+    display: inline-block;
+
+  }
+
+  & .button-counter {
+    display: none;
+  }
+
+  & span {
+    display: none;
+  }
+
+}
+
+.form__input-tags--offer {
+
+  & li {
+    @extend .hashtag--offer;
+  }
+
+}
+
+.form__input-tags--need {
+
+  & li {
+    @extend .hashtag--need;
+  }
+
+
+}
+
+///mobile search
+.form__input--yellow-bg {
+  @extend .form__input;
+  // background: $color-white;
+  border-radius: $border-radius-circle;
+  color: $color-black;
+  border: 0;
+
+  &--border {
+    border: 0; // Reviser
+  }
+}
+
+.popup__options-v,
+.popup__options-h {
+  display: flex; // Static components
+}
+
+.form__options-v {
+  flex-flow: column nowrap;
+}
+
+.form__options-h {
+  display: flex; // Static components
+  flex-wrap: wrap;
+
+  .form__options-btn {
+    flex: 0 1 50%;
+
+  }
+}
+
+.form__options-btn {
+  display: inline-block;
+  background: $color-white;
+
+  text-align: center;
+
+  font-size: $font-size-general;
+  line-height: 2rem;
+  width: 100%;
+  vertical-align: middle;
+  height: auto;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:focus {
+    background: $color-corporative;
+  }
+  &--stroked {
+    stroke: $color-corporative;
+    fill: $color-corporative;
+    border-color: $color-black;
+    background-color: $color-black;
+  }
+  &:hover {
+    fill: $color-corporative;
+    border-color: $color-black;
+    color: $color-white;
+    cursor: pointer;
+    background-color: $color-black;
+  }
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+//Revise
+.form__input--input {
+  max-width: $form-input-width;
+  padding: $form-input-padding 0;
+  font-size: $form-input-font-size;
+}
+
+//Revise
+.form__input--label {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.form__input--message {
+  display: block;
+  margin-top: .6rem;
+}
+
+.form__input-subtitle {
+  text-align: right;
+}
+
+.form__textarea {
+  width: 100%;
+  min-height: 108px;
+  border: 1px solid #D4D4D4;
+  border-radius: 22px;
+  padding: 12px 18px;
+  box-sizing: border-box;
+}
+
+.line {
+  margin: 1rem auto;
+  border-top: 1px solid #D4D4D4;
+}
+
+@media #{$breakpoints-medium} {
+  .form-field--chat button {
+    width: 60px;
+  }
+
+  .form__options-h {
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,241 @@
+
+$button-file-modal-height: calc(var(--vh, 1vh) * 100);
+
+
+.button-file {
+
+  overflow-y: auto;
+
+}
+
+.button-file__modal {
+
+    background-color: transparent;
+    box-shadow: none;
+    top: 0 !important;
+    left: 0 !important;
+    transform: translate(0);
+    overflow-y: auto;
+    width: 100%;
+    height: $button-file-modal-height;
+
+}
+
+.button-file__modal-overlay {
+
+  z-index: $z-index-02;
+  background-color: $color-black;
+
+}
+
+.button-file--top-position {
+
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%);
+
+}
+
+.button-file__container {
+
+    width: 100%;
+    background: none;
+    border: none;
+    max-height: calc(100% - 48px);
+    height: 100%;
+    margin-top: rem(48px);
+    // padding-top: rem(42px);
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: hidden;
+    display: block;
+    -webkit-transition: -webkit-transform 0.2s linear;
+    -moz-transition: -moz-transform 0.2s linear;
+    -ms-transition: -ms-transform 0.2s linear;
+    -o-transition: -o-transform 0.2s linear;
+    transition: transform 0.2s linear;
+    background: none;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+    &--scrollable {
+      overflow-y: auto;
+      background: none;
+      border: none;
+      width: 100%;
+      height: 100%;
+      &:focus {
+        outline: none;
+      }
+    }
+
+}
+
+.button-file__modal .button-file__card-button {
+
+    max-width: rem(500px);
+    width: 100%;
+    padding: 6px;
+
+}
+.button-file__modal > .ember-view {
+
+    background-color: transparent;
+    box-shadow: none;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    height: $button-file-modal-height;
+
+
+}
+
+.button-file__card-button {
+
+    margin-left: auto;
+    margin-right: auto;
+    cursor: auto;
+
+    & > div {
+      box-shadow: none;
+      border-radius: 0;
+      border: 0;
+      margin-bottom: 0;
+    }
+
+}
+
+.button-file__button-arrow {
+
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 20px solid white;
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+
+.button-file--inactive-button {
+      background-color:rgba(1, 1, 1, 0.2);
+      border-color: $color-corporative;
+      border: 2px solid $color-corporative;
+      & path {
+        fill: $color-corporative;
+      }
+    }
+
+.button-file--disabled {
+
+      background-color: $color-black;
+      & g {
+        fill: $color-corporative;
+      }
+
+}
+
+.button-file-content {
+
+      display: flex;
+      align-items: center;
+      &--text {
+        padding-right: $padding-medium;
+        justify-content: flex-end;
+        font-size: $font-size-general;
+      }
+
+}
+.button-file-container {
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // max-width: 100%;
+      width: 100%;
+      &--layer-top {
+        z-index: 52;
+      }
+      & .conv_container {
+      display: flex;
+      flex: 1 1 0;
+      display: flex;
+      }
+      & > .button-circle {
+        width: rem(50px);
+        min-width: rem(50px);
+        height: rem(50px);
+        border: 0;
+        cursor: pointer;
+        z-index: 5000;
+      }
+      &  .notif-circle {
+        border-radius: 50%;
+        position:  absolute;
+        margin-top: 0;
+        top:calc(50% - 26px);
+        right: calc(75%);
+        display: block;
+
+        width: rem(15px);
+        height: rem(15px);
+        border: 0;
+        cursor: pointer;
+        background: $color-blue;
+        z-index: 5000;
+      }
+}
+
+.button-file__conv-link {
+
+    display: inline-block;
+    height: rem(70px);
+    flex: 1 ;
+    width: auto;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    padding: rem(15px) rem(6px);
+    border: rem(2px) solid $color-corporative;
+    border-radius: rem(5px);
+    margin: rem(6px) rem(3px) 0 rem(3px);
+    .icon {
+      width: auto;
+      height: 100%;
+      fill: $color-black;
+    }
+
+}
+
+.button-file__chat-counter {
+
+    display:flex;
+    position: absolute;
+    align-content: center;
+
+}
+
+
+
+
+.button-file__messages-container {
+  max-width: rem(500px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+@media #{$breakpoints-medium} {
+
+  .button-file__modal {
+        width: 100%;
+        overflow-y: auto;
+        margin-left: auto;
+        margin-right: auto;
+      }
+  .button-file__card-button {
+      }
+
+}

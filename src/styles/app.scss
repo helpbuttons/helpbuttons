@@ -1,0 +1,128 @@
+@import 'mixins/_rem';
+
+// variables
+
+@import "variables/colors";
+@import "variables/margins";
+@import "variables/paddings";
+@import "variables/breakpoints";
+@import "variables/border";
+@import "variables/box-shadow";
+@import "variables/fonts";
+@import "variables/titles";
+@import "variables/grid";
+@import "variables/z-index";
+@import "variables/animations";
+@import "variables/reset";
+
+
+@import "base/common";
+// Dashboard (skin for list of atoms and components)
+
+@import "skin/dashboard";
+
+// Atoms (general)
+
+@import "atom/icon";
+@import "atom/picture";
+@import "atom/avatar";
+@import "atom/hashtag";
+@import "atom/text-style";
+
+// Atoms (form)
+
+@import "atom/label";
+@import "atom/button";
+@import "atom/textarea";
+@import "atom/checkbox";
+@import "atom/checkbox-circle";
+@import "atom/radio-button";
+@import "atom/dropdown";
+
+// Third party components and overwrites
+@import "ember-power-select";
+@import "ember-basic-dropdown";
+@import "ember-power-calendar";
+@import "ember-modal-dialog/ember-modal-structure";
+@import "ember-modal-dialog/ember-modal-appearance";
+@import "component/ember-place-autocomplete-overwrite";
+@import "component/ember-leaflet-overwrite";
+@import "component/ember-cli-notifications";
+
+// component (general)
+
+@import "component/forms";
+@import "component/header";
+@import "component/_component-header";
+@import "component/card-button";
+@import "component/card-notification";
+@import "component/promise-button";
+@import "component/_buttons-filters";
+@import "component/loading-overlay";
+@import "component/button-file";
+@import "component/trending-tags";
+@import "component/button-new-location-inserted";
+@import "component/button-new-date-inserted";
+@import "component/button-new-activate";
+@import "component/button-new-share";
+@import "component/login-component";
+@import "component/create-net-component";
+@import "component/info-overlay";
+@import "component/register-component";
+@import "component/message-component";
+@import "component/button-icon";
+@import "component/search-topbar";
+@import "component/error-message";
+@import "component/ember-power-calendar-overwrite";
+@import "component/time-picker";
+@import "component/net-picker";
+@import "component/chat-messages";
+@import "component/card-btn";
+@import "component/btn-animation";
+@import "component/card-chat";
+@import "component/nav-bottom";
+@import "component/nav-header";
+@import "component/home-search";
+// @import "component/profile-search";
+@import "component/popup";
+@import "component/menuselect";
+
+
+// components (comments)
+@import "component/comments-bar";
+@import "component/comments-message";
+@import "component/card-profile";
+
+
+// pages
+@import "pages/application";
+@import "pages/search-map";
+@import "pages/index/index";
+@import "pages/index/list";
+@import "pages/profile-buttons";
+@import "pages/chats";
+@import "pages/login";
+@import "pages/register";
+@import "pages/recovery";
+@import "pages/profile-edition";
+@import "pages/others";
+@import "pages/button-net";
+
+
+html, body {
+  background-color: $color-ligth-gray;
+}
+
+.notifications-index, ._c-notification__container--top_rc8i2a {
+  z-index: 15000 !important;
+}
+
+.disabled {
+  pointer-events: none;
+  background-color: #C8C8C8;
+  color: #858585;
+}
+
+.invisible {
+  visibility: hidden;
+}

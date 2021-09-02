@@ -1,0 +1,28 @@
+.loading-overlay {
+    &__load-over-map{
+      z-index: 1500;
+      position: absolute;
+      left: 0;
+      top: rem(220px);
+      & .loading-overlay__loading-icon {
+        background-color: $color-corporative;
+        border-radius: 50%;
+      }
+    }
+    &__loading-icon {
+      width: 3rem;
+      height: 3rem;
+      margin-top: rem(10px);
+    }
+}
+
+.loading-icon {
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  margin-top: rem(10px);
+}
+
+.loading-icon__hidden {
+  display: none;
+}

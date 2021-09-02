@@ -1,0 +1,175 @@
+$card-notification-background: $color-white;
+$card-notification-border: 1px solid $color-ligth-gray;
+$card-notification-box-shadow: $box-shadow-card;
+$card-notification-busca-background: $color-red;
+$card-notification-ofrece-background: $color-green;
+$card-notification-paragraph-color: $color-gray;
+$card-notification-margin-bottom: 1rem;
+// convivences
+$card-notification-whitespace: .5rem;
+$card-notification-border-height: $border-general-height;
+$card-notification-icon-size: 40px;
+$card-notification-date-before-size: 10px;
+
+.card-notification {
+  background: $card-notification-background;
+  border: $card-notification-border;
+  border-radius: $border-radius-basic;
+  box-shadow: $card-notification-box-shadow;
+  position: relative;
+  margin-bottom: $card-notification-margin-bottom;
+}
+
+.card-notification--offer:after,
+.card-notification--need:after,
+.card-notification--intercambio:after,
+.card-notification--intercambio:before {
+  content: '';
+  display: inline-block;
+  height: $card-notification-border-height;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.card-notification--offer:after {
+  background: $color-green;
+}
+
+.card-notification--need:after {
+  background: $color-red;
+}
+
+.card-notification--intercambio:after,
+.card-notification--intercambio:before {
+  width: 50%;
+}
+
+.card-notification--intercambio:after {
+  background: $color-red;
+}
+
+.card-notification--intercambio:before {
+  background: $color-green;
+  left: auto;
+  right: 0;
+}
+
+.card-notification__content {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  position: relative;
+}
+
+.card-notification__avatar {
+  flex: 0 1 60px;
+  position: relative;
+  border-radius: 50%;
+  justify-content: center;
+  max-height: 3.375rem;
+  max-width: 3.375rem;
+  & .avatar {
+    height: 100%;
+  }
+}
+
+.card-notification__icon {
+  background: $color-corporative;
+  border-radius: $border-radius-circle;
+  height: $card-notification-icon-size;
+  margin-top: -1.25rem;
+  padding: .5rem;
+  transform: translate(-.25rem,-.25rem);
+  width: $card-notification-icon-size;
+
+  .icon {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.card-notification__text {
+  flex: 0 1 80%;
+}
+
+.card-notification__header {
+  color: $color-gray;
+  display: flex;
+  font-size: $font-size-general;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.card-notification__info {
+  flex: 0 1 70%;
+}
+
+.card-notification__date {
+  flex: 0 1 30%;
+  text-align: right;
+}
+
+.card-notification__date--nflex {
+  flex: none;
+}
+
+.card-notification__date:before {
+  background: $color-corporative;
+  border-radius: $border-radius-circle;
+  content: '';
+  display: inline-block;
+  height: $card-notification-date-before-size;
+  transform: translateX(-.5rem);
+  width: $card-notification-date-before-size;
+}
+
+.card-notification__date:before {
+  background: $color-corporative;
+  border-radius: $border-radius-circle;
+  content: '';
+  display: inline-block;
+  height: $card-notification-date-before-size;
+  transform: translateX(-.5rem);
+  width: $card-notification-date-before-size;
+}
+
+.card-notification__old:before {
+  display: none;
+}
+
+.card-notification__title {
+  color: $color-black;
+  font-size: $font-size-general;
+  padding: .5rem 0 0 0;
+  text-align: left;
+}
+
+.card-notification__paragraph {
+  color: $card-notification-paragraph-color;
+  font-size: $font-size-general;
+  line-height: 1.25rem;
+}
+
+$card-notification-close-size: 35px;
+
+.card-notification__close {
+  background: $color-corporative;
+  border-radius: 100%;
+  border: none;
+  height: $card-notification-close-size;
+  width: $card-notification-close-size;
+  .icon {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.card-notification__remove-modal {
+    z-index: 5000;
+    &-content {
+      width: 100%;
+      max-width: rem(450px);
+    }
+  }

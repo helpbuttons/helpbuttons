@@ -1,0 +1,28 @@
+.application {
+  &-footer {
+    display: none; // Revise Angel
+    height: rem(250px);
+    padding: 3rem;
+    background-color: $color-black;
+    &--map {
+      z-index: 1000;
+      position: absolute;
+      bottom: rem(-155px);
+    }
+    &__links {
+      color: $color-white;
+      letter-spacing: 1px;
+      justify-content: space-around;
+    }
+    &__social-network-icon {
+      width: rem(35px);
+      height: rem(35px);
+      fill: $color-white;
+      margin-right: rem(20px);
+      margin-top: rem(40px);
+    }
+    &__social-network-link:hover {
+      text-decoration: none;
+    }
+  }
+}

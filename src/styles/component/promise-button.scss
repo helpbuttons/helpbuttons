@@ -1,0 +1,37 @@
+.promise-button {
+ @extend .button-filter;
+
+  &.button-gray,
+  &.btn-danger,
+  &.btn-primary,
+  &.btn-info {
+    & svg {
+      fill: white;
+    }
+  }
+}
+
+.promise-button--loading {
+
+  position: relative;
+  padding-right: 3.5rem;
+  svg {
+    position: absolute;
+    right: 1rem;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 2rem;
+    height: 2rem;
+    animation: spinner 2s infinite linear;
+  }
+
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+}

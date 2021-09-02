@@ -1,0 +1,20 @@
+.error-message {
+  padding: rem(20px);
+  margin: rem(15px) 0;
+  background-color: $color-red;
+  color: $color-dark-gray;
+  &__icon {
+    width: rem(56px);
+    height: auto;
+  }
+  &__title {
+    font-size: $font-size-general;
+    font-weight: bold;
+  }
+
+  &__top-text,
+  &__subtitle {
+    margin-bottom: 0;
+    font-size: font-size-medium;
+  }
+}

@@ -1,0 +1,83 @@
+$radio-button-content-background: $color-white;
+$radio-button-content-background-hover: $color-black;
+$radio-button-content-border: $border-general-height;
+$radio-button-width: 100%;
+$radio-button-height: 100%;
+$radio-button-width-medium: 40px;
+$radio-button-height-medium: 40px;
+$radio-button-color-white: $color-white;
+$radio-button-color-black: $color-black;
+
+.radio-button__label {
+  display: block;
+  width: $radio-button-width;
+}
+
+.radio-button__content {
+  align-items: center;
+  background: $radio-button-content-background;
+  border: $radio-button-content-border;
+  display: flex;
+  font-size: $font-size-general;
+  padding:  1.5rem 2rem;
+  position: relative;
+  transition: background .2s;
+  width: $radio-button-width;
+  &--disabled {
+    pointer-events: none;
+    background-color: #C3BEBE;
+  }
+}
+
+.radio-button__filter-search {
+  padding: unset;
+  justify-content: center;
+  height: rem(60px);
+  border: $radio-button-color-black 2px solid;
+  border-radius: 2%;
+}
+
+.radio-button__content:hover {
+  cursor: pointer;
+}
+
+.radio-button__icon {
+  align-items: center;
+  display: flex;
+  height: $radio-button-height-medium;
+  transition: transform .2s;
+  width: $radio-button-width-medium;
+
+  .icon {
+    fill: red;
+    height: $radio-button-height;
+    transition: transition .2s;
+    width: $radio-button-width;
+  }
+}
+
+.radio-button__text {
+  margin-left: 6%;
+}
+
+.radio-button__radio-button {
+  display: none;
+
+  &:checked + .radio-button__content {
+    background: $radio-button-content-background-hover url('svg/icons/check-blue.svg') 95% center no-repeat;
+    padding-right: rem(50px);
+    background-size: 40px;
+    color: $radio-button-color-white;
+    & g {
+      fill: $radio-button-color-white;
+    }
+    .icon {
+      fill: $radio-button-color-white;
+    }
+  }
+
+  &:checked + .radio-button__content::before {
+    background: transparent image-url('assets/svg/icons/check.svg') center no-repeat;
+    background-size: 80%;
+  }
+}

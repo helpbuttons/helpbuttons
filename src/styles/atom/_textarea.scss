@@ -1,0 +1,36 @@
+$textarea-textarea-border-radius: $border-radius-semicircle;
+$textarea-textarea-padding-big: $padding-big;
+$textarea-textarea-width: 100%;
+$textarea-textarea-height: 250px;
+$textarea-textarea-min-height: 6.25rem;
+$textarea-textarea-color-gray: $color-gray;
+
+.textarea__textarea {
+  border: 1px solid $color-gray-border;
+  border-radius: $textarea-textarea-border-radius;
+  min-height: $textarea-textarea-min-height;
+  padding: $textarea-textarea-padding-big;
+  width: $textarea-textarea-width;
+  max-width: $textarea-textarea-width;
+  min-width: $textarea-textarea-width;
+  max-height: $textarea-textarea-height;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: $textarea-textarea-color-gray;
+  }
+
+  &:focus {
+    border: 1px solid $textarea-textarea-color-gray;
+    outline: 0;
+  }
+}
+
+.textarea {
+  max-width: $textarea-textarea-width;
+
+  // HTML css default
+  textarea {
+    @extend .textarea__textarea;
+  }
+}

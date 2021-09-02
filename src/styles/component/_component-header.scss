@@ -1,0 +1,178 @@
+.component-header {
+  z-index: $z-index-02; // Revise
+  position: relative;
+
+  &__fixed {
+    width: 100%;
+    position: fixed;
+    z-index: 41;
+    width: 100vw;
+    top: 0;
+  }
+  &__avatar {
+    height: 100%;
+    width: auto;
+  }
+  &__avatar-container {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    max-height: rem(35px);
+    max-width: rem(35px);
+    min-width: rem(35px);
+    height: rem(35px);
+    width: rem(35px);
+    background: $color-ligth-gray;
+    position: static;
+  }
+
+  &__autocomplete-input {
+    background: #fff url(svg/icons/autocomplete-place.svg) rem(10px) center no-repeat;
+    padding-left: rem(35px);
+    height: rem(48px);
+  }
+  &__dropdown-container {
+    background: none;
+    box-shadow: none;
+    max-width: rem(300px);
+    width: 100%;
+    z-index: 1001;
+  }
+  &__modal {
+    z-index: 1001;
+  }
+  &__container-modal {
+    background: $color-black;
+    overflow-y: auto;
+    width: 100vw;
+    height: 100%;
+  }
+  &__dropdown-content {
+    background: $color-black;
+    border-radius: 2%;
+    padding: 1rem;
+    height: 100%;
+    overflow-y: auto;
+  }
+  &__dropdown-arrow {
+    width: 0;
+    height: 0;
+    border-left: rem(10px) solid transparent;
+    border-right: rem(10px) solid transparent;
+    border-bottom: rem(20px) solid $color-black;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  &__menu-button {
+    background: none;
+    display: flex;
+    border: none;
+  }
+  &__session-buttons {
+    min-width: rem(430px);
+  }
+  &__notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: rem(30px);
+    width: rem(30px);
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    background-color: #00a4d6;
+    margin-left: auto;
+  }
+  &__header-button {
+    max-width: rem(150px);
+    min-width: rem(150px);
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    & > button {
+      padding: rem(12px) 1vw;
+      height: rem(48px);
+    }
+  }
+  // Revise
+  &__search-button {
+    border: none;
+    border-radius: 0 $border-radius-circle $border-radius-circle 0;
+    background-color: white;
+    width: rem(48px);
+    height: rem(48px);
+    &:hover {
+      background-color: $color-black;
+      & .icon {
+        fill: $color-corporative;
+      }
+    }
+  }
+
+  &__twitter-button {
+    max-width: rem(275px);
+    min-width: rem(225px);
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+  }
+
+  &__dots-button {
+    max-width: rem(100px);
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+  }
+
+  &__logo {
+    max-width: rem(200px);
+  }
+
+  &__logo-net-link {
+    max-width: rem(200px);
+    display:inline-block;
+    overflow: hidden;
+    &:hover {
+      color: $color-black;
+      text-decoration: none;
+    }
+  }
+  &__logo-net-title {
+    vertical-align: middle;
+    max-width: rem(200px);
+    width: 200px;
+  }
+  &__logo-net-name {
+    display:inline-block;
+    vertical-align: middle;
+    max-width: rem(160px);
+    font-size: $font-size-general;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    overflow: hidden;
+  }
+  &__logo-net-img {
+    max-width: rem(30px);
+    margin-right: rem(5px);
+  }
+  &__logo-net-subt {
+    margin-left: 1rem;
+    float: left;
+    max-width: rem(200px);
+    text-decoration: none;
+  }
+  &__logo-net-hb {
+    & > svg {
+      max-width: rem(90px) !important;
+    }
+  }
+  &__options {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+}
+
+// Avatar
+.component-header__user-header-menu {
+  background: #343a40;
+  padding: 8px;
+  border-radius: $border-radius-basic;
+  cursor: pointer;
+}

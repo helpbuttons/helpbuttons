@@ -1,0 +1,72 @@
+$message-component-border-radius: $border-radius-basic;
+$message-component-border-radius-semicircle: $border-radius-semicircle;
+$message-component-max-width: 300px;
+$message-component-me-after-top: 1rem solid $color-corporative;
+$message-component-me-after-lateral: .75rem solid transparent;
+$message-component-padding-big: $padding-big;
+
+.message-component {
+  border: 1px solid transparent;
+  border-radius: $message-component-border-radius;
+  max-width: $message-component-max-width;
+  padding: $padding-medium;
+  padding-bottom:  0.1rem;
+  padding-top:  0.2rem;
+
+  word-break: break-word;
+  display: inline-block;
+  position: relative;
+  &--me {
+    background: $color-corporative;
+    position: relative;
+    &:after {
+      border-top: $message-component-me-after-top;
+      border-right: $message-component-me-after-lateral;
+      border-left: $message-component-me-after-lateral;
+      bottom: -1rem;
+      display: block;
+      content: '';
+      height: 0;
+      left: 1rem;
+      position: absolute;
+      width: 0;
+    }
+  }
+  &__content {
+    font-size: $font-size-general;
+    margin-bottom: 10px;
+  }
+  &__hour {
+    font-size: .6rem;
+    color: $color-gray;
+    text-align: right;
+  }
+  &__header {
+    align-items: flex-end;
+  }
+  &__avatar {
+    width: 35px;
+    border-radius: 100%;
+  }
+  &__user-name {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: bold;
+    &-container {
+      width: calc(100% - 80px);
+    }
+  }
+}
+
+.message-component--you {
+  background: #EEEEEE;
+  margin-left: auto;
+  min-width: 80px;
+  border-radius: $message-component-border-radius-semicircle;
+  margin-bottom: 10px;
+  padding: .5rem $message-component-padding-big;
+}

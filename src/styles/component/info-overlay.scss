@@ -1,0 +1,85 @@
+.info-overlay {
+  &__selected {
+    border: 1px solid $color-black;
+  }
+  &__container {
+    background: none !important;
+    position: absolute;
+    height:fit-content;
+    width:100%;
+    justify-content: center;
+    align-items: center;
+  }
+ &__background {
+   background-color: $color-corporative;
+   display: flex;
+   border-radius: $border-radius-basic;
+   height: fit-content;
+   justify-content:  center;
+   align-items: center;
+   width: auto;
+   position: relative;
+   
+   top : 30vh;
+   z-index: 500000000
+
+ }
+ &__content {
+   font-family: inherit;
+   font-weight: bold;
+   padding: $button-padding $button-padding;
+   min-width: fit-content;
+   background-color: transparent;
+   position: relative;
+   height: 100%;
+   width:100%;
+   z-index: 500000000
+
+ }
+ &__ {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: .95rem;
+  margin-bottom: 1rem;
+ }
+
+ &__body {
+  position: relative;
+   z-index: 50000
+ }
+  &__dropdown {
+    &-trigger {
+      border: none;
+      background-color: transparent;
+      padding: rem(5px);
+      width: 100%;
+      text-align: center;
+    }
+    &-content {
+      width: 100%;
+      margin-top: rem(10px);
+      text-align: center;
+      border: 1px solid $color-black;
+      max-height: rem(150px);
+      overflow-y: auto;
+    }
+    &-option {
+      display: block;
+      padding: rem(5px) 0;
+      cursor: pointer;
+      width: 100%;
+      background: transparent;
+      border: unset;
+      &:hover {
+        background-color: $color-black;
+        color: white;
+      }
+
+      & + .time-picker__dropdown-option {
+        border-top: rem(1px) solid $color-black;
+      }
+    }
+  }
+}

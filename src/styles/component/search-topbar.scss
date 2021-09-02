@@ -1,0 +1,20 @@
+$search-topbar-margin: 12%;
+
+.search-topbar {
+  position: relative;
+  z-index: $z-index-02;
+
+}
+
+.search-topbar__results {
+  
+  font-size: font-size-medium;
+}
+
+// Estaba usando 992px
+/* @media #{$breakpoints-large} {
+  .search-topbar {
+    // padding-top: 0;
+  }
+}
+ */

@@ -1,0 +1,499 @@
+// TODO: refactor styles, use REM properly, maybe split this styles in other
+// blocks in other style files too, ex: aside-info
+
+$index-mobile-fixed-z-index: $z-index-05;
+
+.index__mobile-fixed {
+  width: 100%;
+  z-index: $index-mobile-fixed-z-index;
+}
+.index__container {
+  // overflow: auto;
+}
+.index {
+  &__html-overflow {
+    overflow: initial;
+  }
+  &__aside-info{
+    order: 2;
+    // margin-top: 6rem;
+    max-width: 21rem;
+    display: block;
+
+    &--overflow {
+      height: 100%;
+      margin-top: 12rem !important;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: none; // revise Jano
+    }
+    &--list {
+      margin-top: 6rem !important;
+    }
+  }
+  &__info {
+    background-color: #FFDD02;
+    border-radius: 50%;
+    bottom: 5rem;
+    height: 3.125rem;
+    margin: 0.5rem;
+    position: fixed;
+    padding: 0.375rem;
+    left: 1rem;
+    text-align: center;
+    width: 3.125rem;
+    z-index: 450 !important;
+    &-container {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      z-index: 450 !important;
+    }
+    & .icon {
+      max-height: 80%;
+      fill: $color-black;
+    }
+    &:hover {
+      background-color: $color-black;
+      & .icon {
+        fill: white;
+      }
+    }
+    &--selected {
+      &:hover {
+        background-color: white;
+        & .icon {
+          max-height: 80%;
+          fill: $color-black;
+        }
+      }
+      background-color: $color-black;
+      & .icon {
+        fill: white;
+      }
+    }
+  }
+  /*
+  &__bottom-nav {
+    background-color: $color-corporative;
+    width: 100%;
+    height: 4rem;
+    position: fixed;
+    float: right;
+    color: $color-black;
+    bottom: rem(0px);
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 900;
+    max-height: 80%;
+    right: 0.95rem;
+  }*/
+
+  &__create {
+    background-color: $color-corporative;
+    border-radius: 50%;
+    justify-content: center;
+    height: auto;
+    margin: 0.5rem;
+    left: 1rem;
+
+    position: relative;
+    align-content: center;
+    text-align: center;
+    width: rem(60px);
+    z-index: 450;
+
+  }
+  &__profile {
+    position: relative;
+    cursor: pointer;
+    align-content: center;
+    background-color: $color-corporative;
+    border-radius: 50%;
+    height: auto;
+    margin: 0.5rem;
+    position: relative;
+    text-align: center;
+    width: rem(60px);
+    z-index: 450;
+
+    & .logged {
+      background-color: $color-black;
+      & svg {
+        fill: $color-corporative;
+      }
+    }
+
+  }
+  &__toggle {
+    margin: 0.5rem;
+    &-env {
+      position: relative;
+      display: inline-block;
+      width: 6rem;
+      height: 2.9rem;
+      &--list{
+
+      }
+      &--map{
+
+      }
+
+      input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+
+      }
+
+      .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: $color-black;
+      -webkit-transition: .4s;
+      transition: .4s;
+
+        & .index-map__map-icon {
+          fill: $color-black ;
+        }
+        & .index-map__list-icon {
+          fill: $color-corporative ;
+        }
+
+      }
+
+      .slider:before {
+      position: absolute;
+      content: "";
+      height: 2.4rem;
+      width: 2.4rem;
+      left: 4px;
+      bottom: 4px;
+      background-color: $color-corporative;
+      -webkit-transition: .4s;
+      transition: .4s;
+      }
+
+
+      input:checked + .slider {
+        background-color: $color-black;
+        & .index-map__map-icon {
+          fill: $color-corporative !important;
+        }
+        & .index-map__list-icon {
+          fill: $color-black !important;
+        }
+      }
+
+
+      input + .slider {
+        background-color: $color-black;
+
+      }
+
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(3.1rem);
+        -ms-transform: translateX(3.1rem);
+        transform: translateX(3.1rem);
+      }
+
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 34px;
+        border-color: $color-black;
+        background-color: $color-black;
+        // border : 0.125rem solid $color-black;
+      }
+
+      .slider.round:before {
+        border-radius: 50%;
+        border-color: $color-black;
+        border : 0.125rem solid $color-black;
+
+      }
+
+    }
+
+  }
+
+
+  &-map {
+
+    &__overlay {
+      height: auto;
+      position: absolute;
+      width: auto;
+      z-index: 450;
+      bottom: 50%;
+      right: 50%;
+    }
+
+    &__overlay-message {
+      background-color: $color-corporative;
+      border-radius: 2rem;
+      color: $color-black;
+      // height: rem(50px);
+      position: relative;
+      margin: rem(8px);
+      padding: rem(6px);
+      width: rem(100px);
+      text-align: center;
+      &:hover {
+        background-color: $color-black;
+        //border: rem(2px) solid $color-black;
+      }
+    }
+
+    &__overlay-message-icon {
+      display: none; // Revise jano
+      bottom: 50%;
+      position: relative;
+      z-index: 2000;
+      & figure {
+        &:hover {
+          background-color: $color-black;
+          //border: rem(2px) solid $color-black;
+          & .icon {
+            fill: $color-corporative;
+          }
+        }
+      }
+    }
+
+    &__create-new-small-btn {
+      background-color: $color-corporative;
+      border-radius: 50%;
+      bottom: rem(14px);
+      height: rem(50px);
+      margin: rem(8px);
+      position: absolute;
+      padding: rem(6px);
+      right: rem(190px);
+      text-align: center;
+      width: rem(50px);
+      z-index: 450;
+
+      &:hover {
+        background-color: $color-black;
+        & .icon {
+          fill: $color-corporative;
+        }
+      }
+    }
+    &__create-new-small-btn-list {
+      background-color: $color-corporative;
+      border-radius: 50%;
+      bottom: rem(14px);
+      height: rem(50px);
+      margin: rem(8px);
+      position: fixed;
+      padding: rem(6px);
+      right: rem(200px);
+      text-align: center;
+      width: rem(50px);
+      z-index: 450;
+
+      &:hover {
+        background-color: $color-black;
+        & .icon {
+          fill: $color-corporative;
+        }
+      }
+    }
+    &__localize-user {
+      display: inline-block; // Revise
+      background-color: white;
+      border-radius: 50%;
+      bottom: rem(20px);
+      height: rem(50px);
+      padding: rem(3px);
+      position: absolute;
+      text-align: center;
+      right: rem(7px);
+      margin: 8px;
+      width: rem(50px);
+      z-index: 450;
+      & .icon {
+        max-height: 80%;
+        fill: $color-black;
+      }
+      &:hover {
+        background-color: $color-black;
+        & .icon {
+          fill: white;
+        }
+      }
+      &--selected {
+        &:hover {
+          background-color: white;
+          & .icon {
+            max-height: 80%;
+            fill: $color-black;
+          }
+        }
+        background-color: $color-black;
+        & .icon {
+          fill: white;
+        }
+      }
+    }
+    &__create-icon {
+      width: 2.8rem;
+      padding: 0.3rem;
+      border-radius: 2rem;
+      border-color: $color-black;
+      border-width: 0.125rem;
+      border-style: dotted;
+
+    }
+    &__profile-icon {
+      width: 2.8rem;
+      padding: 0.3rem;
+      border-radius: 2rem;
+      border-color: $color-black;
+      border-width: 0.125rem;
+      border-style:  groove;
+    }
+    &__list-icon {
+      // position: relative;
+      width: 2.8rem;
+      // margin: 0rem 0rem 0rem 0.3rem;
+      padding: 0.3rem;
+      border-radius: 2rem;
+    }
+    &__map-icon {
+      // position: relative;
+      width: 2.8rem;
+      // margin: 0rem 0.3rem 0rem 0rem;
+      padding: 0.3rem;
+      border-radius: 2rem;
+    }
+  }
+  /*
+  &-new-button {
+    &__modal {
+      z-index: 1001;
+      &-container-class {
+        border: none;
+        background-color: $color-ligth-gray;
+        width: 100%;
+        background: none;
+      }
+      &-close {
+        width: 100vw;
+        height: 90vh;
+        overflow: hidden;
+        background: none;
+        box-shadow: none;
+        max-height: rem(700px);
+        &-- {
+          background-color: $color-corporative;
+        }
+      }
+      &-activate-btn {
+        background-color: transparent;
+        box-shadow: none;
+        width: 100%;
+        & + .ember-modal-dialog {
+          box-shadow: 0 0 rem(10px) #fff;
+        }
+      }
+    }
+  }
+  */
+  &__button-creation {
+    padding: rem(5px);
+    border-radius: 50%;
+    width: rem(166px);
+    margin-left: auto;
+    margin-right: auto;
+    &-border {
+      justify-content: center;
+      align-items: center;
+      padding: 0.3rem;
+      display: flex;
+      border: 3px solid #343a40;
+      position: absolute;
+      z-index: 50;
+      width: 9.375rem;
+      height: 9.375rem;
+      border-radius: 9.375rem;
+      
+      opacity: 0;
+      animation-name: start-ring;
+      animation-delay: 3.5s;
+      animation-duration: 3.5s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+    & svg {
+      fill: $color-corporative;
+      width: rem(25px);
+    }
+    &-text {
+      font-size: font-size-medium;
+      padding-left:0;
+      padding-right:0;
+      text-align: center;
+    }
+  }
+  &__subscribe {
+    background-color: $color-black;
+    color: $color-white;
+    & button {
+      outline: none;
+      border: none;
+      background: transparent;
+      color: $color-white;
+    }
+    &:hover {
+      background-color: $color-white;
+      color: $color-black;
+      & button {
+        background-color: $color-white;
+        color: $color-black;
+      }
+    }
+  }
+  &__button-design {
+    margin:0;
+    border: 30px solid #343a40;
+    background: #343a40;
+    color: #FFDD02;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  &__no-results-icon {
+    max-width: 15rem;
+    max-height: 15rem;
+    display: block;
+    margin: 2rem auto 2rem auto;
+  }
+}
+
+.index {
+  &__info {
+    position: fixed;
+    z-index: 200;
+  }
+}
+
+@media #{$breakpoints-xxlarge} { 
+  .index__mobile-fixed {
+    position: fixed;
+  }
+}

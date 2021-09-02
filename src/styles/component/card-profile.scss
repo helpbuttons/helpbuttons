@@ -1,0 +1,211 @@
+$avatar-container-max-height: 150px;
+$avatar-container-max-width: 150px;
+$avatar-margin: $padding-big;
+
+.card-profile__data {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding-top: $padding-big;
+
+}
+
+.card-profile__rating {//se usa
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 0;
+  width: 100%;
+
+  & svg {
+    width: 1rem;
+    margin-left: 0.5rem;
+  }
+}
+
+.card-profile__location {
+  color: $color-gray;
+  text-align: center;
+  font-size: font-size-medium;
+  .icon {
+    width: rem(25px);
+    height: rem(25px);
+    fill: $color-gray;
+  }
+}
+
+.card-profile__interests {
+  font-size: font-size-medium;
+  margin-right: rem(5px);
+  color: $color-gray;
+}
+
+.card-profile__toggle-button {
+  background-color: transparent;
+  border: rem(2px) solid $color-corporative;
+  width: rem(150px);
+  height: rem(150px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .icon {
+    width: 50%;
+    height: 50%;
+    fill: $color-corporative;
+  }
+  & svg {
+    position: initial;
+    fill: $color-corporative;
+  }
+  &--corporative-bg {
+    background-color: $color-corporative;
+    .icon {
+      fill: $color-black;
+    }
+  }
+}
+
+.card-profile__container {//se usa
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  padding: $padding-big;
+}
+
+.card-profile__avatar-container {//se usa
+  left: 0;
+  position: relative;
+  margin: 0;
+  margin-right: $avatar-margin;
+  max-width: $avatar-container-max-width;
+  min-height: $avatar-container-max-width;
+}
+
+.card-profile__avatar-container--img {
+  height: auto;
+  width: auto;
+  object-fit: scale-down;
+}
+
+.card-profile__avatar-container--icon {
+  object-fit: scale-down;
+}
+
+.card-profile__avatar-container--name {
+  word-wrap: break-word;
+  font-size: $font-size-medium;
+  color: $color-black;
+  text-align: center;
+  font-weight: $font-weight-bold;
+  margin: $margin-small;
+}
+
+//revise
+.card-profile__container-avatar-content {//se usa
+  display: flex;
+  align-items: center;
+}
+
+.card-profile__avatar-container-name {//se usa
+  font-size: $font-size-title;
+  font-weight: bold;
+}
+
+.paragraph {//se usa
+  margin-right: 1rem;
+  &:last-child {
+    margin-right: 0px;
+  }
+}
+
+.grid-one__column-mid-element {
+  font-size: font-size-medium;
+  font-weight: lighter;
+  margin-bottom: 0.5rem;
+}
+
+@media #{$breakpoints-xlarge} {
+
+  .card-profile__rating {
+    display: flex;
+    width: fit-content;
+    height: auto;
+    margin: 0 auto;
+    background-size: contain;
+    margin-bottom: rem(10px);
+    & svg {
+      width: rem(20px);
+    }
+  }
+
+  .card-profile__location {
+    color: $color-gray;
+    text-align: center;
+    font-size: font-size-medium;
+    .icon {
+      width: rem(25px);
+      height: rem(25px);
+      fill: $color-gray;
+    }
+  }
+
+  .card-profile__interests {
+    font-size: font-size-medium;
+    margin-right: rem(5px);
+    color: $color-gray;
+  }
+
+  .card-profile__toggle-button {
+    background-color: transparent;
+    border: rem(2px) solid $color-corporative;
+    width: rem(150px);
+    height: rem(150px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icon {
+      width: 50%;
+      height: 50%;
+      fill: $color-corporative;
+    }
+    & svg {
+      position: initial;
+      fill: $color-corporative;
+    }
+    &--corporative-bg {
+      background-color: $color-corporative;
+      .icon {
+        fill: $color-black;
+      }
+    }
+  }
+
+  .card-profile__avatar-container {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    max-width: $avatar-container-max-width;
+    height: 100%;
+    width: 100%;
+  }
+
+  .card-profile__avatar-container--img {
+    height: auto;
+    width: auto;
+    object-fit: scale-down;
+  }
+
+  .card-profile__avatar-container--icon {
+    object-fit: scale-down;
+  }
+
+  .card-profile__avatar-container--name {
+    word-wrap: break-word;
+    font-size: $font-size-medium;
+    color: $color-black;
+    text-align: center;
+    font-weight: $font-weight-bold;
+    margin: $margin-small;
+  }
+}

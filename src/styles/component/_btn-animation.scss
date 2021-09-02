@@ -1,0 +1,65 @@
+// Structure SCS
+
+.radar {
+  animation: radar 5s linear infinite;
+}
+
+@keyframes radar {
+  0% {
+    transform: scale(2);
+  }
+  20% {
+    transform: scale(8);
+    opacity: 0
+  }
+  50% {
+    transform: scale(8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(12);
+    opacity: 0;
+  }
+}
+
+.btn-animation {
+  padding: 3rem 0;
+  text-align: center;
+
+  button {
+    box-shadow: 0 0 48px $color-corporative;
+    margin: auto;
+  }
+
+  button:after,
+  button:before {
+    @extend .radar;
+
+    border: 1px solid $color-corporative;
+    border-radius: 100%;
+    content: '';
+    display: block;
+    height: 25px;
+    position: absolute;
+    width: 25px;
+  }
+
+  button:after {
+    animation-delay: .2s;
+  }
+
+  button:before {
+    animation-delay: .4s;
+  }
+
+  .card-profile__toggle-button {
+    &:before {
+      border-radius: 0;
+    }
+    &:after {
+      border-radius: 0;
+    }
+  }
+}
+
+// CSS Animation

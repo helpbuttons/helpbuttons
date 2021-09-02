@@ -1,0 +1,42 @@
+// whitespace
+$dashboard-section-margin-bottom: 4rem;
+$dashboard-section-padding: $dashboard-section-margin-bottom;
+
+.dashboard {
+  background: $color-white;
+  padding: 4rem 0;
+}
+
+.dashboard__content {
+  margin: auto;
+  // mobile first (less padding)
+  max-width: 575px; 
+  width: 90%;
+}
+
+.dashboard__title {
+  font-family: Helvetica, sans-serif;
+  font-size: 1.5rem;
+}
+
+.dashboard__title {
+  padding-bottom: 2rem;
+}
+
+.dashboard__section {
+  background: $color-ligth-gray;
+  margin-bottom: $dashboard-section-margin-bottom;
+  padding: $dashboard-section-padding;
+}
+
+.dashboard__section--dark {
+  background: $color-dark-gray;
+}
+
+.dashboard__section--yellow {
+  background: $color-corporative;
+}
+
+hr {
+  margin: 2rem 0;
+}

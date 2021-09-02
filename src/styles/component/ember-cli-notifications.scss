@@ -1,0 +1,12 @@
+._c-notification__container--top_rc8i2a {
+  font-size: $font-size-general;
+  top: rem(50px);
+  z-index: 15000 !important;
+}
+
+
+@media #{$breakpoints-medium} {
+  ._c-notification__container--top_rc8i2a {
+    top: rem(100px);
+  }
+}

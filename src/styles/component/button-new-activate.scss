@@ -1,0 +1,43 @@
+.button-new-activate__colums {
+  display: inline-block;
+
+  text-align: center;
+
+  font-size: $font-size-general;
+  line-height: 1.5rem;
+  width: 100%;
+  vertical-align: middle;
+  height: auto;
+  font-weight: bold;
+}
+
+//button round
+.button-new-activate__change-button {
+  @extend .button;
+  border: 1px solid $color-gray-border;
+}
+
+.button-new-activate__content {
+  height: 100%;
+}
+
+@keyframes start-ring {
+    0% {
+        opacity: 0;
+        transform: scale(1)
+    }
+
+    12.5% {
+        opacity: 0;
+        transform: scale(.995)
+    }
+
+    16.667% {
+        opacity: 1
+    }
+
+    50% {
+        opacity: 0;
+        transform: scale(1.3)
+    }
+}
