@@ -1,0 +1,16 @@
+version: '3'
+services:
+  hb-back:
+    build: .
+    ports:
+      - "8001:3000"
+    volumes:
+     - ./:/home/node/app:rw
+
+  postgres:
+    image: postgis/postgis:13-master
+    restart: always
+    volumes:
+     - ../db/:/var/lib/mysql:rw
+    environment:
+     - POSTGRES_PASSWORD=jgda7s8tds78sagda
