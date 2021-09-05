@@ -1,16 +1,16 @@
 import {inject} from '@loopback/core';
 import {DefaultCrudRepository} from '@loopback/repository';
 import {DbDataSource} from '../datasources';
-import {Network, NetworkRelations} from '../models';
+import {Button, ButtonRelations} from '../models';
 
-export class NetworkRepository extends DefaultCrudRepository<
-  Network,
-  typeof Network.prototype.id,
-  NetworkRelations
+export class ButtonRepository extends DefaultCrudRepository<
+  Button,
+  typeof Button.prototype.id,
+  ButtonRelations
 > {
   constructor(
     @inject('datasources.db') dataSource: DbDataSource,
   ) {
-    super(Network, dataSource);
+    super(Button, dataSource);
   }
 }

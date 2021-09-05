@@ -47,9 +47,9 @@ export class Network extends Entity {
   latitude?: number;
 
   @property({
-    type: 'string',
+    type: 'number',
   })
-  longitude?: string;
+  longitude?: number;
 
   @property({
     type: 'number',
