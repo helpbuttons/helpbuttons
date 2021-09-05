@@ -14,21 +14,10 @@ body {
 }
 
 #modal-overlays {
-  
+
   position: relative;
   z-index: $z-index-06;
 
-  .ember-modal-overlay.translucent { //Revise
-    // background: $popup-background;
-  }
-
-  .index-new-button__modal-close {
-    // top: 0; // Revise
-    // left: 0;
-    // transform: translate(0,0);
-    // width: 100%;
-    // height: 100%;
-  }
 }
 
 
