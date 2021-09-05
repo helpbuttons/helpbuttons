@@ -1,15 +1,15 @@
 import {
   // Count,
   // CountSchema,
-  // Filter,
+  Filter,
   // FilterExcludingWhere,
   repository,
   // Where,
 } from '@loopback/repository';
 import {
   post,
-  // param,
-  // get,
+  param,
+  get,
   getModelSchemaRef,
   // patch,
   // put,
@@ -57,8 +57,8 @@ export class ButtonController {
   ): Promise<Count> {
     return this.buttonRepository.count(where);
   }
-
-  @get('/buttons')
+*/
+  @get('/buttons/find')
   @response(200, {
     description: 'Array of Button model instances',
     content: {
@@ -75,7 +75,7 @@ export class ButtonController {
   ): Promise<Button[]> {
     return this.buttonRepository.find(filter);
   }
-
+/*
   @patch('/buttons')
   @response(200, {
     description: 'Button PATCH success count',

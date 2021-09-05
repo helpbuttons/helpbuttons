@@ -1,12 +1,12 @@
 import {
-  // Filter,
+  Filter,
   // FilterExcludingWhere,
   repository,
 } from '@loopback/repository';
 import {
   post,
-  // param,
-  // get,
+  param,
+  get,
   getModelSchemaRef,
   // patch,
   // put,
@@ -44,7 +44,7 @@ export class NetworkController {
     return this.networkRepository.create(network);
   }
 
-  /*@get('/networks')
+  @get('/networks/find')
   @response(200, {
     description: 'Array of Network model instances',
     content: {
@@ -61,7 +61,7 @@ export class NetworkController {
   ): Promise<Network[]> {
     return this.networkRepository.find(filter);
   }
-
+/*
   @get('/networks/{id}')
   @response(200, {
     description: 'Network model instance',
