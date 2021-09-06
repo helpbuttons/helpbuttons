@@ -57,11 +57,28 @@ export class Network extends Entity {
   radius?: number;
 
   @property({
-    type: 'object',
-    required: true,
+    type: 'array',
+    itemType: 'string',
   })
-  template: object;
+  tags?: string[];
 
+  // TODO: this should be a relation with templates
+  @property({
+    type: 'array',
+    default: [],
+    itemType: 'string',
+  })
+  buttonsTemplate?: string[];
+
+  // TODO this should be a relation with roles
+  @property({
+    type: 'string',
+    default: 'admin'
+  })
+  role: string;
+
+  // TODO: this will have a list of users blocked in a network
+  // blockedUsers?: string[];
 
   constructor(data?: Partial<Network>) {
     super(data);
