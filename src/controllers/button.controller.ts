@@ -17,34 +17,39 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {Button} from '../models';
-import {ButtonRepository} from '../repositories';
+import {Button, Network} from '../models';
+import {ButtonRepository, NetworkRepository} from '../repositories';
 
 export class ButtonController {
   constructor(
     @repository(ButtonRepository)
     public buttonRepository : ButtonRepository,
+    @repository(NetworkRepository)
+    public networkRepository : NetworkRepository
   ) {}
 
-  @post('/buttons/new')
-  @response(200, {
-    description: 'Button model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Button)}},
+  @post('/buttons/new', {
+    responses: {
+      '200': {
+        description: 'create a Button model instance',
+        content: {'application/json': {schema: getModelSchemaRef(Button)}},
+      },
+    },
   })
   async create(
+    @param.query.number('networkId') id: typeof Network.prototype.id,
     @requestBody({
       content: {
         'application/json': {
           schema: getModelSchemaRef(Button, {
-            title: 'NewButton',
+            title: 'NewButtonInNetwork',
             exclude: ['id'],
           }),
         },
       },
-    })
-    button: Omit<Button, 'id'>,
+    }) button: Omit<Button, 'id'>,
   ): Promise<Button> {
-    return this.buttonRepository.create(button);
+    return this.networkRepository.buttons(id).create(button);
   }
 /*
   @get('/buttons/count')

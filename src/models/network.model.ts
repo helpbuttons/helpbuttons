@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Button} from './button.model';
+import {ButtonsNetwork} from './buttons-network.model';
 
 @model()
 export class Network extends Entity {
@@ -57,11 +59,30 @@ export class Network extends Entity {
   radius?: number;
 
   @property({
-    type: 'object',
-    required: true,
+    type: 'array',
+    itemType: 'string',
   })
-  template: object;
+  tags?: string[];
 
+  // TODO: this should be a relation with templates
+  @property({
+    type: 'array',
+    default: [],
+    itemType: 'string',
+  })
+  buttonsTemplate?: string[];
+
+  @hasMany(() => Button, {through: {model: () => ButtonsNetwork}})
+  buttons: Button[];
+  // TODO this should be a relation with roles
+  @property({
+    type: 'string',
+    default: 'admin'
+  })
+  role: string;
+
+  // TODO: this will have a list of users blocked in a network
+  // blockedUsers?: string[];
 
   constructor(data?: Partial<Network>) {
     super(data);
