@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Network} from './network.model';
+import {ButtonsNetwork} from './buttons-network.model';
 
 @model()
 export class Button extends Entity {
@@ -42,13 +44,8 @@ export class Button extends Entity {
   })
   longitude: number;
 
-  @property({
-    type: 'array',
-    itemType: 'string',
-    required: true,
-  })
-  networks: string[];
-
+  @hasMany(() => Network, {through: {model: () => ButtonsNetwork}})
+  networks: Network[];
 
   constructor(data?: Partial<Button>) {
     super(data);

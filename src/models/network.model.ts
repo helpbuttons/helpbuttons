@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Button} from './button.model';
+import {ButtonsNetwork} from './buttons-network.model';
 
 @model()
 export class Network extends Entity {
@@ -70,6 +72,8 @@ export class Network extends Entity {
   })
   buttonsTemplate?: string[];
 
+  @hasMany(() => Button, {through: {model: () => ButtonsNetwork}})
+  buttons: Button[];
   // TODO this should be a relation with roles
   @property({
     type: 'string',
