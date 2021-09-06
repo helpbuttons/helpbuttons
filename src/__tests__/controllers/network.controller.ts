@@ -111,13 +111,18 @@ describe('NetworkController (integration)', () => {
     it('/networks/find include buttons', async () => {
       const resFilter = await client.get('/networks/find').query({
         filter: `{
-        "where": {
-          "id": 3
-        },
-        "include": [
-          "buttons"
-        ]
-      }`}).expect(200);
+          "where": {
+            "id": 3
+          },
+          "include": [
+            {
+              "relation": "buttons",
+              "scope": {
+                "limit": "1"
+              }
+            }
+          ]
+        }`}).expect(200);
       expect(resFilter.body.length).to.equal(1);
       expect(resFilter.body[0].buttons.length).to.equal(1);
       expect(resFilter.body).to.deepEqual(
