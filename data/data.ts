@@ -8,9 +8,9 @@ const data = [
         description: "Net for animal rescue",
         private_net: "private",
         button_name: "pedidos",
-        button_type: {},
-        roles:["rol1","rol2"],
-        blocked_users:,
+        button_type: {}, //array of types, each type has an int, a name and a color associated. Default are offer (green), need (red). 
+        roles:[(2,"admin",[111,131,232])], //array of roles specific for the net, default are net admins. Each of these net roles have their user list
+        blocked_users: [11,223,133],
         latitude: 43.33,
         longitude: 43.33,
         radius: 240,
