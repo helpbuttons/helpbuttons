@@ -63,12 +63,13 @@ export class ButtonController {
   async addToNetworks(
     @param.query.number('buttonId') id: typeof Button.prototype.id,
     @param.query.string('networks') networks: string,
-  ): Promise<any> {
+  ): Promise<object> {
     const networkIds: Array<number> = JSON.parse(networks);
     return Promise.all(
       networkIds.map((networkId) => {
-        this.networkRepository.buttons(networkId).link(id);
-        return 'Added button ' + id + ' to network ' + networkId;
+        return this.networkRepository.buttons(networkId).link(id).then(() => {
+          return 'Added button ' + id + ' to network ' + networkId;
+        });
       })
     )
   }
