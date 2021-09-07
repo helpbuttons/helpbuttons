@@ -27,3 +27,8 @@ npm start:watch
 
 ## run with docker
  TODO
+
+## developers hints:
+
+Cheatsheet on chai and mochajs 
+ https://devhints.io/chai.html

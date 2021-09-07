@@ -30,7 +30,7 @@ describe('NetworkController (integration)', () => {
     ).expect(200);
     expect(res.body).to.containEql({
       "name": "Perritos en adopcion",
-      "id": 1,
+      "id": 5,
       "url": "net/url",
       "avatar": "image/url.png",
       "description": "Net for animal rescue",
@@ -52,43 +52,7 @@ describe('NetworkController (integration)', () => {
   describe('find', () => {
 
 
-    before('add networks', async () => {
-      await client.post('/networks/new').send({
-        "name": "Perritos en adopcion",
-        "place": "Livorno, Italia",
-        "tags": ["Animales", "Perritos", "Adopcion"],
-        "url": "net/url",
-        "avatar": "image/url.png",
-        "description": "Net for animal rescue",
-        "privacy": "publico",
-        "latitude": 43.33,
-        "longitude": 43.33,
-        "radius": 240
-      }).expect(200);
-      await client.post('/networks/new').send({
-        "name": "Perritos en adopcion",
-        "place": "Livorno, Italia",
-        "tags": ["Animales", "Perritos", "Adopcion"],
-        "url": "net/url",
-        "avatar": "image/url.png",
-        "description": "Net for animal rescue",
-        "privacy": "publico",
-        "latitude": 43.33,
-        "longitude": 43.33,
-        "radius": 240
-      }).expect(200);
-      await client.post('/networks/new').send({
-        "name": "Gatitos en adopcion",
-        "place": "Livorno, Italia",
-        "tags": ["Animales", "Perritos", "Adopcion"],
-        "url": "net/url",
-        "avatar": "image/url.png",
-        "description": "Net for animal rescue",
-        "privacy": "publico",
-        "latitude": 43.33,
-        "longitude": 43.33,
-        "radius": 240
-      }).expect(200);
+    before('add network', async () => {
       await client.post('/buttons/new').query({ "networkId": "3" }).send({
         "name": "button name",
         "type": "exchange",
@@ -102,7 +66,7 @@ describe('NetworkController (integration)', () => {
     });
     it('/networks/find', async () => {
       const resFilter = await client.get('/networks/find').send().expect(200);
-      expect(resFilter.body.length).to.equal(4);
+      expect(resFilter.body.length).to.equal(5);
 
       const resFilterOne = await client.get('/networks/find').query({ filter: '{"where": {"name": {"regexp": "^Gat"}}}' }).expect(200);
       expect(resFilterOne.body[0].name).to.startWith('Gat');
