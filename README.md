@@ -9,7 +9,7 @@ Use 'npm ci' instead of 'npm install'. If your version of npm doesn't recognize 
 
 npm install -g npm
 
-Just use 'npm install' if you modified the package.json.
+Just use 'npm install' if you  modified the package.json locally.  
 
 ```bash
 npm run dev
