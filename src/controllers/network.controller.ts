@@ -8,9 +8,8 @@ import {
   param,
   get,
   getModelSchemaRef,
-  // patch,
-  // put,
-  // del,
+  patch,
+  del,
   requestBody,
   response,
 } from '@loopback/rest';
@@ -77,8 +76,8 @@ export class NetworkController {
   ): Promise<Network> {
     return this.networkRepository.findById(id, filter);
   }
-
-  @patch('/networks/{id}')
+*/
+  @patch('/networks/edit/{id}')
   @response(204, {
     description: 'Network PATCH success',
   })
@@ -95,7 +94,7 @@ export class NetworkController {
   ): Promise<void> {
     await this.networkRepository.updateById(id, network);
   }
-
+/*
   @put('/networks/{id}')
   @response(204, {
     description: 'Network PUT success',
@@ -106,12 +105,12 @@ export class NetworkController {
   ): Promise<void> {
     await this.networkRepository.replaceById(id, network);
   }
-
-  @del('/networks/{id}')
+*/
+  @del('/networks/delete/{id}')
   @response(204, {
     description: 'Network DELETE success',
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.networkRepository.deleteById(id);
-  }*/
+  }
 }

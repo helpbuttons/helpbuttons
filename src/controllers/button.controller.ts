@@ -11,9 +11,9 @@ import {
   param,
   get,
   getModelSchemaRef,
-  // patch,
+  patch,
   // put,
-  // del,
+  del,
   requestBody,
   response,
 } from '@loopback/rest';
@@ -115,8 +115,8 @@ export class ButtonController {
   ): Promise<Button> {
     return this.buttonRepository.findById(id, filter);
   }
-
-  @patch('/buttons/{id}')
+*/
+  @patch('/buttons/edit/{id}')
   @response(204, {
     description: 'Button PATCH success',
   })
@@ -133,7 +133,7 @@ export class ButtonController {
   ): Promise<void> {
     await this.buttonRepository.updateById(id, button);
   }
-
+/*
   @put('/buttons/{id}')
   @response(204, {
     description: 'Button PUT success',
@@ -144,13 +144,12 @@ export class ButtonController {
   ): Promise<void> {
     await this.buttonRepository.replaceById(id, button);
   }
-
-  @del('/buttons/{id}')
+*/
+  @del('/buttons/delete/{id}')
   @response(204, {
     description: 'Button DELETE success',
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.buttonRepository.deleteById(id);
   }
-  */
 }
