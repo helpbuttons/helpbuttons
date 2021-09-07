@@ -4,6 +4,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 First, run the development server:
 
+Use 'npm ci' instead of 'npm install'. If your version of npm doesn't recognize it , use first:
+
+npm install -g npm
+
 ```bash
 npm run dev
 # or
