@@ -51,6 +51,27 @@ export class ButtonController {
   ): Promise<Button> {
     return this.networkRepository.buttons(id).create(button);
   }
+  
+  @post('/buttons/addToNetworks', {
+    responses: {
+      '200': {
+        description: 'Add a button to networks',
+        content: {},
+      },
+    },
+  })
+  async addToNetworks(
+    @param.query.number('buttonId') id: typeof Button.prototype.id,
+    @param.query.string('networks') networks: string,
+  ): Promise<any> {
+    const networkIds: Array<number> = JSON.parse(networks);
+    return Promise.all(
+      networkIds.map((networkId) => {
+        this.networkRepository.buttons(networkId).link(id);
+        return 'Added button ' + id + ' to network ' + networkId;
+      })
+    )
+  }
 /*
   @get('/buttons/count')
   @response(200, {
