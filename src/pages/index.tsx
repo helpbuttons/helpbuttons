@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Header />
-      <div>
+      <div style={{ position: 'absolute', zIndex: 1000 }}>
         <Search />
         <Filters />
         <Posts />

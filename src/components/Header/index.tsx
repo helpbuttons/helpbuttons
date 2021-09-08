@@ -1,12 +1,15 @@
+import SelectNetwork from "../SelectNetwork";
+import styles from './header.module.scss'
+
 export default function Header() {
   return (
-    <header>
-      <div>
-        <a href="">Logo</a>
+    <header className={styles.header}>
+      <div className={styles.header__logoContainer}>
+        <a className={styles.header__logo} href="#!">Logo</a>
         <span>Nombre de Red</span>
         <span>Descripción de Red</span>
       </div>
-      <nav>
+      <nav className={styles.header__nav}>
         <ul>
           <li>
             <a href="">Añadir Boton</a>
@@ -15,7 +18,7 @@ export default function Header() {
             <a href="">Perfil</a>
           </li>
           <li>
-            <a href="">Red</a>
+            <SelectNetwork />
           </li>
         </ul>
       </nav>
