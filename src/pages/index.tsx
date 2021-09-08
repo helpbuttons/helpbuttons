@@ -12,17 +12,6 @@ const Home: NextPage = () => {
       console.log(button.name);
     });
   }).catch(() => console.log('ERRRO'));
-  const submitButton = async () => {
-    const response = await fetch ('/api/buttons',{
-      method: 'POST',
-      body: JSON.stringify({ button }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    const data = await response.json()
-    console.log(data)
-  }
 
   return (
     <>
