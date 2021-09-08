@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../store/index';
 
 export default function FakeSelect() {
-    
+
     const networks = useSelector((state) => state);
     const dispatch = useDispatch();
 

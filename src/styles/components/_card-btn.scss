@@ -190,7 +190,7 @@ $card-btn-margin: 1rem;
   align-items: center;
   display: flex;
   flex-flow: row nowrap;
-  padding: 1rem 0rem 1.5rem 0;
+  padding: 1rem 0rem 1.5rem 0; 
 }
 
 .card-btn__foot {
@@ -320,6 +320,7 @@ $card-btn-margin: 1rem;
   margin-right: .5rem;
   padding: .3rem .7rem;
 }
+
 
 .card-btn__link-tag-green {
   @extend .card-btn__link-tag;

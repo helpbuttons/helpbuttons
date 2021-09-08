@@ -4,6 +4,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 First, run the development server:
 
+To avoid problems with package-lock.json.
+Use 'npm ci' instead of 'npm install'. If your version of npm doesn't recognize it , use first:
+
+npm install -g npm
+
+Just use 'npm install' if you  modified the package.json locally.  
+
 ```bash
 npm run dev
 # or

@@ -1,29 +1,21 @@
+import React, { useMemo } from 'react';
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import FakeFiters from '../components/FakeFilters'
-import FakeSelect from '../components/FakeSelect'
-import FakeList from '../components/FakeList';
-
-import { Provider } from 'react-redux';
-import { store } from '../store/store';
+import Map from '../components/LeafletMap/index'
+import axios from "axios";
 
 import styles from '../styles/Home.module.scss'
-import React from 'react';
 
 const Home: NextPage = () => {
+  axios.get('http://localhost:3001/buttons/find').then((res) => {
+    res.data.map((button) => {
+      console.log(button.name);
+    });
+  }).catch(() => console.log('ERRRO'));
 
   return (
     <>
-      <Head>
-        <title>Simulacion de los filtros de HB</title>
-      </Head>
-      <div className={styles.container}>
-        <Provider store={store}>
-          <FakeFiters />
-          <FakeSelect />
-          <FakeList />
-        </Provider>
-      </div>
+      <Map/>
     </>
   )
 }
