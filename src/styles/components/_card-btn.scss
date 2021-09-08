@@ -321,7 +321,8 @@ $card-btn-margin: 1rem;
   padding: .3rem .7rem;
 }
 
-.card-btn__link-tag-green { 
+
+.card-btn__link-tag-green {
   @extend .card-btn__link-tag;
   background: $color-green;
 }
