@@ -1,7 +1,6 @@
-@import 'mixins/_rem';
+components@import 'mixins/_rem';
 
 // variables
-
 @import "variables/colors";
 @import "variables/margins";
 @import "variables/paddings";
@@ -17,81 +16,72 @@
 
 
 @import "base/common";
-// Dashboard (skin for list of atoms and components)
 
+// Dashboard (skin for list of componentss and layouts)
 @import "skin/dashboard";
 
-// Atoms (general)
+//////////// COMPONENTS
 
-@import "atom/icon";
-@import "atom/picture";
-@import "atom/avatar";
-@import "atom/hashtag";
-@import "atom/text-style";
+// componentss (general)
+@import "components/icon";
+@import "components/image";
+@import "components/avatar";
+@import "components/hashtag";
+@import "components/text-style";
 
-// Atoms (form)
-
-@import "atom/label";
-@import "atom/button";
-@import "atom/textarea";
-@import "atom/checkbox";
-@import "atom/checkbox-circle";
-@import "atom/radio-button";
-@import "atom/dropdown";
-
-// Third party components and overwrites
-@import "ember-power-select";
-@import "ember-basic-dropdown";
-@import "ember-power-calendar";
-@import "ember-modal-dialog/ember-modal-structure";
-@import "ember-modal-dialog/ember-modal-appearance";
-@import "component/ember-place-autocomplete-overwrite";
-@import "component/ember-leaflet-overwrite";
-@import "component/ember-cli-notifications";
-
-// component (general)
-
-@import "component/forms";
-@import "component/header";
-@import "component/_component-header";
-@import "component/card-button";
-@import "component/card-notification";
-@import "component/promise-button";
-@import "component/_buttons-filters";
-@import "component/loading-overlay";
-@import "component/button-file";
-@import "component/trending-tags";
-@import "component/button-new-location-inserted";
-@import "component/button-new-date-inserted";
-@import "component/button-new-activate";
-@import "component/button-new-share";
-@import "component/login-component";
-@import "component/create-net-component";
-@import "component/info-overlay";
-@import "component/register-component";
-@import "component/message-component";
-@import "component/button-icon";
-@import "component/search-topbar";
-@import "component/error-message";
-@import "component/ember-power-calendar-overwrite";
-@import "component/time-picker";
-@import "component/net-picker";
-@import "component/chat-messages";
-@import "component/card-btn";
-@import "component/btn-animation";
-@import "component/card-chat";
-@import "component/nav-bottom";
-@import "component/nav-header";
-@import "component/home-search";
-// @import "component/profile-search";
-@import "component/popup";
-@import "component/menuselect";
+// componentss (form)
+@import "components/label";
+@import "components/btn";
+@import "components/textarea";
+@import "components/checkbox";
+@import "components/checkbox-circle";
+@import "components/dropdown";
 
 
-// components (comments)
-@import "component/comments-bar";
-@import "component/comments-message";
-@import "component/card-profile";
+///////////LAYOUT
+
+// layout (general)
+@import "layout/header";
+@import "layout/_component-header";
+@import "layout/card-button";
+@import "layout/card-notification";
+@import "layout/promise-button";
+@import "layout/_buttons-filters";
+@import "layout/loading-overlay";
+@import "layout/button-file";
+@import "layout/trending-tags";
+@import "layout/button-new-location-inserted";
+@import "layout/button-new-date-inserted";
+@import "layout/button-new-activate";
+@import "layout/button-new-share";
+@import "layout/login-component";
+@import "layout/create-net-component";
+@import "layout/info-overlay";
+@import "layout/register-component";
+@import "layout/message-component";
+@import "layout/button-icon";
+@import "layout/search-topbar";
+@import "layout/error-message";
+@import "layout/ember-power-calendar-overwrite";
+@import "layout/time-picker";
+@import "layout/net-picker";
+@import "layout/chat-messages";
+@import "layout/card-btn";
+@import "layout/btn-animation";
+@import "layout/card-chat";
+@import "layout/nav-bottom";
+@import "layout/nav-header";
+@import "layout/home-search";
+// @import "layout/profile-search";
+@import "layout/popup";
+@import "layout/menuselect";
+
+
+// layouts (comments)
+@import "layout/comments-bar";
+@import "layout/comments-message";
+@import "layout/card-profile";
+@import "components/forms";
 
 
 // pages
