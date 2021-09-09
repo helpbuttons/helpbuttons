@@ -1,8 +1,8 @@
 ///list of buttons
 import styles from '../styles/layouts/ButtonList'
 
-function Posts() {
+function ButtonList() {
   return <h1 className={styles.posts}>Posts</h1>;
 }
 
-export default Posts;
+export default ButtonList;
