@@ -2,13 +2,15 @@ import React, { useMemo } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Map from "../components/LeafletMap/index";
+import { Store } from "../store/Store";
+import Event from "../store/Event";
 
-import Header from "../components/Header";
+import HomeHeader from "../components/HomeHeader";
 import styles from "../styles/Home.module.scss";
 
-import Search from "../components/Search";
-import Posts from "../components/Posts";
-import Filters from "../components/Filters";
+import HomeSearch from "../components/HomeSearch";
+import ButtonList from "../components/ButtonList";
+import ButtonFilters from "../components/ButtonFilters";
 
 import ButtonDataService from "services/Buttons";
 
@@ -16,20 +18,6 @@ import ButtonDataService from "services/Buttons";
 // Para simplificar la modificación de estructuras de datos
 // al estilo "immutable objects"
 import produce from 'immer';
-
-export default function ButtonComponent(props) {
-
-  useEffect(() => {
-    ButtonDataService.getAll()
-      .then((res) => {
-        setData(res.data)
-      })
-      .catch((err) => {
-          console.log(err)
-      });
-  },[]);
-
-}
 
 // -- estado global --
 export const store = new Store({

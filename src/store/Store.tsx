@@ -1,25 +1,5 @@
-// === Definición de eventos ===
-
-export interface Event {
-}
-
-export interface UpdateEvent extends Event {
-  public update(state: object): object;
-}
-
-export interface WatchEvent extends Event {
-  public watch(state: object): Observable<Event>;
-}
-
-export function isUpdateEvent(event: Event): boolean {
-  return (event.update !== undefined);
-}
-
-export function isWatchEvent(event: Event): boolean {
-  return (event.watch !== undefined);
-}
-
-
+import Event  from "../store/Event";
+import { BehaviorSubject } from 'rxjs';
 // === Definición del Store ===
 
 export class Store {
@@ -29,7 +9,6 @@ export class Store {
   public constructor(initialState: object) {
     this.state$ = new BehaviorSubject<object>(initialState).pipe(share());
     this.events$ = new Subject<Event>().pipe(share());
-
     this._subscribe();
   }
 
