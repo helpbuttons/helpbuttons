@@ -14,7 +14,7 @@ describe('ButtonController (integration)', () => {
     await app.stop();
   });
 
-  it('/buttons/new bra', async () => {
+  it('/buttons/new', async () => {
     const res = await client.post('/buttons/new').query({ networkId: 4 }).send({
       "name": "button name",
       "type": "exchange",
@@ -39,7 +39,7 @@ describe('ButtonController (integration)', () => {
   describe('/buttons/find', () => {
 
 
-    before('add networks', async () => {
+    before('add buttons', async () => {
       await client.post('/buttons/new').query({ networkId: 3 }).send({
         "name": "button name",
         "type": "exchange",
