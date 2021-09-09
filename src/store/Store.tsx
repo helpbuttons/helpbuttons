@@ -1,5 +1,6 @@
 import Event  from "../store/Event";
-import { BehaviorSubject } from 'rxjs';
+import { withLatestFrom, map, share, filter  } from 'rxjs/operators';
+import { interval, BehaviorSubject, Subject} from 'rxjs';
 // === Definición del Store ===
 
 export class Store {
@@ -20,12 +21,12 @@ export class Store {
     this.events$.pipe(
       filter(event => isUpdateEvent(event)),
       withLatestFrom(this.state$),
-    ).subscribe(this._processUpdateEvent(event, state));
+    ).subscribe(event => this._processUpdateEvent(event, state));
 
     this.events$.pipe(
       filter(event => isWatchEvent(event)),
       withLatestFrom(this.state$),
-    ).subscribe(this._processWatchEvent(event, state));
+    ).subscribe(event => this._processWatchEvent(event, state));
   }
 
   private _processUpdateEvent(event: Event, state: object) {

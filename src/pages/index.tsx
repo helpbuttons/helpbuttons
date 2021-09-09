@@ -5,12 +5,12 @@ import Map from "../components/LeafletMap/index";
 import { Store } from "../store/Store";
 import Event from "../store/Event";
 
-import HomeHeader from "../components/HomeHeader";
+import HomeHeader from "../layouts/Header";
 import styles from "../styles/Home.module.scss";
 
-import HomeSearch from "../components/HomeSearch";
-import ButtonList from "../components/ButtonList";
-import ButtonFilters from "../components/ButtonFilters";
+import HomeSearch from "../layouts/HomeSearch";
+import ButtonList from "../layouts/ButtonList";
+import ButtonFilters from "../layouts/ButtonFilters";
 
 import ButtonDataService from "services/Buttons";
 
@@ -40,9 +40,9 @@ const Home: NextPage = () => {
     <>
       <Header />
       <div style={{ position: 'absolute', zIndex: 1000 }}>
-        <Search />
-        <Filters />
-        <Posts />
+        <HomeSearch />
+        <ButtonFilters />
+        <ButtonList />
       </div>
       <Map />
     </>
