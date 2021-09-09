@@ -1,6 +1,6 @@
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Button} from './button.model';
-
+import {TemplateButtonsTypes} from './enums';
 @model()
 export class TemplateButton extends Entity {
   @property({
@@ -16,10 +16,19 @@ export class TemplateButton extends Entity {
   name?: string;
 
   @property({
+    type: 'string',
+    jsonSchema: {
+      enum: Object.values(TemplateButtonsTypes),
+    },
+    required: true
+  })
+  type?: string;
+
+  @property({
     type: 'object',
     required: true,
   })
-  schema: object;
+  fields: object;
 
   @hasMany(() => Button)
   buttons: Button[];
