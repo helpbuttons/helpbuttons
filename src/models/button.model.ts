@@ -47,6 +47,11 @@ export class Button extends Entity {
   @hasMany(() => Network, {through: {model: () => ButtonsNetwork}})
   networks: Network[];
 
+  @property({
+    type: 'number',
+  })
+  templateButtonId?: number;
+
   constructor(data?: Partial<Button>) {
     super(data);
   }
