@@ -2,7 +2,8 @@
   "ids": {
     "Button": 6,
     "Network": 5,
-    "ButtonsNetwork": 6
+    "ButtonsNetwork": 6,
+    "TemplateButton": 2
   },
   "models": {
     "Button": {
@@ -22,6 +23,9 @@
       "1": "{\"networkId\":3,\"buttonId\":1,\"id\":1}",
       "2": "{\"networkId\":3,\"buttonId\":2,\"id\":2}",
       "3": "{\"networkId\":3,\"buttonId\":3,\"id\":3}"
+    },
+    "TemplateButton": {
+      "1": "{\"name\":\"repartidor\",\"type\":\"need\",\"fields\":{\"items\":[{\"name\":\"position\",\"displayName\":\"Posicion de partida:\",\"type\":\"geoCode\"},{\"name\":\"availableTimes\",\"displayName\":\"Horas/Dias disponibles:\",\"type\":\"recurrentTime\"},{\"name\":\"maximumRadiusKm\",\"displayName\":\"Maximo de deslocacion (km)\",\"type\":\"number\"},{\"name\":\"description\",\"displayName\":\"Descricion e otras informaciones\",\"type\":\"string\"}]},\"id\":1}"
     }
   }
 }
