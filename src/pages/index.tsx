@@ -10,14 +10,30 @@ import Search from "../components/Search";
 import Posts from "../components/Posts";
 import Filters from "../components/Filters";
 
+import ButtonDataService from "services/Buttons";
+
 // https://immerjs.github.io/immer/
 // Para simplificar la modificación de estructuras de datos
 // al estilo "immutable objects"
 import produce from 'immer';
 
+export default function ButtonComponent(props) {
+
+  useEffect(() => {
+    ButtonDataService.getAll()
+      .then((res) => {
+        setData(res.data)
+      })
+      .catch((err) => {
+          console.log(err)
+      });
+  },[]);
+
+}
 
 // -- estado global --
 export const store = new Store({
+
   network: {
     id: 0,
   },
@@ -28,6 +44,7 @@ export const store = new Store({
     cargando: false,
     listado: [],
   }
+
 });
 
 const Home: NextPage = () => {
