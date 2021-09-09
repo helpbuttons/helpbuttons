@@ -301,11 +301,11 @@
 
   align-items: center;
   display: flex;
-  padding: $button-padding 2rem;
+  padding: $padding-medium 2rem;
   position: relative;
 
   &--small {
-    padding: $button-small-padding 2rem;
+    padding: $padding-small 2rem;
   }
 
   &__header {

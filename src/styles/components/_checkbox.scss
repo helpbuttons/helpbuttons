@@ -83,7 +83,7 @@ $checkbox-color-gray-border: $color-gray-border;
 }
 
 
-//CHECKBOX FOR FILTERS - SMALL CHECKBOXES IN MENUS AND HEADER - EXTENDED FROM BUTTON-FILTER
+//CHECKBOX FOR FILTERS - SMALL CHECKBOXES IN MENUS AND HEADER - EXTENDED FROM btn-FILTER
 
 .checkbox-filter__container {
   width: auto;
@@ -101,7 +101,7 @@ $checkbox-color-gray-border: $color-gray-border;
 }
 
 .checkbox-filter__content {//se usa
-  @extend .button-filter;
+  @extend .btn-filter;
 
   color: $checkbox-color-text;
   transition: background 0.2s;

@@ -19,7 +19,7 @@
    align-items: center;
    width: auto;
    position: relative;
-   
+
    top : 30vh;
    z-index: 500000000
 
@@ -27,7 +27,7 @@
  &__content {
    font-family: inherit;
    font-weight: bold;
-   padding: $button-padding $button-padding;
+   padding: 0 0 ;
    min-width: fit-content;
    background-color: transparent;
    position: relative;

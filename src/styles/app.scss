@@ -1,4 +1,3 @@
-components@import 'mixins/_rem';
 
 // variables
 @import "variables/colors";
@@ -12,13 +11,8 @@ components@import 'mixins/_rem';
 @import "variables/grid";
 @import "variables/z-index";
 @import "variables/animations";
-@import "variables/reset";
+@import "reset";
 
-
-@import "base/common";
-
-// Dashboard (skin for list of componentss and layouts)
-@import "skin/dashboard";
 
 //////////// COMPONENTS
 
@@ -28,8 +22,14 @@ components@import 'mixins/_rem';
 @import "components/avatar";
 @import "components/hashtag";
 @import "components/text-style";
+@import "components/btn-animation";
+@import "components/error-message";
+@import "components/button-icon";
+@import "components/chat-bar";
+@import "components/message";
 
 // componentss (form)
+@import "components/forms";
 @import "components/label";
 @import "components/btn";
 @import "components/textarea";
@@ -37,66 +37,51 @@ components@import 'mixins/_rem';
 @import "components/checkbox-circle";
 @import "components/dropdown";
 
+///////////layouts
 
-///////////LAYOUT
-
-// layout (general)
-@import "layout/header";
-@import "layout/_component-header";
-@import "layout/card-button";
-@import "layout/card-notification";
-@import "layout/promise-button";
-@import "layout/_buttons-filters";
-@import "layout/loading-overlay";
-@import "layout/button-file";
-@import "layout/trending-tags";
-@import "layout/button-new-location-inserted";
-@import "layout/button-new-date-inserted";
-@import "layout/button-new-activate";
-@import "layout/button-new-share";
-@import "layout/login-component";
-@import "layout/create-net-component";
-@import "layout/info-overlay";
-@import "layout/register-component";
-@import "layout/message-component";
-@import "layout/button-icon";
-@import "layout/search-topbar";
-@import "layout/error-message";
-@import "layout/ember-power-calendar-overwrite";
-@import "layout/time-picker";
-@import "layout/net-picker";
-@import "layout/chat-messages";
-@import "layout/card-btn";
-@import "layout/btn-animation";
-@import "layout/card-chat";
-@import "layout/nav-bottom";
-@import "layout/nav-header";
-@import "layout/home-search";
-// @import "layout/profile-search";
-@import "layout/popup";
-@import "layout/menuselect";
-
-
-// layouts (comments)
-@import "layout/comments-bar";
-@import "layout/comments-message";
-@import "layout/card-profile";
-@import "components/forms";
+// layouts (general)
+@import "layouts/header";
+@import "layouts/card-button";
+@import "layouts/card-notification";
+@import "layouts/_buttons-filters";
+@import "layouts/loading-overlay";
+@import "layouts/trending-tags";
+@import "layouts/button-new-location";
+@import "layouts/button-new-date";
+@import "layouts/button-new-share";
+@import "layouts/create-net-component";
+@import "layouts/home-info-overlay";
+@import "layouts/register-component";
+@import "layouts/home-search";
+@import "layouts/time-picker";
+@import "layouts/net-picker";
+@import "layouts/chat";
+@import "layouts/card-button-list";
+@import "layouts/card-chat";
+@import "layouts/nav-bottom";
+@import "layouts/nav-header";
+@import "layouts/home-search";
+// @import "layouts/profile-search";
+@import "layouts/popup";
+@import "layouts/menuselect";
+@import "layouts/card-profile";
 
 
 // pages
-@import "pages/application";
-@import "pages/search-map";
 @import "pages/index/index";
-@import "pages/index/list";
+@import "pages/index/button-list";
+@import "pages/index/search-map";
+
 @import "pages/profile-buttons";
 @import "pages/chats";
 @import "pages/login";
 @import "pages/register";
 @import "pages/recovery";
 @import "pages/profile-edition";
-@import "pages/others";
+@import "pages/faqs";
 @import "pages/button-net";
+@import "pages/button-file";
+
 
 
 html, body {

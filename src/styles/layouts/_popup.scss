@@ -4,6 +4,7 @@ $popup-max-width: 540px;
 $popup-content-height: calc( 100vh - #{$popup-header-height });
 $popup-header-lateral: calc( 100% / 2 - #{$popup-max-width} / 2 );
 $popup-header-width: 100%;
+$popup-header-icon-width: 20px;
 $popup__img-height: 200px;
 $popup-comments: 24px;
 $popup-paragraph-padding: 1rem 2rem;
@@ -55,7 +56,7 @@ body {
 
 
 .popup__header-center {//se usa
-  flex: 0 1 $header-center-width;
+  flex: 0 1 $popup-header-width;
   text-align: center;
   padding: 0 rem(10px);
 
@@ -67,7 +68,7 @@ body {
 }
 
 .popup__header-nav {//se usa
-  flex: 0 1 $header-nav-width;
+  flex: 0 1 $popup-header-width;
   text-align: center;
 }
 
@@ -97,7 +98,7 @@ body {
   }
 
   .icon {
-    width: $header-nav-icon-width;
+    width: $popup-header-icon-width;
     height: auto;
     max-height: 25px;
   }

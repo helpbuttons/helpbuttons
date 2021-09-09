@@ -123,7 +123,7 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__submenu {
-  background: transparent url('svg/icons/down.svg') center no-repeat;
+  background: transparent url('../../public/assets/svg/icons/down.svg') center no-repeat;
   background-size: 100%;
   height: 100%;
   position: relative;
@@ -199,12 +199,12 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__local {
-  background: transparent url('svg/icons/place.svg') left center no-repeat;
+  background: transparent url('../../public/assets/svg/icons/place.svg') left center no-repeat;
   background-size: auto $card-button-situation-background-size;
 }
 
 .card-button__time {
-  background: transparent url('svg/icons/time.svg') left center no-repeat;
+  background: transparent url('../../public/assets/svg/icons/time.svg') left center no-repeat;
   background-size: $card-button-situation-background-size;
   margin-left: 1rem;
 }
@@ -436,12 +436,12 @@ $card-button-border-height: $border-general-height;
 
 .card-button__city:before,
 .card-button__city-list:before {
-  background: transparent url('svg/icons/icon-map.svg') left center no-repeat;
+  background: transparent url('../../public/assets/svg/icons/icon-map.svg') left center no-repeat;
   background-size: 100% auto;
 }
 
 .card-button__date:before {
-  background: transparent url('svg/icons/time_black.svg') left center no-repeat;
+  background: transparent url('../../public/assets/svg/icons/time_black.svg') left center no-repeat;
   background-size: 100% auto;
 }
 
