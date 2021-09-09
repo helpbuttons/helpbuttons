@@ -18,12 +18,15 @@ describe('templateButtonController (integration)', () => {
     const res = await client.post('/template-button/new').send({
       "name": "repartidor",
       "type": "offer",
-      "fields": [
-        {"name": "position","displayName": "Posicion de partida:",  "type": "geoCode"},
-        {"name": "availableTimes","displayName" : "Horas/Dias disponibles:","type": "recurrentTime"},
-        {"name": "maximumRadiusKm","displayName": "Maximo de deslocacion (km)", "type": "number"},
-        {"name": "description","displayName": "Descricion e otras informaciones", "type": "string"},
-      ]
+      "fields": { 
+      "items" :
+        [
+          {"name": "position","displayName": "Posicion de partida:",  "type": "geoCode"},
+          {"name": "availableTimes","displayName" : "Horas/Dias disponibles:","type": "recurrentTime"},
+          {"name": "maximumRadiusKm","displayName": "Maximo de deslocacion (km)", "type": "number"},
+          {"name": "description","displayName": "Descricion e otras informaciones", "type": "string"},
+        ]
+      }
     }).expect(200);
     expect(res.body).to.containEql({
       id: 6,
