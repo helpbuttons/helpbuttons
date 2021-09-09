@@ -1,5 +1,5 @@
-import NetPicker from "../NetPicker";
-import styles from './header.module.scss'
+import NetPicker from "../../components/NetPicker";
+import styles from '../../pages/index.tsx'
 
 export default function Header() {
   return (

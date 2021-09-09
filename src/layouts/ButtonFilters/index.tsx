@@ -1,4 +1,4 @@
-import styles from "../../styles/layouts/_buttons-filters.scss";
+import styles from '../../pages/index.tsx'
 
 function Filters() {
   return <h1 className={styles.filters}>filters</h1>;

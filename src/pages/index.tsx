@@ -5,7 +5,7 @@ import Map from "../components/LeafletMap/index";
 import { Store } from "../store/Store";
 import Event from "../store/Event";
 
-import HomeHeader from "../layouts/Header";
+import Header from "../layouts/Header";
 import styles from "../styles/Home.module.scss";
 
 import HomeSearch from "../layouts/HomeSearch";
