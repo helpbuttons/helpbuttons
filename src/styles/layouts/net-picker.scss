@@ -1,0 +1,368 @@
+.net-picker__friend-net {
+
+  max-width: 100% !important;
+
+}
+
+.net-picker__userTag {
+
+  flex: 0.8;
+  max-width: 100% !important;
+  margin-right: 2rem;
+
+}
+
+.net-picker__selected {
+
+  border: 1px solid $color-black;
+
+}
+
+.net-picker__icon {
+
+  min-width: rem(25px);
+  height: rem(25px);
+  margin: rem(5px);
+
+}
+
+.net-picker__ignore {
+
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  border: none;
+  background: transparent;
+
+}
+
+
+
+.net-picker__dropdown-trigger {
+
+  text-align: center;
+  overflow-x: hidden;
+  padding-right: 8rem;
+  height: rem(48px);
+  padding: 0;
+  width: inherit;
+  border: none;
+  border-radius: 2rem;
+  background: white;
+  color: #343a40;
+  transition: all 0.2s ease-in-out;
+
+  & ul {
+
+    width: 100%;
+    display: flex;
+    height: auto;
+    width: 100% !important;
+    min-width: 0;
+    max-width: calc(100vw - 6.75rem);
+
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    cursor: pointer;
+    border: 0.125rem solid #343a40;
+    border-radius: $border-radius-circle;
+    background: #ffdd02;
+  }
+  &:active {
+    cursor: pointer;
+    border: 0.125rem solid #343a40;
+    border-radius: $border-radius-circle;
+    background: #ffdd02;
+  }
+
+  & > button {
+    all: none;
+    display: inline-flex;
+    padding: rem(12px) 1vw;
+    height: rem(48px);
+    border: 0.125rem solid #343a40;
+    border-radius: $border-radius-circle;
+  }
+
+  & span {
+    left: 0;
+    opacity: 0;
+  }
+
+  & input {
+    width: 0;
+  }
+
+  & li {
+    display: flex;
+    white-space: nowrap;
+
+    justify-content: flex-start;
+    font-size: $font-size-medium;
+    align-items: center;
+    margin: 0;
+    height: 100%;
+    overflow-x: hidden;
+    text-align: left;
+    width: 100%;
+    border: none;
+    background-color: $color-corporative;
+
+    & span {
+      background: transparent;
+      color: transparent;
+      display: none;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      position: absolute;
+    }
+    & span {
+      opacity: 1;
+      font-weight: bold;
+      background: transparent;
+      & > .button-counter {
+        display: none;
+      }
+    }
+  }
+}
+
+.net-picker__dropdown-trigger__triggerOpen {
+
+  & input {
+    width: 100% !important;
+    display: flex;
+    font-size: $font-size-medium !important;
+    margin: -1rem;
+    padding-left: 1.5rem;
+    height: 100%;
+  }
+
+  & ul {
+
+    display: flex;
+    height: 90%;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0.7 1 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    align-content: revert;
+
+  }
+
+  & li {
+
+    padding-right: rem(12px) !important;
+    width: auto !important;
+    text-overflow: ellipsis !important;
+    font-size: 0rem !important;
+    font-display: none;
+    background-color: $color-ligth-gray !important;
+    overflow: hidden;
+    height: 90%;
+    vertical-align: middle;
+
+  }
+
+  & span {
+
+    background: transparent;
+    overflow: hidden;
+    text-align: center;
+    font-size: $font-size-medium;
+    position: absolute;
+
+  }
+
+}
+
+.net-picker__dropdown-trigger__triggerClose {
+
+  & input {
+    width: rem(0px) !important;
+    padding: rem(0px) !important;
+    margin: rem(0px) !important;
+    display: none;
+  }
+
+}
+
+.net-picker__dropdown-content {
+
+    width: 100%;
+    margin-top: rem(10px);
+    text-align: center;
+    border: 1px solid $color-black;
+    max-height: rem(150px);
+    overflow-y: auto;
+
+}
+
+.net-picker__dropdown-option {
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  background: white;
+  border: unset;
+  border-radius: $border-radius-semicircle; //REVISE
+
+  & li {
+    display: flex;
+    justify-content: flex-start;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    align-items: center;
+    white-space: nowrap;
+    width: 100%;
+    flex: 1 1 0;
+    margin-left: 0;
+    height: rem(48px);
+    padding: 1.5rem 1rem; //revise
+    border-top: 1px solid $color-gray-border;
+    border-bottom: 1px solid $color-gray-border;
+
+    & svg {
+      min-width: rem(25px);
+      max-width: rem(25px);
+    }
+    &:hover {
+      & svg {
+        fill: $color-white;
+      }
+    }
+    &:focus {
+      & svg {
+        fill: $color-white;
+      }
+    }
+    // width: 100%;
+  }
+
+  & + .time-picker__dropdown-option {
+    border-top: rem(1px) solid $color-black;
+  }
+}
+
+.net-picker__create-new-button {
+
+  padding: 0 $padding-big;//Revise: de 16px a 18px
+  height: rem(46px);
+
+  & button {
+    color: $color-blue;
+    border: none;
+    background: transparent;
+    height: 100%;
+    &:hover {
+      color: $color-blue;
+      text-decoration: underline;
+    }
+  }
+
+  & span:hover {
+    cursor: pointer;
+    color: white;
+  }
+
+}
+
+////button creation andd usertag menu optionss menu options
+.net-picker__dropdown__white-background {
+
+  background-color: $color-white;
+
+  & li {
+    background-color: $color-ligth-gray;
+  }
+}
+
+
+.net-button-icon {
+
+  align-items: center;
+  display: flex;
+  padding: $padding-medium 2rem;
+  position: relative;
+
+  &--small {
+    padding: $padding-small 2rem;
+  }
+
+  &__header {
+    padding: rem(2px) 1vw;
+    height: rem(48px);
+  }
+
+  &__link:hover {
+    border-color: $color-corporative;
+    text-decoration: none;
+  }
+
+}
+
+.net-button-icon__icon {
+
+  height: auto;
+  transition: transform 0.2s;
+  width: rem(30px);
+
+  + .net-button-icon__text {
+    margin-left: 2rem;
+  }
+
+  & > .icon {
+    fill: $color-black;
+  }
+
+}
+
+.net-button-icon__text {
+
+  & + .net-button-icon__icon {
+    margin-left: rem(10px);
+  }
+
+}
+
+.net-button-icon--hover {
+
+  cursor: pointer;
+  background: #343a40;
+  color: #ffdd02;
+
+  & svg {
+    fill: #ffdd02;
+  }
+
+}
+
+@media #{$breakpoints-xxlarge} {
+
+  .net-picker__dropdown-trigger {
+    display: flex;
+    max-width: 14rem;
+    min-width: 14rem;
+    margin-left: 1rem;
+  }
+
+}

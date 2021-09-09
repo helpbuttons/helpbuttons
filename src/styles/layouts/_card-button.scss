@@ -1,0 +1,476 @@
+$card-button-background: $color-white;
+$card-button-border: 1px solid $color-ligth-gray;
+$card-button-box-shadow: $box-shadow-card;
+$card-button-busca-background: $color-red;
+$card-button-ofrece-background: $color-green;
+$card-button-paragraph-color: $color-gray;
+$card-button-margin-bottom: 1rem;
+$card-button-situation-background-size: 14px;
+$card-button__submenu-show-width: 120px;
+$card-button__submenu-show-left: calc( #{$card-button__submenu-show-width} / -2 );
+$card-button-size-icon-before: 18px;
+
+// convivences
+$card-button-whitespace: .5rem;
+$card-button-border-height: $border-general-height;
+
+.card-button {//se usa
+  background: $card-button-background;
+  border: $card-button-border;
+  box-shadow: $card-button-box-shadow;
+  position: relative;
+  margin-bottom: $card-button-margin-bottom;
+  border-radius: 0 0 $border-radius-basic  $border-radius-basic;
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.card-button--white {//se usa
+  background: $color-white;
+}
+
+.card-button {//se usa
+  &--intercambio-swap-deactivated,
+  &--intercambio-deactivated,
+  &--offer-deactivated,
+  &--need-deactivated {
+    opacity: 0.5;
+    background: grey;
+  }
+}
+
+.card-button--offer:after,
+.card-button--need:after,
+.card-button--intercambio:after,
+.card-button--intercambio:before,
+.card-button--intercambio-swap:after,
+.card-button--intercambio-swap:before {//se usa
+  content: '';
+  border-radius: 0;
+  display: inline-block;
+  height: $card-button-border-height;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.card-button--offer:after {//se usa
+  background: $color-green;
+}
+
+.card-button--need:after {//se usa
+  background: $color-red;
+}
+
+.card-button--intercambio:after,
+.card-button--intercambio:before {//se usa
+  width: 50%;
+}
+
+.card-button--intercambio-swap:after,
+.card-button--intercambio-swap:before {//se usa
+  width: 50%;
+}
+
+.card-button--intercambio:after {//se usa
+  background: $color-green;
+}
+
+.card-button--intercambio:before {//se usa
+  background: $color-red;
+  left: auto;
+  right: 0;
+}
+
+.card-button--intercambio-swap:after {//se usa
+  background: $color-red;
+}
+
+.card-button--intercambio-swap:before {//se usa
+  background: $color-green;
+  left: auto;
+  right: 0;
+}
+
+.card-button__content {//se usa
+  padding: 1rem;
+}
+
+.card-button__header {//se usa
+  display: flex;
+  flex-flow: row nowrap;
+  overflow-x: hidden;
+  justify-content: space-between;
+  padding-bottom: $card-button-whitespace;
+}
+
+.card-button__avatar {//se usa
+  flex: 0 1 15%;
+  & > button {
+    border: none;
+    background: none;
+    padding: 0;
+  }
+}
+
+.card-button__info {//se usa
+  flex: 0 1 80%;
+  width: 0rem;
+  padding-left: 1rem;
+  text-align: left;
+}
+
+.card-button__submenu {
+  background: transparent url('../../../public/assets/svg/icons/down.svg') center no-repeat;
+  background-size: 100%;
+  height: 100%;
+  position: relative;
+  text-indent: -9999999px;
+  width: 18px;
+}
+
+.card-button__submenu-show {
+  background: $color-corporative;
+  color: $color-red;
+  left: $card-button__submenu-show-left;
+  position: absolute;
+  width: $card-button__submenu-show-width;
+}
+
+
+.card-button__submenu-link {
+  color: $color-black;
+  display: block;
+  font-size: $font-size-general;
+  font-weight: bold;
+  padding: .25rem .5rem;
+  text-indent: 0;
+}
+
+.card-button__map-container {
+  border-radius: rem(5px) !important;
+}
+
+
+.card-button__calification {
+  color: $color-gray;
+  font-size: $font-size-general;
+}
+
+.card-button__status {//Se usa
+  color: $color-gray;
+  font-size: $font-size-general;
+  font-weight: bold;
+  &--offer {
+    color: $color-green;
+  }
+  &--need {
+    color: $color-red;
+  }
+}
+
+.card-button__name {//Se usa
+  font-size: $font-size-general;
+  text-overflow: ellipsis;
+  //overflow-x: hidden;
+  font-weight: bold;
+  padding-top: .25rem;
+}
+
+.card-button__title {
+  color: $color-gray;
+  font-size: $font-size-general;
+}
+
+.card-button__situation {
+  color: $color-gray;
+  display: flex;
+  font-size: $font-size-general;
+  font-weight: bold;
+  flex-flow: row nowrap;
+  padding: .5rem 0 $card-button-whitespace 0;
+}
+
+.card-button__local,
+.card-button__time {
+  padding-left: 1.5rem;
+}
+
+.card-button__local {
+  background: transparent url('../../../public/assets/svg/icons/place.svg') left center no-repeat;
+  background-size: auto $card-button-situation-background-size;
+}
+
+.card-button__time {
+  background: transparent url('../../../public/assets/svg/icons/time.svg') left center no-repeat;
+  background-size: $card-button-situation-background-size;
+  margin-left: 1rem;
+}
+
+.card-button__busca,
+.card-button__ofrece {//se usa
+  display: flex;
+  flex-flow: row wrap;
+  padding: .25rem 0 0 0;
+}
+
+.card-button__busca {//se usa
+  .hashtag {
+    background: $card-button-busca-background;
+    font-weight: bold;
+    &:hover {
+      color: $hashtag-hover-color;
+      background: $color-black;
+    }
+  }
+}
+
+.card-button__ofrece {//se usa
+  .hashtag {
+    background: $card-button-ofrece-background;
+    font-weight: bold;
+    &:hover {
+      color: $hashtag-hover-color;
+      background: $color-black;
+    }
+  }
+}
+
+.card-button__paragraph {//se usa
+  word-break: break-word;
+  color: $card-button-paragraph-color;
+  font-size: $font-size-general;
+  white-space: pre-line;
+  text-align: left;
+
+  & p {
+    margin-top: 0;//Revise
+  }
+
+  & a {
+    color: $color-blue;
+    cursor: pointer;
+  }
+}
+
+.card-button__phone {//se usa
+  word-break: break-word;
+  white-space: nowrap;
+}
+
+.card-button__nets{
+  padding: $card-button-whitespace 0;
+  display: flex;
+
+}
+
+.resume {
+  word-break: break-word;
+  color: $card-button-paragraph-color;
+  font-size: $font-size-general;
+  line-height: 0.9rem;
+  padding: 0.3 0;
+  text-align: left;
+}
+
+.card-button__picture {
+  width: 100%;
+  border-radius: $border-radius-basic;
+  & img {
+    border-radius: $border-radius-basic;
+  }
+}
+
+.card-button .avatar {
+  width: rem(70px);
+  height: rem(70px);
+}
+
+.card-button__edit-icon {
+  width: rem(30px);
+  height: rem(30px);
+}
+
+.card-button__dropdown-container {
+  background: none;
+  box-shadow: none;
+  max-width: rem(200px);
+  width: 100%;
+  z-index: 10002;
+}
+
+.card-button__dropdown-content {
+  background: $color-black;
+  border-radius: rem(2px);
+  height: 100%;
+  overflow-y: auto;
+  color: white;
+  padding-top: rem(10px);
+  padding-bottom: rem(10px);
+  & > a:hover {
+    text-decoration: none;
+  }
+}
+
+.card-button__dropdown-arrow {
+  width: 0;
+  height: 0;
+  border-left: rem(10px) solid transparent;
+  border-right: rem(10px) solid transparent;
+  border-bottom: rem(20px) solid $color-black;
+  margin-left: auto;
+  margin-right: rem(21px);
+}
+
+.card-button__trigger {
+  position: absolute;
+  right: 0;
+  padding-right: rem(15px);
+  &-button {
+    text-align: left;
+    background: none;
+    border: none;
+    color: white;
+  }
+
+}
+
+.card-button__trigger-options {
+  height: rem(35px);
+  border-radius: rem(1px);
+  width: 100%;
+  line-height: rem(35px);
+  padding-left: rem(25px);
+  &:hover {
+    background-color: #ACACAC;
+    color: $color-black;
+    cursor: pointer;
+  }
+  &:focus {
+    outline: none;
+  }
+  &-input {
+    line-height: rem(25px);
+    margin : rem(5px) 0;
+    border-radius: rem(10px);
+    padding-left: rem(25px);
+    border: none;
+    padding-right: rem(5px);
+    border-radius: rem(2px);
+    -webkit-appearance: none;
+    outline: none;
+  &--email {
+    padding-left: 4px;
+    width: 100%;
+    margin-left: -4px;
+  }
+  }
+}
+
+.card-button__city,
+.card-button__city-list,
+.card-button__date {
+  color: black;
+  font-size: $font-size-general;
+  font-weight: bold;
+  text-align: left;
+}
+
+.card-button__date {
+  text-indent: -29px;
+  padding-left: 44px;
+}
+
+.card-button__city {
+  cursor: pointer;
+  padding-right: 1rem;
+  text-decoration: underline;
+  text-align: left;
+  display: inline-block;
+}
+
+.card-button__city-list {
+  cursor: pointer;
+  padding-right: 1rem;
+  text-align: left;
+  display: inline-block;
+}
+
+.card-button__everywhere {
+  cursor: pointer;
+  padding-right: 1rem;
+  text-decoration: none;
+  text-align: left;
+  display: inline-block;
+}
+
+.card-button__toCity {
+  margin-left: rem(30px);
+  text-decoration: underline;
+}
+
+.card-button__toCity-list {
+  margin-left: rem(30px);
+}
+
+.card-button__close-map {
+  position: absolute;
+  z-index: 401;
+  right: 0;
+  padding: .5rem;
+}
+
+.card-button__city:before,
+.card-button__city-list:before,
+.card-button__date:before {
+  background: red;
+  content: '';
+  display: inline-block;
+  height: $card-button-size-icon-before;
+  margin-right: .5rem;
+  transform: translateY(.25rem);
+  width: $card-button-size-icon-before;
+}
+
+.card-button__city:before,
+.card-button__city-list:before {
+  background: transparent url('../../../public/assets/svg/icons/icon-map.svg') left center no-repeat;
+  background-size: 100% auto;
+}
+
+.card-button__date:before {
+  background: transparent url('../../../public/assets/svg/icons/time_black.svg') left center no-repeat;
+  background-size: 100% auto;
+}
+
+.card-button__avatar-container {//se usa
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  max-height: rem(70px);
+  max-width: rem(70px);
+  height: rem(70px);
+  width: rem(70px);
+  & .card-avatar {//se usa
+    width: auto;
+    height: 100%;
+  }
+}
+
+.card-button__map {
+  max-height: 45vh;
+  height: rem(500px);
+  border-radius: rem(5px);
+  & .leaflet-control-container {
+    display: none;
+  }
+}
+
+
+//revise nueva clase
+.card-buttons {
+  display: flex;
+}

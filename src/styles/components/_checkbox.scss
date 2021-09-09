@@ -1,0 +1,194 @@
+$checkbox-content-border: $border-general-height;
+$checkbox-filter-padding: 3rem;
+$checkbox-height: 58px;
+$checkbox-medium-height: 40px;
+$checkbox-border-radius: $border-radius-circle;
+$checkbox-color: $color-white;
+$checkbox-color-text: $color-black;
+$checkbox-color-text-hover: $color-white;
+$checkbox-color-hover: $color-gray;
+$checkbox-color-text-checked: $color-white;
+$checkbox-color-checked: $color-black;
+$checkbox-color-gray-border: $color-gray-border;
+
+.checkbox {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.checkbox__label {
+  display: block;
+  width: 100%;
+}
+
+.checkbox__netIcon {
+  width: fit-content;
+
+  &_icon {
+    height: fit-content !important;
+    width: fit-content !important;
+  }
+}
+
+//envelope class for checkboxes
+.checkbox__container {
+  width: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  height: $checkbox-height;
+  display: flex;
+  flex: 0 0 auto;
+
+  // flex: 1;
+  &:focus {
+    outline: none;
+  }
+}
+
+//class that includes checkbox STYLED content
+.checkbox__content {
+
+  align-items: center;
+  background: $checkbox-color;
+  border: $checkbox-content-border;
+  display: flex;
+  justify-content: center; //Revise
+  font-size: $font-size-medium;
+  position: relative;
+  height: $checkbox-height;
+  transition: background 0.2s;
+  width: 100%; //REVISE ESTE ES EL ANCHO DE FIGMA
+  color: $checkbox-color-text;
+  min-width: rem(150px);
+  border-radius: 42px;
+  box-sizing: border-box;
+
+}
+
+.checkbox__content--bordered {
+  border: 1px solid #e5e5e5;
+  border-radius: rem(5px);
+}
+
+.checkbox__content--disabled {
+  //revise
+  background: $color-ligth-gray;
+}
+
+
+//CHECKBOX FOR FILTERS - SMALL CHECKBOXES IN MENUS AND HEADER - EXTENDED FROM btn-FILTER
+
+.checkbox-filter__container {
+  width: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex: 0 0 auto;
+
+  // flex: 1;
+  &:focus {
+    outline: none;
+  }
+}
+
+.checkbox-filter__content {//se usa
+  @extend .btn-filter;
+
+  color: $checkbox-color-text;
+  transition: background 0.2s;
+
+  &--bordered {
+    border: 1px solid #e5e5e5;
+    border-radius: rem(5px);
+  }
+}
+
+.checkbox-filter__content:hover {//se usa
+  cursor: pointer;
+}
+
+///-- RREST OF CHECKBOX
+
+
+.checkbox__content:hover {
+  cursor: pointer;
+  background: $checkbox-color-hover;
+  color: $checkbox-color-text-hover !important;
+
+  & svg {
+    fill: $checkbox-color-text-hover;
+  }
+}
+
+.checkbox__icon {
+  height: 30px;
+  width: 30px;
+}
+
+.checkbox__text {
+  margin-bottom: 0;
+}
+
+///CLASS FOR CHECKBOX ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
+
+.checkbox__checkbox {
+  display: none;
+
+  &:checked + .checkbox__content {
+    background: $checkbox-color-checked;
+    background-size: 40px;
+    color: $checkbox-color-text-checked;
+    min-width: rem(150px);
+
+    .icon {
+      fill: $checkbox-color-text-hover;
+    }
+  }
+
+  &:checked + .profile-buttons__checkbox {
+    background: $checkbox-color-checked;
+    color: $checkbox-color-text-checked;
+    min-width: rem(150px);
+  }
+
+  &:checked + .checkbox__content::before {
+    background-size: 80%;
+  }
+}
+
+///CLASS FOR CHECKBOX-FILTER ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
+
+.checkbox-filter__checkbox {
+  display: none;
+
+  &:checked + .checkbox-filter__content { //se usa
+    background: $checkbox-color-checked;
+    color: $checkbox-color-text-checked;
+
+    .icon {
+      fill: $checkbox-color-text-checked;
+    }
+  }
+
+  &:checked + .profile-buttons__checkbox {
+    background: $checkbox-color-checked;
+    color: $checkbox-color-text-checked;
+  }
+
+  &:checked + .checkbox__content::before {
+    background: transparent;
+  }
+}
+
+@media #{$breakpoints-xxlarge} {
+
+}
