@@ -102,7 +102,7 @@ $checkbox-circle-color-corporative: $color-corporative;
   }
 
   &:checked + .checkbox-circle__content::before {
-    background: transparent image-url('assets/../../public/assets/svg/icons/check.svg') center no-repeat;
+    background: transparent image-url('../../../public/assets/svg/icons/check.svg') center no-repeat;
     background-size: 80%;
   }
 }
