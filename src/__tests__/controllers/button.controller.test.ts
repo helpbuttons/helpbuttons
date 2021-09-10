@@ -67,7 +67,6 @@ describe('ButtonController (integration)', () => {
             longitude: 43.33,
             radius: 240,
             tags: ['Animales', 'Perritos', 'Adopcion'],
-            buttonsTemplate: [],
             role: 'admin'
           }
         ]);

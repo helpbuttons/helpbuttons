@@ -1,6 +1,9 @@
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Button} from './button.model';
+import {Network} from './network.model';
 import {TemplateButtonsTypes} from './enums';
+import { TemplateButtonNetwork } from './template-button-network.model';
+
 @model()
 export class TemplateButton extends Entity {
   @property({
@@ -32,6 +35,9 @@ export class TemplateButton extends Entity {
 
   @hasMany(() => Button)
   buttons: Button[];
+
+  @hasMany(() => Network, {through: {model: () => TemplateButtonNetwork}})
+  networks: Network[];
 
   constructor(data?: Partial<TemplateButton>) {
     super(data);

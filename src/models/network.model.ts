@@ -1,6 +1,8 @@
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Button} from './button.model';
 import {ButtonsNetwork} from './buttons-network.model';
+import { TemplateButtonNetwork } from './template-button-network.model';
+import {TemplateButton} from './template-button.model';
 
 @model()
 export class Network extends Entity {
@@ -64,17 +66,13 @@ export class Network extends Entity {
   })
   tags?: string[];
 
-  // TODO: this should be a relation with templates
-  @property({
-    type: 'array',
-    default: [],
-    itemType: 'string',
-  })
-  buttonsTemplate?: string[];
-
   @hasMany(() => Button, {through: {model: () => ButtonsNetwork}})
   buttons: Button[];
+
   // TODO this should be a relation with roles
+  @hasMany(() => TemplateButton, {through: {model: () => TemplateButtonNetwork}})
+  templateButtons: TemplateButton[];
+
   @property({
     type: 'string',
     default: 'admin'

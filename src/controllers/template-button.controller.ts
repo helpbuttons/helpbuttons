@@ -14,12 +14,14 @@ import {
   response,
 } from '@loopback/rest';
 import {TemplateButton} from '../models';
-import {TemplateButtonRepository} from '../repositories';
+import {NetworkRepository, TemplateButtonRepository} from '../repositories';
 
 export class TemplateButtonController {
   constructor(
     @repository(TemplateButtonRepository)
     public templateButtonRepository : TemplateButtonRepository,
+    @repository(NetworkRepository)
+    public networkRepository : NetworkRepository,
   ) {}
 
   @post('/template-buttons/new')
@@ -142,5 +144,27 @@ export class TemplateButtonController {
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.templateButtonRepository.deleteById(id);
+  }
+
+  @post('/template-buttons/addToNetworks', {
+    responses: {
+      '200': {
+        description: 'Add a template button to networks',
+        content: {},
+      },
+    },
+  })
+  async addToNetworks(
+    @param.query.number('templateButtonId') id: typeof TemplateButton.prototype.id,
+    @param.query.string('networks') networks: string,
+  ): Promise<object> {
+    const networkIds: Array<number> = JSON.parse(networks);
+    return Promise.all(
+      networkIds.map((networkId) => {
+        return this.networkRepository.templateButtons(networkId).link(id).then(() => {
+          return 'Added button ' + id + ' to network ' + networkId;
+        });
+      })
+    )
   }
 }
