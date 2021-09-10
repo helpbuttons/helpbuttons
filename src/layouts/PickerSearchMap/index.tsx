@@ -1,8 +1,10 @@
-///list of buttons
-import styles from '../styles/layouts/ButtonList'
-
-function Posts() {
-  return <h1 className={styles.posts}>Posts</h1>;
+function PickerSearchMap() {
+  return (
+    <div>
+      <h2>Buscador</h2>
+      <input type="text" />
+    </div>
+  );
 }
 
-export default Posts;
+export default PickerSearchMap;

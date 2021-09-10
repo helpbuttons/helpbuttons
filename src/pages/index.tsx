@@ -3,17 +3,17 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Map from "../components/LeafletMap/index";
 import { Store } from "../store/Store";
-import Event from "../store/Event";
+import { Event } from "../store/Event";
 
-import Header from "../layouts/Header";
 import styles from "../styles/Home.module.scss";
 
-import HomeSearch from "../layouts/HomeSearch";
-import ButtonList from "../layouts/ButtonList";
-import ButtonFilters from "../layouts/ButtonFilters";
+//    Components
+import HeaderDesktop from "../layouts/HeaderDesktop";
+import Filters from "../layouts/Filters";
+import Posts from "../layouts/Posts";
+
 
 import ButtonDataService from "services/Buttons";
-
 // https://immerjs.github.io/immer/
 // Para simplificar la modificación de estructuras de datos
 // al estilo "immutable objects"
@@ -38,11 +38,10 @@ export const store = new Store({
 const Home: NextPage = () => {
   return (
     <>
-      <Header />
-      <div style={{ position: 'absolute', zIndex: 1000 }}>
-        <HomeSearch />
-        <ButtonFilters />
-        <ButtonList />
+      <HeaderDesktop />
+      <div>
+        <Filters />
+        <Posts /> 
       </div>
       <Map />
     </>

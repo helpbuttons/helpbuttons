@@ -1,27 +1,12 @@
-import NetPicker from "../../components/NetPicker";
-import styles from '../../pages/index.tsx'
+//    Components
+import NavHeader from "../../layouts/NavHeader";
+import HeaderInfoOverlay from "../HeaderInfoOverlay";
 
-export default function Header() {
+export default function HeaderDesktop() {
   return (
-    <header className={styles.header}>
-      <div className={styles.header__logoContainer}>
-        <a className={styles.header__logo} href="#!">Logo</a>
-        <span>Nombre de Red</span>
-        <span>Descripción de Red</span>
-      </div>
-      <nav className={styles.header__nav}>
-        <ul>
-          <li>
-            <a href="">Añadir Boton</a>
-          </li>
-          <li>
-            <a href="">Perfil</a>
-          </li>
-          <li>
-            <NetPicker />
-          </li>
-        </ul>
-      </nav>
+    <header >
+      <HeaderInfoOverlay/>
+      <NavHeader /> 
     </header>
   );
 }
