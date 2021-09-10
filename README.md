@@ -18,7 +18,7 @@ npm run migrate
 npm start
 ```
 
-Open http://127.0.0.1:3000 in your browser.
+Open http://127.0.0.1:3001 in your browser.
 
 ### run the application in watchmode
 ```sh
