@@ -2,7 +2,7 @@ import {
   // Count,
   // CountSchema,
   Filter,
-  // FilterExcludingWhere,
+  FilterExcludingWhere,
   repository,
   // Where,
 } from '@loopback/repository';
@@ -18,14 +18,16 @@ import {
   response,
 } from '@loopback/rest';
 import {Button, Network} from '../models';
-import {ButtonRepository, NetworkRepository} from '../repositories';
+import {ButtonRepository, NetworkRepository, TemplateButtonRepository} from '../repositories';
 
 export class ButtonController {
   constructor(
     @repository(ButtonRepository)
     public buttonRepository : ButtonRepository,
     @repository(NetworkRepository)
-    public networkRepository : NetworkRepository
+    public networkRepository : NetworkRepository,
+    @repository(TemplateButtonRepository)
+    public templateButtonRepository : TemplateButtonRepository
   ) {}
 
   @post('/buttons/new', {
@@ -37,7 +39,7 @@ export class ButtonController {
     },
   })
   async create(
-    @param.query.number('networkId') id: typeof Network.prototype.id,
+    @param.query.number('networkId') networkId: typeof Network.prototype.id,
     @requestBody({
       content: {
         'application/json': {
@@ -49,7 +51,7 @@ export class ButtonController {
       },
     }) button: Omit<Button, 'id'>,
   ): Promise<Button> {
-    return this.networkRepository.buttons(id).create(button);
+    return this.networkRepository.buttons(networkId).create(button);
   }
   
   @post('/buttons/addToNetworks', {
@@ -121,8 +123,8 @@ export class ButtonController {
   ): Promise<Count> {
     return this.buttonRepository.updateAll(button, where);
   }
-
-  @get('/buttons/{id}')
+*/
+  @get('/buttons/findById/{id}')
   @response(200, {
     description: 'Button model instance',
     content: {
@@ -137,7 +139,7 @@ export class ButtonController {
   ): Promise<Button> {
     return this.buttonRepository.findById(id, filter);
   }
-*/
+
   @patch('/buttons/edit/{id}')
   @response(204, {
     description: 'Button PATCH success',

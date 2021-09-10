@@ -1,6 +1,6 @@
 import {
   Filter,
-  // FilterExcludingWhere,
+  FilterExcludingWhere,
   repository,
 } from '@loopback/repository';
 import {
@@ -60,8 +60,8 @@ export class NetworkController {
   ): Promise<Network[]> {
     return this.networkRepository.find(filter);
   }
-/*
-  @get('/networks/{id}')
+
+  @get('/networks/findById/{id}')
   @response(200, {
     description: 'Network model instance',
     content: {
@@ -76,7 +76,7 @@ export class NetworkController {
   ): Promise<Network> {
     return this.networkRepository.findById(id, filter);
   }
-*/
+
   @patch('/networks/edit/{id}')
   @response(204, {
     description: 'Network PATCH success',

@@ -44,7 +44,6 @@ describe('NetworkController (integration)', () => {
         "Perritos",
         "Adopcion"
       ],
-      "buttonsTemplate": [], //array of objects, each type has an int, a name and a color associated. Default are offer (green), need (red).
       "role": "admin", //enum {admin, user, blocked}
     });
   });
@@ -102,7 +101,6 @@ describe('NetworkController (integration)', () => {
           longitude: 43.33,
           radius: 240,
           tags: ['Animales', 'Perritos', 'Adopcion'],
-          buttonsTemplate: [],
           role: 'admin',
           buttons: [
             {
@@ -140,7 +138,6 @@ describe('NetworkController (integration)', () => {
           longitude: 43.33,
           radius: 240,
           tags: ['Animales', 'Perritos', 'Adopcion'],
-          buttonsTemplate: [],
           role: 'admin'
         }]
       );

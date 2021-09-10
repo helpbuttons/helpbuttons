@@ -1,3 +1,4 @@
+import { generateUniqueId } from '@loopback/context';
 import { Client, expect } from '@loopback/testlab';
 import { HelpbuttonsBackendApp } from '../..';
 import { setupApplication } from '../helpers/test-helper';
@@ -13,7 +14,7 @@ describe('ButtonController (integration)', () => {
     await app.stop();
   });
 
-  it('/buttons/new bra', async () => {
+  it('/buttons/new', async () => {
     const res = await client.post('/buttons/new').query({ networkId: 4 }).send({
       "name": "button name",
       "type": "exchange",
@@ -38,7 +39,7 @@ describe('ButtonController (integration)', () => {
   describe('/buttons/find', () => {
 
 
-    before('add networks', async () => {
+    before('add buttons', async () => {
       await client.post('/buttons/new').query({ networkId: 3 }).send({
         "name": "button name",
         "type": "exchange",
@@ -65,8 +66,7 @@ describe('ButtonController (integration)', () => {
             latitude: 43.33,
             longitude: 43.33,
             radius: 240,
-            tags: [ 'Animales', 'Perritos', 'Adopcion' ],
-            buttonsTemplate: [],
+            tags: ['Animales', 'Perritos', 'Adopcion'],
             role: 'admin'
           }
         ]);
@@ -79,10 +79,71 @@ describe('ButtonController (integration)', () => {
     });
 
     it('/buttons/find get button with id=1', async () => {
-      const resFilterOne = await client.get('/buttons/find').query({ filter: '{"where": {"id":1}}'}).expect(200);
+      const resFilterOne = await client.get('/buttons/find').query({ filter: '{"where": {"id":1}}' }).expect(200);
       expect(resFilterOne.body[0].id).to.equal(1);
     });
-    
+
+  });
+
+  it('/buttons/findById get button with id=1', async () => {
+    const resFilterOne = await client.get('/buttons/findById/1').expect(200);
+    expect(resFilterOne.body).to.deepEqual({
+      id: 1,
+      name: 'button name',
+      type: 'exchange',
+      tags: ['onetag'],
+      description: 'description of da button',
+      latitude: 3.12321321,
+      longitude: 5.32421321
+    });
+  });
+
+
+  it('/buttons/edit/1', async () => {
+    const restFindByIdPrev = await client.get('/buttons/findById/1').expect(200);
+    expect(restFindByIdPrev.body).to.deepEqual({
+      id: 1,
+      name: 'button name',
+      type: 'exchange',
+      tags: ['onetag'],
+      description: 'description of da button',
+      latitude: 3.12321321,
+      longitude: 5.32421321
+    });
+
+    const newName = generateUniqueId();
+    await client.patch('/buttons/edit/1').send({ "name": newName }).expect(204);
+
+    const resFindByIdAfter = await client.get('/buttons/findById/1').expect(200);
+    expect(resFindByIdAfter.body).to.deepEqual({
+      id: 1,
+      name: newName,
+      type: 'exchange',
+      tags: ['onetag'],
+      description: 'description of da button',
+      latitude: 3.12321321,
+      longitude: 5.32421321
+    });
+    await client.patch('/buttons/edit/1').send({ "name": "button name" }).expect(204);
+  });
+
+  describe('/buttons/delete', () => {
+    it('/buttons/delete/{id}', async () => {
+      const restFindByIdPrev = await client.get('/buttons/findById/3').expect(200);
+    expect(restFindByIdPrev.body).to.deepEqual({
+      id: 3,
+      name: 'button name',
+      type: 'exchange',
+      tags: ['onetag'],
+      description: 'description of da button',
+      latitude: 3.12321321,
+      longitude: 5.32421321
+    });
+
+    await client.delete('/buttons/delete/3').expect(204);
+
+    await client.get('/buttons/findById/3').expect(404);
+    });
   });
 
   describe('/buttons/addToNetworks/{buttonId}', () => {
@@ -96,5 +157,4 @@ describe('ButtonController (integration)', () => {
       expect(res2.body[0].networks.length).to.equal(3);
     });
   });
-
 });
