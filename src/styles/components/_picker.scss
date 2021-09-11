@@ -1,24 +1,24 @@
-$menuselect-background: rgba(0,0,0,.2);
-$menuselect-header-height: 80px;
-$menuselect-max-width: 480px;
-$menuselect-border-radius: 25px;
-$menuselect-width: 240px;
-$menuselect-content-height: calc( 100vh - #{$menuselect-header-height });
-$menuselect-header-lateral: calc( 100% / 2 - #{$menuselect-max-width} / 2 );
-$menuselect-header-width: 100%;
-$menuselect-comments: 24px;
-$menuselect-padding: 2rem;
-$menuselect-paragraph-padding: 1rem 2rem;
-$menuselect-max-height-large: 720px;
-$menuselect-cualquircosa: red;
-$menuselect-comments-item-padding: 25px;
+$picker-background: rgba(0,0,0,.2);
+$picker-header-height: 80px;
+$picker-max-width: 480px;
+$picker-border-radius: 25px;
+$picker-width: 240px;
+$picker-content-height: calc( 100vh - #{$picker-header-height });
+$picker-header-lateral: calc( 100% / 2 - #{$picker-max-width} / 2 );
+$picker-header-width: 100%;
+$picker-comments: 24px;
+$picker-padding: 2rem;
+$picker-paragraph-padding: 1rem 2rem;
+$picker-max-height-large: 720px;
+$picker-cualquircosa: red;
+$picker-comments-item-padding: 25px;
 
 body {
   overflow-y: scroll; //Revise: Bienvenido Scroll
 }
 
-.menuselect {
-  // Scroll menuselect content
+.picker {
+  // Scroll picker content
   overflow-y: auto;
   overflow-x: hidden;
   height: 100vh;
@@ -27,12 +27,12 @@ body {
 
   // Header Top Content Bottom
   display: flex;
-  width: $menuselect-width;
+  width: $picker-width;
   flex-flow: column;
   justify-content: space-between;
 }
 
-.menuselect__overlay {
+.picker__overlay {
 
   width: 100vw;
   height: 100vh;
@@ -47,7 +47,7 @@ body {
 }
 
 
-.menuselect__content {
+.picker__content {
 
   position: relative;
   overflow: auto;
@@ -61,7 +61,7 @@ body {
 
 }
 
-.menuselect__dropdown {
+.picker__dropdown {
 
   position: relative;
   overflow: auto;
@@ -101,9 +101,9 @@ body {
 
 }
 
-.menuselect__dropdown--home {
+.picker__dropdown--home {
 
-  @extend .menuselect__dropdown;
+  @extend .picker__dropdown;
 
   top:0 !important;
   left: 0 !important;
@@ -126,11 +126,11 @@ body {
 
 }
 
-.menuselect__dropdown::-webkit-scrollbar {
+.picker__dropdown::-webkit-scrollbar {
   display: none;
 }
 
-.menuselect__dropdown--row {
+.picker__dropdown--row {
 
   display: flex;
   flex-direction: row;
@@ -139,14 +139,14 @@ body {
 
 }
 
-.menuselect__dropdown--concept {
+.picker__dropdown--concept {
 
   font-weight: $font-weight-bold;
 
 }
 
 //REVISE NAMING DE LA CLASE
-.menuselect__display {
+.picker__display {
 
   display: flex;
   justify-content:space-between;
@@ -155,7 +155,7 @@ body {
 
 //MEENUSELECT LISTA DE ICONOS EN COLUMNAS DE 3
 
-.menuselect__list-elem {
+.picker__list-elem {
 
   width: 70px;
   height: 70px;
@@ -173,30 +173,30 @@ body {
 
 }
 
-.menuselect__list-elem--icon {
+.picker__list-elem--icon {
 
   width: fit-content;
 
 }
 
 //REVISE NAMING DE LA CLASE
-.menuselect__tags {
+.picker__tags {
 
   width: 100%;
 
 }
 
-.menuselect__section {
+.picker__section {
 
   padding: 1rem;
 
 }
 
-.menuselect-box-shadow {//REVISE
+.picker-box-shadow {//REVISE
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-.menuselect__header {
+.picker__header {
   width: 100%;
 
   font-size: $font-size-medium;
@@ -204,7 +204,7 @@ body {
   text-align: center;
 }
 
-.menuselect__left-title {
+.picker__left-title {
   width: 100%;
   padding: $padding-medium;
 
@@ -216,14 +216,14 @@ body {
 }
 
 // contents
-.menuselect__paragraph {
+.picker__paragraph {
 
   font-size: $font-size-general;
   line-height: 1.5rem;
-  padding: $menuselect-paragraph-padding;
+  padding: $picker-paragraph-padding;
 }
 
-.menuselect__img {
+.picker__img {
   height: 200px;
 
   svg {
@@ -239,11 +239,11 @@ body {
   }
 }
 
-.menuselect__close-container {
+.picker__close-container {
   width: 100%;
 }
 
-.menuselect__close-overlay {
+.picker__close-overlay {
   height: 100vh;
   position: absolute;
   top: 0;
@@ -255,25 +255,25 @@ body {
   padding: 0;
 }
 
-.menuselect__comments,
-.menuselect__options-v,
-.menuselect__options-h {
+.picker__comments,
+.picker__options-v,
+.picker__options-h {
   display: flex; // Static components
 }
 
-.menuselect__comments {
-  padding: $menuselect-comments;
+.picker__comments {
+  padding: $picker-comments;
   overflow-y: auto;
   max-height: 300px;
 }
 
-.menuselects__comments-item {
+.pickers__comments-item {
   background: $color-ligth-gray;
   margin: 8px 0;
-  padding: $menuselect-comments-item-padding 0;
+  padding: $picker-comments-item-padding 0;
 }
 
-.menuselect__options-btn {//se usa
+.picker__options-btn {//se usa
 
   display: inline-block;
   text-align: center;
@@ -295,7 +295,7 @@ body {
   }
 }
 
-.menuselect__options-btn--icon {
+.picker__options-btn--icon {
   height: 20px;
   
   & svg{
@@ -304,7 +304,7 @@ body {
   }
 }
 
-.menuselect__options-title {
+.picker__options-title {
   display: inline-block;
   background: $color-ligth-gray;
 
@@ -315,31 +315,31 @@ body {
   line-height: 1.5rem;
   width: 100%;
   vertical-align: middle;
-  padding: $menuselect-paragraph-padding;
+  padding: $picker-paragraph-padding;
   height: auto;
 }
 
-.menuselect__options-v {
+.picker__options-v {
   flex-flow: column nowrap;
 }
 
-.menuselect__options-h {//se usa
+.picker__options-h {//se usa
   flex-flow: row nowrap;
   justify-content: space-between;
 
-  .menuselect__options-btn {
+  .picker__options-btn {
     flex: 0 1 50%;
   }
 }
 
-//Estilos a los botones del menuselect Revise
-.menuselect__option-btn {//revise
+//Estilos a los botones del picker Revise
+.picker__option-btn {//revise
   height: 60px;
   background: transparent;
   border: none;
   text-align: initial;
   border-bottom: 1px solid $color-gray-border;//Revise este color ahora es una variable
-  padding: 0 $menuselect-padding;//revise este padding puede ir en el txt
+  padding: 0 $picker-padding;//revise este padding puede ir en el txt
   cursor: pointer;
 
   &:last-child {
@@ -351,17 +351,17 @@ body {
   }
 }
 
-.menuselect__option-btn--active {
-  @extend .menuselect__option-btn;
+.picker__option-btn--active {
+  @extend .picker__option-btn;
 }
 
-.menuselect__option-btn-with-icon {
-  @extend .menuselect__option-btn;
+.picker__option-btn-with-icon {
+  @extend .picker__option-btn;
 }
 
 
 //Revise
-.menuselect__themes {
+.picker__themes {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -376,7 +376,7 @@ body {
   width: 30%;
 }
 
-.menuselect__themes-button {
+.picker__themes-button {
 
   border-radius: $border-radius-buttons;
   height: fit-content;
@@ -388,7 +388,7 @@ body {
 
 }
 
-.menuselect__themes-count {
+.picker__themes-count {
   width: 30%;
   text-align: end;
   font-weight: ligth;
@@ -398,8 +398,8 @@ body {
   display: flex;
 }
 
-//Revise: clase menuselect--over
-.menuselect--over {
+//Revise: clase picker--over
+.picker--over {
   position: absolute;
   width: 95%;
 
@@ -410,14 +410,14 @@ body {
 
 }
 
-.menuselect__content {//Revise
-  border-radius: $menuselect-border-radius !important;
+.picker__content {//Revise
+  border-radius: $picker-border-radius !important;
 }
 
 @media #{$breakpoints-medium} {
-  .menuselect {
+  .picker {
     margin: 0 auto;
-    max-width: $menuselect-max-width;//revise
+    max-width: $picker-max-width;//revise
     width: $grid-width;
 
     // Centering
@@ -427,17 +427,17 @@ body {
     background: transparent;
   }
 
-  .menuselect__header,
-  .menuselect__content {
+  .picker__header,
+  .picker__content {
     background: $color-white;
-    max-width: 600px;//revise voy a poner 600 px luego pasar a variable $menuselect-max-width
+    max-width: 600px;//revise voy a poner 600 px luego pasar a variable $picker-max-width
   }
 
-  .menuselect--over {
+  .picker--over {
     width: 500px;
   }
 
-  .menuselect__map--over{
+  .picker__map--over{
     position: absolute;
     top: 10%;
     width: 80%;

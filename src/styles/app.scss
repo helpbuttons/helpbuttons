@@ -11,6 +11,7 @@
 @import "variables/grid";
 @import "variables/z-index";
 @import "variables/animations";
+@import "variables/text-style";
 @import "reset";
 
 
@@ -21,7 +22,6 @@
 @import "components/image";
 @import "components/avatar";
 @import "components/hashtag";
-@import "components/text-style";
 @import "components/btn-animation";
 @import "components/error-message";
 @import "components/button-icon";
@@ -48,12 +48,12 @@
 @import "layouts/trending-tags";
 @import "layouts/button-new-location";
 @import "layouts/button-new-date";
-@import "layouts/button-new-share";
-@import "layouts/create-net-component";
-@import "layouts/home-info-overlay";
+@import "layouts/button-share";
+@import "layouts/popup-create-net";
+@import "layouts/_header-info-overlay";
 @import "layouts/register-component";
 @import "layouts/home-search";
-@import "layouts/time-picker";
+@import "layouts/picker-time";
 @import "layouts/net-picker";
 @import "layouts/chat";
 @import "layouts/card-button-list";
@@ -63,7 +63,7 @@
 @import "layouts/home-search";
 // @import "layouts/profile-search";
 @import "layouts/popup";
-@import "layouts/menuselect";
+@import "layouts/picker";
 @import "layouts/card-profile";
 
 

@@ -1,4 +1,4 @@
-//a variation of menuselect specific for time
+//a variation of picker specific for time
 import { useState } from "react";
 
 

@@ -27,7 +27,7 @@ $btn-border-radius-semicircle: $border-radius-semicircle;
 $btn-font-size-medium: $font-size-medium;
 
 
-//btn style used at the endd of poopups and menuselects
+//btn style used at the endd of poopups and pickers
 .btn-menu-white {
 
   background: transparent;
@@ -46,7 +46,7 @@ $btn-font-size-medium: $font-size-medium;
 
   }
 
-  &:hover {//REVISE MENUSELECT__OPTIONS-BTN YA TIENE ESTE HOVER SERIA BUENO DEBATIR, LO AGREGUE AQUI PORQUE ME PARECE MAS UN ESTILOS DEL BOTON, PERO SE PUEDE CREAR UN HOVER EN GENERAL CON ESTOS ESTILOS QUE SE COMPARTAN
+  &:hover {//REVISE picker__OPTIONS-BTN YA TIENE ESTE HOVER SERIA BUENO DEBATIR, LO AGREGUE AQUI PORQUE ME PARECE MAS UN ESTILOS DEL BOTON, PERO SE PUEDE CREAR UN HOVER EN GENERAL CON ESTOS ESTILOS QUE SE COMPARTAN
 
     fill: $color-corporative;
     border-color: $color-black;

@@ -1,10 +1,10 @@
-.net-picker__friend-net {
+.dropdown-nets__friend-net {
 
   max-width: 100% !important;
 
 }
 
-.net-picker__userTag {
+.dropdown-nets__userTag {
 
   flex: 0.8;
   max-width: 100% !important;
@@ -12,13 +12,13 @@
 
 }
 
-.net-picker__selected {
+.dropdown-nets__selected {
 
   border: 1px solid $color-black;
 
 }
 
-.net-picker__icon {
+.dropdown-nets__icon {
 
   min-width: rem(25px);
   height: rem(25px);
@@ -26,7 +26,7 @@
 
 }
 
-.net-picker__ignore {
+.dropdown-nets__ignore {
 
   background: none;
   color: inherit;
@@ -42,7 +42,7 @@
 
 
 
-.net-picker__dropdown-trigger {
+.dropdown-nets__dropdown-trigger {
 
   text-align: center;
   overflow-x: hidden;
@@ -139,7 +139,7 @@
   }
 }
 
-.net-picker__dropdown-trigger__triggerOpen {
+.dropdown-nets__dropdown-trigger__triggerOpen {
 
   & input {
     width: 100% !important;
@@ -196,7 +196,7 @@
 
 }
 
-.net-picker__dropdown-trigger__triggerClose {
+.dropdown-nets__dropdown-trigger__triggerClose {
 
   & input {
     width: rem(0px) !important;
@@ -207,7 +207,7 @@
 
 }
 
-.net-picker__dropdown-content {
+.dropdown-nets__dropdown-content {
 
     width: 100%;
     margin-top: rem(10px);
@@ -218,7 +218,7 @@
 
 }
 
-.net-picker__dropdown-option {
+.dropdown-nets__dropdown-option {
   display: block;
   cursor: pointer;
   width: 100%;
@@ -258,12 +258,12 @@
     // width: 100%;
   }
 
-  & + .time-picker__dropdown-option {
+  & + .picker-time__dropdown-option {
     border-top: rem(1px) solid $color-black;
   }
 }
 
-.net-picker__create-new-button {
+.dropdown-nets__create-new-button {
 
   padding: 0 $padding-big;//Revise: de 16px a 18px
   height: rem(46px);
@@ -287,7 +287,7 @@
 }
 
 ////button creation andd usertag menu optionss menu options
-.net-picker__dropdown__white-background {
+.dropdown-nets__dropdown__white-background {
 
   background-color: $color-white;
 
@@ -297,68 +297,9 @@
 }
 
 
-.net-button-icon {
-
-  align-items: center;
-  display: flex;
-  padding: $padding-medium 2rem;
-  position: relative;
-
-  &--small {
-    padding: $padding-small 2rem;
-  }
-
-  &__header {
-    padding: rem(2px) 1vw;
-    height: rem(48px);
-  }
-
-  &__link:hover {
-    border-color: $color-corporative;
-    text-decoration: none;
-  }
-
-}
-
-.net-button-icon__icon {
-
-  height: auto;
-  transition: transform 0.2s;
-  width: rem(30px);
-
-  + .net-button-icon__text {
-    margin-left: 2rem;
-  }
-
-  & > .icon {
-    fill: $color-black;
-  }
-
-}
-
-.net-button-icon__text {
-
-  & + .net-button-icon__icon {
-    margin-left: rem(10px);
-  }
-
-}
-
-.net-button-icon--hover {
-
-  cursor: pointer;
-  background: #343a40;
-  color: #ffdd02;
-
-  & svg {
-    fill: #ffdd02;
-  }
-
-}
-
 @media #{$breakpoints-xxlarge} {
 
-  .net-picker__dropdown-trigger {
+  .dropdown-nets__dropdown-trigger {
     display: flex;
     max-width: 14rem;
     min-width: 14rem;

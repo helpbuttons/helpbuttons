@@ -77,7 +77,7 @@
         color: white;
       }
 
-      & + .time-picker__dropdown-option {
+      & + .picker-time__dropdown-option {
         border-top: rem(1px) solid $color-black;
       }
     }

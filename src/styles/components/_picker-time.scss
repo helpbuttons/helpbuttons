@@ -1,6 +1,6 @@
-$time-picker-height: 40px;
+$picker-time-height: 40px;
 
-.time-picker__selected {//se usa
+.picker-time__selected {//se usa
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,16 +9,16 @@ $time-picker-height: 40px;
   width: 250px;
 }
 
-.time-picker__dropdown {//se usa
+.picker-time__dropdown {//se usa
   padding: $padding-medium $padding-big;
   border-radius: 25px;
   border: 1px solid $color-gray;
 
-  height: $time-picker-height;
+  height: $picker-time-height;
 
 }
 
-.time-picker__dropdown-trigger{//se usa
+.picker-time__dropdown-trigger{//se usa
   cursor: pointer;
   border: none;
   background-color: transparent;
@@ -27,7 +27,7 @@ $time-picker-height: 40px;
   text-align: center;
 }
 
-.time-picker__dropdown-content{//se usa
+.picker-time__dropdown-content{//se usa
   border: 1px solid $color-gray;
   margin-top: 0.9rem;
   overflow: auto;
@@ -39,7 +39,7 @@ $time-picker-height: 40px;
   overflow-y: auto;
 }
 
-.time-picker__dropdown-option {//se usa
+.picker-time__dropdown-option {//se usa
   padding: $padding-medium 0;
   display: block;
   padding: rem(5px) 0;
@@ -53,24 +53,24 @@ $time-picker-height: 40px;
   }
 }
 
-.time-picker__dropdown-option + .time-picker__dropdown-option{//revise
+.picker-time__dropdown-option + .picker-time__dropdown-option{//revise
   border-top: 0.025rem solid $color-gray;
 
 }
 
-.time-picker__dropdown-content::-webkit-scrollbar:vertical {
+.picker-time__dropdown-content::-webkit-scrollbar:vertical {
   width: 0;
 }
 
-.time-picker__dropdown-content::-webkit-scrollbar {
+.picker-time__dropdown-content::-webkit-scrollbar {
   -webkit-appearance: none;
 }
 
-.time-picker__points {
+.picker-time__points {
   font-size: $font-size-general;
 }
 
-.time-picker__dropdown-content-gray { 
+.picker-time__dropdown-content-gray {
   background: #EEEE;
   border: none;
 }

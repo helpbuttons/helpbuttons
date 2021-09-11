@@ -1,4 +1,4 @@
-.button-new-share {
+.button-share {
   height: calc(100% - 48px);
   overflow-y: auto;
   margin-top: rem(48px);
@@ -131,7 +131,7 @@
 
 
 @media #{$breakpoints-medium} {
-  .button-new-share {
+  .button-share {
     height: calc(90vh - 48px);
     max-height: calc(700px - 48px);
     background: none;
