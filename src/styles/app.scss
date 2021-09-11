@@ -12,25 +12,30 @@
 @import "variables/z-index";
 @import "variables/animations";
 @import "variables/text-style";
+@import "variables/btn-animation";
+
 @import "reset";
 
 
 //////////// COMPONENTS
 
 // componentss (general)
-@import "components/icon";
+@import "components/elements/icon";
 @import "components/image";
 @import "components/avatar";
 @import "components/hashtag";
-@import "components/btn-animation";
 @import "components/error-message";
 @import "components/button-icon";
-@import "components/chat-bar";
+@import "components/form-chat";
 @import "components/message";
+@import "components/picker-time";
+@import "components/dropdown-nets";
+@import "components/overlay-loading";
+@import "components/picker";
 
 // componentss (form)
-@import "components/forms";
-@import "components/label";
+@import "components/form";
+@import "components/elements/label";
 @import "components/btn";
 @import "components/textarea";
 @import "components/checkbox";
@@ -44,7 +49,6 @@
 @import "layouts/card-button";
 @import "layouts/card-notification";
 @import "layouts/_buttons-filters";
-@import "layouts/loading-overlay";
 @import "layouts/trending-tags";
 @import "layouts/button-new-location";
 @import "layouts/button-new-date";
@@ -53,17 +57,13 @@
 @import "layouts/_header-info-overlay";
 @import "layouts/register-component";
 @import "layouts/home-search";
-@import "layouts/picker-time";
-@import "layouts/net-picker";
 @import "layouts/chat";
 @import "layouts/card-button-list";
 @import "layouts/card-chat";
 @import "layouts/nav-bottom";
 @import "layouts/nav-header";
 @import "layouts/home-search";
-// @import "layouts/profile-search";
 @import "layouts/popup";
-@import "layouts/picker";
 @import "layouts/card-profile";
 
 
@@ -71,7 +71,6 @@
 @import "pages/index/index";
 @import "pages/index/button-list";
 @import "pages/index/search-map";
-
 @import "pages/profile-buttons";
 @import "pages/chats";
 @import "pages/login";
@@ -79,7 +78,7 @@
 @import "pages/recovery";
 @import "pages/profile-edition";
 @import "pages/faqs";
-@import "pages/button-net";
+@import "pages/network-access";
 @import "pages/button-file";
 
 
