@@ -1,4 +1,4 @@
-//a variation of picker specific for time
+//a variation of dropddown specific for time
 import { useState } from "react";
 
 

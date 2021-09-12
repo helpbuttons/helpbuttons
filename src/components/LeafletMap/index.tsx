@@ -1,3 +1,4 @@
+//leaflet component for map manage
 import dynamic from 'next/dynamic';
 
 
