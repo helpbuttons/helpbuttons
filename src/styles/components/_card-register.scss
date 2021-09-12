@@ -1,4 +1,4 @@
-.register-component {
+.card-register {
   display: flex;
   justify-content: center;
   /* padding-left: 1rem;
@@ -43,18 +43,18 @@
   }
 }
 
-.register-component__modal-content {
+.card-register__modal-content {
   display: flex;
   flex-direction: column;
   padding: 1rem 2rem;
 }
 
-.register-component__modal-content > div {
+.card-register__modal-content > div {
   text-align: center;
 }
 
 @media #{$breakpoints-medium} {
-  .register-component {
+  .card-register {
     height: auto;
     min-height: calc((var(--vh, 1vh) * 100) - 75px);
     overflow-y: auto;

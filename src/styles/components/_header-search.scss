@@ -1,24 +1,24 @@
-$home-search-position: 2%;
-$home-search-position-large: $proportional-margin-large;
-$home-search-position-xlarge: $proportional-margin-xlarge;
-$home-search-width: 600px;
-$home-search-width-short: 400px;
-$home-search-net-picker-width: 300px;
-$home-search-net-picker-pos: 2%;
-$home-search-net-picker-right: 2%;
-$home-search-net-picker-pos-xlarge: 4%;
-$home-search-zoom-pos: 2%;
-$home-search-zoom-pos-bottom: 4%;
-$home-search-filter-button-width: 100px;
-$home-search-filter-bar-padding: $padding-medium;
-$home-search-column: calc(100%/8);
-$home-search-half-column: calc(100%/64);
+$header-search-position: 2%;
+$header-search-position-large: $proportional-margin-large;
+$header-search-position-xlarge: $proportional-margin-xlarge;
+$header-search-width: 600px;
+$header-search-width-short: 400px;
+$header-search-net-picker-width: 300px;
+$header-search-net-picker-pos: 2%;
+$header-search-net-picker-right: 2%;
+$header-search-net-picker-pos-xlarge: 4%;
+$header-search-zoom-pos: 2%;
+$header-search-zoom-pos-bottom: 4%;
+$header-search-filter-button-width: 100px;
+$header-search-filter-bar-padding: $padding-medium;
+$header-search-column: calc(100%/8);
+$header-search-half-column: calc(100%/64);
 $home-serch-title-size: 22px;
 $home-serch-title-margin: $gutter;
 $home-serch-description-size: 14px;
-$home-search-button-size: 44px;
-$home-search-button-icon: 24px;
-$home-search-input-border-radius: 42px;
+$header-search-button-size: 44px;
+$header-search-button-icon: 24px;
+$header-search-input-border-radius: 42px;
 $info-container-padding: 10px;
 $info-container-padding-medium: $padding-big;
 $info-container-radius: $border-radius-semicircle;
@@ -27,18 +27,18 @@ $info-line-height: 1.3;
 
 
 // Title + Description
-.home-search__content {
+.header-search__content {
   padding: $gutter 0 0 0;
 }
 
-.home-search__title {
+.header-search__title {
 
   font-weight: $font-weight-regular;
   font-size: $home-serch-title-size;
   margin: auto $home-serch-title-margin;
 }
 
-.home-search__label {//se usa
+.header-search__label {//se usa
   z-index: $z-index-01;
   position: absolute;
   top: 7px;
@@ -47,7 +47,7 @@ $info-line-height: 1.3;
   font-weight: bold;
 }
 
-.home-search__description {
+.header-search__description {
   display: none; // Revise Angel
   font-family: $font-family-second;
   font-weight: $font-weight-regular;
@@ -55,14 +55,14 @@ $info-line-height: 1.3;
 }
 
 //net search
-.home-search__nets{
+.header-search__nets{
   width: 100vw;
   position: relative;
   display: flex;
   z-index: $z-index-01;
 }
 
-.home-search__net-picker {
+.header-search__net-picker {
   padding: 12px;
   display: flex;
   height: fit-content;
@@ -76,7 +76,7 @@ $info-line-height: 1.3;
 
 }
 
-.home-search__filter-info-container {
+.header-search__filter-info-container {
 
   width: 100vw;
   //border-radius: $info-container-radius;
@@ -86,7 +86,7 @@ $info-line-height: 1.3;
   background: white;
 }
 
-.home-search__filter-info-content {
+.header-search__filter-info-content {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -98,42 +98,42 @@ $info-line-height: 1.3;
 }
 
 // Form search
-.home-search {
-  width: $home-search-width;
+.header-search {
+  width: $header-search-width;
   position: fixed;
-  top: $home-search-position;
-  left: $home-search-position;
+  top: $header-search-position;
+  left: $header-search-position;
   padding: $padding-medium;
   z-index: $z-index-01;
 }
 
 //form search with 2 or less fields
-.home-search--short {
-  width: $home-search-width-short;
+.header-search--short {
+  width: $header-search-width-short;
   position: fixed;
-  top: $home-search-position;
-  left: $home-search-position;
+  top: $header-search-position;
+  left: $header-search-position;
   padding: 12px;
   z-index: $z-index-01;
 }
 
-.home-search__tool {//se usa
+.header-search__tool {//se usa
   padding: 4px;
-  border-radius: $home-search-input-border-radius;
+  border-radius: $header-search-input-border-radius;
   background: $color-white;
   box-shadow: $box-shadow-tool;
 }
 
-.home-search--tags,
-.home-search--location,
-.home-search--time,  // Revise Ángel
-.home-search--filters  {
-  border-radius: $home-search-input-border-radius !important;
+.header-search--tags,
+.header-search--location,
+.header-search--time,  // Revise Ángel
+.header-search--filters  {
+  border-radius: $header-search-input-border-radius !important;
 }
 
-.home-search--tags,
-.home-search--location,
-.home-search--time {
+.header-search--tags,
+.header-search--location,
+.header-search--time {
   @extend .form__search;
 
   & span {
@@ -141,7 +141,7 @@ $info-line-height: 1.3;
   }
 }
 
-.home-search__form {//se usa
+.header-search__form {//se usa
   @extend .form;
 
   align-items: center;
@@ -151,44 +151,44 @@ $info-line-height: 1.3;
   width: 100%;
 }
 
-.home-search__column {//se usa
-  flex: 1 1 $home-search-column;
+.header-search__column {//se usa
+  flex: 1 1 $header-search-column;
   position: relative;
 }
 
-.home-search__half-column {
-  flex: 2 1 $home-search-half-column;
+.header-search__half-column {
+  flex: 2 1 $header-search-half-column;
   position: relative;
 }
 
-.home-search__dropdown {
-  flex: 1 1 $home-search-half-column;
-  border-radius: $home-search-input-border-radius;
+.header-search__dropdown {
+  flex: 1 1 $header-search-half-column;
+  border-radius: $header-search-input-border-radius;
 
 }
 
-.home-search__button {
+.header-search__button {
   background: $color-corporative;
 
   .icon {
-    height: $home-search-button-icon;
-    width: $home-search-button-icon;
+    height: $header-search-button-icon;
+    width: $header-search-button-icon;
   }
 }
 
-.home-search--need{
+.header-search--need{
   margin: 0;
-  width: $home-search-filter-button-width;
+  width: $header-search-filter-button-width;
 }
 
-.home-search--offer{
+.header-search--offer{
   margin: 0;
-  width:$home-search-filter-button-width;
+  width:$header-search-filter-button-width;
 }
 
 
 // Resultados resumen
-.home-search__results {
+.header-search__results {
   padding-top: $gutter;
   padding-bottom: $gutter;
   display: flex;
@@ -197,7 +197,7 @@ $info-line-height: 1.3;
 }
 
 //tag filters container desktop
-.home-search__results--tags {
+.header-search__results--tags {
   display: flex;
   flex: 1 0 0;
   flex-direction: row;
@@ -206,7 +206,7 @@ $info-line-height: 1.3;
 }
 
 //search filters mobile
-.home-search__filters-bar {
+.header-search__filters-bar {
   display: flex;
   flex: 1 0 0;
   flex-direction: row;
@@ -218,56 +218,56 @@ $info-line-height: 1.3;
 }
 
 //boton de zoom colocacione
-.home-search__zoom {
+.header-search__zoom {
   position: fixed;
-  bottom: $home-search-zoom-pos;
-  right: $home-search-zoom-pos;
+  bottom: $header-search-zoom-pos;
+  right: $header-search-zoom-pos;
   padding: 12px;
   z-index: 99999999;
 }
 
-.home-search__intro {
+.header-search__intro {
   display: flex;
   align-content: center;
   width: auto;
 }
 
-.home-search__logo {
+.header-search__logo {
   width: 180px;
 }
 
 @media #{$breakpoints-large} {
-  .home-search {
-    top: $home-search-position-large;
-    left: $home-search-position-large;
+  .header-search {
+    top: $header-search-position-large;
+    left: $header-search-position-large;
   }
 }
 
 @media #{$breakpoints-xlarge} {
-  .home-search {
-    top: $home-search-position-xlarge;
-    left: $home-search-position-xlarge;
+  .header-search {
+    top: $header-search-position-xlarge;
+    left: $header-search-position-xlarge;
   }
 
-  .home-search__nets{
-    width: $home-search-net-picker-width;
+  .header-search__nets{
+    width: $header-search-net-picker-width;
     position: fixed;
-    top: $home-search-net-picker-pos-xlarge;
-    right: $home-search-net-picker-pos-xlarge;
+    top: $header-search-net-picker-pos-xlarge;
+    right: $header-search-net-picker-pos-xlarge;
   }
 
-  .home-search--tags{
+  .header-search--tags{
     margin: 0;
   }
 
-  .home-search--tags,
-  .home-search--localization,
-  .home-search--time,  // Revise Ángel
-  .home-search--filters  {//se usa
+  .header-search--tags,
+  .header-search--localization,
+  .header-search--time,  // Revise Ángel
+  .header-search--filters  {//se usa
     width: 100%;
   }
 
-  .home-search__net-picker--info-content { // Revise
+  .header-search__net-picker--info-content { // Revise
     flex-direction: column;
     position: relative;
     width: auto;

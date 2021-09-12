@@ -1,8 +1,8 @@
-$buttons-filters-right: 4%;
-$buttons-filters-padding: 10px;
+$filters-right: 4%;
+$filters-padding: 10px;
 
 
-.buttons-filters {
+.filters {
   &__header {
     position: fixed;
     width: 100%;
@@ -135,7 +135,7 @@ $buttons-filters-padding: 10px;
 }
 
 @media #{$breakpoints-xlarge} {
-  .buttons-filters {
+  .filters {
     width: auto;
     position: relative;
     display: flex;
@@ -145,7 +145,7 @@ $buttons-filters-padding: 10px;
     margin: 0;
     // bottom: 15%;
     padding: 0;
-    // right: $buttons-filters-right;
+    // right: $filters-right;
     z-index: $z-index-01 + 1;
 
     &__select {
@@ -189,7 +189,7 @@ $buttons-filters-padding: 10px;
 }
 
 @media #{$breakpoints-medium} {
-  .buttons-filters {
+  .filters {
     &__checkbox-left {
       padding-left: rem(3px);
     }
@@ -199,7 +199,7 @@ $buttons-filters-padding: 10px;
   }
 }
 
-.button_filters__date_text {
+.filters__date_text {
   height: rem(46px);
   & button {
     color: $color-blue;
