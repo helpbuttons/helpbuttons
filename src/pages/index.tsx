@@ -9,7 +9,7 @@ import styles from "../styles/Home.module.scss";
 
 //    Components
 import HeaderDesktop from "../layouts/HeaderDesktop";
-import Filters from "../layouts/Filters";
+
 
 
 import ButtonDataService from "services/Buttons";
@@ -38,9 +38,6 @@ const Home: NextPage = () => {
   return (
     <>
       <HeaderDesktop />
-      <div>
-        <Filters />
-      </div>
       <Map />
     </>
   );
