@@ -1,22 +1,11 @@
+///this is the mobile header - it has the search input in the middle and to icons on the sides. Left one ddisplays HeaderInfoOverlay with the netpicker and descripttion (in case it's in a net the trigger is the net's logo), right nav btn diisplays the filters
+import HeaderInfoOverlay from "../HeaderInfoOverlay";
 
 function NavHeader(){
   return(
+
     <nav >
-        <ul>
-          <li>
-            <a href="">Añadir Boton</a>
-          </li>
-          <li>
-            <a href="">Perfil</a>
-          </li>
-          <li>
-            <select>
-              <option value="">1</option>
-              <option value="">2</option>
-              <option value="">3</option>
-            </select>
-          </li>
-        </ul>
+      <HeaderInfoOverlay/>
       </nav>
   )
 }

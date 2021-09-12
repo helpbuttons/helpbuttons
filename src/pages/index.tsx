@@ -10,7 +10,6 @@ import styles from "../styles/Home.module.scss";
 //    Components
 import HeaderDesktop from "../layouts/HeaderDesktop";
 import Filters from "../layouts/Filters";
-import Posts from "../layouts/Posts";
 
 
 import ButtonDataService from "services/Buttons";
@@ -41,7 +40,6 @@ const Home: NextPage = () => {
       <HeaderDesktop />
       <div>
         <Filters />
-        <Posts /> 
       </div>
       <Map />
     </>
