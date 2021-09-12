@@ -16,14 +16,25 @@
 
 @import "reset";
 
+//////////////// ELEMENTS
 
-//////////// COMPONENTS
+@import "elements/label";
+@import "elements/icon";
+@import "elements/image";
+@import "elements/avatar";
+@import "elements/hashtag";
+@import "elements/checkbox";
+@import "elements/checkbox-circle";
+
+// elements (form)
+@import "elements/form";
+@import "elements/btn";
+@import "elements/textarea";
+@import "elements/dropdown";
+
+////////////////// COMPONENTS
 
 // componentss (general)
-@import "components/elements/icon";
-@import "components/image";
-@import "components/avatar";
-@import "components/hashtag";
 @import "components/error-message";
 @import "components/button-icon";
 @import "components/form-chat";
@@ -33,16 +44,7 @@
 @import "components/overlay-loading";
 @import "components/picker";
 
-// componentss (form)
-@import "components/form";
-@import "components/elements/label";
-@import "components/btn";
-@import "components/textarea";
-@import "components/checkbox";
-@import "components/checkbox-circle";
-@import "components/dropdown";
-
-///////////layouts
+//////////////////// LAYOUTS
 
 // layouts (general)
 @import "layouts/header";
