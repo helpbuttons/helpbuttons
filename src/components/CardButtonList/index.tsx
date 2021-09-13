@@ -1,6 +1,7 @@
 //Card that displays a resume of the button info in tthe List component. Its fieldds can be customizedd according to buttonTemplate.
 export default function CardButtonList() {
   return (
+    <>
     <div class="card-button-list card-button--ofrece card-button{{buttonType}} card-button-list{{cardStateBtnType}}">
       <div class="card-button-list__thumb">
         <a href="" class="card-button-list__notif-circle notif-circle">1</a>
@@ -75,5 +76,10 @@ export default function CardButtonList() {
       </picture>
 
     </div>
+
+  
+
+    </>
+
   );
 }

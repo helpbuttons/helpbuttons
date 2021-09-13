@@ -1,9 +1,12 @@
 ///fields for home search bar. It's an input bar that can change the number of input fileds dependin on the needs of the network (default is What? Where? When ?  but it can also have "To where"or hide/add fields depending on network needs)
 import Image from 'next/image'
 import logo from '../../../public/assets/svg/logo/logo3-01.svg'
+import Repository from "../../layouts/Repository";
+
 
 export default function HeaderDesktop() {
   return (
+    <>
 
     <div class="header-search">
 
@@ -48,7 +51,7 @@ export default function HeaderDesktop() {
           </div>
 
           <div class="header-search__column">
-          
+
               <div class="header-search__label">Dónde</div>
               <div class="header-search--location">Dónde</div>
 
@@ -66,6 +69,7 @@ export default function HeaderDesktop() {
       </div>
 
     </div>
-
+    <Repository />
+    </>
   );
 }
