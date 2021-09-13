@@ -20,6 +20,9 @@ import {
 import {Button, Network} from '../models';
 import {ButtonRepository, NetworkRepository, TemplateButtonRepository} from '../repositories';
 
+import {authenticate} from '@loopback/authentication';
+@authenticate('jwt')
+
 export class ButtonController {
   constructor(
     @repository(ButtonRepository)
