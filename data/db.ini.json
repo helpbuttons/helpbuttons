@@ -3,7 +3,9 @@
     "Button": 6,
     "Network": 5,
     "ButtonsNetwork": 6,
-    "TemplateButton": 2
+    "TemplateButton": 2,
+    "User": 2,
+    "UserCredentials": 2
   },
   "models": {
     "Button": {
@@ -26,6 +28,12 @@
     },
     "TemplateButton": {
       "1": "{\"name\":\"repartidor\",\"type\":\"need\",\"fields\":{\"items\":[{\"name\":\"position\",\"displayName\":\"Posicion de partida:\",\"type\":\"geoCode\"},{\"name\":\"availableTimes\",\"displayName\":\"Horas/Dias disponibles:\",\"type\":\"recurrentTime\"},{\"name\":\"maximumRadiusKm\",\"displayName\":\"Maximo de deslocacion (km)\",\"type\":\"number\"},{\"name\":\"description\",\"displayName\":\"Descricion e otras informaciones\",\"type\":\"string\"}]},\"id\":1}"
+    },
+    "User": {
+      "81e1be40-12c3-472e-ab2f-1fa9e171afc8": "{\"id\":\"81e1be40-12c3-472e-ab2f-1fa9e171afc8\",\"realm\":\"lala\",\"username\":\"lala\",\"email\":\"testuser2@abc.com\"}"
+    },
+    "UserCredentials": {
+      "f08fc25d-b89d-42e7-9fb2-d2492cb07807": "{\"id\":\"f08fc25d-b89d-42e7-9fb2-d2492cb07807\",\"password\":\"$2a$10$3jeakVol7haQOPL8P08Ym.o3JFzxk5flo5VujHZdEQhvkWXNAZo0a\",\"userId\":\"81e1be40-12c3-472e-ab2f-1fa9e171afc8\"}"
     }
   }
 }
