@@ -3,17 +3,17 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Map from "../components/LeafletMap/index";
 import { Store } from "../store/Store";
-import Event from "../store/Event";
+import { Event } from "../store/Event";
+import List from "../layouts/List";
+import NavBottom from "../components/NavBottom"; //just for mobile
+import NavHeader from "../components/NavHeader"; //just for mobile
 
-import Header from "../layouts/Header";
-import styles from "../styles/Home.module.scss";
+//    Components
+import HeaderDesktop from "../layouts/HeaderDesktop";
 
-import HomeSearch from "../layouts/HomeSearch";
-import ButtonList from "../layouts/ButtonList";
-import ButtonFilters from "../layouts/ButtonFilters";
+
 
 import ButtonDataService from "services/Buttons";
-
 // https://immerjs.github.io/immer/
 // Para simplificar la modificación de estructuras de datos
 // al estilo "immutable objects"
@@ -38,13 +38,12 @@ export const store = new Store({
 const Home: NextPage = () => {
   return (
     <>
-      <Header />
-      <div style={{ position: 'absolute', zIndex: 1000 }}>
-        <HomeSearch />
-        <ButtonFilters />
-        <ButtonList />
-      </div>
+      <HeaderDesktop />
+      <List />
+      <NavHeader />
+      <NavBottom />
       <Map />
+
     </>
   );
 };

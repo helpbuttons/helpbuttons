@@ -1,0 +1,465 @@
+$picker-background: rgba(0,0,0,.2);
+$picker-header-height: 80px;
+$picker-max-width: 480px;
+$picker-border-radius: 25px;
+$picker-width: 240px;
+$picker-content-height: calc( 100vh - #{$picker-header-height });
+$picker-header-lateral: calc( 100% / 2 - #{$picker-max-width} / 2 );
+$picker-header-width: 100%;
+$picker-comments: 24px;
+$picker-padding: 2rem;
+$picker-paragraph-padding: 1rem 2rem;
+$picker-max-height-large: 720px;
+$picker-cualquircosa: red;
+$picker-comments-item-padding: 25px;
+
+body {
+  overflow-y: scroll; //Revise: Bienvenido Scroll
+}
+
+.picker {
+  // Scroll picker content
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
+  background: transparent;
+  position: relative;
+
+  // Header Top Content Bottom
+  display: flex;
+  width: $picker-width;
+  flex-flow: column;
+  justify-content: space-between;
+}
+
+.picker__overlay {
+
+  width: 100vw;
+  height: 100vh;
+  padding:0;
+  margin:0;
+  top:0;
+  left:0;
+  background: transparent;
+  position: fixed;
+  z-index: $z-index-base;
+
+}
+
+
+.picker__content {
+
+  position: relative;
+  overflow: auto;
+  width: auto; //Revise antes era 100%
+  max-width: rem(350px);
+  overflow-y: visible !important;
+  max-height: 90vh;
+  background: $color-white !important;
+  overflow-x: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+}
+
+.picker__dropdown {
+
+  position: relative;
+  overflow: auto;
+  width: auto; //Revise antes era 100%
+  overflow-y: visible !important;
+  max-height: 100% !important;
+  border-radius: $border-radius-semicircle !important;
+  background: $color-white !important;
+  overflow-x: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-size: $font-size-general;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  & ul {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  & ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  & li {
+    border-top: 1px solid #e6e6e6;
+    padding: .5rem;
+     &:hover,
+     :active {
+       color: white;
+     }
+     &[aria-current="true"] {
+       background: $color-black;
+       color: white;
+     }
+  }
+
+}
+
+.picker__dropdown--home {
+
+  @extend .picker__dropdown;
+
+  top:0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  max-height: 50vh !important;
+
+
+  & li {
+    border-top: 1px solid #e6e6e6;
+     padding: .5rem;
+     &:hover,
+     :active {
+       color: white;
+     }
+     &[aria-current="true"] {
+       background: $color-black;
+       color: white;
+     }
+  }
+
+}
+
+.picker__dropdown::-webkit-scrollbar {
+  display: none;
+}
+
+.picker__dropdown--row {
+
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+
+}
+
+.picker__dropdown--concept {
+
+  font-weight: $font-weight-bold;
+
+}
+
+//REVISE NAMING DE LA CLASE
+.picker__display {
+
+  display: flex;
+  justify-content:space-between;
+
+}
+
+//MEENUSELECT LISTA DE ICONOS EN COLUMNAS DE 3
+
+.picker__list-elem {
+
+  width: 70px;
+  height: 70px;
+  padding: $padding-big;
+  margin: $margin-extra-small;
+  float: left;
+  background: transparent;
+  border: none;
+  border-radius: $border-radius-circle;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-black;
+  }
+
+}
+
+.picker__list-elem--icon {
+
+  width: fit-content;
+
+}
+
+//REVISE NAMING DE LA CLASE
+.picker__tags {
+
+  width: 100%;
+
+}
+
+.picker__section {
+
+  padding: 1rem;
+
+}
+
+.picker-box-shadow {//REVISE
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.picker__header {
+  width: 100%;
+
+  font-size: $font-size-medium;
+  font-weight: $font-weight-regular;
+  text-align: center;
+}
+
+.picker__left-title {
+  width: 100%;
+  padding: $padding-medium;
+
+
+  font-size: $font-size-medium;
+  font-weight: $font-weight-regular;
+  text-align: left;
+  color: $color-dark-blue;
+}
+
+// contents
+.picker__paragraph {
+
+  font-size: $font-size-general;
+  line-height: 1.5rem;
+  padding: $picker-paragraph-padding;
+}
+
+.picker__img {
+  height: 200px;
+
+  svg {
+    display: none; // Revise Ángel
+    width: 100%;
+    height: auto;
+  }
+}
+
+.overlaw-scroll {
+  .liquid-child {
+    overflow: auto;
+  }
+}
+
+.picker__close-container {
+  width: 100%;
+}
+
+.picker__close-overlay {
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  overflow: visible;
+  z-index: $z-index-base;
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.picker__comments,
+.picker__options-v,
+.picker__options-h {
+  display: flex; // Static components
+}
+
+.picker__comments {
+  padding: $picker-comments;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.pickers__comments-item {
+  background: $color-ligth-gray;
+  margin: 8px 0;
+  padding: $picker-comments-item-padding 0;
+}
+
+.picker__options-btn {//se usa
+
+  display: inline-block;
+  text-align: center;
+  line-height: 2rem; //revise anteiormente era 1.5rem pero probe con 2rem, y se ve bien
+  width: 100%;
+  vertical-align: middle;
+  height: auto;
+  background: $color-white;
+
+  &--stroked {
+    stroke: $color-corporative;
+    fill: $color-corporative;
+    border-color: $color-black;
+    background-color: $color-black;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.picker__options-btn--icon {
+  height: 20px;
+  
+  & svg{
+    display: none;
+    height: 10px;
+  }
+}
+
+.picker__options-title {
+  display: inline-block;
+  background: $color-ligth-gray;
+
+  padding: $padding-medium 8px;//Revise 12px cambiado a 10px
+  text-align: center;
+
+  font-size: $font-size-general;
+  line-height: 1.5rem;
+  width: 100%;
+  vertical-align: middle;
+  padding: $picker-paragraph-padding;
+  height: auto;
+}
+
+.picker__options-v {
+  flex-flow: column nowrap;
+}
+
+.picker__options-h {//se usa
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  .picker__options-btn {
+    flex: 0 1 50%;
+  }
+}
+
+//Estilos a los botones del picker Revise
+.picker__option-btn {//revise
+  height: 60px;
+  background: transparent;
+  border: none;
+  text-align: initial;
+  border-bottom: 1px solid $color-gray-border;//Revise este color ahora es una variable
+  padding: 0 $picker-padding;//revise este padding puede ir en el txt
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:focus {
+    background: $color-corporative;
+  }
+}
+
+.picker__option-btn--active {
+  @extend .picker__option-btn;
+}
+
+.picker__option-btn-with-icon {
+  @extend .picker__option-btn;
+}
+
+
+//Revise
+.picker__themes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: $padding-medium $padding-big;//de 16px a 18px y de 8px a 10px
+
+  border-top: 1px solid $color-gray-border;
+}
+
+.menuseselect__themes-span {
+  font-weight: bold;
+  width: 30%;
+}
+
+.picker__themes-button {
+
+  border-radius: $border-radius-buttons;
+  height: fit-content;
+  width: auto;
+  padding: 0 $padding-medium;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.picker__themes-count {
+  width: 30%;
+  text-align: end;
+  font-weight: ligth;
+}
+
+.prubea {
+  display: flex;
+}
+
+//Revise: clase picker--over
+.picker--over {
+  position: absolute;
+  width: 95%;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+
+}
+
+.picker__content {//Revise
+  border-radius: $picker-border-radius !important;
+}
+
+@media #{$breakpoints-medium} {
+  .picker {
+    margin: 0 auto;
+    max-width: $picker-max-width;//revise
+    width: $grid-width;
+
+    // Centering
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    background: transparent;
+  }
+
+  .picker__header,
+  .picker__content {
+    background: $color-white;
+    max-width: 600px;//revise voy a poner 600 px luego pasar a variable $picker-max-width
+  }
+
+  .picker--over {
+    width: 500px;
+  }
+
+  .picker__map--over{
+    position: absolute;
+    top: 10%;
+    width: 80%;
+    margin: auto;
+    z-index: $z-index-05;
+  }
+
+  //Revise: Esto puede ir en un breakpoint
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(0deg, #c9c9c9 0%,#c9c9c9 0%);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover{
+    background: #C9C9C9;
+  }
+  ::-webkit-scrollbar-track{
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: inset -7px -30px 12px #f0f0f0;
+  }
+}

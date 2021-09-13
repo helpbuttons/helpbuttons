@@ -1,0 +1,1 @@
+// chat card that goes in ButtonFile component, under ButtonCard, and repeats for every chat that is available. It can also displays in Chats page, on the left column (desktop) or other pllaciess for notifications in the future. It has a "remove chat"icon, date and last message preview

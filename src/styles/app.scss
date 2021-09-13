@@ -11,67 +11,68 @@
 @import "variables/grid";
 @import "variables/z-index";
 @import "variables/animations";
+@import "variables/text-style";
+@import "variables/btn-animation";
+
 @import "reset";
 
+//////////////// ELEMENTS
 
-//////////// COMPONENTS
+@import "elements/label";
+@import "elements/icon";
+@import "elements/image";
+@import "elements/avatar";
+@import "elements/hashtag";
+@import "elements/checkbox";
+@import "elements/checkbox-circle";
+
+// elements (form)
+@import "elements/form";
+@import "elements/btn";
+@import "elements/textarea";
+@import "elements/dropdown";
+
+////////////////// COMPONENTS
 
 // componentss (general)
-@import "components/icon";
-@import "components/image";
-@import "components/avatar";
-@import "components/hashtag";
-@import "components/text-style";
-@import "components/btn-animation";
 @import "components/error-message";
 @import "components/button-icon";
-@import "components/chat-bar";
+@import "components/form-chat";
 @import "components/message";
+@import "components/picker-time";
+@import "components/dropdown-nets";
+@import "components/overlay-loading";
+@import "components/picker";
+@import "components/card-button-list";
+@import "components/card-chat";
+@import "components/nav-bottom";
+@import "components/nav-header";
+@import "components/_header-info-overlay";
+@import "components/card-register";
+@import "components/header-search";
+@import "components/card-button";
+@import "components/card-notification";
+@import "components/_filters";
+@import "components/card-profile";
 
-// componentss (form)
-@import "components/forms";
-@import "components/label";
-@import "components/btn";
-@import "components/textarea";
-@import "components/checkbox";
-@import "components/checkbox-circle";
-@import "components/dropdown";
 
-///////////layouts
+//////////////////// LAYOUTS
 
 // layouts (general)
-@import "layouts/header";
-@import "layouts/card-button";
-@import "layouts/card-notification";
-@import "layouts/_buttons-filters";
-@import "layouts/loading-overlay";
+@import "layouts/header-desktop";
 @import "layouts/trending-tags";
 @import "layouts/button-new-location";
 @import "layouts/button-new-date";
-@import "layouts/button-new-share";
-@import "layouts/create-net-component";
-@import "layouts/home-info-overlay";
-@import "layouts/register-component";
-@import "layouts/home-search";
-@import "layouts/time-picker";
-@import "layouts/net-picker";
+@import "layouts/button-share";
+@import "layouts/popup-create-net";
 @import "layouts/chat";
-@import "layouts/card-button-list";
-@import "layouts/card-chat";
-@import "layouts/nav-bottom";
-@import "layouts/nav-header";
-@import "layouts/home-search";
-// @import "layouts/profile-search";
 @import "layouts/popup";
-@import "layouts/menuselect";
-@import "layouts/card-profile";
 
 
 // pages
 @import "pages/index/index";
 @import "pages/index/button-list";
 @import "pages/index/search-map";
-
 @import "pages/profile-buttons";
 @import "pages/chats";
 @import "pages/login";
@@ -79,7 +80,7 @@
 @import "pages/recovery";
 @import "pages/profile-edition";
 @import "pages/faqs";
-@import "pages/button-net";
+@import "pages/network-access";
 @import "pages/button-file";
 
 
