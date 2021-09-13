@@ -1,17 +1,17 @@
-$button-icon-height: rem(50px);
-$button-icon-width-change: rem(25px);
-$button-icon-width: rem(50px);
-$button-icon-radius: $border-radius-circle;
+$marker-button-height: rem(50px);
+$marker-button-width-change: rem(25px);
+$marker-button-width: rem(50px);
+$marker-button-radius: $border-radius-circle;
 
 
-.button-icon {
+.marker-button {
   height: 30px;
-  
+
 }
 
 .button-map-icon {
-  height: $button-icon-height;
-  width: $button-icon-width;
+  height: $marker-button-height;
+  width: $marker-button-width;
   position: relative;
   margin-bottom: 0;
   &--grey {
@@ -22,8 +22,8 @@ $button-icon-radius: $border-radius-circle;
     &:after {
       content: "";
       display: block;
-      width: $button-icon-width-change;
-      height: $button-icon-height;
+      width: $marker-button-width-change;
+      height: $marker-button-height;
       position: absolute;
       top: 0;
       bottom: 0;
@@ -33,14 +33,14 @@ $button-icon-radius: $border-radius-circle;
     &:before {
       left: 0;
       background-color: $color-green;
-      border-bottom-left-radius: $button-icon-radius;
-      border-top-left-radius: $button-icon-radius;
+      border-bottom-left-radius: $marker-button-radius;
+      border-top-left-radius: $marker-button-radius;
     }
     &:after {
       right: 0;
       background-color: $color-red;
-      border-bottom-right-radius: $button-icon-radius;
-      border-top-right-radius: $button-icon-radius;
+      border-bottom-right-radius: $marker-button-radius;
+      border-top-right-radius: $marker-button-radius;
     }
 
     .button-map-icon__image {
@@ -69,14 +69,14 @@ $button-icon-radius: $border-radius-circle;
     &:before {
       left: 0;
       background-color: $color-red;
-      border-bottom-left-radius: $button-icon-radius;
-      border-top-left-radius: $button-icon-radius;
+      border-bottom-left-radius: $marker-button-radius;
+      border-top-left-radius: $marker-button-radius;
     }
     &:after {
       right: 0;
       background-color: $color-green;
-      border-bottom-right-radius: $button-icon-radius;
-      border-top-right-radius: $button-icon-radius;
+      border-bottom-right-radius: $marker-button-radius;
+      border-top-right-radius: $marker-button-radius;
     }
 
     .button-map-icon__image {
@@ -114,11 +114,11 @@ $button-icon-radius: $border-radius-circle;
   }
 
   &--yellow {
-    .button-icon__image {
+    .marker-button__image {
       border-color: $color-corporative;
       background-color: $color-corporative;
     }
-    .button-icon__arrow {
+    .marker-button__arrow {
       &:after {
         border-top-color: $color-corporative;
       }
@@ -164,7 +164,7 @@ $button-icon-radius: $border-radius-circle;
   &__image {
     width: 100%;
     height: 100%;
-    border-radius: $button-icon-radius;
+    border-radius: $marker-button-radius;
     border-width: rem(5px);
     // border-style: solid; //revise
     z-index: 1;
@@ -232,7 +232,7 @@ $button-icon-radius: $border-radius-circle;
   }
 }
 
-.button-icon__tags {
+.marker-button__tags {
   overflow-x: auto;
   overflow-y: auto;
   max-width: fit-content;
@@ -243,7 +243,7 @@ $button-icon-radius: $border-radius-circle;
   max-height: rem(50px);
 }
 
-.button-icon__link-tag {
+.marker-button__link-tag {
   position: absolute;
   bottom: 102%;
   left: 50%;
@@ -256,28 +256,28 @@ $button-icon-radius: $border-radius-circle;
   padding: $padding-small $padding-medium;
 }
 
-#buttonIcon .button-icon__tags {
+#buttonIcon .marker-button__tags {
   display: block;
 }
 
-#buttonIcon:hover .button-icon__tags {
+#buttonIcon:hover .marker-button__tags {
   display: block;
 }
 
-.button-icon__tags--green {
-  .button-icon__link-tag {
+.marker-button__tags--green {
+  .marker-button__link-tag {
     background: $color-green;
   }
 }
 
-.button-icon__tags--red {
-  .button-icon__link-tag {
+.marker-button__tags--red {
+  .marker-button__link-tag {
     background: $color-red;
   }
 }
 
-.button-icon__tags--change {
-  .button-icon__link-tag {
+.marker-button__tags--change {
+  .marker-button__link-tag {
     &:before,
     &:after {
       content: "";
@@ -303,10 +303,10 @@ $button-icon-radius: $border-radius-circle;
       border-top-right-radius: rem(50px);
     }
 
-    .button-icon__image {
+    .marker-button__image {
       border-color: transparent;
     }
-    .button-icon__arrow {
+    .marker-button__arrow {
       &:after {
         border-top-color: $color-green;
       }
@@ -314,8 +314,8 @@ $button-icon-radius: $border-radius-circle;
   }
 }
 
-.button-icon__tags--yellow {
-  .button-icon__link-tag {
+.marker-button__tags--yellow {
+  .marker-button__link-tag {
     color: $color-black;
     background: $color-corporative;
   }

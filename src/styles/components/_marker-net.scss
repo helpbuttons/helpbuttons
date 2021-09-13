@@ -1,5 +1,5 @@
 
-.icon-net {
+.marker-net {
 
   align-items: center;
   display: flex;
@@ -22,13 +22,13 @@
 
 }
 
-.icon-net__icon {
+.marker-net__icon {
 
   height: auto;
   transition: transform 0.2s;
   width: rem(30px);
 
-  + .icon-net__text {
+  + .marker-net__text {
     margin-left: 2rem;
   }
 
@@ -38,15 +38,15 @@
 
 }
 
-.icon-net__text {
+.marker-net__text {
 
-  & + .icon-net__icon {
+  & + .marker-net__icon {
     margin-left: rem(10px);
   }
 
 }
 
-.icon-net--hover {
+.marker-net--hover {
 
   cursor: pointer;
   background: #343a40;
