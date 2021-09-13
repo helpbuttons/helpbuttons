@@ -1,13 +1,15 @@
 import { Client, expect } from '@loopback/testlab';
 import { HelpbuttonsBackendApp } from '../..';
-import { setupApplication } from '../helpers/test-helper';
+import { setupApplication, login } from '../helpers/authentication.helper';
 
 describe('NetworkController (integration)', () => {
   let app: HelpbuttonsBackendApp;
   let client: Client;
+  let token: string;
 
   before('setupApplication', async () => {
     ({ app, client } = await setupApplication());
+    token = await login(client);
   });
   after(async () => {
     await app.stop();
@@ -27,7 +29,7 @@ describe('NetworkController (integration)', () => {
         "longitude": 43.33,
         "radius": 240
       }
-    ).expect(200);
+    ).set('Authorization', 'Bearer ' + token).expect(200);
     expect(res.body).to.containEql({
       "name": "Perritos en adopcion",
       "id": 5,
@@ -61,13 +63,13 @@ describe('NetworkController (integration)', () => {
         "description": "description of da button",
         "latitude": 3.12321321,
         "longitude": 5.32421321,
-      }).expect(200);
+      }).set('Authorization', 'Bearer ' + token).expect(200);
     });
     it('/networks/find', async () => {
-      const resFilter = await client.get('/networks/find').send().expect(200);
+      const resFilter = await client.get('/networks/find').send().set('Authorization', 'Bearer ' + token).expect(200);
       expect(resFilter.body.length).to.equal(5);
 
-      const resFilterOne = await client.get('/networks/find').query({ filter: '{"where": {"name": {"regexp": "^Gat"}}}' }).expect(200);
+      const resFilterOne = await client.get('/networks/find').query({ filter: '{"where": {"name": {"regexp": "^Gat"}}}' }).set('Authorization', 'Bearer ' + token).expect(200);
       expect(resFilterOne.body[0].name).to.startWith('Gat');
     });
 
@@ -85,7 +87,7 @@ describe('NetworkController (integration)', () => {
               }
             }
           ]
-        }`}).expect(200);
+        }`}).set('Authorization', 'Bearer ' + token).expect(200);
       expect(resFilter.body.length).to.equal(1);
       expect(resFilter.body[0].buttons.length).to.equal(1);
       expect(resFilter.body).to.deepEqual(
@@ -123,7 +125,7 @@ describe('NetworkController (integration)', () => {
         "where": {
           "id": 3
         }
-      }`}).expect(200);
+      }`}).set('Authorization', 'Bearer ' + token).expect(200);
       expect(resFilter.body.length).to.equal(1);
       expect(resFilter.body).to.deepEqual(
         [{

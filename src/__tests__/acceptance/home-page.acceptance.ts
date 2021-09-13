@@ -1,6 +1,6 @@
 import {Client} from '@loopback/testlab';
 import {HelpbuttonsBackendApp} from '../..';
-import {setupApplication} from '../helpers/test-helper';
+import {setupApplication} from '../helpers/authentication.helper';
 
 describe('HomePage', () => {
   let app: HelpbuttonsBackendApp;

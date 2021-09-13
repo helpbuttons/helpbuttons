@@ -1,14 +1,16 @@
 import { generateUniqueId } from '@loopback/context';
 import { Client, expect } from '@loopback/testlab';
 import { HelpbuttonsBackendApp } from '../..';
-import { setupApplication } from '../helpers/test-helper';
+import { setupApplication, login } from '../helpers/authentication.helper';
 
 describe('templateButtonController (integration)', () => {
   let app: HelpbuttonsBackendApp;
   let client: Client;
+  let token: string;
 
   before('setupApplication', async () => {
     ({ app, client } = await setupApplication());
+    token = await login(client);
   });
   after(async () => {
     await app.stop();
@@ -27,7 +29,7 @@ describe('templateButtonController (integration)', () => {
             { "name": "description", "displayName": "Descricion e otras informaciones", "type": "string" },
           ]
       }
-    }).expect(200);
+    }).set('Authorization', 'Bearer ' + token).expect(200);
     expect(res.body).to.containEql({
       id: 2,
       name: 'repartidor',
@@ -61,16 +63,16 @@ describe('templateButtonController (integration)', () => {
 
   describe('/template-buttons/find', () => {
     it('/template-buttons/find', async () => {
-      const resFilterOne = await client.get('/template-buttons/find').query({ filter: '{"where": {"id":1}}' }).expect(200);
+      const resFilterOne = await client.get('/template-buttons/find').query({ filter: '{"where": {"id":1}}' }).set('Authorization', 'Bearer ' + token).expect(200);
       expect(resFilterOne.body[0].id).to.equal(1);
     });
 
     it('/template-buttons/find get button with id=1', async () => {
-      const resFilterOne = await client.get('/template-buttons/find').query({ filter: '{"where": {"id":1}}' }).expect(200);
+      const resFilterOne = await client.get('/template-buttons/find').query({ filter: '{"where": {"id":1}}' }).set('Authorization', 'Bearer ' + token).expect(200);
       expect(resFilterOne.body[0].id).to.equal(1);
     });
     it('/template-buttons/findById with id=1', async () => {
-      const resFilterOne = await client.get('/template-buttons/findById/2').expect(200);
+      const resFilterOne = await client.get('/template-buttons/findById/2').set('Authorization', 'Bearer ' + token).expect(200);
       expect(resFilterOne.body).to.deepEqual({
         id: 2,
         name: 'repartidor',
@@ -128,7 +130,7 @@ describe('templateButtonController (integration)', () => {
 
 
   it('/template-buttons/edit/1', async () => {
-    const restFindByIdPrev = await client.get('/template-buttons/findById/1').expect(200);
+    const restFindByIdPrev = await client.get('/template-buttons/findById/1').set('Authorization', 'Bearer ' + token).expect(200);
     expect(restFindByIdPrev.body).to.deepEqual({
       id: 1,
       name: 'repartidor',
@@ -160,7 +162,7 @@ describe('templateButtonController (integration)', () => {
     });
 
     const newName = generateUniqueId();
-    await client.patch('/template-buttons/edit/1').send({ "name": newName }).expect(204);
+    await client.patch('/template-buttons/edit/1').send({ "name": newName }).set('Authorization', 'Bearer ' + token).expect(204);
 
     const resFindByIdAfter = await client.get('/template-buttons/findById/1').expect(200);
     expect(resFindByIdAfter.body).to.deepEqual({
@@ -192,12 +194,12 @@ describe('templateButtonController (integration)', () => {
         ]
       }
     });
-    await client.patch('/template-buttons/edit/1').send({ "name": "button name" }).expect(204);
+    await client.patch('/template-buttons/edit/1').send({ "name": "button name" }).set('Authorization', 'Bearer ' + token).expect(204);
   });
 
   describe('/template-buttons/delete', () => {
     it('/template-buttons/delete/{id}', async () => {
-      const restFindByIdPrev = await client.get('/template-buttons/findById/1').expect(200);
+      const restFindByIdPrev = await client.get('/template-buttons/findById/1').set('Authorization', 'Bearer ' + token).expect(200);
       expect(restFindByIdPrev.body).to.deepEqual({
         id: 1,
         name: 'button name',
@@ -236,12 +238,12 @@ describe('templateButtonController (integration)', () => {
 
   describe('/template-buttons/addToNetworks/{templateButtonId}', () => {
     it('/template-buttons/addToNetworks', async () => {
-      const res = await client.get('/template-buttons/find').query({ filter: '{"where": {"id":1}, "include":["networks"]}' }).expect(200);
+      const res = await client.get('/template-buttons/find').query({ filter: '{"where": {"id":1}, "include":["networks"]}' }).set('Authorization', 'Bearer ' + token).expect(200);
       expect(res.body[0].networks).to.be.undefined();
 
-      await client.post('/template-buttons/addToNetworks').query({ networks: "[1,2,3]", templateButtonId: 1 }).expect(200);
+      await client.post('/template-buttons/addToNetworks').query({ networks: "[1,2,3]", templateButtonId: 1 }).set('Authorization', 'Bearer ' + token).expect(200);
 
-      const res2 = await client.get('/template-buttons/find').query({ filter: '{"where": {"id":1}, "include":["networks"]}' }).expect(200);
+      const res2 = await client.get('/template-buttons/find').query({ filter: '{"where": {"id":1}, "include":["networks"]}' }).set('Authorization', 'Bearer ' + token).expect(200);
       expect(res2.body[0].networks.length).to.equal(3);
     });
   });

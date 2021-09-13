@@ -1,8 +1,3 @@
-// Copyright IBM Corp. 2020. All Rights Reserved.
-// Node module: @loopback/example-todo-jwt
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
-
 import {authenticate, TokenService} from '@loopback/authentication';
 import {
   Credentials,
@@ -13,7 +8,7 @@ import {
   UserServiceBindings,
 } from '@loopback/authentication-jwt';
 import {inject} from '@loopback/core';
-import {model, property, repository} from '@loopback/repository';
+import {model, property} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
@@ -101,7 +96,7 @@ export class UserController {
   }
 
   @authenticate('jwt')
-  @get('/whoAmI', {
+  @get('/users/whoAmI', {
     responses: {
       '200': {
         description: 'Return current user',
@@ -122,7 +117,7 @@ export class UserController {
     return currentUserProfile[securityId];
   }
 
-  @post('/signup', {
+  @post('/users/signup', {
     responses: {
       '200': {
         description: 'User',
@@ -148,12 +143,10 @@ export class UserController {
     })
     newUserRequest: NewUserRequest,
   ): Promise<User> {
-      console.log('user pass' + newUserRequest.password)
     const password = await hash(newUserRequest.password, await genSalt());
     const savedUser = await this.userRepository.create(
       _.omit(newUserRequest, 'password'),
     );
-        console.log('password: ' + password);
     await this.userRepository.userCredentials(savedUser.id).create({password: password});
 
     return savedUser;

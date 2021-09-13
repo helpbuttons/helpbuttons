@@ -5,6 +5,7 @@ import {
   Client,
 } from '@loopback/testlab';
 
+
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
     // Customize the server configuration here.
@@ -22,8 +23,19 @@ export async function setupApplication(): Promise<AppWithClient> {
   await app.start();
 
   const client = createRestAppClient(app);
-
   return {app, client};
+}
+
+export async function login(client: Client): Promise<string> {
+  const testUserCredential = {
+    email: 'testuser2@abc.com',
+    password: 'testuser2',
+  };
+  const res = await client
+  .post('/users/login')
+  .send(testUserCredential)
+  return res.body.token;
+  
 }
 
 export interface AppWithClient {
