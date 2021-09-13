@@ -4,8 +4,7 @@ import Head from "next/head";
 import Map from "../components/LeafletMap/index";
 import { Store } from "../store/Store";
 import { Event } from "../store/Event";
-
-import styles from "../styles/Home.module.scss";
+import List from "../layouts/List";
 
 //    Components
 import HeaderDesktop from "../layouts/HeaderDesktop";
@@ -38,6 +37,7 @@ const Home: NextPage = () => {
   return (
     <>
       <HeaderDesktop />
+      <List />
       <Map />
     </>
   );
