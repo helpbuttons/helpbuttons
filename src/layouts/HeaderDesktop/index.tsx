@@ -2,15 +2,16 @@
 import NavHeader from "../../layouts/NavHeader";
 import HeaderSearch from "../../components/HeaderSearch";
 import DropdownNets from "../../components/DropdownNets";
+import Filters from "../../components/Filters";
 
 
 export default function HeaderDesktop() {
   return (
     <header>
-      <HeaderSearch>
-      </HeaderSearch>
+      <HeaderSearch />
       <DropdownNets>
       </DropdownNets>
+      <Filters />
     </header>
   );
 }

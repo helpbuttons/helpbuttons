@@ -2,51 +2,38 @@
 //if the filters are too many, it ddisplays a "more filters" option at the end that brings the PopupExtraFilters
 function Filters() {
   return (
-    <>
-      <div>
-        <div>
-          <div>
-            <div>
-              <label htmlFor="">
-                <div>
-                  <div>Qué</div>
-                  <input type="" />
-                  <span></span>
-                </div>
-              </label>
-              <div></div>
-              <span></span>
-            </div>
+    <div class="filters">
+      <div class="checkbox-filter__container">
+        <div class="checkbox-filter__checkbox">
+
+          <div class="checkbox-filter__content button-filter-with-icon">
+
+            <div class="button-filter__icon red"></div>
+            Necesitan
+
           </div>
-          <div>
-            <div>
-              <label htmlFor="">
-                <div>
-                  <div>Dónde</div>
-                  <input type="" />
-                  <span></span>
-                </div>
-              </label>
-              <div></div>
-              <span></span>
-            </div>
-          </div>
-          <div>
-            <div>
-              <label htmlFor="">
-                <div>
-                  <div>Cuándo</div>
-                  <input type="" />
-                  <span></span>
-                </div>
-              </label>
-              <div></div>
-              <span></span>
-            </div>
-          </div>
+
         </div>
+
       </div>
-    </>
+      <div class="checkbox-filter__container">
+
+        <div class="checkbox-filter__checkbox">
+
+          <div class="checkbox-filter__content button-filter-with-icon">
+
+            <div class="button-filter__icon red"></div>
+            Ofrecen
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="button-filter">
+            Order dropdown
+      </div>
+    </div>
   );
 }
 
