@@ -2,6 +2,8 @@
 import NavHeader from "../../layouts/NavHeader";
 import HeaderSearch from "../../components/HeaderSearch";
 import DropdownNets from "../../components/DropdownNets";
+import CardButton from "../../components/CardButton";
+import CardButtonList from "../../components/CardButtonList";
 
 export default function HeaderDesktop() {
   return (
@@ -10,6 +12,10 @@ export default function HeaderDesktop() {
       </HeaderSearch>
       <DropdownNets>
       </DropdownNets>
+      <CardButton>
+      </CardButton>
+      <CardButtonList>
+      </CardButtonList>
     </header>
   );
 }
