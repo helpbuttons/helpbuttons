@@ -24,21 +24,16 @@ export class Sumar implements UpdateEvent {
   }
 }
 
-function NetPicker() {
+export default function DropdownNets() {
+
   const [network, setNetwork] = useState("");
 
-  console.log(network)
-
   return (
-    <select
-      name="network"
-      onChange={(e) => setNetwork(e.target.value)}
-    >
-      <option value="1">red1</option>
-      <option value="2">red2</option>
-      <option value="3">red3</option>
-    </select>
+
+    <div class="header-search__nets">
+      <div class="header-search__net-picker">
+      <input type="text" class="header-search--nets" placeholder='Selecciona red'></input>
+      </div>
+    </div>
   );
 }
-
-export default NetPicker;
