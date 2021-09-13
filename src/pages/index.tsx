@@ -5,6 +5,8 @@ import Map from "../components/LeafletMap/index";
 import { Store } from "../store/Store";
 import { Event } from "../store/Event";
 import List from "../layouts/List";
+import NavBottom from "../components/NavBottom"; //just for mobile
+import NavHeader from "../components/NavHeader"; //just for mobile
 
 //    Components
 import HeaderDesktop from "../layouts/HeaderDesktop";
@@ -38,7 +40,10 @@ const Home: NextPage = () => {
     <>
       <HeaderDesktop />
       <List />
+      <NavHeader />
+      <NavBottom />
       <Map />
+
     </>
   );
 };

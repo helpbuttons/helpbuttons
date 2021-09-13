@@ -1,9 +1,19 @@
 ///fields for home search bar. It's an input bar that can change the number of input fileds dependin on the needs of the network (default is What? Where? When ?  but it can also have "To where"or hide/add fields depending on network needs)
+import Image from 'next/image'
+import logo from '../../../public/assets/svg/logo/logo3-01.svg'
 
 export default function HeaderDesktop() {
   return (
 
     <div class="header-search">
+
+      <div class="header-search__title">
+
+        <a href="#!"><img src="" alt=""/><Image src={logo} alt="icon"/></a>
+        <span>Nombre de Red</span>
+        <span>Descripción de Red</span>
+
+      </div>
 
       <div class="header-search__intro">
 
@@ -38,6 +48,7 @@ export default function HeaderDesktop() {
           </div>
 
           <div class="header-search__column">
+          
               <div class="header-search__label">Dónde</div>
               <div class="header-search--location">Dónde</div>
 

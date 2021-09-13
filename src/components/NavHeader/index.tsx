@@ -6,7 +6,8 @@ function NavHeader(){
 
     <nav >
       <HeaderInfoOverlay/>
-      </nav>
+    </nav>
+
   )
 }
 
