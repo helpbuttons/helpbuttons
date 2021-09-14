@@ -12,9 +12,11 @@ import {
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
 import {Network} from '../models';
 import {NetworkRepository} from '../repositories';
+import { Validations } from './validations';
 
 export class NetworkController {
   constructor(
@@ -40,6 +42,11 @@ export class NetworkController {
     })
     network: Omit<Network, 'id'>,
   ): Promise<Network> {
+    if (network.geoPlace){
+      if (!Validations.isGeoPoint(network.geoPlace)){
+        throw new HttpErrors.UnprocessableEntity('`geoPlace` is not well formated, please check the documentation at https://geojson.org/');
+      }
+    }
     return this.networkRepository.create(network);
   }
 

@@ -25,8 +25,7 @@ describe('NetworkController (integration)', () => {
         "avatar": "image/url.png",
         "description": "Net for animal rescue",
         "privacy": "publico",
-        "latitude": 43.33,
-        "longitude": 43.33,
+        "geoPlace": {"coordinates": [100, 0], "type": "Point"},
         "radius": 240
       }
     ).set('Authorization', 'Bearer ' + token).expect(200);
@@ -38,8 +37,7 @@ describe('NetworkController (integration)', () => {
       "description": "Net for animal rescue",
       "privacy": "publico",
       "place": "Livorno, Italia",
-      "latitude": 43.33,
-      "longitude": 43.33,
+      "geoPlace": {"coordinates": [100, 0], "type": "Point"},
       "radius": 240,
       "tags": [
         "Animales",
@@ -61,8 +59,7 @@ describe('NetworkController (integration)', () => {
           "onetag"
         ],
         "description": "description of da button",
-        "latitude": 3.12321321,
-        "longitude": 5.32421321,
+        "geoPlace": {"coordinates": [100, 0], "type": "Point"},
       }).set('Authorization', 'Bearer ' + token).expect(200);
     });
     it('/networks/find', async () => {
@@ -99,8 +96,7 @@ describe('NetworkController (integration)', () => {
           description: 'Net for animal rescue',
           privacy: 'publico',
           place: 'Livorno, Italia',
-          latitude: 43.33,
-          longitude: 43.33,
+          "geoPlace": {"coordinates": [100, 0], "type": "Point"},
           radius: 240,
           tags: ['Animales', 'Perritos', 'Adopcion'],
           role: 'admin',
@@ -111,8 +107,7 @@ describe('NetworkController (integration)', () => {
               type: 'exchange',
               tags: ['onetag'],
               description: 'description of da button',
-              latitude: 3.12321321,
-              longitude: 5.32421321
+              "geoPlace": {"coordinates": [100, 0], "type": "Point"}
             }
           ]
         }]
@@ -136,8 +131,7 @@ describe('NetworkController (integration)', () => {
           description: 'Net for animal rescue',
           privacy: 'publico',
           place: 'Livorno, Italia',
-          latitude: 43.33,
-          longitude: 43.33,
+          "geoPlace": {"coordinates": [100, 0], "type": "Point"},
           radius: 240,
           tags: ['Animales', 'Perritos', 'Adopcion'],
           role: 'admin'

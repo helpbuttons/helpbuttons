@@ -84,10 +84,10 @@ describe('ButtonController (integration)', () => {
             description: 'Net for animal rescue',
             privacy: 'publico',
             place: 'Livorno, Italia',
-            // geoPlace: {
-            //   coordinates: [100, 0],
-            //   type: "Point"
-            // },
+            geoPlace: {
+              coordinates: [100, 0],
+              type: "Point"
+            },
             radius: 240,
             tags: ['Animales', 'Perritos', 'Adopcion'],
             role: 'admin'
@@ -163,10 +163,7 @@ describe('ButtonController (integration)', () => {
         type: 'exchange',
         tags: ['onetag'],
         description: 'description of da button',
-        geoPlace: {
-          coordinates: [100, 0],
-          type: "Point"
-        }
+        geoPlace: {coordinates: [100, 0], type: "Point"}
       });
 
       await client.delete('/buttons/delete/3').set('Authorization', 'Bearer ' + token).expect(204);
