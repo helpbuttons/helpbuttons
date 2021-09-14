@@ -15,26 +15,43 @@ describe('ButtonController (integration)', () => {
   after(async () => {
     await app.stop();
   });
+  describe('/buttons/new .', () => {
+    it('/buttons/new', async () => {
+      const res = await client.post('/buttons/new').query({ networkId: 4 }).set('Authorization', 'Bearer ' + token).send({
+        "name": "button name",
+        "type": "exchange",
+        "tags": [
+          "onetag"
+        ],
+        "description": "description of da button",
+        "geoPlace": { "type": "Point", "coordinates": [100.0, 0.0] }
+      }).set('Authorization', 'Bearer ' + token);
+      expect(res.body).to.deepEqual({
+        id: 6,
+        name: 'button name',
+        type: 'exchange',
+        tags: ['onetag'],
+        description: 'description of da button',
+        geoPlace: {
+          coordinates: [100, 0],
+          type: "Point"
+        }
+      });
+      expect(res.statusCode).to.equal(200);
+    });
 
-  it('/buttons/new', async () => {
-    const res = await client.post('/buttons/new').query({ networkId: 4 }).set('Authorization', 'Bearer ' + token).send({
-      "name": "button name",
-      "type": "exchange",
-      "tags": [
-        "onetag"
-      ],
-      "description": "description of da button",
-      "latitude": 3.12321321,
-      "longitude": 5.32421321,
-    }).set('Authorization', 'Bearer ' + token).expect(200);
-    expect(res.body).to.containEql({
-      id: 6,
-      name: 'button name',
-      type: 'exchange',
-      tags: ['onetag'],
-      description: 'description of da button',
-      latitude: 3.12321321,
-      longitude: 5.32421321
+    it('/buttons/new with invalid geoLocation', async () => {
+      const res = await client.post('/buttons/new').query({ networkId: 4 }).set('Authorization', 'Bearer ' + token).send({
+        "name": "button name",
+        "type": "exchange",
+        "tags": [
+          "onetag"
+        ],
+        "description": "description of da button",
+        "geoPlace": { "type": "LineString", "coordinates": [100.0, 0.0] }
+      }).set('Authorization', 'Bearer ' + token);
+      expect(res.statusCode).to.equal(422);
+      // expect(res["error"].text).to.equal('`geoPlace` is not well formated, please check the documentation at https://geojson.org/');
     });
   });
 
@@ -49,8 +66,10 @@ describe('ButtonController (integration)', () => {
           "onetag"
         ],
         "description": "description of da button",
-        "latitude": 3.12321321,
-        "longitude": 5.32421321
+        geoPlace: {
+          coordinates: [100, 0],
+          type: "Point"
+        }
       }).set('Authorization', 'Bearer ' + token).expect(200);
     });
     it('/buttons/find with networks', async () => {
@@ -65,8 +84,10 @@ describe('ButtonController (integration)', () => {
             description: 'Net for animal rescue',
             privacy: 'publico',
             place: 'Livorno, Italia',
-            latitude: 43.33,
-            longitude: 43.33,
+            // geoPlace: {
+            //   coordinates: [100, 0],
+            //   type: "Point"
+            // },
             radius: 240,
             tags: ['Animales', 'Perritos', 'Adopcion'],
             role: 'admin'
@@ -88,7 +109,7 @@ describe('ButtonController (integration)', () => {
   });
 
   it('/buttons/findById get button with id=1', async () => {
-    
+
     const resFilterOne = await client.get('/buttons/findById/1').set('Authorization', 'Bearer ' + token).expect(200);
     expect(resFilterOne.body).to.deepEqual({
       id: 1,
@@ -96,8 +117,7 @@ describe('ButtonController (integration)', () => {
       type: 'exchange',
       tags: ['onetag'],
       description: 'description of da button',
-      latitude: 3.12321321,
-      longitude: 5.32421321
+      geoPlace: {coordinates: [100, 0],type: "Point"},
     });
   });
 
@@ -110,8 +130,10 @@ describe('ButtonController (integration)', () => {
       type: 'exchange',
       tags: ['onetag'],
       description: 'description of da button',
-      latitude: 3.12321321,
-      longitude: 5.32421321
+      geoPlace: {
+        coordinates: [100, 0],
+        type: "Point"
+      }
     });
 
     const newName = generateUniqueId();
@@ -124,8 +146,10 @@ describe('ButtonController (integration)', () => {
       type: 'exchange',
       tags: ['onetag'],
       description: 'description of da button',
-      latitude: 3.12321321,
-      longitude: 5.32421321
+      geoPlace: {
+        coordinates: [100, 0],
+        type: "Point"
+      }
     });
     await client.patch('/buttons/edit/1').send({ "name": "button name" }).set('Authorization', 'Bearer ' + token).expect(204);
   });
@@ -133,19 +157,21 @@ describe('ButtonController (integration)', () => {
   describe('/buttons/delete', () => {
     it('/buttons/delete/{id}', async () => {
       const restFindByIdPrev = await client.get('/buttons/findById/3').set('Authorization', 'Bearer ' + token).expect(200);
-    expect(restFindByIdPrev.body).to.deepEqual({
-      id: 3,
-      name: 'button name',
-      type: 'exchange',
-      tags: ['onetag'],
-      description: 'description of da button',
-      latitude: 3.12321321,
-      longitude: 5.32421321
-    });
+      expect(restFindByIdPrev.body).to.deepEqual({
+        id: 3,
+        name: 'button name',
+        type: 'exchange',
+        tags: ['onetag'],
+        description: 'description of da button',
+        geoPlace: {
+          coordinates: [100, 0],
+          type: "Point"
+        }
+      });
 
-    await client.delete('/buttons/delete/3').set('Authorization', 'Bearer ' + token).expect(204);
+      await client.delete('/buttons/delete/3').set('Authorization', 'Bearer ' + token).expect(204);
 
-    await client.get('/buttons/findById/3').set('Authorization', 'Bearer ' + token).expect(404);
+      await client.get('/buttons/findById/3').set('Authorization', 'Bearer ' + token).expect(404);
     });
   });
 

@@ -16,9 +16,11 @@ import {
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
 import {Button, Network} from '../models';
 import {ButtonRepository, NetworkRepository, TemplateButtonRepository} from '../repositories';
+import { Validations } from './validations';
 
 import {authenticate} from '@loopback/authentication';
 @authenticate('jwt')
@@ -54,6 +56,11 @@ export class ButtonController {
       },
     }) button: Omit<Button, 'id'>,
   ): Promise<Button> {
+    if (button.geoPlace){
+      if (!Validations.isGeoPoint(button.geoPlace)){
+        throw new HttpErrors.UnprocessableEntity('`geoPlace` is not well formated, please check the documentation at https://geojson.org/');
+      }
+    }
     return this.networkRepository.buttons(networkId).create(button);
   }
   
