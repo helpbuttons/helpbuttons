@@ -58,6 +58,9 @@
     "@loopback/rest": "^10.0.0",
     "@loopback/rest-explorer": "^3.3.2",
     "@loopback/service-proxy": "^3.2.2",
+    "@types/geojson": "^7946.0.8",
+    "geojson-validation": "^1.0.2",
+    "loopback-connector-postgresql": "^5.4.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {

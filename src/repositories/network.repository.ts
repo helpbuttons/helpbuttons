@@ -1,11 +1,12 @@
 import { inject, Getter } from '@loopback/core';
-import { DefaultCrudRepository, repository, HasManyThroughRepositoryFactory } from '@loopback/repository';
+import { DefaultCrudRepository, repository, HasManyThroughRepositoryFactory, Filter } from '@loopback/repository';
 import { DbDataSource } from '../datasources';
 import { Network, NetworkRelations, Button, ButtonsNetwork, TemplateButton, TemplateButtonNetwork } from '../models';
 import { ButtonsNetworkRepository } from './buttons-network.repository';
 import { ButtonRepository } from './button.repository';
 import { TemplateButtonRepository } from './template-button.repository';
 import { TemplateButtonNetworkRepository } from './template-button-network.repository';
+import { GeoJSON } from 'geojson';
 
 export class NetworkRepository extends DefaultCrudRepository<
   Network,
@@ -41,5 +42,20 @@ export class NetworkRepository extends DefaultCrudRepository<
 
     this.buttons = this.createHasManyThroughRepositoryFactoryFor('buttons', buttonRepositoryGetter, buttonsNetworkRepositoryGetter,);
     this.registerInclusionResolver('buttons', this.buttons.inclusionResolver);
+  }
+
+  public findForMap(geoPolygon: GeoJSON): Promise<Network[]> {
+    let sql:string = `SELECT id
+                      FROM network
+                      WHERE
+                        ST_Within(ST_GeomFromGeoJSON(geoplace),ST_GeomFromGeoJSON(
+                                    '`+ JSON.stringify(geoPolygon) + `'
+                                    ));`
+    return this.execute(sql).then(res => {
+      const networkIds = res.map(function (networkId : {"id": "number"}) {
+        return networkId.id;
+      });
+      return this.find({where: {id: {inq: networkIds}}});
+    });
   }
 }

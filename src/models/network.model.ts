@@ -46,14 +46,10 @@ export class Network extends Entity {
   place?: string;
 
   @property({
-    type: 'number',
+    type: 'object',
+    required: true,
   })
-  latitude?: number;
-
-  @property({
-    type: 'number',
-  })
-  longitude?: number;
+  geoPlace?: object;
 
   @property({
     type: 'number',

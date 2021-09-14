@@ -34,15 +34,10 @@ export class Button extends Entity {
   description?: string;
 
   @property({
-    type: 'number',
-  })
-  latitude?: number;
-
-  @property({
-    type: 'number',
+    type: 'object',
     required: true,
   })
-  longitude: number;
+  geoPlace?: object;
 
   @hasMany(() => Network, {through: {model: () => ButtonsNetwork}})
   networks: Network[];
