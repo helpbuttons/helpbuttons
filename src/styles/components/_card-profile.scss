@@ -69,7 +69,8 @@ $avatar-margin: $padding-big;
   display: flex;
   flex-direction: column;
   flex: 1;
-
+  background-color: $color-white;
+  border-radius: $border-radius-circle;
   padding: $padding-big;
 }
 

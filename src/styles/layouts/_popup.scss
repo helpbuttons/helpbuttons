@@ -14,13 +14,6 @@ body {
   overflow: hidden; // Revise: Adiós Scroll desde el Body
 }
 
-#modal-overlays {
-
-  position: relative;
-  z-index: $z-index-06;
-
-}
-
 
 .popup {//se usa
   // Scroll popup content

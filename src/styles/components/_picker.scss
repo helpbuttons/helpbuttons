@@ -297,7 +297,7 @@ body {
 
 .picker__options-btn--icon {
   height: 20px;
-  
+
   & svg{
     display: none;
     height: 10px;
@@ -371,7 +371,7 @@ body {
   border-top: 1px solid $color-gray-border;
 }
 
-.menuseselect__themes-span {
+.picker__themes-span {
   font-weight: bold;
   width: 30%;
 }
@@ -394,9 +394,6 @@ body {
   font-weight: ligth;
 }
 
-.prubea {
-  display: flex;
-}
 
 //Revise: clase picker--over
 .picker--over {

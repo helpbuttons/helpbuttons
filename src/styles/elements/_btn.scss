@@ -160,6 +160,13 @@ $btn-font-size-medium: $font-size-medium;
   height: $btn-filter-with-icon-icon-width;
   margin-right: $btn-filter-icon-margin;
 
+  & svg {
+
+    max-width: $btn-filter-with-icon-icon-width;
+    max-height: $btn-filter-with-icon-icon-width;
+
+  }
+
   //GREEN CIRCLE OFFER
   &.green {
 
@@ -303,7 +310,7 @@ $btn-font-size-medium: $font-size-medium;
 
 
 //CIRCLE btn LIKE OFFER/NEED FILTER.
-.btn_circle {
+.btn-circle {
 
     display: flex;
     flex-flow: row nowrap;
@@ -315,19 +322,45 @@ $btn-font-size-medium: $font-size-medium;
     background-color: $color-corporative;
     border: 2px;
 
-    svg {
+    &:hover {
 
-      position: absolute;
-      right: 1rem;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-      width: 2rem;
-      height: 2rem;
+      cursor: pointer;
+      background: $color-black;
+      color: $color-white;
+
+      & svg {
+        fill: $color-white;
+      }
 
     }
 
 }
+
+.btn-circle__icon {
+
+    position: absolute;
+    right: 1rem;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 2rem;
+    height: 2rem;
+
+}
+
+.btn-circle__content {
+
+    position: absolute;
+    right: 1rem;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 2rem;
+    height: 2rem;
+
+
+}
+
 
 //CIRCLE btn LIKE NEED FILTER.
 

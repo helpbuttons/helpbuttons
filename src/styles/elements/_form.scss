@@ -163,15 +163,8 @@ $form-input-font-size: $font-size-medium;
   color: $color-black;
   border: 0;
 
-  &--border {
-    border: 0; // Reviser
-  }
 }
 
-.popup__options-v,
-.popup__options-h {
-  display: flex; // Static components
-}
 
 .form__options-v {
   flex-flow: column nowrap;
