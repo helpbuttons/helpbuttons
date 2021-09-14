@@ -17,7 +17,7 @@ import {
 import {Network} from '../models';
 import {NetworkRepository} from '../repositories';
 import { Validations } from './validations';
-
+import { GeoJSON } from 'geojson';
 export class NetworkController {
   constructor(
     @repository(NetworkRepository)
@@ -119,5 +119,31 @@ export class NetworkController {
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.networkRepository.deleteById(id);
+  }
+
+  @get('/networks/map')
+  @response(200, {
+    description: 'Array of Network model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Network, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async map(
+    @param.query.object('geoPolygon') geoPolygon: GeoJSON,
+    @param.filter(Network) filter?: Filter<Network>,
+  ): Promise<Network[]> {
+    // validate geoPolygon
+    if (!geoPolygon) {
+      return this.networkRepository.find(filter);
+    }
+    if (!Validations.isGeoPolygon(geoPolygon)) {
+      throw new HttpErrors.UnprocessableEntity('`geoPlace` is not well formated, should be a GeoPolygon, please check the documentation at https://geojson.org/');
+    }
+    return this.networkRepository.findForMap(geoPolygon);
   }
 }
