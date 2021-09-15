@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: button; Type: TABLE; Schema: public; Owner: postgres
+-- Name: button; Type: TABLE; Schema: public
 --
 
 CREATE TABLE public.button (
@@ -35,10 +35,10 @@ CREATE TABLE public.button (
 );
 
 
-ALTER TABLE public.button OWNER TO postgres;
+
 
 --
--- Name: button_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: button_id_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE public.button_id_seq
@@ -50,17 +50,17 @@ CREATE SEQUENCE public.button_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.button_id_seq OWNER TO postgres;
+
 
 --
--- Name: button_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: button_id_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE public.button_id_seq OWNED BY public.button.id;
 
 
 --
--- Name: buttonsnetwork; Type: TABLE; Schema: public; Owner: postgres
+-- Name: buttonsnetwork; Type: TABLE; Schema: public
 --
 
 CREATE TABLE public.buttonsnetwork (
@@ -70,10 +70,10 @@ CREATE TABLE public.buttonsnetwork (
 );
 
 
-ALTER TABLE public.buttonsnetwork OWNER TO postgres;
+
 
 --
--- Name: buttonsnetwork_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: buttonsnetwork_id_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE public.buttonsnetwork_id_seq
@@ -85,17 +85,17 @@ CREATE SEQUENCE public.buttonsnetwork_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.buttonsnetwork_id_seq OWNER TO postgres;
+
 
 --
--- Name: buttonsnetwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: buttonsnetwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE public.buttonsnetwork_id_seq OWNED BY public.buttonsnetwork.id;
 
 
 --
--- Name: network; Type: TABLE; Schema: public; Owner: postgres
+-- Name: network; Type: TABLE; Schema: public
 --
 
 CREATE TABLE public.network (
@@ -113,10 +113,10 @@ CREATE TABLE public.network (
 );
 
 
-ALTER TABLE public.network OWNER TO postgres;
+
 
 --
--- Name: network_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: network_id_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE public.network_id_seq
@@ -128,17 +128,17 @@ CREATE SEQUENCE public.network_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.network_id_seq OWNER TO postgres;
+
 
 --
--- Name: network_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: network_id_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE public.network_id_seq OWNED BY public.network.id;
 
 
 --
--- Name: role; Type: TABLE; Schema: public; Owner: postgres
+-- Name: role; Type: TABLE; Schema: public
 --
 
 CREATE TABLE public.role (
@@ -148,10 +148,10 @@ CREATE TABLE public.role (
 );
 
 
-ALTER TABLE public.role OWNER TO postgres;
+
 
 --
--- Name: role_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: role_id_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE public.role_id_seq
@@ -163,17 +163,17 @@ CREATE SEQUENCE public.role_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.role_id_seq OWNER TO postgres;
+
 
 --
--- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE public.role_id_seq OWNED BY public.role.id;
 
 
 --
--- Name: templatebutton; Type: TABLE; Schema: public; Owner: postgres
+-- Name: templatebutton; Type: TABLE; Schema: public
 --
 
 CREATE TABLE public.templatebutton (
@@ -184,10 +184,10 @@ CREATE TABLE public.templatebutton (
 );
 
 
-ALTER TABLE public.templatebutton OWNER TO postgres;
+
 
 --
--- Name: templatebutton_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: templatebutton_id_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE public.templatebutton_id_seq
@@ -199,17 +199,17 @@ CREATE SEQUENCE public.templatebutton_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.templatebutton_id_seq OWNER TO postgres;
+
 
 --
--- Name: templatebutton_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: templatebutton_id_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE public.templatebutton_id_seq OWNED BY public.templatebutton.id;
 
 
 --
--- Name: templatebuttonnetwork; Type: TABLE; Schema: public; Owner: postgres
+-- Name: templatebuttonnetwork; Type: TABLE; Schema: public
 --
 
 CREATE TABLE public.templatebuttonnetwork (
@@ -219,10 +219,10 @@ CREATE TABLE public.templatebuttonnetwork (
 );
 
 
-ALTER TABLE public.templatebuttonnetwork OWNER TO postgres;
+
 
 --
--- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE; Schema: public
 --
 
 CREATE SEQUENCE public.templatebuttonnetwork_id_seq
@@ -234,59 +234,59 @@ CREATE SEQUENCE public.templatebuttonnetwork_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.templatebuttonnetwork_id_seq OWNER TO postgres;
+
 
 --
--- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public
 --
 
 ALTER SEQUENCE public.templatebuttonnetwork_id_seq OWNED BY public.templatebuttonnetwork.id;
 
 
 --
--- Name: button id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: button id; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY public.button ALTER COLUMN id SET DEFAULT nextval('public.button_id_seq'::regclass);
 
 
 --
--- Name: buttonsnetwork id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: buttonsnetwork id; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY public.buttonsnetwork ALTER COLUMN id SET DEFAULT nextval('public.buttonsnetwork_id_seq'::regclass);
 
 
 --
--- Name: network id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: network id; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY public.network ALTER COLUMN id SET DEFAULT nextval('public.network_id_seq'::regclass);
 
 
 --
--- Name: role id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: role id; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY public.role ALTER COLUMN id SET DEFAULT nextval('public.role_id_seq'::regclass);
 
 
 --
--- Name: templatebutton id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: templatebutton id; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY public.templatebutton ALTER COLUMN id SET DEFAULT nextval('public.templatebutton_id_seq'::regclass);
 
 
 --
--- Name: templatebuttonnetwork id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: templatebuttonnetwork id; Type: DEFAULT; Schema: public
 --
 
 ALTER TABLE ONLY public.templatebuttonnetwork ALTER COLUMN id SET DEFAULT nextval('public.templatebuttonnetwork_id_seq'::regclass);
 
 
 --
--- Data for Name: button; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: button; Type: TABLE DATA; Schema: public
 --
 
 COPY public.button (id, name, type, tags, description, geoplace, templatebuttonid) FROM stdin;
@@ -294,7 +294,7 @@ COPY public.button (id, name, type, tags, description, geoplace, templatebuttoni
 
 
 --
--- Data for Name: buttonsnetwork; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: buttonsnetwork; Type: TABLE DATA; Schema: public
 --
 
 COPY public.buttonsnetwork (id, networkid, buttonid) FROM stdin;
@@ -302,7 +302,7 @@ COPY public.buttonsnetwork (id, networkid, buttonid) FROM stdin;
 
 
 --
--- Data for Name: network; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: network; Type: TABLE DATA; Schema: public
 --
 
 COPY public.network (name, id, url, avatar, description, privacy, place, geoplace, radius, tags, role) FROM stdin;
@@ -310,7 +310,7 @@ COPY public.network (name, id, url, avatar, description, privacy, place, geoplac
 
 
 --
--- Data for Name: role; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: role; Type: TABLE DATA; Schema: public
 --
 
 COPY public.role (id, name, description) FROM stdin;
@@ -318,7 +318,7 @@ COPY public.role (id, name, description) FROM stdin;
 
 
 --
--- Data for Name: spatial_ref_sys; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: spatial_ref_sys; Type: TABLE DATA; Schema: public
 --
 
 COPY public.spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM stdin;
@@ -326,7 +326,7 @@ COPY public.spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM
 
 
 --
--- Data for Name: templatebutton; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: templatebutton; Type: TABLE DATA; Schema: public
 --
 
 COPY public.templatebutton (id, name, type, fields) FROM stdin;
@@ -334,7 +334,7 @@ COPY public.templatebutton (id, name, type, fields) FROM stdin;
 
 
 --
--- Data for Name: templatebuttonnetwork; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: templatebuttonnetwork; Type: TABLE DATA; Schema: public
 --
 
 COPY public.templatebuttonnetwork (id, networkid, templatebuttonid) FROM stdin;
@@ -342,49 +342,49 @@ COPY public.templatebuttonnetwork (id, networkid, templatebuttonid) FROM stdin;
 
 
 --
--- Name: button_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: button_id_seq; Type: SEQUENCE SET; Schema: public
 --
 
 SELECT pg_catalog.setval('public.button_id_seq', 1, false);
 
 
 --
--- Name: buttonsnetwork_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: buttonsnetwork_id_seq; Type: SEQUENCE SET; Schema: public
 --
 
 SELECT pg_catalog.setval('public.buttonsnetwork_id_seq', 1, false);
 
 
 --
--- Name: network_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: network_id_seq; Type: SEQUENCE SET; Schema: public
 --
 
 SELECT pg_catalog.setval('public.network_id_seq', 1, false);
 
 
 --
--- Name: role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: role_id_seq; Type: SEQUENCE SET; Schema: public
 --
 
 SELECT pg_catalog.setval('public.role_id_seq', 1, false);
 
 
 --
--- Name: templatebutton_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: templatebutton_id_seq; Type: SEQUENCE SET; Schema: public
 --
 
 SELECT pg_catalog.setval('public.templatebutton_id_seq', 1, false);
 
 
 --
--- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE SET; Schema: public
 --
 
 SELECT pg_catalog.setval('public.templatebuttonnetwork_id_seq', 1, false);
 
 
 --
--- Name: button button_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: button button_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.button
@@ -392,7 +392,7 @@ ALTER TABLE ONLY public.button
 
 
 --
--- Name: buttonsnetwork buttonsnetwork_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: buttonsnetwork buttonsnetwork_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.buttonsnetwork
@@ -400,7 +400,7 @@ ALTER TABLE ONLY public.buttonsnetwork
 
 
 --
--- Name: network network_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: network network_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.network
@@ -408,7 +408,7 @@ ALTER TABLE ONLY public.network
 
 
 --
--- Name: role role_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: role role_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.role
@@ -416,7 +416,7 @@ ALTER TABLE ONLY public.role
 
 
 --
--- Name: templatebutton templatebutton_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: templatebutton templatebutton_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.templatebutton
@@ -424,7 +424,7 @@ ALTER TABLE ONLY public.templatebutton
 
 
 --
--- Name: templatebuttonnetwork templatebuttonnetwork_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: templatebuttonnetwork templatebuttonnetwork_pkey; Type: CONSTRAINT; Schema: public
 --
 
 ALTER TABLE ONLY public.templatebuttonnetwork

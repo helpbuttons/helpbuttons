@@ -36,7 +36,8 @@
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build",
-    "start:watch": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\""
+    "start:watch": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
+    "start:gis:watch": "NODE_ENV=postgres tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\""
   },
   "repository": {
     "type": "git",
