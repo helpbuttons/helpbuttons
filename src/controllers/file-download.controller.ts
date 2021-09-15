@@ -20,28 +20,28 @@ const readdir = promisify(fs.readdir);
 
 export class FileDownloadController {
   constructor(@inject(STORAGE_DIRECTORY) private storageDirectory: string) {}
-  @get('/files', {
-    responses: {
-      200: {
-        content: {
-          // string[]
-          'application/json': {
-            schema: {
-              type: 'array',
-              items: {
-                type: 'string',
-              },
-            },
-          },
-        },
-        description: 'A list of files',
-      },
-    },
-  })
-  async listFiles() {
-    const files = await readdir(this.storageDirectory);
-    return files;
-  }
+  // @get('/files', {
+  //   responses: {
+  //     200: {
+  //       content: {
+  //         // string[]
+  //         'application/json': {
+  //           schema: {
+  //             type: 'array',
+  //             items: {
+  //               type: 'string',
+  //             },
+  //           },
+  //         },
+  //       },
+  //       description: 'A list of files',
+  //     },
+  //   },
+  // })
+  // async listFiles() {
+  //   const files = await readdir(this.storageDirectory);
+  //   return files;
+  // }
 
   @get('/files/{filename}')
   @oas.response.file()
