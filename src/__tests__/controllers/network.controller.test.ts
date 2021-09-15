@@ -25,7 +25,10 @@ describe('NetworkController (integration)', () => {
         "avatar": "image/url.png",
         "description": "Net for animal rescue",
         "privacy": "publico",
-        "geoPlace": {"coordinates": [100, 0], "type": "Point"},
+        "geoPlace": { "coordinates": [
+          -9.16534423828125,
+          38.755154214849426
+        ], "type": "Point" },
         "radius": 240
       }
     ).set('Authorization', 'Bearer ' + token).expect(200);
@@ -37,7 +40,10 @@ describe('NetworkController (integration)', () => {
       "description": "Net for animal rescue",
       "privacy": "publico",
       "place": "Livorno, Italia",
-      "geoPlace": {"coordinates": [100, 0], "type": "Point"},
+      "geoPlace": { "coordinates": [
+        -9.16534423828125,
+        38.755154214849426
+      ], "type": "Point" },
       "radius": 240,
       "tags": [
         "Animales",
@@ -59,7 +65,7 @@ describe('NetworkController (integration)', () => {
           "onetag"
         ],
         "description": "description of da button",
-        "geoPlace": {"coordinates": [100, 0], "type": "Point"},
+        "geoPlace": { "coordinates": [100, 0], "type": "Point" },
       }).set('Authorization', 'Bearer ' + token).expect(200);
     });
     it('/networks/find', async () => {
@@ -96,7 +102,7 @@ describe('NetworkController (integration)', () => {
           description: 'Net for animal rescue',
           privacy: 'publico',
           place: 'Livorno, Italia',
-          "geoPlace": {"coordinates": [100, 0], "type": "Point"},
+          "geoPlace": { "coordinates": [100, 0], "type": "Point" },
           radius: 240,
           tags: ['Animales', 'Perritos', 'Adopcion'],
           role: 'admin',
@@ -107,7 +113,7 @@ describe('NetworkController (integration)', () => {
               type: 'exchange',
               tags: ['onetag'],
               description: 'description of da button',
-              "geoPlace": {"coordinates": [100, 0], "type": "Point"}
+              "geoPlace": { "coordinates": [100, 0], "type": "Point" }
             }
           ]
         }]
@@ -131,7 +137,7 @@ describe('NetworkController (integration)', () => {
           description: 'Net for animal rescue',
           privacy: 'publico',
           place: 'Livorno, Italia',
-          "geoPlace": {"coordinates": [100, 0], "type": "Point"},
+          "geoPlace": { "coordinates": [100, 0], "type": "Point" },
           radius: 240,
           tags: ['Animales', 'Perritos', 'Adopcion'],
           role: 'admin'

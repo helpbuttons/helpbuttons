@@ -1,5 +1,5 @@
 import { inject, Getter } from '@loopback/core';
-import { DefaultCrudRepository, repository, HasManyThroughRepositoryFactory, Filter } from '@loopback/repository';
+import { DefaultCrudRepository, repository, HasManyThroughRepositoryFactory } from '@loopback/repository';
 import { DbDataSource } from '../datasources';
 import { Network, NetworkRelations, Button, ButtonsNetwork, TemplateButton, TemplateButtonNetwork } from '../models';
 import { ButtonsNetworkRepository } from './buttons-network.repository';
@@ -45,7 +45,7 @@ export class NetworkRepository extends DefaultCrudRepository<
   }
 
   public findForMap(geoPolygon: GeoJSON): Promise<Network[]> {
-    let sql:string = `SELECT id
+    const sql:string = `SELECT id
                       FROM network
                       WHERE
                         ST_Within(ST_GeomFromGeoJSON(geoplace),ST_GeomFromGeoJSON(

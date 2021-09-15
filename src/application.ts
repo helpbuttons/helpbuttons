@@ -15,8 +15,7 @@ import {
   JWTAuthenticationComponent,
   UserServiceBindings,
 } from '@loopback/authentication-jwt';
-import {DbDataSource} from './datasources';
-
+import {DbDataSource} from './datasources/db.datasource';
 
 export {ApplicationConfig};
 

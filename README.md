@@ -9,8 +9,15 @@ npm install
 ```
 ### setup the datasources
 
+#### Memory
 ```sh
 npm run migrate
+```
+
+#### Postgres
+To drop all tables, recreate all schema, and run migrations
+```sh
+$ docker-compose exec postgres /migrations/run_all.sh drop
 ```
 
 ### Run the application
