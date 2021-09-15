@@ -35,6 +35,12 @@ export class ButtonController {
     public templateButtonRepository : TemplateButtonRepository
   ) {}
 
+  // @authorize({
+  //   allowedRoles: ['everyone'],
+  //   scopes: ['create'],
+  //   resource: 'order',
+  // })
+  
   @post('/buttons/new', {
     responses: {
       '200': {
