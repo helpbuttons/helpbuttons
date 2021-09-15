@@ -1,5 +1,7 @@
 $popup-background: rgba(0,0,0,.2);
 $popup-header-height: 80px;
+$popup-options-height: 80px;
+$popup-options-border-top: 3px $color-black;
 $popup-max-width: 540px;
 $popup-content-height: calc( 100vh - #{$popup-header-height });
 $popup-header-lateral: calc( 100% / 2 - #{$popup-max-width} / 2 );
@@ -7,6 +9,7 @@ $popup-header-width: 100%;
 $popup-header-icon-width: 20px;
 $popup__img-height: 200px;
 $popup-comments: 24px;
+
 $popup-paragraph-padding: 1rem 2rem;
 $popup-max-height-large: 720px;
 
@@ -62,7 +65,16 @@ body {
 
 .popup__header-nav {//se usa
   flex: 0 1 $popup-header-width;
-  text-align: center;
+}
+
+.popup__header-left {//se usa
+  @extend .popup__header-nav;
+  text-align: left;
+}
+
+.popup__header-right {//se usa
+  @extend .popup__header-nav;
+  text-align: right;
 }
 
 .popup__header-content {//se usa
@@ -97,19 +109,15 @@ body {
   }
 }
 
-// conents
-
 .popup__paragraph {//se usa
 
   font-size: $font-size-general;
   line-height: 1.5rem;
-  //padding: $popup-paragraph-padding;//lo baje a 1rem por el momento REVISE
 }
 
 
 .popup__content {//se usa
-  //height: 100vh;
-  //overflow: auto;REVISE
+
   width: 100%;
   height: 100%;
 
@@ -120,17 +128,15 @@ body {
 }
 
 .popup__img {//se usa
+
   height: $popup__img-height;
+  overflow: hidden;
+  display: flex;
+
 
   svg {
     width: 100%;
     height: 100%;
-  }
-}
-
-.overlaw-scroll {
-  .liquid-child {
-    overflow: auto;
   }
 }
 
@@ -170,18 +176,17 @@ body {
 .popup__options-btn {//se usa
   display: inline-block;
   background: $color-white;
+  height: $popup-options-height;
 
   text-align: center;
-
   font-size: $font-size-general;
-  line-height: 2rem;
+  line-height: $popup-options-height;
   width: 100%;
   vertical-align: middle;
-  //padding: $popup-paragraph-padding;//REVISE ESTE PADDING SE PUEDE ELIMINAR IGUALMENTE EL DE LA CLASE DE _picker
-  height: auto;
+  border: none;
+  border-top: 1px solid $color-gray;
 
   &:last-child {
-    border-bottom: none;
   }
 
   &:focus {
@@ -217,29 +222,33 @@ body {
 }
 
 .popup__options-title {
+
   display: inline-block;
-
   text-align: center;
-
   font-size: $font-size-general;
   line-height: 1.5rem;
   width: 100%;
   vertical-align: middle;
   height: auto;
   margin-bottom: 10px;
+
 }
 
 //REVISE
 .popup__section {//se usa
+
   padding: 1rem 1rem;
+
 }
 
 .popup__options-v {//se usa
+
   flex-flow: column nowrap;
 
 }
 
 .popup__options-h {//se usa
+
   //flex-flow: row nowrap;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -247,15 +256,19 @@ body {
   .popup__options-btn {
     flex: 0 1 50%;
   }
+
 }
 
 .popup-paragraph {
+
   text-align: center;
   margin-top: 20px;
+
 }
 
 @media #{$breakpoints-medium} {
   .popup {
+
     margin: 0 auto;
     max-width: $popup-max-width;
 

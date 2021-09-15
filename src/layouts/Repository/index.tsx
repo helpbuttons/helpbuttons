@@ -312,22 +312,10 @@ function Repository() {
           </h3>
           <section class="repository__section repository__section--yellow">
 
-          <div class="card-button-map card-button-map--white">
+          <div class="card-button-map card-button-map--need">
             <div class="card-button-map__content">
 
-             <div class="card-button-map__nets">
-
-                     <img src='https://help-buttons-staging.s3.eu-west-3.amazonaws.com/statics/assets/categories/{{net.imgUrl}}.png' alt="" class="card-avatar card-button-map__net-icon"></img>
-
-             </div>
-
-              <div class="card-button-map__header">
-
-                <div class="card-button-map__avatar">
-
-                          <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar card-avatar picture__img"></img>
-
-                </div>
+              <div class="card-button-map__header ">
 
                 <div class="card-button-map__info">
 
@@ -337,15 +325,7 @@ function Repository() {
 
                   </div>
 
-                  <div class="card-button-map__name">
-                    Username
-                  </div>
-
                 </div>
-
-                <div class="card-button-map__submenu card-button-map__trigger">
-                </div>
-
 
               </div>
 
@@ -354,14 +334,6 @@ function Repository() {
                     <div class="card-button-map__busca">
                       <div class="hashtag">tag</div>
                     </div>
-
-              </div>
-
-              <div class="card-button-map__paragraph">
-
-                <p>description</p>
-
-                <p class="card-button-map__phone">phone</p>
 
               </div>
 
@@ -379,11 +351,11 @@ function Repository() {
 
             </div>
 
-            <picture class="card-button-map__picture picture">
+            <div class="card-button-map__picture-container">
 
-              <img src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" class="card-button-map__picture picture__img"></img>
+              <img src="https://dummyimage.com/1000x1000/#ccc/fff" alt="button-picture" class="card-button-map__picture picture__img"></img>
 
-            </picture>
+            </div>
 
           </div>
 
@@ -397,21 +369,15 @@ function Repository() {
 
           <div class="card-button-list card-button-list--white">
 
+            <div class="card-button-list__picture-container">
+
+              <img src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" class="card-button-map__picture picture__img"></img>
+
+            </div>
+
             <div class="card-button-list__content">
 
-             <div class="card-button-list__nets">
-
-                     <img src='https://help-buttons-staging.s3.eu-west-3.amazonaws.com/statics/assets/categories/{{net.imgUrl}}.png' alt="" class="card-avatar card-button-list__net-icon"></img>
-
-             </div>
-
               <div class="card-button-list__header">
-
-                <div class="card-button-list__avatar">
-
-                  <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar card-avatar picture__img"></img>
-
-                </div>
 
                 <div class="card-button-list__info">
 
@@ -421,9 +387,9 @@ function Repository() {
 
                   </div>
 
-                  <div class="card-button-list__name">
+                  <div class="card-button-list__status card-button-list__status">
 
-                    Username
+                    <span class="card-button-list__title">Button Name</span>
 
                   </div>
 
@@ -464,12 +430,6 @@ function Repository() {
 
             </div>
 
-            <picture class="card-button-list__picture picture">
-
-              <img src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" class="card-button-list__picture picture__img"></img>
-
-            </picture>
-
           </div>
 
           </section>
@@ -483,7 +443,7 @@ function Repository() {
 
             <div class="popup__header">
               <header class="popup__header-content">
-                <div class="popup__header-nav">
+                <div class="popup__header-left">
                   <button class="popup__header-button">
                     <Image class="btn-circle__icon" src={back} alt="icon"/>
                   </button>
@@ -496,7 +456,7 @@ function Repository() {
                     UserTelegram
                   </h1>
                 </div>
-                <div class="popup__header-nav">
+                <div class="popup__header-right">
                   <button class="popup__header-button">
                     <Image class="btn-circle__icon" src={icon} alt="icon"/>
                   </button>
@@ -513,7 +473,7 @@ function Repository() {
           <section class="repository__section repository__section--yellow">
 
 
-            <div class="card-button card-button card-button--white">
+            <div class="card-button card-button card-button--need">
               <div class="card-button__content">
 
                <div class="card-button__nets">
@@ -783,7 +743,7 @@ function Repository() {
                     Lorem ipsum es el texto..
                   </div>
                   <a class="card-notification__close">
-                    <Image class="btn-circle__icon" src={iconCross} alt="icon"/>
+                    <div class="icon-circle"><Image class="" src={iconCross} alt="icon"/></div>
                   </a>
                 </div>
               </div>
@@ -857,26 +817,36 @@ function Repository() {
         <hr></hr>
 
         <h3 class="repository__title">
-          component/card-register
+          component/popup-register
         </h3>
 
         <section class="repository__section">
+
             <div class="popup">
-              <div class="popup__header ">
-                <div class="popup__header-nav">
-                  <Image class="btn-circle__icon" src={iconCross} alt="icon"/>
-                </div>
-                <div class="popup__header-center">
-                  <div class="popup__header-title">REGISTER</div>
-                </div>
-                <div class="popup__header-nav">
-                  <Image class="btn-circle__icon" src={iconCross} alt="icon"/>
-                </div>
+              <div class="popup__header">
+                <header class="popup__header-content">
+                  <div class="popup__header-left">
+                    <button class="popup__header-button">
+                      <Image class="btn-circle__icon" src={back} alt="icon"/>
+                    </button>
+                  </div>
+                  <div class="popup__header-center">
+                    <h1 class="popup__header-title">
+                      Register
+                    </h1>
+                  </div>
+                  <div class="popup__header-right">
+                    <button class="popup__header-button">
+                      <Image class="btn-circle__icon" src={icon} alt="icon"/>
+                    </button>
+                  </div>
+                </header>
               </div>
+
               <div class="popup__content">
 
                 <div class="popup__img">
-                  <img src="https://dummyimage.com/100/#ccc/fff" alt="Register_img" class=""></img>
+                  <img src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" class=""></img>
                 </div>
 
                 <form class="popup__section" onsubmit="">
@@ -913,6 +883,13 @@ function Repository() {
         </h3>
 
         <section class="repository__section">
+
+          <input class="dropdown-nets__dropdown-trigger dropdown__dropdown" type='text' list='listid'></input>
+          <datalist class="dropdown-nets__dropdown-content" id='listid'>
+            <option label='label1' value='Net1'>hola</option>
+            <option label='label2' value='Net2'></option>
+          </datalist>
+
         </section>
 
         <hr></hr>

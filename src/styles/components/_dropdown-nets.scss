@@ -12,12 +12,6 @@
 
 }
 
-.dropdown-nets__selected {
-
-  border: 1px solid $color-black;
-
-}
-
 .dropdown-nets__icon {
 
   min-width: rem(25px);
@@ -26,34 +20,19 @@
 
 }
 
-.dropdown-nets__ignore {
-
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  border: none;
-  background: transparent;
-
-}
-
 
 
 .dropdown-nets__dropdown-trigger {
 
-  text-align: center;
+  text-align: left;
   overflow-x: hidden;
-  padding-right: 8rem;
   height: rem(48px);
-  padding: 0;
+  padding: 0 $padding-big;
   width: inherit;
   border: none;
   border-radius: 2rem;
-  background: white;
-  color: #343a40;
+  background: $color-corporative;
+  color: $color-black;
   transition: all 0.2s ease-in-out;
 
   & ul {
@@ -75,68 +54,15 @@
   }
   &:focus {
     cursor: pointer;
-    border: 0.125rem solid #343a40;
     border-radius: $border-radius-circle;
-    background: #ffdd02;
+    background: $color-white;
   }
   &:active {
     cursor: pointer;
-    border: 0.125rem solid #343a40;
     border-radius: $border-radius-circle;
-    background: #ffdd02;
+    background: $color-ligth-gray;
   }
 
-  & > button {
-    all: none;
-    display: inline-flex;
-    padding: rem(12px) 1vw;
-    height: rem(48px);
-    border: 0.125rem solid #343a40;
-    border-radius: $border-radius-circle;
-  }
-
-  & span {
-    left: 0;
-    opacity: 0;
-  }
-
-  & input {
-    width: 0;
-  }
-
-  & li {
-    display: flex;
-    white-space: nowrap;
-
-    justify-content: flex-start;
-    font-size: $font-size-medium;
-    align-items: center;
-    margin: 0;
-    height: 100%;
-    overflow-x: hidden;
-    text-align: left;
-    width: 100%;
-    border: none;
-    background-color: $color-corporative;
-
-    & span {
-      background: transparent;
-      color: transparent;
-      display: none;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      position: absolute;
-    }
-    & span {
-      opacity: 1;
-      font-weight: bold;
-      background: transparent;
-      & > .button-counter {
-        display: none;
-      }
-    }
-  }
 }
 
 .dropdown-nets__dropdown-trigger__triggerOpen {
@@ -212,7 +138,6 @@
     width: 100%;
     margin-top: rem(10px);
     text-align: center;
-    border: 1px solid $color-black;
     max-height: rem(150px);
     overflow-y: auto;
 

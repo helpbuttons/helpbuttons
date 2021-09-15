@@ -155,21 +155,25 @@ $card-notification-date-before-size: 10px;
 $card-notification-close-size: 35px;
 
 .card-notification__close {
+
+  display: flex;
   background: $color-corporative;
   border-radius: 100%;
   border: none;
   height: $card-notification-close-size;
   width: $card-notification-close-size;
-  .icon {
-    height: auto;
-    width: 100%;
-  }
-}
+  position: absolute;
+  right: 0;
+  margin: $margin-small;
+  bottom: calc(50% - 40px);
 
-.card-notification__remove-modal {
-    z-index: 5000;
-    &-content {
-      width: 100%;
-      max-width: rem(450px);
+  & :hover {
+    background-color: $color-black;
+
+    & img {
+      fill: $color-corporative;
     }
+    cursor: pointer;
   }
+
+}
