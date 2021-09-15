@@ -10,12 +10,29 @@ describe('ButtonController (integration)', () => {
   before('setupApplication', async () => {
     ({ app, client } = await setupApplication());
     token = await login(client);
+
+    await client.post('/networks/new').send(
+      {
+        "name": "Perritos en adopcion",
+        "place": "Livorno, Italia",
+        "tags": ["Animales", "Perritos", "Adopcion"],
+        "url": "net/url",
+        "avatar": "image/url.png",
+        "description": "Net for animal rescue",
+        "privacy": "publico",
+        "geoPlace": { "coordinates": [
+          -9.16534423828125,
+          38.755154214849426
+        ], "type": "Point" },
+        "radius": 240
+      }
+    ).set('Authorization', 'Bearer ' + token).expect(200);
+
   });
   after(async () => {
     await app.stop();
   });
 describe('map generation [gis]', () => {
-
 
     it('/networks/find without buttons', async () => {
       const resFilter = await client.get('/networks/map').query({
@@ -49,17 +66,20 @@ describe('map generation [gis]', () => {
       
       expect(resFilter.body).to.deepEqual(
         [{
-          name: 'Perritos en adopcion',
-          id: 3,
-          url: 'net/url',
-          avatar: 'image/url.png',
-          description: 'Net for animal rescue',
-          privacy: 'publico',
-          place: 'Livorno, Italia',
-          "geoPlace": { "coordinates": [100, 0], "type": "Point" },
-          radius: 240,
-          tags: ['Animales', 'Perritos', 'Adopcion'],
-          role: 'admin'
+          "name": "Perritos en adopcion",
+          "place": "Livorno, Italia",
+          "tags": ["Animales", "Perritos", "Adopcion"],
+          "url": "net/url",
+          "avatar": "image/url.png",
+          "description": "Net for animal rescue",
+          "privacy": "publico",
+          "geoPlace": { "coordinates": [
+            -9.16534423828125,
+            38.755154214849426
+          ], "type": "Point" },
+          "radius": 240,
+          "role": "admin",
+          "id": 1
         }]
       );
       expect(resFilter.body.length).to.equal(1);

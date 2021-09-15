@@ -22,8 +22,8 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "pretest": "npm run rebuild",
-    "test": "cp ./data/db.ini.json ./data/db.json && mocha ./dist/__tests__/**/*.test.js",
-    "test-gis": "cp ./data/db.ini.json ./data/db.json && NODE_ENV=postgres  mocha ./dist/__tests__/**/*.gis.js",
+    "test": "cp ./data/memory/db.ini.json ./data/db.json && mocha ./dist/__tests__/**/*.test.js",
+    "test:gis": "npm run postgres:reset && NODE_ENV=postgres mocha ./dist/__tests__/**/*.gis.js",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "docker:build": "docker build -t hb-back .",
@@ -37,7 +37,9 @@
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build",
     "start:watch": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
-    "start:gis:watch": "NODE_ENV=postgres tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\""
+    "start:gis:watch": "NODE_ENV=postgres tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
+    "postgres:install": "docker-compose exec postgres /migrations/run_all.sh new",
+    "postgres:reset": "docker-compose exec postgres /migrations/run_all.sh reset"
   },
   "repository": {
     "type": "git",

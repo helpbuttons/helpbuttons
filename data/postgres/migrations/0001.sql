@@ -3,7 +3,9 @@ CREATE TABLE public.user (
     realm text NOT NULL,
     username text NOT NULL,
     email text NOT NULL,
-    description text
+    description text,
+    emailverified boolean,
+    verificationtoken text
 );
 
 ALTER TABLE ONLY public.user

@@ -12,6 +12,7 @@ services:
     restart: always
     volumes:
      - ../db/:/var/lib/mysql:rw
+     - ./data/postgres/:/migrations/:ro
     environment:
      - POSTGRES_PASSWORD=jgda7s8tds78sagda
     ports:
