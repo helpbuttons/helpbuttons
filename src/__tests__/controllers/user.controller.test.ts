@@ -2,7 +2,7 @@ import { Client, expect } from '@loopback/testlab';
 import { HelpbuttonsBackendApp } from '../..';
 import { setupApplication } from '../helpers/authentication.helper';
 
-describe('Users (integration)', () => {
+describe('Users (integration) [users]', () => {
   let app: HelpbuttonsBackendApp;
   let client: Client;
 
