@@ -6,3 +6,4 @@ export * from './template-button.controller';
 export * from './user.controller';
 export * from './file-download.controller';
 export * from './file-upload.controller';
+export * from './tag.controller';

@@ -23,6 +23,8 @@ import {ButtonRepository, NetworkRepository, TemplateButtonRepository} from '../
 import { Validations } from './validations';
 
 import {authenticate} from '@loopback/authentication';
+import { TagService } from '../services';
+import { service } from '@loopback/core';
 @authenticate('jwt')
 
 export class ButtonController {
@@ -32,14 +34,9 @@ export class ButtonController {
     @repository(NetworkRepository)
     public networkRepository : NetworkRepository,
     @repository(TemplateButtonRepository)
-    public templateButtonRepository : TemplateButtonRepository
+    public templateButtonRepository : TemplateButtonRepository,
+    @service(TagService) public tagService: TagService
   ) {}
-
-  // @authorize({
-  //   allowedRoles: ['everyone'],
-  //   scopes: ['create'],
-  //   resource: 'order',
-  // })
   
   @post('/buttons/new', {
     responses: {
@@ -67,7 +64,13 @@ export class ButtonController {
         throw new HttpErrors.UnprocessableEntity('`geoPlace` is not well formated, please check the documentation at https://geojson.org/');
       }
     }
-    return this.networkRepository.buttons(networkId).create(button);
+
+    return this.networkRepository.buttons(networkId).create(button).then((createdButton) => {
+      if (createdButton.id && button.tags) {
+        this.tagService.addTags('button',createdButton.id.toString(), button.tags);
+      }
+      return createdButton;
+    });
   }
   
   @post('/buttons/addToNetworks', {
@@ -171,7 +174,10 @@ export class ButtonController {
     })
     button: Button,
   ): Promise<void> {
-    await this.buttonRepository.updateById(id, button);
+    await this.buttonRepository.updateById(id, button).then(() => {
+      this.tagService.updateTags('button',id.toString(), button.tags ? button.tags : []);
+      return button;
+    });
   }
 /*
   @put('/buttons/{id}')
