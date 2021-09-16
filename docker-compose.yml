@@ -17,3 +17,4 @@ services:
      - POSTGRES_PASSWORD=jgda7s8tds78sagda
     ports:
      - 5432:5432
+    command: ["postgres", "-c", "log_statement=all"]
