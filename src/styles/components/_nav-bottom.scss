@@ -1,8 +1,9 @@
 $nav-bottom-padding: 8px;
 $nav-bottom-icon-size: 24px;
 $nav-bottom-icon-size-desktop: 28px;
-$nav-bottom-link-create-size: 38px;
-$nav-bottom-link-create-size-desktop: 42px;
+$nav-bottom-link-create-size: 58px;
+$nav-bottom-link-create-margin: -28px;
+$nav-bottom-link-create-size-desktop: 72px;
 $nav-bottom--desktop-width: 500px;
 $nav-bottom-create-message-bottom: 90px ;
 $nav-bottom-create-message-width: 100px;
@@ -16,7 +17,8 @@ $nav-bottom-border: 32px;
   box-sizing: border-box;
   bottom: 0;
   left: 0;
-  position: fixed;
+  //position: fixed; REVISE comented for repository
+  position: relative;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -45,12 +47,14 @@ $nav-bottom-border: 32px;
 }
 
 .nav-bottom__link--create {//se usa
-  background: $color-black; // Revise
+
+  background: $color-black;
   max-width: $nav-bottom-link-create-size;
+  width: $nav-bottom-link-create-size;
   height: $nav-bottom-link-create-size;
-  padding: 8px;
-  margin-top: -18px;
-  border-radius: 12px;
+  padding: $padding-big;
+  margin-top: $nav-bottom-link-create-margin;
+  border-radius: $border-radius-semicircle;
 
   display: flex;
   justify-content: center;
@@ -65,7 +69,8 @@ $nav-bottom-border: 32px;
   }
 }
 
-.nav-bottom__create-message{//se usa
+.nav-bottom__create-message{
+
   position: absolute;
   color: $color-white;
   display: flex;
@@ -100,8 +105,8 @@ $nav-bottom-border: 32px;
    position: absolute;
    margin-top: 0;
    display: block;
-   width: rem(15px);
-   height: rem(15px);
+   width: 15px;
+   height: 15px;
    border: 0;
    color: $color-white;
    font-weight: bold;

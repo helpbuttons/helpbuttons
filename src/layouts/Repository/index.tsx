@@ -1,7 +1,11 @@
 //List of elements component that can be used anywhere in the app
 import icon from '../../../public/assets/svg/icons/chat.svg'
-import iconCross from '../../../public/assets/svg/icons/cross.svg'
+import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
 import back from '../../../public/assets/svg/icons/back.svg'
+import hand from '../../../public/assets/svg/icons/hand_call.svg'
+import send from '../../../public/assets/svg/icons/send.svg'
+import atta from '../../../public/assets/svg/icons/atta.svg'
+
 import Image from 'next/image'
 
 function Repository() {
@@ -87,7 +91,9 @@ function Repository() {
 
             <button class="btn-circle">
               <div class="btn-circle__content">
-                <Image class="btn-circle__icon" src={icon} alt="icon"/>
+                <div class="btn-circle__icon">
+                  <Image class="icon" src={CrossIcon} alt="icon"/>
+                </div>
               </div>
             </button>
 
@@ -171,32 +177,41 @@ function Repository() {
           </h3>
           <section class="repository__section">
 
-            <div class="dropdown">
-              <select class="dropdown__dropdown">
-                <option value="volvo" class="picker__options-btn">Volvo</option>
-                <option value="volvo" class="picker__options-btn">Option1</option>
-                <option value="volvo" class="picker__options-btn">Option2</option>
-                <option value="volvo" class="picker__options-btn">Option3</option>
-                <option value="volvo" class="picker__options-btn">Option4</option>
-                <option value="volvo" class="">Option5</option>
-                <option value="volvo" class="">Option6</option>
+            <div class="dropdown-select">
+              <div class="label">label dropdown</div>
+              <select class="dropdown-select__trigger">
+                <option value="volvo" class="dropdown-select__option">Volvo</option>
+                <option value="volvo" class="dropdown-select__option">Option1</option>
+                <option value="volvo" class="dropdown-select__option">Option2</option>
+                <option value="volvo" class="dropdown-select__option">Option3</option>
+                <option value="volvo" class="dropdown-select__option">Option4</option>
+                <option value="volvo" class="dropdown-select__option">Option5</option>
+                <option value="volvo" class="dropdown-select__option">Option6</option>
               </select>
             </div>
 
             <hr></hr>
 
-            <div class="dropdown">
-              <div class="label">label dropdown</div>
-              <select class="dropdown__dropdown">
-                <option value="volvo" class="select">Volvo</option>
-                <option value="volvo" class="">Option1</option>
-                <option value="volvo" class="">Option2</option>
-                <option value="volvo" class="">Option3</option>
-                <option value="volvo" class="">Option4</option>
-                <option value="volvo" class="">Option5</option>
-                <option value="volvo" class="">Option6</option>
-              </select>
-            </div>
+            <input class="dropdown-nets__dropdown-trigger dropdown__dropdown" autocomplete="off"  id="input" name="browsers" placeholder="Search Network" type='text' list='listid'></input>
+            <datalist class="dropdown-nets__dropdown-content" id='listid'>
+              <option class="dropdown-nets__dropdown-option" label='label1' value='Net1'>hola</option>
+              <option class="dropdown-nets__dropdown-option" label='label2' value='Net2'>hola</option>
+              <option class="dropdown-nets__create-new-button" label='label2' value='Net2'>Create Net</option>
+            </datalist>
+
+            <hr></hr>
+
+            <input class="dropdown__dropdown" autocomplete="off" list="browsers" id="input" name="browsers" placeholder="Search Tag"></input>
+              <datalist class="dropdown-nets__dropdown-content" id='browsers'>
+                <option value="tag1" class="dropdown-nets__dropdown-option" label='label1'>tag</option>
+                <option value="tag2" class="dropdown-nets__dropdown-option" label='label2'>Option1</option>
+                <option value="tag3" class="dropdown-nets__dropdown-option" label='label3'>Option2</option>
+                <option value="tag4" class="dropdown-nets__dropdown-option" label='label4'>Option3</option>
+                <option value="tag5" class="dropdown-nets__dropdown-option" label='label5'>Option4</option>
+                <option value="tag6" class="dropdown-nets__dropdown-option" label='label1'>Option5</option>
+                <option value="tag7" class="dropdown-nets__dropdown-option" label='label1'>Option6</option>
+              </datalist>
+
           </section>
 
           <h3 class="repository__title">
@@ -209,7 +224,7 @@ function Repository() {
                 <input type="checkbox" class="checkbox__checkbox" id="input-tos"></input>
                 <div class="checkbox__content">
                   <div class="checkbox__icon">
-                    <Image class="icon" src={icon} alt="icon"/>
+                    <Image class="icon" src={CrossIcon} alt="icon"/>
                   </div>
                   <div class="checkbox__text">
                     Ahora
@@ -225,7 +240,7 @@ function Repository() {
                 <input type="checkbox" class="checkbox__checkbox" id="input-tos"></input>
                 <div class="checkbox__content">
                   <div class="checkbox__icon">
-                    <Image class="icon" src={icon} alt="icon"/>
+                    <Image class="icon" src={CrossIcon} alt="icon"/>
                   </div>
                   <div class="checkbox__text">
                     Fecha/hora concreta
@@ -241,7 +256,7 @@ function Repository() {
                 <input type="checkbox" class="checkbox__checkbox" id="input-tos"></input>
                 <div class="checkbox__content">
                   <div class="checkbox__icon">
-                    <Image class="icon" src={icon} alt="icon"/>
+                    <Image class="icon" src={CrossIcon} alt="icon"/>
                   </div>
                   <div class="checkbox__text">
                     Cerca de mi
@@ -445,7 +460,9 @@ function Repository() {
               <header class="popup__header-content">
                 <div class="popup__header-left">
                   <button class="popup__header-button">
-                    <Image class="btn-circle__icon" src={back} alt="icon"/>
+                    <div class="btn-circle__icon">
+                      <Image class="icon" src={back} alt="icon"/>
+                    </div>
                   </button>
                 </div>
                 <div class="popup__header-center">
@@ -458,7 +475,9 @@ function Repository() {
                 </div>
                 <div class="popup__header-right">
                   <button class="popup__header-button">
-                    <Image class="btn-circle__icon" src={icon} alt="icon"/>
+                    <div class="btn-circle__icon">
+                      <Image class="icon" src={CrossIcon} alt="icon"/>
+                    </div>
                   </button>
                 </div>
               </header>
@@ -628,7 +647,7 @@ function Repository() {
                     <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
                   </picture>
                   <div class="card-notification__icon">
-                    <Image class="btn-circle__icon" src={icon} alt="icon"/>
+                    <Image class="btn-circle__icon" src={CrossIcon} alt="icon"/>
                   </div>
                 </div>
                 <div class="card-notification__text">
@@ -659,7 +678,7 @@ function Repository() {
                     <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
                   </picture>
                   <div class="card-notification__icon">
-                    <Image class="btn-circle__icon" src={icon} alt="icon"/>
+                    <Image class="btn-circle__icon" src={CrossIcon} alt="icon"/>
                   </div>
                 </div>
                 <div class="card-notification__text">
@@ -690,7 +709,7 @@ function Repository() {
                     <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
                   </picture>
                   <div class="card-notification__icon">
-                    <Image class="btn-circle__icon" src={icon} alt="icon"/>
+                    <Image class="btn-circle__icon" src={CrossIcon} alt="icon"/>
                   </div>
                 </div>
                 <div class="card-notification__text">
@@ -743,7 +762,7 @@ function Repository() {
                     Lorem ipsum es el texto..
                   </div>
                   <a class="card-notification__close">
-                    <div class="icon-circle"><Image class="" src={iconCross} alt="icon"/></div>
+                    <div class="icon-circle"><Image class="" src={CrossIcon} alt="icon"/></div>
                   </a>
                 </div>
               </div>
@@ -774,17 +793,21 @@ function Repository() {
 
                 <div class="paragraph grid-three__column">
                   90
-                  <Image class="btn-circle__icon" src={iconCross} alt="icon"/>
-
+                  <div class="btn-circle__icon">
+                    <Image class="icon" src={CrossIcon} alt="icon"/>
+                  </div>
                 </div>
                 <div class="paragraph grid-three__column">
                   77
-                  <Image class="btn-circle__icon" src={iconCross} alt="icon"/>
-
+                  <div class="btn-circle__icon">
+                    <Image class="icon" src={CrossIcon} alt="icon"/>
+                  </div>
                 </div>
                 <div class="paragraph grid-three__column">
                   23
-                  <Image class="btn-circle__icon" src={iconCross} alt="icon"/>
+                  <div class="btn-circle__icon">
+                    <Image class="icon" src={CrossIcon} alt="icon"/>
+                  </div>
 
                 </div>
               </figure>
@@ -805,7 +828,7 @@ function Repository() {
 
           <div class="btn-with-icon">
             <div class="btn-with-icon__icon">
-              <Image class="btn-circle__icon" src={iconCross} alt="icon"/>
+              <Image class="btn-circle__icon" src={CrossIcon} alt="icon"/>
             </div>
             <span class="btn-with-icon__text">
               Cerrar sesión
@@ -827,7 +850,9 @@ function Repository() {
                 <header class="popup__header-content">
                   <div class="popup__header-left">
                     <button class="popup__header-button">
-                      <Image class="btn-circle__icon" src={back} alt="icon"/>
+                      <div class="btn-circle__icon">
+                        <Image class="icon" src={back} alt="icon"/>
+                      </div>
                     </button>
                   </div>
                   <div class="popup__header-center">
@@ -837,7 +862,9 @@ function Repository() {
                   </div>
                   <div class="popup__header-right">
                     <button class="popup__header-button">
-                      <Image class="btn-circle__icon" src={icon} alt="icon"/>
+                      <div class="btn-circle__icon">
+                        <Image class="icon" src={CrossIcon} alt="icon"/>
+                      </div>
                     </button>
                   </div>
                 </header>
@@ -857,7 +884,7 @@ function Repository() {
 
                   <button class="btn-with-icon button-with-icon--offer">
                     <div class="btn-filter__icon">
-                      <Image class="btn-circle__icon" src={iconCross} alt="icon"/>
+                      <Image class="btn-circle__icon" src={CrossIcon} alt="icon"/>
                     </div>
                     <div class="btn-with-icon__text">
                       ENTRAR
@@ -884,10 +911,11 @@ function Repository() {
 
         <section class="repository__section">
 
-          <input class="dropdown-nets__dropdown-trigger dropdown__dropdown" type='text' list='listid'></input>
+          <input class="dropdown-nets__dropdown-trigger dropdown__dropdown" autocomplete="off" list="" id="input" name="browsers" placeholder="Select Network" type='text'></input>
           <datalist class="dropdown-nets__dropdown-content" id='listid'>
-            <option label='label1' value='Net1'>hola</option>
-            <option label='label2' value='Net2'></option>
+            <option class="dropdown-nets__dropdown-option" label='label1' value='Net1'>hola</option>
+            <option class="dropdown-nets__dropdown-option" label='label2' value='Net2'>hola</option>
+            <option class="dropdown-nets__create-new-button" label='label2' value='Net2'>Create Net</option>
           </datalist>
 
         </section>
@@ -899,6 +927,24 @@ function Repository() {
         </h3>
 
         <section class="repository__section">
+
+        <div class="error-message">
+
+          <div class="error-message__icon">
+            <Image class="icon" src={hand} alt="icon"/>
+          </div>
+          <div class="">
+            <p class="error-message__top-text">Error</p>
+            <h4 class="error-message__title">
+              Titulo error
+            </h4>
+            <p class="error-message__subtitle">
+              Error mensaje
+            </p>
+          </div>
+
+        </div>
+
         </section>
 
         <hr></hr>
@@ -908,6 +954,29 @@ function Repository() {
         </h3>
 
         <section class="repository__section">
+
+          <form class="chats__new-message" onsubmit="">
+
+              <button class="btn-circle">
+                <div class="btn-circle__content">
+                  <div class="btn-circle__icon">
+                    <Image class="icon" src={atta} alt="icon"/>
+                  </div>
+                </div>
+              </button>
+              <div class="chats__new-message-message">
+                <input class="form__input chats__new-message-input"></input>
+              </div>
+              <button class="btn-circle">
+                <div class="btn-circle__content">
+                  <div class="btn-circle__icon">
+                    <Image class="icon" src={send} alt="icon"/>
+                  </div>
+                </div>
+              </button>
+
+          </form>
+
         </section>
 
         <hr></hr>
@@ -926,6 +995,36 @@ function Repository() {
         </h3>
 
         <section class="repository__section">
+
+          <div class="header-search__tool">
+
+            <form class="header-search__form" onsubmit="return false;">
+
+              <div class="header-search__column">
+
+                <div class="header-search__label">Qué</div>
+                <input type="text" class="header-search--tags" placeholder='Selecciona fecha'></input>
+
+              </div>
+
+              <div class="header-search__column">
+
+                  <div class="header-search__label">Dónde</div>
+                  <input type="text" class="header-search--location" placeholder='Selecciona lugar'></input>
+
+              </div>
+
+              <div class="header-search__column">
+
+                <div class="header-search__label">Cuándo</div>
+                <input type="text" class="header-search--time" placeholder='Selecciona fecha'></input>
+
+              </div>
+
+            </form>
+
+          </div>
+
         </section>
 
         <hr></hr>
@@ -935,24 +1034,76 @@ function Repository() {
         </h3>
 
         <section class="repository__section">
+
+          <figure id='markerButton' class="marker-button marker-button--need">
+            <div class="marker-button__image">
+              <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar"></img>
+            </div>
+            <span class="marker-button__arrow"></span>
+            <div class="marker-button__tags marker-button__tags--need">
+                <div class="marker-button__link-tag">
+                  tag
+                </div>
+            </div>
+
+          </figure>
+
         </section>
 
         <hr></hr>
+
+        <section class="repository__section">
+
+          <figure id='markerButton' class="marker-button marker-button--need marker-button--name-alone">
+            <span class="marker-button__arrow"></span>
+            <div class="marker-button__tags--need">
+                <div class="marker-button__link-tag--alone">
+                  palabras
+                </div>
+            </div>
+
+          </figure>
+
+        </section>
+
+        <hr></hr>
+
 
         <h3 class="repository__title">
           component/marker-net
         </h3>
 
         <section class="repository__section">
+
+          <figure id='markerNet' class="marker-net">
+            <div class="marker-net__image">
+              <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar"></img>
+            </div>
+            <span class="marker-net__arrow"></span>
+            <div class="marker-net__name">
+                <div class="marker-net__link-name">
+                  netname
+                </div>
+            </div>
+
+          </figure>
+
         </section>
 
         <hr></hr>
 
-        <h3 class="repository__title">
-          component/marker-net
-        </h3>
-
         <section class="repository__section">
+
+          <figure id='markerButton' class="marker-net marker-net--need marker-net--name-alone">
+            <span class="marker-net__arrow"></span>
+            <div class="marker-net__name">
+                <div class="marker-net__link-name--alone">
+                  netname
+                </div>
+            </div>
+
+          </figure>
+
         </section>
 
         <hr></hr>
@@ -962,6 +1113,58 @@ function Repository() {
         </h3>
 
         <section class="repository__section">
+
+          <div class="message message--me">
+
+            <div class="message__content">
+              message
+            </div>
+            <div class="message__hour">
+              00:00
+            </div>
+
+          </div>
+
+          <hr></hr>
+
+          <div class="message message--you">
+
+            <div class="message__header">
+
+                <div class="message__avatar">
+                  <img src="https://dummyimage.com/30/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
+                </div>
+
+              <div class="message__user-name-container">
+                <p class="message__user-name">Username</p>
+              </div>
+
+            </div>
+
+            <div class="message__content">
+              message
+            </div>
+
+            <div class="message__hour">
+              00:00
+            </div>
+
+          </div>
+
+          <hr></hr>
+
+          <div class="message message--you">
+
+            <div class="message__content">
+              message
+            </div>
+
+            <div class="message__hour">
+              00:00
+            </div>
+
+          </div>
+
         </section>
 
         <hr></hr>
@@ -971,6 +1174,53 @@ function Repository() {
         </h3>
 
         <section class="repository__section">
+
+          <div id="bottom-nav" class="nav-bottom">
+
+            <a href="" class="nav-bottom__link nav-bottom__link--active">
+                <div class="nav-bottom__icon">
+                    <Image class="icon" src={send} alt="icon"/>
+                </div>
+                <div class="nav-bottom__text">
+                  Mapa
+                </div>
+            </a>
+
+            <a href="" class="nav-bottom__link nav-bottom__link--active">
+                <div class="nav-bottom__icon">
+                    <Image class="icon" src={send} alt="icon"/>
+                </div>
+                <div class="nav-bottom__text">
+                  Mapa
+                </div>
+            </a>
+
+            <a href="" class="nav-bottom__link nav-bottom__link--create">
+                <div class="nav-bottom__icon">
+                    <Image class="icon" src={send} alt="icon"/>
+                </div>
+            </a>
+
+            <a href="" class="nav-bottom__link nav-bottom__link--active">
+                <div class="nav-bottom__icon">
+                    <Image class="icon" src={send} alt="icon"/>
+                </div>
+                <div class="nav-bottom__text">
+                  Login
+                </div>
+            </a>
+
+            <a href="" class="nav-bottom__link nav-bottom__link--active">
+                <div class="nav-bottom__icon">
+                    <Image class="icon" src={send} alt="icon"/>
+                </div>
+                <div class="nav-bottom__text">
+                  Profile
+                </div>
+            </a>
+
+          </div>
+
         </section>
 
         <hr></hr>

@@ -52,7 +52,7 @@ body {
   position: relative;
   overflow: auto;
   width: auto; //Revise antes era 100%
-  max-width: rem(350px);
+  max-width: 350px;
   overflow-y: visible !important;
   max-height: 90vh;
   background: $color-white !important;

@@ -153,7 +153,7 @@ $card-button-map-border-height: $border-general-height;
 }
 
 .card-button-map__map-container {
-  border-radius: rem(5px) !important;
+  border-radius: 5px !important;
 }
 
 
@@ -295,8 +295,8 @@ $card-button-map-border-height: $border-general-height;
 }
 
 .card-button-map .avatar {
-  width: rem(70px);
-  height: rem(70px);
+  width: 70px;
+  height: 70px;
 }
 
 
@@ -338,12 +338,12 @@ $card-button-map-border-height: $border-general-height;
 }
 
 .card-button-map__toCity {
-  margin-left: rem(30px);
+  margin-left: 30px;
   text-decoration: underline;
 }
 
 .card-button-map__toCity-list {
-  margin-left: rem(30px);
+  margin-left: 30px;
 }
 
 .card-button-map__close-map {
@@ -381,10 +381,10 @@ $card-button-map-border-height: $border-general-height;
   display: flex;
   justify-content: center;
   overflow: hidden;
-  max-height: rem(70px);
-  max-width: rem(70px);
-  height: rem(70px);
-  width: rem(70px);
+  max-height: 70px;
+  max-width: 70px;
+  height: 70px;
+  width: 70px;
   & .card-avatar {//se usa
     width: auto;
     height: 100%;
@@ -393,8 +393,8 @@ $card-button-map-border-height: $border-general-height;
 
 .card-button-map__map {
   max-height: 45vh;
-  height: rem(500px);
-  border-radius: rem(5px);
+  height: 500px;
+  border-radius: 5px;
   & .leaflet-control-container {
     display: none;
   }

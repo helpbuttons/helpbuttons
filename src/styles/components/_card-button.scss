@@ -150,7 +150,7 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__map-container {
-  border-radius: rem(5px) !important;
+  border-radius: 5px !important;
 }
 
 
@@ -284,31 +284,31 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button .avatar {
-  width: rem(70px);
-  height: rem(70px);
+  width: 70px;
+  height: 70px;
 }
 
 .card-button__edit-icon {
-  width: rem(30px);
-  height: rem(30px);
+  width: 30px;
+  height: 30px;
 }
 
 .card-button__dropdown-container {
   background: none;
   box-shadow: none;
-  max-width: rem(200px);
+  max-width: 200px;
   width: 100%;
   z-index: 10002;
 }
 
 .card-button__dropdown-content {
   background: $color-black;
-  border-radius: rem(2px);
+  border-radius: 2px;
   height: 100%;
   overflow-y: auto;
   color: white;
-  padding-top: rem(10px);
-  padding-bottom: rem(10px);
+  padding-top: 10px;
+  padding-bottom: 10px;
   & > a:hover {
     text-decoration: none;
   }
@@ -317,17 +317,17 @@ $card-button-border-height: $border-general-height;
 .card-button__dropdown-arrow {
   width: 0;
   height: 0;
-  border-left: rem(10px) solid transparent;
-  border-right: rem(10px) solid transparent;
-  border-bottom: rem(20px) solid $color-black;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid $color-black;
   margin-left: auto;
-  margin-right: rem(21px);
+  margin-right: 21px;
 }
 
 .card-button__trigger {
   position: absolute;
   right: 0;
-  padding-right: rem(15px);
+  padding-right: 15px;
   &-button {
     text-align: left;
     background: none;
@@ -338,11 +338,11 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__trigger-options {
-  height: rem(35px);
-  border-radius: rem(1px);
+  height: 35px;
+  border-radius: 1px;
   width: 100%;
-  line-height: rem(35px);
-  padding-left: rem(25px);
+  line-height: 35px;
+  padding-left: 25px;
   &:hover {
     background-color: #ACACAC;
     color: $color-black;
@@ -352,13 +352,13 @@ $card-button-border-height: $border-general-height;
     outline: none;
   }
   &-input {
-    line-height: rem(25px);
-    margin : rem(5px) 0;
-    border-radius: rem(10px);
-    padding-left: rem(25px);
+    line-height: 25px;
+    margin : 5px 0;
+    border-radius: 10px;
+    padding-left: 25px;
     border: none;
-    padding-right: rem(5px);
-    border-radius: rem(2px);
+    padding-right: 5px;
+    border-radius: 2px;
     -webkit-appearance: none;
     outline: none;
   &--email {
@@ -407,12 +407,12 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__toCity {
-  margin-left: rem(30px);
+  margin-left: 30px;
   text-decoration: underline;
 }
 
 .card-button__toCity-list {
-  margin-left: rem(30px);
+  margin-left: 30px;
 }
 
 .card-button__close-map {
@@ -450,10 +450,10 @@ $card-button-border-height: $border-general-height;
   display: flex;
   justify-content: center;
   overflow: hidden;
-  max-height: rem(70px);
-  max-width: rem(70px);
-  height: rem(70px);
-  width: rem(70px);
+  max-height: 70px;
+  max-width: 70px;
+  height: 70px;
+  width: 70px;
   & .card-avatar {//se usa
     width: auto;
     height: 100%;
@@ -462,8 +462,8 @@ $card-button-border-height: $border-general-height;
 
 .card-button__map {
   max-height: 45vh;
-  height: rem(500px);
-  border-radius: rem(5px);
+  height: 500px;
+  border-radius: 5px;
   & .leaflet-control-container {
     display: none;
   }

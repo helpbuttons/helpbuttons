@@ -6,6 +6,8 @@ $chat-color-corporative: $color-corporative;
 $chat-margin-big: $margin-big;
 $chat-icon-width: 20px;
 $chat-button-width: 47px;
+$chat-padding: $padding-big;
+$chat-new-message-radius: $border-radius-circle;
 
 .chat-messages {
   &__container {
@@ -29,16 +31,27 @@ $chat-button-width: 47px;
 }
 
 .chats__new-message {
+
   width: 100%;
   display: flex;
   justify-content: space-between;
+  vertical-align: center;
+  background-color: $color-white;
+  padding: $chat-padding;
+  border-radius: 0 0 $chat-new-message-radius $chat-new-message-radius;
+
+}
+
+.chats__new-message-message {
+  flex-grow:1;
+  padding: 0 $padding-big;
+  margin: auto;
 }
 
 .chats__new-message-input {
   border-radius: $chat-border-radius;
   border: 1px solid $chat-color-gray-border;
   padding: 0 $chat-padding;
-  height: $chat-height !important;
 }
 
 .chats__button {
@@ -53,4 +66,3 @@ $chat-button-width: 47px;
   width: $chat-icon-width !important;
   fill: black !important;
 }
-

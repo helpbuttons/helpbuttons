@@ -81,7 +81,7 @@ $index-mobile-fixed-z-index: $z-index-05;
     position: fixed;
     float: right;
     color: $color-black;
-    bottom: rem(0px);
+    bottom: 0px;
     display: flex;
     justify-content: space-between;
     position: fixed;
@@ -101,7 +101,7 @@ $index-mobile-fixed-z-index: $z-index-05;
     position: relative;
     align-content: center;
     text-align: center;
-    width: rem(60px);
+    width: 60px;
     z-index: 450;
 
   }
@@ -115,7 +115,7 @@ $index-mobile-fixed-z-index: $z-index-05;
     margin: 0.5rem;
     position: relative;
     text-align: center;
-    width: rem(60px);
+    width: 60px;
     z-index: 450;
 
     & .logged {
@@ -242,15 +242,15 @@ $index-mobile-fixed-z-index: $z-index-05;
       background-color: $color-corporative;
       border-radius: 2rem;
       color: $color-black;
-      // height: rem(50px);
+      // height: 50px;
       position: relative;
-      margin: rem(8px);
-      padding: rem(6px);
-      width: rem(100px);
+      margin: 8px;
+      padding: 6px;
+      width: 100px;
       text-align: center;
       &:hover {
         background-color: $color-black;
-        //border: rem(2px) solid $color-black;
+        //border: 2px solid $color-black;
       }
     }
 
@@ -262,7 +262,7 @@ $index-mobile-fixed-z-index: $z-index-05;
       & figure {
         &:hover {
           background-color: $color-black;
-          //border: rem(2px) solid $color-black;
+          //border: 2px solid $color-black;
           & .icon {
             fill: $color-corporative;
           }
@@ -273,14 +273,14 @@ $index-mobile-fixed-z-index: $z-index-05;
     &__create-new-small-btn {
       background-color: $color-corporative;
       border-radius: 50%;
-      bottom: rem(14px);
-      height: rem(50px);
-      margin: rem(8px);
+      bottom: 14px;
+      height: 50px;
+      margin: 8px;
       position: absolute;
-      padding: rem(6px);
-      right: rem(190px);
+      padding: 6px;
+      right: 190px;
       text-align: center;
-      width: rem(50px);
+      width: 50px;
       z-index: 450;
 
       &:hover {
@@ -293,14 +293,14 @@ $index-mobile-fixed-z-index: $z-index-05;
     &__create-new-small-btn-list {
       background-color: $color-corporative;
       border-radius: 50%;
-      bottom: rem(14px);
-      height: rem(50px);
-      margin: rem(8px);
+      bottom: 14px;
+      height: 50px;
+      margin: 8px;
       position: fixed;
-      padding: rem(6px);
-      right: rem(200px);
+      padding: 6px;
+      right: 200px;
       text-align: center;
-      width: rem(50px);
+      width: 50px;
       z-index: 450;
 
       &:hover {
@@ -314,14 +314,14 @@ $index-mobile-fixed-z-index: $z-index-05;
       display: inline-block; // Revise
       background-color: white;
       border-radius: 50%;
-      bottom: rem(20px);
-      height: rem(50px);
-      padding: rem(3px);
+      bottom: 20px;
+      height: 50px;
+      padding: 3px;
       position: absolute;
       text-align: center;
-      right: rem(7px);
+      right: 7px;
       margin: 8px;
-      width: rem(50px);
+      width: 50px;
       z-index: 450;
       & .icon {
         max-height: 80%;
@@ -395,7 +395,7 @@ $index-mobile-fixed-z-index: $z-index-05;
         overflow: hidden;
         background: none;
         box-shadow: none;
-        max-height: rem(700px);
+        max-height: 700px;
         &-- {
           background-color: $color-corporative;
         }
@@ -405,16 +405,16 @@ $index-mobile-fixed-z-index: $z-index-05;
         box-shadow: none;
         width: 100%;
         & + .ember-modal-dialog {
-          box-shadow: 0 0 rem(10px) #fff;
+          box-shadow: 0 0 10px #fff;
         }
       }
     }
   }
   */
   &__button-creation {
-    padding: rem(5px);
+    padding: 5px;
     border-radius: 50%;
-    width: rem(166px);
+    width: 166px;
     margin-left: auto;
     margin-right: auto;
     &-border {
@@ -438,7 +438,7 @@ $index-mobile-fixed-z-index: $z-index-05;
     }
     & svg {
       fill: $color-corporative;
-      width: rem(25px);
+      width: 25px;
     }
     &-text {
       font-size: font-size-medium;

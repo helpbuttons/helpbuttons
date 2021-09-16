@@ -22,7 +22,7 @@ $picker-time-height: 40px;
   cursor: pointer;
   border: none;
   background-color: transparent;
-  //padding: rem(5px);
+  //padding: 5px;
   width: 100%;
   text-align: center;
 }
@@ -32,17 +32,17 @@ $picker-time-height: 40px;
   margin-top: 0.9rem;
   overflow: auto;
   width: 100%;
-  margin-top: rem(10px);
+  margin-top: 10px;
   text-align: center;
   border: 1px solid $color-black;
-  max-height: rem(150px);
+  max-height: 150px;
   overflow-y: auto;
 }
 
 .picker-time__dropdown-option {//se usa
   padding: $padding-medium 0;
   display: block;
-  padding: rem(5px) 0;
+  padding: 5px 0;
   cursor: pointer;
   width: 100%;
   background: transparent;

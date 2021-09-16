@@ -1,32 +1,97 @@
 
+$marker-net-height: 70px;
+$marker-net-height-name: 20px;
+$marker-net-width-change: 25px;
+$marker-net-width: 70px;
+$marker-net-radius: $border-radius-circle;
+$marker-net-line: 0.2rem;
+$marker-arrow-width: 2px;
+$marker-arrow-height: 25px;
+
 .marker-net {
 
-  align-items: center;
-  display: flex;
-  padding: $padding-medium 2rem;
+  height: $marker-net-height;
+  width: $marker-net-width;
+  border: none;
   position: relative;
+  margin: auto;
+  margin-bottom: 0;
 
-  &--small {
-    padding: $padding-small 2rem;
-  }
+}
 
-  &__header {
-    padding: rem(2px) 1vw;
-    height: rem(48px);
-  }
+.marker-net--name-alone {
 
-  &__link:hover {
+  height: $marker-net-height-name;
+
+}
+
+.marker-net__link:hover {
     border-color: $color-corporative;
     text-decoration: none;
   }
 
+.marker-net__image {
+
 }
+
+.marker-net__arrow {
+  &:after {
+  }
+}
+
+.marker-net {
+    .marker-net__image {
+      border-color: $color-black;
+      background-color: $color-black;
+    }
+    .marker-net__arrow {
+      &:after {
+        border-top-color: $color-black;
+      }
+    }
+  }
+
+.marker-net__image {
+    width: 100%;
+    height: 100%;
+    border-style: solid;
+    z-index: 1;
+    object-fit: cover;
+    overflow: hidden;
+    border-width: $marker-net-line;
+    display: flex;
+    border-radius: $marker-net-radius;
+  }
+
+  .marker-net__arrow {
+      z-index: $z-index-03;
+      position: relative;
+      bottom: 0;
+      right: 0;
+      left: calc(50% - 8px);
+      margin: auto;
+      &:after,
+      &:before {
+        content: "";
+        display: block;
+        height: $marker-arrow-height;
+        width: $marker-arrow-width;
+        border-top: 10px solid transparent;
+        border-right: 6px solid transparent;
+        border-left: 6px solid transparent;
+        position: absolute;
+        bottom: -33px;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+      }
+    }
 
 .marker-net__icon {
 
   height: auto;
   transition: transform 0.2s;
-  width: rem(30px);
+  width: 30px;
 
   + .marker-net__text {
     margin-left: 2rem;
@@ -41,8 +106,45 @@
 .marker-net__text {
 
   & + .marker-net__icon {
-    margin-left: rem(10px);
+    margin-left: 10px;
   }
+
+}
+
+
+.marker-net__name {
+
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: fit-content;
+  padding: 0 0 $padding-small 0;
+  white-space: nowrap;
+  justify-content: center;
+  width: fit-content;
+  left: auto;
+  max-height: 50px;
+
+}
+
+.marker-net__link-name {
+
+  position: absolute;
+  bottom: 102%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: $color-black;
+  border-radius: $border-radius-semicircle;
+  color: $color-corporative;
+  font-weight: $font-weight-bold;
+  padding: $padding-small $padding-medium;
+
+}
+
+
+.marker-net__link-name--alone {
+
+  @extend .marker-net__link-name;
+
 
 }
 

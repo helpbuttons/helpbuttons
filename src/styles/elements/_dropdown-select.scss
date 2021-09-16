@@ -1,0 +1,64 @@
+$dropdown-dropdown-border-radius: $border-radius-basic;
+$padding-dropdown-options-top: 200px;
+$dropdown-height: $form-input-height;
+$dropdown-width: auto;
+$dropdown-max-width: 10rem;
+
+.dropdown-select {
+  width: 100%;
+}
+
+.dropdown-select__trigger {
+
+  text-align: left;
+  overflow-x: hidden;
+  height: $form-input-height;
+  padding: $padding-big $padding-big;
+  width: inherit;
+  border: none;
+  border-radius: 2rem;
+  background: $color-white;
+  color: $color-black;
+  transition: all 0.2s ease-in-out;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+
+  &::before {
+    display: none;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    cursor: pointer;
+    border-radius: $border-radius-circle;
+    background: $color-white;
+  }
+  &:active {
+    cursor: pointer;
+    border-radius: $border-radius-circle;
+    background: $color-ligth-gray;
+  }
+
+}
+
+
+@media #{$breakpoints-xxlarge} {
+
+  .dropdown-select__trigger {
+
+    display: flex;
+    max-width: $dropdown-max-width;
+    min-width: $dropdown-width;
+    margin-left: $margin-small;
+
+  }
+
+}

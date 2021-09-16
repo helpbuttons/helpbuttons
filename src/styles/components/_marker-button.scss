@@ -1,23 +1,36 @@
-$marker-button-height: rem(50px);
-$marker-button-width-change: rem(25px);
-$marker-button-width: rem(50px);
+$marker-button-height: 70px;
+$marker-button-height-name: 20px;
+$marker-button-width-change: 25px;
+$marker-button-width: 70px;
 $marker-button-radius: $border-radius-circle;
+$marker-button-line: 0.2rem;
+$marker-arrow-width: 2px;
+$marker-arrow-height: 25px;
+
+
 
 
 .marker-button {
-  height: 30px;
+
+  height: $marker-button-height;
+  width: $marker-button-width;
+  border: none;
+  position: relative;
+  margin: auto;
+  margin-bottom: 0;
 
 }
 
-.button-map-icon {
-  height: $marker-button-height;
-  width: $marker-button-width;
-  position: relative;
-  margin-bottom: 0;
-  &--grey {
+.marker-button--name-alone {
+  
+  height: $marker-button-height-name;
+
+}
+
+.marker-button--grey {
     opacity: 0.5;
   }
-  &--change {
+.marker-button--change {
     &:before,
     &:after {
       content: "";
@@ -43,23 +56,24 @@ $marker-button-radius: $border-radius-circle;
       border-top-right-radius: $marker-button-radius;
     }
 
-    .button-map-icon__image {
+    .marker-button__image {
       border-color: transparent;
+
     }
-    .button-map-icon__arrow {
+    .marker-button__arrow {
       &:after {
         border-top-color: $color-green;
       }
     }
   }
 
-  &--swap {
+.marker-button--swap {
     &:before,
     &:after {
       content: "";
       display: block;
-      width: rem(25px);
-      height: rem(50px);
+      width: 25px;
+      height: 50px;
       position: absolute;
       top: 0;
       bottom: 0;
@@ -79,41 +93,42 @@ $marker-button-radius: $border-radius-circle;
       border-top-right-radius: $marker-button-radius;
     }
 
-    .button-map-icon__image {
+    .marker-button__image {
       border-color: transparent;
     }
-    .button-map-icon__arrow {
+    .marker-button__arrow {
       &:after {
         border-top-color: $color-red;
       }
     }
   }
 
-  &--need {
-    .button-map-icon__image {
+.marker-button--need {
+    .marker-button__image {
       border-color: $color-red;
       background-color: $color-red;
     }
 
-    .button-map-icon__arrow {
+    .marker-button__arrow {
       &:after {
         border-top-color: $color-red;
       }
     }
   }
-  &--offer {
-    .button-map-icon__image {
+
+.marker-button--offer {
+    .marker-button__image {
       border-color: $color-green;
       background-color: $color-green;
     }
-    .button-map-icon__arrow {
+    .marker-button__arrow {
       &:after {
         border-top-color: $color-green;
       }
     }
   }
 
-  &--yellow {
+.marker-button--yellow {
     .marker-button__image {
       border-color: $color-corporative;
       background-color: $color-corporative;
@@ -124,76 +139,70 @@ $marker-button-radius: $border-radius-circle;
       }
     }
   }
-  //button net style over map
-  &--net {
-    .button-map-icon__image {
-      border-color: transparent;
-      background-color: transparent;
-    }
-    .button-map-icon__arrow {
-      &:after {
-        border-top-color: transparent;
-      }
-    }
-  }
 
-  &--create {
-    .button-map-icon__image {
+
+.marker-button--create {
+    .marker-button__image {
       border-color: $color-corporative;
       background-color: $color-corporative;
     }
-    .button-map-icon__arrow {
+    .marker-button__arrow {
       &:after {
         border-top-color: $color-corporative;
       }
     }
   }
 
-  &--neutro {
-    .button-map-icon__image {
+.marker-button--neutro {
+    .marker-button__image {
       border-color: $color-black;
       background-color: transparent;
     }
-    .button-map-icon__arrow {
+    .marker-button__arrow {
       &:after {
         border-top-color: $color-black;
       }
     }
   }
 
-  &__image {
+.marker-button__image {
     width: 100%;
     height: 100%;
-    border-radius: $marker-button-radius;
-    border-width: rem(5px);
-    // border-style: solid; //revise
+    border-style: solid;
     z-index: 1;
     object-fit: cover;
+    overflow: hidden;
+    border-width: $marker-button-line;
+    display: flex;
+    border-radius: $marker-button-radius;
   }
-  &__arrow {
-    display: none; //revise hide arrow
-    position: absolute;
+
+.marker-button__arrow {
+    z-index: $z-index-03;
+    position: relative;
     bottom: 0;
     right: 0;
-    left: 0;
-    margin: 0 auto;
+    left: calc(50% - 8px);
+    margin: auto;
     &:after,
     &:before {
       content: "";
       display: block;
-      height: rem(10px);
-      width: rem(5px);
-      border-top: rem(10px) solid transparent;
-      border-right: rem(6px) solid transparent;
-      border-left: rem(6px) solid transparent;
+      height: $marker-arrow-height;
+      width: $marker-arrow-width;
+      border-top: 10px solid transparent;
+      border-right: 6px solid transparent;
+      border-left: 6px solid transparent;
       position: absolute;
-      bottom: rem(-9px);
+      bottom: -33px;
       right: 0;
       left: 0;
       margin: 0 auto;
     }
   }
-  &__tracking_pos {
+
+
+.marker-button__tracking_pos {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -207,43 +216,50 @@ $marker-button-radius: $border-radius-circle;
       content: "";
       border-top-color: $color-green;
       display: block;
-      height: rem(10px);
-      width: rem(5px);
-      border-top: rem(10px) solid transparent;
-      border-right: rem(6px) solid transparent;
-      border-left: rem(6px) solid transparent;
+      height: 10px;
+      width: 5px;
+      border-top: 10px solid transparent;
+      border-right: 6px solid transparent;
+      border-left: 6px solid transparent;
       position: absolute;
-      bottom: rem(-9px);
+      bottom: -9px;
       right: 0;
       left: 0;
       margin: 0 auto;
     }
   }
-  &--cluster {
-    .button-map-icon__image {
-      border-color: $color-corporative;
-      background-color: $color-corporative;
-    }
-    .button-map-icon__arrow {
-      &:after {
-        border-top-color: $color-corporative;
-      }
+
+.marker-button--cluster {
+
+  .marker-button__image {
+    border-color: $color-corporative;
+    background-color: $color-corporative;
+  }
+  .marker-button__arrow {
+    &:after {
+      border-top-color: $color-corporative;
     }
   }
+
 }
 
+
 .marker-button__tags {
+
   overflow-x: auto;
   overflow-y: auto;
   max-width: fit-content;
   padding: 0 0 $padding-small 0;
   white-space: nowrap;
+  justify-content: center;
   width: fit-content;
   left: auto;
-  max-height: rem(50px);
+  max-height: 50px;
+
 }
 
 .marker-button__link-tag {
+
   position: absolute;
   bottom: 102%;
   left: 50%;
@@ -251,26 +267,27 @@ $marker-button-radius: $border-radius-circle;
   background: $color-gray;
   border-radius: $border-radius-semicircle;
   color: $color-white;
-  font-size: $font-size-medium;
   font-weight: $font-weight-bold;
   padding: $padding-small $padding-medium;
+
 }
 
-#buttonIcon .marker-button__tags {
-  display: block;
+.marker-button__link-tag--alone {
+
+  @extend .marker-button__link-tag;
+
+
 }
 
-#buttonIcon:hover .marker-button__tags {
-  display: block;
-}
+.marker-button__tags--offer {
 
-.marker-button__tags--green {
   .marker-button__link-tag {
     background: $color-green;
   }
+
 }
 
-.marker-button__tags--red {
+.marker-button__tags--need {
   .marker-button__link-tag {
     background: $color-red;
   }
@@ -293,14 +310,14 @@ $marker-button-radius: $border-radius-circle;
     &:before {
       left: 0;
       background-color: $color-green;
-      border-bottom-left-radius: rem(50px);
-      border-top-left-radius: rem(50px);
+      border-bottom-left-radius: 50px;
+      border-top-left-radius: 50px;
     }
     &:after {
       right: 0;
       background-color: $color-red;
-      border-bottom-right-radius: rem(50px);
-      border-top-right-radius: rem(50px);
+      border-bottom-right-radius: 50px;
+      border-top-right-radius: 50px;
     }
 
     .marker-button__image {

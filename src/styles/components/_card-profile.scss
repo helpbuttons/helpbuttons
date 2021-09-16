@@ -28,23 +28,23 @@ $avatar-margin: $padding-big;
   text-align: center;
   font-size: font-size-medium;
   .icon {
-    width: rem(25px);
-    height: rem(25px);
+    width: 25px;
+    height: 25px;
     fill: $color-gray;
   }
 }
 
 .card-profile__interests {
   font-size: font-size-medium;
-  margin-right: rem(5px);
+  margin-right: 5px;
   color: $color-gray;
 }
 
 .card-profile__toggle-button {
   background-color: transparent;
-  border: rem(2px) solid $color-corporative;
-  width: rem(150px);
-  height: rem(150px);
+  border: 2px solid $color-corporative;
+  width: 150px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,9 +134,9 @@ $avatar-margin: $padding-big;
     height: auto;
     margin: 0 auto;
     background-size: contain;
-    margin-bottom: rem(10px);
+    margin-bottom: 10px;
     & svg {
-      width: rem(20px);
+      width: 20px;
     }
   }
 
@@ -145,23 +145,23 @@ $avatar-margin: $padding-big;
     text-align: center;
     font-size: font-size-medium;
     .icon {
-      width: rem(25px);
-      height: rem(25px);
+      width: 25px;
+      height: 25px;
       fill: $color-gray;
     }
   }
 
   .card-profile__interests {
     font-size: font-size-medium;
-    margin-right: rem(5px);
+    margin-right: 5px;
     color: $color-gray;
   }
 
   .card-profile__toggle-button {
     background-color: transparent;
-    border: rem(2px) solid $color-corporative;
-    width: rem(150px);
-    height: rem(150px);
+    border: 2px solid $color-corporative;
+    width: 150px;
+    height: 150px;
     display: flex;
     align-items: center;
     justify-content: center;

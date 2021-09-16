@@ -3,7 +3,7 @@
       z-index: 1500;
       position: absolute;
       left: 0;
-      top: rem(220px);
+      top: 220px;
       & .loading-overlay__loading-icon {
         background-color: $color-corporative;
         border-radius: 50%;
@@ -12,7 +12,7 @@
     &__loading-icon {
       width: 3rem;
       height: 3rem;
-      margin-top: rem(10px);
+      margin-top: 10px;
     }
 }
 
@@ -20,7 +20,7 @@
   position: absolute;
   width: 3rem;
   height: 3rem;
-  margin-top: rem(10px);
+  margin-top: 10px;
 }
 
 .loading-icon__hidden {

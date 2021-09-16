@@ -40,7 +40,7 @@ body {
 
   width: 100%;
   padding: .5rem;
-
+  height: $popup-header-height;
   border-radius: 25px 25px 0 0;//REVISE SOBRE EL BORDER RADIUS
 
   border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;//REVISE SOBRE EL BORDER RADIUS
@@ -54,7 +54,7 @@ body {
 .popup__header-center {//se usa
   flex: 0 1 $popup-header-width;
   text-align: center;
-  padding: 0 rem(10px);
+  padding: 0 10px;
 
   .icon {
     max-width: 100%;
