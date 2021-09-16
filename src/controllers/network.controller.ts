@@ -18,10 +18,13 @@ import {Network} from '../models';
 import {NetworkRepository} from '../repositories';
 import { Validations } from './validations';
 import { GeoJSON } from 'geojson';
+import { TagService } from '../services';
+import { service } from '@loopback/core';
 export class NetworkController {
   constructor(
     @repository(NetworkRepository)
     public networkRepository : NetworkRepository,
+    @service(TagService) public tagService: TagService
   ) {}
 
   @post('/networks/new')
@@ -47,7 +50,12 @@ export class NetworkController {
         throw new HttpErrors.UnprocessableEntity('`geoPlace` is not well formated, please check the documentation at https://geojson.org/');
       }
     }
-    return this.networkRepository.create(network);
+    return this.networkRepository.create(network).then((createdNetwork) => {
+      if (createdNetwork.id && network.tags) {
+        this.tagService.addTags('network',createdNetwork.id.toString(), network.tags);
+      }
+      return createdNetwork;
+    });
   }
 
   @get('/networks/find')
@@ -99,7 +107,12 @@ export class NetworkController {
     })
     network: Network,
   ): Promise<void> {
-    await this.networkRepository.updateById(id, network);
+    await this.networkRepository.updateById(id, network).then(() => {
+      if (id && network.tags) {
+        this.tagService.addTags('network',id.toString(), network.tags);
+      }
+      return network;
+    });
   }
 /*
   @put('/networks/{id}')

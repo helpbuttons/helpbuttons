@@ -68,9 +68,6 @@ export class ButtonController {
     return this.networkRepository.buttons(networkId).create(button).then((createdButton) => {
       if (createdButton.id && button.tags) {
         this.tagService.addTags('button',createdButton.id.toString(), button.tags);
-      }else {
-        // Maybe should throw??? whats going on?
-        console.log('error, id not created? no tags?');
       }
       return createdButton;
     });
@@ -177,9 +174,9 @@ export class ButtonController {
     })
     button: Button,
   ): Promise<void> {
-    await this.buttonRepository.updateById(id, button).then((createdButton) => {
+    await this.buttonRepository.updateById(id, button).then(() => {
       this.tagService.updateTags('button',id.toString(), button.tags ? button.tags : []);
-      return createdButton;
+      return button;
     });
   }
 /*

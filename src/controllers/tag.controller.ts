@@ -26,26 +26,26 @@ export class TagController {
     public tagRepository : TagRepository,
   ) {}
 
-  @post('/tags/new')
-  @response(200, {
-    description: 'Tag model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Tag)}},
-  })
-  async create(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Tag, {
-            title: 'NewTag',
+  // @post('/tags/new')
+  // @response(200, {
+  //   description: 'Tag model instance',
+  //   content: {'application/json': {schema: getModelSchemaRef(Tag)}},
+  // })
+  // async create(
+  //   @requestBody({
+  //     content: {
+  //       'application/json': {
+  //         schema: getModelSchemaRef(Tag, {
+  //           title: 'NewTag',
             
-          }),
-        },
-      },
-    })
-    tag: Tag,
-  ): Promise<Tag> {
-    return this.tagRepository.create(tag);
-  }
+  //         }),
+  //       },
+  //     },
+  //   })
+  //   tag: Tag,
+  // ): Promise<Tag> {
+  //   return this.tagRepository.create(tag);
+  // }
 /*
   @get('/tags/count')
   @response(200, {
@@ -95,7 +95,7 @@ export class TagController {
     return this.tagRepository.updateAll(tag, where);
   }
 */
-  @get('/tags/findById/{id}')
+  @get('/tags/findByTag/{tag}')
   @response(200, {
     description: 'Tag model instance',
     content: {
@@ -111,24 +111,25 @@ export class TagController {
     return this.tagRepository.findById(id, filter);
   }
 
-  @patch('/tags/{id}')
-  @response(204, {
-    description: 'Tag PATCH success',
-  })
-  async updateById(
-    @param.path.string('id') id: string,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Tag, {partial: true}),
-        },
-      },
-    })
-    tag: Tag,
-  ): Promise<void> {
-    await this.tagRepository.updateById(id, tag);
-  }
-/*
+//   @patch('/tags/{id}')
+//   @response(204, {
+//     description: 'Tag PATCH success',
+//   })
+//   async updateById(
+//     @param.path.string('id') id: string,
+//     @requestBody({
+//       content: {
+//         'application/json': {
+//           schema: getModelSchemaRef(Tag, {partial: true}),
+//         },
+//       },
+//     })
+//     tag: Tag,
+//   ): Promise<void> {
+//     await this.tagRepository.updateById(id, tag);
+//   }
+//
+/* 
   @put('/tags/{id}')
   @response(204, {
     description: 'Tag PUT success',
