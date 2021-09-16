@@ -11,6 +11,7 @@ $dropdown-max-width: 10rem;
 .dropdown-select__trigger {
 
   text-align: left;
+  font-size: $font-size-general;
   overflow-x: hidden;
   height: $form-input-height;
   padding: $padding-big $padding-big;

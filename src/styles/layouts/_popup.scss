@@ -18,7 +18,7 @@ body {
 }
 
 
-.popup {//se usa
+.popup {
   // Scroll popup content
   overflow-y: auto;
   overflow-x: hidden;
@@ -36,7 +36,7 @@ body {
 
 //POPUP HEADERS
 .popup__header--trans,
-.popup__header {//se usa
+.popup__header {
 
   width: 100%;
   padding: .5rem;
@@ -51,7 +51,7 @@ body {
 }
 
 
-.popup__header-center {//se usa
+.popup__header-center {
   flex: 0 1 $popup-header-width;
   text-align: center;
   padding: 0 10px;
@@ -63,21 +63,21 @@ body {
   }
 }
 
-.popup__header-nav {//se usa
+.popup__header-nav {
   flex: 0 1 $popup-header-width;
 }
 
-.popup__header-left {//se usa
+.popup__header-left {
   @extend .popup__header-nav;
   text-align: left;
 }
 
-.popup__header-right {//se usa
+.popup__header-right {
   @extend .popup__header-nav;
   text-align: right;
 }
 
-.popup__header-content {//se usa
+.popup__header-content {
   height: 100%;
   display: flex;
   align-items: center;
@@ -85,7 +85,7 @@ body {
   justify-content: center;
 }
 
-.popup__header-title  {//se usa
+.popup__header-title  {
   font-size: $font-size-general;
 
   font-weight: $font-weight-bold;
@@ -109,14 +109,14 @@ body {
   }
 }
 
-.popup__paragraph {//se usa
+.popup__paragraph {
 
   font-size: $font-size-general;
   line-height: 1.5rem;
 }
 
 
-.popup__content {//se usa
+.popup__content {
 
   width: 100%;
   height: 100%;
@@ -127,7 +127,7 @@ body {
   justify-content: space-between;
 }
 
-.popup__img {//se usa
+.popup__img {
 
   height: $popup__img-height;
   overflow: hidden;
@@ -157,23 +157,23 @@ body {
 
 .popup__comments,
 .popup__options-v,
-.popup__options-h {//se usa
+.popup__options-h {
   display: flex; // Static components
 }
 
-.popup__comments {//se usa
+.popup__comments {
   padding: $popup-comments;
   overflow-y: auto;
   max-height: 300px;
 }
 
-.popups__comments-item {//se usa
+.popups__comments-item {
   background: $color-ligth-gray;
   margin: 8px 0;
   padding: 25px 0;
 }
 
-.popup__options-btn {//se usa
+.popup__options-btn {
   display: inline-block;
   background: $color-white;
   height: $popup-options-height;
@@ -235,19 +235,19 @@ body {
 }
 
 //REVISE
-.popup__section {//se usa
+.popup__section {
 
   padding: 1rem 1rem;
 
 }
 
-.popup__options-v {//se usa
+.popup__options-v {
 
   flex-flow: column nowrap;
 
 }
 
-.popup__options-h {//se usa
+.popup__options-h {
 
   //flex-flow: row nowrap;
   flex-wrap: wrap;

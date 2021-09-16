@@ -159,8 +159,8 @@
     &-loading-location-text {
       text-align: center;
       width: 100%;
-      font-size: 1.2rem;
-      margin-top: 50px
+      font-size: $font-size-general;
+      margin-top: 50px;
     }
   }
   &__loading-spinner, &__loading-spinner * {

@@ -8,6 +8,7 @@ $dropdown-max-width: 10rem;
 
   text-align: left;
   overflow-x: hidden;
+  font-size: $font-size-general;
   height: $form-input-height;
   padding: 0 $padding-big;
   width: auto;
@@ -72,6 +73,7 @@ $dropdown-max-width: 10rem;
   background: $color-corporative;
   color: $color-black;
   transition: all 0.2s ease-in-out;
+  font-size: $font-size-general;
 
 
   &::-webkit-scrollbar {
@@ -122,9 +124,6 @@ $dropdown-max-width: 10rem;
   border: unset;
   border-radius: $border-radius-semicircle; //REVISE
 
-  & + .picker-time__dropdown-option {
-    border-top: 1px solid $color-black;
-  }
 
 }
 

@@ -1280,7 +1280,7 @@ function Repository() {
                     Fecha / hora concreta
                   </div>
               </button>
-              <button  class="picker__option-btn--active" type="button" name="button">
+              <button  class="picker__option-btn-with-icon" type="button" name="button">
                   <div class="picker__option-btn--icon">
                     <CrossIcon />
                   </div>
@@ -1305,68 +1305,84 @@ function Repository() {
             <div class="picker__section">
               <header class="picker__header ">
                   Selecciona días de la semana y hora
-                  <small class=" ">Haga clic para elegir</small>
               </header>
-              <div class="  button-new-date-inserted__week-days">
-                  <button class="selected" type="button" name="button">
-                      <div class="radio-button__text">
+              <div class="picker__row">
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
                         Lun
                       </div>
+                    </div>
                   </button>
 
-                  <button class="selected" type="button" name="button">
-                      <div class="radio-button__text">
-                        Mar
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
                       </div>
+                    </div>
                   </button>
 
-                  <button class="selected" type="button" name="button">
-                      <div class="radio-button__text">
-                        Mie
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
                       </div>
+                    </div>
                   </button>
 
-                  <button class="selected" type="button" name="button">
-                      <div class="radio-button__text">
-                        Jue
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
                       </div>
+                    </div>
                   </button>
 
-                  <button class="selected" type="button" name="button">
-                      <div class="radio-button__text">
-                        Vie
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
                       </div>
+                    </div>
                   </button>
 
-
-                  <button class="" type="button" name="button">
-                      <div class="radio-button__text">
-                        Sab
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
                       </div>
+                    </div>
                   </button>
 
-                  <button class="" type="button" name="button">
-                      <div class="radio-button__text">
-                        Dom
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
                       </div>
+                    </div>
                   </button>
 
               </div>
 
             </div>
 
-            <button class="picker__options-btn button-menu-white" type="button" name="button">
-              Aceptar
-            </button>
+            <div class="picker__options-v">
+              <button  class="picker__option-btn--center" type="button" name="button">
+                  <div class="picker__option-btn--txt">
+                    Aceptar
+                  </div>
+              </button>
+            </div>
 
           </div>
 
           <div class="picker__content">
             <div class="picker__section">
-            
+
               <header class="picker__header ">
                   Selecciona días de la semana y hora
-                  <small class=" ">Haga clic para elegir</small>
               </header>
 
                 <div class="picker-time__selected">

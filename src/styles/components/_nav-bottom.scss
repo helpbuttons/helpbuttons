@@ -11,7 +11,7 @@ $nav-bottom-create-message-left: calc(( #{$nav-bottom--desktop-width} / 2) - (#{
 $nav-bottom-width: 640px;
 $nav-bottom-border: 32px;
 
-.nav-bottom {//se usa
+.nav-bottom {
   background-color: $color-corporative;
   padding: $nav-bottom-padding;
   box-sizing: border-box;
@@ -27,7 +27,7 @@ $nav-bottom-border: 32px;
 }
 
 .nav-bottom__button,
-.nav-bottom__link {//se usa
+.nav-bottom__link {
   flex: 0 1 20%;
   text-align: center;
   text-decoration: none;
@@ -38,7 +38,7 @@ $nav-bottom-border: 32px;
   }
 }
 
-.nav-bottom__text {//se usa
+.nav-bottom__text {
 
   padding-top: .05rem;
   font-size: $font-size-general;
@@ -46,7 +46,7 @@ $nav-bottom-border: 32px;
   font-weight: 700;
 }
 
-.nav-bottom__link--create {//se usa
+.nav-bottom__link--create {
 
   background: $color-black;
   max-width: $nav-bottom-link-create-size;
@@ -88,7 +88,7 @@ $nav-bottom-border: 32px;
   border-radius: $border-radius-circle;
 }
 
-.nav-bottom__icon {//se usa
+.nav-bottom__icon {
   .icon {
     fill: $color-black;
     height: $nav-bottom-icon-size;

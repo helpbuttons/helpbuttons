@@ -17,7 +17,7 @@ $card-button-list-size-icon-before: 18px;
 $card-button-list-whitespace: .5rem;
 $card-button-list-border-height: $border-general-height;
 
-.card-button-list {//se usa
+.card-button-list {
   background: $color-white;
   border: $card-button-list-border;
   max-width: $card-button-list-width;
@@ -31,11 +31,11 @@ $card-button-list-border-height: $border-general-height;
   }
 }
 
-.card-button-list--white {//se usa
+.card-button-list--white {
   background: $color-white;
 }
 
-.card-button-list {//se usa
+.card-button-list {
   &--intercambio-swap-deactivated,
   &--intercambio-deactivated,
   &--offer-deactivated,
@@ -50,7 +50,7 @@ $card-button-list-border-height: $border-general-height;
 .card-button-list--intercambio:after,
 .card-button-list--intercambio:before,
 .card-button-list--intercambio-swap:after,
-.card-button-list--intercambio-swap:before {//se usa
+.card-button-list--intercambio-swap:before {
   content: '';
   border-radius: 0;
   display: inline-block;
@@ -61,49 +61,49 @@ $card-button-list-border-height: $border-general-height;
   width: 100%;
 }
 
-.card-button-list--offer:after {//se usa
+.card-button-list--offer:after {
   background: $color-green;
 }
 
-.card-button-list--need:after {//se usa
+.card-button-list--need:after {
   background: $color-red;
 }
 
 .card-button-list--intercambio:after,
-.card-button-list--intercambio:before {//se usa
+.card-button-list--intercambio:before {
   width: 50%;
 }
 
 .card-button-list--intercambio-swap:after,
-.card-button-list--intercambio-swap:before {//se usa
+.card-button-list--intercambio-swap:before {
   width: 50%;
 }
 
-.card-button-list--intercambio:after {//se usa
+.card-button-list--intercambio:after {
   background: $color-green;
 }
 
-.card-button-list--intercambio:before {//se usa
+.card-button-list--intercambio:before {
   background: $color-red;
   left: auto;
   right: 0;
 }
 
-.card-button-list--intercambio-swap:after {//se usa
+.card-button-list--intercambio-swap:after {
   background: $color-red;
 }
 
-.card-button-list--intercambio-swap:before {//se usa
+.card-button-list--intercambio-swap:before {
   background: $color-green;
   left: auto;
   right: 0;
 }
 
-.card-button-list__content {//se usa
+.card-button-list__content {
   padding: 1rem;
 }
 
-.card-button-list__header {//se usa
+.card-button-list__header {
   display: flex;
   flex-flow: row nowrap;
   overflow-x: hidden;
@@ -111,7 +111,7 @@ $card-button-list-border-height: $border-general-height;
   padding-bottom: $card-button-list-whitespace;
 }
 
-.card-button-list__avatar {//se usa
+.card-button-list__avatar {
   flex: 0 1 15%;
   & > button {
     border: none;
@@ -120,7 +120,7 @@ $card-button-list-border-height: $border-general-height;
   }
 }
 
-.card-button-list__info {//se usa
+.card-button-list__info {
   flex: 0 1 80%;
   width: 0rem;
   text-align: left;
@@ -163,7 +163,7 @@ $card-button-list-border-height: $border-general-height;
   font-size: $font-size-general;
 }
 
-.card-button-list__status {//Se usa
+.card-button-list__status {
   color: $color-gray;
   font-size: $font-size-general;
   font-weight: bold;
@@ -175,7 +175,7 @@ $card-button-list-border-height: $border-general-height;
   }
 }
 
-.card-button-list__name {//Se usa
+.card-button-list__name {
   font-size: $font-size-general;
   text-overflow: ellipsis;
   //overflow-x: hidden;
@@ -214,13 +214,13 @@ $card-button-list-border-height: $border-general-height;
 }
 
 .card-button-list__busca,
-.card-button-list__ofrece {//se usa
+.card-button-list__ofrece {
   display: flex;
   flex-flow: row wrap;
   padding: .25rem 0 0 0;
 }
 
-.card-button-list__busca {//se usa
+.card-button-list__busca {
   .hashtag {
     background: $card-button-list-busca-background;
     font-weight: bold;
@@ -231,7 +231,7 @@ $card-button-list-border-height: $border-general-height;
   }
 }
 
-.card-button-list__ofrece {//se usa
+.card-button-list__ofrece {
   .hashtag {
     background: $card-button-list-ofrece-background;
     font-weight: bold;
@@ -242,7 +242,7 @@ $card-button-list-border-height: $border-general-height;
   }
 }
 
-.card-button-list__paragraph {//se usa
+.card-button-list__paragraph {
   word-break: break-word;
   color: $card-button-list-paragraph-color;
   font-size: $font-size-general;
@@ -259,7 +259,7 @@ $card-button-list-border-height: $border-general-height;
   }
 }
 
-.card-button-list__phone {//se usa
+.card-button-list__phone {
   word-break: break-word;
   white-space: nowrap;
 }
@@ -377,7 +377,7 @@ $card-button-list-border-height: $border-general-height;
   background-size: 100% auto;
 }
 
-.card-button-list__avatar-container {//se usa
+.card-button-list__avatar-container {
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -386,7 +386,7 @@ $card-button-list-border-height: $border-general-height;
   max-width: 70px;
   height: 70px;
   width: 70px;
-  & .card-avatar {//se usa
+  & .card-avatar {
     width: auto;
     height: 100%;
   }

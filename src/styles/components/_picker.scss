@@ -262,7 +262,7 @@ body {
   padding: $picker-comments-item-padding 0;
 }
 
-.picker__options-btn {//se usa
+.picker__options-btn {
 
   display: inline-block;
   text-align: center;
@@ -312,13 +312,21 @@ body {
   flex-flow: column nowrap;
 }
 
-.picker__options-h {//se usa
+.picker__options-h {
   flex-flow: row nowrap;
   justify-content: space-between;
 
   .picker__options-btn {
     flex: 0 1 50%;
   }
+}
+
+.picker__row {
+
+  margin: $margin-small 0;
+  display: flex;
+  justify-content: space-evenly;
+
 }
 
 //Estilos a los botones del picker Revise
@@ -332,6 +340,7 @@ body {
   cursor: pointer;
 
   &:last-child {
+    border-top: 1px solid $color-gray-border;//Revise este color ahora es una variable
     border-bottom: none;
   }
 
@@ -342,10 +351,20 @@ body {
 
 .picker__option-btn--active {
   @extend .picker__option-btn;
+  text-align: initial;
+}
+
+.picker__option-btn--center {
+  @extend .picker__option-btn;
+  text-align: initial;
 }
 
 .picker__option-btn-with-icon {
   @extend .picker__option-btn;
+}
+
+.picker__option-btn--txt{
+  font-size: $font-size-general;
 }
 
 

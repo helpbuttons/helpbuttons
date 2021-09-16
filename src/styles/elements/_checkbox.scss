@@ -100,7 +100,7 @@ $checkbox-color-gray-border: $color-gray-border;
   }
 }
 
-.checkbox-filter__content {//se usa
+.checkbox-filter__content {
   @extend .btn-filter;
 
   color: $checkbox-color-text;
@@ -112,7 +112,7 @@ $checkbox-color-gray-border: $color-gray-border;
   }
 }
 
-.checkbox-filter__content:hover {//se usa
+.checkbox-filter__content:hover {
   cursor: pointer;
 }
 
@@ -170,7 +170,7 @@ $checkbox-color-gray-border: $color-gray-border;
 .checkbox-filter__checkbox {
   display: none;
 
-  &:checked + .checkbox-filter__content { //se usa
+  &:checked + .checkbox-filter__content { 
     background: $checkbox-color-checked;
     color: $checkbox-color-text-checked;
 

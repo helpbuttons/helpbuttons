@@ -81,7 +81,7 @@ $btn-font-size-medium: $font-size-medium;
 //BOTONES sencillos de filtro redondos con fondo blanco que sirve de base a hashtags y checkbox,
 //TIENEN version con icon a la izquierda y versión con cruz para borrar
 
-.btn-filter {//se usa
+.btn-filter {
 
   padding: $btn-padding-y $btn-padding-x !important;
   width: auto !important;
@@ -150,7 +150,7 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
-.btn-filter-with-icon {//se usa
+.btn-filter-with-icon {
 
   @extend .btn-filter;
   padding-left: $padding-medium !important;
@@ -158,7 +158,7 @@ $btn-font-size-medium: $font-size-medium;
 }
 
 //SIZE AND PLACEMENT ICON INSIDE btn FILTER
-.btn-filter__icon {//se usa
+.btn-filter__icon {
 
   width: $btn-filter-with-icon-icon-width;
   height: $btn-filter-with-icon-icon-width;
@@ -190,7 +190,7 @@ $btn-font-size-medium: $font-size-medium;
 }
 
 //CURCLE ICON SPLIT IN TWO HALFS CIRCLE FOR EXCHANGE SYMBOL
-.btn-filter__split-icon {//se usa
+.btn-filter__split-icon {
 
   width: $btn-filter-with-icon-icon-width;
   height: $btn-filter-with-icon-icon-width;
@@ -200,7 +200,7 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
-.btn-filter__split-icon--half {//se usa
+.btn-filter__split-icon--half {
 
   width: 9px;
 
@@ -218,7 +218,7 @@ $btn-font-size-medium: $font-size-medium;
 
 ///REGULAR btnS FOR OPTIONS - OONE WITH AND ONE WITHOOUT ICONS
 .btn,
-.btn-with-icon {//se usa
+.btn-with-icon {
 
   align-items: center;
   display: flex;
@@ -275,7 +275,7 @@ $btn-font-size-medium: $font-size-medium;
 
 //NORMAL btn WITH ICON ON THE CENTER
 
-.btn-with-icon {//se usa
+.btn-with-icon {
 
   align-items: center;
   display: flex;

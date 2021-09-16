@@ -88,9 +88,6 @@ $dropdown-nets-max-width: 10rem;
   border: unset;
   border-radius: $border-radius-semicircle; //REVISE
 
-  & + .picker-time__dropdown-option {
-    border-top: 1px solid $color-black;
-  }
 
 }
 

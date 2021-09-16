@@ -1,6 +1,6 @@
 $picker-time-height: 40px;
 
-.picker-time__selected {//se usa
+.picker-time__selected {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,7 +9,7 @@ $picker-time-height: 40px;
   width: 250px;
 }
 
-.picker-time__dropdown {//se usa
+.picker-time__dropdown {
   padding: $padding-medium $padding-big;
   border-radius: 25px;
   border: 1px solid $color-gray;
@@ -18,7 +18,7 @@ $picker-time-height: 40px;
 
 }
 
-.picker-time__dropdown-trigger{//se usa
+.picker-time__dropdown-trigger{
   cursor: pointer;
   border: none;
   background-color: transparent;
@@ -27,7 +27,7 @@ $picker-time-height: 40px;
   text-align: center;
 }
 
-.picker-time__dropdown-content{//se usa
+.picker-time__dropdown-content{
   border: 1px solid $color-gray;
   margin-top: 0.9rem;
   overflow: auto;
@@ -39,10 +39,10 @@ $picker-time-height: 40px;
   overflow-y: auto;
 }
 
-.picker-time__dropdown-option {//se usa
+.picker-time__dropdown-option {
+
   padding: $padding-medium 0;
   display: block;
-  padding: 5px 0;
   cursor: pointer;
   width: 100%;
   background: transparent;
