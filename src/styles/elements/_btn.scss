@@ -344,7 +344,13 @@ $btn-font-size-medium: $font-size-medium;
 .btn-circle__icon {
 
   display: flex;
-  height: $btn-circle-icon-height;
+
+  & svg {
+    fill: $color-black;
+    height: $btn-circle-icon-height;
+    width: $btn-circle-icon-height;
+
+  }
 
 }
 

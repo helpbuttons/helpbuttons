@@ -49,11 +49,11 @@ export default function CardButton() {
                       Editar botón
                     </div>
 
-                    <button tagName="a" class="card-button__trigger-options card-button__trigger-button">
+                    <button  class="card-button__trigger-options card-button__trigger-button">
                       Quitar botón de la red
                     </button>
 
-                    <button tagName="a" class="card-button__trigger-options card-button__trigger-button">
+                    <button  class="card-button__trigger-options card-button__trigger-button">
                       Borrar botón
                     </button>
 
@@ -61,15 +61,15 @@ export default function CardButton() {
                       input for username or email
                     </div>
 
-                    <button tagName="a" class="card-button__trigger-options card-button__trigger-button">
+                    <button  class="card-button__trigger-options card-button__trigger-button">
                       Transferir botón
                     </button>
 
-                    <button tagName="a" class="card-button__trigger-options card-button__trigger-button">
+                    <button  class="card-button__trigger-options card-button__trigger-button">
                       Compartir botón
                     </button>
 
-                    <button tagName="a" class="card-button__trigger-options card-button__trigger-button">
+                    <button  class="card-button__trigger-options card-button__trigger-button">
                       Reportar botón
                     </button>
 

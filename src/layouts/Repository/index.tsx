@@ -92,7 +92,7 @@ function Repository() {
             <button class="btn-circle">
               <div class="btn-circle__content">
                 <div class="btn-circle__icon">
-                  <Image class="icon" src={CrossIcon} alt="icon"/>
+                  <CrossIcon />
                 </div>
               </div>
             </button>
@@ -224,7 +224,7 @@ function Repository() {
                 <input type="checkbox" class="checkbox__checkbox" id="input-tos"></input>
                 <div class="checkbox__content">
                   <div class="checkbox__icon">
-                    <Image class="icon" src={CrossIcon} alt="icon"/>
+                    <CrossIcon />
                   </div>
                   <div class="checkbox__text">
                     Ahora
@@ -240,7 +240,7 @@ function Repository() {
                 <input type="checkbox" class="checkbox__checkbox" id="input-tos"></input>
                 <div class="checkbox__content">
                   <div class="checkbox__icon">
-                    <Image class="icon" src={CrossIcon} alt="icon"/>
+                    <CrossIcon />
                   </div>
                   <div class="checkbox__text">
                     Fecha/hora concreta
@@ -256,7 +256,7 @@ function Repository() {
                 <input type="checkbox" class="checkbox__checkbox" id="input-tos"></input>
                 <div class="checkbox__content">
                   <div class="checkbox__icon">
-                    <Image class="icon" src={CrossIcon} alt="icon"/>
+                    <CrossIcon />
                   </div>
                   <div class="checkbox__text">
                     Cerca de mi
@@ -461,7 +461,7 @@ function Repository() {
                 <div class="popup__header-left">
                   <button class="popup__header-button">
                     <div class="btn-circle__icon">
-                      <Image class="icon" src={back} alt="icon"/>
+                      <CrossIcon />
                     </div>
                   </button>
                 </div>
@@ -476,7 +476,7 @@ function Repository() {
                 <div class="popup__header-right">
                   <button class="popup__header-button">
                     <div class="btn-circle__icon">
-                      <Image class="icon" src={CrossIcon} alt="icon"/>
+                      <CrossIcon />
                     </div>
                   </button>
                 </div>
@@ -582,19 +582,19 @@ function Repository() {
                         Editar botón
                       </div>
 
-                      <button tagName="a" class="card-button__trigger-options card-button__trigger-button">
+                      <button  class="card-button__trigger-options card-button__trigger-button">
                         Quitar botón de la red
                       </button>
 
-                      <button tagName="a" class="card-button__trigger-options card-button__trigger-button">
+                      <button  class="card-button__trigger-options card-button__trigger-button">
                         Borrar botón
                       </button>
 
-                      <button tagName="a" class="card-button__trigger-options card-button__trigger-button">
+                      <button  class="card-button__trigger-options card-button__trigger-button">
                         Compartir botón
                       </button>
 
-                      <button tagName="a" class="card-button__trigger-options card-button__trigger-button">
+                      <button  class="card-button__trigger-options card-button__trigger-button">
                         Reportar botón
                       </button>
 
@@ -603,32 +603,6 @@ function Repository() {
                 </div>
 
             </div>
-
-          </section>
-
-          <h3 class="repository__title">
-            components/nav-header
-          </h3>
-
-          <section class="repository__section">
-
-            <header class="nav-header nav-header__main">
-              <div class="nav-header__left">
-                <a href="" class="nav-header__icon">
-                x
-                </a>
-              </div>
-              <div class="nav-header__center">
-                <h1 class="nav-header__title">
-                  Title of page
-                </h1>
-              </div>
-              <div class="nav-header__right">
-                <a href="" class="nav-header__icon">
-                x
-                </a>
-              </div>
-            </header>
 
           </section>
 
@@ -647,7 +621,7 @@ function Repository() {
                     <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
                   </picture>
                   <div class="card-notification__icon">
-                    <Image class="btn-circle__icon" src={CrossIcon} alt="icon"/>
+                    <CrossIcon />
                   </div>
                 </div>
                 <div class="card-notification__text">
@@ -678,7 +652,7 @@ function Repository() {
                     <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
                   </picture>
                   <div class="card-notification__icon">
-                    <Image class="btn-circle__icon" src={CrossIcon} alt="icon"/>
+                    <CrossIcon />
                   </div>
                 </div>
                 <div class="card-notification__text">
@@ -709,7 +683,7 @@ function Repository() {
                     <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
                   </picture>
                   <div class="card-notification__icon">
-                    <Image class="btn-circle__icon" src={CrossIcon} alt="icon"/>
+                    <CrossIcon />
                   </div>
                 </div>
                 <div class="card-notification__text">
@@ -761,10 +735,14 @@ function Repository() {
                   <div class="card-notification__paragraph">
                     Lorem ipsum es el texto..
                   </div>
-                  <a class="card-notification__close">
-                    <div class="icon-circle"><Image class="" src={CrossIcon} alt="icon"/></div>
-                  </a>
                 </div>
+                <button class="btn-circle card-notification__delete">
+                  <div class="btn-circle__content">
+                    <div class="btn-circle__icon">
+                      <CrossIcon />
+                    </div>
+                  </div>
+                </button>
               </div>
             </div>
 
@@ -794,19 +772,19 @@ function Repository() {
                 <div class="paragraph grid-three__column">
                   90
                   <div class="btn-circle__icon">
-                    <Image class="icon" src={CrossIcon} alt="icon"/>
+                    <CrossIcon />
                   </div>
                 </div>
                 <div class="paragraph grid-three__column">
                   77
                   <div class="btn-circle__icon">
-                    <Image class="icon" src={CrossIcon} alt="icon"/>
+                    <CrossIcon />
                   </div>
                 </div>
                 <div class="paragraph grid-three__column">
                   23
                   <div class="btn-circle__icon">
-                    <Image class="icon" src={CrossIcon} alt="icon"/>
+                    <CrossIcon />
                   </div>
 
                 </div>
@@ -828,7 +806,7 @@ function Repository() {
 
           <div class="btn-with-icon">
             <div class="btn-with-icon__icon">
-              <Image class="btn-circle__icon" src={CrossIcon} alt="icon"/>
+              <CrossIcon />
             </div>
             <span class="btn-with-icon__text">
               Cerrar sesión
@@ -851,7 +829,7 @@ function Repository() {
                   <div class="popup__header-left">
                     <button class="popup__header-button">
                       <div class="btn-circle__icon">
-                        <Image class="icon" src={back} alt="icon"/>
+                        <CrossIcon />
                       </div>
                     </button>
                   </div>
@@ -863,7 +841,7 @@ function Repository() {
                   <div class="popup__header-right">
                     <button class="popup__header-button">
                       <div class="btn-circle__icon">
-                        <Image class="icon" src={CrossIcon} alt="icon"/>
+                        <CrossIcon />
                       </div>
                     </button>
                   </div>
@@ -884,7 +862,7 @@ function Repository() {
 
                   <button class="btn-with-icon button-with-icon--offer">
                     <div class="btn-filter__icon">
-                      <Image class="btn-circle__icon" src={CrossIcon} alt="icon"/>
+                      <CrossIcon />
                     </div>
                     <div class="btn-with-icon__text">
                       ENTRAR
@@ -931,7 +909,7 @@ function Repository() {
         <div class="error-message">
 
           <div class="error-message__icon">
-            <Image class="icon" src={hand} alt="icon"/>
+            <CrossIcon />
           </div>
           <div class="">
             <p class="error-message__top-text">Error</p>
@@ -960,7 +938,7 @@ function Repository() {
               <button class="btn-circle">
                 <div class="btn-circle__content">
                   <div class="btn-circle__icon">
-                    <Image class="icon" src={atta} alt="icon"/>
+                    <CrossIcon />
                   </div>
                 </div>
               </button>
@@ -970,7 +948,7 @@ function Repository() {
               <button class="btn-circle">
                 <div class="btn-circle__content">
                   <div class="btn-circle__icon">
-                    <Image class="icon" src={send} alt="icon"/>
+                    <CrossIcon />
                   </div>
                 </div>
               </button>
@@ -986,6 +964,7 @@ function Repository() {
         </h3>
 
         <section class="repository__section">
+            not defined as component
         </section>
 
         <hr></hr>
@@ -1179,7 +1158,7 @@ function Repository() {
 
             <a href="" class="nav-bottom__link nav-bottom__link--active">
                 <div class="nav-bottom__icon">
-                    <Image class="icon" src={send} alt="icon"/>
+                    <CrossIcon />
                 </div>
                 <div class="nav-bottom__text">
                   Mapa
@@ -1188,7 +1167,7 @@ function Repository() {
 
             <a href="" class="nav-bottom__link nav-bottom__link--active">
                 <div class="nav-bottom__icon">
-                    <Image class="icon" src={send} alt="icon"/>
+                    <CrossIcon />
                 </div>
                 <div class="nav-bottom__text">
                   Mapa
@@ -1197,13 +1176,13 @@ function Repository() {
 
             <a href="" class="nav-bottom__link nav-bottom__link--create">
                 <div class="nav-bottom__icon">
-                    <Image class="icon" src={send} alt="icon"/>
+                    <CrossIcon />
                 </div>
             </a>
 
             <a href="" class="nav-bottom__link nav-bottom__link--active">
                 <div class="nav-bottom__icon">
-                    <Image class="icon" src={send} alt="icon"/>
+                    <CrossIcon />
                 </div>
                 <div class="nav-bottom__text">
                   Login
@@ -1212,7 +1191,7 @@ function Repository() {
 
             <a href="" class="nav-bottom__link nav-bottom__link--active">
                 <div class="nav-bottom__icon">
-                    <Image class="icon" src={send} alt="icon"/>
+                    <CrossIcon />
                 </div>
                 <div class="nav-bottom__text">
                   Profile
@@ -1230,6 +1209,31 @@ function Repository() {
         </h3>
 
         <section class="repository__section">
+
+          <form class="nav-header__new-message" onsubmit="">
+
+              <button class="btn-circle">
+                <div class="btn-circle__content">
+                  <div class="btn-circle__icon">
+                    <CrossIcon />
+                  </div>
+                </div>
+              </button>
+
+              <div class="nav-header__new-message-message">
+                <input class="form__input nav-header__new-message-input" placeholder="Search tags"></input>
+              </div>
+
+              <button class="btn-circle">
+                <div class="btn-circle__content">
+                  <div class="btn-circle__icon">
+                    <CrossIcon />
+                  </div>
+                </div>
+              </button>
+
+          </form>
+
         </section>
 
         <hr></hr>
@@ -1239,15 +1243,15 @@ function Repository() {
         </h3>
 
         <section class="repository__section">
-        </section>
 
-        <hr></hr>
+        <div class="spinner-overlay">
+          <figure class="btn-circle">
+            <div class="loading-overlay__loading-icon spinner">
+              <CrossIcon />
+            </div>
+          </figure>
+        </div>
 
-        <h3 class="repository__title">
-          component/picker-time
-        </h3>
-
-        <section class="repository__section">
         </section>
 
         <hr></hr>
@@ -1257,59 +1261,146 @@ function Repository() {
         </h3>
 
         <section class="repository__section">
+
+          <div class="picker">
+            <div class="picker--over picker-box-shadow picker__content picker__options-v">
+              <button  class="picker__option-btn--active" type="button" name="button">
+                  <div class="picker__option-btn--icon">
+                    <CrossIcon />
+                  </div>
+                  <div class="picker__option-btn--txt">
+                    Ahora
+                  </div>
+              </button>
+              <button  class="picker__option-btn--active" type="button" name="button">
+                  <div class="picker__option-btn--icon">
+                    <CrossIcon />
+                  </div>
+                  <div class="picker__option-btn--txt">
+                    Fecha / hora concreta
+                  </div>
+              </button>
+              <button  class="picker__option-btn--active" type="button" name="button">
+                  <div class="picker__option-btn--icon">
+                    <CrossIcon />
+                  </div>
+                  <div class="picker__option-btn--txt">
+                    Fecha / hora concreta
+                  </div>
+              </button>
+            </div>
+          </div>
+
         </section>
 
         <hr></hr>
 
-          <h3 class="repository__title">
-            component/comments-message
-          </h3>
-          <section class="repository__section">
+        <h3 class="repository__title">
+          component/picker-time
+        </h3>
 
-            <div class="comments-message__day">
-              14 jul 2018
+        <section class="repository__section">
+
+          <div class="picker__content">
+            <div class="picker__section">
+              <header class="picker__header ">
+                  Selecciona días de la semana y hora
+                  <small class=" ">Haga clic para elegir</small>
+              </header>
+              <div class="  button-new-date-inserted__week-days">
+                  <button class="selected" type="button" name="button">
+                      <div class="radio-button__text">
+                        Lun
+                      </div>
+                  </button>
+
+                  <button class="selected" type="button" name="button">
+                      <div class="radio-button__text">
+                        Mar
+                      </div>
+                  </button>
+
+                  <button class="selected" type="button" name="button">
+                      <div class="radio-button__text">
+                        Mie
+                      </div>
+                  </button>
+
+                  <button class="selected" type="button" name="button">
+                      <div class="radio-button__text">
+                        Jue
+                      </div>
+                  </button>
+
+                  <button class="selected" type="button" name="button">
+                      <div class="radio-button__text">
+                        Vie
+                      </div>
+                  </button>
+
+
+                  <button class="" type="button" name="button">
+                      <div class="radio-button__text">
+                        Sab
+                      </div>
+                  </button>
+
+                  <button class="" type="button" name="button">
+                      <div class="radio-button__text">
+                        Dom
+                      </div>
+                  </button>
+
+              </div>
+
             </div>
 
-            <hr></hr>
+            <button class="picker__options-btn button-menu-white" type="button" name="button">
+              Aceptar
+            </button>
 
-            <div class="comments-message comments-message--me">
-              <div class="comments-message__content">
-                Reference site about Lorem Ipsum, giving information on its origins, as well as ...
+          </div>
+
+          <div class="picker__content">
+            <div class="picker__section">
+            
+              <header class="picker__header ">
+                  Selecciona días de la semana y hora
+                  <small class=" ">Haga clic para elegir</small>
+              </header>
+
+                <div class="picker-time__selected">
+                    <div class="picker-time__dropdown">
+                        <div class="picker-time__dropdown-trigger">
+                          00
+                        </div>
+                        <div class="picker-time__dropdown-content">
+                          <div class="picker-time__dropdown-option">
+                            00
+                          </div>
+                        </div>
+                    </div>
+
+                    <span class="picker-time__points">:</span>
+
+                    <div class="picker-time__dropdown">
+                        <div class="picker-time__dropdown-trigger">
+                          00
+                        </div>
+                        <div class="picker-time__dropdown-content">
+                          <div class="picker-time__dropdown-option">
+                            00
+                          </div>
+                        </div>
+                    </div>
+                        <button class="picker-time__dropdown-option">AM</button>
+                        <button  class="picker-time__dropdown-option">PM</button>
+                  </div>
               </div>
-              <div class="comments-message__hour">
-                00:00pm
-              </div>
+
             </div>
 
-            <hr></hr>
-
-            <div class="comments-message comments-message--you">
-              <div class="comments-message__content">
-                Hello world!
-              </div>
-              <div class="comments-message__hour">
-                00:00pm
-              </div>
-            </div>
-          </section>
-
-
-          <h3 class="repository__title">
-            component/comments-bar
-          </h3>
-          <section class="repository__section">
-            <div class="comments-bar">
-              <div class="comments-bar__button">
-                Link
-              </div>
-              <div class="comments-bar__input input">
-                <input type="text" class="input__input" placeholder="Placeholder"></input>
-              </div>
-              <div class="comments-bar__button">
-                Link
-              </div>
-            </div>
-          </section>
+        </section>
 
         </div>
       </div>

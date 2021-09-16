@@ -1,6 +1,4 @@
 $icon-width: 100%;
-$icon-circle-width: 100%;
-$icon-circle-padding: $padding-medium ;
 $icon-width-medium: 50px;
 $icon-height-medium: 50px;
 $icon-color-white: $color-white;
@@ -22,12 +20,6 @@ $icon-border-radius: 50%;
     height: 20px;
     width: auto;
   }
-}
-
-.icon-circle {
-  width: $icon-width;
-  height: auto;
-  padding: $icon-circle-padding;
 }
 
 .clusterIcon {

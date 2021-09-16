@@ -19,17 +19,6 @@ body {
 
 .picker {
   // Scroll picker content
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100vh;
-  background: transparent;
-  position: relative;
-
-  // Header Top Content Bottom
-  display: flex;
-  width: $picker-width;
-  flex-flow: column;
-  justify-content: space-between;
 }
 
 .picker__overlay {
@@ -397,13 +386,10 @@ body {
 
 //Revise: clase picker--over
 .picker--over {
-  position: absolute;
+
+  //position: absolute;  REVISE FOR REPOSITORY
+  position: relative;
   width: 95%;
-
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
 
 }
 
@@ -413,15 +399,7 @@ body {
 
 @media #{$breakpoints-medium} {
   .picker {
-    margin: 0 auto;
-    max-width: $picker-max-width;//revise
-    width: $grid-width;
 
-    // Centering
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    background: transparent;
   }
 
   .picker__header,
