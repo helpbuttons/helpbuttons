@@ -320,6 +320,11 @@ $card-button-border-height: $border-general-height;
   height: 30px;
 }
 
+.card-button__options-menu {
+  display: none;
+
+}
+
 .card-button__dropdown-container {
   background: none;
   box-shadow: none;

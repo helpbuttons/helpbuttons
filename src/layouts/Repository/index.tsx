@@ -1250,7 +1250,7 @@ function Repository() {
 
         <section class="repository__section">
 
-          <div id="bottom-nav" class="nav-bottom">
+          <div id="bottom-nav" class="nav-bottom--repo">
 
             <a href="" class="nav-bottom__link nav-bottom__link--active">
                 <div class="nav-bottom__icon">

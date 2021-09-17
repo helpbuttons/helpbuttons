@@ -8,7 +8,7 @@ export default function CardButton() {
     <>
 
           <div class="card-button card-button card-button--need">
-          
+
             <div class="card-button__content">
 
              <div class="card-button__nets">
@@ -93,6 +93,40 @@ export default function CardButton() {
               <img src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" class="card-button__picture picture__img"></img>
 
             </picture>
+
+          </div>
+
+          <div class="card-button__options-menu">
+
+            <div class="card-button__trigger">
+              <div class="card-button__edit-icon card-button__submenu"></div>
+            </div>
+
+            <div class="card-button__dropdown-container">
+              <div class="card-button__dropdown-arrow"></div>
+              <div class="card-button__dropdown-content">
+
+                <div class="card-button__trigger-options">
+                  Editar botón
+                </div>
+
+                <button  class="card-button__trigger-options card-button__trigger-button">
+                  Quitar botón de la red
+                </button>
+
+                <button  class="card-button__trigger-options card-button__trigger-button">
+                  Borrar botón
+                </button>
+
+                <button  class="card-button__trigger-options card-button__trigger-button">
+                  Compartir botón
+                </button>
+
+                <button  class="card-button__trigger-options card-button__trigger-button">
+                  Reportar botón
+                </button>
+              </div>
+            </div>
 
           </div>
 
