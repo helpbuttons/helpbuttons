@@ -43,7 +43,7 @@ function Repository() {
             <button disabled class="btn-with-icon button-with-icon--offer">
               <div class="btn-filter__icon green"></div>
               <div class="btn-with-icon__text">
-                Ofrezco
+                Ofrezco inactivo
               </div>
             </button>
 
@@ -62,25 +62,31 @@ function Repository() {
             <hr></hr>
 
             <button class="btn">
-              Botón ejemplo
+              Botón ejemplo sin icono
             </button>
 
             <hr></hr>
 
             <button class="btn btn--black btn--center">
-              Botón ejemplo
+              Botón ejemplo negro
             </button>
 
             <hr></hr>
 
             <button class="btn btn--corporative btn--center">
-              Botón ejemplo
+              Botón ejemplo corp
             </button>
 
             <hr></hr>
 
             <button class="btn-filter">
-              Filtro ejemplo
+              Filter example
+            </button>
+
+            <hr></hr>
+
+            <button disabled class="btn-filter">
+              Filter example
             </button>
 
             <hr></hr>

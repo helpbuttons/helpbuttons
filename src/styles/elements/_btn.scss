@@ -73,20 +73,20 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn-filter {
 
-  padding: $btn-padding-y $btn-padding-x !important;
-  width: auto !important;
+  padding: $btn-padding-y $btn-padding-x ;
+  width: auto ;
   background-color: $color-white;
-  font-size: $btn-font-size-medium !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  height: 35px !important;
-  line-height: 0rem !important;
-  border: $btn-filter-border solid $color-gray !important;
-  border-radius: $btn-border-radius !important;
+  font-size: $btn-font-size-medium;
+  display: flex ;
+  justify-content: space-between ;
+  align-items: center ;
+  height: 35px ;
+  line-height: 0rem ;
+  border: $btn-filter-border solid $color-gray-border;
+  border-radius: $btn-border-radius ;
   text-decoration: none;
-  text-align: center !important;
-  margin: 0 $margin-exxtra-small !important;
+  text-align: center ;
+  margin: 0 $margin-exxtra-small ;
 
   a {
 
