@@ -135,6 +135,7 @@ $marker-arrow-height: 25px;
   background: $color-black;
   border-radius: $border-radius-semicircle;
   color: $color-corporative;
+  font-size: $font-size-general;
   font-weight: $font-weight-bold;
   padding: $padding-small $padding-medium;
 
@@ -144,7 +145,6 @@ $marker-arrow-height: 25px;
 .marker-net__link-name--alone {
 
   @extend .marker-net__link-name;
-
 
 }
 

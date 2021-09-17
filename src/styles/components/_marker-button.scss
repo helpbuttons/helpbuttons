@@ -22,7 +22,7 @@ $marker-arrow-height: 25px;
 }
 
 .marker-button--name-alone {
-  
+
   height: $marker-button-height-name;
 
 }
@@ -267,6 +267,7 @@ $marker-arrow-height: 25px;
   background: $color-gray;
   border-radius: $border-radius-semicircle;
   color: $color-white;
+  font-size: $font-size-general;
   font-weight: $font-weight-bold;
   padding: $padding-small $padding-medium;
 

@@ -47,7 +47,7 @@ function Repository() {
                 <div class="btn-filter__split-icon--half green-l"></div>
                 <div class="btn-filter__split-icon--half red-r"></div>
               </div>
-              <div class="button-with-icon__text">
+              <div class="btn-with-icon__text">
                 Intercambio
               </div>
             </button>
@@ -368,7 +368,18 @@ function Repository() {
 
             <div class="card-button-map__picture-container">
 
-              <img src="https://dummyimage.com/1000x1000/#ccc/fff" alt="button-picture" class="card-button-map__picture picture__img"></img>
+              <div class="card-button-map__nav">
+
+                <div class="arrow btn-circle__icon">
+                  <CrossIcon />
+                </div>
+                <div class="arrow btn-circle__icon">
+                  <CrossIcon />
+                </div>
+
+              </div>
+
+              <img src="https://dummyimage.com/500x250/#ccc/fff" alt="button-picture" class="card-button-map__picture picture__img"></img>
 
             </div>
 
@@ -382,11 +393,22 @@ function Repository() {
 
           <section class="repository__section repository__section--yellow">
 
-          <div class="card-button-list card-button-list--white">
+          <div class="card-button-list card-button-list--need">
 
             <div class="card-button-list__picture-container">
 
-              <img src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" class="card-button-map__picture picture__img"></img>
+              <div class="card-button-list__nav">
+
+                <div class="arrow btn-circle__icon">
+                  <CrossIcon />
+                </div>
+                <div class="arrow btn-circle__icon">
+                  <CrossIcon />
+                </div>
+
+              </div>
+
+              <img src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" class="picture__img"></img>
 
             </div>
 
@@ -468,9 +490,6 @@ function Repository() {
                 <div class="popup__header-center">
                   <h1 class="popup__header-title">
                     Username
-                  </h1>
-                  <h1 class="popup__header-title">
-                    UserTelegram
                   </h1>
                 </div>
                 <div class="popup__header-right">
@@ -560,6 +579,17 @@ function Repository() {
               </div>
 
               <picture class="card-button__picture picture">
+
+                <div class="card-button__picture-nav">
+
+                  <div class="arrow btn-circle__icon">
+                    <CrossIcon />
+                  </div>
+                  <div class="arrow btn-circle__icon">
+                    <CrossIcon />
+                  </div>
+
+                </div>
 
                 <img src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" class="card-button__picture picture__img"></img>
 
@@ -1366,6 +1396,37 @@ function Repository() {
 
               </div>
 
+              <div class="picker-time__selected">
+
+                <div class="picker-time__dropdown">
+                    <div class="picker-time__dropdown-trigger">
+                      00
+                    </div>
+                    <div class="picker-time__dropdown-content">
+                      <div class="picker-time__dropdown-option">
+                        00
+                      </div>
+                    </div>
+                </div>
+
+                <span class="picker-time__points">:</span>
+
+                <div class="picker-time__dropdown">
+                    <div class="picker-time__dropdown-trigger">
+                      00
+                    </div>
+                    <div class="picker-time__dropdown-content">
+                      <div class="picker-time__dropdown-option">
+                        00
+                      </div>
+                    </div>
+                </div>
+
+                <button class="picker-time__dropdown-option">AM</button>
+                <button  class="picker-time__dropdown-option">PM</button>
+
+              </div>
+
             </div>
 
             <div class="picker__options-v">
@@ -1378,40 +1439,55 @@ function Repository() {
 
           </div>
 
+          <hr></hr>
+
           <div class="picker__content">
+
             <div class="picker__section">
 
               <header class="picker__header ">
-                  Selecciona días de la semana y hora
+                  Selecciona día y hora
               </header>
 
-                <div class="picker-time__selected">
-                    <div class="picker-time__dropdown">
-                        <div class="picker-time__dropdown-trigger">
-                          00
-                        </div>
-                        <div class="picker-time__dropdown-content">
-                          <div class="picker-time__dropdown-option">
-                            00
-                          </div>
-                        </div>
-                    </div>
+              <div class="picker-time__selected">
 
-                    <span class="picker-time__points">:</span>
-
-                    <div class="picker-time__dropdown">
-                        <div class="picker-time__dropdown-trigger">
-                          00
-                        </div>
-                        <div class="picker-time__dropdown-content">
-                          <div class="picker-time__dropdown-option">
-                            00
-                          </div>
-                        </div>
+                <div class="picker-time__dropdown">
+                    <div class="picker-time__dropdown-trigger">
+                      00
                     </div>
-                        <button class="picker-time__dropdown-option">AM</button>
-                        <button  class="picker-time__dropdown-option">PM</button>
-                  </div>
+                    <div class="picker-time__dropdown-content">
+                      <div class="picker-time__dropdown-option">
+                        00
+                      </div>
+                    </div>
+                </div>
+
+                <span class="picker-time__points">:</span>
+
+                <div class="picker-time__dropdown">
+                    <div class="picker-time__dropdown-trigger">
+                      00
+                    </div>
+                    <div class="picker-time__dropdown-content">
+                      <div class="picker-time__dropdown-option">
+                        00
+                      </div>
+                    </div>
+                </div>
+
+                <button class="picker-time__dropdown-option">AM</button>
+                <button  class="picker-time__dropdown-option">PM</button>
+
+              </div>
+
+            </div>
+
+              <div class="picker__options-v">
+                <button  class="picker__option-btn--center" type="button" name="button">
+                    <div class="picker__option-btn--txt">
+                      Aceptar
+                    </div>
+                </button>
               </div>
 
             </div>

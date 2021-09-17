@@ -283,6 +283,41 @@ $card-button-border-height: $border-general-height;
   }
 }
 
+//image arrows
+.card-button__picture-nav {
+
+  width: 90%;
+  height: inherit;
+  position: absolute;
+  z-index: $z-index-01;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.card-button__picture-nav .arrow {
+
+  @extend .btn-circle;
+  border: none;
+  max-height: 35px;
+  max-width: 35px;
+
+  & svg {
+    height: 18px;
+    width: 18px;
+  }
+
+}
+
+.card-button__picture-nav .arrow--left {
+  @extend .card-button-map__nav;
+}
+
+.card-button__picture-nav .arrow--right {
+  @extend .card-button-map__nav;
+}
+
 .card-button .avatar {
   width: 70px;
   height: 70px;
@@ -343,6 +378,8 @@ $card-button-border-height: $border-general-height;
   width: 100%;
   line-height: 35px;
   padding-left: 25px;
+  font-size: $font-size-general;
+
   &:hover {
     background-color: #ACACAC;
     color: $color-black;

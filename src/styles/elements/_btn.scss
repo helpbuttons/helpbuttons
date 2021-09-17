@@ -8,7 +8,7 @@ $btn-padding: $padding-medium;
 $btn-padding-y: $padding-medium;
 $btn-padding-x: $padding-big;
 $btn-filter-height: 35px;
-$btn-small-padding: 14px;
+$btn-small-padding: $padding-small;
 $btn-filter-margin: 10px;
 $btn-filter-height: 20px;
 $btn-hashtag-close-height: 13px;
@@ -41,6 +41,7 @@ $btn-font-size-medium: $font-size-medium;
   padding: $btn-padding-big 0rem;
   height: auto;
   width: 100%;
+  font-size: $font-size-general;
   border-top: 1px solid $color-gray-border;
   border-right: 1px solid $color-gray-border;
 
@@ -50,7 +51,7 @@ $btn-font-size-medium: $font-size-medium;
 
   }
 
-  &:hover {//REVISE picker__OPTIONS-BTN YA TIENE ESTE HOVER SERIA BUENO DEBATIR, LO AGREGUE AQUI PORQUE ME PARECE MAS UN ESTILOS DEL BOTON, PERO SE PUEDE CREAR UN HOVER EN GENERAL CON ESTOS ESTILOS QUE SE COMPARTAN
+  &:hover {
 
     fill: $color-corporative;
     border-color: $color-black;
@@ -312,6 +313,12 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+.btn-with-icon__text {
+
+  font-size: $font-size-general;
+
+}
+
 
 //CIRCLE btn LIKE OFFER/NEED FILTER.
 .btn-circle {
@@ -325,13 +332,26 @@ $btn-font-size-medium: $font-size-medium;
     width: $btn-circle-height;
     height: $btn-circle-height;
     background-color: $color-corporative;
-    border: none;
+    border: $border-lines-width solid $color-corporative;
 
     &:hover {
 
       cursor: pointer;
       background: $color-black;
       color: $color-white;
+
+      & svg {
+        fill: $color-white;
+      }
+
+    }
+
+    &:active {
+
+      cursor: pointer;
+      border: none;
+      background: $color-corporative;
+      color: $color-black;
 
       & svg {
         fill: $color-white;
@@ -358,6 +378,7 @@ $btn-font-size-medium: $font-size-medium;
 
   align-items: center;
   vertical-align: middle;
+  font-size: $font-size-general;
 
 }
 

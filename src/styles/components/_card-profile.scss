@@ -3,6 +3,7 @@ $avatar-container-max-width: 150px;
 $avatar-margin: $padding-big;
 
 .card-profile__data {
+  font-size: $font-size-general;
   height: auto;
   display: flex;
   flex-direction: column;

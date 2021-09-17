@@ -23,6 +23,7 @@ $card-button-map-border-height: $border-general-height;
   max-width: $card-button-map-width;
   box-shadow: $card-button-map-box-shadow;
   position: relative;
+  margin: auto;
   margin-bottom: $card-button-map-margin-bottom;
   border-radius: 0 0 $border-radius-basic  $border-radius-basic;
   p {
@@ -284,6 +285,7 @@ $card-button-map-border-height: $border-general-height;
 }
 
 .card-button-map__picture-container {
+
   width: auto;
   max-height: $card-button-map-image-height;
   height: $card-button-map-image-height;
@@ -292,11 +294,42 @@ $card-button-map-border-height: $border-general-height;
   margin: 0 $card-button-map-margin $card-button-map-margin $card-button-map-margin;
   display: flex;
   justify-content: center;
+
 }
 
-.card-button-map .avatar {
-  width: 70px;
-  height: 70px;
+
+.card-button-map__nav {
+
+  width: 90%;
+  height: inherit;
+  position: absolute;
+  z-index: $z-index-01;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.card-button-map__nav .arrow {
+
+  @extend .btn-circle;
+  border: none;
+  max-height: 35px;
+  max-width: 35px;
+
+  & svg {
+    height: 18px;
+    width: 18px;
+  }
+
+}
+
+.card-button-map__nav .arrow--left {
+  @extend .card-button-map__nav;
+}
+
+.card-button-map__nav .arrow--right {
+  @extend .card-button-map__nav;
 }
 
 
