@@ -109,10 +109,9 @@ CREATE TABLE public.network (
     geoplace text NOT NULL,
     radius integer,
     tags text,
+    friendnetworks text,
     role text DEFAULT 'admin'::text
 );
-
-
 
 
 --

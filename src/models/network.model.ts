@@ -62,6 +62,12 @@ export class Network extends Entity {
   })
   tags?: string[];
 
+  @property({
+    type: 'array',
+    itemType: 'number',
+  })
+  friendNetworks?: number[];
+
   @hasMany(() => Button, {through: {model: () => ButtonsNetwork}})
   buttons: Button[];
 

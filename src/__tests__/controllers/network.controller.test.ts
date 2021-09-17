@@ -29,10 +29,11 @@ describe('NetworkController (integration)', () => {
           -9.16534423828125,
           38.755154214849426
         ], "type": "Point" },
-        "radius": 240
+        "radius": 240,
+        "friendNetworks": [1, 2]
       }
     ).set('Authorization', 'Bearer ' + token).expect(200);
-    expect(res.body).to.containEql({
+    expect(res.body).to.deepEqual({
       "name": "Perritos en adopcion",
       "id": 5,
       "url": "net/url",
@@ -51,6 +52,7 @@ describe('NetworkController (integration)', () => {
         "Adopcion"
       ],
       "role": "admin", //enum {admin, user, blocked}
+      "friendNetworks": [1, 2]
     });
   });
 
