@@ -1,9 +1,9 @@
-//All the edition posibilities menus and accordion, including neet preferences etc
+//Chat page for a determine button (id), you can see the private or group cchat in this URL
 import NavHeader from '../../components/NavHeader'
 import NavBottom from '../../components/NavBottom'
 
 
-export default function ProfileEdition() {
+export default function Notifications() {
 
   return (
 
