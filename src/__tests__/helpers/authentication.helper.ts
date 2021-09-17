@@ -25,7 +25,18 @@ export async function setupApplication(): Promise<AppWithClient> {
   const client = createRestAppClient(app);
   return {app, client};
 }
-
+export async function signup(client: Client): Promise<string> {
+  const signupData = {
+    "username": "lala",
+    "realm" : "lala",
+    "email": "testuser2@abc.com",
+    "password": "testuser2"
+  };
+  const res = await client
+  .post('/users/signup')
+  .send(signupData)
+  return res.body.token; 
+}
 export async function login(client: Client): Promise<string> {
   const testUserCredential = {
     email: 'testuser2@abc.com',

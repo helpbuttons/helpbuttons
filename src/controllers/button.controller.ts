@@ -23,8 +23,9 @@ import {ButtonRepository, NetworkRepository, TemplateButtonRepository} from '../
 import { Validations } from './validations';
 
 import {authenticate} from '@loopback/authentication';
-import { TagService } from '../services';
-import { service } from '@loopback/core';
+import { inject } from '@loopback/core';
+import { TagController } from './tag.controller';
+
 @authenticate('jwt')
 
 export class ButtonController {
@@ -35,7 +36,8 @@ export class ButtonController {
     public networkRepository : NetworkRepository,
     @repository(TemplateButtonRepository)
     public templateButtonRepository : TemplateButtonRepository,
-    @service(TagService) public tagService: TagService
+    @inject('controllers.TagController') 
+    public tagController: TagController,
   ) {}
   
   @post('/buttons/new', {
@@ -65,11 +67,14 @@ export class ButtonController {
       }
     }
 
-    return this.networkRepository.buttons(networkId).create(button).then((createdButton) => {
-      if (createdButton.id && button.tags) {
-        this.tagService.addTags('button',createdButton.id.toString(), button.tags);
+    return this.networkRepository.buttons(networkId).create(button)
+    .then((createdButton) => {
+      if (!createdButton.id || !button.tags) {
+        return createdButton;
       }
-      return createdButton;
+      return this.tagController.addTags('button',createdButton.id.toString(), button.tags).then(
+         () => { return createdButton; }
+      );
     });
   }
   
@@ -174,10 +179,8 @@ export class ButtonController {
     })
     button: Button,
   ): Promise<void> {
-    await this.buttonRepository.updateById(id, button).then(() => {
-      this.tagService.updateTags('button',id.toString(), button.tags ? button.tags : []);
-      return button;
-    });
+    await this.buttonRepository.updateById(id, button);
+    await this.tagController.updateTags('button',id.toString(), button.tags ? button.tags : []);
   }
 /*
   @put('/buttons/{id}')

@@ -1,6 +1,6 @@
 import { Client, expect } from '@loopback/testlab';
 import { HelpbuttonsBackendApp } from '../..';
-import { login, setupApplication } from '../helpers/authentication.helper';
+import { login, setupApplication, signup } from '../helpers/authentication.helper';
 
 describe('ButtonController (integration)', () => {
   let app: HelpbuttonsBackendApp;
@@ -8,9 +8,11 @@ describe('ButtonController (integration)', () => {
   let token: string;
 
   before('setupApplication', async () => {
-    ({ app, client } = await setupApplication());
-    token = await login(client);
 
+    ({ app, client } = await setupApplication());
+    await signup(client);
+    token = await login(client);
+    
     await client.post('/networks/new').send(
       {
         "name": "Perritos en adopcion",
@@ -20,10 +22,12 @@ describe('ButtonController (integration)', () => {
         "avatar": "image/url.png",
         "description": "Net for animal rescue",
         "privacy": "publico",
-        "geoPlace": { "coordinates": [
-          -9.16534423828125,
-          38.755154214849426
-        ], "type": "Point" },
+        "geoPlace": {
+          "coordinates": [
+            -9.16534423828125,
+            38.755154214849426
+          ], "type": "Point"
+        },
         "radius": 240
       }
     ).set('Authorization', 'Bearer ' + token).expect(200);
@@ -32,7 +36,7 @@ describe('ButtonController (integration)', () => {
   after(async () => {
     await app.stop();
   });
-describe('map generation [gis]', () => {
+  describe('map generation [gis]', () => {
 
     it('/networks/find without buttons', async () => {
       const resFilter = await client.get('/networks/map').query({
@@ -63,7 +67,7 @@ describe('map generation [gis]', () => {
             ]
           ]
         }`}).set('Authorization', 'Bearer ' + token).expect(200);
-      
+
       expect(resFilter.body).to.deepEqual(
         [{
           "name": "Perritos en adopcion",
@@ -73,10 +77,12 @@ describe('map generation [gis]', () => {
           "avatar": "image/url.png",
           "description": "Net for animal rescue",
           "privacy": "publico",
-          "geoPlace": { "coordinates": [
-            -9.16534423828125,
-            38.755154214849426
-          ], "type": "Point" },
+          "geoPlace": {
+            "coordinates": [
+              -9.16534423828125,
+              38.755154214849426
+            ], "type": "Point"
+          },
           "radius": 240,
           "role": "admin",
           "id": 1
