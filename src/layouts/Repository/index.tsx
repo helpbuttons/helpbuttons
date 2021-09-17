@@ -40,6 +40,13 @@ function Repository() {
               </div>
             </button>
 
+            <button disabled class="btn-with-icon button-with-icon--offer">
+              <div class="btn-filter__icon green"></div>
+              <div class="btn-with-icon__text">
+                Ofrezco
+              </div>
+            </button>
+
             <hr></hr>
 
             <button class="btn-with-icon">
@@ -60,8 +67,14 @@ function Repository() {
 
             <hr></hr>
 
-            <button class="btn-menu-white">
-              Btn picker example
+            <button class="btn btn--black btn--center">
+              Botón ejemplo
+            </button>
+
+            <hr></hr>
+
+            <button class="btn btn--corporative btn--center">
+              Botón ejemplo
             </button>
 
             <hr></hr>
@@ -90,6 +103,14 @@ function Repository() {
             <hr></hr>
 
             <button class="btn-circle">
+              <div class="btn-circle__content">
+                <div class="btn-circle__icon">
+                  <CrossIcon />
+                </div>
+              </div>
+            </button>
+
+            <button disabled class="btn-circle">
               <div class="btn-circle__content">
                 <div class="btn-circle__icon">
                   <CrossIcon />
@@ -1448,6 +1469,306 @@ function Repository() {
               <header class="picker__header ">
                   Selecciona día y hora
               </header>
+
+              <div class="picker__row">
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+              </div>
+
+              <div class="picker__row">
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+              </div>
+
+              <div class="picker__row">
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+              </div>
+
+              <div class="picker__row">
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+              </div>
+
+              <div class="picker__row">
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+                  <button class="btn-circle">
+                    <div class="btn-circle__content">
+                      <div class="btn-circle__icon">
+                        Lun
+                      </div>
+                    </div>
+                  </button>
+
+              </div>
 
               <div class="picker-time__selected">
 
