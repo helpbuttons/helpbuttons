@@ -7,12 +7,12 @@ import {
   Response,
   RestBindings,
 } from '@loopback/rest';
-import fs from 'fs';
+// import fs from 'fs';
 import path from 'path';
-import {promisify} from 'util';
+// import {promisify} from 'util';
 import {STORAGE_DIRECTORY} from '../keys';
 
-const readdir = promisify(fs.readdir);
+// const readdir = promisify(fs.readdir);
 
 /**
  * A controller to handle file downloads using multipart/form-data media type
