@@ -1,7 +1,51 @@
 $avatar-border-radius: $border-radius-circle;
-$avatar-max-width: 80px;
+$avatar-big-max-width: 80px;
+$avatar-small-max-width: 30px;
+$avatar-medium-max-width: 50px;
 
 .avatar {
+
+  overflow: hidden;
+
+}
+
+.avatar-big {
+
+  @extend .avatar;
+  border-radius: 100%;
+  max-width: $avatar-big-max-width;
+  max-height: $avatar-big-max-width;
+  height: $avatar-big-max-width;
+  width: $avatar-big-max-width;
+  min-height: $avatar-big-max-width;
+  min-width: $avatar-big-max-width;
+
+}
+
+.avatar-medium {
+
+  @extend .avatar;
   border-radius: $avatar-border-radius;
-  max-width: $avatar-max-width;
+  max-width: $avatar-medium-max-width;
+  max-height: $avatar-medium-max-width;
+  width: $avatar-medium-max-width;
+  height: $avatar-medium-max-width;
+  width: $avatar-medium-max-width;
+  min-height: $avatar-medium-max-width;
+  min-width: $avatar-medium-max-width;
+
+}
+
+.avatar-small {
+
+  @extend .avatar;
+  border-radius: $avatar-border-radius;
+  max-width: $avatar-small-max-width;
+  max-height: $avatar-small-max-width;
+  width: $avatar-small-max-width;
+  height: $avatar-small-max-width;
+  width: $avatar-small-max-width;
+  min-height: $avatar-small-max-width;
+  min-width: $avatar-small-max-width;
+
 }

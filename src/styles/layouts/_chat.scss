@@ -35,7 +35,7 @@ $chat-new-message-radius: $border-radius-circle;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  vertical-align: center;
+  align-items: center;
   background-color: $color-white;
   padding: $chat-padding;
   border-radius: 0 0 $chat-new-message-radius $chat-new-message-radius;

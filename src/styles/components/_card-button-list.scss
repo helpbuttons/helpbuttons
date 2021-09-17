@@ -124,15 +124,7 @@ $card-button-list-border-height: $border-general-height;
 
 .card-button-map__nav .arrow {
 
-  @extend .btn-circle;
-  border: none;
-  max-height: 35px;
-  max-width: 35px;
-
-  & svg {
-    height: 18px;
-    width: 18px;
-  }
+  @extend .btn-circle--small ;
 
 }
 

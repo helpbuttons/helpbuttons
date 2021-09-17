@@ -75,6 +75,12 @@ $avatar-margin: $padding-big;
   padding: $padding-big;
 }
 
+.card-profile__content {
+  display: flex;
+  flex-direction: column;
+
+}
+
 .card-profile__avatar-container {
   left: 0;
   position: relative;
@@ -106,7 +112,7 @@ $avatar-margin: $padding-big;
 //revise
 .card-profile__container-avatar-content {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .card-profile__avatar-container-name {

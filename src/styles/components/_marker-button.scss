@@ -21,6 +21,18 @@ $marker-arrow-height: 25px;
 
 }
 
+.marker-button__image {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    border-style: solid;
+    z-index: 1;
+    object-fit: cover;
+    overflow: hidden;
+    border-width: $marker-button-line;
+    display: flex;
+}
+
 .marker-button--name-alone {
 
   height: $marker-button-height-name;
@@ -165,17 +177,7 @@ $marker-arrow-height: 25px;
     }
   }
 
-.marker-button__image {
-    width: 100%;
-    height: 100%;
-    border-style: solid;
-    z-index: 1;
-    object-fit: cover;
-    overflow: hidden;
-    border-width: $marker-button-line;
-    display: flex;
-    border-radius: $marker-button-radius;
-  }
+
 
 .marker-button__arrow {
     z-index: $z-index-03;

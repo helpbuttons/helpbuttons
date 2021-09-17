@@ -68,7 +68,7 @@ function Repository() {
             <hr></hr>
 
             <button class="btn btn--black btn--center">
-              Botón ejemplo negro
+              Botón ejemplo negro centrado
             </button>
 
             <hr></hr>
@@ -152,7 +152,22 @@ function Repository() {
               <label class="form__label label">
                 Text label
               </label>
-              <input type="text" class="form__input--yellow-bg" placeholder="Placeholder"></input>
+              <input type="text" class="form__input--dark-bg" placeholder="Placeholder"></input>
+              <div class="form__input-subtitle">
+                <div class="form__input-subtitle-side">
+                  <label class="form__input-subtitle--error">
+                    Notes in this side to explain the field, also errors
+                  </label>
+                  <label class="form__input-subtitle--text">
+                    Notes in this side to explain the field, also errors
+                  </label>
+                </div>
+                <div class="form__input-subtitle-side">
+                  <a href="" class="form__input-subtitle--text link">
+                    Links to other extra functions on this side
+                  </a>
+                </div>
+              </div>
             </div>
 
             <hr></hr>
@@ -164,6 +179,19 @@ function Repository() {
               <div class="form__options-btn">
                 SAVE
               </div>
+            </div>
+
+            <hr></hr>
+
+            <div class="form__options-h">
+
+              <div class="form__options-text">
+                Explain something
+              </div>
+              <div class="form__options-btn">
+              CANCEL
+              </div>
+
             </div>
 
             <hr></hr>
@@ -185,11 +213,7 @@ function Repository() {
             elements/textarea
           </h3>
 
-          <hr></hr>
-
           <section class="repository__section">
-
-          <hr></hr>
 
             <div class="textarea">
               <label class="form__label label">
@@ -338,9 +362,19 @@ function Repository() {
             elements/avatar
           </h3>
           <section class="repository__section">
-            <picture class="picture">
-              <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
-            </picture>
+
+            <div class="avatar-medium">
+              <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" class="picture__img"></img>
+            </div>
+
+            <div class="avatar-big">
+              <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="picture__img"></img>
+            </div>
+
+            <div class="avatar-small">
+              <img src="https://dummyimage.com/30/#ccc/fff" alt="Avatar" class="picture__img"></img>
+            </div>
+
           </section>
 
           <hr></hr>
@@ -551,7 +585,9 @@ function Repository() {
 
                   <div class="card-button__avatar">
 
-                    <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar card-avatar picture__img"></img>
+                    <div class="avatar-big">
+                      <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="picture__img"></img>
+                    </div>
 
                   </div>
 
@@ -670,13 +706,14 @@ function Repository() {
           </h3>
           <section class="repository__section">
 
-
             <div class="card-notification card-notification--intercambio">
               <div class="card-notification__content">
                 <div class="card-notification__avatar">
-                  <picture class="picture">
-                    <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
-                  </picture>
+
+                  <div class="avatar-medium">
+                    <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" class="picture__img"></img>
+                  </div>
+
                   <div class="card-notification__icon">
                     <CrossIcon />
                   </div>
@@ -705,9 +742,9 @@ function Repository() {
             <div class="card-notification card-notification--offer">
               <div class="card-notification__content">
                 <div class="card-notification__avatar">
-                  <picture class="picture">
-                    <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
-                  </picture>
+                  <div class="avatar-medium">
+                    <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" class="picture__img"></img>
+                  </div>
                   <div class="card-notification__icon">
                     <CrossIcon />
                   </div>
@@ -736,9 +773,9 @@ function Repository() {
             <div class="card-notification card-notification--need">
               <div class="card-notification__content">
                 <div class="card-notification__avatar">
-                  <picture class="picture">
-                    <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
-                  </picture>
+                  <div class="avatar-medium">
+                    <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" class="picture__img"></img>
+                  </div>
                   <div class="card-notification__icon">
                     <CrossIcon />
                   </div>
@@ -776,9 +813,9 @@ function Repository() {
             <div class="card-notification">
               <div class="card-notification__content">
                 <div class="card-notification__avatar">
-                  <picture class="picture">
-                    <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
-                  </picture>
+                  <div class="avatar-medium">
+                    <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" class="picture__img"></img>
+                  </div>
                 </div>
                 <div class="card-notification__text">
                   <div class="card-notification__header">
@@ -817,7 +854,9 @@ function Repository() {
           <div class="card-profile__container">
           <div class="card-profile__container-avatar-content">
             <figure class="card-profile__avatar-container avatar">
-              <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar picture__img"></img>
+              <div class="avatar-big">
+                <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="picture__img"></img>
+              </div>
             </figure>
 
             <div class="card-profile__content">
@@ -1072,8 +1111,8 @@ function Repository() {
         <section class="repository__section">
 
           <figure id='markerButton' class="marker-button marker-button--need">
-            <div class="marker-button__image">
-              <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar"></img>
+            <div class="avatar-medium marker-button__image">
+              <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" class="picture__img"></img>
             </div>
             <span class="marker-button__arrow"></span>
             <div class="marker-button__tags marker-button__tags--need">
@@ -1112,8 +1151,8 @@ function Repository() {
         <section class="repository__section">
 
           <figure id='markerNet' class="marker-net">
-            <div class="marker-net__image">
-              <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="avatar"></img>
+            <div class="avatar-medium marker-net__image">
+              <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" class="picture__img"></img>
             </div>
             <span class="marker-net__arrow"></span>
             <div class="marker-net__name">
@@ -1267,7 +1306,7 @@ function Repository() {
 
         <section class="repository__section">
 
-          <form class="nav-header__new-message" onsubmit="">
+          <form class="nav-header__content" onsubmit="">
 
               <button class="btn-circle">
                 <div class="btn-circle__content">
@@ -1277,8 +1316,8 @@ function Repository() {
                 </div>
               </button>
 
-              <div class="nav-header__new-message-message">
-                <input class="form__input nav-header__new-message-input" placeholder="Search tags"></input>
+              <div class="nav-header__content-message">
+                <input class="form__input nav-header__content-input" placeholder="Search tags"></input>
               </div>
 
               <button class="btn-circle">

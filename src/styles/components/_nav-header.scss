@@ -30,25 +30,25 @@ $nav-header-new-message-radius: $border-radius-circle;
   }
 }
 
-.nav-header__new-message {
+.nav-header__content {
 
   width: 100%;
   display: flex;
   justify-content: space-between;
-  vertical-align: center;
+  align-items: center;
   background-color: $color-corporative;
   padding: $nav-header-padding;
   border-radius: 0 0 0 0;
 
 }
 
-.nav-header__new-message-message {
+.nav-header__content-message {
   flex-grow:1;
   padding: 0 $padding-big;
   margin: auto;
 }
 
-.nav-header__new-message-input {
+.nav-header__content-input {
   border-radius: $nav-header-border-radius;
   border: 1px solid $nav-header-color-gray-border;
   padding: 0 $nav-header-padding;
