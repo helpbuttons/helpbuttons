@@ -8,9 +8,8 @@ export default function Notifications() {
   return (
 
     <>
-        <NavHeader />
 
-
+      <NavHeader />
 
       <NavBottom />
 

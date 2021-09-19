@@ -8,9 +8,8 @@ export default function ProfileEdition() {
   return (
 
     <>
-        <NavHeader />
 
-
+      <NavHeader />
 
       <NavBottom />
 

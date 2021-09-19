@@ -8,9 +8,8 @@ export default function Faqs() {
   return (
 
     <>
-        <NavHeader />
 
-
+      <NavHeader />
 
       <NavBottom />
 

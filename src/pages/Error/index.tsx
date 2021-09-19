@@ -8,9 +8,8 @@ export default function Error() {
   return (
 
     <>
-        <NavHeader />
 
-
+      <NavHeader />
 
       <NavBottom />
 

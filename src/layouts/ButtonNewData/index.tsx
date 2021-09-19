@@ -1,5 +1,5 @@
 //Data section of the button creation process , here is where butttonTemplate field of the backend displays all extradata, description, images and other specific field of the net you're displaying.
-//It uses popup classes if it's an overlay. In mobile it's be its own page. It leads to buttonNewPublish and iis preceeded by ButtonNewType
+//It uses popup classNamees if it's an overlay. In mobile it's be its own page. It leads to buttonNewPublish and iis preceeded by ButtonNewType
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
 import NavHeader from '../../components/NavHeader'
 import NavBottom from '../../components/NavBottom'
@@ -10,16 +10,16 @@ export default function ButtonNewData() {
   return (
 
     <>
-        <div class="popup__section">
+        <div className="popup__section">
 
-          <p class="popup__paragraph">
+          <p className="popup__paragraph">
             Añade un título diciendo qué buscas y/u ofreces con palabras clave. Añade
             imágenes si quieres.
           </p>
 
-          <div class="form__input-tags"></div>
+          <div className="form__input-tags"></div>
 
-            <div class="button-new-description__exchange-container">
+            <div className="button-new-description__exchange-container">
 
               <button type="button" name="button" >
 
@@ -27,17 +27,17 @@ export default function ButtonNewData() {
 
             </div>
 
-          <textarea class="textarea__textarea"> </textarea>
+          <textarea className="textarea__textarea"> </textarea>
 
-            <div class="popup__options-v">
-              <button class="btn">
+            <div className="popup__options-v">
+              <button className="btn">
                 + Añadir imagen
               </button>
             </div>
 
-            <div class="popup__options-h">
+            <div className="popup__options-h">
 
-              <button class="popup__options-btn button-menu-white">
+              <button className="popup__options-btn button-menu-white">
                 + Añadir imagen
               </button>
 
@@ -46,19 +46,19 @@ export default function ButtonNewData() {
               <img
                 src=""
                 alt="Avatar"
-                class="popup__options-btn--icon"
+                className="popup__options-btn--icon"
               />
 
-              <div class="popup__options-btn button-menu-white" type="button" name="button">
+              <div className="popup__options-btn button-menu-white" type="button" name="button">
                 Quitar imagen
               </div>
 
             </div>
 
-        <div class="popup__options-v">
+        <div className="popup__options-v">
 
           <button
-            class="popup__options-btn button-menu-white"
+            className="popup__options-btn button-menu-white"
             type="button"
             name="button"
             disabled>
@@ -69,7 +69,7 @@ export default function ButtonNewData() {
 
       </div>
 
-      <div class="button-new-description__spinner"> </div>
+      <div className="button-new-description__spinner"> </div>
 
     </>
 

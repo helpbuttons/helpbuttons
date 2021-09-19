@@ -8,9 +8,8 @@ export default function Recovery() {
   return (
 
     <>
-        <NavHeader />
 
-
+      <NavHeader />
 
       <NavBottom />
 

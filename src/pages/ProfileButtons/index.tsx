@@ -8,9 +8,8 @@ export default function ProfileButtons() {
   return (
 
     <>
-        <NavHeader />
 
-
+      <NavHeader />
 
       <NavBottom />
 

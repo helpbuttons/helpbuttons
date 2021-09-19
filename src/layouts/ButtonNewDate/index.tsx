@@ -8,34 +8,34 @@ export default function ButtonNewDate() {
   return (
 
     <>
-    <div class="btn-new-activate__colums">
+    <div classNameName="btn-new-activate__colums">
 
         Ahora
-      <div class="btn">
+      <div className="btn">
         Cambiar fecha
       </div>
 
     </div>
 
-    <div class="picker--over picker-box-shadow picker__content picker__options-v">
-      <button  class="picker__option-btn--active" type="button" name="btn">
-          <div class="picker__option-btn--icon">
+    <div className="picker--over picker-box-shadow picker__content picker__options-v">
+      <button  className="picker__option-btn--active" type="button" name="btn">
+          <div className="picker__option-btn--icon">
           </div>
-          <div class="picker__option-btn--txt">
+          <div className="picker__option-btn--txt">
             Ahora
           </div>
       </button>
-      <button  class="picker__option-btn--active" type="button" name="button">
-          <div class="picker__option-btn--icon">
+      <button  className="picker__option-btn--active" type="button" name="button">
+          <div className="picker__option-btn--icon">
           </div>
-          <div class="picker__option-btn--txt">
+          <div className="picker__option-btn--txt">
             Ahora
           </div>
       </button>
-      <button  class="picker__option-btn--active" type="button" name="button">
-          <div class="picker__option-btn--icon">
+      <button  className="picker__option-btn--active" type="button" name="button">
+          <div className="picker__option-btn--icon">
           </div>
-          <div class="picker__option-btn--txt">
+          <div className="picker__option-btn--txt">
             Ahora
           </div>
       </button>

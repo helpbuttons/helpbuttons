@@ -11,7 +11,6 @@ export default function ButtonNew() {
   return (
 
     <>
-        <NavHeader />
 
         <ButtonNewType />
 
@@ -20,8 +19,6 @@ export default function ButtonNew() {
         <ButtonPublish />
 
         <ButtonShare />
-
-        <NavBottom />
 
     </>
 

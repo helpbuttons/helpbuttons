@@ -9,9 +9,8 @@ export default function Register() {
   return (
 
     <>
-        <NavHeader />
 
-
+      <NavHeader />
 
       <NavBottom />
 

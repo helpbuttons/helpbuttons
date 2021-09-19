@@ -8,9 +8,8 @@ export default function Login() {
   return (
 
     <>
-        <NavHeader />
-
-
+    
+      <NavHeader />
 
       <NavBottom />
 

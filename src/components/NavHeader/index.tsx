@@ -7,23 +7,23 @@ function NavHeader(){
 
     <>
 
-      <form class="nav-header__content" onsubmit="">
+      <form className="nav-header__content">
 
-          <button class="btn-circle">
-            <div class="btn-circle__content">
-              <div class="btn-circle__icon">
+          <button className="btn-circle">
+            <div className="btn-circle__content">
+              <div className="btn-circle__icon">
                 <CrossIcon />
               </div>
             </div>
           </button>
 
-          <div class="nav-header__content-message">
-            <input class="form__input nav-header__content-input" placeholder="Search tags"></input>
+          <div className="nav-header__content-message">
+            <input className="form__input nav-header__content-input" placeholder="Search tags"></input>
           </div>
 
-          <button class="btn-circle">
-            <div class="btn-circle__content">
-              <div class="btn-circle__icon">
+          <button className="btn-circle">
+            <div className="btn-circle__content">
+              <div className="btn-circle__icon">
                 <CrossIcon />
               </div>
             </div>
