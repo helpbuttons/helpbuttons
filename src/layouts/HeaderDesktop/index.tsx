@@ -9,8 +9,7 @@ export default function HeaderDesktop() {
   return (
     <header>
       <HeaderSearch />
-      <DropdownNets>
-      </DropdownNets>
+      <DropdownNets />
       <Filters />
     </header>
   );

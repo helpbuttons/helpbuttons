@@ -7,7 +7,7 @@
   margin: $margin-big 0 0 0;
 
   cursor: pointer;
-  transition: 0.4s;
+  transition: $transition-default;
   z-index: $z-index-01;
 
 }
@@ -23,7 +23,7 @@
   padding: $padding-huge;
 
   background-color: $color-white;
-  height: 40px;
+  height: auto;
   margin: -20px 0;
   border-radius: 0  0 $border-radius-circle $border-radius-circle;
   display: block;

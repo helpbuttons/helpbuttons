@@ -140,6 +140,21 @@ body {
   }
 }
 
+.popup__map {
+
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+
+}
+
+.popup__map-input {
+
+  position: absolute;
+  margin-top: $margin-big;
+
+}
+
 .popup__close-container {
   width: 100%;
 }
@@ -254,7 +269,17 @@ body {
   justify-content: space-between;
 
   .popup__options-btn {
+
     flex: 0 1 50%;
+
+    &:first-child {
+      border-radius: 0px 0px 0px 25px;
+    }
+
+    &:last-child {
+      border-radius: 0px 0px 25px 0px;
+    }
+
   }
 
 }
@@ -267,6 +292,7 @@ body {
 }
 
 @media #{$breakpoints-medium} {
+
   .popup {
 
     margin: 0 auto;
@@ -304,16 +330,12 @@ body {
     padding: 1rem 2rem;
   }
 
-  .popup__options-btn {
-    &:last-child {//REVISE
-      border-radius: 0px 0px 25px 25px;//REVISE
-    }
-  }
 
   .popup__options-h {
 
     flex-flow: row nowrap;
     align-items: flex-end;
+
 
   }
 

@@ -980,6 +980,63 @@ function Repository() {
         <hr></hr>
 
         <h3 className="repository__title">
+          component/popup-map
+        </h3>
+
+        <section className="repository__section">
+
+            <div className="popup">
+              <div className="popup__header">
+                <header className="popup__header-content">
+                  <div className="popup__header-left">
+                    <button className="popup__header-button">
+                      <div className="btn-circle__icon">
+                        <CrossIcon />
+                      </div>
+                    </button>
+                  </div>
+                  <div className="popup__header-center">
+                    <h1 className="popup__header-title">
+                      Button location
+                    </h1>
+                  </div>
+                  <div className="popup__header-right">
+                    <button className="popup__header-button">
+                      <div className="btn-circle__icon">
+                        <CrossIcon />
+                      </div>
+                    </button>
+                  </div>
+                </header>
+              </div>
+
+              <div className="popup__content">
+
+
+                <form className="popup__section" >
+
+                    <input type="text" className="form__input" placeholder="Search location"></input>
+
+                </form>
+
+                <div className="popup__map">
+                  <img src="https://dummyimage.com/550x200/#ccc/fff" alt="Map_select" className=""></img>
+                </div>
+
+                <div className="popup__options-h">
+
+                  <button className="popup__options-btn">Cancelar</button>
+                  <button className="popup__options-btn">Aceptar</button>
+
+                </div>
+
+              </div>
+            </div>
+        </section>
+
+        <hr></hr>
+
+        <h3 className="repository__title">
           component/dropdown-nets
         </h3>
 
@@ -1870,7 +1927,7 @@ function Repository() {
 
       <button class="accordion">Section 1</button>
         <div class="panel">
-        <p>Lorem ipsum...</p>
+        <p>Lorem ipsum... palabra. Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras. Ejemplo palabras Ejemplo palabras Ejemplo palabras ., Ejemplo palabrasEjemplo palabras</p>
         </div>
 
       <button class="accordion">Section 2</button>
