@@ -19,6 +19,18 @@ export class TemplateButtonNetwork extends Entity {
   })
   templateButtonId?: number;
 
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  created ? : string;
+  
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  modified ? : string;
+  
   constructor(data?: Partial<TemplateButtonNetwork>) {
     super(data);
   }

@@ -81,6 +81,18 @@ export class Network extends Entity {
   })
   role: string;
 
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  created ? : string;
+  
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  modified ? : string;
+  
   // TODO: this will have a list of users blocked in a network
   // blockedUsers?: string[];
 

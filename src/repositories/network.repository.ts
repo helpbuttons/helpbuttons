@@ -42,6 +42,10 @@ export class NetworkRepository extends DefaultCrudRepository<
 
     this.buttons = this.createHasManyThroughRepositoryFactoryFor('buttons', buttonRepositoryGetter, buttonsNetworkRepositoryGetter,);
     this.registerInclusionResolver('buttons', this.buttons.inclusionResolver);
+
+    (this.modelClass as any).observe('persist', async (ctx: any) => {
+      ctx.data.modified = new Date();
+    });
   }
 
   public findForMap(geoPolygon: GeoJSON): Promise<Network[]> {

@@ -33,6 +33,18 @@ export class TemplateButton extends Entity {
   })
   fields: object;
 
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  created ? : string;
+  
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  modified ? : string;
+  
   @hasMany(() => Button)
   buttons: Button[];
 
