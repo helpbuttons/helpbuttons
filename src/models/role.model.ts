@@ -20,6 +20,18 @@ export class Role extends Entity {
   })
   description?: string;
 
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  created ? : string;
+  
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  modified ? : string;
+  
 
   constructor(data?: Partial<Role>) {
     super(data);

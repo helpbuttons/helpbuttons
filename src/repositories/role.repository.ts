@@ -12,5 +12,9 @@ export class RoleRepository extends DefaultCrudRepository<
     @inject('datasources.db') dataSource: DbDataSource,
   ) {
     super(Role, dataSource);
+
+    (this.modelClass as any).observe('persist', async (ctx: any) => {
+      ctx.data.modified = new Date();
+    });
   }
 }

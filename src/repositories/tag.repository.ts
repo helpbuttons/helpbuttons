@@ -12,5 +12,9 @@ export class TagRepository extends DefaultCrudRepository<
     @inject('datasources.db') dataSource: DbDataSource,
   ) {
     super(Tag, dataSource);
+    
+    (this.modelClass as any).observe('persist', async (ctx: any) => {
+      ctx.data.modified = new Date();
+    });
   }
 }

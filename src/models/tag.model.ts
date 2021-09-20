@@ -19,6 +19,18 @@ export class Tag extends Entity {
   })
   modelId?: string;
 
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  created ? : string;
+  
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  modified ? : string;
+  
   constructor(data?: Partial<Tag>) {
     super(data);
   }
