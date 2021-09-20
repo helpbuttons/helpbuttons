@@ -12,121 +12,22 @@ $filters-padding: 10px;
   overflow-x: scroll;
   padding: $padding-big $padding-small;
 
-  &__header {
-    position: relative;
-    width: 100%;
-    top: 0;
-    z-index: 1;
-    background: $color-ligth-gray;
-  }
-  //overwrites deefaul ember select
-  &__select {
-    text-align: center;
-    border: 1px solid #e5e5e5;
-    border-radius: $border-radius-circle;
-    height: auto;
-
-  }
-  &__filters-container {
-    padding-top: 48px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    background: $color-ligth-gray;
-  }
-  & > * {
-    font-size: $font-size-general;
-  }
-  &__modal {
-    z-index: 10000000001;
-  }
-  &__modal-container {
-    flex-direction: column;
-    display: flex;
-    overflow-y: auto;
-    width: 100vw;
-    height: 100%;
-  }
-  &__zoom {
-    border-radius: $border-radius-circle;
-  }
-  &__search-btn {
-    display: inline-block;
-    background-color: $color-corporative;
-    z-index: 450;
-    border-radius: $border-radius-circle;
-    padding: 0 10px;
-    width: 140px;
-    height: 50px;
-    text-align: center;
-    line-height: 50px;
-    &:hover {
-      background-color: $color-black;
-      text-decoration: none;
-      & .icon {
-        fill: $color-corporative;
-      }
-    }
-    & .icon {
-      fill: $color-black;
-    }
-  }
-  &__list-icon {
-    width: 36px;
-  }
-  &__sort-icon {
-    background: #fff url(../../../public/assets/svg/icons/order.svg) 10px center no-repeat;
-    padding-left: 35px;
-    background-size: 25px;
-  }
-  &__checkbox {
-    min-width: 160px;
-    &--border-grey {
-      border: 1px solid #e5e5e5;
-      &:focus {
-        border: 1px solid $color-black;
-      }
-    }
-  }
-  &__autocomplete-input {
-    background: #fff url(../../../public/assets/svg/icons/autocomplete-place.svg) 10px center no-repeat;
-    padding-left: 35px;
-    height: 62px;
-    border: 1px solid #e5e5e5;
-    &:focus {
-      box-shadow: none;
-      border: 1px solid $color-black;
-    }
-  }
-  &__no-localize-user-btn {
-    width: 65px;
-    height: 50px;
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-  &__options {
-    // box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  }
-  &__tags-multiple-select {
-    height: auto;
-    min-height: 62px;
-    line-height: 62px;
-    border: 1px solid #e5e5e5;
-    border-radius: $border-radius-circle;
-    padding: 0 $padding-big;//Revise: de 16px a 18px
-    font-size: $font-size-general;
-    &:focus {
-      box-shadow: none;
-      border: 1px solid $color-black;
-    }
-  }
-  &__card-align {
-
-    max-width: calc(400px + 596px + 15px);
-
-  }
 }
+
+.filters--vertical {
+
+  position: relative;
+  width: 100%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  background: $color-corporative;
+  overflow-x: scroll;
+  padding: $padding-big $padding-big;
+
+
+}
+
 
 @media #{$breakpoints-xlarge} {
   .filters {
@@ -141,24 +42,6 @@ $filters-padding: 10px;
     padding: 0;
     // right: $filters-right;
     z-index: $z-index-01 + 1;
-
-    &__select {
-      height: auto;
-
-    }
-    &__tags-multiple-select {
-      height: auto;
-      min-height: 3rem;
-      line-height: 3rem;
-
-    }
-    &__autocomplete-input {
-      height: 48px;
-    }
-    .checkbox__content {
-      padding: 7px 10px;
-      line-height: 34px;
-    }
   }
 }
 
@@ -174,35 +57,5 @@ $filters-padding: 10px;
     overflow-x: scroll;
     padding: $padding-big $padding-small;
 
-    &__checkbox-left {
-      padding-left: 3px;
-    }
-    &__checkbox-right {
-      padding-right: 3px;
-    }
   }
-}
-
-.filters__date_text {
-  height: 46px;
-  & button {
-    color: $color-blue;
-    border: none;
-    background: transparent;
-    height: 100%;
-    width: auto;
-    max-width: 130px;
-    overflow: hidden;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    &:hover {
-      color:$color-blue;
-      text-decoration: underline;
-    }
-  }
-  & span:hover {
-    cursor: pointer;
-    color:white;
-      }
 }

@@ -284,7 +284,8 @@ function Repository() {
             elements/checkbox
           </h3>
           <section className="repository__section">
-            <div className="label">label checkbox</div>
+
+          <div className="label">label checkbox</div>
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
@@ -294,6 +295,20 @@ function Repository() {
                   </div>
                   <div className="checkbox__text">
                     Ahora
+                  </div>
+                </div>
+              </label>
+            </div>
+
+            <hr></hr>
+
+            <div className="checkbox">
+              <label className="checkbox__label">
+                <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
+                <div className="checkbox__content">
+                  <div className="checkbox__icon red"></div>
+                  <div className="checkbox__text">
+                    Necesito Ahora
                   </div>
                 </div>
               </label>

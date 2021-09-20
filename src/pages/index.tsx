@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Map from "../components/LeafletMap/index";
+import Map from "../components/LeafletMap";
 import { Store } from "../store/Store";
 import { Event } from "../store/Event";
 import List from "../layouts/List";
 import NavBottom from "../components/NavBottom"; //just for mobile
-import Repository from "../layouts/Repository";
 import NavHeader from "../components/NavHeader"; //just for mobile
+import FiltersMobile from "../components/FiltersMobile"; //just for mobile
 
 //    Components
 import HeaderDesktop from "../layouts/HeaderDesktop";
@@ -40,6 +40,7 @@ const Home: NextPage = () => {
   return (
     <>
       <NavHeader />
+      <FiltersMobile />
       <Map />
       <NavBottom />
     </>
