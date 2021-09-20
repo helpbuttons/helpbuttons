@@ -20,6 +20,7 @@ import {
 import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
+import { TagController } from '.';
 import { UserExtraRepository } from '../repositories';
 
 @model()
@@ -84,6 +85,8 @@ export class UserController {
     @inject(UserServiceBindings.USER_REPOSITORY) protected userRepository: UserRepository,
     @repository(UserExtraRepository)
     public userExtraRepository : UserExtraRepository,
+    @inject('controllers.TagController') 
+    public tagController: TagController,
   ) {}
 
   @post('/users/login', {
@@ -177,6 +180,9 @@ export class UserController {
     await this.userRepository.userCredentials(savedUser.id).create({password: password});
 
     await this.userExtraRepository.createForUser(_.pick(newUserRequest, ['interests']), savedUser.id);
+
+    if (newUserRequest.interests)
+      await this.tagController.addTags('user',savedUser.id.toString(), newUserRequest.interests);
 
     return savedUser;
   }
