@@ -31,7 +31,6 @@ export class Role extends Entity {
     default: () => new Date()
   })
   modified ? : string;
-  
 
   constructor(data?: Partial<Role>) {
     super(data);

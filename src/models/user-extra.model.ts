@@ -1,15 +1,31 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
 
 @model()
 export class UserExtra extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
-    generated: true,
   })
-  id?: number;
+  id?: string;
 
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  interests?: string[];
 
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  created ? : string;
+  
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  modified ? : string;
+  
   constructor(data?: Partial<UserExtra>) {
     super(data);
   }
