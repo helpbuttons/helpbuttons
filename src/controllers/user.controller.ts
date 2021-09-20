@@ -8,7 +8,7 @@ import {
   UserServiceBindings,
 } from '@loopback/authentication-jwt';
 import {inject} from '@loopback/core';
-import {model, property} from '@loopback/repository';
+import {model, property, repository} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
@@ -16,9 +16,12 @@ import {
   requestBody,
   SchemaObject,
 } from '@loopback/rest';
+
 import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
+import { TagController } from '.';
+import { UserExtraRepository } from '../repositories';
 
 @model()
 export class NewUserRequest extends User {
@@ -27,6 +30,25 @@ export class NewUserRequest extends User {
     required: true,
   })
   password: string;
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  interests?: string[];
+
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  created ? : string;
+  
+  @property({
+    type: 'date',
+    default: () => new Date()
+  })
+  modified ? : string;
+
 }
 
 const CredentialsSchema: SchemaObject = {
@@ -61,6 +83,10 @@ export class UserController {
     @inject(SecurityBindings.USER, {optional: true})
     public user: UserProfile,
     @inject(UserServiceBindings.USER_REPOSITORY) protected userRepository: UserRepository,
+    @repository(UserExtraRepository)
+    public userExtraRepository : UserExtraRepository,
+    @inject('controllers.TagController') 
+    public tagController: TagController,
   ) {}
 
   @post('/users/login', {
@@ -143,11 +169,20 @@ export class UserController {
     })
     newUserRequest: NewUserRequest,
   ): Promise<User> {
+    
     const password = await hash(newUserRequest.password, await genSalt());
+    
+    newUserRequest.realm = 'admin';
     const savedUser = await this.userRepository.create(
-      _.omit(newUserRequest, 'password'),
+      _.pick(newUserRequest, ['username','email','realm']),
     );
+    
     await this.userRepository.userCredentials(savedUser.id).create({password: password});
+
+    await this.userExtraRepository.createForUser(_.pick(newUserRequest, ['interests']), savedUser.id);
+
+    if (newUserRequest.interests)
+      await this.tagController.addTags('user',savedUser.id.toString(), newUserRequest.interests);
 
     return savedUser;
   }

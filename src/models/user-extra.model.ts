@@ -1,24 +1,18 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
-export class Role extends Entity {
+export class UserExtra extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
-    generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
-    type: 'string',
-    required: true,
+    type: 'array',
+    itemType: 'string',
   })
-  name: string;
-
-  @property({
-    type: 'string',
-  })
-  description?: string;
+  interests?: string[];
 
   @property({
     type: 'date',
@@ -31,14 +25,14 @@ export class Role extends Entity {
     default: () => new Date()
   })
   modified ? : string;
-
-  constructor(data?: Partial<Role>) {
+  
+  constructor(data?: Partial<UserExtra>) {
     super(data);
   }
 }
 
-export interface RoleRelations {
+export interface UserExtraRelations {
   // describe navigational properties here
 }
 
-export type RoleWithRelations = Role & RoleRelations;
+export type UserExtraWithRelations = UserExtra & UserExtraRelations;

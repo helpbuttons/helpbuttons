@@ -27,7 +27,7 @@ describe('Users (integration) [users]', () => {
         },
         "expectedResponseBody":
         {
-            "realm": "lala",
+            "realm": "admin",
             "username": "lala",
             "email": "testuser2@abcd.com"
         },

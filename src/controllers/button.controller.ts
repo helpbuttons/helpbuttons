@@ -180,7 +180,9 @@ export class ButtonController {
     button: Button,
   ): Promise<void> {
     await this.buttonRepository.updateById(id, button);
-    await this.tagController.updateTags('button',id.toString(), button.tags ? button.tags : []);
+    if (button.tags) {
+      await this.tagController.updateTags('button',id.toString(), button.tags);
+    }
   }
 /*
   @put('/buttons/{id}')

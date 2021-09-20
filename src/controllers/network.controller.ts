@@ -113,7 +113,9 @@ export class NetworkController {
     network: Network,
   ): Promise<void> {
     await this.networkRepository.updateById(id, network);
-    await this.tagController.addTags('network',id.toString(), network.tags ? network.tags : []);
+    if (network.tags) {
+      await this.tagController.updateTags('network',id.toString(), network.tags);
+    }
   }
 /*
   @put('/networks/{id}')
