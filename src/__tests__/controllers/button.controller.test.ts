@@ -26,7 +26,7 @@ describe('ButtonController (integration)', () => {
         "description": "description of da button",
         "geoPlace": { "type": "Point", "coordinates": [100.0, 0.0] }
       }).set('Authorization', 'Bearer ' + token);
-      expect(res.body).to.deepEqual({
+      expect(res.body).to.containDeep({
         id: 6,
         name: 'button name',
         type: 'exchange',
@@ -74,7 +74,7 @@ describe('ButtonController (integration)', () => {
     });
     it('/buttons/find with networks', async () => {
       const resFilterOne = await client.get('/buttons/find').query({ filter: '{"where": {"id":1}, "include":["networks"]}' }).set('Authorization', 'Bearer ' + token).expect(200);
-      expect(resFilterOne.body[0].networks).to.deepEqual(
+      expect(resFilterOne.body[0].networks).to.containDeep(
         [
           {
             name: 'Perritos en adopcion',
@@ -140,7 +140,7 @@ describe('ButtonController (integration)', () => {
     await client.patch('/buttons/edit/1').set('Authorization', 'Bearer ' + token).send({ "name": newName }).expect(204);
 
     const resFindByIdAfter = await client.get('/buttons/findById/1').set('Authorization', 'Bearer ' + token).expect(200);
-    expect(resFindByIdAfter.body).to.deepEqual({
+    expect(resFindByIdAfter.body).to.containDeep({
       id: 1,
       name: newName,
       type: 'exchange',
