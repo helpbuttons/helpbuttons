@@ -41,6 +41,7 @@ $dropdown-max-width: 10rem;
 .dropdown__filter {
   @extend .btn-filter;
   text-align: left;
+  line-height: auto;
 }
 
 .dropdown__friend-net {

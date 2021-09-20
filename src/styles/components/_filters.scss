@@ -11,7 +11,6 @@ $filters-padding: 10px;
   background: $color-corporative;
   overflow-x: scroll;
   padding: $padding-big $padding-small;
-  white-space: nowrap;
 
   &__header {
     position: relative;
@@ -165,7 +164,7 @@ $filters-padding: 10px;
 
 @media #{$breakpoints-medium} {
   .filters {
-    
+
     position: relative;
     position: relative;
     width: 100%;

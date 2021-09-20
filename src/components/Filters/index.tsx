@@ -3,36 +3,43 @@
 export default function Filters() {
   return (
     <div class="filters">
-      <div class="checkbox-filter__container">
-        <div class="checkbox-filter__checkbox">
 
-          <div class="checkbox-filter__content btn-filter-with-icon">
+        <div className="checkbox-filter__container">
+          <label className="checkbox__filter-label">
+            <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
+            <div className="checkbox-filter__content btn-filter-with-icon">
+              <div class="btn-filter__icon red"></div>
 
-            <div class="btn-filter__icon red"></div>
-            Necesitan
-
-          </div>
-
+              <div className="checkbox__text">
+                Necesitan
+              </div>
+            </div>
+          </label>
         </div>
 
-      </div>
-      <div class="checkbox-filter__container">
+        <div className="checkbox-filter__container">
+          <label className="checkbox__filter-label">
+            <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
+            <div className="checkbox-filter__content btn-filter-with-icon">
+              <div class="btn-filter__icon red"></div>
 
-        <div class="checkbox-filter__checkbox">
-
-          <div class="checkbox-filter__content btn-filter-with-icon">
-
-            <div class="btn-filter__icon red"></div>
-            Ofrecen
-
-          </div>
-
+              <div className="checkbox__text">
+                Necesitan
+              </div>
+            </div>
+          </label>
         </div>
 
-      </div>
-      <div class="btn-filter dropdown">
-            Order dropdown
-      </div>
+        <select className="dropdown__filter">
+          <option value="volvo" className="dropdown-select__option">Volvo</option>
+          <option value="volvo" className="dropdown-select__option">Option1</option>
+          <option value="volvo" className="dropdown-select__option">Option2</option>
+          <option value="volvo" className="dropdown-select__option">Option3</option>
+          <option value="volvo" className="dropdown-select__option">Option4</option>
+          <option value="volvo" className="dropdown-select__option">Option5</option>
+          <option value="volvo" className="dropdown-select__option">Option6</option>
+        </select>
+
     </div>
   );
 }
