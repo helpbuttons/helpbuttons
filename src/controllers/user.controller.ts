@@ -16,7 +16,6 @@ import {
   requestBody,
   SchemaObject,
 } from '@loopback/rest';
-import {UserExtra} from '../models';
 
 import {SecurityBindings, securityId, UserProfile} from '@loopback/security';
 import {genSalt, hash} from 'bcryptjs';
