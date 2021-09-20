@@ -39,9 +39,9 @@ export const store = new Store({
 const Home: NextPage = () => {
   return (
     <>
-      <Repository />
+      <NavHeader />
       <Map />
-
+      <NavBottom />
     </>
   );
 };

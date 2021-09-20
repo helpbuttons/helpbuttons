@@ -1,4 +1,4 @@
-//Filters is the component under the search bar sectioon of the home page and other pages. It consist of several items all with button-fillter class, and its parts can be altered by the button templates of the selected network.
+//Filters is the component under the search bar sectioon of the home page and other pages. It consist of several items all with btn-fillter class, and its parts can be altered by the btn templates of the selected network.
 //if the filters are too many, it ddisplays a "more filters" option at the end that brings the PopupExtraFilters
 export default function Filters() {
   return (
@@ -6,9 +6,9 @@ export default function Filters() {
       <div class="checkbox-filter__container">
         <div class="checkbox-filter__checkbox">
 
-          <div class="checkbox-filter__content button-filter-with-icon">
+          <div class="checkbox-filter__content btn-filter-with-icon">
 
-            <div class="button-filter__icon red"></div>
+            <div class="btn-filter__icon red"></div>
             Necesitan
 
           </div>
@@ -20,9 +20,9 @@ export default function Filters() {
 
         <div class="checkbox-filter__checkbox">
 
-          <div class="checkbox-filter__content button-filter-with-icon">
+          <div class="checkbox-filter__content btn-filter-with-icon">
 
-            <div class="button-filter__icon red"></div>
+            <div class="btn-filter__icon red"></div>
             Ofrecen
 
           </div>
@@ -30,7 +30,7 @@ export default function Filters() {
         </div>
 
       </div>
-      <div class="button-filter">
+      <div class="btn-filter dropdown">
             Order dropdown
       </div>
     </div>

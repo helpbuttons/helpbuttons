@@ -127,7 +127,7 @@ $nav-bottom-border: 32px;
 @media #{$breakpoints-medium} {
   .nav-bottom {
     border-radius: $nav-bottom-border;
-    bottom: 2%;
+    bottom: 0;
     max-width: $nav-bottom-width;
     left: calc( 50% - #{$nav-bottom-width} / 2 );
   }

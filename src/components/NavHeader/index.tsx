@@ -1,6 +1,7 @@
 ///this is the mobile header - it has the search input in the middle and to icons on the sides. Left one ddisplays HeaderInfoOverlay with the netpicker and descripttion (in case it's in a net the trigger is the net's logo), right nav btn diisplays the filters
 import HeaderInfoOverlay from "../HeaderInfoOverlay";
 import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
+import Filters from "../Filters";
 
 function NavHeader(){
   return(
@@ -30,6 +31,8 @@ function NavHeader(){
           </button>
 
       </form>
+
+      <Filters />
 
     </>
 

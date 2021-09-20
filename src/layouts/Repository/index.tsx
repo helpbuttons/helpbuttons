@@ -108,6 +108,21 @@ function Repository() {
 
             <hr></hr>
 
+            <div className="checkbox-filter__container">
+              <label className="checkbox__filter-label">
+                <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
+                <div className="checkbox-filter__content btn-filter-with-icon">
+                  <div class="btn-filter__icon red"></div>
+
+                  <div className="checkbox__text">
+                    Filter checkbox
+                  </div>
+                </div>
+              </label>
+            </div>
+
+            <hr></hr>
+
             <button className="btn-circle">
               <div className="btn-circle__content">
                 <div className="btn-circle__icon">
@@ -1390,6 +1405,51 @@ function Repository() {
         </section>
 
         <hr></hr>
+
+
+        <h3 className="repository__title">
+          component/filters
+        </h3>
+
+        <section className="repository__section">
+
+          <div class="filters">
+
+              <div className="checkbox-filter__container">
+                <label className="checkbox__filter-label">
+                  <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
+                  <div className="checkbox-filter__content btn-filter-with-icon">
+                    <div class="btn-filter__icon red"></div>
+
+                    <div className="checkbox__text">
+                      Necesitan
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <div className="checkbox-filter__container">
+                <label className="checkbox__filter-label">
+                  <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
+                  <div className="checkbox-filter__content btn-filter-with-icon">
+                    <div class="btn-filter__icon red"></div>
+
+                    <div className="checkbox__text">
+                      Necesitan
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <div class="dropdown__filter">
+                    Order dropdown
+              </div>
+
+          </div>
+
+          </section>
+
+
 
         <h3 className="repository__title">
           component/overlay-loading

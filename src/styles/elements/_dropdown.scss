@@ -38,6 +38,11 @@ $dropdown-max-width: 10rem;
 
 }
 
+.dropdown__filter {
+  @extend .btn-filter;
+  text-align: left;
+}
+
 .dropdown__friend-net {
 
   max-width: 100% !important;

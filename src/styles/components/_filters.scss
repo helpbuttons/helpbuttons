@@ -3,8 +3,18 @@ $filters-padding: 10px;
 
 
 .filters {
+  position: relative;
+  position: relative;
+  width: 100%;
+  top: 0;
+  display: flex;
+  background: $color-corporative;
+  overflow-x: scroll;
+  padding: $padding-big $padding-small;
+  white-space: nowrap;
+
   &__header {
-    position: fixed;
+    position: relative;
     width: 100%;
     top: 0;
     z-index: 1;
@@ -155,6 +165,16 @@ $filters-padding: 10px;
 
 @media #{$breakpoints-medium} {
   .filters {
+    
+    position: relative;
+    position: relative;
+    width: 100%;
+    top: 0;
+    display: flex;
+    background: $color-corporative;
+    overflow-x: scroll;
+    padding: $padding-big $padding-small;
+
     &__checkbox-left {
       padding-left: 3px;
     }
