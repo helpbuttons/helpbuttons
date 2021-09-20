@@ -23,7 +23,7 @@ export class ButtonRepository extends DefaultCrudRepository<
     this.networks = this.createHasManyThroughRepositoryFactoryFor('networks', networkRepositoryGetter, buttonsNetworkRepositoryGetter,);
     this.registerInclusionResolver('networks', this.networks.inclusionResolver);
 
-    (this.modelClass as any).observe('persist', async (ctx: any) => {
+    (this.modelClass).observe('persist', async (ctx) => {
       ctx.data.modified = new Date();
     });
   }

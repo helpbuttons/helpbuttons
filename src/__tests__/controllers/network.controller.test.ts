@@ -33,7 +33,7 @@ describe('NetworkController (integration)', () => {
         "friendNetworks": [1, 2]
       }
     ).set('Authorization', 'Bearer ' + token).expect(200);
-    expect(res.body).to.deepEqual({
+    expect(res.body).to.containDeep({
       "name": "Perritos en adopcion",
       "id": 5,
       "url": "net/url",
@@ -95,7 +95,7 @@ describe('NetworkController (integration)', () => {
         }`}).set('Authorization', 'Bearer ' + token).expect(200);
       expect(resFilter.body.length).to.equal(1);
       expect(resFilter.body[0].buttons.length).to.equal(1);
-      expect(resFilter.body).to.deepEqual(
+      expect(resFilter.body).to.containDeep(
         [{
           name: 'Perritos en adopcion',
           id: 3,

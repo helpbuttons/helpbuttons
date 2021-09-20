@@ -73,7 +73,7 @@ describe('templateButtonController (integration)', () => {
     });
     it('/template-buttons/findById with id=1', async () => {
       const resFilterOne = await client.get('/template-buttons/findById/2').set('Authorization', 'Bearer ' + token).expect(200);
-      expect(resFilterOne.body).to.deepEqual({
+      expect(resFilterOne.body).to.containDeep({
         id: 2,
         name: 'repartidor',
         type: 'need',
@@ -165,7 +165,7 @@ describe('templateButtonController (integration)', () => {
     await client.patch('/template-buttons/edit/1').send({ "name": newName }).set('Authorization', 'Bearer ' + token).expect(204);
 
     const resFindByIdAfter = await client.get('/template-buttons/findById/1').expect(200);
-    expect(resFindByIdAfter.body).to.deepEqual({
+    expect(resFindByIdAfter.body).to.containDeep({
       id: 1,
       name: newName,
       type: 'need',
@@ -200,7 +200,7 @@ describe('templateButtonController (integration)', () => {
   describe('/template-buttons/delete', () => {
     it('/template-buttons/delete/{id}', async () => {
       const restFindByIdPrev = await client.get('/template-buttons/findById/1').set('Authorization', 'Bearer ' + token).expect(200);
-      expect(restFindByIdPrev.body).to.deepEqual({
+      expect(restFindByIdPrev.body).to.containDeep({
         id: 1,
         name: 'button name',
         type: 'need',
