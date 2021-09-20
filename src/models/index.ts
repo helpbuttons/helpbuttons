@@ -6,3 +6,4 @@ export * from './template-button-network.model';
 export * from './role.model';
 // export * from './user-role.model';
 export * from './tag.model';
+export * from './user-extra.model';
