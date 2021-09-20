@@ -15,21 +15,21 @@
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     & .icon {
-      width: rem(30px);
-      height: rem(30px);
+      width: 30px;
+      height: 30px;
       margin: 0;
-      margin-bottom: rem(7px);
+      margin-bottom: 7px;
     }
     & .icon_b {
-      width: rem(23px);
-      height: rem(23px);
+      width: 23px;
+      height: 23px;
       margin: 0;
-      margin-bottom: rem(7px);
+      margin-bottom: 7px;
     }
   }
   &__category-text {
-    line-height: rem(30px);
-    margin-bottom: rem(7px);
+    line-height: 30px;
+    margin-bottom: 7px;
   }
   &__images {
     width: 50%;
@@ -44,8 +44,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: rem(100px);
-    margin-bottom: rem(15px);
+    margin-bottom: 100px;
+    margin-bottom: 15px;
 
   }
   &__offer-tag {
@@ -70,7 +70,7 @@
   }
   &__iframe {
     // border: 2px solid black;
-    border-radius: rem(5px);
+    border-radius: 5px;
     text-align: center;
     background-color: transparent;
     height: auto;

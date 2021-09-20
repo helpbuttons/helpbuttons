@@ -13,8 +13,8 @@ $list-header-padding-top: 242px;
 
   &__go-to-index-btn {
     position: fixed;
-    bottom: rem(20px);
-    right: rem(0px);
+    bottom: 20px;
+    right: 0px;
     z-index: 200;
 
     .icon {
@@ -27,7 +27,7 @@ $list-header-padding-top: 242px;
 
       &:hover {
         background-color: $color-black;
-        border: rem(2px) solid $color-black;
+        border: 2px solid $color-black;
         fill: $color-corporative;
 
         & .icon {

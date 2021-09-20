@@ -1,76 +1,171 @@
-.dropdown--toggle {
-  background: #e0e0e0;
-  border: #e5e5e5 1px solid;
-  border-radius: 42px;
-  color: black;
-  font-size: $font-size-medium;
-  font-weight: bold;
-  height: 3.125rem;
-  padding-left: 1rem;
+$dropdown-dropdown-border-radius: $border-radius-basic;
+$padding-dropdown-options-top: 200px;
+$dropdown-height: $form-input-height;
+$dropdown-width: auto;
+$dropdown-max-width: 10rem;
+
+.dropdown__dropdown {
+
   text-align: left;
+  overflow-x: hidden;
+  font-size: $font-size-general;
+  height: $form-input-height;
+  padding: 0 $padding-big;
   width: 100%;
+  border: none;
+  border-radius: 2rem;
+  background: $color-white;
+  color: $color-black;
+  transition: all 0.2s ease-in-out;
+
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    cursor: pointer;
+    border-radius: $border-radius-circle;
+    background: $color-white;
+  }
+  &:active {
+    cursor: pointer;
+    border-radius: $border-radius-circle;
+    background: $color-ligth-gray;
+  }
+
+}
+
+.dropdown__filter {
+  @extend .btn-filter;
+  text-align: left;
+  line-height: auto;
+}
+
+.dropdown__friend-net {
+
+  max-width: 100% !important;
+
+}
+
+.dropdown__userTag {
+
+  flex: 0.8;
+  max-width: 100% !important;
+  margin-right: 2rem;
+
+}
+
+.dropdown__icon {
+
+  min-width: 25px;
+  height: 25px;
+  margin: 5px;
+
+}
+
+
+.dropdown__dropdown-trigger {
+
+  text-align: left;
+  overflow-x: hidden;
+  height: $form-input-height;
+  padding: 0 $padding-big;
+  width: inherit;
+  border: none;
+  border-radius: 2rem;
+  background: $color-corporative;
+  color: $color-black;
+  transition: all 0.2s ease-in-out;
+  font-size: $font-size-general;
+
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    cursor: pointer;
+    border-radius: $border-radius-circle;
+    background: $color-white;
+  }
+  &:active {
+    cursor: pointer;
+    border-radius: $border-radius-circle;
+    background: $color-ligth-gray;
+  }
+
+}
+
+
+.dropdown__dropdown-content {
+
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+    max-height: 150px;
+    overflow-y: auto;
+
+    position: absolute;
+    background-color: white;
+    border: 1px solid blue;
+    border-radius: 0 0 5px 5px;
+    border-top: none;
+    font-family: sans-serif;
+    width: 350px;
+    padding: 5px;
+
+}
+
+.dropdown__dropdown-option {
+
+  display: block;
   cursor: pointer;
-  margin-bottom: 1.2rem;
-}
-
-.dropdown--toggle--grey-bordered {
-  border-color: #0e0e0e;
-}
-
-.dropdown--content {
-  padding: 1rem;
-}
-
-.dropdown--content:last-child {
-  margin-bottom: 1.2rem;
-}
-
-.dropdown--title {
-  font-size: $font-size-general;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  line-height: 1.9rem;
-}
-
-.dropdown--paragraph {
-  font-size: $font-size-general;
-  margin-bottom: 1rem;
-  line-height: 1.4rem;
-}
-
-.dropdown--text--with-img {
-  font-size: $font-size-general;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  line-height: 1.9rem;
-}
-
-.dropdown__img {
-  max-width: 200px;
-  margin: 1rem 0rem;
-}
-
-.dropdown__img--big {
-  max-width: 600px;
   width: 100%;
-  margin: 1rem 0rem;
+  background: white;
+  border: unset;
+  border-radius: $border-radius-semicircle; //REVISE
+
+
 }
 
-.dropdown__list__title {
-  font-size: $font-size-general;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  line-height: 1.9rem;
+.dropdown__create-new-button {
+
+  padding: 0 $padding-big;//Revise: de 16px a 18px
+  height: $form-input-height;
+
+  & button {
+    color: $color-blue;
+    border: none;
+    background: transparent;
+    height: 100%;
+    &:hover {
+      color: $color-blue;
+      text-decoration: underline;
+    }
+  }
+
+  & span:hover {
+    cursor: pointer;
+    color: white;
+  }
+
 }
 
-.dropdown__list__list {
-  font-size: $font-size-general;
-  margin-bottom: 1rem;
-  line-height: 1.2rem;
-}
 
-.dropdown__icon--big {
-  max-width: 300px;
-  width: 100%;
-  margin: 1rem 0rem;
+@media #{$breakpoints-xxlarge} {
+
+  .dropdown__dropdown-trigger {
+
+    display: flex;
+    max-width: $dropdown-max-width;
+    min-width: $dropdown-width;
+    margin-left: $margin-small;
+
+  }
+
 }

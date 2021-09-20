@@ -1,20 +1,35 @@
+$error-message-padding: $padding-big;
+$error-message-margin: $margin-big;
+$error-message-text-margin: $margin-extra-small;
+$error-message-radius: $border-radius-basic;
+
 .error-message {
-  padding: rem(20px);
-  margin: rem(15px) 0;
+  padding: $error-message-padding;
+  margin: 15px 0;
+  border-radius: $error-message-radius;
   background-color: $color-red;
   color: $color-dark-gray;
-  &__icon {
-    width: rem(56px);
-    height: auto;
-  }
-  &__title {
-    font-size: $font-size-general;
-    font-weight: bold;
-  }
+  display: flex;
+}
 
-  &__top-text,
-  &__subtitle {
-    margin-bottom: 0;
-    font-size: font-size-medium;
-  }
+.error-message__icon {
+
+  width: 56px;
+  height: auto;
+
+}
+
+.error-message__title {
+
+  font-size: $font-size-general;
+  font-weight: bold;
+  margin: $error-message-text-margin 0;
+}
+
+.error-message__top-text,
+.error-message__subtitle {
+
+  margin-bottom: 0;
+  font-size: $font-size-small;
+
 }

@@ -17,7 +17,7 @@ $home-serch-title-size: 22px;
 $home-serch-title-margin: $gutter;
 $home-serch-description-size: 14px;
 $header-search-button-size: 44px;
-$header-search-button-icon: 24px;
+$header-search-marker-button: 24px;
 $header-search-input-border-radius: 42px;
 $info-container-padding: 10px;
 $info-container-padding-medium: $padding-big;
@@ -38,7 +38,7 @@ $info-line-height: 1.3;
   margin: auto $home-serch-title-margin;
 }
 
-.header-search__label {//se usa
+.header-search__label {
   z-index: $z-index-01;
   position: absolute;
   top: 7px;
@@ -117,7 +117,7 @@ $info-line-height: 1.3;
   z-index: $z-index-01;
 }
 
-.header-search__tool {//se usa
+.header-search__tool {
   padding: 4px;
   border-radius: $header-search-input-border-radius;
   background: $color-white;
@@ -141,7 +141,7 @@ $info-line-height: 1.3;
   }
 }
 
-.header-search__form {//se usa
+.header-search__form {
   @extend .form;
 
   align-items: center;
@@ -151,7 +151,7 @@ $info-line-height: 1.3;
   width: 100%;
 }
 
-.header-search__column {//se usa
+.header-search__column {
   flex: 1 1 $header-search-column;
   position: relative;
 }
@@ -171,8 +171,8 @@ $info-line-height: 1.3;
   background: $color-corporative;
 
   .icon {
-    height: $header-search-button-icon;
-    width: $header-search-button-icon;
+    height: $header-search-marker-button;
+    width: $header-search-marker-button;
   }
 }
 
@@ -263,7 +263,7 @@ $info-line-height: 1.3;
   .header-search--tags,
   .header-search--localization,
   .header-search--time,  // Revise Ángel
-  .header-search--filters  {//se usa
+  .header-search--filters  {
     width: 100%;
   }
 

@@ -1,11 +1,15 @@
-$picture-width: 100%;
+$picture-width: fit-content;
 
 .picture {
   width: $picture-width;
+  margin: auto;
 }
 
 .picture__img {
-  height: auto;
+  width: $picture-width;
+  margin: auto;
+  bottom: 0;
+
 }
 
 @media #{$breakpoints-medium} {

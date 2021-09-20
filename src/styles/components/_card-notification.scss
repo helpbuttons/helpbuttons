@@ -10,6 +10,9 @@ $card-notification-whitespace: .5rem;
 $card-notification-border-height: $border-general-height;
 $card-notification-icon-size: 40px;
 $card-notification-date-before-size: 10px;
+//deletebutton
+$card-notification-delete-size: 100px;
+
 
 .card-notification {
   background: $card-notification-background;
@@ -92,6 +95,7 @@ $card-notification-date-before-size: 10px;
 
 .card-notification__text {
   flex: 0 1 80%;
+  margin-left: $margin-big;
 }
 
 .card-notification__header {
@@ -152,24 +156,15 @@ $card-notification-date-before-size: 10px;
   line-height: 1.25rem;
 }
 
-$card-notification-close-size: 35px;
 
-.card-notification__close {
-  background: $color-corporative;
-  border-radius: 100%;
-  border: none;
-  height: $card-notification-close-size;
-  width: $card-notification-close-size;
-  .icon {
-    height: auto;
-    width: 100%;
-  }
+.card-notification__delete {
+
+  flex: 0 1 auto;
+  position: relative;
+  right: 0;
+  max-height: 3.375rem;
+  max-width: 3.375rem;
+
+  margin: auto $margin-extra-small ;
+
 }
-
-.card-notification__remove-modal {
-    z-index: 5000;
-    &-content {
-      width: 100%;
-      max-width: rem(450px);
-    }
-  }

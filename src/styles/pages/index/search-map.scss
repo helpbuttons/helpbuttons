@@ -14,8 +14,8 @@ $search-map-height: 0; // Altura del header
 
   &__localize-user {
     background-color: $color-white;
-    padding: rem(4px);
-    border: rem(1px) solid #e5e5e5;
+    padding: 4px;
+    border: 1px solid #e5e5e5;
     display: none; // inline-block Revise
     z-index: 450;
     border-radius: 50%;
@@ -28,7 +28,7 @@ $search-map-height: 0; // Altura del header
     }
     &:hover {
       background-color: $color-black;
-      border: rem(2px) solid $color-black;
+      border: 2px solid $color-black;
       & .icon {
         fill: $color-white;
       }
@@ -36,14 +36,14 @@ $search-map-height: 0; // Altura del header
     &--selected {
       &:hover {
         background-color: $color-white;
-        border: rem(1px) solid #e5e5e5;
+        border: 1px solid #e5e5e5;
         & .icon {
           max-height: 80%;
           fill: $color-black;
         }
       }
       background-color: $color-black;
-      border: rem(2px) solid $color-black;
+      border: 2px solid $color-black;
       & .icon {
         fill: $color-white;
       }

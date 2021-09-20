@@ -8,7 +8,7 @@ $text-font-size-medium: 2rem;
 $text-font-size-small: 1rem;
 $text-line-height-giant: 4.5rem;
 $text-line-height-big: 3.5rem;
-$text-line-height-medium: 2.5rem; 
+$text-line-height-medium: 2.5rem;
 $text-line-height-small: 1.5rem;
 
 .title__h1,
@@ -50,4 +50,16 @@ $text-line-height-small: 1.5rem;
       border-bottom: 0;
     }
   }
+}
+
+.link {
+
+    color: $text-color-black;
+    border-bottom: 1px solid $text-color-black;
+    text-decoration: none;
+
+    &:hover {
+      border-bottom: 0;
+    }
+    
 }

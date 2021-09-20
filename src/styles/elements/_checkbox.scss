@@ -1,6 +1,6 @@
-$checkbox-content-border: $border-general-height;
+$checkbox-content-border: $border-lines-width;
 $checkbox-filter-padding: 3rem;
-$checkbox-height: 58px;
+$checkbox-height: $height-btn;
 $checkbox-medium-height: 40px;
 $checkbox-border-radius: $border-radius-circle;
 $checkbox-color: $color-white;
@@ -25,6 +25,11 @@ $checkbox-color-gray-border: $color-gray-border;
 .checkbox__label {
   display: block;
   width: 100%;
+}
+
+.checkbox__filter-label {
+  display: block;
+  width: auto;
 }
 
 .checkbox__netIcon {
@@ -55,18 +60,18 @@ $checkbox-color-gray-border: $color-gray-border;
 //class that includes checkbox STYLED content
 .checkbox__content {
 
-  align-items: center;
+  @extend .btn-with-icon;
+
   background: $checkbox-color;
-  border: $checkbox-content-border;
+  border: $checkbox-content-border solid $color-gray-border;
   display: flex;
-  justify-content: center; //Revise
   font-size: $font-size-medium;
   position: relative;
   height: $checkbox-height;
   transition: background 0.2s;
-  width: 100%; //REVISE ESTE ES EL ANCHO DE FIGMA
+  width: auto;
   color: $checkbox-color-text;
-  min-width: rem(150px);
+  min-width: 150px;
   border-radius: 42px;
   box-sizing: border-box;
 
@@ -74,7 +79,7 @@ $checkbox-color-gray-border: $color-gray-border;
 
 .checkbox__content--bordered {
   border: 1px solid #e5e5e5;
-  border-radius: rem(5px);
+  border-radius: 5px;
 }
 
 .checkbox__content--disabled {
@@ -100,7 +105,7 @@ $checkbox-color-gray-border: $color-gray-border;
   }
 }
 
-.checkbox-filter__content {//se usa
+.checkbox-filter__content {
   @extend .btn-filter;
 
   color: $checkbox-color-text;
@@ -108,11 +113,11 @@ $checkbox-color-gray-border: $color-gray-border;
 
   &--bordered {
     border: 1px solid #e5e5e5;
-    border-radius: rem(5px);
+    border-radius: 5px;
   }
 }
 
-.checkbox-filter__content:hover {//se usa
+.checkbox-filter__content:hover {
   cursor: pointer;
 }
 
@@ -130,11 +135,12 @@ $checkbox-color-gray-border: $color-gray-border;
 }
 
 .checkbox__icon {
-  height: 30px;
-  width: 30px;
+  @extend .btn-filter__icon;
+
 }
 
 .checkbox__text {
+  @extend .btn-with-icon__text;
   margin-bottom: 0;
 }
 
@@ -147,17 +153,11 @@ $checkbox-color-gray-border: $color-gray-border;
     background: $checkbox-color-checked;
     background-size: 40px;
     color: $checkbox-color-text-checked;
-    min-width: rem(150px);
+    min-width: 150px;
 
-    .icon {
+    & svg {
       fill: $checkbox-color-text-hover;
     }
-  }
-
-  &:checked + .profile-buttons__checkbox {
-    background: $checkbox-color-checked;
-    color: $checkbox-color-text-checked;
-    min-width: rem(150px);
   }
 
   &:checked + .checkbox__content::before {
@@ -170,7 +170,7 @@ $checkbox-color-gray-border: $color-gray-border;
 .checkbox-filter__checkbox {
   display: none;
 
-  &:checked + .checkbox-filter__content { //se usa
+  &:checked + .checkbox-filter__content {
     background: $checkbox-color-checked;
     color: $checkbox-color-text-checked;
 

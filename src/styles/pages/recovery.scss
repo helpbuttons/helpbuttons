@@ -1,7 +1,7 @@
 .recovery {
   height: calc(100vh - 75px);
   &__header {
-    height: rem(75px);
+    height: 75px;
     background: $color-corporative;
   }
   &__svg {

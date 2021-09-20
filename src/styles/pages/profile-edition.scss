@@ -45,8 +45,8 @@
     height: 350px;
   }
   &__container {
-    padding-left: rem(25px);
-    padding-right: rem(25px);
+    padding-left: 25px;
+    padding-right: 25px;
     min-height: calc(100% - 75px);
   }
   &__modal-delete {
@@ -57,7 +57,7 @@
     height: 180px;
     border-radius: 5px;
     padding-top: 33px;
-    font-size: 25px;
+    font-size: $font-size-general
     & strong {
       text-align: center;
     }
@@ -69,7 +69,7 @@
     color: black;
     font-size: $font-size-general;
     font-weight: bold;
-    height: rem(50px);
+    height: 50px;
     padding-left: 1rem;
     text-align: left;
     width: 100%;
@@ -90,7 +90,7 @@
     display: flex;
     font-size: $font-size-general;
     font-weight: bold;
-    height: rem(32px);
+    height: 32px;
     margin-bottom: 0;
     margin-left: 1rem;
     margin-top: 0.5rem;
@@ -114,7 +114,7 @@
   &__input {
     border-radius: $border-radius-circle;
     font-size: $font-size-general;
-    height: rem(45px);
+    height: 45px;
     padding-left: $padding-big;//Revise: esto era 16px y se paso a 18px
     padding-right: $padding-big;//Revise: esto era 16px y se paso a 18px
     width: 100%;
@@ -144,19 +144,19 @@
     min-height: 6.25rem;
   }
   &__activate-button {
-    
+
     border: 1px solid $color-black;
     width: 100%;
-    height: rem(48px);
+    height: 48px;
     background: none;
-    margin-bottom: rem(20px);
+    margin-bottom: 20px;
     &--primary {
       background: $color-corporative;
       border: 1px solid $color-corporative;
     }
     & .icon {
-      height: rem(30px);
-      width: rem(30px);
+      height: 30px;
+      width: 30px;
     }
   }
 /*   &__checkbox {
@@ -165,7 +165,7 @@
   } */
   &__avatar {
     height: 100%;
-    max-height: rem(100px);
+    max-height: 100px;
     left:50%;
     &:hover{
       cursor: pointer;
@@ -176,14 +176,14 @@
     justify-content: center;
     margin-left: 30px;
     overflow:  hidden;
-    max-height: rem(100px);
-    max-width: rem(100px);
-    height: rem(100px);
+    max-height: 100px;
+    max-width: 100px;
+    height: 100px;
     background: $color-white;
     text-align: center;
     width: 100%;
     top:75%;
-    margin-bottom: rem(20px);
+    margin-bottom: 20px;
 
     &:hover{
 

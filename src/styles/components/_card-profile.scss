@@ -3,6 +3,7 @@ $avatar-container-max-width: 150px;
 $avatar-margin: $padding-big;
 
 .card-profile__data {
+  font-size: $font-size-general;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -10,7 +11,7 @@ $avatar-margin: $padding-big;
 
 }
 
-.card-profile__rating {//se usa
+.card-profile__rating {
   height: auto;
   display: flex;
   justify-content: flex-start;
@@ -28,23 +29,23 @@ $avatar-margin: $padding-big;
   text-align: center;
   font-size: font-size-medium;
   .icon {
-    width: rem(25px);
-    height: rem(25px);
+    width: 25px;
+    height: 25px;
     fill: $color-gray;
   }
 }
 
 .card-profile__interests {
   font-size: font-size-medium;
-  margin-right: rem(5px);
+  margin-right: 5px;
   color: $color-gray;
 }
 
 .card-profile__toggle-button {
   background-color: transparent;
-  border: rem(2px) solid $color-corporative;
-  width: rem(150px);
-  height: rem(150px);
+  border: 2px solid $color-corporative;
+  width: 150px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,15 +66,22 @@ $avatar-margin: $padding-big;
   }
 }
 
-.card-profile__container {//se usa
+.card-profile__container {
   display: flex;
   flex-direction: column;
   flex: 1;
-
+  background-color: $color-white;
+  border-radius: $border-radius-circle;
   padding: $padding-big;
 }
 
-.card-profile__avatar-container {//se usa
+.card-profile__content {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.card-profile__avatar-container {
   left: 0;
   position: relative;
   margin: 0;
@@ -102,21 +110,14 @@ $avatar-margin: $padding-big;
 }
 
 //revise
-.card-profile__container-avatar-content {//se usa
+.card-profile__container-avatar-content {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.card-profile__avatar-container-name {//se usa
+.card-profile__avatar-container-name {
   font-size: $font-size-title;
   font-weight: bold;
-}
-
-.paragraph {//se usa
-  margin-right: 1rem;
-  &:last-child {
-    margin-right: 0px;
-  }
 }
 
 .grid-one__column-mid-element {
@@ -133,9 +134,9 @@ $avatar-margin: $padding-big;
     height: auto;
     margin: 0 auto;
     background-size: contain;
-    margin-bottom: rem(10px);
+    margin-bottom: 10px;
     & svg {
-      width: rem(20px);
+      width: 20px;
     }
   }
 
@@ -144,23 +145,23 @@ $avatar-margin: $padding-big;
     text-align: center;
     font-size: font-size-medium;
     .icon {
-      width: rem(25px);
-      height: rem(25px);
+      width: 25px;
+      height: 25px;
       fill: $color-gray;
     }
   }
 
   .card-profile__interests {
     font-size: font-size-medium;
-    margin-right: rem(5px);
+    margin-right: 5px;
     color: $color-gray;
   }
 
   .card-profile__toggle-button {
     background-color: transparent;
-    border: rem(2px) solid $color-corporative;
-    width: rem(150px);
-    height: rem(150px);
+    border: 2px solid $color-corporative;
+    width: 150px;
+    height: 150px;
     display: flex;
     align-items: center;
     justify-content: center;

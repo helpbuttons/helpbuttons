@@ -6,6 +6,7 @@ $textarea-textarea-min-height: 6.25rem;
 $textarea-textarea-color-gray: $color-gray;
 
 .textarea__textarea {
+  font-size: $font-size-general;
   border: 1px solid $color-gray-border;
   border-radius: $textarea-textarea-border-radius;
   min-height: $textarea-textarea-min-height;

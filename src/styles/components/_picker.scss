@@ -19,17 +19,6 @@ body {
 
 .picker {
   // Scroll picker content
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100vh;
-  background: transparent;
-  position: relative;
-
-  // Header Top Content Bottom
-  display: flex;
-  width: $picker-width;
-  flex-flow: column;
-  justify-content: space-between;
 }
 
 .picker__overlay {
@@ -52,7 +41,7 @@ body {
   position: relative;
   overflow: auto;
   width: auto; //Revise antes era 100%
-  max-width: rem(350px);
+  max-width: 350px;
   overflow-y: visible !important;
   max-height: 90vh;
   background: $color-white !important;
@@ -273,7 +262,7 @@ body {
   padding: $picker-comments-item-padding 0;
 }
 
-.picker__options-btn {//se usa
+.picker__options-btn {
 
   display: inline-block;
   text-align: center;
@@ -297,7 +286,7 @@ body {
 
 .picker__options-btn--icon {
   height: 20px;
-  
+
   & svg{
     display: none;
     height: 10px;
@@ -323,13 +312,21 @@ body {
   flex-flow: column nowrap;
 }
 
-.picker__options-h {//se usa
+.picker__options-h {
   flex-flow: row nowrap;
   justify-content: space-between;
 
   .picker__options-btn {
     flex: 0 1 50%;
   }
+}
+
+.picker__row {
+
+  margin: $margin-small 0;
+  display: flex;
+  justify-content: space-evenly;
+
 }
 
 //Estilos a los botones del picker Revise
@@ -343,6 +340,7 @@ body {
   cursor: pointer;
 
   &:last-child {
+    border-top: 1px solid $color-gray-border;//Revise este color ahora es una variable
     border-bottom: none;
   }
 
@@ -353,10 +351,20 @@ body {
 
 .picker__option-btn--active {
   @extend .picker__option-btn;
+  text-align: initial;
+}
+
+.picker__option-btn--center {
+  @extend .picker__option-btn;
+  text-align: center;
 }
 
 .picker__option-btn-with-icon {
   @extend .picker__option-btn;
+}
+
+.picker__option-btn--txt{
+  font-size: $font-size-general;
 }
 
 
@@ -371,7 +379,7 @@ body {
   border-top: 1px solid $color-gray-border;
 }
 
-.menuseselect__themes-span {
+.picker__themes-span {
   font-weight: bold;
   width: 30%;
 }
@@ -394,19 +402,13 @@ body {
   font-weight: ligth;
 }
 
-.prubea {
-  display: flex;
-}
 
 //Revise: clase picker--over
 .picker--over {
-  position: absolute;
+
+  //position: absolute;  REVISE FOR REPOSITORY
+  position: relative;
   width: 95%;
-
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
 
 }
 
@@ -416,15 +418,7 @@ body {
 
 @media #{$breakpoints-medium} {
   .picker {
-    margin: 0 auto;
-    max-width: $picker-max-width;//revise
-    width: $grid-width;
 
-    // Centering
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    background: transparent;
   }
 
   .picker__header,

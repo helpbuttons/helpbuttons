@@ -53,21 +53,21 @@
     &-trigger {
       border: none;
       background-color: transparent;
-      padding: rem(5px);
+      padding: 5px;
       width: 100%;
       text-align: center;
     }
     &-content {
       width: 100%;
-      margin-top: rem(10px);
+      margin-top: 10px;
       text-align: center;
       border: 1px solid $color-black;
-      max-height: rem(150px);
+      max-height: 150px;
       overflow-y: auto;
     }
     &-option {
       display: block;
-      padding: rem(5px) 0;
+      padding: 5px 0;
       cursor: pointer;
       width: 100%;
       background: transparent;
@@ -77,9 +77,6 @@
         color: white;
       }
 
-      & + .picker-time__dropdown-option {
-        border-top: rem(1px) solid $color-black;
-      }
     }
   }
 }

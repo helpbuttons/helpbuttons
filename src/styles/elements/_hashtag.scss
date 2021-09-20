@@ -53,8 +53,8 @@ $hashtag-color-gray: $color-gray;
   }
 
   & svg {
-    height: rem(10px);
-    width: rem(10px);
+    height: 10px;
+    width: 10px;
 
     background-color: $hashtag-color-gray;
     padding: $hashtag-padding-extra-small;

@@ -7,7 +7,6 @@
 @import "variables/border";
 @import "variables/box-shadow";
 @import "variables/fonts";
-@import "variables/titles";
 @import "variables/grid";
 @import "variables/z-index";
 @import "variables/animations";
@@ -20,7 +19,7 @@
 
 @import "elements/label";
 @import "elements/icon";
-@import "elements/image";
+@import "elements/picture";
 @import "elements/avatar";
 @import "elements/hashtag";
 @import "elements/checkbox";
@@ -31,24 +30,28 @@
 @import "elements/btn";
 @import "elements/textarea";
 @import "elements/dropdown";
+@import "elements/dropdown-select";
+@import "elements/accordion";
 
 ////////////////// COMPONENTS
 
 // componentss (general)
 @import "components/error-message";
-@import "components/button-icon";
+@import "components/marker-button";
+@import "components/marker-net";
 @import "components/form-chat";
 @import "components/message";
 @import "components/picker-time";
 @import "components/dropdown-nets";
 @import "components/overlay-loading";
 @import "components/picker";
+@import "components/card-button-map";
 @import "components/card-button-list";
 @import "components/card-chat";
 @import "components/nav-bottom";
 @import "components/nav-header";
 @import "components/_header-info-overlay";
-@import "components/card-register";
+@import "components/popup-register";
 @import "components/header-search";
 @import "components/card-button";
 @import "components/card-notification";
@@ -67,6 +70,7 @@
 @import "layouts/popup-create-net";
 @import "layouts/chat";
 @import "layouts/popup";
+@import "layouts/repository";
 
 
 // pages

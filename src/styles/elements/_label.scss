@@ -10,13 +10,12 @@ $label-padding-bottom: .5rem;
   font-weight: bold;
   letter-spacing: $label-letter-spacing;
   padding-bottom: $label-padding-bottom;
-  text-transform: uppercase;
-
-  text-align: center;
+  text-transform: initial;
+  text-align: initial;
   margin: $label-margin;
 }
 
-@media #{$breakpoints-xxlarge} { 
+@media #{$breakpoints-xxlarge} {
   .label {
     text-align: initial;
     margin: 0px;

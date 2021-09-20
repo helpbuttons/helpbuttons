@@ -4,7 +4,9 @@ import CardButtonList from "../../components/CardButtonList";
 
 function List() {
   return (
+      <>
       <CardButtonList />
+      </>
   );
 
 }

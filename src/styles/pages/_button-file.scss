@@ -2,9 +2,10 @@
 $button-file-modal-height: calc(var(--vh, 1vh) * 100);
 
 
-.button-file {
+.button-file__center {
 
-  overflow-y: auto;
+  overflow-y:  scroll;
+  height: 100vh;
 
 }
 
@@ -43,8 +44,8 @@ $button-file-modal-height: calc(var(--vh, 1vh) * 100);
     border: none;
     max-height: calc(100% - 48px);
     height: 100%;
-    margin-top: rem(48px);
-    // padding-top: rem(42px);
+    margin-top: 48px;
+    // padding-top: 42px;
     margin-left: auto;
     margin-right: auto;
     overflow-x: hidden;
@@ -75,7 +76,7 @@ $button-file-modal-height: calc(var(--vh, 1vh) * 100);
 
 .button-file__modal .button-file__card-button {
 
-    max-width: rem(500px);
+    max-width: 500px;
     width: 100%;
     padding: 6px;
 
@@ -164,9 +165,9 @@ $button-file-modal-height: calc(var(--vh, 1vh) * 100);
       display: flex;
       }
       & > .button-circle {
-        width: rem(50px);
-        min-width: rem(50px);
-        height: rem(50px);
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
         border: 0;
         cursor: pointer;
         z-index: 5000;
@@ -179,8 +180,8 @@ $button-file-modal-height: calc(var(--vh, 1vh) * 100);
         right: calc(75%);
         display: block;
 
-        width: rem(15px);
-        height: rem(15px);
+        width: 15px;
+        height: 15px;
         border: 0;
         cursor: pointer;
         background: $color-blue;
@@ -191,16 +192,16 @@ $button-file-modal-height: calc(var(--vh, 1vh) * 100);
 .button-file__conv-link {
 
     display: inline-block;
-    height: rem(70px);
+    height: 70px;
     flex: 1 ;
     width: auto;
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    padding: rem(15px) rem(6px);
-    border: rem(2px) solid $color-corporative;
-    border-radius: rem(5px);
-    margin: rem(6px) rem(3px) 0 rem(3px);
+    padding: 15px 6px;
+    border: 2px solid $color-corporative;
+    border-radius: 5px;
+    margin: 6px 3px 0 3px;
     .icon {
       width: auto;
       height: 100%;
@@ -221,7 +222,7 @@ $button-file-modal-height: calc(var(--vh, 1vh) * 100);
 
 
 .button-file__messages-container {
-  max-width: rem(500px);
+  max-width: 500px;
   margin-left: auto;
   margin-right: auto;
 }

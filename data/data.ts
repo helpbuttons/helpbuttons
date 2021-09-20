@@ -24,6 +24,7 @@ const data = [
         buttons: [
             {   //required data
                 templateId: 1,
+                active: true,
                 tags: ["tag1", "tag2", "tag3"],
                 //required data
                 date: ["1/08/2021"],
@@ -35,17 +36,6 @@ const data = [
                 networks: [13,24],
                 chatType: "single", //enum {single,group} chat structure
                 templateExtraData: {}, //JSON template contains info about the image and the description (standard) and also about booleans, radius, checklist and every other field related to the network module
-            },
-            {
-                type: 1,
-                tags: ["tag1", "tag2", "tag3"],
-                date: ["1/08/2021"],
-                location: ["Livorno, Italia"],
-                longitude: [43.2333],
-                latitude: [21.0002],
-                networks: [13,24],
-                isGroup: true,
-                templateExtraData: {}, //JSON template contains info about the image and the description (standard) and also about booleans, checklist and every other field related to the network module
             },
         ]
     },

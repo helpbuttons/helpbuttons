@@ -2,7 +2,7 @@
   width: 100%;
 
   &-map {
-    border-radius: rem(8px);
+    border-radius: 8px;
     height: 100vh;
     border-radius: 0.5rem;
     margin-left: auto;
@@ -44,7 +44,7 @@
     height: auto;
     background: $color-ligth-gray;
     border-radius: 0 0 .5rem .5rem;
-    max-width: rem(500px);
+    max-width: 500px;
     width: 50%;
     &--small-height {
       & .button-new-location__text {
@@ -55,11 +55,11 @@
     &-svg-image {
       height: 100%;
       width: 100%;
-      max-width: rem(350px);
-      max-height: rem(350px);
+      max-width: 350px;
+      max-height: 350px;
     }
     &-svg-container {
-      min-height: rem(100px);
+      min-height: 100px;
       text-align: center;
       display: flex;
       justify-content: center;
@@ -107,29 +107,29 @@
     outline: none !important;
   }
   &__next-step-btn {
-    max-height: rem(68px);
-    height: rem(68px);
+    max-height: 68px;
+    height: 68px;
     line-height: 100%;
     padding: 0;
   }
   &__map {
     width: 100%;
     position: absolute;
-    top: rem(48px);
+    top: 48px;
     height: calc(100% - 48px - 68px);
     &-search-bar {
-      height: rem(48px);
-      min-height: rem(50px);
+      height: 48px;
+      min-height: 50px;
       z-index: 1001;
       position: relative;
       margin-left: auto;
       margin-right: auto;
       width: 50%;
-      min-width: rem(200px);
-      top: rem(65px);
+      min-width: 200px;
+      top: 65px;
       & input {
-        border: rem(1px) solid $color-black;
-        height: rem(48px);
+        border: 1px solid $color-black;
+        height: 48px;
       }
     }
     &-buttons {
@@ -159,8 +159,8 @@
     &-loading-location-text {
       text-align: center;
       width: 100%;
-      font-size: 1.2rem;
-      margin-top: rem(50px)
+      font-size: $font-size-general;
+      margin-top: 50px;
     }
   }
   &__loading-spinner, &__loading-spinner * {

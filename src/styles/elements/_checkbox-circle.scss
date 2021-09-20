@@ -49,7 +49,7 @@ $checkbox-circle-color-corporative: $color-corporative;
   height: 53px;
   width: fit-content;
   &--small {
-    padding: rem(15px) rem(10px);
+    padding: 15px 10px;
   }
   &--bordered {
     border: 1px solid #e5e5e5;
@@ -98,7 +98,7 @@ $checkbox-circle-color-corporative: $color-corporative;
     background: $checkbox-circle-color-black;
     padding-right: 0;
     color: $checkbox-circle-color-corporative;
-    min-width: rem(150px);
+    min-width: 150px;
   }
 
   &:checked + .checkbox-circle__content::before {
