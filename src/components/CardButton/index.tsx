@@ -7,69 +7,69 @@ export default function CardButton() {
 
     <>
 
-          <div class="card-button card-button card-button--need">
+          <div className="card-button card-button card-button--need">
 
-            <div class="card-button__content">
+            <div className="card-button__content">
 
-             <div class="card-button__nets">
+             <div className="card-button__nets">
 
-               <img src='https://help-buttons-staging.s3.eu-west-3.amazonaws.com/statics/assets/categories/{{net.imgUrl}}.png' alt="" class="card-avatar card-button__net-icon"></img>
+               <img src='https://help-buttons-staging.s3.eu-west-3.amazonaws.com/statics/assets/categories/{{net.imgUrl}}.png' alt="" className="card-avatar card-button__net-icon"></img>
 
              </div>
 
-              <div class="card-button__header">
+              <div className="card-button__header">
 
-                <div class="card-button__avatar">
+                <div className="card-button__avatar">
 
-                  <div class="avatar-big">
-                    <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" class="picture__img"></img>
+                  <div className="avatar-big">
+                    <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img"></img>
                   </div>
 
                 </div>
 
-                <div class="card-button__info">
+                <div className="card-button__info">
 
-                  <div class="card-button__status card-button__status">
+                  <div className="card-button__status card-button__status">
 
-                    <span class="card-button__status--offer">button type</span> y <span class="card-button__status--need">button type</span>
+                    <span className="card-button__status--offer">button type</span> y <span className="card-button__status--need">button type</span>
 
                   </div>
 
-                  <div class="card-button__name">
+                  <div className="card-button__name">
                     Username
                   </div>
 
                 </div>
 
-                <div class="card-button__submenu card-button__trigger">
+                <div className="card-button__submenu card-button__trigger">
                 </div>
 
 
               </div>
 
-              <div class="card-button__hashtags">
+              <div className="card-button__hashtags">
 
-                    <div class="card-button__busca">
-                      <div class="hashtag">tag</div>
+                    <div className="card-button__busca">
+                      <div className="hashtag">tag</div>
                     </div>
 
               </div>
 
-              <div class="card-button__paragraph">
+              <div className="card-button__paragraph">
 
                 <p>description</p>
 
-                <p class="card-button__phone">phone</p>
+                <p className="card-button__phone">phone</p>
 
               </div>
 
-              <div class="card-buttons">
+              <div className="card-buttons">
 
-                <div class="card-button__city card-button__everywhere " >
+                <div className="card-button__city card-button__everywhere " >
                   En todas partes
                 </div>
 
-                <div class="card-button__date">
+                <div className="card-button__date">
                     Date
                 </div>
 
@@ -77,52 +77,52 @@ export default function CardButton() {
 
             </div>
 
-            <picture class="card-button__picture picture">
+            <picture className="card-button__picture picture">
 
-              <div class="card-button__picture-nav">
+              <div className="card-button__picture-nav">
 
-                <div class="arrow btn-circle__icon">
+                <div className="arrow btn-circle__icon">
                   <CrossIcon />
                 </div>
-                <div class="arrow btn-circle__icon">
+                <div className="arrow btn-circle__icon">
                   <CrossIcon />
                 </div>
 
               </div>
 
-              <img src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" class="card-button__picture picture__img"></img>
+              <img src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" className="card-button__picture picture__img"></img>
 
             </picture>
 
           </div>
 
-          <div class="card-button__options-menu">
+          <div className="card-button__options-menu">
 
-            <div class="card-button__trigger">
-              <div class="card-button__edit-icon card-button__submenu"></div>
+            <div className="card-button__trigger">
+              <div className="card-button__edit-icon card-button__submenu"></div>
             </div>
 
-            <div class="card-button__dropdown-container">
-              <div class="card-button__dropdown-arrow"></div>
-              <div class="card-button__dropdown-content">
+            <div className="card-button__dropdown-container">
+              <div className="card-button__dropdown-arrow"></div>
+              <div className="card-button__dropdown-content">
 
-                <div class="card-button__trigger-options">
+                <div className="card-button__trigger-options">
                   Editar botón
                 </div>
 
-                <button  class="card-button__trigger-options card-button__trigger-button">
+                <button  className="card-button__trigger-options card-button__trigger-button">
                   Quitar botón de la red
                 </button>
 
-                <button  class="card-button__trigger-options card-button__trigger-button">
+                <button  className="card-button__trigger-options card-button__trigger-button">
                   Borrar botón
                 </button>
 
-                <button  class="card-button__trigger-options card-button__trigger-button">
+                <button  className="card-button__trigger-options card-button__trigger-button">
                   Compartir botón
                 </button>
 
-                <button  class="card-button__trigger-options card-button__trigger-button">
+                <button  className="card-button__trigger-options card-button__trigger-button">
                   Reportar botón
                 </button>
               </div>

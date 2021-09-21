@@ -2,7 +2,7 @@
 export default function HeaderInfoOverlay() {
   return (
 
-    <div class="info-overlay__container">
+    <div className="info-overlay__container">
 
         <div className="form-field">
           <label className="form__label label">

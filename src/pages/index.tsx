@@ -43,6 +43,7 @@ const Home: NextPage = () => {
       <NavHeader />
       <HeaderInfoOverlay />
       <FiltersMobile />
+      <List />
       <Map />
       <NavBottom />
     </>

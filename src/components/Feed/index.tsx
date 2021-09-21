@@ -3,25 +3,25 @@ import Dropdown from '../../elements/Dropdown'
 
 export default function Feed() {
   return (
-    <div class="feed-container">
+    <div className="feed-container">
 
-      <div class="feed-selector">
+      <div className="feed-selector">
 
           <Dropdown />
 
       </div>
 
-      <div class="feed-line"></div>
+      <div className="feed-line"></div>
 
-      <div class="feed-section">
+      <div className="feed-section">
 
-        <div class="feed-element">
+        <div className="feed-element">
 
           <CardChat />
 
         </div>
 
-        <div class="feed-element">
+        <div className="feed-element">
 
           <CardChat />
 

@@ -3,7 +3,7 @@ import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
 
 function NavBottom(){
   return(
-      <nav id="bottom-nav" class="nav-bottom">
+      <nav id="bottom-nav" className="nav-bottom">
 
         <a href="http://127.0.0.1:3000/" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">

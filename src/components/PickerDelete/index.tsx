@@ -2,9 +2,9 @@
 export default function PickerDelete() {
   return (
     <>
-      <div class="picker">
-          <header class="picker">
-            <h5 class="ember-modal-dialog__title ember-modal-dialog__title--reservation-picker">
+      <div className="picker">
+          <header className="picker">
+            <h5 className="ember-modal-dialog__title ember-modal-dialog__title--reservation-picker">
               ¿Seguro que quieres borrar este x?
               <small>
                 ¡Esta acción no se puede deshacer!
@@ -13,16 +13,16 @@ export default function PickerDelete() {
             </h5>
           </header>
           <button
-            class=" card-chat__radius--left"
+            className=" card-chat__radius--left"
             type="button"
             name="button"
             {{action "showConfirmationDialog"}}
           >
             Cancelar
           </button>
-          <div class="">
+          <div className="">
             <button
-              class=" card-chat__radius--right"
+              className=" card-chat__radius--right"
               type="button"
               name="button"
             >

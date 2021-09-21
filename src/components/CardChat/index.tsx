@@ -4,29 +4,29 @@ import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
 export default function CardChat() {
   return (
     <>
-      <div class="card-notification">
-        <div class="card-notification__content">
-          <div class="card-notification__avatar">
-            <div class="avatar-medium">
-              <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" class="picture__img"></img>
+      <div className="card-notification">
+        <div className="card-notification__content">
+          <div className="card-notification__avatar">
+            <div className="avatar-medium">
+              <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" className="picture__img"></img>
             </div>
           </div>
-          <div class="card-notification__text">
-            <div class="card-notification__header">
-              <div class="card-notification__date card-notification__date--nflex">
+          <div className="card-notification__text">
+            <div className="card-notification__header">
+              <div className="card-notification__date card-notification__date--nflex">
                 hace 2 días
               </div>
             </div>
-            <h2 class="card-notification__title">
+            <h2 className="card-notification__title">
               Jorge
             </h2>
-            <div class="card-notification__paragraph">
+            <div className="card-notification__paragraph">
               Lorem ipsum es el texto..
             </div>
           </div>
-          <button class="btn-circle card-notification__delete">
-            <div class="btn-circle__content">
-              <div class="btn-circle__icon">
+          <button className="btn-circle card-notification__delete">
+            <div className="btn-circle__content">
+              <div className="btn-circle__icon">
                 <CrossIcon />
               </div>
             </div>

@@ -2,10 +2,34 @@
 .list__container {
 
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  height: max-content;
+  width: 100%;
+  position: fixed;
+  bottom: $footer-height-mobile;
+
+}
+
+.list__content {
+
+  display: flex;
   padding: $padding-small;
+  background-color: $color-ligth-gray;
   flex-direction: row;
-  height: auto;
-  overflow: scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  z-index: $z-index-02;
+  height: $card-button-list-height;
+  margin-bottom: 10px;
+
+}
+
+
+.list__element {
+
+  height: 100%;
 
 }
 

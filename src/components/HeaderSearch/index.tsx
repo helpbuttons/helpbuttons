@@ -8,9 +8,9 @@ export default function HeaderDesktop() {
   return (
     <>
 
-      <div class="header-search">
+      <div className="header-search">
 
-        <div class="header-search__title">
+        <div className="header-search__title">
 
           <a href="#!"><img src="" alt=""/><Image src={logo} alt="icon"/></a>
           <span>Nombre de Red</span>
@@ -18,49 +18,49 @@ export default function HeaderDesktop() {
 
         </div>
 
-        <div class="header-search__intro">
+        <div className="header-search__intro">
 
-            <div class="header-search__logo">
+            <div className="header-search__logo">
 
-              <div class="header-search__logo-net-title"><div class="header-search__logo-net-name"></div></div>
+              <div className="header-search__logo-net-title"><div className="header-search__logo-net-name"></div></div>
 
-              <div class="header-search__logo-net-subt">
+              <div className="header-search__logo-net-subt">
                 basado en  logo
               </div>
 
             </div>
 
-            <h1 class="header-search__title">
+            <h1 className="header-search__title">
               La colaboración libre
             </h1>
 
         </div>
 
-        <div class="header-search__content">
+        <div className="header-search__content">
         </div>
 
-        <div class="header-search__tool">
+        <div className="header-search__tool">
 
-          <form class="header-search__form" onsubmit="return false;">
+          <form className="header-search__form" onsubmit="return false;">
 
-            <div class="header-search__column">
+            <div className="header-search__column">
 
-              <div class="header-search__label">Qué</div>
-              <input type="text" class="header-search--tags" placeholder='Selecciona fecha'></input>
-
-            </div>
-
-            <div class="header-search__column">
-
-                <div class="header-search__label">Dónde</div>
-                <div class="header-search--location">Dónde</div>
+              <div className="header-search__label">Qué</div>
+              <input type="text" className="header-search--tags" placeholder='Selecciona fecha'></input>
 
             </div>
 
-            <div class="header-search__column">
+            <div className="header-search__column">
 
-              <div class="header-search__label">Cuándo</div>
-              <input type="text" class="header-search--time" placeholder='Selecciona fecha'></input>
+                <div className="header-search__label">Dónde</div>
+                <div className="header-search--location">Dónde</div>
+
+            </div>
+
+            <div className="header-search__column">
+
+              <div className="header-search__label">Cuándo</div>
+              <input type="text" className="header-search--time" placeholder='Selecciona fecha'></input>
 
             </div>
 

@@ -2,7 +2,7 @@
 export default function FiltersMobile() {
   return (
 
-  <form class="filters--vertical">
+  <form className="filters--vertical">
 
 
       <div className="form-field">

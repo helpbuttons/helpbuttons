@@ -6,8 +6,9 @@ $card-button-list-ofrece-background: $color-green;
 $card-button-list-paragraph-color: $color-gray;
 $card-button-list-margin-bottom: $margin-extra-small;
 $card-button-list-width: 100%;
-$card-button-list-image-height: 15rem;
-$card-button-list-image-width: 5rem;
+$card-button-list-height: 200px;
+$card-button-list-image-height: 200px;
+$card-button-list-image-width: 200px;
 $card-button-list-margin: 0.5rem;
 $card-button-list-situation-background-size: 14px;
 $card-button-list__submenu-show-width: 120px;
@@ -26,10 +27,10 @@ $card-button-list-border-height: $border-general-height;
   max-width: $card-button-list-width;
   box-shadow: $card-button-list-box-shadow;
   position: relative;
+  height: $card-button-list-height;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: $card-button-list-margin-bottom;
+  justify-content: space-between;
+  // margin-bottom: $card-button-list-margin-bottom;
   border-radius: $border-radius-basic $border-radius-basic $border-radius-basic  $border-radius-basic;
 
 }
@@ -301,9 +302,9 @@ $card-button-list-border-height: $border-general-height;
 }
 
 .card-button-list__picture-container {
-  width: auto;
-  min-width: $card-button-list-image-width;
-  max-height: $card-button-list-image-height;
+  width: $card-button-list-image-height;
+  // min-width: $card-button-list-image-width;
+
   height: $card-button-list-image-height;
   overflow: hidden;
   border-radius: $border-radius-basic;

@@ -1,7 +1,7 @@
 //QUESTIONS AND INFO
 import NavHeader from '../../components/NavHeader'
 import NavBottom from '../../components/NavBottom'
-
+import CardDirectory from '../../components/CardDirectory'
 
 export default function Faqs() {
 
@@ -10,6 +10,8 @@ export default function Faqs() {
     <>
 
       <NavHeader />
+
+      <CardDirectory />
 
       <NavBottom />
 

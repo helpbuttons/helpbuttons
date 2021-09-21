@@ -30,9 +30,9 @@ export default function DropdownNets() {
 
   return (
 
-    <div class="header-search__nets">
-      <div class="header-search__net-picker">
-      <input type="text" class="header-search--nets" placeholder='Selecciona red'></input>
+    <div className="header-search__nets">
+      <div className="header-search__net-picker">
+      <input type="text" className="header-search--nets" placeholder='Selecciona red'></input>
       </div>
     </div>
   );

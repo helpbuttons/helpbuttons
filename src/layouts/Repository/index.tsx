@@ -116,7 +116,7 @@ function Repository() {
               <label className="checkbox__filter-label">
                 <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                 <div className="checkbox-filter__content btn-filter-with-icon">
-                  <div class="btn-filter__icon red"></div>
+                  <div className="btn-filter__icon red"></div>
 
                   <div className="checkbox__text">
                     Filter checkbox
@@ -1426,13 +1426,13 @@ function Repository() {
 
         <section className="repository__section">
 
-          <div class="filters">
+          <div className="filters">
 
               <div className="checkbox-filter__container">
                 <label className="checkbox__filter-label">
                   <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                   <div className="checkbox-filter__content btn-filter-with-icon">
-                    <div class="btn-filter__icon red"></div>
+                    <div className="btn-filter__icon red"></div>
 
                     <div className="checkbox__text">
                       Necesitan
@@ -1445,7 +1445,7 @@ function Repository() {
                 <label className="checkbox__filter-label">
                   <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                   <div className="checkbox-filter__content btn-filter-with-icon">
-                    <div class="btn-filter__icon red"></div>
+                    <div className="btn-filter__icon red"></div>
 
                     <div className="checkbox__text">
                       Necesitan
@@ -2004,18 +2004,18 @@ function Repository() {
 
       <section className="repository__section">
 
-      <button class="accordion">Section 1</button>
-        <div class="panel">
+      <button className="accordion">Section 1</button>
+        <div className="panel">
         <p>Lorem ipsum... palabra. Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras. Ejemplo palabras Ejemplo palabras Ejemplo palabras ., Ejemplo palabrasEjemplo palabras</p>
         </div>
 
-      <button class="accordion">Section 2</button>
-        <div class="panel">
+      <button className="accordion">Section 2</button>
+        <div className="panel">
         <p>Lorem ipsum...</p>
         </div>
 
-      <button class="accordion">Section 3</button>
-        <div class="panel">
+      <button className="accordion">Section 3</button>
+        <div className="panel">
         <p>Lorem ipsum...</p>
         </div>
 

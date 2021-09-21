@@ -7,31 +7,31 @@ export default function ButtonNewType() {
 
     <>
 
-      <div class="popup__section">
-        <p class="popup__paragraph">
+      <div className="popup__section">
+        <p className="popup__paragraph">
           Un botón es un perfil público que te permitirá encontrar personas que
           puedan necesitar o puedan ofrecerte colaboración.
         </p>
-        <button class="button-with-icon button-with-icon--hover button-with-icon--offer">
-          <div class="button-filter__icon green"></div>
-          <div class="button-with-icon__text">
+        <button className="button-with-icon button-with-icon--hover button-with-icon--offer">
+          <div className="button-filter__icon green"></div>
+          <div className="button-with-icon__text">
             Ofrezco
           </div>
         </button>
 
-        <button class=" button-with-icon button-with-icon--hover button-with-icon--intercambia">
-          <div class="button-filter__split-icon">
-            <div class="button-filter__split-icon--half green-l"></div>
-            <div class="button-filter__split-icon--half red-r"></div>
+        <button className=" button-with-icon button-with-icon--hover button-with-icon--intercambia">
+          <div className="button-filter__split-icon">
+            <div className="button-filter__split-icon--half green-l"></div>
+            <div className="button-filter__split-icon--half red-r"></div>
           </div>
-          <div class="button-with-icon__text">
+          <div className="button-with-icon__text">
             Intercambio
           </div>
         </button>
 
-        <button class=" button-with-icon button-with-icon--hover button-with-icon--need">
-          <div class="button-filter__icon red"></div>
-          <div class="button-with-icon__text">
+        <button className=" button-with-icon button-with-icon--hover button-with-icon--need">
+          <div className="button-filter__icon red"></div>
+          <div className="button-with-icon__text">
             Necesito
           </div>
         </button>

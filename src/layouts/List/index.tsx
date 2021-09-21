@@ -5,11 +5,24 @@ import CardButtonList from "../../components/CardButtonList";
 function List() {
   return (
       <>
-        <div class="list__container"
-          <CardButtonList />
-          <CardButtonList />
-          <CardButtonList />
+
+        <div className="list__container">
+
+              <div className="drag-tab"><span className="drag-tab__line"></span></div>
+
+              <div className="list__content">
+
+                  <div className="list__element">
+                    <CardButtonList />
+                  </div>
+                  <div className="list__element">
+                    <CardButtonList />
+                  </div>
+
+              </div>
+
         </div>
+
       </>
   );
 
