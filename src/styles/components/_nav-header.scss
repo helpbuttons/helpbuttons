@@ -1,7 +1,7 @@
 $nav-header-border-radius: $border-radius-buttons;
 $nav-header-color-gray-border: $color-gray-border;
 $nav-header-padding: $padding-big;
-$nav-header-height: 58px;
+$nav-header-height: $header-height-mobile;
 $nav-header-color-corporative: $color-corporative;
 $nav-header-margin-big: $margin-big;
 $nav-header-icon-width: 20px;
@@ -34,18 +34,16 @@ $nav-header-new-message-radius: $border-radius-circle;
 
   width: 100%;
   display: flex;
+  height: $nav-header-height;
   justify-content: space-between;
   align-items: center;
   background-color: $color-corporative;
-  padding: $nav-header-padding;
   border-radius: 0 0 0 0;
 
 }
 
 .nav-header__content-message {
   flex-grow:1;
-  padding: 0 $padding-big;
-  margin: auto;
 }
 
 .nav-header__content-input {

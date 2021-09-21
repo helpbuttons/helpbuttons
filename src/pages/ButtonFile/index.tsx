@@ -62,18 +62,7 @@ export default function ButtonFile() {
           </div>
 
         //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
-        <div class="button-file__feed-section">
-
-          <div class="button-file__feed-element">
-
-            <CardNotification />
-            <CardChat />
-            <CardChat />
-            <CardNotification />
-
-          </div>
-
-        </div>
+        <Feed />
 
       </div>
 

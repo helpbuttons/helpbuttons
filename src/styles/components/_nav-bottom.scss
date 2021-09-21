@@ -1,6 +1,6 @@
 $nav-bottom-padding: 8px;
-$nav-bottom-icon-size: 24px;
-$nav-bottom-icon-size-desktop: 28px;
+$nav-bottom-icon-size: 30px;
+$nav-bottom-icon-size-desktop: 100px;
 $nav-bottom-link-create-size: 58px;
 $nav-bottom-link-create-margin: -28px;
 $nav-bottom-link-create-size-desktop: 72px;
@@ -9,12 +9,14 @@ $nav-bottom-create-message-bottom: 90px ;
 $nav-bottom-create-message-width: 100px;
 $nav-bottom-create-message-left: calc(( #{$nav-bottom--desktop-width} / 2) - (#{$nav-bottom-create-message-width} / 8) ) ;
 $nav-bottom-width: 640px;
+$nav-bottom-height: $footer-height-mobile;
 $nav-bottom-border: 32px;
 
 .nav-bottom {
   background-color: $color-corporative;
   padding: $nav-bottom-padding;
   box-sizing: border-box;
+  min-height: $nav-bottom-height;
   bottom: 0;
   left: 0;
   position: fixed;
@@ -93,7 +95,7 @@ $nav-bottom-border: 32px;
 }
 
 .nav-bottom__icon {
-  .icon {
+  & svg {
     fill: $color-black;
     height: $nav-bottom-icon-size;
     width: $nav-bottom-icon-size;

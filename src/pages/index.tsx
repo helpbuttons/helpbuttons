@@ -8,6 +8,7 @@ import List from "../layouts/List";
 import NavBottom from "../components/NavBottom"; //just for mobile
 import NavHeader from "../components/NavHeader"; //just for mobile
 import FiltersMobile from "../components/FiltersMobile"; //just for mobile
+import HeaderInfoOverlay from "../components/HeaderInfoOverlay"; //just for mobile
 
 //    Components
 import HeaderDesktop from "../layouts/HeaderDesktop";
@@ -40,6 +41,7 @@ const Home: NextPage = () => {
   return (
     <>
       <NavHeader />
+      <HeaderInfoOverlay />
       <FiltersMobile />
       <Map />
       <NavBottom />

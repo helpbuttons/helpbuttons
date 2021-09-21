@@ -214,8 +214,6 @@ $form-input-font-size: $font-size-medium;
 
 .form__options-btn {
 
-  @extend .btn;
-  @extend .btn--center;
   margin: 0 $margin-small !important;
   width: 80% !important;
 

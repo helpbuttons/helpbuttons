@@ -5,7 +5,11 @@ import CardButtonList from "../../components/CardButtonList";
 function List() {
   return (
       <>
-      <CardButtonList />
+        <div class="list__container"
+          <CardButtonList />
+          <CardButtonList />
+          <CardButtonList />
+        </div>
       </>
   );
 

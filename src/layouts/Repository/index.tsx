@@ -6,8 +6,6 @@ import hand from '../../../public/assets/svg/icons/hand_call.svg'
 import send from '../../../public/assets/svg/icons/send.svg'
 import atta from '../../../public/assets/svg/icons/atta.svg'
 
-import Image from 'next/image'
-
 function Repository() {
   return (
       <div className="repository">
@@ -188,10 +186,10 @@ function Repository() {
             <hr></hr>
 
             <div className="form__options-h">
-              <div className="form__options-btn">
+              <div className="btn form__options-btn">
               CANCEL
               </div>
-              <div className="form__options-btn">
+              <div className="btn form__options-btn">
                 SAVE
               </div>
             </div>
@@ -203,7 +201,7 @@ function Repository() {
               <div className="form__options-text">
                 Explain something
               </div>
-              <div className="form__options-btn">
+              <div className="btn form__options-btn">
               CANCEL
               </div>
 
@@ -212,10 +210,10 @@ function Repository() {
             <hr></hr>
 
             <div className="form__options-v">
-              <div className="form__options-btn">
+              <div className="btn form__options-btn">
               CANCEL
               </div>
-              <div className="form__options-btn">
+              <div className="btn form__options-btn">
                 SAVE
               </div>
             </div>
@@ -882,39 +880,39 @@ function Repository() {
         <section className="repository__section">
 
           <div className="card-profile__container">
-          <div className="card-profile__container-avatar-content">
-            <figure className="card-profile__avatar-container avatar">
-              <div className="avatar-big">
-                <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img"></img>
-              </div>
-            </figure>
-
-            <div className="card-profile__content">
-              <div className="card-profile__avatar-container-name">
-                Username
-              </div>
-              <figure className="card-profile__rating grid-three">
-
-                <div className="paragraph grid-three__column">
-                  90
-                  <div className="btn-circle__icon">
-                    <CrossIcon />
-                  </div>
-                </div>
-                <div className="paragraph grid-three__column">
-                  77
-                  <div className="btn-circle__icon">
-                    <CrossIcon />
-                  </div>
-                </div>
-                <div className="paragraph grid-three__column">
-                  23
-                  <div className="btn-circle__icon">
-                    <CrossIcon />
-                  </div>
-
+            <div className="card-profile__container-avatar-content">
+              <figure className="card-profile__avatar-container avatar">
+                <div className="avatar-big">
+                  <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img"></img>
                 </div>
               </figure>
+
+              <div className="card-profile__content">
+                <div className="card-profile__avatar-container-name">
+                  Username
+                </div>
+                <figure className="card-profile__rating grid-three">
+
+                  <div className="paragraph grid-three__column">
+                    90
+                    <div className="btn-circle__icon">
+                      <CrossIcon />
+                    </div>
+                  </div>
+                  <div className="paragraph grid-three__column">
+                    77
+                    <div className="btn-circle__icon">
+                      <CrossIcon />
+                    </div>
+                  </div>
+                  <div className="paragraph grid-three__column">
+                    23
+                    <div className="btn-circle__icon">
+                      <CrossIcon />
+                    </div>
+
+                  </div>
+                </figure>
             </div>
           </div>
           <div className="card-profile__data">
@@ -1344,7 +1342,7 @@ function Repository() {
                     <CrossIcon />
                 </div>
                 <div className="nav-bottom__text">
-                  Mapa
+                  Map
                 </div>
             </a>
 
@@ -1353,13 +1351,7 @@ function Repository() {
                     <CrossIcon />
                 </div>
                 <div className="nav-bottom__text">
-                  Mapa
-                </div>
-            </a>
-
-            <a href="" className="nav-bottom__link nav-bottom__link--create">
-                <div className="nav-bottom__icon">
-                    <CrossIcon />
+                  Create
                 </div>
             </a>
 
@@ -1377,7 +1369,7 @@ function Repository() {
                     <CrossIcon />
                 </div>
                 <div className="nav-bottom__text">
-                  Profile
+                  Faqs
                 </div>
             </a>
 

@@ -33,7 +33,7 @@ $dropdown-nets-max-width: 10rem;
   height: $form-input-height;
   padding: 0 $padding-big;
   width: inherit;
-  border: none;
+  border: $border-lines-width solid $color-gray-border;
   border-radius: 2rem;
   background: $color-corporative;
   color: $color-black;

@@ -5,45 +5,39 @@ function NavBottom(){
   return(
       <nav id="bottom-nav" class="nav-bottom">
 
-        <a href="" class="nav-bottom__link nav-bottom__link--active">
-            <div class="nav-bottom__icon">
+        <a href="" className="nav-bottom__link nav-bottom__link--active">
+            <div className="nav-bottom__icon">
                 <CrossIcon />
             </div>
-            <div class="nav-bottom__text">
-              Mapa
+            <div className="nav-bottom__text">
+              Home
             </div>
         </a>
 
-        <a href="" class="nav-bottom__link nav-bottom__link--active">
-            <div class="nav-bottom__icon">
+        <a href="" className="nav-bottom__link nav-bottom__link--active">
+            <div className="nav-bottom__icon">
                 <CrossIcon />
             </div>
-            <div class="nav-bottom__text">
-              Mapa
+            <div className="nav-bottom__text">
+              Create
             </div>
         </a>
 
-        <a href="" class="nav-bottom__link nav-bottom__link--create">
-            <div class="nav-bottom__icon">
+        <a href="" className="nav-bottom__link nav-bottom__link--active">
+            <div className="nav-bottom__icon">
                 <CrossIcon />
             </div>
-        </a>
-
-        <a href="" class="nav-bottom__link nav-bottom__link--active">
-            <div class="nav-bottom__icon">
-                <CrossIcon />
-            </div>
-            <div class="nav-bottom__text">
+            <div className="nav-bottom__text">
               Login
             </div>
         </a>
 
-        <a href="" class="nav-bottom__link nav-bottom__link--active">
-            <div class="nav-bottom__icon">
+        <a href="" className="nav-bottom__link nav-bottom__link--active">
+            <div className="nav-bottom__icon">
                 <CrossIcon />
             </div>
-            <div class="nav-bottom__text">
-              Profile
+            <div className="nav-bottom__text">
+              Faqs
             </div>
         </a>
 

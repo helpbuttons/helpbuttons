@@ -39,24 +39,11 @@ export default function FiltersMobile() {
           Tipos de botón
         </label>
 
-
-        <div className="checkbox">
-          <label className="checkbox__label">
-            <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
-            <div className="checkbox__content">
-              <div className="checkbox__icon red"></div>
-              <div className="checkbox__text">
-                Necesito Ahora
-              </div>
-            </div>
-          </label>
-        </div>
-
         <div className="form__options-h">
           <div className="checkbox">
             <label className="checkbox__label">
               <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
-              <div className="checkbox__content">
+              <div className="checkbox__content form__options-btn">
                 <div className="checkbox__icon red"></div>
                 <div className="checkbox__text">
                   Necesito Ahora
@@ -67,7 +54,7 @@ export default function FiltersMobile() {
           <div className="checkbox">
             <label className="checkbox__label">
               <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
-              <div className="checkbox__content">
+              <div className="checkbox__content form__options-btn">
                 <div className="checkbox__icon red"></div>
                 <div className="checkbox__text">
                   Necesito Ahora
@@ -93,8 +80,6 @@ export default function FiltersMobile() {
           <option value="volvo" className="dropdown-select__option">Option6</option>
         </select>
       </div>
-
-
 
   </form>
 

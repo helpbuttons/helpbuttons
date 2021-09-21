@@ -1,1 +1,21 @@
 ///shouldd be the posts list
+.list__container {
+
+  display: flex;
+  padding: $padding-small;
+  flex-direction: row;
+  height: auto;
+  overflow: scroll;
+
+}
+
+
+@media #{$breakpoints-xxlarge} {
+
+  .list__container {
+
+    flex-direction: column;
+
+  }
+
+}
