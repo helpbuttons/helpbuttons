@@ -1,5 +1,6 @@
 //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
 import Dropdown from '../../elements/Dropdown'
+import CardChat from '../../components/CardChat'
 
 export default function Feed() {
   return (

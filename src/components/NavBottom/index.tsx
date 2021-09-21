@@ -23,6 +23,33 @@ function NavBottom(){
             </div>
         </a>
 
+        <a href="http://127.0.0.1:3000/ProfileEdition" className="nav-bottom__link nav-bottom__link--active">
+            <div className="nav-bottom__icon">
+                <CrossIcon />
+            </div>
+            <div className="nav-bottom__text">
+              Config
+            </div>
+        </a>
+
+        <a href="http://127.0.0.1:3000/ProfileButtons" className="nav-bottom__link nav-bottom__link--active">
+            <div className="nav-bottom__icon">
+                <CrossIcon />
+            </div>
+            <div className="nav-bottom__text">
+              Profile
+            </div>
+        </a>
+
+        <a href="http://127.0.0.1:3000/ButtonFile" className="nav-bottom__link nav-bottom__link--active">
+            <div className="nav-bottom__icon">
+                <CrossIcon />
+            </div>
+            <div className="nav-bottom__text">
+              Button
+            </div>
+        </a>
+
         <a href="http://127.0.0.1:3000/Login" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
                 <CrossIcon />

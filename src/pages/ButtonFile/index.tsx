@@ -5,6 +5,7 @@ import CardChat from '../../components/CardChat'
 import CardNotification from '../../components/CardNotification'
 import NavHeader from '../../components/NavHeader'
 import NavBottom from '../../components/NavBottom'
+import Feed from '../../components/Feed'
 
 
 export default function ButtonFile() {
