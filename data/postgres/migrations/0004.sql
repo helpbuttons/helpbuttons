@@ -7,3 +7,5 @@ CREATE TABLE public.userextra (
 
 ALTER TABLE ONLY public.userextra
     ADD CONSTRAINT userextra_pkey PRIMARY KEY (id);
+
+alter table public.user add column roles string default '["guest"]'
