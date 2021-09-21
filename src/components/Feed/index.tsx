@@ -1,18 +1,31 @@
 //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
+import Dropdown from '../../elements/Dropdown'
 
 export default function Feed() {
   return (
-    <div class="button-file__feed-section">
+    <div class="feed-container">
 
-      <div class="button-file__feed-element">
+      <div class="feed-selector">
 
-        <CardChat />
+          <Dropdown />
 
       </div>
 
-      <div class="button-file__feed-element">
+      <div class="feed-line"></div>
 
-        <CardChat />
+      <div class="feed-section">
+
+        <div class="feed-element">
+
+          <CardChat />
+
+        </div>
+
+        <div class="feed-element">
+
+          <CardChat />
+
+        </div>
 
       </div>
 

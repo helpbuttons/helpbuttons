@@ -104,6 +104,12 @@ function Repository() {
               Filter with icon
             </button>
 
+            <button className="btn-filter-with-icon">
+              <div className="btn-filter__icon green"></div>
+              Filter with double icon
+              <div className="btn-filter__remove-icon"></div>
+            </button>
+
             <hr></hr>
 
             <div className="checkbox-filter__container">

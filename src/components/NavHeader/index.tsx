@@ -22,14 +22,6 @@ function NavHeader(){
             <input className="form__input nav-header__content-input" placeholder="Search tags"></input>
           </div>
 
-          <button className="btn-circle">
-            <div className="btn-circle__content">
-              <div className="btn-circle__icon">
-                <CrossIcon />
-              </div>
-            </div>
-          </button>
-
       </form>
 
       <Filters />

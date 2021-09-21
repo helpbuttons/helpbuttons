@@ -11,7 +11,7 @@ export default function ButtonNew() {
   return (
 
     <>
-        
+
         <ButtonNewType />
 
         <ButtonNewData />
@@ -19,6 +19,8 @@ export default function ButtonNew() {
         <ButtonPublish />
 
         <ButtonShare />
+
+        <NavBottom />
 
     </>
 

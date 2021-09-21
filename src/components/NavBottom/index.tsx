@@ -5,7 +5,7 @@ function NavBottom(){
   return(
       <nav id="bottom-nav" class="nav-bottom">
 
-        <a href="" className="nav-bottom__link nav-bottom__link--active">
+        <a href="http://127.0.0.1:3000/" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
                 <CrossIcon />
             </div>
@@ -14,7 +14,7 @@ function NavBottom(){
             </div>
         </a>
 
-        <a href="" className="nav-bottom__link nav-bottom__link--active">
+        <a href="http://127.0.0.1:3000/ButtonNew" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
                 <CrossIcon />
             </div>
@@ -23,7 +23,7 @@ function NavBottom(){
             </div>
         </a>
 
-        <a href="" className="nav-bottom__link nav-bottom__link--active">
+        <a href="http://127.0.0.1:3000/Login" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
                 <CrossIcon />
             </div>
@@ -32,7 +32,7 @@ function NavBottom(){
             </div>
         </a>
 
-        <a href="" className="nav-bottom__link nav-bottom__link--active">
+        <a href="http://127.0.0.1:3000/Faqs" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
                 <CrossIcon />
             </div>
