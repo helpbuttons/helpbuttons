@@ -14,9 +14,8 @@ export const FILE_UPLOAD_SERVICE = BindingKey.create<FileUploadHandler>(
 export const STORAGE_DIRECTORY = BindingKey.create<string>('storage.directory');
 
 
-import {TokenService, UserService} from '@loopback/authentication';
-import { User } from './models';
-import { Credentials } from './services/custom-user.service';
+import {TokenService} from '@loopback/authentication';
+
 export namespace TokenServiceConstants {
   export const TOKEN_SECRET_VALUE = 'myjwts3cr3t';
   export const TOKEN_EXPIRES_IN_VALUE = '600';

@@ -10,7 +10,7 @@ import {
   NonVoid,
   Provider,
 } from '@loopback/core';
-import { Principal, securityId, SecurityBindings } from '@loopback/security';
+import { Principal, securityId, SecurityBindings, Role } from '@loopback/security';
 import debugFactory from 'debug';
 import { getAuthorizationMetadata } from '@loopback/authorization';
 import { AuthorizationBindings, AuthorizationTags } from '@loopback/authorization';
@@ -70,18 +70,17 @@ export class AuthorizationInterceptor implements Provider<Interceptor> {
     const user = await invocationCtx.get<CustomUserProfile>(SecurityBindings.USER, {
       optional: true,
     });
-    console.log('this is the user:');
-    console.log(user);
+    
     debug('Current user', user);
 
     const authorizationCtx: AuthorizationContext = {
       principals: user ? [createPrincipalFromUserProfile(user)] : [],
-      roles: user && user.roles ? user.roles : [],
+      roles: user ? createRoles(user.roles) : [],
       scopes: [],
       resource: invocationCtx.targetName,
       invocationContext: invocationCtx,
     };
-
+    
     debug('Security context for %s', description, authorizationCtx);
     const authorizers = await loadAuthorizers(
       invocationCtx,
@@ -144,14 +143,17 @@ async function loadAuthorizers(
 }
 
 function createPrincipalFromUserProfile(user: CustomUserProfile): Principal {
-  console.log(user);
-  const up = {
+  return {
     ...user,
     name: user.name ?? user[securityId],
     type: 'USER',
   };
-
-  console.log('::::::::::::::::::::::::::::::::::::dsadsa');
-  console.log(up);
-  return up;
 }
+  function createRoles(roles?: string[]): Role[] {
+    if (!roles) {
+      return [];
+    }
+    return roles.map((item) => {
+      return {name: item,    [securityId]: ''};  
+    });
+  }

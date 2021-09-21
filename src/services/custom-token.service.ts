@@ -26,21 +26,18 @@ export class CustomTokenService implements TokenService {
 
     let userProfile: UserProfile;
 
-    // var stack = new Error().stack
-    // console.log( stack )
-
-    // console.log('verifying token....');
     try {
       // decode user profile from token
       const decodedToken = await verifyAsync(token, this.jwtSecret);
       // don't copy over  token field 'iat' and 'exp', nor 'email' to user profile
+      
       userProfile = Object.assign(
         {[securityId]: '', name: ''},
         {
           [securityId]: decodedToken.id,
           name: decodedToken.name,
           id: decodedToken.id,
-          role: decodedToken.role,
+          roles: decodedToken.roles,
         },
       );
     } catch (error) {
@@ -62,8 +59,7 @@ export class CustomTokenService implements TokenService {
       name: userProfile.name,
       roles: userProfile.roles,
     };
-    console.log('aa');
-    console.log(userInfoForToken);
+    
     // Generate a JSON Web Token
     let token: string;
     try {

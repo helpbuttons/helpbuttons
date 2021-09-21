@@ -8,5 +8,5 @@ export interface CustomUserProfile extends UserProfile {
     // `UserProfile` that previously was exported by `@loopback/authentication`
     email?: string;
     name?: string;
-    roles?: Role[];
+    roles?: string[];
   }

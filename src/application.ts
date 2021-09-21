@@ -23,9 +23,6 @@ import {CustomTokenService} from './services/custom-token.service';
 import {TokenServiceBindings, TokenServiceConstants} from './keys';
 import { UserCredentialsRepository, UserRepository } from './repositories';
 import { CustomUserService } from './services/custom-user.service';
-import { SecurityBindings } from '@loopback/security';
-
-import { CustomUserProfile } from './types';
 
 export {ApplicationConfig};
 
@@ -84,20 +81,16 @@ export class HelpbuttonsBackendApp extends BootMixin(
     this.bind(TokenServiceBindings.TOKEN_SERVICE).toClass(CustomTokenService);
 
     // Bind user service inside constructor
-    this.bind(UserServiceBindings.USER_SERVICE).toClass(CustomUserService),// error on this line
+    this.bind(UserServiceBindings.USER_SERVICE).toClass(CustomUserService);
 
     // Bind user and credentials repository
     this.bind(UserServiceBindings.USER_REPOSITORY).toClass(
       UserRepository,
-    ),
-
-    this.bind(SecurityBindings.USER).toAlias(
-      CustomUserProfile,
-    ),
+    );
 
     this.bind(UserServiceBindings.USER_CREDENTIALS_REPOSITORY).toClass(
       UserCredentialsRepository,
-    )
+    );
 
     // mount authorization component
     const binding = this.component(AuthorizationComponent);

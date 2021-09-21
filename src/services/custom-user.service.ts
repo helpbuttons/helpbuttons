@@ -9,9 +9,8 @@ import {HttpErrors} from '@loopback/rest';
 import {securityId, UserProfile} from '@loopback/security';
 import {compare} from 'bcryptjs';
 import {UserRepository} from '../repositories';
-/* eslint-disable*/
 import {User} from '../models';
-/* eslint-enable */
+
 /**
  * A pre-defined type for user credentials. It assumes a user logs in
  * using the email and password. You can modify it if your app has different credential fields
@@ -28,11 +27,10 @@ export class CustomUserService implements UserService<User, Credentials> {
 
   async verifyCredentials(credentials: Credentials): Promise<User> {
     const invalidCredentialsError = 'Invalid email or password.';
-    console.log('veryfiiiinggg credentialsss::::')
     const foundUser = await this.userRepository.findOne({
       where: {email: credentials.email},
     });
-    console.log(foundUser);
+    
     if (!foundUser) {
       throw new HttpErrors.Unauthorized(invalidCredentialsError);
     }
@@ -53,7 +51,6 @@ export class CustomUserService implements UserService<User, Credentials> {
       throw new HttpErrors.Unauthorized(invalidCredentialsError);
     }
 
-    console.log(foundUser);
     return foundUser;
   }
 

@@ -79,7 +79,7 @@ export class UserController {
     @inject(TokenServiceBindings.TOKEN_SERVICE)
     public customTokenService: CustomTokenService,
     @inject(UserServiceBindings.USER_SERVICE)
-    public userService: UserService<User, Credentials>,
+    public userService: UserService<CustomUserProfile, Credentials>,
     @inject(SecurityBindings.USER, {optional: true})
     public user: CustomUserProfile,
     @inject(UserServiceBindings.USER_REPOSITORY) protected userRepository: UserRepository,
@@ -113,17 +113,16 @@ export class UserController {
   ): Promise<{token: string}> {
     // ensure the user exists, and the password is correct
     const user = await this.userService.verifyCredentials(credentials);
-    // convert a User object into a UserProfile object (reduced set of properties)
+    
     const userProfile = this.userService.convertToUserProfile(user);
-    console.log('user controllllerrr');
-    console.log(userProfile);
+    
     // create a JSON Web Token based on the user profile
     const token = await this.customTokenService.generateToken(userProfile);
     return {token};
   }
 
   @authenticate('jwt')
-  @authorize({resource: 'order', scopes: ['patch']})
+  @authorize({allowedRoles: ["guest"]})
   @get('/users/whoAmI', {
     responses: {
       '200': {

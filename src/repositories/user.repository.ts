@@ -40,9 +40,7 @@ export class UserRepository extends DefaultCrudRepository<
     userId: typeof User.prototype.id,
   ): Promise<UserCredentials | undefined> {
     try {
-        console.log('FINDING CREDENTIALSSS');
       const userCredentials =  await this.userCredentials(userId).get();
-      console.log(userCredentials);
       return userCredentials;
     } catch (err) {
       if (err.code === 'ENTITY_NOT_FOUND') {

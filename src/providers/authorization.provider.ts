@@ -1,6 +1,6 @@
 import { AuthorizationContext, AuthorizationDecision, AuthorizationMetadata, Authorizer } from "@loopback/authorization";
 import { Provider } from "@loopback/core";
-// 
+
 export class AuthorizationProvider implements Provider<Authorizer> {
     /**
      * @returns an authorizer function
@@ -14,14 +14,19 @@ export class AuthorizationProvider implements Provider<Authorizer> {
       context: AuthorizationContext,
       metadata: AuthorizationMetadata,
     ) {
-      console.log(JSON.stringify(context));
-      console.log('metadata: ')
-      console.log(JSON.stringify(metadata));
-      // events.push(context.resource);
-      if (
-        context.resource === 'OrderController.prototype.cancelOrder' &&
-        context.principals[0].name === 'user-01'
-      ) {
+
+      let decidedToAllow = false;
+      if (metadata.allowedRoles){
+        metadata.allowedRoles.forEach(allowedRole => {
+          context.roles.forEach(userRole => {
+            if (allowedRole.toString() === userRole.name) {
+              decidedToAllow = true;
+            }
+          });
+        });
+      }
+
+      if (decidedToAllow) {
         return AuthorizationDecision.ALLOW;
       }
       return AuthorizationDecision.DENY;
