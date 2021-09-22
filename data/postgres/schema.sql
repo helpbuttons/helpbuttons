@@ -70,8 +70,6 @@ CREATE TABLE public.buttonsnetwork (
 );
 
 
-
-
 --
 -- Name: buttonsnetwork_id_seq; Type: SEQUENCE; Schema: public
 --
@@ -395,7 +393,7 @@ ALTER TABLE ONLY public.button
 --
 
 ALTER TABLE ONLY public.buttonsnetwork
-    ADD CONSTRAINT buttonsnetwork_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT buttonsnetwork_pkey PRIMARY KEY (networkid,buttonid);
 
 
 --
