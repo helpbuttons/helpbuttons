@@ -5,11 +5,12 @@ services:
     ports:
       - "8001:3000"
     volumes:
-     - ./:/home/node/app:rw
+     - ./:/home/node/app:ro
 
   postgres:
     image: postgis/postgis:13-master
     restart: always
+    container_name: helpbuttons_postgres
     volumes:
      - ../db/:/var/lib/mysql:rw
      - ./data/postgres/:/migrations/:ro
