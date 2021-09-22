@@ -1,5 +1,4 @@
 import { authenticate } from '@loopback/authentication';
-import { authorize } from '@loopback/authorization';
 import {inject} from '@loopback/core';
 import {
   post,
