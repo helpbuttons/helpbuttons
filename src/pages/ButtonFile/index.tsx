@@ -1,7 +1,6 @@
 //the button url itself
 import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
 import CardButton from '../../components/CardButton'
-import CardChat from '../../components/CardChat'
 import CardNotification from '../../components/CardNotification'
 import NavHeader from '../../components/NavHeader'
 import NavBottom from '../../components/NavBottom'
