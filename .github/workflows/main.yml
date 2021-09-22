@@ -13,4 +13,4 @@ jobs:
       - run: docker-compose up -d postgres
       - run: npm i
       - run: docker exec helpbuttons_postgres /migrations/run_all.sh reset
-      - run: npm test
+      - run: node_modules/.bin/lb-nyc npm run test
