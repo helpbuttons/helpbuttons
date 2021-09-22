@@ -225,4 +225,43 @@ describe('ButtonController (integration)', () => {
       expect(res2.body[0].networks.length).to.equal(4);
     });
   });
+  describe('transfer ownership of button', () => {
+    let buttonId = -1;
+    let networkId = -1;
+    
+    const newOwner = {'username': 'blasfemia@com.com', 'password': 'blasfemia2'};
+    let newOwnerUserId = '';
+    before('transfer ownership of button - create buttons', async () => {
+      newOwnerUserId = await signup(app, client, newOwner);
+      networkId = await createNetwork(client, token);
+      buttonId = await createButton(networkId, client, token);
+    });
+
+    it('/buttons/edit/{buttonId}', async () => {
+      await client.patch('/buttons/edit/' + buttonId).set('Authorization', 'Bearer ' + token).send({name: 'new name'}).expect(204);
+
+      await client.patch('/buttons/edit/' + buttonId).set('Authorization', 'Bearer ' + token).send({owner: newOwnerUserId}).expect(204);
+
+      await client.get('/buttons/findById/' + buttonId).set('Authorization', 'Bearer ' + token).expect(200).then((response) => {
+        expect(response.body.name).to.equal('new name');
+      });
+
+      // try to edit it again.. fails..
+      await client.patch('/buttons/edit/' + buttonId).set('Authorization', 'Bearer ' + token).send({name: 'other new name'}).expect(422);
+
+      await client.get('/buttons/findById/' + buttonId).set('Authorization', 'Bearer ' + token).expect(200).then((response) => {
+        expect(response.body.name).to.equal('new name');
+      });
+
+      // change to the new owner
+      const newOwnerToken = await login(client, newOwner);
+
+      await client.patch('/buttons/edit/' + buttonId).set('Authorization', 'Bearer ' + newOwnerToken).send({name: 'yet another new name'}).expect(204);
+
+      await client.get('/buttons/findById/' + buttonId).set('Authorization', 'Bearer ' + token).expect(200).then((response) => {
+        expect(response.body.name).to.equal('yet another new name');  
+      });
+      
+    });
+  });
 });
