@@ -51,11 +51,6 @@ export class Button extends Entity {
   })
   modified ? : string;
   
-  @property({
-    type: 'string'
-  })
-  owner: string;
-
   @hasMany(() => Network, {through: {model: () => ButtonsNetwork}})
   networks: Network[];
 
