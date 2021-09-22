@@ -7,3 +7,10 @@ CREATE TABLE public.userextra (
 
 ALTER TABLE ONLY public.userextra
     ADD CONSTRAINT userextra_pkey PRIMARY KEY (id);
+
+alter table public.user add column roles text default '["guest"]';
+
+alter table button add column owner text not null default '';
+alter table network add column owner text not null default '';
+
+alter table network drop column role;

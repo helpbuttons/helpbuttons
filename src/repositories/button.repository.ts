@@ -27,4 +27,17 @@ export class ButtonRepository extends DefaultCrudRepository<
       ctx.data.modified = new Date();
     });
   }
+
+  public isOwner(userId: string, id: number){
+    
+    return this.find({"where": {"id": id,"owner": userId}, "fields": {"id": true}}).then((items) => {
+      if(items && items.length > 0) {
+        return true;
+      }
+      return false;
+    }).catch((err)=> {
+      console.log('Error at button repository checking ownership of a button.... ' + err);
+      return false;
+    });
+  }
 }
