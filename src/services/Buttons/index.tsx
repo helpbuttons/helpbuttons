@@ -1,33 +1,35 @@
-import http from "../../http-common";
-import ButtonData from "../types/button.type"
+import { Observable } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+
+import { ButtonData } from './button.type';
 
 
-class ButtonDataService {
+export class ButtonDataService {
 
-  //catch in componets
 
-  getAll() {
-    return http.get("/buttons");
+  public static getAll(): Observable<ButtonData> {
+    return ajax.get<ButtonData>(`http://localhost:3001/buttons`);
   }
 
-  get(id: string) {
-    return http.get(`/buttons/${id}`);
+  public static get(id: string): Observable<ButtonData> {
+    return ajax.get<ButtonData>(`http://localhost:3001/buttons/${id}`);
   }
 
-  create(data: ButtonData) {
-    return http.post("/buttons", data);
+  public static create(data: ButtonData): Observable<ButtonData> {
+    return ajax.post<ButtonData>(`http://localhost:3001/buttons`,data);
   }
 
-  update(data: ButtonData, id: any) {
-    return http.put(`/buttons/${id}`, data);
+  public static update(data: ButtonData, id:any): Observable<ButtonData> {
+    return ajax.put<ButtonData>(`http://localhost:3001/buttons/${id}`,data);
   }
 
-  delete(id: any) {
-    return http.delete(`/buttons/${id}`);
+  public static delete(id:any): Observable<ButtonData> {
+    return ajax.delete<ButtonData>(`http://localhost:3001/buttons/${id}`);
   }
 
-  deleteAll() {
-    return http.delete(`/buttons`);
+  public static deleteAll(id:any): Observable<ButtonData> {
+    return ajax.delete<ButtonData>(`http://localhost:3001/buttons`);
   }
+
 
 }
