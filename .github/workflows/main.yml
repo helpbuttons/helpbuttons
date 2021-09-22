@@ -12,5 +12,5 @@ jobs:
           node-version: 12
       - run: docker-compose up -d postgres
       - run: npm i
-      - run: docker exec helpbuttons_postgres npm run postgres:reset
+      - run: docker exec helpbuttons_postgres /migrations/run_all.sh reset
       - run: npm test
