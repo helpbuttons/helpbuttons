@@ -4,7 +4,7 @@ import {
   givenHttpServerConfig,
   Client,
 } from '@loopback/testlab';
-
+import { UserRepository } from '@loopback/authentication-jwt';
 
 export async function setupApplication(): Promise<AppWithClient> {
   const restConfig = givenHttpServerConfig({
@@ -25,7 +25,11 @@ export async function setupApplication(): Promise<AppWithClient> {
   const client = createRestAppClient(app);
   return {app, client};
 }
-export async function signup(client: Client): Promise<string> {
+export async function signup(app: HelpbuttonsBackendApp, client: Client): Promise<string> {
+  
+  const userRepo : UserRepository = await app.get('repositories.UserRepository');
+  await userRepo.deleteAll();
+
   const signupData = {
     "username": "lala",
     "realm" : "lala",
@@ -34,8 +38,9 @@ export async function signup(client: Client): Promise<string> {
   };
   const res = await client
   .post('/users/signup')
-  .send(signupData)
-  return res.body.token; 
+  .send(signupData);
+  
+  return res.body.id; 
 }
 export async function login(client: Client): Promise<string> {
   const testUserCredential = {

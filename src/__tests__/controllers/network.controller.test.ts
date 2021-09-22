@@ -2,7 +2,7 @@ import { Client, expect } from '@loopback/testlab';
 import { HelpbuttonsBackendApp } from '../..';
 import { setupApplication, login } from '../helpers/authentication.helper';
 
-describe('NetworkController (integration)', () => {
+describe.only('NetworkController (integration)', () => {
   let app: HelpbuttonsBackendApp;
   let client: Client;
   let token: string;
