@@ -10,14 +10,4 @@ export class BackTestService {
     return ajax.getJSON<OpenApi>('http://localhost:3001/openapi.json');
   }
 
-
-  public static getAll(id: string): Observable<OpenApi> {
-    return ajax.getJSON<OpenApi>('http://localhost:3001/openapi.json');
-  }
-
-  get(id: string) {
-    return http.get(`/buttons/${id}`);
-  }
-
-
 }

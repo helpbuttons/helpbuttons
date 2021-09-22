@@ -8,27 +8,27 @@ export class NetworkDataService {
 
 
   public static getAll(): Observable<NetworkData> {
-    return ajax.get<NetworkData>(`http://localhost:3001/networks`);
+    return ajax.get(`http://localhost:3001/networks`);
   }
 
   public static get(id: string): Observable<NetworkData> {
-    return ajax.get<NetworkData>(`http://localhost:3001/networks/${id}`);
+    return ajax.get(`http://localhost:3001/networks/${id}`);
   }
 
   public static create(data: NetworkData): Observable<NetworkData> {
-    return ajax.post<NetworkData>(`http://localhost:3001/networks`,data);
+    return ajax.post(`http://localhost:3001/networks`,data);
   }
 
   public static update(data: NetworkData, id:any): Observable<NetworkData> {
-    return ajax.put<NetworkData>(`http://localhost:3001/networks/${id}`,data);
+    return ajax.put(`http://localhost:3001/networks/${id}`,data);
   }
 
   public static delete(id:any): Observable<NetworkData> {
-    return ajax.delete<NetworkData>(`http://localhost:3001/networks/${id}`);
+    return ajax.delete(`http://localhost:3001/networks/${id}`);
   }
 
   public static deleteAll(id:any): Observable<NetworkData> {
-    return ajax.delete<NetworkData>(`http://localhost:3001/networks`);
+    return ajax.delete(`http://localhost:3001/networks`);
   }
 
 
