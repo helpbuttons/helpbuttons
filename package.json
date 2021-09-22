@@ -10,7 +10,7 @@
     "svgr": "svgr icons -d elements/icons --icon"
   },
   "dependencies": {
-    "axios": "^0.21.4",
+    "immer": "^9.0.6",
     "leaflet": "^1.7.1",
     "next": "11.1.0",
     "react": "17.0.2",

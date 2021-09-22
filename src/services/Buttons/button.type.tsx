@@ -1,4 +1,4 @@
-export default interface ButtonData {
+export interface ButtonData {
   id?: any | null,
   templateId: any | null,
   tags: ["tag1", "tag2", "tag3"],

@@ -1,20 +1,31 @@
 // === Definición de eventos ===
 
-export interface Event {
+export abstract class Event {
 }
 
-export interface UpdateEvent extends Event {
-  public update (state: object): object;
+export abstract class UpdateEvent extends Event {
+  public abstract update (state: object): object;
 }
 
-export interface WatchEvent extends Event {
-  public watch (state: object): Observable<Event>;
+export abstract class WatchEvent extends Event {
+  public abstract watch (state: object): Observable<Event>;
 }
 
-export function isUpdateEvent(event: Event): boolean {
+export abstract class EffectEvent extends Event {
+  public abstract effect (state: object): void;
+}
+
+
+// === Funciones de tipos ===
+
+export function isUpdateEvent(event: Event): event is Event {
   return (event.update !== undefined);
 }
 
-export function isWatchEvent(event: Event): boolean {
+export function isWatchEvent(event: Event): event is Event {
   return (event.watch !== undefined);
+}
+
+export function isEffectEvent(event: Event): event is Event {
+  return (event.effect !== undefined);
 }
