@@ -63,6 +63,11 @@ export class Network extends Entity {
   tags?: string[];
 
   @property({
+    type: 'string'
+  })
+  owner: string;
+
+  @property({
     type: 'array',
     itemType: 'number',
   })
@@ -74,12 +79,6 @@ export class Network extends Entity {
   // TODO this should be a relation with roles
   @hasMany(() => TemplateButton, {through: {model: () => TemplateButtonNetwork}})
   templateButtons: TemplateButton[];
-
-  @property({
-    type: 'string',
-    default: 'admin'
-  })
-  role: string;
 
   @property({
     type: 'date',

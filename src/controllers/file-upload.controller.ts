@@ -1,3 +1,4 @@
+import { authenticate } from '@loopback/authentication';
 import {inject} from '@loopback/core';
 import {
   post,
@@ -20,6 +21,8 @@ export class FileUploadController {
   constructor(
     @inject(FILE_UPLOAD_SERVICE) private handler: FileUploadHandler,
   ) {}
+
+  @authenticate('jwt')
   @post('/files', {
     responses: {
       200: {

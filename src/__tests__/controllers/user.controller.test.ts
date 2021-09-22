@@ -20,15 +20,14 @@ describe('Users (integration) [users]', () => {
         "name": '/users/signup',
         "requestBody":
         {
-            "username": "lala",
-            "realm" : "lala",
             "email": "testuser2@abcd.com",
             "password": "testuser2"
         },
         "expectedResponseBody":
         {
-            "realm": "admin",
-            "username": "lala",
+            "realm": "",
+            "roles": ["registered"],
+            "username": "testuser2@abcd.com",
             "email": "testuser2@abcd.com"
         },
         "expectedResponseCode": 200

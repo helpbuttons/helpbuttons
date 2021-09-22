@@ -10,7 +10,7 @@ describe('ButtonController (integration)', () => {
   before('setupApplication', async () => {
 
     ({ app, client } = await setupApplication());
-    await signup(client);
+    await signup(app, client);
     token = await login(client);
     
     await client.post('/networks/new').send(

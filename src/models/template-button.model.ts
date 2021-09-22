@@ -45,6 +45,11 @@ export class TemplateButton extends Entity {
   })
   modified ? : string;
   
+  @property({
+    type: 'string'
+  })
+  owner: string;
+  
   @hasMany(() => Button)
   buttons: Button[];
 

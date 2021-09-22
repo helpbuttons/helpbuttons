@@ -4,18 +4,19 @@ import {Entity, model, property} from '@loopback/repository';
 export class ButtonsNetwork extends Entity {
   @property({
     type: 'number',
-    id: true,
     generated: true,
   })
   id?: number;
 
   @property({
     type: 'number',
+    id: true,
   })
   networkId?: number;
 
   @property({
     type: 'number',
+    id: true,
   })
   buttonId?: number;
 

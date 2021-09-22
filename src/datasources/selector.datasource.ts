@@ -16,4 +16,4 @@ const postgresDatasource = {
     "database": "postgres"
 };
 
-export const datasourceConfig = (process.env.NODE_ENV === 'postgres') ? postgresDatasource : memoryDatasource;
+export const datasourceConfig = (process.env.NODE_ENV === 'memory') ? memoryDatasource : postgresDatasource;

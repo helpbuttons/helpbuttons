@@ -12,9 +12,14 @@ import {
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
 import {TemplateButton} from '../models';
 import {NetworkRepository, TemplateButtonRepository} from '../repositories';
+
+import {UserProfile, SecurityBindings} from '@loopback/security';
+import { authenticate } from '@loopback/authentication';
+import { inject } from '@loopback/core';
 
 export class TemplateButtonController {
   constructor(
@@ -24,12 +29,14 @@ export class TemplateButtonController {
     public networkRepository : NetworkRepository,
   ) {}
 
+  @authenticate('jwt')
   @post('/template-buttons/new')
   @response(200, {
     description: 'TemplateButton model instance',
     content: {'application/json': {schema: getModelSchemaRef(TemplateButton)}},
   })
   async create(
+    @inject(SecurityBindings.USER) currentUserProfile: UserProfile,
     @requestBody({
       content: {
         'application/json': {
@@ -42,6 +49,7 @@ export class TemplateButtonController {
     })
     templateButton: Omit<TemplateButton, 'id'>,
   ): Promise<TemplateButton> {
+    templateButton.owner = currentUserProfile.id;
     return this.templateButtonRepository.create(templateButton);
   }
 /*
@@ -109,11 +117,13 @@ export class TemplateButtonController {
     return this.templateButtonRepository.findById(id, filter);
   }
 
+  @authenticate('jwt')
   @patch('/template-buttons/edit/{id}')
   @response(204, {
     description: 'TemplateButton PATCH success',
   })
   async updateById(
+    @inject(SecurityBindings.USER) currentUserProfile: UserProfile,
     @param.path.number('id') id: number,
     @requestBody({
       content: {
@@ -124,6 +134,7 @@ export class TemplateButtonController {
     })
     templateButton: TemplateButton,
   ): Promise<void> {
+    await this.isOwner(id, currentUserProfile);
     await this.templateButtonRepository.updateById(id, templateButton);
   }
 /*
@@ -138,14 +149,20 @@ export class TemplateButtonController {
     await this.templateButtonRepository.replaceById(id, templateButton);
   }
 */
+  @authenticate('jwt')
   @del('/template-buttons/{id}')
   @response(204, {
     description: 'TemplateButton DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(
+    @inject(SecurityBindings.USER) currentUserProfile: UserProfile,
+    @param.path.number('id') id: number
+  ): Promise<void> {
+    await this.isOwner(id, currentUserProfile);
     await this.templateButtonRepository.deleteById(id);
   }
 
+  @authenticate('jwt')
   @post('/template-buttons/addToNetworks', {
     responses: {
       '200': {
@@ -155,16 +172,28 @@ export class TemplateButtonController {
     },
   })
   async addToNetworks(
-    @param.query.number('templateButtonId') id: typeof TemplateButton.prototype.id,
+    @inject(SecurityBindings.USER) currentUserProfile: UserProfile,
+    @param.query.number('templateButtonId') id: number,
     @param.query.string('networks') networks: string,
   ): Promise<object> {
     const networkIds: Array<number> = JSON.parse(networks);
+
+    const ownedNetworkIds = await this.networkRepository.findOwnerNetworks(currentUserProfile.id, networkIds);
+    
     return Promise.all(
-      networkIds.map((networkId) => {
+      ownedNetworkIds.map((networkId) => {
         return this.networkRepository.templateButtons(networkId).link(id).then(() => {
-          return 'Added button ' + id + ' to network ' + networkId;
+          return 'Added template button ' + id + ' to network ' + networkId;
         });
       })
     )
+  }
+
+  protected async isOwner(buttonId : number, currentUserProfile: UserProfile){
+    const isOwnerOfButton = await this.templateButtonRepository.isOwner(currentUserProfile.id, buttonId);
+
+    if (!isOwnerOfButton) {
+      throw new HttpErrors.UnprocessableEntity('You are not the owner of the button');
+    }
   }
 }

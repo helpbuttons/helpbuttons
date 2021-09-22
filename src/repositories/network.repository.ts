@@ -50,6 +50,27 @@ export class NetworkRepository extends DefaultCrudRepository<
     /* eslint-enable @typescript-eslint/no-explicit-any */ 
   }
 
+  public findOwnerNetworks(userId: string, networkIds: number[]){
+    
+    return this.find({"where": {"id": {"inq": networkIds},"owner": userId}, "fields": {"id": true}}).then(
+      (networks) => {
+        return networks.map((network) => {
+          return network.id;
+        });
+      }
+    );
+  }
+
+  public isOwner(userId: string, networkId: number){
+    
+    return this.find({"where": {"id": networkId,"owner": userId}, "fields": {"id": true}}).then((networks) => {
+      if(networks && networks.length > 0) {
+        return true;
+      }
+      return false;
+    });
+  }
+
   public findForMap(geoPolygon: GeoJSON): Promise<Network[]> {
     const sql:string = `SELECT id
                       FROM network
