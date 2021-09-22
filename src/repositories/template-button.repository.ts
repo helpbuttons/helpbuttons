@@ -37,4 +37,14 @@ export class TemplateButtonRepository extends DefaultCrudRepository<
     });
     /* eslint-enable @typescript-eslint/no-explicit-any */ 
   }
+
+  public isOwner(userId: string, id: number){
+    
+    return this.find({"where": {"id": id,"owner": userId}, "fields": {"id": true}}).then((items) => {
+      if(items && items.length > 0) {
+        return true;
+      }
+      return false;
+    });
+  }
 }

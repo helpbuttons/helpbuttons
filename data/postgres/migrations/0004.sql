@@ -12,5 +12,6 @@ alter table public.user add column roles text default '["guest"]';
 
 alter table button add column owner text not null default '';
 alter table network add column owner text not null default '';
+alter table templatebutton add column owner text not null default '';
 
 alter table network drop column role;

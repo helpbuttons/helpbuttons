@@ -35,9 +35,6 @@ export class ButtonRepository extends DefaultCrudRepository<
         return true;
       }
       return false;
-    }).catch((err)=> {
-      console.log('Error at button repository checking ownership of a button.... ' + err);
-      return false;
     });
   }
 }

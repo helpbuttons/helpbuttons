@@ -68,9 +68,6 @@ export class NetworkRepository extends DefaultCrudRepository<
         return true;
       }
       return false;
-    }).catch((err)=> {
-      console.log('Error at network repository checking ownership of a network.... ' + err);
-      return false;
     });
   }
 
