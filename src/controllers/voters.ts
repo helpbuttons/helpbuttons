@@ -59,10 +59,6 @@ export async function onlyAdmin(
     if (currentUser.roles && currentUser.roles.length > 0 && currentUser.roles.indexOf('admin')) {
         return AuthorizationDecision.ALLOW;
     }
-
-    if (currentUser[securityId] === authorizationCtx.invocationContext.args[0]) {
-      return AuthorizationDecision.ALLOW;
-    }
     
     return AuthorizationDecision.DENY;
   }

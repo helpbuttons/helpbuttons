@@ -140,6 +140,8 @@ export class UserController {
     @inject(SecurityBindings.USER)
     currentUserProfile: CustomUserProfile,
   ): Promise<string> {
+    console.log('AIM');
+    console.log(currentUserProfile[securityId]);
     return currentUserProfile[securityId];
   }
 
