@@ -73,11 +73,8 @@ export class ButtonController {
     if (!networkId) {
       throw new HttpErrors.UnprocessableEntity('Network id is not present');
     }
-    const isOwnerOfNetwork = await this.networkRepository.isOwner(userId, networkId);
-    if (!isOwnerOfNetwork)
-    {
-      throw new HttpErrors.UnprocessableEntity('You are not the owner of the network');
-    }
+
+    await this.isOwnerOfNetwork(userId, networkId);
     
     return this.networkRepository.buttons(networkId).create(button)
     .then((createdButton) => {
@@ -239,6 +236,14 @@ export class ButtonController {
     const isOwnerOfButton = await this.buttonRepository.isOwner(userId, buttonId);
 
     if (!isOwnerOfButton) {
+      throw new HttpErrors.UnprocessableEntity('You are not the owner of the button');
+    }
+  }
+
+  protected async isOwnerOfNetwork(userId : string, networkId : number){
+    const isOwnerOfNetwork = await this.networkRepository.isOwner(userId, networkId);
+
+    if (!isOwnerOfNetwork) {
       throw new HttpErrors.UnprocessableEntity('You are not the owner of the button');
     }
   }

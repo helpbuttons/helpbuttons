@@ -122,7 +122,6 @@ export class UserController {
   }
 
   @authenticate('jwt')
-  @authorize({allowedRoles: ["guest"]})
   @get('/users/whoAmI', {
     responses: {
       '200': {
