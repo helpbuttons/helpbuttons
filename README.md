@@ -7,33 +7,43 @@
 ```sh
 npm install
 ```
-### setup the datasources
-
-#### Memory
-```sh
-npm run migrate
-```
-
-#### Postgres
+#### Setup using postgres as datastore
+##### Setup postgres
 To drop all tables, recreate all schema, and run migrations
 ```sh
-$ docker-compose exec postgres /migrations/run_all.sh drop
+$ npm run postgres:reset
 ```
 
-### Run the application
+#### start postgres
+Start postgres
 ```sh
-npm start
+$ npm run postgres:start
+```
+
+#### Run the application
+```sh
+$ npm start
 ```
 
 Open http://127.0.0.1:3001 in your browser.
 
-### run the application in watchmode
+#### run the application in watchmode 
 ```sh
-npm start:watch
+$ npm start:watch
 ```
 
-## run with docker
- TODO
+### Setup using memory (json file) as datastore 
+ - If you use memory you won't be able to run postgres+GIS queries )
+#### Setup memory
+```sh
+$ NODE_ENV=memory npm run migrate
+```
+
+#### Run the application
+```sh
+$ NODE_ENV=memory npm start
+```
+
 
 ## developers hints:
 
