@@ -171,10 +171,12 @@ export class UserController {
     
     const password = await hash(newUserRequest.password, await genSalt());
     
-    newUserRequest.realm = 'admin';
+    newUserRequest.realm = '';
     newUserRequest.username = newUserRequest.email;
+    newUserRequest.roles = ["registered"];
+    
     const savedUser = await this.userRepository.create(
-      _.pick(newUserRequest, ['username','email','realm','role']),
+      _.pick(newUserRequest, ['username','email','realm','roles']),
     );
     
     await this.userRepository.userCredentials(savedUser.id).create({password: password});

@@ -25,8 +25,6 @@ import {UserProfile, SecurityBindings} from '@loopback/security';
 import {authenticate} from '@loopback/authentication';
 import { inject } from '@loopback/core';
 import { TagController } from './tag.controller';
-import { authorize } from '@loopback/authorization';
-import { onlyOwner } from './voters';
 
 export class ButtonController {
   // protected currentUserProfile : UserProfile;
@@ -45,7 +43,6 @@ export class ButtonController {
   }
   
   @authenticate('jwt')
-  @authorize({allowedRoles: ["guest", "admin"], voters: [onlyOwner]})
   @post('/buttons/new/', {
     responses: {
       '200': {
@@ -92,7 +89,6 @@ export class ButtonController {
   }
   
   @authenticate('jwt')
-  @authorize({allowedRoles: ["admin"], voters: [onlyOwner]})
   @post('/buttons/addToNetworks/{buttonId}', {
     responses: {
       '200': {
@@ -190,7 +186,6 @@ export class ButtonController {
   }
 
   @authenticate('jwt')
-  @authorize({allowedRoles: ["owner", "admin"]})
   @patch('/buttons/edit/{id}')
   @response(204, {
     description: 'Button PATCH success',
@@ -226,7 +221,6 @@ export class ButtonController {
   }
 */
   @authenticate('jwt')
-  @authorize({allowedRoles: ["owner", "admin"]})
   @del('/buttons/delete/{id}')
   @response(204, {
     description: 'Button DELETE success',
