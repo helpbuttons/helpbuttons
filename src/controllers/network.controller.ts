@@ -20,6 +20,8 @@ import { Validations } from './validations';
 import { GeoJSON } from 'geojson';
 import { inject } from '@loopback/core';
 import { TagController } from './tag.controller';
+import {UserProfile, SecurityBindings} from '@loopback/security';
+import { authenticate } from '@loopback/authentication';
 
 export class NetworkController {
   constructor(
@@ -29,12 +31,14 @@ export class NetworkController {
     public tagController: TagController,
   ) {}
 
+  @authenticate('jwt')
   @post('/networks/new')
   @response(200, {
     description: 'Network model instance',
     content: {'application/json': {schema: getModelSchemaRef(Network)}},
   })
   async create(
+    @inject(SecurityBindings.USER) currentUserProfile: UserProfile,
     @requestBody({
       content: {
         'application/json': {
@@ -52,6 +56,8 @@ export class NetworkController {
         throw new HttpErrors.UnprocessableEntity('`geoPlace` is not well formated, please check the documentation at https://geojson.org/');
       }
     }
+    network.owner = currentUserProfile.id;
+
     return this.networkRepository.create(network)
     .then((createdNetwork) => {
       if (!createdNetwork.id || !network.tags) {

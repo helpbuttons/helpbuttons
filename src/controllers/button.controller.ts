@@ -29,9 +29,10 @@ import { authorize } from '@loopback/authorization';
 import { onlyOwner } from './voters';
 
 export class ButtonController {
+  // protected currentUserProfile : UserProfile;
   constructor(
-    @inject(SecurityBindings.USER)
-    public currentUserProfile: UserProfile,
+    // @inject(SecurityBindings.USER)
+    // public currentUserProfile: UserProfile,
     @repository(ButtonRepository)
     public buttonRepository : ButtonRepository,
     @repository(NetworkRepository)
@@ -40,7 +41,8 @@ export class ButtonController {
     public templateButtonRepository : TemplateButtonRepository,
     @inject('controllers.TagController') 
     public tagController: TagController,
-  ) {}
+  ) {
+  }
   
   @authenticate('jwt')
   @authorize({allowedRoles: ["guest", "admin"], voters: [onlyOwner]})
@@ -53,6 +55,7 @@ export class ButtonController {
     },
   })
   async create(
+    @inject(SecurityBindings.USER) currentUserProfile: UserProfile,
     @param.query.number('networkId') networkId: typeof Network.prototype.id,
     @requestBody({
       content: {
@@ -70,12 +73,12 @@ export class ButtonController {
         throw new HttpErrors.UnprocessableEntity('`geoPlace` is not well formated, please check the documentation at https://geojson.org/');
       }
     }
-    button.owner = this.currentUserProfile.id;
+    button.owner = currentUserProfile.id;
     if (!networkId) {
       throw new HttpErrors.UnprocessableEntity('Network id is not present');
     }
 
-    await this.isOwnerOfNetwork(networkId);
+    await this.isOwnerOfNetwork(networkId, currentUserProfile);
     
     return this.networkRepository.buttons(networkId).create(button)
     .then((createdButton) => {
@@ -99,14 +102,15 @@ export class ButtonController {
     },
   })
   async addToNetworks(
+    @inject(SecurityBindings.USER) currentUserProfile: UserProfile,
     @param.path.number('buttonId') buttonId: number,
     @param.query.string('networks') networks: string,
   ): Promise<object> {
     const networkIds: Array<number> = JSON.parse(networks);
     
-    const ownedNetworkIds = await this.networkRepository.findOwnerNetworks(this.currentUserProfile.id, networkIds);
+    const ownedNetworkIds = await this.networkRepository.findOwnerNetworks(currentUserProfile.id, networkIds);
     
-    await this.isOwner(buttonId);
+    await this.isOwner(buttonId, currentUserProfile);
     
     return Promise.all(
       ownedNetworkIds.map((networkId) => {
@@ -192,6 +196,7 @@ export class ButtonController {
     description: 'Button PATCH success',
   })
   async updateById(
+    @inject(SecurityBindings.USER) currentUserProfile: UserProfile,
     @param.path.number('id') id: number,
     @requestBody({
       content: {
@@ -202,7 +207,7 @@ export class ButtonController {
     })
     button: Button,
   ): Promise<void> {
-    await this.isOwner(id);
+    await this.isOwner(id, currentUserProfile);
     await this.buttonRepository.updateById(id, button);
     if (button.tags) {
       await this.tagController.updateTags('button',id.toString(), button.tags);
@@ -226,21 +231,24 @@ export class ButtonController {
   @response(204, {
     description: 'Button DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
-    await this.isOwner(id);
+  async deleteById(
+    @param.path.number('id') id: number,
+    @inject(SecurityBindings.USER) currentUserProfile: UserProfile,
+    ): Promise<void> {
+    await this.isOwner(id, currentUserProfile);
     await this.buttonRepository.deleteById(id);
   }
 
-  protected async isOwner(buttonId : number){
-    const isOwnerOfButton = await this.buttonRepository.isOwner(this.currentUserProfile.id, buttonId);
+  protected async isOwner(buttonId : number, currentUserProfile: UserProfile){
+    const isOwnerOfButton = await this.buttonRepository.isOwner(currentUserProfile.id, buttonId);
 
     if (!isOwnerOfButton) {
       throw new HttpErrors.UnprocessableEntity('You are not the owner of the button');
     }
   }
 
-  protected async isOwnerOfNetwork(networkId : number){
-    const isOwnerOfNetwork = await this.networkRepository.isOwner(this.currentUserProfile.id, networkId);
+  protected async isOwnerOfNetwork(networkId : number,currentUserProfile: UserProfile){
+    const isOwnerOfNetwork = await this.networkRepository.isOwner(currentUserProfile.id, networkId);
 
     if (!isOwnerOfNetwork) {
       throw new HttpErrors.UnprocessableEntity('You are not the owner of the network');
