@@ -12,4 +12,5 @@ jobs:
           node-version: 12
       - run: docker-compose up -d postgres
       - run: npm i
+      - run: npm run postgres:reset
       - run: npm test
