@@ -15,7 +15,7 @@ describe('ButtonController (integration)', () => {
   after(async () => {
     await app.stop();
   });
-  describe.only('/buttons/new .', () => {
+  describe('/buttons/new .', () => {
     it('/buttons/new', async () => {
       const res = await client.post('/buttons/new').query({ networkId: 4 }).set('Authorization', 'Bearer ' + token).send({
         "name": "button name",
