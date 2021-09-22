@@ -10,5 +10,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - run: docker-compose up -d postgres
       - run: npm i
       - run: npm test
