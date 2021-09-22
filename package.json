@@ -41,7 +41,8 @@
     "start:watch": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
     "start:gis:watch": "NODE_ENV=postgres tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
     "postgres:install": "docker-compose exec postgres /migrations/run_all.sh new",
-    "postgres:reset": "docker-compose exec postgres /migrations/run_all.sh reset"
+    "postgres:reset": "docker-compose exec postgres /migrations/run_all.sh reset",
+    "postgres:term": "docker-compose exec postgres psql -U postgres"
   },
   "repository": {
     "type": "git",
