@@ -34,7 +34,7 @@ export default class AddButton extends Component<Props, State> {
       latitude: [],
       // optional values
       networks: [],
-      chatType: "single", //enum {single,group} chat structure
+      feedType: "single", //enum {single,group} feed structure
       templateExtraData: {}, //JSON
 
     };
@@ -73,7 +73,7 @@ export default class AddButton extends Component<Props, State> {
           latitude: [],
           // optional values
           networks: [],
-          chatType: "single", //enum {single,group} chat structure
+          feedType: "single", //enum {single,group} feed structure
           templateExtraData: {}, //JSON
         });
         console.log(response.data);
@@ -97,7 +97,7 @@ export default class AddButton extends Component<Props, State> {
       latitude: [],
       // optional values
       networks: [],
-      chatType: "single", //enum {single,group} chat structure
+      feedType: "single", //enum {single,group} feed structure
       templateExtraData: {}, //JSON
     });
   }

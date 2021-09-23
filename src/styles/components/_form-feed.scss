@@ -1,9 +1,9 @@
-$form-chat-background: $color-white;
-$form-chat-button-size: 70px;
+$form-feed-background: $color-white;
+$form-feed-button-size: 70px;
 
-.form-chat {
+.form-feed {
   align-items: stretch;
-  background: $form-chat-background;
+  background: $form-feed-background;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -15,12 +15,12 @@ $form-chat-button-size: 70px;
   }
 }
 
-.form-chat__button {
+.form-feed__button {
   background: $color-gray;
-  flex: 0 1 $form-chat-button-size;
+  flex: 0 1 $form-feed-button-size;
   text-indent: -9999999px;
 }
 
-.form-chat__input {
+.form-feed__input {
   flex: 0 1 80%;
 }

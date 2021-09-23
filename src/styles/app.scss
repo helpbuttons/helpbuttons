@@ -40,7 +40,7 @@
 @import "components/error-message";
 @import "components/marker-button";
 @import "components/marker-net";
-@import "components/form-chat";
+@import "components/form-feed";
 @import "components/message";
 @import "components/picker-time";
 @import "components/dropdown-nets";
@@ -48,8 +48,7 @@
 @import "components/picker";
 @import "components/card-button-map";
 @import "components/card-button-list";
-@import "components/card-chat";
-@import "components/feed";
+@import "components/card-feed";
 @import "components/nav-bottom";
 @import "components/nav-header";
 @import "components/_header-info-overlay";
@@ -66,11 +65,12 @@
 // layouts (general)
 @import "layouts/header-desktop";
 @import "layouts/trending-tags";
+@import "layouts/feed";
 @import "layouts/button-new-location";
 @import "layouts/button-new-date";
 @import "layouts/button-share";
 @import "layouts/popup-create-net";
-@import "layouts/chat";
+@import "layouts/feed";
 @import "layouts/list";
 @import "layouts/popup";
 @import "layouts/repository";
@@ -82,7 +82,6 @@
 @import "pages/button-new";
 @import "pages/index/search-map";
 @import "pages/profile-buttons";
-@import "pages/chats";
 @import "pages/login";
 @import "pages/register";
 @import "pages/recovery";

@@ -13,7 +13,7 @@ export default function PickerDelete() {
             </h5>
           </header>
           <button
-            className=" card-chat__radius--left"
+            className=" card-feed__radius--left"
             type="button"
             name="button"
             {{action "showConfirmationDialog"}}
@@ -22,7 +22,7 @@ export default function PickerDelete() {
           </button>
           <div className="">
             <button
-              className=" card-chat__radius--right"
+              className=" card-feed__radius--right"
               type="button"
               name="button"
             >

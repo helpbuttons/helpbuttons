@@ -1,19 +1,21 @@
 ///Accordion section component for displaying long section data
+import React, { Component } from 'react';
 
 
-export default function Accordion() {
+export default class Accordion extends React.Component {
 
-  return (
+  render() {
 
-    <>
+        return (
 
-      <button id="section_name" className="accordion">Section 1</button>
-        <div className="panel">
-        <p>Lorem ipsum... palabra. Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras. Ejemplo palabras Ejemplo palabras Ejemplo palabras ., Ejemplo palabrasEjemplo palabras</p>
-        </div>
+            <>
+              <button id="section_name" className="accordion">Section 1</button>
+                <div className="panel">
+                  {this.props.children}
+                </div>
+            </>
 
-    </>
-
-  );
+        );
+  }
 
 }

@@ -17,9 +17,14 @@ export default function Config() {
         <h2 className="title__h3 config__title">Config</h2>
 
         <CardDirectory />
-        <Accordion />
-        
-        <Accordion />
+
+        <Accordion>
+          <p>Texto molón de mi acorodeón</p>
+        </Accordion>
+
+        <Accordion>
+          <p>Otro Texto molón de mi acorodeón</p>
+        </Accordion>
 
       </div>
 

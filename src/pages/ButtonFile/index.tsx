@@ -35,7 +35,7 @@ export default function ButtonFile() {
 
             <div className="button-file__action-section--field">
 
-              <form className="chats__new-message" >
+              <form className="feeds__new-message" >
 
                   <button className="btn-circle">
                     <div className="btn-circle__content">
@@ -44,8 +44,8 @@ export default function ButtonFile() {
                       </div>
                     </div>
                   </button>
-                  <div className="chats__new-message-message">
-                    <input className="form__input chats__new-message-input"></input>
+                  <div className="feeds__new-message-message">
+                    <input className="form__input feeds__new-message-input"></input>
                   </div>
                   <button className="btn-circle">
                     <div className="btn-circle__content">

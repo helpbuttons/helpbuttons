@@ -1,7 +1,7 @@
-// chat card that goes in ButtonFile component, under ButtonCard, and repeats for every chat that is available. It can also displays in Chats page, on the left column (desktop) or other pllaciess for notifications in the future. It has a "remove chat"icon, date and last message preview
+// feed card that goes in ButtonFile component, under ButtonCard, and repeats for every feed that is available. It can also displays in feeds page, on the left column (desktop) or other pllaciess for notifications in the future. It has a "remove feed"icon, date and last message preview
 import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
 
-export default function CardChat() {
+export default function CardFeed() {
   return (
     <>
       <div className="card-notification">

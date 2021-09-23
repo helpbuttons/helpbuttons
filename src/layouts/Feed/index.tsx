@@ -1,6 +1,6 @@
 //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
 import Dropdown from '../../elements/Dropdown'
-import CardChat from '../../components/CardChat'
+import Cardfeed from '../../components/Cardfeed'
 
 export default function Feed() {
   return (
@@ -18,13 +18,13 @@ export default function Feed() {
 
         <div className="feed-element">
 
-          <CardChat />
+          <Cardfeed />
 
         </div>
 
         <div className="feed-element">
 
-          <CardChat />
+          <Cardfeed />
 
         </div>
 

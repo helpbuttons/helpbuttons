@@ -1,5 +1,5 @@
 //List of elements component that can be used anywhere in the app
-import icon from '../../../public/assets/svg/icons/chat.svg'
+import icon from '../../../public/assets/svg/icons/feed.svg'
 import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
 import back from '../../../public/assets/svg/icons/back.svg'
 import hand from '../../../public/assets/svg/icons/hand_call.svg'
@@ -839,7 +839,7 @@ function Repository() {
         <hr></hr>
 
         <h3 className="repository__title">
-          component/card-chat
+          component/card-feed
         </h3>
 
         <section className="repository__section">
@@ -1115,12 +1115,12 @@ function Repository() {
         <hr></hr>
 
         <h3 className="repository__title">
-          component/form-chat
+          component/form-feed
         </h3>
 
         <section className="repository__section">
 
-          <form className="chats__new-message" >
+          <form className="feeds__new-message" >
 
               <button className="btn-circle">
                 <div className="btn-circle__content">
@@ -1129,8 +1129,8 @@ function Repository() {
                   </div>
                 </div>
               </button>
-              <div className="chats__new-message-message">
-                <input className="form__input chats__new-message-input"></input>
+              <div className="feeds__new-message-message">
+                <input className="form__input feeds__new-message-input"></input>
               </div>
               <button className="btn-circle">
                 <div className="btn-circle__content">
