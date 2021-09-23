@@ -10,42 +10,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-        - '12.22'
-        database-name:
-        - helpbuttons
-        database-password:
-        - postgres
-        database-user:
-        - postgres
-        database-host:
-        - 127.0.0.1
-        database-port:
-        - 5432
-
     steps:
       - name: "checkout"
         uses: actions/checkout@v2
+      - name: "copy env.ci to .env"
+        run: |
+          cp env.ci .env
       - name: "setup node"
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - name: "start postgis"
-        env:
-          POSTGRES_HOSTNAME: ${{ matrix.database-host }}
-          POSTGRES_USER: ${{ matrix.database-user }}
-          POSTGRES_PASSWORD: ${{ matrix.database-password }}
-          POSTGRES_DB: ${{ matrix.database-name }}
         run: |
          docker-compose up -d db 
       - name: "run the tests"
-        env:
-          POSTGRES_HOSTNAME: ${{ matrix.database-host }}
-          POSTGRES_USER: ${{ matrix.database-user }}
-          POSTGRES_PASSWORD: ${{ matrix.database-password }}
-          POSTGRES_DB: ${{ matrix.database-name }}
         run: |
          npm i
          npm run build
