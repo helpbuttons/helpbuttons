@@ -9,11 +9,4 @@ case "$1" in
     "new")
         psql -U postgres postgres < {$FULLPATH}/schema.sql
         ;&
-    "migrations")
-        psql -U postgres postgres < $FULLPATH/migrations/0001.sql
-        psql -U postgres postgres < ${FULLPATH}/migrations/0002.sql
-        psql -U postgres postgres < ${FULLPATH}/migrations/0003.sql
-        psql -U postgres postgres < ${FULLPATH}/migrations/0004.sql
-        psql -U postgres postgres < ${FULLPATH}/migrations/0005.sql
-        ;;
 esac
