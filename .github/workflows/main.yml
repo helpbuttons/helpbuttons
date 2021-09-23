@@ -12,12 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version:
-        - '2.7.2'
         node-version:
         - '12.22'
         database-name:
-        - my-app
+        - helpbuttons
         database-password:
         - postgres
         database-user:
@@ -35,6 +33,8 @@ jobs:
           POSTGRES_PASSWORD: ${{ matrix.database-password }}
         ports:
           - 5432:5432
+        volumes:
+          - ./data/postgres/:/docker-entrypoint-initdb.d/
         # Set health checks to wait until postgres has started
         options:
           --health-cmd pg_isready
@@ -48,13 +48,13 @@ jobs:
       - name: "setup node"
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: ${{ matrix.node-version }}
       - name: "run the tests"
         env:
-          DATABASE_USER: ${{ matrix.database-user }}
-          DATABASE_PASSWORD: ${{ matrix.database-password }}
-          DATABASE_HOST: ${{ matrix.database-host }}
-          DATABASE_PORT: ${{ matrix.database-port }}
+          POSTGRES_HOSTNAME: ${{ matrix.database-host }}
+          POSTGRES_USER: ${{ matrix.database-user }}
+          POSTGRES_PASSWORD: ${{ matrix.database-password }}
+          POSTGRES_DB: ${{ matrix.database-name }}
         run: |
          npm i
          npm run build
