@@ -4,7 +4,7 @@ import CardButton from '../../components/CardButton'
 import CardNotification from '../../components/CardNotification'
 import NavHeader from '../../components/NavHeader'
 import NavBottom from '../../components/NavBottom'
-import Feed from '../../components/Feed'
+import Feed from '../../layouts/Feed'
 
 
 export default function ButtonFile() {
