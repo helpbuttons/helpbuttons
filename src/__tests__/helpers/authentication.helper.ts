@@ -25,31 +25,45 @@ export async function setupApplication(): Promise<AppWithClient> {
   const client = createRestAppClient(app);
   return {app, client};
 }
-export async function signup(app: HelpbuttonsBackendApp, client: Client): Promise<string> {
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function signup(app: HelpbuttonsBackendApp, client: Client, customSignupData?: any ): Promise<string> {
   
   const userRepo : UserRepository = await app.get('repositories.UserRepository');
   await userRepo.deleteAll();
 
-  const signupData = {
+  let signupData = {
     "username": "lala",
     "realm" : "lala",
     "email": "testuser2@abc.com",
     "password": "testuser2"
   };
+  signupData = {
+    ...signupData,
+    ...customSignupData,
+  };
+  
   const res = await client
   .post('/users/signup')
   .send(signupData);
   
   return res.body.id; 
 }
-export async function login(client: Client): Promise<string> {
-  const testUserCredential = {
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function login(client: Client, customUserCredential?: any): Promise<string> {
+  let userCredential = {
     email: 'testuser2@abc.com',
     password: 'testuser2',
   };
+
+  userCredential = {
+    ...userCredential,
+    ...customUserCredential,
+  };
   const res = await client
   .post('/users/login')
-  .send(testUserCredential)
+  .send(userCredential)
   return res.body.token;
   
 }
