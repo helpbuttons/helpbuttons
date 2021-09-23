@@ -8,7 +8,7 @@ const memoryDatasource = {
 const postgresDatasource = {
     "name": "db",
     "connector": "postgresql",
-    "url": "postgres://postgres:jgda7s8tds78sagda@localhost/postgres",
+    "url": "",
     "host": "postgres",
     "port": "5432",
     "user": "postgres",
