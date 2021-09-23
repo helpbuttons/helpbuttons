@@ -22,9 +22,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: "start postgis"
         run: |
-         docker-compose up -d db 
+         docker-compose -f docker-compose.tests.yml up -d db 
       - name: "run the tests"
         run: |
-         npm i
-         npm run build
-         node_modules/.bin/lb-nyc ./node_modules/.bin/mocha ./dist/__tests__/**/*.test.js
+         docker-compose -f docker-compose.tests.yml up tests 

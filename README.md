@@ -1,5 +1,10 @@
 # helpbuttons backend
 
+## run using docker-compose
+
+`$ docker-compose up`
+
+Open http://127.0.0.1:3001 in your browser.
 
 ## run with npm
 ### install dependencies
