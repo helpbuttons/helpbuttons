@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: "run the tests"
+      - name: "start postgis"
         env:
           POSTGRES_HOSTNAME: ${{ matrix.database-host }}
           POSTGRES_USER: ${{ matrix.database-user }}
@@ -40,6 +40,13 @@ jobs:
           POSTGRES_DB: ${{ matrix.database-name }}
         run: |
          docker-compose up -d postgres 
+      - name: "run the tests"
+        env:
+          POSTGRES_HOSTNAME: ${{ matrix.database-host }}
+          POSTGRES_USER: ${{ matrix.database-user }}
+          POSTGRES_PASSWORD: ${{ matrix.database-password }}
+          POSTGRES_DB: ${{ matrix.database-name }}
+        run: |
          npm i
          npm run build
          node_modules/.bin/lb-nyc ./node_modules/.bin/mocha ./dist/__tests__/**/*.test.js
