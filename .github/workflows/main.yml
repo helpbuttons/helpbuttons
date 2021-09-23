@@ -24,23 +24,6 @@ jobs:
         - 127.0.0.1
         database-port:
         - 5432
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_DB: ${{ matrix.database-name }}
-          POSTGRES_USER: ${{ matrix.database-user }}
-          POSTGRES_PASSWORD: ${{ matrix.database-password }}
-        ports:
-          - 5432:5432
-        volumes:
-          - data/postgres/:/docker-entrypoint-initdb.d/
-        # Set health checks to wait until postgres has started
-        options:
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     steps:
       - name: "checkout"
@@ -56,6 +39,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ matrix.database-password }}
           POSTGRES_DB: ${{ matrix.database-name }}
         run: |
+         docker-compose up -d postgres 
          npm i
          npm run build
          node_modules/.bin/lb-nyc ./node_modules/.bin/mocha ./dist/__tests__/**/*.test.js
