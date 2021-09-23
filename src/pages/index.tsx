@@ -11,16 +11,35 @@ import NavHeader from "../components/NavHeader"; //just for mobile
 //    Components
 import HeaderDesktop from "../layouts/HeaderDesktop";
 
-
+import { BackTestState, backTestInitial } from "../pages/BackTest/data";
 
 import ButtonDataService from "services/Buttons";
+
+
 // https://immerjs.github.io/immer/
 // Para simplificar la modificación de estructuras de datos
 // al estilo "immutable objects"
 import produce from 'immer';
 
+
 // -- estado global --
-export const store = new Store({
+
+export interface GlobalState {
+  network: {
+    id: number;
+  }
+  sumador: {
+    valor: number;
+  }
+  gente: {
+    cargando: boolean;
+    listado: object[];
+  }
+  backTest: BackTestState;
+}
+
+
+export const store = new Store<GlobalState>({
 
   network: {
     id: 0,
@@ -31,7 +50,8 @@ export const store = new Store({
   gente: {
     cargando: false,
     listado: [],
-  }
+  },
+  backTest: backTestInitial,
 
 });
 

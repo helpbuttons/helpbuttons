@@ -1,44 +1,44 @@
-///button icon over the map
-import http from "../http-common";
-import type { NextApiRequest, NextApiResponse } from 'next'
-import NetworkData from "../types/button.type"
+import { Observable } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+
+import { NetworkData } from './network.type';
 
 
-class NetworkDataService {
-  getAll() {
-    return http.get("/networks");
+export class NetworkDataService {
+
+
+  public static getAll(): Observable<NetworkData> {
+    return ajax.get(`http://localhost:3001/networks`);
   }
 
-  get(id: string) {
-    return http.get(`/networks/${id}`);
+  public static get(id: string): Observable<NetworkData> {
+    return ajax.get(`http://localhost:3001/networks/${id}`);
   }
 
-  create(data: ButtonData) {
-    return http.post("/networks", data);
+  public static create(data: NetworkData): Observable<NetworkData> {
+    return ajax.post(`http://localhost:3001/networks`,data);
   }
 
-  update(data: ButtonData, id: any) {
-    return http.put(`/networks/${id}`, data);
+  public static update(data: NetworkData, id:any): Observable<NetworkData> {
+    return ajax.put(`http://localhost:3001/networks/${id}`,data);
   }
 
-  delete(id: any) {
-    return http.delete(`/networks/${id}`);
+  public static delete(id:any): Observable<NetworkData> {
+    return ajax.delete(`http://localhost:3001/networks/${id}`);
   }
 
-  deleteAll() {
-    return http.delete(`/networks`);
+  public static deleteAll(id:any): Observable<NetworkData> {
+    return ajax.delete(`http://localhost:3001/networks`);
   }
 
-  // findByTag(tag: string) {
-  //   return http.get(`/networks?tag=${tag}`);
-  // }
+
 }
 
 //////try with next api response
 //
 // export default (req: NextApiRequest, res: NextApiResponse) => {
 //
-//   createButton: async function(id) {
+//   createnetwork: async function(id) {
 //     try {
 //         const response = await axios.post(BASE_URL+'api/networks/new', AUTH_API_CONFIG);
 //         return response.data;
@@ -48,7 +48,7 @@ class NetworkDataService {
 //     }
 //   },
 //
-//   getButton: async function(id) {
+//   getnetwork: async function(id) {
 //     try {
 //         const response = await axios.get(BASE_URL+'api/user/'+id, AUTH_API_CONFIG);
 //         return response.data;
@@ -58,7 +58,7 @@ class NetworkDataService {
 //     }
 //   },
 //
-//   getButtonList: async function(id) {
+//   getnetworkList: async function(id) {
 //     try {
 //         const response = await axios.get(BASE_URL+'api/networks', AUTH_API_CONFIG);
 //         return response.data;
@@ -68,8 +68,8 @@ class NetworkDataService {
 //     }
 //   },
         // axios.get('http://localhost:3001/networks/new').then((res) => {
-        //   res.data.map((button) => {
-        //     console.log(button.name);
+        //   res.data.map((network) => {
+        //     console.log(network.name);
         //   });
         // }).catch(() => console.log('ERRRO'));
 // }
