@@ -15,6 +15,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - run: cp env.ci .env
       - run: docker-compose up -d postgres
       - run: npm i
       - run: docker exec helpbuttons_postgres /migrations/run_all.sh reset

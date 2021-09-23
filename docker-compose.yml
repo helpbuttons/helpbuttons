@@ -3,19 +3,25 @@ services:
   hb-back:
     build: .
     ports:
-      - "8001:3000"
-    volumes:
-     - ./:/home/node/app:ro
-
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: npm run build
+    # volumes:
+      # - ./src:/home/node/app/src:ro
   postgres:
     image: postgis/postgis:13-master
     restart: always
     container_name: helpbuttons_postgres
     volumes:
-     - ../db/:/var/lib/mysql:rw
-     - ./data/postgres/:/migrations/:ro
-    environment:
-     - POSTGRES_PASSWORD=jgda7s8tds78sagda
-    ports:
-     - 5432:5432
+     - hb-db:/var/lib/mysql:rw
+     - ./data/postgres/:/docker-entrypoint-initdb.d/:ro
     command: ["postgres", "-c", "log_statement=all"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - hb-db

@@ -9,11 +9,11 @@ const postgresDatasource = {
     "name": "db",
     "connector": "postgresql",
     "url": "",
-    "host": "postgres",
+    "host": process.env.POSTGRES_HOSTNAME,
     "port": "5432",
-    "user": "postgres",
-    "password": "jgda7s8tds78sagda",
-    "database": "postgres"
+    "user": process.env.POSTGRES_USER,
+    "password": process.env.POSTGRES_PASSWORD,
+    "database": process.env.POSTGRES_DB
 };
 
 export const datasourceConfig = (process.env.NODE_ENV === 'memory') ? memoryDatasource : postgresDatasource;
