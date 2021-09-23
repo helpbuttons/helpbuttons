@@ -9,6 +9,7 @@ import {model, property, repository} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
+  HttpErrors,
   post,
   requestBody,
   SchemaObject,
@@ -168,7 +169,8 @@ export class UserController {
     })
     newUserRequest: NewUserRequest,
   ): Promise<User> {
-    
+    await this.isAlreadyTaken(newUserRequest.email);
+
     const password = await hash(newUserRequest.password, await genSalt());
     
     newUserRequest.realm = '';
@@ -187,5 +189,13 @@ export class UserController {
       await this.tagController.addTags('user',savedUser.id.toString(), newUserRequest.interests);
 
     return savedUser;
+  }
+
+  protected async isAlreadyTaken(email: string){
+    const users = await this.userRepository.find({where: {'email': email}});
+    
+    if (users && users.length > 0) {
+      throw new HttpErrors.UnprocessableEntity('Email already taken');
+    }
   }
 }
