@@ -39,10 +39,10 @@
     "start:memory:watch": "NODE_ENV=memory tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build",
-    "postgres:start": "docker-compose up -d postgres",
-    "postgres:install": "docker-compose exec postgres /migrations/run_all.sh new",
-    "postgres:reset": "docker-compose exec postgres /migrations/run_all.sh reset",
-    "postgres:term": "docker-compose exec postgres psql -U postgres"
+    "postgres:start": "docker-compose up -d db",
+    "postgres:install": "docker-compose exec db /migrations/run_all.sh new",
+    "postgres:reset": "docker-compose exec db /migrations/run_all.sh reset",
+    "postgres:term": "docker-compose exec db psql -U postgres"
   },
   "repository": {
     "type": "git",
@@ -68,6 +68,7 @@
     "@loopback/service-proxy": "^3.2.2",
     "@types/geojson": "^7946.0.8",
     "@types/multer": "^1.4.7",
+    "dotenv": "^10.0.0",
     "geojson-validation": "^1.0.2",
     "loopback-connector-postgresql": "^5.4.0",
     "multer": "^1.4.3",

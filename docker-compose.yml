@@ -3,19 +3,31 @@ services:
   hb-back:
     build: .
     ports:
-      - "8001:3000"
-    volumes:
-     - ./:/home/node/app:ro
-
-  postgres:
+      - "3001:3001"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+# if u want to develop code using docker...
+    # command: npm run start:watch
+    # volumes:
+      # - ./src:/home/node/app/src:ro
+  db:
     image: postgis/postgis:13-master
     restart: always
+    env_file:
+      - .env
     container_name: helpbuttons_postgres
     volumes:
-     - ../db/:/var/lib/mysql:rw
-     - ./data/postgres/:/migrations/:ro
-    environment:
-     - POSTGRES_PASSWORD=jgda7s8tds78sagda
-    ports:
-     - 5432:5432
+     - ./data/postgres/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    # if you want to have a persistent database.. should change this
+    #- /storage/hb-db:/var/lib/mysql:rw
     command: ["postgres", "-c", "log_statement=all"]
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
