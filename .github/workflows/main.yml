@@ -10,14 +10,35 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: github-db
+          POSTGRES_USER: github
+          POSTGRES_PASSWORD: doesntmatter
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options:
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: cp env.ci .env
-      - run: docker-compose up -d postgres
-      - run: npm i
-      # - run: docker exec helpbuttons_postgres /docker-entrypoint-initdb.d/run_all.sh reset
-      - run: npm run build
-      - run: node_modules/.bin/lb-nyc ./node_modules/.bin/mocha ./dist/__tests__/**/*.test.js
+      - env:
+          DATABASE_USER: github
+          DATABASE_PASSWORD: doesntmatter
+          DATABASE_HOST: postgres
+          DATABASE_PORT: 5432
+          POSTGRES_DB: github-db
+        run: |
+         docker-compose up -d postgres
+         npm i
+         npm run build
+         node_modules/.bin/lb-nyc ./node_modules/.bin/mocha ./dist/__tests__/**/*.test.js
