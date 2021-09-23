@@ -1,5 +1,5 @@
 #!/bin/bash
-FULLPATH=/migrations/
+FULLPATH="/docker-entrypoint-initdb.d"
 
 case "$1" in
     "reset")
@@ -7,10 +7,10 @@ case "$1" in
         psql -U postgres postgres -c "DROP table public.user,usercredentials,userextra CASCADE;"
         ;&
     "new")
-        psql -U postgres postgres < ${FULLPATH}schema.sql
+        psql -U postgres postgres < {$FULLPATH}/schema.sql
         ;&
     "migrations")
-        psql -U postgres postgres < ${FULLPATH}/migrations/0001.sql
+        psql -U postgres postgres < $FULLPATH/migrations/0001.sql
         psql -U postgres postgres < ${FULLPATH}/migrations/0002.sql
         psql -U postgres postgres < ${FULLPATH}/migrations/0003.sql
         psql -U postgres postgres < ${FULLPATH}/migrations/0004.sql
