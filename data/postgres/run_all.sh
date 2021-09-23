@@ -14,5 +14,6 @@ case "$1" in
         psql -U postgres postgres < ${FULLPATH}/migrations/0002.sql
         psql -U postgres postgres < ${FULLPATH}/migrations/0003.sql
         psql -U postgres postgres < ${FULLPATH}/migrations/0004.sql
+        psql -U postgres postgres < ${FULLPATH}/migrations/0005.sql
         ;;
 esac
