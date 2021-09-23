@@ -17,7 +17,7 @@ function Submit() {
 }
 
 
-class PopupRegister extends React.Component {
+export default class PopupRegister extends React.Component {
 
   constructor(props) {
     super(props);
