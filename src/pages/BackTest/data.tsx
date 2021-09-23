@@ -44,4 +44,3 @@ export class OpenApiLoaded implements UpdateEvent {
     });
   }
 }
-
