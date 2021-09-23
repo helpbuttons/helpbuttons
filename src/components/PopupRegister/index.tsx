@@ -77,6 +77,10 @@ export default class PopupRegister extends React.Component {
                 <input type="text" className="form__input" value={this.state.value} onChange={this.handleChange} placeholder="Escribe tu mail para participar"></input>
               </div>
 
+              <div className="form-field">
+                <input type="text" className="form__input" value={this.state.value} onChange={this.handleChange} placeholder="Escribe una contraseña"></input>
+              </div>
+
               <button className="btn-with-icon button-with-icon--offer" type="submit" value="Submit">
                 <div className="btn-filter__icon">
                   <CrossIcon />
