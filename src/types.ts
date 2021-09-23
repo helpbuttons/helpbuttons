@@ -21,7 +21,6 @@ export type FileUploaded = {
 };
 
 export type NotificatioEmail = {
-  from: string;
   to: string;
   subject: string;
   content: string;
