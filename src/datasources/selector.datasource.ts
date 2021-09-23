@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const memoryDatasource = {
     "name": "db",
     "connector": "memory",
