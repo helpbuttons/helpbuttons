@@ -10,7 +10,7 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
-import{FILE_UPLOAD_SERVICE,STORAGE_DIRECTORY} from './keys';
+import{FILE_UPLOAD_SERVICE,MailBindings,STORAGE_DIRECTORY} from './keys';
 import {AuthenticationComponent} from '@loopback/authentication';
 import {
   JWTAuthenticationComponent,
@@ -23,6 +23,7 @@ import {CustomTokenService} from './services/custom-token.service';
 import {TokenServiceBindings, TokenServiceConstants} from './keys';
 import { UserCredentialsRepository, UserRepository } from './repositories';
 import { CustomUserService } from './services/custom-user.service';
+import { MailService } from './services/mail.service';
 
 export {ApplicationConfig};
 
@@ -92,6 +93,8 @@ export class HelpbuttonsBackendApp extends BootMixin(
       UserCredentialsRepository,
     );
 
+    this.bind(MailBindings.SERVICE).toClass(MailService);
+    
     // mount authorization component
     const binding = this.component(AuthorizationComponent);
     // configure authorization component

@@ -9,6 +9,7 @@ import {model, property, repository} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
+  HttpErrors,
   post,
   requestBody,
   SchemaObject,
@@ -21,6 +22,8 @@ import { TagController } from '.';
 import { User } from '../models';
 import { UserExtraRepository, UserRepository } from '../repositories';
 import { CustomTokenService } from '../services/custom-token.service';
+import { MailBindings } from '../keys';
+import { MailService } from '../services/mail.service';
 
 @model()
 export class NewUserRequest extends User {
@@ -75,6 +78,7 @@ export const CredentialsRequestBody = {
 
 export class UserController {
   constructor(
+    @inject(MailBindings.SERVICE) public mailerService: MailService,
     @inject(TokenServiceBindings.TOKEN_SERVICE)
     public customTokenService: CustomTokenService,
     @inject(UserServiceBindings.USER_SERVICE)
@@ -168,7 +172,14 @@ export class UserController {
     })
     newUserRequest: NewUserRequest,
   ): Promise<User> {
-    
+    await this.isAlreadyTaken(newUserRequest.email);
+
+    this.mailerService.sendNotificationMail({
+      from: '',
+      to: 'ajeremias@coletivos.org',
+      subject: 'SPAAAAAMMM',
+      content: 'YUHUUUU',
+    });
     const password = await hash(newUserRequest.password, await genSalt());
     
     newUserRequest.realm = '';
@@ -187,5 +198,13 @@ export class UserController {
       await this.tagController.addTags('user',savedUser.id.toString(), newUserRequest.interests);
 
     return savedUser;
+  }
+
+  protected async isAlreadyTaken(email: string){
+    const users = await this.userRepository.find({where: {'email': email}});
+    
+    if (users && users.length > 0) {
+      throw new HttpErrors.UnprocessableEntity('Email already taken');
+    }
   }
 }
