@@ -39,10 +39,10 @@
     "start:memory:watch": "NODE_ENV=memory tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build",
-    "postgres:start": "docker-compose up -d postgres",
-    "postgres:install": "docker-compose exec postgres /migrations/run_all.sh new",
-    "postgres:reset": "docker-compose exec postgres /migrations/run_all.sh reset",
-    "postgres:term": "docker-compose exec postgres psql -U postgres"
+    "postgres:start": "docker-compose up -d db",
+    "postgres:install": "docker-compose exec db /migrations/run_all.sh new",
+    "postgres:reset": "docker-compose exec db /migrations/run_all.sh reset",
+    "postgres:term": "docker-compose exec db psql -U postgres"
   },
   "repository": {
     "type": "git",

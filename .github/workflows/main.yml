@@ -39,7 +39,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ matrix.database-password }}
           POSTGRES_DB: ${{ matrix.database-name }}
         run: |
-         docker-compose up -d postgres 
+         docker-compose up -d db 
       - name: "run the tests"
         env:
           POSTGRES_HOSTNAME: ${{ matrix.database-host }}
