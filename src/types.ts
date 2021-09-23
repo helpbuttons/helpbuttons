@@ -9,4 +9,13 @@ export interface CustomUserProfile extends UserProfile {
     email?: string;
     name?: string;
     roles?: string[];
-  }
+}
+
+export type FileUploaded = {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  filename: string;
+  size: number;
+};

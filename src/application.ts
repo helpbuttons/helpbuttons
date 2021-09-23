@@ -1,5 +1,5 @@
 import {BootMixin} from '@loopback/boot';
-import {ApplicationConfig} from '@loopback/core';
+import {ApplicationConfig, generateUniqueId} from '@loopback/core';
 import {
   RestExplorerBindings,
   RestExplorerComponent,
@@ -113,7 +113,10 @@ export class HelpbuttonsBackendApp extends BootMixin(
         destination,
         // Use the original file name as is
         filename: (req, file, cb) => {
-          cb(null, file.originalname);
+          file.filename = generateUniqueId()+file.originalname
+          cb(null, generateUniqueId()+file.filename);
+          if (req.file)
+            req.file.filename = file.filename;
         },
       }),
     };
