@@ -5,11 +5,19 @@ export default function ButtonNewLocation() {
   return (
 
     <>
-    <div classNameName="btn-new-activate__colums">
 
-        En cualquier lugar
+    <div className="btn-new-activate__colums">
+
+      <div className="card-buttons">
+
+        <div className="card-button__city card-button__everywhere " >
+          En todas partes
+        </div>
+
+      </div>
+
       <div className="btn">
-        Cambiar lugar
+          Cambiar lugar
       </div>
 
     </div>

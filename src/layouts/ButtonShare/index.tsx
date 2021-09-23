@@ -18,14 +18,14 @@ export default function ButtonShare() {
                 <button
                   type="button"
                   name="button"
-                  className="button_circle"
+                  className="btn-circle"
                 >
                 f
                 </button>
                 <button
                   type="button"
                   name="button"
-                  className="button_circle"
+                  className="btn-circle"
 
                 >
                   t
@@ -34,14 +34,14 @@ export default function ButtonShare() {
                 <button
                   type="button"
                   name="button"
-                  className="button_circle"
+                  className="btn-circle"
 
                 >
                   w
                 </button>
               </div>
               <button
-                className="button-with-icon"
+                className="btn-with-icon"
                 type="button"
                 name="button"
 
@@ -49,7 +49,7 @@ export default function ButtonShare() {
                 Copiar enlace
               </button>
               <button
-                className="button-with-icon"
+                className="btn-with-icon"
                 type="button"
                 name="button"
 
@@ -60,7 +60,7 @@ export default function ButtonShare() {
         </div>
         <div className="popup__options-v">
             <button
-              className="popup__options-btn button-menu-white"
+              className="popup__options-btn btn-menu-white"
               type="button"
               name="button"
             >

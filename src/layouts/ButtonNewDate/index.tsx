@@ -8,9 +8,17 @@ export default function ButtonNewDate() {
   return (
 
     <>
-    <div classNameName="btn-new-activate__colums">
+    <div className="btn-new-activate__colums">
 
-        Ahora
+
+      <div className="card-buttons">
+
+        <div className="card-button__date">
+            Ahora
+        </div>
+
+      </div>
+
       <div className="btn">
         Cambiar fecha
       </div>
@@ -29,14 +37,14 @@ export default function ButtonNewDate() {
           <div className="picker__option-btn--icon">
           </div>
           <div className="picker__option-btn--txt">
-            Ahora
+            En una fecha Concreta
           </div>
       </button>
       <button  className="picker__option-btn--active" type="button" name="button">
           <div className="picker__option-btn--icon">
           </div>
           <div className="picker__option-btn--txt">
-            Ahora
+            Fecha periódica
           </div>
       </button>
     </div>

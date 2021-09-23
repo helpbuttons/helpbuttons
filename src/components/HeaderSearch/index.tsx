@@ -41,7 +41,7 @@ export default function HeaderDesktop() {
 
         <div className="header-search__tool">
 
-          <form className="header-search__form" onsubmit="return false;">
+          <form className="header-search__form" >
 
             <div className="header-search__column">
 
@@ -71,7 +71,7 @@ export default function HeaderDesktop() {
       </div>
 
       <Filters />
-    
+
     </>
   );
 }

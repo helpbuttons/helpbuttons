@@ -23,7 +23,7 @@ function NavBottom(){
             </div>
         </a>
 
-        <a href="http://127.0.0.1:3000/ProfileEdition" className="nav-bottom__link nav-bottom__link--active">
+        <a href="http://127.0.0.1:3000/Config" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
                 <CrossIcon />
             </div>

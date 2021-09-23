@@ -106,48 +106,55 @@ export default class AddButton extends Component<Props, State> {
     const { submitted, title, description } = this.state;
 
     return (
-      <div className="submit-form">
-        {submitted ? (
-          <div>
-            <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newButton}>
-              Add
-            </button>
-          </div>
-        ) : (
-          <div>
-            <div className="form-group">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
-                className="form-control"
-                id="title"
-                required
-                value={title}
-                onChange={this.onChangeTitle}
-                name="title"
-              />
-            </div>
+      <>
+        
+        <ButtonNewDate />
+        <ButtonNewLocation />
 
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
-              <input
-                type="text"
-                className="form-control"
-                id="description"
-                required
-                value={description}
-                onChange={this.onChangeDescription}
-                name="description"
-              />
+        <div className="submit-form">
+          {submitted ? (
+            <div>
+              <h4>You submitted successfully!</h4>
+              <button className="btn btn-success" onClick={this.newButton}>
+                Add
+              </button>
             </div>
+          ) : (
+            <div>
+              <div className="form-group">
+                <label htmlFor="title">Title</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="title"
+                  required
+                  value={title}
+                  onChange={this.onChangeTitle}
+                  name="title"
+                />
+              </div>
 
-            <button onClick={this.saveButton} className="btn btn-success">
-              Submit
-            </button>
-          </div>
-        )}
-      </div>
+              <div className="form-group">
+                <label htmlFor="description">Description</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="description"
+                  required
+                  value={description}
+                  onChange={this.onChangeDescription}
+                  name="description"
+                />
+              </div>
+
+              <button onClick={this.saveButton} className="btn btn-success">
+                Submit
+              </button>
+            </div>
+          )}
+        </div>
+
+      </>
 
     );
   }

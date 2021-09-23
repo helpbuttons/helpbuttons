@@ -14,7 +14,7 @@ export default function ButtonFile() {
     <>
         <NavHeader />
 
-        <div className="button-file__center">
+        <div className="button-file__container">
 
           <div className="button-file__card-section">
 
@@ -35,7 +35,7 @@ export default function ButtonFile() {
 
             <div className="button-file__action-section--field">
 
-              <form className="chats__new-message" onsubmit="">
+              <form className="chats__new-message" >
 
                   <button className="btn-circle">
                     <div className="btn-circle__content">

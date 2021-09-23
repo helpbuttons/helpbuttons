@@ -119,12 +119,19 @@ body {
 .popup__content {
 
   width: 100%;
-  height: 100%;
-
-  border-radius: 0px 0px $border-radius-semicircle $border-radius-semicircle;//REVISE
+  height: 100vh;
+  margin-bottom: $footer-height-mobile;
+  border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;//REVISE
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+}
+
+.popup__section {
+
+  padding: 1rem 1rem;
+
 }
 
 .popup__img {
@@ -132,7 +139,9 @@ body {
   height: $popup__img-height;
   overflow: hidden;
   display: flex;
-
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 
   svg {
     width: 100%;
@@ -160,6 +169,7 @@ body {
 }
 
 .popup__close-overlay {
+
   height: 100vh;
   position: fixed;
   top: 0;
@@ -168,6 +178,7 @@ body {
   border: none;
   background: none;
   padding: 0;
+
 }
 
 .popup__comments,
@@ -177,18 +188,23 @@ body {
 }
 
 .popup__comments {
+
   padding: $popup-comments;
   overflow-y: auto;
   max-height: 300px;
+
 }
 
 .popups__comments-item {
+
   background: $color-ligth-gray;
   margin: 8px 0;
   padding: 25px 0;
+
 }
 
 .popup__options-btn {
+
   display: inline-block;
   background: $color-white;
   height: $popup-options-height;
@@ -227,13 +243,17 @@ body {
 
 //Revise:
 .popup__options-medium {
+
   width: 240px;
   margin: 0 auto;
+
 }
 
 
 .popup__options-btn--icon {
+
   height: 20px;
+
 }
 
 .popup__options-title {
@@ -249,16 +269,20 @@ body {
 
 }
 
-//REVISE
-.popup__section {
-
-  padding: 1rem 1rem;
-
-}
 
 .popup__options-v {
 
   flex-flow: column nowrap;
+
+  .popup__options-btn {
+
+    flex: 0 1 50%;
+
+    &:last-child {
+      border-radius: 0 0 25px 25px;
+    }
+
+  }
 
 }
 
@@ -273,11 +297,11 @@ body {
     flex: 0 1 50%;
 
     &:first-child {
-      border-radius: 0px 0px 0px 25px;
+      border-radius: 0 0 0 25px;
     }
 
     &:last-child {
-      border-radius: 0px 0px 25px 0px;
+      border-radius: 0 0 25px 0;
     }
 
   }
@@ -304,13 +328,12 @@ body {
     justify-content: center;
     background: transparent;
 
-    min-height: 608px;
-
     //width: auto;//Esto es para movil, pero derrepente podriamos agregar un max-width
   }
 
   .popup__header,
   .popup__content {
+
     background: $color-white;
     display: flex;
     flex-direction: column;
@@ -322,7 +345,6 @@ body {
   }
 
   .popup__content {
-    min-height: 502px;
     height: auto;
   }
 
@@ -342,7 +364,7 @@ body {
   .popup__options-v {
     flex-flow: column nowrap;
     &:last-child {//REVISE
-      border-radius: 0px 0px 25px 25px;//REVISE
+      border-radius: 0 0 25px 25px;//REVISE
     }
   }
 }

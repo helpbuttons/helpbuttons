@@ -13,7 +13,7 @@ export default function CardButton() {
 
              <div className="card-button__nets">
 
-               <img src='https://help-buttons-staging.s3.eu-west-3.amazonaws.com/statics/assets/categories/{{net.imgUrl}}.png' alt="" className="card-avatar card-button__net-icon"></img>
+               <img src='' alt="" className="card-avatar card-button__net-icon"></img>
 
              </div>
 

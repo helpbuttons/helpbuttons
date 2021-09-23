@@ -1,10 +1,10 @@
-//QUESTIONS AND INFO
+//All the edition posibilities menus and accordion, including neet preferences etc
 import NavHeader from '../../components/NavHeader'
 import NavBottom from '../../components/NavBottom'
 import CardDirectory from '../../components/CardDirectory'
 import Accordion from '../../elements/Accordion'
 
-export default function Faqs() {
+export default function Config() {
 
   return (
 
@@ -12,16 +12,13 @@ export default function Faqs() {
 
       <NavHeader />
 
-      <div className="faqs__content">
+      <div className="config__content">
 
-        <h2 className="title__h3 faqs__title">Faqs</h2>
-
+        <h2 className="title__h3 config__title">Config</h2>
 
         <CardDirectory />
-
-
-
         <Accordion />
+        
         <Accordion />
 
       </div>
