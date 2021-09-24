@@ -34,10 +34,12 @@ export class MailService {
         subject: notificationEmail.subject,
         text: notificationEmail.content,
         html: "<b>" + notificationEmail.content + "</b>",
-      }).then((info) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      }).then((info: any) => {
         console.log("email sent! to %s subject %s", notificationEmail.to, notificationEmail.subject);
         return info;
-      }).catch((err) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      }).catch((err: any) => {
         console.log(err);
         console.log('failed to send email!!');
       });
