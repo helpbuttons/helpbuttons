@@ -122,7 +122,7 @@ export class UserController {
 
     const userProfile = this.userService.convertToUserProfile(user);
 
-    if (!user.emailVerified1) {
+    if (!user.emailVerified) {
       throw new HttpErrors.Unauthorized('Please activate your account using the link provided by mail');
     }
     // create a JSON Web Token based on the user profile
