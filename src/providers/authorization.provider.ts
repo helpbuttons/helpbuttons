@@ -17,7 +17,6 @@ export class AuthorizationProvider implements Provider<Authorizer> {
     metadata: AuthorizationMetadata,
   ) {
     return AuthorizationDecision.ABSTAIN;
-    // console.log(metadata);
     // let RBAC_PERMISSIONS = [{
     //   'name': 'ButtonController.prototype.create',
     //   'arg': '0',
@@ -26,15 +25,11 @@ export class AuthorizationProvider implements Provider<Authorizer> {
     // }];
     // let resourceId = context.invocationContext.args[0];
     // let methodName = context.invocationContext.methodName;
-    // console.log(context.invocationContext.targetName)
     // // let resourceName = context.invocationContext.
 
     // let perms = RBAC_PERMISSIONS.find((permission) => {
     //   return (permission.name == context.invocationContext.targetName);
     // });
-
-    // console.log(perms);
-
     // let decidedToAllow = false;
     // if (metadata.allowedRoles) {
     //   if (metadata.allowedRoles.indexOf('guest') > -1) {
@@ -51,7 +46,6 @@ export class AuthorizationProvider implements Provider<Authorizer> {
     // }
 
     // if (decidedToAllow) {
-    //   console.log('ALLOOWWING 2 ')
     //   // return AuthorizationDecision.ALLOW;
     // }
     // // return AuthorizationDecision.DENY;

@@ -10,7 +10,6 @@ export async function onlyAdmin(
     authorizationCtx: AuthorizationContext,
     metadata: AuthorizationMetadata,
 ) {
-    console.log(authorizationCtx);
     let currentUser: UserProfile;
     if (authorizationCtx.principals.length > 0) {
         const user = _.pick(authorizationCtx.principals[0], [
@@ -54,17 +53,13 @@ export async function onlyAdmin(
     //   ]);
     //   currentUser = { [securityId]: user.id, name: user.name, roles: user.roles };
     // } else {
-    //   console.log('DENYIING 1');
     //     return AuthorizationDecision.DENY;
     // }
   
     // if (currentUser.roles && currentUser.roles.length > 0 && currentUser.roles.indexOf('admin') !== -1) {
-    //   console.log('ALLOW ADMIN!! 1 ')
     //   console.log(currentUser.roles)
     //     return AuthorizationDecision.ALLOW;
     // }
-
-    // console.log('DENYIING 2');
     // return AuthorizationDecision.DENY;
   }
 

@@ -1,5 +1,6 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
+import { logger } from '../logger';
 import {datasourceConfig} from './selector.datasource';
 // Observe application's life cycle to disconnect the datasource when
 // application is stopped. This allows the application to be shut down
@@ -15,7 +16,8 @@ export class DbDataSource extends juggler.DataSource
     @inject('datasources.datasourceConfig.db', {optional: true})
     dsConfig: object = datasourceConfig,
   ) {
-    console.log('Starting: ' + datasourceConfig.connector);
+    logger.info('Starting: ' + datasourceConfig.connector);
+    
     super(dsConfig);
   }
 }

@@ -1,4 +1,5 @@
 
+import { logger } from "../logger";
 import { NotificatioEmail } from "../types";
 require('dotenv').config()
 
@@ -36,12 +37,12 @@ export class MailService {
         html: "<b>" + notificationEmail.content + "</b>",
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }).then((info: any) => {
-        console.log("email sent! to %s subject %s", notificationEmail.to, notificationEmail.subject);
+        logger.info("email sent! to %s subject %s", notificationEmail.to, notificationEmail.subject);
         return info;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }).catch((err: any) => {
-        console.log(err);
-        console.log('failed to send email!!');
+        logger.error(err);
+        logger.warn('failed to send email!');
       });
     }
     return Promise.resolve({});
