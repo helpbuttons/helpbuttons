@@ -221,8 +221,9 @@ export class UserController {
   ): Promise<string> {
     const user = await this.userRepository.findOne({ where: { 'verificationToken': verificationToken } });
     if (user) {
-      this.userRepository.updateById(user.id, { emailVerified: true });
-      return "ok";
+      return this.userRepository.updateById(user.id, { emailVerified: true }).then(() => {
+        return "ok";
+      });
     }
     return "fail";
   }
