@@ -22,8 +22,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: "eslint"
         run: |
+         yarn
          yarn eslint
-         node_modules/.bin/lb-eslint --report-unused-disable-directives .
   tests:
     runs-on: ubuntu-latest
     steps:
