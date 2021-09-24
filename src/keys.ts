@@ -15,6 +15,7 @@ export const STORAGE_DIRECTORY = BindingKey.create<string>('storage.directory');
 
 
 import {TokenService} from '@loopback/authentication';
+import { MailService } from './services/mail.service';
 
 export namespace TokenServiceConstants {
   export const TOKEN_SECRET_VALUE = 'myjwts3cr3t';
@@ -30,6 +31,10 @@ export namespace TokenServiceBindings {
   export const TOKEN_SERVICE = BindingKey.create<TokenService>(
     'services.authentication.jwt.tokenservice',
   );
+}
+
+export namespace MailBindings {
+  export const SERVICE = BindingKey.create<MailService>('mail.services');
 }
 
 // export namespace UserServiceBindings {

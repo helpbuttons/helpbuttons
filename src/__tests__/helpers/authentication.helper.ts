@@ -47,6 +47,9 @@ export async function signup(app: HelpbuttonsBackendApp, client: Client, customS
   .post('/users/signup')
   .send(signupData);
   
+  // activate account
+  await client.get(res.body.verificationToken);
+
   return res.body.id; 
 }
 
@@ -64,6 +67,7 @@ export async function login(client: Client, customUserCredential?: any): Promise
   const res = await client
   .post('/users/login')
   .send(userCredential)
+  
   return res.body.token;
   
 }

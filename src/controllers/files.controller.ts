@@ -19,7 +19,6 @@ import { FILE_UPLOAD_SERVICE, STORAGE_DIRECTORY } from '../keys';
 import {FileRepository} from '../repositories';
 import { getFilesAndFields } from '../services/file-upload.service';
 import { FileUploadHandler } from '../types';
-import {File} from '../models';
 
 @authenticate('jwt')
 export class FilesController {

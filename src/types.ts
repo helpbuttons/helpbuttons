@@ -1,14 +1,14 @@
-import {RequestHandler} from 'express-serve-static-core';
+import { RequestHandler } from 'express-serve-static-core';
 import { UserProfile } from '@loopback/security'
 
 export type FileUploadHandler = RequestHandler;
 
 export interface CustomUserProfile extends UserProfile {
-    // `email` and `name` are added to be identical with the
-    // `UserProfile` that previously was exported by `@loopback/authentication`
-    email?: string;
-    name?: string;
-    roles?: string[];
+  // `email` and `name` are added to be identical with the
+  // `UserProfile` that previously was exported by `@loopback/authentication`
+  email?: string;
+  name?: string;
+  roles?: string[];
 }
 
 export type FileUploaded = {
@@ -18,4 +18,10 @@ export type FileUploaded = {
   mimetype: string;
   filename: string;
   size: number;
+};
+
+export type NotificatioEmail = {
+  to: string;
+  subject: string;
+  content: string;
 };

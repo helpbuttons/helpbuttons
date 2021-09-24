@@ -302,7 +302,7 @@ CREATE TABLE public."user" (
     username text NOT NULL,
     email text NOT NULL,
     description text,
-    emailverified boolean,
+    emailverified boolean default false,
     verificationtoken text,
     roles text DEFAULT '["guest"]'::text
 );
@@ -378,97 +378,6 @@ ALTER TABLE ONLY public.templatebutton ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 ALTER TABLE ONLY public.templatebuttonnetwork ALTER COLUMN id SET DEFAULT nextval('public.templatebuttonnetwork_id_seq'::regclass);
-
-
---
--- Data for Name: button; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.button (id, name, type, tags, description, geoplace, templatebuttonid, created, modified, owner) FROM stdin;
-\.
-
-
---
--- Data for Name: buttonsnetwork; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.buttonsnetwork (id, networkid, buttonid, created, modified) FROM stdin;
-\.
-
-
---
--- Data for Name: file; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.file (id, filename, originalname, encoding, mimetype, size, url, created, modified) FROM stdin;
-\.
-
-
---
--- Data for Name: network; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.network (name, id, url, avatar, description, privacy, place, geoplace, radius, tags, friendnetworks, created, modified, owner) FROM stdin;
-\.
-
-
---
--- Data for Name: role; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.role (id, name, description, created, modified) FROM stdin;
-\.
-
-
---
--- Data for Name: tag; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tag (id, modelname, modelid, created, modified) FROM stdin;
-\.
-
-
---
--- Data for Name: templatebutton; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.templatebutton (id, name, type, fields, created, modified, owner) FROM stdin;
-\.
-
-
---
--- Data for Name: templatebuttonnetwork; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.templatebuttonnetwork (id, networkid, templatebuttonid, created, modified) FROM stdin;
-\.
-
-
---
--- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public."user" (id, realm, username, email, description, emailverified, verificationtoken, roles) FROM stdin;
-c99c5e92-5db0-4867-9bea-8b3a26aa55f4		user@example.com	user@example.com	\N	\N	\N	["registered"]
-\.
-
-
---
--- Data for Name: usercredentials; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.usercredentials (id, password, userid, description) FROM stdin;
-16510533-046a-4442-9f02-8190dc246399	$2a$10$MoZhUxgGYP5sjT2aF4LQMeUJjo6xN1dEQg0w7C65NenOkcqFRc03G	c99c5e92-5db0-4867-9bea-8b3a26aa55f4	\N
-\.
-
-
---
--- Data for Name: userextra; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.userextra (id, interests, created, modified) FROM stdin;
-c99c5e92-5db0-4867-9bea-8b3a26aa55f4	\N	2021-09-23 16:22:05.318	2021-09-23 16:22:05.318
-\.
 
 
 --
