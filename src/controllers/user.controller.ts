@@ -209,7 +209,7 @@ export class UserController {
     });
     
     //TODO this should not be sent in here.. is only for testing...
-    savedUser.verificationToken =  activationUrl;
+    savedUser.verificationToken =  '/users/activate/' + savedUser.verificationToken;
     return savedUser;
   }
 
