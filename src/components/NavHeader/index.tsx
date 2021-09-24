@@ -23,6 +23,8 @@ export default class NavHeader extends React.Component {
 
     }
 
+
+
   hideComponent(name) {
       console.log(name);
       switch (name) {

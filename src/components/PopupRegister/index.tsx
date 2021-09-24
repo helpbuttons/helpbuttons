@@ -1,14 +1,17 @@
 //Form component with the main fields for register in the platform
 import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
 import { UserService } from '../../services/Users';
+import { map } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
 import { Component, ChangeEvent } from "react";
 import * as React from "react";
 import { useEffect } from 'react';
 import { useRef } from '../../store/Store';
-import { LoadOpenApi } from './data';
+import { getValueFromInputEvent } from './data';
+import { User } from '../../services/Users/user.type';
+import NavHeader from '../../components/NavHeader';
+import dynamic from 'next/dynamic'
 
-
-import NavHeader from '../../components/NavHeader'
 
 function Submit() {
 
@@ -16,19 +19,64 @@ function Submit() {
 
 }
 
+let userModel: User = {};
+
+let buttonElement: HTMLButtonElement;
+let emailInput: HTMLInputElement;
+let passwordInput: HTMLInputElement;
+
+let emailChange$: Observable<InputEvent>;
+let passwordChange$: Observable<InputEvent>;
+let submit$: Observable<MouseEvent>;
 
 export default class PopupRegister extends React.Component {
 
+
   constructor(props) {
+
     super(props);
     this.state = {value: ''};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    buttonElement = document.getElementById("submit") as HTMLButtonElement;
+    emailInput = document.getElementById("email") as HTMLInputElement;
+    passwordInput = document.getElementById("password") as HTMLInputElement;
+
+    emailChange$ = fromEvent<InputEvent>(emailInput, "input");
+    passwordChange$ = fromEvent<InputEvent>(passwordInput, "input");
+    submit$ = fromEvent<MouseEvent>(buttonElement, "click");
+
   }
+
+
 
   handleChange(event) {
     this.setState({value: event.target.value});
+
+    emailChange$
+      .pipe(map((event: InputEvent) => (event.target as HTMLInputElement).value))
+      .subscribe(email => {
+        console.log("email Value: ", email);
+        userModel.email = email;
+      });
+
+    passwordChange$
+      .pipe(map((event: InputEvent) => (event.target as HTMLInputElement).value))
+      .subscribe(password => {
+        console.log("password Value:", password);
+        userModel.password = password;
+      });
+
+    emailChange$.pipe(getValueFromInputEvent).subscribe(email => {
+      console.log("email Value: ", email);
+      userModel.email = email;
+      });
+
+    submit$
+    .pipe(tap((event: MouseEvent) => console.log(event)))
+    .subscribe(() => console.log("Sending User", { userModel }));
   }
 
   handleSubmit(event) {
@@ -74,14 +122,14 @@ export default class PopupRegister extends React.Component {
             <form className="popup__section" onSubmit={this.handleSubmit}>
 
               <div className="form-field">
-                <input type="text" className="form__input" value={this.state.value} onChange={this.handleChange} placeholder="Escribe tu mail para participar"></input>
+                <input type="text" id="email" className="form__input" value={this.state.value} onChange={this.handleChange} placeholder="Escribe tu mail para participar"></input>
               </div>
 
               <div className="form-field">
-                <input type="text" className="form__input" value={this.state.value} onChange={this.handleChange} placeholder="Escribe una contraseña"></input>
+                <input type="text"  id="password" className="form__input" value={this.state.value} onChange={this.handleChange} placeholder="Escribe una contraseña"></input>
               </div>
 
-              <button className="btn-with-icon button-with-icon--offer" type="submit" value="Submit">
+              <button className="btn-with-icon button-with-icon--offer" id="submit" type="submit" value="Submit">
                 <div className="btn-filter__icon">
                   <CrossIcon />
                 </div>

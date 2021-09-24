@@ -8,23 +8,36 @@ import { User } from '../../services/Users/types';
 
 export interface UserSignupState {
   email: string;
+  password: string;
   user: User;
 }
 
 
 export const signupInitial = {
   email: "(empty)",
+  password: "1234",
   user: null,
 }
 
+export function getValueFromInputEvent(event: Observable<InputEvent>): Observable<string> {
 
-export class RegisterUser implements WatchEvent {
+  return event.pipe(
+    tap(event => console.log("event.target", event.target)),
+    map((event: InputEvent) => (event.target as HTMLInputElement).value)
+  );
 
-  public watch() {
-    return UserService.signup()
-    )
-  }
 }
+
+// export class RegisterUser implements WatchEvent {
+//
+//   public watch() {
+//
+//
+//     return UserService.signup()
+//
+//     )
+//   }
+// }
 
 
 export class UserRegistered implements UpdateEvent {
