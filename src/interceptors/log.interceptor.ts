@@ -38,15 +38,9 @@ export class LogInterceptor implements Provider<Interceptor> {
     invocationCtx: InvocationContext,
     next: () => ValueOrPromise<InvocationResult>,
   ) {
-    try {
       logger.info(invocationCtx.targetName);
-      // Add pre-invocation logic here
+    
       const result = await next();
-      // Add post-invocation logic here
       return result;
-    } catch (err) {
-      // Add error handling logic here
-      throw err;
-    }
   }
 }
