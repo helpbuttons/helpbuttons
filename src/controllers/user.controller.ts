@@ -25,8 +25,9 @@ import { TagController } from '.';
 import { User } from '../models';
 import { UserExtraRepository, UserRepository } from '../repositories';
 import { CustomTokenService } from '../services/custom-token.service';
-import { MailBindings } from '../keys';
+import { MailBindings, URI } from '../keys';
 import { MailService } from '../services/mail.service';
+import { logger } from '../logger';
 
 @model()
 export class NewUserRequest extends User {
@@ -198,8 +199,9 @@ export class UserController {
 
     if (newUserRequest.interests)
       await this.tagController.addTags('user', savedUser.id.toString(), newUserRequest.interests);
-
-    const activationUrl: string = process.env.BACKEND_URI + '/users/activate/' + savedUser.verificationToken;
+    
+    logger.info(URI);
+    const activationUrl: string = URI + 'users/activate/' + savedUser.verificationToken;
     await this.mailerService.sendNotificationMail({
       to: savedUser.email,
       subject: 'Please verify ur account',
@@ -207,7 +209,7 @@ export class UserController {
     });
     
     //TODO this should not be sent in here.. is only for testing...
-    savedUser.verificationToken =  '/users/activate/' + savedUser.verificationToken;
+    savedUser.verificationToken =  activationUrl;
     return savedUser;
   }
 
