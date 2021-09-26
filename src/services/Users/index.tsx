@@ -1,10 +1,13 @@
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-
+import config from 'config';
+import { authHeader, handleResponse } from '../helpers';
 import { UserData } from './user.type';
-
 import { OpenApi } from './types';
 
+export const userService = {
+    getAll
+};
 
 export class UserDataService {
 
@@ -38,4 +41,15 @@ export class UserDataService {
   }
 
 
+}
+
+
+
+export const userService = {
+    getAll
+};
+
+function getAll() {
+    const requestOptions = { method: 'GET', headers: authHeader() };
+    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
 }

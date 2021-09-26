@@ -6,12 +6,20 @@ import Filters from "../Filters";
 import FiltersMobile from "../FiltersMobile"; //just for mobile
 
 
+
 export default class NavHeader extends React.Component {
+
+
 
   constructor() {
       super();
       this.state = {
         name: "React",
+        tag: '',
+        search: "",
+        setSearch: "",
+        results: "",
+        setResults: "",
         showHideFilters: true,
         showHideFiltersMobile: false,
         showHideExtraFilters: false,

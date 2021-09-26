@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { fromEvent } from 'rxjs';
 import { Component, ChangeEvent } from "react";
 import * as React from "react";
+import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
 import { useRef } from '../../store/Store';
 import { getValueFromInputEvent } from './data';
@@ -12,6 +13,8 @@ import { User } from '../../services/Users/user.type';
 import NavHeader from '../../components/NavHeader';
 import dynamic from 'next/dynamic'
 
+
+GLOBAL.document = new JSDOM(html).window.document;
 
 function Submit() {
 
@@ -35,7 +38,7 @@ export default class PopupRegister extends React.Component {
   constructor(props) {
 
     super(props);
-    this.state = {value: ''};
+    this.state = {value: '', user: userModel};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,11 +51,12 @@ export default class PopupRegister extends React.Component {
     passwordChange$ = fromEvent<InputEvent>(passwordInput, "input");
     submit$ = fromEvent<MouseEvent>(buttonElement, "click");
 
+
   }
 
 
-
   handleChange(event) {
+
     this.setState({value: event.target.value});
 
     emailChange$
@@ -60,23 +64,23 @@ export default class PopupRegister extends React.Component {
       .subscribe(email => {
         console.log("email Value: ", email);
         userModel.email = email;
-      });
+      })
+      .unsuscribe();
 
     passwordChange$
       .pipe(map((event: InputEvent) => (event.target as HTMLInputElement).value))
       .subscribe(password => {
         console.log("password Value:", password);
         userModel.password = password;
-      });
+      })
+      .unsuscribe();
 
-    emailChange$.pipe(getValueFromInputEvent).subscribe(email => {
-      console.log("email Value: ", email);
-      userModel.email = email;
-      });
 
     submit$
     .pipe(tap((event: MouseEvent) => console.log(event)))
-    .subscribe(() => console.log("Sending User", { userModel }));
+    .subscribe(() => console.log("Sending User", { userModel }))
+    .unsuscribe();
+
   }
 
   handleSubmit(event) {
@@ -129,7 +133,7 @@ export default class PopupRegister extends React.Component {
                 <input type="text"  id="password" className="form__input" value={this.state.value} onChange={this.handleChange} placeholder="Escribe una contraseña"></input>
               </div>
 
-              <button className="btn-with-icon button-with-icon--offer" id="submit" type="submit" value="Submit">
+              <button className="btn-with-icon button-with-icon--offer" id="submit" type="submit" value="Submit" onSubmit={this.handleChange}>
                 <div className="btn-filter__icon">
                   <CrossIcon />
                 </div>
