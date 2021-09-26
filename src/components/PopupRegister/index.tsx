@@ -1,11 +1,11 @@
 //Form component with the main fields for register in the platform
 import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
-
+import { useEffect } from 'react';
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-import { authenticationService } from '../../services/AuthenticationService';
+import { authenticationService } from '../../services/authentication.service.ts';
 
 class PopupRegister extends React.Component {
     constructor(props) {
@@ -15,6 +15,7 @@ class PopupRegister extends React.Component {
         if (authenticationService.currentUserValue) {
             this.props.history.push('/');
         }
+
     }
 
     render() {

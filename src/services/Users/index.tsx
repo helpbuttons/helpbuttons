@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import config from 'config';
 import { authHeader, handleResponse } from '../helpers';
 import { UserData } from './user.type';
 import { OpenApi } from './types';

@@ -1,9 +1,15 @@
 import { BehaviorSubject } from 'rxjs';
+import { handleResponse } from '../helpers/handleResponse.tsx';
 
-import config from 'config';
-import { handleResponse } from '../helpers';
+export const currentUserSubject = new BehaviorSubject('');
 
-const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+export function giveCurrentUserValue () {
+
+  useEffect(() => {
+      authenticationService.currentUserSubject = JSON.parse(localStorage.getItem('currentUser'))
+  },[])
+
+};
 
 export const authenticationService = {
     login,
@@ -19,7 +25,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return fetch(`http://localhost:3001/users/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes

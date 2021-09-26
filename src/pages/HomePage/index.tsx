@@ -1,6 +1,6 @@
 import React from 'react';
 import { userService } from '../../services/Users';
-import { authenticationService } from '../../services/AuthenticationService';
+import { authenticationService } from '../../services/authentication.service.ts';
 
 class HomePage extends React.Component {
     constructor(props) {

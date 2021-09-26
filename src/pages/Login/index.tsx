@@ -1,11 +1,12 @@
 //
 import React from 'react';
+import { useEffect } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-import { authenticationService } from '../../services/AuthenticationService';
+import { authenticationService } from '../../services/authentication.service.ts';
 
-class LoginPage extends React.Component {
+class Login extends React.Component {
     constructor(props) {
         super(props);
 
@@ -13,7 +14,9 @@ class LoginPage extends React.Component {
         if (authenticationService.currentUserValue) {
             this.props.history.push('/');
         }
+
     }
+
 
     render() {
         return (
@@ -75,4 +78,4 @@ class LoginPage extends React.Component {
     }
 }
 
-export { LoginPage };
+export default Login;

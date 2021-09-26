@@ -4,8 +4,8 @@ import { Router, Route, Link } from 'react-router-dom';
 import { history } from '../helpers';
 import { authenticationService } from '../../services';
 import { PrivateRoute } from '../components';
-import { HomePage } from '@/HomePage';
-import { LoginPage } from '@/LoginPage';
+import { HomePage } from '../pages/HomePage';
+import { Login } from '../pages/Login';
 
 class App extends React.Component {
     constructor(props) {
@@ -43,7 +43,7 @@ class App extends React.Component {
                             <div className="row">
                                 <div className="col-md-6 offset-md-3">
                                     <PrivateRoute exact path="/" component={HomePage} />
-                                    <Route path="/login" component={LoginPage} />
+                                    <Route path="/login" component={Login} />
                                 </div>
                             </div>
                         </div>

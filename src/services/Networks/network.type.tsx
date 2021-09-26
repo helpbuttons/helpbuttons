@@ -1,4 +1,4 @@
-export interface NetworkData {
+export interface INetwork {
   //required data
   name: string,
   url: string,
