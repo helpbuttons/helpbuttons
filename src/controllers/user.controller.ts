@@ -12,15 +12,7 @@ import {
   get,
   getModelSchemaRef,
   HttpErrors,
-<<<<<<< HEAD
-=======
   param,
->>>>>>> develop
-  param,
-<<<<<<< HEAD
-=======
-  param,
->>>>>>> develop
   post,
   requestBody,
   SchemaObject,
@@ -220,7 +212,6 @@ export class UserController {
     savedUser.verificationToken =  '/users/activate/' + savedUser.verificationToken;
     return savedUser;
   }
-
   @get('/users/activate/{verificationToken}', {
     responses: {
       '200': {},
