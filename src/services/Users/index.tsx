@@ -12,7 +12,7 @@ export class UserDataService {
 
 
   public static getAll(): Observable<UserData> {
-    return ajax.get(`http://localhost:3001/users`);
+    return ajax.get(`http://localhost:3001/api/users`);
   }
 
   public static get(id: string): Observable<UserData> {
