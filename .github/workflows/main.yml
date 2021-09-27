@@ -19,7 +19,7 @@ jobs:
       - name: "setup node"
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 12
       - name: "eslint"
         run: |
          yarn
@@ -35,7 +35,7 @@ jobs:
       - name: "setup node"
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 12
       - name: "start postgis"
         run: |
          docker-compose up -d db 
