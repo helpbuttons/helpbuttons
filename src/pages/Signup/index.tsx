@@ -1,13 +1,16 @@
-//Form component with the main fields for register in the platform
-import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
-import { useEffect } from 'react';
+//
+//Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
+import NavHeader from '../../components/NavHeader'
+import NavBottom from '../../components/NavBottom'
 import React from 'react';
+import { useEffect } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 import { authenticationService } from '../../services/authentication.service.ts';
+import { UserDataService } from '../../services/Users';
 
-class PopupSignup extends React.Component {
+class Signup extends React.Component {
     constructor(props) {
         super(props);
 
@@ -17,6 +20,7 @@ class PopupSignup extends React.Component {
         }
 
     }
+
 
     render() {
         return (
@@ -37,7 +41,7 @@ class PopupSignup extends React.Component {
                     })}
                     onSubmit={({ username, password }, { setStatus, setSubmitting }) => {
                         setStatus();
-                        authenticationService.login(username, password)
+                        UserDataService.signup(username, password)
                             .then(
                                 user => {
                                     const { from } = this.props.location.state || { from: { pathname: "/" } };
@@ -45,7 +49,6 @@ class PopupSignup extends React.Component {
                                 },
                                 error => {
                                     setSubmitting(false);
-                                    setStatus(error);
                                 }
                             );
                     }}
@@ -73,72 +76,9 @@ class PopupSignup extends React.Component {
                         </Form>
                     )}
                 />
-
-            <div className="popup">
-              <div className="popup__header">
-                <header className="popup__header-content">
-                  <div className="popup__header-left">
-                    <button className="popup__header-button">
-                      <div className="btn-circle__icon">
-                        <CrossIcon />
-                      </div>
-                    </button>
-                  </div>
-                  <div className="popup__header-center">
-                    <h1 className="popup__header-title">
-                      Signup
-                    </h1>
-                  </div>
-                  <div className="popup__header-right">
-                    <button className="popup__header-button">
-                      <div className="btn-circle__icon">
-                        <CrossIcon />
-                      </div>
-                    </button>
-                  </div>
-                </header>
-              </div>
-
-              <div className="popup__content">
-
-                <div className="popup__img">
-                  <img src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className=""></img>
-                </div>
-
-                <form className="popup__section" onSubmit={this.handleSubmit}>
-
-                  <div className="form-field">
-                    <input type="text" id="email" className="form__input" value={this.state.value} onChange={this.handleChange} placeholder="Escribe tu mail para participar"></input>
-                  </div>
-
-                  <div className="form-field">
-                    <input type="text"  id="password" className="form__input" value={this.state.value} onChange={this.handleChange} placeholder="Escribe una contraseña"></input>
-                  </div>
-
-                  <button className="btn-with-icon button-with-icon--offer" id="submit" type="submit" value="Submit" onSubmit={this.handleChange}>
-                    <div className="btn-filter__icon">
-                      <CrossIcon />
-                    </div>
-                    <div className="btn-with-icon__text">
-                      ENTRAR
-                    </div>
-                  </button>
-
-                </form>
-
-                <div className="popup__options-v">
-
-                  <button className="popup__options-btn">Tengo cuenta</button>
-
-                </div>
-
-              </div>
-
             </div>
-
-          </div>
-
-        )}
+        )
+    }
 }
 
-export default { PopupSignup };
+export default Signup;

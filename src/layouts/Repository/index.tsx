@@ -948,7 +948,7 @@ function Repository() {
         <hr></hr>
 
         <h3 className="repository__title">
-          component/popup-register
+          component/popup-signup
         </h3>
 
         <section className="repository__section">
@@ -965,7 +965,7 @@ function Repository() {
                   </div>
                   <div className="popup__header-center">
                     <h1 className="popup__header-title">
-                      Register
+                      Signup
                     </h1>
                   </div>
                   <div className="popup__header-right">

@@ -10,6 +10,9 @@
     "svgr": "svgr icons -d elements/icons --icon"
   },
   "dependencies": {
+    "dotenv": "^10.0.0",
+    "formik": "^2.2.9",
+    "fs": "0.0.1-security",
     "immer": "^9.0.6",
     "leaflet": "^1.7.1",
     "next": "11.1.0",
@@ -20,7 +23,8 @@
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "rxjs": "^7.3.0",
-    "sass": "^1.38.2"
+    "sass": "^1.38.2",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@svgr/cli": "^5.5.0",
