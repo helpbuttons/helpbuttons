@@ -37,6 +37,38 @@ describe('Users (integration) [users]', () => {
     expect(res.body).to.containEql(endpoint.expectedResponseBody);
   });
 
+  it('/users/signup invalid email', async () => {
+
+    const endpoint = 
+    {
+        "name": '/users/signup',
+        "requestBody":
+        {
+            "email": "imnotanemail",
+            "password": "testuser2"
+        },
+        "error":
+        {
+          statusCode: 422,
+          name: 'UnprocessableEntityError',
+          message: 'The request body is invalid. See error object `details` property for more info.',
+          code: 'VALIDATION_FAILED',
+          details: [
+            {
+              path: '/email',
+              code: 'format',
+              message: 'must match format "email"',
+              info: { format: 'email' }
+            }  
+          ]  
+        },
+        "expectedResponseCode": 422
+    };
+
+    const res = await client.post(endpoint.name).send(endpoint.requestBody).expect(endpoint.expectedResponseCode);
+    expect(res.body.error).to.containEql(endpoint.error);
+  });
+
   it('/users/login', async () => {
 
     const endpoint = 

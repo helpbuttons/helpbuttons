@@ -212,7 +212,6 @@ export class UserController {
     savedUser.verificationToken =  '/users/activate/' + savedUser.verificationToken;
     return savedUser;
   }
-
   @get('/users/activate/{verificationToken}', {
     responses: {
       '200': {},
@@ -229,7 +228,7 @@ export class UserController {
     }
     return "fail";
   }
-
+  
   protected async isAlreadyTaken(email: string) {
     const users = await this.userRepository.find({ where: { 'email': email } });
 
