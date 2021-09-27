@@ -35,10 +35,7 @@ export class User extends Entity {
     required: true,
     unique: true,
     jsonSchema: {
-        type: "object",
-        propertyNames: {
-          format: "email"
-        }
+      format: "email"
     }
   })
   email: string;

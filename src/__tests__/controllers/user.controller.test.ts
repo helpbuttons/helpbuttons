@@ -56,10 +56,10 @@ describe('Users (integration) [users]', () => {
           details: [
             {
               path: '/email',
-              code: 'type',
-              message: 'must be object',
-              info: { type: 'object' }
-            }
+              code: 'format',
+              message: 'must match format "email"',
+              info: { format: 'email' }
+            }  
           ]  
         },
         "expectedResponseCode": 422
