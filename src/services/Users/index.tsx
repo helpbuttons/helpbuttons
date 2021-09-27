@@ -6,9 +6,6 @@ import { OpenApi } from './types';
 
 const backendUri = "https://localhost:3001";
 
-// export const userService = {
-//     getAll
-// };
 
 export class UserDataService {
 
@@ -29,10 +26,6 @@ export class UserDataService {
     return ajax.post(`${backendUri}/users/login`,{ username, password });
   }
 
-  // public static signup(data: UserData): Observable<UserData> {
-  //   return ajax.post(`${backendUri}/users/signup`,data);
-  // }
-
   public static update(data: UserData, id:any): Observable<UserData> {
     return ajax.put(`${backendUri}/users/${id}`,data);
   }
@@ -47,10 +40,3 @@ export class UserDataService {
 
 
 }
-
-
-
-// function getAll() {
-//     const requestOptions = { method: 'GET', headers: authHeader() };
-//     return fetch(`http://localhost:3001/users`, requestOptions).then(handleResponse);
-// }
