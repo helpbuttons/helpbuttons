@@ -19,8 +19,8 @@ export class UserDataService {
     return ajax.get(`http://localhost:3001/users/${id}`);
   }
 
-  public static login(id: string): Observable<UserData> {
-    return ajax.get(`http://localhost:3001/users/login`,data);
+  public static login(username: string, password:string): Observable<UserData> {
+    return ajax.post(`http://127.0.0.1:3001/users/login`,{ username, password });
   }
 
   public static signup(data: UserData): Observable<UserData> {

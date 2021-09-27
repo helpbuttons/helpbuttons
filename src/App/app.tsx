@@ -1,6 +1,5 @@
 import React from 'react';
 import { Router, Route, Link } from 'react-router-dom';
-
 import { history } from '../helpers';
 import { authenticationService } from '../../services';
 import { PrivateRoute } from '../components';
