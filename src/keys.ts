@@ -1,3 +1,4 @@
+require('dotenv').config()
 import {BindingKey} from '@loopback/core';
 import {FileUploadHandler} from './types';
 
@@ -15,6 +16,7 @@ export const STORAGE_DIRECTORY = BindingKey.create<string>('storage.directory');
 
 
 import {TokenService} from '@loopback/authentication';
+import { MailService } from './services/mail.service';
 
 export namespace TokenServiceConstants {
   export const TOKEN_SECRET_VALUE = 'myjwts3cr3t';
@@ -32,6 +34,11 @@ export namespace TokenServiceBindings {
   );
 }
 
+export namespace MailBindings {
+  export const SERVICE = BindingKey.create<MailService>('mail.services');
+}
+
+export const URI = 'https://' + process.env.HOST + (process.env.PORT ? ':'+process.env.PORT : '') + '/';
 // export namespace UserServiceBindings {
 //   export const USER_SERVICE = BindingKey.create<UserService<User, Credentials>>(
 //     'services.user.service',

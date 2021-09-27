@@ -8,15 +8,39 @@ on:
       - develop
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: "checkout"
+        uses: actions/checkout@v2
+      - name: "copy env.ci to .env"
+        run: |
+          cp env.ci .env
+      - name: "setup node"
+        uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: docker-compose up -d postgres
-      - run: npm i
-      - run: docker exec helpbuttons_postgres /migrations/run_all.sh reset
-      - run: npm run build
-      - run: node_modules/.bin/lb-nyc ./node_modules/.bin/mocha ./dist/__tests__/**/*.test.js
+      - name: "eslint"
+        run: |
+         yarn
+         yarn eslint
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "checkout"
+        uses: actions/checkout@v2
+      - name: "copy env.ci to .env"
+        run: |
+          cp env.ci .env
+      - name: "setup node"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: "start postgis"
+        run: |
+         docker-compose up -d db 
+      - name: "run the tests"
+        run: |
+         yarn
+         yarn build
+         node_modules/.bin/lb-nyc ./node_modules/.bin/mocha ./dist/__tests__/**/*.test.js

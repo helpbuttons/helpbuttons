@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: button; Type: TABLE; Schema: public
+-- Name: button; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.button (
@@ -31,14 +31,17 @@ CREATE TABLE public.button (
     tags text,
     description text,
     geoplace text NOT NULL,
-    templatebuttonid integer
+    templatebuttonid integer,
+    created timestamp without time zone DEFAULT now() NOT NULL,
+    modified timestamp without time zone DEFAULT now() NOT NULL,
+    owner text DEFAULT ''::text NOT NULL
 );
 
 
-
+ALTER TABLE public.button OWNER TO postgres;
 
 --
--- Name: button_id_seq; Type: SEQUENCE; Schema: public
+-- Name: button_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.button_id_seq
@@ -50,28 +53,32 @@ CREATE SEQUENCE public.button_id_seq
     CACHE 1;
 
 
-
+ALTER TABLE public.button_id_seq OWNER TO postgres;
 
 --
--- Name: button_id_seq; Type: SEQUENCE OWNED BY; Schema: public
+-- Name: button_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.button_id_seq OWNED BY public.button.id;
 
 
 --
--- Name: buttonsnetwork; Type: TABLE; Schema: public
+-- Name: buttonsnetwork; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.buttonsnetwork (
     id integer NOT NULL,
     networkid integer,
-    buttonid integer
+    buttonid integer,
+    created timestamp without time zone DEFAULT now() NOT NULL,
+    modified timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
+ALTER TABLE public.buttonsnetwork OWNER TO postgres;
+
 --
--- Name: buttonsnetwork_id_seq; Type: SEQUENCE; Schema: public
+-- Name: buttonsnetwork_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.buttonsnetwork_id_seq
@@ -83,17 +90,36 @@ CREATE SEQUENCE public.buttonsnetwork_id_seq
     CACHE 1;
 
 
-
+ALTER TABLE public.buttonsnetwork_id_seq OWNER TO postgres;
 
 --
--- Name: buttonsnetwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public
+-- Name: buttonsnetwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.buttonsnetwork_id_seq OWNED BY public.buttonsnetwork.id;
 
 
 --
--- Name: network; Type: TABLE; Schema: public
+-- Name: file; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.file (
+    id text NOT NULL,
+    filename text,
+    originalname text,
+    encoding text,
+    mimetype text,
+    size text,
+    url text,
+    created timestamp without time zone DEFAULT now() NOT NULL,
+    modified timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.file OWNER TO postgres;
+
+--
+-- Name: network; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.network (
@@ -108,12 +134,16 @@ CREATE TABLE public.network (
     radius integer,
     tags text,
     friendnetworks text,
-    role text DEFAULT 'admin'::text
+    created timestamp without time zone DEFAULT now() NOT NULL,
+    modified timestamp without time zone DEFAULT now() NOT NULL,
+    owner text DEFAULT ''::text NOT NULL
 );
 
 
+ALTER TABLE public.network OWNER TO postgres;
+
 --
--- Name: network_id_seq; Type: SEQUENCE; Schema: public
+-- Name: network_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.network_id_seq
@@ -125,30 +155,32 @@ CREATE SEQUENCE public.network_id_seq
     CACHE 1;
 
 
-
+ALTER TABLE public.network_id_seq OWNER TO postgres;
 
 --
--- Name: network_id_seq; Type: SEQUENCE OWNED BY; Schema: public
+-- Name: network_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.network_id_seq OWNED BY public.network.id;
 
 
 --
--- Name: role; Type: TABLE; Schema: public
+-- Name: role; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.role (
     id integer NOT NULL,
     name text NOT NULL,
-    description text
+    description text,
+    created timestamp without time zone DEFAULT now() NOT NULL,
+    modified timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
-
+ALTER TABLE public.role OWNER TO postgres;
 
 --
--- Name: role_id_seq; Type: SEQUENCE; Schema: public
+-- Name: role_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.role_id_seq
@@ -160,31 +192,49 @@ CREATE SEQUENCE public.role_id_seq
     CACHE 1;
 
 
-
+ALTER TABLE public.role_id_seq OWNER TO postgres;
 
 --
--- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: public
+-- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.role_id_seq OWNED BY public.role.id;
 
 
 --
--- Name: templatebutton; Type: TABLE; Schema: public
+-- Name: tag; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tag (
+    id text NOT NULL,
+    modelname text NOT NULL,
+    modelid text NOT NULL,
+    created timestamp without time zone DEFAULT now() NOT NULL,
+    modified timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.tag OWNER TO postgres;
+
+--
+-- Name: templatebutton; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.templatebutton (
     id integer NOT NULL,
     name text,
     type text NOT NULL,
-    fields text NOT NULL
+    fields text NOT NULL,
+    created timestamp without time zone DEFAULT now() NOT NULL,
+    modified timestamp without time zone DEFAULT now() NOT NULL,
+    owner text DEFAULT ''::text NOT NULL
 );
 
 
-
+ALTER TABLE public.templatebutton OWNER TO postgres;
 
 --
--- Name: templatebutton_id_seq; Type: SEQUENCE; Schema: public
+-- Name: templatebutton_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.templatebutton_id_seq
@@ -196,30 +246,32 @@ CREATE SEQUENCE public.templatebutton_id_seq
     CACHE 1;
 
 
-
+ALTER TABLE public.templatebutton_id_seq OWNER TO postgres;
 
 --
--- Name: templatebutton_id_seq; Type: SEQUENCE OWNED BY; Schema: public
+-- Name: templatebutton_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.templatebutton_id_seq OWNED BY public.templatebutton.id;
 
 
 --
--- Name: templatebuttonnetwork; Type: TABLE; Schema: public
+-- Name: templatebuttonnetwork; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.templatebuttonnetwork (
     id integer NOT NULL,
     networkid integer,
-    templatebuttonid integer
+    templatebuttonid integer,
+    created timestamp without time zone DEFAULT now() NOT NULL,
+    modified timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
-
+ALTER TABLE public.templatebuttonnetwork OWNER TO postgres;
 
 --
--- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE; Schema: public
+-- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.templatebuttonnetwork_id_seq
@@ -231,204 +283,185 @@ CREATE SEQUENCE public.templatebuttonnetwork_id_seq
     CACHE 1;
 
 
-
+ALTER TABLE public.templatebuttonnetwork_id_seq OWNER TO postgres;
 
 --
--- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public
+-- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.templatebuttonnetwork_id_seq OWNED BY public.templatebuttonnetwork.id;
 
 
 --
--- Name: button id; Type: DEFAULT; Schema: public
+-- Name: user; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."user" (
+    id text NOT NULL,
+    realm text NOT NULL,
+    username text NOT NULL,
+    email text NOT NULL,
+    description text,
+    emailverified boolean default false,
+    verificationtoken text,
+    roles text DEFAULT '["guest"]'::text
+);
+
+
+ALTER TABLE public."user" OWNER TO postgres;
+
+--
+-- Name: usercredentials; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usercredentials (
+    id text NOT NULL,
+    password text NOT NULL,
+    userid text NOT NULL,
+    description text
+);
+
+
+ALTER TABLE public.usercredentials OWNER TO postgres;
+
+--
+-- Name: userextra; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.userextra (
+    id text NOT NULL,
+    interests text,
+    created timestamp without time zone DEFAULT now() NOT NULL,
+    modified timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.userextra OWNER TO postgres;
+
+--
+-- Name: button id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.button ALTER COLUMN id SET DEFAULT nextval('public.button_id_seq'::regclass);
 
 
 --
--- Name: buttonsnetwork id; Type: DEFAULT; Schema: public
+-- Name: buttonsnetwork id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.buttonsnetwork ALTER COLUMN id SET DEFAULT nextval('public.buttonsnetwork_id_seq'::regclass);
 
 
 --
--- Name: network id; Type: DEFAULT; Schema: public
+-- Name: network id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.network ALTER COLUMN id SET DEFAULT nextval('public.network_id_seq'::regclass);
 
 
 --
--- Name: role id; Type: DEFAULT; Schema: public
+-- Name: role id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.role ALTER COLUMN id SET DEFAULT nextval('public.role_id_seq'::regclass);
 
 
 --
--- Name: templatebutton id; Type: DEFAULT; Schema: public
+-- Name: templatebutton id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.templatebutton ALTER COLUMN id SET DEFAULT nextval('public.templatebutton_id_seq'::regclass);
 
 
 --
--- Name: templatebuttonnetwork id; Type: DEFAULT; Schema: public
+-- Name: templatebuttonnetwork id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.templatebuttonnetwork ALTER COLUMN id SET DEFAULT nextval('public.templatebuttonnetwork_id_seq'::regclass);
 
 
 --
--- Data for Name: button; Type: TABLE DATA; Schema: public
---
-
-COPY public.button (id, name, type, tags, description, geoplace, templatebuttonid) FROM stdin;
-\.
-
-
---
--- Data for Name: buttonsnetwork; Type: TABLE DATA; Schema: public
---
-
-COPY public.buttonsnetwork (id, networkid, buttonid) FROM stdin;
-\.
-
-
---
--- Data for Name: network; Type: TABLE DATA; Schema: public
---
-
-COPY public.network (name, id, url, avatar, description, privacy, place, geoplace, radius, tags, role) FROM stdin;
-\.
-
-
---
--- Data for Name: role; Type: TABLE DATA; Schema: public
---
-
-COPY public.role (id, name, description) FROM stdin;
-\.
-
-
---
--- Data for Name: spatial_ref_sys; Type: TABLE DATA; Schema: public
---
-
-COPY public.spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM stdin;
-\.
-
-
---
--- Data for Name: templatebutton; Type: TABLE DATA; Schema: public
---
-
-COPY public.templatebutton (id, name, type, fields) FROM stdin;
-\.
-
-
---
--- Data for Name: templatebuttonnetwork; Type: TABLE DATA; Schema: public
---
-
-COPY public.templatebuttonnetwork (id, networkid, templatebuttonid) FROM stdin;
-\.
-
-
---
--- Name: button_id_seq; Type: SEQUENCE SET; Schema: public
+-- Name: button_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.button_id_seq', 1, false);
 
 
 --
--- Name: buttonsnetwork_id_seq; Type: SEQUENCE SET; Schema: public
+-- Name: buttonsnetwork_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.buttonsnetwork_id_seq', 1, false);
 
 
 --
--- Name: network_id_seq; Type: SEQUENCE SET; Schema: public
+-- Name: network_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.network_id_seq', 1, false);
 
 
 --
--- Name: role_id_seq; Type: SEQUENCE SET; Schema: public
+-- Name: role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.role_id_seq', 1, false);
 
 
 --
--- Name: templatebutton_id_seq; Type: SEQUENCE SET; Schema: public
+-- Name: templatebutton_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.templatebutton_id_seq', 1, false);
 
 
 --
--- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE SET; Schema: public
+-- Name: templatebuttonnetwork_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.templatebuttonnetwork_id_seq', 1, false);
 
 
 --
--- Name: button button_pkey; Type: CONSTRAINT; Schema: public
+-- Name: file file_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.button
-    ADD CONSTRAINT button_pkey PRIMARY KEY (id);
-
-
---
--- Name: buttonsnetwork buttonsnetwork_pkey; Type: CONSTRAINT; Schema: public
---
-
-ALTER TABLE ONLY public.buttonsnetwork
-    ADD CONSTRAINT buttonsnetwork_pkey PRIMARY KEY (networkid,buttonid);
+ALTER TABLE ONLY public.file
+    ADD CONSTRAINT file_pkey PRIMARY KEY (id);
 
 
 --
--- Name: network network_pkey; Type: CONSTRAINT; Schema: public
+-- Name: tag tag_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.network
-    ADD CONSTRAINT network_pkey PRIMARY KEY (id);
-
-
---
--- Name: role role_pkey; Type: CONSTRAINT; Schema: public
---
-
-ALTER TABLE ONLY public.role
-    ADD CONSTRAINT role_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.tag
+    ADD CONSTRAINT tag_pkey PRIMARY KEY (id, modelname, modelid);
 
 
 --
--- Name: templatebutton templatebutton_pkey; Type: CONSTRAINT; Schema: public
+-- Name: user user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.templatebutton
-    ADD CONSTRAINT templatebutton_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public."user"
+    ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 
 
 --
--- Name: templatebuttonnetwork templatebuttonnetwork_pkey; Type: CONSTRAINT; Schema: public
+-- Name: usercredentials usercredentials_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.templatebuttonnetwork
-    ADD CONSTRAINT templatebuttonnetwork_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.usercredentials
+    ADD CONSTRAINT usercredentials_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: userextra userextra_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.userextra
+    ADD CONSTRAINT userextra_pkey PRIMARY KEY (id);
 
 
 --
 -- PostgreSQL database dump complete
 --
-

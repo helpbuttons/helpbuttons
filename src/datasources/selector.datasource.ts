@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const memoryDatasource = {
     "name": "db",
     "connector": "memory",
@@ -8,12 +10,12 @@ const memoryDatasource = {
 const postgresDatasource = {
     "name": "db",
     "connector": "postgresql",
-    "url": "postgres://postgres:jgda7s8tds78sagda@localhost/postgres",
-    "host": "postgres",
+    "url": "",
+    "host": process.env.POSTGRES_HOSTNAME,
     "port": "5432",
-    "user": "postgres",
-    "password": "jgda7s8tds78sagda",
-    "database": "postgres"
+    "user": process.env.POSTGRES_USER,
+    "password": process.env.POSTGRES_PASSWORD,
+    "database": process.env.POSTGRES_DB
 };
 
 export const datasourceConfig = (process.env.NODE_ENV === 'memory') ? memoryDatasource : postgresDatasource;
