@@ -1,6 +1,6 @@
 //
-import NavHeader from '../../components/NavHeader'
-import NavBottom from '../../components/NavBottom'
+import NavHeader from '../../components/nav/NavHeader'
+import NavBottom from '../../components/nav/NavBottom'
 
 
 export default function Recovery() {

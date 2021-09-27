@@ -1,7 +1,7 @@
 //
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
-import NavHeader from '../../components/NavHeader'
-import NavBottom from '../../components/NavBottom'
+import NavHeader from '../../components/nav/NavHeader'
+import NavBottom from '../../components/nav/NavBottom'
 import React from 'react';
 import { useEffect } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';

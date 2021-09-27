@@ -1,5 +1,5 @@
 //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
-import CardNotification from '../../components/CardNotification'
+import CardNotification from '../../components/feed/CardNotification'
 import Dropdown from '../../elements/Dropdown'
 
 export default function FeedProfile() {

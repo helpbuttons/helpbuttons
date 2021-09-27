@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Map from "../components/LeafletMap";
+import Map from "../components/map/LeafletMap";
 import { Store } from "../store/Store";
 import { Event } from "../store/Event";
-import List from "../layouts/List";
-import NavBottom from "../components/NavBottom"; //just for mobile
-import NavHeader from "../components/NavHeader"; //just for mobile
+import List from "../components/list/List";
+import NavBottom from "../components/nav/NavBottom"; //just for mobile
+import NavHeader from "../components/nav/NavHeader"; //just for mobile
 
 //    Components
 import HeaderDesktop from "../layouts/HeaderDesktop";

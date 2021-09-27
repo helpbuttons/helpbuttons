@@ -2,8 +2,8 @@
 import { Component, ChangeEvent } from "react";
 import ButtonDataService from "../../services/Buttons";
 import IButton from '../../services/Buttons/button.type.tsx';
-import ButtonNewDate from '../../layouts/ButtonNewDate';
-import ButtonNewLocation from '../../layouts/ButtonNewLocation';
+import ButtonNewDate from '../../components/button/ButtonNewDate';
+import ButtonNewLocation from '../../components/button/ButtonNewLocation';
 
 type Props = {};
 

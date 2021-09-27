@@ -1,7 +1,7 @@
 //All the edition posibilities menus and accordion, including neet preferences etc
-import NavHeader from '../../components/NavHeader'
-import NavBottom from '../../components/NavBottom'
-import CardDirectory from '../../components/CardDirectory'
+import NavHeader from '../../components/nav/NavHeader'
+import NavBottom from '../../components/nav/NavBottom'
+import Directory from '../../elements/Directory'
 import Accordion from '../../elements/Accordion'
 
 export default function Config() {
@@ -16,7 +16,7 @@ export default function Config() {
 
         <h2 className="title__h3 config__title">Config</h2>
 
-        <CardDirectory />
+        <Directory />
 
         <Accordion>
           <p>Texto molón de mi acorodeón</p>

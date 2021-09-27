@@ -1,6 +1,6 @@
 //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
 import Dropdown from '../../elements/Dropdown'
-import Cardfeed from '../../components/Cardfeed'
+import Cardfeed from '../../components/feed/Cardfeed'
 
 export default function Feed() {
   return (

@@ -4,7 +4,7 @@ import { store } from '../index';
 import { LoadOpenApi } from './data';
 
 
-import NavHeader from '../../components/NavHeader'
+import NavHeader from '../../components/nav/NavHeader'
 
 export default function BackTest() {
 
