@@ -25,6 +25,21 @@ import { authenticationService } from 'services';
 // al estilo "immutable objects"
 import produce from 'immer';
 
+//Current user session object
+export interface CurrentUserState {
+  username: string,
+  email: string,
+  realm: string,
+  roles: [],
+}
+
+//No logged user  values
+export const userInitial = {
+  username: "",
+  email: "",
+  realm: "",
+  roles: [],
+}
 
 // -- estado global --
 
@@ -39,12 +54,7 @@ export interface GlobalState {
     cargando: boolean;
     listado: object[];
   }
-  user: {
-    username: string;
-    email: string;
-    realm: string;
-    roles: [];
-  }
+  currentUser: UserInitial;
   backTest: BackTestState;
 }
 
@@ -61,12 +71,7 @@ export const store = new Store<GlobalState>({
     cargando: false,
     listado: [],
   },
-  user: {
-      username: "",
-      email: "",
-      realm: "",
-      roles: [],
-  },
+  currentUser: userInitial,
   backTest: backTestInitial,
 
 });
