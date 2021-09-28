@@ -10,6 +10,8 @@ import { IUser } from 'services/Users/types';
 
 export class SignupEvent implements WatchEvent {
   public watch(state: GlobalState, email: string, password: string) {
+    debugger
+    console.log("adadadad");
     return UserService.signup(email, password).pipe(
       map((userData) => new UserSignupEvent(userData))
     )

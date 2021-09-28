@@ -59,7 +59,8 @@ export const store = new Store<GlobalState>({
     listado: [],
   },
   user: {
-    id: 0,
+      username: "",
+      email: "",
   },
   backTest: backTestInitial,
 

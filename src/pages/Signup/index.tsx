@@ -9,14 +9,12 @@ import { Layout } from 'components/user/Layout';
 import { userService } from 'services/Users';
 import { alertService } from 'services/Alert';
 import { store } from '../index';
-
+import { useEffect } from 'react';
 
 import { SignupEvent } from './data';
 
 
-export default Signup;
-
-function Signup() {
+export default function Signup() {
 
     const router = useRouter();
 
@@ -34,8 +32,13 @@ function Signup() {
     const { register, handleSubmit, formState } = useForm(formOptions);
     const { errors } = formState;
 
+    useEffect((user) => {
+      store.emit(new SignupEvent("adadadad", "adadad"));
+    }, []);
+
     function onSubmit(user) {
 
+        debugger
         store.emit(new SignupEvent(user.email, user.password));
     }
 
