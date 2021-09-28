@@ -40,7 +40,8 @@ export interface GlobalState {
     listado: object[];
   }
   user: {
-    id: number,
+    username: string,
+    email: string,
   }
   backTest: BackTestState;
 }

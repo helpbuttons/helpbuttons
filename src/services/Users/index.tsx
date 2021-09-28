@@ -19,13 +19,13 @@ export const userObs = {
 export class UserService {
 
   public static signup(email:string, password:string): Observable<any> {
-    debugger
 
-    const ghibliFilmWithHeaders$ = ajax({
+    const userWithHeaders$ = ajax({
         url: baseUrl+"/users/signup",
         method: "POST",
         headers: {
-          "Content-Type": "json",
+          "Content-Type": "application/json",
+          "accept": "application/json",
         },
         body: {
           "email": email,
@@ -33,8 +33,8 @@ export class UserService {
         },
     });
 
-    return ghibliFilmWithHeaders$;
-    
+    return userWithHeaders$;
+
   }
 
   public static user(): Observable<IUser> {

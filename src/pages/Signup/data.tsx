@@ -21,8 +21,9 @@ export class SignupEvent implements WatchEvent {
 export class UserSignupEvent implements UpdateEvent {
   public constructor(private userData: IUser) {}
   public update(state: GlobalState) {
+    debugger
     return produce(state, newState => {
-      newState.login.userData = this.userData;
+      newState.user = this.userData;
     });
   }
 }
