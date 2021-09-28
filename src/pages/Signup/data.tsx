@@ -1,11 +1,11 @@
 import { map } from 'rxjs/operators';
 import { produce } from 'immer';
 
-import { WatchEvent } from '../store/Event';
-import { GlobalState } from '../store/Store';
+import { WatchEvent } from 'store/Event';
+import { GlobalState } from 'store/Store';
 
-import { UserService } from '../../services/UserService';
-import { UserData } from '../../services/Users/types';
+import { UserService } from 'services/Users';
+import { UserData } from 'services/Users/types';
 
 
 export class SignupEvent implements WatchEvent {

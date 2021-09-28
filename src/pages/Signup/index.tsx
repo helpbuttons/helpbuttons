@@ -7,6 +7,10 @@ import { Link } from 'elements/Link';
 import { Layout } from 'components/user/Layout';
 import { userService } from 'services/Users';
 import { alertService } from 'services/Alert';
+import { store } from '../index';
+
+
+import { SignupEvent } from './data';
 
 
 export default Signup;
@@ -33,6 +37,8 @@ function Signup() {
     const { errors } = formState;
 
     function onSubmit(user) {
+
+        store.emit(new SignupEvent(user));
         return userService.signup(user);
             // .then(() => {
             //     alertService.success('Registration successful', { keepAfterRouteChange: true });
