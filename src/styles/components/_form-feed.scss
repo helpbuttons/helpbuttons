@@ -1,0 +1,26 @@
+$form-feed-background: $color-white;
+$form-feed-button-size: 70px;
+
+.form-feed {
+  align-items: stretch;
+  background: $form-feed-background;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  .input__input {
+    border: 1px solid $color-gray;
+    border-radius: 0 !important;
+    margin: 0;
+  }
+}
+
+.form-feed__button {
+  background: $color-gray;
+  flex: 0 1 $form-feed-button-size;
+  text-indent: -9999999px;
+}
+
+.form-feed__input {
+  flex: 0 1 80%;
+}

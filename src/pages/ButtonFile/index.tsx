@@ -1,10 +1,10 @@
 //the button url itself
 import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
-import CardButton from '../../components/CardButton'
-import CardChat from '../../components/CardChat'
-import CardNotification from '../../components/CardNotification'
-import NavHeader from '../../components/NavHeader'
-import NavBottom from '../../components/NavBottom'
+import CardButton from '../../components/button/CardButton'
+import CardNotification from '../../components/feed/CardNotification'
+import NavHeader from '../../components/nav/NavHeader'
+import NavBottom from '../../components/nav/NavBottom'
+import Feed from '../../layouts/Feed'
 
 
 export default function ButtonFile() {
@@ -14,42 +14,42 @@ export default function ButtonFile() {
     <>
         <NavHeader />
 
-        <div class="button-file__center">
+        <div className="button-file__container">
 
-          <div class="button-file__card-section">
+          <div className="button-file__card-section">
 
             <CardButton />
 
           </div>
 
           //ACTION SECTION - HERE COME BASIC INTERACTION BUTTONS AND MESSAGE INPUT
-          <div class="button-file__action-section">
+          <div className="button-file__action-section">
 
-            <div class="button-file__action-section--field">
+            <div className="button-file__action-section--field">
 
-              <button class="btn btn--black btn--center">
+              <button className="btn btn--black btn--center">
                 Botón ejemplo negro centrado
               </button>
 
             </div>
 
-            <div class="button-file__action-section--field">
+            <div className="button-file__action-section--field">
 
-              <form class="chats__new-message" onsubmit="">
+              <form className="feeds__new-message" >
 
-                  <button class="btn-circle">
-                    <div class="btn-circle__content">
-                      <div class="btn-circle__icon">
+                  <button className="btn-circle">
+                    <div className="btn-circle__content">
+                      <div className="btn-circle__icon">
                         <CrossIcon />
                       </div>
                     </div>
                   </button>
-                  <div class="chats__new-message-message">
-                    <input class="form__input chats__new-message-input"></input>
+                  <div className="feeds__new-message-message">
+                    <input className="form__input feeds__new-message-input"></input>
                   </div>
-                  <button class="btn-circle">
-                    <div class="btn-circle__content">
-                      <div class="btn-circle__icon">
+                  <button className="btn-circle">
+                    <div className="btn-circle__content">
+                      <div className="btn-circle__icon">
                         <CrossIcon />
                       </div>
                     </div>
@@ -62,18 +62,7 @@ export default function ButtonFile() {
           </div>
 
         //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
-        <div class="button-file__feed-section">
-
-          <div class="button-file__feed-element">
-
-            <CardNotification />
-            <CardChat />
-            <CardChat />
-            <CardNotification />
-
-          </div>
-
-        </div>
+        <Feed />
 
       </div>
 

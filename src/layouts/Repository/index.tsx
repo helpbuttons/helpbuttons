@@ -1,12 +1,10 @@
 //List of elements component that can be used anywhere in the app
-import icon from '../../../public/assets/svg/icons/chat.svg'
+import icon from '../../../public/assets/svg/icons/feed.svg'
 import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
 import back from '../../../public/assets/svg/icons/back.svg'
 import hand from '../../../public/assets/svg/icons/hand_call.svg'
 import send from '../../../public/assets/svg/icons/send.svg'
 import atta from '../../../public/assets/svg/icons/atta.svg'
-
-import Image from 'next/image'
 
 function Repository() {
   return (
@@ -106,13 +104,19 @@ function Repository() {
               Filter with icon
             </button>
 
+            <button className="btn-filter-with-icon">
+              <div className="btn-filter__icon green"></div>
+              Filter with double icon
+              <div className="btn-filter__remove-icon"></div>
+            </button>
+
             <hr></hr>
 
             <div className="checkbox-filter__container">
               <label className="checkbox__filter-label">
                 <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                 <div className="checkbox-filter__content btn-filter-with-icon">
-                  <div class="btn-filter__icon red"></div>
+                  <div className="btn-filter__icon red"></div>
 
                   <div className="checkbox__text">
                     Filter checkbox
@@ -188,10 +192,10 @@ function Repository() {
             <hr></hr>
 
             <div className="form__options-h">
-              <div className="form__options-btn">
+              <div className="btn form__options-btn">
               CANCEL
               </div>
-              <div className="form__options-btn">
+              <div className="btn form__options-btn">
                 SAVE
               </div>
             </div>
@@ -203,7 +207,7 @@ function Repository() {
               <div className="form__options-text">
                 Explain something
               </div>
-              <div className="form__options-btn">
+              <div className="btn form__options-btn">
               CANCEL
               </div>
 
@@ -212,10 +216,10 @@ function Repository() {
             <hr></hr>
 
             <div className="form__options-v">
-              <div className="form__options-btn">
+              <div className="btn form__options-btn">
               CANCEL
               </div>
-              <div className="form__options-btn">
+              <div className="btn form__options-btn">
                 SAVE
               </div>
             </div>
@@ -835,7 +839,7 @@ function Repository() {
         <hr></hr>
 
         <h3 className="repository__title">
-          component/card-chat
+          component/card-feed
         </h3>
 
         <section className="repository__section">
@@ -882,39 +886,39 @@ function Repository() {
         <section className="repository__section">
 
           <div className="card-profile__container">
-          <div className="card-profile__container-avatar-content">
-            <figure className="card-profile__avatar-container avatar">
-              <div className="avatar-big">
-                <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img"></img>
-              </div>
-            </figure>
-
-            <div className="card-profile__content">
-              <div className="card-profile__avatar-container-name">
-                Username
-              </div>
-              <figure className="card-profile__rating grid-three">
-
-                <div className="paragraph grid-three__column">
-                  90
-                  <div className="btn-circle__icon">
-                    <CrossIcon />
-                  </div>
-                </div>
-                <div className="paragraph grid-three__column">
-                  77
-                  <div className="btn-circle__icon">
-                    <CrossIcon />
-                  </div>
-                </div>
-                <div className="paragraph grid-three__column">
-                  23
-                  <div className="btn-circle__icon">
-                    <CrossIcon />
-                  </div>
-
+            <div className="card-profile__container-avatar-content">
+              <figure className="card-profile__avatar-container avatar">
+                <div className="avatar-big">
+                  <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img"></img>
                 </div>
               </figure>
+
+              <div className="card-profile__content">
+                <div className="card-profile__avatar-container-name">
+                  Username
+                </div>
+                <figure className="card-profile__rating grid-three">
+
+                  <div className="paragraph grid-three__column">
+                    90
+                    <div className="btn-circle__icon">
+                      <CrossIcon />
+                    </div>
+                  </div>
+                  <div className="paragraph grid-three__column">
+                    77
+                    <div className="btn-circle__icon">
+                      <CrossIcon />
+                    </div>
+                  </div>
+                  <div className="paragraph grid-three__column">
+                    23
+                    <div className="btn-circle__icon">
+                      <CrossIcon />
+                    </div>
+
+                  </div>
+                </figure>
             </div>
           </div>
           <div className="card-profile__data">
@@ -944,7 +948,7 @@ function Repository() {
         <hr></hr>
 
         <h3 className="repository__title">
-          component/popup-register
+          component/popup-signup
         </h3>
 
         <section className="repository__section">
@@ -961,7 +965,7 @@ function Repository() {
                   </div>
                   <div className="popup__header-center">
                     <h1 className="popup__header-title">
-                      Register
+                      Signup
                     </h1>
                   </div>
                   <div className="popup__header-right">
@@ -1111,12 +1115,12 @@ function Repository() {
         <hr></hr>
 
         <h3 className="repository__title">
-          component/form-chat
+          component/form-feed
         </h3>
 
         <section className="repository__section">
 
-          <form className="chats__new-message" >
+          <form className="feeds__new-message" >
 
               <button className="btn-circle">
                 <div className="btn-circle__content">
@@ -1125,8 +1129,8 @@ function Repository() {
                   </div>
                 </div>
               </button>
-              <div className="chats__new-message-message">
-                <input className="form__input chats__new-message-input"></input>
+              <div className="feeds__new-message-message">
+                <input className="form__input feeds__new-message-input"></input>
               </div>
               <button className="btn-circle">
                 <div className="btn-circle__content">
@@ -1344,7 +1348,7 @@ function Repository() {
                     <CrossIcon />
                 </div>
                 <div className="nav-bottom__text">
-                  Mapa
+                  Map
                 </div>
             </a>
 
@@ -1353,13 +1357,7 @@ function Repository() {
                     <CrossIcon />
                 </div>
                 <div className="nav-bottom__text">
-                  Mapa
-                </div>
-            </a>
-
-            <a href="" className="nav-bottom__link nav-bottom__link--create">
-                <div className="nav-bottom__icon">
-                    <CrossIcon />
+                  Create
                 </div>
             </a>
 
@@ -1377,7 +1375,7 @@ function Repository() {
                     <CrossIcon />
                 </div>
                 <div className="nav-bottom__text">
-                  Profile
+                  Faqs
                 </div>
             </a>
 
@@ -1428,13 +1426,13 @@ function Repository() {
 
         <section className="repository__section">
 
-          <div class="filters">
+          <div className="filters">
 
               <div className="checkbox-filter__container">
                 <label className="checkbox__filter-label">
                   <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                   <div className="checkbox-filter__content btn-filter-with-icon">
-                    <div class="btn-filter__icon red"></div>
+                    <div className="btn-filter__icon red"></div>
 
                     <div className="checkbox__text">
                       Necesitan
@@ -1447,7 +1445,7 @@ function Repository() {
                 <label className="checkbox__filter-label">
                   <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                   <div className="checkbox-filter__content btn-filter-with-icon">
-                    <div class="btn-filter__icon red"></div>
+                    <div className="btn-filter__icon red"></div>
 
                     <div className="checkbox__text">
                       Necesitan
@@ -2006,18 +2004,18 @@ function Repository() {
 
       <section className="repository__section">
 
-      <button class="accordion">Section 1</button>
-        <div class="panel">
+      <button className="accordion">Section 1</button>
+        <div className="panel">
         <p>Lorem ipsum... palabra. Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras Ejemplo palabras. Ejemplo palabras Ejemplo palabras Ejemplo palabras ., Ejemplo palabrasEjemplo palabras</p>
         </div>
 
-      <button class="accordion">Section 2</button>
-        <div class="panel">
+      <button className="accordion">Section 2</button>
+        <div className="panel">
         <p>Lorem ipsum...</p>
         </div>
 
-      <button class="accordion">Section 3</button>
-        <div class="panel">
+      <button className="accordion">Section 3</button>
+        <div className="panel">
         <p>Lorem ipsum...</p>
         </div>
 

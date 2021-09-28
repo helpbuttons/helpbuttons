@@ -1,13 +1,13 @@
 //this is the component that shows a resume of the button that is going to be published or edited. It takes all the data from the rest of the ButtonNew steps andd send it to the backend. It leads to Button Share.
 import { Component, ChangeEvent } from "react";
 import ButtonDataService from "../../services/Buttons";
-import ButtonData from '../types/Button.type';
-import ButtonNewDate from '../../layouts/ButtonNewDate';
-import ButtonNewLocation from '../../layouts/ButtonNewLocation';
+import IButton from '../../services/Buttons/button.type.tsx';
+import ButtonNewDate from '../../components/button/ButtonNewDate';
+import ButtonNewLocation from '../../components/button/ButtonNewLocation';
 
 type Props = {};
 
-type State = ButtonData & {
+type State = IButton & {
   submitted: boolean
 };
 
@@ -34,7 +34,7 @@ export default class AddButton extends Component<Props, State> {
       latitude: [],
       // optional values
       networks: [],
-      chatType: "single", //enum {single,group} chat structure
+      feedType: "single", //enum {single,group} feed structure
       templateExtraData: {}, //JSON
 
     };
@@ -73,7 +73,7 @@ export default class AddButton extends Component<Props, State> {
           latitude: [],
           // optional values
           networks: [],
-          chatType: "single", //enum {single,group} chat structure
+          feedType: "single", //enum {single,group} feed structure
           templateExtraData: {}, //JSON
         });
         console.log(response.data);
@@ -97,7 +97,7 @@ export default class AddButton extends Component<Props, State> {
       latitude: [],
       // optional values
       networks: [],
-      chatType: "single", //enum {single,group} chat structure
+      feedType: "single", //enum {single,group} feed structure
       templateExtraData: {}, //JSON
     });
   }
@@ -106,48 +106,55 @@ export default class AddButton extends Component<Props, State> {
     const { submitted, title, description } = this.state;
 
     return (
-      <div className="submit-form">
-        {submitted ? (
-          <div>
-            <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newButton}>
-              Add
-            </button>
-          </div>
-        ) : (
-          <div>
-            <div className="form-group">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
-                className="form-control"
-                id="title"
-                required
-                value={title}
-                onChange={this.onChangeTitle}
-                name="title"
-              />
-            </div>
+      <>
 
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
-              <input
-                type="text"
-                className="form-control"
-                id="description"
-                required
-                value={description}
-                onChange={this.onChangeDescription}
-                name="description"
-              />
-            </div>
+        <ButtonNewDate />
+        <ButtonNewLocation />
 
-            <button onClick={this.saveButton} className="btn btn-success">
-              Submit
-            </button>
-          </div>
-        )}
-      </div>
+        <div className="submit-form">
+          {submitted ? (
+            <div>
+              <h4>You submitted successfully!</h4>
+              <button className="btn btn-success" onClick={this.newButton}>
+                Add
+              </button>
+            </div>
+          ) : (
+            <div>
+              <div className="form-group">
+                <label htmlFor="title">Title</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="title"
+                  required
+                  value={title}
+                  onChange={this.onChangeTitle}
+                  name="title"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="description">Description</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="description"
+                  required
+                  value={description}
+                  onChange={this.onChangeDescription}
+                  name="description"
+                />
+              </div>
+
+              <button onClick={this.saveButton} className="btn btn-success">
+                Submit
+              </button>
+            </div>
+          )}
+        </div>
+
+      </>
 
     );
   }

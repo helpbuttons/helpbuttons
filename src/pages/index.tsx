@@ -1,13 +1,14 @@
 import React, { useMemo } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Map from "../components/LeafletMap";
+import Map from "../components/map/LeafletMap";
 import { Store } from "../store/Store";
 import { Event } from "../store/Event";
-import List from "../layouts/List";
-import NavBottom from "../components/NavBottom"; //just for mobile
-import NavHeader from "../components/NavHeader"; //just for mobile
-import FiltersMobile from "../components/FiltersMobile"; //just for mobile
+import List from "../components/list/List";
+import NavBottom from "../components/nav/NavBottom"; //just for mobile
+import NavHeader from "../components/nav/NavHeader"; //just for mobile
+import { userService } from 'services/Users';
+import { Link } from 'elements/Link';
 
 //    Components
 import HeaderDesktop from "../layouts/HeaderDesktop";
@@ -15,6 +16,8 @@ import HeaderDesktop from "../layouts/HeaderDesktop";
 import { BackTestState, backTestInitial } from "../pages/BackTest/data";
 
 import ButtonDataService from "services/Buttons";
+
+import { authenticationService } from 'services';
 
 
 // https://immerjs.github.io/immer/
@@ -36,6 +39,12 @@ export interface GlobalState {
     cargando: boolean;
     listado: object[];
   }
+  user: {
+    username: string;
+    email: string;
+    realm: string;
+    roles: [];
+  }
   backTest: BackTestState;
 }
 
@@ -52,6 +61,12 @@ export const store = new Store<GlobalState>({
     cargando: false,
     listado: [],
   },
+  user: {
+      username: "",
+      email: "",
+      realm: "",
+      roles: [],
+  },
   backTest: backTestInitial,
 
 });
@@ -59,8 +74,12 @@ export const store = new Store<GlobalState>({
 const Home: NextPage = () => {
   return (
     <>
+
+      <h1>Hi {userObs.userValue?.firstName}!</h1>
+      <p>You&apos;re logged in with Next.js & JWT!!</p>
+      <p><Link href="/users">Manage Users</Link></p>
+
       <NavHeader />
-      <FiltersMobile />
       <Map />
       <NavBottom />
     </>

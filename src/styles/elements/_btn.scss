@@ -10,7 +10,7 @@ $btn-padding-x: $padding-big;
 $btn-filter-height: 35px;
 $btn-small-padding: $padding-small;
 $btn-filter-margin: 10px;
-$btn-filter-padding-y: 0px;
+$btn-filter-padding-y: 0;
 $btn-filter-height: 20px;
 $btn-hashtag-close-height: 13px;
 $btn-hashtag-close-margin: 7px;
@@ -119,7 +119,7 @@ $btn-font-size-medium: $font-size-medium;
 .btn-filter-with-icon {
 
   @extend .btn-filter;
-  padding-left: $padding-medium !important;
+  padding: $padding-medium !important;
 
 }
 
@@ -145,11 +145,31 @@ $btn-font-size-medium: $font-size-medium;
 
   }
 
+
   //RED CIRCLE NEED
   &.red {
 
     border-radius: $btn-border-radius-semicircle;
     background: $color-red;
+
+  }
+
+}
+
+.btn-filter__remove-icon {
+
+  width: $btn-filter-with-icon-icon-width;
+  height: $btn-filter-with-icon-icon-width;
+  margin-left: $btn-filter-icon-margin;
+  margin-right: 0;
+
+  border-radius: $border-radius-circle;
+  background-color: $color-black;
+
+  & svg {
+
+    max-width: $btn-filter-with-icon-icon-width;
+    max-height: $btn-filter-with-icon-icon-width;
 
   }
 
@@ -173,12 +193,12 @@ $btn-font-size-medium: $font-size-medium;
 
   &.green-l {
     background: $color-green;
-    border-radius: $btn-border-radius-semicircle 0px 0px $btn-border-radius-semicircle;
+    border-radius: $btn-border-radius-semicircle 0 0 $btn-border-radius-semicircle;
   }
 
   &.red-r {
     background: $color-red;
-    border-radius: 0px $btn-border-radius-semicircle $btn-border-radius-semicircle 0px;
+    border-radius: 0 $btn-border-radius-semicircle $btn-border-radius-semicircle 0;
   }
 
 }
@@ -232,7 +252,7 @@ $btn-font-size-medium: $font-size-medium;
 }
 
 
-//CIRCLE btn LIKE OFFER/NEED FILTER, DELETE CHAT BUTTON, NAV IN CARD BUTTONS, AND OTHERS.
+//CIRCLE btn LIKE OFFER/NEED FILTER, DELETE feed BUTTON, NAV IN CARD BUTTONS, AND OTHERS.
 
 .btn-circle {
 
@@ -426,7 +446,7 @@ $btn-font-size-medium: $font-size-medium;
 
   .btn-filter {
 
-    margin: 0px 5px;
+    margin: 0 5px;
 
   }
 

@@ -17,14 +17,15 @@ $filters-padding: 10px;
 .filters--vertical {
 
   position: relative;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
+  margin-bottom:$footer-height-mobile;
   top: 0;
   display: flex;
   flex-direction: column;
-  background: $color-corporative;
-  overflow-x: scroll;
+  background: $color-ligth-gray;
+  overflow-y: scroll;
   padding: $padding-big $padding-big;
-
 
 }
 

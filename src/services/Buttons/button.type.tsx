@@ -1,4 +1,4 @@
-export interface ButtonData {
+export interface IButton {
   id?: any | null,
   templateId: any | null,
   tags: ["tag1", "tag2", "tag3"],
@@ -10,6 +10,6 @@ export interface ButtonData {
   latitude: [],
   // optional values
   networks: [],
-  chatType: "single", //enum {single,group} chat structure
+  feedType: "single", //enum {single,group} feed structure
   templateExtraData: {}, //JSON template contains info about the image and the description (standard) and also about booleans, radius, checklist and every other field related to the network module
 }

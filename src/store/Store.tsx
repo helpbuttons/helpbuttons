@@ -10,7 +10,7 @@ export class Store<T> {
   public events$: Observable<Event>;
 
   public constructor(initialState: T) {
-    this.state$ = new BehaviorSubject<T>(initialState).pipe(share());
+    this.state$ = new BehaviorSubject<T>(initialState);
     this.events$ = new Subject<Event>().pipe(share());
     this._subscribe();
   }

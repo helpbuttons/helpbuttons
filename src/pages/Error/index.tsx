@@ -1,6 +1,6 @@
 //ERROR PAGE
-import NavHeader from '../../components/NavHeader'
-import NavBottom from '../../components/NavBottom'
+import ErrorMessage from '../../components/overlay/ErrorMessage'
+import NavBottom from '../../components/nav/NavBottom'
 
 
 export default function Error() {
@@ -9,7 +9,7 @@ export default function Error() {
 
     <>
 
-      <NavHeader />
+      <ErrorMessage />
 
       <NavBottom />
 
