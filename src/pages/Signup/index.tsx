@@ -32,13 +32,7 @@ export default function Signup() {
     const { register, handleSubmit, formState } = useForm(formOptions);
     const { errors } = formState;
 
-    useEffect((user) => {
-      store.emit(new SignupEvent("adadadad", "adadad"));
-    }, []);
-
     function onSubmit(user) {
-
-        debugger
         store.emit(new SignupEvent(user.email, user.password));
     }
 
