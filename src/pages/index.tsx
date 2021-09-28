@@ -15,8 +15,6 @@ import HeaderDesktop from "../layouts/HeaderDesktop";
 
 import { BackTestState, backTestInitial } from "../pages/BackTest/data";
 
-import { UserState, userInitial } from "../pages/BackTest/data";
-
 import ButtonDataService from "services/Buttons";
 
 import { authenticationService } from 'services';
@@ -27,6 +25,21 @@ import { authenticationService } from 'services';
 // al estilo "immutable objects"
 import produce from 'immer';
 
+//Current user session object
+export interface CurrentUserState {
+  username: string,
+  email: string,
+  realm: string,
+  roles: [],
+}
+
+//No logged user  values
+export const userInitial = {
+  username: "",
+  email: "",
+  realm: "",
+  roles: [],
+}
 
 // -- estado global --
 

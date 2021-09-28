@@ -1,3 +1,4 @@
+//User interface
 export interface IUser {
 
   username: string,
