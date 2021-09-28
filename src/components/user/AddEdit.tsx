@@ -44,7 +44,7 @@ function AddEdit(props) {
     }
 
     function createUser(data) {
-        return userService.signup(data)
+        return userObs.signup(data)
             .then(() => {
                 alertService.success('User added', { keepAfterRouteChange: true });
                 router.push('.');
@@ -53,7 +53,7 @@ function AddEdit(props) {
     }
 
     function updateUser(id, data) {
-        return userService.update(id, data)
+        return userObs.update(id, data)
             .then(() => {
                 alertService.success('User updated', { keepAfterRouteChange: true });
                 router.push('..');

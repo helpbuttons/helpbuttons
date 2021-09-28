@@ -10,15 +10,39 @@ const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 const userSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('user')));
 
-export const userService = {
+export const userObs = {
     user: userSubject.asObservable(),
     get userValue () { return userSubject.value },
-    login,
-    signup,
-    getAll,
-    getById,
-    update,
 };
+
+
+export class UserService {
+
+  public static signup(email:string, password:string): Observable<any> {
+
+
+    return ajax.post<any>(`${baseUrl}/users/signup`, JSON.stringify({
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'rxjs-custom-header': 'Rxjs'
+          },
+          body: {
+            "email": email,
+            "password": password
+          }
+        }));
+  }
+
+  public static user(): Observable<IUser> {
+    return userSubject.asObservable();
+  }
+
+  public static userValue() {
+    return userSubject.value;
+  }
+
+}
 
 function signup(email: string, password: string) {
 

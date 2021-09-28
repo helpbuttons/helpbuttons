@@ -10,7 +10,7 @@ function Layout({ children }) {
 
     useEffect(() => {
         // redirect to home if already logged in
-        if (userService.userValue) {
+        if (userObs.userValue) {
             router.push('/');
         }
 

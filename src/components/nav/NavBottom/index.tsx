@@ -3,7 +3,7 @@ import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
 import Link from 'next/link'
 import { useState, useEffect } from 'react';
 import { NavLink } from '.';
-import { userService } from 'services/Users';
+import { userObs } from 'services/Users';
 
 export default NavBottom;
 
@@ -12,12 +12,12 @@ function NavBottom(){
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-      const subscription = userService.user.subscribe(x => setUser(x));
+      const subscription = userObs.user.subscribe(x => setUser(x));
       return () => subscription.unsubscribe();
   }, []);
 
   function logout() {
-      userService.logout();
+      userObs.logout();
   }
 
   // only show nav when logged in
