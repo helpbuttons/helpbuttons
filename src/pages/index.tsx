@@ -15,6 +15,8 @@ import HeaderDesktop from "../layouts/HeaderDesktop";
 
 import { BackTestState, backTestInitial } from "../pages/BackTest/data";
 
+import { UserState, userInitial } from "../pages/BackTest/data";
+
 import ButtonDataService from "services/Buttons";
 
 import { authenticationService } from 'services';
@@ -39,12 +41,7 @@ export interface GlobalState {
     cargando: boolean;
     listado: object[];
   }
-  user: {
-    username: string;
-    email: string;
-    realm: string;
-    roles: [];
-  }
+  currentUser: UserInitial;
   backTest: BackTestState;
 }
 
@@ -61,12 +58,7 @@ export const store = new Store<GlobalState>({
     cargando: false,
     listado: [],
   },
-  user: {
-      username: "",
-      email: "",
-      realm: "",
-      roles: [],
-  },
+  currentUser: userInitial,
   backTest: backTestInitial,
 
 });
