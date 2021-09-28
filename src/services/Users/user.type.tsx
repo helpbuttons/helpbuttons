@@ -1,6 +1,8 @@
 export interface IUser {
 
-  id?: any | null,
-  email: string
+  username: string,
+  email: string,
+  realm: string,
+  roles: []
 
 }
