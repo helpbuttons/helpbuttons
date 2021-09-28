@@ -954,6 +954,7 @@ function Repository() {
         <section className="repository__section">
 
             <div className="popup">
+            
               <div className="popup__header">
                 <header className="popup__header-content">
                   <div className="popup__header-left">

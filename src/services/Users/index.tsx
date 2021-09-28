@@ -38,5 +38,28 @@ export class UserService {
 
   }
 
+  //Login user
+  public static login(email:string, password:string): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const userWithHeaders$ = ajax({
+
+          url: baseUrl+"/users/login",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+            "email": email,
+            "password": password,
+          },
+      });
+
+    return userWithHeaders$;
+
+  }
+
+
 
 }
