@@ -18,6 +18,8 @@ import CrossIcon from './../public/assets/svg/icons/cross1.tsx'
 //imported react components
 import Alert from 'components/overlay/Alert';
 import { Link } from 'elements/Link';
+import Popup from 'components/popup/Popup';
+
 
 
 export default function PopupSignup() {
@@ -46,11 +48,10 @@ export default function PopupSignup() {
   }
 
   return (
-      <>
-          <Alert />
-          <div className="popup">
 
-            <div className="popup__content">
+        <Popup title="Signup">
+
+          <Alert />
 
                 <div className="popup__img">
                   <img src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className=""></img>
@@ -76,7 +77,7 @@ export default function PopupSignup() {
                             <div className="btn-filter__icon">
                             </div>
                             <div className="btn-with-icon__text">
-                              Register
+                              REGISTER
                             </div>
                         </button>
 
@@ -86,15 +87,13 @@ export default function PopupSignup() {
 
                 <div className="popup__options-v">
 
-                  <Link href="/Login" className="popup__options-btn">Cancel</Link>
+                  <Link href="/Login" className="popup__options-btn">I have an account</Link>
 
                 </div>
 
-              </div>
 
-          </div>
+      </Popup>
 
-      </>
   );
 
 }

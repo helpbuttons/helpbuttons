@@ -2,7 +2,7 @@
 import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
 import Link from 'next/link'
 import { useState, useEffect } from 'react';
-import { NavLink } from '.';
+import { NavLink } from 'elements/Navlink';
 import { userObs } from 'services/Users';
 
 export default NavBottom;
@@ -21,7 +21,7 @@ function NavBottom(){
   }
 
   // only show nav when logged in
-  if (!user) return null;
+  // if (!user) return null;
 
   return(
       <nav id="bottom-nav" className="nav-bottom">

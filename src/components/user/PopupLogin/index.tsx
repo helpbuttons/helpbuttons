@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import { store } from 'pages/index';
 import { userService } from 'services/Users';
 import { alertService } from 'services/Alert';
-import { SignupEvent } from 'pages/Signup/data';
+import { LoginEvent } from 'pages/Login/data';
 
 //imported react components
 import Alert from 'components/overlay/Alert';
@@ -36,20 +36,24 @@ export default function PopupLogin() {
   const { errors } = formState;
 
   function onSubmit(user) {
-
+    debugger
     store.emit(new LoginEvent(user.email, user.password));
 
   }
 
   return (
-      <>
-          <Popup>
+
+          <Popup title="Login">
+
+              <div className="popup__img">
+                <img src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className=""></img>
+              </div>
 
               <form className="popup__section" onSubmit={handleSubmit(onSubmit)}>
-              
+
                   <div className="form__field">
-                      <label>Username</label>
-                      <input name="username" type="text" {...register('username')} className={`form__input ${errors.username ? '' : ''}`} />
+                      <label>Email / Username</label>
+                      <input name="email" type="text" {...register('email')} className={`form__input ${errors.username ? '' : ''}`} />
                       <div className="invalid-feedback">{errors.username?.message}</div>
                   </div>
                   <div className="form__field">
@@ -57,12 +61,12 @@ export default function PopupLogin() {
                       <input name="password" type="password" {...register('password')} className={`form__input ${errors.password ? '' : ''}`} />
                       <div className="invalid-feedback">{errors.password?.message}</div>
                   </div>
-                  <button disabled={formState.isSubmitting} className="btn-with-icon button-with-icon--offer">
+                  <button disabled={formState.isSubmitting} className="btn-with-icon">
                     {formState.isSubmitting && <span className=""></span>}
                     <div className="btn-filter__icon">
                     </div>
                     <div className="btn-with-icon__text">
-                      ENTRAR
+                      ENTER
                     </div>
                   </button>
 
@@ -70,12 +74,12 @@ export default function PopupLogin() {
 
               <div className="popup__options-v">
 
-                <Link href="/Signup" className="popup__options-btn">Register</Link>
+                <Link href="/Signup" className="popup__options-btn">I don't have an account</Link>
 
               </div>
 
           </Popup>
-      </>
+
   );
 
 }

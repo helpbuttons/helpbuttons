@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Map from "../components/map/LeafletMap";
-import { Store } from "../store/Store";
-import { Event } from "../store/Event";
-import List from "../components/list/List";
-import NavBottom from "../components/nav/NavBottom"; //just for mobile
-import NavHeader from "../components/nav/NavHeader"; //just for mobile
+import Map from "components/map/LeafletMap";
+import { Store } from "store/Store";
+import { Event } from "store/Event";
+import List from "components/list/List";
+import NavBottom from "components/nav/NavBottom"; //just for mobile
+import NavHeader from "components/nav/NavHeader"; //just for mobile
 import { userService } from 'services/Users';
 import { Link } from 'elements/Link';
 
@@ -79,11 +79,6 @@ export const store = new Store<GlobalState>({
 const Home: NextPage = () => {
   return (
     <>
-
-      <h1>Hi {userObs.userValue?.firstName}!</h1>
-      <p>You&apos;re logged in with Next.js & JWT!!</p>
-      <p><Link href="/users">Manage Users</Link></p>
-
       <NavHeader />
       <Map />
       <NavBottom />

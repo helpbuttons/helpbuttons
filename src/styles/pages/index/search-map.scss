@@ -1,5 +1,14 @@
 $search-map-height: 0; // Altura del header
 
+.leaflet-container {
+  height: 100vh;
+  width: 100vw;
+  display: block;
+  position: relative;
+  z-index: $z-index-base;
+  bottom: 0;
+}
+
 .search-map {
   height: 100vh;
   position: absolute;
@@ -7,10 +16,6 @@ $search-map-height: 0; // Altura del header
   top: 0;
   width: 100%;
   z-index: $z-index-base;
-
-  .leaflet-container {
-    height: 100%;
-  }
 
   &__localize-user {
     background-color: $color-white;

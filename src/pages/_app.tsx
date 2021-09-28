@@ -4,8 +4,6 @@ import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { userObs } from 'services/Users';
-import NavBottom from 'components/nav/NavBottom';
-import Alert from 'components/overlay/Alert';
 
 export default MyApp;
 
@@ -37,7 +35,7 @@ function MyApp({ Component, pageProps }) {
     function authCheck(url) {
         // redirect to login page if accessing a private page and not logged in
         setUser(userObs.userValue);
-        const publicPaths = ['/Login', '/Signup'];
+        const publicPaths = ['/Login', '/Signup', '/RepositoryPage', '/Faqs', '/'];
         const path = url.split('?')[0];
         if (!userObs.userValue && !publicPaths.includes(path)) {
             setAuthorized(false);
@@ -58,8 +56,6 @@ function MyApp({ Component, pageProps }) {
             </Head>
 
             <div className={`${user ? '' : ''}`}>
-                <NavBottom />
-                <Alert />
                 {authorized &&
                     <Component {...pageProps} />
                 }
