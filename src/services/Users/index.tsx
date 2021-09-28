@@ -20,12 +20,21 @@ export class UserService {
 
   public static signup(email:string, password:string): Observable<any> {
     debugger
-    return ajax.post(`${baseUrl}/users/signup`, JSON.stringify({
-          body: {
-            "email": email,
-            "password": password
-          }
-        }));
+
+    const ghibliFilmWithHeaders$ = ajax({
+        url: baseUrl+"/users/signup",
+        method: "POST",
+        headers: {
+          "Content-Type": "json",
+        },
+        body: {
+          "email": email,
+          "password": password,
+        },
+    });
+
+    return ghibliFilmWithHeaders$;
+    
   }
 
   public static user(): Observable<IUser> {
