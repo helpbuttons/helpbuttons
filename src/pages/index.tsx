@@ -40,8 +40,10 @@ export interface GlobalState {
     listado: object[];
   }
   user: {
-    username: string,
-    email: string,
+    username: string;
+    email: string;
+    realm: string;
+    roles: [];
   }
   backTest: BackTestState;
 }
@@ -62,6 +64,8 @@ export const store = new Store<GlobalState>({
   user: {
       username: "",
       email: "",
+      realm: "",
+      roles: [],
   },
   backTest: backTestInitial,
 

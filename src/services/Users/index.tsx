@@ -33,6 +33,7 @@ export class UserService {
         },
     });
 
+    debugger 
     return userWithHeaders$;
 
   }
