@@ -1,4 +1,4 @@
-//Form component with the main fields for register in the platform
+//Form component with the main fields for signup in the platform
 import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
 import { useEffect } from 'react';
 import React from 'react';

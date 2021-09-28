@@ -2,7 +2,7 @@ import { map } from 'rxjs/operators';
 import { produce } from 'immer';
 
 import { WatchEvent } from '../store/Event';
-import { UserDataService } from '../../services/Users';
+import { UserService } from '../../services/Users';
 import { User } from '../../services/Users/types';
 
 

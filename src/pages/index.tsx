@@ -7,6 +7,8 @@ import { Event } from "../store/Event";
 import List from "../components/list/List";
 import NavBottom from "../components/nav/NavBottom"; //just for mobile
 import NavHeader from "../components/nav/NavHeader"; //just for mobile
+import { userService } from 'services/Users';
+import { Link } from 'elements/Link';
 
 //    Components
 import HeaderDesktop from "../layouts/HeaderDesktop";
@@ -15,7 +17,7 @@ import { BackTestState, backTestInitial } from "../pages/BackTest/data";
 
 import ButtonDataService from "services/Buttons";
 
-import { userService, authenticationService } from '../services';
+import { authenticationService } from 'services';
 
 
 // https://immerjs.github.io/immer/
@@ -60,8 +62,12 @@ export const store = new Store<GlobalState>({
 const Home: NextPage = () => {
   return (
     <>
+
+      <h1>Hi {userService.userValue?.firstName}!</h1>
+      <p>You&apos;re logged in with Next.js & JWT!!</p>
+      <p><Link href="/users">Manage Users</Link></p>
+
       <NavHeader />
-      <List />
       <Map />
       <NavBottom />
     </>

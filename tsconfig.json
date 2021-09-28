@@ -1,26 +1,4 @@
 {
-  "@/app/*": [
-      "src/app/*"
-  ],
-  "@/common/*": [
-      "src/common/*"
-  ],
-  "@/components/*": [
-      "src/common/components/*"
-  ],
-  "@/utils/*": [
-      "src/common/utils/*"
-  ],
-  "@/layouts/*": [
-      "src/layouts/*"
-  ],
-  "@/modules/*": [
-      "src/modules/*"
-  ],
-  "@/pages/*": [
-      "src/pages/*"
-  ],
-
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -29,6 +7,7 @@
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "baseUrl": "./src",
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",

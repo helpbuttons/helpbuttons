@@ -44,7 +44,7 @@ function AddEdit(props) {
     }
 
     function createUser(data) {
-        return userService.register(data)
+        return userService.signup(data)
             .then(() => {
                 alertService.success('User added', { keepAfterRouteChange: true });
                 router.push('.');

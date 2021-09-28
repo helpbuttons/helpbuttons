@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-import { Link } from 'components';
-import { Layout } from 'components/account';
-import { userService, alertService } from 'services';
+import { Link } from 'elements/Link';
+import { Layout } from 'components/user/Layout';
+import { userService, alertService } from 'services/Users';
 
 export default Login;
 
@@ -53,7 +53,7 @@ function Login() {
                             {formState.isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                             Login
                         </button>
-                        <Link href="/account/register" className="btn btn-link">Register</Link>
+                        <Link href="/Signup" className="btn btn-link">Register</Link>
                     </form>
                 </div>
             </div>
