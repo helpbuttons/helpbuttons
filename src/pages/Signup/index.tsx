@@ -33,6 +33,7 @@ export default function Signup() {
     const { errors } = formState;
 
     function onSubmit(user) {
+        debugger
         store.emit(new SignupEvent(user.email, user.password));
     }
 

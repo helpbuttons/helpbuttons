@@ -19,14 +19,8 @@ export const userObs = {
 export class UserService {
 
   public static signup(email:string, password:string): Observable<any> {
-
-
-    return ajax.post<any>(`${baseUrl}/users/signup`, JSON.stringify({
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'rxjs-custom-header': 'Rxjs'
-          },
+    debugger
+    return ajax.post(`${baseUrl}/users/signup`, JSON.stringify({
           body: {
             "email": email,
             "password": password
