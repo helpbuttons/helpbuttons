@@ -33,7 +33,7 @@ export default function Signup() {
     const { errors } = formState;
 
     function onSubmit(user) {
-        //emit is called to trigger the event by the observable
+        //emit is called to trigger the event by the observable 
         store.emit(new SignupEvent(user.email, user.password));
 
     }
