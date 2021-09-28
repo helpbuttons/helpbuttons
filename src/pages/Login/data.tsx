@@ -5,7 +5,7 @@ import { WatchEvent } from '../store/Event';
 import { GlobalState } from '../store/Store';
 
 import { UserService } from '../../services/UserService';
-import { UserData } from '../../services/Users/types';
+import { IUser } from '../../services/Users/types';
 
 
 export class LoginEvent implements WatchEvent {
@@ -18,7 +18,7 @@ export class LoginEvent implements WatchEvent {
 
 
 export class UserLoggedEvent implements UpdateEvent {
-  public constructor(private userData: UserData) {}
+  public constructor(private userData: IUser) {}
 
   public update(state: GlobalState) {
     return produce(state, newState => {

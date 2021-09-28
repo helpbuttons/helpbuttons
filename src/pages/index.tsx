@@ -39,6 +39,9 @@ export interface GlobalState {
     cargando: boolean;
     listado: object[];
   }
+  user: {
+    id: number,
+  }
   backTest: BackTestState;
 }
 
@@ -54,6 +57,9 @@ export const store = new Store<GlobalState>({
   gente: {
     cargando: false,
     listado: [],
+  },
+  user: {
+    id: 0,
   },
   backTest: backTestInitial,
 

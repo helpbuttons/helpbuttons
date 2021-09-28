@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { catchError } from 'rxjs/operators';
 
 import { Link } from 'elements/Link';
 import { Layout } from 'components/user/Layout';
@@ -16,16 +17,13 @@ import { SignupEvent } from './data';
 export default Signup;
 
 function Signup() {
+
     const router = useRouter();
 
     // form validation rules
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string()
-            .required('First Name is required'),
-        lastName: Yup.string()
-            .required('Last Name is required'),
-        username: Yup.string()
-            .required('Username is required'),
+        email: Yup.string()
+            .required('Email is required'),
         password: Yup.string()
             .required('Password is required')
             .min(6, 'Password must be at least 6 characters')
@@ -38,13 +36,7 @@ function Signup() {
 
     function onSubmit(user) {
 
-        store.emit(new SignupEvent(user));
-        return userService.signup(user);
-            // .then(() => {
-            //     alertService.success('Registration successful', { keepAfterRouteChange: true });
-            //     router.push('Login');
-            // })
-            // .catch(alertService.error);
+        store.emit(new SignupEvent(user.email, user.password));
     }
 
     return (
@@ -54,18 +46,8 @@ function Signup() {
                 <div className="card-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-group">
-                            <label>First Name</label>
-                            <input name="firstName" type="text" {...register('firstName')} className={`form-control ${errors.firstName ? 'is-invalid' : ''}`} />
-                            <div className="invalid-feedback">{errors.firstName?.message}</div>
-                        </div>
-                        <div className="form-group">
-                            <label>Last Name</label>
-                            <input name="lastName" type="text" {...register('lastName')} className={`form-control ${errors.lastName ? 'is-invalid' : ''}`} />
-                            <div className="invalid-feedback">{errors.lastName?.message}</div>
-                        </div>
-                        <div className="form-group">
-                            <label>Username</label>
-                            <input name="username" type="text" {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`} />
+                            <label>Email</label>
+                            <input name="username" type="text" {...register('email')} className={`form-control ${errors.username ? 'is-invalid' : ''}`} />
                             <div className="invalid-feedback">{errors.username?.message}</div>
                         </div>
                         <div className="form-group">
