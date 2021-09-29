@@ -7,69 +7,154 @@ import { NetworkData } from './network.type';
 export class NetworkDataService {
 
 
-  public static getAll(): Observable<NetworkData> {
-    return ajax.get(`http://localhost:3001/networks`);
+  //Create network
+  public static create(data: INetwork, userId: any): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const networkWithHeaders$ = ajax({
+
+          url: baseUrl+"/networks/new",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+
+
+          },
+      });
+
+    return networkWithHeaders$;
+
   }
 
-  public static get(id: string): Observable<NetworkData> {
-    return ajax.get(`http://localhost:3001/networks/${id}`);
+  //Edit network
+  public static edit(data: INetwork): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const networkWithHeaders$ = ajax({
+
+          url: baseUrl+"/networks/edit/"+id,
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+
+          },
+
+      });
+
+    return networkWithHeaders$;
+
   }
 
-  public static create(data: NetworkData): Observable<NetworkData> {
-    return ajax.post(`http://localhost:3001/networks`,data);
+  //Get networks
+  public static find(id: any): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const networkWithHeaders$ = ajax({
+
+          url: baseUrl+"/networks/find",
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+          },
+      });
+
+    return networkWithHeaders$;
+
   }
 
-  public static update(data: NetworkData, id:any): Observable<NetworkData> {
-    return ajax.put(`http://localhost:3001/networks/${id}`,data);
+  //Map networks
+  public static map(data: INetwork): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const networkWithHeaders$ = ajax({
+
+          url: baseUrl+"/networks/map",
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+          },
+      });
+
+    return networkWithHeaders$;
+
   }
 
-  public static delete(id:any): Observable<NetworkData> {
-    return ajax.delete(`http://localhost:3001/networks/${id}`);
+  //Get network by id
+  public static findById(id: string): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const networkWithHeaders$ = ajax({
+
+          url: baseUrl+"/networks/findById/"+id,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+            "id":id,
+          },
+      });
+
+    return networkWithHeaders$;
+
   }
 
-  public static deleteAll(id:any): Observable<NetworkData> {
-    return ajax.delete(`http://localhost:3001/networks`);
-  }
+
+    //Delete network
+    public static _delete(id: any): Observable<any> {
+
+        //save the ajax object that can be .pipe by the observable
+        const networkWithHeaders$ = ajax({
+
+            url: baseUrl+"/networks/delete/"+id,
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "accept": "application/json",
+            },
+            body: {
+              "id":id,
+            },
+        });
+
+      return networkWithHeaders$;
+
+    }
+
+    //Delete all networks
+    public static deleteAll(id: any): Observable<any> {
+
+        //save the ajax object that can be .pipe by the observable
+        const networkWithHeaders$ = ajax({
+
+            url: baseUrl+"/networks",
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "accept": "application/json",
+            },
+            body: {
+              "id":id,
+            },
+        });
+
+      return networkWithHeaders$;
+
+    }
+
 
 
 }
-
-//////try with next api response
-//
-// export default (req: NextApiRequest, res: NextApiResponse) => {
-//
-//   createnetwork: async function(id) {
-//     try {
-//         const response = await axios.post(BASE_URL+'api/networks/new', AUTH_API_CONFIG);
-//         return response.data;
-//
-//     } catch (error) {
-//       throw error;
-//     }
-//   },
-//
-//   getnetwork: async function(id) {
-//     try {
-//         const response = await axios.get(BASE_URL+'api/user/'+id, AUTH_API_CONFIG);
-//         return response.data;
-//
-//     } catch (error) {
-//       throw error;
-//     }
-//   },
-//
-//   getnetworkList: async function(id) {
-//     try {
-//         const response = await axios.get(BASE_URL+'api/networks', AUTH_API_CONFIG);
-//         return response.data;
-//
-//     } catch (error) {
-//       throw error;
-//     }
-//   },
-        // axios.get('http://localhost:3001/networks/new').then((res) => {
-        //   res.data.map((network) => {
-        //     console.log(network.name);
-        //   });
-        // }).catch(() => console.log('ERRRO'));
-// }
