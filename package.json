@@ -19,7 +19,7 @@
     "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
     "prettier:check": "yarn prettier:cli -- -l",
     "prettier:fix": "yarn prettier:cli -- --write",
-    "eslint": "lb-eslint --report-unused-disable-directives .",
+    "eslint": "lb-eslint --report-unused-disable-directives . --ignore-pattern hb-admin",
     "eslint:fix": "yarn eslint -- --fix",
     "pretest": "yarn rebuild",
     "test": "mocha ./dist/__tests__/**/*.test.js",
