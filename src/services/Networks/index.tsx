@@ -1,14 +1,14 @@
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 
-import { NetworkData } from './network.type';
+import { INetwork } from './network.type';
 
 
-export class NetworkDataService {
+export class NetworkService {
 
 
   //Create network
-  public static new(data: INetwork, userId: any): Observable<any> {
+  public static new(data: INetwork, user: any): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const networkWithHeaders$ = ajax({
