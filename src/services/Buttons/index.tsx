@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 
-import { Button } from './button.type';
+import { IButton } from './button.type';
 
 
-export class ButtonDataService {
+export class ButtonService {
 
   //Create button
   public static new(data: IButton, userId: any): Observable<any> {
