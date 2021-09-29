@@ -1,35 +1,178 @@
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 
-import { Button } from './button.type';
+import { IButton } from './button.type';
 
 
-export class ButtonDataService {
+export class ButtonService {
 
+  //Create button
+  public static new(data: IButton, userId: any): Observable<any> {
 
-  public static getAll(): Observable<Button> {
-    return ajax.get(`http://localhost:3001/buttons`);
+      //save the ajax object that can be .pipe by the observable
+      const buttonWithHeaders$ = ajax({
+
+          url: baseUrl+"/buttons/new",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+
+            "name": data.name,
+            "type": data.type,
+            "tags": data.tags,
+            "description": data.description,
+            "geoPlace": data.geoPlace,
+            "owner": userId,
+            "templateButtonId": data.templateButtonId,
+
+          },
+      });
+
+    return buttonWithHeaders$;
+
   }
 
-  public static get(id: string): Observable<Button> {
-    return ajax.get(`http://localhost:3001/buttons/${id}`);
+  //Edit button
+  public static edit(data: IButton): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const buttonWithHeaders$ = ajax({
+
+          url: baseUrl+"/buttons/edit/"+id,
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+
+            "name": data.name,
+            "type": data.type,
+            "tags": data.tags,
+            "description": data.description,
+            "geoPlace": data.geoPlace,
+            "owner": data.owner,
+            "templateButtonId": data.templateButtonId,
+          },
+
+      });
+
+    return buttonWithHeaders$;
+
   }
 
-  public static create(data: Button): Observable<Button> {
-    return ajax.post(`http://localhost:3001/buttons`,data);
+  //Edit button
+  public static addToNetworks(data: IButton): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const buttonWithHeaders$ = ajax({
+
+          url: baseUrl+"/buttons/addToNetworks/"+id,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+
+            "name": data.id,
+            "networks": data.networks,
+
+          },
+
+      });
+
+    return buttonWithHeaders$;
+
   }
 
-  public static update(data: Button, id:any): Observable<Button> {
-    return ajax.put(`http://localhost:3001/buttons/${id}`,data);
+  //Get buttons
+  public static find(id: any): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const buttonWithHeaders$ = ajax({
+
+          url: baseUrl+"/buttons",
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+            "id":id,
+          },
+      });
+
+    return buttonWithHeaders$;
+
   }
 
-  public static delete(id:any): Observable<Button> {
-    return ajax.delete(`http://localhost:3001/buttons/${id}`);
+  //Get button by id
+  public static findById(id: string): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const buttonWithHeaders$ = ajax({
+
+          url: baseUrl+"/buttons/findById/"+id,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+            "id":id,
+          },
+      });
+
+    return buttonWithHeaders$;
+
   }
 
-  public static deleteAll(id:any): Observable<Button> {
-    return ajax.delete(`http://localhost:3001/buttons`);
-  }
+
+    //Delete button
+    public static _delete(id: any): Observable<any> {
+
+        //save the ajax object that can be .pipe by the observable
+        const buttonWithHeaders$ = ajax({
+
+            url: baseUrl+"/buttons/delete/"+id,
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "accept": "application/json",
+            },
+            body: {
+              "id":id,
+            },
+        });
+
+      return buttonWithHeaders$;
+
+    }
+
+    //Delete all buttons
+    public static deleteAll(id: any): Observable<any> {
+
+        //save the ajax object that can be .pipe by the observable
+        const buttonWithHeaders$ = ajax({
+
+            url: baseUrl+"/buttons",
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "accept": "application/json",
+            },
+            body: {
+              "id":id,
+            },
+        });
+
+      return buttonWithHeaders$;
+
+    }
 
 
 }
