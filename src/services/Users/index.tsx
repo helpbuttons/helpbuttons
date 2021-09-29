@@ -60,6 +60,49 @@ export class UserService {
 
   }
 
+  //Login user
+  public static whoAmI(): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const userWithHeaders$ = ajax({
+
+          url: baseUrl+"/users/whoAmI",
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+          },
+      });
+
+    return userWithHeaders$;
+
+  }
+
+  //Login user
+  public static activate(token: any): Observable<any> {
+
+      //save the ajax object that can be .pipe by the observable
+      const userWithHeaders$ = ajax({
+
+          url: baseUrl+"/users/activate/"+token,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
+
+            "verificationToken": token,
+
+          },
+      });
+
+    return userWithHeaders$;
+
+  }
+
   public static logout() {
       // remove user from local storage to log user out
       localStorage.removeItem('currentUser');

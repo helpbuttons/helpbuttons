@@ -54,6 +54,7 @@ export interface GlobalState {
     cargando: boolean;
     listado: object[];
   }
+
   currentUser: UserInitial;
   backTest: BackTestState;
 }
@@ -71,6 +72,7 @@ export const store = new Store<GlobalState>({
     cargando: false,
     listado: [],
   },
+  
   currentUser: userInitial,
   backTest: backTestInitial,
 
