@@ -1,7 +1,4 @@
 //is the component or element integrated in buttonNewPublish. Right before activate button. It displays the current selected date and a button to chang it, that ddisplays a picker with the date options for the net that's selecte
-import NavHeader from '../../components/nav/NavHeader'
-import NavBottom from '../../components/nav/NavBottom'
-
 
 export default function ButtonNewDate() {
 

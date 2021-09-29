@@ -1,144 +1,99 @@
 //Form component with the main fields for signup in the platform
-import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
-import { useEffect } from 'react';
+//imported from libraries
+import { useRouter } from 'next/router';
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { catchError } from 'rxjs/operators';
+import { useEffect } from 'react';
 
-import { authenticationService } from '../../services/authentication.service.ts';
+//imported internal classes, variables, files or functions
+import { store } from 'pages/index';
+import { userService } from 'services/Users';
+import { alertService } from 'services/Alert';
+import { SignupEvent } from 'pages/Signup/data';
+import CrossIcon from './../public/assets/svg/icons/cross1.tsx'
 
-class PopupSignup extends React.Component {
-    constructor(props) {
-        super(props);
+//imported react components
+import Alert from 'components/overlay/Alert';
+import { Link } from 'elements/Link';
+import Popup from 'components/popup/Popup';
 
-        // redirect to home if already logged in
-        if (authenticationService.currentUserValue) {
-            this.props.history.push('/');
-        }
 
-    }
 
-    render() {
-        return (
-            <div>
-                <div className="alert alert-info">
-                    Username: test<br />
-                    Password: test
-                </div>
-                <h2>Login</h2>
-                <Formik
-                    initialValues={{
-                        username: '',
-                        password: ''
-                    }}
-                    validationSchema={Yup.object().shape({
-                        username: Yup.string().required('Username is required'),
-                        password: Yup.string().required('Password is required')
-                    })}
-                    onSubmit={({ username, password }, { setStatus, setSubmitting }) => {
-                        setStatus();
-                        authenticationService.login(username, password)
-                            .then(
-                                user => {
-                                    const { from } = this.props.location.state || { from: { pathname: "/" } };
-                                    this.props.history.push(from);
-                                },
-                                error => {
-                                    setSubmitting(false);
-                                    setStatus(error);
-                                }
-                            );
-                    }}
-                    render={({ errors, status, touched, isSubmitting }) => (
-                        <Form>
-                            <div className="form-group">
-                                <label htmlFor="username">Username</label>
-                                <Field name="username" type="text" className={'form-control' + (errors.username && touched.username ? ' is-invalid' : '')} />
-                                <ErrorMessage name="username" component="div" className="invalid-feedback" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="password">Password</label>
-                                <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
-                                <ErrorMessage name="password" component="div" className="invalid-feedback" />
-                            </div>
-                            <div className="form-group">
-                                <button type="submit" className="btn btn-primary" disabled={isSubmitting}>Login</button>
-                                {isSubmitting &&
-                                    <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                                }
-                            </div>
-                            {status &&
-                                <div className={'alert alert-danger'}>{status}</div>
-                            }
-                        </Form>
-                    )}
-                />
+export default function PopupSignup() {
 
-            <div className="popup">
-              <div className="popup__header">
-                <header className="popup__header-content">
-                  <div className="popup__header-left">
-                    <button className="popup__header-button">
-                      <div className="btn-circle__icon">
-                        <CrossIcon />
-                      </div>
-                    </button>
-                  </div>
-                  <div className="popup__header-center">
-                    <h1 className="popup__header-title">
-                      Signup
-                    </h1>
-                  </div>
-                  <div className="popup__header-right">
-                    <button className="popup__header-button">
-                      <div className="btn-circle__icon">
-                        <CrossIcon />
-                      </div>
-                    </button>
-                  </div>
-                </header>
-              </div>
+  const router = useRouter();
 
-              <div className="popup__content">
+  // form validation rules
+  const validationSchema = Yup.object().shape({
+      email: Yup.string()
+          .required('Email is required'),
+      password: Yup.string()
+          .required('Password is required')
+          .min(6, 'Password must be at least 6 characters')
+  });
+
+  const formOptions = { resolver: yupResolver(validationSchema) };
+
+  // get functions to build form with useForm() hook
+  const { register, handleSubmit, formState } = useForm(formOptions);
+  const { errors } = formState;
+
+  function onSubmit(user) {
+      //emit is called to trigger the event by the observable
+      store.emit(new SignupEvent(user.email, user.password));
+
+  }
+
+  return (
+
+        <Popup title="Signup">
+
+          <Alert />
 
                 <div className="popup__img">
                   <img src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className=""></img>
                 </div>
 
-                <form className="popup__section" onSubmit={this.handleSubmit}>
+                <div className="popup__section">
 
-                  <div className="form-field">
-                    <input type="text" id="email" className="form__input" value={this.state.value} onChange={this.handleChange} placeholder="Escribe tu mail para participar"></input>
-                  </div>
+                    <form onSubmit={handleSubmit(onSubmit)}>
 
-                  <div className="form-field">
-                    <input type="text"  id="password" className="form__input" value={this.state.value} onChange={this.handleChange} placeholder="Escribe una contraseña"></input>
-                  </div>
+                        <div className="form__field">
+                            <label>Email</label>
+                            <input name="username" type="text" {...register('email')} className={`form__input ${errors.username ? '' : ''}`} />
+                            <div className="">{errors.username?.message}</div>
+                        </div>
+                        <div className="form__field">
+                            <label>Password</label>
+                            <input name="password" type="password" {...register('password')} className={`form__input  ${errors.password ? '' : ''}`} />
+                            <div className="invalid-feedback">{errors.password?.message}</div>
+                        </div>
 
-                  <button className="btn-with-icon button-with-icon--offer" id="submit" type="submit" value="Submit" onSubmit={this.handleChange}>
-                    <div className="btn-filter__icon">
-                      <CrossIcon />
-                    </div>
-                    <div className="btn-with-icon__text">
-                      ENTRAR
-                    </div>
-                  </button>
+                        <button disabled={formState.isSubmitting} className="btn-with-icon button-with-icon--offer">
+                            {formState.isSubmitting && <span className=""></span>}
+                            <div className="btn-filter__icon">
+                            </div>
+                            <div className="btn-with-icon__text">
+                              REGISTER
+                            </div>
+                        </button>
 
-                </form>
-
-                <div className="popup__options-v">
-
-                  <button className="popup__options-btn">Tengo cuenta</button>
+                    </form>
 
                 </div>
 
-              </div>
+                <div className="popup__options-v">
 
-            </div>
+                  <Link href="/Login" className="popup__options-btn">I have an account</Link>
 
-          </div>
+                </div>
 
-        )}
+
+      </Popup>
+
+  );
+
 }
-
-export default { PopupSignup };
