@@ -23,6 +23,13 @@ export class TemplateButtonService {
           },
           body: {
 
+            "templateButtonId" : data.templateButtonId,
+            "networks" : data.networks,
+            "name": data.name,
+            "type": data.type,
+            "fields": data.fields,
+            "owner": data.owner,
+
           },
       });
 
@@ -31,7 +38,7 @@ export class TemplateButtonService {
   }
 
   //add templateButton to networks
-  public static addToNetworks(data: ITemplateButton): Observable<any> {
+  public static addToNetworks(id: any, networks : []): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const templateButtonWithHeaders$ = ajax({
@@ -43,6 +50,9 @@ export class TemplateButtonService {
             "accept": "application/json",
           },
           body: {
+
+            "templateButtonId" : data.id,
+            "networks" : networks,
 
           },
       });
@@ -65,6 +75,12 @@ export class TemplateButtonService {
           },
           body: {
 
+            "id": id,
+            "name": data.name,
+            "type": data.type,
+            "fields": data.fields,
+            "owner": data.owner,
+
           },
       });
 
@@ -85,6 +101,11 @@ export class TemplateButtonService {
             "accept": "application/json",
           },
           body: {
+
+            "name": data.name,
+            "type": data.type,
+            "fields": data.fields,
+            "owner": data.owner,
 
           },
       });
@@ -107,6 +128,8 @@ export class TemplateButtonService {
           },
           body: {
 
+            "id": id,
+
           },
       });
 
@@ -127,6 +150,8 @@ export class TemplateButtonService {
             "accept": "application/json",
           },
           body: {
+
+            "id": id,
 
           },
       });
