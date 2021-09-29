@@ -8,7 +8,7 @@ export class NetworkDataService {
 
 
   //Create network
-  public static create(data: INetwork, userId: any): Observable<any> {
+  public static new(data: INetwork, userId: any): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const networkWithHeaders$ = ajax({
@@ -21,6 +21,14 @@ export class NetworkDataService {
           },
           body: {
 
+            "name": data.name,
+            "url": data.url,
+            "avatar": data.avatar,
+            "description": data.description,
+            "privacy": data.privacy,
+            "place": data.place,
+            "geoPlace": data.geoPlace,
+            "owner": user.id,
 
           },
       });
@@ -30,7 +38,7 @@ export class NetworkDataService {
   }
 
   //Edit network
-  public static edit(data: INetwork): Observable<any> {
+  public static edit(data: INetwork, user: IUser): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const networkWithHeaders$ = ajax({
@@ -42,6 +50,19 @@ export class NetworkDataService {
             "accept": "application/json",
           },
           body: {
+
+            "name": data.name,
+            "id": data.id,
+            "url": data.url,
+            "avatar": data.avatar,
+            "description": data.description,
+            "privacy": data.privacy,
+            "place": data.place,
+            "geoPlace": data.geoPlace,
+            "radius": data.radius,
+            "tags": data.tags,
+            "owner": user.id,
+            "friendNetworks": data.friendNetworks,
 
           },
 
@@ -64,6 +85,9 @@ export class NetworkDataService {
             "accept": "application/json",
           },
           body: {
+
+            "id" : id,
+
           },
       });
 
@@ -84,6 +108,9 @@ export class NetworkDataService {
             "accept": "application/json",
           },
           body: {
+
+            "id" : id,
+
           },
       });
 
@@ -104,7 +131,9 @@ export class NetworkDataService {
             "accept": "application/json",
           },
           body: {
+
             "id":id,
+
           },
       });
 
@@ -126,7 +155,9 @@ export class NetworkDataService {
               "accept": "application/json",
             },
             body: {
+
               "id":id,
+
             },
         });
 
@@ -147,7 +178,9 @@ export class NetworkDataService {
               "accept": "application/json",
             },
             body: {
+
               "id":id,
+
             },
         });
 
