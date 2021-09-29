@@ -23,8 +23,6 @@ export class TemplateButtonService {
           },
           body: {
 
-            "templateButtonId" : data.templateButtonId,
-            "networks" : data.networks,
             "name": data.name,
             "type": data.type,
             "fields": data.fields,
