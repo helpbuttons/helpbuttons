@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
-
+const userSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('user')));
 
 export const userObs = {
 
@@ -108,8 +108,7 @@ export class UserService {
 
   public static logout() {
       // remove user from local storage to log user out
-      store.currentUser.loggedIn = false;
-      // currentUserSubject.next(null);
+      currentUserSubject.next(null);
   }
 
 }

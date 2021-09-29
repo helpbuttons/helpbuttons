@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { store } from './index';
+
 import { userService } from 'services';
+import { userObs } from 'services/Users';
 
 export { Layout };
 
