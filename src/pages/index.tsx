@@ -26,11 +26,15 @@ import { authenticationService } from 'services';
 import produce from 'immer';
 
 //Current user session object
-export interface CurrentUserState {
+export interface UserState {
   username: string,
   email: string,
   realm: string,
   roles: [],
+}
+
+export interface CurrentUserState {
+  token: string,
 }
 
 //No logged user  values
@@ -39,6 +43,11 @@ export const userInitial = {
   email: "",
   realm: "",
   roles: [],
+}
+
+//No logged user  values
+export const currentUserInitial = {
+  token: "",
 }
 
 // -- estado global --
@@ -56,6 +65,7 @@ export interface GlobalState {
   }
 
   currentUser: UserInitial;
+  user: UserInitial;
   backTest: BackTestState;
 }
 
@@ -72,8 +82,9 @@ export const store = new Store<GlobalState>({
     cargando: false,
     listado: [],
   },
-  
-  currentUser: userInitial,
+
+  currentUser: currentUserInitial,
+  user: userInitial,
   backTest: backTestInitial,
 
 });

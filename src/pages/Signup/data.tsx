@@ -29,7 +29,7 @@ export class UserSignupEvent implements UpdateEvent {
   public constructor(private userData: IUser) {}
   public update(state: GlobalState) {
     return produce(state, newState => {
-      newState.currentUser = this.userData;
+      newState.user = this.userData;
     });
   }
 }

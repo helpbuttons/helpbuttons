@@ -2,15 +2,18 @@ import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { store } from './index';
 import { BehaviorSubject } from 'rxjs';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
-const userSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('user')));
+
 
 export const userObs = {
+
     user: userSubject.asObservable(),
     get userValue () { return userSubject.value },
+
 };
 
 //User services for all app
@@ -105,10 +108,8 @@ export class UserService {
 
   public static logout() {
       // remove user from local storage to log user out
-      localStorage.removeItem('currentUser');
-      currentUserSubject.next(null);
+      store.currentUser.loggedIn = false;
+      // currentUserSubject.next(null);
   }
-
-
 
 }
