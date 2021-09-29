@@ -10,6 +10,6 @@ export interface IButton {
   latitude: [],
   // optional values
   networks: [],
-  feedType: "single", //enum {single,group} feed structure
+  feedType: enum, //enum {single,group} feed structure
   templateExtraData: {}, //JSON template contains info about the image and the description (standard) and also about booleans, radius, checklist and every other field related to the network module
 }
