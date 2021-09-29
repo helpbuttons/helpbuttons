@@ -9,15 +9,15 @@ const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 const tagSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('tag')));
 
 //User services for all app
-export class UserService {
+export class TagService {
 
   //Find model by tag
   public static findByTag(tag: Itag): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
-      const userWithHeaders$ = ajax({
+      const tagWithHeaders$ = ajax({
 
-          url: baseUrl+"/users/findByTag"+tag.id.toString(),
+          url: baseUrl+"/tags/findByTag"+tag.id.toString(),
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export class UserService {
           },
       });
 
-    return userWithHeaders$;
+    return tagWithHeaders$;
 
   }
 
@@ -36,9 +36,9 @@ export class UserService {
   public static find(tag: Itag): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
-      const userWithHeaders$ = ajax({
+      const tagWithHeaders$ = ajax({
 
-          url: baseUrl+"/users/tags",
+          url: baseUrl+"/tags/tags",
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -54,7 +54,7 @@ export class UserService {
           },
       });
 
-    return userWithHeaders$;
+    return tagWithHeaders$;
 
   }
 
