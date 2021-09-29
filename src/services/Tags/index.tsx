@@ -6,7 +6,6 @@ import { BehaviorSubject } from 'rxjs';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
-const tagSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('tag')));
 
 //User services for all app
 export class TagService {
