@@ -7,12 +7,12 @@ import { Button } from './button.type';
 export class ButtonDataService {
 
   //Create button
-  public static create(data: IButton, userId: any): Observable<any> {
+  public static new(data: IButton, userId: any): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const buttonWithHeaders$ = ajax({
 
-          url: baseUrl+"/buttons/create",
+          url: baseUrl+"/buttons/new",
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -36,12 +36,12 @@ export class ButtonDataService {
   }
 
   //Edit button
-  public static update(data: IButton): Observable<any> {
+  public static edit(data: IButton): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const buttonWithHeaders$ = ajax({
 
-          url: baseUrl+"/buttons/update/"+id,
+          url: baseUrl+"/buttons/edit/"+id,
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
