@@ -7,11 +7,11 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
-//User services for all app
+//Tag services for all app
 export class TagService {
 
   //Find model by tag
-  public static findByTag(tag: Itag): Observable<any> {
+  public static findByTag(tag: ITag): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const tagWithHeaders$ = ajax({
@@ -32,7 +32,7 @@ export class TagService {
   }
 
   //Find array of tag model instances
-  public static find(tag: Itag): Observable<any> {
+  public static find(tag: ITag): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const tagWithHeaders$ = ajax({
@@ -48,7 +48,6 @@ export class TagService {
               "id": tag.id,
               "modelName": tag.modelName,
               "modelId": tag.modelId,
-              "tagName": tag.tagName,
 
           },
       });
