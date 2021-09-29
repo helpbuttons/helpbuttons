@@ -38,11 +38,11 @@ function MyApp({ Component, pageProps }) {
         const publicPaths = ['/Login', '/Signup', '/RepositoryPage', '/Faqs', '/'];
         const path = url.split('?')[0];
         if (!userObs.userValue && !publicPaths.includes(path)) {
-            setAuthorized(false);
-            router.push({
-                pathname: '/Login',
-                query: { returnUrl: router.asPath }
-            });
+            setAuthorized(true);
+            // router.push({
+            //     pathname: '/Login',
+            //     query: { returnUrl: router.asPath }
+            // });
         } else {
             setAuthorized(true);
         }
@@ -51,7 +51,7 @@ function MyApp({ Component, pageProps }) {
     return (
         <>
             <Head>
-                <title>Next.js 11 - User Registration and Login Example</title>
+                <title>Helpbuttons.org</title>
                 {/* eslint-disable-next-line @next/next/no-css-tags */}
             </Head>
 

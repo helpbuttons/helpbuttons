@@ -14,6 +14,7 @@ import { alertService } from 'services/Alert';
 export class LoginEvent implements WatchEvent {
   public constructor(private email: string,private password: string) {}
   public watch(state: GlobalState) {
+    debugger
     return UserService.login(this.email, this.password).pipe(
       map((userData) => new UserLoggedEvent(userData)),
       catchError((error) => {
@@ -31,6 +32,9 @@ export class UserLoggedEvent implements UpdateEvent {
   public constructor(private userData: IUser) {}
   public update(state: GlobalState) {
     return produce(state, newState => {
+      debugger
+      userSubject.next(this.userData.token);
+      localStorage.setItem('userToken', JSON.stringify(this.userData.token));
       newState.currentUser = this.userData;
     });
   }

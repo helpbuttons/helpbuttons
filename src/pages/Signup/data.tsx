@@ -29,6 +29,7 @@ export class UserSignupEvent implements UpdateEvent {
   public constructor(private userData: IUser) {}
   public update(state: GlobalState) {
     return produce(state, newState => {
+      console.log("user logged"+ this.userData.email);
       newState.user = this.userData;
     });
   }
