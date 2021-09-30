@@ -5,5 +5,6 @@ export interface IUser {
   email: string,
   realm: string,
   roles: [],
+  token: string,
 
 }

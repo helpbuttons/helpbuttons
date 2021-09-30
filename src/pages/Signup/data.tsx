@@ -21,6 +21,7 @@ export class SignupEvent implements WatchEvent {
         return of(error);
       })
     )
+    .subscribe(output2 => alert(output2));
   }
 }
 
@@ -29,7 +30,6 @@ export class UserSignupEvent implements UpdateEvent {
   public constructor(private userData: IUser) {}
   public update(state: GlobalState) {
     return produce(state, newState => {
-      console.log("user logged"+ this.userData.email);
       newState.user = this.userData;
     });
   }
