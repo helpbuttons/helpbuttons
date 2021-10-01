@@ -8,3 +8,9 @@ export interface IUser {
   token: string,
 
 }
+
+export interface ICurrentUser {
+
+  token: string,
+
+}

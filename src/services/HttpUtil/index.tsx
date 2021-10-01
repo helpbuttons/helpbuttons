@@ -1,17 +1,9 @@
-import { Injectable } from '@angular/core';
-import { AppConfig } from '../app/app.config';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from 'next/config';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-@Service()
-class Foo {
-  doFooStuff() {
-    console.log('foo');
-  }
-}
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
+
 
 export class HttpUtilsService {
   public apiUrl: string;
@@ -27,13 +19,14 @@ export class HttpUtilsService {
       this.isAuthenticated$.next(true);
     }
 
-    this.apiUrl = AppConfig.apiUrl;
+    this.apiUrl = publicRuntimeConfig.apiUrl;
     if (this.apiUrl.indexOf('<front-host>') >= 0) {
       this.apiUrl = this.apiUrl.replace('<front-host>', window.location.hostname);
     }
   }
 
   public setAccessToken(tokenType?: string, accessToken?: string) {
+    debugger
     this.tokenType = tokenType;
     this.accessToken = accessToken;
     if (this.tokenType && this.accessToken) {
@@ -47,21 +40,21 @@ export class HttpUtilsService {
     }
   }
 
-  public getHttpOptions(isJson = true) {
-    let headers = new HttpHeaders();
-
-    if (isJson) {
-      headers = headers.set('Content-Type', 'application/json');
-    }
-
-    if (this.tokenType && this.accessToken) {
-      headers = headers.set('Authorization', `${this.tokenType} ${this.accessToken}`);
-    }
-
-    const httpOptions = {
-      headers
-    };
-
-    return httpOptions;
-  }
+  // public getHttpOptions(isJson = true) {
+  //   let headers = new HttpHeaders();
+  //
+  //   if (isJson) {
+  //     headers = headers.set('Content-Type', 'application/json');
+  //   }
+  //
+  //   if (this.tokenType && this.accessToken) {
+  //     headers = headers.set('Authorization', `${this.tokenType} ${this.accessToken}`);
+  //   }
+  //
+  //   const httpOptions = {
+  //     headers
+  //   };
+  //
+  //   return httpOptions;
+  // }
 }

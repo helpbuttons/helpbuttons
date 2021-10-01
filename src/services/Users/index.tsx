@@ -7,12 +7,12 @@ import { BehaviorSubject } from 'rxjs';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
-const userSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('user')));
+const userToken = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('user')));
 
 export const userObs = {
 
-    user: userSubject.asObservable(),
-    get userValue () { return userSubject.value },
+    user: userToken.asObservable(),
+    get userValue () { return userToken.value },
 
 };
 
@@ -52,12 +52,17 @@ export class UserService {
           headers: {
             "Content-Type": "application/json",
             "accept": "application/json",
+            "responseType": 'json',
           },
           body: {
             "email": email,
             "password": password,
           },
       });
+      // .done (response => response.json())
+      // .done (data => {
+      //   console.console.log(data.results[0]);
+      // });
 
     return userWithHeaders$;
 
