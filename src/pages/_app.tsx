@@ -3,7 +3,7 @@ import '../styles/app.scss'
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { userObs } from 'services/Users';
+import HttpUtilsService from 'services/HttpUtilsService';
 
 export default MyApp;
 
@@ -34,16 +34,16 @@ function MyApp({ Component, pageProps }) {
 
     function authCheck(url) {
         // redirect to login page if accessing a private page and not logged in
-        setUser(userObs.userValue);
-        const publicPaths = ['/Login', '/Signup', '/RepositoryPage', '/Faqs', '/'];
+        const token =  window.localStorage.getItem('access_token');
+        const publicPaths = ['/Login', '/Signup', '/RepositoryPage', '/Faqs', '/', '/ButtonNew'];
         const path = url.split('?')[0];
-        if (!userObs.userValue && !publicPaths.includes(path)) {
-            setAuthorized(false);
+        if (!token && !publicPaths.includes(path)) {
             router.push({
                 pathname: '/Login',
                 query: { returnUrl: router.asPath }
             });
         } else {
+
             setAuthorized(true);
         }
     }
@@ -51,7 +51,7 @@ function MyApp({ Component, pageProps }) {
     return (
         <>
             <Head>
-                <title>Next.js 11 - User Registration and Login Example</title>
+                <title>Helpbuttons.org</title>
                 {/* eslint-disable-next-line @next/next/no-css-tags */}
             </Head>
 

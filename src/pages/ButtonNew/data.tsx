@@ -10,11 +10,11 @@ import { IUser } from 'services/Users/types';
 import { alertService } from 'services/Alert';
 
 //Called event for new user signup
-export class SignupEvent implements WatchEvent {
-  public constructor(private email: string,private password: string) {}
+export class CreateEvent implements WatchEvent {
+  public constructor(private name: string, private type: string, private type: string, private description: string, private geoPlace: {}, private created: string, private modified: string, private owner: string, private templateButtonId: int) {}
   public watch(state: GlobalState) {
-    return UserService.signup(this.email, this.password).pipe(
-      map((userData) => new UserSignupEvent(userData)),
+    return ButtonService.new(this.name, this.type, this.description, this.geoPlace, this.created, this.modified, this.owner, this.templateButtonId ).pipe(
+      map((buttonData) => new ButtonCreateEvent(buttonData)),
       catchError((error) => {
         console.log("error: ", error);
         error = alertService.error;
@@ -26,8 +26,8 @@ export class SignupEvent implements WatchEvent {
 }
 
 //Called event for session update values
-export class UserSignupEvent implements UpdateEvent {
-  public constructor(private userData: IUser) {}
+export class ButtonCreateEvent implements UpdateEvent {
+  public constructor(private buttonData: IButton) {}
   public update(state: GlobalState) {
     return produce(state, newState => {
       newState.user = this.userData;

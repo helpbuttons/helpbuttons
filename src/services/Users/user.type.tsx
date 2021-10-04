@@ -5,5 +5,12 @@ export interface IUser {
   email: string,
   realm: string,
   roles: [],
+  token: string,
+
+}
+
+export interface ICurrentUser {
+
+  token: string,
 
 }

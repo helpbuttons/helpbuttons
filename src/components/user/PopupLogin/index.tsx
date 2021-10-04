@@ -36,7 +36,9 @@ export default function PopupLogin() {
   const { errors } = formState;
 
   function onSubmit(user) {
+
     debugger
+    console.log('login');
     store.emit(new LoginEvent(user.email, user.password));
 
   }

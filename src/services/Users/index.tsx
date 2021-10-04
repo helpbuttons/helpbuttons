@@ -8,14 +8,6 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
-
-export const userObs = {
-
-    user: userSubject.asObservable(),
-    get userValue () { return userSubject.value },
-
-};
-
 //User services for all app
 export class UserService {
 
@@ -52,12 +44,17 @@ export class UserService {
           headers: {
             "Content-Type": "application/json",
             "accept": "application/json",
+            "responseType": 'json',
           },
           body: {
             "email": email,
             "password": password,
           },
       });
+      // .done (response => response.json())
+      // .done (data => {
+      //   console.console.log(data.results[0]);
+      // });
 
     return userWithHeaders$;
 
@@ -108,8 +105,9 @@ export class UserService {
 
   public static logout() {
       // remove user from local storage to log user out
-      store.currentUser.loggedIn = false;
-      // currentUserSubject.next(null);
+      this.tokenType = window.localStorage.removeItem('token_type');
+      this.accessToken = window.localStorage.removeItem('access_token');
+
   }
 
 }

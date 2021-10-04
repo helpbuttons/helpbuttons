@@ -34,7 +34,7 @@ export interface UserState {
 }
 
 export interface CurrentUserState {
-  token: string,
+  token: any,
 }
 
 //No logged user  values
@@ -64,8 +64,8 @@ export interface GlobalState {
     listado: object[];
   }
 
-  currentUser: UserInitial;
-  user: UserInitial;
+  currentUser: CurrentUserState;
+  user: UserState;
   backTest: BackTestState;
 }
 
