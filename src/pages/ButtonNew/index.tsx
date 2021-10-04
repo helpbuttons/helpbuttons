@@ -1,5 +1,5 @@
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
-import PopupHeader from '../../components/popup/PopupHeader'
+import Popup from '../../components/popup/Popup'
 import NavBottom from '../../components/nav/NavBottom'
 import ButtonNewType from "../../components/button/ButtonNewType";
 import ButtonNewData from "../../components/button/ButtonNewData";
@@ -11,7 +11,9 @@ export default function ButtonNew() {
   return (
 
     <>
-        <PopupHeader />
+
+        <Popup title="Crear Botón">
+
 
         <div className="button-new__container">
 
@@ -26,6 +28,8 @@ export default function ButtonNew() {
         </div>
 
         <NavBottom />
+
+        </Popup>
 
     </>
 

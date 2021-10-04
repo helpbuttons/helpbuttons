@@ -7,14 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
-const userToken = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('user')));
-
-export const userObs = {
-
-    user: userToken.asObservable(),
-    get userValue () { return userToken.value },
-
-};
 
 //User services for all app
 export class UserService {
@@ -113,7 +105,9 @@ export class UserService {
 
   public static logout() {
       // remove user from local storage to log user out
-      currentUserSubject.next(null);
+      this.tokenType = window.localStorage.removeItem('token_type');
+      this.accessToken = window.localStorage.removeItem('access_token');
+
   }
 
 }

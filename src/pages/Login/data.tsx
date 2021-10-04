@@ -9,8 +9,7 @@ import { GlobalState } from 'store/Store';
 import { UserService } from 'services/Users';
 import { IUser } from 'services/Users/types';
 import { alertService } from 'services/Alert';
-import { userObs } from 'services/Users';
-import { HttpUtilsService } from "services/HttpUtil";
+import { HttpUtilsService } from "services/HttpUtilsService";
 
 //Called event for login
 export class LoginEvent implements WatchEvent {

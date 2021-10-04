@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { userService } from 'services';
-import { userObs } from 'services/Users';
 
 export { Layout };
 
@@ -10,8 +9,8 @@ function Layout({ children }) {
     const router = useRouter();
 
     useEffect(() => {
-        // redirect to home if already logged in
-        if (userObs.userValue) {
+        // redirect to home if not already logged in
+        if () {
             router.push('/');
         }
 
