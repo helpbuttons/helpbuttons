@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 
 //imported internal classes, variables, files or functions
 import { store } from 'pages/index';
-import { userService } from 'services/Users';
 import { alertService } from 'services/Alert';
 import { LoginEvent } from 'pages/Login/data';
 

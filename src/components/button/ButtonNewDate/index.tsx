@@ -1,6 +1,6 @@
 //is the component or element integrated in buttonNewPublish. Right before activate button. It displays the current selected date and a button to chang it, that ddisplays a picker with the date options for the net that's selecte
 
-export default function ButtonNewDate() {
+export default function ButtonNewDate({ exact, ...props }) {
 
   return (
 
@@ -26,18 +26,18 @@ export default function ButtonNewDate() {
       <button  className="picker__option-btn--active" type="button" name="btn">
           <div className="picker__option-btn--icon">
           </div>
-          <div className="picker__option-btn--txt">
+          <div onClick={() => props.setDate("Ahora")} className="picker__option-btn--txt">
             Ahora
           </div>
       </button>
-      <button  className="picker__option-btn--active" type="button" name="button">
+      <button onClick={() => props.setDate("10 Abril de 2022")}  className="picker__option-btn--active" type="button" name="button">
           <div className="picker__option-btn--icon">
           </div>
           <div className="picker__option-btn--txt">
             En una fecha Concreta
           </div>
       </button>
-      <button  className="picker__option-btn--active" type="button" name="button">
+      <button onClick={() => props.setDate("Todos los miércoles")}  className="picker__option-btn--active" type="button" name="button">
           <div className="picker__option-btn--icon">
           </div>
           <div className="picker__option-btn--txt">

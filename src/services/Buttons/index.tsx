@@ -1,22 +1,37 @@
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-
 import { IButton } from './button.type';
+
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { store } from './index';
+import { useRef } from '../../store/Store';
+
+
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
+const baseUrl = `${publicRuntimeConfig.apiUrl}`;
+
 
 
 export class ButtonService {
 
-  //Create button
-  public static new(data: IButton, userId: any): Observable<any> {
 
+  //Create button
+  public static new(data: IButton, token: string): Observable<any> {
+
+      debugger
+      const network = useRef(store, (state) => state.network.id);
+      console.log(JSON.parse(data.geoPlace));
       //save the ajax object that can be .pipe by the observable
       const buttonWithHeaders$ = ajax({
 
-          url: baseUrl+"/buttons/new",
+          url: baseUrl+"/buttons/new?networkId="+ network.toString(),
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "accept": "application/json",
+            "Authorization": "Bearer " + token,
           },
           body: {
 
@@ -24,9 +39,7 @@ export class ButtonService {
             "type": data.type,
             "tags": data.tags,
             "description": data.description,
-            "geoPlace": data.geoPlace,
-            "owner": userId,
-            "templateButtonId": data.templateButtonId,
+            "geoPlace": JSON.parse(data.geoPlace),
 
           },
       });

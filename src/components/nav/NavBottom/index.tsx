@@ -10,6 +10,7 @@ export default NavBottom;
 function NavBottom(){
 
   const [user, setUser] = useState(null);
+  const isAuthenticated =  window.localStorage.getItem('access_token');
 
   useEffect(() => {
       // const subscription = HttpUtilsService.isAuthenticated.subscribe(x => setUser(x));
@@ -41,6 +42,15 @@ function NavBottom(){
             </div>
             <div className="nav-bottom__text">
               Create
+            </div>
+        </NavLink>
+
+        <NavLink href="/NetworkNew" className="nav-bottom__link nav-bottom__link--active">
+            <div className="nav-bottom__icon">
+                <CrossIcon />
+            </div>
+            <div className="nav-bottom__text">
+              CreateNet
             </div>
         </NavLink>
 

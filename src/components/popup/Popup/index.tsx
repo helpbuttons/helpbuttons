@@ -4,7 +4,7 @@
 import PopupHeader from 'components/popup/PopupHeader';
 
 
-export default function Popup({children, title}) {
+export default function Popup({children, title, ...props}) {
 
   return (
 
@@ -18,6 +18,7 @@ export default function Popup({children, title}) {
                     {children}
 
               </div>
+
 
           </div>
   );

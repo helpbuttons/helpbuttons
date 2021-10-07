@@ -3,7 +3,6 @@ import { ajax } from 'rxjs/ajax';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { store } from './index';
-import { BehaviorSubject } from 'rxjs';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
@@ -60,8 +59,8 @@ export class UserService {
 
   }
 
-  //Login user
-  public static whoAmI(): Observable<any> {
+  //Check user
+  public static whoAmI(token:string): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const userWithHeaders$ = ajax({
@@ -73,6 +72,7 @@ export class UserService {
             "accept": "application/json",
           },
           body: {
+            token: token,
           },
       });
 
