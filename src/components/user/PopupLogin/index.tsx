@@ -19,8 +19,6 @@ import { LoginEvent } from 'pages/Login/data';
 
 export default function PopupLogin() {
 
-  const router = useRouter();
-
   // form validation rules
   const validationSchema = Yup.object().shape({
       email: Yup.string().required('Username is required'),
