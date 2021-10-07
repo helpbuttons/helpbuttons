@@ -13,7 +13,7 @@ import ButtonShare from "components/button/ButtonShare";
 
 import { store } from 'pages/index';
 import { useRef } from 'store/Store';
-import { CreateEvent } from 'pages/ButtonNew/data';
+import { CreateButtonEvent } from 'pages/ButtonNew/data';
 import IButton from 'services/Buttons/button.type';
 
 
