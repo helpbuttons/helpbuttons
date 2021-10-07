@@ -25,9 +25,7 @@ export default class AddButton extends Component<Props, State> {
       <>
 
         <ButtonNewDate setDate={this.props.setDate}/>
-        <ButtonNewLocation setLoc={this.props.setLoc}/>
-
-
+        <ButtonNewLocation setGeoPlace={this.props.setGeoPlace}/>
 
       </>
 

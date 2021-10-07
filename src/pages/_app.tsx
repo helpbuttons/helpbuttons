@@ -37,7 +37,6 @@ function MyApp({ Component, pageProps }) {
 
     function authCheck(url) {
         // redirect to login page if accessing a private page and not logged in
-        debugger
         const token =  window.localStorage.getItem('access_token');
         const publicPaths = ['/Login', '/Signup', '/RepositoryPage', '/Faqs', '/', '/ButtonNew'];
         const path = url.split('?')[0];
@@ -45,11 +44,8 @@ function MyApp({ Component, pageProps }) {
         if (token) {
            setLogged(true);
          }
-
         else {
-
           setLogged(false);
-
         }
 
         if (!token && !publicPaths.includes(path)) {
@@ -58,7 +54,6 @@ function MyApp({ Component, pageProps }) {
                 query: { returnUrl: router.asPath }
             });
         } else {
-
             setAuthorized(true);
         }
     }
@@ -73,9 +68,11 @@ function MyApp({ Component, pageProps }) {
             <div className={`${user ? '' : ''}`}>
 
                 {authorized &&
+
                     <Component {...pageProps} />
 
                 }
+
                 <NavBottom logged={logged} />
             </div>
 

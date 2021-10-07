@@ -17,8 +17,6 @@ export class ButtonService {
   //Create button
   public static new(data: IButton, token: string, networkId: string): Observable<any> {
 
-      debugger
-      console.log(JSON.parse(data.geoPlace) + networkId);
       //save the ajax object that can be .pipe by the observable
       const buttonWithHeaders$ = ajax({
 

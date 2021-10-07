@@ -10,12 +10,11 @@ import INetwork from 'services/Networks/types';
 import { alertService } from 'services/Alert';
 
 //Called event for new user signup
-export class CreateNetwork implements WatchEvent {
+export class CreateNetworkEvent implements WatchEvent {
   public constructor(private network : INetwork, private token : string) {}
   public watch(state: GlobalState) {
-    debugger
     return NetworkService.new(this.network, this.token).pipe(
-          map((networkData) => new NetworkCreateEvent(networkData)),
+          map((networkData) => new NetworkUpdateEvent(networkData)),
           catchError((error) => {
             console.log("error: ", error);
             error = alertService.error;
@@ -27,11 +26,10 @@ export class CreateNetwork implements WatchEvent {
 
 
 //Called event for session update values
-export class NetworkCreateEvent implements UpdateEvent {
+export class NetworkUpdateEvent implements UpdateEvent {
   public constructor(private network: INetwork) {}
   public update(state: GlobalState) {
     console.log(this.network.response);
-    debugger
     return produce(state, newState => {
       newState.network.id = this.network.response.id;
     });

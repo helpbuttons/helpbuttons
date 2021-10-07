@@ -8,7 +8,6 @@ import { GlobalState } from 'store/Store';
 
 import { UserService } from 'services/Users';
 import { IUser } from 'services/Users/types';
-import { alertService } from 'services/Alert';
 import { HttpUtilsService } from "services/HttpUtilsService";
 
 //Called event for login
@@ -21,7 +20,6 @@ export class LoginEvent implements WatchEvent {
       take(1),
       catchError(error => of({ error: true, message: `Error ${error.status}` })),
       tap(userData => {
-        debugger
         new HttpUtilsService().setAccessToken("user",userData.response.token);
         console.log(localStorage.getItem('user'));
         Router.push({ pathname: '/', state: {} });

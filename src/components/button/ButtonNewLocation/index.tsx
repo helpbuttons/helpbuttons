@@ -23,21 +23,21 @@ export default function ButtonNewLocation({ exact, ...props }) {
     </div>
 
     <div className="picker--over picker-box-shadow picker__content picker__options-v">
-      <div onClick={() => props.setLoc("En todas partes")}  className="picker__option-btn--active" type="button" name="btn">
+      <div onClick={() => props.setGeoPlace("En todas partes")}  className="picker__option-btn--active" type="button" name="btn">
           <div className="picker__option-btn--icon">
           </div>
           <div className="picker__option-btn--txt">
             En cualquier lugar
           </div>
       </div>
-      <div onClick={() => props.setLoc("Calle Ancha 24, Jerez")}  className="picker__option-btn--active" type="button" name="button">
+      <div onClick={() => props.setGeoPlace("Calle Ancha 24, Jerez")}  className="picker__option-btn--active" type="button" name="button">
           <div className="picker__option-btn--icon">
           </div>
           <div className="picker__option-btn--txt">
             En un sitio concreto
           </div>
       </div>
-      <div onClick={() => props.setLoc("De Calle Larga 24, Madrid a Calle ancha 22, Jerez")}  className="picker__option-btn--active" type="button" name="button">
+      <div onClick={() => props.setGeoPlace("De Calle Larga 24, Madrid a Calle ancha 22, Jerez")}  className="picker__option-btn--active" type="button" name="button">
           <div className="picker__option-btn--icon">
           </div>
           <div className="picker__option-btn--txt">

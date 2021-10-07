@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { catchError } from 'rxjs/operators';
-import { useEffect } from 'react';
 
 import Popup from 'components/popup/Popup'
 import ButtonNewType from "components/button/ButtonNewType";
@@ -15,13 +13,15 @@ import ButtonShare from "components/button/ButtonShare";
 
 import { store } from 'pages/index';
 import { useRef } from 'store/Store';
-import { alertService } from 'services/Alert';
 import { CreateEvent } from 'pages/ButtonNew/data';
 import IButton from 'services/Buttons/button.type';
 
 
 export default function ButtonNew() {
 
+    const router = useRouter();
+
+  // form variables
     const [name, setName] = useState("");
     const [owner, setOwner] = useState(0);
     const [templateButtonId, setTemplateButtonId] = useState(0);
@@ -29,14 +29,16 @@ export default function ButtonNew() {
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState([]);
     const [date, setDate] = useState("");
-    const [location, setLoc] = useState('{ "type": "Point", "coordinates": [100.0, 0.0]}');
+    const [geoPlace, setGeoPlace] = useState('{ "type": "Point", "coordinates": [100.0, 0.0]}');
     const [networks, setNetworks] = useState([]);
     const [feedType, setFeedType] = useState("");
     const [templateExtraData, setTemplateExtraData] = useState("");
 
+    // get selected network from store
     const networkId = useRef(store, (state) => state.network.id.toString());
+    // get validation token from localStorage
+    const token = window.localStorage.getItem('access_token');
 
-    const router = useRouter();
 
     // form validation rules
     const buttonSchema = Yup.object().shape({
@@ -49,21 +51,17 @@ export default function ButtonNew() {
         location: Yup.string(),
 
     });
-
+    // form validation YUP functions
     const formOptions = { resolver: yupResolver(buttonSchema) };
-
-    const token = window.localStorage.getItem('access_token');
-
-    // get functions to build form with useForm() hook
+    // get functions to build form with useForm() hook. Not used to store or send the data
     const { register, handleSubmit, formState } = useForm(formOptions);
     const { errors } = formState;
 
 
     function onSubmit() {
-        //emit is called to trigger the event by the observable
-        debugger
-        console.log('login');
+        console.log('create button');
 
+        //button data interface to be stored and sent
         const button: IButton = {
 
           name: name,
@@ -74,7 +72,7 @@ export default function ButtonNew() {
           //required data
           // date: date,
           //GIS DATA
-          geoPlace: location,
+          geoPlace: geoPlace,
           // optional values
           networks: networks,
           // feedType: feedType, //enum {single,group} feed structure
@@ -82,8 +80,8 @@ export default function ButtonNew() {
 
         };
 
-        debugger
-        store.emit(new CreateEvent(button, token, networkId));
+        //emit is called to trigger the event by the observable
+        store.emit(new CreateButtonEvent(button, token, networkId));
 
     }
 
@@ -103,9 +101,9 @@ export default function ButtonNew() {
                   {tags}
                   {description}
 
-                  <ButtonPublish setDate={setDate} setLoc={setLoc} setFeedType={setFeedType} date={date} location={location} feedType={feedType} register={register} errors={errors}/>
+                  <ButtonPublish setDate={setDate} setGeoPlace={setGeoPlace} setFeedType={setFeedType} date={date} geoPlace={geoPlace} feedType={feedType} register={register} errors={errors}/>
                   {date}
-                  {location}
+                  {geoPlace}
                   {feedType}
 
                   <ButtonShare />
@@ -115,7 +113,7 @@ export default function ButtonNew() {
                     <button type="submit" disabled={formState.isSubmitting}  className="popup__options-btn btn-menu-white">
 
                       {formState.isSubmitting && <span className=""></span>}
-                        Crear
+                        Crear Botón
 
                     </button>
 

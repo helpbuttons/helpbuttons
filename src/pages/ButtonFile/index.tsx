@@ -1,10 +1,10 @@
 //the button url itself
 import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
-import CardButton from '../../components/button/CardButton'
-import CardNotification from '../../components/feed/CardNotification'
-import NavHeader from '../../components/nav/NavHeader'
+import CardButton from 'components/button/CardButton'
+import CardNotification from 'components/feed/CardNotification'
+import NavHeader from 'components/nav/NavHeader'
 
-import Feed from '../../layouts/Feed'
+import Feed from 'layouts/Feed'
 
 
 export default function ButtonFile() {

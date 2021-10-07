@@ -1,24 +1,22 @@
 //create net popup menu
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { catchError } from 'rxjs/operators';
-import { useEffect } from 'react';
 
-import Popup from '../../components/popup/Popup';
-;
+import Popup from 'components/popup/Popup';
 
 import { store } from 'pages/index';
-import { alertService } from 'services/Alert';
-import { CreateNetwork } from 'pages/NetworkNew/data';
+import { CreateNetworkEvent } from 'pages/NetworkNew/data';
 import INetwork from 'services/Networks/network.type';
-
 
 
 export default function NetworkNew() {
 
+    //session token to check if logged and send with request
+    const token = window.localStorage.getItem('access_token');
+
+    ///declare form variables
     const [name, setName] = useState("network example");
     const [url, setUrl] = useState("");
     const [avatar, setAvatar] = useState("");
@@ -31,9 +29,7 @@ export default function NetworkNew() {
     const [radius, setRadius] = useState(0);
     const [owner, setOwner] = useState("");
 
-    const router = useRouter();
-
-    // form validation rules
+    // form validation rules in yup form.
     const networkSchema = Yup.object().shape({
 
         name: Yup.string(),
@@ -47,23 +43,17 @@ export default function NetworkNew() {
         geoPlace: Yup.string(),
         radius: Yup.string(),
 
-
     });
 
     const formOptions = { resolver: yupResolver(networkSchema) };
-
-    const token = window.localStorage.getItem('access_token');
-
-    // get functions to build form with useForm() hook
+    // get functions to build form with useForm() hook, we don't use register in this case since we store the data apart.
     const { register, handleSubmit, formState } = useForm(formOptions);
     const { errors } = formState;
 
-
     function onSubmit() {
         //emit is called to trigger the event by the observable
-        debugger
         console.log('create net');
-
+        //provisional interface to send, YUP is used for validation messages, not for sending data. Real data is stored here using useState and sent.
         const network: INetwork = {
 
           name: name,
@@ -80,8 +70,7 @@ export default function NetworkNew() {
 
         };
 
-        debugger
-        store.emit(new CreateNetwork(network, token));
+        store.emit(new CreateNetworkEvent(network, token));
 
     }
 
@@ -142,7 +131,7 @@ export default function NetworkNew() {
                     <button type="submit" disabled={formState.isSubmitting}  className="popup__options-btn btn-menu-white">
 
                       {formState.isSubmitting && <span className=""></span>}
-                        Crear
+                        Create Net
 
                     </button>
 

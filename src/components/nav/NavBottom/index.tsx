@@ -11,17 +11,9 @@ function NavBottom({logged}){
 
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-      // const subscription = HttpUtilsService.isAuthenticated.subscribe(x => setUser(x));
-      // return () => subscription.unsubscribe();
-  }, []);
-
   function logout() {
       UserService.logout();
   }
-
-  // only show nav when logged in
-  // if (!user) return null;
 
   return(
 

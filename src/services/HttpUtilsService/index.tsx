@@ -26,7 +26,6 @@ export class HttpUtilsService {
   }
 
   public setAccessToken(tokenType?: string, accessToken?: string) {
-    debugger
     this.tokenType = tokenType;
     this.accessToken = accessToken;
     if (this.tokenType && this.accessToken) {
