@@ -7,10 +7,9 @@ import { HttpUtilsService } from 'services/HttpUtilsService';
 
 export default NavBottom;
 
-function NavBottom(){
+function NavBottom({logged}){
 
   const [user, setUser] = useState(null);
-  const isAuthenticated =  window.localStorage.getItem('access_token');
 
   useEffect(() => {
       // const subscription = HttpUtilsService.isAuthenticated.subscribe(x => setUser(x));
@@ -25,6 +24,7 @@ function NavBottom(){
   // if (!user) return null;
 
   return(
+
       <nav id="bottom-nav" className="nav-bottom">
 
         <NavLink href="/" className="nav-bottom__link nav-bottom__link--active">
@@ -45,33 +45,6 @@ function NavBottom(){
             </div>
         </NavLink>
 
-        <NavLink href="/NetworkNew" className="nav-bottom__link nav-bottom__link--active">
-            <div className="nav-bottom__icon">
-                <CrossIcon />
-            </div>
-            <div className="nav-bottom__text">
-              CreateNet
-            </div>
-        </NavLink>
-
-        <NavLink href="/Config" className="nav-bottom__link nav-bottom__link--active">
-            <div className="nav-bottom__icon">
-                <CrossIcon />
-            </div>
-            <div className="nav-bottom__text">
-              Config
-            </div>
-        </NavLink>
-
-        <NavLink href="/Profile" className="nav-bottom__link nav-bottom__link--active">
-            <div className="nav-bottom__icon">
-                <CrossIcon />
-            </div>
-            <div className="nav-bottom__text">
-              Profile
-            </div>
-        </NavLink>
-
         <NavLink href="/ButtonFile" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
                 <CrossIcon />
@@ -81,14 +54,6 @@ function NavBottom(){
             </div>
         </NavLink>
 
-        <NavLink href="/Login" className="nav-bottom__link nav-bottom__link--active">
-            <div className="nav-bottom__icon">
-                <CrossIcon />
-            </div>
-            <div className="nav-bottom__text">
-              Login
-            </div>
-        </NavLink>
 
         <NavLink href="/Faqs" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
@@ -99,14 +64,62 @@ function NavBottom(){
             </div>
         </NavLink>
 
-        <a onClick={logout} href="/Faqs" className="nav-bottom__link nav-bottom__link--active">
-            <div className="nav-bottom__icon">
-                <CrossIcon />
-            </div>
-            <div className="nav-bottom__text">
-              Logout
-            </div>
-        </a>
+        {logged && (
+            <>
+
+              <NavLink href="/NetworkNew" className="nav-bottom__link nav-bottom__link--active">
+                  <div className="nav-bottom__icon">
+                      <CrossIcon />
+                  </div>
+                  <div className="nav-bottom__text">
+                    CreateNet
+                  </div>
+              </NavLink>
+
+              <NavLink href="/Profile" className="nav-bottom__link nav-bottom__link--active">
+                  <div className="nav-bottom__icon">
+                      <CrossIcon />
+                  </div>
+                  <div className="nav-bottom__text">
+                    Profile
+                  </div>
+              </NavLink>
+
+              <NavLink href="/Config" className="nav-bottom__link nav-bottom__link--active">
+                  <div className="nav-bottom__icon">
+                      <CrossIcon />
+                  </div>
+                  <div className="nav-bottom__text">
+                    Config
+                  </div>
+              </NavLink>
+
+              <a onClick={logout} href="/Faqs" className="nav-bottom__link nav-bottom__link--active">
+                  <div className="nav-bottom__icon">
+                      <CrossIcon />
+                  </div>
+                  <div className="nav-bottom__text">
+                    Logout
+                  </div>
+              </a>
+
+            </>
+
+        )}
+
+        { !logged && (
+
+            <NavLink href="/Login" className="nav-bottom__link nav-bottom__link--active">
+                <div className="nav-bottom__icon">
+                    <CrossIcon />
+                </div>
+                <div className="nav-bottom__text">
+                  Login
+                </div>
+            </NavLink>
+
+          )
+        }
 
       </nav>
   );

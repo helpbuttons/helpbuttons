@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 import { useEffect } from 'react';
 
 import Popup from '../../components/popup/Popup';
-import NavBottom from '../../components/nav/NavBottom';
+;
 
 import { store } from 'pages/index';
 import { alertService } from 'services/Alert';
@@ -65,7 +65,7 @@ export default function NetworkNew() {
         console.log('create net');
 
         const network: INetwork = {
-          
+
           name: name,
           url: url,
           privacy: privacy,
@@ -152,7 +152,7 @@ export default function NetworkNew() {
 
               </Popup>
 
-              <NavBottom />
+
 
           </>
       );

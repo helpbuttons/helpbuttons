@@ -1,6 +1,6 @@
 //Screen to give access to a network. I can be because is private or because yoou're blocked
 import NavHeader from '../../components/nav/NavHeader'
-import NavBottom from '../../components/nav/NavBottom'
+
 import PopupHeader from '../../components/popup/PopupHeader'
 
 
@@ -35,7 +35,7 @@ export default function NetworkAccess() {
 
       </div>
 
-      <NavBottom />
+      
 
     </>
 

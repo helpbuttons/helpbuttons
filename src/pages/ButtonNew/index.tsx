@@ -8,7 +8,6 @@ import { catchError } from 'rxjs/operators';
 import { useEffect } from 'react';
 
 import Popup from 'components/popup/Popup'
-import NavBottom from 'components/nav/NavBottom'
 import ButtonNewType from "components/button/ButtonNewType";
 import ButtonNewData from "components/button/ButtonNewData";
 import ButtonPublish from "layouts/ButtonPublish";
@@ -126,7 +125,7 @@ export default function ButtonNew() {
 
               </Popup>
 
-              <NavBottom />
+
 
           </>
       );

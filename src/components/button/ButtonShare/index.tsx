@@ -1,6 +1,5 @@
 // this is the sharing social section menu options that uses popup classNamees. It can be isplayed at the end of buttonNew Process but also directly in ButtonFile from the options menu.
 import NavHeader from '../../components/nav/NavHeader'
-import NavBottom from '../../components/nav/NavBottom'
 
 
 export default function ButtonShare() {
@@ -10,7 +9,7 @@ export default function ButtonShare() {
     <>
 
         <div className="popup__section">
-        
+
               <p className="popup__paragraph">
                 ¡Compártelo para que lo vea más gente!
               </p>

@@ -3,7 +3,7 @@ import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
 import CardButton from '../../components/button/CardButton'
 import CardNotification from '../../components/feed/CardNotification'
 import NavHeader from '../../components/nav/NavHeader'
-import NavBottom from '../../components/nav/NavBottom'
+
 import Feed from '../../layouts/Feed'
 
 
@@ -66,7 +66,7 @@ export default function ButtonFile() {
 
       </div>
 
-      <NavBottom />
+
 
     </>
 
