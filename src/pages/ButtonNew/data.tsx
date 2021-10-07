@@ -12,10 +12,10 @@ import { alertService } from 'services/Alert';
 
 //Called event for new user signup
 export class CreateEvent implements WatchEvent {
-  public constructor(private button : IButton, private token : string) {}
+  public constructor(private button : IButton, private token : string, private networkId : string) {}
   public watch(state: GlobalState) {
     debugger
-    return ButtonService.new(this.button, this.token).pipe(
+    return ButtonService.new(this.button, this.token, this.networkId).pipe(
             catchError((error) => {
               console.log("error: ", error);
               error = alertService.error;

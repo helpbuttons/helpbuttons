@@ -65,7 +65,7 @@ export default function NetworkNew() {
         console.log('create net');
 
         const network: INetwork = {
-
+          
           name: name,
           url: url,
           privacy: privacy,

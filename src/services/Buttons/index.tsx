@@ -12,21 +12,17 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
-
-
 export class ButtonService {
 
-
   //Create button
-  public static new(data: IButton, token: string): Observable<any> {
+  public static new(data: IButton, token: string, networkId: string): Observable<any> {
 
       debugger
-      const network = useRef(store, (state) => state.network.id);
-      console.log(JSON.parse(data.geoPlace));
+      console.log(JSON.parse(data.geoPlace) + networkId);
       //save the ajax object that can be .pipe by the observable
       const buttonWithHeaders$ = ajax({
 
-          url: baseUrl+"/buttons/new?networkId="+ network.toString(),
+          url: baseUrl+"/buttons/new?networkId="+ networkId,
           method: "POST",
           headers: {
             "Content-Type": "application/json",

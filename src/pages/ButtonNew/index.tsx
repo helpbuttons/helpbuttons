@@ -7,14 +7,15 @@ import * as Yup from 'yup';
 import { catchError } from 'rxjs/operators';
 import { useEffect } from 'react';
 
-import Popup from '../../components/popup/Popup'
-import NavBottom from '../../components/nav/NavBottom'
-import ButtonNewType from "../../components/button/ButtonNewType";
-import ButtonNewData from "../../components/button/ButtonNewData";
-import ButtonPublish from "../../layouts/ButtonPublish";
-import ButtonShare from "../../components/button/ButtonShare";
+import Popup from 'components/popup/Popup'
+import NavBottom from 'components/nav/NavBottom'
+import ButtonNewType from "components/button/ButtonNewType";
+import ButtonNewData from "components/button/ButtonNewData";
+import ButtonPublish from "layouts/ButtonPublish";
+import ButtonShare from "components/button/ButtonShare";
 
 import { store } from 'pages/index';
+import { useRef } from 'store/Store';
 import { alertService } from 'services/Alert';
 import { CreateEvent } from 'pages/ButtonNew/data';
 import IButton from 'services/Buttons/button.type';
@@ -34,6 +35,7 @@ export default function ButtonNew() {
     const [feedType, setFeedType] = useState("");
     const [templateExtraData, setTemplateExtraData] = useState("");
 
+    const networkId = useRef(store, (state) => state.network.id.toString());
 
     const router = useRouter();
 
@@ -82,7 +84,7 @@ export default function ButtonNew() {
         };
 
         debugger
-        store.emit(new CreateEvent(button, token));
+        store.emit(new CreateEvent(button, token, networkId));
 
     }
 

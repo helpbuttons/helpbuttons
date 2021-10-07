@@ -28,10 +28,12 @@ export class CreateNetwork implements WatchEvent {
 
 //Called event for session update values
 export class NetworkCreateEvent implements UpdateEvent {
-  public constructor(private networkData: INetwork) {}
+  public constructor(private network: INetwork) {}
   public update(state: GlobalState) {
+    console.log(this.network.response);
+    debugger
     return produce(state, newState => {
-      newState.network = this.networkData.id;
+      newState.network.id = this.network.response.id;
     });
   }
 }
