@@ -5,7 +5,7 @@ export interface IButton {
   templateButtonId: any | null,
   type: enum,
   tags: [Itag],
-  description: string;
+  description: string,
   //required data
   date: [],
   //GIS DATA

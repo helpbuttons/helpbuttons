@@ -3,12 +3,15 @@ import { ajax } from 'rxjs/ajax';
 
 import { INetwork } from './network.type';
 
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
+const baseUrl = `${publicRuntimeConfig.apiUrl}`;
+import { store } from 'pages/index';
 
 export class NetworkService {
 
-
   //Create network
-  public static new(data: INetwork, user: any): Observable<any> {
+  public static new(data: INetwork, token: string): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const networkWithHeaders$ = ajax({
@@ -18,6 +21,7 @@ export class NetworkService {
           headers: {
             "Content-Type": "application/json",
             "accept": "application/json",
+            "Authorization": "Bearer " + token,
           },
           body: {
 
@@ -27,8 +31,7 @@ export class NetworkService {
             "description": data.description,
             "privacy": data.privacy,
             "place": data.place,
-            "geoPlace": data.geoPlace,
-            "owner": user.id,
+            "geoPlace": JSON.parse(data.geoPlace),
 
           },
       });

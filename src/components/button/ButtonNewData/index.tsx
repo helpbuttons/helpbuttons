@@ -1,10 +1,9 @@
 //Data section of the button creation process , here is where butttonTemplate field of the backend displays all extradata, description, images and other specific field of the net you're displaying.
 //It uses popup classNamees if it's an overlay. In mobile it's be its own page. It leads to buttonNewPublish and iis preceeded by ButtonNewType
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
-import PopupHeader from '../../components/popup/PopupHeader'
 
 
-export default function ButtonNewData() {
+export default function ButtonNewData({ exact, ...props }) {
 
   return (
 
@@ -17,7 +16,8 @@ export default function ButtonNewData() {
             imágenes si quieres.
           </p>
 
-          <textarea className="textarea__textarea" placeholder="Escribe aquí tu descripción"></textarea>
+          <textarea onChange={() => props.setDescription("")} name="description" type="text" className="textarea__textarea" placeholder="Escribe aquí tu descripción"></textarea>
+          <div className="invalid-feedback">{props.errors.description?.message}</div>
 
           <p className="popup__paragraph">
             Elige etiquetas que definan tu botón :
@@ -26,7 +26,7 @@ export default function ButtonNewData() {
           <div className="card-button__hashtags">
 
                 <div className="card-button__busca">
-                  <div className="hashtag">tag</div>
+                  <div onClick={() => props.setTags("tag1")} className="hashtag">tag</div>
                 </div>
 
           </div>
@@ -39,17 +39,6 @@ export default function ButtonNewData() {
 
           </div>
 
-          <div className="popup__options-v">
-
-            <button
-              className="btn"
-              type="button"
-              name="button"
-              disabled>
-              Siguiente
-            </button>
-
-          </div>
 
       </div>
 

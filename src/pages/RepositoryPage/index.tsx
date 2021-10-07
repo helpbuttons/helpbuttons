@@ -6,7 +6,6 @@ import Map from "../components/map/LeafletMap/index";
 import { Store } from "../store/Store";
 import { Event } from "../store/Event";
 import List from "../components/List";
-import NavBottom from "../components/NavBottom"; //just for mobile
 import Repository from "../../layouts/Repository";
 import NavHeader from "../components/NavHeader"; //just for mobile
 

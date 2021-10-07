@@ -5,7 +5,6 @@ import Map from "components/map/LeafletMap";
 import { Store } from "store/Store";
 import { Event } from "store/Event";
 import List from "components/list/List";
-import NavBottom from "components/nav/NavBottom"; //just for mobile
 import NavHeader from "components/nav/NavHeader"; //just for mobile
 import { userService } from 'services/Users';
 import { Link } from 'elements/Link';
@@ -94,7 +93,7 @@ const Home: NextPage = () => {
     <>
       <NavHeader />
       <Map />
-      <NavBottom />
+
     </>
   );
 };

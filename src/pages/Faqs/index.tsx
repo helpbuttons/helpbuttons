@@ -1,6 +1,6 @@
 //QUESTIONS AND INFO
 import NavHeader from '../../components/nav/NavHeader'
-import NavBottom from '../../components/nav/NavBottom'
+
 import Directory from '../../elements/Directory'
 import Accordion from '../../elements/Accordion'
 
@@ -26,7 +26,7 @@ export default function Faqs() {
 
       </div>
 
-      <NavBottom />
+      
 
     </>
 

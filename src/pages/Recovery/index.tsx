@@ -1,6 +1,6 @@
 //
 import NavHeader from '../../components/nav/NavHeader'
-import NavBottom from '../../components/nav/NavBottom'
+
 
 
 export default function Recovery() {
@@ -11,7 +11,7 @@ export default function Recovery() {
 
       <NavHeader />
 
-      <NavBottom />
+      
 
     </>
 
