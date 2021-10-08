@@ -10,9 +10,9 @@ services:
       db:
         condition: service_healthy
 # if u want to develop code using docker...
-    # command: npm run start:watch
-    # volumes:
-      # - ./src:/home/node/app/src:ro
+    command: npm run start:watch
+    volumes:
+      - ./src:/home/node/app/src:ro
   db:
     image: postgis/postgis:13-master
     restart: always
