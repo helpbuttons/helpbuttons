@@ -4,13 +4,13 @@ $filters-padding: 10px;
 
 .filters {
   position: relative;
-  position: relative;
   width: 100%;
   top: 0;
   display: flex;
   background: $color-corporative;
   overflow-x: scroll;
   padding: $padding-big $padding-small;
+  z-index: $z-index-01;
 
 }
 
@@ -26,6 +26,7 @@ $filters-padding: 10px;
   background: $color-ligth-gray;
   overflow-y: scroll;
   padding: $padding-big $padding-big;
+  z-index: $z-index-01;
 
 }
 

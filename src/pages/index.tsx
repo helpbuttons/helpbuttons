@@ -90,11 +90,12 @@ export const store = new Store<GlobalState>({
 
 const Home: NextPage = () => {
   return (
-    <>
-      <NavHeader />
-      <Map />
 
-    </>
+      <div className="index__container">
+        <NavHeader />
+        <Map />
+      </div>
+
   );
 };
 
