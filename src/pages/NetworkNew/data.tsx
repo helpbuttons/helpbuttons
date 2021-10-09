@@ -29,7 +29,6 @@ export class CreateNetworkEvent implements WatchEvent {
 export class NetworkUpdateEvent implements UpdateEvent {
   public constructor(private network: INetwork) {}
   public update(state: GlobalState) {
-    console.log(this.network.response);
     return produce(state, newState => {
       newState.network.id = this.network.response.id;
     });

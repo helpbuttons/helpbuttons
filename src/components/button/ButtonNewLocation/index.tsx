@@ -11,7 +11,7 @@ export default function ButtonNewLocation({ exact, ...props }) {
       <div className="card-buttons">
 
         <div className="card-button__city card-button__everywhere " >
-          En todas partes
+          {props.geoPlace}
         </div>
 
       </div>
@@ -21,29 +21,28 @@ export default function ButtonNewLocation({ exact, ...props }) {
       </div>
 
     </div>
-
     <div className="picker--over picker-box-shadow picker__content picker__options-v">
-      <div onClick={() => props.setGeoPlace("En todas partes")}  className="picker__option-btn--active" type="button" name="btn">
+      <button onClick={() => props.setGeoPlace('{ "type": "Point", "coordinates": [100.0, 0.0]}')}  className="picker__option-btn--active" type="button" name="btn">
           <div className="picker__option-btn--icon">
           </div>
           <div className="picker__option-btn--txt">
             En cualquier lugar
           </div>
-      </div>
-      <div onClick={() => props.setGeoPlace("Calle Ancha 24, Jerez")}  className="picker__option-btn--active" type="button" name="button">
+      </button>
+      <button onClick={() => props.setGeoPlace('{ "type": "Point", "coordinates": [100.0, 0.0]}')}  className="picker__option-btn--active" type="button" name="button">
           <div className="picker__option-btn--icon">
           </div>
           <div className="picker__option-btn--txt">
             En un sitio concreto
           </div>
-      </div>
-      <div onClick={() => props.setGeoPlace("De Calle Larga 24, Madrid a Calle ancha 22, Jerez")}  className="picker__option-btn--active" type="button" name="button">
+      </button>
+      <button onClick={() => props.setGeoPlace('{ "type": "Point", "coordinates": [100.0, 0.0]}')}  className="picker__option-btn--active" type="button" name="button">
           <div className="picker__option-btn--icon">
           </div>
           <div className="picker__option-btn--txt">
             Desde / Hasta
           </div>
-      </div>
+      </button>
     </div>
 
     </>

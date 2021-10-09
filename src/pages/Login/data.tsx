@@ -21,7 +21,6 @@ export class LoginEvent implements WatchEvent {
       catchError(error => of({ error: true, message: `Error ${error.status}` })),
       tap(userData => {
         new HttpUtilsService().setAccessToken("user",userData.response.token);
-        console.log(localStorage.getItem('user'));
         Router.push({ pathname: '/', state: {} });
       }),
     )

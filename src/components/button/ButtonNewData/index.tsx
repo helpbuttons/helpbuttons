@@ -17,6 +17,7 @@ export default function ButtonNewData({ exact, ...props }) {
           </p>
 
           <textarea onChange={() => props.setDescription("")} name="description" type="text" className="textarea__textarea" placeholder="Escribe aquí tu descripción"></textarea>
+          
           <div className="invalid-feedback">{props.errors.description?.message}</div>
 
           <p className="popup__paragraph">
@@ -33,9 +34,10 @@ export default function ButtonNewData({ exact, ...props }) {
 
           <div className="popup__options-h">
 
-            <button className="btn">
-              + Añadir imagen
-            </button>
+                <label htmlFor="files" className="btn">
+                  + Añadir imagen
+                </label>
+                <input id="files" type="file"/>
 
           </div>
 

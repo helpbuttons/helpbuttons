@@ -50,10 +50,6 @@ export class UserService {
             "password": password,
           },
       });
-      // .done (response => response.json())
-      // .done (data => {
-      //   console.console.log(data.results[0]);
-      // });
 
     return userWithHeaders$;
 

@@ -11,7 +11,7 @@ export default function ButtonNewDate({ exact, ...props }) {
       <div className="card-buttons">
 
         <div className="card-button__date">
-            Ahora
+            {props.date}
         </div>
 
       </div>
