@@ -22,8 +22,6 @@ import Popup from 'components/popup/Popup';
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 
 
-
-
 export default function PopupSignup() {
 
   const router = useRouter();
@@ -75,7 +73,7 @@ export default function PopupSignup() {
                             <div className="invalid-feedback">{errors.password?.message}</div>
                         </div>
 
-                        <Btn btnType={BtnType.splitIcon} caption="REGISTER" isSubmitting={formState.isSubmitting} contentAlignment={ContentAlignment.center}/>
+                        <Btn btnType={BtnType.splitIcon} caption="REGISTER" contentAlignment={ContentAlignment.center}/>
 
                     </form>
 
