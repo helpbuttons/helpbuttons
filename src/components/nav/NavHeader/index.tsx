@@ -58,38 +58,38 @@ export default class NavHeader extends React.Component {
 
     return(
 
-      <>
+      <div className="nav-header__container">
 
-        <form className="nav-header__content">
+          <form className="nav-header__content">
 
-            <button className="btn-circle">
+              <button className="btn-circle">
 
-              <div className="btn-circle__content">
+                <div className="btn-circle__content">
 
-                <div className="btn-circle__icon">
-                  <CrossIcon />
+                  <div className="btn-circle__icon">
+                    <CrossIcon />
+                  </div>
+
                 </div>
+
+              </button>
+
+              <div className="nav-header__content-message">
+
+                <input onFocus={() => this.setState({ showHideFiltersMobile: true })} onBlur={() => this.setState({ showHideFiltersMobile: false })} className="form__input nav-header__content-input" placeholder="Search tags"></input>
 
               </div>
 
-            </button>
+          </form>
 
-            <div className="nav-header__content-message">
+          <Filters />
 
-              <input onFocus={() => this.setState({ showHideFiltersMobile: true })} onBlur={() => this.setState({ showHideFiltersMobile: false })} className="form__input nav-header__content-input" placeholder="Search tags"></input>
+          { showHideFiltersMobile ? <FiltersMobile />  : null}
 
-            </div>
-
-        </form>
-
-        <Filters />
-
-        { showHideFiltersMobile ? <FiltersMobile />  : null}
-
-        { showHideInfoOverlay ? <HeaderInfo />  : null}
+          { showHideInfoOverlay ? <HeaderInfo />  : null}
 
 
-      </>
+      </div>
 
     )
 

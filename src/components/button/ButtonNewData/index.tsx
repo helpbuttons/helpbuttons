@@ -17,7 +17,6 @@ export default function ButtonNewData({ exact, ...props }) {
           </p>
 
           <textarea onChange={() => props.setDescription("")} name="description" type="text" className="textarea__textarea" placeholder="Escribe aquí tu descripción"></textarea>
-          
           <div className="invalid-feedback">{props.errors.description?.message}</div>
 
           <p className="popup__paragraph">
@@ -26,18 +25,18 @@ export default function ButtonNewData({ exact, ...props }) {
 
           <div className="card-button__hashtags">
 
-                <div className="card-button__busca">
-                  <div onClick={() => props.setTags("tag1")} className="hashtag">tag</div>
-                </div>
+              <div className="card-button__busca">
+                <div onClick={() => props.setTags("tag1")} className="hashtag">tag</div>
+              </div>
 
           </div>
 
           <div className="popup__options-h">
 
-                <label htmlFor="files" className="btn">
-                  + Añadir imagen
-                </label>
-                <input id="files" type="file"/>
+              <label htmlFor="files" className="btn">
+                + Añadir imagen
+              </label>
+              <input id="files" type="file" className="btn"/>
 
           </div>
 

@@ -8,7 +8,11 @@ $index-mobile-fixed-z-index: $z-index-05;
   z-index: $index-mobile-fixed-z-index;
 }
 .index__container {
-  // overflow: auto;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 .index {
   &__html-overflow {
@@ -428,7 +432,7 @@ $index-mobile-fixed-z-index: $z-index-05;
       width: 9.375rem;
       height: 9.375rem;
       border-radius: 9.375rem;
-      
+
       opacity: 0;
       animation-name: start-ring;
       animation-delay: 3.5s;
@@ -492,7 +496,7 @@ $index-mobile-fixed-z-index: $z-index-05;
   }
 }
 
-@media #{$breakpoints-xxlarge} { 
+@media #{$breakpoints-xxlarge} {
   .index__mobile-fixed {
     position: fixed;
   }
