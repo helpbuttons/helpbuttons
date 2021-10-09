@@ -1,10 +1,11 @@
 //List of elements component that can be used anywhere in the app
 import icon from '../../../public/assets/svg/icons/feed.svg'
-import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
+import CrossIcon from '../../../public/assets/svg/icons/cross1'
 import back from '../../../public/assets/svg/icons/back.svg'
 import hand from '../../../public/assets/svg/icons/hand_call.svg'
 import send from '../../../public/assets/svg/icons/send.svg'
 import atta from '../../../public/assets/svg/icons/atta.svg'
+import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 
 function Repository() {
   return (
@@ -24,6 +25,7 @@ function Repository() {
 
           <section className="repository__section">
 
+            <Btn iconLeft={IconType.red} caption="Necesito Btn" />
             <button className="btn-with-icon btn-with-icon--need">
               <div className="btn-filter__icon red"></div>
               <div className="btn-with-icon__text">
@@ -31,6 +33,7 @@ function Repository() {
               </div>
             </button>
 
+            <Btn iconLeft={IconType.green} caption="Ofrezco Btn" />
             <button className="btn-with-icon button-with-icon--offer">
               <div className="btn-filter__icon green"></div>
               <div className="btn-with-icon__text">
@@ -38,6 +41,7 @@ function Repository() {
               </div>
             </button>
 
+            <Btn iconLeft={IconType.green} caption="Ofrezco inactivo Btn" disabled={true} />
             <button disabled className="btn-with-icon button-with-icon--offer">
               <div className="btn-filter__icon green"></div>
               <div className="btn-with-icon__text">
@@ -47,6 +51,7 @@ function Repository() {
 
             <hr></hr>
 
+            <Btn iconLeft={IconType.splitRedGreen} caption="Intercambio Btn" />
             <button className="btn-with-icon">
               <div className="btn-filter__split-icon">
                 <div className="btn-filter__split-icon--half green-l"></div>
@@ -59,51 +64,55 @@ function Repository() {
 
             <hr></hr>
 
-            <button className="btn">
-              Botón ejemplo sin icono
-            </button>
+            <Btn caption="Botón ejemplo sin icono" />
 
             <hr></hr>
 
+            <Btn contentAlignment={ContentAlignment.center} caption="Botón ejemplo negro centrado Btn" />
             <button className="btn btn--black btn--center">
               Botón ejemplo negro centrado
             </button>
 
             <hr></hr>
 
-            <button className="btn btn--corporative btn--center">
-              Botón ejemplo corp
-            </button>
+            <Btn caption="Botón ejemplo corp" 
+                 contentAlignment={ContentAlignment.center} 
+                 type={BtnType.corporative} />
 
             <hr></hr>
 
+            <Btn type={BtnType.filter} caption="Filter example Btn" />
             <button className="btn-filter">
               Filter example
             </button>
 
             <hr></hr>
 
+            <Btn type={BtnType.filter} disabled={true} caption="Filter disabled example Btn" />
             <button disabled className="btn-filter">
-              Filter example
+              Filter disabled example
             </button>
 
             <hr></hr>
 
+            <Btn type={BtnType.filter} iconLeft={IconType.splitRedGreen} caption="Filter with icon split Btn" />
             <button className="btn-filter-with-icon">
               <div className="btn-filter__split-icon">
                 <div className="btn-filter__split-icon--half green-l"></div>
                 <div className="btn-filter__split-icon--half red-r"></div>
               </div>
-              Filter with icon
+              Filter with icon split
             </button>
 
             <hr></hr>
 
+            <Btn type={BtnType.filter} iconLeft={IconType.green} caption="Filter with icon green Btn" />
             <button className="btn-filter-with-icon">
               <div className="btn-filter__icon green"></div>
-              Filter with icon
+              Filter with icon green
             </button>
 
+            <Btn type={BtnType.filter} iconLeft={IconType.green} iconRight={IconType.remove} caption="Filter with double icon Btn" />
             <button className="btn-filter-with-icon">
               <div className="btn-filter__icon green"></div>
               Filter with double icon
