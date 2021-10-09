@@ -19,6 +19,8 @@ import CrossIcon from './../public/assets/svg/icons/cross1.tsx'
 import Alert from 'components/overlay/Alert';
 import { Link } from 'elements/Link';
 import Popup from 'components/popup/Popup';
+import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
+
 
 
 
@@ -66,20 +68,14 @@ export default function PopupSignup() {
                             <input name="username" type="text" {...register('email')} className={`form__input ${errors.username ? '' : ''}`} />
                             <div className="">{errors.username?.message}</div>
                         </div>
+
                         <div className="form__field">
                             <label>Password</label>
                             <input name="password" type="password" {...register('password')} className={`form__input  ${errors.password ? '' : ''}`} />
                             <div className="invalid-feedback">{errors.password?.message}</div>
                         </div>
 
-                        <button disabled={formState.isSubmitting} className="btn-with-icon button-with-icon--offer">
-                            {formState.isSubmitting && <span className=""></span>}
-                            <div className="btn-filter__icon">
-                            </div>
-                            <div className="btn-with-icon__text">
-                              REGISTER
-                            </div>
-                        </button>
+                        <Btn btnType={BtnType.splitIcon} caption="REGISTER" isSubmitting={formState.isSubmitting} contentAlignment={ContentAlignment.center}/>
 
                     </form>
 
