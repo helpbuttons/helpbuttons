@@ -6,6 +6,7 @@ export default function CardProfile() {
     <>
       <div className="card-profile__container">
         <div className="card-profile__container-avatar-content">
+
             <figure className="card-profile__avatar-container avatar">
               <div className="avatar-big">
                 <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img"></img>
@@ -13,9 +14,11 @@ export default function CardProfile() {
             </figure>
 
             <div className="card-profile__content">
+
               <div className="card-profile__avatar-container-name">
                 Username
               </div>
+
               <figure className="card-profile__rating grid-three">
 
                 <div className="paragraph grid-three__column">
@@ -37,7 +40,9 @@ export default function CardProfile() {
                   </div>
 
                 </div>
+
               </figure>
+              
           </div>
         </div>
         <div className="card-profile__data">

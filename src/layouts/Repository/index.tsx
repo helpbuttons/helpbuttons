@@ -26,6 +26,7 @@ function Repository() {
           <section className="repository__section">
 
             <Btn iconLeft={IconType.red} caption="Necesito Btn" />
+            
             <button className="btn-with-icon btn-with-icon--need">
               <div className="btn-filter__icon red"></div>
               <div className="btn-with-icon__text">
@@ -75,8 +76,8 @@ function Repository() {
 
             <hr></hr>
 
-            <Btn caption="Botón ejemplo corp" 
-                 contentAlignment={ContentAlignment.center} 
+            <Btn caption="Botón ejemplo corp"
+                 contentAlignment={ContentAlignment.center}
                  type={BtnType.corporative} />
 
             <hr></hr>

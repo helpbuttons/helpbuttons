@@ -21,7 +21,6 @@ export class SignupEvent implements WatchEvent {
         return of(error);
       })
     )
-    .subscribe(output2 => alert(output2));
   }
 }
 

@@ -1,5 +1,6 @@
 ///Btn is the project convention for tradittional buttons, in order to avoidd confussion with app's buttons
 import React from "react";
+import Spinner from "elements/Spinner";
 
 export enum BtnType {
     corporative,
@@ -23,8 +24,9 @@ interface BtnProps {
     iconLeft?: IconType;
     iconRight?: IconType;
     contentAlignment?: ContentAlignment;
-    type?: BtnType;
+    btnType?: BtnType;
     disabled?: boolean;
+    isSubmitting?: boolean;
 }
 
 function BtnIcon({ icon }: { icon: IconType }) {
@@ -65,9 +67,10 @@ export default function Btn({
     caption,
     iconRight = null,
     iconLeft = null,
-    type = null,
+    btnType = null,
     contentAlignment = null,
     disabled = false,
+    isSubmitting = false,
 }: BtnProps) {
     let classNames = [];
     const hasIcon = iconRight !== null || iconLeft !== null;
@@ -78,7 +81,7 @@ export default function Btn({
             break;
     }
 
-    switch (type) {
+    switch (btnType) {
         case BtnType.corporative:
             classNames.push("btn btn--corporative");
             break;
@@ -97,10 +100,12 @@ export default function Btn({
             }
             break;
     }
+
     const className = classNames.join(" ");
 
     return (
         <button disabled={disabled} className={className}>
+            {isSubmitting && <Spinner />}
             <BtnIcon icon={iconLeft} />
             <CaptionNode caption={caption} hasIcon={hasIcon} />
             <BtnIcon icon={iconRight} />
