@@ -6,14 +6,13 @@ import CardButtonMap from 'components/map/CardButtonMap'
 import CrossIcon from '../public/assets/svg/icons/cross1.tsx'
 
 
-export default class MarkerButton extends React.Component {
+export default function MarkerButton () {
+
+  const position = [51.505, -0.09];
 
 
-  render() {
+  return (
 
-    const position = [51.505, -0.09];
-
-    return (
       <Marker
         position={position}
         icon={ iconButton }
@@ -23,6 +22,6 @@ export default class MarkerButton extends React.Component {
           A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>
       </Marker>
-      );
-  }
+
+  )
 }
