@@ -248,7 +248,7 @@ function Repository() {
               <label className="form__label label">
                 Text label
               </label>
-              <textarea rows="4" cols="50" className="textarea__textarea" placeholder="Describe yourself here..."></textarea>
+              <textarea rows={4} cols={50} className="textarea__textarea" placeholder="Describe yourself here..."></textarea>
             </div>
           </section>
 

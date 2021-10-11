@@ -16,7 +16,7 @@ export default function ButtonNewData({ exact, ...props }) {
             imágenes si quieres.
           </p>
 
-          <textarea onChange={() => props.setDescription("")} name="description" type="text" className="textarea__textarea" placeholder="Escribe aquí tu descripción"></textarea>
+          <textarea onChange={() => props.setDescription("")} name="description" className="textarea__textarea" placeholder="Escribe aquí tu descripción"></textarea>
           <div className="invalid-feedback">{props.errors.description?.message}</div>
 
           <p className="popup__paragraph">
