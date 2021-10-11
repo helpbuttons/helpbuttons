@@ -1,6 +1,6 @@
-export default { Spinner };
+import CrossIcon from '../../public/assets/svg/icons/cross1'
 
-function Spinner() {
+export default function Spinner() {
     return (
       <div className="spinner-overlay">
         <figure className="btn-circle">
