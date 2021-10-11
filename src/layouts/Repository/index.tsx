@@ -78,25 +78,25 @@ function Repository() {
 
             <Btn caption="Botón ejemplo corp"
                  contentAlignment={ContentAlignment.center}
-                 type={BtnType.corporative} />
+                 btnType={BtnType.corporative} />
 
             <hr></hr>
 
-            <Btn type={BtnType.filter} caption="Filter example Btn" />
+            <Btn btnType={BtnType.filter} caption="Filter example Btn" />
             <button className="btn-filter">
               Filter example
             </button>
 
             <hr></hr>
 
-            <Btn type={BtnType.filter} disabled={true} caption="Filter disabled example Btn" />
+            <Btn btnType={BtnType.filter} disabled={true} caption="Filter disabled example Btn" />
             <button disabled className="btn-filter">
               Filter disabled example
             </button>
 
             <hr></hr>
 
-            <Btn type={BtnType.filter} iconLeft={IconType.splitRedGreen} caption="Filter with icon split Btn" />
+            <Btn btnType={BtnType.filter} iconLeft={IconType.splitRedGreen} caption="Filter with icon split Btn" />
             <button className="btn-filter-with-icon">
               <div className="btn-filter__split-icon">
                 <div className="btn-filter__split-icon--half green-l"></div>
@@ -107,13 +107,13 @@ function Repository() {
 
             <hr></hr>
 
-            <Btn type={BtnType.filter} iconLeft={IconType.green} caption="Filter with icon green Btn" />
+            <Btn btnType={BtnType.filter} iconLeft={IconType.green} caption="Filter with icon green Btn" />
             <button className="btn-filter-with-icon">
               <div className="btn-filter__icon green"></div>
               Filter with icon green
             </button>
 
-            <Btn type={BtnType.filter} iconLeft={IconType.green} iconRight={IconType.remove} caption="Filter with double icon Btn" />
+            <Btn btnType={BtnType.filter} iconLeft={IconType.green} iconRight={IconType.remove} caption="Filter with double icon Btn" />
             <button className="btn-filter-with-icon">
               <div className="btn-filter__icon green"></div>
               Filter with double icon
