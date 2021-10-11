@@ -36,7 +36,7 @@ export default function CardButtonList({button}) {
 
                         <a>{button.name}</a>
 
-                <Image src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" className="picture__img" />
+                <Image layout='fill' objectFit="contain" src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" className="picture__img" />
 
               </div>
 

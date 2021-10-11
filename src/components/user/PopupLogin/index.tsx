@@ -44,7 +44,7 @@ export default function PopupLogin() {
           <Popup title="Login">
 
               <div className="popup__img">
-                <Image src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className="" />
+                <Image layout='fill' objectFit="contain" src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className="" />
               </div>
 
               <form className="popup__section" onSubmit={handleSubmit(onSubmit)}>

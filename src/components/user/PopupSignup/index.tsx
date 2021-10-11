@@ -55,7 +55,7 @@ export default function PopupSignup() {
           <Alert />
 
                 <div className="popup__img">
-                  <Image src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className="" />
+                  <Image layout='fill' objectFit="contain" src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className="" />
                 </div>
 
                 <div className="popup__section">

@@ -56,7 +56,7 @@ export default function CardButtonMap () {
 
         </div>
 
-        <Image src="https://dummyimage.com/500x250/#ccc/fff" alt="button-picture" className="card-button-map__picture picture__img" />
+        <Image layout='fill' objectFit="contain" src="https://dummyimage.com/500x250/#ccc/fff" alt="button-picture" className="card-button-map__picture picture__img" />
 
       </div>
 

@@ -14,7 +14,7 @@ export default function CardButton() {
 
              <div className="card-button__nets">
 
-               <Image src='' alt="" className="card-avatar card-button__net-icon" />
+               <Image layout='fill' objectFit="contain" src='' alt="" className="card-avatar card-button__net-icon" />
 
              </div>
 
@@ -23,7 +23,7 @@ export default function CardButton() {
                 <div className="card-button__avatar">
 
                   <div className="avatar-big">
-                    <Image src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img" />
+                    <Image layout='fill' objectFit="contain" src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img" />
                   </div>
 
                 </div>
@@ -91,7 +91,7 @@ export default function CardButton() {
 
               </div>
 
-              <Image src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" className="card-button__picture picture__img" />
+              <Image layout='fill' objectFit="contain" src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" className="card-button__picture picture__img" />
 
             </picture>
 
