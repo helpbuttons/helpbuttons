@@ -94,6 +94,7 @@ const Home: NextPage = () => {
       <div className="index__container">
         <NavHeader />
         <Map />
+        <List />
       </div>
 
   );
