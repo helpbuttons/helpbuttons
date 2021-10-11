@@ -1,5 +1,6 @@
 //Profile Card with the the info displayed by the user in Profile page. It shows different options depending if it's other user profile or your profile when logged.
-import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
+import Image from 'next/image'
+import CrossIcon from '../../../../public/assets/svg/icons/cross1'
 
 export default function CardProfile() {
   return (
@@ -9,7 +10,7 @@ export default function CardProfile() {
 
             <figure className="card-profile__avatar-container avatar">
               <div className="avatar-big">
-                <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img"></img>
+                <Image src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img" />
               </div>
             </figure>
 

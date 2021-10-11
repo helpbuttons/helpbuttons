@@ -1,7 +1,8 @@
 //Mobile bottom navigation component with just creation , profile and home buttons if logged in. It not logged it shows home, Button creation , login and faqs too.
-import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
+import Link from 'next/link'
+import CrossIcon from '../../../../public/assets/svg/icons/cross1'
 import { useState, useEffect } from 'react';
-import { NavLink } from 'elements/Navlink';
+import NavLink from 'elements/Navlink';
 import { UserService } from 'services/Users';
 import { HttpUtilsService } from 'services/HttpUtilsService';
 
@@ -86,14 +87,14 @@ function NavBottom({logged}){
                   </div>
               </NavLink>
 
-              <a onClick={logout} href="/Faqs" className="nav-bottom__link nav-bottom__link--active">
+              <Link href="/Faqs"><a onClick={logout} className="nav-bottom__link nav-bottom__link--active">
                   <div className="nav-bottom__icon">
                       <CrossIcon />
                   </div>
                   <div className="nav-bottom__text">
                     Logout
                   </div>
-              </a>
+              </a></Link>
 
             </>
 

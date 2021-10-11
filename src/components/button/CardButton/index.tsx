@@ -1,5 +1,6 @@
 //Main card of the Button that is used inside ButtonFile component and in ButtonNewPublish for the preview. It has all the Data that a button has andd displays it according to the main buttonTemplate and network that buttton selected.
-import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
+import Image from 'next/image'
+import CrossIcon from '../../../../public/assets/svg/icons/cross1'
 
 
 export default function CardButton() {
@@ -13,7 +14,7 @@ export default function CardButton() {
 
              <div className="card-button__nets">
 
-               <img src='' alt="" className="card-avatar card-button__net-icon"></img>
+               <Image src='' alt="" className="card-avatar card-button__net-icon" />
 
              </div>
 
@@ -22,7 +23,7 @@ export default function CardButton() {
                 <div className="card-button__avatar">
 
                   <div className="avatar-big">
-                    <img src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img"></img>
+                    <Image src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img" />
                   </div>
 
                 </div>
@@ -90,7 +91,7 @@ export default function CardButton() {
 
               </div>
 
-              <img src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" className="card-button__picture picture__img"></img>
+              <Image src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" className="card-button__picture picture__img" />
 
             </picture>
 

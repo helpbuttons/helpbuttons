@@ -12,7 +12,7 @@ export default function HeaderDesktop() {
 
         <div className="header-search__title">
 
-          <a href="#!"><img src="" alt=""/><Image src={logo} alt="icon"/></a>
+          <a href="#!"><Image src="" alt="" /><Image src={logo} alt="icon" /></a>
           <span>Nombre de Red</span>
           <span>Descripción de Red</span>
 

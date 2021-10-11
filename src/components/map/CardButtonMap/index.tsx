@@ -1,5 +1,5 @@
 //The smallest of buttons'cards. It ddisplays over the map when a marker is clicked / touched. Itt was very reduce info, like image, tags, title or other fieldds conidered by the buttonTemplate field.
-
+import Image from 'next/image'
 
 export default function CardButtonMap () {
 
@@ -56,7 +56,7 @@ export default function CardButtonMap () {
 
         </div>
 
-        <img src="https://dummyimage.com/500x250/#ccc/fff" alt="button-picture" className="card-button-map__picture picture__img"></img>
+        <Image src="https://dummyimage.com/500x250/#ccc/fff" alt="button-picture" className="card-button-map__picture picture__img" />
 
       </div>
 

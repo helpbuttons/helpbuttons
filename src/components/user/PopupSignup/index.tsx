@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { catchError } from 'rxjs/operators';
 import { useEffect } from 'react';
+import Image from 'next/image'
 
 //imported internal classes, variables, files or functions
 import { store } from 'pages/index';
@@ -54,7 +55,7 @@ export default function PopupSignup() {
           <Alert />
 
                 <div className="popup__img">
-                  <img src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className=""></img>
+                  <Image src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className="" />
                 </div>
 
                 <div className="popup__section">

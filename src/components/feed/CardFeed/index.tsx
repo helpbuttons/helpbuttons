@@ -1,5 +1,7 @@
 // feed card that goes in ButtonFile component, under ButtonCard, and repeats for every feed that is available. It can also displays in feeds page, on the left column (desktop) or other places for notifications in the future. It has a "remove feed"icon, date and last message preview
-import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
+import Image from 'next/image'
+import CrossIcon from '../../../../public/assets/svg/icons/cross1'
+
 
 export default function CardFeed() {
   return (
@@ -8,7 +10,7 @@ export default function CardFeed() {
         <div className="card-notification__content">
           <div className="card-notification__avatar">
             <div className="avatar-medium">
-              <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" className="picture__img"></img>
+              <Image src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" className="picture__img" />
             </div>
           </div>
           <div className="card-notification__text">

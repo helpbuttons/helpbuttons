@@ -18,7 +18,7 @@ export default function NetworkAccess() {
 
           <form className="popup__section">
 
-            <p class="popup__options-title">
+            <p className="popup__options-title">
               This Network is private. Do you want to join?
             </p>
 
