@@ -4,6 +4,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import Image from 'next/image'
 
 //imported react components
 import Alert from 'components/overlay/Alert';
@@ -43,7 +44,7 @@ export default function PopupLogin() {
           <Popup title="Login">
 
               <div className="popup__img">
-                <img src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className=""></img>
+                <Image src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className="" />
               </div>
 
               <form className="popup__section" onSubmit={handleSubmit(onSubmit)}>
@@ -71,7 +72,7 @@ export default function PopupLogin() {
 
               <div className="popup__options-v">
 
-                <Link href="/Signup" className="popup__options-btn">I don't have an account</Link>
+                <Link href="/Signup" className="popup__options-btn">I don&apos;t have an account</Link>
 
               </div>
 

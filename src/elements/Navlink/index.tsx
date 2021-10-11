@@ -1,20 +1,14 @@
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
-
 import { Link } from 'elements/Link';
 
-export { NavLink };
 
-NavLink.propTypes = {
-    href: PropTypes.string.isRequired,
-    exact: PropTypes.bool
-};
+type Props = {
+    href: string
+    exact?: boolean
+} & React.ComponentProps<typeof Link>
 
-NavLink.defaultProps = {
-    exact: false
-};
 
-function NavLink({ children, href, exact, ...props }) {
+export default function NavLink({ children, href, exact = false, ...props }: Props) {
     const { pathname } = useRouter();
     const isActive = exact ? pathname === href : pathname.startsWith(href);
 

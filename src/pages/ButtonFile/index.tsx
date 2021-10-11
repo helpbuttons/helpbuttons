@@ -22,7 +22,7 @@ export default function ButtonFile() {
 
           </div>
 
-          //ACTION SECTION - HERE COME BASIC INTERACTION BUTTONS AND MESSAGE INPUT
+          {/* ACTION SECTION - HERE COME BASIC INTERACTION BUTTONS AND MESSAGE INPUT */}
           <div className="button-file__action-section">
 
             <div className="button-file__action-section--field">
@@ -61,7 +61,7 @@ export default function ButtonFile() {
 
           </div>
 
-        //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
+        {/* FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES */}
         <Feed />
 
       </div>

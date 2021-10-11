@@ -13,11 +13,11 @@ export default function PickerTime() {
       </div>
 
       <div className="picker__options-h">
-
-        <button className="picker__options-btn button-menu-white" {{action 'confirmDate'}} type="button" name="button">
+        {/* TODO: check how to deal with actions */}
+        <button className="picker__options-btn button-menu-white" data-action='confirmDate' type="button" name="button">
           Aceptar
         </button>
-        <button className="picker__options-btn button-menu-white" {{action 'cleanDate'}} type="button" name="button">
+        <button className="picker__options-btn button-menu-white" data-action='cleanDate' type="button" name="button">
           Limpiar
         </button>
 

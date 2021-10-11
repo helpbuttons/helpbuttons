@@ -12,11 +12,12 @@ export default function PickerDelete() {
               </small>
             </h5>
           </header>
+          {/* XXX: check what to do with this action */}
           <button
             className=" card-feed__radius--left"
             type="button"
             name="button"
-            {{action "showConfirmationDialog"}}
+            data-action="showConfirmationDialog"
           >
             Cancelar
           </button>

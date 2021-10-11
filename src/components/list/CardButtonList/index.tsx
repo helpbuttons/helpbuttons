@@ -1,5 +1,7 @@
 //Card that displays a resume of the button info in tthe List component. Its fieldds can be customizedd according to buttonTemplate.
-import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
+import Link from 'next/link'
+import Image from 'next/image'
+import CrossIcon from '../../../../public/assets/svg/icons/cross1'
 
 export default function CardButtonList({button}) {
   return (
@@ -14,7 +16,8 @@ export default function CardButtonList({button}) {
               pathname: '/button/[slug]',
               query: { slug: button.slug },
             }}
-          >
+            passHref
+          ><a>
 
             <div className="card-button-list card-button-list--need">
 
@@ -33,7 +36,7 @@ export default function CardButtonList({button}) {
 
                         <a>{button.name}</a>
 
-                <img src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" className="picture__img"></img>
+                <Image src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" className="picture__img" />
 
               </div>
 
@@ -94,7 +97,7 @@ export default function CardButtonList({button}) {
 
             </div>
 
-          </Link>
+            </a></Link>
 
         </li>
 

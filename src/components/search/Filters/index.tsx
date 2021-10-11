@@ -29,7 +29,7 @@ export default function Filters() {
             <label className="checkbox__filter-label">
               <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
               <div className="checkbox-filter__content btn-filter-with-icon">
-                <div class="btn-filter__icon red"></div>
+                <div className="btn-filter__icon red"></div>
                 <div className="checkbox__text">
                   Necesitan { Object.keys(paths).length }
                 </div>
