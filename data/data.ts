@@ -29,7 +29,7 @@ const data = [
                 //not required data
                 tags: ["Animales", "Perritos", "Adopcion"],
                 description: "Net for animal rescue",
-                buttonsTemplate: [{id:1,name:"repartidor",type:"offer",, fields:[geoCode:"posicion boton", , ]},{id:2,name:"restaurante",type:"need",, fields:[geoCode:"posicion boton", , ]}], //array of objects, each type has an int, a name and a color associated. Default are offer (green), need (red).
+                buttonsTemplate: [{id:1,name:"repartidor",type:"offer",, fields:[geoCode:"posicion boton"]},{id:2,name:"restaurante",type:"need", fields:[geoCode:"posicion boton"]}], //array of objects, each type has an int, a name and a color associated. Default are offer (green), need (red).
                 //data for GIS
                 showButtons : "area", //enum {area, point} show buttons by area not showing exact position on map
                 location: "Livorno, Italia",
