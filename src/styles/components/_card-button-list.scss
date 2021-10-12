@@ -29,6 +29,7 @@ $card-button-list-border-height: $border-general-height;
   position: relative;
   height: $card-button-list-height;
   display: flex;
+  line-height: $text-line-height-small;
   justify-content: space-between;
   // margin-bottom: $card-button-list-margin-bottom;
   border-radius: $border-radius-basic $border-radius-basic $border-radius-basic  $border-radius-basic;
@@ -234,14 +235,14 @@ $card-button-list-border-height: $border-general-height;
   margin-left: 1rem;
 }
 
-.card-button-list__busca,
-.card-button-list__ofrece {
+.card-button-list__need,
+.card-button-list__offer {
   display: flex;
   flex-flow: row wrap;
   padding: .25rem 0 0 0;
 }
 
-.card-button-list__busca {
+.card-button-list__need {
   .hashtag {
     background: $card-button-list-busca-background;
     font-weight: bold;
@@ -252,7 +253,7 @@ $card-button-list-border-height: $border-general-height;
   }
 }
 
-.card-button-list__ofrece {
+.card-button-list__offer {
   .hashtag {
     background: $card-button-list-ofrece-background;
     font-weight: bold;
@@ -415,13 +416,9 @@ $card-button-list-border-height: $border-general-height;
   max-height: 45vh;
   height: 500px;
   border-radius: 5px;
-  & .leaflet-control-container {
-    display: none;
-  }
 }
 
 
-//revise nueva clase
-.card-button-lists {
+.card-button-list__geoDate {
   display: flex;
 }

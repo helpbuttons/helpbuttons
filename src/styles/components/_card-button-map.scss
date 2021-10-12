@@ -1,6 +1,6 @@
 $card-button-map-background: $color-white;
 $card-button-map-border: 1px solid $color-ligth-gray;
-$card-button-map-box-shadow: $box-shadow-card;
+$card-button-map-box-shadow: none;
 $card-button-map-busca-background: $color-red;
 $card-button-map-ofrece-background: $color-green;
 $card-button-map-paragraph-color: $color-gray;
@@ -29,6 +29,10 @@ $card-button-map-border-height: $border-general-height;
   p {
     margin-bottom: 0;
   }
+}
+
+.card-button-map--wrapper {
+
 }
 
 .card-button-map--white {
@@ -213,14 +217,14 @@ $card-button-map-border-height: $border-general-height;
   margin-left: 1rem;
 }
 
-.card-button-map__busca,
-.card-button-map__ofrece {
+.card-button-map__need,
+.card-button-map__offer {
   display: flex;
   flex-flow: row wrap;
   padding: .25rem 0 0 0;
 }
 
-.card-button-map__busca {
+.card-button-map__need {
   .hashtag {
     background: $card-button-map-busca-background;
     font-weight: bold;
@@ -231,7 +235,7 @@ $card-button-map-border-height: $border-general-height;
   }
 }
 
-.card-button-map__ofrece {
+.card-button-map__offer {
   .hashtag {
     background: $card-button-map-ofrece-background;
     font-weight: bold;
@@ -420,9 +424,6 @@ $card-button-map-border-height: $border-general-height;
   max-height: 45vh;
   height: 500px;
   border-radius: 5px;
-  & .leaflet-control-container {
-    display: none;
-  }
 }
 
 

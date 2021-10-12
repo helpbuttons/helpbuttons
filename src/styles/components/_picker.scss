@@ -46,7 +46,7 @@ body {
   max-height: 90vh;
   background: $color-white !important;
   overflow-x: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: none;
 
 }
 
@@ -60,7 +60,7 @@ body {
   border-radius: $border-radius-semicircle !important;
   background: $color-white !important;
   overflow-x: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: none;
   font-size: $font-size-general;
 
   -ms-overflow-style: none;
@@ -181,8 +181,8 @@ body {
 
 }
 
-.picker-box-shadow {//REVISE
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+.picker-box-shadow {
+  box-shadow: none;
 }
 
 .picker__header {
@@ -454,6 +454,6 @@ body {
   ::-webkit-scrollbar-track{
     background: #ffffff;
     border-radius: 10px;
-    box-shadow: inset -7px -30px 12px #f0f0f0;
+    box-shadow: none;
   }
 }

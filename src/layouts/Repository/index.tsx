@@ -451,7 +451,7 @@ function Repository() {
 
                 <div className="card-button-map__hashtags">
 
-                      <div className="card-button-map__busca">
+                      <div className="card-button-map__need">
                         <div className="hashtag">tag</div>
                       </div>
 
@@ -544,7 +544,7 @@ function Repository() {
 
               <div className="card-button-list__hashtags">
 
-                    <div className="card-button-list__busca">
+                    <div className="card-button-list__need">
                       <div className="hashtag">tag</div>
                     </div>
 
@@ -558,7 +558,7 @@ function Repository() {
 
               </div>
 
-              <div className="card-button-lists">
+              <div className="card-button-list__geoDate">
 
                 <div className="card-button-list__city card-button-list__everywhere " >
                   En todas partes

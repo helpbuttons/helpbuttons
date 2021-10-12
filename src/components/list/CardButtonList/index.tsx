@@ -1,7 +1,7 @@
 //Card that displays a resume of the button info in tthe List component. Its fieldds can be customizedd according to buttonTemplate.
-import Link from 'next/link'
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 import CrossIcon from '../../../../public/assets/svg/icons/cross1'
+import { Link } from 'elements/Link';
 
 export default function CardButtonList() {
   return (
@@ -28,58 +28,62 @@ export default function CardButtonList() {
 
             <div className="card-button-list__content">
 
-              <div className="card-button-list__header">
+              <Link href="/ButtonFile">
 
-                <div className="card-button-list__info">
+                  <div className="card-button-list__header">
 
-                  <div className="card-button-list__status card-button-list__status">
+                    <div className="card-button-list__info">
 
-                    <span className="card-button-list__status--offer">button type</span> y <span className="card-button-list__status--need">button type</span>
+                      <div className="card-button-list__status card-button-list__status">
 
-                  </div>
+                        <span className="card-button-list__status--offer">button type</span> y <span className="card-button-list__status--need">button type</span>
 
-                  <div className="card-button-list__status card-button-list__status">
+                      </div>
 
-                    <span className="card-button-list__title">Button Name</span>
+                      <div className="card-button-list__status card-button-list__status">
 
-                  </div>
+                        <span className="card-button-list__title">Button Name</span>
 
-                </div>
+                      </div>
 
-                <div className="card-button-list__submenu card-button-list__trigger">
-                </div>
-
-              </div>
-
-              <div className="card-button-list__hashtags">
-
-                    <div className="card-button-list__busca">
-                      <div className="hashtag">tag</div>
                     </div>
 
+                    <div className="card-button-list__submenu card-button-list__trigger">
+                    </div>
+
+                  </div>
+
+                  <div className="card-button-list__hashtags">
+
+                        <div className="card-button-list__need">
+                          <div className="hashtag">tag</div>
+                        </div>
+
+                  </div>
+
+                  <div className="card-button-list__paragraph">
+
+                    <p>description</p>
+
+                    <p className="card-button-list__phone">phone</p>
+
+                  </div>
+
+                  <div className="card-button-list__geoDate">
+
+                    <div className="card-button-list__city card-button-list__everywhere " >
+                      En todas partes
+                    </div>
+
+                    <div className="card-button-list__date">
+                        Date
+                    </div>
+
+                  </div>
+
+              </Link>
+
               </div>
-
-              <div className="card-button-list__paragraph">
-
-                <p>description</p>
-
-                <p className="card-button-list__phone">phone</p>
-
-              </div>
-
-              <div className="card-button-lists">
-
-                <div className="card-button-list__city card-button-list__everywhere " >
-                  En todas partes
-                </div>
-
-                <div className="card-button-list__date">
-                    Date
-                </div>
-
-              </div>
-
-            </div>
 
           </div>
 
