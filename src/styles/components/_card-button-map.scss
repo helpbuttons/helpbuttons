@@ -304,6 +304,7 @@ $card-button-map-border-height: $border-general-height;
   margin: 0 $card-button-map-margin $card-button-map-margin $card-button-map-margin;
   display: flex;
   justify-content: center;
+  position: relative;
 
 }
 
@@ -317,6 +318,7 @@ $card-button-map-border-height: $border-general-height;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 $padding-small;
 
 }
 
