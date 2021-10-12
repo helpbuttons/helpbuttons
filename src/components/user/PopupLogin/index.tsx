@@ -4,10 +4,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import Image from 'next/image'
 
 //imported react components
 import Alert from 'components/overlay/Alert';
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 import Popup from 'components/popup/Popup';
 import { Link } from 'elements/Link';
 
@@ -44,7 +44,7 @@ export default function PopupLogin() {
           <Popup title="Login">
 
               <div className="popup__img">
-                <Image layout='fill' objectFit="contain" src="https://dummyimage.com/550x200/#ccc/fff" alt="Register_img" className="" />
+                <ImageWrapper imageType={ImageType.popup} src="https://dummyimage.com/200/#ccc/fff" alt="popup_img"/>
               </div>
 
               <form className="popup__section" onSubmit={handleSubmit(onSubmit)}>

@@ -1,6 +1,6 @@
 //Card that displays a resume of the button info in tthe List component. Its fieldds can be customizedd according to buttonTemplate.
 import Link from 'next/link'
-import Image from 'next/image'
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 import CrossIcon from '../../../../public/assets/svg/icons/cross1'
 
 export default function CardButtonList() {
@@ -23,10 +23,9 @@ export default function CardButtonList() {
               </div>
 
                 <a>Nombre</a>
-                <Image layout='fill' objectFit="contain" src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" className="picture__img" />
-
-
             </div>
+
+              <ImageWrapper imageType={ImageType.popup} src="https://dummyimage.com/200/#ccc/fff" alt="popup_img"/>
 
             <div className="card-button-list__content">
 

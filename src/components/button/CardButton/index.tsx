@@ -1,6 +1,7 @@
 //Main card of the Button that is used inside ButtonFile component and in ButtonNewPublish for the preview. It has all the Data that a button has andd displays it according to the main buttonTemplate and network that buttton selected.
 import Image from 'next/image'
 import CrossIcon from '../../../../public/assets/svg/icons/cross1'
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 
 
 export default function CardButton() {
@@ -14,7 +15,7 @@ export default function CardButton() {
 
              <div className="card-button__nets">
 
-               <Image layout='fill' objectFit="contain" src='' alt="" className="card-avatar card-button__net-icon" />
+               <ImageWrapper imageType={ImageType.buttonCard} src="https://dummyimage.com/80/#ccc/fff" alt="Avatar"/>
 
              </div>
 
@@ -23,7 +24,7 @@ export default function CardButton() {
                 <div className="card-button__avatar">
 
                   <div className="avatar-big">
-                    <Image layout='fill' objectFit="contain" src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img" />
+                    <ImageWrapper imageType={ImageType.avatar} src="https://dummyimage.com/80/#ccc/fff" alt="Avatar"/>
                   </div>
 
                 </div>
@@ -91,7 +92,7 @@ export default function CardButton() {
 
               </div>
 
-              <Image layout='fill' objectFit="contain" src="https://dummyimage.com/1000/#ccc/fff" alt="button-picture" className="card-button__picture picture__img" />
+              <ImageWrapper imageType={ImageType.buttonCard} src="https://dummyimage.com/1000/#ccc/fff" alt="Avatar"/>
 
             </picture>
 

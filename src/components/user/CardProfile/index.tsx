@@ -1,5 +1,5 @@
 //Profile Card with the the info displayed by the user in Profile page. It shows different options depending if it's other user profile or your profile when logged.
-import Image from 'next/image'
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 import CrossIcon from '../../../../public/assets/svg/icons/cross1'
 
 export default function CardProfile() {
@@ -9,9 +9,13 @@ export default function CardProfile() {
         <div className="card-profile__container-avatar-content">
 
             <figure className="card-profile__avatar-container avatar">
+
               <div className="avatar-big">
-                <Image layout='fill' objectFit="contain" src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img" />
+
+                <ImageWrapper imageType={ImageType.avatar} src="https://dummyimage.com/80/#ccc/fff" alt="avatar"/>
+
               </div>
+
             </figure>
 
             <div className="card-profile__content">
@@ -43,7 +47,7 @@ export default function CardProfile() {
                 </div>
 
               </figure>
-              
+
           </div>
         </div>
         <div className="card-profile__data">
