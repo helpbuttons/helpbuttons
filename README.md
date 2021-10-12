@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Welcome to Helpbuttons Repo
+
+This is the front repository for Helpbuttons. In order to communicate with the API you need to install [hb-back](https://github.com/helpbuttons/hb-back) too. For more detailed info check the hb-docs repo (https://github.com/helpbuttons/hb_docs).
 
 ## Getting Started
 
@@ -21,14 +23,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Key Elements, Components and Layouts
 
-To see a preview of all the styled key pieces that conform the app, open http://localhost:3000/RepositoryPage .
+To see a preview of all the styled key pieces that conform the app, open http://localhost:3000/RepositoryPage.
 
 ## Services Folder
 
-Services folder contains API routes and calls. 
+Services folder contains API routes and calls.
 
+## Main tech specifications used in this repo:
+
+Typescript, React, NextJS, Leaflet, CSS, HTML
 
 ## Learn More
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 To learn more about Next.js, take a look at the following resources:
 

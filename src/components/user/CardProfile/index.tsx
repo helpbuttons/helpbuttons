@@ -10,7 +10,7 @@ export default function CardProfile() {
 
             <figure className="card-profile__avatar-container avatar">
               <div className="avatar-big">
-                <Image src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img" />
+                <Image layout='fill' objectFit="contain" src="https://dummyimage.com/80/#ccc/fff" alt="Avatar" className="picture__img" />
               </div>
             </figure>
 

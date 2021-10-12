@@ -11,7 +11,7 @@ export default function CardNotification() {
           <div className="card-notification__avatar">
 
             <div className="avatar-medium">
-              <Image src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" className="picture__img" />
+              <Image layout='fill' objectFit="contain" src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" className="picture__img" />
             </div>
 
             <div className="card-notification__icon">

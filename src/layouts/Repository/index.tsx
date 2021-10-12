@@ -7,6 +7,7 @@ import send from '../../../public/assets/svg/icons/send.svg'
 import atta from '../../../public/assets/svg/icons/atta.svg'
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import CheckBox from 'elements/Checkbox'
+import BtnCircle from 'elements/BtnCircle'
 
 function Repository() {
   return (
@@ -138,21 +139,9 @@ function Repository() {
 
             <hr></hr>
 
-            <button className="btn-circle">
-              <div className="btn-circle__content">
-                <div className="btn-circle__icon">
-                  <CrossIcon />
-                </div>
-              </div>
-            </button>
+            <BtnCircle />
 
-            <button disabled className="btn-circle">
-              <div className="btn-circle__content">
-                <div className="btn-circle__icon">
-                  <CrossIcon />
-                </div>
-              </div>
-            </button>
+            <BtnCircle disabled />
 
           </section>
 
@@ -249,7 +238,7 @@ function Repository() {
               <label className="form__label label">
                 Text label
               </label>
-              <textarea rows="4" cols="50" className="textarea__textarea" placeholder="Describe yourself here..."></textarea>
+              <textarea rows={4} cols={50} className="textarea__textarea" placeholder="Describe yourself here..."></textarea>
             </div>
           </section>
 
