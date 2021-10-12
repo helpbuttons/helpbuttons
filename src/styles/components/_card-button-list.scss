@@ -29,6 +29,7 @@ $card-button-list-border-height: $border-general-height;
   position: relative;
   height: $card-button-list-height;
   display: flex;
+  line-height: $text-line-height-small;
   justify-content: space-between;
   // margin-bottom: $card-button-list-margin-bottom;
   border-radius: $border-radius-basic $border-radius-basic $border-radius-basic  $border-radius-basic;
@@ -111,30 +112,34 @@ $card-button-list-border-height: $border-general-height;
 
 
 ///image arrows
-.card-button-map__nav {
+.card-button-list__nav {
 
-  width: 90%;
-  height: inherit;
-  position: absolute;
+  width: 100%;
+  height: 100%;
   z-index: $z-index-01;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: absolute;
+  margin: auto;
+  padding-right: $padding-small;
+  padding-left: $padding-small;
+
 
 }
 
-.card-button-map__nav .arrow {
+.card-button-list__nav .arrow {
 
   @extend .btn-circle--small ;
 
 }
 
-.card-button-map__nav .arrow--left {
-  @extend .card-button-map__nav;
+.card-button-list__nav .arrow--left {
+  @extend .card-button-list__nav;
 }
 
-.card-button-map__nav .arrow--right {
-  @extend .card-button-map__nav;
+.card-button-list__nav .arrow--right {
+  @extend .card-button-list__nav;
 }
 
 .card-button-list__info {
@@ -170,7 +175,7 @@ $card-button-list-border-height: $border-general-height;
   text-indent: 0;
 }
 
-.card-button-list__map-container {
+.card-button-list__list-container {
   border-radius: 5px !important;
 }
 
@@ -230,14 +235,14 @@ $card-button-list-border-height: $border-general-height;
   margin-left: 1rem;
 }
 
-.card-button-list__busca,
-.card-button-list__ofrece {
+.card-button-list__need,
+.card-button-list__offer {
   display: flex;
   flex-flow: row wrap;
   padding: .25rem 0 0 0;
 }
 
-.card-button-list__busca {
+.card-button-list__need {
   .hashtag {
     background: $card-button-list-busca-background;
     font-weight: bold;
@@ -248,7 +253,7 @@ $card-button-list-border-height: $border-general-height;
   }
 }
 
-.card-button-list__ofrece {
+.card-button-list__offer {
   .hashtag {
     background: $card-button-list-ofrece-background;
     font-weight: bold;
@@ -303,14 +308,15 @@ $card-button-list-border-height: $border-general-height;
 
 .card-button-list__picture-container {
   width: $card-button-list-image-height;
-  // min-width: $card-button-list-image-width;
-
-  height: $card-button-list-image-height;
+  min-width: $card-button-list-image-width;
+  //
+  // height: $card-button-list-image-height;
   overflow: hidden;
+  position: relative;
   border-radius: $border-radius-basic;
   margin: $card-button-list-margin 0 $card-button-list-margin $card-button-list-margin;
-  display: flex;
-  justify-content:  flex-start;
+  // display: flex;
+  // justify-content:  flex-start;
 
 }
 
@@ -361,7 +367,7 @@ $card-button-list-border-height: $border-general-height;
   margin-left: 30px;
 }
 
-.card-button-list__close-map {
+.card-button-list__close-list {
   position: absolute;
   z-index: 401;
   right: 0;
@@ -406,17 +412,13 @@ $card-button-list-border-height: $border-general-height;
   }
 }
 
-.card-button-list__map {
+.card-button-list__list {
   max-height: 45vh;
   height: 500px;
   border-radius: 5px;
-  & .leaflet-control-container {
-    display: none;
-  }
 }
 
 
-//revise nueva clase
-.card-button-lists {
+.card-button-list__geoDate {
   display: flex;
 }

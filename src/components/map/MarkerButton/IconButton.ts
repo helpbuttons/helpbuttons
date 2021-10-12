@@ -7,7 +7,7 @@ const iconButton = L.divIcon({
 
             `<figure id='markerButton' class="marker-button marker-button--need">
                     <div class="avatar-medium marker-button__image">
-                      <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" class="picture__img"></img>
+                      <img src="https://dummyimage.com/100/#ccc/fff" alt="Avatar" class="picture__img"/>
                     </div>
 
                     <span class="marker-button__arrow"></span>

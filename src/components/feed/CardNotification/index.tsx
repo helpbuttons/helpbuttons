@@ -1,6 +1,7 @@
 //notification card that can be used in a notif menu or a message notification, it's the same as feed card with slight modifitaion for different purposes.
 import Image from 'next/image'
 import CrossIcon from '../../../../public/assets/svg/icons/cross1'
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 
 
 export default function CardNotification() {
@@ -11,7 +12,7 @@ export default function CardNotification() {
           <div className="card-notification__avatar">
 
             <div className="avatar-medium">
-              <Image layout='fill' objectFit="contain" src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" className="picture__img" />
+              <ImageWrapper imageType={ImageType.avatar} src="https://dummyimage.com/80/#ccc/fff" alt="Avatar"/>
             </div>
 
             <div className="card-notification__icon">

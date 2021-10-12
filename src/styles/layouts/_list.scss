@@ -22,8 +22,8 @@
   overflow-x: scroll;
   overflow-y: hidden;
   z-index: $z-index-02;
-  height: $card-button-list-height;
-  margin-bottom: 10px;
+  height: auto;
+  min-height: $card-button-list-height;
 
 }
 

@@ -1,5 +1,5 @@
 ///fields for home search bar. It's an input bar that can change the number of input fileds dependin on the needs of the network (default is What? Where? When ?  but it can also have "To where"or hide/add fields depending on network needs)
-import Image from 'next/image'
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 import logo from '../../../public/assets/svg/logo/logo3-01.svg'
 import Filters from "../../search/Filters";
 
@@ -12,7 +12,9 @@ export default function HeaderDesktop() {
 
         <div className="header-search__title">
 
-          <a href="#!"><Image layout='fill' objectFit="contain" src="" alt="" /><Image layout='fill' objectFit="contain" src={logo} alt="icon" /></a>
+          <a href="#!">
+            <ImageWrapper imageType={ImageType.avatar} src="https://dummyimage.com/80/#ccc/fff" alt="logo"/>
+          </a>
           <span>Nombre de Red</span>
           <span>Descripción de Red</span>
 

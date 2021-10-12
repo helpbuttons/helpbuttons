@@ -17,9 +17,8 @@ export default function MarkerButton () {
         position={position}
         icon={ iconButton }
         >
-        <Popup>
+        <Popup className="card-button-map--wrapper">
             <CardButtonMap />
-          A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>
       </Marker>
 
