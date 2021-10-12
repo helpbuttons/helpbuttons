@@ -16,11 +16,9 @@ export default function ButtonFile() {
 
         <div className="button-file__container">
 
-          <div className="button-file__card-section">
 
             <CardButton />
 
-          </div>
 
           {/* ACTION SECTION - HERE COME BASIC INTERACTION BUTTONS AND MESSAGE INPUT */}
           <div className="button-file__action-section">

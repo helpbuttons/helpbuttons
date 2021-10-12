@@ -60,6 +60,9 @@ export default function ImageWrapper({
             height = "1000";
             break;
         case ImageType.buttonCard:
+            width = "1000";
+            height = "1000";
+            layout = "responsive";
             break;
         default:
             break;

@@ -278,17 +278,18 @@ $card-button-border-height: $border-general-height;
 .card-button__picture {
   width: 100%;
   border-radius: $border-radius-basic;
-  & img {
-    border-radius: $border-radius-basic;
-  }
+  position: relative;
+
 }
 
 //image arrows
 .card-button__picture-nav {
 
-  width: 90%;
-  height: inherit;
+  width: 100%;
+  height: 100%;
+  margin: auto;
   position: absolute;
+  padding: 0 $padding-small;
   z-index: $z-index-01;
   display: flex;
   justify-content: space-between;

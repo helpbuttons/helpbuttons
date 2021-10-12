@@ -38,15 +38,6 @@ function NavBottom({logged}){
             </div>
         </NavLink>
 
-        <NavLink href="/ButtonFile" className="nav-bottom__link nav-bottom__link--active">
-            <div className="nav-bottom__icon">
-                <CrossIcon />
-            </div>
-            <div className="nav-bottom__text">
-              Button
-            </div>
-        </NavLink>
-
 
         <NavLink href="/Faqs" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
