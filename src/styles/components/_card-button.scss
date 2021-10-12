@@ -270,8 +270,8 @@ $card-button-border-height: $border-general-height;
   word-break: break-word;
   color: $card-button-paragraph-color;
   font-size: $font-size-general;
-  line-height: 0.9rem;
-  padding: 0.3 0;
+  line-height: $text-line-height-small;
+  padding: $padding-small 0;
   text-align: left;
 }
 

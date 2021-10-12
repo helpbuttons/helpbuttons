@@ -32,7 +32,13 @@ $card-button-map-border-height: $border-general-height;
 }
 
 .card-button-map--wrapper {
-
+  .leaflet-popup-content-wrapper{
+    background: transparent;
+    box-shadow: none;
+  }
+  .leaflet-popup-tip-container {
+    display: none;
+  }
 }
 
 .card-button-map--white {
@@ -278,8 +284,8 @@ $card-button-map-border-height: $border-general-height;
   word-break: break-word;
   color: $card-button-map-paragraph-color;
   font-size: $font-size-general;
-  line-height: 0.9rem;
-  padding: 0.3 0;
+  line-height: $text-line-height-small;
+  padding: $padding-small 0;
   text-align: left;
 }
 
@@ -424,6 +430,9 @@ $card-button-map-border-height: $border-general-height;
   max-height: 45vh;
   height: 500px;
   border-radius: 5px;
+  & .leaflet-control-container {
+    display: none;
+  }
 }
 
 
