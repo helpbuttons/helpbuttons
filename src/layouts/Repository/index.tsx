@@ -6,6 +6,7 @@ import hand from '../../../public/assets/svg/icons/hand_call.svg'
 import send from '../../../public/assets/svg/icons/send.svg'
 import atta from '../../../public/assets/svg/icons/atta.svg'
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
+import BtnCircle from 'elements/BtnCircle'
 
 function Repository() {
   return (
@@ -137,21 +138,9 @@ function Repository() {
 
             <hr></hr>
 
-            <button className="btn-circle">
-              <div className="btn-circle__content">
-                <div className="btn-circle__icon">
-                  <CrossIcon />
-                </div>
-              </div>
-            </button>
+            <BtnCircle />
 
-            <button disabled className="btn-circle">
-              <div className="btn-circle__content">
-                <div className="btn-circle__icon">
-                  <CrossIcon />
-                </div>
-              </div>
-            </button>
+            <BtnCircle disabled />
 
           </section>
 
