@@ -9,6 +9,7 @@ export default function CardButtonList() {
 
           <div className="card-button-list card-button-list--need">
 
+
             <div className="card-button-list__picture-container">
 
               <div className="card-button-list__nav">
@@ -21,11 +22,9 @@ export default function CardButtonList() {
                 </div>
 
               </div>
-
-                <a>Nombre</a>
+              <ImageWrapper imageType={ImageType.cardList} src="https://dummyimage.com/200/#ccc/fff" alt="popup_img"/>
             </div>
 
-              <ImageWrapper imageType={ImageType.popup} src="https://dummyimage.com/200/#ccc/fff" alt="popup_img"/>
 
             <div className="card-button-list__content">
 

@@ -9,8 +9,8 @@ export enum ImageType {
     avatar,
     popup,
     marker,
-    mapCard,
-    listCard,
+    cardMap,
+    cardList,
     buttonCard,
 }
 
@@ -49,9 +49,12 @@ export default function ImageWrapper({
             break;
         case ImageType.marker:
             break;
-        case ImageType.mapCard:
+        case ImageType.cardMap:
+            layout = "responsive";
+            width = "200";
+            height = "130";
             break;
-        case ImageType.listCard:
+        case ImageType.cardList:
             layout = "responsive";
             width = "1000";
             height = "1000";

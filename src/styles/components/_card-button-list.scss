@@ -111,30 +111,34 @@ $card-button-list-border-height: $border-general-height;
 
 
 ///image arrows
-.card-button-map__nav {
+.card-button-list__nav {
 
-  width: 90%;
-  height: inherit;
-  position: absolute;
+  width: 100%;
+  height: 100%;
   z-index: $z-index-01;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: absolute;
+  margin: auto;
+  padding-right: $padding-small;
+  padding-left: $padding-small;
+
 
 }
 
-.card-button-map__nav .arrow {
+.card-button-list__nav .arrow {
 
   @extend .btn-circle--small ;
 
 }
 
-.card-button-map__nav .arrow--left {
-  @extend .card-button-map__nav;
+.card-button-list__nav .arrow--left {
+  @extend .card-button-list__nav;
 }
 
-.card-button-map__nav .arrow--right {
-  @extend .card-button-map__nav;
+.card-button-list__nav .arrow--right {
+  @extend .card-button-list__nav;
 }
 
 .card-button-list__info {
@@ -170,7 +174,7 @@ $card-button-list-border-height: $border-general-height;
   text-indent: 0;
 }
 
-.card-button-list__map-container {
+.card-button-list__list-container {
   border-radius: 5px !important;
 }
 
@@ -303,14 +307,15 @@ $card-button-list-border-height: $border-general-height;
 
 .card-button-list__picture-container {
   width: $card-button-list-image-height;
-  // min-width: $card-button-list-image-width;
-
-  height: $card-button-list-image-height;
+  min-width: $card-button-list-image-width;
+  //
+  // height: $card-button-list-image-height;
   overflow: hidden;
+  position: relative;
   border-radius: $border-radius-basic;
   margin: $card-button-list-margin 0 $card-button-list-margin $card-button-list-margin;
-  display: flex;
-  justify-content:  flex-start;
+  // display: flex;
+  // justify-content:  flex-start;
 
 }
 
@@ -361,7 +366,7 @@ $card-button-list-border-height: $border-general-height;
   margin-left: 30px;
 }
 
-.card-button-list__close-map {
+.card-button-list__close-list {
   position: absolute;
   z-index: 401;
   right: 0;
@@ -406,7 +411,7 @@ $card-button-list-border-height: $border-general-height;
   }
 }
 
-.card-button-list__map {
+.card-button-list__list {
   max-height: 45vh;
   height: 500px;
   border-radius: 5px;

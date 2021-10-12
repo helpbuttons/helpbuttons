@@ -1,5 +1,6 @@
 //The smallest of buttons'cards. It ddisplays over the map when a marker is clicked / touched. Itt was very reduce info, like image, tags, title or other fieldds conidered by the buttonTemplate field.
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
+import CrossIcon from '../../../../public/assets/svg/icons/cross1'
 
 export default function CardButtonMap () {
 
@@ -50,15 +51,17 @@ export default function CardButtonMap () {
         <div className="card-button-map__nav">
 
           <div className="arrow btn-circle__icon">
+            <CrossIcon />
           </div>
           <div className="arrow btn-circle__icon">
+            <CrossIcon />
           </div>
 
         </div>
 
         <div className="card-button-map__picture picture__img">
 
-          <ImageWrapper imageType={ImageType.cardMap} src="https://dummyimage.com/80/#ccc/fff" alt="button-picture"/>
+          <ImageWrapper imageType={ImageType.cardMap} src="https://dummyimage.com/200/#ccc/fff" alt="button-picture"/>
 
         </div>
 
