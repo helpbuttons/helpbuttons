@@ -6,6 +6,7 @@ import hand from '../../../public/assets/svg/icons/hand_call.svg'
 import send from '../../../public/assets/svg/icons/send.svg'
 import atta from '../../../public/assets/svg/icons/atta.svg'
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
+import CheckBox from 'elements/Checkbox'
 import BtnCircle from 'elements/BtnCircle'
 
 function Repository() {
@@ -289,6 +290,7 @@ function Repository() {
           <section className="repository__section">
 
           <div className="label">label checkbox</div>
+            <CheckBox icon="cross" text="Ahora CheckBox" inputId="ahora-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
@@ -305,6 +307,7 @@ function Repository() {
 
             <hr></hr>
 
+            <CheckBox icon="red" text="Necesito Ahora CheckBox" inputId="necesito-ahora-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
@@ -319,6 +322,7 @@ function Repository() {
 
             <hr></hr>
 
+            <CheckBox icon="cross" text="Fecha/hora concreta CheckBox" inputId="fecha-hora-concreta-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
@@ -335,6 +339,7 @@ function Repository() {
 
             <hr></hr>
 
+            <CheckBox icon="cross" text="Cerca de mí CheckBox" inputId="cerca-de-mi-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
