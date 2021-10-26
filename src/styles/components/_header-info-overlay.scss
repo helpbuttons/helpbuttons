@@ -1,40 +1,57 @@
 .info-overlay__selected {
+
     border: 1px solid $color-black;
+
   }
 
 .info-overlay__container {
-    background: none !important;
+
+    background-color: $color-corporative;
     position: absolute;
-    height:fit-content;
+    height:100vh;
     width:100%;
-    justify-content: center;
-    align-items: center;
+    z-index: $z-index-02;
+    box-sizing: border-box;
+
   }
 
-.info-overlay__background {
-   background-color: $color-corporative;
-   display: flex;
-   border-radius: $border-radius-basic;
-   height: fit-content;
-   justify-content:  center;
-   align-items: center;
-   width: auto;
-   position: relative;
+.info-overlay__name {
 
-   top : 30vh;
-   z-index: 500000000
+  margin: auto;
+  width: 100%;
+  font-size: $font-size-title;
+  text-align: center;
 
- }
- 
+}
+
+.info-overlay__description {
+
+  margin: $margin-big;
+
+}
+
+.info-overlay__nets {
+
+  margin: auto;
+  position: absolute;
+  bottom: 130px;
+  width: 100%;
+
+}
+
+
 .info-overlay__content {
    font-family: inherit;
    font-weight: bold;
    padding: 0 0 ;
+   display: block;
+   justify-content: space-around;
+   margin: $margin-big;
    min-width: fit-content;
    background-color: transparent;
    position: relative;
    height: 100%;
-   width:100%;
+   box-sizing: border-box;
    z-index: 500000000
 
  }
