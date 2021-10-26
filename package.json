@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.1",
-    "bootstrap-icons": "^1.6.1",
     "dotenv": "^10.0.0",
     "formik": "^2.2.9",
     "fs": "0.0.1-security",
@@ -21,6 +20,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.12.1",
+    "react-icons": "^4.3.1",
     "react-leaflet": "^3.2.1",
     "react-redux": "^7.2.4",
     "redux": "^4.1.1",

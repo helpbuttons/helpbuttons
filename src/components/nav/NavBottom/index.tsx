@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import NavLink from 'elements/Navlink';
 import { UserService } from 'services/Users';
 import { HttpUtilsService } from 'services/HttpUtilsService';
+import { BsFillHouseFill } from "react-icons/bs";
 
 export default NavBottom;
 
@@ -22,7 +23,7 @@ function NavBottom({logged}){
 
         <NavLink href="/" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
-                <CrossIcon />
+            <BsFillHouseFill/>
             </div>
             <div className="nav-bottom__text">
               Home
