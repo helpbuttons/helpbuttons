@@ -63,9 +63,7 @@ export default function CardButtonList() {
 
                   <div className="card-button-list__paragraph">
 
-                    <p>description</p>
-
-                    <p className="card-button-list__phone">phone</p>
+                    <p>Description</p>
 
                   </div>
 

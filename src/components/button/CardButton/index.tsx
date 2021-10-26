@@ -79,7 +79,7 @@ export default function CardButton() {
 
             </div>
 
-            <picture className="card-button__picture picture">
+            <div className="card-button__picture">
 
               <div className="card-button__picture-nav">
 
@@ -94,7 +94,7 @@ export default function CardButton() {
 
               <ImageWrapper imageType={ImageType.buttonCard} src="https://dummyimage.com/1000/#ccc/fff" alt="Avatar"/>
 
-            </picture>
+            </div>
 
           </div>
 

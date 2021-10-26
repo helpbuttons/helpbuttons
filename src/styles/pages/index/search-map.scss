@@ -1,5 +1,13 @@
 $search-map-height: 0; // Altura del header
 
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  z-index: $z-index-base;
+  bottom: 0;
+}
+
 .search-map {
   height: 100vh;
   position: absolute;

@@ -27,30 +27,31 @@ export default function CardButtonMap () {
 
           </div>
 
+
+          <div className="card-button-map__hashtags">
+
+                <div className="card-button-map__need">
+                  <div className="hashtag">tag</div>
+                </div>
+                <div className="card-button-map__offer">
+                  <div className="hashtag">tag</div>
+                </div>
+
+          </div>
+
+          <div className="card-button-maps">
+
+            <div className="card-button-map__city card-button-map__everywhere " >
+              En todas partes
+            </div>
+
+            <div className="card-button-map__date">
+                Date
+            </div>
+
+          </div>
+          
         </Link>
-
-        <div className="card-button-map__hashtags">
-
-              <div className="card-button-map__need">
-                <div className="hashtag">tag</div>
-              </div>
-              <div className="card-button-map__offer">
-                <div className="hashtag">tag</div>
-              </div>
-
-        </div>
-
-        <div className="card-button-maps">
-
-          <div className="card-button-map__city card-button-map__everywhere " >
-            En todas partes
-          </div>
-
-          <div className="card-button-map__date">
-              Date
-          </div>
-
-        </div>
 
       </div>
 

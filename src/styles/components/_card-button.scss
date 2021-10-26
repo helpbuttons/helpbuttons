@@ -270,25 +270,26 @@ $card-button-border-height: $border-general-height;
   word-break: break-word;
   color: $card-button-paragraph-color;
   font-size: $font-size-general;
-  line-height: 0.9rem;
-  padding: 0.3 0;
+  line-height: $text-line-height-small;
+  padding: $padding-small 0;
   text-align: left;
 }
 
 .card-button__picture {
   width: 100%;
   border-radius: $border-radius-basic;
-  & img {
-    border-radius: $border-radius-basic;
-  }
+  position: relative;
+
 }
 
 //image arrows
 .card-button__picture-nav {
 
-  width: 90%;
-  height: inherit;
+  width: 100%;
+  height: 100%;
+  margin: auto;
   position: absolute;
+  padding: 0 $padding-small;
   z-index: $z-index-01;
   display: flex;
   justify-content: space-between;
