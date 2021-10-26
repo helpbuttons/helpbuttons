@@ -25,6 +25,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 To see a preview of all the styled key pieces that conform the app, open http://localhost:3000/RepositoryPage.
 
+For available icons visit :
+
+https://react-icons.github.io/react-icons/icons?name=bs
+
 ## Services Folder
 
 Services folder contains API routes and calls.
