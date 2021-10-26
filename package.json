@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.1",
+    "bootstrap-icons": "^1.6.1",
     "dotenv": "^10.0.0",
     "formik": "^2.2.9",
     "fs": "0.0.1-security",
