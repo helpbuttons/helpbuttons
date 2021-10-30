@@ -441,6 +441,11 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+// UPLOAD IMAGE FUNCTIONALITY BUTTON
+
+.btn-file-upload{
+  display: none;
+}
 
 
 @media #{$breakpoints-large} {

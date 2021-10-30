@@ -1,6 +1,7 @@
 //Data section of the button creation process , here is where butttonTemplate field of the backend displays all extradata, description, images and other specific field of the net you're displaying.
 //It uses popup classNamees if it's an overlay. In mobile it's be its own page. It leads to buttonNewPublish and iis preceeded by ButtonNewType
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
+import ButtonUploadData from '../ButtonUploadData'
 
 
 export default function ButtonNewData({ exact, ...props }) {
@@ -30,14 +31,15 @@ export default function ButtonNewData({ exact, ...props }) {
               </div>
 
           </div>
+          <div>
+            <div className="popup__options-h">
 
-          <div className="popup__options-h">
+                <label htmlFor="files" className="btn">
+                  + Añadir imagen
+                </label>
 
-              <label htmlFor="files" className="btn">
-                + Añadir imagen
-              </label>
-              <input id="files" type="file" className="btn"/>
-
+            </div>
+                <ButtonUploadData/>
           </div>
 
 
