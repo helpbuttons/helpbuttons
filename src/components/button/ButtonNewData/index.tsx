@@ -31,7 +31,6 @@ export default function ButtonNewData({ exact, ...props }) {
               </div>
 
           </div>
-          <div>
             <div className="popup__options-h">
 
                 <label htmlFor="files" className="btn">
@@ -40,7 +39,6 @@ export default function ButtonNewData({ exact, ...props }) {
 
             </div>
                 <ButtonUploadData/>
-          </div>
 
 
       </div>
