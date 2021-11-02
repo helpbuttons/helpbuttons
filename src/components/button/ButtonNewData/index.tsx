@@ -2,10 +2,9 @@
 //It uses popup classNamees if it's an overlay. In mobile it's be its own page. It leads to buttonNewPublish and iis preceeded by ButtonNewType
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
 import ButtonUploadData from '../ButtonUploadData'
-
+import UploadedImageList from '../../list/UploadedImageList'
 
 export default function ButtonNewData({ exact, ...props }) {
-
   return (
 
     <>
@@ -38,8 +37,8 @@ export default function ButtonNewData({ exact, ...props }) {
                 </label>
 
             </div>
-                <ButtonUploadData/>
-
+            <ButtonUploadData/>
+            <UploadedImageList/>
 
       </div>
 
