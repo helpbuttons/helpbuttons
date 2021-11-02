@@ -22,11 +22,18 @@ export default function Faqs() {
             Net description
           </div>
 
-          <label className="form__label label">
-            Dónde buscas x? :
-          </label>
-          <input type="text" className="form__input" placeholder="Search Location"></input>
+          <div className="info-overlay__image">
 
+            <div className="info-overlay__location">
+
+              <label className="form__label label">
+                Dónde buscas x? :
+              </label>
+              <input type="text" className="form__input" placeholder="Search Location"></input>
+
+            </div>
+
+          </div>
 
           <div className="info-overlay__nets">
 

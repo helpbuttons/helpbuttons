@@ -1,63 +1,84 @@
+$info-location-field-width: 330px;
+$info-nets-field-bottom: 90px;
+
 .info-overlay__selected {
 
     border: 1px solid $color-black;
 
-  }
+}
 
 .info-overlay__container {
 
     background-color: $color-corporative;
-    position: absolute;
     height:100vh;
     width:100%;
     z-index: $z-index-02;
     box-sizing: border-box;
 
-  }
+}
 
 .info-overlay__name {
 
-  margin: auto;
+  margin: $padding-big auto;
   width: 100%;
   font-size: $font-size-title;
   text-align: center;
 
 }
 
+.info-overlay__image {
+
+  height: 300px;
+  width: 100vw;
+  padding: $padding-big;
+  background-color: $color-black;
+  background-image:  url(https://dummyimage.com/200/#ccc/fff);
+  background-repeat: no-repeat, repeat;
+  background-size: cover;
+
+}
+
+.info-overlay__location {
+
+  margin: auto;
+
+}
+
 .info-overlay__description {
 
   margin: $margin-big;
+  margin: 30px auto;
+  text-align: center;
 
 }
 
 .info-overlay__nets {
 
-  margin: auto;
+  padding: $padding-big;
   position: absolute;
-  bottom: 130px;
+  bottom: $info-nets-field-bottom;
   width: 100%;
 
 }
 
 
 .info-overlay__content {
+
+   position: absolute;
    font-family: inherit;
    font-weight: bold;
    padding: 0 0 ;
    display: block;
    justify-content: space-around;
-   margin: $margin-big;
    min-width: fit-content;
    background-color: transparent;
-   position: relative;
    height: 100%;
+   width: fit-content;
    box-sizing: border-box;
-   z-index: 500000000
 
  }
 
 
 .info-overlay__body {
   position: relative;
-   z-index: 50000
  }
