@@ -1,46 +1,84 @@
+$info-location-field-width: 330px;
+$info-nets-field-bottom: 90px;
+
 .info-overlay__selected {
+
     border: 1px solid $color-black;
-  }
+
+}
 
 .info-overlay__container {
-    background: none !important;
-    position: absolute;
-    height:fit-content;
+
+    background-color: $color-corporative;
+    height:100vh;
     width:100%;
-    justify-content: center;
-    align-items: center;
-  }
+    z-index: $z-index-02;
+    box-sizing: border-box;
 
-.info-overlay__background {
-   background-color: $color-corporative;
-   display: flex;
-   border-radius: $border-radius-basic;
-   height: fit-content;
-   justify-content:  center;
-   align-items: center;
-   width: auto;
-   position: relative;
+}
 
-   top : 30vh;
-   z-index: 500000000
+.info-overlay__name {
 
- }
- 
+  margin: $padding-big auto;
+  width: 100%;
+  font-size: $font-size-title;
+  text-align: center;
+
+}
+
+.info-overlay__image {
+
+  height: 300px;
+  width: 100vw;
+  padding: $padding-big;
+  background-color: $color-black;
+  background-image:  url(https://dummyimage.com/200/#ccc/fff);
+  background-repeat: no-repeat, repeat;
+  background-size: cover;
+
+}
+
+.info-overlay__location {
+
+  margin: auto;
+
+}
+
+.info-overlay__description {
+
+  margin: $margin-big;
+  margin: 30px auto;
+  text-align: center;
+
+}
+
+.info-overlay__nets {
+
+  padding: $padding-big;
+  position: absolute;
+  bottom: $info-nets-field-bottom;
+  width: 100%;
+
+}
+
+
 .info-overlay__content {
+
+   position: absolute;
    font-family: inherit;
    font-weight: bold;
    padding: 0 0 ;
+   display: block;
+   justify-content: space-around;
    min-width: fit-content;
    background-color: transparent;
-   position: relative;
    height: 100%;
-   width:100%;
-   z-index: 500000000
+   width: fit-content;
+   box-sizing: border-box;
 
  }
 
 
 .info-overlay__body {
   position: relative;
-   z-index: 50000
  }
