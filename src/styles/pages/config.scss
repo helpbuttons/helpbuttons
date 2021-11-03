@@ -1,12 +1,14 @@
 .config__content {
 
   margin: 0 $margin-extra-small;
-
+  min-height: 100vh;
 }
 
 .config__section {
 
-  margin: 0 $margin-small;
+  height: 100vh;
+  overflow: auto;
+  margin-bottom: $margin-big;
 
 }
 

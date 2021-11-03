@@ -2,20 +2,18 @@
 import React, { Component } from 'react';
 
 
-export default class Accordion extends React.Component {
+export default function Accordion({
+    title,
+    children,
+}: BtnProps) {
 
-  render() {
+    return (
+        <>
+          <button id={title} className="accordion">{title}</button>
+            <div className="panel">
+              {children}
+            </div>
+        </>
 
-        return (
-
-            <>
-              <button id="section_name" className="accordion">Section 1</button>
-                <div className="panel">
-                  {this.props.children}
-                </div>
-            </>
-
-        );
-  }
-
+    );
 }
