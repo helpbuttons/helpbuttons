@@ -13,28 +13,10 @@ $picker-max-height-large: 720px;
 $picker-cualquircosa: red;
 $picker-comments-item-padding: 25px;
 
-body {
-  overflow-y: scroll; //Revise: Bienvenido Scroll
-}
 
 .picker {
   // Scroll picker content
 }
-
-.picker__overlay {
-
-  width: 100vw;
-  height: 100vh;
-  padding:0;
-  margin:0;
-  top:0;
-  left:0;
-  background: transparent;
-  position: fixed;
-  z-index: $z-index-base;
-
-}
-
 
 .picker__content {
 
@@ -50,100 +32,8 @@ body {
 
 }
 
-.picker__dropdown {
 
-  position: relative;
-  overflow: auto;
-  width: auto; //Revise antes era 100%
-  overflow-y: visible !important;
-  max-height: 100% !important;
-  border-radius: $border-radius-semicircle !important;
-  background: $color-white !important;
-  overflow-x: hidden;
-  box-shadow: none;
-  font-size: $font-size-general;
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  & ul {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  & ul::-webkit-scrollbar {
-    display: none;
-  }
-
-  & li {
-    border-top: 1px solid #e6e6e6;
-    padding: .5rem;
-     &:hover,
-     :active {
-       color: white;
-     }
-     &[aria-current="true"] {
-       background: $color-black;
-       color: white;
-     }
-  }
-
-}
-
-.picker__dropdown--home {
-
-  @extend .picker__dropdown;
-
-  top:0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  max-height: 50vh !important;
-
-
-  & li {
-    border-top: 1px solid #e6e6e6;
-     padding: .5rem;
-     &:hover,
-     :active {
-       color: white;
-     }
-     &[aria-current="true"] {
-       background: $color-black;
-       color: white;
-     }
-  }
-
-}
-
-.picker__dropdown::-webkit-scrollbar {
-  display: none;
-}
-
-.picker__dropdown--row {
-
-  display: flex;
-  flex-direction: row;
-  align-content: space-between;
-  justify-content: space-between;
-
-}
-
-.picker__dropdown--concept {
-
-  font-weight: $font-weight-bold;
-
-}
-
-//REVISE NAMING DE LA CLASE
-.picker__display {
-
-  display: flex;
-  justify-content:space-between;
-
-}
-
-//MEENUSELECT LISTA DE ICONOS EN COLUMNAS DE 3
-
+// LISTA DE ICONOS EN COLUMNAS DE 3
 .picker__list-elem {
 
   width: 70px;
@@ -168,12 +58,6 @@ body {
 
 }
 
-//REVISE NAMING DE LA CLASE
-.picker__tags {
-
-  width: 100%;
-
-}
 
 .picker__section {
 
@@ -193,17 +77,6 @@ body {
   text-align: center;
 }
 
-.picker__left-title {
-  width: 100%;
-  padding: $padding-medium;
-
-
-  font-size: $font-size-medium;
-  font-weight: $font-weight-regular;
-  text-align: left;
-  color: $color-dark-blue;
-}
-
 // contents
 .picker__paragraph {
 
@@ -219,12 +92,6 @@ body {
     display: none; // Revise Ángel
     width: 100%;
     height: auto;
-  }
-}
-
-.overlaw-scroll {
-  .liquid-child {
-    overflow: auto;
   }
 }
 
@@ -262,28 +129,6 @@ body {
   padding: $picker-comments-item-padding 0;
 }
 
-.picker__options-btn {
-
-  display: inline-block;
-  text-align: center;
-  line-height: 2rem; //revise anteiormente era 1.5rem pero probe con 2rem, y se ve bien
-  width: 100%;
-  vertical-align: middle;
-  height: auto;
-  background: $color-white;
-
-  &--stroked {
-    stroke: $color-corporative;
-    fill: $color-corporative;
-    border-color: $color-black;
-    background-color: $color-black;
-  }
-
-  &:focus {
-    box-shadow: none;
-  }
-}
-
 .picker__options-btn--icon {
   height: 20px;
 
@@ -291,21 +136,6 @@ body {
     display: none;
     height: 10px;
   }
-}
-
-.picker__options-title {
-  display: inline-block;
-  background: $color-ligth-gray;
-
-  padding: $padding-medium 8px;//Revise 12px cambiado a 10px
-  text-align: center;
-
-  font-size: $font-size-general;
-  line-height: 1.5rem;
-  width: 100%;
-  vertical-align: middle;
-  padding: $picker-paragraph-padding;
-  height: auto;
 }
 
 .picker__options-v {
@@ -368,52 +198,13 @@ body {
 }
 
 
-//Revise
-.picker__themes {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: $padding-medium $padding-big;//de 16px a 18px y de 8px a 10px
-
-  border-top: 1px solid $color-gray-border;
-}
-
-.picker__themes-span {
-  font-weight: bold;
-  width: 30%;
-}
-
-.picker__themes-button {
-
-  border-radius: $border-radius-buttons;
-  height: fit-content;
-  width: auto;
-  padding: 0 $padding-medium;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-}
-
-.picker__themes-count {
-  width: 30%;
-  text-align: end;
-  font-weight: ligth;
-}
-
-
-//Revise: clase picker--over
 .picker--over {
 
-  //position: absolute;  REVISE FOR REPOSITORY
-  position: relative;
+  position: absolute;
   width: 95%;
+  height: 100%;
+  z-index: $z-index-05;
 
-}
-
-.picker__content {//Revise
-  border-radius: $picker-border-radius !important;
 }
 
 @media #{$breakpoints-medium} {

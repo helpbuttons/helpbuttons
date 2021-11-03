@@ -3,6 +3,8 @@ import NavHeader from '../../components/nav/NavHeader'
 
 import Directory from '../../elements/Directory'
 import Accordion from '../../elements/Accordion'
+import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
+import { Link } from 'elements/Link';
 
 export default function Faqs() {
 
@@ -27,7 +29,7 @@ export default function Faqs() {
             <div className="info-overlay__location">
 
               <label className="form__label label">
-                Dónde buscas x? :
+                Where are you? :
               </label>
               <input type="text" className="form__input" placeholder="Search Location"></input>
 
@@ -43,6 +45,10 @@ export default function Faqs() {
               <option className="dropdown-nets__dropdown-option" label='label2' value='Net2'>hola</option>
               <option className="dropdown-nets__create-new-button" label='label2' value='Net2'>Create Net</option>
             </datalist>
+
+            <Link href="/NetworkNew">
+              <Btn contentAlignment={ContentAlignment.center} caption="Create Net"  />
+            </Link>
 
           </div>
 

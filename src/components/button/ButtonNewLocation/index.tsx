@@ -26,29 +26,32 @@ export default function ButtonNewLocation({ exact, ...props }) {
     </div>
 
     {showHideMenu &&
+      <div className="picker__close-container">
 
-      <div className="picker--over picker-box-shadow picker__content picker__options-v">
-        <button onClick={() => props.setGeoPlace('{ "type": "Point", "coordinates": [100.0, 0.0]}')}  className="picker__option-btn--active" type="button" name="btn">
-            <div className="picker__option-btn--icon">
-            </div>
-            <div className="picker__option-btn--txt">
-              En cualquier lugar
-            </div>
-        </button>
-        <button onClick={() => props.setGeoPlace('{ "type": "Point", "coordinates": [100.0, 0.0]}')}  className="picker__option-btn--active" type="button" name="button">
-            <div className="picker__option-btn--icon">
-            </div>
-            <div className="picker__option-btn--txt">
-              En un sitio concreto
-            </div>
-        </button>
-        <button onClick={() => props.setGeoPlace('{ "type": "Point", "coordinates": [100.0, 0.0]}')}  className="picker__option-btn--active" type="button" name="button">
-            <div className="picker__option-btn--icon">
-            </div>
-            <div className="picker__option-btn--txt">
-              Desde / Hasta
-            </div>
-        </button>
+        <div className="picker--over picker-box-shadow picker__content picker__options-v">
+          <button onClick={() => props.setGeoPlace('{ "type": "Point", "coordinates": [100.0, 0.0]}')}  className="picker__option-btn--active" type="button" name="btn">
+              <div className="picker__option-btn--icon">
+              </div>
+              <div className="picker__option-btn--txt">
+                En cualquier lugar
+              </div>
+          </button>
+          <button onClick={() => props.setGeoPlace('{ "type": "Point", "coordinates": [100.0, 0.0]}')}  className="picker__option-btn--active" type="button" name="button">
+              <div className="picker__option-btn--icon">
+              </div>
+              <div className="picker__option-btn--txt">
+                En un sitio concreto
+              </div>
+          </button>
+          <button onClick={() => props.setGeoPlace('{ "type": "Point", "coordinates": [100.0, 0.0]}')}  className="picker__option-btn--active" type="button" name="button">
+              <div className="picker__option-btn--icon">
+              </div>
+              <div className="picker__option-btn--txt">
+                Desde / Hasta
+              </div>
+          </button>
+        </div>
+        
       </div>
 
     }

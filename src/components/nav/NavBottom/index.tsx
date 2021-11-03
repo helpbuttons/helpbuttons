@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import CrossIcon from '../../../../public/assets/svg/icons/cross1'
 import { useState, useEffect } from 'react';
+
 import NavLink from 'elements/Navlink';
 import { UserService } from 'services/Users';
 import { HttpUtilsService } from 'services/HttpUtilsService';
@@ -13,10 +14,6 @@ function NavBottom({logged}){
 
   const [user, setUser] = useState(null);
 
-  function logout() {
-      UserService.logout();
-  }
-
   return(
 
       <nav id="bottom-nav" className="nav-bottom">
@@ -26,7 +23,7 @@ function NavBottom({logged}){
             <BsFillHouseFill/>
             </div>
             <div className="nav-bottom__text">
-              Home
+              Explore
             </div>
         </NavLink>
 
@@ -39,27 +36,21 @@ function NavBottom({logged}){
             </div>
         </NavLink>
 
+        {!logged &&
 
-        <NavLink href="/Faqs" className="nav-bottom__link nav-bottom__link--active">
-            <div className="nav-bottom__icon">
-                <CrossIcon />
-            </div>
-            <div className="nav-bottom__text">
-              Faqs
-            </div>
-        </NavLink>
+          <NavLink href="/Faqs" className="nav-bottom__link nav-bottom__link--active">
+              <div className="nav-bottom__icon">
+                  <CrossIcon />
+              </div>
+              <div className="nav-bottom__text">
+                Faqs
+              </div>
+          </NavLink>
+
+        }
 
         {logged && (
             <>
-
-              <NavLink href="/NetworkNew" className="nav-bottom__link nav-bottom__link--active">
-                  <div className="nav-bottom__icon">
-                      <CrossIcon />
-                  </div>
-                  <div className="nav-bottom__text">
-                    CreateNet
-                  </div>
-              </NavLink>
 
               <NavLink href="/Profile" className="nav-bottom__link nav-bottom__link--active">
                   <div className="nav-bottom__icon">
@@ -70,24 +61,14 @@ function NavBottom({logged}){
                   </div>
               </NavLink>
 
-              <NavLink href="/Config" className="nav-bottom__link nav-bottom__link--active">
+              <NavLink href="/Notifications" className="nav-bottom__link nav-bottom__link--active">
                   <div className="nav-bottom__icon">
                       <CrossIcon />
                   </div>
                   <div className="nav-bottom__text">
-                    Config
+                    Activity
                   </div>
               </NavLink>
-
-              <Link href="/Faqs"><a onClick={logout} className="nav-bottom__link nav-bottom__link--active">
-                  <div className="nav-bottom__icon">
-                      <CrossIcon />
-                  </div>
-                  <div className="nav-bottom__text">
-                    Logout
-                  </div>
-              </a></Link>
-
             </>
 
         )}
