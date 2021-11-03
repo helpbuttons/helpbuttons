@@ -1,15 +1,9 @@
 //is the component or element integrated in buttonNewPublish. Right before activate button. It displays the current selected date and a button to chang it, that ddisplays a picker with the date options for the net that's selecte
-
+import React, {useState} from "react";
 
 export default function ButtonNewDate({ exact, ...props }) {
 
-  const showHideMenu = false;
-
-  function handleHideMenu(e) {         // separate handler for each field
-    this.setState({
-      showHideMenu: !this.state,
-    });
-  }
+  const [showHideMenu, setHideMenu] = useState(false);
 
   return (
 
@@ -25,7 +19,7 @@ export default function ButtonNewDate({ exact, ...props }) {
 
       </div>
 
-      <div className="btn" onClick={handleHideMenu}>
+      <div className="btn" onClick={() => setHideMenu(!showHideMenu)}>
         Change date
       </div>
 

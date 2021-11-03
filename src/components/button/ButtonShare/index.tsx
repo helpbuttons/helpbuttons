@@ -1,6 +1,5 @@
 // this is the sharing social section menu options that uses popup classNamees. It can be isplayed at the end of buttonNew Process but also directly in ButtonFile from the options menu.
-import NavHeader from '../../components/nav/NavHeader'
-
+import React, {useState} from "react";
 
 export default function ButtonShare() {
 
@@ -15,7 +14,7 @@ export default function ButtonShare() {
   return (
 
     <>
-    
+
     {showHideMenu &&
 
         <div className="popup__section">

@@ -1,15 +1,10 @@
 //this is the component integrated in buttonNewPublish to display the location. It shows the current location and has a button to change the location that displays a picker with the differents location options for the network
+import React, {useState} from "react";
 
 export default function ButtonNewLocation({ exact, ...props }) {
 
-  const showHideMenu = false;
+  const [showHideMenu, setHideMenu] = useState(false);
 
-  function handleHideMenu(e) {         // separate handler for each field
-    this.setState({
-      showHideMenu: !this.state,
-    });
-  }
-  
   return (
 
     <>
@@ -24,7 +19,7 @@ export default function ButtonNewLocation({ exact, ...props }) {
 
       </div>
 
-      <div className="btn">
+      <div className="btn" onClick={() => setHideMenu(!showHideMenu)}>
           Cambiar lugar
       </div>
 

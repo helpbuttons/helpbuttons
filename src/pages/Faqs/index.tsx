@@ -18,7 +18,6 @@ export default function Faqs() {
 
           <h2 className="title__h3 faqs__title">Faqs</h2>
 
-
           <Accordion title="What's Helpbuttons">
           </Accordion>
 

@@ -1,5 +1,5 @@
 ///Accordion section component for displaying long section data
-import React, { Component } from 'react';
+import React, {useState} from "react";
 
 
 export default function Accordion({
@@ -7,12 +7,16 @@ export default function Accordion({
     children,
 }: BtnProps) {
 
+  const [showChildren, setShowChildren] = useState(false);
+
     return (
         <>
-          <button id={title} className="accordion">{title}</button>
+          <button id={title} className="accordion" onClick={() => setShowChildren(!showChildren)}>{title}</button>
+          {showChildren &&
             <div className="panel">
               {children}
             </div>
+          }
         </>
 
     );
