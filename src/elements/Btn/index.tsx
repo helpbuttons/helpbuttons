@@ -11,7 +11,7 @@ export enum BtnType {
 export enum IconType {
     red,
     green,
-    remove,
+    svg,
     splitRedGreen,
 }
 export enum ContentAlignment {
@@ -21,6 +21,7 @@ export enum ContentAlignment {
 }
 interface BtnProps {
     caption: string;
+    iconLink: string;
     iconLeft?: IconType;
     iconRight?: IconType;
     contentAlignment?: ContentAlignment;
@@ -29,14 +30,14 @@ interface BtnProps {
     isSubmitting?: boolean;
 }
 
-function BtnIcon({ icon }: { icon: IconType }) {
+function BtnIcon({ icon, iconLink }: { icon: IconType }) {
     switch (icon) {
         case IconType.red:
             return <div className="btn-filter__icon red"></div>;
         case IconType.green:
             return <div className="btn-filter__icon green"></div>;
-        case IconType.remove:
-            return <div className="btn-filter__remove-icon"></div>;
+        case IconType.svg:
+            return <div className="btn-with-icon__icon">{iconLink}</div>;
         case IconType.splitRedGreen:
             return (
                 <div className="btn-filter__split-icon">
@@ -67,6 +68,7 @@ export default function Btn({
     caption,
     iconRight = null,
     iconLeft = null,
+    iconLink = null,
     btnType = null,
     contentAlignment = null,
     disabled = false,
@@ -106,9 +108,9 @@ export default function Btn({
     return (
         <button disabled={disabled} className={className}>
             {isSubmitting && <Spinner />}
-            <BtnIcon icon={iconLeft} />
+            <BtnIcon icon={iconLeft} iconLink={iconLink}/>
             <CaptionNode caption={caption} hasIcon={hasIcon} />
-            <BtnIcon icon={iconRight} />
+            <BtnIcon icon={iconRight} iconLink={iconLink}/>
         </button>
     );
 }

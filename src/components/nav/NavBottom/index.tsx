@@ -6,7 +6,13 @@ import { useState, useEffect } from 'react';
 import NavLink from 'elements/Navlink';
 import { UserService } from 'services/Users';
 import { HttpUtilsService } from 'services/HttpUtilsService';
-import { BsFillHouseFill } from "react-icons/bs";
+import { IoAddOutline } from "react-icons/io5";
+import { IoSearchOutline } from "react-icons/io5";
+import { IoPersonOutline } from "react-icons/io5";
+import { IoHeartOutline } from "react-icons/io5";
+import { IoLogInOutline } from "react-icons/io5";
+import { IoHelpOutline } from "react-icons/io5";
+import { IoGlobeOutline } from "react-icons/io5";
 
 export default NavBottom;
 
@@ -20,7 +26,7 @@ function NavBottom({logged}){
 
         <NavLink href="/" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
-            <BsFillHouseFill/>
+            <IoGlobeOutline/>
             </div>
             <div className="nav-bottom__text">
               Explore
@@ -29,7 +35,7 @@ function NavBottom({logged}){
 
         <NavLink href="/ButtonNew" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
-                <CrossIcon />
+                <IoAddOutline/>
             </div>
             <div className="nav-bottom__text">
               Create
@@ -40,7 +46,7 @@ function NavBottom({logged}){
 
           <NavLink href="/Faqs" className="nav-bottom__link nav-bottom__link--active">
               <div className="nav-bottom__icon">
-                  <CrossIcon />
+                  <IoHelpOutline />
               </div>
               <div className="nav-bottom__text">
                 Faqs
@@ -54,7 +60,7 @@ function NavBottom({logged}){
 
               <NavLink href="/Profile" className="nav-bottom__link nav-bottom__link--active">
                   <div className="nav-bottom__icon">
-                      <CrossIcon />
+                      <IoPersonOutline />
                   </div>
                   <div className="nav-bottom__text">
                     Profile
@@ -63,7 +69,7 @@ function NavBottom({logged}){
 
               <NavLink href="/Notifications" className="nav-bottom__link nav-bottom__link--active">
                   <div className="nav-bottom__icon">
-                      <CrossIcon />
+                      <IoHeartOutline />
                   </div>
                   <div className="nav-bottom__text">
                     Activity
@@ -77,7 +83,7 @@ function NavBottom({logged}){
 
             <NavLink href="/Login" className="nav-bottom__link nav-bottom__link--active">
                 <div className="nav-bottom__icon">
-                    <CrossIcon />
+                    <IoLogInOutline />
                 </div>
                 <div className="nav-bottom__text">
                   Login

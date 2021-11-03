@@ -5,6 +5,10 @@ import { Link } from 'elements/Link';
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 
 import { UserService } from 'services/Users';
+import { IoPersonOutline } from "react-icons/io5";
+import { IoHeartOutline } from "react-icons/io5";
+import { IoRibbonOutline } from "react-icons/io5";
+import { IoLogOutOutline } from "react-icons/io5";
 
 export default function CardProfile() {
 
@@ -39,19 +43,19 @@ export default function CardProfile() {
                 <div className="paragraph grid-three__column">
                   90
                   <div className="btn-circle__icon">
-                    <CrossIcon />
+                    <IoHeartOutline />
                   </div>
                 </div>
                 <div className="paragraph grid-three__column">
                   77
                   <div className="btn-circle__icon">
-                    <CrossIcon />
+                    <IoPersonOutline />
                   </div>
                 </div>
                 <div className="paragraph grid-three__column">
                   23
                   <div className="btn-circle__icon">
-                    <CrossIcon />
+                    <IoRibbonOutline />
                   </div>
 
                 </div>
@@ -77,7 +81,7 @@ export default function CardProfile() {
 
         <Link href="/"><a onClick={logout} className="btn-with-icon">
           <div className="btn-with-icon__icon">
-            <CrossIcon />
+            <IoLogOutOutline />
           </div>
           <span className="btn-with-icon__text">
             Logout
@@ -88,9 +92,13 @@ export default function CardProfile() {
           <Btn contentAlignment={ContentAlignment.center} caption="Config account"  />
         </Link>
 
+        <Btn contentAlignment={ContentAlignment.center} caption="Config account"  />
+
+        <Btn iconLeft={IconType.svg} iconLink={<IoHeartOutline />} caption="Support User" />
+
         <div className="btn-with-icon">
           <div className="btn-with-icon__icon">
-            <CrossIcon />
+            <IoHeartOutline />
           </div>
           <span className="btn-with-icon__text">
             Support User

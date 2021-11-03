@@ -4,6 +4,7 @@ import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
 import Filters from "../../search/Filters";
 import FiltersMobile from "../../search/FiltersMobile"; //just for mobile
 import { Link } from 'elements/Link';
+import { IoHomeOutline } from "react-icons/io5";
 
 
 export default class NavHeader extends React.Component {
@@ -74,7 +75,7 @@ export default class NavHeader extends React.Component {
 
                   <div className="btn-circle__icon">
 
-                    <CrossIcon />
+                    <IoHomeOutline />
 
                   </div>
 

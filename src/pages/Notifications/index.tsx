@@ -9,8 +9,6 @@ export default function Notifications() {
 
     <>
 
-      <NavHeader />
-
       <div className="body__content">
 
         <div className="body__section">
