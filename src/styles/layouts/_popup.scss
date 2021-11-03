@@ -20,7 +20,7 @@ body {
 
 .popup {
   // Scroll popup content
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   height: 100vh;
   width: 100vw;
@@ -51,10 +51,9 @@ body {
 
   width: 100%;
   padding: .5rem;
+  position:  relative;
   height: $popup-header-height;
-  border-radius: 25px 25px 0 0;//REVISE SOBRE EL BORDER RADIUS
 
-  border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;//REVISE SOBRE EL BORDER RADIUS
 }
 
 .popup__header--trans {
@@ -130,6 +129,8 @@ body {
 
   width: 100%;
   height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   margin-bottom: $footer-height-mobile;
   border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;//REVISE
   display: flex;
@@ -351,7 +352,9 @@ body {
   }
 
   .popup__header {
-    min-height: 44px;
+    min-height: $popup-header-height;
+    border-radius: 25px 25px 0 0;//REVISE SOBRE EL BORDER RADIUS
+    border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;//REVISE SOBRE EL BORDER RADIUS
   }
 
   .popup__content {

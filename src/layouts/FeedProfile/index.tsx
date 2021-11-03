@@ -29,6 +29,12 @@ export default function FeedProfile() {
 
         </div>
 
+        <div className="feed-element">
+
+          <CardNotification />
+
+        </div>
+
       </div>
 
     </div>

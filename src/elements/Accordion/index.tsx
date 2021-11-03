@@ -1,21 +1,23 @@
 ///Accordion section component for displaying long section data
-import React, { Component } from 'react';
+import React, {useState} from "react";
 
 
-export default class Accordion extends React.Component {
+export default function Accordion({
+    title,
+    children,
+}: BtnProps) {
 
-  render() {
+  const [showChildren, setShowChildren] = useState(false);
 
-        return (
+    return (
+        <>
+          <button id={title} className="accordion" onClick={() => setShowChildren(!showChildren)}>{title}</button>
+          {showChildren &&
+            <div className="panel">
+              {children}
+            </div>
+          }
+        </>
 
-            <>
-              <button id="section_name" className="accordion">Section 1</button>
-                <div className="panel">
-                  {this.props.children}
-                </div>
-            </>
-
-        );
-  }
-
+    );
 }

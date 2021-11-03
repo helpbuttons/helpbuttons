@@ -28,7 +28,7 @@ function Repository() {
           <section className="repository__section">
 
             <Btn iconLeft={IconType.red} caption="Necesito Btn" />
-            
+
             <button className="btn-with-icon btn-with-icon--need">
               <div className="btn-filter__icon red"></div>
               <div className="btn-with-icon__text">
@@ -152,13 +152,13 @@ function Repository() {
 
           <section className="repository__section">
 
-            <div className="form-field">
+            <div className="form__field">
               <input type="text" className="form__input" placeholder="Placeholder"></input>
             </div>
 
             <hr></hr>
 
-            <div className="form-field">
+            <div className="form__field">
               <label className="form__label label">
                 Text label
               </label>
@@ -991,7 +991,7 @@ function Repository() {
 
                 <form className="popup__section" >
 
-                  <div className="form-field">
+                  <div className="form__field">
                     <input type="text" className="form__input" placeholder="Escribe tu mail para participar"></input>
                   </div>
 

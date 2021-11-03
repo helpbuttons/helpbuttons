@@ -1,8 +1,18 @@
 //Profile Card with the the info displayed by the user in Profile page. It shows different options depending if it's other user profile or your profile when logged.
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 import CrossIcon from '../../../../public/assets/svg/icons/cross1'
+import { Link } from 'elements/Link';
+import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
+
+import { UserService } from 'services/Users';
 
 export default function CardProfile() {
+
+
+  function logout() {
+      UserService.logout();
+  }
+
   return (
     <>
       <div className="card-profile__container">
@@ -48,8 +58,10 @@ export default function CardProfile() {
 
               </figure>
 
-          </div>
+            </div>
+
         </div>
+
         <div className="card-profile__data">
           <div className="card-profile__description grid-one__column-mid-element">
             Descripcion
@@ -63,14 +75,28 @@ export default function CardProfile() {
           </div>
         </div>
 
+        <Link href="/"><a onClick={logout} className="btn-with-icon">
+          <div className="btn-with-icon__icon">
+            <CrossIcon />
+          </div>
+          <span className="btn-with-icon__text">
+            Logout
+          </span>
+        </a></Link>
+
+        <Link href="/Config">
+          <Btn contentAlignment={ContentAlignment.center} caption="Config account"  />
+        </Link>
+
         <div className="btn-with-icon">
           <div className="btn-with-icon__icon">
             <CrossIcon />
           </div>
           <span className="btn-with-icon__text">
-            Apoyar usuario
+            Support User
           </span>
         </div>
+
       </div>
     </>
   );
