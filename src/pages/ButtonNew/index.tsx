@@ -92,7 +92,7 @@ export default function ButtonNew() {
 
               <Popup title="Crear Botón">
 
-                <form onSubmit={handleSubmit(onSubmit)} className="button-new__container">
+                <form onSubmit={handleSubmit(onSubmit)} className="popup__section">
 
                   <ButtonNewType setType={setType} type={type} register={register} errors={errors}/>
                   {type}
@@ -113,7 +113,7 @@ export default function ButtonNew() {
                     <button type="submit" disabled={formState.isSubmitting}  className="popup__options-btn btn-menu-white">
 
                       {formState.isSubmitting && <span className=""></span>}
-                        Crear Botón
+                        Create Button
 
                     </button>
 

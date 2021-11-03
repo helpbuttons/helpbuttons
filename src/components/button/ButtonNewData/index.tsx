@@ -12,35 +12,36 @@ export default function ButtonNewData({ exact, ...props }) {
         <div className="popup__section">
 
           <p className="popup__paragraph">
-            Añade un título diciendo qué buscas y/u ofreces. Añade
-            imágenes si quieres.
+            Describe your purpose:
           </p>
+          <div className="form__field">
 
-          <textarea onChange={() => props.setDescription("")} name="description" className="textarea__textarea" placeholder="Escribe aquí tu descripción"></textarea>
-          <div className="invalid-feedback">{props.errors.description?.message}</div>
+            <textarea onChange={() => props.setDescription("")} name="description" className="textarea__textarea" placeholder="i.e. I would like to offer..."></textarea>
+            <div className="invalid-feedback">{props.errors.description?.message}</div>
+
+          </div>
 
           <p className="popup__paragraph">
-            Elige etiquetas que definan tu botón :
+            Choose tags that better suite your purpose :
           </p>
 
-          <div className="card-button__hashtags">
-
+          <div className="form__field card-button__hashtags">
               <div className="card-button__busca">
                 <div onClick={() => props.setTags("tag1")} className="hashtag">tag</div>
               </div>
+          </div>
+
+          <div className="popup__options-h">
+
+              <label htmlFor="files" className="btn">
+                + Añadir imagen
+              </label>
 
           </div>
-            <div className="popup__options-h">
+          <ButtonUploadData/>
+          <UploadedImageList/>
 
-                <label htmlFor="files" className="btn">
-                  + Añadir imagen
-                </label>
-
-            </div>
-            <ButtonUploadData/>
-            <UploadedImageList/>
-
-      </div>
+        </div>
 
       <div className="button-new-description__spinner"> </div>
 

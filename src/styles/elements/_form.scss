@@ -55,7 +55,7 @@ $form-input-font-size: $font-size-medium;
 }
 
 
-.form-field {
+.form__field {
   max-width: 100%;
   font-size: $font-size-medium;
   margin-top: 10px;
@@ -63,7 +63,7 @@ $form-input-font-size: $font-size-medium;
 }
 
 
-.form-field--feed {
+.form__field--feed {
   display: flex;
   max-width: 100%;
   padding: .5rem .5rem;
@@ -71,7 +71,7 @@ $form-input-font-size: $font-size-medium;
 }
 
 
-.form-field--feed button {
+.form__field--feed button {
   background: $color-corporative;
   border: none;
   width: 69px;
@@ -283,7 +283,7 @@ $form-input-font-size: $font-size-medium;
 
 @media #{$breakpoints-medium} {
 
-  .form-field--feed button {
+  .form__field--feed button {
     width: 60px;
   }
 

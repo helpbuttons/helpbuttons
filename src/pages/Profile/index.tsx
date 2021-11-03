@@ -13,11 +13,17 @@ export default function Profile() {
 
       <NavHeader />
 
-      <CardProfile />
+      <div className="body__content">
 
-      <FeedProfile />
+        <div className="body__section">
 
-      
+          <CardProfile />
+
+          <FeedProfile />
+
+        </div>
+
+      </div>
 
     </>
 

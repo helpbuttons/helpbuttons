@@ -1,0 +1,15 @@
+.body__content {
+
+  margin: 0 $margin-extra-small;
+  min-height: 100vh;
+
+}
+
+.body__section {
+
+  height: 100vh;
+  padding-bottom: 250px;
+  overflow: auto;
+  margin-bottom: $margin-big;
+
+}

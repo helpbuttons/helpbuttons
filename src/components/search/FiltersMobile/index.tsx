@@ -5,7 +5,7 @@ export default function FiltersMobile() {
   <form className="filters--vertical">
 
 
-      <div className="form-field">
+      <div className="form__field">
         <label className="form__label label">
           Origen de tu viaje :
         </label>
@@ -16,7 +16,7 @@ export default function FiltersMobile() {
         <input type="text" className="form__input" placeholder="Search Location"></input>
       </div>
 
-      <div className="form-field">
+      <div className="form__field">
         <label className="form__label label">
           Cuándo viajas :
         </label>
@@ -34,7 +34,7 @@ export default function FiltersMobile() {
       <hr></hr>
 
 
-      <div className="form-field">
+      <div className="form__field">
         <label className="form__label label">
           Tipos de botón
         </label>
@@ -66,7 +66,7 @@ export default function FiltersMobile() {
 
       </div>
 
-      <div className="form-field">
+      <div className="form__field">
         <label className="form__label label">
           Text label
         </label>

@@ -15,9 +15,9 @@ export default function Config() {
 
       <NavHeader />
 
-      <div className="config__content">
+      <div className="body__content">
 
-        <div className="config__section">
+        <div className="body__section">
 
           <h2 className="title__h3 config__title">Config</h2>
 
@@ -25,7 +25,7 @@ export default function Config() {
 
             <form>
 
-              <div className="form-field">
+              <div className="form__field">
                 <label className="form__label label">
                   Username
                 </label>
@@ -33,7 +33,7 @@ export default function Config() {
               </div>
 
 
-              <div className="form-field">
+              <div className="form__field">
                 <label className="form__label label">
                   Email
                 </label>
@@ -47,7 +47,7 @@ export default function Config() {
                 </div>
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
                 <label className="form__label label">
                   Imagen de perfil
                 </label>
@@ -61,7 +61,7 @@ export default function Config() {
                 </div>
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
                 <label className="form__label label">
                   Imagen de perfil
                 </label>
@@ -78,7 +78,7 @@ export default function Config() {
                 </div>
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
                 <div className="textarea">
                   <label className="form__label label">
                     Description
@@ -87,28 +87,28 @@ export default function Config() {
                 </div>
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
                 <label className="form__label label">
                   Share location
                 </label>
                 <CheckBox icon="cross" text="Compartir" inputId="ahora-checkbox" />
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
                 <label className="form__label label">
                   Languages
                 </label>
                 <input type="text" className="form__input" placeholder="Write your email"></input>
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
                 <label className="form__label label">
                   App language
                 </label>
                 <input type="text" className="form__input" placeholder="Write your email"></input>
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
                 <label className="form__label label">
                   Activate/Deactivate User
                 </label>
@@ -122,7 +122,7 @@ export default function Config() {
                 </div>
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
                 <label className="form__label label">
                   Borrar perfil
                 </label>
@@ -147,14 +147,14 @@ export default function Config() {
 
             <p>Elige las etiquetas que te interesan para que otras personas las conozcan y si quieres recibir avisos :</p>
 
-              <div className="form-field">
+              <div className="form__field">
                 <label className="form__label label">
                   Intereses
                 </label>
                 <input type="text" className="form__input" placeholder="i.e. sports food etc"></input>
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
 
                 <Btn contentAlignment={ContentAlignment.center} caption="Receive Notifications" />
 
@@ -162,7 +162,7 @@ export default function Config() {
 
               <p>Aquí puedes elegir para qué redes y qué tipo de botones (Necesitan rojo/ Ofrecen verde) quieres recibir los avisos de cada interés:</p>
 
-              <div className="form-field">
+              <div className="form__field">
 
                 <label className="form__label label">
                   Intereses
@@ -187,7 +187,7 @@ export default function Config() {
 
               <p>Aquí puedes elegir a qué distancia y tu lugar de referencia para recibir avisos.</p>
 
-              <div className="form-field">
+              <div className="form__field">
 
                 <label className="form__label label">
                   Distance
@@ -196,7 +196,7 @@ export default function Config() {
 
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
 
                 <label className="form__label label">
                   Lugar de referencia :
@@ -214,7 +214,7 @@ export default function Config() {
             <form>
 
               <p>Aquí puedes elegir a qué distancia y tu lugar de referencia para recibir avisos.</p>
-              <div className="form-field">
+              <div className="form__field">
 
                 <label className="form__label label">
                   Password
@@ -233,7 +233,7 @@ export default function Config() {
 
             <form>
 
-              <div className="form-field">
+              <div className="form__field">
 
                 <label className="form__label label">
                   Phone
@@ -242,7 +242,7 @@ export default function Config() {
 
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
 
                 <label className="form__label label">
                   Telegram
@@ -251,7 +251,7 @@ export default function Config() {
 
               </div>
 
-              <div className="form-field">
+              <div className="form__field">
 
                 <label className="form__label label">
                   Whatsapp
@@ -273,7 +273,7 @@ export default function Config() {
 
             <form>
 
-              <div className="form-field">
+              <div className="form__field">
 
                 <label className="form__label label">
                   Blocked Users
@@ -293,7 +293,7 @@ export default function Config() {
 
           <form>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 Network Name
@@ -302,7 +302,7 @@ export default function Config() {
 
             </div>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 Network Search Name
@@ -311,7 +311,7 @@ export default function Config() {
 
             </div>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 Description
@@ -320,7 +320,7 @@ export default function Config() {
 
             </div>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 Location
@@ -329,7 +329,7 @@ export default function Config() {
 
             </div>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 Network Icon
@@ -338,7 +338,7 @@ export default function Config() {
 
             </div>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 Network tags
@@ -347,7 +347,7 @@ export default function Config() {
 
             </div>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 Network Url
@@ -356,7 +356,7 @@ export default function Config() {
 
             </div>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 Network Friends
@@ -365,7 +365,7 @@ export default function Config() {
 
             </div>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 Blocked Users
@@ -374,7 +374,7 @@ export default function Config() {
 
             </div>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 Admin Users
@@ -383,7 +383,7 @@ export default function Config() {
 
             </div>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 Admitted Users
@@ -394,7 +394,7 @@ export default function Config() {
 
             <Btn contentAlignment={ContentAlignment.center} caption="External Network"/>
 
-            <div className="form-field">
+            <div className="form__field">
 
               <label className="form__label label">
                 External Url

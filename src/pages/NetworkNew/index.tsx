@@ -81,49 +81,49 @@ export default function NetworkNew() {
 
               <Popup title="Create Network">
 
-                <form onSubmit={handleSubmit(onSubmit)} className="button-new__container">
+                <form onSubmit={handleSubmit(onSubmit)} className="popup__section">
 
-                <div className="form__field">
-                    <label>Name</label>
-                    <input name="name" type="text" {...register('name')} className={`form__input ${errors.name ? '' : ''}`} />
-                    <div className="">{errors.name?.message}</div>
-                </div>
+                  <div className="form__field">
+                      <label className="label">Name</label>
+                      <input name="name" type="text" {...register('name')} className={`form__input ${errors.name ? '' : ''}`} />
+                      <div className="">{errors.name?.message}</div>
+                  </div>
 
-                <div className="form__field">
-                    <label>Avatar</label>
-                    <input name="avatar" type="text" {...register('avatar')} className={`form__input ${errors.avatar ? '' : ''}`} />
-                    <div className="">{errors.avatar?.message}</div>
-                </div>
+                  <div className="form__field">
+                      <label className="label">Avatar</label>
+                      <input name="avatar" type="text" {...register('avatar')} className={`form__input ${errors.avatar ? '' : ''}`} />
+                      <div className="">{errors.avatar?.message}</div>
+                  </div>
 
-                <div className="form__field">
-                    <label>Url</label>
-                    <input name="url" type="text" {...register('url')} className={`form__input ${errors.url ? '' : ''}`} />
-                    <div className="">{errors.url?.message}</div>
-                </div>
+                  <div className="form__field">
+                      <label className="label">Url</label>
+                      <input name="url" type="text" {...register('url')} className={`form__input ${errors.url ? '' : ''}`} />
+                      <div className="">{errors.url?.message}</div>
+                  </div>
 
-                <div className="form__field">
-                    <label>Privacy</label>
-                    <input name="privacy" type="text" {...register('privacy')} className={`form__input ${errors.privacy ? '' : ''}`} />
-                    <div className="">{errors.privacy?.message}</div>
-                </div>
+                  <div className="form__field">
+                      <label className="label">Privacy</label>
+                      <input name="privacy" type="text" {...register('privacy')} className={`form__input ${errors.privacy ? '' : ''}`} />
+                      <div className="">{errors.privacy?.message}</div>
+                  </div>
 
-                <div className="form__field">
-                    <label>Description</label>
-                    <textarea name="description" type="text" {...register('description')} className={`form__input ${errors.description ? '' : ''}`} />
-                    <div className="">{errors.description?.message}</div>
-                </div>
+                  <div className="form__field">
+                      <label className="label">Description</label>
+                      <textarea name="description" type="text" {...register('description')} className={`form__input ${errors.description ? '' : ''}`} />
+                      <div className="">{errors.description?.message}</div>
+                  </div>
 
-                <div className="form__field">
-                    <label>geoPlace</label>
-                    <input name="geoPlace" type="text" {...register('geoPlace')} className={`form__input ${errors.geoPlace ? '' : ''}`} />
-                    <div className="">{errors.geoPlace?.message}</div>
-                </div>
+                  <div className="form__field">
+                      <label className="label">geoPlace</label>
+                      <input name="geoPlace" type="text" {...register('geoPlace')} className={`form__input ${errors.geoPlace ? '' : ''}`} />
+                      <div className="">{errors.geoPlace?.message}</div>
+                  </div>
 
-                <div className="form__field">
-                    <label>Radius</label>
-                    <input name="radius" type="text" {...register('radius')} className={`form__input ${errors.radius ? '' : ''}`} />
-                    <div className="">{errors.radius?.message}</div>
-                </div>
+                  <div className="form__field">
+                      <label className="label">Radius</label>
+                      <input name="radius" type="text" {...register('radius')} className={`form__input ${errors.radius ? '' : ''}`} />
+                      <div className="">{errors.radius?.message}</div>
+                  </div>
 
 
                   <div className="popup__options-v">

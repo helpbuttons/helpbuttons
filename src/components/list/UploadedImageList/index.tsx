@@ -5,24 +5,23 @@ import Image from 'next/dist/client/image';
 
 
 function UploadedImageList() {
-  
+
   return (
       <>
-              <div className="drag-tab"><span className="drag-tab__line"></span></div>
-
-              <div className="list__content">
-                <div className="list__element">
+              <div className="picture-gallery">
+                <div className="picture-gallery__img">
                   <Image src="https://dummyimage.com/200/#ccc/fff" alt="popup_img" width="300" height="300"/>
                 </div>
-                <div className="list__element">
-                  <Image src="https://dummyimage.com/200/#ccc/fff" alt="popup_img" width="300" height="300"/>
-                </div><div className="list__element">
+                <div className="picture-gallery__img">
                   <Image src="https://dummyimage.com/200/#ccc/fff" alt="popup_img" width="300" height="300"/>
                 </div>
-                <div className="list__element">
+                <div className="picture-gallery__img">
                   <Image src="https://dummyimage.com/200/#ccc/fff" alt="popup_img" width="300" height="300"/>
                 </div>
-                <div className="list__element">
+                <div className="picture-gallery__img">
+                  <Image src="https://dummyimage.com/200/#ccc/fff" alt="popup_img" width="300" height="300"/>
+                </div>
+                <div className="picture-gallery__img">
                   <Image src="https://dummyimage.com/200/#ccc/fff" alt="popup_img" width="300" height="300"/>
                 </div>
               </div>

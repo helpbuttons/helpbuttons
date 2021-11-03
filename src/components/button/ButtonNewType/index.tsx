@@ -20,12 +20,12 @@ export default function ButtonNewType({ exact, ...props }) {
 
       <div className="popup__section">
         <p className="popup__paragraph">
-          ? Qué quieres hacer ? :
+          Choose your type:
         </p>
         <div name="type" onClick={() => props.setType("offer")} {...props.register('type')} className="btn-with-icon btn-with-icon--hover btn-with-icon--offer">
           <div className="btn-filter__icon green"></div>
           <div className="btn-with-icon__text">
-            Ofrezco
+            Offer
           </div>
         </div>
 
@@ -35,14 +35,14 @@ export default function ButtonNewType({ exact, ...props }) {
             <div className="btn-filter__split-icon--half red-r"></div>
           </div>
           <div className="btn-with-icon__text">
-            Intercambio
+            Exchange
           </div>
         </div>
 
         <div name="type"  onClick={() => props.setType("need")} {...props.register('type')} className=" btn-with-icon btn-with-icon--hover btn-with-icon--need">
           <div className="btn-filter__icon red"></div>
           <div className="btn-with-icon__text">
-            Necesito
+            Need
           </div>
         </div>
       </div>
