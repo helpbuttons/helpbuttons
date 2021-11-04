@@ -6,6 +6,8 @@ $error-message-radius: $border-radius-basic;
 .error-message {
   padding: $error-message-padding;
   margin: 15px 0;
+  width: 100%;
+  height: 100%;
   border-radius: $error-message-radius;
   background-color: $color-red;
   color: $color-dark-gray;
