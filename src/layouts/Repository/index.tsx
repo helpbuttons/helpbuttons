@@ -1093,22 +1093,22 @@ function Repository() {
         <hr></hr>
 
         <h3 className="repository__title">
-          component/error-message
+          component/card-alert
         </h3>
 
         <section className="repository__section">
 
-        <div className="error-message">
+        <div className="card-alert">
 
-          <div className="error-message__icon">
+          <div className="card-alert__icon">
             <CrossIcon />
           </div>
           <div className="">
-            <p className="error-message__top-text">Error</p>
-            <h4 className="error-message__title">
+            <p className="card-alert__top-text">Error</p>
+            <h4 className="card-alert__title">
               Titulo error
             </h4>
-            <p className="error-message__subtitle">
+            <p className="card-alert__subtitle">
               Error mensaje
             </p>
           </div>
