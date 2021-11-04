@@ -9,6 +9,8 @@ import { GlobalState } from 'store/Store';
 import { UserService } from 'services/Users';
 import { IUser } from 'services/Users/types';
 import { HttpUtilsService } from "services/HttpUtilsService";
+import { alertService }  from 'services/Alert/index.ts';
+
 
 //Called event for login
 export class LoginEvent implements WatchEvent {
@@ -18,10 +20,16 @@ export class LoginEvent implements WatchEvent {
     return UserService.login(this.email, this.password).pipe(
       map(userData => userData),
       take(1),
-      catchError(error => of({ error: true, message: `Error ${error.status}` })),
       tap(userData => {
+        if(userData.response.token)
         new HttpUtilsService().setAccessToken("user",userData.response.token);
         Router.push({ pathname: '/', state: {} });
+      }),
+      catchError((error) => {
+        console.log("error: ", error);
+        debugger
+        alertService.error('error');
+        return of(error);
       }),
     )
   }

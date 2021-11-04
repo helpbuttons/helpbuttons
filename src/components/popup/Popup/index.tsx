@@ -10,7 +10,7 @@ export default function Popup({children, title, ...props}) {
 
           <div className="popup">
 
-              <PopupHeader linkBack="/" linkFwd="/">{title}</PopupHeader>
+              <PopupHeader linkFwd="/">{title}</PopupHeader>
 
 
               <div className="popup__content">

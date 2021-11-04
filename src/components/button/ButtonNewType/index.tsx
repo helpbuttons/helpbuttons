@@ -17,38 +17,39 @@ export default function ButtonNewType({ exact, ...props }) {
   return (
 
     <>
+        <div className="form__field">
 
-      <div className="popup__section">
-        <p className="popup__paragraph">
-          Choose your type:
-        </p>
-        <div name="type" onClick={() => props.setType("offer")} {...props.register('type')} className="btn-with-icon btn-with-icon--hover btn-with-icon--offer">
-          <div className="btn-filter__icon green"></div>
-          <div className="btn-with-icon__text">
-            Offer
-          </div>
-        </div>
+          <p className="popup__paragraph">
+            Choose your type:
+          </p>
 
-        <div name="type"  onClick={() => props.setType("exchange")} {...props.register('type')} className="btn-with-icon btn-with-icon--hover btn-with-icon--exchange">
-          <div className="btn-filter__split-icon">
-            <div className="btn-filter__split-icon--half green-l"></div>
-            <div className="btn-filter__split-icon--half red-r"></div>
+          <div name="type" onClick={() => props.setType("offer")} {...props.register('type')} className="btn-with-icon btn-with-icon--hover btn-with-icon--offer">
+            <div className="btn-filter__icon green"></div>
+            <div className="btn-with-icon__text">
+              Offer
+            </div>
           </div>
-          <div className="btn-with-icon__text">
-            Exchange
-          </div>
-        </div>
 
-        <div name="type"  onClick={() => props.setType("need")} {...props.register('type')} className=" btn-with-icon btn-with-icon--hover btn-with-icon--need">
-          <div className="btn-filter__icon red"></div>
-          <div className="btn-with-icon__text">
-            Need
+          <div name="type"  onClick={() => props.setType("exchange")} {...props.register('type')} className="btn-with-icon btn-with-icon--hover btn-with-icon--exchange">
+            <div className="btn-filter__split-icon">
+              <div className="btn-filter__split-icon--half green-l"></div>
+              <div className="btn-filter__split-icon--half red-r"></div>
+            </div>
+            <div className="btn-with-icon__text">
+              Exchange
+            </div>
           </div>
-        </div>
+
+          <div name="type"  onClick={() => props.setType("need")} {...props.register('type')} className=" btn-with-icon btn-with-icon--hover btn-with-icon--need">
+            <div className="btn-filter__icon red"></div>
+            <div className="btn-with-icon__text">
+              Need
+            </div>
+          </div>
+
+        <div className="invalid-feedback">{props.errors.type?.message}</div>
+
       </div>
-
-      <div className="invalid-feedback">{props.errors.type?.message}</div>
-
 
     </>
 

@@ -14,13 +14,11 @@ export default function ButtonNewData({ exact, ...props }) {
   return (
 
     <>
-
-        <div className="popup__section">
-
-          <p className="popup__paragraph">
-            Describe your purpose:
-          </p>
           <div className="form__field">
+
+            <p className="popup__paragraph">
+              Describe your purpose:
+            </p>
 
             <textarea onFocus={() => setShowTags(true)} onBlur={() => setShowTags(false)} onChange={() => props.setDescription("")} name="description" className="textarea__textarea" placeholder="i.e. I would like to offer..."></textarea>
             <div className="invalid-feedback">{props.errors.description?.message}</div>
@@ -28,13 +26,14 @@ export default function ButtonNewData({ exact, ...props }) {
           </div>
 
           { showTags &&
+
             <div className="form__field">
 
               <p className="popup__paragraph">
                 Choose tags that better suite your purpose :
               </p>
 
-              <div className="form__field card-button__hashtags">
+              <div className="card-button__hashtags">
                   <div className="card-button__busca">
                     <div onClick={() => props.setTags("tag1")} className="hashtag">tag</div>
                   </div>
@@ -44,11 +43,10 @@ export default function ButtonNewData({ exact, ...props }) {
 
           }
 
-
-          <div className="popup__options-h">
+          <div className="form__field">
 
               <label htmlFor="files" className="btn" onClick={() => setShowGallery(true)} onBlur={() => setShowGallery(false)}>
-                + Add image
+                + Add image (optional)
               </label>
 
           </div>
@@ -59,7 +57,6 @@ export default function ButtonNewData({ exact, ...props }) {
             <UploadedImageList/>
           }
 
-        </div>
 
       <div className="button-new-description__spinner"> </div>
 

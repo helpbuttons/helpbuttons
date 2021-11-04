@@ -420,8 +420,9 @@ $card-button-border-height: $border-general-height;
 
 .card-button__city {
   cursor: pointer;
+  text-indent: -29px;
+  padding-left: 44px;
   padding-right: 1rem;
-  text-decoration: underline;
   text-align: left;
   display: inline-block;
 }
@@ -433,13 +434,6 @@ $card-button-border-height: $border-general-height;
   display: inline-block;
 }
 
-.card-button__everywhere {
-  cursor: pointer;
-  padding-right: 1rem;
-  text-decoration: none;
-  text-align: left;
-  display: inline-block;
-}
 
 .card-button__toCity {
   margin-left: 30px;

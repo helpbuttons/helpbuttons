@@ -90,21 +90,18 @@ export default function ButtonNew() {
 
           <>
 
-              <Popup title="Crear Botón">
+              <Popup title="Create Button">
 
                 <form onSubmit={handleSubmit(onSubmit)} className="popup__section">
 
                   <ButtonNewType setType={setType} type={type} register={register} errors={errors}/>
-                  {type}
 
                   <ButtonNewData  setDescription={setDescription} setTags={setTags} description={description} tags={tags} register={register} errors={errors}/>
                   {tags}
                   {description}
 
                   <ButtonPublish setDate={setDate} setGeoPlace={setGeoPlace} setFeedType={setFeedType} date={date} geoPlace={geoPlace} feedType={feedType} register={register} errors={errors}/>
-                  {date}
-                  {geoPlace}
-                  {feedType}
+
 
                   <ButtonShare />
 

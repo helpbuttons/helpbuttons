@@ -81,7 +81,7 @@ function Alert({ id, fade }) {
     function cssClasses(alert) {
         if (!alert) return;
 
-        const classes = ['alert', 'alert-dismissable'];
+        const classes = ['error-message', 'error-message'];
 
         const alertTypeClass = {
             [AlertType.Success]: 'alert-success',
@@ -99,14 +99,14 @@ function Alert({ id, fade }) {
         return classes.join(' ');
     }
 
-    if (!alerts.length) return null;
+    // if (!alerts.length) return null;
 
     return (
-        <div className="container">
-            <div className="m-3">
+        <div className="popup">
+            <div className="popup__content">
                 {alerts.map((alert, index) =>
                     <div key={index} className={cssClasses(alert)}>
-                        <a className="close" onClick={() => removeAlert(alert)}>&times;</a>
+                        <a className="btn" onClick={() => removeAlert(alert)}>&times;</a>
                         <span dangerouslySetInnerHTML={{ __html: alert.message }}></span>
                     </div>
                 )}

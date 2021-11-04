@@ -43,8 +43,10 @@ export default function PopupSignup() {
   const { errors } = formState;
 
   function onSubmit(user) {
+
       //emit is called to trigger the event by the observable
-      store.emit(new SignupEvent(user.email, user.password));
+      store.emit(new SignupEvent(user.email, user.password))
+
 
   }
 
@@ -67,13 +69,25 @@ export default function PopupSignup() {
                         <div className="form__field">
                             <label>Email</label>
                             <input name="username" type="text" {...register('email')} className={`form__input ${errors.username ? '' : ''}`} />
-                            <div className="">{errors.username?.message}</div>
+                            <div className="form__input-subtitle">
+                              <div className="form__input-subtitle-side">
+                                <label className="form__input-subtitle--text">
+                                  {errors.username?.message}
+                                </label>
+                              </div>
+                            </div>
                         </div>
 
                         <div className="form__field">
                             <label>Password</label>
                             <input name="password" type="password" {...register('password')} className={`form__input  ${errors.password ? '' : ''}`} />
-                            <div className="invalid-feedback">{errors.password?.message}</div>
+                            <div className="form__input-subtitle">
+                              <div className="form__input-subtitle-side">
+                                <label className="form__input-subtitle--text">
+                                  {errors.username?.message}
+                                </label>
+                              </div>
+                            </div>
                         </div>
 
                         <Btn btnType={BtnType.splitIcon} caption="REGISTER" contentAlignment={ContentAlignment.center}/>

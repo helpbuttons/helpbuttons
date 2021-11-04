@@ -10,11 +10,13 @@ export default function PopupHeader({children, linkBack, linkFwd}) {
       <div className="popup__header">
         <header className="popup__header-content">
           <div className="popup__header-left">
-            <Link href={linkBack} className="popup__header-button">
-              <div className="btn-circle__icon">
-                <CrossIcon />
-              </div>
-            </Link>
+            {linkBack &&
+              <Link href={linkBack} className="popup__header-button">
+                <div className="btn-circle__icon">
+                  <CrossIcon />
+                </div>
+              </Link>
+            }
           </div>
           <div className="popup__header-center">
             <h1 className="popup__header-title">
@@ -22,11 +24,13 @@ export default function PopupHeader({children, linkBack, linkFwd}) {
             </h1>
           </div>
           <div className="popup__header-right">
-            <Link href={linkFwd} className="popup__header-button">
-              <div className="btn-circle__icon">
-                <CrossIcon />
-              </div>
-            </Link>
+            {linkFwd &&
+              <Link href={linkFwd} className="popup__header-button">
+                <div className="btn-circle__icon">
+                  <CrossIcon />
+                </div>
+              </Link>
+            }
           </div>
         </header>
       </div>

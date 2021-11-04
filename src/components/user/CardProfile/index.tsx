@@ -9,6 +9,8 @@ import { IoPersonOutline } from "react-icons/io5";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoRibbonOutline } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
+import { IoHammerOutline } from "react-icons/io5";
+
 
 export default function CardProfile() {
 
@@ -89,21 +91,10 @@ export default function CardProfile() {
         </a></Link>
 
         <Link href="/Config">
-          <Btn contentAlignment={ContentAlignment.center} caption="Config account"  />
+          <Btn iconLeft={IconType.svg} iconLink={<IoHammerOutline />} caption="Config account"  />
         </Link>
 
-        <Btn contentAlignment={ContentAlignment.center} caption="Config account"  />
-
         <Btn iconLeft={IconType.svg} iconLink={<IoHeartOutline />} caption="Support User" />
-
-        <div className="btn-with-icon">
-          <div className="btn-with-icon__icon">
-            <IoHeartOutline />
-          </div>
-          <span className="btn-with-icon__text">
-            Support User
-          </span>
-        </div>
 
       </div>
     </>

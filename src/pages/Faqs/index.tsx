@@ -3,53 +3,47 @@ import NavHeader from '../../components/nav/NavHeader'
 
 import Directory from '../../elements/Directory'
 import Accordion from '../../elements/Accordion'
+import Popup from 'components/popup/Popup'
 
 export default function Faqs() {
 
   return (
 
     <>
+      <Popup title="Faqs">
 
-      <NavHeader />
+        <div className="popup__section">
 
-      <div className="body__content">
+            <Accordion title="What's Helpbuttons">
+            </Accordion>
 
-        <div className="body__section">
+            <Accordion title="What's for">
+            </Accordion>
 
-          <h2 className="title__h3 faqs__title">Faqs</h2>
+            <Accordion title="What's a button">
+            </Accordion>
 
-          <Accordion title="What's Helpbuttons">
-          </Accordion>
+            <Accordion title="What's a Net">
+            </Accordion>
 
-          <Accordion title="What's for">
-          </Accordion>
+            <Accordion title="The community">
+            </Accordion>
 
-          <Accordion title="What's a button">
-          </Accordion>
+            <Accordion title="Ethics Policies">
+            </Accordion>
 
-          <Accordion title="What's a Net">
-          </Accordion>
+            <Accordion title="Privacy Policies">
+            </Accordion>
 
-          <Accordion title="The community">
-          </Accordion>
+            <Accordion title="Security Policies">
+            </Accordion>
 
-          <Accordion title="Ethics Policies">
-          </Accordion>
-
-          <Accordion title="Privacy Policies">
-          </Accordion>
-
-          <Accordion title="Security Policies">
-          </Accordion>
-
-          <Accordion title="Contact">
-          </Accordion>
+            <Accordion title="Contact">
+            </Accordion>
 
         </div>
 
-      </div>
-
-
+      </Popup>
 
     </>
 

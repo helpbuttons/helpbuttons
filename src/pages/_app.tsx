@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import HttpUtilsService from 'services/HttpUtilsService';
 import NavBottom from "components/nav/NavBottom"; //just for mobile
+import Alert from "components/overlay/Alert";
 
 export default MyApp;
 
@@ -72,7 +73,7 @@ function MyApp({ Component, pageProps }) {
                     <Component {...pageProps} />
 
                 }
-
+                <Alert />
                 <NavBottom logged={logged} />
             </div>
 
