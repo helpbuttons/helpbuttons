@@ -1,6 +1,8 @@
+$padding-bottom-content: 70px;
+
 .body__content {
 
-  margin: 0 $margin-extra-small;
+  margin: 0 0;
   min-height: 100vh;
 
 }
@@ -8,7 +10,6 @@
 .body__section {
 
   height: 100vh;
-  padding-bottom: 250px;
   overflow: auto;
   margin-bottom: $margin-big;
 

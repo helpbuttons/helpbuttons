@@ -6,6 +6,7 @@ import Accordion from '../../elements/Accordion'
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import CheckBox from 'elements/Checkbox'
 import BtnCircle from 'elements/BtnCircle'
+import Popup from 'components/popup/Popup'
 
 export default function Config() {
 
@@ -13,408 +14,402 @@ export default function Config() {
 
     <>
 
-      <NavHeader />
+        <Popup title="Config">
 
-      <div className="body__content">
-
-        <div className="body__section">
-
-          <h2 className="title__h3 config__title">Config</h2>
-
-          <Accordion title="User data">
-
-            <form>
-
-              <div className="form__field">
-                <label className="form__label label">
-                  Username
-                </label>
-                <input type="text" className="form__input" placeholder="Write your name"></input>
-              </div>
+            <div className="popup__section">
 
 
-              <div className="form__field">
-                <label className="form__label label">
-                  Email
-                </label>
-                <input type="text" className="form__input" placeholder="Write your email"></input>
-                <div className="form__input-subtitle">
-                  <div className="form__input-subtitle-side">
-                    <label className="form__input-subtitle--error">
-                      Notes in this side to explain the field, also errors
+              <Accordion title="User data">
+
+                <form>
+
+                  <div className="form__field">
+                    <label className="form__label label">
+                      Username
                     </label>
+                    <input type="text" className="form__input" placeholder="Write your name"></input>
                   </div>
-                </div>
-              </div>
 
-              <div className="form__field">
-                <label className="form__label label">
-                  Imagen de perfil
-                </label>
-                <input type="text" className="form__input" placeholder="Write your email"></input>
-                <div className="form__input-subtitle">
-                  <div className="form__input-subtitle-side">
-                    <label className="form__input-subtitle--text">
-                      Notes in this side to explain the field, also errors
+
+                  <div className="form__field">
+                    <label className="form__label label">
+                      Email
                     </label>
+                    <input type="text" className="form__input" placeholder="Write your email"></input>
+                    <div className="form__input-subtitle">
+                      <div className="form__input-subtitle-side">
+                        <label className="form__input-subtitle--error">
+                          Notes in this side to explain the field, also errors
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div className="form__field">
-                <label className="form__label label">
-                  Imagen de perfil
-                </label>
-                <input type="text" className="form__input" placeholder="Write your email"></input>
-                <div className="form__input-subtitle">
-                  <div className="form__input-subtitle-side">
-                    <label className="form__input-subtitle--error">
-                      Notes in this side to explain the field, also errors
+                  <div className="form__field">
+                    <label className="form__label label">
+                      Imagen de perfil
                     </label>
-                    <label className="form__input-subtitle--text">
-                      Notes in this side to explain the field, also errors
-                    </label>
+                    <input type="text" className="form__input" placeholder="Write your email"></input>
+                    <div className="form__input-subtitle">
+                      <div className="form__input-subtitle-side">
+                        <label className="form__input-subtitle--text">
+                          Notes in this side to explain the field, also errors
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div className="form__field">
-                <div className="textarea">
-                  <label className="form__label label">
-                    Description
-                  </label>
-                  <textarea rows={4} cols={50} className="textarea__textarea" placeholder="p.ej. Soy estudiante y trabajador autónomo, tengo dos hijos. Soy amante de los animales y del bricolaje. Me gustaría colaborar en el barrio..."></textarea>
-                </div>
-              </div>
-
-              <div className="form__field">
-                <label className="form__label label">
-                  Share location
-                </label>
-                <CheckBox icon="cross" text="Compartir" inputId="ahora-checkbox" />
-              </div>
-
-              <div className="form__field">
-                <label className="form__label label">
-                  Languages
-                </label>
-                <input type="text" className="form__input" placeholder="Write your email"></input>
-              </div>
-
-              <div className="form__field">
-                <label className="form__label label">
-                  App language
-                </label>
-                <input type="text" className="form__input" placeholder="Write your email"></input>
-              </div>
-
-              <div className="form__field">
-                <label className="form__label label">
-                  Activate/Deactivate User
-                </label>
-                <CheckBox icon="cross" text="Activar" inputId="ahora-checkbox" />
-                <div className="form__input-subtitle">
-                  <div className="form__input-subtitle-side">
-                    <label className="form__input-subtitle--text">
-                      Si desactivas tu perfil tus botones dejarán de ser accesibles aunque seguirán existiendo para cuando los necesites.
+                  <div className="form__field">
+                    <label className="form__label label">
+                      Imagen de perfil
                     </label>
+                    <input type="text" className="form__input" placeholder="Write your email"></input>
+                    <div className="form__input-subtitle">
+                      <div className="form__input-subtitle-side">
+                        <label className="form__input-subtitle--error">
+                          Notes in this side to explain the field, also errors
+                        </label>
+                        <label className="form__input-subtitle--text">
+                          Notes in this side to explain the field, also errors
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div className="form__field">
-                <label className="form__label label">
-                  Borrar perfil
-                </label>
-                <CheckBox icon="cross" text="Activar" inputId="ahora-checkbox" />
-                <div className="form__input-subtitle">
-                  <div className="form__input-subtitle-side">
-                    <label className="form__input-subtitle--text">
-                      Si borras tu perfil tus botones también se borrarán.
+                  <div className="form__field">
+                    <div className="textarea">
+                      <label className="form__label label">
+                        Description
+                      </label>
+                      <textarea rows={4} cols={50} className="textarea__textarea" placeholder="p.ej. Soy estudiante y trabajador autónomo, tengo dos hijos. Soy amante de los animales y del bricolaje. Me gustaría colaborar en el barrio..."></textarea>
+                    </div>
+                  </div>
+
+                  <div className="form__field">
+                    <label className="form__label label">
+                      Share location
                     </label>
+                    <CheckBox icon="cross" text="Compartir" inputId="ahora-checkbox" />
                   </div>
-                </div>
-              </div>
 
-              <Btn contentAlignment={ContentAlignment.center} caption="Save changes" />
+                  <div className="form__field">
+                    <label className="form__label label">
+                      Languages
+                    </label>
+                    <input type="text" className="form__input" placeholder="Write your email"></input>
+                  </div>
 
-            </form>
+                  <div className="form__field">
+                    <label className="form__label label">
+                      App language
+                    </label>
+                    <input type="text" className="form__input" placeholder="Write your email"></input>
+                  </div>
 
-          </Accordion>
+                  <div className="form__field">
+                    <label className="form__label label">
+                      Activate/Deactivate User
+                    </label>
+                    <CheckBox icon="cross" text="Activar" inputId="ahora-checkbox" />
+                    <div className="form__input-subtitle">
+                      <div className="form__input-subtitle-side">
+                        <label className="form__input-subtitle--text">
+                          Si desactivas tu perfil tus botones dejarán de ser accesibles aunque seguirán existiendo para cuando los necesites.
+                        </label>
+                      </div>
+                    </div>
+                  </div>
 
-          <Accordion title="Interests and Alerts">
-            <form>
+                  <div className="form__field">
+                    <label className="form__label label">
+                      Borrar perfil
+                    </label>
+                    <CheckBox icon="cross" text="Activar" inputId="ahora-checkbox" />
+                    <div className="form__input-subtitle">
+                      <div className="form__input-subtitle-side">
+                        <label className="form__input-subtitle--text">
+                          Si borras tu perfil tus botones también se borrarán.
+                        </label>
+                      </div>
+                    </div>
+                  </div>
 
-            <p>Elige las etiquetas que te interesan para que otras personas las conozcan y si quieres recibir avisos :</p>
+                  <Btn contentAlignment={ContentAlignment.center} caption="Save changes" />
 
-              <div className="form__field">
-                <label className="form__label label">
-                  Intereses
-                </label>
-                <input type="text" className="form__input" placeholder="i.e. sports food etc"></input>
-              </div>
+                </form>
 
-              <div className="form__field">
+              </Accordion>
 
-                <Btn contentAlignment={ContentAlignment.center} caption="Receive Notifications" />
+              <Accordion title="Interests and Alerts">
+                <form>
 
-              </div>
+                <p>Elige las etiquetas que te interesan para que otras personas las conozcan y si quieres recibir avisos :</p>
 
-              <p>Aquí puedes elegir para qué redes y qué tipo de botones (Necesitan rojo/ Ofrecen verde) quieres recibir los avisos de cada interés:</p>
+                  <div className="form__field">
+                    <label className="form__label label">
+                      Intereses
+                    </label>
+                    <input type="text" className="form__input" placeholder="i.e. sports food etc"></input>
+                  </div>
 
-              <div className="form__field">
+                  <div className="form__field">
 
-                <label className="form__label label">
-                  Intereses
-                </label>
+                    <Btn contentAlignment={ContentAlignment.center} caption="Receive Notifications" />
 
-                <div className="form__interests">
+                  </div>
 
-                    <a href="" className="hashtag hashtag--yellow-home">example</a>
+                  <p>Aquí puedes elegir para qué redes y qué tipo de botones (Necesitan rojo/ Ofrecen verde) quieres recibir los avisos de cada interés:</p>
 
-                    <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="off" list="" id="input" name="browsers" placeholder="Select Network" type='text'></input>
-                    <datalist className="dropdown-nets__dropdown-content" id='listid'>
-                      <option className="dropdown-nets__dropdown-option" label='label1' value='Net1'>hola</option>
-                      <option className="dropdown-nets__dropdown-option" label='label2' value='Net2'>hola</option>
-                      <option className="dropdown-nets__create-new-button" label='label2' value='Net2'>Create Net</option>
-                    </datalist>
+                  <div className="form__field">
 
-                    <BtnCircle />
+                    <label className="form__label label">
+                      Intereses
+                    </label>
 
-                </div>
+                    <div className="form__interests">
 
-              </div>
+                        <a href="" className="hashtag hashtag--yellow-home">example</a>
 
-              <p>Aquí puedes elegir a qué distancia y tu lugar de referencia para recibir avisos.</p>
+                        <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="off" list="" id="input" name="browsers" placeholder="Select Network" type='text'></input>
+                        <datalist className="dropdown-nets__dropdown-content" id='listid'>
+                          <option className="dropdown-nets__dropdown-option" label='label1' value='Net1'>hola</option>
+                          <option className="dropdown-nets__dropdown-option" label='label2' value='Net2'>hola</option>
+                          <option className="dropdown-nets__create-new-button" label='label2' value='Net2'>Create Net</option>
+                        </datalist>
 
-              <div className="form__field">
+                        <BtnCircle />
 
-                <label className="form__label label">
-                  Distance
-                </label>
-                <input type="text" className="form__input" placeholder="choose distance"></input>
+                    </div>
 
-              </div>
+                  </div>
 
-              <div className="form__field">
+                  <p>Aquí puedes elegir a qué distancia y tu lugar de referencia para recibir avisos.</p>
 
-                <label className="form__label label">
-                  Lugar de referencia :
-                </label>
-                <input type="text" className="form__input" placeholder="choose distance"></input>
+                  <div className="form__field">
 
-              </div>
+                    <label className="form__label label">
+                      Distance
+                    </label>
+                    <input type="text" className="form__input" placeholder="choose distance"></input>
 
-              <Btn contentAlignment={ContentAlignment.center} caption="Save changes" />
-            </form>
-          </Accordion>
+                  </div>
 
-          <Accordion title="Seguridad y Contraseña">
+                  <div className="form__field">
 
-            <form>
+                    <label className="form__label label">
+                      Lugar de referencia :
+                    </label>
+                    <input type="text" className="form__input" placeholder="choose distance"></input>
 
-              <p>Aquí puedes elegir a qué distancia y tu lugar de referencia para recibir avisos.</p>
-              <div className="form__field">
+                  </div>
 
-                <label className="form__label label">
-                  Password
-                </label>
-                <input type="text" className="form__input" placeholder="Present password"></input>
+                  <Btn contentAlignment={ContentAlignment.center} caption="Save changes" />
+                </form>
+              </Accordion>
 
-              </div>
+              <Accordion title="Seguridad y Contraseña">
 
-              <Btn contentAlignment={ContentAlignment.center} caption="Reset password"/>
+                <form>
 
-            </form>
+                  <p>Aquí puedes elegir a qué distancia y tu lugar de referencia para recibir avisos.</p>
+                  <div className="form__field">
 
-          </Accordion>
+                    <label className="form__label label">
+                      Password
+                    </label>
+                    <input type="text" className="form__input" placeholder="Present password"></input>
 
-          <Accordion title="Connected apps">
+                  </div>
 
-            <form>
+                  <Btn contentAlignment={ContentAlignment.center} caption="Reset password"/>
 
-              <div className="form__field">
+                </form>
 
-                <label className="form__label label">
-                  Phone
-                </label>
-                <input type="text" className="form__input" placeholder="choose distance"></input>
+              </Accordion>
 
-              </div>
+              <Accordion title="Connected apps">
 
-              <div className="form__field">
+                <form>
 
-                <label className="form__label label">
-                  Telegram
-                </label>
-                <input type="text" className="form__input" placeholder="Telegram Username"></input>
+                  <div className="form__field">
 
-              </div>
+                    <label className="form__label label">
+                      Phone
+                    </label>
+                    <input type="text" className="form__input" placeholder="choose distance"></input>
 
-              <div className="form__field">
+                  </div>
 
-                <label className="form__label label">
-                  Whatsapp
-                </label>
-                <input type="text" className="form__input" placeholder="Telegram Username"></input>
+                  <div className="form__field">
 
-                <Btn contentAlignment={ContentAlignment.center} caption="Show phone"/>
+                    <label className="form__label label">
+                      Telegram
+                    </label>
+                    <input type="text" className="form__input" placeholder="Telegram Username"></input>
 
-              </div>
+                  </div>
 
-              <Btn contentAlignment={ContentAlignment.center} caption="Save changes"/>
+                  <div className="form__field">
 
-            </form>
+                    <label className="form__label label">
+                      Whatsapp
+                    </label>
+                    <input type="text" className="form__input" placeholder="Telegram Username"></input>
 
-          </Accordion>
+                    <Btn contentAlignment={ContentAlignment.center} caption="Show phone"/>
 
+                  </div>
 
-          <Accordion title="User Management">
+                  <Btn contentAlignment={ContentAlignment.center} caption="Save changes"/>
 
-            <form>
+                </form>
 
-              <div className="form__field">
-
-                <label className="form__label label">
-                  Blocked Users
-                </label>
-                <input type="text" className="form__input" placeholder="Telegram Username"></input>
-
-              </div>
-
-              <Btn contentAlignment={ContentAlignment.center} caption="Save changes"/>
-
-            </form>
-
-          </Accordion>
+              </Accordion>
 
 
-          <Accordion title="Networks">
+              <Accordion title="User Management">
 
-          <form>
+                <form>
 
-            <div className="form__field">
+                  <div className="form__field">
 
-              <label className="form__label label">
-                Network Name
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
+                    <label className="form__label label">
+                      Blocked Users
+                    </label>
+                    <input type="text" className="form__input" placeholder="Telegram Username"></input>
+
+                  </div>
+
+                  <Btn contentAlignment={ContentAlignment.center} caption="Save changes"/>
+
+                </form>
+
+              </Accordion>
+
+
+              <Accordion title="Networks">
+
+                <form>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      Network Name
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      Network Search Name
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      Description
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      Location
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      Network Icon
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      Network tags
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      Network Url
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      Network Friends
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      Blocked Users
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      Admin Users
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      Admitted Users
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <Btn contentAlignment={ContentAlignment.center} caption="External Network"/>
+
+                  <div className="form__field">
+
+                    <label className="form__label label">
+                      External Url
+                    </label>
+                    <input type="text" className="form__input" placeholder="Name"></input>
+
+                  </div>
+
+                  <Btn contentAlignment={ContentAlignment.center} caption="Save Changes"/>
+
+                </form>
+
+              </Accordion>
 
             </div>
 
-            <div className="form__field">
-
-              <label className="form__label label">
-                Network Search Name
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
-
-            </div>
-
-            <div className="form__field">
-
-              <label className="form__label label">
-                Description
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
-
-            </div>
-
-            <div className="form__field">
-
-              <label className="form__label label">
-                Location
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
-
-            </div>
-
-            <div className="form__field">
-
-              <label className="form__label label">
-                Network Icon
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
-
-            </div>
-
-            <div className="form__field">
-
-              <label className="form__label label">
-                Network tags
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
-
-            </div>
-
-            <div className="form__field">
-
-              <label className="form__label label">
-                Network Url
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
-
-            </div>
-
-            <div className="form__field">
-
-              <label className="form__label label">
-                Network Friends
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
-
-            </div>
-
-            <div className="form__field">
-
-              <label className="form__label label">
-                Blocked Users
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
-
-            </div>
-
-            <div className="form__field">
-
-              <label className="form__label label">
-                Admin Users
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
-
-            </div>
-
-            <div className="form__field">
-
-              <label className="form__label label">
-                Admitted Users
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
-
-            </div>
-
-            <Btn contentAlignment={ContentAlignment.center} caption="External Network"/>
-
-            <div className="form__field">
-
-              <label className="form__label label">
-                External Url
-              </label>
-              <input type="text" className="form__input" placeholder="Name"></input>
-
-            </div>
-
-            <Btn contentAlignment={ContentAlignment.center} caption="Save Changes"/>
-
-          </form>
-
-          </Accordion>
-
-
-        </div>
-
-      </div>
-
-
+          </Popup>
 
     </>
 

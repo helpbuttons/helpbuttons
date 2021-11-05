@@ -34,8 +34,9 @@ export default function ButtonNew() {
     const [feedType, setFeedType] = useState("");
     const [templateExtraData, setTemplateExtraData] = useState("");
 
-    // get selected network from store
-    const networkId = useRef(store, (state) => state.network.id.toString());
+    // get selected network from store and/or localStorage
+    // const networkId = useRef(store, (state) => state.network.id.toString());
+    const networkId = window.localStorage.getItem('network_id');
     // get validation token from localStorage
     const token = window.localStorage.getItem('access_token');
 
@@ -51,6 +52,7 @@ export default function ButtonNew() {
         location: Yup.string(),
 
     });
+    
     // form validation YUP functions
     const formOptions = { resolver: yupResolver(buttonSchema) };
     // get functions to build form with useForm() hook. Not used to store or send the data

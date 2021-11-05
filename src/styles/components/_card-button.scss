@@ -5,6 +5,7 @@ $card-button-busca-background: $color-red;
 $card-button-ofrece-background: $color-green;
 $card-button-paragraph-color: $color-gray;
 $card-button-margin-bottom: 1rem;
+$card-button-picture-max-height: 300px;
 $card-button-situation-background-size: 14px;
 $card-button__submenu-show-width: 120px;
 $card-button__submenu-show-left: calc( #{$card-button__submenu-show-width} / -2 );
@@ -19,7 +20,6 @@ $card-button-border-height: $border-general-height;
   border: $card-button-border;
   box-shadow: $card-button-box-shadow;
   position: relative;
-  margin-bottom: $card-button-margin-bottom;
   border-radius: 0 0 $border-radius-basic  $border-radius-basic;
   p {
     margin-bottom: 0;
@@ -279,6 +279,8 @@ $card-button-border-height: $border-general-height;
   width: 100%;
   border-radius: $border-radius-basic;
   position: relative;
+  max-height: $card-button-picture-max-height;
+  overflow: hidden;
 
 }
 
@@ -420,11 +422,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__city {
   cursor: pointer;
-  text-indent: -29px;
-  padding-left: 44px;
-  padding-right: 1rem;
   text-align: left;
-  display: inline-block;
 }
 
 .card-button__city-list {
@@ -496,7 +494,7 @@ $card-button-border-height: $border-general-height;
 }
 
 
-//revise nueva clase
-.card-buttons {
+.card-button__locDate {
   display: flex;
+  justify-content: space-between;
 }

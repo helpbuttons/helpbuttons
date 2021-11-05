@@ -68,6 +68,7 @@ $avatar-margin: $padding-big;
 
 .card-profile__container {
   display: flex;
+  height: auto;
   flex-direction: column;
   flex: 1;
   background-color: $color-white;
@@ -78,7 +79,18 @@ $avatar-margin: $padding-big;
 .card-profile__content {
   display: flex;
   flex-direction: column;
+  bottom: 0;
 
+
+}
+
+.card-profile__actions{
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  bottom: 0;
+  position: relative;
+  flex: auto;
 }
 
 .card-profile__avatar-container {

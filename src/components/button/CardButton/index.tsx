@@ -1,6 +1,7 @@
 //Main card of the Button that is used inside ButtonFile component and in ButtonNewPublish for the preview. It has all the Data that a button has andd displays it according to the main buttonTemplate and network that buttton selected.
 import Image from 'next/image'
-import CrossIcon from '../../../../public/assets/svg/icons/cross1'
+import { IoChevronForwardOutline } from "react-icons/io5";
+import { IoChevronBackOutline } from "react-icons/io5";
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 
 
@@ -65,10 +66,10 @@ export default function CardButton() {
 
               </div>
 
-              <div className="card-buttons">
+              <div className="card-button__locDate">
 
                 <div className="card-button__city card-button__everywhere " >
-                  En todas partes
+                  Place
                 </div>
 
                 <div className="card-button__date">
@@ -84,10 +85,10 @@ export default function CardButton() {
               <div className="card-button__picture-nav">
 
                 <div className="arrow btn-circle__icon">
-                  <CrossIcon />
+                  <IoChevronBackOutline />
                 </div>
                 <div className="arrow btn-circle__icon">
-                  <CrossIcon />
+                  <IoChevronForwardOutline />
                 </div>
 
               </div>
