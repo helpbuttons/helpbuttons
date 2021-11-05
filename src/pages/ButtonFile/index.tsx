@@ -4,7 +4,6 @@ import { IoAddOutline } from "react-icons/io5";
 
 import CardButton from 'components/button/CardButton'
 import CardNotification from 'components/feed/CardNotification'
-import NavHeader from 'components/nav/NavHeader'
 
 import Feed from 'layouts/Feed'
 
@@ -14,9 +13,10 @@ export default function ButtonFile() {
   return (
 
     <>
-        <NavHeader />
 
-        <div className="button-file__container">
+        <div className="body__content">
+
+        <div className="body__section">
 
 
             <CardButton />
@@ -56,6 +56,7 @@ export default function ButtonFile() {
         {/* FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES */}
         <Feed />
 
+      </div>
       </div>
 
 

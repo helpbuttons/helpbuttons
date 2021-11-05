@@ -1,10 +1,11 @@
 $button-file-modal-height: calc(var(--vh, 1vh) * 100);
-
+$button-file__container-max-width: $grid-max-width;
 
 .button-file__container {
 
   overflow-y:  scroll;
   height: 100vh;
+  max-width:$button-file__container-max-width;
   padding-bottom: $footer-height-mobile;
 
 }

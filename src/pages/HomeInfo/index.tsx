@@ -15,11 +15,11 @@ export default function Faqs() {
         <div className="info-overlay__content">
 
           <div className="info-overlay__name">
-            Net Name
+            Network Name
           </div>
 
           <div className="info-overlay__description">
-            Net description
+            Network description
           </div>
 
           <div className="info-overlay__image">
@@ -27,7 +27,7 @@ export default function Faqs() {
             <div className="info-overlay__location">
 
               <label className="form__label label">
-                Where are you? :
+                Where do you go?
               </label>
 
               <input type="text" className="form__input" placeholder="Search Location"></input>
@@ -48,7 +48,7 @@ export default function Faqs() {
               </datalist>
 
               <Link href="/NetworkNew">
-                <Btn contentAlignment={ContentAlignment.center} caption="Create Net"  />
+                <Btn btnType={BtnType.corporative} contentAlignment={ContentAlignment.center} caption="Create Network"  />
               </Link>
 
             </div>

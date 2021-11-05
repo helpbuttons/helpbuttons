@@ -6,6 +6,7 @@ $boddy-max-width: $grid-max-width;
   margin: auto;
   min-height: 100vh;
   max-width: $boddy-max-width;
+  overflow: auto;
 
 
 }
@@ -13,7 +14,6 @@ $boddy-max-width: $grid-max-width;
 .body__section {
 
   height: 100vh;
-  overflow: auto;
   margin-bottom: $margin-big;
 
 }
