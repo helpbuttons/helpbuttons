@@ -250,13 +250,13 @@ function Repository() {
             <div className="dropdown-select">
               <div className="label">label dropdown</div>
               <select className="dropdown-select__trigger">
-                <option value="volvo" className="dropdown-select__option">Volvo</option>
-                <option value="volvo" className="dropdown-select__option">Option1</option>
-                <option value="volvo" className="dropdown-select__option">Option2</option>
-                <option value="volvo" className="dropdown-select__option">Option3</option>
-                <option value="volvo" className="dropdown-select__option">Option4</option>
-                <option value="volvo" className="dropdown-select__option">Option5</option>
-                <option value="volvo" className="dropdown-select__option">Option6</option>
+                <option value="status" className="dropdown-select__option">Status changes</option>
+                <option value="status" className="dropdown-select__option">All comments</option>
+                <option value="status" className="dropdown-select__option">Other users comments</option>
+                <option value="status" className="dropdown-select__option">Telegram messages</option>
+                <option value="status" className="dropdown-select__option">All interactions</option>
+                <option value="status" className="dropdown-select__option">Other buttons interactions</option>
+                <option value="status" className="dropdown-select__option">My buttons interactions</option>
               </select>
             </div>
 
@@ -274,12 +274,12 @@ function Repository() {
             <input className="dropdown__dropdown" autoComplete="off" list="browsers" id="input" name="browsers" placeholder="Search Tag"></input>
               <datalist className="dropdown-nets__dropdown-content" id='browsers'>
                 <option value="tag1" className="dropdown-nets__dropdown-option" label='label1'>tag</option>
-                <option value="tag2" className="dropdown-nets__dropdown-option" label='label2'>Option1</option>
-                <option value="tag3" className="dropdown-nets__dropdown-option" label='label3'>Option2</option>
-                <option value="tag4" className="dropdown-nets__dropdown-option" label='label4'>Option3</option>
-                <option value="tag5" className="dropdown-nets__dropdown-option" label='label5'>Option4</option>
-                <option value="tag6" className="dropdown-nets__dropdown-option" label='label1'>Option5</option>
-                <option value="tag7" className="dropdown-nets__dropdown-option" label='label1'>Option6</option>
+                <option value="tag2" className="dropdown-nets__dropdown-option" label='label2'>All comments</option>
+                <option value="tag3" className="dropdown-nets__dropdown-option" label='label3'>Other users comments</option>
+                <option value="tag4" className="dropdown-nets__dropdown-option" label='label4'>Telegram messages</option>
+                <option value="tag5" className="dropdown-nets__dropdown-option" label='label5'>All interactions</option>
+                <option value="tag6" className="dropdown-nets__dropdown-option" label='label1'>Other buttons interactions</option>
+                <option value="tag7" className="dropdown-nets__dropdown-option" label='label1'>My buttons interactions</option>
               </datalist>
 
           </section>
@@ -1460,13 +1460,13 @@ function Repository() {
               </div>
 
               <select className="dropdown__filter">
-                <option value="volvo" className="dropdown-select__option">Volvo</option>
-                <option value="volvo" className="dropdown-select__option">Option1</option>
-                <option value="volvo" className="dropdown-select__option">Option2</option>
-                <option value="volvo" className="dropdown-select__option">Option3</option>
-                <option value="volvo" className="dropdown-select__option">Option4</option>
-                <option value="volvo" className="dropdown-select__option">Option5</option>
-                <option value="volvo" className="dropdown-select__option">Option6</option>
+                <option value="status" className="dropdown-select__option">Status changes</option>
+                <option value="status" className="dropdown-select__option">All comments</option>
+                <option value="status" className="dropdown-select__option">Other users comments</option>
+                <option value="status" className="dropdown-select__option">Telegram messages</option>
+                <option value="status" className="dropdown-select__option">All interactions</option>
+                <option value="status" className="dropdown-select__option">Other buttons interactions</option>
+                <option value="status" className="dropdown-select__option">My buttons interactions</option>
               </select>
 
           </div>

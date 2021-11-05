@@ -1,9 +1,12 @@
 $padding-bottom-content: 70px;
+$boddy-max-width: $grid-max-width;
 
 .body__content {
 
-  margin: 0 0;
+  margin: auto;
   min-height: 100vh;
+  max-width: $boddy-max-width;
+
 
 }
 

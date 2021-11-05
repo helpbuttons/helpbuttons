@@ -37,18 +37,22 @@ export default function Faqs() {
 
           </div>
 
-          <div className="info-overlay__nets">
+          <div className="info-overlay__bottom">
 
-            <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="off" list="" id="input" name="browsers" placeholder="Select other Network" type='text'></input>
-            <datalist className="dropdown-nets__dropdown-content" id='listid'>
-              <option className="dropdown-nets__dropdown-option" label='label1' value='Net1'>hola</option>
-              <option className="dropdown-nets__dropdown-option" label='label2' value='Net2'>hola</option>
-              <option className="dropdown-nets__create-new-button" label='label2' value='Net2'>Create Net</option>
-            </datalist>
+            <div className="info-overlay__nets">
 
-            <Link href="/NetworkNew">
-              <Btn contentAlignment={ContentAlignment.center} caption="Create Net"  />
-            </Link>
+              <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="off" list="" id="input" name="browsers" placeholder="Select other Network" type='text'></input>
+              <datalist className="dropdown-nets__dropdown-content" id='listid'>
+                <option className="dropdown-nets__dropdown-option" label='label1' value='Net1'>hola</option>
+                <option className="dropdown-nets__dropdown-option" label='label2' value='Net2'>hola</option>
+                <option className="dropdown-nets__create-new-button" label='label2' value='Net2'>Create Net</option>
+              </datalist>
+
+              <Link href="/NetworkNew">
+                <Btn contentAlignment={ContentAlignment.center} caption="Create Net"  />
+              </Link>
+
+            </div>
 
           </div>
 

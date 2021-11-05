@@ -39,13 +39,13 @@ export default function Filters() {
         }
 
         <select className="dropdown__filter">
-          <option value="volvo" className="dropdown-select__option">Volvo</option>
-          <option value="volvo" className="dropdown-select__option">Option1</option>
-          <option value="volvo" className="dropdown-select__option">Option2</option>
-          <option value="volvo" className="dropdown-select__option">Option3</option>
-          <option value="volvo" className="dropdown-select__option">Option4</option>
-          <option value="volvo" className="dropdown-select__option">Option5</option>
-          <option value="volvo" className="dropdown-select__option">Option6</option>
+          <option value="status" className="dropdown-select__option">Status changes</option>
+          <option value="status" className="dropdown-select__option">All comments</option>
+          <option value="status" className="dropdown-select__option">Other users comments</option>
+          <option value="status" className="dropdown-select__option">Telegram messages</option>
+          <option value="status" className="dropdown-select__option">All interactions</option>
+          <option value="status" className="dropdown-select__option">Other buttons interactions</option>
+          <option value="status" className="dropdown-select__option">My buttons interactions</option>
         </select>
 
     </div>

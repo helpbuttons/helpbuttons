@@ -2,7 +2,7 @@ $popup-background: rgba(0,0,0,.2);
 $popup-header-height: 80px;
 $popup-options-height: 80px;
 $popup-options-border-top: 3px $color-black;
-$popup-max-width: 540px;
+$popup-max-width: $grid-max-width;
 $popup-content-height: calc( 100vh - #{$popup-header-height });
 $popup-header-lateral: calc( 100% / 2 - #{$popup-max-width} / 2 );
 $popup-header-width: 100%;

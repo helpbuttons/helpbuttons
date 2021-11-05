@@ -1,5 +1,7 @@
 $info-location-field-width: 330px;
 $info-nets-field-bottom: 90px;
+$info-nets-max-width: $grid-max-width;
+$info-image-height: $height-wide-image;
 
 .info-overlay__selected {
 
@@ -28,7 +30,7 @@ $info-nets-field-bottom: 90px;
 
 .info-overlay__image {
 
-  height: 300px;
+  height: $info-image-height;
   width: 100vw;
   padding: $padding-big;
   background-color: $color-black;
@@ -40,6 +42,7 @@ $info-nets-field-bottom: 90px;
 
 .info-overlay__location {
 
+  @extend .form__field;
   margin: auto;
 
 }
@@ -47,17 +50,25 @@ $info-nets-field-bottom: 90px;
 .info-overlay__description {
 
   margin: $margin-big;
-  margin: 30px auto;
+  margin: $margin-big auto;
   text-align: center;
+
+}
+
+.info-overlay__bottom {
+
+  width: 100%;
+  padding: $padding-big;
+  position: absolute;
+  bottom: $info-nets-field-bottom;
 
 }
 
 .info-overlay__nets {
 
-  padding: $padding-big;
-  position: absolute;
-  bottom: $info-nets-field-bottom;
-  width: 100%;
+  @extend .form__field;
+  margin: auto;
+  max-width: $info-nets-max-width;
 
 }
 

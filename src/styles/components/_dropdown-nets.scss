@@ -1,6 +1,6 @@
 $dropdown-nets-height: $form-input-height;
 $dropdown-nets-width: 5rem;
-$dropdown-nets-max-width: 10rem;
+$dropdown-nets-max-width: $grid-max-width;
 
 
 .dropdown-nets__friend-net {
@@ -120,10 +120,8 @@ $dropdown-nets-max-width: 10rem;
 
   .dropdown-nets__dropdown-trigger {
 
-    display: flex;
     max-width: $dropdown-nets-max-width;
     min-width: $dropdown-nets-width;
-    margin-left: $margin-small;
 
   }
 
