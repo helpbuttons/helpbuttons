@@ -1,6 +1,7 @@
 //Card that displays a resume of the button info in tthe List component. Its fieldds can be customizedd according to buttonTemplate.
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
-import CrossIcon from '../../../../public/assets/svg/icons/cross1'
+import { IoChevronForwardOutline } from "react-icons/io5";
+import { IoChevronBackOutline } from "react-icons/io5";
 import { Link } from 'elements/Link';
 
 export default function CardButtonList() {
@@ -15,10 +16,10 @@ export default function CardButtonList() {
               <div className="card-button-list__nav">
 
                 <div className="arrow btn-circle__icon">
-                  <CrossIcon />
+                  <IoChevronBackOutline />
                 </div>
                 <div className="arrow btn-circle__icon">
-                  <CrossIcon />
+                  <IoChevronForwardOutline />
                 </div>
 
               </div>

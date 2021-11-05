@@ -85,7 +85,7 @@ export default class NavHeader extends React.Component {
 
               <div className="nav-header__content-message">
 
-                <input onFocus={() => this.setState({ showHideFiltersMobile: true })} onBlur={() => this.setState({ showHideFiltersMobile: false })} className="form__input nav-header__content-input" placeholder="Search tags"></input>
+                <input onFocus={() => this.setState({ showHideFiltersMobile: true })} onBlur={() => this.setState({ showHideFiltersMobile: false })} className="form__input nav-header__content-input" placeholder="Search"></input>
 
               </div>
 

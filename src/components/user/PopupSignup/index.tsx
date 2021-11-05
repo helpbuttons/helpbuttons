@@ -14,7 +14,6 @@ import { store } from 'pages/index';
 import { userService } from 'services/Users';
 import { alertService } from 'services/Alert';
 import { SignupEvent } from 'pages/Signup/data';
-import CrossIcon from './../public/assets/svg/icons/cross1.tsx'
 
 //imported react components
 import Alert from 'components/overlay/Alert';

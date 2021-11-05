@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 
 import { alertService, AlertType } from 'services/Alert';
 
+import { IoSadOutline } from "react-icons/io5";
+import { IoCloseOutline } from "react-icons/io5";
+
+
 export default Alert;
 
 Alert.propTypes = {
@@ -81,13 +85,13 @@ function Alert({ id, fade }) {
     function cssClasses(alert) {
         if (!alert) return;
 
-        const classes = ['error-message', 'error-message'];
+        const classes = ['card-alert', 'card-alert'];
 
         const alertTypeClass = {
-            [AlertType.Success]: 'alert-success',
-            [AlertType.Error]: 'alert-danger',
-            [AlertType.Info]: 'alert-info',
-            [AlertType.Warning]: 'alert-warning'
+            [AlertType.Success]: 'card-alert--success',
+            [AlertType.Error]: 'card-alert--error',
+            [AlertType.Info]: 'card-alert--info',
+            [AlertType.Warning]: 'card-alert--warning'
         }
 
         classes.push(alertTypeClass[alert.type]);
@@ -99,18 +103,19 @@ function Alert({ id, fade }) {
         return classes.join(' ');
     }
 
-    // if (!alerts.length) return null;
+    if (!alerts.length) return null;
 
     return (
-        <div className="popup">
-            <div className="popup__content">
+        <div className="card-alert__container">
                 {alerts.map((alert, index) =>
                     <div key={index} className={cssClasses(alert)}>
-                        <a className="btn" onClick={() => removeAlert(alert)}>&times;</a>
-                        <span dangerouslySetInnerHTML={{ __html: alert.message }}></span>
+                        <div className="card-alert__content">
+                          <div className="card-alert__icon"><IoSadOutline/></div>
+                          <span className="card-alert__title" dangerouslySetInnerHTML={{ __html: alert.message }}></span>
+                        </div>
+                        <a className="btn-circle--small" onClick={() => removeAlert(alert)}><IoCloseOutline/></a>
                     </div>
                 )}
-            </div>
         </div>
     );
 }

@@ -1,6 +1,7 @@
 //The smallest of buttons'cards. It ddisplays over the map when a marker is clicked / touched. Itt was very reduce info, like image, tags, title or other fieldds conidered by the buttonTemplate field.
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
-import CrossIcon from '../../../../public/assets/svg/icons/cross1'
+import { IoChevronForwardOutline } from "react-icons/io5";
+import { IoChevronBackOutline } from "react-icons/io5";
 import { Link } from 'elements/Link';
 
 export default function CardButtonMap () {
@@ -50,7 +51,7 @@ export default function CardButtonMap () {
             </div>
 
           </div>
-          
+
         </Link>
 
       </div>
@@ -60,10 +61,10 @@ export default function CardButtonMap () {
         <div className="card-button-map__nav">
 
           <div className="arrow btn-circle__icon">
-            <CrossIcon />
+            <IoChevronBackOutline />
           </div>
           <div className="arrow btn-circle__icon">
-            <CrossIcon />
+            <IoChevronForwardOutline />
           </div>
 
         </div>

@@ -24,7 +24,7 @@ function NavBottom({logged}){
 
       <nav id="bottom-nav" className="nav-bottom">
 
-        <NavLink href="/" className="nav-bottom__link nav-bottom__link--active">
+        <NavLink href="/Explore" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
             <IoGlobeOutline/>
             </div>

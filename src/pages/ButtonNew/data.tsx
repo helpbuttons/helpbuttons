@@ -1,4 +1,4 @@
-import { map, catchError } from 'rxjs/operators';
+import { map, tap, take, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { produce } from 'immer';
 
@@ -15,11 +15,20 @@ export class CreateButtonEvent implements WatchEvent {
   public constructor(private button : IButton, private token : string, private networkId : string) {}
   public watch(state: GlobalState) {
     return ButtonService.new(this.button, this.token, this.networkId).pipe(
+            map(buttonData => buttonData),
+            take(1),
+            tap(buttonData => {
+              alertService.info('Has creado un botón' + buttonData.response.id.toString());
+            }),
             catchError((error) => {
-              console.log("error: ", error);
-              error = alertService.error;
+              console.log("error: ", error.message);
+              if(error.response.error.details) {
+                alertService.error(error.response.error.details[0].message);
+              } else {
+                alertService.error(error.response.error.message);
+              }
               return of(error);
-            })
+            }),
     )
   }
 }

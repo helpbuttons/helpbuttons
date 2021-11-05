@@ -1,6 +1,7 @@
-import { map, catchError } from 'rxjs/operators';
+import { map, tap, take, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { produce } from 'immer';
+import Router, { withRouter } from 'next/router';
 
 import { WatchEvent } from 'store/Event';
 import { GlobalState } from 'store/Store';
@@ -14,12 +15,24 @@ export class SignupEvent implements WatchEvent {
   public constructor(private email: string,private password: string) {}
   public watch(state: GlobalState) {
     return UserService.signup(this.email, this.password).pipe(
-      map((userData) => new UserSignupEvent(userData)),
+      map((userData) => userData),
+      take(1),
+      tap(userData => {
+        debugger
+        // if(userData.response.verificationToken)
+        // Router.push({ pathname: 'localhost:3000' + userData.response.verificationToken.toString(), state: {} });
+        window.location.assign('localhost:3000' + userData.response.verificationToken.toString());
+        alertService.info('You signed up! Now visit this link to activate');
+        Router.push({ pathname: '/', state: {} });
+      }),
       catchError((error) => {
-        console.log("error: ", error);
-        error = alertService.error;
-        return of(error);
-      })
+        // if(error.response.error.details) {
+        //   alertService.error(error.response.error.details[0].message);
+        // } else {
+        //   alertService.error(error.response.error.message);
+        // }
+        // return of(error);
+      }),
     )
   }
 }

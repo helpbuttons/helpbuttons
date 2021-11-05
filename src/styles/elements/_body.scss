@@ -1,15 +1,19 @@
+$padding-bottom-content: 70px;
+$boddy-max-width: $grid-max-width;
+
 .body__content {
 
-  margin: 0 $margin-extra-small;
+  margin: auto;
   min-height: 100vh;
+  max-width: $boddy-max-width;
+  overflow: auto;
+
 
 }
 
 .body__section {
 
   height: 100vh;
-  padding-bottom: 250px;
-  overflow: auto;
   margin-bottom: $margin-big;
 
 }

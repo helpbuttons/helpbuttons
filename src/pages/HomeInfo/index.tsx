@@ -1,6 +1,4 @@
 //INFO AND RESULTS
-import NavHeader from '../../components/nav/NavHeader'
-
 import Directory from '../../elements/Directory'
 import Accordion from '../../elements/Accordion'
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
@@ -17,11 +15,11 @@ export default function Faqs() {
         <div className="info-overlay__content">
 
           <div className="info-overlay__name">
-            Net Name
+            Network Name
           </div>
 
           <div className="info-overlay__description">
-            Net description
+            Network description
           </div>
 
           <div className="info-overlay__image">
@@ -29,26 +27,31 @@ export default function Faqs() {
             <div className="info-overlay__location">
 
               <label className="form__label label">
-                Where are you? :
+                Where do you go?
               </label>
+
               <input type="text" className="form__input" placeholder="Search Location"></input>
 
             </div>
 
           </div>
 
-          <div className="info-overlay__nets">
+          <div className="info-overlay__bottom">
 
-            <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="off" list="" id="input" name="browsers" placeholder="Select other Network" type='text'></input>
-            <datalist className="dropdown-nets__dropdown-content" id='listid'>
-              <option className="dropdown-nets__dropdown-option" label='label1' value='Net1'>hola</option>
-              <option className="dropdown-nets__dropdown-option" label='label2' value='Net2'>hola</option>
-              <option className="dropdown-nets__create-new-button" label='label2' value='Net2'>Create Net</option>
-            </datalist>
+            <div className="info-overlay__nets">
 
-            <Link href="/NetworkNew">
-              <Btn contentAlignment={ContentAlignment.center} caption="Create Net"  />
-            </Link>
+              <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="off" list="" id="input" name="browsers" placeholder="Select other Network" type='text'></input>
+              <datalist className="dropdown-nets__dropdown-content" id='listid'>
+                <option className="dropdown-nets__dropdown-option" label='label1' value='Net1'>hola</option>
+                <option className="dropdown-nets__dropdown-option" label='label2' value='Net2'>hola</option>
+                <option className="dropdown-nets__create-new-button" label='label2' value='Net2'>Create Net</option>
+              </datalist>
+
+              <Link href="/NetworkNew">
+                <Btn btnType={BtnType.corporative} contentAlignment={ContentAlignment.center} caption="Create Network"  />
+              </Link>
+
+            </div>
 
           </div>
 
