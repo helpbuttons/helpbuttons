@@ -86,7 +86,7 @@ export default function CardProfile() {
 
         <div className="card-profile__actions">
 
-          <Link href="/">
+          <Link href="/Explore">
             <a onClick={logout} className="btn-with-icon">
 
               <div className="btn-with-icon__icon">

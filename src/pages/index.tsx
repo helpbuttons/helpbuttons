@@ -1,22 +1,21 @@
 import React, { useMemo } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Map from "components/map/LeafletMap";
 import { Store } from "store/Store";
 import { Event } from "store/Event";
-import List from "components/list/List";
-import NavHeader from "components/nav/NavHeader"; //just for mobile
+
+//services
 import { userService } from 'services/Users';
-import { Link } from 'elements/Link';
+import ButtonDataService from "services/Buttons";
+import { authenticationService } from 'services';
 
 //    Components
-import HeaderDesktop from "../layouts/HeaderDesktop";
+import HomeInfo from "pages/HomeInfo";
 
-import { BackTestState, backTestInitial } from "../pages/BackTest/data";
 
-import ButtonDataService from "services/Buttons";
+import { BackTestState, backTestInitial } from "pages/BackTest/data";
 
-import { authenticationService } from 'services';
+
 
 
 // https://immerjs.github.io/immer/
@@ -91,11 +90,7 @@ export const store = new Store<GlobalState>({
 const Home: NextPage = () => {
   return (
 
-      <div className="index__container">
-        <NavHeader />
-        <Map />
-        <List />
-      </div>
+      <HomeInfo />
 
   );
 };

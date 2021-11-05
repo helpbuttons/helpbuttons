@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }) {
     function authCheck(url) {
         // redirect to login page if accessing a private page and not logged in
         const token =  window.localStorage.getItem('access_token');
-        const publicPaths = ['/Login', '/Signup', '/RepositoryPage', '/Faqs', '/', '/ButtonNew', '/HomeInfo'];
+        const publicPaths = ['/Login', '/Signup', '/RepositoryPage', '/Faqs', '/', '/ButtonNew', '/Explore', '/HomeInfo'];
         const path = url.split('?')[0];
 
         if (token) {

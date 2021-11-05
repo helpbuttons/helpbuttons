@@ -1,6 +1,4 @@
 //INFO AND RESULTS
-import NavHeader from '../../components/nav/NavHeader'
-
 import Directory from '../../elements/Directory'
 import Accordion from '../../elements/Accordion'
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
@@ -31,6 +29,7 @@ export default function Faqs() {
               <label className="form__label label">
                 Where are you? :
               </label>
+
               <input type="text" className="form__input" placeholder="Search Location"></input>
 
             </div>

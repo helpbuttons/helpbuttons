@@ -45,7 +45,7 @@ export default function ImageWrapper({
     switch (imageType) {
         case ImageType.popup:
             width = "200";
-            height = "100";
+            height = "80";
             break;
         case ImageType.marker:
             break;
