@@ -16,8 +16,8 @@ export default function Explore() {
 
         <div className="index__container">
           <NavHeader />
-          <Map />
           <List />
+          <Map />
         </div>
 
   );

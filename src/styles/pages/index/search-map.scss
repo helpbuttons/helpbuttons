@@ -4,6 +4,7 @@ $search-map-height: 0; // Altura del header
 .leaflet-container {
   height: 100%;
   width: 100%;
+  float: right;
   z-index: $z-index-base;
   bottom: 0;
 }
@@ -52,5 +53,16 @@ $search-map-height: 0; // Altura del header
         fill: $color-white;
       }
     }
+  }
+
+}
+
+
+@media #{$breakpoints-xlarge} {
+  .leaflet-container {
+      position: relative;
+      float: right;
+      right: 0;
+      width: 60%;
   }
 }

@@ -10,6 +10,7 @@ $drag-tab-line-height: 5px;
   z-index: 10000000;
   margin: 0;
   border-radius: $border-radius-circle $border-radius-circle 0 0;
+
 }
 
 .drag-tab__line {
@@ -22,4 +23,33 @@ $drag-tab-line-height: 5px;
   width: 20%;
   height: $drag-tab-line-height;
 
+}
+
+
+@media #{$breakpoints-xlarge} {
+  .drag-tab {
+
+    display: block;
+    width: $height-btn;
+    height: 100%;
+    border-radius: 0 ;
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+
+  }
+
+  .drag-tab__line {
+
+    position: relative;
+    display: flex;
+    border-radius: $border-radius-circle;
+    margin: auto $margin-extra-small ;
+    background-color: $color-ligth-gray;
+    width: $drag-tab-line-height;
+    height: 200px;
+    top: calc(50% - 200px);
+
+  }
 }

@@ -35,11 +35,32 @@
 }
 
 
-@media #{$breakpoints-xxlarge} {
+@media #{$breakpoints-xlarge} {
 
   .list__container {
 
+    height:100%;
+    float: left;
+    width: 40%;
+    position: relative;
+    overflow: scroll;
+    bottom: 0;
+    flex-flow: row-reverse;
+
+
+  }
+
+  .list__content {
+
     flex-direction: column;
+    width: 100%;
+
+  }
+
+  .list__element {
+
+    height: auto;
+    width: 100%;
 
   }
 
