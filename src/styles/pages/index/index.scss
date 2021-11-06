@@ -20,4 +20,10 @@ $index-mobile-fixed-z-index: $z-index-05;
     position: fixed;
     display: block;
   }
+  .index__content--left {
+    flex-direction: column;
+    width: 40vw;
+    float: left;
+    height: 100%;
+  }
 }

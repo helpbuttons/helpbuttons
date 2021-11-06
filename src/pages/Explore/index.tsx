@@ -15,8 +15,10 @@ export default function Explore() {
   return (
 
         <div className="index__container">
-          <NavHeader />
-          <List />
+          <div className="index__content--left">
+            <NavHeader />
+            <List />
+          </div>
           <Map />
         </div>
 

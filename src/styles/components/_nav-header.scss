@@ -51,3 +51,19 @@ $nav-header-new-message-radius: $border-radius-circle;
   width: $nav-header-icon-width !important;
   fill: black !important;
 }
+
+@media #{$breakpoints-xlarge} {
+
+  .nav-header__container {
+
+    background-color: $color-corporative;
+
+  }
+
+  .nav-header__content {
+
+    width: 100%;
+
+  }
+
+}

@@ -162,11 +162,11 @@ $nav-bottom-border: 32px;
 
 @media #{$breakpoints-xlarge} {
   .nav-bottom {
-    border-radius: $nav-bottom-border;
+    border-radius: $nav-bottom-border 0 0 $nav-bottom-border;
     flex-direction: column;
     width: auto;
     height: $nav-bottom-height-desktop;
-    right: 2%;
+    right: 0;
     left: auto;
     max-width: $nav-bottom-width;
     top: calc( 50% - #{$nav-bottom-height-desktop} / 2 );
