@@ -14,6 +14,7 @@ $nav-bottom-height-desktop: 500px;
 $nav-bottom-border: 32px;
 
 .nav-bottom {
+
   background-color: $color-corporative;
   padding: $nav-bottom-padding;
   box-sizing: border-box;
@@ -26,6 +27,7 @@ $nav-bottom-border: 32px;
   justify-content: space-between;
   width: 100%;
   z-index: $z-index-04;
+  
 }
 
 .nav-bottom--repo {
@@ -35,13 +37,22 @@ $nav-bottom-border: 32px;
 
 .nav-bottom__button,
 .nav-bottom__link {
-  flex: 0 1 20%;
+  // flex: 0 1 20%;
+  padding: $padding-small;
   text-align: center;
   text-decoration: none;
+  border-radius: $border-radius-circle;
 
   &:hover {
-    opacity: .5;
+
     cursor: pointer;
+
+    .nav-bottom__icon {
+
+      transition: 0.2s;
+      transform: translateY(-0.4rem);
+
+    }
   }
 }
 
@@ -51,6 +62,13 @@ $nav-bottom-border: 32px;
   font-size: $font-size-general;
   text-decoration: none;
   font-weight: 700;
+}
+
+.nav-bottom__link--active {
+
+  font-weight: bolder;
+
+
 }
 
 .nav-bottom__link--create {
@@ -175,6 +193,12 @@ $nav-bottom-border: 32px;
   .nav-bottom-profile {
     border-radius: $nav-bottom-border;
     max-width: $nav-bottom-width;
+  }
+
+  .nav-bottom__link--active {
+
+    height: auto;
+
   }
 
   .nav-bottom__icon {
