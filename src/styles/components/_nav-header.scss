@@ -29,6 +29,13 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 }
 
+.nav-header--hide {
+
+  display: none;
+  position: absolute;
+
+}
+
 .nav-header__content-message {
   flex-grow:1;
 }
@@ -50,4 +57,20 @@ $nav-header-new-message-radius: $border-radius-circle;
 .nav-header__icon {
   width: $nav-header-icon-width !important;
   fill: black !important;
+}
+
+@media #{$breakpoints-xlarge} {
+
+  .nav-header__container {
+
+    background-color: $color-corporative;
+
+  }
+
+  .nav-header__content {
+
+    width: 100%;
+
+  }
+
 }

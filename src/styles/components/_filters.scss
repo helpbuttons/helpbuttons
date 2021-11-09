@@ -33,7 +33,6 @@ $filters-padding: 10px;
 
 @media #{$breakpoints-xlarge} {
   .filters {
-    width: auto;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -44,13 +43,6 @@ $filters-padding: 10px;
     padding: 0;
     // right: $filters-right;
     z-index: $z-index-01 + 1;
-  }
-}
-
-@media #{$breakpoints-medium} {
-  .filters {
-
-    position: relative;
     position: relative;
     width: 100%;
     top: 0;
@@ -58,6 +50,15 @@ $filters-padding: 10px;
     background: $color-corporative;
     overflow-x: scroll;
     padding: $padding-big $padding-small;
+  }
+
+
+  .filters--vertical {
+
+    position: relative;
+    width: auto;
+
 
   }
+
 }

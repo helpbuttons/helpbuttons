@@ -1,4 +1,5 @@
 //EXPLORE MAP
+import React, {useState} from "react";
 
 //services
 import { userService } from 'services/Users';
@@ -12,12 +13,20 @@ import NavHeader from "components/nav/NavHeader"; //just for mobile
 
 export default function Explore() {
 
+  const [showLeftColumn, setShowLeftColumn] = useState(true);
+
+  const onchange = (data) => {
+      setShowLeftColumn(!showLeftColumn);
+  }
+
   return (
 
         <div className="index__container">
-          <NavHeader />
+          <div className={'index__content-left ' + (showLeftColumn ? '' : 'index__content-left--hide')}>
+            <NavHeader showSearch={showLeftColumn}/>
+            <List showLeftColumn={showLeftColumn} onchange={(e) => { onchange(e) }}  />
+          </div>
           <Map />
-          <List />
         </div>
 
   );

@@ -3,7 +3,11 @@ import Image from 'next/image'
 import { IoChevronForwardOutline } from "react-icons/io5";
 import { IoChevronBackOutline } from "react-icons/io5";
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
-
+import { IoPersonOutline } from "react-icons/io5";
+import { IoHeartOutline } from "react-icons/io5";
+import { IoRibbonOutline } from "react-icons/io5";
+import { IoLogOutOutline } from "react-icons/io5";
+import { IoHammerOutline } from "react-icons/io5";
 
 export default function CardButton() {
   return (
@@ -41,6 +45,31 @@ export default function CardButton() {
                   <div className="card-button__name">
                     Username
                   </div>
+
+                  <figure className="card-button__rating grid-three">
+
+                    <div className="paragraph grid-three__column">
+
+                      90
+                      <div className="btn-circle__icon">
+                        <IoHeartOutline />
+                      </div>
+                    </div>
+                    <div className="paragraph grid-three__column">
+                      77
+                      <div className="btn-circle__icon">
+                        <IoPersonOutline />
+                      </div>
+                    </div>
+                    <div className="paragraph grid-three__column">
+                      23
+                      <div className="btn-circle__icon">
+                        <IoRibbonOutline />
+                      </div>
+
+                    </div>
+
+                  </figure>
 
                 </div>
 
