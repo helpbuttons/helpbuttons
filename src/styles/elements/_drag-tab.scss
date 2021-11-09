@@ -1,8 +1,14 @@
 $drag-tab-height: $height-btn;
+$drag-tab-width-desktop: 44px;
+$drag-tab-height-desktop: 200px;
 $drag-tab-line-height: 5px;
+$drag-tab-line-height-desktop: 100px;
+$drag-tab-line-left-desktop: 20px;
+$drag-tab-line-position-desktop: calc(50% - 50px);
 
 
 .drag-tab {
+
   width: 100%;
   position: relative;
   height: $drag-tab-height;
@@ -29,14 +35,14 @@ $drag-tab-line-height: 5px;
 @media #{$breakpoints-xlarge} {
   .drag-tab {
 
+    position: fixed;
+    z-index: 999999;
     display: block;
-    width: $height-btn;
-    height: 100%;
-    border-radius: 0 ;
-    cursor: move; /* fallback if grab cursor is unsupported */
-    cursor: grab;
-    cursor: -moz-grab;
-    cursor: -webkit-grab;
+    width: $drag-tab-width-desktop;
+    margin-right: -$drag-tab-width-desktop;
+    height: $drag-tab-height-desktop;
+    border-radius: 0 $border-radius-circle $border-radius-circle 0;
+    cursor: pointer;; /* fallback if grab cursor is unsupported */
 
   }
 
@@ -44,12 +50,14 @@ $drag-tab-line-height: 5px;
 
     position: relative;
     display: flex;
+    left: $drag-tab-line-left-desktop;
     border-radius: $border-radius-circle;
     margin: auto $margin-extra-small ;
+    top: $drag-tab-line-position-desktop;
     background-color: $color-ligth-gray;
     width: $drag-tab-line-height;
-    height: 200px;
-    top: calc(50% - 200px);
+    height: $drag-tab-line-height-desktop;
+    // top: calc(50% - 200px);
 
   }
 }
