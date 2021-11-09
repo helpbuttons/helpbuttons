@@ -29,6 +29,13 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 }
 
+.nav-header--hide {
+
+  display: none;
+  position: absolute;
+
+}
+
 .nav-header__content-message {
   flex-grow:1;
 }

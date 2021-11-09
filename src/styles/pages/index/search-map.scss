@@ -9,6 +9,10 @@ $search-map-height: 0; // Altura del header
   bottom: 0;
 }
 
+.leaflet-control-zoom{
+  float: right;
+}
+
 .search-map {
   height: 100vh;
   position: absolute;
@@ -61,8 +65,7 @@ $search-map-height: 0; // Altura del header
 @media #{$breakpoints-xlarge} {
   .leaflet-container {
       position: relative;
-      float: right;
-      right: 0;
-      width: 60%;
+      width: auto;
+      float: unset;
   }
 }

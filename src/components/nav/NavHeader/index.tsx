@@ -1,105 +1,83 @@
 ///this is the mobile header - it has the search input in the middle and to icons on the sides. Left one ddisplays HeaderInfo with the netpicker and descripttion (in case it's in a net the trigger is the net's logo), right nav btn diisplays the filters
-import React, { Component } from 'react';
-import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
-import Filters from "../../search/Filters";
-import FiltersMobile from "../../search/FiltersMobile"; //just for mobile
+import React, {useState} from "react";
+import Filters from "components/search/Filters";
+import FiltersMobile from "components/search/FiltersMobile"; //just for mobile
 import { Link } from 'elements/Link';
 import { IoHomeOutline } from "react-icons/io5";
 
 
-export default class NavHeader extends React.Component {
 
+function NavHeader(props) {
 
-  constructor() {
-      super();
+  const [showSearch, setShowSearch] = useState(true);
 
-      this.state = {
-        name: "React",
-        tag: '',
-        search: "",
-        setSearch: "",
-        results: "",
-        setResults: "",
-        showHideFilters: true,
-        showHideFiltersMobile: false,
-        showHideExtraFilters: false,
-        showHideInfoOverlay: false
+  // const [showHideExtraFilters, setShowHideExtraFilters] = useState(true);
 
-      };
+  const [showHideFiltersMobile, setShowHideFiltersMobile] = useState(false);
 
-      this.hideComponent = this.hideComponent.bind(this);
+  // const [showHideFilters, setShowHideFilters] = useState(true);
+  //
+  // const [showHideInfoOverlay, setShowHideInfoOverlay] = useState(true);
+  //
+  // const [showSearch, setShowSearch] = useState(true);
+  //
+  // const [name, setName] = useState(true);
+  //
+  // const [tag, setTag] = useState(true);
+  //
+  // const [search, setSearch] = useState(true);
+  //
+  // const [results, setResults] = useState(true);
 
-    }
-
-
-
-  hideComponent(name) {
-      console.log(name);
-      switch (name) {
-        case "showHideFilters":
-          this.setState({ showHideFilters: !this.state.showHideFilters });
-          break;
-        case "showHideFiltersMobile":
-          this.setState({ showHideFiltersMobile: !this.state.showHideFiltersMobile });
-          console.log(this.state.showHideFiltersMobile);
-          break;
-        case "showHideExtraFilters":
-          this.setState({ showHideExtraFilters: !this.state.showHideExtraFilters });
-          break;
-        default:
-          null;
-      }
-    }
-
-  handleInfo(e:Event) {
-
-      e.preventDefault();
-      this.setState(prevState => ({  showHideInfoOverlay: !prevState.showHideInfoOverlay }));
-
+  const handleChange = event => {
+      props.onchange(event.target.value);
   }
 
-  render() {
+  return(
 
-    const { showHideFilters, showHideFiltersMobile, showHideExtraFilters, showHideInfoOverlay } = this.state;
+    <>
 
+        <div className={'nav-header__container' + (showSearch ? '' : 'nav-header--hide')}>
 
-    return(
+            <form className="nav-header__content">
 
-      <div className="nav-header__container">
+                <Link href="/HomeInfo" className="btn-circle">
 
-          <form className="nav-header__content">
+                  <div className="btn-circle__content">
 
-              <Link href="/HomeInfo" className="btn-circle">
+                    <div className="btn-circle__icon">
 
-                <div className="btn-circle__content">
+                      <IoHomeOutline />
 
-                  <div className="btn-circle__icon">
-
-                    <IoHomeOutline />
+                    </div>
 
                   </div>
 
+                </Link>
+
+                <div className="nav-header__content-message">
+
+                  {showSearch &&
+
+                    <input onFocus={() => setShowHideFiltersMobile(true)} onBlur={() => setShowHideFiltersMobile(false)} className="form__input nav-header__content-input" placeholder="Search"></input>
+
+                  }
+
                 </div>
 
-              </Link>
+            </form>
 
-              <div className="nav-header__content-message">
+            <Filters />
 
-                <input onFocus={() => this.setState({ showHideFiltersMobile: true })} onBlur={() => this.setState({ showHideFiltersMobile: false })} className="form__input nav-header__content-input" placeholder="Search"></input>
-
-              </div>
-
-          </form>
-
-          <Filters />
-
-          { showHideFiltersMobile ? <FiltersMobile />  : null}
+            { showHideFiltersMobile ? <FiltersMobile />  : null}
 
 
-      </div>
+        </div>
 
-    )
+    </>
 
-  }
+  );
 
 }
+
+export default NavHeader;

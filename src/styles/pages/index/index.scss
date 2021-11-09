@@ -20,10 +20,19 @@ $index-mobile-fixed-z-index: $z-index-05;
     position: fixed;
     display: block;
   }
-  .index__content--left {
+  .index__content-left {
     flex-direction: column;
     width: 40vw;
     float: left;
     height: 100%;
+    transition: 2s;
+  }
+  .index__content-left--hide {
+    flex-direction: column;
+    // width: 4rem;
+    margin-left: -37vw;
+    right: -200px;
+    transition: 2s;
+    // transform: translateX(-1000px);
   }
 }
