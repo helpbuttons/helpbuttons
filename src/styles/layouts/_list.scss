@@ -1,3 +1,5 @@
+$list-container-hide-height: calc(70px - 230px);
+
 ///shouldd be the posts list
 .list__container {
 
@@ -5,11 +7,12 @@
   flex-direction: column;
   width: 100%;
   overflow: hidden;
-  height: max-content;
+  height: auto;
   width: 100%;
   position: fixed;
   bottom: $footer-height-mobile;
   z-index: $z-index-01;
+  transition: $transition-default-slow;
 
 }
 
@@ -27,6 +30,11 @@
 
 }
 
+.list__container--hide {
+
+  bottom: $list-container-hide-height;
+
+}
 
 .list__element {
 
@@ -42,7 +50,7 @@
     height:100%;
     float: left;
     position: relative;
-    overflow: scroll;
+    overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
 

@@ -1,21 +1,26 @@
 $drag-tab-height: $height-btn;
 $drag-tab-width-desktop: 44px;
 $drag-tab-height-desktop: 200px;
+$drag-tab-card-height: $card-button-list-height;
+$drag-tab-bottom-height: $nav-bottom-height;
+$drag-tab-bottom: calc(#{$drag-tab-card-height} + #{$drag-tab-bottom-height});
 $drag-tab-line-height: 5px;
 $drag-tab-line-height-desktop: 100px;
 $drag-tab-line-left-desktop: 20px;
 $drag-tab-line-position-desktop: calc(50% - 50px);
-
+$drag-tab-icon-size: 30px;
 
 .drag-tab {
 
   width: 100%;
-  position: relative;
+  position: absolute;
   height: $drag-tab-height;
   background-color: $color-white;
-  z-index: 10000000;
   margin: 0;
+  z-index: $z-index-01;
+  bottom: $drag-tab-bottom;
   border-radius: $border-radius-circle $border-radius-circle 0 0;
+  transition: $transition-default-slow;
 
 }
 
@@ -31,33 +36,58 @@ $drag-tab-line-position-desktop: calc(50% - 50px);
 
 }
 
+.drag-tab--open {
+  
+  transition: $transition-default-slow;
+  bottom: $drag-tab-bottom-height;
+
+}
+
+.drag-tab__icon {
+
+  display: none;
+
+}
+
 
 @media #{$breakpoints-xlarge} {
   .drag-tab {
 
-    position: fixed;
-    z-index: 999999;
-    display: block;
+    position: absolute;
     width: $drag-tab-width-desktop;
-    margin-right: -$drag-tab-width-desktop;
-    height: $drag-tab-height-desktop;
+    bottom:0px;
+    left: 40%;
+    margin: 0 0 $margin-big 0;
+    height: auto;
     border-radius: 0 $border-radius-circle $border-radius-circle 0;
-    cursor: pointer;; /* fallback if grab cursor is unsupported */
+    cursor: pointer; /* fallback if grab cursor is unsupported */
+    padding: $padding-small;
+    transition: $transition-default-slow;
+
+  }
+
+  .drag-tab--open {
+
+    left:0;
 
   }
 
   .drag-tab__line {
 
-    position: relative;
-    display: flex;
-    left: $drag-tab-line-left-desktop;
-    border-radius: $border-radius-circle;
-    margin: auto $margin-extra-small ;
-    top: $drag-tab-line-position-desktop;
-    background-color: $color-ligth-gray;
-    width: $drag-tab-line-height;
-    height: $drag-tab-line-height-desktop;
-    // top: calc(50% - 200px);
+    display: none;
 
   }
+
+  .drag-tab__icon {
+
+    display: flex;
+
+    svg {
+      width: $drag-tab-icon-size;
+      height: $drag-tab-icon-size;
+    }
+
+
+  }
+
 }

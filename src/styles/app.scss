@@ -22,7 +22,6 @@
 @import "elements/picture";
 @import "elements/avatar";
 @import "elements/body";
-@import "elements/drag-tab";
 @import "elements/hashtag";
 @import "elements/checkbox";
 @import "elements/checkbox-circle";
@@ -60,6 +59,9 @@
 @import "components/_filters";
 @import "components/card-profile";
 
+////special element for variable rendering
+@import "elements/drag-tab";
+
 
 //////////////////// LAYOUTS
 
@@ -94,10 +96,10 @@
 
 
 html, body {
-  background-color: $color-ligth-gray;
+  background-color: $color-blue;
 }
 
-.notifications-index, ._c-notification__container--top_rc8i2a {
+.notifications-index {
   z-index: 15000 !important;
 }
 

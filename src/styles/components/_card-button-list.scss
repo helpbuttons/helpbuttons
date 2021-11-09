@@ -6,7 +6,7 @@ $card-button-list-ofrece-background: $color-green;
 $card-button-list-paragraph-color: $color-gray;
 $card-button-list-margin-bottom: $margin-extra-small;
 $card-button-list-width: 450px;
-$card-button-list-height: auto;
+$card-button-list-height: 230px;
 $card-button-list-image-height: 200px;
 $card-button-list-image-width: 200px;
 $card-button-list-margin: 0.5rem;
@@ -368,7 +368,7 @@ $card-button-list-border-height: $border-general-height;
 
 .card-button-list__close-list {
   position: absolute;
-  z-index: 401;
+  z-index: $z-index-01;
   right: 0;
   padding: .5rem;
 }
