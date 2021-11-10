@@ -24,10 +24,10 @@ $nav-bottom-border: 32px;
   position: fixed;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
   z-index: $z-index-04;
-  
+
 }
 
 .nav-bottom--repo {
