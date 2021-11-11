@@ -1,5 +1,4 @@
 import L from 'leaflet';
-import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
 
 const iconButton = L.divIcon({
       className: 'marker-button',

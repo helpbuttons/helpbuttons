@@ -1,26 +1,27 @@
 ///button marker over the map
 import React from 'react';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { map } from 'rxjs/operators';
+import { useState } from 'react'
+
+import { Marker, Popup } from 'react-leaflet'
 import {  iconButton  } from './IconButton';
 import CardButtonMap from 'components/map/CardButtonMap'
-import CrossIcon from '../public/assets/svg/icons/cross1.tsx'
 
+export default function MarkerButton ({buttons, ...props}) {
 
-export default function MarkerButton () {
+  let buttonArray = buttons.length > 0 ? buttons[0] : buttons;
 
-  const position = [51.505, -0.09];
+  const markers = buttonArray.map((place, i) => (
 
+          <Marker key={i} position={place.geoPlace ? { lat: place.geoPlace.coordinates[0], lng: place.geoPlace.coordinates[1]} : {lat:null,lng:null}} icon={ iconButton }>
 
-  return (
+          <Popup className="card-button-map--wrapper">
+              <CardButtonMap />
+          </Popup>
 
-      <Marker
-        position={position}
-        icon={ iconButton }
-        >
-        <Popup className="card-button-map--wrapper">
-            <CardButtonMap />
-        </Popup>
-      </Marker>
+          </Marker>
 
-  )
-}
+  ));
+
+  return markers;
+};

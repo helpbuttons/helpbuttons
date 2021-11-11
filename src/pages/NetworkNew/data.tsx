@@ -18,7 +18,6 @@ export class CreateNetworkEvent implements WatchEvent {
           take(1),
           tap(networkData => {
             new NetworkUpdateEvent(networkData)
-            debugger
             if(networkData.response.id)
             window.localStorage.setItem('network_id', networkData.response.id);
           }),
@@ -41,7 +40,6 @@ export class NetworkUpdateEvent implements UpdateEvent {
   public constructor(private network: INetwork) {}
   public update(state: GlobalState) {
     return produce(state, newState => {
-      debugger
       newState.network.id = this.network.response.id;
     });
   }

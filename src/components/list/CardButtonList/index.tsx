@@ -6,7 +6,7 @@ import { Link } from 'elements/Link';
 
 export default function CardButtonList() {
   return (
-    <>
+    <div className="list__element">
 
           <div className="card-button-list card-button-list--need">
 
@@ -86,7 +86,7 @@ export default function CardButtonList() {
 
           </div>
 
-    </>
+    </div>
 
   );
 }

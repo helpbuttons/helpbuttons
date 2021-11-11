@@ -1,12 +1,11 @@
 //EXPLORE MAP
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 
 //services
-import { userService } from 'services/Users';
-import ButtonDataService from "services/Buttons";
-import { authenticationService } from 'services';
+import { ButtonService } from "services/Buttons";
 
 //components
+import { GetButtonsEvent } from 'pages/Explore/data.tsx';
 import Map from "components/map/LeafletMap";
 import List from "components/list/List";
 import NavHeader from "components/nav/NavHeader"; //just for mobile
@@ -19,14 +18,24 @@ export default function Explore() {
       setShowLeftColumn(!showLeftColumn);
   }
 
+  const [buttons, setButtons] = useState({
+    btns: []
+  })
+
+  useEffect(() => {
+
+    GetButtonsEvent(setButtons);
+
+  }, [])
+
   return (
 
         <div className="index__container">
           <div className={'index__content-left ' + (showLeftColumn ? '' : 'index__content-left--hide')}>
             <NavHeader showSearch={showLeftColumn}/>
-            <List showLeftColumn={showLeftColumn} onchange={(e) => { onchange(e) }}  />
+            <List buttons={buttons.btns} showLeftColumn={showLeftColumn} onchange={(e) => { onchange(e) }}  />
           </div>
-          <Map />
+          <Map buttons={buttons.btns}/>
         </div>
 
   );

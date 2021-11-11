@@ -1,10 +1,62 @@
 //INFO AND RESULTS
 import Directory from '../../elements/Directory'
 import Accordion from '../../elements/Accordion'
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { useMap } from 'react-leaflet';
+import { useEffect } from 'react';
+
+
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import { Link } from 'elements/Link';
 
+
+
 export default function Faqs() {
+
+
+  const SearchField = ({ apiKey }) => {
+    const provider = new MapBoxProvider({
+      params: {
+        access_token: apiKey,
+      },
+    });
+
+    // @ts-ignore
+    const searchControl = new GeoSearchControl({
+      provider: provider,
+    });
+
+    // const map = useMap();
+    //
+    // useEffect(() => {
+    //   map.addControl(searchControl);
+    //   return () => map.removeControl(searchControl);
+    // }, []);
+
+    new GeoSearchControl({
+      provider: myProvider, // required
+      showMarker: true, // optional: true|false  - default true
+      showPopup: false, // optional: true|false  - default false
+      marker: {
+        // optional: L.Marker    - default L.Icon.Default
+        icon: new L.Icon.Default(),
+        draggable: false,
+      },
+      popupFormat: ({ query, result }) => result.label, // optional: function    - default returns result label,
+      resultFormat: ({ result }) => result.label, // optional: function    - default returns result label
+      maxMarkers: 1, // optional: number      - default 1
+      retainZoomLevel: false, // optional: true|false  - default false
+      animateZoom: true, // optional: true|false  - default true
+      autoClose: false, // optional: true|false  - default false
+      searchLabel: 'Enter address', // optional: string      - default 'Enter address'
+      keepResult: false, // optional: true|false  - default false
+      updateMap: true, // optional: true|false  - default true
+    });
+
+    return null;
+  }
+
+
 
   return (
 
@@ -24,7 +76,7 @@ export default function Faqs() {
 
           <div className="info-overlay__image">
 
-            <div className="info-overlay__location">
+            <form className="info-overlay__location">
 
               <label className="form__label label">
                 Where do you go?
@@ -32,7 +84,7 @@ export default function Faqs() {
 
               <input type="text" className="form__input" placeholder="Search Location"></input>
 
-            </div>
+            </form>
 
           </div>
 
