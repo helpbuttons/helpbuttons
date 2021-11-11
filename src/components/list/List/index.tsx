@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import CardButtonList from "components/list/CardButtonList";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import { IoChevronBackOutline } from "react-icons/io5";
+import ContentList from "components/list/ContentList";
 import Link from 'next/link'
 
 
@@ -15,6 +16,8 @@ function List(props) {
       props.onchange(event.target.value);
       setShowLeftColumn(!showLeftColumn);
   }
+
+  const buttons = props.buttons;
 
   return (
       <>
@@ -38,17 +41,7 @@ function List(props) {
 
 
               <div className="list__content">
-
-                  <div className="list__element">
-                    <CardButtonList />
-                  </div>
-                  <div className="list__element">
-                    <CardButtonList />
-                  </div>
-                  <div className="list__element">
-                    <CardButtonList />
-                  </div>
-
+                <ContentList buttons={buttons}/>
               </div>
 
         </div>

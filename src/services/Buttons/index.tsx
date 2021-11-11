@@ -97,19 +97,19 @@ export class ButtonService {
   }
 
   //Get buttons
-  public static find(id: any): Observable<any> {
+  public static find(): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const buttonWithHeaders$ = ajax({
 
-          url: baseUrl+"/buttons",
+          url: baseUrl+"/buttons/find",
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             "accept": "application/json",
           },
           body: {
-            "id":id,
+
           },
       });
 

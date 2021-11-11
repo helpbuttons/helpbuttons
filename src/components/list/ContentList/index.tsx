@@ -1,0 +1,21 @@
+///button marker over the map
+import React from 'react';
+import { map } from 'rxjs/operators';
+import { useState } from 'react'
+
+import CardButtonList from 'components/list/CardButtonList'
+
+export default function ContentList ({buttons, ...props}) {
+
+  let buttonArray = buttons.length > 0 ? buttons[0] : buttons;
+
+  const markers = buttonArray.map((place, i) => (
+
+      <CardButtonList key={i} />
+
+  ));
+
+  console.log(markers);
+
+  return markers;
+};
