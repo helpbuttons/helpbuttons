@@ -29,9 +29,10 @@ function NavHeader(props) {
   //
   // const [results, setResults] = useState(true);
 
-  const handleChange = event => {
-      props.onchange(event.target.value);
-  }
+  // const handleChange = event => {
+  //     debugger
+  //     props.onchange(event.target.value);
+  // }
 
   return(
 
