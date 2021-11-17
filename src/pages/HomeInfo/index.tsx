@@ -79,7 +79,7 @@ export default function Faqs() {
             <form className="info-overlay__location">
 
               <label className="form__label label">
-                Where do you go?
+                Where do you start?
               </label>
 
               <input type="text" className="form__input" placeholder="Search Location"></input>
