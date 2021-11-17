@@ -76,7 +76,7 @@ export class NetworkService {
   }
 
   //Get networks
-  public static find(id: any): Observable<any> {
+  public static find(): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
       const networkWithHeaders$ = ajax({
@@ -88,8 +88,6 @@ export class NetworkService {
             "accept": "application/json",
           },
           body: {
-
-            "id" : id,
 
           },
       });

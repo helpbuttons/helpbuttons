@@ -1,18 +1,26 @@
 //INFO AND RESULTS
-import Directory from '../../elements/Directory'
-import Accordion from '../../elements/Accordion'
-import { OpenStreetMapProvider } from 'leaflet-geosearch';
+//libraries
+import { useState, useEffect } from "react";
 import { useMap } from 'react-leaflet';
-import { useEffect } from 'react';
 
+//services
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { GetNetworksEvent } from 'pages/HomeInfo/data.tsx';
 
+//components
+import DropdownNets from 'components/network/DropdownNets'
+import Directory from 'elements/Directory'
+import Accordion from 'elements/Accordion'
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import { Link } from 'elements/Link';
 
 
 
-export default function Faqs() {
+export default function HomeInfo() {
 
+  const [networks, setNetworks] = useState({
+    nets: []
+  })
 
   const SearchField = ({ apiKey }) => {
     const provider = new MapBoxProvider({
@@ -56,7 +64,11 @@ export default function Faqs() {
     return null;
   }
 
+  useEffect(() => {
 
+    GetNetworksEvent(setNetworks);
+
+  }, [])
 
   return (
 
@@ -92,12 +104,7 @@ export default function Faqs() {
 
             <div className="info-overlay__nets">
 
-              <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="off" list="" id="input" name="browsers" placeholder="Select other Network" type='text'></input>
-              <datalist className="dropdown-nets__dropdown-content" id='listid'>
-                <option className="dropdown-nets__dropdown-option" label='label1' value='Net1'>hola</option>
-                <option className="dropdown-nets__dropdown-option" label='label2' value='Net2'>hola</option>
-                <option className="dropdown-nets__create-new-button" label='label2' value='Net2'>Create Net</option>
-              </datalist>
+              <DropdownNets  networks={networks.nets} net='string'/>
 
               <Link href="/NetworkNew">
                 <Btn btnType={BtnType.corporative} contentAlignment={ContentAlignment.center} caption="Create Network"  />

@@ -2,38 +2,27 @@
 import { useState } from "react";
 
 
+export default function DropdownNets({networks, ...props}) {
 
+  let networksArray = networks.length > 0 ? networks[0] : networks;
 
-// -- componente sumador --
-export class Resetear implements UpdateEvent {
-  public update(state: object): object {
-    return produce(state, draft => {
-      draft.sumador.valor = 0;
-    });
-  }
-}
+  const options = networksArray.map((net, i) => (
 
+      <option className="dropdown-nets__dropdown-option" label={net.name} value={net.name}>{net.name}</option>
 
-export class Sumar implements UpdateEvent {
-  public constructor(private valor: int) {}
+  ));
 
-  public update(state: object): object {
-    return produce(state, draft => {
-      draft.sumador.valor += this.valor;
-    });
-  }
-}
-
-export default function DropdownNets() {
-
-  const [network, setNetwork] = useState("");
+  console.log(options);
 
   return (
 
-    <div className="header-search__nets">
-      <div className="header-search__net-picker">
-      <input type="text" className="header-search--nets" placeholder='Selecciona red'></input>
-      </div>
-    </div>
+    <>
+      <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="off" list="" id="input" name="browsers" placeholder="Select other Network" type='text'></input>
+      <datalist className="dropdown-nets__dropdown-content" id='listid'>
+        {options}
+      </datalist>
+    </>
+
+
   );
 }

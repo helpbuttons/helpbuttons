@@ -9,7 +9,8 @@ import Popup from 'components/popup/Popup';
 import { store } from 'pages/index';
 import { CreateNetworkEvent } from 'pages/NetworkNew/data';
 import INetwork from 'services/Networks/network.type';
-
+import CheckBox from 'elements/Checkbox'
+import Btn, {ContentAlignment, BtnType, IconType}  from 'elements/Btn'
 
 export default function NetworkNew() {
 
@@ -20,7 +21,7 @@ export default function NetworkNew() {
     const [name, setName] = useState("network example");
     const [url, setUrl] = useState("");
     const [avatar, setAvatar] = useState("");
-    const [privacy, setPrivacy] = useState("");
+    const [privacy, setPrivacy] = useState(true);
     const [place, setPlace] = useState("");
     const [tags, setTags] = useState([]);
     const [friendNetworks, setFriendNetworks] = useState([]);
@@ -63,7 +64,6 @@ export default function NetworkNew() {
           place: place,
           description: description,
           geoPlace: geoPlace,
-          tags: tags,
           radius: radius,
           owner: owner,
           friendNetworks: friendNetworks,
@@ -85,46 +85,45 @@ export default function NetworkNew() {
 
                   <div className="form__field">
                       <label className="label">Name</label>
-                      <input name="name" type="text" {...register('name')} className={`form__input ${errors.name ? '' : ''}`} />
+                      <input name="name" type="text" value={name} {...register('name')} onChange={(e) => setName(e.target.value)} className={`form__input ${errors.name ? '' : ''}`} />
                       <div className="">{errors.name?.message}</div>
                   </div>
 
                   <div className="form__field">
                       <label className="label">Avatar</label>
-                      <input name="avatar" type="text" {...register('avatar')} className={`form__input ${errors.avatar ? '' : ''}`} />
+                      <Btn iconLeft={IconType.svg} caption="Choose avatar" value={avatar} onChange={(e) => setAvatar(e.target.value)}/>
                       <div className="">{errors.avatar?.message}</div>
                   </div>
 
                   <div className="form__field">
                       <label className="label">Url</label>
-                      <input name="url" type="text" {...register('url')} className={`form__input ${errors.url ? '' : ''}`} />
+                      <input name="url" type="text" value={url} onChange={(e) => setUrl(e.target.value)} {...register('url')} className={`form__input ${errors.url ? '' : ''}`} />
                       <div className="">{errors.url?.message}</div>
                   </div>
 
                   <div className="form__field">
                       <label className="label">Privacy</label>
-                      <input name="privacy" type="text" {...register('privacy')} className={`form__input ${errors.privacy ? '' : ''}`} />
+                      <CheckBox icon="cross" text="Privacy" inputId="privacy" value={privacy} onChange={(e) => setPrivacy(e.target.value)} {...register('privacy')} className={`form__input ${errors.avatar ? '' : ''}`}/>
                       <div className="">{errors.privacy?.message}</div>
                   </div>
 
                   <div className="form__field">
                       <label className="label">Description</label>
-                      <textarea name="description" type="text" {...register('description')} className={`form__input ${errors.description ? '' : ''}`} />
+                      <textarea name="description" type="text"  value={description} onChange={(e) => setDescription(e.target.value)} {...register('description')} className={`form__input ${errors.description ? '' : ''}`} />
                       <div className="">{errors.description?.message}</div>
                   </div>
 
                   <div className="form__field">
                       <label className="label">geoPlace</label>
-                      <input name="geoPlace" type="text" {...register('geoPlace')} className={`form__input ${errors.geoPlace ? '' : ''}`} />
+                      <input name="geoPlace" type="text"  value={geoPlace} onChange={(e) => setGeoPlace(e.target.value)} {...register('geoPlace')} className={`form__input ${errors.geoPlace ? '' : ''}`} />
                       <div className="">{errors.geoPlace?.message}</div>
                   </div>
 
                   <div className="form__field">
                       <label className="label">Radius</label>
-                      <input name="radius" type="text" {...register('radius')} className={`form__input ${errors.radius ? '' : ''}`} />
+                      <input name="radius" type="text"  value={radius} onChange={(e) => setRadius(e.target.value)} {...register('radius')} className={`form__input ${errors.radius ? '' : ''}`} />
                       <div className="">{errors.radius?.message}</div>
                   </div>
-
 
                   <div className="popup__options-v">
 

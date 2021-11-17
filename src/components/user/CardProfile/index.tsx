@@ -103,8 +103,6 @@ export default function CardProfile() {
             <Btn iconLeft={IconType.svg} iconLink={<IoHammerOutline />} caption="Config account"  />
           </Link>
 
-          <Btn iconLeft={IconType.svg} iconLink={<IoHeartOutline />} caption="Support User" />
-
         </div>
 
       </div>
