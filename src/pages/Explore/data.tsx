@@ -11,7 +11,6 @@ import { alertService }  from 'services/Alert/index.ts';
    let btns = ButtonService.find().subscribe(buttons => {
 
      if (buttons) {
-         console.log(buttons.response[0].geoPlace)
            // add message to local state if not empty
            setButtons({ btns: [buttons.response] });
        } else {
