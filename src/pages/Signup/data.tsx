@@ -25,12 +25,12 @@ export class SignupEvent implements WatchEvent {
         Router.push({ pathname: '/', state: {} });
       }),
       catchError((error) => {
-        // if(error.response.error.details) {
-        //   alertService.error(error.response.error.details[0].message);
-        // } else {
-        //   alertService.error(error.response.error.message);
-        // }
-        // return of(error);
+        if(error.response.error.details) {
+          alertService.error(error.response.error.details[0].message);
+        } else {
+          alertService.error(error.response.error.message);
+        }
+        return of(error);
       }),
     )
   }

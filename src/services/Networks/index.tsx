@@ -143,51 +143,51 @@ export class NetworkService {
   }
 
 
-    //Delete network
-    public static _delete(id: any): Observable<any> {
+  //Delete network
+  public static _delete(id: any): Observable<any> {
 
-        //save the ajax object that can be .pipe by the observable
-        const networkWithHeaders$ = ajax({
+      //save the ajax object that can be .pipe by the observable
+      const networkWithHeaders$ = ajax({
 
-            url: baseUrl+"/networks/delete/"+id,
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              "accept": "application/json",
-            },
-            body: {
+          url: baseUrl+"/networks/delete/"+id,
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
 
-              "id":id,
+            "id":id,
 
-            },
-        });
+          },
+      });
 
-      return networkWithHeaders$;
+    return networkWithHeaders$;
 
-    }
+  }
 
-    //Delete all networks
-    public static deleteAll(id: any): Observable<any> {
+  //Delete all networks
+  public static deleteAll(id: any): Observable<any> {
 
-        //save the ajax object that can be .pipe by the observable
-        const networkWithHeaders$ = ajax({
+      //save the ajax object that can be .pipe by the observable
+      const networkWithHeaders$ = ajax({
 
-            url: baseUrl+"/networks",
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              "accept": "application/json",
-            },
-            body: {
+          url: baseUrl+"/networks",
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+          },
+          body: {
 
-              "id":id,
+            "id":id,
 
-            },
-        });
+          },
+      });
 
-      return networkWithHeaders$;
+    return networkWithHeaders$;
 
-    }
+  }
 
 
 

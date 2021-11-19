@@ -22,6 +22,8 @@ export default function HomeInfo() {
     nets: []
   })
 
+  const selectedNetwork = window.localStorage.getItem('network_id');
+
   const SearchField = ({ apiKey }) => {
     const provider = new MapBoxProvider({
       params: {
@@ -33,6 +35,7 @@ export default function HomeInfo() {
     const searchControl = new GeoSearchControl({
       provider: provider,
     });
+
 
     // const map = useMap();
     //
@@ -104,7 +107,7 @@ export default function HomeInfo() {
 
             <div className="info-overlay__nets">
 
-              <DropdownNets  networks={networks.nets} net='string'/>
+              <DropdownNets  networks={networks.nets} selectedNetwork={selectedNetwork} net='string'/>
 
               <Link href="/NetworkNew">
                 <Btn btnType={BtnType.corporative} contentAlignment={ContentAlignment.center} caption="Create Network"  />

@@ -15,7 +15,5 @@ export default function ContentList ({buttons, ...props}) {
 
   ));
 
-  console.log(markers);
-
   return markers;
 };

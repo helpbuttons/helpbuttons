@@ -21,7 +21,7 @@ export default function NetworkNew() {
     const [name, setName] = useState("network example");
     const [url, setUrl] = useState("");
     const [avatar, setAvatar] = useState("");
-    const [privacy, setPrivacy] = useState(true);
+    const [privacy, setPrivacy] = useState("");
     const [place, setPlace] = useState("");
     const [tags, setTags] = useState([]);
     const [friendNetworks, setFriendNetworks] = useState([]);
@@ -103,13 +103,13 @@ export default function NetworkNew() {
 
                   <div className="form__field">
                       <label className="label">Privacy</label>
-                      <CheckBox icon="cross" text="Privacy" inputId="privacy" value={privacy} onChange={(e) => setPrivacy(e.target.value)} {...register('privacy')} className={`form__input ${errors.avatar ? '' : ''}`}/>
+                      <CheckBox icon="cross" inputId="privacy" value={privacy} onChange={(e) => setPrivacy(e.target.value)} />
                       <div className="">{errors.privacy?.message}</div>
                   </div>
 
                   <div className="form__field">
                       <label className="label">Description</label>
-                      <textarea name="description" type="text"  value={description} onChange={(e) => setDescription(e.target.value)} {...register('description')} className={`form__input ${errors.description ? '' : ''}`} />
+                      <textarea name="description" type="text"  value={description} {...register('description')}  onChange={(e) => setDescription(e.target.value)} className={`form__input ${errors.description ? '' : ''}`} />
                       <div className="">{errors.description?.message}</div>
                   </div>
 
