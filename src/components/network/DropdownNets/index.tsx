@@ -36,7 +36,7 @@ export default function DropdownNets({networks, ...props}) {
 
   const options = networksArray.map((net, i) => (
 
-      <option className="dropdown-nets__dropdown-option" label={net.name} value={net.name}>{net.name}</option>
+      <option key={net.id} className="dropdown-nets__dropdown-option" label={net.name} value={net.name}>{net.name}</option>
 
   ));
 
@@ -44,10 +44,7 @@ export default function DropdownNets({networks, ...props}) {
     const userInput = e.target.value;
 
     // Filter our suggestions that don't contain the user's input
-    const unLinked = networksArray.filter(
-      (nets) =>
-        nets.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-    );
+    const unLinked = networksArray;
 
     setInput(e.target.value);
     setFilteredSuggestions(unLinked);
