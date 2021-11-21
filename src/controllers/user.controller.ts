@@ -201,6 +201,14 @@ export class UserController {
       await this.tagController.addTags('user', savedUser.id.toString(), newUserRequest.interests);
     
     logger.info(URI);
+
+    if (process.env.ENV === 'dev') 
+    {
+      return this.userRepository.updateById(savedUser.id, { emailVerified: true }).then(() => {
+        return savedUser;
+      });
+    }
+
     const activationUrl: string = URI + 'users/activate/' + savedUser.verificationToken;
     await this.mailerService.sendNotificationMail({
       to: savedUser.email,
