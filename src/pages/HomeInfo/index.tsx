@@ -5,7 +5,7 @@ import { useMap } from 'react-leaflet';
 
 //services
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
-import { GetNetworksEvent } from 'pages/HomeInfo/data.tsx';
+import { GetNetworksEvent, GetNetworkByIdEvent } from 'pages/HomeInfo/data.tsx';
 
 //components
 import DropdownNets from 'components/network/DropdownNets'
@@ -21,6 +21,8 @@ export default function HomeInfo() {
   const [networks, setNetworks] = useState({
     nets: []
   })
+
+  const [selectedNetworkObject, setSelectedNetworkObject] = useState({ id: "", name: "Helpbuttons" , url: "" , avatar: "" , privacy: "" , roles: "" , tags: "" , description: "Select a net for entering the Explore section" , buttonsTemplate: "" , showButtons: "" , place: "" , geoPlace: "" , radius: "" , friendNetworks: "" , networkRoles: "" , blockedUsers: "" });
 
   const selectedNetwork = window.localStorage.getItem('network_id');
 
@@ -70,6 +72,7 @@ export default function HomeInfo() {
   useEffect(() => {
 
     GetNetworksEvent(setNetworks);
+    GetNetworkByIdEvent(selectedNetwork, setSelectedNetworkObject);
 
   }, [])
 
@@ -82,11 +85,11 @@ export default function HomeInfo() {
         <div className="info-overlay__content">
 
           <div className="info-overlay__name">
-            Network Name
+            {selectedNetworkObject.name}
           </div>
 
           <div className="info-overlay__description">
-            Network description
+            {selectedNetworkObject.description}
           </div>
 
           <div className="info-overlay__image">
