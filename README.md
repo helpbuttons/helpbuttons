@@ -1,6 +1,6 @@
 # helpbuttons backend
 
-## run using docker-compose
+## runing using docker-compose
 
 ### copy & edit the file env.docker to .env according to your needs
 `$ cp env.docker .env`
@@ -10,18 +10,25 @@
 
 Open http://127.0.0.1:3001 in your browser.
 
-## run with yarn
+## runing with yarn
+#### We need to run an instance of postgis.. we recomend to use docker 
+
+To start postgis:
+```sh
+$ docker-compose up db
+```
+
+### copy the .env file and edit according to ur needs
+
+> In the env file u can define an smtp host, and also where postgis is running
+```sh
+$ cp env.yarn .env
+```
+
 ### install dependencies
 
 ```sh
 yarn
-```
-
-#### Setup using postgres as datastore
-#### start postgres
-Start postgres
-```sh
-$ yarn postgres:start
 ```
 
 #### Run the application
@@ -36,17 +43,6 @@ Open http://127.0.0.1:3001 in your browser.
 $ yarn start:watch
 ```
 
-### Setup using memory (json file) as datastore 
- - If you use memory you won't be able to run postgres+GIS queries )
-#### Setup memory
-```sh
-$ NODE_ENV=memory yarn run migrate
-```
-
-#### Run the application
-```sh
-$ NODE_ENV=memory yarn start
-```
 
 
 ## developers hints:
