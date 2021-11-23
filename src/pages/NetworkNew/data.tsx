@@ -6,6 +6,7 @@ import { WatchEvent } from 'store/Event';
 import { GlobalState } from 'store/Store';
 
 import { NetworkService } from 'services/Networks';
+import Router from 'next/router';
 import INetwork from 'services/Networks/types';
 import { alertService } from 'services/Alert';
 
@@ -20,6 +21,7 @@ export class CreateNetworkEvent implements WatchEvent {
             new NetworkUpdateEvent(networkData)
             if(networkData.response.id)
             window.localStorage.setItem('network_id', networkData.response.id);
+            Router.push({ pathname: '/', state: {} });
           }),
           catchError((error) => {
             console.log("error: ", error.message);
