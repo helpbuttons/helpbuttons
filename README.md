@@ -21,10 +21,8 @@ $ docker-compose up db
 ### copy the .env file and edit according to ur needs
 
 > In the env file u can define an smtp host, and also where postgis is running
-
 ```sh
-cp env.docker .env
-nano .env
+$ cp env.yarn .env
 ```
 
 ### install dependencies
