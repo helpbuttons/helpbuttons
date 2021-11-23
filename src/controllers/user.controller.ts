@@ -22,8 +22,8 @@ import { SecurityBindings, securityId } from '@loopback/security';
 import { genSalt, hash } from 'bcryptjs';
 import _ from 'lodash';
 import { TagController } from '.';
-import { User } from '../models';
-import { UserExtraRepository, UserRepository } from '../repositories';
+import { Network, User } from '../models';
+import { NetworkRepository, UserExtraRepository, UserRepository } from '../repositories';
 import { CustomTokenService } from '../services/custom-token.service';
 import { MailBindings, URI } from '../keys';
 import { MailService } from '../services/mail.service';
@@ -94,6 +94,8 @@ export class UserController {
     public userExtraRepository: UserExtraRepository,
     @inject('controllers.TagController')
     public tagController: TagController,
+    @repository(NetworkRepository)
+    public networkRepository : NetworkRepository,
   ) { }
 
   @post('/users/login', {
@@ -202,22 +204,48 @@ export class UserController {
     
     logger.info(URI);
 
+    await this.userRepository.userCredentials(savedUser.id).create({ password: password });
+
+    const count = await this.userRepository.count();
+    
+    if (count.count < 2) {
+      let network: Network;
+      network = new Network(
+        {
+          "name": "Perritos en adopcion",
+          "place": "Livorno, Italia",
+          "tags": ["livorno", "queso"],
+          "url": "net/url",
+          "avatar": "image/url.png",
+          "description": "Net for animal rescue",
+          "privacy": "publico",
+          "geoPlace": {
+            "coordinates": [
+              -9.16534423828125,
+              38.755154214849426
+            ], "type": "Point"
+          },
+          "radius": 240,
+          "friendNetworks": [1, 2],
+          "owner": savedUser.id,
+        }
+      );
+      await this.networkRepository.create(network);
+      
+    }
+    
+    // if in the ENV is dev then activate the user automatically
     if (process.env.ENV === 'dev') 
     {
-      return this.userRepository.updateById(savedUser.id, { emailVerified: true }).then(() => {
-        return savedUser;
+      await this.userRepository.updateById(savedUser.id, { emailVerified: true });
+    } else {
+      const activationUrl: string = URI + 'users/activate/' + savedUser.verificationToken;
+      await this.mailerService.sendNotificationMail({
+        to: savedUser.email,
+        subject: 'Please verify ur account',
+        content: 'click here: <a href="' + activationUrl + '">' + activationUrl + '</a>',
       });
     }
-
-    const activationUrl: string = URI + 'users/activate/' + savedUser.verificationToken;
-    await this.mailerService.sendNotificationMail({
-      to: savedUser.email,
-      subject: 'Please verify ur account',
-      content: 'click here: <a href="' + activationUrl + '">' + activationUrl + '</a>',
-    });
-    
-    //TODO this should not be sent in here.. is only for testing...
-    savedUser.verificationToken =  '/users/activate/' + savedUser.verificationToken;
     return savedUser;
   }
   @get('/users/activate/{verificationToken}', {
