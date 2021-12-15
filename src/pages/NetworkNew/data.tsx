@@ -9,6 +9,7 @@ import { NetworkService } from 'services/Networks';
 import Router from 'next/router';
 import INetwork from 'services/Networks/types';
 import { alertService } from 'services/Alert';
+import { errorService } from 'services/Error';
 
 //Called event for new user signup
 export class CreateNetworkEvent implements WatchEvent {
@@ -19,18 +20,13 @@ export class CreateNetworkEvent implements WatchEvent {
           take(1),
           tap(networkData => {
             new NetworkUpdateEvent(networkData)
-            if(networkData.response.id)
-            window.localStorage.setItem('network_id', networkData.response.id);
+
+            storeService.save('network_id',networkData.response.id);
+
             Router.push({ pathname: '/', state: {} });
           }),
           catchError((error) => {
-            console.log("error: ", error.message);
-            if(error.response.error.details) {
-              alertService.error(error.response.error.details[0].message);
-            } else {
-              alertService.error(error.response.error.message);
-            }
-            return of(error);
+            return errorService.handle(error);
           })
     )
   }
