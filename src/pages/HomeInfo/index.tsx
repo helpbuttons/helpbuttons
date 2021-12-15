@@ -8,7 +8,7 @@ import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import { GetNetworksEvent, GetNetworkByIdEvent } from 'pages/HomeInfo/data.tsx';
 
 //components
-import DropdownNets from 'components/network/DropdownNets'
+import DropdownNetworks from 'components/network/DropdownNetworks'
 import Directory from 'elements/Directory'
 import Accordion from 'elements/Accordion'
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
@@ -110,7 +110,7 @@ export default function HomeInfo() {
 
             <div className="info-overlay__nets">
 
-              <DropdownNets  networks={networks.nets} selectedNetwork={selectedNetwork} net='string'/>
+              <DropdownNetworks  networks={networks.nets} selectedNetwork={selectedNetwork} net='string'/>
 
               <Link href="/NetworkNew">
                 <Btn btnType={BtnType.corporative} contentAlignment={ContentAlignment.center} caption="Create Network"  />

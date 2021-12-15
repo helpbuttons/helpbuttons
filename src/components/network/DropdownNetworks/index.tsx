@@ -24,7 +24,7 @@ const SuggestionsListComponent = () => {
    );
  };
 
-export default function DropdownNets({networks, ...props}) {
+export default function DropdownNetworks({networks, ...props}) {
 
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
