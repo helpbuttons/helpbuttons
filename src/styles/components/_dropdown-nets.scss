@@ -68,15 +68,13 @@ $dropdown-nets-max-width: $grid-max-width;
     text-align: center;
     max-height: 150px;
     overflow-y: auto;
-
-    position: absolute;
+    display: block;
     background-color: white;
-    border: 1px solid blue;
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 0 $border-radius-circle $border-radius-circle;
     border-top: none;
     font-family: sans-serif;
-    width: 350px;
     padding: 5px;
+    z-index: $z-index-02;
 
 }
 
@@ -84,10 +82,16 @@ $dropdown-nets-max-width: $grid-max-width;
 
   display: block;
   cursor: pointer;
+  box-sizing: border-box;
   width: 100%;
-  background: white;
-  border: unset;
+  padding: $padding-big;
+  background: $color-white;  border: unset;
   border-radius: $border-radius-semicircle; //REVISE
+
+  &:hover {
+    background-color : $color-black;
+    color: $color-white;
+  }
 
 
 }

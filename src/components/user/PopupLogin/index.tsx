@@ -33,8 +33,6 @@ export default function PopupLogin() {
 
   function onSubmit(user) {
 
-    console.log('login');
-
     store.emit(new LoginEvent(user.email, user.password));
 
   }

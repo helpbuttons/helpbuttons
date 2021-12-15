@@ -20,10 +20,12 @@ export default function CheckBox({
     icon,
     text,
     inputId,
+    value,
 }: {
     icon: IconType;
     text: string;
     inputId: string;
+    value: string;
 }) {
     return (
         <div className="checkbox">
@@ -32,8 +34,9 @@ export default function CheckBox({
                     type="checkbox"
                     className="checkbox__checkbox"
                     id={inputId}
+                    value={value}
                 ></input>
-                <div className="checkbox__content">
+                <div className={`checkbox__content ${value ? 'checked' : ''}`}>
                     <CheckBoxIcon icon={icon} />
                     <div className="checkbox__text">{text}</div>
                 </div>

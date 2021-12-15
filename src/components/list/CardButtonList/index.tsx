@@ -4,8 +4,9 @@ import { IoChevronForwardOutline } from "react-icons/io5";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { Link } from 'elements/Link';
 
-export default function CardButtonList() {
+export default function CardButtonList(props) {
   return (
+    
     <div className="list__element">
 
           <div className="card-button-list card-button-list--need">
@@ -37,13 +38,13 @@ export default function CardButtonList() {
 
                       <div className="card-button-list__status card-button-list__status">
 
-                        <span className="card-button-list__status--offer">button type</span> y <span className="card-button-list__status--need">button type</span>
+                        <span className="card-button-list__status--offer">{props.type}</span>
 
                       </div>
 
                       <div className="card-button-list__status card-button-list__status">
 
-                        <span className="card-button-list__title">Button Name</span>
+                        <span className="card-button-list__title">{props.name}</span>
 
                       </div>
 
@@ -57,25 +58,25 @@ export default function CardButtonList() {
                   <div className="card-button-list__hashtags">
 
                         <div className="card-button-list__need">
-                          <div className="hashtag">tag</div>
+                          <div className="hashtag">{props.tags}</div>
                         </div>
 
                   </div>
 
                   <div className="card-button-list__paragraph">
 
-                    <p>Description</p>
+                    <p>{props.description}</p>
 
                   </div>
 
                   <div className="card-button-list__geoDate">
 
                     <div className="card-button-list__city card-button-list__everywhere " >
-                      En todas partes
+                      {props.geoPlace}
                     </div>
 
                     <div className="card-button-list__date">
-                        Date
+                      {props.date}
                     </div>
 
                   </div>

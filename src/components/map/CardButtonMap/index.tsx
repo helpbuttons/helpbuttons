@@ -4,7 +4,7 @@ import { IoChevronForwardOutline } from "react-icons/io5";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { Link } from 'elements/Link';
 
-export default function CardButtonMap () {
+export default function CardButtonMap (props) {
 
   return (
 
@@ -20,7 +20,7 @@ export default function CardButtonMap () {
 
               <div className="card-button-map__status card-button-map__status">
 
-                    <span className="card-button-map__status--offer">button type</span> y <span className="card-button-map__status--need">button type</span>
+                    <span className="card-button-map__status--offer">{props.type}</span> y <span className="card-button-map__status--need">button type</span>
 
               </div>
 

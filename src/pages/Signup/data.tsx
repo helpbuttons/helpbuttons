@@ -20,17 +20,17 @@ export class SignupEvent implements WatchEvent {
       tap(userData => {
         // if(userData.response.verificationToken)
         // Router.push({ pathname: 'localhost:3000' + userData.response.verificationToken.toString(), state: {} });
-        window.location.assign('localhost:3000' + userData.response.verificationToken.toString());
-        alertService.info('You signed up! Now visit this link to activate');
+        // window.location.assign('localhost:3000' + userData.response.verificationToken.toString());
+        // alertService.info('You signed up! Now visit this link to activate');
         Router.push({ pathname: '/', state: {} });
       }),
       catchError((error) => {
-        // if(error.response.error.details) {
-        //   alertService.error(error.response.error.details[0].message);
-        // } else {
-        //   alertService.error(error.response.error.message);
-        // }
-        // return of(error);
+        if(error.response.error.details) {
+          alertService.error(error.response.error.details[0].message);
+        } else {
+          alertService.error(error.response.error.message);
+        }
+        return of(error);
       }),
     )
   }

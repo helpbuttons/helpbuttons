@@ -87,7 +87,7 @@ export default function CardProfile() {
         <div className="card-profile__actions">
 
           <Link href="/Explore">
-            <a onClick={logout} className="btn-with-icon">
+            <div onClick={logout} className="btn-with-icon">
 
               <div className="btn-with-icon__icon">
                 <IoLogOutOutline />
@@ -96,14 +96,12 @@ export default function CardProfile() {
                 Logout
               </span>
 
-            </a>
+            </div>
           </Link>
 
           <Link href="/Config">
             <Btn iconLeft={IconType.svg} iconLink={<IoHammerOutline />} caption="Config account"  />
           </Link>
-
-          <Btn iconLeft={IconType.svg} iconLink={<IoHeartOutline />} caption="Support User" />
 
         </div>
 

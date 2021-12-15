@@ -1,18 +1,30 @@
 //INFO AND RESULTS
-import Directory from '../../elements/Directory'
-import Accordion from '../../elements/Accordion'
-import { OpenStreetMapProvider } from 'leaflet-geosearch';
+//libraries
+import { useState, useEffect } from "react";
 import { useMap } from 'react-leaflet';
-import { useEffect } from 'react';
 
+//services
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { GetNetworksEvent, GetNetworkByIdEvent } from 'pages/HomeInfo/data.tsx';
 
+//components
+import DropdownNets from 'components/network/DropdownNets'
+import Directory from 'elements/Directory'
+import Accordion from 'elements/Accordion'
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import { Link } from 'elements/Link';
 
 
 
-export default function Faqs() {
+export default function HomeInfo() {
 
+  const [networks, setNetworks] = useState({
+    nets: []
+  })
+
+  const [selectedNetworkObject, setSelectedNetworkObject] = useState({ id: "", name: "Helpbuttons" , url: "" , avatar: "" , privacy: "" , roles: "" , tags: "" , description: "Select a net for entering the Explore section" , buttonsTemplate: "" , showButtons: "" , place: "" , geoPlace: "" , radius: "" , friendNetworks: "" , networkRoles: "" , blockedUsers: "" });
+
+  const selectedNetwork = window.localStorage.getItem('network_id');
 
   const SearchField = ({ apiKey }) => {
     const provider = new MapBoxProvider({
@@ -25,6 +37,7 @@ export default function Faqs() {
     const searchControl = new GeoSearchControl({
       provider: provider,
     });
+
 
     // const map = useMap();
     //
@@ -56,7 +69,12 @@ export default function Faqs() {
     return null;
   }
 
+  useEffect(() => {
 
+    GetNetworksEvent(setNetworks);
+    GetNetworkByIdEvent(selectedNetwork, setSelectedNetworkObject);
+
+  }, [])
 
   return (
 
@@ -67,11 +85,11 @@ export default function Faqs() {
         <div className="info-overlay__content">
 
           <div className="info-overlay__name">
-            Network Name
+            {selectedNetworkObject.name}
           </div>
 
           <div className="info-overlay__description">
-            Network description
+            {selectedNetworkObject.description}
           </div>
 
           <div className="info-overlay__image">
@@ -79,7 +97,7 @@ export default function Faqs() {
             <form className="info-overlay__location">
 
               <label className="form__label label">
-                Where do you go?
+                Where do you start?
               </label>
 
               <input type="text" className="form__input" placeholder="Search Location"></input>
@@ -92,12 +110,7 @@ export default function Faqs() {
 
             <div className="info-overlay__nets">
 
-              <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="off" list="" id="input" name="browsers" placeholder="Select other Network" type='text'></input>
-              <datalist className="dropdown-nets__dropdown-content" id='listid'>
-                <option className="dropdown-nets__dropdown-option" label='label1' value='Net1'>hola</option>
-                <option className="dropdown-nets__dropdown-option" label='label2' value='Net2'>hola</option>
-                <option className="dropdown-nets__create-new-button" label='label2' value='Net2'>Create Net</option>
-              </datalist>
+              <DropdownNets  networks={networks.nets} selectedNetwork={selectedNetwork} net='string'/>
 
               <Link href="/NetworkNew">
                 <Btn btnType={BtnType.corporative} contentAlignment={ContentAlignment.center} caption="Create Network"  />

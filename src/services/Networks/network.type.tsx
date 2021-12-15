@@ -1,6 +1,6 @@
 export interface INetwork {
   //required data
-  id: any || null;
+  id: int;
   name: string,
   url: string,
   avatar: string,

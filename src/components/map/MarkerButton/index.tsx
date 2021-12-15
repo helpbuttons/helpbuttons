@@ -11,13 +11,13 @@ export default function MarkerButton ({buttons, ...props}) {
 
   let buttonArray = buttons.length > 0 ? buttons[0] : buttons;
 
-  const markers = buttonArray.map((place, i) => (
+  const markers = buttonArray.map((btn, i) => (
 
-          <Marker key={i} position={place.geoPlace ? { lat: place.geoPlace.coordinates[0], lng: place.geoPlace.coordinates[1]} : {lat:null,lng:null}} icon={ iconButton }>
+          <Marker key={btn.id} position={btn.geoPlace ? { lat: btn.geoPlace.coordinates[0], lng: btn.geoPlace.coordinates[1]} : {lat:null,lng:null}} icon={ iconButton }>
 
-          <Popup className="card-button-map--wrapper">
-              <CardButtonMap />
-          </Popup>
+            <Popup className="card-button-map--wrapper">
+                <CardButtonMap key={btn.id} type={btn.type} userName={btn.owner} images={btn.images} buttonName={btn.name} tags={btn.tags} description={btn.description} date={btn.date} location={btn.geoPlace}/>
+            </Popup>
 
           </Marker>
 
