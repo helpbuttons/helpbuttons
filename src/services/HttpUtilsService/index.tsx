@@ -12,6 +12,7 @@ export class HttpUtilsService {
   private tokenType?: string;
   private accessToken?: string;
 
+  //TO DO : CHANGE CONSTRUCTOR TO FUNCTION INJECTION
   constructor() {
     this.tokenType = window.localStorage.getItem('token_type') || undefined;
     this.accessToken = window.localStorage.getItem('access_token') || undefined;
@@ -23,7 +24,7 @@ export class HttpUtilsService {
     if (this.apiUrl.indexOf('<front-host>') >= 0) {
       this.apiUrl = this.apiUrl.replace('<front-host>', window.location.hostname);
     }
-  }
+  }  
 
   public setAccessToken(tokenType?: string, accessToken?: string) {
     this.tokenType = tokenType;

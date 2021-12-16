@@ -14,8 +14,7 @@ import HomeInfo from "pages/HomeInfo";
 
 
 import { BackTestState, backTestInitial } from "pages/BackTest/data";
-
-
+import { CommonDataState, commonDataInitial } from "modules/Common/data";
 
 
 // https://immerjs.github.io/immer/
@@ -23,67 +22,19 @@ import { BackTestState, backTestInitial } from "pages/BackTest/data";
 // al estilo "immutable objects"
 import produce from 'immer';
 
-//Current user session object
-export interface UserState {
-  username: string,
-  email: string,
-  realm: string,
-  roles: [],
-}
-
-export interface CurrentUserState {
-  token: any,
-}
-
-//No logged user  values
-export const userInitial = {
-  username: "",
-  email: "",
-  realm: "",
-  roles: [],
-}
-
-//No logged user  values
-export const currentUserInitial = {
-  token: "",
-}
 
 // -- estado global --
-
 export interface GlobalState {
-  network: {
-    id: number;
-  }
-  sumador: {
-    valor: number;
-  }
-  gente: {
-    cargando: boolean;
-    listado: object[];
-  }
 
-  currentUser: CurrentUserState;
-  user: UserState;
   backTest: BackTestState;
-}
+  commonData: CommonDataState;
 
+}
 
 export const store = new Store<GlobalState>({
 
-  network: {
-    id: 0,
-  },
-  sumador: {
-    valor: 0,
-  },
-  gente: {
-    cargando: false,
-    listado: [],
-  },
-
-  currentUser: currentUserInitial,
-  user: userInitial,
   backTest: backTestInitial,
+  commonData: commonDataInitial,
 
 });
 

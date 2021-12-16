@@ -6,6 +6,10 @@ import { useMap } from 'react-leaflet';
 //services
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import { GetNetworksEvent, GetNetworkByIdEvent } from 'pages/HomeInfo/data.tsx';
+import { useRef } from '../../store/Store';
+import { store } from '../index';
+import { LoadCommonData } from 'modules/Common/data';
+import INetwork from 'services/Networks/network.type.tsx'
 
 //components
 import DropdownNetworks from 'components/network/DropdownNetworks'
@@ -18,13 +22,13 @@ import { Link } from 'elements/Link';
 
 export default function HomeInfo() {
 
-  const [networks, setNetworks] = useState({
-    nets: []
-  })
+  const [networks, setNetworks] = useState(useRef(store, (state) => state.commonData.networks));
 
-  const [selectedNetworkObject, setSelectedNetworkObject] = useState({ id: "", name: "Helpbuttons" , url: "" , avatar: "" , privacy: "" , roles: "" , tags: "" , description: "Select a net for entering the Explore section" , buttonsTemplate: "" , showButtons: "" , place: "" , geoPlace: "" , radius: "" , friendNetworks: "" , networkRoles: "" , blockedUsers: "" });
+  const [selectedNetworkObject, setSelectedNetworkObject] = useState({
+    id: "",
+    name:"",
+  });
 
-  const selectedNetwork = window.localStorage.getItem('network_id');
 
   const SearchField = ({ apiKey }) => {
     const provider = new MapBoxProvider({
@@ -69,10 +73,12 @@ export default function HomeInfo() {
     return null;
   }
 
+
   useEffect(() => {
 
-    GetNetworksEvent(setNetworks);
-    GetNetworkByIdEvent(selectedNetwork, setSelectedNetworkObject);
+    store.emit(new LoadCommonData());
+    // GetNetworksEvent(setNetworks);
+    // GetNetworkByIdEvent(selectedNetwork, setSelectedNetworkObject);
 
   }, [])
 
@@ -110,7 +116,7 @@ export default function HomeInfo() {
 
             <div className="info-overlay__nets">
 
-              <DropdownNetworks  networks={networks.nets} selectedNetwork={selectedNetwork} net='string'/>
+              <DropdownNetworks  networks={networks} setSelectedNetworkObject={setSelectedNetworkObject} net='string'/>
 
               <Link href="/NetworkNew">
                 <Btn btnType={BtnType.corporative} contentAlignment={ContentAlignment.center} caption="Create Network"  />
