@@ -1,20 +1,22 @@
 //INFO AND RESULTS
 //libraries
+import { useRef } from 'store/Store';
+import { store } from 'pages/index';
+import { LoadCommonData } from 'modules/Common/data';
+
 import { useState, useEffect } from "react";
-import { useMap } from 'react-leaflet';
+// import { useMap } from 'react-leaflet';
 
 //services
-import { OpenStreetMapProvider } from 'leaflet-geosearch';
-import { GetNetworksEvent, GetNetworkByIdEvent } from 'pages/HomeInfo/data.tsx';
-import { useRef } from '../../store/Store';
-import { store } from '../index';
-import { LoadCommonData } from 'modules/Common/data';
-import INetwork from 'services/Networks/network.type.tsx'
+// import { OpenStreetMapProvider } from 'leaflet-geosearch';
+// import { useRef } from 'store/Store';
+// import { store } from 'pages/index';
+// import { LoadCommonData } from 'modules/Common/data';
 
 //components
-import DropdownNetworks from 'components/network/DropdownNetworks'
-import Directory from 'elements/Directory'
-import Accordion from 'elements/Accordion'
+// import DropdownNetworks from 'components/network/DropdownNetworks'
+// import Directory from 'elements/Directory'
+// import Accordion from 'elements/Accordion'
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import { Link } from 'elements/Link';
 
@@ -22,12 +24,9 @@ import { Link } from 'elements/Link';
 
 export default function HomeInfo() {
 
-  const [networks, setNetworks] = useState(useRef(store, (state) => state.commonData.networks));
+  // const [networks, setNetworks] = useState(useRef(store, (state) => state.commonData.networks));
+  const networks = useRef(store, (state) => state.commonData.networks);
 
-  const [selectedNetworkObject, setSelectedNetworkObject] = useState({
-    id: "",
-    name:"",
-  });
 
 
   const SearchField = ({ apiKey }) => {
@@ -77,8 +76,7 @@ export default function HomeInfo() {
   useEffect(() => {
 
     store.emit(new LoadCommonData());
-    // GetNetworksEvent(setNetworks);
-    // GetNetworkByIdEvent(selectedNetwork, setSelectedNetworkObject);
+
 
   }, [])
 
@@ -91,11 +89,9 @@ export default function HomeInfo() {
         <div className="info-overlay__content">
 
           <div className="info-overlay__name">
-            {selectedNetworkObject.name}
           </div>
 
           <div className="info-overlay__description">
-            {selectedNetworkObject.description}
           </div>
 
           <div className="info-overlay__image">
@@ -116,7 +112,6 @@ export default function HomeInfo() {
 
             <div className="info-overlay__nets">
 
-              <DropdownNetworks  networks={networks} setSelectedNetworkObject={setSelectedNetworkObject} net='string'/>
 
               <Link href="/NetworkNew">
                 <Btn btnType={BtnType.corporative} contentAlignment={ContentAlignment.center} caption="Create Network"  />

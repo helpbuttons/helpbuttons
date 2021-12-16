@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useRef } from '../../store/Store';
-import { store } from '../index';
+import { useRef } from 'store/Store';
+import { store } from 'pages/index';
 import { LoadOpenApi } from './data';
 
 
