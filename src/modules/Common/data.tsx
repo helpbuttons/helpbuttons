@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import React, { useState } from 'react';
 import { produce } from 'immer';
 
@@ -33,17 +33,23 @@ export class LoadCommonData implements UpdateEvent, WatchEvent {
     return NetworkService.find().pipe(
       map((networks) => {
         new NetworksDataLoaded(networks);
-      })
+      }),
+      catchError((error) => {
+        debugger
+        console.log(error);
+      }),
+
     )
   }
 }
 
 
 export class NetworksDataLoaded implements UpdateEvent {
-  public constructor(private networks: any) {debugger}
+  public constructor(private networks: any) {}
   public update(state: GlobalState) {
     return produce(state, newState => {
       newState.commonData.networks = this.networks.response;
     });
   }
+  
 }
