@@ -21,19 +21,26 @@ export class Store<T> {
 
   private _subscribe(): void {
     this.events$.pipe(
-      filter(event => isUpdateEvent(event)),
+      filter((event) => {
+        console.log(event);
+        return isUpdateEvent(event);
+      }),
       withLatestFrom(this.state$),
     ).subscribe(([event, state]) => this._processUpdateEvent(event, state));
 
     this.events$.pipe(
       filter((event) => {
-        isWatchEvent(event);
+        console.log(event);
+        return isWatchEvent(event);
       }),
       withLatestFrom(this.state$),
     ).subscribe(([event, state]) => this._processWatchEvent(event, state));
 
     this.events$.pipe(
-      filter(event => isEffectEvent(event)),
+      filter((event) => {
+        console.log(event);
+        return isEffectEvent(event);
+      }),
       withLatestFrom(this.state$),
     ).subscribe(([event, state]) => this._processEffectEvent(event, state));
   }
