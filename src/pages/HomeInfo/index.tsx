@@ -113,6 +113,7 @@ export default function HomeInfo() {
             <div className="info-overlay__nets">
 
 
+
               <Link href="/NetworkNew">
                 <Btn btnType={BtnType.corporative} contentAlignment={ContentAlignment.center} caption="Create Network"  />
               </Link>

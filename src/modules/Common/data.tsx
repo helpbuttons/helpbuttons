@@ -12,14 +12,14 @@ import { INetwork } from 'services/Networks/types';
 
 export interface CommonDataState {
   heading: string;
-  networks: any;
+  networks: INetwork[];
   selectedNetwork: INetwork;
 }
 
 
 export const commonDataInitial = {
   heading: "(empty)",
-  networks: null,
+  networks: [],
   selectedNetwork: null,
 }
 
@@ -32,10 +32,9 @@ export class LoadCommonData implements UpdateEvent, WatchEvent {
   public watch(state: GlobalState) {
     return NetworkService.find().pipe(
       map((networks) => {
-        new NetworksDataLoaded(networks);
+       new NetworksDataLoaded(networks);
       }),
       catchError((error) => {
-        debugger
         console.log(error);
       }),
 
@@ -51,5 +50,5 @@ export class NetworksDataLoaded implements UpdateEvent {
       newState.commonData.networks = this.networks.response;
     });
   }
-  
+
 }

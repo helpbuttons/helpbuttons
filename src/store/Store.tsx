@@ -26,7 +26,9 @@ export class Store<T> {
     ).subscribe(([event, state]) => this._processUpdateEvent(event, state));
 
     this.events$.pipe(
-      filter(event => isWatchEvent(event)),
+      filter((event) => {
+        isWatchEvent(event);
+      }),
       withLatestFrom(this.state$),
     ).subscribe(([event, state]) => this._processWatchEvent(event, state));
 
