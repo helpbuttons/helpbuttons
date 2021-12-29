@@ -20,13 +20,13 @@ export abstract class EffectEvent extends Event {
 
 export function isUpdateEvent(event: Event): event is Event {
   console.log(event);
-  return (event.update !== undefined);
+  return (event && (event.update !== undefined));
 }
 
 export function isWatchEvent(event: Event): event is Event {
-  return (event.watch !== undefined);
+  return (event && (event.watch !== undefined));
 }
 
 export function isEffectEvent(event: Event): event is Event {
-  return (event.effect !== undefined);
+  return (event && (event.effect !== undefined));
 }
