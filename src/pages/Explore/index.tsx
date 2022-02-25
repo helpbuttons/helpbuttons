@@ -24,7 +24,7 @@ export default function Explore() {
 
   useEffect(() => {
 
-    GetButtonsEvent(setButtons);
+    return GetButtonsEvent(setButtons);
 
   }, [])
 

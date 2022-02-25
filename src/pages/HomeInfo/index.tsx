@@ -71,9 +71,11 @@ export default function HomeInfo() {
 
   useEffect(() => {
 
-    GetNetworksEvent(setNetworks);
-    GetNetworkByIdEvent(selectedNetwork, setSelectedNetworkObject);
-
+   return()=>{
+      GetNetworksEvent(setNetworks)();
+      GetNetworkByIdEvent(selectedNetwork, setSelectedNetworkObject)();
+    } 
+    
   }, [])
 
   return (
