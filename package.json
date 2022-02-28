@@ -8,7 +8,7 @@
     "start": "next start",
     "commit": "git-cz",
     "prepare": "husky instal && husky install",
-    "lint": "echo foo",
+    "lint": "next lint",
     "svgr": "svgr icons -d elements/icons --icon"
   },
   "dependencies": {
@@ -43,6 +43,7 @@
     "@types/react-redux": "^7.1.18",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
+    "@typescript-eslint/parser": "^5.12.1",
     "commitizen": "^4.2.4",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.0",
