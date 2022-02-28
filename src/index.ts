@@ -1,6 +1,8 @@
+import './dotenv';
 import {ApplicationConfig, HelpbuttonsBackendApp} from './application';
 import { logger } from './logger';
 
+//procees.cwd() de donde se llama
 export * from './application';
 
 export async function main(options: ApplicationConfig = {}) {

@@ -6,7 +6,7 @@ const memoryDatasource = {
     "localStorage": "",
     "file": "./data/db.json"
 };
-
+console.log('process.env.POSTGRES_HOSTNAME');
 const postgresDatasource = {
     "name": "db",
     "connector": "postgresql",
@@ -17,5 +17,4 @@ const postgresDatasource = {
     "password": process.env.POSTGRES_PASSWORD,
     "database": process.env.POSTGRES_DB
 };
-
 export const datasourceConfig = (process.env.NODE_ENV === 'memory') ? memoryDatasource : postgresDatasource;
