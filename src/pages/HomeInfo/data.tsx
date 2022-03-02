@@ -1,8 +1,5 @@
-import { map, tap, take, catchError } from 'rxjs/operators';
-
 import { NetworkService } from 'services/Networks';
-import { INetwork } from 'services/Networks/types';
-import { alertService }  from 'services/Alert/index.ts';
+
 
 
  export function GetNetworksEvent (setNetworks) {
