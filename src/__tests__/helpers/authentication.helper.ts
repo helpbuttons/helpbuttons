@@ -11,8 +11,8 @@ export async function setupApplication(): Promise<AppWithClient> {
     // Customize the server configuration here.
     // Empty values (undefined, '') will be ignored by the helper.
     //
-    // host: process.env.HOST,
-    // port: +process.env.PORT,
+    host: process.env.HOST,
+    port: 80,
   });
 
   const app = new HelpbuttonsBackendApp({
