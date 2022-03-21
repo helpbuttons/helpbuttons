@@ -2,7 +2,8 @@
 //libraries
 import { useRef } from 'store/Store';
 import { store } from 'pages/index';
-import { LoadCommonData } from 'modules/Common/data';
+import { LoadCommonNetworks } from 'modules/Common/data';
+import { LoadCommonSelectedNetwork } from 'modules/Common/data';
 
 import { useState, useEffect } from "react";
 
@@ -15,11 +16,20 @@ export default function HomeInfo() {
 
   // const [networks, setNetworks] = useState(useRef(store, (state) => state.commonData.networks));
   const networks = useRef(store, (state) => state.commonData.networks);
-
+  const [selectedNetworkId, setSelectedNetworkId] = useState(useRef( store, (state) => {
+      debugger
+      if(state.commonData.selectedNetwork == null)
+      {
+        return "0";
+      }
+      return state.commonData.selectedNetwork.id;
+    })
+  );
 
   useEffect(() => {
 
-    store.emit(new LoadCommonData());
+    store.emit(new LoadCommonNetworks());
+    store.emit(new LoadCommonSelectedNetwork(selectedNetworkId));
 
   }, [])
 
@@ -32,9 +42,11 @@ export default function HomeInfo() {
         <div className="info-overlay__content">
 
           <div className="info-overlay__name">
+
           </div>
 
           <div className="info-overlay__description">
+
           </div>
 
           <div className="info-overlay__image">
