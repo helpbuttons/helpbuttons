@@ -1,7 +1,6 @@
 import {HelpbuttonsBackendApp} from '../..';
 import {
   supertest,
-  createRestAppClient,
   givenHttpServerConfig,
   Client,
 } from '@loopback/testlab';

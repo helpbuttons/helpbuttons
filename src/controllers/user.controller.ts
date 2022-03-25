@@ -209,8 +209,8 @@ export class UserController {
     const count = await this.userRepository.count();
     
     if (count.count < 2) {
-      let network: Network;
-      network = new Network(
+      const network: Network
+       = new Network(
         {
           "name": "Perritos en adopcion",
           "place": "Livorno, Italia",

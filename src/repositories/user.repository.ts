@@ -1,6 +1,5 @@
 import {Getter, inject} from '@loopback/core';
 import {
-  Count,
   DefaultCrudRepository,
   HasOneRepositoryFactory,
   repository,
