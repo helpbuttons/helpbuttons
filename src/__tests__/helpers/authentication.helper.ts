@@ -1,5 +1,6 @@
 import {HelpbuttonsBackendApp} from '../..';
 import {
+  supertest,
   createRestAppClient,
   givenHttpServerConfig,
   Client,
@@ -11,8 +12,8 @@ export async function setupApplication(): Promise<AppWithClient> {
     // Customize the server configuration here.
     // Empty values (undefined, '') will be ignored by the helper.
     //
-    host: process.env.HOST,
-    port: 80,
+    // host: process.env.HOST,
+    // port: 80,
   });
 
   const app = new HelpbuttonsBackendApp({
@@ -22,7 +23,7 @@ export async function setupApplication(): Promise<AppWithClient> {
   await app.boot();
   await app.start();
 
-  const client = createRestAppClient(app);
+  const client = supertest('localhost:3001/')
   return {app, client};
 }
 
