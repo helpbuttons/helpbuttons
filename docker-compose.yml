@@ -1,18 +1,19 @@
 version: '3'
 services:
-  hb-back:
-    build: .
-    ports:
-      - "3001:3001"
-    env_file:
-      - .env
-    depends_on:
-      db:
-        condition: service_healthy
-# if u want to develop code using docker...
-    command: npm run start:watch
-    volumes:
-      - ./src:/home/node/app/src:ro
+# dont use docker to run the backend... the code won't be updated...
+#   hb-back:
+#     build: .
+#     ports:
+#       - "3001:3001"
+#     env_file:
+#       - .env
+#     depends_on:
+#       db:
+#         condition: service_healthy
+# # if u want to develop code using docker...
+#     command: npm run start:watch
+#     volumes:
+#       - ./src:/home/node/app/src:ro
   db:
     image: postgis/postgis:13-master
     restart: always
