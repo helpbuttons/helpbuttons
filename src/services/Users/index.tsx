@@ -1,13 +1,15 @@
-import getConfig from 'next/config';
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { store } from './index';
+import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
 //User services for all app
 export class UserService {
-  public tokenType;
-  public accessToken;
+
   //Signup in the new user
   public static signup(email:string, password:string): Observable<any> {
 
@@ -99,8 +101,8 @@ export class UserService {
 
   public static logout() {
       // remove user from local storage to log user out
-     window.localStorage.removeItem('token_type');
-     window.localStorage.removeItem('access_token');
+      this.tokenType = window.localStorage.removeItem('token_type');
+      this.accessToken = window.localStorage.removeItem('access_token');
 
   }
 

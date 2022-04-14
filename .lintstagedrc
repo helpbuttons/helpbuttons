@@ -1,5 +1,0 @@
-{
-  "*.{js,tsx,ts}": [
-      "npx run lint"
-    ]
-}
