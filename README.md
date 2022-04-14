@@ -1,4 +1,4 @@
-![HB cover](/hb_front/public/assets/images/hb_landscape_02_small.jpg?raw=true "hb cover")
+![HB cover](/public/assets/images/hb_landscape_02_small.jpg?raw=true "hb cover")
 
 ## Welcome to Helpbuttons Repo
 
