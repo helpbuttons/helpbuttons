@@ -1,3 +1,5 @@
+![HB cover](/hb_front/public/assets/images/hb_landscape_02_small.jpg?raw=true "hb cover")
+
 ## Welcome to Helpbuttons Repo
 
 This is the front repository for Helpbuttons. In order to communicate with the API you need to install [hb-back](https://github.com/helpbuttons/hb-back) too. For more detailed info check the hb-docs repo (https://github.com/helpbuttons/hb_docs).
