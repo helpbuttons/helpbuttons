@@ -21,7 +21,7 @@ export enum ContentAlignment {
 }
 interface BtnProps {
     caption: string;
-    iconLink?: string;
+    iconLink: string;
     iconLeft?: IconType;
     iconRight?: IconType;
     contentAlignment?: ContentAlignment;
@@ -30,7 +30,7 @@ interface BtnProps {
     isSubmitting?: boolean;
 }
 
-function BtnIcon({ icon, iconLink="" }: { icon: IconType ,iconLink?:string}) {
+function BtnIcon({ icon, iconLink }: { icon: IconType }) {
     switch (icon) {
         case IconType.red:
             return <div className="btn-filter__icon red"></div>;

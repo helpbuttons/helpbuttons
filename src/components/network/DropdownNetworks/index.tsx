@@ -1,10 +1,9 @@
 //a variation of dropddown specific for time
 import { useState } from "react";
 
-const SuggestionsListComponent = (filteredSuggestions=[],activeSuggestionIndex) => {
-  const onClick=()=>{};
+const SuggestionsListComponent = () => {
    return filteredSuggestions.length ? (
-     <ul className="suggestions">
+     <ul class="suggestions">
        {filteredSuggestions.map((suggestion, index) => {
          let className;
          // Flag the active suggestion with a class
@@ -19,8 +18,8 @@ const SuggestionsListComponent = (filteredSuggestions=[],activeSuggestionIndex) 
        })}
      </ul>
    ) : (
-     <div className="no-suggestions">
-       <em>No suggestions, you '&apos re on your own!</em>
+     <div class="no-suggestions">
+       <em>No suggestions, you're on your own!</em>
      </div>
    );
  };

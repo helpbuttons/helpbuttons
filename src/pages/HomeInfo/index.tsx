@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { useMap } from 'react-leaflet';
 
 //services
-import { GeoSearchControl, MapBoxProvider, OpenStreetMapProvider } from 'leaflet-geosearch';
-import { GetNetworksEvent, GetNetworkByIdEvent } from 'pages/HomeInfo/data';
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { GetNetworksEvent, GetNetworkByIdEvent } from 'pages/HomeInfo/data.tsx';
 
 //components
 import DropdownNetworks from 'components/network/DropdownNetworks'
@@ -45,26 +45,26 @@ export default function HomeInfo() {
     //   map.addControl(searchControl);
     //   return () => map.removeControl(searchControl);
     // }, []);
-    //comentando hasta ver como funciona
-    // new GeoSearchControl({
-    //   provider: myProvider, // required
-    //   showMarker: true, // optional: true|false  - default true
-    //   showPopup: false, // optional: true|false  - default false
-    //   marker: {
-    //     // optional: L.Marker    - default L.Icon.Default
-    //     icon: new L.Icon.Default(),
-    //     draggable: false,
-    //   },
-    //   popupFormat: ({ query, result }) => result.label, // optional: function    - default returns result label,
-    //   resultFormat: ({ result }) => result.label, // optional: function    - default returns result label
-    //   maxMarkers: 1, // optional: number      - default 1
-    //   retainZoomLevel: false, // optional: true|false  - default false
-    //   animateZoom: true, // optional: true|false  - default true
-    //   autoClose: false, // optional: true|false  - default false
-    //   searchLabel: 'Enter address', // optional: string      - default 'Enter address'
-    //   keepResult: false, // optional: true|false  - default false
-    //   updateMap: true, // optional: true|false  - default true
-    // });
+
+    new GeoSearchControl({
+      provider: myProvider, // required
+      showMarker: true, // optional: true|false  - default true
+      showPopup: false, // optional: true|false  - default false
+      marker: {
+        // optional: L.Marker    - default L.Icon.Default
+        icon: new L.Icon.Default(),
+        draggable: false,
+      },
+      popupFormat: ({ query, result }) => result.label, // optional: function    - default returns result label,
+      resultFormat: ({ result }) => result.label, // optional: function    - default returns result label
+      maxMarkers: 1, // optional: number      - default 1
+      retainZoomLevel: false, // optional: true|false  - default false
+      animateZoom: true, // optional: true|false  - default true
+      autoClose: false, // optional: true|false  - default false
+      searchLabel: 'Enter address', // optional: string      - default 'Enter address'
+      keepResult: false, // optional: true|false  - default false
+      updateMap: true, // optional: true|false  - default true
+    });
 
     return null;
   }
@@ -76,7 +76,7 @@ export default function HomeInfo() {
       GetNetworkByIdEvent(selectedNetwork, setSelectedNetworkObject)();
     } 
     
-  }, [selectedNetwork])
+  }, [])
 
   return (
 
