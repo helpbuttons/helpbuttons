@@ -27,13 +27,15 @@ export const commonDataInitial = {
 export class LoadCommonNetworks implements UpdateEvent, WatchEvent {
   public update(state: GlobalState) {
     return produce(state, newState => {
-      //add her anything to be updated not as observable
+      //add here anything to be updated not as observable
     });
   }
   public watch(state: GlobalState) {
     return NetworkService.find().pipe(
       map((networks) => {
+
        new NetworksDataLoaded(networks);
+
       }),
       catchError((error) => {
         console.log(error);
@@ -52,7 +54,7 @@ export class LoadCommonSelectedNetwork implements UpdateEvent, WatchEvent {
     });
   }
   public watch(state: GlobalState) {
-    debugger
+
     return NetworkService.findById(this.networkId).pipe(
       map((selectedNetwork) => {
        new SelectedNetworkDataLoaded(selectedNetwork);
@@ -67,10 +69,14 @@ export class LoadCommonSelectedNetwork implements UpdateEvent, WatchEvent {
 
 
 export class NetworksDataLoaded implements UpdateEvent {
-  public constructor(private networks: any) {}
+  public constructor(private networks: any) {
+
+  }
   public update(state: GlobalState) {
+
     return produce(state, newState => {
-      newState.commonData.networks = this.networks.response;
+
+      newState.commonData.networks = this.networks.response[0];
     });
   }
 

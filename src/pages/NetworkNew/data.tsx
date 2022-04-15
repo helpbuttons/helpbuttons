@@ -10,6 +10,7 @@ import Router from 'next/router';
 import INetwork from 'services/Networks/types';
 import { alertService } from 'services/Alert';
 import { errorService } from 'services/Error';
+import { storeService } from 'services/Store';
 
 //Called event for new user signup
 export class CreateNetworkEvent implements WatchEvent {
@@ -19,11 +20,13 @@ export class CreateNetworkEvent implements WatchEvent {
           map(networkData => networkData),
           take(1),
           tap(networkData => {
-            new NetworkUpdateEvent(networkData)
+            alertService.info('You have created a network' + networkData.response.id.toString());
 
+            //store net in Store
+            new NetworkUpdateEvent(networkData);
             storeService.save('network_id',networkData.response.id);
 
-            Router.push({ pathname: '/', state: {} });
+            Router.push({ pathname: '/', state: state });
           }),
           catchError((error) => {
             return errorService.handle(error);
@@ -35,10 +38,12 @@ export class CreateNetworkEvent implements WatchEvent {
 
 //Called event for session update values
 export class NetworkUpdateEvent implements UpdateEvent {
-  public constructor(private network: INetwork) {}
+  public constructor(private network: any) {}
   public update(state: GlobalState) {
+
     return produce(state, newState => {
-      newState.network.id = this.network.response.id;
+
+      newState.selectedNetwork.id = this.network.response.id;
     });
   }
 }

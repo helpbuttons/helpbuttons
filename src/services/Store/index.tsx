@@ -1,6 +1,7 @@
 
 export const storeService = {
     save,
+    read,
 };
 
 // add variable to localStorage to not loose on refresh

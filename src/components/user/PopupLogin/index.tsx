@@ -39,7 +39,7 @@ export default function PopupLogin() {
 
   return (
 
-          <Popup title="Login">
+          <Popup title="Login" linkFwd="/HomeInfo">
 
               <div className="popup__img">
                 <ImageWrapper imageType={ImageType.popup} src="https://dummyimage.com/200/#ccc/fff" alt="popup_img"/>
