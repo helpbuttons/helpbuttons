@@ -14,7 +14,7 @@ import HomeInfo from "pages/HomeInfo";
 
 
 import { BackTestState, backTestInitial } from "pages/BackTest/data";
-import { CommonDataState, commonDataInitial } from "modules/Common/data";
+import { CommonDataState, commonDataInitial } from "pages/Common/data";
 
 
 // https://immerjs.github.io/immer/

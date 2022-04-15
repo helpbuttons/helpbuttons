@@ -2,8 +2,8 @@
 //libraries
 import { useRef } from 'store/Store';
 import { store } from 'pages/index';
-import { LoadCommonNetworks } from 'modules/Common/data';
-import { LoadCommonSelectedNetwork } from 'modules/Common/data';
+import { LoadCommonNetworks } from 'pages/Common/data';
+import { LoadCommonSelectedNetwork } from 'pages/Common/data';
 import Router from 'next/router';
 
 import { useState, useEffect } from "react";
@@ -33,6 +33,7 @@ export default function HomeInfo() {
 
     if(storeService.read('network_id') == null)
     {
+
       alertService.info('It looks like youre new ! First, create your network');
       Router.push({ pathname: '/NetworkNew'});
     }

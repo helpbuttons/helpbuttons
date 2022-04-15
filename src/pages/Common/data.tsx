@@ -27,7 +27,7 @@ export const commonDataInitial = {
 export class LoadCommonNetworks implements UpdateEvent, WatchEvent {
   public update(state: GlobalState) {
     return produce(state, newState => {
-      //add her anything to be updated not as observable
+      //add here anything to be updated not as observable
     });
   }
   public watch(state: GlobalState) {
