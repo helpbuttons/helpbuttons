@@ -52,7 +52,7 @@ export default function ButtonNew() {
         location: Yup.string(),
 
     });
-    
+
     // form validation YUP functions
     const formOptions = { resolver: yupResolver(buttonSchema) };
     // get functions to build form with useForm() hook. Not used to store or send the data
@@ -92,7 +92,7 @@ export default function ButtonNew() {
 
           <>
 
-              <Popup title="Create Button">
+              <Popup title="Create Button" linkFwd="/Explore">
 
                 <form onSubmit={handleSubmit(onSubmit)} className="popup__section">
 

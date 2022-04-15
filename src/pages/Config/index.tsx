@@ -14,7 +14,7 @@ export default function Config() {
 
     <>
 
-        <Popup title="Config">
+        <Popup title="Config" linkFwd="/Explore">
 
             <div className="popup__section">
 

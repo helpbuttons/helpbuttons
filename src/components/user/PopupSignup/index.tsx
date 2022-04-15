@@ -51,7 +51,7 @@ export default function PopupSignup() {
 
   return (
 
-        <Popup title="Signup">
+        <Popup title="Signup" linkFwd="/HomeInfo">
 
           <Alert />
 

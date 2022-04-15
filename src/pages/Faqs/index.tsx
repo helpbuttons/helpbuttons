@@ -10,7 +10,7 @@ export default function Faqs() {
   return (
 
     <>
-      <Popup title="Faqs">
+      <Popup title="Faqs" linkFwd="/Explore">
 
         <div className="popup__section">
 

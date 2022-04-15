@@ -52,7 +52,7 @@ export class LoadCommonSelectedNetwork implements UpdateEvent, WatchEvent {
     });
   }
   public watch(state: GlobalState) {
-    debugger
+    //debugger
     return NetworkService.findById(this.networkId).pipe(
       map((selectedNetwork) => {
        new SelectedNetworkDataLoaded(selectedNetwork);
@@ -70,6 +70,7 @@ export class NetworksDataLoaded implements UpdateEvent {
   public constructor(private networks: any) {}
   public update(state: GlobalState) {
     return produce(state, newState => {
+      debugger
       newState.commonData.networks = this.networks.response;
     });
   }

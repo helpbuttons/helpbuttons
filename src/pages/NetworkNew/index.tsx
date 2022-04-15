@@ -79,7 +79,7 @@ export default function NetworkNew() {
 
           <>
 
-              <Popup title="Create Network">
+              <Popup title="Create Network" linkFwd="/HomeInfo">
 
                 <form onSubmit={handleSubmit(onSubmit)} className="popup__section">
 
