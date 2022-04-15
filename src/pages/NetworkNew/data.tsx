@@ -21,8 +21,11 @@ export class CreateNetworkEvent implements WatchEvent {
           take(1),
           tap(networkData => {
             alertService.info('You have created a network' + networkData.response.id.toString());
+
+            //store net in Store
             new NetworkUpdateEvent(networkData);
             storeService.save('network_id',networkData.response.id);
+
             Router.push({ pathname: '/', state: state });
           }),
           catchError((error) => {
@@ -35,11 +38,11 @@ export class CreateNetworkEvent implements WatchEvent {
 
 //Called event for session update values
 export class NetworkUpdateEvent implements UpdateEvent {
-  public constructor(private network: INetwork) {}
+  public constructor(private network: any) {}
   public update(state: GlobalState) {
-    debugger
+
     return produce(state, newState => {
-      debugger
+
       newState.selectedNetwork.id = this.network.response.id;
     });
   }
