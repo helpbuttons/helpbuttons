@@ -12,10 +12,10 @@ import { alertService }  from 'services/Alert/index.ts';
 
      if (nets) {
            // add message to local state if not empty
-           setNetworks({ nets: [nets.response] });
+           setNetworks(nets.response);
        } else {
            // clear messages when empty message received
-           setNetworks({ nets: [] });
+           setNetworks([]);
        }
 
    });
