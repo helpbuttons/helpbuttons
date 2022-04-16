@@ -31,9 +31,10 @@ For available icons visit :
 
 https://react-icons.github.io/react-icons/icons?name=bs
 
-## Services Folder
+## Complete Documentation
 
-Services folder contains API routes and calls.
+Please load and read complete documentation
+[hb-docs](https://github.com/helpbuttons/hb-docs)
 
 ## Main tech specifications used in this repo:
 
