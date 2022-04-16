@@ -33,7 +33,7 @@ https://react-icons.github.io/react-icons/icons?name=bs
 
 ## Complete Documentation
 
-Please read complete documentation
+Please load and read complete documentation
 [hb-docs](https://github.com/helpbuttons/hb-docs)
 
 ## Main tech specifications used in this repo:
