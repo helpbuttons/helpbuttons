@@ -1,18 +1,16 @@
 //a variation of picker specific for time
 import moment from "moment";
 import { useState } from "react";
-import DatePicker from "react-date-picker";
-import TimePicker from "react-time-picker";
 
 export default function PickerTime() {
   const [Days, setDays] = useState(moment());
   const [Hour, setHour] = useState("0");
   const [Minutos, setMinutos] = useState("0");
-  const [Meridian, setMeridian] = useState("");
 
   const MinutosInt = parseInt(Minutos);
   const HorasInt = parseInt(Hour);
 
+  //Aqui esta la hora y el dia que eliga el usuario
   const DiaYHora = Days.minutes(MinutosInt).hours(HorasInt);
 
   const updateMinutos = function (event) {
