@@ -5,12 +5,23 @@ import DatePicker from "react-date-picker";
 import TimePicker from "react-time-picker";
 
 export default function PickerTime() {
-  const [Days, setDays] = useState({});
-  const [Hour, setHour] = useState("");
+  const [Days, setDays] = useState(moment());
+  const [Hour, setHour] = useState("0");
+  const [Minutos, setMinutos] = useState("0");
   const [Meridian, setMeridian] = useState("");
-  const day = new Date();
 
-  console.log(Days);
+  const MinutosInt = parseInt(Minutos);
+  const HorasInt = parseInt(Hour);
+
+  const DiaYHora = Days.minutes(MinutosInt).hours(HorasInt);
+
+  const updateMinutos = function (event) {
+    setMinutos(event.target.value);
+  };
+
+  const updateHoras = function (event) {
+    setHour(event.target.value);
+  };
 
   return (
     <>
@@ -27,13 +38,19 @@ export default function PickerTime() {
                   moment().locale("es");
 
                   const Lunes = moment().startOf("week").day(1);
-                  const LunesQueViene = moment().day(8).startOf("week").day(1);
+
+                  const LunesQueViene = moment()
+                    .day(8)
+                    .startOf("week")
+
+                    .day(1);
+
                   console.log();
 
                   if (moment() < Lunes) {
-                    setDays({ Lunes });
+                    setDays(Lunes);
                   } else {
-                    setDays({ LunesQueViene });
+                    setDays(LunesQueViene);
                   }
                 }}
               >
@@ -51,9 +68,9 @@ export default function PickerTime() {
                   console.log(Martes);
 
                   if (moment() < Martes) {
-                    setDays({ Martes });
+                    setDays(Martes);
                   } else {
-                    setDays({ MartesQueViene });
+                    setDays(MartesQueViene);
                   }
                 }}
               >
@@ -73,9 +90,9 @@ export default function PickerTime() {
                   console.log(Miercoles);
 
                   if (moment() < Miercoles) {
-                    setDays({ Miercoles });
+                    setDays(Miercoles);
                   } else {
-                    setDays({ MiercolesQueViene });
+                    setDays(MiercolesQueViene);
                   }
                 }}
               >
@@ -96,9 +113,9 @@ export default function PickerTime() {
                   console.log(Jueves);
 
                   if (moment() < Jueves) {
-                    setDays({ Jueves });
+                    setDays(Jueves);
                   } else {
-                    setDays({ JuevesQueViene });
+                    setDays(JuevesQueViene);
                   }
                 }}
               >
@@ -119,9 +136,9 @@ export default function PickerTime() {
                   console.log(Viernes);
 
                   if (moment() < Viernes) {
-                    setDays({ Viernes });
+                    setDays(Viernes);
                   } else {
-                    setDays({ ViernesQueViene });
+                    setDays(ViernesQueViene);
                   }
                 }}
               >
@@ -142,9 +159,9 @@ export default function PickerTime() {
                   console.log(Sabado);
 
                   if (moment() < Sabado) {
-                    setDays({ Sabado });
+                    setDays(Sabado);
                   } else {
-                    setDays({ SabadoQueViene });
+                    setDays(SabadoQueViene);
                   }
                 }}
               >
@@ -165,9 +182,9 @@ export default function PickerTime() {
                   console.log(Domingo);
 
                   if (moment() < Domingo) {
-                    setDays({ Domingo });
+                    setDays(Domingo);
                   } else {
-                    setDays({ DomingoQueViene });
+                    setDays(DomingoQueViene);
                   }
                 }}
               >
@@ -178,7 +195,11 @@ export default function PickerTime() {
             </div>
 
             <div className="picker-time__selected">
-              <select className="picker-time__dropdown picker-time__dropdown-option">
+              <select
+                className="picker-time__dropdown picker-time__dropdown-option"
+                onChange={updateHoras}
+              >
+                <option value="00">00</option>
                 <option value="01">01</option>
                 <option value="02">02</option>
                 <option value="03">03</option>
@@ -205,32 +226,17 @@ export default function PickerTime() {
 
               <span className="picker-time__points">:</span>
 
-              <select className="picker-time__dropdown picker-time__dropdown-option">
-                <option value="00">00</option>
+              <select
+                className="picker-time__dropdown picker-time__dropdown-option"
+                onChange={updateMinutos}
+              >
+                <option value="0">00</option>
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
                 <option value="40">40</option>
                 <option value="50">50</option>
-                <option value="60">60</option>
               </select>
-
-              <button
-                className="picker-time__dropdown-option"
-                onClick={() => {
-                  setMeridian("AM");
-                }}
-              >
-                AM
-              </button>
-              <button
-                className="picker-time__dropdown-option"
-                onClick={() => {
-                  setMeridian("PM");
-                }}
-              >
-                PM
-              </button>
             </div>
           </div>
           <div className="picker__options-v">
