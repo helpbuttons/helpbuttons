@@ -5,12 +5,12 @@ import DatePicker from "react-date-picker";
 import TimePicker from "react-time-picker";
 
 export default function PickerTime() {
-  const [Days, setDays] = useState("");
+  const [Days, setDays] = useState({});
   const [Hour, setHour] = useState("");
   const [Meridian, setMeridian] = useState("");
-  const [value, onChange] = useState(new Date());
+  const day = new Date();
 
-  console.log(Days + " " + Hour + " " + Meridian);
+  console.log(Days);
 
   return (
     <>
@@ -25,8 +25,16 @@ export default function PickerTime() {
                 className="btn-circle"
                 onClick={() => {
                   moment().locale("es");
-                  const Lunes = moment().day(1).format("dddd Do MMMM YYYY");
-                  setDays(Lunes);
+
+                  const Lunes = moment().startOf("week").day(1);
+                  const LunesQueViene = moment().day(8).startOf("week").day(1);
+                  console.log();
+
+                  if (moment() < Lunes) {
+                    setDays({ Lunes });
+                  } else {
+                    setDays({ LunesQueViene });
+                  }
                 }}
               >
                 <div className="btn-circle__content">
@@ -38,8 +46,15 @@ export default function PickerTime() {
                 className="btn-circle"
                 onClick={() => {
                   moment().locale("es");
-                  const Martes = moment().day(2).format("dddd Do MMMM YYYY");
-                  setDays(Martes);
+                  const Martes = moment().startOf("week").day(2);
+                  const MartesQueViene = moment().day(9).startOf("week").day(2);
+                  console.log(Martes);
+
+                  if (moment() < Martes) {
+                    setDays({ Martes });
+                  } else {
+                    setDays({ MartesQueViene });
+                  }
                 }}
               >
                 <div className="btn-circle__content">
@@ -50,8 +65,18 @@ export default function PickerTime() {
               <button
                 className="btn-circle"
                 onClick={() => {
-                  const Miercoles = moment().day(3).format("dddd Do MMMM YYYY");
-                  setDays(Miercoles);
+                  const Miercoles = moment().startOf("week").day(3);
+                  const MiercolesQueViene = moment()
+                    .day(10)
+                    .startOf("week")
+                    .day(3);
+                  console.log(Miercoles);
+
+                  if (moment() < Miercoles) {
+                    setDays({ Miercoles });
+                  } else {
+                    setDays({ MiercolesQueViene });
+                  }
                 }}
               >
                 <div className="btn-circle__content">
@@ -63,8 +88,18 @@ export default function PickerTime() {
                 className="btn-circle"
                 onClick={() => {
                   moment().locale("es");
-                  const Jueves = moment().day(4).format("dddd Do MMMM YYYY");
-                  setDays(Jueves);
+                  const Jueves = moment().startOf("week").day(4);
+                  const JuevesQueViene = moment()
+                    .day(11)
+                    .startOf("week")
+                    .day(4);
+                  console.log(Jueves);
+
+                  if (moment() < Jueves) {
+                    setDays({ Jueves });
+                  } else {
+                    setDays({ JuevesQueViene });
+                  }
                 }}
               >
                 <div className="btn-circle__content">
@@ -76,8 +111,18 @@ export default function PickerTime() {
                 className="btn-circle"
                 onClick={() => {
                   moment().locale("es");
-                  const Viernes = moment().day(5).format("dddd Do MMMM YYYY");
-                  setDays(Viernes);
+                  const Viernes = moment().startOf("week").day(5);
+                  const ViernesQueViene = moment()
+                    .day(12)
+                    .startOf("week")
+                    .day(5);
+                  console.log(Viernes);
+
+                  if (moment() < Viernes) {
+                    setDays({ Viernes });
+                  } else {
+                    setDays({ ViernesQueViene });
+                  }
                 }}
               >
                 <div className="btn-circle__content">
@@ -89,8 +134,18 @@ export default function PickerTime() {
                 className="btn-circle"
                 onClick={() => {
                   moment().locale("es");
-                  const Sabado = moment().day(6).format("dddd Do MMMM YYYY");
-                  setDays(Sabado);
+                  const Sabado = moment().startOf("week").day(6);
+                  const SabadoQueViene = moment()
+                    .day(13)
+                    .startOf("week")
+                    .day(6);
+                  console.log(Sabado);
+
+                  if (moment() < Sabado) {
+                    setDays({ Sabado });
+                  } else {
+                    setDays({ SabadoQueViene });
+                  }
                 }}
               >
                 <div className="btn-circle__content">
@@ -102,8 +157,18 @@ export default function PickerTime() {
                 className="btn-circle"
                 onClick={() => {
                   moment().locale("es");
-                  const Domingo = moment().day(7).format("dddd Do MMMM YYYY");
-                  setDays(Domingo);
+                  const Domingo = moment().startOf("week").day(7);
+                  const DomingoQueViene = moment()
+                    .day(14)
+                    .startOf("week")
+                    .day(7);
+                  console.log(Domingo);
+
+                  if (moment() < Domingo) {
+                    setDays({ Domingo });
+                  } else {
+                    setDays({ DomingoQueViene });
+                  }
                 }}
               >
                 <div className="btn-circle__content">
