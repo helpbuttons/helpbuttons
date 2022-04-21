@@ -1,7 +1,6 @@
 $picker-time-height: 40px;
 
 .picker-time__selected {
-
   display: flex;
   align-items: center;
   font-size: $font-size-general;
@@ -9,7 +8,6 @@ $picker-time-height: 40px;
   width: 60%;
   margin: $margin-small auto;
   justify-content: space-evenly;
-
 }
 
 .picker-time__dropdown {
@@ -23,33 +21,38 @@ $picker-time-height: 40px;
     background-color: $color-black;
     color: white;
   }
-
 }
 
-.picker-time__dropdown-trigger{
+.calendar .day {
+  position: relative;
+  width: calc(100% / 7);
+  height: 44px;
+  display: inline-block;
+  background-color: white;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
 
+.picker-time__dropdown-trigger {
   cursor: pointer;
   border: none;
   background-color: transparent;
   //padding: 5px;
   width: 100%;
   text-align: center;
-
-
 }
 
-.picker-time__dropdown-content{
-
+.picker-time__dropdown-content {
   overflow: auto;
   width: 100%;
   margin-top: 10px;
   text-align: center;
   overflow-y: auto;
-
 }
 
 .picker-time__dropdown-option {
-
   padding: $padding-medium $padding-big;
   border-radius: $border-radius-circle;
   border: $border-lines-width solid $color-gray;
@@ -64,9 +67,7 @@ $picker-time-height: 40px;
     background-color: $color-black;
     color: white;
   }
-
 }
-
 
 .picker-time__dropdown-content::-webkit-scrollbar:vertical {
   width: 0;
@@ -81,6 +82,6 @@ $picker-time-height: 40px;
 }
 
 .picker-time__dropdown-content-gray {
-  background: #EEEE;
+  background: #eeee;
   border: none;
 }
