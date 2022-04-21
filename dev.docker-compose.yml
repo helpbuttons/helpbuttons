@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:    
+  postgres:
+    image: postgres:13
+    restart: always
+    ports:
+      - '${POSTGRESQL_EXPOSED_PORT}:5432'
+    volumes:
+      - postgres:/data/postgres
+    env_file:
+      - .postgresql.env
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
