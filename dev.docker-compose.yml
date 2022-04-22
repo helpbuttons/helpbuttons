@@ -2,7 +2,7 @@ version: '3.7'
 
 services:    
   postgres:
-    image: postgres:13
+    image: kartoza/postgis:14-3.2--v2022.02.14
     restart: always
     ports:
       - '${POSTGRESQL_EXPOSED_PORT}:5432'
