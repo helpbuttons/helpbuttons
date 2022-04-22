@@ -6,13 +6,17 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { ButtonService } from '../providers/button.service';
 import { CreateButtonDto } from '../dto/requests/create-button.dto';
 import { UpdateButtonDto } from '../dto/requests/update-button.dto';
+import { FilterButtonsDto } from '../dto/requests/filter-buttons.dto';
 
-@Controller('button')
+@ApiTags('Button')
+@Controller('buttons')
 export class ButtonController {
   constructor(private readonly buttonService: ButtonService) {}
 
@@ -22,25 +26,27 @@ export class ButtonController {
   }
 
   @Get()
-  findAll() {
-    return this.buttonService.findAll();
+  async findAll(@Query() filters: FilterButtonsDto) {
+    return await this.buttonService.findAll(filters);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.buttonService.findOne(+id);
+  @Get(':buttonId')
+  findOne(@Param('buttonId') buttonId: string) {
+    return this.buttonService.findOne(buttonId);
   }
 
-  @Patch(':id')
+  @Patch(':buttonId')
   update(
-    @Param('id') id: string,
+    @Param('buttonId') buttonId: string,
     @Body() updateButtonDto: UpdateButtonDto,
   ) {
-    return this.buttonService.update(+id, updateButtonDto);
+    return this.buttonService.update(buttonId, updateButtonDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.buttonService.remove(+id);
+  @Delete(':buttonId')
+  async remove(@Param('buttonId') buttonId: string) {
+    return await this.buttonService.remove({
+      where: { id: buttonId },
+    });
   }
 }

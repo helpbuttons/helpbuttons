@@ -1,1 +1,3 @@
-export class Button {}
+import { Button } from '.prisma/client';
+
+export type ButtonWithRelations = Button;

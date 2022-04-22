@@ -1,4 +1,4 @@
-import { CustomBaseEntity } from '../entity';
+import { CustomBaseEntity } from '../types';
 
 export class BaseOutputForAdminDto {
   id!: string;
