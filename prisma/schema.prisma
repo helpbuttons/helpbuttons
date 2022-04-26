@@ -30,7 +30,12 @@ model User {
   @@map("users")
 }
 
+// Undone
+// https://github.com/prisma/prisma/issues/2789#issuecomment-1014839425
+// https://hussainwali.medium.com/insert-spatial-data-into-postgres-postgis-using-typeorm-in-nestjs-nodejs-2e03ab7ff0d
+
 // IMO really useful
+// https://github.com/prisma/prisma-examples/tree/latest/typescript/postgis-express
 // https://github.com/prisma/prisma/issues/1798#issuecomment-775016807
 // https://github.com/prisma/prisma/issues/1798#issuecomment-1023710584
 // https://github.com/prisma/prisma/issues/10634#issuecomment-1069112132
@@ -41,19 +46,11 @@ model User {
 // https://github.com/prisma/prisma/issues/1798#issuecomment-948082095
 // https://github.com/prisma/prisma/issues/2789#issuecomment-823078403
 model Button {
-  id        String @id @pg.Char(36) // nanoid
-  latitude  Float  @pg.DoublePrecision
-  longitude Float  @pg.DoublePrecision
+  id        String                   @id @pg.Char(36) // nanoid
+  latitude  Float                    @pg.DoublePrecision
+  longitude Float                    @pg.DoublePrecision
+  location  Unsupported("geometry")?
 
+  // README: Do not change the database name, nether here, nor repository layer without caution.
   @@map("buttons")
-}
-
-model UnsupportedButton {
-  id          String                   @id @pg.Char(36) // nanoid
-  // CREATE EXTENSION postgis;
-  geoLocation Unsupported("geometry")?
-
-  @@index([geoLocation], name: "geo_location_point_index")
-  @@map("unsupported_buttons")
-  @@ignore
 }
