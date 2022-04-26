@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 
 import { BaseService } from '@src/shared/libs/tapsa-crud';
 import { CreateButtonDto } from '../dto/requests/create-button.dto';
@@ -27,12 +26,13 @@ export class ButtonService extends BaseService<
     });
   }
 
-  create(createButtonDto: CreateButtonDto) {
+  async create(createButtonDto: CreateButtonDto) {
     const { latitude, longitude } = createButtonDto;
 
-    return this.add({
+    return await this.buttonRepository.create({
       data: {
-        id: dbIdGenerator(),
+        // README: just ignore this id: ''.
+        id: '',
         latitude,
         longitude,
       },
