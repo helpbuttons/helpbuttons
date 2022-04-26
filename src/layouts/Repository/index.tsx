@@ -1542,7 +1542,7 @@ function Repository() {
           <Calendar />
         </section>
         <section className="repository_section">
-          <PickerDate />
+          <PickerPeriodDate />
         </section>
 
         <hr></hr>
