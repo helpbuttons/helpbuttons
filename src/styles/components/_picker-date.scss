@@ -1,6 +1,6 @@
-$picker-time-height: 40px;
+$picker-date-height: 40px;
 
-.picker-time__selected {
+.picker-date__selected {
   display: flex;
   align-items: center;
   font-size: $font-size-general;
@@ -10,12 +10,12 @@ $picker-time-height: 40px;
   justify-content: space-evenly;
 }
 
-.picker-time__dropdown {
+.picker-date__dropdown {
   padding: $padding-medium $padding-big;
   border-radius: $border-radius-circle;
   border: $border-lines-width solid $color-gray;
   width: auto;
-  height: $picker-time-height;
+  height: $picker-date-height;
 
   &:hover {
     background-color: $color-black;
@@ -35,7 +35,7 @@ $picker-time-height: 40px;
   text-align: center;
 }
 
-.picker-time__dropdown-trigger {
+.picker-date__dropdown-trigger {
   cursor: pointer;
   border: none;
   background-color: transparent;
@@ -44,7 +44,7 @@ $picker-time-height: 40px;
   text-align: center;
 }
 
-.picker-time__dropdown-content {
+.picker-date__dropdown-content {
   overflow: auto;
   width: 100%;
   margin-top: 10px;
@@ -52,11 +52,11 @@ $picker-time-height: 40px;
   overflow-y: auto;
 }
 
-.picker-time__dropdown-option {
+.picker-date__dropdown-option {
   padding: $padding-medium $padding-big;
   border-radius: $border-radius-circle;
   border: $border-lines-width solid $color-gray;
-  height: $picker-time-height;
+  height: $picker-date-height;
   font-size: $font-size-general;
   align-items: center;
   display: flex;
@@ -69,19 +69,19 @@ $picker-time-height: 40px;
   }
 }
 
-.picker-time__dropdown-content::-webkit-scrollbar:vertical {
+.picker-date__dropdown-content::-webkit-scrollbar:vertical {
   width: 0;
 }
 
-.picker-time__dropdown-content::-webkit-scrollbar {
+.picker-date__dropdown-content::-webkit-scrollbar {
   -webkit-appearance: none;
 }
 
-.picker-time__points {
+.picker-date__points {
   font-size: $font-size-general;
 }
 
-.picker-time__dropdown-content-gray {
+.picker-date__dropdown-content-gray {
   background: #eeee;
   border: none;
 }

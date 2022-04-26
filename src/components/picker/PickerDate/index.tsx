@@ -95,9 +95,9 @@ export default function Calendar() {
           ))}
         </div>
       </div>
-      <div className="picker-time__selected">
+      <div className="picker-date__selected">
         <select
-          className="picker-time__dropdown picker-time__dropdown-option"
+          className="picker-date__dropdown picker-date__dropdown-option"
           onChange={updateHoras}
         >
           <option value="00">00</option>
@@ -125,10 +125,10 @@ export default function Calendar() {
           <option value="23">23</option>
         </select>
 
-        <span className="picker-time__points">:</span>
+        <span className="picker-date__points">:</span>
 
         <select
-          className="picker-time__dropdown picker-time__dropdown-option"
+          className="picker-date__dropdown picker-date__dropdown-option"
           onChange={updateMinutos}
         >
           <option value="0">00</option>

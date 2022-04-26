@@ -1536,7 +1536,7 @@ function Repository() {
 
         <hr></hr>
 
-        <h3 className="repository__title">component/picker-time</h3>
+        <h3 className="repository__title">component/picker-date</h3>
 
         <section className="repository__section">
           <Calendar />
