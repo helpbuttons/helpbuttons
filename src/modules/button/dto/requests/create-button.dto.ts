@@ -10,12 +10,12 @@ export class CreateButtonDto implements Partial<Button> {
     type: Number,
     isArray: false,
     required: true,
-    example: 22.325722878836917,
+    example: 22.325_722_878_836_917,
   })
   @IsNumber({
     allowInfinity: false,
     allowNaN: false,
-    maxDecimalPlaces: 5,
+    maxDecimalPlaces: 20,
   })
   latitude: number;
 
@@ -31,7 +31,7 @@ export class CreateButtonDto implements Partial<Button> {
   @IsNumber({
     allowInfinity: false,
     allowNaN: false,
-    maxDecimalPlaces: 5,
+    maxDecimalPlaces: 20,
   })
   longitude: number;
 }
