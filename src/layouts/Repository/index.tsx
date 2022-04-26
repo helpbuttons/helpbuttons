@@ -8,8 +8,8 @@ import atta from "../../../public/assets/svg/icons/atta.svg";
 import Btn, { ContentAlignment, BtnType, IconType } from "elements/Btn";
 import CheckBox from "elements/Checkbox";
 import BtnCircle from "elements/BtnCircle";
-import PickerTime from "components/picker/PickerTime";
-import Calendar from "components/picker/PickerTime/calendar";
+import PickerPeriodDate from "components/picker/PickerPeriodDate";
+import Calendar from "components/picker/PickerDate";
 
 function Repository() {
   return (
@@ -1542,7 +1542,7 @@ function Repository() {
           <Calendar />
         </section>
         <section className="repository_section">
-          <PickerTime />
+          <PickerDate />
         </section>
 
         <hr></hr>
