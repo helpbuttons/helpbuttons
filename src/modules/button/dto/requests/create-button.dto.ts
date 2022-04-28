@@ -10,7 +10,7 @@ export class CreateButtonDto implements Partial<Button> {
     type: Number,
     isArray: false,
     required: true,
-    example: 22.325_722_878_836_917,
+    example: 39.23864,
   })
   @IsNumber({
     allowInfinity: false,
@@ -26,7 +26,7 @@ export class CreateButtonDto implements Partial<Button> {
     type: Number,
     isArray: false,
     required: true,
-    example: 114.1681843685841,
+    example: -8.67096,
   })
   @IsNumber({
     allowInfinity: false,

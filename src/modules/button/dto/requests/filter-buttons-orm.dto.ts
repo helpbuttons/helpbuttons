@@ -1,25 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsOptional } from 'class-validator';
 
-export class FilterButtonsDto {
-  @ApiProperty({
-    name: 'buttonsWithin',
-    title: 'Other Buttons Within',
-    description:
-      'Get other buttons within the specified area in kilometer',
-    type: Number,
-    example: 4,
-    required: false,
-    isArray: false,
-  })
-  @IsOptional()
-  @IsNumber({
-    allowInfinity: false,
-    allowNaN: false,
-    maxDecimalPlaces: 10,
-  })
-  buttonsWithin?: number;
-
+export class FilterButtonsOrmDto {
   @ApiProperty({
     name: 'latitude',
     title: 'Latitude',
