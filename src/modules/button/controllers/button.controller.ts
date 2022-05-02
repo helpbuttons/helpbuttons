@@ -10,32 +10,31 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { CreateButtonDto, UpdateButtonDto } from '../providers/button.dto';
 import { ButtonService } from '../providers/button.service';
-import { CreateButtonDto } from '../dto/requests/create-button.dto';
-import { UpdateButtonDto } from '../dto/requests/update-button.dto';
-import { FilterButtonsDto } from '../dto/requests/filter-buttons.dto';
+// import { FilterButtonsOrmDto } from '../dto/requests/filter-buttons-orm.dto';
 
-@ApiTags('Button')
+@ApiTags('buttons')
 @Controller('buttons')
 export class ButtonController {
   constructor(private readonly buttonService: ButtonService) {}
 
-  @Post()
+  @Post('new')
   create(@Body() createButtonDto: CreateButtonDto) {
     return this.buttonService.create(createButtonDto);
   }
 
-  @Get()
-  async findAll(@Query() filters: FilterButtonsDto) {
-    return await this.buttonService.findAll(filters);
-  }
+  // @Get('/find/')
+  // async findAll(@Query() filters: FilterButtonsOrmDto) {
+  //   return await this.buttonService.findAll(filters);
+  // }
 
-  @Get(':buttonId')
+  @Get('findById/:buttonId')
   findOne(@Param('buttonId') buttonId: string) {
     return this.buttonService.findOne(buttonId);
   }
 
-  @Patch(':buttonId')
+  @Patch('edit/:buttonId')
   update(
     @Param('buttonId') buttonId: string,
     @Body() updateButtonDto: UpdateButtonDto,
@@ -43,10 +42,8 @@ export class ButtonController {
     return this.buttonService.update(buttonId, updateButtonDto);
   }
 
-  @Delete(':buttonId')
+  @Delete('delete/:buttonId')
   async remove(@Param('buttonId') buttonId: string) {
-    return await this.buttonService.remove({
-      where: { id: buttonId },
-    });
+    return this.buttonService.remove(buttonId);
   }
 }
