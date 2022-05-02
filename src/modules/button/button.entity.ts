@@ -1,8 +1,9 @@
-import {  Column, Entity, PrimaryColumn, CreateDateColumn, UpdateDateColumn  } from 'typeorm';
+import { GenericEntity } from '@src/shared/types/generic.entity';
+import {  Column, Entity, PrimaryColumn  } from 'typeorm';
 // https://stackoverflow.com/a/67557083
 
 @Entity()
-export class Button {
+export class Button extends GenericEntity{
   
   @Column({})
   @PrimaryColumn()
@@ -23,11 +24,8 @@ export class Button {
   @Column({type: 'geography'})
   location: string;
 
-  @CreateDateColumn()
-  created: Date;
-
-  @UpdateDateColumn()
-  modified: Date;
+  @Column("text", {array: true})
+  tags?: string[];
 
   // missing, network relations, template, owner, tags
 }

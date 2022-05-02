@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { CreateButtonDto, UpdateButtonDto } from '../providers/button.dto';
-import { ButtonService } from '../providers/button.service';
+import { CreateButtonDto, UpdateButtonDto } from './button.dto';
+import { ButtonService } from './button.service';
 // import { FilterButtonsOrmDto } from '../dto/requests/filter-buttons-orm.dto';
 
 @ApiTags('buttons')

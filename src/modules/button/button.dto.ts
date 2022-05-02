@@ -64,7 +64,12 @@ export class CreateButtonDto implements Partial<Button> {
   })
   longitude: number;
 
-  
+  @ApiProperty({
+    type: String,
+    required:true,
+  })
+  networkId: string;
+
   @ApiProperty({
     type: String,
     required: true,

@@ -29,7 +29,6 @@ async function bootstrap() {
     }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
-  app.setGlobalPrefix('api/v1');
 
   const config = new DocumentBuilder()
     .setTitle('Helpbuttons backend')
