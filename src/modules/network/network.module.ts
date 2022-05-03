@@ -16,5 +16,6 @@ import { TagModule } from '../tag/tag.module';
   providers: [
     NetworkService
   ],
+  exports: [NetworkService]
 })
 export class NetworkModule {}

@@ -19,9 +19,9 @@ import { ButtonService } from './button.service';
 export class ButtonController {
   constructor(private readonly buttonService: ButtonService) {}
 
-  @Post('new')
-  create(@Body() createDto: CreateButtonDto) {
-    return this.buttonService.create(createDto);
+  @Post('new/:networkId')
+  create(@Param('networkId') networkId: string, @Body() createDto: CreateButtonDto) {
+    return this.buttonService.create(createDto, networkId);
   }
 
   // @Get('/find/')

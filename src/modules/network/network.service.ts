@@ -41,8 +41,9 @@ export class NetworkService {
     return network;
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} network`;
+  async findOne(id: string): Promise<Network>{
+    console.log(id);
+    return await this.networkRepository.findOne({where: [{id}]});
   }
 
   update(id: string, updateDto: UpdateNetworkDto) {

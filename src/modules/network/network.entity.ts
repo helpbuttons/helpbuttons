@@ -1,5 +1,6 @@
 import { GenericEntity } from '@src/shared/types/generic.entity';
-import {  Column, Entity, PrimaryColumn  } from 'typeorm';
+import {  Column, Entity, OneToMany, PrimaryColumn  } from 'typeorm';
+import { Button } from '../button/button.entity';
 
 @Entity()
 export class Network extends GenericEntity{
@@ -38,5 +39,7 @@ export class Network extends GenericEntity{
   @Column("text", {array: true})
   tags?: string[];
 
+  @OneToMany(() => Button, (button) => button.network)
+  buttons: Network[]
   // missing, templates, buttons, friendNetworks, owner
 }

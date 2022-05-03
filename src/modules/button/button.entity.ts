@@ -1,5 +1,6 @@
 import { GenericEntity } from '@src/shared/types/generic.entity';
-import {  Column, Entity, PrimaryColumn  } from 'typeorm';
+import {  Column, Entity, ManyToOne, PrimaryColumn  } from 'typeorm';
+import { Network } from '../network/network.entity';
 // https://stackoverflow.com/a/67557083
 
 @Entity()
@@ -27,5 +28,7 @@ export class Button extends GenericEntity{
   @Column("text", {array: true})
   tags?: string[];
 
+  @ManyToOne(() => Network, (network) => network.buttons)
+  network: Network
   // missing, network relations, template, owner, tags
 }

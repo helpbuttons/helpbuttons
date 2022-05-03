@@ -6,20 +6,29 @@ import { TagService } from '../tag/tag.service';
 import { CreateButtonDto,UpdateButtonDto } from './button.dto';
 import { Button } from './button.entity';
 import { getManager } from "typeorm";
+import { NetworkService } from '../network/network.service';
 
 @Injectable()
 export class ButtonService {
   constructor(
     @InjectRepository(Button)
     private readonly buttonRepository: Repository<Button>,
-    private readonly tagService: TagService){
+    private readonly tagService: TagService,
+    private readonly networkService: NetworkService){
   }
 
-  async create(createDto: CreateButtonDto) {
+  async create(createDto: CreateButtonDto, networkId: string) {
     // TODO: 
     // add tags,
     // is owner of networkId ??
     // validate geopoint
+    
+    const network = await this.networkService.findOne(networkId);
+    
+    if (!network) {
+      throw new HttpException({message: 'Network not found'}, HttpStatus.BAD_REQUEST)
+    }
+    
 
     let button = {
       id: dbIdGenerator(),
@@ -29,6 +38,7 @@ export class ButtonService {
       longitude: createDto.longitude,
       tags: createDto.tags,
       location: () => `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
+      network: network,
     }
     
     await getManager().transaction(async transactionalEntityManager => {

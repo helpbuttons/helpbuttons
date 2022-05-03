@@ -63,21 +63,6 @@ export class CreateButtonDto implements Partial<Button> {
     maxDecimalPlaces: 20,
   })
   longitude: number;
-
-  @ApiProperty({
-    type: String,
-    required:true,
-  })
-  networkId: string;
-
-  @ApiProperty({
-    type: String,
-    required: true,
-  })
-  @MinLength(3, {
-    message: 'button location is too short',
-  })
-  location: string; // TODO, validate using gjv -> geojson-validation
 }
 
 
