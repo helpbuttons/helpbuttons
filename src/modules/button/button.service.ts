@@ -18,11 +18,6 @@ export class ButtonService {
   }
 
   async create(createDto: CreateButtonDto, networkId: string) {
-    // TODO: 
-    // add tags,
-    // is owner of networkId ??
-    // validate geopoint
-    
     const network = await this.networkService.findOne(networkId);
     
     if (!network) {
@@ -51,15 +46,36 @@ export class ButtonService {
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} button`;
+    return this.buttonRepository.findOne({id});
   }
 
-  update(id: string, updateButtonDto: UpdateButtonDto) {
-    return `This action updates a #${id} button`;
+  update(id: string, updateDto: UpdateButtonDto) {
+
+    let location = {};
+
+    if (updateDto.latitude > 0 && updateDto.longitude > 0)
+    {
+      location = {location: () => `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`};
+    }else {
+      delete updateDto.latitude
+      delete updateDto.longitude
+    }
+
+    let button = {
+      ...updateDto,
+      ...location,
+      id
+    }
+    
+    if (button.tags) {
+      this.tagService.updateTags('button', button.id, button.tags)
+    }
+
+    return this.buttonRepository.save([button]);
   }
 
   remove(id: string) {
-    return `This action removes #${id} button`;
+    return this.buttonRepository.delete({id});
   }
 }
   

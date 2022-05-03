@@ -37,9 +37,9 @@ export class ButtonController {
   @Patch('edit/:buttonId')
   update(
     @Param('buttonId') buttonId: string,
-    @Body() updateButtonDto: UpdateButtonDto,
+    @Body() updateDto: UpdateButtonDto,
   ) {
-    return this.buttonService.update(buttonId, updateButtonDto);
+    return this.buttonService.update(buttonId, updateDto);
   }
 
   @Delete('delete/:buttonId')

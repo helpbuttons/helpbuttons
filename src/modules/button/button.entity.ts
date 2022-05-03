@@ -1,10 +1,10 @@
-import { GenericEntity } from '@src/shared/types/generic.entity';
+import { BaseEntity } from '@src/shared/types/base.entity';
 import {  Column, Entity, ManyToOne, PrimaryColumn  } from 'typeorm';
 import { Network } from '../network/network.entity';
 // https://stackoverflow.com/a/67557083
 
 @Entity()
-export class Button extends GenericEntity{
+export class Button extends BaseEntity{
   
   @Column({})
   @PrimaryColumn()
@@ -23,7 +23,7 @@ export class Button extends GenericEntity{
   public longitude: number;
 
   @Column({type: 'geography'})
-  location: string;
+  location: object;
 
   @Column("text", {array: true})
   tags?: string[];

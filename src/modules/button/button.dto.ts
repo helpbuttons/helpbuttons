@@ -41,11 +41,7 @@ export class CreateButtonDto implements Partial<Button> {
     required: true,
     example: 39.23864,
   })
-  @IsNumber({
-    allowInfinity: false,
-    allowNaN: false,
-    maxDecimalPlaces: 20,
-  })
+  @IsLatitude()
   latitude: number;
 
   @ApiProperty({
@@ -57,11 +53,7 @@ export class CreateButtonDto implements Partial<Button> {
     required: true,
     example: -8.67096,
   })
-  @IsNumber({
-    allowInfinity: false,
-    allowNaN: false,
-    maxDecimalPlaces: 20,
-  })
+  @IsLongitude()
   longitude: number;
 }
 
