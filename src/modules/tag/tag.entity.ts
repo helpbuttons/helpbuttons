@@ -1,9 +1,9 @@
-import { GenericEntity } from '@src/shared/types/generic.entity';
+import { BaseEntity } from '@src/shared/types/base.entity';
 import {  Column, Entity, PrimaryColumn, PrimaryGeneratedColumn  } from 'typeorm';
 // https://stackoverflow.com/a/67557083
 
 @Entity()
-export class Tag extends GenericEntity{
+export class Tag extends BaseEntity{
   
   @Column({})
   @PrimaryColumn()

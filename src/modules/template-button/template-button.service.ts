@@ -28,15 +28,20 @@ export class TemplateButtonService {
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} templateButton`;
+    return this.templateButtonRepository.findOne({id});
   }
 
-  update(id: string, updateTemplateButtonDto: UpdateTemplateButtonDto) {
-    return `This action updates a #${id} templateButton`;
+  update(id: string, updateDto: UpdateTemplateButtonDto) {
+    let templateButton = {
+      ...updateDto,
+      id
+    }
+
+    return this.templateButtonRepository.save([templateButton]);
   }
 
   remove(id: string) {
-    return `This action removes #${id} templateButton`;
+    return this.templateButtonRepository.delete({id});
   }
 }
   

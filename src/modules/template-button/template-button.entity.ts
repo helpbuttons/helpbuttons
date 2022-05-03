@@ -1,4 +1,4 @@
-import { GenericEntity } from '@src/shared/types/generic.entity';
+import { BaseEntity } from '@src/shared/types/base.entity';
 import {  Column, Entity, PrimaryColumn  } from 'typeorm';
 // https://stackoverflow.com/a/67557083
 
@@ -9,7 +9,7 @@ export enum TemplateButtonType {
 }
 
 @Entity()
-export class TemplateButton extends GenericEntity{
+export class TemplateButton extends BaseEntity{
   
   @Column({})
   @PrimaryColumn()

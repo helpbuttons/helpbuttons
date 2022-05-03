@@ -25,4 +25,17 @@ export class TagService {
     });
     return await this.tagRepository.insert(tagsToInsert)
   }
+
+  async updateTags(modelName: string, modelId: string, tags: string[])
+  {
+    let tagsToInsert = tags.map((tag) => {
+        return {
+            modelName: modelName,
+            modelId: modelId,
+            tag: tag
+        };
+    });
+    await this.tagRepository.delete({modelName, modelId})
+    return await this.tagRepository.insert(tagsToInsert)
+  }
 }

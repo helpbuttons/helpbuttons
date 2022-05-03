@@ -1,9 +1,9 @@
-import { GenericEntity } from '@src/shared/types/generic.entity';
+import { BaseEntity } from '@src/shared/types/base.entity';
 import {  Column, Entity, OneToMany, PrimaryColumn  } from 'typeorm';
 import { Button } from '../button/button.entity';
 
 @Entity()
-export class Network extends GenericEntity{
+export class Network extends BaseEntity{
   
   @Column({})
   @PrimaryColumn()

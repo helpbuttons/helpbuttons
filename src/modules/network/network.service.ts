@@ -42,16 +42,36 @@ export class NetworkService {
   }
 
   async findOne(id: string): Promise<Network>{
-    console.log(id);
-    return await this.networkRepository.findOne({where: [{id}]});
+    return await this.networkRepository.findOne({id});
   }
 
   update(id: string, updateDto: UpdateNetworkDto) {
-    return `This action updates a #${id} network`;
+    
+    let location = {};
+
+    if (updateDto.latitude > 0 && updateDto.longitude > 0)
+    {
+      location = {location: () => `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`};
+    }else {
+      delete updateDto.latitude
+      delete updateDto.longitude
+    }
+
+    let network = {
+      ...updateDto,
+      ...location,
+      id
+    }
+    
+    if (network.tags) {
+      this.tagService.updateTags('network', network.id, network.tags)
+    }
+
+    return this.networkRepository.save([network]);
   }
 
   remove(id: string) {
-    return `This action removes #${id} network`;
+    return this.networkRepository.delete({id});
   }
 }
   
