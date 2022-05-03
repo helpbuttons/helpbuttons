@@ -29,21 +29,21 @@ export class TemplateButtonController {
   //   return await this.templateButtonService.findAll(filters);
   // }
 
-  // @Get('findById/:templateButtonId')
-  // findOne(@Param('templateButtonId') templateButtonId: string) {
-  //   return this.templateButtonService.findOne(templateButtonId);
-  // }
+  @Get('findById/:templateButtonId')
+  findOne(@Param('templateButtonId') templateButtonId: string) {
+    return this.templateButtonService.findOne(templateButtonId);
+  }
 
-  // @Patch('edit/:templateButtonId')
-  // update(
-  //   @Param('templateButtonId') templateButtonId: string,
-  //   @Body() updateTemplateButtonDto: UpdateTemplateButtonDto,
-  // ) {
-  //   return this.templateButtonService.update(templateButtonId, updateTemplateButtonDto);
-  // }
+  @Patch('edit/:templateButtonId')
+  update(
+    @Param('templateButtonId') templateButtonId: string,
+    @Body() updateTemplateButtonDto: UpdateTemplateButtonDto,
+  ) {
+    return this.templateButtonService.update(templateButtonId, updateTemplateButtonDto);
+  }
 
-  // @Delete('delete/:templateButtonId')
-  // async remove(@Param('templateButtonId') templateButtonId: string) {
-  //   return this.templateButtonService.remove(templateButtonId);
-  // }
+  @Delete('delete/:templateButtonId')
+  async remove(@Param('templateButtonId') templateButtonId: string) {
+    return this.templateButtonService.remove(templateButtonId);
+  }
 }
