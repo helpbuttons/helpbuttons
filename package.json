@@ -19,9 +19,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "compose:up": "docker-compose -f dev.docker-compose.yml up",
-    "compose:down": "docker-compose -f dev.docker-compose.yml down --remove-orphans",
-    "prisma:dev": "npx prisma generate && npx prisma db push && npx prisma db seed"
+    "compose:up": "docker-compose up",
+    "compose:down": "docker-compose down --remove-orphans"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
