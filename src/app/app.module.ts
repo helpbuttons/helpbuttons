@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ButtonModule } from '@src/modules/button/button.module';
 import { NetworkModule } from '@src/modules/network/network.module';
 import { TagModule } from '@src/modules/tag/tag.module';
+import { TemplateButtonModule } from '@src/modules/template-button/template-button.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -32,7 +33,8 @@ import { validate } from './validators/env.validator';
     }),
     ButtonModule,
     TagModule,
-    NetworkModule
+    NetworkModule,
+    TemplateButtonModule
   ],
   controllers: [AppController],
   providers: [AppService],
