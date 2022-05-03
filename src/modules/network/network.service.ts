@@ -3,28 +3,29 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { Repository } from 'typeorm';
 import { TagService } from '../tag/tag.service';
-import { CreateButtonDto,UpdateButtonDto } from './button.dto';
-import { Button } from './button.entity';
+import { CreateNetworkDto,UpdateNetworkDto } from './network.dto';
+import { Network } from './network.entity';
 import { getManager } from "typeorm";
 
 @Injectable()
-export class ButtonService {
+export class NetworkService {
   constructor(
-    @InjectRepository(Button)
-    private readonly buttonRepository: Repository<Button>,
+    @InjectRepository(Network)
+    private readonly networkRepository: Repository<Network>,
     private readonly tagService: TagService){
   }
 
-  async create(createDto: CreateButtonDto) {
+  async create(createDto: CreateNetworkDto) {
     // TODO: 
-    // add tags,
-    // is owner of networkId ??
+    // add owner
     // validate geopoint
 
-    let button = {
+    let network = {
       id: dbIdGenerator(),
       name: createDto.name,
       description: createDto.description,
+      url: createDto.url,
+      radius: createDto.radius,
       latitude: createDto.latitude,
       longitude: createDto.longitude,
       tags: createDto.tags,
@@ -32,24 +33,24 @@ export class ButtonService {
     }
     
     await getManager().transaction(async transactionalEntityManager => {
-      await this.tagService.addTags('button', button.id, createDto.tags).catch(err => {throw new HttpException({message: err.message}, HttpStatus.BAD_REQUEST)});
+      await this.tagService.addTags('network', network.id, createDto.tags).catch(err => {throw new HttpException({message: err.message}, HttpStatus.BAD_REQUEST)});
       
-      await this.buttonRepository.insert([button]);
+      await this.networkRepository.insert([network]);
     });
     
-    return button;
+    return network;
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} button`;
+    return `This action returns a #${id} network`;
   }
 
-  update(id: string, updateButtonDto: UpdateButtonDto) {
-    return `This action updates a #${id} button`;
+  update(id: string, updateDto: UpdateNetworkDto) {
+    return `This action updates a #${id} network`;
   }
 
   remove(id: string) {
-    return `This action removes #${id} button`;
+    return `This action removes #${id} network`;
   }
 }
   

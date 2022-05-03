@@ -20,8 +20,8 @@ export class ButtonController {
   constructor(private readonly buttonService: ButtonService) {}
 
   @Post('new')
-  create(@Body() createButtonDto: CreateButtonDto) {
-    return this.buttonService.create(createButtonDto);
+  create(@Body() createDto: CreateButtonDto) {
+    return this.buttonService.create(createDto);
   }
 
   // @Get('/find/')

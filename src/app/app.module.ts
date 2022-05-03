@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ButtonModule } from '@src/modules/button/button.module';
+import { NetworkModule } from '@src/modules/network/network.module';
 import { TagModule } from '@src/modules/tag/tag.module';
 
 import { AppController } from './app.controller';
@@ -30,7 +31,8 @@ import { validate } from './validators/env.validator';
       synchronize: true,
     }),
     ButtonModule,
-    TagModule
+    TagModule,
+    NetworkModule
   ],
   controllers: [AppController],
   providers: [AppService],
