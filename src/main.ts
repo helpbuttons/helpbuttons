@@ -11,6 +11,9 @@ import { HttpExceptionFilter } from './shared/middlewares/errors/global-http-exc
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  
+  app.enableCors({origin: 'http://localhost:3000'});
+
   const webAppConfigs = app.get<ConfigType<typeof webAppConfig>>(
     webAppConfig.KEY,
   );
@@ -28,7 +31,7 @@ async function bootstrap() {
       },
     }),
   );
-  app.useGlobalFilters(new HttpExceptionFilter());
+  // app.useGlobalFilters(new HttpExceptionFilter());
 
   const config = new DocumentBuilder()
     .setTitle('Helpbuttons backend')
