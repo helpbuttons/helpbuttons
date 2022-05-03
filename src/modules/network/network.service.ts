@@ -45,6 +45,9 @@ export class NetworkService {
     return await this.networkRepository.findOne({id});
   }
 
+  async findAll(): Promise<Network[]>{
+    return await this.networkRepository.find();
+  }
   update(id: string, updateDto: UpdateNetworkDto) {
     
     let location = {};

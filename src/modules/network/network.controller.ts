@@ -24,10 +24,10 @@ import {
       return this.networkService.create(createDto);
     }
   
-    // @Get('/find/')
-    // async findAll(@Query() filters: FilterNetworksOrmDto) {
-    //   return await this.networkService.findAll(filters);
-    // }
+    @Get('find')
+    async findAll() {
+      return await this.networkService.findAll();
+    }
   
     @Get('findById/:networkId')
     findOne(@Param('networkId') networkId: string) {
