@@ -22,7 +22,6 @@ export class TemplateButtonService {
       formFields: createDto.formFields
     }
     
-    console.log(templateButton);
     await this.templateButtonRepository.insert([templateButton]);
     
     return templateButton;

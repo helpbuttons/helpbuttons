@@ -15,7 +15,7 @@ import {
   export class TagController {
     constructor(private readonly tagService: TagService) {}
   
-    @Get('findById/:tag')
+    @Get('findByTag/:tag')
     findOne(@Param('tag') tag: string) {
       return this.tagService.find(tag);
     }
