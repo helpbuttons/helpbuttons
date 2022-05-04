@@ -24,10 +24,10 @@ export class ButtonController {
     return this.buttonService.create(createDto, networkId);
   }
 
-  // @Get('/find/')
-  // async findAll(@Query() filters: FilterButtonsOrmDto) {
-  //   return await this.buttonService.findAll(filters);
-  // }
+  @Get('/find/')
+  async findAll() {
+    return await this.buttonService.findAll();
+  }
 
   @Get('findById/:buttonId')
   findOne(@Param('buttonId') buttonId: string) {

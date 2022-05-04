@@ -74,6 +74,10 @@ export class ButtonService {
     return this.buttonRepository.save([button]);
   }
 
+  findAll() {
+    return this.buttonRepository.find();
+  }
+
   remove(id: string) {
     return this.buttonRepository.delete({id});
   }
