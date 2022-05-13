@@ -1,21 +1,18 @@
-import { Injectable } from '@nestjs/common';
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository } from 'typeorm';
+import { BaseRepository } from 'typeorm-transactional-cls-hooked';
+
 import { User } from './user.entity';
 
-@Injectable()
 @EntityRepository(User)
-export class UserRepository extends Repository<User> {
+export class UserRepository extends BaseRepository<User> {
   async isEmailExists(email: string) {
     const user = await this.findOne({
       where: {
-        email,
+        username: email,
       },
     });
 
-    if (user) {
-      return true;
-    }
-    return false;
+    return user ? true : false;
   }
 
   async isUsernameExists(username: string) {

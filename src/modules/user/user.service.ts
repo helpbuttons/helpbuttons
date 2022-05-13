@@ -1,60 +1,43 @@
 import { Injectable } from '@nestjs/common';
-import {
-  dbIdGenerator,
-  publicNanoidGenerator,
-} from '@src/shared/helpers/nanoid-generator.helper';
-import { hash } from 'argon2';
 
-import { LoginDto, SignupUserDto } from './user.dto';
 import { UserRepository } from './user.repository';
+import { User } from './user.entity';
+import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async signup(signupUserDto: SignupUserDto) {
-    const {
-      email,
-      interests,
-      password: plainPassword,
-      realm,
-      username,
-    } = signupUserDto;
-    const verificationToken = publicNanoidGenerator();
-    const emailVerified = false;
-    const roles = ['user'];
+  async createUser(user: User) {
     const id = dbIdGenerator();
-    const password = await this.hashPassword(plainPassword);
-    const user = this.userRepository.create({
-      id,
-      email,
+    const {
       realm,
       username,
       verificationToken,
       roles,
       emailVerified,
-      password,
-      interests,
+    } = user;
+    const createdUser = this.userRepository.create({
+      id,
+      realm,
+      username,
+      verificationToken,
+      roles,
+      emailVerified,
     });
 
-    await this.userRepository.save(user);
+    await this.userRepository.save(createdUser);
 
-    return user;
+    return createdUser;
   }
 
-  activate(verificationToken: string) {
-    // TODO:
-  }
+  async isEmailExists(email: string) {
+    const user = await this.userRepository.isEmailExists(email);
 
-  login(loginDto: LoginDto) {
-    // TODO:
+    return user ? true : false;
   }
 
   whoAmI() {
     // TODO:
-  }
-
-  hashPassword(password: string) {
-    return hash(password);
   }
 }
