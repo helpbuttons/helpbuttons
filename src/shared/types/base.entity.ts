@@ -1,11 +1,17 @@
 import { UpdateDateColumn, CreateDateColumn } from 'typeorm';
 
 export class BaseEntity {
-  @CreateDateColumn({ default: () => 'CURRENT_TIMESTAMP', type: 'timestamp' })
+  @CreateDateColumn({
+    default: () => 'CURRENT_TIMESTAMP',
+    type: 'timestamp',
+  })
   // tslint:disable-next-line: variable-name
-  created_at: Date;
+  created_at?: Date;
 
-  @UpdateDateColumn({ default: () => 'CURRENT_TIMESTAMP', type: 'timestamp' })
+  @UpdateDateColumn({
+    default: () => 'CURRENT_TIMESTAMP',
+    type: 'timestamp',
+  })
   // tslint:disable-next-line: variable-name
-  updated_at: Date;
+  updated_at?: Date;
 }

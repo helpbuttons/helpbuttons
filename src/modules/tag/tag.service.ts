@@ -11,31 +11,33 @@ export class TagService {
   }
 
   async find(tag: string) {
-    return await this.tagRepository.find({tag: `%${tag}`});
+    return await this.tagRepository.find({ tag: `%${tag}` });
   }
 
-  async addTags(modelName: string, modelId: string, tags: string[])
-  {
+  async addTags(modelName: string, modelId: string, tags: string[]) {
     let tagsToInsert = tags.map((tag) => {
         return {
             modelName: modelName,
             modelId: modelId,
-            tag: tag
+        tag: tag,
         };
     });
-    return await this.tagRepository.insert(tagsToInsert)
+    return await this.tagRepository.insert(tagsToInsert);
   }
 
-  async updateTags(modelName: string, modelId: string, tags: string[])
-  {
+  async updateTags(
+    modelName: string,
+    modelId: string,
+    tags: string[],
+  ) {
     let tagsToInsert = tags.map((tag) => {
         return {
             modelName: modelName,
             modelId: modelId,
-            tag: tag
+        tag: tag,
         };
     });
-    await this.tagRepository.delete({modelName, modelId})
-    return await this.tagRepository.insert(tagsToInsert)
+    // await this.tagRepository.delete({modelName, modelId})
+    return await this.tagRepository.insert(tagsToInsert);
   }
 }
