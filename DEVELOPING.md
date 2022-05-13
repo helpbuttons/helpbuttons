@@ -7,8 +7,8 @@ users.
 
 Install the following extensions:
 
- - [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
- - [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
 ## Development workflow
 
@@ -34,3 +34,11 @@ Install the following extensions:
    suite and lint the code for both programming and style errors. You should run
    this command manually whenever you have new changes to test. Test failures
    and linter errors will be printed to the terminal.
+
+# Use NestJS CLI for sake of consistency:
+
+1. Creating new provider - Things like repository, etc
+   1. `nest g modules/module-name/provider-name` use `--no-spec` if you do not want to write unit test for it
+   2. Now code in that created file
+1. Creating new interceptor:
+   1. `nest g interceptor modules/module-name/interceptor-name` use `--no-spec` if you do not want to write unit test for it
