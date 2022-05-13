@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 import { BaseEntity } from '@src/shared/types/base.entity';
 

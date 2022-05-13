@@ -1,32 +1,27 @@
 import { Injectable } from '@nestjs/common';
 
-import {
-  CreateUserCredentialDto,
-  UpdateUserCredentialDto,
-} from './user-credential.dto';
+import { UserCredential } from './user-credential.entity';
+import { UserCredentialRepository } from './user-credential-repository';
+import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 
 @Injectable()
 export class UserCredentialService {
-  create(createUserCredentialDto: CreateUserCredentialDto) {
-    return 'This action adds a new userCredential';
-  }
+  constructor(
+    private readonly userCredentialRepository: UserCredentialRepository,
+  ) {}
 
-  findAll() {
-    return `This action returns all userCredential`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} userCredential`;
-  }
-
-  update(
-    id: number,
-    updateUserCredentialDto: UpdateUserCredentialDto,
+  async createUserCredential(
+    createUserCredentialDto: Partial<UserCredential>,
   ) {
-    return `This action updates a #${id} userCredential`;
-  }
+    const { password: hashedPassword, userId } =
+      createUserCredentialDto;
+    const createdUserCredential =
+      this.userCredentialRepository.create({
+        id: dbIdGenerator(),
+        userId,
+        password: hashedPassword,
+      });
 
-  remove(id: number) {
-    return `This action removes a #${id} userCredential`;
+    await this.userCredentialRepository.save(createdUserCredential);
   }
 }
