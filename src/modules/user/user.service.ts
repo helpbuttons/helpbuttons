@@ -1,26 +1,60 @@
 import { Injectable } from '@nestjs/common';
+import {
+  dbIdGenerator,
+  publicNanoidGenerator,
+} from '@src/shared/helpers/nanoid-generator.helper';
+import { hash } from 'argon2';
 
-import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { LoginDto, SignupUserDto } from './user.dto';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(private readonly userRepository: UserRepository) {}
+
+  async signup(signupUserDto: SignupUserDto) {
+    const {
+      email,
+      interests,
+      password: plainPassword,
+      realm,
+      username,
+    } = signupUserDto;
+    const verificationToken = publicNanoidGenerator();
+    const emailVerified = false;
+    const roles = ['user'];
+    const id = dbIdGenerator();
+    const password = await this.hashPassword(plainPassword);
+    const user = this.userRepository.create({
+      id,
+      email,
+      realm,
+      username,
+      verificationToken,
+      roles,
+      emailVerified,
+      password,
+      interests,
+    });
+
+    await this.userRepository.save(user);
+
+    return user;
   }
 
-  findAll() {
-    return `This action returns all user`;
+  activate(verificationToken: string) {
+    // TODO:
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  login(loginDto: LoginDto) {
+    // TODO:
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  whoAmI() {
+    // TODO:
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  hashPassword(password: string) {
+    return hash(password);
   }
 }

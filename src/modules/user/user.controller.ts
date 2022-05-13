@@ -3,43 +3,38 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 
 import { UserService } from './user.service';
-import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { LoginDto, SignupUserDto } from './user.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { SignupExtraRulesInterceptor } from './signup-extra-rules.interceptor';
 
-@Controller('user')
+@ApiTags('User')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @Post('signup')
+  @UseInterceptors(SignupExtraRulesInterceptor)
+  async signup(@Body() signupUserDto: SignupUserDto) {
+    return await this.userService.signup(signupUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
+  @Get('activate/:verificationToken')
+  activate(@Param('verificationToken') verificationToken: string) {
+    return this.userService.activate(verificationToken);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @Post('login')
+  login(@Body() loginDto: LoginDto) {
+    return this.userService.login(loginDto);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ) {
-    return this.userService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  @Get('whoAmI')
+  whoAmI() {
+    return this.userService.whoAmI();
   }
 }
