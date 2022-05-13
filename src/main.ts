@@ -1,7 +1,9 @@
+import 'reflect-metadata';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { initializeTransactionalContext } from 'typeorm-transactional-cls-hooked';
 
 import { AppModule } from '@src/app/app.module';
 import webAppConfig from './app/configs/web-app.config';
@@ -10,9 +12,14 @@ import webAppConfig from './app/configs/web-app.config';
 import { HttpExceptionFilter } from './shared/middlewares/errors/global-http-exception-filter.middleware';
 
 async function bootstrap() {
+  /**
+   * README: Calling initializeTransactionalContext and or patchTypeORMRepositoryWithBaseRepository must happen BEFORE any application context is initialized!
+   */
+  initializeTransactionalContext();
+
   const app = await NestFactory.create(AppModule);
-  
-  app.enableCors({origin: 'http://localhost:3000'});
+
+  app.enableCors({ origin: 'http://localhost:3000' });
 
   const webAppConfigs = app.get<ConfigType<typeof webAppConfig>>(
     webAppConfig.KEY,
