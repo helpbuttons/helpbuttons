@@ -4,12 +4,15 @@ import {
   Body,
   UseInterceptors,
   Get,
+  Request,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { LoginRequestDto, SignupRequestDto } from './auth.dto';
 import { AuthService } from './auth.service';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 import { SignupExtraRulesInterceptor } from './signup-extra-rules.interceptor';
 
 @ApiTags('User')
@@ -28,8 +31,9 @@ export class AuthController {
     return this.authService.activate(verificationToken);
   }
 
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Body() loginDto: LoginRequestDto) {
-    return this.authService.login(loginDto);
+  async login(@Request() req) {
+    return req.user;
   }
 }

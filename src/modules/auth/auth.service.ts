@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { hash } from 'argon2';
+import { hash, verify } from 'argon2';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
-
+import { JwtService } from '@nestjs/jwt';
 import { LoginRequestDto, SignupRequestDto } from './auth.dto';
 import { UserService } from '../user/user.service';
 import { publicNanoidGenerator } from '@src/shared/helpers/nanoid-generator.helper';
@@ -21,6 +21,7 @@ export class AuthService {
     @Inject(webAppConfig.KEY)
     private readonly webAppConfigs: ConfigType<typeof webAppConfig>,
     private readonly mailService: MailService,
+    private jwtTokenService: JwtService,
   ) {}
 
   @Transactional()
@@ -75,8 +76,31 @@ export class AuthService {
     // TODO:
   }
 
-  login(loginDto: LoginRequestDto) {
-    // TODO:
+  async validateUser(email: string, plainPassword: string): Promise<any> {
+    const user = await this.userService.findOne(email);
+    if (!user) {
+      return null;
+    }
+    
+    const userCredential = await this.userCredentialService.findOne(user.id);
+    if (!userCredential)
+    {
+      return null;
+    }
+
+    if (!(await verify(userCredential.password, plainPassword))){
+      return null;
+    }
+
+    return this.getAccessToken(user);
+  }
+  
+  async getAccessToken(user) {
+    const payload = { username: user.email, sub: user.id };
+
+    return {
+        access_token: this.jwtTokenService.sign(payload),
+    };
   }
 
   hashPassword(password: string) {

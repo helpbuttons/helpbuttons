@@ -24,4 +24,8 @@ export class UserCredentialService {
 
     await this.userCredentialRepository.save(createdUserCredential);
   }
+
+  async findOne(id: string) {
+    return await this.userCredentialRepository.findOne({where: {userId: id}});
+  }
 }
