@@ -7,11 +7,10 @@ import { UserCredentialModule } from '../user-credential/user-credential.module'
 import { UserModule } from '../user/user.module';
 import { MailModule } from '../mail/mail.module';
 import { TagModule } from '../tag/tag.module';
-import authConfig from './auth.config';
 
 @Module({
   imports: [
-    ConfigModule.forFeature(authConfig),
+    ConfigModule.forRoot(),
     UserCredentialModule,
     UserModule,
     MailModule,

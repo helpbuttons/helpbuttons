@@ -10,7 +10,6 @@ import { UserCredentialService } from '../user-credential/user-credential.servic
 import { TagService } from '../tag/tag.service';
 import webAppConfig from '@src/app/configs/web-app.config';
 import { NodeEnv } from '@src/shared/types';
-import authConfig from './auth.config';
 import { MailService } from '../mail/mail.service';
 
 @Injectable()
@@ -21,8 +20,6 @@ export class AuthService {
     private readonly tagService: TagService,
     @Inject(webAppConfig.KEY)
     private readonly webAppConfigs: ConfigType<typeof webAppConfig>,
-    @Inject(authConfig.KEY)
-    private readonly authConfigs: ConfigType<typeof authConfig>,
     private readonly mailService: MailService,
   ) {}
 
@@ -63,7 +60,7 @@ export class AuthService {
 
     if (!user.emailVerified) {
       const activationUrl: string =
-        this.authConfigs.activationUrl + user.verificationToken;
+        this.webAppConfigs.baseUrl + 'user/activate/'+ user.verificationToken;
 
       await this.mailService.sendActivationEmail({
         to: email,
