@@ -12,8 +12,8 @@ import { LoginRequestDto, SignupRequestDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { SignupExtraRulesInterceptor } from './signup-extra-rules.interceptor';
 
-@ApiTags('Authentication')
-@Controller('auth')
+@ApiTags('User')
+@Controller('users')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 

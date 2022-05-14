@@ -19,6 +19,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
+  // enable cors for the frontend.. still hardcoded.. needs to change
   app.enableCors({ origin: 'http://localhost:3000' });
 
   const webAppConfigs = app.get<ConfigType<typeof webAppConfig>>(
