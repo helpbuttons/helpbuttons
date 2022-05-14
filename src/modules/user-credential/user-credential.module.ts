@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { UserCredentialService } from './user-credential.service';
 import { UserCredentialController } from './user-credential.controller';
-import { UserCredentialRepository } from './user-credential-repository';
+import { UserCredentialRepository } from './user-credential.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserCredentialRepository])],

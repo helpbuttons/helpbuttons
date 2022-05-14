@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { UserCredential } from './user-credential.entity';
-import { UserCredentialRepository } from './user-credential-repository';
+import { UserCredentialRepository } from './user-credential.repository';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 
 @Injectable()
