@@ -1,20 +1,22 @@
 //INFO AND RESULTS
 //libraries
-import { useRef } from 'store/Store';
-import { store } from 'pages/index';
-import { LoadCommonNetworks } from 'pages/Common/data';
-import { LoadCommonSelectedNetwork } from 'pages/Common/data';
 import Router from 'next/router';
-
 import { useState, useEffect } from "react";
 
 //services
 import { storeService } from 'services/Store';
 import { alertService } from 'services/Alert';
+import { store } from 'pages/index';
+import { useRef } from 'store/Store';
+
+//functions
+import { LoadCommonNetworks } from 'pages/Common/data';
+import { LoadCommonSelectedNetwork } from 'pages/Common/data';
 
 //components
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import { Link } from 'elements/Link';
+import DropdownNetworks from 'components/network/DropdownNetworks';
 
 
 
@@ -39,8 +41,6 @@ export default function HomeInfo() {
     }
 
     alertService.info("You're in the " + storeService.read('network_id') + " network !");
-
-    store.emit(new LoadCommonNetworks());
 
   }, [])
 
@@ -78,7 +78,7 @@ export default function HomeInfo() {
 
             <div className="info-overlay__nets">
 
-
+              <DropdownNetworks />
 
               <Link href="/NetworkNew">
                 <Btn btnType={BtnType.corporative} contentAlignment={ContentAlignment.center} caption="Create Network"  />

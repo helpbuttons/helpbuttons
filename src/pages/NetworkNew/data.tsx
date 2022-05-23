@@ -7,7 +7,7 @@ import { GlobalState } from 'store/Store';
 
 import { NetworkService } from 'services/Networks';
 import Router from 'next/router';
-import INetwork from 'services/Networks/types';
+import INetwork from 'services/Networks/network.type.tsx';
 import { alertService } from 'services/Alert';
 import { errorService } from 'services/Error';
 import { storeService } from 'services/Store';

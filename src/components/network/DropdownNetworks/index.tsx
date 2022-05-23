@@ -1,44 +1,26 @@
-//a variation of dropddown specific for time
-import { useState } from "react";
-import { storeService } from "";
+//a variation of dropddown specific for networks
+//libraries
+import { useState, useEffect } from "react";
 
-const SuggestionsListComponent = () => {
-   return filteredSuggestions.length ? (
-     <ul class="suggestions">
-       {filteredSuggestions.map((suggestion, index) => {
-         let className;
-         // Flag the active suggestion with a class
-         if (index === activeSuggestionIndex) {
-           className = "suggestion-active";
-         }
-         return (
-           <li className={className} key={suggestion} onClick={onClick}>
-             {suggestion}
-           </li>
-         );
-       })}
-     </ul>
-   ) : (
-     <div class="no-suggestions">
-       <em>No suggestions, you're on your own!</em>
-     </div>
-   );
- };
+//functions
+import { GetNetworksEvent } from "./data.tsx";
+import { SetNetworkByIdEvent } from "./data.tsx";
 
-export default function DropdownNetworks({networks, setSelectedNetworkObject, ...props}) {
+//services
+import { NetworkService } from 'services/Networks';
+import { store } from 'pages/index';
+import { useRef } from 'store/Store';
+import { INetwork } from 'services/Networks/network.type.tsx';
 
+
+export default function DropdownNetworks({ ...props}) {
+
+  let [networks, setNetworks] = useState([]);
+  let [selectedNetwork, setSelectedNetwork] = useState(INetwork);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [input, setInput] = useState("");
-
-  let networksArray = networks.length > 0 ? networks[0] : networks;
-
-  const options = networksArray.map((net, i) => (
-
-      <option data_id={net.id} className="dropdown-nets__dropdown-option" label={net.name} value={net.name}>{net.name}</option>
-
-  ));
 
   const onChange = (e) => {
 
@@ -54,22 +36,41 @@ export default function DropdownNetworks({networks, setSelectedNetworkObject, ..
 
   const onClick = (e) => {
 
-   console.log(e.target.data_id + e.target.label);
+   console.log(e.target.attributes.data_id.nodeValue + e.target.attributes.label.value);
+   //setInput(e.target.innerText); uncomment iif we want to externalize inputs from the component
+   SetNetworkByIdEvent(e.target.attributes.data_id.nodeValue, setSelectedNetwork);
    setFilteredSuggestions([]);
-   setInput(e.target.innerText);
    setActiveSuggestionIndex(0);
    setShowSuggestions(false);
-   setSelectedNetworkObject(e.target.data_id);
 
   };
+
+
+  //get networks into array
+  let networksArray = networks.nets ? networks.nets : networks;
+
+  const options = networksArray.map((net, i) => (
+
+      <option key={net.id} data_id={net.id} className="dropdown-nets__dropdown-option" label={net.name} value={net.name} onClick={onClick}>{net.name}</option>
+
+  ));
+
+  console.log(options);
+
+  useEffect(() => {
+
+    //call networks array before rendering
+    networks = GetNetworksEvent(setNetworks);
+
+  }, [])
 
   return (
 
     <>
-      <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="on" onChange={onChange} list="" id="input" name="browsers" placeholder="Select other Network" type='text'></input>
+      <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="on" onChange={onChange} list="" id="input" name="browsers" placeholder="Search other Network" type='text'></input>
 
         {showSuggestions && input &&
-          <datalist className="dropdown-nets__dropdown-content" onClick={onClick} id='listid'>
+          <datalist className="dropdown-nets__dropdown-content" id='listid'>
             {options}
           </datalist>
         }
