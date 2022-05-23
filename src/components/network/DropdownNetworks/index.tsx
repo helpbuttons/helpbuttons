@@ -36,7 +36,7 @@ export default function DropdownNetworks({ ...props}) {
 
   const onClick = (e) => {
 
-   console.log(e.target.attributes.data_id.nodeValue + e.target.attributes.label.value);
+  //  console.log(e.target.attributes.data_id.nodeValue + e.target.attributes.label.value);
    //setInput(e.target.innerText); uncomment iif we want to externalize inputs from the component
    SetNetworkByIdEvent(e.target.attributes.data_id.nodeValue, setSelectedNetwork);
    setFilteredSuggestions([]);
@@ -55,7 +55,7 @@ export default function DropdownNetworks({ ...props}) {
 
   ));
 
-  console.log(options);
+  // console.log(options);
 
   useEffect(() => {
 

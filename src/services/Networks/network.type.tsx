@@ -13,7 +13,9 @@ export interface INetwork {
   //data for GIS
   showButtons : string, //enum {area, point} show buttons by area not showing exact position on map
   place: string,
-  geoPlace: {},
+  // geoPlace: {},
+  latitude: number,
+  longitude: number,
   radius: string,
   friendNetworks: [],
   //only for admins:

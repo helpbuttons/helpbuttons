@@ -20,7 +20,7 @@ export default function ButtonNewData({ exact, ...props }) {
               Describe your purpose:
             </p>
 
-            <textarea onFocus={() => setShowTags(true)} onBlur={() => setShowTags(false)} onChange={() => props.setDescription("")} name="description" className="textarea__textarea" placeholder="i.e. I would like to offer..."></textarea>
+            <textarea onFocus={() => setShowTags(true)} onBlur={() => setShowTags(false)} onChange={(e) => props.setDescription(e.target.value)} name="description" className="textarea__textarea" placeholder="i.e. I would like to offer..."></textarea>
             <div className="invalid-feedback">{props.errors.description?.message}</div>
 
           </div>

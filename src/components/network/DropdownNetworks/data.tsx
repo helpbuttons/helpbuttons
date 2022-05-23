@@ -35,7 +35,7 @@ import { storeService } from 'services/Store';
     // Call by id to return net.
     let networks = NetworkService.findById(id).subscribe(net => {
 
-       console.log(net.response.name);
+    //    console.log(net.response.name);
 
       if (net) {
             // return network data
@@ -62,7 +62,7 @@ import { storeService } from 'services/Store';
 
    // Call by id to return net.
    let networks = NetworkService.findById(id).subscribe(net => {
-      console.log(net.response.name);
+    //   console.log(net.response.name);
      if (net) {
            // return network data
            setNetwork(net.response);

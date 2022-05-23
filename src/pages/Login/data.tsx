@@ -26,11 +26,10 @@ export class LoginEvent implements WatchEvent {
         Router.push({ pathname: '/', state: {} });
       }),
       catchError((error) => {
-        console.log("error: ", error.message);
-        if(error.response.error.details) {
-          alertService.error(error.response.error.details[0].message);
+        if(error.response.message) {
+          alertService.error(error.response.message);
         } else {
-          alertService.error(error.response.error.message);
+          alertService.error(error.mesage);
         }
         return of(error);
       }),

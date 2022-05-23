@@ -32,7 +32,6 @@ export function NoNetworkCreatedAction () {
 //
 //    // Call by id to return net.
 //    let networks = NetworkService.findById(id).subscribe(net => {
-//       console.log(net.response.name);
 //      if (net) {
 //            // return network data
 //            setNetwork(net.response);

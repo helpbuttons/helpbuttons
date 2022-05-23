@@ -31,8 +31,10 @@ export class NetworkService {
             "description": data.description,
             "privacy": data.privacy,
             "place": data.place,
-            "geoPlace": JSON.parse(data.geoPlace),
-
+            "latitude": data.latitude,
+            "longitude": data.longitude,
+            "tags": [],
+            // "radius": data.radius
           },
       });
 
@@ -61,7 +63,8 @@ export class NetworkService {
             "description": data.description,
             "privacy": data.privacy,
             "place": data.place,
-            "geoPlace": data.geoPlace,
+            "latitude": data.latitude,
+            "longitude": data.longitude,
             "radius": data.radius,
             "tags": data.tags,
             "owner": user.id,

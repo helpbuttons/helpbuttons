@@ -9,7 +9,9 @@ export interface IButton {
   //required data
   date: [],
   //GIS DATA
-  geoPlace: [],
+  // geoPlace: [],
+  latitude: number,
+  longitude: number,
   // optional values
   networks: [],
   feedType: enum, //enum {single,group} feed structure

@@ -19,6 +19,7 @@ export class CreateButtonEvent implements WatchEvent {
               alertService.info('Has creado un botón' + buttonData.response.id.toString());
             }),
             catchError((error) => {
+              // console.log(error)
               return errorService.handle(error);
             }),
     )

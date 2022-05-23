@@ -28,13 +28,12 @@ export class ButtonService {
             "Authorization": "Bearer " + token,
           },
           body: {
-
             "name": data.name,
             "type": data.type,
             "tags": data.tags,
             "description": data.description,
-            "geoPlace": JSON.parse(data.geoPlace),
-
+            "latitude": data.latitude,
+            "longitude": data.longitude
           },
       });
 

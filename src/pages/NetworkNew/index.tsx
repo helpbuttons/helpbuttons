@@ -11,6 +11,7 @@ import { CreateNetworkEvent } from 'pages/NetworkNew/data';
 import INetwork from 'services/Networks/network.type';
 import CheckBox from 'elements/Checkbox'
 import Btn, {ContentAlignment, BtnType, IconType}  from 'elements/Btn'
+import Location from 'elements/Location';
 
 export default function NetworkNew() {
 
@@ -26,7 +27,9 @@ export default function NetworkNew() {
     const [tags, setTags] = useState([]);
     const [friendNetworks, setFriendNetworks] = useState([]);
     const [description, setDescription] = useState("");
-    const [geoPlace, setGeoPlace] = useState('{ "type": "Point", "coordinates": [100.0, 0.0]}');
+    // const [geoPlace, setGeoPlace] = useState('{ "type": "Point", "coordinates": [100.0, 0.0]}');
+    const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
     const [radius, setRadius] = useState(0);
     const [owner, setOwner] = useState("");
 
@@ -53,7 +56,7 @@ export default function NetworkNew() {
 
     function onSubmit() {
         //emit is called to trigger the event by the observable
-        console.log('create net');
+        // console.log('create net');
         //provisional interface to send, YUP is used for validation messages, not for sending data. Real data is stored here using useState and sent.
         const network: INetwork = {
 
@@ -63,7 +66,8 @@ export default function NetworkNew() {
           avatar: avatar,
           place: place,
           description: description,
-          geoPlace: geoPlace,
+          latitude: latitude,
+          longitude: longitude,
           radius: radius,
           owner: owner,
           friendNetworks: friendNetworks,
@@ -113,11 +117,7 @@ export default function NetworkNew() {
                       <div className="">{errors.description?.message}</div>
                   </div>
 
-                  <div className="form__field">
-                      <label className="label">geoPlace</label>
-                      <input name="geoPlace" type="text"  value={geoPlace} onChange={(e) => setGeoPlace(e.target.value)} {...register('geoPlace')} className={`form__input ${errors.geoPlace ? '' : ''}`} />
-                      <div className="">{errors.geoPlace?.message}</div>
-                  </div>
+                  <Location setLongitude={setLongitude} longitude={longitude} setLatitude={setLatitude} latitude={latitude}/>
 
                   <div className="form__field">
                       <label className="label">Radius</label>

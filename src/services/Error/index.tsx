@@ -8,8 +8,9 @@ export const errorService = {
 // enable subscribing to alerts observable
 function handle(error) {
 
-  console.error(error);
-
+  if (error.response.message) {
+    alertService.error(error.response.message);
+  }else 
   if(error.response && error.response.error && error.response.error.details ) {
 
     alertService.error(error.response.error.details[0].message);
