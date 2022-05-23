@@ -28,9 +28,9 @@ export class AuthService {
   async signup(signupUserDto: SignupRequestDto) {
     const {
       email,
-      interests,
+      // interests,
       password: plainPassword,
-      realm,
+      // realm,
     } = signupUserDto;
     const hashedPassword = await this.hashPassword(plainPassword);
     const roles = ['registered'];
@@ -41,8 +41,9 @@ export class AuthService {
       emailVerified = true;
     }
 
+    console.log('createing user...' + email)
     const user = await this.userService.createUser({
-      realm,
+      // realm,
       username: email,
       verificationToken,
       emailVerified,
@@ -53,11 +54,11 @@ export class AuthService {
       userId: user.id,
       password: hashedPassword,
     });
-    for (const tag of interests) {
-      await this.tagService.createTag({
-        tag,
-      });
-    }
+    // for (const tag of interests) {
+    //   await this.tagService.createTag({
+    //     tag,
+    //   });
+    // }
 
     if (!user.emailVerified) {
       const activationUrl: string =
@@ -99,7 +100,7 @@ export class AuthService {
     const payload = { username: user.email, sub: user.id };
 
     return {
-        access_token: this.jwtTokenService.sign(payload),
+        token: this.jwtTokenService.sign(payload),
     };
   }
 

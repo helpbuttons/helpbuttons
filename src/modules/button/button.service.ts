@@ -27,7 +27,7 @@ export class ButtonService {
 
     let button = {
       id: dbIdGenerator(),
-      name: createDto.name,
+      // name: createDto.name,
       description: createDto.description,
       latitude: createDto.latitude,
       longitude: createDto.longitude,

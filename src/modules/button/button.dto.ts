@@ -6,14 +6,14 @@ import { PartialType } from '@nestjs/swagger';
 // https://github.com/typestack/class-validator
 
 export class CreateButtonDto implements Partial<Button> {
-  @ApiProperty({
-    type: String,
-    required: true,
-  })
-  @MinLength(3, {
-    message: 'button name is too short',
-  })
-  name: string;
+  // @ApiProperty({
+  //   type: String,
+  //   required: true,
+  // })
+  // @MinLength(3, {
+  //   message: 'button name is too short',
+  // })
+  // name: string;
   
   @ApiProperty({
     type: [String],

@@ -19,7 +19,7 @@ export class NetworkService {
     // TODO: 
     // add owner
     // validate geopoint
-
+    createDto.radius = createDto.radius ? createDto.radius : 1;
     let network = {
       id: dbIdGenerator(),
       name: createDto.name,

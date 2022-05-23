@@ -7,8 +7,10 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { ButtonService } from './button.service';
@@ -19,8 +21,9 @@ import { ButtonService } from './button.service';
 export class ButtonController {
   constructor(private readonly buttonService: ButtonService) {}
 
-  @Post('new/:networkId')
-  create(@Param('networkId') networkId: string, @Body() createDto: CreateButtonDto) {
+  // @UseGuards(JwtAuthGuard)
+  @Post('new')
+  create(@Query('networkId') networkId: string, @Body() createDto: CreateButtonDto) {
     return this.buttonService.create(createDto, networkId);
   }
 

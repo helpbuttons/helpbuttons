@@ -27,9 +27,9 @@ export class CreateNetworkDto implements Partial<Network> {
   @ApiProperty({
     type: String,
   })
-  @MinLength(3, {
-    message: 'url is too short',
-  })
+  // @MinLength(3, {
+  //   message: 'url is too short',
+  // })
   url: string;
 
   @ApiProperty({
@@ -38,11 +38,11 @@ export class CreateNetworkDto implements Partial<Network> {
     type: Number,
     example: 10,
   })
-  @IsNumber({
-    allowInfinity: false,
-    allowNaN: false,
-    maxDecimalPlaces: 2,
-  })
+  // @IsNumber({
+  //   allowInfinity: false,
+  //   allowNaN: false,
+  //   maxDecimalPlaces: 2,
+  // })
   radius: number;
 
   
