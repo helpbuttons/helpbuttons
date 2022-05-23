@@ -1,0 +1,23 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ButtonService } from './button.service';
+import { ButtonController } from './button.controller';
+import { Button } from './button.entity';
+import { TagModule } from '../tag/tag.module';
+import { NetworkModule } from '../network/network.module';
+
+
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([Button]),
+    TagModule,
+    NetworkModule
+  ],
+  controllers: [
+    ButtonController
+  ],
+  providers: [
+    ButtonService
+  ],
+})
+export class ButtonModule {}

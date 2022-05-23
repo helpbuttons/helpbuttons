@@ -1,34 +1,6 @@
-# helpbuttons backend
+# How to start app in development mode
 
-## running the backend
-#### We need to run an instance of postgis.. we recomend to use docker 
-
-To start postgis:
-```sh
-$ cp env.docker .env
-$ docker-compose up db -d
-```
-### install dependencies
-
-```sh
-yarn
-```
-
-#### Run the application
-```sh
-$ yarn start
-```
-
-Open http://127.0.0.1:3001 in your browser.
-
-#### run the application in watchmode 
-```sh
-$ yarn start:watch
-```
-
-
-
-## developers hints:
-
-Cheatsheet on chai and mochajs 
- https://devhints.io/chai.html
+1. `cp .env.example .env` and update it with correct values
+2. `npm run compose:up` to start Postgres container with PostGIS extension
+3. `npm ci` and after this step wait for 3 second, This time should be enough for postgres initialize itself
+4. `npm run start:dev`

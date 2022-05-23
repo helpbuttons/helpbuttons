@@ -1,9 +1,27 @@
 {
-  "$schema": "http://json.schemastore.org/tsconfig",
-  "extends": "@loopback/build/config/tsconfig.common.json",
+  "include": ["src/**/*", "src/**/*.json", "prisma/**/*.json"],
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src"
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@src/*": ["src/*"]
+    },
+    "resolveJsonModule": true
   },
-  "include": ["src"]
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
 }
