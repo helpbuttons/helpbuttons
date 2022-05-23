@@ -14,6 +14,8 @@ import ButtonShare from "components/button/ButtonShare";
 import { store } from 'pages/index';
 import { CreateButtonEvent } from 'pages/ButtonNew/data';
 import IButton from 'services/Buttons/button.type';
+import ButtonNewDate from 'components/button/ButtonNewDate';
+import Location from 'elements/Location';
 
 
 export default function ButtonNew() {
@@ -28,7 +30,9 @@ export default function ButtonNew() {
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState([]);
     const [date, setDate] = useState("");
-    const [geoPlace, setGeoPlace] = useState('{ "type": "Point", "coordinates": [100.0, 0.0]}');
+    // const [geoPlace, setGeoPlace] = useState('{ "type": "Point", "coordinates": [100.0, 0.0]}');
+    const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
     const [networks, setNetworks] = useState([]);
     const [feedType, setFeedType] = useState("");
     const [templateExtraData, setTemplateExtraData] = useState("");
@@ -60,7 +64,7 @@ export default function ButtonNew() {
 
 
     function onSubmit() {
-        console.log('create button');
+        // console.log('create button');
 
         //button data interface to be stored and sent
         const button: IButton = {
@@ -73,7 +77,9 @@ export default function ButtonNew() {
           //required data
           // date: date,
           //GIS DATA
-          geoPlace: geoPlace,
+          // geoPlace: geoPlace,
+          latitude: latitude,
+          longitude: longitude,
           // optional values
           networks: networks,
           // feedType: feedType, //enum {single,group} feed structure
@@ -101,8 +107,8 @@ export default function ButtonNew() {
                   {tags}
                   {description}
 
-                  <ButtonPublish setDate={setDate} setGeoPlace={setGeoPlace} setFeedType={setFeedType} date={date} geoPlace={geoPlace} feedType={feedType} register={register} errors={errors}/>
-
+                  <ButtonNewDate setDate={setDate} date={date}/>
+                  <Location setLongitude={setLongitude} longitude={longitude} setLatitude={setLatitude} latitude={latitude}/>
 
                   <ButtonShare />
 

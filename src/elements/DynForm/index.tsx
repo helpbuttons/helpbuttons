@@ -33,7 +33,7 @@ const DynamicForm = (props) => {
           [key]: data
         }));
       } else {
-        console.log("found", key, state[key]);
+        // console.log("found", key, state[key]);
         // this.setState({
         //   [key]: [e.target.value, ...this.state[key]]
         // });
