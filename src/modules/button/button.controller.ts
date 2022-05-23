@@ -21,7 +21,7 @@ import { ButtonService } from './button.service';
 export class ButtonController {
   constructor(private readonly buttonService: ButtonService) {}
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post('new')
   create(@Query('networkId') networkId: string, @Body() createDto: CreateButtonDto) {
     return this.buttonService.create(createDto, networkId);
