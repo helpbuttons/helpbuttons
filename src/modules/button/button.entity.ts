@@ -8,12 +8,7 @@ export class Button extends BaseEntity {
   @Column({})
   @PrimaryColumn()
   public id: string;
-
-  @Column({
-    nullable: true,
-  })
-  name?: string;
-
+  
   @Column({})
   description: string;
 
