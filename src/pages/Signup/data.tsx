@@ -18,7 +18,6 @@ export class SignupEvent implements WatchEvent {
       map((userData) => userData),
       take(1),
       tap(userData => {
-        debugger
         // if(userData.response.verificationToken)
         // Router.push({ pathname: 'localhost:3000' + userData.response.verificationToken.toString(), state: {} });
         // window.location.assign('localhost:3000' + userData.response.verificationToken.toString());
