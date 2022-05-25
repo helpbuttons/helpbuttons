@@ -64,7 +64,6 @@ export default function ButtonNew() {
 
 
     function onSubmit() {
-        // console.log('create button');
 
         //button data interface to be stored and sent
         const button: IButton = {
