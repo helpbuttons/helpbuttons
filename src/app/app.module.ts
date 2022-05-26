@@ -30,7 +30,7 @@ import { validate } from './validators/env.validator';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOSTNAME,
-      port: parseInt(process.env.POSTGRESQL_EXPOSED_PORT),
+      port: parseInt(process.env.POSTGRES_PORT),
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
