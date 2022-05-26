@@ -17,6 +17,8 @@ import FieldText from 'elements/Fields/FieldText';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import Form from 'elements/Form';
 import PopupOptions from 'components/popup/PopupOptions'
+import PopupImg from 'components/popup/PopupImg';
+import PopupSection from 'components/popup/PopupSection';
 
 export default function Signup() {
   const fields = {
@@ -43,13 +45,13 @@ export default function Signup() {
 
           <Alert />
 
-                <div className="popup__img">
+                <PopupImg>
 
                   <ImageWrapper imageType={ImageType.popup} src="https://dummyimage.com/80/#ccc/fff" alt="register_img"/>
 
-                </div>
+                </PopupImg>
 
-                <div className="popup__section">
+                <PopupSection>
                     <Form onSubmit={handleSubmit}>
                       <FieldText handleChange={setValue} name="email" label="Email" validationError={validationErrors.email}></FieldText>
                       <FieldPassword handleChange={setValue} name="password" label="Password" validationError={validationErrors.password}></FieldPassword>
@@ -58,7 +60,7 @@ export default function Signup() {
 
                     </Form>
 
-                </div>
+                </PopupSection>
                 <PopupOptions>
                   <Link href="/Login" className="popup__options-btn">I have an account</Link>
 
