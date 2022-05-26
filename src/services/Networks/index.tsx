@@ -34,7 +34,7 @@ export class NetworkService {
             "latitude": data.latitude,
             "longitude": data.longitude,
             "tags": [],
-            // "radius": data.radius
+            "radius": data.radius
           },
       });
 

@@ -29,7 +29,7 @@ export class CreateNetworkEvent implements WatchEvent {
             Router.push({ pathname: '/', state: state });
           }),
           catchError((error) => {
-            if (error.response.validationErrors)
+            if (error.response && error.response.validationErrors)
             {
               this.setValidationErrors(error.response.validationErrors)
             }

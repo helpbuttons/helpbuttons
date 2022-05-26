@@ -18,9 +18,9 @@ export default function NetworkNew() {
       url: "",
       privacy: false,
       description: "",
-      latitude: "",
-      longitude: "",
-      radius: ""
+      latitude: 0,
+      longitude: 0,
+      radius: 0
     };
     const [values, setValues] = useState(fields);
     const [validationErrors, setValidationErrors] = useState(fields);
@@ -33,15 +33,16 @@ export default function NetworkNew() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
+      const network: INetwork = {...values};
+
       console.log(values);
-      store.emit(new CreateNetworkEvent(values, token, setValidationErrors));
+      store.emit(new CreateNetworkEvent(network, token, setValidationErrors));
     };
 
     return (
 
         <>
             <Popup title="Create Network" linkFwd="/HomeInfo">
-            {JSON.stringify(validationErrors)}
 
               <Form onSubmit={handleSubmit}>
                 
@@ -52,19 +53,19 @@ export default function NetworkNew() {
                 </FieldText>
 
                 <FieldCheckbox label="Privacy" value={values.privacy} handleChange={setValue} name="privacy" validationError={validationErrors.privacy}>
-                  privacy checkbox
                 </FieldCheckbox>
                 
                 <FieldText handleChange={setValue} value={values.description} name="description" label="Description" validationError={validationErrors.description}>
                 </FieldText>
 
-                <FieldLocation>
-                latitude
+                <FieldText handleChange={setValue} value={values.latitude} name="latitude" label="Latitude" validationError={validationErrors.latitude} isNumber>
+                </FieldText>
 
-                longitude
+                <FieldText handleChange={setValue} value={values.longitude} name="longitude" label="Longitude" validationError={validationErrors.longitude} isNumber>
+                </FieldText>
 
-                radius
-                </FieldLocation>
+                <FieldText handleChange={setValue} value={values.radius} name="radius" label="Radius" validationError={validationErrors.radius} isNumber>
+                </FieldText>
 
                 <div className="popup__options-v">
 

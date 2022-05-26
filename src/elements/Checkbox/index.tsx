@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CrossIcon from "../../../public/assets/svg/icons/cross1";
 
 
@@ -36,7 +36,7 @@ export default function CheckBox({
 }) {
 
     type IconType = "cross" | "red";
-    const [checked, setChecked] = React.useState(false);
+    const [checked, setChecked] = useState(false);
 
     const onChange = () => {
         setChecked(!checked);

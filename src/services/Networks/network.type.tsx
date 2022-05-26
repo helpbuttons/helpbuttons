@@ -16,7 +16,7 @@ export interface INetwork {
   // geoPlace: {},
   latitude: number,
   longitude: number,
-  radius: string,
+  radius: number,
   friendNetworks: [],
   //only for admins:
   networkRoles: [], //array of roles specific for the net, default are net admins. Each of these net roles have their user list
