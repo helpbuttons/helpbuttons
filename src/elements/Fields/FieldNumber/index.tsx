@@ -5,7 +5,7 @@ export default function FieldText({
     validationError,
 }) {
     const onChange = (e) => {
-        handleChange(name, e.target.value);
+        handleChange(name, e.target.valueAsNumber);
       };
 
     return (
@@ -13,7 +13,8 @@ export default function FieldText({
         <label className="label">{label}</label>
             <input 
                       name={name} 
-                      type="text"
+                      type="number"
+                      step="any"
                       onChange={onChange}
                       className={`form__input ${validationError ? 'validation-error' : ''}`} 
                     />

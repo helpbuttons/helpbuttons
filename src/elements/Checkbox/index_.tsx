@@ -1,6 +1,5 @@
-import React, { useState } from "react";
 import CrossIcon from "../../../public/assets/svg/icons/cross1";
-
+type IconType = "cross" | "red";
 
 function CheckBoxIcon({ icon }: { icon: IconType }) {
     switch (icon) {
@@ -17,42 +16,34 @@ function CheckBoxIcon({ icon }: { icon: IconType }) {
     }
 }
 
-
-
 export default function CheckBox({
     icon,
     text,
-    inputId,
     value,
-    name,
-    handleChange,
-}: {
-    icon: IconType;
-    text: string;
-    inputId: string;
-    value: string;
-    name: string;
-    handleChange: Object;
+    onClick = ()=>{},
+    name = "",
+    inputId = "",
 }) {
-
-    type IconType = "cross" | "red";
-    const [checked, setChecked] = useState(false);
-
-    const onChange = () => {
-        setChecked(!checked);
-        handleChange(name, !checked);
-      };
-
-    return (
-        <div className="checkbox">
-            <label className="checkbox__label">
-                <input
+    let input = <input
                     type="checkbox"
                     className="checkbox__checkbox"
                     name={name}
-                    checked={checked}
-                    onChange={onChange}
-                ></input>
+                    onChange={onClick}
+                    ></input>
+    if(value) {
+        // http://react.tips/checkboxes-in-react/
+        input = <input
+        type="checkbox"
+        className="checkbox__checkbox"
+        name={name}
+        onChange={onClick}
+        checked
+        ></input>
+    }
+    return (
+        <div className="checkbox">
+            <label className="checkbox__label">
+               {input}
                 <div className={`checkbox__content ${value ? 'checked' : ''}`}>
                     <CheckBoxIcon icon={icon} />
                     <div className="checkbox__text">{text}</div>

@@ -1,4 +1,4 @@
-export default function FieldText({
+export default function FieldPassword({
     label,
     handleChange,
     name,
@@ -13,7 +13,7 @@ export default function FieldText({
         <label className="label">{label}</label>
             <input 
                       name={name} 
-                      type="text"
+                      type="password"
                       onChange={onChange}
                       className={`form__input ${validationError ? 'validation-error' : ''}`} 
                     />

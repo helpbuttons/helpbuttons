@@ -6,12 +6,14 @@ import { store } from 'pages/index';
 import FieldText from 'elements/Fields/FieldText';
 import Form from 'elements/Form';
 import { useForm } from 'react-hook-form';
-import FieldLocation from 'elements/Fields/FieldLocation';
 import FieldCheckbox from 'elements/Fields/FieldCheckbox';
+import FieldNumber from 'elements/Fields/FieldNumber';
+import PopupOptions from 'components/popup/PopupOptions';
+import FormSubmit from 'elements/Form/FormSubmit';
 
 
 export default function NetworkNew() {
-  const token = window.localStorage.getItem('access_token');
+    const token = window.localStorage.getItem('access_token');
     const fields = {
       name: "",
       avatar: "",
@@ -22,7 +24,7 @@ export default function NetworkNew() {
       longitude: 0,
       radius: 0
     };
-    const [values, setValues] = useState(fields);
+    const [values, setValues] = useState<INetwork>(fields);
     const [validationErrors, setValidationErrors] = useState(fields);
 
     const {formState: { isSubmitting }} = useForm()
@@ -33,10 +35,7 @@ export default function NetworkNew() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      const network: INetwork = {...values};
-
-      console.log(values);
-      store.emit(new CreateNetworkEvent(network, token, setValidationErrors));
+      store.emit(new CreateNetworkEvent(values, token, setValidationErrors));
     };
 
     return (
@@ -45,7 +44,6 @@ export default function NetworkNew() {
             <Popup title="Create Network" linkFwd="/HomeInfo">
 
               <Form onSubmit={handleSubmit}>
-                
                 <FieldText handleChange={setValue} value={values.name} name="name" label="Name" validationError={validationErrors.name}></FieldText>
 
                 TODO: AVATAR
@@ -58,24 +56,18 @@ export default function NetworkNew() {
                 <FieldText handleChange={setValue} value={values.description} name="description" label="Description" validationError={validationErrors.description}>
                 </FieldText>
 
-                <FieldText handleChange={setValue} value={values.latitude} name="latitude" label="Latitude" validationError={validationErrors.latitude} isNumber>
-                </FieldText>
+                <FieldNumber handleChange={setValue} value={values.latitude} name="latitude" label="Latitude" validationError={validationErrors.latitude}>
+                </FieldNumber>
 
-                <FieldText handleChange={setValue} value={values.longitude} name="longitude" label="Longitude" validationError={validationErrors.longitude} isNumber>
-                </FieldText>
+                <FieldNumber handleChange={setValue} value={values.longitude} name="longitude" label="Longitude" validationError={validationErrors.longitude}>
+                </FieldNumber>
 
-                <FieldText handleChange={setValue} value={values.radius} name="radius" label="Radius" validationError={validationErrors.radius} isNumber>
-                </FieldText>
+                <FieldNumber handleChange={setValue} value={values.radius} name="radius" label="Radius" validationError={validationErrors.radius}>
+                </FieldNumber>
 
-                <div className="popup__options-v">
-
-                    <button type="submit" disabled={isSubmitting}  className="popup__options-btn btn-menu-white">
-
-                      {isSubmitting && <span className=""></span>}
-                        Create Network
-                    </button>
-
-                </div>
+                <PopupOptions>
+                    <FormSubmit title="Create Network" isSubmitting={isSubmitting}/>
+                </PopupOptions>
 
 
               </Form>
