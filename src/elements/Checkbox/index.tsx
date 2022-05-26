@@ -1,5 +1,6 @@
+import React from "react";
 import CrossIcon from "../../../public/assets/svg/icons/cross1";
-type IconType = "cross" | "red";
+
 
 function CheckBoxIcon({ icon }: { icon: IconType }) {
     switch (icon) {
@@ -16,25 +17,42 @@ function CheckBoxIcon({ icon }: { icon: IconType }) {
     }
 }
 
+
+
 export default function CheckBox({
     icon,
     text,
     inputId,
     value,
+    name,
+    handleChange,
 }: {
     icon: IconType;
     text: string;
     inputId: string;
     value: string;
+    name: string;
+    handleChange: Object;
 }) {
+
+    type IconType = "cross" | "red";
+    const [checked, setChecked] = React.useState(false);
+
+    const onChange = () => {
+        setChecked(!checked);
+        handleChange(name, !checked);
+      };
+
     return (
         <div className="checkbox">
+            {checked.toString()}
             <label className="checkbox__label">
                 <input
                     type="checkbox"
                     className="checkbox__checkbox"
-                    id={inputId}
-                    value={value}
+                    name={name}
+                    checked={checked}
+                    onChange={onChange}
                 ></input>
                 <div className={`checkbox__content ${value ? 'checked' : ''}`}>
                     <CheckBoxIcon icon={icon} />

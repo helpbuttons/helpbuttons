@@ -14,7 +14,7 @@ import { storeService } from 'services/Store';
 
 //Called event for new user signup
 export class CreateNetworkEvent implements WatchEvent {
-  public constructor(private network : INetwork, private token : string) {}
+  public constructor(private network : INetwork, private token : string, private setValidationErrors) {}
   public watch(state: GlobalState) {
     return NetworkService.new(this.network, this.token).pipe(
           map(networkData => networkData),
@@ -29,6 +29,10 @@ export class CreateNetworkEvent implements WatchEvent {
             Router.push({ pathname: '/', state: state });
           }),
           catchError((error) => {
+            if (error.response.validationErrors)
+            {
+              this.setValidationErrors(error.response.validationErrors)
+            }
             return errorService.handle(error);
           })
     )
