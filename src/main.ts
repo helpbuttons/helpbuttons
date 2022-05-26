@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationError, ValidationPipe } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -10,6 +10,7 @@ import webAppConfig from './app/configs/web-app.config';
 
 // Middleware
 import { HttpExceptionFilter } from './shared/middlewares/errors/global-http-exception-filter.middleware';
+import { ValidationException, ValidationFilter } from './shared/middlewares/errors/validation-filter.middleware';
 
 async function bootstrap() {
   /**
@@ -26,20 +27,18 @@ async function bootstrap() {
     webAppConfig.KEY,
   );
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      validationError: {
-        target: true,
-        value: true,
-      },
-      transform: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
-    }),
-  );
-  // app.useGlobalFilters(new HttpExceptionFilter());
+  // validation filters
+  app.useGlobalFilters(new ValidationFilter());
+  app.useGlobalPipes(new ValidationPipe({
+    skipMissingProperties: false,
+    exceptionFactory: (errors: ValidationError[]) => {
+      const errMsg = {};
+      errors.forEach(err => {
+        errMsg[err.property] = [...Object.values(err.constraints)];
+      });
+      return new ValidationException(errMsg);
+    }
+  }));
 
   const config = new DocumentBuilder()
     .setTitle('Helpbuttons backend')
