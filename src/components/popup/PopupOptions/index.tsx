@@ -3,7 +3,7 @@
 //imported from libraries
 
 
-export default function PopupOptions({children, title, linkFwd, ...props}) {
+export default function PopupOptions({children}) {
 
   return (
 

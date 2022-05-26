@@ -15,7 +15,8 @@ import Popup from 'components/popup/Popup';
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import FieldText from 'elements/Fields/FieldText';
 import FieldPassword from 'elements/Fields/FieldPassword';
-
+import Form from 'elements/Form';
+import PopupOptions from 'components/popup/PopupOptions'
 
 export default function Signup() {
   const fields = {
@@ -49,22 +50,19 @@ export default function Signup() {
                 </div>
 
                 <div className="popup__section">
-
-                    <form onSubmit={handleSubmit}>
-                      <FieldText handleChange={setValue} value={values.email} name="email" label="Email" validationError={validationErrors.email}></FieldText>
-                      <FieldPassword handleChange={setValue} value={values.password} name="password" label="Password" validationError={validationErrors.password}></FieldPassword>
+                    <Form onSubmit={handleSubmit}>
+                      <FieldText handleChange={setValue} name="email" label="Email" validationError={validationErrors.email}></FieldText>
+                      <FieldPassword handleChange={setValue} name="password" label="Password" validationError={validationErrors.password}></FieldPassword>
                       
-                      <Btn btnType={BtnType.splitIcon} caption="REGISTER" contentAlignment={ContentAlignment.center}/>
+                      <Btn btnType={BtnType.splitIcon} caption="REGISTER" contentAlignment={ContentAlignment.center} isSubmitting={isSubmitting}/>
 
-                    </form>
+                    </Form>
 
                 </div>
-
-                <div className="popup__options-v">
-
+                <PopupOptions>
                   <Link href="/Login" className="popup__options-btn">I have an account</Link>
 
-                </div>
+                </PopupOptions>
 
 
       </Popup>
