@@ -361,19 +361,32 @@ function Repository() {
           </h3>
 
           <section className="repository__section repository__section--yellow">
+
             <div className="radio">
               <label className="radio__label">
-                <input type="radio" className="radio__radio" id="input-tos"></input>
+                <input type="radio" className="radio__radio" id="type2" name="type"></input>
                 <div className="radio__content">
                   <div className="radio__icon">
                     <CrossIcon />
                   </div>
                   <div className="radio__text">
-                    Cerca de mi
+                    Op1
+                  </div>
+                </div>
+              </label>
+              <label className="radio__label">
+                <input type="radio" className="radio__radio" id="type4" name="type"></input>
+                <div className="radio__content">
+                  <div className="radio__icon">
+                    <CrossIcon />
+                  </div>
+                  <div className="radio__text">
+                    Op2
                   </div>
                 </div>
               </label>
             </div>
+            
           </section>
 
           <h3 className="repository__title">

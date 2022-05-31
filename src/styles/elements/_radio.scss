@@ -11,6 +11,7 @@ $radio-color-text-checked: $color-white;
 $radio-color-checked: $color-black;
 $radio-color-gray-border: $color-gray-border;
 
+//frame div for erasing any style and warrantee 100% space FOR all radio buttons
 .radio {
   width: 100%;
   background: none;
@@ -22,16 +23,19 @@ $radio-color-gray-border: $color-gray-border;
   }
 }
 
+//label div for enclosing all radio button elements
 .radio__label {
   display: block;
   width: 100%;
 }
 
+// (same but for filters, smaller buttons)
 .radio__filter-label {
   display: block;
   width: auto;
 }
 
+//CHANGE: PROVISIONAL CLASS NAME FOR ICON , STUDY CHANGES
 .radio__netIcon {
   width: fit-content;
 
@@ -41,7 +45,7 @@ $radio-color-gray-border: $color-gray-border;
   }
 }
 
-//envelope class for radioes
+//envelope class for radios input
 .radio__container {
   width: auto;
   background: none;
@@ -57,7 +61,7 @@ $radio-color-gray-border: $color-gray-border;
   }
 }
 
-//class that includes radio STYLED content
+//class that includes radio STYLED content after input div
 .radio__content {
   @extend .btn-with-icon;
 
@@ -85,8 +89,7 @@ $radio-color-gray-border: $color-gray-border;
   background: $color-ligth-gray;
 }
 
-//radio FOR FILTERS - SMALL radioES IN MENUS AND HEADER - EXTENDED FROM btn-FILTER
-
+//radio elements FOR FILTERS - SMALL radioES IN MENUS AND HEADER - EXTENDED FROM btn-FILTER
 .radio-filter__container {
   width: auto;
   background: none;
@@ -118,8 +121,7 @@ $radio-color-gray-border: $color-gray-border;
   cursor: pointer;
 }
 
-///-- RREST OF radio
-
+///-- REST OF radio
 .radio__content:hover {
   cursor: pointer;
   background: $radio-color-hover;
@@ -139,10 +141,10 @@ $radio-color-gray-border: $color-gray-border;
   margin-bottom: 0;
 }
 
-///CLASS FOR radio ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
+///CLASS FOR radio input ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
 
 .radio__radio {
-  // display: none;
+  display: none;
 
   &:checked + .radio__content {
     background: $radio-color-checked;
@@ -160,8 +162,7 @@ $radio-color-gray-border: $color-gray-border;
   }
 }
 
-///CLASS FOR radio-FILTER ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
-
+///CLASS FOR radio input -FILTER ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
 .radio-filter__radio {
   display: none;
 
