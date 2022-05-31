@@ -1,115 +1,95 @@
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import Form from "elements/Form";
 
-import Popup from 'components/popup/Popup'
-import ButtonNewType from "components/button/ButtonNewType";
-import ButtonNewData from "components/button/ButtonNewData";
-import ButtonPublish from "layouts/ButtonPublish";
+import Popup from "components/popup/Popup";
+import ButtonType from "components/button/ButtonType";
+
+import { store } from "pages/index";
+import { CreateButtonEvent } from "pages/ButtonNew/data";
+import { IButton } from "services/Buttons/button.type";
+import FieldLocation from "elements/Fields/FieldLocation";
+import PopupSection from "components/popup/PopupSection";
+import FieldTextArea from "elements/Fields/FieldTextArea";
+import FieldUploadImage from "elements/Fields/FieldImageUpload";
+import PopupOptions from "components/popup/PopupOptions";
+import FormSubmit from "elements/Form/FormSubmit";
 import ButtonShare from "components/button/ButtonShare";
-
-import { store } from 'pages/index';
-import { CreateButtonEvent } from 'pages/ButtonNew/data';
-import IButton from 'services/Buttons/button.type';
-import ButtonNewDate from 'components/button/ButtonNewDate';
-import Location from 'elements/Location';
-
+// import Location from 'elements/Location';
 
 export default function ButtonNew() {
+  const networkId = window.localStorage.getItem("network_id");
+  const token = window.localStorage.getItem("access_token");
 
-    const router = useRouter();
+  // TODO: tags
 
-  // form variables
-    const [name, setName] = useState("");
-    const [owner, setOwner] = useState(0);
-    const [templateButtonId, setTemplateButtonId] = useState(0);
-    const [type, setType] = useState("offer");
-    const [description, setDescription] = useState("");
-    const [tags, setTags] = useState([]);
-    const [date, setDate] = useState("");
-    // const [geoPlace, setGeoPlace] = useState('{ "type": "Point", "coordinates": [100.0, 0.0]}');
-    const [latitude, setLatitude] = useState(0);
-    const [longitude, setLongitude] = useState(0);
-    const [networks, setNetworks] = useState([]);
-    const [feedType, setFeedType] = useState("");
-    const [templateExtraData, setTemplateExtraData] = useState("");
+  const fields = {
+    name: "",
+    templateButtonId: null,
+    type: "",
+    description: "",
+    latitude: null,
+    longitude: null,
+  };
 
-    // get selected network from store and/or localStorage
-    // const networkId = useRef(store, (state) => state.network.id.toString());
-    const networkId = window.localStorage.getItem('network_id');
-    // get validation token from localStorage
-    const token = window.localStorage.getItem('access_token');
+  const [button, setValues] = useState<IButton>(fields);
+  const [validationErrors, setValidationErrors] = useState(fields);
 
+  const {
+    formState: { isSubmitting },
+  } = useForm();
 
-    // form validation rules
-    const buttonSchema = Yup.object().shape({
+  const setValue = (name, value) => {
+    setValues({ ...button, [name]: value });
+  };
 
-        type: Yup.mixed(),
-        description: Yup.string()
-            .min(6, 'Description must be at least 6 characters'),
-        tags: Yup.string(),
-        date: Yup.string(),
-        location: Yup.string(),
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    store.emit(
+      new CreateButtonEvent(button, token, networkId, setValidationErrors)
+    );
+  };
 
-    });
-
-    // form validation YUP functions
-    const formOptions = { resolver: yupResolver(buttonSchema) };
-    // get functions to build form with useForm() hook. Not used to store or send the data
-    const { register, handleSubmit, formState } = useForm(formOptions);
-    const { errors } = formState;
-
-
-    function onSubmit() {
-
-        //button data interface to be stored and sent
-        const button: IButton = {
-
-          name: name,
-          templateButtonId: templateButtonId,
-          type: type,
-          tags: tags,
-          description: description,
-          //required data
-          // date: date,
-          //GIS DATA
-          // geoPlace: geoPlace,
-          latitude: latitude,
-          longitude: longitude,
-          // optional values
-          networks: networks,
-          // feedType: feedType, //enum {single,group} feed structure
-          // templateExtraData: JSON.stringify(templateExtraData),
-
-        };
-
-        //emit is called to trigger the event by the observable
-        store.emit(new CreateButtonEvent(button, token, networkId));
-
-    }
-
-
-    return (
-
-          <>
-
-              <Popup title="Create Button" linkFwd="/Explore">
-
-                <form onSubmit={handleSubmit(onSubmit)} className="popup__section">
-
-                  <ButtonNewType setType={setType} type={type} register={register} errors={errors}/>
-
+  return (
+    <>
+      <Popup title="Create Button" linkFwd="/Explore">
+        {JSON.stringify(button)}
+        <PopupSection>
+          <Form onSubmit={handleSubmit}>
+            <ButtonType
+              handleChange={setValue}
+              name="type"
+              validationError={validationErrors.type}
+            />
+            <FieldTextArea
+              label="Describe your purpose:"
+              handleChange={setValue}
+              name="description"
+              placeholder="i.e. I would like to offer..."
+              validationError={validationErrors.description}
+            />
+            <FieldUploadImage label="+ Add image (optional)" />
+            <FieldLocation
+              setValue={setValue}
+              values={button}
+              validationErrors={validationErrors}
+            />
+            dsa
+            <ButtonShare />
+            <PopupOptions>
+              <FormSubmit title="Create Button" isSubmitting={isSubmitting} />
+            </PopupOptions>
+            {/* 
                   <ButtonNewData  setDescription={setDescription} setTags={setTags} description={description} tags={tags} register={register} errors={errors}/>
                   {tags}
                   {description}
 
                   <ButtonNewDate setDate={setDate} date={date}/>
-                  <Location setLongitude={setLongitude} longitude={longitude} setLatitude={setLatitude} latitude={latitude}/>
+                  
+                  <FieldLocation setValue={setValue} values={values} validationErrors={validationErrors} />
 
-                  <ButtonShare />
+                  
 
                   <div className="popup__options-v">
 
@@ -120,15 +100,10 @@ export default function ButtonNew() {
 
                     </button>
 
-                  </div>
-
-                </form>
-
-              </Popup>
-
-
-
-          </>
-      );
-
+                  </div> */}
+          </Form>
+        </PopupSection>
+      </Popup>
+    </>
+  );
 }

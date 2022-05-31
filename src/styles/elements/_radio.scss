@@ -1,0 +1,188 @@
+$radio-content-border: $border-lines-width;
+$radio-filter-padding: 3rem;
+$radio-height: $height-btn;
+$radio-medium-height: 40px;
+$radio-border-radius: $border-radius-circle;
+$radio-color: $color-white;
+$radio-color-text: $color-black;
+$radio-color-text-hover: $color-white;
+$radio-color-hover: $color-gray;
+$radio-color-text-checked: $color-white;
+$radio-color-checked: $color-black;
+$radio-color-gray-border: $color-gray-border;
+
+.radio {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.radio__label {
+  display: block;
+  width: 100%;
+}
+
+.radio__filter-label {
+  display: block;
+  width: auto;
+}
+
+.radio__netIcon {
+  width: fit-content;
+
+  &_icon {
+    height: fit-content !important;
+    width: fit-content !important;
+  }
+}
+
+//envelope class for radioes
+.radio__container {
+  width: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  height: $radio-height;
+  display: flex;
+  flex: 0 0 auto;
+
+  // flex: 1;
+  &:focus {
+    outline: none;
+  }
+}
+
+//class that includes radio STYLED content
+.radio__content {
+  @extend .btn-with-icon;
+
+  background: $radio-color;
+  border: $radio-content-border solid $color-gray-border;
+  display: flex;
+  font-size: $font-size-medium;
+  position: relative;
+  height: $radio-height;
+  transition: background 0.2s;
+  width: auto;
+  color: $radio-color-text;
+  min-width: 150px;
+  border-radius: 42px;
+  box-sizing: border-box;
+}
+
+.radio__content--bordered {
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+}
+
+.radio__content--disabled {
+  //revise
+  background: $color-ligth-gray;
+}
+
+//radio FOR FILTERS - SMALL radioES IN MENUS AND HEADER - EXTENDED FROM btn-FILTER
+
+.radio-filter__container {
+  width: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex: 0 0 auto;
+
+  // flex: 1;
+  &:focus {
+    outline: none;
+  }
+}
+
+.radio-filter__content {
+  @extend .btn-filter;
+
+  color: $radio-color-text;
+  transition: background 0.2s;
+
+  &--bordered {
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+  }
+}
+
+.radio-filter__content:hover {
+  cursor: pointer;
+}
+
+///-- RREST OF radio
+
+.radio__content:hover {
+  cursor: pointer;
+  background: $radio-color-hover;
+  color: $radio-color-text-hover !important;
+
+  & svg {
+    fill: $radio-color-text-hover;
+  }
+}
+
+.radio__icon {
+  @extend .btn-filter__icon;
+}
+
+.radio__text {
+  @extend .btn-with-icon__text;
+  margin-bottom: 0;
+}
+
+///CLASS FOR radio ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
+
+.radio__radio {
+  display: none;
+
+  &:checked + .radio__content {
+    background: $radio-color-checked;
+    background-size: 40px;
+    color: $radio-color-text-checked;
+    min-width: 150px;
+
+    & svg {
+      fill: $radio-color-text-hover;
+    }
+  }
+
+  &:checked + .radio__content::before {
+    background-size: 80%;
+  }
+}
+
+///CLASS FOR radio-FILTER ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
+
+.radio-filter__radio {
+  display: none;
+
+  &:checked + .radio-filter__content {
+    background: $radio-color-checked;
+    color: $radio-color-text-checked;
+
+    .icon {
+      fill: $radio-color-text-checked;
+    }
+  }
+
+  &:checked + .profile-buttons__radio {
+    background: $radio-color-checked;
+    color: $radio-color-text-checked;
+  }
+
+  &:checked + .radio__content::before {
+    background: transparent;
+  }
+}
+
+@media #{$breakpoints-xxlarge} {
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import CheckBox from 'elements/Checkbox'
+import FieldError from "../FieldError";
 
 export default function FieldCheckbox({
     label,
@@ -12,7 +13,7 @@ export default function FieldCheckbox({
         <div className="form__field">
         <label className="label">{label}</label>
             <CheckBox icon="cross" name={name} value={value} handleChange={handleChange}/>
-         {validationError}
+            <FieldError validationError={validationError}/>
         </div>
         
     );

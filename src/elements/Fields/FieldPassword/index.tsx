@@ -1,3 +1,6 @@
+import React from "react";
+import FieldError from "../FieldError";
+
 export default function FieldPassword({
     label,
     handleChange,
@@ -17,7 +20,7 @@ export default function FieldPassword({
                       onChange={onChange}
                       className={`form__input ${validationError ? 'validation-error' : ''}`} 
                     />
-         {validationError}
+            <FieldError validationError={validationError}/>
         </div>
     );
 }

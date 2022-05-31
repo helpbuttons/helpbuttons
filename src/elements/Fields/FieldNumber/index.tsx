@@ -1,3 +1,5 @@
+import FieldError from "../FieldError";
+
 export default function FieldText({
     label,
     handleChange,
@@ -18,7 +20,7 @@ export default function FieldText({
                       onChange={onChange}
                       className={`form__input ${validationError ? 'validation-error' : ''}`} 
                     />
-         {validationError}
+         <FieldError validationError={validationError}/>
         </div>
     );
 }

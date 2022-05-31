@@ -10,6 +10,8 @@ import FieldCheckbox from 'elements/Fields/FieldCheckbox';
 import FieldNumber from 'elements/Fields/FieldNumber';
 import PopupOptions from 'components/popup/PopupOptions';
 import FormSubmit from 'elements/Form/FormSubmit';
+import FieldLocation from 'elements/Fields/FieldLocation';
+import PopupSection from 'components/popup/PopupSection';
 
 
 export default function NetworkNew() {
@@ -20,9 +22,9 @@ export default function NetworkNew() {
       url: "",
       privacy: false,
       description: "",
-      latitude: 0,
-      longitude: 0,
-      radius: 0
+      latitude: null,
+      longitude: null,
+      radius: null
     };
     const [values, setValues] = useState<INetwork>(fields);
     const [validationErrors, setValidationErrors] = useState(fields);
@@ -42,7 +44,7 @@ export default function NetworkNew() {
 
         <>
             <Popup title="Create Network" linkFwd="/HomeInfo">
-
+              <PopupSection>
               <Form onSubmit={handleSubmit}>
                 <FieldText handleChange={setValue} value={values.name} name="name" label="Name" validationError={validationErrors.name}></FieldText>
 
@@ -56,22 +58,15 @@ export default function NetworkNew() {
                 <FieldText handleChange={setValue} value={values.description} name="description" label="Description" validationError={validationErrors.description}>
                 </FieldText>
 
-                <FieldNumber handleChange={setValue} value={values.latitude} name="latitude" label="Latitude" validationError={validationErrors.latitude}>
-                </FieldNumber>
-
-                <FieldNumber handleChange={setValue} value={values.longitude} name="longitude" label="Longitude" validationError={validationErrors.longitude}>
-                </FieldNumber>
-
-                <FieldNumber handleChange={setValue} value={values.radius} name="radius" label="Radius" validationError={validationErrors.radius}>
-                </FieldNumber>
-
+                <FieldLocation setValue={setValue} values={values} validationErrors={validationErrors} />
+                
                 <PopupOptions>
                     <FormSubmit title="Create Network" isSubmitting={isSubmitting}/>
                 </PopupOptions>
 
 
               </Form>
-
+              </PopupSection>
             </Popup>
 
 
