@@ -142,7 +142,7 @@ $radio-color-gray-border: $color-gray-border;
 ///CLASS FOR radio ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
 
 .radio__radio {
-  display: none;
+  // display: none;
 
   &:checked + .radio__content {
     background: $radio-color-checked;
