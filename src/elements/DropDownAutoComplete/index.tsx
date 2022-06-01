@@ -2,22 +2,22 @@
 //libraries
 import { useState } from "react";
 
-export default function DropdownComp({
+export function DropdownAutoComplete({
   options,
-  bubbleChange,
+  onChange,
   setValue,
   placeholder,
 }) {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [input, setInput] = useState("");
 
-  const onChange = (e) => {
+  const onChangeInput = (e) => {
     let inputText = e.target.value;
 
     const userInput = e.target.value;
     setInput(inputText);
     setShowSuggestions(true);
-    bubbleChange(e);
+    onChange(userInput);
   };
 
   const onClick = (e) => {
@@ -34,7 +34,7 @@ export default function DropdownComp({
       <input
         className="dropdown-nets__dropdown-trigger dropdown__dropdown"
         autoComplete="on"
-        onChange={onChange}
+        onChange={onChangeInput}
         list=""
         id="input"
         name="browsers"
@@ -53,5 +53,15 @@ export default function DropdownComp({
         </datalist>
       )}
     </>
+  );
+}
+
+export function DropDownAutoCompleteOption({ value, label }) {
+  return (
+    <option
+      className="dropdown-nets__dropdown-option"
+      label={label}
+      value={value}
+    ></option>
   );
 }
