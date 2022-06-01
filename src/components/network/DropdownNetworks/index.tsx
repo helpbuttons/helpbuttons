@@ -1,82 +1,64 @@
-//a variation of dropddown specific for networks
-//libraries
-import { useState, useEffect } from "react";
-
-//functions
-import { GetNetworksEvent } from "./data.tsx";
-import { SetNetworkByIdEvent } from "./data.tsx";
+import DropdownComp from "components/dropdown";
+import DropdownOption from "components/dropdown/option";
+import { useEffect, useState } from "react";
+import { Subject } from "rxjs";
+import { alertService } from "services/Alert";
 
 //services
-import { NetworkService } from 'services/Networks';
-import { store } from 'pages/index';
-import { useRef } from 'store/Store';
-import { INetwork } from 'services/Networks/network.type.tsx';
+import { NetworkService } from "services/Networks";
+import { INetwork } from "services/Networks/network.type";
+import { setSelectedNetwork, setValueAndDebounce } from "./data";
 
+const timeInMsBetweenStrokes = 200;
 
-export default function DropdownNetworks({ ...props}) {
+export default function DropdownNetworks({ ...props }) {
+  const [options, setOptions] = useState([]);
 
-  let [networks, setNetworks] = useState([]);
-  let [selectedNetwork, setSelectedNetwork] = useState(INetwork);
-  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [input, setInput] = useState("");
+  const [sub, setSub] = useState(new Subject()); //evita la inicializaacion en cada renderizado
+  const [sub$, setSub$] = useState(
+    setValueAndDebounce(sub, timeInMsBetweenStrokes)
+  ); //para no sobrecargar el componente ,lo delegamos a una lib externa(solid);
 
-  const onChange = (e) => {
-
-    const userInput = e.target.value;
-    // Filter our suggestions that don't contain the user's input
-    const unLinked = networksArray;
-    setInput(e.target.value);
-    setFilteredSuggestions(unLinked);
-    setActiveSuggestionIndex(0);
-    setShowSuggestions(true);
-
+  const onChange = (event) => {
+    //console.log(event.target.value);
+    sub.next(event.target.value);
   };
-
-  const onClick = (e) => {
-
-  //  console.log(e.target.attributes.data_id.nodeValue + e.target.attributes.label.value);
-   //setInput(e.target.innerText); uncomment iif we want to externalize inputs from the component
-   SetNetworkByIdEvent(e.target.attributes.data_id.nodeValue, setSelectedNetwork);
-   setFilteredSuggestions([]);
-   setActiveSuggestionIndex(0);
-   setShowSuggestions(false);
-
-  };
-
-
-  //get networks into array
-  let networksArray = networks.nets ? networks.nets : networks;
-
-  const options = networksArray.map((net, i) => (
-
-      <option key={net.id} data_id={net.id} className="dropdown-nets__dropdown-option" label={net.name} value={net.name} onClick={onClick}>{net.name}</option>
-
-  ));
-
-  // console.log(options);
 
   useEffect(() => {
+    let s = sub$.subscribe(
+      (rs: any) => {
+        setOptions(
+          rs.response.map((net) => {
+            return (
+              <DropdownOption key={net.id} label={net.name} value={net.id} />
+            );
+          })
+        );
+      },
+      (e) => {
+        console.log("error subscribe", e);
+      }
+    );
+    return () => {
+      s.unsubscribe(); //limpiamos
+    };
+  }, []); //first time
 
-    //call networks array before rendering
-    networks = GetNetworksEvent(setNetworks);
-
-  }, [])
-
+  const setValue = (networkId, networkName) => {
+    // const networkId = e.target.attributes.data_id.nodeValue;
+    // const networkName = e.target.attributes.label.nodeValue;
+    setSelectedNetwork(networkId);
+    alertService.info(
+      "You're using the network '" + networkName + "' network !"
+    );
+  };
   return (
-
     <>
-      <input className="dropdown-nets__dropdown-trigger dropdown__dropdown" autoComplete="on" onChange={onChange} list="" id="input" name="browsers" placeholder="Search other Network" type='text'></input>
-
-        {showSuggestions && input &&
-          <datalist className="dropdown-nets__dropdown-content" id='listid'>
-            {options}
-          </datalist>
-        }
-
+      <DropdownComp
+        setValue={setValue}
+        bubbleChange={onChange}
+        options={options}
+      ></DropdownComp>
     </>
-
-
   );
 }
