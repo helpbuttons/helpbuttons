@@ -2,7 +2,12 @@
 //libraries
 import { useState } from "react";
 
-export default function DropdownComp({ options, bubbleChange, setValue }) {
+export default function DropdownComp({
+  options,
+  bubbleChange,
+  setValue,
+  placeholder,
+}) {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [input, setInput] = useState("");
 
@@ -26,7 +31,6 @@ export default function DropdownComp({ options, bubbleChange, setValue }) {
 
   return (
     <>
-      {JSON.stringify(options)}
       <input
         className="dropdown-nets__dropdown-trigger dropdown__dropdown"
         autoComplete="on"
@@ -34,7 +38,7 @@ export default function DropdownComp({ options, bubbleChange, setValue }) {
         list=""
         id="input"
         name="browsers"
-        placeholder="Search other Network"
+        placeholder={placeholder}
         type="text"
         value={input}
       ></input>

@@ -58,6 +58,7 @@ export default function DropdownNetworks({ ...props }) {
         setValue={setValue}
         bubbleChange={onChange}
         options={options}
+        placeholder="Search other Network"
       ></DropdownComp>
     </>
   );
