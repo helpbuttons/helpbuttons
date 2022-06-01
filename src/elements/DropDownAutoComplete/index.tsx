@@ -1,5 +1,3 @@
-//a variation of dropddown specific for networks
-//libraries
 import { useState } from "react";
 
 export function DropdownAutoComplete({
@@ -29,6 +27,10 @@ export function DropdownAutoComplete({
     setShowSuggestions(false);
   };
 
+  const onInputClick = (e) => {
+    e.target.select();
+  };
+
   return (
     <>
       <input
@@ -41,6 +43,7 @@ export function DropdownAutoComplete({
         placeholder={placeholder}
         type="text"
         value={input}
+        onClick={onInputClick}
       ></input>
 
       {showSuggestions && (
