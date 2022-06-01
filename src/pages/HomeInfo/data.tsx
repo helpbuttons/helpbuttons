@@ -3,8 +3,12 @@ import { NetworkService } from "services/Networks";
 import { debounceTime } from "rxjs";
 import { switchMap } from "rxjs/operators";
 
-export function setSelectedNetwork(networkId: string) {
-  NetworkService.setSelectedNetwork(networkId);
+export function setSelectedNetworkId(networkId: string) {
+  NetworkService.setSelectedNetworkId(networkId);
+}
+
+export function getSelectedNetworkId() {
+  return NetworkService.getSelectedNetworkId();
 }
 
 export function setValueAndDebounce(sub, ms) {

@@ -161,7 +161,11 @@ export class NetworkService {
     return ajax(baseUrl + path).pipe(map((res: any) => res.response));
   }
 
-  public static setSelectedNetwork(networkId: string) {
+  public static setSelectedNetworkId(networkId: string) {
     localStorageService.save("network_id", networkId);
+  }
+
+  public static getSelectedNetworkId() {
+    return localStorageService.read("network_id");
   }
 }

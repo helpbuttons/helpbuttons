@@ -4,7 +4,6 @@ import Router from "next/router";
 import { useState, useEffect } from "react";
 
 //services
-import { localStorageService } from "services/LocalStorage";
 import { alertService } from "services/Alert";
 import { store } from "pages/index";
 import { useRef } from "store/Store";
@@ -14,7 +13,11 @@ import Btn, { ContentAlignment, BtnType, IconType } from "elements/Btn";
 import { Link } from "elements/Link";
 
 import { Subject } from "rxjs";
-import { setSelectedNetwork, setValueAndDebounce } from "./data";
+import {
+  setSelectedNetworkId,
+  getSelectedNetworkId,
+  setValueAndDebounce,
+} from "./data";
 import {
   DropdownAutoComplete,
   DropDownAutoCompleteOption,
@@ -25,19 +28,17 @@ export default function HomeInfo() {
   const networks = useRef(store, (state) => state.commonData.networks);
   const [selectedNetworkId, setSelectedNetworkId] = useState(
     useRef(store, (state) => {
-      return localStorageService.read("network_id");
+      return getSelectedNetworkId();
     })
   );
 
   useEffect(() => {
-    if (localStorageService.read("network_id") == null) {
+    if (getSelectedNetworkId() == null) {
       alertService.info("It looks like youre new ! First, create your network");
       Router.push({ pathname: "/NetworkNew" });
     }
 
-    alertService.info(
-      "You're in the " + localStorageService.read("network_id") + " network !"
-    );
+    alertService.info("You're in the " + getSelectedNetworkId() + " network !");
   }, []);
 
   return (
@@ -117,7 +118,7 @@ function DropdownNetworks() {
   }, []); //first time
 
   const setValue = (networkId, networkName) => {
-    setSelectedNetwork(networkId);
+    setSelectedNetworkId(networkId);
     alertService.info(
       "You're using the network '" + networkName + "' network !"
     );
