@@ -1,49 +1,19 @@
-// import { map, tap, take, catchError } from 'rxjs/operators';
-//
-// import { NetworkService } from 'services/Networks';
-// import { INetwork } from 'services/Networks/types';
-import { alertService }  from 'services/Alert/index.ts';
-//
-export function NoNetworkCreatedAction () {
-  
+import { NetworkService } from "services/Networks";
+
+import { debounceTime } from "rxjs";
+import { switchMap } from "rxjs/operators";
+
+export function setSelectedNetworkId(networkId: string) {
+  NetworkService.setSelectedNetworkId(networkId);
 }
-//  export function GetNetworksEvent (setNetworks) {
-//
-//    // Anything in here is fired on component mount.
-//    let networks = NetworkService.find().subscribe(nets => {
-//
-//      if (nets) {
-//            // add message to local state if not empty
-//            setNetworks(nets.response);
-//        } else {
-//            // clear messages when empty message received
-//            setNetworks([]);
-//        }
-//
-//    });
-//    return () => {
-//        // Anything in here is fired on component unmount.
-//        networks.unsubscribe();
-//    }
-//
-//  }
-//
-//  export function GetNetworkByIdEvent (id, setNetwork) {
-//
-//    // Call by id to return net.
-//    let networks = NetworkService.findById(id).subscribe(net => {
-//      if (net) {
-//            // return network data
-//            setNetwork(net.response);
-//        } else {
-//            //  return network empty values
-//            setNetwork();
-//        }
-//
-//    });
-//    return () => {
-//        // Anything in here is fired on component unmount.
-//        networks.unsubscribe();
-//    }
-//
-//  }
+
+export function getSelectedNetworkId() {
+  return NetworkService.getSelectedNetworkId();
+}
+
+export function setValueAndDebounce(sub, ms) {
+  return sub.asObservable().pipe(
+    debounceTime(ms),
+    switchMap((name) => NetworkService.find(name)) //n is id;
+  );
+}
