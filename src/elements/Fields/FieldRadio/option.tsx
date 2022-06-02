@@ -5,19 +5,20 @@ export default function FieldRadioOption({
   children,
 }) {
   const onClick = (e) => {
-    e.preventDefault();
     handleChange(name, value);
   };
   return (
     <>
-      <input
-        onClick={onClick}
-        type="radio"
-        className={`btn-with-icon btn-with-icon--hover btn-with-icon--${
-          value ? value : ""
-        }`}
-      />
-      {children}
+      <label className="radio__label">
+        <input
+          onClick={onClick}
+          type="radio"
+          id={name}
+          name={name}
+          className="radio__radio"
+        ></input>
+        <div className="radio__content">{children}</div>
+      </label>
     </>
   );
 }

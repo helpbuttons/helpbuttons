@@ -16,6 +16,7 @@ import FieldUploadImage from "elements/Fields/FieldImageUpload";
 import PopupOptions from "components/popup/PopupOptions";
 import FormSubmit from "elements/Form/FormSubmit";
 import ButtonShare from "components/button/ButtonShare";
+import ButtonNewDate from "components/button/ButtonNewDate";
 // import Location from 'elements/Location';
 
 export default function ButtonNew() {
@@ -35,6 +36,7 @@ export default function ButtonNew() {
 
   const [button, setValues] = useState<IButton>(fields);
   const [validationErrors, setValidationErrors] = useState(fields);
+  const [date, setDate] = useState("");
 
   const {
     formState: { isSubmitting },
@@ -54,7 +56,6 @@ export default function ButtonNew() {
   return (
     <>
       <Popup title="Create Button" linkFwd="/Explore">
-        {JSON.stringify(button)}
         <PopupSection>
           <Form onSubmit={handleSubmit}>
             <ButtonType
@@ -75,32 +76,11 @@ export default function ButtonNew() {
               values={button}
               validationErrors={validationErrors}
             />
-            dsa
+            <ButtonNewDate setDate={setDate} date={date} />
             <ButtonShare />
             <PopupOptions>
               <FormSubmit title="Create Button" isSubmitting={isSubmitting} />
             </PopupOptions>
-            {/* 
-                  <ButtonNewData  setDescription={setDescription} setTags={setTags} description={description} tags={tags} register={register} errors={errors}/>
-                  {tags}
-                  {description}
-
-                  <ButtonNewDate setDate={setDate} date={date}/>
-                  
-                  <FieldLocation setValue={setValue} values={values} validationErrors={validationErrors} />
-
-                  
-
-                  <div className="popup__options-v">
-
-                    <button type="submit" disabled={formState.isSubmitting}  className="popup__options-btn btn-menu-white">
-
-                      {formState.isSubmitting && <span className=""></span>}
-                        Create Button
-
-                    </button>
-
-                  </div> */}
           </Form>
         </PopupSection>
       </Popup>
