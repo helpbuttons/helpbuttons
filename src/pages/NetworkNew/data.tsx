@@ -10,11 +10,14 @@ import Router from "next/router";
 import INetwork from "services/Networks/network.type.tsx";
 import { alertService } from "services/Alert";
 import { errorService } from "services/Error";
-import { localStorageService } from "services/LocalStorage";
 
 //Called event for new user signup
 export class CreateNetworkEvent implements WatchEvent {
-  public constructor(private network: INetwork, private token: string) {}
+  public constructor(
+    private network: INetwork,
+    private token: string,
+    private setValidationErrors
+  ) {}
   public watch(state: GlobalState) {
     return NetworkService.new(this.network, this.token).pipe(
       map((networkData) => networkData),
@@ -26,11 +29,13 @@ export class CreateNetworkEvent implements WatchEvent {
 
         //store net in Store
         new NetworkUpdateEvent(networkData);
-        NetworkService.setSelectedNetwork(networkData.response.id);
-
+        NetworkService.setSelectedNetworkId(networkData.response.id);
         Router.push({ pathname: "/", state: state });
       }),
       catchError((error) => {
+        if (error.response && error.response.validationErrors) {
+          this.setValidationErrors(error.response.validationErrors);
+        }
         return errorService.handle(error);
       })
     );
