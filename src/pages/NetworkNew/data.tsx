@@ -26,7 +26,7 @@ export class CreateNetworkEvent implements WatchEvent {
 
         //store net in Store
         new NetworkUpdateEvent(networkData);
-        localStorageService.save("network_id", networkData.response.id);
+        NetworkService.setSelectedNetwork(networkData.response.id);
 
         Router.push({ pathname: "/", state: state });
       }),
