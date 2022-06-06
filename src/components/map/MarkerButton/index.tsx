@@ -7,7 +7,7 @@ import { Marker, Popup } from "react-leaflet";
 import { iconButton } from "./IconButton";
 import CardButtonMap from "components/map/CardButtonMap";
 
-export function MarkerButton({ position }) {
+export function MarkerButton({ position, children }) {
   return (
     <Marker
       position={
@@ -20,7 +20,16 @@ export function MarkerButton({ position }) {
       }
       icon={iconButton}
     >
-      {/* <Popup className="card-button-map--wrapper">
+      {children}
+    </Marker>
+  );
+}
+export function MarkersButton({ buttons, ...props }) {
+  let buttonArray = buttons.length > 0 ? buttons[0] : buttons;
+
+  const markers = buttonArray.map((button, i) => (
+    <MarkerButton position={button.location} key={i}>
+      <Popup className="card-button-map--wrapper">
         <CardButtonMap
           key={button.id}
           type={button.type}
@@ -32,16 +41,8 @@ export function MarkerButton({ position }) {
           date={button.date}
           location={button.geoPlace}
         />
-      </Popup> */}
-    </Marker>
-  );
-}
-export function MarkersButton({ buttons, ...props }) {
-  let buttonArray = buttons.length > 0 ? buttons[0] : buttons;
-
-  console.log(buttons);
-  const markers = buttonArray.map((btn, i) => (
-    <MarkerButton position={btn.location} key={i} />
+      </Popup>
+    </MarkerButton>
   ));
 
   return markers;
