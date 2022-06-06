@@ -43,7 +43,9 @@ export default function ButtonNew() {
   } = useForm();
 
   const setValue = (name, value) => {
-    setValues({ ...button, [name]: value });
+    setValues((previousState) => {
+      return { ...previousState, [name]: value };
+    });
   };
 
   const handleSubmit = (event) => {
