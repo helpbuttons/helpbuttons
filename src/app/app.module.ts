@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from '@src/modules/auth/auth.module';
 import { ButtonModule } from '@src/modules/button/button.module';
 import { MailModule } from '@src/modules/mail/mail.module';
 import { NetworkModule } from '@src/modules/network/network.module';
+import { StorageModule } from '@src/modules/storage/storage.module';
 import { TagModule } from '@src/modules/tag/tag.module';
 import { TemplateButtonModule } from '@src/modules/template-button/template-button.module';
 import { UserCredentialModule } from '@src/modules/user-credential/user-credential.module';
@@ -37,6 +39,9 @@ import { validate } from './validators/env.validator';
       entities: ['dist/modules/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    MulterModule.register({
+      dest: process.env.UPLOADS_PATH,
+    }),
     ButtonModule,
     TagModule,
     NetworkModule,
@@ -44,6 +49,7 @@ import { validate } from './validators/env.validator';
     UserModule,
     AuthModule,
     UserCredentialModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
