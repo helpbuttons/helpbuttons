@@ -1,27 +1,49 @@
 ///button marker over the map
-import React from 'react';
-import { map } from 'rxjs/operators';
-import { useState } from 'react'
+import React from "react";
+import { map } from "rxjs/operators";
+import { useState } from "react";
 
-import { Marker, Popup } from 'react-leaflet'
-import {  iconButton  } from './IconButton';
-import CardButtonMap from 'components/map/CardButtonMap'
+import { Marker, Popup } from "react-leaflet";
+import { iconButton } from "./IconButton";
+import CardButtonMap from "components/map/CardButtonMap";
 
-export default function MarkerButton ({buttons, ...props}) {
-
+export function MarkerButton({ position, children }) {
+  return (
+    <Marker
+      position={
+        position
+          ? {
+              lat: position.coordinates[0],
+              lng: position.coordinates[1],
+            }
+          : { lat: null, lng: null }
+      }
+      icon={iconButton}
+    >
+      {children}
+    </Marker>
+  );
+}
+export function MarkersButton({ buttons, ...props }) {
   let buttonArray = buttons.length > 0 ? buttons[0] : buttons;
 
-  const markers = buttonArray.map((btn, i) => (
-
-          <Marker key={btn.id} position={btn.geoPlace ? { lat: btn.geoPlace.coordinates[0], lng: btn.geoPlace.coordinates[1]} : {lat:null,lng:null}} icon={ iconButton }>
-
-            <Popup className="card-button-map--wrapper">
-                <CardButtonMap key={btn.id} type={btn.type} userName={btn.owner} images={btn.images} buttonName={btn.name} tags={btn.tags} description={btn.description} date={btn.date} location={btn.geoPlace}/>
-            </Popup>
-
-          </Marker>
-
+  const markers = buttonArray.map((button, i) => (
+    <MarkerButton position={button.location} key={i}>
+      <Popup className="card-button-map--wrapper">
+        <CardButtonMap
+          key={button.id}
+          type={button.type}
+          userName={button.owner}
+          images={button.images}
+          buttonName={button.name}
+          tags={button.tags}
+          description={button.description}
+          date={button.date}
+          location={button.geoPlace}
+        />
+      </Popup>
+    </MarkerButton>
   ));
 
   return markers;
-};
+}

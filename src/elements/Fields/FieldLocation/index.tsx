@@ -2,9 +2,18 @@
 import React, { useState } from "react";
 import FieldNumber from "../FieldNumber";
 import FieldError from "../FieldError";
+import "leaflet/dist/leaflet.css";
 
+import Map from "components/map/LeafletMap";
 export default function FieldLocation({ setValue, values, validationErrors }) {
   const [showHideMenu, setHideMenu] = useState(false);
+  const style = { width: "100%", height: "600px" };
+
+  const onClick = (e) => {
+    setValue("latitude", e.coordinates[0]);
+    setValue("longitude", e.coordinates[1]);
+    setValue("radius", 20);
+  };
 
   return (
     <>
@@ -24,31 +33,7 @@ export default function FieldLocation({ setValue, values, validationErrors }) {
       {showHideMenu && (
         <div className="picker__close-container">
           <div className="picker--over picker-box-shadow picker__content picker__options-v">
-            <fieldset>
-              <FieldNumber
-                handleChange={setValue}
-                value={values.latitude}
-                name="latitude"
-                label="Latitude"
-                validationError={validationErrors.latitude}
-              ></FieldNumber>
-
-              <FieldNumber
-                handleChange={setValue}
-                value={values.longitude}
-                name="longitude"
-                label="Longitude"
-                validationError={validationErrors.longitude}
-              ></FieldNumber>
-
-              <FieldNumber
-                handleChange={setValue}
-                value={values.radius}
-                name="radius"
-                label="Radius"
-                validationError={validationErrors.radius}
-              ></FieldNumber>
-            </fieldset>
+            <Map addMarkerClick={onClick} style={style} />
           </div>
 
           <div
