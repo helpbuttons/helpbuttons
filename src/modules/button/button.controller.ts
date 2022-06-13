@@ -8,13 +8,21 @@ import {
   Delete,
   Query,
   UseGuards,
+  Request,
+  UseInterceptors,
+  UploadedFile,
+  UploadedFiles,
 } from '@nestjs/common';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { ButtonService } from './button.service';
 // import { FilterButtonsOrmDto } from '../dto/requests/filter-buttons-orm.dto';
+import { editFileName, imageFileFilter } from '../storage/storage.utils';
 
 @ApiTags('buttons')
 @Controller('buttons')
@@ -23,8 +31,19 @@ export class ButtonController {
 
   @UseGuards(JwtAuthGuard)
   @Post('new')
-  create(@Query('networkId') networkId: string, @Body() createDto: CreateButtonDto) {
-    return this.buttonService.create(createDto, networkId);
+  @UseInterceptors(FilesInterceptor('images[]', 4, {
+    storage: diskStorage({
+      destination: process.env.UPLOADS_PATH,
+      filename: editFileName,
+    }),
+    fileFilter: imageFileFilter,
+  }
+  ))
+  create(@Query('networkId') networkId: string,
+    @UploadedFiles() images,
+    @Body() createDto: CreateButtonDto,
+  ) {
+    return this.buttonService.create(createDto, networkId, images);
   }
 
   @Get('/find/')

@@ -7,6 +7,7 @@ import { initializeTransactionalContext } from 'typeorm-transactional-cls-hooked
 
 import { AppModule } from '@src/app/app.module';
 import webAppConfig from './app/configs/web-app.config';
+import * as bodyParser from 'body-parser';
 
 // Middleware
 import { HttpExceptionFilter } from './shared/middlewares/errors/global-http-exception-filter.middleware';
@@ -27,6 +28,9 @@ async function bootstrap() {
     webAppConfig.KEY,
   );
 
+  app.use(bodyParser.json({limit: '50mb'}));
+  app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+  
   // validation filters
   app.useGlobalFilters(new ValidationFilter());
   app.useGlobalPipes(new ValidationPipe({

@@ -24,6 +24,9 @@ export class Button extends BaseEntity {
   @Column('text', { array: true, nullable: true })
   tags?: string[];
 
+  @Column('text', { array: true, nullable: true })
+  images: string[];
+  
   @ManyToOne(() => Network, (network) => network.buttons)
   network: Network;
   // missing, network relations, template, owner, tags

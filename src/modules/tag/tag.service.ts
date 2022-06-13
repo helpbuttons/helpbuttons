@@ -26,7 +26,7 @@ export class TagService {
   }
 
   async addTags(modelName: string, modelId: string, tags: string[]) {
-    let tagsToInsert = tags.map((tag) => {
+    let tagsToInsert = tags.filter(tag => tag.length > 0).map((tag) => {
       return {
         modelName: modelName,
         modelId: modelId,
