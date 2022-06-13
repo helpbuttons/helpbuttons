@@ -32,23 +32,18 @@ export class StorageController {
     return res.sendFile(image, { root: process.env.UPLOADS_PATH });
   }
 
-  @Post('upload-image')
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: process.env.UPLOADS_PATH,
-        filename: editFileName,
-      }),
-      fileFilter: imageFileFilter,
-    }),
-  )
-  async uploadedImage(@UploadedFile() file) {
-      this.storageService.newImage(file);
-    const response = {
-      originalname: file.originalname,
-      filename: file.filename,
-    };
-    return response;
-  }
+  // @Post('upload-image')
+  // @UseInterceptors(
+  //   FileInterceptor('image', {
+  //     storage: diskStorage({
+  //       destination: process.env.UPLOADS_PATH,
+  //       filename: editFileName,
+  //     }),
+  //     fileFilter: imageFileFilter,
+  //   }),
+  // )
+  // async uploadedImage(@UploadedFile() file) {
+  //   return this.storageService.newImage(file);
+  // }
 
 }

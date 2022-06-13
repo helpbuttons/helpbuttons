@@ -12,17 +12,14 @@ export class StorageService {
   }
 
   async newImage(file: any) {
-    console.log(file)
-    console.log('createing ')
     const fileimage = {
       id: dbIdGenerator(),
       name: file.filename,
       mimetype: file.mimetype,
       originalname: file.originalname,
     }
-    console.log(fileimage)
-    // create new file on a table...
-    return await this.imageFilesRepository.insert([fileimage]);
+    await this.imageFilesRepository.insert([fileimage]);
+    return '/get/' + fileimage.name;
 
   }
 }

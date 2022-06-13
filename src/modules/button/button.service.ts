@@ -7,6 +7,7 @@ import { CreateButtonDto,UpdateButtonDto } from './button.dto';
 import { Button } from './button.entity';
 import { getManager } from "typeorm";
 import { NetworkService } from '../network/network.service';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable()
 export class ButtonService {
@@ -14,30 +15,38 @@ export class ButtonService {
     @InjectRepository(Button)
     private readonly buttonRepository: Repository<Button>,
     private readonly tagService: TagService,
-    private readonly networkService: NetworkService){
+    private readonly networkService: NetworkService,
+    private readonly storageService: StorageService) {
   }
 
-  async create(createDto: CreateButtonDto, networkId: string) {
+  async create(createDto: CreateButtonDto, networkId: string, images: File[]) {
     const network = await this.networkService.findOne(networkId);
     
     if (!network) {
       throw new HttpException({message: 'Network not found'}, HttpStatus.BAD_REQUEST)
     }
     
-
     let button = {
       id: dbIdGenerator(),
-      // name: createDto.name,
       description: createDto.description,
       latitude: createDto.latitude,
       longitude: createDto.longitude,
       tags: createDto.tags,
       location: () => `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
       network: network,
+      images: []
     }
     
     await getManager().transaction(async transactionalEntityManager => {
-      await this.tagService.addTags('button', button.id, createDto.tags).catch(err => {throw new HttpException({message: err.message}, HttpStatus.BAD_REQUEST)});
+      if (Array.isArray(button.tags)) {
+        await this.tagService.addTags('button', button.id, button.tags).catch(err => {throw new HttpException({message: err.message}, HttpStatus.BAD_REQUEST)});  
+      }
+      
+      if (Array.isArray(images) && images.length > 0) {
+        button.images = await Promise.all(images.map( async (imageFile) => {
+          return await (await this.storageService.newImage(imageFile));
+        }));
+      }
       
       await this.buttonRepository.insert([button]);
     });
@@ -75,7 +84,10 @@ export class ButtonService {
   }
 
   findAll() {
-    return this.buttonRepository.find();
+    return this.buttonRepository.find({
+      order: {
+      created_at: "DESC"
+    }});
   }
 
   remove(id: string) {
