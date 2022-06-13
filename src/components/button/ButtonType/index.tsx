@@ -21,10 +21,8 @@ function RadioIcon({ icon }: { icon: IconType }) {
   }
 }
 
-export default function ButtonType({ handleChange, validationError }) {
+export default function ButtonType({ handleChange, name, validationError }) {
   const [value, setValue] = useState("");
-
-  const name = "type";
 
   let onChange = (name, value) => {
     setValue(value);

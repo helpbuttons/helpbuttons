@@ -2,12 +2,8 @@ import { Observable } from "rxjs";
 import { ajax } from "rxjs/ajax";
 import { IButton } from "./button.type";
 
-import { map, catchError } from "rxjs/operators";
-import { of } from "rxjs";
-import { store } from "./index";
-import { useRef } from "../../store/Store";
-
 import getConfig from "next/config";
+import { UtilsService } from "services/Utils";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -18,26 +14,27 @@ export class ButtonService {
     token: string,
     networkId: string
   ): Observable<any> {
-    //save the ajax object that can be .pipe by the observable
-    const buttonWithHeaders$ = ajax({
+    
+    let bodyData = {
+      name: data.name,
+      type: data.type,
+      description: data.description,
+      latitude: data.latitude,
+      longitude: data.longitude,
+      tags: [],
+      images: data.images,
+    };
+    const formData = UtilsService.objectToFormData(bodyData);
+
+    return ajax({
       url: baseUrl + "/buttons/new?networkId=" + networkId,
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         accept: "application/json",
         Authorization: "Bearer " + token,
       },
-      body: {
-        name: data.name,
-        type: data.type,
-        tags: [],
-        description: data.description,
-        latitude: data.latitude,
-        longitude: data.longitude,
-      },
+      body: formData
     });
-
-    return buttonWithHeaders$;
   }
 
   //Edit button
