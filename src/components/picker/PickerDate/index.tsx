@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import buildCalendar from "./build";
 import dayStyles from "./styles";
 
-export default function Calendar() {
+export default function PickerDate() {
   const [calendar, setCalendar] = useState([]);
   const [value, setValue] = useState(moment());
   const [Hour, setHour] = useState("0");

@@ -2,7 +2,7 @@
 import moment from "moment";
 import { useState } from "react";
 
-export default function PickerTime() {
+export default function PickerPeriodDate() {
   const [Days, setDays] = useState(moment());
   const [Hour, setHour] = useState("0");
   const [Minutos, setMinutos] = useState("0");
