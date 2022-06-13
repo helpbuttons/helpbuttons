@@ -19,7 +19,7 @@ export class StorageService {
       originalname: file.originalname,
     }
     await this.imageFilesRepository.insert([fileimage]);
-    return '/get/' + fileimage.name;
+    return fileimage.name;
 
   }
 }

@@ -8,10 +8,10 @@ import { PartialType } from '@nestjs/swagger';
 export class CreateButtonDto implements Partial<Button> {
   @ApiProperty({
     type: [String],
-    required: true,
+    required: false,
   })
   @IsArray({})
-  tags: string[];
+  tags?: string[];
 
   @ApiProperty({
     type: String,

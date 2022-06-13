@@ -41,7 +41,7 @@ export class ButtonController {
   ))
   create(@Query('networkId') networkId: string,
     @UploadedFiles() images,
-    @Body() createDto: CreateButtonDto
+    @Body() createDto: CreateButtonDto,
   ) {
     return this.buttonService.create(createDto, networkId, images);
   }
