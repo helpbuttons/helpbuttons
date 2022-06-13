@@ -39,7 +39,10 @@ export class ButtonService {
     
     await getManager().transaction(async transactionalEntityManager => {
       if (Array.isArray(button.tags)) {
-        await this.tagService.addTags('button', button.id, button.tags).catch(err => {throw new HttpException({message: err.message}, HttpStatus.BAD_REQUEST)});  
+        await this.tagService.addTags('button', button.id, button.tags).catch(err => {
+          console.log(`Error adding tags ${JSON.stringify(button.tags)} to button ${button.id}`)
+          throw new HttpException({ message: err.message }, HttpStatus.BAD_REQUEST)
+        });
       }
       
       if (Array.isArray(images) && images.length > 0) {
