@@ -12,11 +12,11 @@ import { IButton } from "services/Buttons/button.type";
 import FieldLocation from "elements/Fields/FieldLocation";
 import PopupSection from "components/popup/PopupSection";
 import FieldTextArea from "elements/Fields/FieldTextArea";
-import FieldUploadImage from "elements/Fields/FieldImageUpload";
 import PopupOptions from "components/popup/PopupOptions";
 import FormSubmit from "elements/Form/FormSubmit";
 import ButtonShare from "components/button/ButtonShare";
 import ButtonNewDate from "components/button/ButtonNewDate";
+import FieldUploadImage from "elements/Fields/FieldImageUpload/index";
 // import Location from 'elements/Location';
 
 export default function ButtonNew() {
@@ -32,6 +32,7 @@ export default function ButtonNew() {
     description: "",
     latitude: null,
     longitude: null,
+    images: []
   };
 
   const [button, setValues] = useState<IButton>(fields);
@@ -63,6 +64,11 @@ export default function ButtonNew() {
               name="type"
               validationError={validationErrors.type}
             />
+            <FieldUploadImage
+              name="images"
+              handleChange={setValue}
+              label="+ Add image (optional)"
+            />
             <FieldTextArea
               label="Describe your purpose:"
               handleChange={setValue}
@@ -70,7 +76,6 @@ export default function ButtonNew() {
               placeholder="i.e. I would like to offer..."
               validationError={validationErrors.description}
             />
-            <FieldUploadImage label="+ Add image (optional)" />
             <FieldLocation
               setValue={setValue}
               values={button}

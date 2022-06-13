@@ -26,7 +26,7 @@ export class CreateButtonEvent implements WatchEvent {
           "Has creado un botón" + buttonData.response.id.toString()
         );
 
-        Router.push({ pathname: "/", state: state });
+        Router.push({ pathname: "/Explore", state: state });
       }),
       catchError((error) => {
         if (error.response && error.response.validationErrors) {

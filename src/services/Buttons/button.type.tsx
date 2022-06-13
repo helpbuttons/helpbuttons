@@ -2,6 +2,7 @@ export interface IButton {
   id?: any | null;
   owner?: any;
   name: string;
+  images: any[];
   templateButtonId?: any | null;
   type?: enum;
   tags?: [string];
