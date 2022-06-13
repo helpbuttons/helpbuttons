@@ -1,5 +1,4 @@
 import { map, tap, take, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { produce } from 'immer';
 import Router, { withRouter } from 'next/router';
 
@@ -9,13 +8,13 @@ import { GlobalState } from 'store/Store';
 import { UserService } from 'services/Users';
 import { IUser } from 'services/Users/types';
 import { HttpUtilsService } from "services/HttpUtilsService";
-import { alertService }  from 'services/Alert/index.ts';
+import { errorService } from 'services/Error';
 
 
 //Called event for login
-export class LoginEvent implements WatchEvent {
+export class LoginFormEvent implements WatchEvent {
 
-  public constructor(private email: string,private password: string) {}
+  public constructor(private email: string,private password: string, private setValidationErrors) {}
   public watch(state: GlobalState) {
     return UserService.login(this.email, this.password).pipe(
       map(userData => userData),
@@ -26,13 +25,11 @@ export class LoginEvent implements WatchEvent {
         Router.push({ pathname: '/', state: {} });
       }),
       catchError((error) => {
-        console.log("error: ", error.message);
-        if(error.response.error.details) {
-          alertService.error(error.response.error.details[0].message);
-        } else {
-          alertService.error(error.response.error.message);
+        if (error.response && error.response.validationErrors)
+        {
+          this.setValidationErrors(error.response.validationErrors)
         }
-        return of(error);
+        return errorService.handle(error);
       }),
     )
   }

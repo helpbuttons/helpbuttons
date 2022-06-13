@@ -22,7 +22,6 @@ export class Store<T> {
   private _subscribe(): void {
     this.events$.pipe(
       filter((event) => {
-        console.log(event);
         return isUpdateEvent(event);
       }),
       withLatestFrom(this.state$),
@@ -30,7 +29,6 @@ export class Store<T> {
 
     this.events$.pipe(
       filter((event) => {
-        console.log(event);
         return isWatchEvent(event);
       }),
       withLatestFrom(this.state$),
@@ -38,7 +36,6 @@ export class Store<T> {
 
     this.events$.pipe(
       filter((event) => {
-        console.log(event);
         return isEffectEvent(event);
       }),
       withLatestFrom(this.state$),

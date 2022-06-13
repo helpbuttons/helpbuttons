@@ -7,8 +7,7 @@ import { UpdateEvent } from '../store/Event';
 import { GlobalState } from 'store/Store';
 
 import { NetworkService } from 'services/Networks';
-import { INetwork } from 'services/Networks/types';
-
+import { INetwork } from 'services/Networks/network.type.tsx';
 
 export interface CommonDataState {
   heading: string;
@@ -38,7 +37,6 @@ export class LoadCommonNetworks implements UpdateEvent, WatchEvent {
 
       }),
       catchError((error) => {
-        console.log(error);
       }),
 
     )
@@ -60,7 +58,7 @@ export class LoadCommonSelectedNetwork implements UpdateEvent, WatchEvent {
        new SelectedNetworkDataLoaded(selectedNetwork);
       }),
       catchError((error) => {
-        console.log(error);
+        console.error(error);
       }),
 
     )
