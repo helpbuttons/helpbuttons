@@ -1,59 +1,54 @@
 //is the component or element integrated in buttonNewPublish. Right before activate button. It displays the current selected date and a button to chang it, that ddisplays a picker with the date options for the net that's selecte
-import React, {useState} from "react";
+import { Picker, PickerSelector } from "components/picker/Picker";
+import PickerPeriodDate from "components/picker/PickerPeriodDate";
+import PickerDate from "components/picker/PickerDate";
+import React, { useState } from "react";
 
 export default function ButtonNewDate({ exact, ...props }) {
-
   const [showHideMenu, setHideMenu] = useState(false);
+  const [pickerMode, setPickerMode] = useState("");
 
+  let closeMenu = () => {
+    setHideMenu(false);
+    setPickerMode("");
+  };
   return (
-
     <>
-
       <div className="form__field">
+        <div className="card-button__date">{props.date}</div>
 
-        <div className="card-button__date">
-          {props.date}
-        </div>
-        
         <div className="btn" onClick={() => setHideMenu(!showHideMenu)}>
           Change date
         </div>
-
       </div>
-
-      {showHideMenu &&
-
-        <div className="picker__close-container">
-          <div className="picker--over picker-box-shadow picker__content picker__options-v">
-            <button  className="picker__option-btn--active" type="button" name="btn">
-                <div className="picker__option-btn--icon">
-                </div>
-                <div onClick={() => props.setDate("Ahora")} className="picker__option-btn--txt">
-                  Now
-                </div>
-            </button>
-            <button onClick={() => props.setDate("10 Abril de 2022")}  className="picker__option-btn--active" type="button" name="button">
-                <div className="picker__option-btn--icon">
-                </div>
-                <div className="picker__option-btn--txt">
-                  Specific date
-                </div>
-            </button>
-            <button onClick={() => props.setDate("Todos los miércoles")}  className="picker__option-btn--active" type="button" name="button">
-                <div className="picker__option-btn--icon">
-                </div>
-                <div className="picker__option-btn--txt">
-                  Periodic date
-                </div>
-            </button>
-          </div>
-          <div className="picker__close-overlay" onClick={() => setHideMenu(false)}></div>
-        </div>
-
-      }
-
+      {showHideMenu && (
+        <Picker setHideMenu={setHideMenu} onClosed={closeMenu}>
+          {pickerMode == "" && (
+            <PickerSelector
+              label="Now"
+              value="now"
+              onHandleChange={setPickerMode}
+            />
+          )}
+          {pickerMode == "" && (
+            <PickerSelector
+              label="Specific"
+              value="specific"
+              onHandleChange={setPickerMode}
+            />
+          )}
+          {pickerMode == "" && (
+            <PickerSelector
+              label="Periodic Date"
+              value="periodic"
+              onHandleChange={setPickerMode}
+            />
+          )}
+          {pickerMode == "now" && <PickerDate></PickerDate>}
+          {pickerMode == "specific" && <PickerPeriodDate></PickerPeriodDate>}
+          {pickerMode == "periodic" && <PickerPeriodDate></PickerPeriodDate>}
+        </Picker>
+      )}
     </>
-
-
   );
 }

@@ -40,8 +40,8 @@ function List(props) {
         <div className="list__container" className={'list__container ' + (showLeftColumn ? '' : 'list__container--hide')}>
 
 
-              <div className="list__content">
-                <ContentList buttons={buttons}/>
+        <div className="list__content">
+          <ContentList buttons={buttons} />
               </div>
 
         </div>
