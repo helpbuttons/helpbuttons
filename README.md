@@ -8,15 +8,15 @@ This software is currently being developed heavily, so be minded this might not 
 
 ## Getting Started
 
-### First, run the postgis server using docker: 
-
-`$ docker-compose up -d db`
-
-### Second, setup the .env file:
+### First, setup the .env file:
 
 `$ cp .env.example .env`
 
 edit the .env file according to your needs.
+
+### Secondly, run the postgis server using docker: 
+
+`$ docker-compose up -d db`
 
 ### Lastly, run the backend:
 ```
