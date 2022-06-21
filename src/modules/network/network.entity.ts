@@ -20,9 +20,6 @@ export class Network extends BaseEntity {
   //   @Column({}) TODO
   //   privacy?: string;
 
-  //   @Column({}) TODO
-  //   avatar?: string;
-
   @Column({ type: 'double precision' })
   radius: number;
 
@@ -37,6 +34,9 @@ export class Network extends BaseEntity {
 
   @Column('text', { array: true, nullable: true })
   tags?: string[];
+
+  @Column({type: 'text', nullable: true})
+  avatar?: string;
 
   @OneToMany(() => Button, (button) => button.network)
   buttons: Network[];

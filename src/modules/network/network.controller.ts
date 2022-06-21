@@ -6,9 +6,13 @@ import {
     Patch,
     Param,
     Delete,
-    Query,
+    UseInterceptors,
+    UploadedFile,
   } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
   import { ApiTags } from '@nestjs/swagger';
+import { diskStorage } from 'multer';
+import { editFileName, imageFileFilter } from '../storage/storage.utils';
   
   import { CreateNetworkDto, UpdateNetworkDto } from './network.dto';
   import { NetworkService } from './network.service';
@@ -20,13 +24,23 @@ import {
     constructor(private readonly networkService: NetworkService) {}
   
     @Post('new')
-    create(@Body() createDto: CreateNetworkDto) {
-      return this.networkService.create(createDto);
+    @UseInterceptors(FileInterceptor('avatar', {
+      storage: diskStorage({
+        destination: process.env.UPLOADS_PATH,
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }
+    ))
+    create(@UploadedFile() avatar,
+      @Body() createDto: CreateNetworkDto
+    ){
+      return this.networkService.create(createDto, avatar);
     }
   
-    @Get('find')
-    async findAll() {
-      return await this.networkService.findAll();
+    @Get('find/:name')
+    async findAll(@Param('name') name: string) {
+      return await this.networkService.findAll(name);
     }
   
     @Get('findById/:networkId')
