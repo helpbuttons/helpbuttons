@@ -13,7 +13,7 @@ export class Tag extends BaseEntity {
   })
   id?: string;
 
-  @PrimaryColumn()
+  @Column()
   tag: string;
 
   @Column({

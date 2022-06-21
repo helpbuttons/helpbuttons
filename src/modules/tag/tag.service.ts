@@ -28,6 +28,7 @@ export class TagService {
   async addTags(modelName: string, modelId: string, tags: string[]) {
     let tagsToInsert = tags.filter(tag => tag.length > 0).map((tag) => {
       return {
+        id: dbIdGenerator(),
         modelName: modelName,
         modelId: modelId,
         tag: tag,
