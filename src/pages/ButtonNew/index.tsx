@@ -16,13 +16,14 @@ import PopupOptions from "components/popup/PopupOptions";
 import FormSubmit from "elements/Form/FormSubmit";
 import ButtonShare from "components/button/ButtonShare";
 import ButtonNewDate from "components/button/ButtonNewDate";
-import FieldUploadImage from "elements/Fields/FieldImageUpload/index";
+import FieldUploadImages from "elements/Fields/FieldImagesUpload/index";
 import PickerTime from "components/picker/PickerPeriodDate";
+import { localStorageService } from "services/LocalStorage";
 // import Location from 'elements/Location';
 
 export default function ButtonNew() {
-  const networkId = window.localStorage.getItem("network_id");
-  const token = window.localStorage.getItem("access_token");
+  const networkId = localStorageService.read("network_id");
+  const token = localStorageService.read("access_token");
 
   // TODO: tags
 
@@ -67,10 +68,11 @@ export default function ButtonNew() {
               name="type"
               validationError={validationErrors.type}
             />
-            <FieldUploadImage
+            <FieldUploadImages
               name="images"
               handleChange={setValue}
               label="+ Add image (optional)"
+              maxNumber="4"
             />
             <FieldTextArea
               label="Describe your purpose:"

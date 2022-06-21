@@ -9,7 +9,7 @@ import { store } from "pages/index";
 import { useRef } from "store/Store";
 
 //components
-import Btn, { ContentAlignment, BtnType, IconType } from "elements/Btn";
+import Btn, { ContentAlignment, BtnType } from "elements/Btn";
 import { Link } from "elements/Link";
 
 import { Subject } from "rxjs";
@@ -17,28 +17,39 @@ import {
   setSelectedNetworkId,
   getSelectedNetworkId,
   setValueAndDebounce,
+  getSelectedNetwork,
 } from "./data";
 import {
   DropdownAutoComplete,
   DropDownAutoCompleteOption,
 } from "elements/DropDownAutoComplete";
 
-export default function HomeInfo() {
-  // const [networks, setNetworks] = useState(useRef(store, (state) => state.commonData.networks));
-  const networks = useRef(store, (state) => state.commonData.networks);
-  const [selectedNetworkId, setSelectedNetworkId] = useState(
-    useRef(store, (state) => {
-      return getSelectedNetworkId();
-    })
-  );
+import ImageWrapper, {ImageContainer} from "elements/ImageWrapper";
 
-  useEffect(() => {
-    if (getSelectedNetworkId() == null) {
+export default function HomeInfo() {
+  const [selectedNetwork, setSelectedNetwork] = useState({
+    name: ''
+  });
+  
+  const setValue = (name, value) => {
+    setValues((previousState) => {
+      return { ...previousState, [name]: value };
+    });
+  };
+
+  const selectNetwork = (network) => {
+    setSelectedNetwork((previousState) => {
+      return { ...previousState, ...network };
+    });
+    if (network.id == null) {
       alertService.info("It looks like youre new ! First, create your network");
-      Router.push({ pathname: "/NetworkNew" });
     }
 
-    alertService.info("You're in the " + getSelectedNetworkId() + " network !");
+    alertService.info("You're in the '" + network.name + "' network !");
+  };
+
+  useEffect(() => {
+    getSelectedNetwork(selectNetwork);
   }, []);
 
   return (
@@ -63,7 +74,15 @@ export default function HomeInfo() {
 
           <div className="info-overlay__bottom">
             <div className="info-overlay__nets">
-              <DropdownNetworks />
+              {selectedNetwork.name}
+              <ImageContainer
+                src={selectedNetwork.avatar}
+                alt={selectedNetwork.name}
+                width={"50"}
+                height={"50"}
+                localUrl
+              />
+              <DropdownNetworks selectNetwork={selectNetwork}/>
               <Link href="/NetworkNew">
                 <Btn
                   btnType={BtnType.corporative}
@@ -79,7 +98,7 @@ export default function HomeInfo() {
   );
 }
 
-function DropdownNetworks() {
+function DropdownNetworks( {selectNetwork}) {
   const timeInMsBetweenStrokes = 200; //ms
 
   const [options, setOptions] = useState([]);
@@ -118,10 +137,7 @@ function DropdownNetworks() {
   }, []); //first time
 
   const setValue = (networkId, networkName) => {
-    setSelectedNetworkId(networkId);
-    alertService.info(
-      "You're using the network '" + networkName + "' network !"
-    );
+    setSelectedNetworkId(networkId, selectNetwork);
   };
   return (
     <>

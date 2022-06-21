@@ -2,8 +2,9 @@
 ///Btn is the project convention for tradittional buttons, in order to avoidd confussion with app's buttons
 import React from "react";
 import Image from 'next/image'
-
-
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
+const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
 export enum ImageType {
     avatar,
@@ -28,6 +29,7 @@ interface ImageProps {
     alt: string;
     objectFit?: string;
     imageType: ImageType;
+    localUrl?: boolean;
 }
 
 
@@ -39,6 +41,7 @@ export default function ImageWrapper({
     src = null,
     objectFit = "contain",
     imageType = ImageType.popup,
+    localUrl = false
 }: ImageProps) {
     let classNames = [];
 
@@ -69,12 +72,47 @@ export default function ImageWrapper({
     }
 
     const className = classNames.join(" ");
+    if (localUrl) {
+        src = baseUrl + "/files/get/" + src;
+    }
 
     return (
           <Image
             src={src}
             alt={alt}
             layout={layout}
+            width={width}
+            height={height}
+          />
+    );
+}
+
+
+
+
+export function ImageContainer({
+    height = 200,
+    width = 200,
+    alt = null,
+    src = '',
+    localUrl = false
+}) {
+    let classNames = [];
+
+    const className = classNames.join(" ");
+    if (!src) {
+        return (
+            <>
+            </>
+        );
+    }
+    if (localUrl) {
+        src = baseUrl + "/files/get/" + src;
+    }
+    return (
+          <Image
+            src={src}
+            alt={alt}
             width={width}
             height={height}
           />

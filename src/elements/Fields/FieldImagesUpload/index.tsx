@@ -1,24 +1,22 @@
 import { useState } from "react";
 import ImageUploading from "react-images-uploading";
 
-export default function FieldUploadImage({ name, label, handleChange }) {
+export default function FieldUploadImages({ name, label, handleChange, maxNumber }) {
   const [images, setImages] = useState([]);
-
   const onChange = (imageList, addUpdateIndex) => {
     setImages(imageList);
-
     const imageFilesList = imageList.map((imageData) => imageData.file);
-    
-    if (imageFilesList.length > 0)
-      handleChange(name, imageFilesList[0]);
+    handleChange(name, imageFilesList);
   };
 
   return (
     <>
       <div className="form__field">
         <ImageUploading
+          multiple
           value={images}
           onChange={onChange}
+          maxNumber={maxNumber}
           dataURLKey="data_url"
         >
           {({
