@@ -38,11 +38,6 @@ export class CreateNetworkDto implements Partial<Network> {
     type: Number,
     example: 10,
   })
-  @IsNumber({
-    allowInfinity: false,
-    allowNaN: false,
-    maxDecimalPlaces: 2,
-  })
   radius: number;
 
   
@@ -55,11 +50,7 @@ export class CreateNetworkDto implements Partial<Network> {
     required: true,
     example: 39.23864,
   })
-  @IsNumber({
-    allowInfinity: false,
-    allowNaN: false,
-    maxDecimalPlaces: 20,
-  })
+  @IsLatitude()
   latitude: number;
 
   @ApiProperty({
@@ -71,11 +62,7 @@ export class CreateNetworkDto implements Partial<Network> {
     required: true,
     example: -8.67096,
   })
-  @IsNumber({
-    allowInfinity: false,
-    allowNaN: false,
-    maxDecimalPlaces: 20,
-  })
+  @IsLongitude()
   longitude: number;
 
   @ApiProperty({

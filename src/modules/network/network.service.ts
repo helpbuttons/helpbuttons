@@ -1,21 +1,23 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateNetworkDto,UpdateNetworkDto } from './network.dto';
 import { Network } from './network.entity';
 import { getManager } from "typeorm";
+import { StorageService } from '../storage/storage.service';
 
 @Injectable()
 export class NetworkService {
   constructor(
     @InjectRepository(Network)
     private readonly networkRepository: Repository<Network>,
-    private readonly tagService: TagService){
+    private readonly tagService: TagService,
+    private readonly storageService: StorageService) {
   }
 
-  async create(createDto: CreateNetworkDto) {
+  async create(createDto: CreateNetworkDto, avatar: File) {
     // TODO: 
     // add owner
     // validate geopoint
@@ -30,11 +32,13 @@ export class NetworkService {
       longitude: createDto.longitude,
       tags: createDto.tags,
       location: () => `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
+      avatar: '',
     }
     
     await getManager().transaction(async transactionalEntityManager => {
       await this.tagService.addTags('network', network.id, createDto.tags).catch(err => {throw new HttpException({message: err.message}, HttpStatus.BAD_REQUEST)});
       
+      network.avatar = await this.storageService.newImage(avatar);
       await this.networkRepository.insert([network]);
     });
     
@@ -45,8 +49,10 @@ export class NetworkService {
     return await this.networkRepository.findOne({id});
   }
 
-  async findAll(): Promise<Network[]>{
-    return await this.networkRepository.find();
+  async findAll(name: string): Promise<Network[]>{
+    return await this.networkRepository.find({
+      name: ILike(`%${name}%`)
+    });
   }
   update(id: string, updateDto: UpdateNetworkDto) {
     

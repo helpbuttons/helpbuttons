@@ -4,11 +4,13 @@ import { NetworkService } from './network.service';
 import { NetworkController } from './network.controller';
 import { Network } from './network.entity';
 import { TagModule } from '../tag/tag.module';
+import { StorageModule } from '../storage/storage.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Network]),
-    TagModule
+    TagModule,
+    StorageModule
   ],
   controllers: [
     NetworkController
