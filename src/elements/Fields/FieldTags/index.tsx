@@ -50,17 +50,18 @@ export default function FieldTags({
 
   return (
     <div className="form__field">
-      <label className="label">{label}</label>
-      <ul className="input-tag__tags">
+    <label className="label">{label}</label>
+    <div className="card-button-list__hashtags">
+        <div className="card-button-list__need"></div>
         {tags.map((tag, i) => (
-          <li key={tag}>
-            {tag}
-            <button type="button" onClick={() => removeTag(tag)}>
-              x
-            </button>
-          </li>
+            <div key={i} className="hashtag">
+                {tag}
+                <button type="button" onClick={() => removeTag(tag)}>
+                x
+                </button>
+            </div>
         ))}
-      </ul>
+      </div>
       <input
         name={name}
         type="text"
