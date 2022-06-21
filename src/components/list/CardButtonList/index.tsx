@@ -6,12 +6,13 @@ import { Link } from "elements/Link";
 
 
 export default function CardButtonList(props) {
-  let imageUrl = "https://dummyimage.com/200/#ccc/fff";
+  let imageUrl = "";
   if (props && props.images && props.images.length > 0) {
     // TODO, make imageWrapper support multiple images...
     imageUrl = props.images[0];
   }
 
+  
   return (
     <div className="list__element">
       <div className="card-button-list card-button-list--need">
@@ -31,7 +32,6 @@ export default function CardButtonList(props) {
             localUrl
           />
         </div>
-
         <div className="card-button-list__content">
           <Link href="/ButtonFile">
             <div className="card-button-list__header">
@@ -52,7 +52,11 @@ export default function CardButtonList(props) {
 
             <div className="card-button-list__hashtags">
               <div className="card-button-list__need">
-                <div className="hashtag">{props.tags}</div>
+              {props.tags.length > 0 && props.tags.filter(tag => tag.length > 0).map( (tag,key)=>
+                (
+                <div className="hashtag" key={key}>{tag}</div>
+                )
+                )}
               </div>
             </div>
 

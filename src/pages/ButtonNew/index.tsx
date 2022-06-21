@@ -19,6 +19,7 @@ import ButtonNewDate from "components/button/ButtonNewDate";
 import FieldUploadImages from "elements/Fields/FieldImagesUpload/index";
 import PickerTime from "components/picker/PickerPeriodDate";
 import { localStorageService } from "services/LocalStorage";
+import FieldTags from "elements/Fields/FieldTags";
 // import Location from 'elements/Location';
 
 export default function ButtonNew() {
@@ -34,7 +35,8 @@ export default function ButtonNew() {
     description: "",
     latitude: null,
     longitude: null,
-    images: []
+    images: [],
+    tags: []
   };
 
   const [button, setValues] = useState<IButton>(fields);
@@ -85,6 +87,12 @@ export default function ButtonNew() {
               setValue={setValue}
               values={button}
               validationErrors={validationErrors}
+            />
+            <FieldTags
+              label="Tags"
+              handleChange={setValue}
+              name="tags"
+              validationError={validationErrors.tags}
             />
             <ButtonNewDate setDate={setDate} date={date} />
             <ButtonShare />

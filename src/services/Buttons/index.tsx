@@ -21,9 +21,10 @@ export class ButtonService {
       description: data.description,
       latitude: data.latitude,
       longitude: data.longitude,
-      tags: [],
+      tags: data.tags,
       images: data.images,
     };
+
     const formData = UtilsService.objectToFormData(bodyData);
 
     return ajax({

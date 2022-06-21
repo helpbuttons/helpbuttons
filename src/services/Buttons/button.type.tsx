@@ -5,7 +5,7 @@ export interface IButton {
   images: any[];
   templateButtonId?: any | null;
   type?: enum;
-  tags?: [string];
+  tags?: any[];
   description: string;
   //required data
   date?: [];

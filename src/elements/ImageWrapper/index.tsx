@@ -72,8 +72,10 @@ export default function ImageWrapper({
     }
 
     const className = classNames.join(" ");
-    if (localUrl) {
+    if (localUrl && src) {
         src = baseUrl + "/files/get/" + src;
+    } else {
+        src = "https://dummyimage.com/200/#ccc/fff";
     }
 
     return (
