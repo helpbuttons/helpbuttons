@@ -4,11 +4,12 @@ import { IoChevronForwardOutline } from "react-icons/io5";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { Link } from "elements/Link";
 
+
 export default function CardButtonList(props) {
   let imageUrl = "https://dummyimage.com/200/#ccc/fff";
   if (props && props.images && props.images.length > 0) {
     // TODO, make imageWrapper support multiple images...
-    imageUrl = "http://localhost:3001/files/get/" + props.images[0];
+    imageUrl = props.images[0];
   }
 
   return (
@@ -27,6 +28,7 @@ export default function CardButtonList(props) {
             imageType={ImageType.cardList}
             src={imageUrl}
             alt="popup_img"
+            localUrl
           />
         </div>
 

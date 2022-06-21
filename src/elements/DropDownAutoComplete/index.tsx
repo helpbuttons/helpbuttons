@@ -19,7 +19,7 @@ export function DropdownAutoComplete({
   };
 
   const onClick = (e) => {
-    setInput(e.target.attributes.label.nodeValue);
+    setInput('');
     setValue(
       e.target.attributes.value.nodeValue,
       e.target.attributes.label.nodeValue

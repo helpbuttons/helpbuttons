@@ -12,8 +12,9 @@
   "dependencies": {
     "@hookform/resolvers": "^2.8.1",
     "dotenv": "^10.0.0",
+    "dotenv-webpack": "^7.1.0",
     "formik": "^2.2.9",
-    "fs": "0.0.1-security",
+    "fs": "^0.0.1-security",
     "immer": "^9.0.6",
     "leaflet": "^1.7.1",
     "leaflet-geosearch": "^3.6.0",

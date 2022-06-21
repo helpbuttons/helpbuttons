@@ -12,6 +12,7 @@ import PopupOptions from "components/popup/PopupOptions";
 import FormSubmit from "elements/Form/FormSubmit";
 import FieldLocation from "elements/Fields/FieldLocation";
 import PopupSection from "components/popup/PopupSection";
+import FieldUploadImage from "elements/Fields/FieldImageUpload";
 
 export default function NetworkNew() {
   const token = window.localStorage.getItem("access_token");
@@ -55,7 +56,11 @@ export default function NetworkNew() {
               label="Name"
               validationError={validationErrors.name}
             ></FieldText>
-            TODO: AVATAR
+             <FieldUploadImage
+              name="avatar"
+              handleChange={setValue}
+              label="+ Add avatar"
+            />
             <FieldText
               handleChange={setValue}
               value={values.url}

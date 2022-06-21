@@ -9,34 +9,36 @@ const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 import { store } from "pages/index";
 import { map } from "rxjs/operators";
 import { localStorageService } from "services/LocalStorage";
+import { UtilsService } from "services/Utils";
 
 export class NetworkService {
   //Create network
   public static new(data: INetwork, token: string): Observable<any> {
-    //save the ajax object that can be .pipe by the observable
-    const networkWithHeaders$ = ajax({
+    
+    let bodyData = {
+      name: data.name,
+      url: data.url,
+      avatar: data.avatar,
+      description: data.description,
+      privacy: data.privacy,
+      place: data.place,
+      latitude: data.latitude,
+      longitude: data.longitude,
+      tags: [],
+      radius: data.radius,
+    };
+
+    const formData = UtilsService.objectToFormData(bodyData);
+
+    return ajax({
       url: baseUrl + "/networks/new",
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         accept: "application/json",
         Authorization: "Bearer " + token,
       },
-      body: {
-        name: data.name,
-        url: data.url,
-        avatar: data.avatar,
-        description: data.description,
-        privacy: data.privacy,
-        place: data.place,
-        latitude: data.latitude,
-        longitude: data.longitude,
-        tags: [],
-        radius: data.radius,
-      },
+      body: formData,
     });
-
-    return networkWithHeaders$;
   }
 
   //Edit network

@@ -20,8 +20,6 @@ export class CreateNetworkEvent implements WatchEvent {
   ) {}
   public watch(state: GlobalState) {
     return NetworkService.new(this.network, this.token).pipe(
-      map((networkData) => networkData),
-      take(1),
       tap((networkData) => {
         alertService.info(
           "You have created a network" + networkData.response.id.toString()
