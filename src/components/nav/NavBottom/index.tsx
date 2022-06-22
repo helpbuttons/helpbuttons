@@ -1,29 +1,39 @@
 //Mobile bottom navigation component with just creation , profile and home buttons if logged in. It not logged it shows home, Button creation , login and faqs too.
-import Link from 'next/link'
-import CrossIcon from '../../../../public/assets/svg/icons/cross1'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import NavLink from 'elements/Navlink';
-import { UserService } from 'services/Users';
-import { HttpUtilsService } from 'services/HttpUtilsService';
 import { IoAddOutline } from "react-icons/io5";
-import { IoSearchOutline } from "react-icons/io5";
 import { IoPersonOutline } from "react-icons/io5";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoLogInOutline } from "react-icons/io5";
 import { IoHelpOutline } from "react-icons/io5";
 import { IoGlobeOutline } from "react-icons/io5";
+import { useRef } from "store/Store";
+import { GlobalState, store } from 'pages';
+import {ImageContainer} from "elements/ImageWrapper";
 
 export default NavBottom;
 
 function NavBottom({logged}){
 
   const [user, setUser] = useState(null);
+  const selectedNetwork = useRef(store, (state :GlobalState) => state.commonData.selectedNetwork);
 
   return(
 
-      <nav id="bottom-nav" className="nav-bottom">
-
+    <nav id="bottom-nav" className="nav-bottom">
+      { selectedNetwork && (
+        <>
+          {selectedNetwork.name}
+        <ImageContainer
+                  src={selectedNetwork.avatar}
+                  alt={selectedNetwork.name}
+                  width={50}
+                  height={50}
+                  localUrl
+        /></>
+      )
+      }
         <NavLink href="/Explore" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
             <IoGlobeOutline/>

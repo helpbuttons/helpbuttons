@@ -4,6 +4,7 @@ import { IButton } from "./button.type";
 
 import getConfig from "next/config";
 import { UtilsService } from "services/Utils";
+import { NetworkService } from "services/Networks";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -83,9 +84,10 @@ export class ButtonService {
 
   //Get buttons
   public static find(): Observable<any> {
+    const networkId = NetworkService.getSelectedNetworkId();
     //save the ajax object that can be .pipe by the observable
     const buttonWithHeaders$ = ajax({
-      url: baseUrl + "/buttons/find",
+      url: baseUrl + "/buttons/find/"+networkId,
       method: "GET",
       headers: {
         "Content-Type": "application/json",

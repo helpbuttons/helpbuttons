@@ -1,51 +1,25 @@
-import { map, tap, take, catchError } from "rxjs/operators";
-import { of } from "rxjs";
-import { produce } from "immer";
-
-import { WatchEvent } from "store/Event";
-import { GlobalState } from "store/Store";
 
 import { NetworkService } from "services/Networks";
 import Router from "next/router";
-import INetwork from "services/Networks/network.type.tsx";
 import { alertService } from "services/Alert";
 import { errorService } from "services/Error";
 
-//Called event for new user signup
-export class CreateNetworkEvent implements WatchEvent {
-  public constructor(
-    private network: INetwork,
-    private token: string,
-    private setValidationErrors
-  ) {}
-  public watch(state: GlobalState) {
-    return NetworkService.new(this.network, this.token).pipe(
-      tap((networkData) => {
-        alertService.info(
-          "You have created a network" + networkData.response.id.toString()
-        );
-
-        //store net in Store
-        new NetworkUpdateEvent(networkData);
-        NetworkService.setSelectedNetworkId(networkData.response.id);
-        Router.push({ pathname: "/", state: state });
-      }),
-      catchError((error) => {
-        if (error.response && error.response.validationErrors) {
-          this.setValidationErrors(error.response.validationErrors);
-        }
-        return errorService.handle(error);
-      })
-    );
-  }
-}
-
-//Called event for session update values
-export class NetworkUpdateEvent implements UpdateEvent {
-  public constructor(private network: any) {}
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.selectedNetwork.id = this.network.response.id;
-    });
-  }
+export function createNewNetwork(network, token: string, setValidationErrors) {
+  return NetworkService.create(network, token,
+    (networkData) => {
+      NetworkService.setSelectedNetworkId(networkData.response.id);
+      
+      alertService.info(
+        "You have created a network" + networkData.response.id.toString()
+      );
+      
+      Router.push("/");
+    },
+    (error) => {
+    if (error.response && error.response.validationErrors) {
+      setValidationErrors(error.response.validationErrors);
+    }
+    return errorService.handle(error);
+    }
+  );
 }

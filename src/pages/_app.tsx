@@ -3,9 +3,9 @@ import '../styles/app.scss'
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import HttpUtilsService from 'services/HttpUtilsService';
 import NavBottom from "components/nav/NavBottom"; //just for mobile
 import Alert from "components/overlay/Alert";
+import { NetworkService } from 'services/Networks';
 
 export default MyApp;
 
@@ -26,6 +26,8 @@ function MyApp({ Component, pageProps }) {
         // on route change complete - run auth check
         router.events.on('routeChangeComplete', authCheck)
 
+        NetworkService.setSelectedNetworkId(NetworkService.getSelectedNetworkId());
+        
         // unsubscribe from events in useEffect return function
         return () => {
             router.events.off('routeChangeStart', hideContent);
