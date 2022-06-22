@@ -46,9 +46,9 @@ export class ButtonController {
     return this.buttonService.create(createDto, networkId, images);
   }
 
-  @Get('/find/')
-  async findAll() {
-    return await this.buttonService.findAll();
+  @Get('/find/:networkId')
+  async findAll(@Param('networkId') networkId: string) {
+    return await this.buttonService.findAll(networkId);
   }
 
   @Get('findById/:buttonId')

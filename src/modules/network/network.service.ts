@@ -38,7 +38,10 @@ export class NetworkService {
     await getManager().transaction(async transactionalEntityManager => {
       await this.tagService.addTags('network', network.id, createDto.tags).catch(err => {throw new HttpException({message: err.message}, HttpStatus.BAD_REQUEST)});
       
-      network.avatar = await this.storageService.newImage(avatar);
+      // console.log(avatar);
+      if (typeof avatar !== 'undefined') {
+        network.avatar = await this.storageService.newImage(avatar);
+      }
       await this.networkRepository.insert([network]);
     });
     

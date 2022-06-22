@@ -86,10 +86,16 @@ export class ButtonService {
     return this.buttonRepository.save([button]);
   }
 
-  findAll() {
+  findAll(networkId: string) {
     return this.buttonRepository.find({
+      relations: ['network'],
+      where: {
+        network: {
+          id: networkId
+        }
+      },
       order: {
-      created_at: "DESC"
+        created_at: "DESC"
     }});
   }
 
