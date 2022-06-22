@@ -35,11 +35,11 @@ const AddMarker = ({ handleClick }) => {
   );
 };
 
-export default function Map({ buttons, style, addMarkerClick }) {
-  const [currentLocation, setCurrentLocation] = useState({
-    lat: "51.505",
-    lng: "-0.09",
-  });
+export default function Map({ buttons, style, addMarkerClick, initialLocation = {
+  lat: "51.505",
+  lng: "-0.09",
+} }) {
+  const [currentLocation, setCurrentLocation] = useState(initialLocation);
   const [zoom, setZoom] = useState(13);
 
   return (

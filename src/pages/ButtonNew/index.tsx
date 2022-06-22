@@ -6,7 +6,7 @@ import Form from "elements/Form";
 import Popup from "components/popup/Popup";
 import ButtonType from "components/button/ButtonType";
 
-import { store } from "pages/index";
+import { GlobalState, store } from 'pages';
 import { CreateButtonEvent } from "pages/ButtonNew/data";
 import { IButton } from "services/Buttons/button.type";
 import FieldLocation from "elements/Fields/FieldLocation";
@@ -20,12 +20,13 @@ import FieldUploadImages from "elements/Fields/FieldImagesUpload/index";
 import PickerTime from "components/picker/PickerPeriodDate";
 import { localStorageService } from "services/LocalStorage";
 import FieldTags from "elements/Fields/FieldTags";
+import { useRef } from "store/Store";
 // import Location from 'elements/Location';
 
 export default function ButtonNew() {
   const networkId = localStorageService.read("network_id");
   const token = localStorageService.read("access_token");
-
+  const selectedNetwork = useRef(store, (state :GlobalState) => state.commonData.selectedNetwork);
   // TODO: tags
 
   const fields = {
@@ -83,11 +84,17 @@ export default function ButtonNew() {
               placeholder="i.e. I would like to offer..."
               validationError={validationErrors.description}
             />
-            <FieldLocation
-              setValue={setValue}
-              values={button}
-              validationErrors={validationErrors}
-            />
+            {selectedNetwork && (
+              <FieldLocation
+                setValue={setValue}
+                values={button}
+                validationErrors={validationErrors}
+                initialLocation={{
+                  lat: selectedNetwork.location.coordinates[0],
+                  lng: selectedNetwork.location.coordinates[1],
+                }}
+              />
+            )}
             <FieldTags
               label="Tags"
               handleChange={setValue}
