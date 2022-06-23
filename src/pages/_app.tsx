@@ -24,9 +24,7 @@ function MyApp({ Component, pageProps }) {
         router.events.on('routeChangeStart', hideContent);
 
         // on route change complete - run auth check
-        router.events.on('routeChangeComplete', authCheck)
-
-        NetworkService.setSelectedNetworkId(NetworkService.getSelectedNetworkId());
+        router.events.on('routeChangeComplete', authCheck);
         
         // unsubscribe from events in useEffect return function
         return () => {

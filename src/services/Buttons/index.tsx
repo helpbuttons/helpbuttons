@@ -83,8 +83,7 @@ export class ButtonService {
   }
 
   //Get buttons
-  public static find(): Observable<any> {
-    const networkId = NetworkService.getSelectedNetworkId();
+  public static find(networkId: string): Observable<any> {
     //save the ajax object that can be .pipe by the observable
     const buttonWithHeaders$ = ajax({
       url: baseUrl + "/buttons/find/"+networkId,

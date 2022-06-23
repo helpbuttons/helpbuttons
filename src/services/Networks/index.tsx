@@ -169,45 +169,4 @@ export class NetworkService {
     return ajax(baseUrl + path).pipe(map((res: any) => res.response));
   }
 
-  public static setSelectedNetworkId(networkId: string) {
-    localStorageService.save("network_id", networkId);
-    return this.findById(networkId).subscribe(network => {
-      if (network.response) {
-        store.emit(new NetworkUpdateEvent(network.response));
-      }
-    });
-  }
-
-  public static getSelectedNetworkId() {
-    return localStorageService.read("network_id");
-  }
-}
-
-
-class CreateNetworkEvent implements WatchEvent {
-  public constructor(
-    private network: INetwork,
-    private token: string,
-    private successFunction,
-    private failFunction
-  ) {}
-  public watch(state: GlobalState) {
-    return NetworkService.new(this.network, this.token).pipe(
-      tap((networkData) => {
-        this.successFunction(networkData);
-      }),
-      catchError((error) => {
-        return this.failFunction(error);
-      })
-    );
-  }
-}
-
-class NetworkUpdateEvent implements UpdateEvent {
-  public constructor(private network: any) {}
-  public update(state: GlobalState) {
-    return produce(state, (newState: GlobalState) => {
-      newState.commonData.selectedNetwork = this.network;
-    });
-  }
 }
