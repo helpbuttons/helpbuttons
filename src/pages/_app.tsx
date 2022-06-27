@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import NavBottom from "components/nav/NavBottom"; //just for mobile
 import Alert from "components/overlay/Alert";
 import { NetworkService } from 'services/Networks';
+import { loadStoreValues } from './data';
 
 export default MyApp;
 
@@ -18,6 +19,8 @@ function MyApp({ Component, pageProps }) {
     useEffect(() => {
         // on initial load - run auth check
         authCheck(router.asPath);
+
+        loadStoreValues();
 
         // on route change start - hide page content by setting authorized to false
         const hideContent = () => setAuthorized(false);

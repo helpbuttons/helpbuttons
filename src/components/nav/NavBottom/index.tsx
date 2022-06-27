@@ -18,26 +18,10 @@ export default NavBottom;
 function NavBottom({logged}){
 
   const [user, setUser] = useState(null);
-  const selectedNetwork = useRef(store, (state :GlobalState) => state.commonData.selectedNetwork);
-
-  useEffect(() => {
-    loadSelectedNetworkId();
-  }, []);
+  
   return(
 
     <nav id="bottom-nav" className="nav-bottom">
-      { selectedNetwork && (
-        <>
-          {selectedNetwork.name}
-        <ImageContainer
-                  src={selectedNetwork.avatar}
-                  alt={selectedNetwork.name}
-                  width={50}
-                  height={50}
-                  localUrl
-        /></>
-      )
-      }
         <NavLink href="/Explore" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
             <IoGlobeOutline/>

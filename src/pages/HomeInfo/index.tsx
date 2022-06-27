@@ -1,6 +1,8 @@
 //INFO AND RESULTS
 //libraries
 import { useState, useEffect } from "react";
+import { ImageContainer } from "elements/ImageWrapper";
+import { useRef } from "store/Store";
 
 //components
 import Btn, { ContentAlignment, BtnType } from "elements/Btn";
@@ -8,15 +10,17 @@ import { Link } from "elements/Link";
 
 import { Subject } from "rxjs";
 import {
-  setSelectedNetworkId,
   setValueAndDebounce,
 } from "./data";
 import {
   DropdownAutoComplete,
   DropDownAutoCompleteOption,
 } from "elements/DropDownAutoComplete";
+import { GlobalState, store } from "pages";
+import { setSelectedNetworkId } from "./data";
 
 export default function HomeInfo() {
+  const selectedNetwork = useRef(store, (state :GlobalState) => state.commonData.selectedNetwork);
 
   return (
     <>
@@ -40,6 +44,20 @@ export default function HomeInfo() {
 
           <div className="info-overlay__bottom">
             <div className="info-overlay__nets">
+              <div>
+                { selectedNetwork && (
+                  <>
+                    {selectedNetwork.name}
+                    <ImageContainer
+                              src={selectedNetwork.avatar}
+                              alt={selectedNetwork.name}
+                              width={50}
+                              height={50}
+                              localUrl
+                    />
+                  </>)
+                }
+              </div>
               <DropdownNetworks/>
               <Link href="/NetworkNew">
                 <Btn
