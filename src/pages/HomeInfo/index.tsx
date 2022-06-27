@@ -1,11 +1,7 @@
 //INFO AND RESULTS
 //libraries
-import Router from "next/router";
 import { useState, useEffect } from "react";
-
-//services
-import { alertService } from "services/Alert";
-import { store } from "pages/index";
+import { ImageContainer } from "elements/ImageWrapper";
 import { useRef } from "store/Store";
 
 //components
@@ -14,43 +10,17 @@ import { Link } from "elements/Link";
 
 import { Subject } from "rxjs";
 import {
-  setSelectedNetworkId,
-  getSelectedNetworkId,
   setValueAndDebounce,
-  getSelectedNetwork,
 } from "./data";
 import {
   DropdownAutoComplete,
   DropDownAutoCompleteOption,
 } from "elements/DropDownAutoComplete";
-
-import ImageWrapper, {ImageContainer} from "elements/ImageWrapper";
+import { GlobalState, store } from "pages";
+import { setSelectedNetworkId } from "./data";
 
 export default function HomeInfo() {
-  const [selectedNetwork, setSelectedNetwork] = useState({
-    name: ''
-  });
-  
-  const setValue = (name, value) => {
-    setValues((previousState) => {
-      return { ...previousState, [name]: value };
-    });
-  };
-
-  const selectNetwork = (network) => {
-    setSelectedNetwork((previousState) => {
-      return { ...previousState, ...network };
-    });
-    if (network.id == null) {
-      alertService.info("It looks like youre new ! First, create your network");
-    }
-
-    alertService.info("You're in the '" + network.name + "' network !");
-  };
-
-  useEffect(() => {
-    getSelectedNetwork(selectNetwork);
-  }, []);
+  const selectedNetwork = useRef(store, (state :GlobalState) => state.commonData.selectedNetwork);
 
   return (
     <>
@@ -74,15 +44,21 @@ export default function HomeInfo() {
 
           <div className="info-overlay__bottom">
             <div className="info-overlay__nets">
-              {selectedNetwork.name}
-              <ImageContainer
-                src={selectedNetwork.avatar}
-                alt={selectedNetwork.name}
-                width={"50"}
-                height={"50"}
-                localUrl
-              />
-              <DropdownNetworks selectNetwork={selectNetwork}/>
+              <div>
+                { selectedNetwork && (
+                  <>
+                    {selectedNetwork.name}
+                    <ImageContainer
+                              src={selectedNetwork.avatar}
+                              alt={selectedNetwork.name}
+                              width={50}
+                              height={50}
+                              localUrl
+                    />
+                  </>)
+                }
+              </div>
+              <DropdownNetworks/>
               <Link href="/NetworkNew">
                 <Btn
                   btnType={BtnType.corporative}
@@ -98,7 +74,7 @@ export default function HomeInfo() {
   );
 }
 
-function DropdownNetworks( {selectNetwork}) {
+function DropdownNetworks() {
   const timeInMsBetweenStrokes = 200; //ms
 
   const [options, setOptions] = useState([]);
@@ -137,7 +113,7 @@ function DropdownNetworks( {selectNetwork}) {
   }, []); //first time
 
   const setValue = (networkId, networkName) => {
-    setSelectedNetworkId(networkId, selectNetwork);
+    setSelectedNetworkId(networkId);
   };
   return (
     <>

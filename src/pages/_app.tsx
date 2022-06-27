@@ -3,9 +3,10 @@ import '../styles/app.scss'
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import HttpUtilsService from 'services/HttpUtilsService';
 import NavBottom from "components/nav/NavBottom"; //just for mobile
 import Alert from "components/overlay/Alert";
+import { NetworkService } from 'services/Networks';
+import { loadStoreValues } from './data';
 
 export default MyApp;
 
@@ -19,13 +20,15 @@ function MyApp({ Component, pageProps }) {
         // on initial load - run auth check
         authCheck(router.asPath);
 
+        loadStoreValues();
+
         // on route change start - hide page content by setting authorized to false
         const hideContent = () => setAuthorized(false);
         router.events.on('routeChangeStart', hideContent);
 
         // on route change complete - run auth check
-        router.events.on('routeChangeComplete', authCheck)
-
+        router.events.on('routeChangeComplete', authCheck);
+        
         // unsubscribe from events in useEffect return function
         return () => {
             router.events.off('routeChangeStart', hideContent);

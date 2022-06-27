@@ -5,7 +5,7 @@ import FieldError from "../FieldError";
 import "leaflet/dist/leaflet.css";
 
 import Map from "components/map/LeafletMap";
-export default function FieldLocation({ setValue, values, validationErrors }) {
+export default function FieldLocation({ setValue, values, validationErrors, initialLocation }) {
   const [showHideMenu, setHideMenu] = useState(false);
   const style = { width: "100%", height: "600px" };
 
@@ -33,7 +33,7 @@ export default function FieldLocation({ setValue, values, validationErrors }) {
       {showHideMenu && (
         <div className="picker__close-container">
           <div className="picker--over picker-box-shadow picker__content picker__options-v">
-            <Map addMarkerClick={onClick} style={style} />
+            <Map addMarkerClick={onClick} initialLocation={initialLocation} style={style} />
           </div>
 
           <div

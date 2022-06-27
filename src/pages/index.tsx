@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Store } from "store/Store";
@@ -19,7 +19,6 @@ import { CommonDataState, commonDataInitial } from "pages/Common/data";
 // https://immerjs.github.io/immer/
 // Para simplificar la modificación de estructuras de datos
 // al estilo "immutable objects"
-import produce from 'immer';
 
 
 // -- estado global --

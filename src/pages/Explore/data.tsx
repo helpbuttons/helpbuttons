@@ -1,14 +1,13 @@
 import { map, tap, take, catchError } from 'rxjs/operators';
 
 import { ButtonService } from 'services/Buttons';
-import { IButton } from 'services/Buttons/types';
-import { alertService }  from 'services/Alert/index.ts';
+import { localStorageService } from 'services/LocalStorage';
 
 
  export function GetButtonsEvent (setButtons) {
-
+   const networkId = localStorageService.read("network_id");
    // Anything in here is fired on component mount.
-   let btns = ButtonService.find().subscribe(buttons => {
+   let btns = ButtonService.find(networkId).subscribe(buttons => {
 
      if (buttons) {
            // add message to local state if not empty

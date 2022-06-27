@@ -1,20 +1,26 @@
 import { Observable } from "rxjs";
 import { ajax } from "rxjs/ajax";
-
 import { INetwork } from "./network.type";
+import { GlobalState, store } from "pages/index";
+import { WatchEvent } from "store/Event";
+import { map, tap, take, catchError } from "rxjs/operators";
+import { localStorageService } from "services/LocalStorage";
+import { UtilsService } from "services/Utils";
+import { UpdateEvent } from "store/Event";
+import { produce } from "immer";
 
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
-import { store } from "pages/index";
-import { map } from "rxjs/operators";
-import { localStorageService } from "services/LocalStorage";
-import { UtilsService } from "services/Utils";
+
 
 export class NetworkService {
   //Create network
+  public static create(network, token: string, successFunc, failFunc) {
+    store.emit(new CreateNetworkEvent(network, token,successFunc, failFunc));
+  }
+
   public static new(data: INetwork, token: string): Observable<any> {
-    
     let bodyData = {
       name: data.name,
       url: data.url,
@@ -163,11 +169,4 @@ export class NetworkService {
     return ajax(baseUrl + path).pipe(map((res: any) => res.response));
   }
 
-  public static setSelectedNetworkId(networkId: string) {
-    localStorageService.save("network_id", networkId);
-  }
-
-  public static getSelectedNetworkId() {
-    return localStorageService.read("network_id");
-  }
 }

@@ -2,25 +2,17 @@ import { NetworkService } from "services/Networks";
 
 import { debounceTime } from "rxjs";
 import { switchMap } from "rxjs/operators";
+import { localStorageService } from "services/LocalStorage";
+import { selectedNetworkEvent } from "store/CommonData";
+import { store } from "pages";
 
-export function setSelectedNetworkId(networkId: string, setSelectedNetwork) {
-  NetworkService.setSelectedNetworkId(networkId);
+export function setSelectedNetworkId(networkId: string) {
+  
   return NetworkService.findById(networkId).subscribe(network => {
     if (network.response) {
-      setSelectedNetwork(network.response);
-    }
-  });
-}
-
-export function getSelectedNetworkId() {
-  return NetworkService.getSelectedNetworkId();
-}
-
-export function getSelectedNetwork(setSelectedNetwork) {
-  const selectedNetworkId = getSelectedNetworkId();
-  return NetworkService.findById(selectedNetworkId).subscribe(network => {
-    if (network.response) {
-      setSelectedNetwork(network.response);
+      alertService.info("You have selected network '" + network.response.name.toString() + "'");
+      localStorageService.save("network_id", networkId);
+      store.emit(new selectedNetworkEvent(network.response));
     }
   });
 }

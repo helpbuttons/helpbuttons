@@ -1,51 +1,53 @@
-import { map, tap, take, catchError } from "rxjs/operators";
-import { of } from "rxjs";
-import { produce } from "immer";
-
-import { WatchEvent } from "store/Event";
-import { GlobalState } from "store/Store";
 
 import { NetworkService } from "services/Networks";
 import Router from "next/router";
-import INetwork from "services/Networks/network.type.tsx";
 import { alertService } from "services/Alert";
 import { errorService } from "services/Error";
+import { store } from "pages";
+import { selectedNetworkEvent } from "store/CommonData"
+import { localStorageService } from "services/LocalStorage";
+import { INetwork } from "services/Networks/network.type";
+import { GlobalState } from "pages";
+import { catchError, tap } from "rxjs/operators";
+import { WatchEvent } from "store/Event";
 
-//Called event for new user signup
+export function createNewNetwork(network, token: string, setValidationErrors) {
+  store.emit(new CreateNetworkEvent(network, token,
+    (networkData :INetwork) => {
+      localStorageService.save("network_id", networkData.id);
+      store.emit(new selectedNetworkEvent(networkData));
+            
+      alertService.info(
+        "You have created a network" + networkData.id.toString()
+      );
+      
+      Router.push("/");
+    },
+    (error) => {
+    if (error.response && error.response.validationErrors) {
+      setValidationErrors(error.response.validationErrors);
+    }
+    return errorService.handle(error);
+    }
+  ));
+}
+
 export class CreateNetworkEvent implements WatchEvent {
-  public constructor(
-    private network: INetwork,
-    private token: string,
-    private setValidationErrors
-  ) {}
-  public watch(state: GlobalState) {
-    return NetworkService.new(this.network, this.token).pipe(
-      tap((networkData) => {
-        alertService.info(
-          "You have created a network" + networkData.response.id.toString()
-        );
-
-        //store net in Store
-        new NetworkUpdateEvent(networkData);
-        NetworkService.setSelectedNetworkId(networkData.response.id);
-        Router.push({ pathname: "/", state: state });
-      }),
-      catchError((error) => {
-        if (error.response && error.response.validationErrors) {
-          this.setValidationErrors(error.response.validationErrors);
-        }
-        return errorService.handle(error);
-      })
-    );
+    public constructor(
+      private network: INetwork,
+      private token: string,
+      private successFunction,
+      private failFunction
+    ) {}
+    public watch(state: GlobalState) {
+      return NetworkService.new(this.network, this.token).pipe(
+        tap((networkData) => {
+          this.successFunction(networkData.response);
+        }),
+        catchError((error) => {
+          return this.failFunction(error);
+        })
+      );
+    }
   }
-}
-
-//Called event for session update values
-export class NetworkUpdateEvent implements UpdateEvent {
-  public constructor(private network: any) {}
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.selectedNetwork.id = this.network.response.id;
-    });
-  }
-}
+  
