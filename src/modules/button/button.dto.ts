@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Button } from './button.entity';
-import { IsNumber, MinLength, IsLatitude, IsLongitude, IsArray } from 'class-validator';
+import { IsNumber, MinLength, IsLatitude, IsLongitude, IsArray, IsOptional } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
 
 // https://github.com/typestack/class-validator
@@ -10,8 +10,9 @@ export class CreateButtonDto implements Partial<Button> {
     type: [String],
     required: false,
   })
+  @IsOptional()
   @IsArray({})
-  tags?: string[];
+  tags: string[];
 
   @ApiProperty({
     type: String,

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Network } from './network.entity';
-import { IsNumber, MinLength, IsLatitude, IsLongitude, IsArray } from 'class-validator';
+import { IsNumber, MinLength, IsLatitude, IsLongitude, IsArray, IsOptional } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
 
 // https://github.com/typestack/class-validator
@@ -67,8 +67,9 @@ export class CreateNetworkDto implements Partial<Network> {
 
   @ApiProperty({
     type: [String],
-    required: true,
+    required: false,
   })
+  @IsOptional()
   @IsArray({})
   tags: string[];
 }

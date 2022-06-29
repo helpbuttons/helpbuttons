@@ -32,8 +32,8 @@ export class Network extends BaseEntity {
   @Column({ type: 'geography' })
   location: string;
 
-  @Column('text', { array: true, nullable: true })
-  tags?: string[];
+  @Column('text', { array: true, nullable: true, default: [] })
+  tags: string[];
 
   @Column({type: 'text', nullable: true})
   avatar?: string;
