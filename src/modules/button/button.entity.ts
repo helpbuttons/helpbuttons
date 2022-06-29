@@ -3,6 +3,12 @@ import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Network } from '../network/network.entity';
 // https://stackoverflow.com/a/67557083
 
+enum ButtonType{
+  OFFER = "offer",
+  NEED  = "need",
+  EXCHANGE = "exchange",
+}
+
 @Entity()
 export class Button extends BaseEntity {
   @Column({})
@@ -21,8 +27,11 @@ export class Button extends BaseEntity {
   @Column({ type: 'geography' })
   location: object;
 
-  @Column('text', { array: true, nullable: true })
-  tags?: string[];
+  @Column({ type: 'enum', enum: ButtonType, default: ButtonType.NEED })
+  type: object;
+
+  @Column('text', { array: true, nullable: true, default: [] })
+  tags: string[];
 
   @Column('text', { array: true, nullable: true })
   images: string[];
