@@ -36,7 +36,11 @@ export class NetworkService {
     }
     
     await getManager().transaction(async transactionalEntityManager => {
-      await this.tagService.addTags('network', network.id, createDto.tags).catch(err => {throw new HttpException({message: err.message}, HttpStatus.BAD_REQUEST)});
+      if (Array.isArray(createDto.tags)) {
+      {
+        await this.tagService.addTags('network', network.id, createDto.tags).catch(err => {throw new HttpException({message: err.message}, HttpStatus.BAD_REQUEST)});
+      }
+      
       
       // console.log(avatar);
       if (typeof avatar !== 'undefined') {
