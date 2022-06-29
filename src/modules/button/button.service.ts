@@ -58,7 +58,10 @@ export class ButtonService {
   }
 
   findOne(id: string) {
-    return this.buttonRepository.findOne({id});
+    return this.buttonRepository.findOne({
+      where: {id},
+      relations: ['network'],
+    });
   }
 
   update(id: string, updateDto: UpdateButtonDto) {
