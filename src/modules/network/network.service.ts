@@ -36,7 +36,7 @@ export class NetworkService {
     }
     
     await getManager().transaction(async transactionalEntityManager => {
-      if (Array.isArray(createDto.tags)) {
+      if (Array.isArray(createDto.tags))
       {
         await this.tagService.addTags('network', network.id, createDto.tags).catch(err => {throw new HttpException({message: err.message}, HttpStatus.BAD_REQUEST)});
       }
