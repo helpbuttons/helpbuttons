@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from '@src/modules/auth/auth.module';
 import { ButtonModule } from '@src/modules/button/button.module';
+import { FeedButtonModule } from '@src/modules/feed-button/feed-button.module';
 import { MailModule } from '@src/modules/mail/mail.module';
 import { NetworkModule } from '@src/modules/network/network.module';
 import { StorageModule } from '@src/modules/storage/storage.module';
@@ -50,6 +51,7 @@ import { validate } from './validators/env.validator';
     AuthModule,
     UserCredentialModule,
     StorageModule,
+    FeedButtonModule
   ],
   controllers: [AppController],
   providers: [AppService],

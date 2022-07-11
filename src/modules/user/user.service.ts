@@ -41,6 +41,11 @@ export class UserService {
     return await this.userRepository.findOne({where: {username: `${email}`}});
   }
 
+  async findById(id: string) {
+    return await this.userRepository.findOne({where: {id}});
+  }
+
+
   whoAmI() {
     // TODO:
   }
