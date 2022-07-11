@@ -17,7 +17,7 @@ function save(name: LocalStorageVars, data: any) {
 
 // get variable from localStorage
 function read(name: LocalStorageVars) {
-  return window.localStorage.getItem(name);
+  return window.localStorage.getItem(name) || undefined;
 }
 
 function remove(name: LocalStorageVars) {

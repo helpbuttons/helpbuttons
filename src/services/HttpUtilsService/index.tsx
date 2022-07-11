@@ -15,8 +15,8 @@ export class HttpUtilsService {
 
   //TO DO : CHANGE CONSTRUCTOR TO FUNCTION INJECTION
   constructor() {
-    this.tokenType = localStorageService.read(LocalStorageVars.TOKEN_TYPE) || undefined;
-    this.accessToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN) || undefined;
+    this.tokenType = localStorageService.read(LocalStorageVars.TOKEN_TYPE);
+    this.accessToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
     if (this.tokenType && this.accessToken) {
       this.isAuthenticated$.next(true);
     }
