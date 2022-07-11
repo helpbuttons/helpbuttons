@@ -4,6 +4,7 @@ import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { store } from './index';
 import getConfig from 'next/config';
+import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -101,9 +102,9 @@ export class UserService {
 
   public static logout() {
       // remove user from local storage to log user out
-      this.tokenType = window.localStorage.removeItem('token_type');
-      this.accessToken = window.localStorage.removeItem('access_token');
-
+      localStorageService.remove(LocalStorageVars.ACCESS_TOKEN);
+      localStorageService.remove(LocalStorageVars.NETWORK_SELECTED);
+      localStorageService.remove(LocalStorageVars.TOKEN_TYPE);
   }
 
 }
