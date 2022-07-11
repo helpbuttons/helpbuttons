@@ -37,7 +37,7 @@ function List(props) {
 
         </div>
 
-        <div className="list__container" className={'list__container ' + (showLeftColumn ? '' : 'list__container--hide')}>
+        <div className={'list__container ' + (showLeftColumn ? '' : 'list__container--hide')}>
 
 
         <div className="list__content">

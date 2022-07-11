@@ -110,7 +110,7 @@ function DropdownNetworks() {
     return () => {
       s.unsubscribe(); //limpiamos
     };
-  }, []); //first time
+  }, [sub$]); //first time
 
   const setValue = (networkId, networkName) => {
     setSelectedNetworkId(networkId);

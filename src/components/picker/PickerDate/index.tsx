@@ -9,6 +9,8 @@ export default function PickerDate() {
   const [value, setValue] = useState(moment());
   const [Hour, setHour] = useState("0");
   const [Minutes, setMinutes] = useState("0");
+  const startDay = value.clone().startOf("month").startOf("week");
+  const endDay = value.clone().endOf("month").endOf("week");
 
   useEffect(() => {
     const day = startDay.clone().subtract(1, "day");
@@ -21,11 +23,8 @@ export default function PickerDate() {
       );
     }
     setCalendar(buildCalendar(value));
-  }, [value]);
-
-  const startDay = value.clone().startOf("month").startOf("week");
-  const endDay = value.clone().endOf("month").endOf("week");
-
+  }, [value, endDay, startDay]);
+  
   function currMonthName() {
     return value.format("MMMM");
   }
@@ -82,10 +81,10 @@ export default function PickerDate() {
       </div>
       <div className="body">
         <div className="picker_section">
-          {calendar.map((week) => (
-            <div className="picker_row">
-              {week.map((day) => (
-                <div className="btn-circle day" onClick={() => setValue(day)}>
+          {calendar.map((week, id) => (
+            <div className="picker_row" key={id}>
+              {week.map((day, id) => (
+                <div className="btn-circle day" onClick={() => setValue(day)} key={id}>
                   <div className={dayStyles(day, value)}>
                     {day.format("D").toString()}
                   </div>
