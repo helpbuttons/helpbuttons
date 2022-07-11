@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
 import { hash, verify } from 'argon2';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { JwtService } from '@nestjs/jwt';
@@ -7,17 +7,17 @@ import { LoginRequestDto, SignupRequestDto } from './auth.dto';
 import { UserService } from '../user/user.service';
 import { publicNanoidGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { UserCredentialService } from '../user-credential/user-credential.service';
-import { TagService } from '../tag/tag.service';
 import webAppConfig from '@src/app/configs/web-app.config';
 import { NodeEnv } from '@src/shared/types';
 import { MailService } from '../mail/mail.service';
+import { ExtractJwt } from 'passport-jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly userCredentialService: UserCredentialService,
-    private readonly tagService: TagService,
+    private readonly configService: ConfigService,
     @Inject(webAppConfig.KEY)
     private readonly webAppConfigs: ConfigType<typeof webAppConfig>,
     private readonly mailService: MailService,
@@ -106,5 +106,9 @@ export class AuthService {
 
   hashPassword(password: string) {
     return hash(password);
+  }
+
+  async getCurrentUser(userId) {
+    return this.userService.findById(userId);
   }
 }

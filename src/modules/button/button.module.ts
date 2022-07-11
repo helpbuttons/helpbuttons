@@ -21,5 +21,8 @@ import { StorageModule } from '../storage/storage.module';
   providers: [
     ButtonService
   ],
+  exports: [
+    ButtonService
+  ]
 })
 export class ButtonModule {}

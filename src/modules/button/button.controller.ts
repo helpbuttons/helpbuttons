@@ -17,19 +17,19 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 
 import { ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { ButtonService } from './button.service';
 // import { FilterButtonsOrmDto } from '../dto/requests/filter-buttons-orm.dto';
 import { editFileName, imageFileFilter } from '../storage/storage.utils';
+import { Auth } from '@src/shared/decorator/auth.decorator';
 
 @ApiTags('buttons')
 @Controller('buttons')
 export class ButtonController {
   constructor(private readonly buttonService: ButtonService) {}
 
-  @UseGuards(JwtAuthGuard)
+  @Auth()
   @Post('new')
   @UseInterceptors(FilesInterceptor('images[]', 4, {
     storage: diskStorage({
