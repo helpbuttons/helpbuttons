@@ -13,9 +13,11 @@ import FormSubmit from "elements/Form/FormSubmit";
 import FieldLocation from "elements/Fields/FieldLocation";
 import PopupSection from "components/popup/PopupSection";
 import FieldUploadImage from "elements/Fields/FieldImageUpload";
+import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 
 export default function NetworkNew() {
-  const token = window.localStorage.getItem("access_token");
+  const token = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
+  
   const fields = {
     name: "",
     avatar: "",
