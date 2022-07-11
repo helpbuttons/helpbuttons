@@ -18,14 +18,14 @@ import ButtonShare from "components/button/ButtonShare";
 import ButtonNewDate from "components/button/ButtonNewDate";
 import FieldUploadImages from "elements/Fields/FieldImagesUpload/index";
 import PickerTime from "components/picker/PickerPeriodDate";
-import { localStorageService } from "services/LocalStorage";
+import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 import FieldTags from "elements/Fields/FieldTags";
 import { useRef } from "store/Store";
 // import Location from 'elements/Location';
 
 export default function ButtonNew() {
-  const networkId = localStorageService.read("network_id");
-  const token = localStorageService.read("access_token");
+  const networkId = localStorageService.read(LocalStorageVars.NETWORK_SELECTED);
+  const token = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
   const selectedNetwork = useRef(store, (state :GlobalState) => state.commonData.selectedNetwork);
   // TODO: tags
 

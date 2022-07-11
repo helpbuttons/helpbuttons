@@ -2,6 +2,7 @@ import { HttpHeaders } from 'next/config';
 import { BehaviorSubject } from 'rxjs';
 
 import getConfig from 'next/config';
+import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 const { publicRuntimeConfig } = getConfig();
 
 
@@ -14,8 +15,8 @@ export class HttpUtilsService {
 
   //TO DO : CHANGE CONSTRUCTOR TO FUNCTION INJECTION
   constructor() {
-    this.tokenType = window.localStorage.getItem('token_type') || undefined;
-    this.accessToken = window.localStorage.getItem('access_token') || undefined;
+    this.tokenType = localStorageService.read(LocalStorageVars.TOKEN_TYPE);
+    this.accessToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
     if (this.tokenType && this.accessToken) {
       this.isAuthenticated$.next(true);
     }
@@ -30,12 +31,12 @@ export class HttpUtilsService {
     this.tokenType = tokenType;
     this.accessToken = accessToken;
     if (this.tokenType && this.accessToken) {
-      window.localStorage.setItem('token_type', this.tokenType);
-      window.localStorage.setItem('access_token', this.accessToken);
+      localStorageService.save(LocalStorageVars.TOKEN_TYPE, this.tokenType);
+      localStorageService.save(LocalStorageVars.ACCESS_TOKEN, this.accessToken);
       this.isAuthenticated$.next(true);
     } else {
-      window.localStorage.removeItem('token_type');
-      window.localStorage.removeItem('access_token');
+      localStorageService.remove(LocalStorageVars.TOKEN_TYPE);
+      localStorageService.remove(LocalStorageVars.ACCESS_TOKEN);
       this.isAuthenticated$.next(false);
     }
   }
