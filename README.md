@@ -20,9 +20,9 @@ edit the .env file according to your needs.
 
 ### Lastly, run the backend:
 ```
-$ npm ci
+$ yarn
 
-$ npm run start:dev
+$ yarn start:dev
 ```
 
 Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.

@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { TagRepository } from './tag-repository';
+import { Repository } from 'typeorm';
 import { Tag } from './tag.entity';
 
 @Injectable()
 export class TagService {
-  constructor(private readonly tagRepository: TagRepository) {}
+  
+  constructor(@InjectRepository(Tag)
+  private readonly tagRepository: Repository<Tag>) {}
 
   async createTag(tag: Tag) {
     const createdTag = this.tagRepository.create({

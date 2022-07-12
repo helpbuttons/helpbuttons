@@ -2,7 +2,7 @@ import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 import { BaseEntity } from '@src/shared/types/base.entity';
 
-@Entity({ name: 'user-credentials' })
+@Entity()
 export class UserCredential extends BaseEntity {
   @PrimaryColumn()
   id: string;
