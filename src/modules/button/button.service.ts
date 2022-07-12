@@ -8,6 +8,7 @@ import { Button } from './button.entity';
 import { getManager } from "typeorm";
 import { NetworkService } from '../network/network.service';
 import { StorageService } from '../storage/storage.service';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class ButtonService {
@@ -19,7 +20,7 @@ export class ButtonService {
     private readonly storageService: StorageService) {
   }
 
-  async create(createDto: CreateButtonDto, networkId: string, images: File[]) {
+  async create(createDto: CreateButtonDto, networkId: string, images: File[], user: User) {
     const network = await this.networkService.findOne(networkId);
     
     if (!network) {
@@ -34,7 +35,8 @@ export class ButtonService {
       tags: createDto.tags,
       location: () => `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
       network: network,
-      images: []
+      images: [],
+      owner: user,
     }
     
     await getManager().transaction(async transactionalEntityManager => {
@@ -60,7 +62,7 @@ export class ButtonService {
   findOne(id: string) {
     return this.buttonRepository.findOne({
       where: {id},
-      relations: ['network'],
+      relations: ['network', 'feed'],
     });
   }
 
@@ -91,7 +93,7 @@ export class ButtonService {
 
   findAll(networkId: string) {
     return this.buttonRepository.find({
-      relations: ['network'],
+      relations: ['network', 'feed'],
       where: {
         network: {
           id: networkId
