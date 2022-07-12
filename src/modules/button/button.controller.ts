@@ -23,6 +23,8 @@ import { ButtonService } from './button.service';
 // import { FilterButtonsOrmDto } from '../dto/requests/filter-buttons-orm.dto';
 import { editFileName, imageFileFilter } from '../storage/storage.utils';
 import { Auth } from '@src/shared/decorator/auth.decorator';
+import { CurrentUser } from '@src/shared/decorator/current-user';
+import { User } from '../user/user.entity';
 
 @ApiTags('buttons')
 @Controller('buttons')
@@ -42,8 +44,9 @@ export class ButtonController {
   create(@Query('networkId') networkId: string,
     @UploadedFiles() images,
     @Body() createDto: CreateButtonDto,
+    @CurrentUser() user: User,
   ) {
-    return this.buttonService.create(createDto, networkId, images);
+    return this.buttonService.create(createDto, networkId, images, user);
   }
 
   @Get('/find/:networkId')
