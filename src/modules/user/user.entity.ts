@@ -3,7 +3,7 @@ import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 import { UserCredential } from '../user-credential/user-credential.entity';
 
-@Entity({ name: 'users' })
+@Entity()
 export class User extends BaseEntity {
   @PrimaryColumn({
     type: 'char',

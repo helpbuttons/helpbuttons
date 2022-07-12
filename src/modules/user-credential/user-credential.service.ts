@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 
 import { UserCredential } from './user-credential.entity';
-import { UserCredentialRepository } from './user-credential.repository';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class UserCredentialService {
   constructor(
-    private readonly userCredentialRepository: UserCredentialRepository,
+    @InjectRepository(UserCredential)
+    private readonly userCredentialRepository: Repository<UserCredential>
   ) {}
 
   async createUserCredential(

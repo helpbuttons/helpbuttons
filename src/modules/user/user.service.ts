@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
-
-import { UserRepository } from './user.repository';
 import { User } from './user.entity';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>) {}
 
   async createUser(user: User) {
     const id = dbIdGenerator();
@@ -32,8 +34,11 @@ export class UserService {
   }
 
   async isEmailExists(email: string) {
-    const user = await this.userRepository.isEmailExists(email);
-
+    const user = await this.userRepository.findOne({
+      where: {
+        username: email,
+      },
+    });
     return user ? true : false;
   }
 
