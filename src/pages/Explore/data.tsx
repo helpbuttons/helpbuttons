@@ -6,6 +6,10 @@ import { localStorageService } from 'services/LocalStorage';
 
  export function GetButtonsEvent (setButtons) {
    const networkId = localStorageService.read("network_id");
+   if (!networkId)
+   {
+    return [];
+   }
    // Anything in here is fired on component mount.
    let btns = ButtonService.find(networkId).subscribe(buttons => {
 

@@ -8,6 +8,9 @@ export function loadStoreValues() {
 }
 function loadSelectedNetworkId() {
     const networkId = localStorageService.read("network_id");
+    if (!networkId) {
+      return null;
+    }
     return NetworkService.findById(networkId).subscribe(network => {
       if (network.response) {
         store.emit(new selectedNetworkEvent(network.response));
