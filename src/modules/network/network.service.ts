@@ -53,12 +53,12 @@ export class NetworkService {
   }
 
   async findOne(id: string): Promise<Network>{
-    return await this.networkRepository.findOne({where: {id}});
+    return await this.networkRepository.findOne({id});
   }
 
   async findAll(name: string): Promise<Network[]>{
-    return await this.networkRepository.find({ where:{ 
-      name: ILike(`%${name}%`)}
+    return await this.networkRepository.find({
+      name: ILike(`%${name}%`)
     });
   }
   update(id: string, updateDto: UpdateNetworkDto) {

@@ -22,7 +22,7 @@ export class TagService {
   }
 
   async find(tag: string) {
-    return await this.tagRepository.find({where: { tag: `%${tag}` }});
+    return await this.tagRepository.find({ tag: `%${tag}` });
   }
 
   async addTags(modelName: string, modelId: string, tags: string[]) {

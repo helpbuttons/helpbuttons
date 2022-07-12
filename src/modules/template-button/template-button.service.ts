@@ -28,7 +28,7 @@ export class TemplateButtonService {
   }
 
   findOne(id: string) {
-    return this.templateButtonRepository.findOne({where: {id}});
+    return this.templateButtonRepository.findOne({id});
   }
 
   update(id: string, updateDto: UpdateTemplateButtonDto) {
