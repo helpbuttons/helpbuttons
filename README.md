@@ -18,11 +18,17 @@ edit the .env file according to your needs.
 
 `$ docker-compose up -d db`
 
-### Lastly, run the backend:
+### run the backend:
 ```
 $ yarn
 
 $ yarn start:dev
+```
+
+run the migrations:
+
+```
+$ yarn migration:run
 ```
 
 Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
@@ -53,3 +59,6 @@ You can check out [the nestjs GitHub repository](https://github.com/nestjs/nest)
 `$ docker-compose exec db psql -U [USER] [DATABASE_NAME]`
 
 - When the backend fails to start because of database problems, you can always reset the database, by removing the directory `db`
+
+- If you need to drop the scheme and restart fresh you run
+`$ yarn schema:drop`
