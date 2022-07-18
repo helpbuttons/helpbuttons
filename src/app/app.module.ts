@@ -15,6 +15,7 @@ import { UserCredentialModule } from '@src/modules/user-credential/user-credenti
 import { UserModule } from '@src/modules/user/user.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { typeOrmModuleOptions } from './configs/orm.config';
 import webAppConfig from './configs/web-app.config';
 import { validate } from './validators/env.validator';
 
@@ -30,16 +31,7 @@ import { validate } from './validators/env.validator';
     }),
     MailModule,
     // FIXME: READ this confs using ConfigService
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.POSTGRES_HOSTNAME,
-      port: parseInt(process.env.POSTGRES_PORT),
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB,
-      entities: ['dist/modules/**/*.entity{.ts,.js}'],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(typeOrmModuleOptions),
     MulterModule.register({
       dest: process.env.UPLOADS_PATH,
     }),
