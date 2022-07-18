@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { ILike, Repository } from 'typeorm';
@@ -55,7 +55,7 @@ export class NetworkService {
   async findOne(id: string): Promise<Network>{
     const network = await this.networkRepository.findOne({id});
     if (!network) {
-      throw new BadRequestException('Network not found');
+      throw new NotFoundException('Network not found');
     }
     return network;
   }
@@ -70,7 +70,7 @@ export class NetworkService {
     const defaultNetwork = await this.networkRepository.findOne({order: {created_at: "ASC"}});
     if (!defaultNetwork)
     {
-      throw new BadRequestException('Default network not found');
+      throw new NotFoundException('Default network not found');
     }
     return defaultNetwork;
   }
