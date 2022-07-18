@@ -27,6 +27,9 @@ $ yarn start:dev
 
 Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
 
+You can checkout the documentation of the api at [http://localhost:3001/doc/](http://localhost:3001/doc/)
+
+
 ## Main tech specifications used in this repo:
 
 Typescript, NestJS, TypeORM
