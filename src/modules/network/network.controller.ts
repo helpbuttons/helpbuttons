@@ -47,6 +47,11 @@ import { editFileName, imageFileFilter } from '../storage/storage.utils';
     findOne(@Param('networkId') networkId: string) {
       return this.networkService.findOne(networkId);
     }
+
+    @Get('findById')
+    findDefaultNetwork() {
+      return this.networkService.findDefaultNetwork();
+    }
   
     @Patch('edit/:networkId')
     update(
