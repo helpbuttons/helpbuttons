@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { ILike, Repository } from 'typeorm';
@@ -53,7 +53,11 @@ export class NetworkService {
   }
 
   async findOne(id: string): Promise<Network>{
-    return await this.networkRepository.findOne({id});
+    const network = await this.networkRepository.findOne({id});
+    if (!network) {
+      throw new NotFoundException('Network not found');
+    }
+    return network;
   }
 
   async findAll(name: string): Promise<Network[]>{
@@ -61,6 +65,16 @@ export class NetworkService {
       name: ILike(`%${name}%`)
     });
   }
+
+  async findDefaultNetwork(): Promise<Network>{
+    const defaultNetwork = await this.networkRepository.findOne({order: {created_at: "ASC"}});
+    if (!defaultNetwork)
+    {
+      throw new NotFoundException('Default network not found');
+    }
+    return defaultNetwork;
+  }
+
   update(id: string, updateDto: UpdateNetworkDto) {
     
     let location = {};
