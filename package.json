@@ -24,7 +24,7 @@
     "typeorm": "node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js --config src/app/configs/orm.config.ts",
     "migration:generate": "yarn build && yarn typeorm migration:generate -- -n",
     "migration:run": "yarn build && yarn typeorm migration:run",
-    "schema:drop": "yarn typeorm --config src/app/configs/orm.config.ts schema:drop"
+    "schema:drop": "yarn typeorm schema:drop"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.6.1",

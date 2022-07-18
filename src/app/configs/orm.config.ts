@@ -19,7 +19,7 @@ export const typeOrmModuleOptions:TypeOrmModuleOptions = {
 export const OrmConfig = {
     ...typeOrmModuleOptions,
     migrationsTableName: "migrations",
-    migrations: ["dist/migrations/*.ts"],
+    migrations: ["dist/migrations/*.js"],
     cli: {
         "migrationsDir": "src/migrations"
     }
