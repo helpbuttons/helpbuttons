@@ -16,61 +16,33 @@ export default class CreateUsers implements Seeder {
       id: userId,
       realm: '',
       username: 'user@email.com',
-      verificationToken: 'notokeneededd',
+      verificationToken: 'notokeneeded',
       roles:  ['registered'],
       emailVerified: true,
     };
 
-    // insert(connection, User, userData);
-    await connection
-    .createQueryBuilder()
-    .insert()
-    .into(User)
-    .values([
-      userData
-    ])
-    .execute()
-    
-    await connection
-    .createQueryBuilder()
-    .insert()
-    .into(UserCredential)
-    .values([
-      {
-        id: dbIdGenerator(),
-        userId: userId,
-        password: hashedPassword
-      }
-    ])
-    .execute()
+    await insert(connection, User, userData);
+    await insert(connection, UserCredential, {
+      id: dbIdGenerator(),
+      userId: userId,
+      password: hashedPassword
+    });
 
     const networkId = dbIdGenerator();
+    await insert(connection, Network, {
+      id: networkId,
+      name: 'Example Network',
+      description: 'this is an example network',
+      url: 'https://urlfornetwork.com',
+      radius: 10,
+      latitude: 38.86323,
+      longitude: -9.2697,
+      tags: ['tag1', 'tag2'],
+      location: () => `ST_MakePoint(38.86323, -9.2697)`,
+      avatar: '',
+    });
 
-    await connection
-    .createQueryBuilder()
-    .insert()
-    .into(Network)
-    .values([
-      {
-        id: networkId,
-        name: 'Example Network',
-        description: 'this is an example network',
-        url: 'https://urlfornetwork.com',
-        radius: 10,
-        latitude: 38.86323,
-        longitude: -9.2697,
-        tags: ['tag1', 'tag2'],
-        location: () => `ST_MakePoint(38.86323, -9.2697)`,
-        avatar: '',
-      }
-    ])
-    .execute()
-
-    await connection
-    .createQueryBuilder()
-    .insert()
-    .into(Button)
-    .values([
+    await insert(connection, Button, 
       {
         id: dbIdGenerator(),
         description: 'this is an example button',
@@ -82,8 +54,7 @@ export default class CreateUsers implements Seeder {
         owner: {id: userId},
         images: [],
       }
-    ])
-    .execute()
+    );
     
   }
 }
