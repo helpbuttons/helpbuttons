@@ -11,7 +11,7 @@ export class selectedNetworkEvent implements UpdateEvent {
   
   public update(state: GlobalState) {
     return produce(state, (newState: GlobalState) => {
-      newState.commonData.selectedNetwork = this.network;
+      newState.common.selectedNetwork = this.network;
     });
   }
 }

@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ajax } from "rxjs/ajax";
 
@@ -52,7 +52,11 @@ export class HttpService {
       method: "GET",
       headers: {...this._defaultHeaders(), ...headers},
     }).pipe(
-      map((result) => (result.response as T | undefined))
+      map((result) => (result.response as T | undefined)),
+      catchError((err) => {
+        alert("A network error has occurred, the data could not be read"); // TODO: show a better message to the user
+        return of(undefined);
+      })
     );
   }
 

@@ -25,9 +25,7 @@ export function MarkerButton({ position, children }) {
   );
 }
 export function MarkersButton({ buttons, ...props }) {
-  let buttonArray = buttons.length > 0 ? buttons[0] : buttons;
-
-  const markers = buttonArray.map((button, i) => (
+  const markers = buttons.map((button, i) => (
     <MarkerButton position={button.location} key={i}>
       <Popup className="card-button-map--wrapper">
         <CardButtonMap
