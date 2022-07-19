@@ -30,16 +30,7 @@ export default class CreateUsers implements Seeder {
       userData
     ])
     .execute()
-
-    await connection
-    .createQueryBuilder()
-    .insert()
-    .into(User)
-    .values([
-      userData
-    ])
-    .execute()
-
+    
     await connection
     .createQueryBuilder()
     .insert()
