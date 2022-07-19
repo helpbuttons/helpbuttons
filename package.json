@@ -24,7 +24,8 @@
     "typeorm": "node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js --config src/app/configs/orm.config.ts",
     "migration:generate": "yarn build && yarn typeorm migration:generate -- -n",
     "migration:run": "yarn build && yarn typeorm migration:run",
-    "schema:drop": "yarn typeorm schema:drop"
+    "schema:drop": "yarn typeorm schema:drop",
+    "seed:run": "node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm-seeding/dist/cli.js -n src/app/configs/orm.config.ts seed"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.6.1",
@@ -51,6 +52,7 @@
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.3.0",
     "typeorm": "^0.2.45",
+    "typeorm-seeding": "^1.6.1",
     "typeorm-transactional-cls-hooked": "^0.1.21"
   },
   "devDependencies": {
