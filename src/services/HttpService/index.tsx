@@ -1,15 +1,17 @@
-import { HttpHeaders } from 'next/config';
 import { BehaviorSubject } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { ajax } from "rxjs/ajax";
 
 import getConfig from 'next/config';
-import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 const { publicRuntimeConfig } = getConfig();
 
+import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 
-export class HttpUtilsService {
-  public apiUrl: string;
+
+export class HttpService {
   public isAuthenticated$ = new BehaviorSubject(false);
 
+  private apiUrl: string;
   private tokenType?: string;
   private accessToken?: string;
 
@@ -25,7 +27,7 @@ export class HttpUtilsService {
     if (this.apiUrl.indexOf('<front-host>') >= 0) {
       this.apiUrl = this.apiUrl.replace('<front-host>', window.location.hostname);
     }
-  }  
+  }
 
   public setAccessToken(tokenType?: string, accessToken?: string) {
     this.tokenType = tokenType;
@@ -41,21 +43,32 @@ export class HttpUtilsService {
     }
   }
 
-  // public getHttpOptions(isJson = true) {
-  //   let headers = new HttpHeaders();
-  //
-  //   if (isJson) {
-  //     headers = headers.set('Content-Type', 'application/json');
-  //   }
-  //
-  //   if (this.tokenType && this.accessToken) {
-  //     headers = headers.set('Authorization', `${this.tokenType} ${this.accessToken}`);
-  //   }
-  //
-  //   const httpOptions = {
-  //     headers
-  //   };
-  //
-  //   return httpOptions;
-  // }
+  public get<T>(path: string,
+                body: object = {},
+                headers: object = {},
+               ): Observable<T | undefined> {
+    return ajax({
+      url: this.apiUrl + path,
+      method: "GET",
+      headers: {...this._defaultHeaders(), ...headers},
+    }).pipe(
+      map((result) => (result.response as T | undefined))
+    );
+  }
+
+  private _defaultHeaders(): object {
+    let headers = {
+      "Content-Type": "application/json",
+      accept: "application/json",
+    };
+
+    if (this.tokenType && this.accessToken) {
+      headers["Authorization"] = `${this.tokenType} ${this.accessToken}`;
+    }
+
+    return headers;
+  }
 }
+
+export const httpService = new HttpService();
+
