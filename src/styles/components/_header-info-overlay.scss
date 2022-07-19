@@ -30,12 +30,11 @@ $info-image-height: 700px;
 }
 
 .info-overlay__image {
-
   height: $info-image-height;
   width: 100vw;
   padding: $padding-big;
   background-color: $color-black;
-  background-image:  url(https://dummyimage.com/200/#ccc/fff);
+  background-image:  url(https://picsum.photos/id/1018/1024/768);
   background-repeat: no-repeat, repeat;
   background-size: cover;
 

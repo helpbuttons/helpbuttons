@@ -10,6 +10,6 @@ module.exports = {
             : 'http://localhost:3001' // production api,
     },
     images: {
-      domains: ['dummyimage.com', 'localhost'],
+      domains: ['dummyimage.com', 'picsum.photos', 'localhost'],
     },
 }

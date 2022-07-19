@@ -30,7 +30,7 @@ export default function Explore() {
     <div className="index__container">
       <div className={'index__content-left ' + (showLeftColumn ? '' : 'index__content-left--hide')}>
         <NavHeader showSearch={showLeftColumn}/>
-        {visibleButtons && false && (
+        {visibleButtons && (
           <List buttons={visibleButtons} showLeftColumn={showLeftColumn} onchange={(e) => { onchange(e) }} />
         )}
       </div>
