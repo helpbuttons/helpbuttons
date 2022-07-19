@@ -1,6 +1,6 @@
 import { Connection } from 'typeorm'
 
-export async function insert(connection: Connection, entity: T, values: any) {
+export async function insert(connection: Connection, entity: any, values: any) {
     return await connection
       .createQueryBuilder()
       .insert()
