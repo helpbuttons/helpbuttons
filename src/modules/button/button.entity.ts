@@ -5,7 +5,7 @@ import { Network } from '../network/network.entity';
 import { User } from '../user/user.entity';
 // https://stackoverflow.com/a/67557083
 
-enum ButtonType{
+export enum ButtonType{
   OFFER = "offer",
   NEED  = "need",
   EXCHANGE = "exchange",
