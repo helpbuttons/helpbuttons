@@ -1,10 +1,5 @@
 //List of elements component that can be used anywhere in the app
-import icon from '../../../public/assets/svg/icons/feed.svg'
-import CrossIcon from '../../../public/assets/svg/icons/cross1'
-import back from '../../../public/assets/svg/icons/back.svg'
-import hand from '../../../public/assets/svg/icons/hand_call.svg'
-import send from '../../../public/assets/svg/icons/send.svg'
-import atta from '../../../public/assets/svg/icons/atta.svg'
+import { IoClose } from "react-icons/io5";
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import CheckBox from 'elements/Checkbox'
 import BtnCircle from 'elements/BtnCircle'
@@ -296,7 +291,7 @@ function Repository() {
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
                 <div className="checkbox__content">
                   <div className="checkbox__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <div className="checkbox__text">
                     Ahora
@@ -328,7 +323,7 @@ function Repository() {
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
                 <div className="checkbox__content">
                   <div className="checkbox__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <div className="checkbox__text">
                     Fecha/hora concreta
@@ -345,7 +340,7 @@ function Repository() {
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
                 <div className="checkbox__content">
                   <div className="checkbox__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <div className="checkbox__text">
                     Cerca de mi
@@ -367,7 +362,7 @@ function Repository() {
                 <input type="radio" className="radio__radio" id="type2" name="type"></input>
                 <div className="radio__content">
                   <div className="radio__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <div className="radio__text">
                     Op1
@@ -378,7 +373,7 @@ function Repository() {
                 <input type="radio" className="radio__radio" id="type4" name="type"></input>
                 <div className="radio__content">
                   <div className="radio__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <div className="radio__text">
                     Op2
@@ -386,7 +381,7 @@ function Repository() {
                 </div>
               </label>
             </div>
-            
+
           </section>
 
           <h3 className="repository__title">
@@ -504,10 +499,10 @@ function Repository() {
                 <div className="card-button-map__nav">
 
                   <div className="arrow btn-circle__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <div className="arrow btn-circle__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
 
                 </div>
@@ -533,10 +528,10 @@ function Repository() {
               <div className="card-button-list__nav">
 
                 <div className="arrow btn-circle__icon">
-                  <CrossIcon />
+                  <IoClose />
                 </div>
                 <div className="arrow btn-circle__icon">
-                  <CrossIcon />
+                  <IoClose />
                 </div>
 
               </div>
@@ -616,7 +611,7 @@ function Repository() {
                 <div className="popup__header-left">
                   <button className="popup__header-button">
                     <div className="btn-circle__icon">
-                      <CrossIcon />
+                      <IoClose />
                     </div>
                   </button>
                 </div>
@@ -628,7 +623,7 @@ function Repository() {
                 <div className="popup__header-right">
                   <button className="popup__header-button">
                     <div className="btn-circle__icon">
-                      <CrossIcon />
+                      <IoClose />
                     </div>
                   </button>
                 </div>
@@ -718,10 +713,10 @@ function Repository() {
                 <div className="card-button__picture-nav">
 
                   <div className="arrow btn-circle__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <div className="arrow btn-circle__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
 
                 </div>
@@ -787,7 +782,7 @@ function Repository() {
                   </div>
 
                   <div className="card-notification__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                 </div>
                 <div className="card-notification__text">
@@ -818,7 +813,7 @@ function Repository() {
                     <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" className="picture__img"></img>
                   </div>
                   <div className="card-notification__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                 </div>
                 <div className="card-notification__text">
@@ -849,7 +844,7 @@ function Repository() {
                     <img src="https://dummyimage.com/50/#ccc/fff" alt="Avatar" className="picture__img"></img>
                   </div>
                   <div className="card-notification__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                 </div>
                 <div className="card-notification__text">
@@ -905,7 +900,7 @@ function Repository() {
                 <button className="btn-circle card-notification__delete">
                   <div className="btn-circle__content">
                     <div className="btn-circle__icon">
-                      <CrossIcon />
+                      <IoClose />
                     </div>
                   </div>
                 </button>
@@ -940,19 +935,19 @@ function Repository() {
                   <div className="paragraph grid-three__column">
                     90
                     <div className="btn-circle__icon">
-                      <CrossIcon />
+                      <IoClose />
                     </div>
                   </div>
                   <div className="paragraph grid-three__column">
                     77
                     <div className="btn-circle__icon">
-                      <CrossIcon />
+                      <IoClose />
                     </div>
                   </div>
                   <div className="paragraph grid-three__column">
                     23
                     <div className="btn-circle__icon">
-                      <CrossIcon />
+                      <IoClose />
                     </div>
 
                   </div>
@@ -974,7 +969,7 @@ function Repository() {
 
           <div className="btn-with-icon">
             <div className="btn-with-icon__icon">
-              <CrossIcon />
+              <IoClose />
             </div>
             <span className="btn-with-icon__text">
               Cerrar sesión
@@ -998,7 +993,7 @@ function Repository() {
                   <div className="popup__header-left">
                     <button className="popup__header-button">
                       <div className="btn-circle__icon">
-                        <CrossIcon />
+                        <IoClose />
                       </div>
                     </button>
                   </div>
@@ -1010,7 +1005,7 @@ function Repository() {
                   <div className="popup__header-right">
                     <button className="popup__header-button">
                       <div className="btn-circle__icon">
-                        <CrossIcon />
+                        <IoClose />
                       </div>
                     </button>
                   </div>
@@ -1031,7 +1026,7 @@ function Repository() {
 
                   <button className="btn-with-icon button-with-icon--offer">
                     <div className="btn-filter__icon">
-                      <CrossIcon />
+                      <IoClose />
                     </div>
                     <div className="btn-with-icon__text">
                       ENTRAR
@@ -1064,7 +1059,7 @@ function Repository() {
                   <div className="popup__header-left">
                     <button className="popup__header-button">
                       <div className="btn-circle__icon">
-                        <CrossIcon />
+                        <IoClose />
                       </div>
                     </button>
                   </div>
@@ -1076,7 +1071,7 @@ function Repository() {
                   <div className="popup__header-right">
                     <button className="popup__header-button">
                       <div className="btn-circle__icon">
-                        <CrossIcon />
+                        <IoClose />
                       </div>
                     </button>
                   </div>
@@ -1135,7 +1130,7 @@ function Repository() {
         <div className="card-alert">
 
           <div className="card-alert__icon">
-            <CrossIcon />
+            <IoClose />
           </div>
           <div className="">
             <p className="card-alert__top-text">Error</p>
@@ -1164,7 +1159,7 @@ function Repository() {
               <button className="btn-circle">
                 <div className="btn-circle__content">
                   <div className="btn-circle__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                 </div>
               </button>
@@ -1174,7 +1169,7 @@ function Repository() {
               <button className="btn-circle">
                 <div className="btn-circle__content">
                   <div className="btn-circle__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                 </div>
               </button>
@@ -1384,7 +1379,7 @@ function Repository() {
 
             <a href="" className="nav-bottom__link nav-bottom__link--active">
                 <div className="nav-bottom__icon">
-                    <CrossIcon />
+                    <IoClose />
                 </div>
                 <div className="nav-bottom__text">
                   Map
@@ -1393,7 +1388,7 @@ function Repository() {
 
             <a href="" className="nav-bottom__link nav-bottom__link--active">
                 <div className="nav-bottom__icon">
-                    <CrossIcon />
+                    <IoClose />
                 </div>
                 <div className="nav-bottom__text">
                   Create
@@ -1402,7 +1397,7 @@ function Repository() {
 
             <a href="" className="nav-bottom__link nav-bottom__link--active">
                 <div className="nav-bottom__icon">
-                    <CrossIcon />
+                    <IoClose />
                 </div>
                 <div className="nav-bottom__text">
                   Login
@@ -1411,7 +1406,7 @@ function Repository() {
 
             <a href="" className="nav-bottom__link nav-bottom__link--active">
                 <div className="nav-bottom__icon">
-                    <CrossIcon />
+                    <IoClose />
                 </div>
                 <div className="nav-bottom__text">
                   Faqs
@@ -1435,7 +1430,7 @@ function Repository() {
               <button className="btn-circle">
                 <div className="btn-circle__content">
                   <div className="btn-circle__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                 </div>
               </button>
@@ -1447,7 +1442,7 @@ function Repository() {
               <button className="btn-circle">
                 <div className="btn-circle__content">
                   <div className="btn-circle__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                 </div>
               </button>
@@ -1518,7 +1513,7 @@ function Repository() {
         <div className="spinner-overlay">
           <figure className="btn-circle">
             <div className="loading-overlay__loading-icon spinner">
-              <CrossIcon />
+              <IoClose />
             </div>
           </figure>
         </div>
@@ -1537,7 +1532,7 @@ function Repository() {
             <div className="picker--over picker-box-shadow picker__content picker__options-v">
               <button  className="picker__option-btn--active" type="button" name="button">
                   <div className="picker__option-btn--icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <div className="picker__option-btn--txt">
                     Ahora
@@ -1545,7 +1540,7 @@ function Repository() {
               </button>
               <button  className="picker__option-btn--active" type="button" name="button">
                   <div className="picker__option-btn--icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <div className="picker__option-btn--txt">
                     Fecha / hora concreta
@@ -1553,7 +1548,7 @@ function Repository() {
               </button>
               <button  className="picker__option-btn-with-icon" type="button" name="button">
                   <div className="picker__option-btn--icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <div className="picker__option-btn--txt">
                     Fecha / hora concreta

@@ -1,4 +1,4 @@
-import CrossIcon from "../../../public/assets/svg/icons/cross1";
+import { IoClose } from "react-icons/io5";
 
 export default function BtnCircle({
     disabled = false,
@@ -9,7 +9,7 @@ export default function BtnCircle({
         <button disabled={disabled} className="btn-circle">
             <div className="btn-circle__content">
                 <div className="btn-circle__icon">
-                    <CrossIcon />
+                    <IoClose />
                 </div>
             </div>
         </button>

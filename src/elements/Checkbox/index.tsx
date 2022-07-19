@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CrossIcon from "../../../public/assets/svg/icons/cross1";
+import { IoClose } from "react-icons/io5";
 type IconType = "cross" | "red";
 
 function CheckBoxIcon({ icon }: { icon: IconType }) {
@@ -7,7 +7,7 @@ function CheckBoxIcon({ icon }: { icon: IconType }) {
         case "cross":
             return (
                 <div className="checkbox__icon">
-                    <CrossIcon />
+                    <IoClose />
                 </div>
             );
         case "red":

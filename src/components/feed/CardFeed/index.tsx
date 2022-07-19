@@ -1,6 +1,6 @@
 // feed card that goes in ButtonFile component, under ButtonCard, and repeats for every feed that is available. It can also displays in feeds page, on the left column (desktop) or other places for notifications in the future. It has a "remove feed"icon, date and last message preview
 import Image from 'next/image'
-import CrossIcon from '../../../../public/assets/svg/icons/cross1'
+import { IoClose } from "react-icons/io5";
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 
 
@@ -30,7 +30,7 @@ export default function CardFeed() {
           <button className="btn-circle card-notification__delete">
             <div className="btn-circle__content">
               <div className="btn-circle__icon">
-                <CrossIcon />
+                <IoClose />
               </div>
             </div>
           </button>

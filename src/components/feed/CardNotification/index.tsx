@@ -1,6 +1,6 @@
 //notification card that can be used in a notif menu or a message notification, it's the same as feed card with slight modifitaion for different purposes.
 import Image from 'next/image'
-import CrossIcon from '../../../../public/assets/svg/icons/cross1'
+import { IoClose } from "react-icons/io5";
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 
 
@@ -16,7 +16,7 @@ export default function CardNotification() {
             </div>
 
             <div className="card-notification__icon">
-              <CrossIcon />
+              <IoClose />
             </div>
           </div>
           <div className="card-notification__text">

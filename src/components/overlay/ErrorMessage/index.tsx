@@ -1,5 +1,5 @@
 ///error small popup
-import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
+import { IoClose } from "react-icons/io5";
 
 export default function ErrorMessage() {
   return (
@@ -7,7 +7,7 @@ export default function ErrorMessage() {
     <div className="card-alert">
 
       <div className="card-alert__icon">
-        <CrossIcon />
+        <IoClose />
       </div>
       <div className="">
         <p className="card-alert__top-text">Error</p>

@@ -1,6 +1,6 @@
 import React from "react";
 import NextLink from "next/link";
-import CrossIcon from "../../../../public/assets/svg/icons/cross1";
+import { IoClose } from "react-icons/io5";
 
 ///small popup to pick small data by the user
 export function Picker({ setHideMenu, onClosed, children }) {
@@ -10,7 +10,7 @@ export function Picker({ setHideMenu, onClosed, children }) {
         <div className="picker--over picker-box-shadow picker__content picker__options-v">
           <a onClick={onClosed} className="popup__header-button">
             <div className="btn-circle__icon">
-              <CrossIcon />
+              <IoClose />
             </div>
           </a>
           {children}
