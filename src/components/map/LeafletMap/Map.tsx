@@ -40,7 +40,7 @@ export default function Map({ buttons, style, addMarkerClick, initialLocation = 
   lng: "-0.09",
 } }) {
   const [currentLocation, setCurrentLocation] = useState(initialLocation);
-  const [zoom, setZoom] = useState(13);
+  const [zoom, setZoom] = useState(8);
 
   return (
     <MapContainer
@@ -50,7 +50,7 @@ export default function Map({ buttons, style, addMarkerClick, initialLocation = 
       style={style}
     >
       <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        attribution="&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors"
         url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
       />
       {buttons && <MarkersButton buttons={buttons} />}

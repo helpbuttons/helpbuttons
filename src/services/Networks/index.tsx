@@ -14,9 +14,8 @@ import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
-
 export class NetworkService {
-  //Create network
+
   public static create(network, token: string, successFunc, failFunc) {
     store.emit(new CreateNetworkEvent(network, token,successFunc, failFunc));
   }

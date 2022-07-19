@@ -17,16 +17,11 @@ import {
   DropDownAutoCompleteOption,
 } from "elements/DropDownAutoComplete";
 import { GlobalState, store } from "pages";
-import { FetchDefaultNetwork } from "pages/Common/data";
 import { setSelectedNetworkId } from "./data";
 
 export default function HomeInfo() {
-  const selectedNetwork = useRef(store, (state: GlobalState) => state.commonData.selectedNetwork);
-  const selectedNetworkLoading = useRef(store, (state: GlobalState) => state.commonData.selectedNetworkLoading);
-
-  useEffect(() => {
-    store.emit(new FetchDefaultNetwork());
-  }, []);
+  const selectedNetwork = useRef(store, (state: GlobalState) => state.common.selectedNetwork);
+  const selectedNetworkLoading = useRef(store, (state: GlobalState) => state.common.selectedNetworkLoading);
 
   return (
     <>

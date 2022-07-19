@@ -26,7 +26,7 @@ import { useRef } from "store/Store";
 export default function ButtonNew() {
   const networkId = localStorageService.read(LocalStorageVars.NETWORK_SELECTED);
   const token = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
-  const selectedNetwork = useRef(store, (state :GlobalState) => state.commonData.selectedNetwork);
+  const selectedNetwork = useRef(store, (state :GlobalState) => state.common.selectedNetwork);
   // TODO: tags
 
   const fields = {

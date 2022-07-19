@@ -1,4 +1,4 @@
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { produce } from 'immer';
 
 import { WatchEvent } from 'store/Event';
@@ -6,14 +6,14 @@ import { UpdateEvent } from '../store/Event';
 import { GlobalState } from 'store/Store';
 
 import { NetworkService } from 'services/Networks';
-import { INetwork } from 'services/Networks/network.type.tsx';
+import { INetwork } from 'services/Networks/network.type';
 
-export interface CommonDataState {
+export interface CommonState {
   // networks: INetwork[];
   selectedNetwork: INetwork;
 }
 
-export const commonDataInitial = {
+export const commonInitial = {
   // networks: [],
   selectedNetwork: null,
   selectedNetworkLoading: false,
@@ -22,7 +22,7 @@ export const commonDataInitial = {
 export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
   public update(state: GlobalState) {
     return produce(state, newState => {
-      newState.commonData.selectedNetworkLoading = true;
+      newState.common.selectedNetworkLoading = true;
     });
   }
 
@@ -38,8 +38,8 @@ export class SelectedNetworkFetched implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, newState => {
-      newState.commonData.selectedNetwork = this.network;
-      newState.commonData.selectedNetworkLoading = false;
+      newState.common.selectedNetwork = this.network;
+      newState.common.selectedNetworkLoading = false;
     });
   }
 }
@@ -98,7 +98,7 @@ export class SelectedNetworkFetched implements UpdateEvent {
 //
 //     return produce(state, newState => {
 //
-//       newState.commonData.networks = this.networks.response[0];
+//       newState.common.networks = this.networks.response[0];
 //     });
 //   }
 //
@@ -109,7 +109,7 @@ export class SelectedNetworkFetched implements UpdateEvent {
 //   public constructor(private selectedNetwork: INetwork) {}
 //   public update(state: GlobalState) {
 //     return produce(state, newState => {
-//       newState.commonData.selectedNetwork = this.selectedNetwork.response;
+//       newState.common.selectedNetwork = this.selectedNetwork.response;
 //     });
 //   }
 //

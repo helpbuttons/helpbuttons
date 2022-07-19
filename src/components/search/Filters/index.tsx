@@ -4,7 +4,7 @@ import { store } from '../../../pages/index';
 //Filters is the component under the search bar sectioon of the home page and other pages. It consist of several items all with btn-fillter class, and its parts can be altered by the btn templates of the selected network.
 //if the filters are too many, it ddisplays a "more filters" option at the end that brings the PopupExtraFilters
 export default function Filters() {
-  const paths = useRef(store, (state) => state.commonData.networks);
+  const paths = useRef(store, (state) => state.common.networks);
 
   return (
     <div className="filters">

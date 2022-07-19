@@ -11,7 +11,6 @@ import { IoGlobeOutline } from "react-icons/io5";
 import { useRef } from "store/Store";
 import { GlobalState, store } from 'pages';
 import {ImageContainer} from "elements/ImageWrapper";
-import { loadSelectedNetworkId } from './data';
 
 export default NavBottom;
 
