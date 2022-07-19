@@ -7,9 +7,6 @@ export const typeOrmModuleOptions:TypeOrmModuleOptions = {
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
-    entities: [
-        'dist/modules/**/*.entity.{ts,js}',
-    ],
     /* Note : it is unsafe to use synchronize: true for schema synchronization
     on production once you get data in your database. */
     // synchronize: true,
@@ -19,9 +16,14 @@ export const typeOrmModuleOptions:TypeOrmModuleOptions = {
 export const OrmConfig = {
     ...typeOrmModuleOptions,
     migrationsTableName: "migrations",
-    migrations: ["dist/migrations/*.js"],
+    migrations: ["src/data/migrations/*{.ts,.js}"],
+    seeds: ['src/data/seeds/*.seed.{ts,js}'],
+    factories: ['src/data/factories/*{.ts,.js}'],
     cli: {
-        "migrationsDir": "src/migrations"
-    }
+        "migrationsDir": "src/data/migrations"
+    },
+    entities: [
+        'src/modules/**/*.entity.{ts,js}',
+    ],
 };
 export default OrmConfig;

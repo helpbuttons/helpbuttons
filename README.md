@@ -35,6 +35,12 @@ Open [http://localhost:3001](http://localhost:3001) with your browser to see the
 
 You can checkout the documentation of the api at [http://localhost:3001/doc/](http://localhost:3001/doc/)
 
+## Using pre-created data
+You can use the pre-created data:
+
+`yarn seed:run`
+
+**login:** user@email.com **password:** password
 
 ## Main tech specifications used in this repo:
 
