@@ -91,7 +91,45 @@ export class ButtonService {
     return this.buttonRepository.save([button]);
   }
 
-  findAll(networkId: string) {
+  findAll(networkId: string, bounds: any) {
+    // ST_Contains
+    // ST_Point
+    // SELECT ST_MakePolygon( ST_GeomFromText('LINESTRING(75 29,77 29,77 29, 75 29)'));
+
+    // ST_Shift_Longitude(location)
+    // northEast: {
+    //   lat: northEast_lat,
+    //   lng: northEast_lng,
+    // },
+    // southWest: {
+    //   lat: southWest_lat,
+    //   lng: southEast_lng
+    // }
+
+    const query = `SELECT button.location, button.description
+FROM button 
+WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON((
+  ${bounds.southWest.lat}
+  ${bounds.northEast.lng},
+
+  ${bounds.northEast.lat}
+  ${bounds.northEast.lng},
+
+  ${bounds.northEast.lat}
+  ${bounds.southWest.lng},
+
+  ${bounds.southWest.lat}
+  ${bounds.southWest.lng},
+
+  ${bounds.southWest.lat}
+  ${bounds.northEast.lng}
+
+))'), button.location);`;
+console.log(query);
+    // select ST_Shift_Longitude(ST_GeographyFromText('SRID=4326;POINT(0 0)')) && 
+    // ST_Shift_Longitude(ST_GeographyFromText('SRID=4326;POLYGON((180 -80,  -80 -80, -80 80, 180 80, 180 -80))')) as expectTrue_1, 
+    const polygon = "";
+
     return this.buttonRepository.find({
       relations: ['network', 'feed'],
       where: {
@@ -108,4 +146,45 @@ export class ButtonService {
     return this.buttonRepository.delete({id});
   }
 }
+  /*
+
+SELECT button.location, button.description
+FROM button 
+WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON((
+  38.40993643412625
+  -2.7052797510194653,
+
+  38.803246523797704
+  -2.7052797510194653,
+
+  38.803246523797704
+  -3.4090913965272778,
+
+  38.40993643412625
+  -3.4090913965272778,
   
+  38.40993643412625
+  -2.7052797510194653
+
+))'), ST_GEOMFROMTEXT('POINT(38.75 -3.33)'));
+button.latitude
+
+
+SELECT
+ST_GEOMFROMTEXT('POLYGON((
+  38.40993643412625
+  -2.7052797510194653,
+
+  38.803246523797704
+  -2.7052797510194653,
+
+  38.803246523797704
+  -3.4090913965272778,
+
+  38.40993643412625
+  -3.4090913965272778,
+
+  38.40993643412625
+  -2.7052797510194653
+
+))')*/
