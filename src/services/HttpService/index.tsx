@@ -1,11 +1,12 @@
-import { BehaviorSubject, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { BehaviorSubject, of } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
 
-import getConfig from 'next/config';
+import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 
-import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
+import { localStorageService, LocalStorageVars } from "services/LocalStorage";
+import { alertService } from "services/Alert";
 
 
 export class HttpService {
@@ -24,8 +25,8 @@ export class HttpService {
     }
 
     this.apiUrl = publicRuntimeConfig.apiUrl;
-    if (this.apiUrl.indexOf('<front-host>') >= 0) {
-      this.apiUrl = this.apiUrl.replace('<front-host>', window.location.hostname);
+    if (this.apiUrl.indexOf("<front-host>") >= 0) {
+      this.apiUrl = this.apiUrl.replace("<front-host>", window.location.hostname);
     }
   }
 
@@ -54,7 +55,7 @@ export class HttpService {
     }).pipe(
       map((result) => (result.response as T | undefined)),
       catchError((err) => {
-        alert("A network error has occurred, the data could not be read"); // TODO: show a better message to the user
+        alertService.error("A network error has occurred, the data could not be read", {autoClose: true}); // TODO: show a better message to the user
         return of(undefined);
       })
     );

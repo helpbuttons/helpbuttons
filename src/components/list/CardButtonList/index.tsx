@@ -12,7 +12,6 @@ export default function CardButtonList(props) {
     imageUrl = props.images[0];
   }
 
-  
   return (
     <div className="list__element">
       <div className="card-button-list card-button-list--need">
@@ -28,8 +27,7 @@ export default function CardButtonList(props) {
           <ImageWrapper
             imageType={ImageType.cardList}
             src={imageUrl}
-            alt="popup_img"
-            localUrl
+            alt={props.description}
           />
         </div>
         <div className="card-button-list__content">

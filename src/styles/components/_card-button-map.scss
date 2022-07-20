@@ -46,8 +46,7 @@ $card-button-map-border-height: $border-general-height;
 }
 
 .card-button-map {
-  &--intercambio-swap-deactivated,
-  &--intercambio-deactivated,
+  &--exchange-deactivated,
   &--offer-deactivated,
   &--need-deactivated {
     opacity: 0.5;
@@ -57,10 +56,7 @@ $card-button-map-border-height: $border-general-height;
 
 .card-button-map--offer:after,
 .card-button-map--need:after,
-.card-button-map--intercambio:after,
-.card-button-map--intercambio:before,
-.card-button-map--intercambio-swap:after,
-.card-button-map--intercambio-swap:before {
+.card-button-map--exchange:after {
   content: '';
   border-radius: 0;
   display: inline-block;
@@ -79,32 +75,17 @@ $card-button-map-border-height: $border-general-height;
   background: $color-red;
 }
 
-.card-button-map--intercambio:after,
-.card-button-map--intercambio:before {
+.card-button-map--exchange:after,
+.card-button-map--exchange:before {
   width: 50%;
 }
 
-.card-button-map--intercambio-swap:after,
-.card-button-map--intercambio-swap:before {
-  width: 50%;
-}
-
-.card-button-map--intercambio:after {
+.card-button-map--exchange:after {
   background: $color-green;
 }
 
-.card-button-map--intercambio:before {
+.card-button-map--exchange:before {
   background: $color-red;
-  left: auto;
-  right: 0;
-}
-
-.card-button-map--intercambio-swap:after {
-  background: $color-red;
-}
-
-.card-button-map--intercambio-swap:before {
-  background: $color-green;
   left: auto;
   right: 0;
 }

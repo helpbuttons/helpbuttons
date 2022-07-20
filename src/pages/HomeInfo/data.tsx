@@ -8,7 +8,6 @@ import { store } from "pages";
 import { alertService } from "services/Alert";
 
 export function setSelectedNetworkId(networkId: string) {
-  
   return NetworkService.findById(networkId).subscribe(network => {
     if (network.response) {
       alertService.info("You have selected network '" + network.response.name.toString() + "'");

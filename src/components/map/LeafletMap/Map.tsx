@@ -40,7 +40,7 @@ export default function Map({ buttons, style, addMarkerClick, initialLocation = 
   lng: "-0.09",
 } }) {
   const [currentLocation, setCurrentLocation] = useState(initialLocation);
-  const [zoom, setZoom] = useState(8);
+  const [zoom, setZoom] = useState(11);
 
   return (
     <MapContainer
