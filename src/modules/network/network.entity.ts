@@ -29,7 +29,7 @@ export class Network extends BaseEntity {
   @Column({ type: 'double precision' })
   public longitude: number;
 
-  @Column({ type: 'geography' })
+  @Column({ type: 'geometry' })
   location: string;
 
   @Column('text', { array: true, nullable: true, default: [] })

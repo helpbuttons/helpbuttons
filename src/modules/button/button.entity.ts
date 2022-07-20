@@ -26,7 +26,7 @@ export class Button extends BaseEntity {
   @Column({ type: 'double precision' })
   public longitude: number;
 
-  @Column({ type: 'geography' })
+  @Column({ type: 'geometry' })
   location: object;
 
   @Column({ type: 'enum', enum: ButtonType, default: ButtonType.NEED })

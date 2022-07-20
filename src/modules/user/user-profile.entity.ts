@@ -22,7 +22,7 @@ export class UserProfile extends BaseEntity {
   @Column({})
   defaultLanguage: string;
 
-  @Column({ type: 'geography' })
+  @Column({ type: 'geometry' })
   location: object;
   
   @Column({default: false})
