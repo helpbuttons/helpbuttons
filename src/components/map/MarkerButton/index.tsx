@@ -44,6 +44,9 @@ export function MarkersButton({ buttons,onBoundsChange, ...props }) {
     moveend: (e) => {
       onBoundsChange(map.getBounds());
     },
+    load: () => {
+      onBoundsChange(map.getBounds());
+    }
   });
   const markers = buttons.map((button, i) => (
     <MarkerButton button={button} key={i}>
