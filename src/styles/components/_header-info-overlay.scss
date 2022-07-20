@@ -5,53 +5,108 @@ $info-image-height: 700px;
 
 .info-overlay__selected {
 
-    border: 1px solid $color-black;
+  border: 1px solid $color-black;
 
 }
 
 .info-overlay__container {
 
-    background-color: $color-corporative;
-    height:100vh;
-    width:100%;
-    z-index: $z-index-02;
-    box-sizing: border-box;
-
-}
-
-.info-overlay__name {
-
-  margin: $padding-big auto;
-  width: 100%;
-  margin-top: $proportional-margin-xlarge;
-  font-size: $font-size-title;
-  text-align: center;
-
-}
-
-.info-overlay__image {
-  height: $info-image-height;
-  width: 100vw;
-  padding: $padding-big;
-  background-color: $color-black;
-  background-image:  url(https://picsum.photos/id/1018/1024/768);
+  background-color: $color-white;
+  height:100vh;
+  width:100%;
+  z-index: $z-index-02;
+  box-sizing: border-box;
+  background-image:  url(https://placekitten.com/800/500);
   background-repeat: no-repeat, repeat;
+  background-position: center;
   background-size: cover;
 
 }
 
-.info-overlay__location {
+.info-overlay__content {
 
+  display: grid;
+  grid-template-rows:auto 1fr auto;
   @extend .form__field;
   margin: auto;
+  font-family: inherit;
+  font-weight: bold;
+  padding: 0 0 ;
+  min-width: fit-content;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding-bottom: 90px;
+
+ }
+
+.info-overlay__location {
+
+  background-color: $color-transparent;
+  margin: 0 $padding-big;
+  padding: $padding-big;
+  border-radius: 0 0 25px 25px;
+
+  .label {
+
+    color: $color-white;
+  
+  }
 
 }
 
-.info-overlay__description {
+.info-overlay__card {
 
-  margin: $margin-big;
-  margin: $margin-big auto;
-  text-align: center;
+  @extend .form__field;
+  flex-grow: 1;
+  margin: $padding-big;
+  margin-top: $margin-small;
+  color: $color-white;
+  max-height: calc( 100vh - 400px);
+  min-height: 100px;
+
+  .card {
+
+    border-radius: 25px;
+    background-color: $color-transparent;
+    padding: $padding-big;
+    max-height: 100%;
+    height: fit-content;
+    overflow: auto;
+
+    .card__header {
+
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: $margin-big;
+  
+      .card__header-image {
+  
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        background-color: $color-gray;
+  
+      }
+  
+      .card__header-title {
+  
+        margin-left: $margin-small;
+  
+      }
+
+    }
+
+  }
+
+  .info-overlay__description {
+
+    overflow:auto;
+    white-space: normal;
+
+  }
 
 }
 
@@ -59,7 +114,6 @@ $info-image-height: 700px;
 
   width: 100%;
   padding: $padding-big;
-  position: absolute;
   bottom: $info-nets-field-bottom;
 
 }
@@ -72,35 +126,31 @@ $info-image-height: 700px;
 
 }
 
-
-.info-overlay__content {
-
-   position: absolute;
-   font-family: inherit;
-   font-weight: bold;
-   padding: 0 0 ;
-   display: block;
-   justify-content: space-around;
-   min-width: fit-content;
-   background-color: transparent;
-   height: 100%;
-   width: fit-content;
-   box-sizing: border-box;
-
- }
-
-
 .info-overlay__body {
+
   position: relative;
+
  }
 
 
  @media #{$breakpoints-xlarge} {
 
-   .info-overlay__bottom {
+  .info-overlay__bottom {
 
-     bottom: 2%;
+    bottom: 2%;
 
-   }
+  }
+
+  .info-overlay__content {
+
+    padding-bottom: 0px;
+
+  }
+
+  .info-overlay__card {
+    
+    max-height: calc(100vh - 300px);
+
+  }
 
  }
