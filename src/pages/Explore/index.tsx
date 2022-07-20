@@ -24,11 +24,6 @@ export default function Explore() {
   const updateButtons = (bounds: Bounds) => {
     store.emit(new FindButtons(selectedNetwork.id, bounds));
   }
-  useEffect(() => {
-    if (selectedNetwork) {
-      store.emit(new FindButtons(selectedNetwork.id, null));
-    }
-  }, [selectedNetwork])
   
   return (
     <div className="index__container">
