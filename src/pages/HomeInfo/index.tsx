@@ -24,40 +24,45 @@ export default function HomeInfo() {
   const selectedNetworkLoading = useRef(store, (state: GlobalState) => state.common.selectedNetworkLoading);
 
   return (
-    <>
-      <div className="info-overlay__container">
-        <div className="info-overlay__content">
-          <form className="info-overlay__location">
-              <label className="form__label label">Where do you start?</label>
-              <input
-                type="text"
-                className="form__input"
-                placeholder="Search Location"
-              ></input>
-          </form>
-        </div>
+    <div className="info-overlay__container">
+      <div className="info-overlay__content">
+        <form className="info-overlay__location">
+            <label className="form__label label">Where do you start?</label>
 
+            <input
+              type="text"
+              className="form__input"
+              placeholder="Search Location"
+            ></input>
+        </form>
+        { selectedNetworkLoading && (
+          <>
+            <div className="info-overlay__card">Loading...</div>
+          </>)
+        }
+        { selectedNetwork && (
+          <div className="info-overlay__card">
+            <div className="card">
+              <div className="card__header">
+                <ImageContainer
+                    src={selectedNetwork.avatar}
+                    alt={selectedNetwork.name}
+                    width={50}
+                    height={50}
+                    localUrl
+                />
+                <h3 className="card__header-title">
+                  {selectedNetwork.name}
+                </h3>
+              </div>
+              <div className="info-overlay__description">
+                {selectedNetwork.description}
+              </div>
+            </div>
+          </div>
+        )}
         <div className="info-overlay__bottom">
           <div className="info-overlay__nets">
-            <div>
-              { selectedNetworkLoading && (
-                <>
-                  <div>Loading...</div>
-                </>)
-              }
-              { selectedNetwork && (
-                <>
-                  {selectedNetwork.name}
-                  <ImageContainer
-                            src={selectedNetwork.avatar}
-                            alt={selectedNetwork.name}
-                            width={50}
-                            height={50}
-                            localUrl
-                  />
-                </>)
-              }
-            </div>
             <DropdownNetworks/>
             <Link href="/NetworkNew">
               <Btn
@@ -66,22 +71,10 @@ export default function HomeInfo() {
                 caption="Create Network"
               />
             </Link>
-            <div className="info-overlay__card">
-              <div className="card__header">
-                <div className="card__header-image"></div>
-                <h3 className="card__header-title">
-                  Network name
-                </h3>
-              </div>
-              <div className="info-overlay__description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Sed at condimentum felis. Nulla at purus sit amet erat finibus aliquam.
-              </div>
-            </div>
-          </div>   
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
