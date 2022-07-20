@@ -1,9 +1,7 @@
 ///button marker over the map
 import React from "react";
-import { map } from "rxjs/operators";
-import { useState } from "react";
 
-import { Marker, Popup } from "react-leaflet";
+import { Marker, Popup, useMapEvents } from "react-leaflet";
 import { iconButton, iconSelector } from "./IconButton";
 import CardButtonMap from "components/map/CardButtonMap";
 
@@ -41,7 +39,12 @@ export function MarkerButton({ button, children }) {
     </Marker>
   );
 }
-export function MarkersButton({ buttons, ...props }) {
+export function MarkersButton({ buttons,onBoundsChange, ...props }) {
+  const map = useMapEvents({
+    moveend: (e) => {
+      onBoundsChange(map.getBounds());
+    },
+  });
   const markers = buttons.map((button, i) => (
     <MarkerButton button={button} key={i}>
       <Popup className="card-button-map--wrapper">

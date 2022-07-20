@@ -7,6 +7,7 @@ import { GlobalState } from 'store/Store';
 
 import { ButtonService } from 'services/Buttons';
 import { IButton } from 'services/Buttons/button.type';
+import { Bounds } from 'leaflet';
 
 // import { map, tap, take, catchError } from 'rxjs/operators';
 //
@@ -22,7 +23,7 @@ export const exploreInitial = {
 }
 
 export class FindButtons implements UpdateEvent, WatchEvent {
-  public constructor(private networkId: string) {}
+  public constructor(private networkId: string, private bounds: Bounds) {}
 
   public update(state: GlobalState) {
     return produce(state, newState => {
@@ -31,7 +32,7 @@ export class FindButtons implements UpdateEvent, WatchEvent {
   }
 
   public watch(state: GlobalState) {
-    return ButtonService.find(this.networkId).pipe(
+    return ButtonService.find(this.networkId, this.bounds).pipe(
       map((buttons) => new ButtonsFound(buttons)),
     );
   }
