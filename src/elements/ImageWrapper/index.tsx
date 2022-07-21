@@ -75,7 +75,8 @@ export default function ImageWrapper({
     if (localUrl && src) {
         src = baseUrl + "/files/get/" + src;
     } else {
-        src = "https://dummyimage.com/200/#ccc/fff";
+        const seed = "x" + alt.slice(0, 20).replace(" ", "").replace("'", "");
+        src = `https://picsum.photos/seed/${seed}/${width}/${height}`;
     }
 
     return (
@@ -88,9 +89,6 @@ export default function ImageWrapper({
           />
     );
 }
-
-
-
 
 export function ImageContainer({
     height = 200,

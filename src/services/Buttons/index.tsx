@@ -1,21 +1,22 @@
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { ajax } from "rxjs/ajax";
 import { IButton } from "./button.type";
 
+import { httpService } from "services/HttpService";
 import getConfig from "next/config";
 import { UtilsService } from "services/Utils";
-import { NetworkService } from "services/Networks";
+import { Bounds } from "leaflet";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
 export class ButtonService {
-  //Create button
+
   public static new(
     data: IButton,
     token: string,
     networkId: string
   ): Observable<any> {
-    
+
     let bodyData = {
       name: data.name,
       type: data.type,
@@ -83,19 +84,30 @@ export class ButtonService {
   }
 
   //Get buttons
-  public static find(networkId: string): Observable<any> {
-    //save the ajax object that can be .pipe by the observable
-    const buttonWithHeaders$ = ajax({
-      url: baseUrl + "/buttons/find/"+networkId,
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-      body: {},
+  public static find(networkId: string, bounds: any): Observable<IButton[]> {
+    if (!bounds)
+    {
+      return of([]);
+    }
+    return httpService.get<IButton[]>("/buttons/find/" + networkId, 
+    {
+      northEast_lat: bounds._northEast.lat.toString(),
+      northEast_lng: bounds._northEast.lng.toString(),
+      southWest_lat: bounds._southWest.lat.toString(),
+      southWest_lng: bounds._southWest.lng.toString(),
     });
-
-    return buttonWithHeaders$;
+    // //save the ajax object that can be .pipe by the observable
+    // const buttonWithHeaders$ = ajax({
+    //   url: baseUrl + "/buttons/find/"+networkId,
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     accept: "application/json",
+    //   },
+    //   body: {},
+    // });
+    //
+    // return buttonWithHeaders$;
   }
 
   //Get button by id

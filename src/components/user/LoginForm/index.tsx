@@ -10,10 +10,11 @@ import Form from 'elements/Form';
 import FieldText from 'elements/Fields/FieldText';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import { Link } from 'elements/Link';
 
 
 
-export default function LoginForm({children}) {
+export default function LoginForm() {
   const fields = {
     email: "",
     password: "",
@@ -33,12 +34,38 @@ export default function LoginForm({children}) {
   };
 
   return (
-            <Form onSubmit={handleSubmit}>
-                <FieldText handleChange={setValue} name="email" label="Email" validationError={validationErrors.email}></FieldText>
-                <FieldPassword handleChange={setValue} name="password" label="Password" validationError={validationErrors.password}></FieldPassword>
-                
-                <Btn btnType={BtnType.splitIcon} caption="ENTER" contentAlignment={ContentAlignment.center} isSubmitting={isSubmitting}/>
-
+            <Form onSubmit={handleSubmit} classNameExtra="login">
+              <div className="login__form">
+                <div className="form__inputs-wrapper">
+                  <FieldText 
+                    handleChange={setValue} 
+                    name="email" 
+                    label="Email" 
+                    validationError={validationErrors.email}
+                    classNameInput="squared"
+                    placeholder="email@email.em"
+                  ></FieldText>
+                  <FieldPassword 
+                    handleChange={setValue} 
+                    name="password" 
+                    label="Password" 
+                    validationError={validationErrors.password}
+                    classNameInput="squared"
+                    placeholder="Type your password"
+                  ></FieldPassword>
+                </div>
+                <div className="form__btn-wrapper">
+                  <Btn 
+                    btnType={BtnType.splitIcon} 
+                    caption="ENTER" 
+                    contentAlignment={ContentAlignment.center} 
+                    isSubmitting={isSubmitting}
+                  />
+                  <div className="popup__link">
+                    <Link href="/Signup">I don&apos;t have an account</Link>
+                  </div>
+                </div>
+              </div>
             </Form>
 
   );

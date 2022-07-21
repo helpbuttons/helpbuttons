@@ -11,6 +11,8 @@ import FieldNumber from "elements/Fields/FieldNumber";
 import PopupOptions from "components/popup/PopupOptions";
 import FormSubmit from "elements/Form/FormSubmit";
 import FieldLocation from "elements/Fields/FieldLocation";
+import FieldRadio from "elements/Fields/FieldRadio";
+import FieldRadioOption from "elements/Fields/FieldRadio/option";
 import PopupSection from "components/popup/PopupSection";
 import FieldUploadImage from "elements/Fields/FieldImageUpload";
 import { localStorageService, LocalStorageVars } from "services/LocalStorage";
@@ -22,7 +24,7 @@ export default function NetworkNew() {
     name: "",
     avatar: "",
     url: "",
-    privacy: false,
+    privacy: "public",
     description: "",
     latitude: null,
     longitude: null,
@@ -70,13 +72,14 @@ export default function NetworkNew() {
               label="Url"
               validationError={validationErrors.url}
             ></FieldText>
-            <FieldCheckbox
-              label="Privacy"
-              value={values.privacy}
-              handleChange={setValue}
-              name="privacy"
-              validationError={validationErrors.privacy}
-            ></FieldCheckbox>
+            <FieldRadio label="Privacy">
+              <FieldRadioOption handleChange={setValue} name={"privacy"} value="public" isChecked ={values.privacy === "public"}>
+                <div className="btn-with-icon__text">Public</div>
+              </FieldRadioOption>
+              <FieldRadioOption handleChange={setValue} name={"privacy"} value="private" isChecked ={values.privacy === "private"}>
+                <div className="btn-with-icon__text">Private</div>
+              </FieldRadioOption>
+            </FieldRadio>
             <FieldText
               handleChange={setValue}
               value={values.description}

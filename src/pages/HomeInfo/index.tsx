@@ -20,57 +20,61 @@ import { GlobalState, store } from "pages";
 import { setSelectedNetworkId } from "./data";
 
 export default function HomeInfo() {
-  const selectedNetwork = useRef(store, (state :GlobalState) => state.commonData.selectedNetwork);
+  const selectedNetwork = useRef(store, (state: GlobalState) => state.common.selectedNetwork);
+  const selectedNetworkLoading = useRef(store, (state: GlobalState) => state.common.selectedNetworkLoading);
 
   return (
-    <>
-      <div className="info-overlay__container">
-        <div className="info-overlay__content">
-          <div className="info-overlay__name"></div>
+    <div className="info-overlay__container">
+      <div className="info-overlay__content">
+        <form className="info-overlay__location">
+            <label className="form__label label">Where do you start?</label>
 
-          <div className="info-overlay__description"></div>
-
-          <div className="info-overlay__image">
-            <form className="info-overlay__location">
-              <label className="form__label label">Where do you start?</label>
-
-              <input
-                type="text"
-                className="form__input"
-                placeholder="Search Location"
-              ></input>
-            </form>
-          </div>
-
-          <div className="info-overlay__bottom">
-            <div className="info-overlay__nets">
-              <div>
-                { selectedNetwork && (
-                  <>
-                    {selectedNetwork.name}
-                    <ImageContainer
-                              src={selectedNetwork.avatar}
-                              alt={selectedNetwork.name}
-                              width={50}
-                              height={50}
-                              localUrl
-                    />
-                  </>)
-                }
-              </div>
-              <DropdownNetworks/>
-              <Link href="/NetworkNew">
-                <Btn
-                  btnType={BtnType.corporative}
-                  contentAlignment={ContentAlignment.center}
-                  caption="Create Network"
+            <input
+              type="text"
+              className="form__input"
+              placeholder="Search Location"
+            ></input>
+        </form>
+        { selectedNetworkLoading && (
+          <>
+            <div className="info-overlay__card">Loading...</div>
+          </>)
+        }
+        { selectedNetwork && (
+          <div className="info-overlay__card">
+            <div className="card">
+              <div className="card__header">
+                <ImageContainer
+                    src={selectedNetwork.avatar}
+                    alt={selectedNetwork.name}
+                    width={50}
+                    height={50}
+                    localUrl
                 />
-              </Link>
+                <h3 className="card__header-title">
+                  {selectedNetwork.name}
+                </h3>
+              </div>
+              <div className="info-overlay__description">
+                {selectedNetwork.description}
+              </div>
             </div>
+          </div>
+        )}
+        <div className="info-overlay__bottom">
+          <div className="info-overlay__nets">
+            <DropdownNetworks/>
+            <Link href="/NetworkNew">
+              <Btn
+                btnType={BtnType.corporative}
+                contentAlignment={ContentAlignment.center}
+                caption="Create Network"
+              />
+            </Link>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

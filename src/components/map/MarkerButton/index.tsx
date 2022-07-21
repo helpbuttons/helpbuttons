@@ -1,13 +1,11 @@
 ///button marker over the map
 import React from "react";
-import { map } from "rxjs/operators";
-import { useState } from "react";
 
-import { Marker, Popup } from "react-leaflet";
-import { iconButton } from "./IconButton";
+import { Marker, Popup, useMapEvents } from "react-leaflet";
+import { iconButton, iconSelector } from "./IconButton";
 import CardButtonMap from "components/map/CardButtonMap";
 
-export function MarkerButton({ position, children }) {
+export function MarkerSelector({ position }) {
   return (
     <Marker
       position={
@@ -18,17 +16,37 @@ export function MarkerButton({ position, children }) {
             }
           : { lat: null, lng: null }
       }
-      icon={iconButton}
+      icon={iconSelector()}
+    >
+    </Marker>
+  );
+}
+
+export function MarkerButton({ button, children }) {
+  return (
+    <Marker
+      position={
+        button.location
+          ? {
+              lat: button.location.coordinates[0],
+              lng: button.location.coordinates[1],
+            }
+          : { lat: null, lng: null }
+      }
+      icon={iconButton(button)}
     >
       {children}
     </Marker>
   );
 }
-export function MarkersButton({ buttons, ...props }) {
-  let buttonArray = buttons.length > 0 ? buttons[0] : buttons;
-
-  const markers = buttonArray.map((button, i) => (
-    <MarkerButton position={button.location} key={i}>
+export function MarkersButton({ buttons,onBoundsChange, ...props }) {
+  const map = useMapEvents({
+    moveend: (e) => {
+      onBoundsChange(map.getBounds());
+    },
+  });
+  const markers = buttons.map((button, i) => (
+    <MarkerButton button={button} key={i}>
       <Popup className="card-button-map--wrapper">
         <CardButtonMap
           key={button.id}
@@ -39,7 +57,7 @@ export function MarkersButton({ buttons, ...props }) {
           tags={button.tags}
           description={button.description}
           date={button.date}
-          location={button.geoPlace}
+          location={button.location}
         />
       </Popup>
     </MarkerButton>

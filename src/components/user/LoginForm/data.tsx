@@ -7,21 +7,22 @@ import { GlobalState } from 'store/Store';
 
 import { UserService } from 'services/Users';
 import { IUser } from 'services/Users/types';
-import { HttpUtilsService } from "services/HttpUtilsService";
+import { HttpService } from "services/HttpService";
 import { errorService } from 'services/Error';
 
 
 //Called event for login
 export class LoginFormEvent implements WatchEvent {
 
-  public constructor(private email: string,private password: string, private setValidationErrors) {}
+  public constructor(private email: string, private password: string, private setValidationErrors) {}
+
   public watch(state: GlobalState) {
     return UserService.login(this.email, this.password).pipe(
       map(userData => userData),
       take(1),
       tap(userData => {
         if(userData.response.token)
-        new HttpUtilsService().setAccessToken("user",userData.response.token);
+        new HttpService().setAccessToken("user",userData.response.token);
         Router.push({ pathname: '/', state: {} });
       }),
       catchError((error) => {

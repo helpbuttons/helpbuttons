@@ -6,8 +6,10 @@ import { useRouter } from 'next/router';
 import NavBottom from "components/nav/NavBottom"; //just for mobile
 import Alert from "components/overlay/Alert";
 import { NetworkService } from 'services/Networks';
-import { loadStoreValues } from './data';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
+
+import { GlobalState, store } from "pages";
+import { FetchDefaultNetwork } from "pages/Common/data";
 
 export default MyApp;
 
@@ -21,7 +23,8 @@ function MyApp({ Component, pageProps }) {
         // on initial load - run auth check
         authCheck(router.asPath);
 
-        loadStoreValues();
+        // load the default network and make it available globally
+        store.emit(new FetchDefaultNetwork());
 
         // on route change start - hide page content by setting authorized to false
         const hideContent = () => setAuthorized(false);

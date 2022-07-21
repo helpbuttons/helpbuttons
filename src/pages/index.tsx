@@ -12,26 +12,18 @@ import { authenticationService } from 'services';
 //    Components
 import HomeInfo from "pages/HomeInfo";
 
-
-import { CommonDataState, commonDataInitial } from "pages/Common/data";
-
-
-// https://immerjs.github.io/immer/
-// Para simplificar la modificación de estructuras de datos
-// al estilo "immutable objects"
-
+import { CommonState, commonInitial } from "pages/Common/data";
+import { ExploreState, exploreInitial } from "pages/Explore/data";
 
 // -- estado global --
 export interface GlobalState {
-
-  commonData: CommonDataState;
-
+  common: CommonState;
+  explore: ExploreState;
 }
 
 export const store = new Store<GlobalState>({
-
-  commonData: commonDataInitial,
-
+  common: commonInitial,
+  explore: exploreInitial,
 });
 
 const Home: NextPage = () => {
