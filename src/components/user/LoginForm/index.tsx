@@ -40,14 +40,16 @@ export default function LoginForm() {
                     label="Email"
                     classNameInput="squared"
                     placeholder="email@email.em"
-                    {...register("email")}
+                    validationError={ errors.email }
+                    {...register("email", { required: true })}
                   ></FieldText>
                   <FieldPassword 
                     name="password" 
                     label="Password" 
                     classNameInput="squared"
                     placeholder="Type your password"
-                    {...register("password")}
+                    validationError={ errors.password }
+                    {...register("password", { required: true })}
                   ></FieldPassword>
                 </div>
                 <div className="form__btn-wrapper">
