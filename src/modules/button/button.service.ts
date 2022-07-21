@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateButtonDto,UpdateButtonDto } from './button.dto';
 import { Button } from './button.entity';
@@ -91,13 +91,36 @@ export class ButtonService {
     return this.buttonRepository.save([button]);
   }
 
-  findAll(networkId: string) {
+  async findAll(networkId: string, bounds: any) {
+    const buttonsOnBounds = await this.buttonRepository.createQueryBuilder('button')
+    .select('id')
+    .where(`
+      button.networkId = '${networkId}' AND
+      ST_Contains(ST_GEOMFROMTEXT('POLYGON((
+      ${bounds.southWest.lat}
+      ${bounds.northEast.lng},
+    
+      ${bounds.northEast.lat}
+      ${bounds.northEast.lng},
+    
+      ${bounds.northEast.lat}
+      ${bounds.southWest.lng},
+    
+      ${bounds.southWest.lat}
+      ${bounds.southWest.lng},
+    
+      ${bounds.southWest.lat}
+      ${bounds.northEast.lng}
+    
+    ))'), button.location)`)
+    .execute();
+      
+    const buttonsIds = buttonsOnBounds.map((button) => button.id);
+
     return this.buttonRepository.find({
       relations: ['network', 'feed'],
       where: {
-        network: {
-          id: networkId
-        }
+        id: In(buttonsIds),
       },
       order: {
         created_at: "DESC"
@@ -108,4 +131,3 @@ export class ButtonService {
     return this.buttonRepository.delete({id});
   }
 }
-  

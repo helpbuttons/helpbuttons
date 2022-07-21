@@ -50,8 +50,23 @@ export class ButtonController {
   }
 
   @Get('/find/:networkId')
-  async findAll(@Param('networkId') networkId: string) {
-    return await this.buttonService.findAll(networkId);
+  async findAll(@Param('networkId') networkId: string, 
+  @Query('northEast_lat') northEast_lat: string,
+  @Query('northEast_lng') northEast_lng: string,
+  @Query('southWest_lat') southWest_lat: string,
+  @Query('southWest_lng') southWest_lng: string,
+  ) {
+    return await this.buttonService.findAll(networkId, 
+      {
+        northEast: {
+          lat: northEast_lat,
+          lng: northEast_lng,
+        },
+        southWest: {
+          lat: southWest_lat,
+          lng: southWest_lng
+        }
+      });
   }
 
   @Get('findById/:buttonId')
