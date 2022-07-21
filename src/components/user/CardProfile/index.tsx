@@ -1,6 +1,6 @@
 //Profile Card with the the info displayed by the user in Profile page. It shows different options depending if it's other user profile or your profile when logged.
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
-import CrossIcon from '../../../../public/assets/svg/icons/cross1'
+import { IoClose } from "react-icons/io5";
 import { Link } from 'elements/Link';
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 

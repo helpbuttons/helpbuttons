@@ -1,6 +1,6 @@
 import * as React from "react";
 
-function CrossIcon(props) {
+function IoClose(props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +15,4 @@ function CrossIcon(props) {
   );
 }
 
-export default CrossIcon;
+export default IoClose;

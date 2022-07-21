@@ -1,11 +1,11 @@
-import CrossIcon from '../../public/assets/svg/icons/cross1'
+import { IoClose } from "react-icons/io5";
 
 export default function Spinner() {
     return (
       <div className="spinner-overlay">
         <figure className="btn-circle">
           <div className="loading-overlay__loading-icon spinner">
-            <CrossIcon />
+            <IoClose />
           </div>
         </figure>
       </div>

@@ -1,5 +1,5 @@
 ///Header for popups, with cclose option and optional other elements
-import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
+import { IoClose } from "react-icons/io5";
 import { Link } from 'elements/Link';
 
 interface PopupHeader {
@@ -18,7 +18,7 @@ export default function PopupHeader({children, linkBack, linkFwd}: PopupHeader) 
             {linkBack &&
               <Link href={linkBack} className="popup__header-button">
                 <div className="btn-circle__icon">
-                  <CrossIcon />
+                  <IoClose />
                 </div>
               </Link>
             }
@@ -32,7 +32,7 @@ export default function PopupHeader({children, linkBack, linkFwd}: PopupHeader) 
             {linkFwd &&
               <Link href={linkFwd} className="popup__header-button">
                 <div className="btn-circle__icon">
-                  <CrossIcon />
+                  <IoClose />
                 </div>
               </Link>
             }

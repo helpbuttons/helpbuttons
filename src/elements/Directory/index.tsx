@@ -1,5 +1,5 @@
 //Profile Card with the the info displayed by the user in Profile page. It shows different options depending if it's other user profile or your profile when logged.
-import CrossIcon from '../../../public/assets/svg/icons/cross1.tsx'
+import { IoClose } from "react-icons/io5";
 
 export default function Directory() {
   return (
@@ -22,7 +22,7 @@ export default function Directory() {
                 <div className="btn-with-icon">
 
                   <div className="btn-with-icon__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <span className="btn-with-icon__text">
                     Tema interior de índice
@@ -33,7 +33,7 @@ export default function Directory() {
                 <div className="btn-with-icon">
 
                   <div className="btn-with-icon__icon">
-                    <CrossIcon />
+                    <IoClose />
                   </div>
                   <span className="btn-with-icon__text">
                     Tema interior de índice

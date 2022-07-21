@@ -3,7 +3,7 @@ import FieldRadio from "elements/Fields/FieldRadio";
 import FieldRadioOption from "elements/Fields/FieldRadio/option";
 import { useState } from "react";
 
-import CrossIcon from "../../../../public/assets/svg/icons/cross1";
+import { IoClose } from "react-icons/io5";
 type IconType = "cross" | "red";
 
 function RadioIcon({ icon }: { icon: IconType }) {
@@ -11,7 +11,7 @@ function RadioIcon({ icon }: { icon: IconType }) {
     case "cross":
       return (
         <div className="checkbox__icon">
-          <CrossIcon />
+          <IoClose />
         </div>
       );
     case "red":
