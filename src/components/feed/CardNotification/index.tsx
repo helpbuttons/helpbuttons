@@ -7,7 +7,7 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 export default function CardNotification() {
   return (
     <>
-      <div className="card-notification card-notification--intercambio">
+      <div className="card-notification card-notification--exchange">
         <div className="card-notification__content">
           <div className="card-notification__avatar">
 

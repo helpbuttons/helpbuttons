@@ -5,7 +5,7 @@ function iconButton(button) {
       className: 'marker-button',
       html:(
 
-            `<figure id='markerButton' class="marker-button marker-button--need">
+            `<figure id='markerButton' class="marker-button marker-button--${ button.type }">
                     <div class="avatar-medium marker-button__image">
                       <img src="https://picsum.photos/seed/${ button.id }/50/50"
                         alt="${ button.description }" title="${ button.description }" class="picture__img"/>
@@ -13,7 +13,7 @@ function iconButton(button) {
 
                     <span class="marker-button__arrow"></span>
 
-                    <div class="marker-button__tags marker-button__tags--need">
+                    <div class="marker-button__tags marker-button__tags--${ button.type }">
                         <div class="marker-button__link-tag">
                           ${ button.type }
                         </div>

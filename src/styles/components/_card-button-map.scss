@@ -233,6 +233,18 @@ $card-button-map-border-height: $border-general-height;
   }
 }
 
+.card-button-map__exchange {
+  .hashtag {
+    background: $color-black;
+    font-weight: bold;
+    &:hover {
+      color: $hashtag-hover-color;
+      background: $color-green;
+    }
+  }
+}
+
+
 .card-button-map__paragraph {
   word-break: break-word;
   color: $card-button-map-paragraph-color;
