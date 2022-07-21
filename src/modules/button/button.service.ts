@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { Repository, In } from 'typeorm';
@@ -9,6 +9,7 @@ import { getManager } from "typeorm";
 import { NetworkService } from '../network/network.service';
 import { StorageService } from '../storage/storage.service';
 import { User } from '../user/user.entity';
+import { of } from 'rxjs';
 
 @Injectable()
 export class ButtonService {
@@ -92,6 +93,7 @@ export class ButtonService {
   }
 
   async findAll(networkId: string, bounds: any) {
+    try {
     const buttonsOnBounds = await this.buttonRepository.createQueryBuilder('button')
     .select('id')
     .where(`
@@ -125,6 +127,9 @@ export class ButtonService {
       order: {
         created_at: "DESC"
     }});
+    }catch(err) {
+      throw new NotFoundException('no buttons found');
+    }
   }
 
   remove(id: string) {
