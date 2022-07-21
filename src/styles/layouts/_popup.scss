@@ -253,6 +253,21 @@ body {
   }
 }
 
+.popup__link {
+
+  text-decoration: underline;
+  text-align: center;
+  width: 100%;
+  padding: $padding-big;
+
+  a:visited, a:active {
+
+    color: $color-black;
+
+  }
+
+}
+
 //Revise:
 .popup__options-medium {
 
