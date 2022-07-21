@@ -12,6 +12,7 @@ import FieldText from 'elements/Fields/FieldText';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { Link } from 'elements/Link';
+import { alertService } from 'services/Alert';
 
 export default function LoginForm() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
@@ -21,6 +22,7 @@ export default function LoginForm() {
   }
 
   const onSuccess = () => {
+    alertService.info("You signed up! Now visit this link to activate");
     store.emit(new NavigateTo("/"));
   }
 
