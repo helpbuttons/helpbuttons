@@ -30,21 +30,14 @@ export default function ButtonType({ handleChange, name, validationError }) {
   };
   return (
     <>
-      <FieldRadio label="Choose your type:" validationError={validationError}>
-        <FieldRadioOption handleChange={onChange} name={name} value="offer">
-          <div className="btn-filter__icon green"></div>
-          <div className="btn-with-icon__text">Offer</div>
-        </FieldRadioOption>
-        <FieldRadioOption handleChange={onChange} name={name} value="exchange">
-          <div className="btn-filter__split-icon">
-            <div className="btn-filter__split-icon--half green-l"></div>
-            <div className="btn-filter__split-icon--half red-r"></div>
-          </div>
-          <div className="btn-with-icon__text">Exchange</div>
-        </FieldRadioOption>
-        <FieldRadioOption handleChange={onChange} name={name} value="need">
+      <FieldRadio label="Button type:" validationError={validationError}>
+        <FieldRadioOption handleChange={onChange} name={name} value="need" isChecked={value === "need"}>
           <div className="btn-filter__icon red"></div>
           <div className="btn-with-icon__text">Need</div>
+        </FieldRadioOption>
+        <FieldRadioOption handleChange={onChange} name={name} value="offer" isChecked={value === "offer"}>
+          <div className="btn-filter__icon green"></div>
+          <div className="btn-with-icon__text">Offer</div>
         </FieldRadioOption>
       </FieldRadio>
     </>

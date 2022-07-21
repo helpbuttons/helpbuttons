@@ -13,6 +13,11 @@ $label-padding-bottom: .5rem;
   text-transform: initial;
   text-align: initial;
   margin: $label-margin;
+
+  &.light {
+    color: $color-gray;
+    font-weight: lighter;
+  }
 }
 
 @media #{$breakpoints-xxlarge} {

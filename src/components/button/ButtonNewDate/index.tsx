@@ -4,7 +4,7 @@ import PickerPeriodDate from "components/picker/PickerPeriodDate";
 import PickerDate from "components/picker/PickerDate";
 import React, { useState } from "react";
 
-export default function ButtonNewDate({ exact, ...props }) {
+export default function ButtonNewDate({ title, exact, ...props }) {
   const [showHideMenu, setHideMenu] = useState(false);
   const [pickerMode, setPickerMode] = useState("");
 
@@ -15,8 +15,10 @@ export default function ButtonNewDate({ exact, ...props }) {
   return (
     <>
       <div className="form__field">
-        <div className="card-button__date">{props.date}</div>
-
+        <div className="card-button__date">
+          {props.date && props.date}
+          {!props.date && title}
+        </div>
         <div className="btn" onClick={() => setHideMenu(!showHideMenu)}>
           Change date
         </div>

@@ -39,7 +39,7 @@ export function MarkerButton({ button, children }) {
     </Marker>
   );
 }
-export function MarkersButton({ buttons,onBoundsChange, ...props }) {
+export function MarkersButton({ buttons, onBoundsChange, ...props }) {
   const map = useMapEvents({
     moveend: (e) => {
       onBoundsChange(map.getBounds());

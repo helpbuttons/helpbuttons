@@ -15,11 +15,15 @@ export default function FieldLocation({ setValue, values, validationErrors, init
     setValue("radius", 20);
   };
 
+  const title =values.latitude || values.longitude
+  ?  `${values.longitude}, ${values.latitude} (radius: ${values.radius} km`
+  :  "Where ?"
+
   return (
     <>
       <div className="form__field">
         <div className="card-button__city card-button__everywhere">
-          {values.longitude}, {values.latitude} (radius: {values.radius} km)
+        {title}
         </div>
 
         <div className="btn" onClick={() => setHideMenu(!showHideMenu)}>

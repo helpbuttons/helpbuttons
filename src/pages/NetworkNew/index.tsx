@@ -72,7 +72,7 @@ export default function NetworkNew() {
               label="Url"
               validationError={validationErrors.url}
             ></FieldText>
-            <FieldRadio label="Privacy">
+            <FieldRadio label="Privacy" validationError={validationErrors.privacy}>
               <FieldRadioOption handleChange={setValue} name={"privacy"} value="public" isChecked ={values.privacy === "public"}>
                 <div className="btn-with-icon__text">Public</div>
               </FieldRadioOption>
