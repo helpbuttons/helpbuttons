@@ -1,21 +1,24 @@
 import { map } from 'rxjs/operators';
 import { produce } from 'immer';
+import Router from 'next/router';
 
-import { WatchEvent } from 'store/Event';
-import { UpdateEvent } from '../store/Event';
+import { WatchEvent, UpdateEvent, EffectEvent } from 'store/Event';
 import { GlobalState } from 'store/Store';
 
-import { NetworkService } from 'services/Networks';
+import { IUser } from 'services/Users/types';
 import { INetwork } from 'services/Networks/network.type';
+import { NetworkService } from 'services/Networks';
 
 export interface CommonState {
+  currentUser: IUser;
   // networks: INetwork[];
   selectedNetwork: INetwork;
 }
 
 export const commonInitial = {
+  currentUser: undefined,
   // networks: [],
-  selectedNetwork: null,
+  selectedNetwork: undefined,
   selectedNetworkLoading: false,
 }
 
@@ -44,6 +47,23 @@ export class SelectedNetworkFetched implements UpdateEvent {
   }
 }
 
+export class SetCurrentUser implements UpdateEvent {
+  public constructor(private currentUser: IUser) {}
+
+  public update(state: GlobalState) {
+    return produce(state, newState => {
+      newState.common.currentUser = this.currentUser;
+    });
+  }
+}
+
+export class NavigateTo implements EffectEvent {
+  public constructor(private path: string) {}
+
+  public effect(state: GlobalState) {
+    Router.push({ pathname: this.path, state: {} });
+  }
+}
 
 
 // //NETWORK LIST

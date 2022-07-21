@@ -1,5 +1,7 @@
+import React from "react";
 import FieldError from "../FieldError";
-interface  FieldText {
+
+interface IFieldText {
     label: string,
     handleChange: Function,
     name: string,
@@ -8,29 +10,31 @@ interface  FieldText {
     placeholder?: string   
 }
 
-export default function FieldText({
+const FieldText = React.forwardRef(({
     label,
-    handleChange,
     name,
-    validationError,
     classNameInput,
-    placeholder
-}: FieldText) {
-    const onChange = (e) => {
-        handleChange(name, e.target.value);
-      };
-
+    placeholder,
+    onChange,
+    onBlur,
+    validationError,
+}, ref): IFieldText => {
     return (
         <div className="form__field">
             <label className="label">{label}</label>
             <input
-                placeholder={placeholder}
                 name={name} 
+                ref={ref}
                 type="text"
+                placeholder={placeholder}
                 onChange={onChange}
+                onBlur={onBlur}
                 className={`form__input ${classNameInput} ${validationError ? 'validation-error' : ''}`} 
             />
             <FieldError validationError={validationError}/>
         </div>
     );
-}
+});
+
+export default FieldText;
+
