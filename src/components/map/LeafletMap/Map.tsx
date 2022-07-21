@@ -35,7 +35,7 @@ const AddMarker = ({ handleClick }) => {
 export default function Map({ buttons, style, addMarkerClick, initialLocation = {
   lat: "51.505",
   lng: "-0.09",
-}, onBoundsChange }) {
+}, onBoundsChange = (e) => {}}) {
   const [currentLocation, setCurrentLocation] = useState(initialLocation);
   const [zoom, setZoom] = useState(11);
   const getButtonsOnBounds = (map) => {
