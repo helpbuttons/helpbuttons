@@ -2,8 +2,13 @@
 import CrossIcon from '../../../../public/assets/svg/icons/cross1.tsx'
 import { Link } from 'elements/Link';
 
+interface PopupHeader {
+  children?: any,
+  linkBack?: string, 
+  linkFwd?: string
+}
 
-export default function PopupHeader({children, linkBack, linkFwd}) {
+export default function PopupHeader({children, linkBack, linkFwd}: PopupHeader) {
   return (
 
     <>

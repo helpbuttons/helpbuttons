@@ -40,35 +40,34 @@ export default function Signup() {
   };
 
   return (
-
-        <Popup title="Signup" linkFwd="/HomeInfo">
-
+      <Popup title="Signup" linkFwd="/HomeInfo">
           <Alert />
-
-                <PopupImg>
-
-                  <ImageWrapper imageType={ImageType.popup} src="https://dummyimage.com/80/#ccc/fff" alt="register_img"/>
-
-                </PopupImg>
-
-                <PopupSection>
-                    <Form onSubmit={handleSubmit}>
-                      <FieldText handleChange={setValue} name="email" label="Email" validationError={validationErrors.email}></FieldText>
-                      <FieldPassword handleChange={setValue} name="password" label="Password" validationError={validationErrors.password}></FieldPassword>
-                      
+          <Form onSubmit={handleSubmit} classNameExtra="login">
+              <div className="login__form">
+                  <div className="form__inputs-wrapper">
+                      <FieldText 
+                        handleChange={setValue} 
+                        name="email" 
+                        label="Email" 
+                        validationError={validationErrors.email}
+                        classNameInput="squared"
+                        placeholder="email@email.em"
+                      ></FieldText>
+                      <FieldPassword 
+                        handleChange={setValue} 
+                        name="password" 
+                        label="Password" 
+                        validationError={validationErrors.password}
+                        classNameInput="squared"
+                        placeholder="Type your password"
+                      ></FieldPassword>
+                  </div>
+                  <div className="form__btn-wrapper">
                       <Btn btnType={BtnType.splitIcon} caption="REGISTER" contentAlignment={ContentAlignment.center} isSubmitting={isSubmitting}/>
-
-                    </Form>
-
-                </PopupSection>
-                <PopupOptions>
-                  <Link href="/Login" className="popup__options-btn">I have an account</Link>
-
-                </PopupOptions>
-
-
+                      <Link href="/Login" className="popup__options-btn">I have an account</Link>
+                  </div>
+              </div>
+          </Form>
       </Popup>
-
   );
-
 }
