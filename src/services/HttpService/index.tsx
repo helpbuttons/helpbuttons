@@ -43,12 +43,12 @@ export class HttpService {
                 body: object = {},
                 headers: object = {},
                ): Observable<T | undefined> {
-    const query = new URLSearchParams(body);
-    if (query.keys().length > 0) {
-      return this._ajax("GET", path + '?' + query.toString(), {}, headers);
-    } else {
-      return this._ajax("GET", path, {}, headers);
+    if (Object.keys(body).length > 0) {
+      const query = new URLSearchParams(body);
+      const queryString = query.toString();
+      path += '?' + queryString;
     }
+    return this._ajax("GET", path, {}, headers);
   }
 
   public post<T>(path: string,
