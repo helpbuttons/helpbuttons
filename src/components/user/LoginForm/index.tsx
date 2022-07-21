@@ -16,19 +16,20 @@ import { alertService } from 'services/Alert';
 
 export default function LoginForm() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
+  const [ errorMsg, setErrorMsg ] = useState(undefined);
 
   const onSubmit = (data) => {
     store.emit(new Login(data.email, data.password, onSuccess, onError));
   }
 
   const onSuccess = () => {
-    alertService.info("You signed up! Now visit this link to activate");
     store.emit(new NavigateTo("/"));
   }
 
   const onError = (err) => {
-    // TODO: terminar esto
-    console.error(err);
+    if (err === "login-incorrect") {
+      setErrorMsg("User or password not found");
+    }
   }
 
   return (
@@ -52,6 +53,9 @@ export default function LoginForm() {
                     {...register("password", { required: true })}
                   ></FieldPassword>
                 </div>
+                { errorMsg && (
+                  <div>{ errorMsg }</div>
+                )}
                 <div className="form__btn-wrapper">
                   <Btn 
                     btnType={BtnType.splitIcon} 

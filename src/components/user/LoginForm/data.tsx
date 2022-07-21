@@ -9,7 +9,7 @@ import { SetCurrentUser } from 'pages/Common/data';
 
 import { UserService } from 'services/Users';
 import { IUser } from 'services/Users/types';
-import { HttpService } from "services/HttpService";
+import { HttpService, isHttpError } from "services/HttpService";
 import { errorService } from 'services/Error';
 
 export class Login implements WatchEvent {
@@ -23,13 +23,13 @@ export class Login implements WatchEvent {
       map(userData => {
         if (userData) {
           return new FetchUserData(this.onSuccess, this.onError);
-        } else {
-          throw Error("Login incorrect");
         }
       }),
       catchError((err) => {
-        if (this.onError) {
-          this.onError(err);
+        if (isHttpError(err) && err.status === 401) { // Unauthorized
+          this.onError("login-incorrect");
+        } else {
+          throw err;
         }
         return of(undefined);
       })
