@@ -48,8 +48,10 @@ export class HttpService {
                 body: object = {},
                 headers: object = {},
                ): Observable<T | undefined> {
+                // TODO: fixme...!
+    const query = new URLSearchParams(body);
     return ajax({
-      url: this.apiUrl + path,
+      url: this.apiUrl + path + '?' + query.toString(),
       method: "GET",
       headers: {...this._defaultHeaders(), ...headers},
     }).pipe(

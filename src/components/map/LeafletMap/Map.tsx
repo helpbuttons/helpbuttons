@@ -31,12 +31,16 @@ const AddMarker = ({ handleClick }) => {
   );
 };
 
+
 export default function Map({ buttons, style, addMarkerClick, initialLocation = {
   lat: "51.505",
   lng: "-0.09",
-} }) {
+}, onBoundsChange }) {
   const [currentLocation, setCurrentLocation] = useState(initialLocation);
   const [zoom, setZoom] = useState(11);
+  const getButtonsOnBounds = (map) => {
+    onBoundsChange(map.getBounds())
+  }
 
   return (
     <MapContainer
@@ -44,12 +48,13 @@ export default function Map({ buttons, style, addMarkerClick, initialLocation = 
       zoom={zoom}
       scrollWheelZoom={true}
       style={style}
+      whenCreated={(map) => getButtonsOnBounds(map)}
     >
       <TileLayer
         attribution="&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors"
         url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
       />
-      {buttons && <MarkersButton buttons={buttons} />}
+      {buttons && <MarkersButton buttons={buttons} onBoundsChange={onBoundsChange}/>}
       {addMarkerClick && <AddMarker handleClick={addMarkerClick} />}
     </MapContainer>
   );

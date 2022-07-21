@@ -1,10 +1,11 @@
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { ajax } from "rxjs/ajax";
 import { IButton } from "./button.type";
 
 import { httpService } from "services/HttpService";
 import getConfig from "next/config";
 import { UtilsService } from "services/Utils";
+import { Bounds } from "leaflet";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -83,8 +84,18 @@ export class ButtonService {
   }
 
   //Get buttons
-  public static find(networkId: string): Observable<IButton[]> {
-    return httpService.get<IButton[]>("/buttons/find/" + networkId);
+  public static find(networkId: string, bounds: any): Observable<IButton[]> {
+    if (!bounds)
+    {
+      return of([]);
+    }
+    return httpService.get<IButton[]>("/buttons/find/" + networkId, 
+    {
+      northEast_lat: bounds._northEast.lat.toString(),
+      northEast_lng: bounds._northEast.lng.toString(),
+      southWest_lat: bounds._southWest.lat.toString(),
+      southWest_lng: bounds._southWest.lng.toString(),
+    });
     // //save the ajax object that can be .pipe by the observable
     // const buttonWithHeaders$ = ajax({
     //   url: baseUrl + "/buttons/find/"+networkId,
