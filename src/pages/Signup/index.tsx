@@ -20,6 +20,7 @@ import PopupOptions from 'components/popup/PopupOptions'
 import PopupImg from 'components/popup/PopupImg';
 import PopupSection from 'components/popup/PopupSection';
 import { NavigateTo } from 'pages/Common/data';
+import { alertService } from 'services/Alert';
 
 export default function Signup() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
@@ -30,11 +31,13 @@ export default function Signup() {
 
   const onSuccess = () => {
     // TODO: show message saying to check the email
-    store.emit(new NavigateTo("/")); 
+    alertService.info("You've signed up sucessfuly!"); // this won't show up
+    store.emit(new NavigateTo("/Login")); 
   }
 
   const onError = (err) => {
     // TODO: terminar esto
+    alertService.error(err);
     console.error(err);
   }
 
