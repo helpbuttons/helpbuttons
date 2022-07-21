@@ -26,7 +26,7 @@ export class SignupExtraRulesInterceptor implements NestInterceptor {
     const isEmailExists = await this.userService.isEmailExists(email);
 
     if (isEmailExists) {
-      throw new BadRequestException('Email already exists');
+      throw new BadRequestException('email-already-exists');
     }
 
     return next.handle();
