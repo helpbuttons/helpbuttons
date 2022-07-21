@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { ILike, Repository } from 'typeorm';
 import { TagService } from '../tag/tag.service';
-import { CreateNetworkDto,UpdateNetworkDto } from './network.dto';
+import { CreateNetworkDto, UpdateNetworkDto } from './network.dto';
 import { Network } from './network.entity';
-import { getManager } from "typeorm";
+import { getManager } from 'typeorm';
 import { StorageService } from '../storage/storage.service';
 
 @Injectable()
@@ -14,15 +14,15 @@ export class NetworkService {
     @InjectRepository(Network)
     private readonly networkRepository: Repository<Network>,
     private readonly tagService: TagService,
-    private readonly storageService: StorageService) {
-  }
+    private readonly storageService: StorageService,
+  ) {}
 
   async create(createDto: CreateNetworkDto, avatar: File) {
-    // TODO: 
+    // TODO:
     // add owner
     // validate geopoint
     createDto.radius = createDto.radius ? createDto.radius : 1;
-    let network = {
+    const network = {
       id: dbIdGenerator(),
       name: createDto.name,
       description: createDto.description,
@@ -31,24 +31,33 @@ export class NetworkService {
       latitude: createDto.latitude,
       longitude: createDto.longitude,
       tags: createDto.tags,
-      location: () => `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
+      privacy: createDto.privacy,
+      location: () =>
+        `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
       avatar: '',
-    }
-    
-    await getManager().transaction(async transactionalEntityManager => {
-      if (Array.isArray(createDto.tags))
-      {
-        await this.tagService.addTags('network', network.id, createDto.tags).catch(err => {throw new HttpException({message: err.message}, HttpStatus.BAD_REQUEST)});
-      }
-      
-      
-      // console.log(avatar);
-      if (typeof avatar !== 'undefined') {
-        network.avatar = await this.storageService.newImage(avatar);
-      }
-      await this.networkRepository.insert([network]);
-    });
-    
+    };
+
+    await getManager().transaction(
+      async (transactionalEntityManager) => {
+        if (Array.isArray(createDto.tags)) {
+          await this.tagService
+            .addTags('network', network.id, createDto.tags)
+            .catch((err) => {
+              throw new HttpException(
+                { message: err.message },
+                HttpStatus.BAD_REQUEST,
+              );
+            });
+        }
+
+        // console.log(avatar);
+        if (typeof avatar !== 'undefined') {
+          network.avatar = await this.storageService.newImage(avatar);
+        }
+        await this.networkRepository.insert([network]);
+      },
+    );
+
     return network;
   }
 
@@ -60,9 +69,9 @@ export class NetworkService {
     return network;
   }
 
-  async findAll(name: string): Promise<Network[]>{
+  async findAll(name: string): Promise<Network[]> {
     return await this.networkRepository.find({
-      name: ILike(`%${name}%`)
+      name: ILike(`%${name}%`),
     });
   }
 
@@ -76,32 +85,32 @@ export class NetworkService {
   }
 
   update(id: string, updateDto: UpdateNetworkDto) {
-    
     let location = {};
 
-    if (updateDto.latitude > 0 && updateDto.longitude > 0)
-    {
-      location = {location: () => `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`};
-    }else {
-      delete updateDto.latitude
-      delete updateDto.longitude
+    if (updateDto.latitude > 0 && updateDto.longitude > 0) {
+      location = {
+        location: () =>
+          `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
+      };
+    } else {
+      delete updateDto.latitude;
+      delete updateDto.longitude;
     }
 
     let network = {
       ...updateDto,
       ...location,
-      id
-    }
-    
+      id,
+    };
+
     if (network.tags) {
-      this.tagService.updateTags('network', network.id, network.tags)
+      this.tagService.updateTags('network', network.id, network.tags);
     }
 
     return this.networkRepository.save([network]);
   }
 
   remove(id: string) {
-    return this.networkRepository.delete({id});
+    return this.networkRepository.delete({ id });
   }
 }
-  

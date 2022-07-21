@@ -2,6 +2,10 @@ import { BaseEntity } from '@src/shared/types/base.entity';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { Button } from '../button/button.entity';
 
+export enum PrivacyType {
+  PUBLIC = 'public',
+  PRIVATE = 'private',
+}
 @Entity()
 export class Network extends BaseEntity {
   @Column({})
@@ -17,8 +21,13 @@ export class Network extends BaseEntity {
   @Column({ nullable: true })
   url?: string;
 
-  //   @Column({}) TODO
-  //   privacy?: string;
+  @Column({
+    type: 'enum',
+    enum: PrivacyType,
+    default: PrivacyType.PUBLIC,
+    nullable: true,
+  })
+  privacy: PrivacyType;
 
   @Column({ type: 'double precision' })
   radius: number;
@@ -35,7 +44,7 @@ export class Network extends BaseEntity {
   @Column('text', { array: true, nullable: true, default: [] })
   tags: string[];
 
-  @Column({type: 'text', nullable: true})
+  @Column({ type: 'text', nullable: true })
   avatar?: string;
 
   @OneToMany(() => Button, (button) => button.network)
