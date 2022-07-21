@@ -19,52 +19,53 @@ import Form from 'elements/Form';
 import PopupOptions from 'components/popup/PopupOptions'
 import PopupImg from 'components/popup/PopupImg';
 import PopupSection from 'components/popup/PopupSection';
+import { NavigateTo } from 'pages/Common/data';
+import { alertService } from 'services/Alert';
 
 export default function Signup() {
-  const fields = {
-    email: "",
-    password: "",
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
+
+  const onSubmit = (data) => {
+    store.emit(new SignupEvent(data.email, data.password, onSuccess, onError));
   };
-  const [values, setValues] = useState(fields);
-  const [validationErrors, setValidationErrors] = useState(fields);
 
-  const {formState: { isSubmitting }} = useForm()
-
-  const setValue = (name, value) => {
-    setValues({ ...values, [name]: value });
+  const onSuccess = () => {
+    // TODO: show message saying to check the email
+    alertService.info("You've signed up sucessfuly!"); // this won't show up
+    store.emit(new NavigateTo("/Login")); 
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    store.emit(new SignupEvent(values.email, values.password, setValidationErrors));
-  };
+  const onError = (err) => {
+    // TODO: terminar esto
+    alertService.error(err);
+    console.error(err);
+  }
 
   return (
       <Popup title="Signup" linkFwd="/HomeInfo">
-          <Alert />
-          <Form onSubmit={handleSubmit} classNameExtra="login">
+          <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
               <div className="login__form">
                   <div className="form__inputs-wrapper">
                       <FieldText 
-                        handleChange={setValue} 
                         name="email" 
                         label="Email" 
-                        validationError={validationErrors.email}
                         classNameInput="squared"
                         placeholder="email@email.em"
+                        {...register("email")}
                       ></FieldText>
                       <FieldPassword 
-                        handleChange={setValue} 
                         name="password" 
                         label="Password" 
-                        validationError={validationErrors.password}
                         classNameInput="squared"
                         placeholder="Type your password"
+                        {...register("password")}
                       ></FieldPassword>
                   </div>
                   <div className="form__btn-wrapper">
                       <Btn btnType={BtnType.splitIcon} caption="REGISTER" contentAlignment={ContentAlignment.center} isSubmitting={isSubmitting}/>
-                      <Link href="/Login" className="popup__options-btn">I have an account</Link>
+                      <div className="popup__link">
+                        <Link href="/Login">I have an account</Link>
+                      </div>
                   </div>
               </div>
           </Form>
