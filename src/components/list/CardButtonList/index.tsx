@@ -14,7 +14,7 @@ export default function CardButtonList(props) {
 
   return (
     <div className="list__element">
-      <div className="card-button-list card-button-list--need">
+      <div className={`card-button-list card-button-list--${props.type}`}>
         <div className="card-button-list__picture-container">
           <div className="card-button-list__nav">
             <div className="arrow btn-circle__icon">
@@ -35,7 +35,7 @@ export default function CardButtonList(props) {
             <div className="card-button-list__header">
               <div className="card-button-list__info">
                 <div className="card-button-list__status card-button-list__status">
-                  <span className="card-button-list__status--offer">
+                  <span className={`card-button-list__status--${props.type}`}>
                     {props.type}
                   </span>
                 </div>
@@ -49,7 +49,8 @@ export default function CardButtonList(props) {
             </div>
 
             <div className="card-button-list__hashtags">
-              <div className="card-button-list__need">
+              <div className={`card-button-list__${props.type}`}>
+                
               {props.tags.length > 0 && props.tags.filter(tag => tag.length > 0).map( (tag,key)=>
                 (
                 <div className="hashtag" key={key}>{tag}</div>

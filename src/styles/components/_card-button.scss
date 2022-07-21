@@ -31,8 +31,8 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button {
-  &--intercambio-swap-deactivated,
-  &--intercambio-deactivated,
+  &--exchange-swap-deactivated,
+  &--exchange-deactivated,
   &--offer-deactivated,
   &--need-deactivated {
     opacity: 0.5;
@@ -42,10 +42,10 @@ $card-button-border-height: $border-general-height;
 
 .card-button--offer:after,
 .card-button--need:after,
-.card-button--intercambio:after,
-.card-button--intercambio:before,
-.card-button--intercambio-swap:after,
-.card-button--intercambio-swap:before {
+.card-button--exchange:after,
+.card-button--exchange:before,
+.card-button--exchange-swap:after,
+.card-button--exchange-swap:before {
   content: '';
   border-radius: 0;
   display: inline-block;
@@ -64,31 +64,31 @@ $card-button-border-height: $border-general-height;
   background: $color-red;
 }
 
-.card-button--intercambio:after,
-.card-button--intercambio:before {
+.card-button--exchange:after,
+.card-button--exchange:before {
   width: 50%;
 }
 
-.card-button--intercambio-swap:after,
-.card-button--intercambio-swap:before {
+.card-button--exchange-swap:after,
+.card-button--exchange-swap:before {
   width: 50%;
 }
 
-.card-button--intercambio:after {
+.card-button--exchange:after {
   background: $color-green;
 }
 
-.card-button--intercambio:before {
+.card-button--exchange:before {
   background: $color-red;
   left: auto;
   right: 0;
 }
 
-.card-button--intercambio-swap:after {
+.card-button--exchange-swap:after {
   background: $color-red;
 }
 
-.card-button--intercambio-swap:before {
+.card-button--exchange-swap:before {
   background: $color-green;
   left: auto;
   right: 0;

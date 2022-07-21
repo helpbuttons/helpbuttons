@@ -25,8 +25,8 @@ $card-notification-delete-size: 100px;
 
 .card-notification--offer:after,
 .card-notification--need:after,
-.card-notification--intercambio:after,
-.card-notification--intercambio:before {
+.card-notification--exchange:after,
+.card-notification--exchange:before {
   content: '';
   display: inline-block;
   height: $card-notification-border-height;
@@ -44,16 +44,16 @@ $card-notification-delete-size: 100px;
   background: $color-red;
 }
 
-.card-notification--intercambio:after,
-.card-notification--intercambio:before {
+.card-notification--exchange:after,
+.card-notification--exchange:before {
   width: 50%;
 }
 
-.card-notification--intercambio:after {
+.card-notification--exchange:after {
   background: $color-red;
 }
 
-.card-notification--intercambio:before {
+.card-notification--exchange:before {
   background: $color-green;
   left: auto;
   right: 0;

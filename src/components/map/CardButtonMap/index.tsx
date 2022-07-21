@@ -6,21 +6,13 @@ import { Link } from "elements/Link";
 
 export default function CardButtonMap({ type, userName, images, tags, description, location, date }) {
   return (
-    <div className="card-button-map card-button-map--need">
+    <div className={`card-button-map card-button-map--${type}`}>
       <div className="card-button-map__content">
         <Link href="/ButtonFile">
           <div className="card-button-map__header ">
             <div className="card-button-map__info">
               <div className="card-button-map__status card-button-map__status">
-                {(type === "offer") && (
-                  <span className="card-button-map__status--offer">{type}</span>
-                )}
-                {(type === "need") && (
-                  <span className="card-button-map__status--need">{type}</span>
-                )}
-                {(type === "exchange") && (
-                  <span className="card-button-map__status--exchange">{type}</span>
-                )}
+                <span className={`card-button-map__status--${type}`}>{type}</span>
               </div>
             </div>
           </div>
@@ -28,7 +20,7 @@ export default function CardButtonMap({ type, userName, images, tags, descriptio
           {(tags.length > 0) && (
             <div className="card-button-map__hashtags">
               {tags.map((tag, i) => (
-                <div key={i} className="card-button-map__need">
+                <div key={i} className={`card-button-map__${type}`}>
                   <div className="hashtag">{tag}</div>
                 </div>
               ))}
