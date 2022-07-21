@@ -12,7 +12,7 @@ export default function FieldTags({
 
     setInput(inputText);
   };
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(["Video", "Call"]); // Suggested tags, can be changed or removed
   const [input, setInput] = useState("");
 
   const removeTag = (tagToRemove) => {
@@ -41,7 +41,6 @@ export default function FieldTags({
       addTag(val);
       setInput("");
       e.preventDefault();
-      //   this.tagInput.value = null;
     } else if (e.key === "Backspace" && !val) {
       removeTag(val);
     }
@@ -49,26 +48,29 @@ export default function FieldTags({
   };
 
   return (
-    <div className="form__field">
-    <label className="label">{label}</label>
-    <div className="card-button-list__hashtags">
-        <div className="card-button-list__need"></div>
-        {tags.map((tag, i) => (
-            <div key={i} className="hashtag">
+    <div className="tag__field">
+    <label className="label light">{label}</label>
+    <div className="card-button-list__tags">
+        <ul className="tags__list">
+          {tags.map((tag, i) => (
+              <li className="tags__list-tag" key={`${tag}-${i}`}>
                 {tag}
-                <button type="button" onClick={() => removeTag(tag)}>
-                x
-                </button>
-            </div>
-        ))}
+                    <button className="tag__btn" type="button" onClick={() => removeTag(tag)}>
+                    x
+                    </button>
+              </li>
+          ))}
+        </ul>
       </div>
       <input
         name={name}
         type="text"
         onChange={onChange}
-        className={`form__input ${validationError ? "validation-error" : ""}`}
+        className={`tag__input form__input ${validationError ? "validation-error" : ""}`}
         onKeyDown={inputKeyDown}
         value={input}
+        placeholder= "+Add"
+        autoComplete="off"
       />
       <FieldError validationError={validationError} />
     </div>

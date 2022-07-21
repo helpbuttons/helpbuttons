@@ -62,52 +62,57 @@ export default function ButtonNew() {
 
   return (
     <>
-      <Popup title="Create Button" linkFwd="/Explore">
-        <PopupSection>
-          <Form onSubmit={handleSubmit}>
-            <ButtonType
-              handleChange={setValue}
-              name="type"
-              validationError={validationErrors.type}
+      <Popup title="Publish Button" linkFwd="/Explore">
+      <Form onSubmit={handleSubmit} classNameExtra="publish_btn">
+        <div className="publish_btn-first">
+          <ButtonType
+            handleChange={setValue}
+            name="type"
+            validationError={validationErrors.type}
+          />
+          <FieldTextArea
+            label="Description:"
+            handleChange={setValue}
+            name="description"
+            placeholder="Write a description for your button"
+            validationError={validationErrors.description}
+            classNameExtra="squared"
+          />
+          <FieldTags
+            label="Tag suggestions"
+            handleChange={setValue}
+            name="tags"
+            validationError={validationErrors.tags}
+          />
+        </div>
+        <div className="publish_btn-scd">
+          <FieldUploadImages
+            name="images"
+            handleChange={setValue}
+            label="+ Add image"
+            maxNumber="4"
+          />
+
+          {selectedNetwork && (
+            <FieldLocation
+              setValue={setValue}
+              values={button}
+              validationErrors={validationErrors}
+              initialLocation={{
+                lat: selectedNetwork.location.coordinates[0],
+                lng: selectedNetwork.location.coordinates[1],
+              }}
             />
-            <FieldUploadImages
-              name="images"
-              handleChange={setValue}
-              label="+ Add image (optional)"
-              maxNumber="4"
-            />
-            <FieldTextArea
-              label="Describe your purpose:"
-              handleChange={setValue}
-              name="description"
-              placeholder="i.e. I would like to offer..."
-              validationError={validationErrors.description}
-            />
-            {selectedNetwork && (
-              <FieldLocation
-                setValue={setValue}
-                values={button}
-                validationErrors={validationErrors}
-                initialLocation={{
-                  lat: selectedNetwork.location.coordinates[0],
-                  lng: selectedNetwork.location.coordinates[1],
-                }}
-              />
-            )}
-            <FieldTags
-              label="Tags"
-              handleChange={setValue}
-              name="tags"
-              validationError={validationErrors.tags}
-            />
-            <ButtonNewDate setDate={setDate} date={date} />
-            <ButtonShare />
-            <PopupOptions>
-              <FormSubmit title="Create Button" isSubmitting={isSubmitting} />
-            </PopupOptions>
-          </Form>
-        </PopupSection>
-      </Popup>
-    </>
+          )}
+
+          <ButtonNewDate title="When ?" setDate={setDate} date={date} />
+          <ButtonShare />
+        </div>
+        <div className="publish__submit">
+          <FormSubmit classNameExtra="create_btn" title="Publish" isSubmitting={isSubmitting} />
+        </div>
+      </Form>
+    </Popup>
+  </>
   );
 }

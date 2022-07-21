@@ -64,7 +64,7 @@ export default function Signup() {
                   <div className="form__btn-wrapper">
                       <Btn btnType={BtnType.splitIcon} caption="REGISTER" contentAlignment={ContentAlignment.center} isSubmitting={isSubmitting}/>
                       <div className="popup__link">
-                        <Link href="/Login">I have an account</Link>
+                          <Link href="/Login">I have an account</Link>
                       </div>
                   </div>
               </div>

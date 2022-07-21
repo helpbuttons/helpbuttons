@@ -25,6 +25,10 @@ $textarea-textarea-color-gray: $color-gray;
     border: 1px solid $textarea-textarea-color-gray;
     outline: 0;
   }
+
+  &.squared {
+    border-radius: $border-general-height;
+  }
 }
 
 .textarea {
