@@ -24,7 +24,6 @@ import { useRef } from "store/Store";
 // import Location from 'elements/Location';
 
 export default function ButtonNew() {
-  const networkId = localStorageService.read(LocalStorageVars.NETWORK_SELECTED);
   const token = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
   const selectedNetwork = useRef(store, (state :GlobalState) => state.common.selectedNetwork);
   // TODO: tags
@@ -57,7 +56,7 @@ export default function ButtonNew() {
   const handleSubmit = (event) => {
     event.preventDefault();
     store.emit(
-      new CreateButtonEvent(button, token, networkId, setValidationErrors)
+      new CreateButtonEvent(button, token, selectedNetwork.id, setValidationErrors)
     );
   };
 
