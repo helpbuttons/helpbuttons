@@ -7,6 +7,7 @@ import { WatchEvent } from "store/Event";
 import { UserService } from "services/Users";
 import { IUser } from "services/Users/types";
 import { GlobalState } from "pages";
+import { FetchUserData } from "components/user/LoginForm/data";
 
 //Called event for new user signup
 export class SignupEvent implements WatchEvent {
@@ -20,8 +21,7 @@ export class SignupEvent implements WatchEvent {
     return UserService.signup(this.email, this.password).pipe(
       map((userData) => {
         if(userData) {
-          this.onSuccess();
-          return of(true);
+          return new FetchUserData(this.onSuccess, this.onError);
         }
       }),
       catchError((err) => {

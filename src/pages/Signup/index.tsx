@@ -32,7 +32,7 @@ export default function Signup() {
   const onSuccess = () => {
     // TODO: show message saying to check the email
     alertService.info("You've signed up sucessfuly!"); // this won't show up
-    store.emit(new NavigateTo("/Login")); 
+    store.emit(new NavigateTo("/")); 
   }
 
   const onError = (err) => {
