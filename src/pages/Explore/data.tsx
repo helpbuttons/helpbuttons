@@ -22,14 +22,8 @@ export const exploreInitial = {
   visibleButtons: [],
 }
 
-export class FindButtons implements UpdateEvent, WatchEvent {
+export class FindButtons implements WatchEvent {
   public constructor(private networkId: string, private bounds: Bounds) {}
-
-  public update(state: GlobalState) {
-    return produce(state, newState => {
-      newState.explore.visibleButtons = [];
-    });
-  }
 
   public watch(state: GlobalState) {
     return ButtonService.find(this.networkId, this.bounds).pipe(

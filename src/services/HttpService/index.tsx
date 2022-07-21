@@ -1,5 +1,5 @@
 import { BehaviorSubject, of } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { catchError, map, tap } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
 
 import getConfig from "next/config";
@@ -13,14 +13,12 @@ export class HttpService {
   public isAuthenticated$ = new BehaviorSubject(false);
 
   private apiUrl: string;
-  private tokenType?: string;
   private accessToken?: string;
 
   //TO DO : CHANGE CONSTRUCTOR TO FUNCTION INJECTION
   constructor() {
-    this.tokenType = localStorageService.read(LocalStorageVars.TOKEN_TYPE);
     this.accessToken = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
-    if (this.tokenType && this.accessToken) {
+    if (this.accessToken) {
       this.isAuthenticated$.next(true);
     }
 
@@ -30,15 +28,12 @@ export class HttpService {
     }
   }
 
-  public setAccessToken(tokenType?: string, accessToken?: string) {
-    this.tokenType = tokenType;
+  public setAccessToken(accessToken?: string) {
     this.accessToken = accessToken;
-    if (this.tokenType && this.accessToken) {
-      localStorageService.save(LocalStorageVars.TOKEN_TYPE, this.tokenType);
+    if (this.accessToken) {
       localStorageService.save(LocalStorageVars.ACCESS_TOKEN, this.accessToken);
       this.isAuthenticated$.next(true);
     } else {
-      localStorageService.remove(LocalStorageVars.TOKEN_TYPE);
       localStorageService.remove(LocalStorageVars.ACCESS_TOKEN);
       this.isAuthenticated$.next(false);
     }
@@ -48,16 +43,35 @@ export class HttpService {
                 body: object = {},
                 headers: object = {},
                ): Observable<T | undefined> {
-                // TODO: fixme...!
-    const query = new URLSearchParams(body);
+    if (Object.keys(body).length > 0) {
+      const query = new URLSearchParams(body);
+      const queryString = query.toString();
+      path += '?' + queryString;
+    }
+    return this._ajax("GET", path, {}, headers);
+  }
+
+  public post<T>(path: string,
+                 body: object = {},
+                 headers: object = {},
+                ): Observable<T | undefined> {
+    return this._ajax("POST", path, body, headers);
+  }
+
+  private _ajax<T>(method: string,
+                   path: string,
+                   body: object,
+                   headers: object,
+                  ): Observable<T | undefined> {
     return ajax({
-      url: this.apiUrl + path + '?' + query.toString(),
-      method: "GET",
+      url: this.apiUrl + path,
+      method: method,
+      body: body,
       headers: {...this._defaultHeaders(), ...headers},
     }).pipe(
-      map((result) => (result.response as T | undefined)),
-      catchError((err) => {
-        alertService.error("A network error has occurred, the data could not be read", {autoClose: true}); // TODO: show a better message to the user
+      map(result => (result.response as T | undefined)),
+      catchError(err => {
+        alertService.error("A network error has occurred", {autoClose: true}); // TODO: show a better message to the user
         return of(undefined);
       })
     );
@@ -69,8 +83,8 @@ export class HttpService {
       accept: "application/json",
     };
 
-    if (this.tokenType && this.accessToken) {
-      headers["Authorization"] = `${this.tokenType} ${this.accessToken}`;
+    if (this.accessToken) {
+      headers["Authorization"] = `Bearer ${this.accessToken}`;
     }
 
     return headers;

@@ -1,9 +1,11 @@
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { map, catchError } from 'rxjs/operators';
+import { map, tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { store } from './index';
 import getConfig from 'next/config';
+import { IUser, ICurrentUser } from "./network.type";
+import { httpService } from "services/HttpService";
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
@@ -34,47 +36,19 @@ export class UserService {
   }
 
   //Login user
-  public static login(email:string, password:string): Observable<any> {
+  public static login(email:string, password:string): Observable<ICurrentUser | undefined> {
+    return httpService.post<ICurrentUser>("/users/login", {email, password}).pipe(
+      tap((user) => httpService.setAccessToken(user?.token))
+    );
+  }
 
-      //save the ajax object that can be .pipe by the observable
-      const userWithHeaders$ = ajax({
-
-          url: baseUrl+"/users/login",
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "accept": "application/json",
-            "responseType": 'json',
-          },
-          body: {
-            "email": email,
-            "password": password,
-          },
-      });
-
-    return userWithHeaders$;
-
+  public static isLoggedIn(): boolean {
+    return httpService.isAuthenticated$.value;
   }
 
   //Check user
-  public static whoAmI(token:string): Observable<any> {
-
-      //save the ajax object that can be .pipe by the observable
-      const userWithHeaders$ = ajax({
-
-          url: baseUrl+"/users/whoAmI",
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "accept": "application/json",
-          },
-          body: {
-            token: token,
-          },
-      });
-
-    return userWithHeaders$;
-
+  public static whoAmI(): Observable<any> {
+    return httpService.get<IUser>("/users/whoami");
   }
 
   //Login user
@@ -101,10 +75,6 @@ export class UserService {
   }
 
   public static logout() {
-      // remove user from local storage to log user out
-      localStorageService.remove(LocalStorageVars.ACCESS_TOKEN);
-      localStorageService.remove(LocalStorageVars.NETWORK_SELECTED);
-      localStorageService.remove(LocalStorageVars.TOKEN_TYPE);
+    httpService.setAccessToken(undefined);
   }
-
 }

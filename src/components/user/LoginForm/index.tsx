@@ -5,53 +5,47 @@ import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
 import { store } from 'pages/index';
-import { LoginFormEvent } from './data';
+import { Login } from './data';
+import { NavigateTo } from 'pages/Common/data';
 import Form from 'elements/Form';
 import FieldText from 'elements/Fields/FieldText';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { Link } from 'elements/Link';
 
-
-
 export default function LoginForm() {
-  const fields = {
-    email: "",
-    password: "",
-  };
-  const [values, setValues] = useState(fields);
-  const [validationErrors, setValidationErrors] = useState(fields);
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
 
-  const {formState: { isSubmitting }} = useForm()
-
-  const setValue = (name, value) => {
-    setValues({ ...values, [name]: value });
+  const onSubmit = (data) => {
+    store.emit(new Login(data.email, data.password, onSuccess, onError));
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    store.emit(new LoginFormEvent(values.email, values.password, setValidationErrors));
-  };
+  const onSuccess = () => {
+    store.emit(new NavigateTo("/"));
+  }
+
+  const onError = (err) => {
+    // TODO: terminar esto
+    console.error(err);
+  }
 
   return (
-            <Form onSubmit={handleSubmit} classNameExtra="login">
+            <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
               <div className="login__form">
                 <div className="form__inputs-wrapper">
-                  <FieldText 
-                    handleChange={setValue} 
-                    name="email" 
-                    label="Email" 
-                    validationError={validationErrors.email}
+                  <FieldText
+                    name="email"
+                    label="Email"
                     classNameInput="squared"
                     placeholder="email@email.em"
+                    {...register("email")}
                   ></FieldText>
                   <FieldPassword 
-                    handleChange={setValue} 
                     name="password" 
                     label="Password" 
-                    validationError={validationErrors.password}
                     classNameInput="squared"
                     placeholder="Type your password"
+                    {...register("password")}
                   ></FieldPassword>
                 </div>
                 <div className="form__btn-wrapper">
@@ -67,7 +61,5 @@ export default function LoginForm() {
                 </div>
               </div>
             </Form>
-
   );
-
 }

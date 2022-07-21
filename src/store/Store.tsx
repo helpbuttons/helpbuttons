@@ -49,7 +49,9 @@ export class Store<T> {
 
   private _processWatchEvent(event: Event, state: T) {
     const newEvents$ = event.watch(state);
-    newEvents$.subscribe(event => this.events$.next(event));
+    if (newEvents$) {
+      newEvents$.subscribe(event => this.events$.next(event));
+    }
   }
 
   private _processEffectEvent(event: Event, state: T) {

@@ -1,7 +1,7 @@
 import React from "react";
 import FieldError from "../FieldError";
 
-interface  FieldPassword {
+interface IFieldPassword {
     label: string,
     handleChange: Function,
     name: string,
@@ -10,29 +10,30 @@ interface  FieldPassword {
     placeholder?: string   
 }
 
-export default function FieldPassword({
+const FieldPassword = React.forwardRef(({
     label,
-    handleChange,
     name,
-    validationError,
     classNameInput,
-    placeholder
-}: FieldPassword) {
-    const onChange = (e) => {
-        handleChange(name, e.target.value);
-      };
-
+    placeholder,
+    onChange,
+    onBlur,
+    validationError,
+}, ref): IFieldPassword => {
     return (
         <div className="form__field">
             <label className="label">{label}</label>
-            <input 
-                name={name} 
+            <input
+                name={name}
+                ref={ref}
                 type="password"
                 onChange={onChange}
+                onBlur={onBlur}
                 className={`form__input ${classNameInput} ${validationError ? 'validation-error' : ''}`} 
                 placeholder={placeholder}
             />
             <FieldError validationError={validationError}/>
         </div>
     );
-}
+});
+
+export default FieldPassword;

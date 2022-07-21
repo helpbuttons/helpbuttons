@@ -12,8 +12,9 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { IoHammerOutline } from "react-icons/io5";
 
 
-export default function CardProfile() {
+export default function CardProfile(props) {
 
+  const user = props.user;
 
   function logout() {
       UserService.logout();
@@ -37,7 +38,7 @@ export default function CardProfile() {
             <div className="card-profile__content">
 
               <div className="card-profile__avatar-container-name">
-                Username
+                { user.username }
               </div>
 
               <figure className="card-profile__rating grid-three">
