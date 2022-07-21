@@ -70,7 +70,7 @@ export class AuthService {
       });
     }
 
-    return user;
+    return this.getAccessToken(user);
   }
 
   activate(verificationToken: string) {
