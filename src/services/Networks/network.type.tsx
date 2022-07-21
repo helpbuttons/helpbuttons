@@ -4,7 +4,7 @@ export interface INetwork {
   name: string,
   url: string,
   avatar?: string,
-  privacy: boolean, //enum {publico, privado} default publico
+  privacy: string, //enum {publico, privado} default publico
   roles?: string, //enum {admin, user, blocked} default admin, user
   //not required data
   tags?: [],
