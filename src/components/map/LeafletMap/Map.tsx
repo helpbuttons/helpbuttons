@@ -8,7 +8,7 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import CardButtonMap from "components/map/CardButtonMap";
-import { MarkerButton, MarkersButton } from "components/map/MarkerButton";
+import { MarkersButton, MarkerSelector } from "components/map/MarkerButton";
 import { ButtonService } from "services/Buttons";
 
 const AddMarker = ({ handleClick }) => {
@@ -16,9 +16,6 @@ const AddMarker = ({ handleClick }) => {
 
   const map = useMapEvents({
     click: (e) => {
-      // console.log(e.latlng);
-
-      // setPosition(e.latlng); // 👈 add marker
       const position = {
         type: "Point",
         coordinates: [e.latlng.lat, e.latlng.lng],
@@ -26,12 +23,11 @@ const AddMarker = ({ handleClick }) => {
       setPosition(position);
       handleClick(position);
       map.setView(e.latlng, map.getZoom());
-      /* CODE TO ADD NEW PLACE TO STORE (check the source code) */
     },
   });
 
   return position === null ? null : (
-    <MarkerButton position={position}></MarkerButton>
+    <MarkerSelector position={position}/>
   );
 };
 

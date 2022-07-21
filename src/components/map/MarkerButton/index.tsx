@@ -4,8 +4,25 @@ import { map } from "rxjs/operators";
 import { useState } from "react";
 
 import { Marker, Popup } from "react-leaflet";
-import { iconButton } from "./IconButton";
+import { iconButton, iconSelector } from "./IconButton";
 import CardButtonMap from "components/map/CardButtonMap";
+
+export function MarkerSelector({ position }) {
+  return (
+    <Marker
+      position={
+        position
+          ? {
+              lat: position.coordinates[0],
+              lng: position.coordinates[1],
+            }
+          : { lat: null, lng: null }
+      }
+      icon={iconSelector()}
+    >
+    </Marker>
+  );
+}
 
 export function MarkerButton({ button, children }) {
   return (
