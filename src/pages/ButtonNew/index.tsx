@@ -7,7 +7,7 @@ import Popup from "components/popup/Popup";
 import ButtonType from "components/button/ButtonType";
 
 import { GlobalState, store } from 'pages';
-import { CreateButtonEvent } from "pages/ButtonNew/data";
+import { CreateButton } from "state/Explore";
 import { IButton } from "services/Buttons/button.type";
 import FieldLocation from "elements/Fields/FieldLocation";
 import FieldTextArea from "elements/Fields/FieldTextArea";
@@ -22,7 +22,7 @@ import { useRef } from "store/Store";
 
 export default function ButtonNew() {
   const token = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
-  const selectedNetwork = useRef(store, (state :GlobalState) => state.common.selectedNetwork);
+  const selectedNetwork = useRef(store, (state :GlobalState) => state.networks.selectedNetwork);
 
   const fields = {
     name: "",
@@ -61,7 +61,7 @@ export default function ButtonNew() {
   const handleSubmit = (event) => {
     event.preventDefault();
     store.emit(
-      new CreateButtonEvent(button, token, selectedNetwork.id, setValidationErrors)
+      new CreateButton(button, token, selectedNetwork.id, setValidationErrors)
     );
   };
 

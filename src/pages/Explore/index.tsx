@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from "react";
 
 //components
-// import { GetButtonsEvent } from 'pages/Explore/data.tsx';
-import { FindButtons } from 'pages/Explore/data';
+import { FindButtons } from 'state/Explore';
 import Map from "components/map/LeafletMap";
 import List from "components/list/List";
 import NavHeader from "components/nav/NavHeader"; //just for mobile
@@ -12,7 +11,7 @@ import { GlobalState, store } from "pages";
 import { Bounds } from "leaflet";
 
 export default function Explore() {
-  const selectedNetwork = useRef(store, (state: GlobalState) => state.common.selectedNetwork);
+  const selectedNetwork = useRef(store, (state: GlobalState) => state.networks.selectedNetwork);
   const visibleButtons = useRef(store, (state: GlobalState) => state.explore.visibleButtons);
 
   const [showLeftColumn, setShowLeftColumn] = useState(true);

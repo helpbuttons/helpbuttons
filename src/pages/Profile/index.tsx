@@ -8,7 +8,7 @@ import { GlobalState, store } from "pages";
 
 export default function Profile() {
 
-  const currentUser = useRef(store, (state: GlobalState) => state.common.currentUser);
+  const currentUser = useRef(store, (state: GlobalState) => state.users.currentUser);
 
   return (
 

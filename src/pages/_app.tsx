@@ -11,8 +11,8 @@ import { NetworkService } from 'services/Networks';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 
 import { GlobalState, store } from "pages";
-import { FetchDefaultNetwork, SetCurrentUser } from "pages/Common/data";
-import { FetchUserData } from "components/user/LoginForm/data";
+import { FetchDefaultNetwork } from "state/Networks";
+import { FetchUserData, SetCurrentUser } from "state/Users";
 
 import { useRef } from "store/Store";
 
@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }) {
     const [user, setUser] = useState(null);
     const [authorized, setAuthorized] = useState(false);
 
-    const currentUser = useRef(store, (state: GlobalState) => state.common.currentUser);
+    const currentUser = useRef(store, (state: GlobalState) => state.users.currentUser);
 
     // Whenever we log in or log out, fetch user data
     httpService.isAuthenticated$.subscribe((isAuthenticated) => {

@@ -1,18 +1,16 @@
-import { map } from 'rxjs/operators';
+import { Router } from 'next/router';
+import { map, tap, catchError } from 'rxjs/operators';
 import { produce } from 'immer';
 
 import { WatchEvent } from 'store/Event';
 import { UpdateEvent } from '../store/Event';
 import { GlobalState } from 'store/Store';
 
+import { alertService } from 'services/Alert';
+import { errorService } from 'services/Error';
 import { ButtonService } from 'services/Buttons';
 import { IButton } from 'services/Buttons/button.type';
 import { Bounds } from 'leaflet';
-
-// import { map, tap, take, catchError } from 'rxjs/operators';
-//
-// import { localStorageService } from 'services/LocalStorage';
-
 
 export interface ExploreState {
   visibleButtons: IButton[];
@@ -42,27 +40,28 @@ export class ButtonsFound implements UpdateEvent {
   }
 }
 
-//  export function GetButtonsEvent (setButtons) {
-//    const networkId = localStorageService.read("network_id");
-//    if (!networkId)
-//    {
-//     return [];
-//    }
-//    // Anything in here is fired on component mount.
-//    let btns = ButtonService.find(networkId).subscribe(buttons => {
-//
-//      if (buttons) {
-//            // add message to local state if not empty
-//            setButtons({ btns: [buttons.response] });
-//        } else {
-//            // clear messages when empty message received
-//            setButtons({ btns: [] });
-//        }
-//
-//    });
-//    return () => {
-//        // Anything in here is fired on component unmount.
-//        btns.unsubscribe();
-//    }
-//
-//  }
+export class CreateButton implements WatchEvent {
+  public constructor(
+    private button: IButton,
+    private token: string,
+    private networkId: string,
+    private setValidationErrors
+  ) {}
+  public watch(state: GlobalState) {
+    return ButtonService.new(this.button, this.token, this.networkId).pipe(
+      tap((buttonData) => {
+        alertService.info(
+          "Has creado un botón" + buttonData.response.id.toString()
+        );
+
+        Router.push({ pathname: "/Explore", state: state });
+      }),
+      catchError((error) => {
+        if (error.response && error.response.validationErrors) {
+          this.setValidationErrors(error.response.validationErrors);
+        }
+        return errorService.handle(error);
+      })
+    );
+  }
+}
