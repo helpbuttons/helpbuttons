@@ -27,8 +27,7 @@ export class SignupEvent implements WatchEvent {
       }),
       catchError((err) => {
         if (isHttpError(err) &&
-            err.status === 400 && // BadRequest
-            err.response.message === "email-already-exists") {
+            err.status === 400) {
           this.onError("email-already-exists");
         } else {
           throw err;
