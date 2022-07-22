@@ -8,6 +8,9 @@ const { publicRuntimeConfig } = getConfig();
 import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 import { alertService } from "services/Alert";
 
+export function isHttpError(err: object) {
+  return (err.status && err.request && err.response);
+}
 
 export class HttpService {
   public isAuthenticated$ = new BehaviorSubject(false);
@@ -70,10 +73,6 @@ export class HttpService {
       headers: {...this._defaultHeaders(), ...headers},
     }).pipe(
       map(result => (result.response as T | undefined)),
-      catchError(err => {
-        alertService.error("A network error has occurred", {autoClose: true}); // TODO: show a better message to the user
-        return of(undefined);
-      })
     );
   }
 

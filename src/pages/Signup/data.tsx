@@ -5,6 +5,7 @@ import { produce } from "immer";
 import { WatchEvent } from "store/Event";
 
 import { UserService } from "services/Users";
+import { isHttpError } from "services/HttpService";
 import { IUser } from "services/Users/types";
 import { GlobalState } from "pages";
 import { FetchUserData } from "components/user/LoginForm/data";
@@ -25,8 +26,11 @@ export class SignupEvent implements WatchEvent {
         }
       }),
       catchError((err) => {
-        if (this.onError) {
-          this.onError(err);
+        if (isHttpError(err) &&
+            err.status === 400) {
+          this.onError("email-already-exists");
+        } else {
+          throw err;
         }
         return of(undefined);
       })

@@ -24,21 +24,20 @@ import { alertService } from 'services/Alert';
 
 export default function Signup() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
+  const [ errorMsg, setErrorMsg ] = useState(undefined);
 
   const onSubmit = (data) => {
     store.emit(new SignupEvent(data.email, data.password, onSuccess, onError));
   };
 
   const onSuccess = () => {
-    // TODO: show message saying to check the email
-    alertService.info("You've signed up sucessfuly!"); // this won't show up
     store.emit(new NavigateTo("/")); 
   }
 
   const onError = (err) => {
-    // TODO: terminar esto
-    alertService.error(err);
-    console.error(err);
+    if (err === "email-already-exists") {
+      setErrorMsg("This email already has registered");
+    }
   }
 
   return (
@@ -63,6 +62,9 @@ export default function Signup() {
                         {...register("password", { required: true, minLength: 8 })}
                       ></FieldPassword>
                   </div>
+                  { errorMsg && (
+                    <div>{ errorMsg }</div>
+                  )}
                   <div className="form__btn-wrapper">
                       <Btn btnType={BtnType.splitIcon} caption="REGISTER" contentAlignment={ContentAlignment.center} isSubmitting={isSubmitting}/>
                       <div className="popup__link">
