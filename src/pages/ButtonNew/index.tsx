@@ -1,5 +1,5 @@
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "elements/Form";
 
@@ -10,14 +10,11 @@ import { GlobalState, store } from 'pages';
 import { CreateButtonEvent } from "pages/ButtonNew/data";
 import { IButton } from "services/Buttons/button.type";
 import FieldLocation from "elements/Fields/FieldLocation";
-import PopupSection from "components/popup/PopupSection";
 import FieldTextArea from "elements/Fields/FieldTextArea";
-import PopupOptions from "components/popup/PopupOptions";
 import FormSubmit from "elements/Form/FormSubmit";
 import ButtonShare from "components/button/ButtonShare";
 import ButtonNewDate from "components/button/ButtonNewDate";
 import FieldUploadImages from "elements/Fields/FieldImagesUpload/index";
-import PickerTime from "components/picker/PickerPeriodDate";
 import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 import FieldTags from "elements/Fields/FieldTags";
 import { useRef } from "store/Store";
@@ -26,7 +23,6 @@ import { useRef } from "store/Store";
 export default function ButtonNew() {
   const token = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
   const selectedNetwork = useRef(store, (state :GlobalState) => state.common.selectedNetwork);
-  // TODO: tags
 
   const fields = {
     name: "",
@@ -36,22 +32,31 @@ export default function ButtonNew() {
     latitude: null,
     longitude: null,
     images: [],
-    tags: []
+    tags: ["Video", "Call"]
   };
 
   const [button, setValues] = useState<IButton>(fields);
-  const [validationErrors, setValidationErrors] = useState(fields);
+  const [validationErrors, setValidationErrors] = useState({
+    name: "",
+    templateButtonId: null,
+    type: "",
+    description: "",
+    latitude: null,
+    longitude: null,
+    images: null,
+    tags: null
+  });
   const [date, setDate] = useState("");
 
   const {
     formState: { isSubmitting },
-  } = useForm();
+  } = useForm({defaultValues: fields});
 
-  const setValue = (name, value) => {
+  const setValue = useCallback( (name, value) => {
     setValues((previousState) => {
       return { ...previousState, [name]: value };
     });
-  };
+  }, []) ;
 
   const handleSubmit = (event) => {
     event.preventDefault();

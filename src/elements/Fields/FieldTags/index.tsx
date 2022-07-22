@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FieldError from "../FieldError";
 
 export default function FieldTags({
@@ -46,6 +46,8 @@ export default function FieldTags({
     }
     handleChange(name, tags);
   };
+  
+  useEffect(()=>{handleChange(name, tags);}, [tags, name, handleChange])
 
   return (
     <div className="tag__field">
