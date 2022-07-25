@@ -1,6 +1,8 @@
 //This is the first section in the button creation process, but can be displayed or not depending on the selected network settings. It displays the buttons types (default offer an need and exchange) and leads to ButtonNewData after selection
+import FieldError from "elements/Fields/FieldError";
 import FieldRadio from "elements/Fields/FieldRadio";
-import FieldRadioOption from "elements/Fields/FieldRadio/option";
+import { FieldRadioOption } from "elements/Fields/FieldRadio/option";
+import React from "react";
 import { useState } from "react";
 
 import { IoClose } from "react-icons/io5";
@@ -21,25 +23,30 @@ function RadioIcon({ icon }: { icon: IconType }) {
   }
 }
 
-export default function ButtonType({ handleChange, name, validationError }) {
-  const [value, setValue] = useState("");
-
-  let onChange = (name, value) => {
-    setValue(value);
-    handleChange(name, value);
-  };
+export const ButtonType = React.forwardRef(({name, onChange, validationError}, ref) => {
   return (
-    <>
-      <FieldRadio label="Button type:" validationError={validationError}>
-        <FieldRadioOption handleChange={onChange} name={name} value="need" isChecked={value === "need"}>
+        <>
+       <FieldRadio label="Button type:">
+       <FieldError validationError={validationError}/>
+       <FieldRadioOption
+          onChange={onChange} 
+          name={name}
+          ref={ref} 
+          value="need"
+        >
           <div className="btn-filter__icon red"></div>
           <div className="btn-with-icon__text">Need</div>
         </FieldRadioOption>
-        <FieldRadioOption handleChange={onChange} name={name} value="offer" isChecked={value === "offer"}>
+        <FieldRadioOption
+          onChange={onChange} 
+          name={name}
+          ref={ref} 
+          value="offer"
+        >
           <div className="btn-filter__icon green"></div>
           <div className="btn-with-icon__text">Offer</div>
         </FieldRadioOption>
-      </FieldRadio>
+       </FieldRadio>
     </>
-  );
-}
+  )
+});

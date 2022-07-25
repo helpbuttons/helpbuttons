@@ -1,28 +1,27 @@
+import React from "react";
 import FieldError from "../FieldError";
 
-interface FieldText {
+
+interface IFieldTextArea {
   label: string,
-  handleChange: Function,
+  onChange: Function,
   name: string,
   validationError: any,
   placeholder: string,
   classNameExtra?: string
 }
 
-export default function FieldText({
-  label,
-  handleChange,
-  name,
-  validationError,
-  placeholder,
-  classNameExtra
-}: FieldText) {
-  const onChange = (e) => {
-    handleChange(name, e.target.value);
-  };
 
-  return (
-    <>
+export const FieldTextArea = React.forwardRef(({
+    label,
+    onChange,
+    name,
+    validationError,
+    placeholder,
+    classNameExtra,
+}, ref): IFieldTextArea => {
+    return (
+      <>
       <div className="form__field">
         <p className="popup__paragraph">{label}</p>
         <textarea
@@ -30,9 +29,10 @@ export default function FieldText({
           name={name}
           className={`${classNameExtra} textarea__textarea`}
           placeholder={placeholder}
+          ref={ref}
         ></textarea>
         <FieldError validationError={validationError} />
       </div>
     </>
-  );
-}
+    );
+});

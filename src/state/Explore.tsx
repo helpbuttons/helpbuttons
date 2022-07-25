@@ -53,8 +53,6 @@ export class CreateButton implements WatchEvent {
         alertService.info(
           "Has creado un botón" + buttonData.response.id.toString()
         );
-
-        Router.push({ pathname: "/Explore", state: state });
       }),
       catchError((error) => {
         if (error.response && error.response.validationErrors) {
