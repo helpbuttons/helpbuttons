@@ -1,18 +1,24 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
+import { useFieldArray } from "react-hook-form";
 import FieldError from "../FieldError";
 
 export default function FieldTags({
   label,
-  handleChange,
   name,
   validationError,
+  control
 }) {
-  const onChange = (e) => {
+  const {  append, remove } = useFieldArray({
+    control,
+    name: name
+  });
+
+  const onInputChange = (e) => {
     let inputText = e.target.value;
 
     setInput(inputText);
   };
-  const [tags, setTags] = useState(["Video", "Call"]); // Suggested tags, can be changed or removed
+  const [tags, setTags] = useState([]); // Suggested tags, can be changed or removed
   const [input, setInput] = useState("");
 
   const removeTag = (tagToRemove) => {
@@ -20,6 +26,7 @@ export default function FieldTags({
       previousState = previousState.filter(
         (tag) => tag.toLowerCase() !== tagToRemove.toLowerCase()
       );
+      remove(tagToRemove.toLowerCase())
       return previousState;
     });
   };
@@ -29,6 +36,7 @@ export default function FieldTags({
       if (tags.find((tag) => tag.toLowerCase() === newTag.toLowerCase())) {
         return previousState;
       }
+      append(newTag.toLowerCase());
       previousState.push(newTag);
       return previousState;
     });
@@ -44,10 +52,7 @@ export default function FieldTags({
     } else if (e.key === "Backspace" && !val) {
       removeTag(val);
     }
-    handleChange(name, tags);
   };
-  
-  useEffect(()=>{handleChange(name, tags);}, [tags, name, handleChange])
 
   return (
     <div className="tag__field">
@@ -67,7 +72,7 @@ export default function FieldTags({
       <input
         name={name}
         type="text"
-        onChange={onChange}
+        onChange={onInputChange}
         className={`tag__input form__input ${validationError ? "validation-error" : ""}`}
         onKeyDown={inputKeyDown}
         value={input}

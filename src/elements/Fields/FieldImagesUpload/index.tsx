@@ -1,12 +1,18 @@
 import { useState } from "react";
+import { useFieldArray } from "react-hook-form";
 import ImageUploading from "react-images-uploading";
 
-export default function FieldUploadImages({ name, label, handleChange, maxNumber }) {
+export default function FieldUploadImages({ name, label, maxNumber, control }) {
   const [images, setImages] = useState([]);
+
+  const {  replace } = useFieldArray({
+    control,
+    name: name
+  });
+
   const onChange = (imageList, addUpdateIndex) => {
     setImages(imageList);
-    const imageFilesList = imageList.map((imageData) => imageData.file);
-    handleChange(name, imageFilesList);
+    replace(imageList);
   };
 
   return (
