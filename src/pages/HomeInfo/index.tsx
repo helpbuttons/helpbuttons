@@ -9,19 +9,19 @@ import Btn, { ContentAlignment, BtnType } from "elements/Btn";
 import { Link } from "elements/Link";
 
 import { Subject } from "rxjs";
-import {
-  setValueAndDebounce,
-} from "./data";
-import {
-  DropdownAutoComplete,
-  DropDownAutoCompleteOption,
-} from "elements/DropDownAutoComplete";
+// import {
+//   setValueAndDebounce,
+// } from "./data";
+// import {
+//   DropdownAutoComplete,
+//   DropDownAutoCompleteOption,
+// } from "elements/DropDownAutoComplete";
 import { GlobalState, store } from "pages";
 import { setSelectedNetworkId } from "./data";
 
 export default function HomeInfo() {
-  const selectedNetwork = useRef(store, (state: GlobalState) => state.common.selectedNetwork);
-  const selectedNetworkLoading = useRef(store, (state: GlobalState) => state.common.selectedNetworkLoading);
+  const selectedNetwork = useRef(store, (state: GlobalState) => state.networks.selectedNetwork);
+  const selectedNetworkLoading = useRef(store, (state: GlobalState) => state.networks.selectedNetworkLoading);
 
   return (
     <div className="info-overlay__container">
@@ -61,72 +61,75 @@ export default function HomeInfo() {
             </div>
           </div>
         )}
-        <div className="info-overlay__bottom">
-          <div className="info-overlay__nets">
-            <DropdownNetworks/>
-            <Link href="/NetworkNew">
-              <Btn
-                btnType={BtnType.corporative}
-                contentAlignment={ContentAlignment.center}
-                caption="Create Network"
-              />
-            </Link>
-          </div>
-        </div>
+        {/* Uncomment when we enable multi network */}
+        {/* <div className="info-overlay__bottom"> */}
+        {/*   <div className="info-overlay__nets"> */}
+        {/*     <DropdownNetworks/> */}
+        {/*     <Link href="/NetworkNew"> */}
+        {/*       <Btn */}
+        {/*         btnType={BtnType.corporative} */}
+        {/*         contentAlignment={ContentAlignment.center} */}
+        {/*         caption="Create Network" */}
+        {/*       /> */}
+        {/*     </Link> */}
+        {/*   </div> */}
+        {/* </div> */}
       </div>
     </div>
   );
 }
 
-function DropdownNetworks() {
-  const timeInMsBetweenStrokes = 200; //ms
-
-  const [options, setOptions] = useState([]);
-
-  const [sub, setSub] = useState(new Subject()); //evita la inicializaacion en cada renderizado
-  const [sub$, setSub$] = useState(
-    setValueAndDebounce(sub, timeInMsBetweenStrokes)
-  ); //para no sobrecargar el componente ,lo delegamos a una lib externa(solid);
-
-  const onChange = (inputText) => {
-    sub.next(inputText);
-  };
-
-  useEffect(() => {
-    let s = sub$.subscribe(
-      (rs: any) => {
-        setOptions(
-          rs.response.map((net) => {
-            return (
-              <DropDownAutoCompleteOption
-                key={net.id}
-                label={net.name}
-                value={net.id}
-              />
-            );
-          })
-        );
-      },
-      (e) => {
-        console.log("error subscribe", e);
-      }
-    );
-    return () => {
-      s.unsubscribe(); //limpiamos
-    };
-  }, [sub$]); //first time
-
-  const setValue = (networkId, networkName) => {
-    setSelectedNetworkId(networkId);
-  };
-  return (
-    <>
-      <DropdownAutoComplete
-        setValue={setValue}
-        onChange={onChange}
-        options={options}
-        placeholder="Search other Network"
-      ></DropdownAutoComplete>
-    </>
-  );
-}
+// Uncomment when we enable multi networks
+//
+// function DropdownNetworks() {
+//   const timeInMsBetweenStrokes = 200; //ms
+//
+//   const [options, setOptions] = useState([]);
+//
+//   const [sub, setSub] = useState(new Subject()); //evita la inicializaacion en cada renderizado
+//   const [sub$, setSub$] = useState(
+//     setValueAndDebounce(sub, timeInMsBetweenStrokes)
+//   ); //para no sobrecargar el componente ,lo delegamos a una lib externa(solid);
+//
+//   const onChange = (inputText) => {
+//     sub.next(inputText);
+//   };
+//
+//   useEffect(() => {
+//     let s = sub$.subscribe(
+//       (rs: any) => {
+//         setOptions(
+//           rs.response.map((net) => {
+//             return (
+//               <DropDownAutoCompleteOption
+//                 key={net.id}
+//                 label={net.name}
+//                 value={net.id}
+//               />
+//             );
+//           })
+//         );
+//       },
+//       (e) => {
+//         console.log("error subscribe", e);
+//       }
+//     );
+//     return () => {
+//       s.unsubscribe(); //limpiamos
+//     };
+//   }, [sub$]); //first time
+//
+//   const setValue = (networkId, networkName) => {
+//     setSelectedNetworkId(networkId);
+//   };
+//   return (
+//     <>
+//       <DropdownAutoComplete
+//         setValue={setValue}
+//         onChange={onChange}
+//         options={options}
+//         placeholder="Search other Network"
+//       ></DropdownAutoComplete>
+//     </>
+//   );
+// }

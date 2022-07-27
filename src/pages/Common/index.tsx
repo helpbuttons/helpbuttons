@@ -7,8 +7,8 @@ import NavHeader from 'components/nav/NavHeader'
 
 export default function BackTest() {
 
-  const selectedNetwork = useRef(store, (state) => state.common.selectedNetwork);
-  const networks = useRef(store, (state) => state.common.networks);
+  const selectedNetwork = useRef(store, (state) => state.networks.selectedNetwork);
+  const networks = useRef(store, (state) => state.networks.networks);
 
   useEffect(() => {
   }, []);
