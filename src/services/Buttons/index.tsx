@@ -16,22 +16,9 @@ export class ButtonService {
     data: IButton,
     networkId: string
   ): Observable<any> {
-
-    const token = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
     const formData = UtilsService.objectToFormData(data);
 
-    // TODO: wont work with httpService ?!
-    // return httpService.post("/buttons/new?networkId=" + networkId, formData, headers);
-
-    return ajax({
-      url: baseUrl + "/buttons/new?networkId=" + networkId,
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: formData
-    });
+    return httpService.post("/buttons/new?networkId=" + networkId, formData);
   }
 
   //Edit button
@@ -58,25 +45,6 @@ export class ButtonService {
     return buttonWithHeaders$;
   }
 
-  //Edit button
-  public static addToNetworks(data: IButton): Observable<any> {
-    //save the ajax object that can be .pipe by the observable
-    const buttonWithHeaders$ = ajax({
-      url: baseUrl + "/buttons/addToNetworks/" + id,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-      body: {
-        name: data.id,
-        networks: data.networks,
-      },
-    });
-
-    return buttonWithHeaders$;
-  }
-
   //Get buttons
   public static find(networkId: string, bounds: any): Observable<IButton[]> {
     if (!bounds)
@@ -90,18 +58,6 @@ export class ButtonService {
       southWest_lat: bounds._southWest.lat.toString(),
       southWest_lng: bounds._southWest.lng.toString(),
     });
-    // //save the ajax object that can be .pipe by the observable
-    // const buttonWithHeaders$ = ajax({
-    //   url: baseUrl + "/buttons/find/"+networkId,
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     accept: "application/json",
-    //   },
-    //   body: {},
-    // });
-    //
-    // return buttonWithHeaders$;
   }
 
   //Get button by id

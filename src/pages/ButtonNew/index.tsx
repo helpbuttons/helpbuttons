@@ -25,7 +25,6 @@ import { alertService } from "services/Alert";
 
 
 export default function ButtonNew() {
-  const token = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
   const selectedNetwork = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork
