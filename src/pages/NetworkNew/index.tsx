@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Popup from "components/popup/Popup";
 import { INetwork } from "services/Networks/network.type";
-import { createNewNetwork } from "./data";
+// import { createNewNetwork } from "./data";
 import { store } from "pages/index";
 import FieldText from "elements/Fields/FieldText";
 import Form from "elements/Form";
@@ -45,7 +45,7 @@ export default function NetworkNew() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createNewNetwork(values, token, setValidationErrors);
+    // createNewNetwork(values, token, setValidationErrors);
   };
 
   return (

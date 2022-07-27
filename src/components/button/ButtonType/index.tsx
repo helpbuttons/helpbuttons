@@ -23,7 +23,7 @@ function RadioIcon({ icon }: { icon: IconType }) {
   }
 }
 
-export const ButtonType = React.forwardRef(({name, onChange, validationError}, ref) => {
+const ButtonType = React.forwardRef(({name, onChange, validationError}, ref) => {
   return (
         <>
        <FieldRadio label="Button type:">
@@ -50,3 +50,5 @@ export const ButtonType = React.forwardRef(({name, onChange, validationError}, r
     </>
   )
 });
+ButtonType.displayName = "ButtonType"
+export default ButtonType;
