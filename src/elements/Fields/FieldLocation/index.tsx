@@ -11,7 +11,7 @@ export default function FieldLocation({ validationErrors, initialLocation, contr
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [radius, setRadius] = useState(1);
-  const style = { width: "100%", height: "600px" };
+  const style = { width: "90vw", height: "80vh" };
   // const { field:latitude } = useController({ name: 'latitude' })
   const { field : fieldLatitude } = useController({ name: 'latitude', control })
   const { field : fieldLongitude } = useController({ name: 'longitude', control })
