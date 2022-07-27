@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }) {
     // Whenever we log in or log out, fetch user data
     httpService.isAuthenticated$.subscribe((isAuthenticated) => {
         if (isAuthenticated && !currentUser) {
-            store.emit(new FetchUserData());
+            store.emit(new FetchUserData(() => {}, (err) => { UserService.logout() }));
         } else if (!isAuthenticated && currentUser) {
             store.emit(new SetCurrentUser(undefined));
         }
