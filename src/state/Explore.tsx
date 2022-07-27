@@ -11,6 +11,8 @@ import { errorService } from 'services/Error';
 import { ButtonService } from 'services/Buttons';
 import { IButton } from 'services/Buttons/button.type';
 import { Bounds } from 'leaflet';
+import { of } from 'rxjs';
+import { isHttpError } from 'services/HttpService';
 
 export interface ExploreState {
   visibleButtons: IButton[];
@@ -43,22 +45,26 @@ export class ButtonsFound implements UpdateEvent {
 export class CreateButton implements WatchEvent {
   public constructor(
     private button: IButton,
-    private token: string,
     private networkId: string,
-    private setValidationErrors
+    private onSuccess,
+    private onError
   ) {}
   public watch(state: GlobalState) {
-    return ButtonService.new(this.button, this.token, this.networkId).pipe(
-      tap((buttonData) => {
-        alertService.info(
-          "Has creado un botón" + buttonData.response.id.toString()
-        );
+    return ButtonService.new(this.button, this.networkId).pipe(
+      map((buttonData) => {
+        this.onSuccess();
       }),
       catchError((error) => {
-        if (error.response && error.response.validationErrors) {
-          this.setValidationErrors(error.response.validationErrors);
+        let err = error.response;
+        
+        if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
+          this.onError("unauthorized");
+        } else if (err.statusCode === 400 && err.message === "validation-error") {
+          this.onError(" validations error")
+        } else {
+          throw error;
         }
-        return errorService.handle(error);
+        return of(undefined);
       })
     );
   }

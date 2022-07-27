@@ -21,6 +21,7 @@ import { useRef } from "store/Store";
 import { NavigateTo } from "state/Routes";
 import FieldText from "elements/Fields/FieldText";
 import FieldError from "elements/Fields/FieldError";
+import { alertService } from "services/Alert";
 
 
 export default function ButtonNew() {
@@ -30,9 +31,7 @@ export default function ButtonNew() {
     (state: GlobalState) => state.networks.selectedNetwork
   );
 
-  const [tags, setTags] = useState([]);
-  const [images, setImages] = useState([]);
-  const [location, setLocation] = useState(null);
+  const [date, setDate] = useState("");
 
   const {
     register,
@@ -40,13 +39,13 @@ export default function ButtonNew() {
     formState: { errors, isSubmitting },
     control,
   } = useForm();
+
   const [errorMsg, setErrorMsg] = useState(undefined);
 
   const onSubmit = (data) => {
-    console.log(data);
-    // store.emit(
-      // new CreateButton(data, token, selectedNetwork.id, setValidationErrors)
-    // );
+    store.emit(
+      new CreateButton(data, selectedNetwork.id, onSuccess, onError)
+    );
   };
 
   const onSuccess = () => {
@@ -54,51 +53,9 @@ export default function ButtonNew() {
   };
 
   const onError = (err) => {
-    
+    alertService.error("Error on creating button " + err, {})
   };
 
-
-
-  // const fields = {
-  //   name: "",
-  //   templateButtonId: null,
-  //   type: "",
-  //   description: "",
-  //   latitude: null,
-  //   longitude: null,
-  //   images: [],
-  //   tags: ["Video", "Call"]
-  // };
-
-  // const [button, setValues] = useState<IButton>(fields);
-  // const [validationErrors, setValidationErrors] = useState({
-  //   name: "",
-  //   templateButtonId: null,
-  //   type: "",
-  //   description: "",
-  //   latitude: null,
-  //   longitude: null,
-  //   images: null,
-  //   tags: null
-  // });
-  // const [date, setDate] = useState("");
-
-  // const {
-  //   formState: { isSubmitting },
-  // } = useForm({defaultValues: fields});
-
-  // const setValue = useCallback( (name, value) => {
-  //   setValues((previousState) => {
-  //     return { ...previousState, [name]: value };
-  //   });
-  // }, []) ;
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   store.emit(
-  //     new CreateButton(button, token, selectedNetwork.id, setValidationErrors)
-  //   );
-  // };
 
   return (
     <>
@@ -138,7 +95,6 @@ export default function ButtonNew() {
 
             {selectedNetwork && (
               <FieldLocation
-                setValue={(a, location) => {setLocation(location)}}
                 control={control}
                 validationErrors={undefined}
                 initialLocation={{
@@ -148,8 +104,8 @@ export default function ButtonNew() {
               />
             )}
 
-            {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} />
-            <ButtonShare /> */}
+            <ButtonNewDate title="When ?" setDate={setDate} date={date} />
+            <ButtonShare />
           </div>
           <div className="publish__submit">
             <FormSubmit

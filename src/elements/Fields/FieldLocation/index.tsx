@@ -24,7 +24,7 @@ export default function FieldLocation({ validationErrors, initialLocation, contr
       return newValue;
     })
     setLongitude((previousValue) => {
-      const newValue = e.coordinates[0];
+      const newValue = e.coordinates[1];
       fieldLongitude.onChange(newValue);
       return newValue;
     })

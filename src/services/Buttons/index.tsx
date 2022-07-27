@@ -6,6 +6,7 @@ import { httpService } from "services/HttpService";
 import getConfig from "next/config";
 import { UtilsService } from "services/Utils";
 import { Bounds } from "leaflet";
+import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -13,21 +14,14 @@ export class ButtonService {
 
   public static new(
     data: IButton,
-    token: string,
     networkId: string
   ): Observable<any> {
 
-    let bodyData = {
-      name: data.name,
-      type: data.type,
-      description: data.description,
-      latitude: data.latitude,
-      longitude: data.longitude,
-      tags: data.tags,
-      images: data.images,
-    };
+    const token = localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
+    const formData = UtilsService.objectToFormData(data);
 
-    const formData = UtilsService.objectToFormData(bodyData);
+    // TODO: wont work with httpService ?!
+    // return httpService.post("/buttons/new?networkId=" + networkId, formData, headers);
 
     return ajax({
       url: baseUrl + "/buttons/new?networkId=" + networkId,
