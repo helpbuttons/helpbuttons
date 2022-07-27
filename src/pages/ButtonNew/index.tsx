@@ -136,17 +136,17 @@ export default function ButtonNew() {
               control={control}
             />
 
-            {/* {selectedNetwork && (
+            {selectedNetwork && (
               <FieldLocation
                 setValue={(a, location) => {setLocation(location)}}
-                register={register}
+                control={control}
                 validationErrors={undefined}
                 initialLocation={{
                   lat: selectedNetwork.location.coordinates[0],
                   lng: selectedNetwork.location.coordinates[1],
                 }}
               />
-            )} */}
+            )}
 
             {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} />
             <ButtonShare /> */}
