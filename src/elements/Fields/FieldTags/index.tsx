@@ -32,14 +32,11 @@ export default function FieldTags({
   };
 
   const addTag = (newTag: string) => {
-    setTags((previousState) => {
-      if (tags.find((tag) => tag.toLowerCase() === newTag.toLowerCase())) {
-        return previousState;
-      }
-      append(newTag.toLowerCase());
-      previousState.push(newTag);
-      return previousState;
-    });
+    if (tags.find((tag) => tag.toLowerCase() == newTag.toLocaleLowerCase())) {
+      return;
+    }
+    append(newTag.toLowerCase());
+    setTags([...tags, newTag]);
   };
 
   const inputKeyDown = (e) => {
