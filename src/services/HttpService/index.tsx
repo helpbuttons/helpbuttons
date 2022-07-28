@@ -78,7 +78,6 @@ export class HttpService {
 
   private _defaultHeaders(): object {
     let headers = {
-      "Content-Type": "application/json",
       accept: "application/json",
     };
 

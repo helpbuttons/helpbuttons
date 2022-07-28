@@ -12,25 +12,26 @@ import { authenticationService } from 'services';
 //    Components
 import HomeInfo from "pages/HomeInfo";
 
-import { CommonState, commonInitial } from "pages/Common/data";
-import { ExploreState, exploreInitial } from "pages/Explore/data";
+import { NetworksState, networksInitial } from "state/Networks";
+import { UsersState, usersInitial } from "state/Users";
+import { ExploreState, exploreInitial } from "state/Explore";
 
 // -- estado global --
 export interface GlobalState {
-  common: CommonState;
+  networks: networksState;
+  users: UsersState;
   explore: ExploreState;
 }
 
 export const store = new Store<GlobalState>({
-  common: commonInitial,
+  networks: networksInitial,
+  users: usersInitial,
   explore: exploreInitial,
 });
 
 const Home: NextPage = () => {
   return (
-
       <HomeInfo />
-
   );
 };
 

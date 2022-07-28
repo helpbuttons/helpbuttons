@@ -1,26 +1,24 @@
-export default function FieldRadioOption({
-  handleChange,
-  value,
+import { forwardRef } from "react";
+
+export const FieldRadioOption = forwardRef(({
   name,
   children,
-  isChecked,
-}) {
-  const onClick = (e) => {
-    handleChange(name, value);
-  };
+  value,
+  onChange
+}, ref) => {
   return (
     <>
-      <label className="radio__label">
+    <label className="radio__label">
         <input
-          onChange={onClick}
+          ref={ref}
           type="radio"
-          id={name}
           name={name}
+          value={value}
+          onChange={onChange}
           className="radio__radio"
-          checked={isChecked}
         ></input>
         <div className="radio__content">{children}</div>
       </label>
     </>
   );
-}
+});

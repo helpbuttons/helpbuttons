@@ -6,7 +6,7 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 
 //imported internal classes, variables, files or functions
 import { store } from 'pages/index';
-import { SignupEvent } from 'pages/Signup/data';
+import { SignupUser } from 'state/Users';
 
 //imported react components
 import Alert from 'components/overlay/Alert';
@@ -19,7 +19,7 @@ import Form from 'elements/Form';
 import PopupOptions from 'components/popup/PopupOptions'
 import PopupImg from 'components/popup/PopupImg';
 import PopupSection from 'components/popup/PopupSection';
-import { NavigateTo } from 'pages/Common/data';
+import { NavigateTo } from 'state/Routes';
 import { alertService } from 'services/Alert';
 
 export default function Signup() {
@@ -27,7 +27,7 @@ export default function Signup() {
   const [ errorMsg, setErrorMsg ] = useState(undefined);
 
   const onSubmit = (data) => {
-    store.emit(new SignupEvent(data.email, data.password, onSuccess, onError));
+    store.emit(new SignupUser(data.email, data.password, onSuccess, onError));
   };
 
   const onSuccess = () => {
@@ -63,7 +63,7 @@ export default function Signup() {
                       ></FieldPassword>
                   </div>
                   { errorMsg && (
-                    <div>{ errorMsg }</div>
+                    <div className="form__input-subtitle--error">{ errorMsg }</div>
                   )}
                   <div className="form__btn-wrapper">
                       <Btn btnType={BtnType.splitIcon} caption="REGISTER" contentAlignment={ContentAlignment.center} isSubmitting={isSubmitting}/>

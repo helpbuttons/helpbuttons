@@ -5,19 +5,32 @@ import FieldError from "../FieldError";
 import "leaflet/dist/leaflet.css";
 
 import Map from "components/map/LeafletMap";
-export default function FieldLocation({ setValue, values, validationErrors, initialLocation }) {
+import { useController } from "react-hook-form";
+export default function FieldLocation({ validationErrors, initialLocation, control }) {
   const [showHideMenu, setHideMenu] = useState(false);
-  const style = { width: "100%", height: "600px" };
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [radius, setRadius] = useState(1);
+  const style = { width: "90vw", height: "80vh" };
+  // const { field:latitude } = useController({ name: 'latitude' })
+  const { field : fieldLatitude } = useController({ name: 'latitude', control })
+  const { field : fieldLongitude } = useController({ name: 'longitude', control })
 
   const onClick = (e) => {
-    setValue("latitude", e.coordinates[0]);
-    setValue("longitude", e.coordinates[1]);
-    setValue("radius", 20);
+
+    setLatitude((previousValue) => {
+      const newValue = e.coordinates[0];
+      fieldLatitude.onChange(newValue);
+      return newValue;
+    })
+    setLongitude((previousValue) => {
+      const newValue = e.coordinates[1];
+      fieldLongitude.onChange(newValue);
+      return newValue;
+    })
   };
 
-  const title =values.latitude || values.longitude
-  ?  `${values.longitude}, ${values.latitude} (radius: ${values.radius} km`
-  :  "Where ?"
+  const title = latitude || longitude ? `${latitude}, ${longitude} (radius: ${radius} km) ` : "Where ?";
 
   return (
     <>
@@ -25,13 +38,12 @@ export default function FieldLocation({ setValue, values, validationErrors, init
         <div className="card-button__city card-button__everywhere">
         {title}
         </div>
-
         <div className="btn" onClick={() => setHideMenu(!showHideMenu)}>
           Change place
         </div>
-        <FieldError validationError={validationErrors.latitude} />
+        {/* <FieldError validationError={validationErrors.latitude} />
         <FieldError validationError={validationErrors.longitude} />
-        <FieldError validationError={validationErrors.radius} />
+        <FieldError validationError={validationErrors.radius} /> */}
       </div>
 
       {showHideMenu && (

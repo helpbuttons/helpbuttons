@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
 import { store } from 'pages/index';
-import { Login } from './data';
-import { NavigateTo } from 'pages/Common/data';
+import { Login } from 'state/Users';
+import { NavigateTo } from 'state/Routes';
 import Form from 'elements/Form';
 import FieldText from 'elements/Fields/FieldText';
 import FieldPassword from 'elements/Fields/FieldPassword';
@@ -54,7 +54,7 @@ export default function LoginForm() {
                   ></FieldPassword>
                 </div>
                 { errorMsg && (
-                  <div>{ errorMsg }</div>
+                  <div className="form__input-subtitle--error">{ errorMsg }</div>
                 )}
                 <div className="form__btn-wrapper">
                   <Btn 
