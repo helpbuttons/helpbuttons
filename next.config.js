@@ -12,4 +12,7 @@ module.exports = {
     images: {
       domains: ['dummyimage.com', 'picsum.photos', 'localhost'],
     },
+    typescript:{
+        ignoreBuildErrors: true,
+    }
 }
