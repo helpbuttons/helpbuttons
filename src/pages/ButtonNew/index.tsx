@@ -4,7 +4,7 @@ import { Controller, useForm, useFieldArray } from "react-hook-form";
 import Form from "elements/Form";
 
 import Popup from "components/popup/Popup";
-import { ButtonType } from "components/button/ButtonType";
+import ButtonType from "components/button/ButtonType";
 
 import { GlobalState, store } from "pages";
 import { CreateButton } from "state/Explore";

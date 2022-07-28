@@ -1,10 +1,11 @@
 import { forwardRef } from "react";
 
-export const FieldRadioOption = forwardRef(({
+const FieldRadioOption = forwardRef(({
   name,
   children,
   value,
-  onChange
+  onChange,
+  onBlur
 }, ref) => {
   return (
     <>
@@ -15,6 +16,7 @@ export const FieldRadioOption = forwardRef(({
           name={name}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
           className="radio__radio"
         ></input>
         <div className="radio__content">{children}</div>
@@ -22,3 +24,5 @@ export const FieldRadioOption = forwardRef(({
     </>
   );
 });
+
+export default FieldRadioOption;
