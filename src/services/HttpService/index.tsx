@@ -25,6 +25,9 @@ export class HttpService {
     }
 
     this.apiUrl = publicRuntimeConfig.apiUrl;
+    if (this.apiUrl.indexOf("<front-host>") >= 0) {
+      this.apiUrl = this.apiUrl.replace("<front-host>", window.location.hostname);
+    }
   }
 
   public setAccessToken(accessToken?: string) {

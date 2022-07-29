@@ -32,5 +32,6 @@ jobs:
           node-version: 12
       - name: "build"
         run: |
+         cp .env.sample .env
          yarn
          yarn build
