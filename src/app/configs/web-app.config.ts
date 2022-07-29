@@ -14,6 +14,5 @@ export default registerAs('webAppConfigs', (): webAppConfigs => {
     allowedCors: process.env?.ALLOWED_CORS
   };
 
-  configs.baseUrl = configs.host + ':' + configs.port.toString();
   return configs;
 });
