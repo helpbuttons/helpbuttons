@@ -16,5 +16,13 @@ module.exports = {
     },
     typescript:{
         ignoreBuildErrors: true,
-    }
+    },
+    rewrites: async () => {
+        return [
+          {
+            source: '/geoapify/:path*',
+            destination: 'https://api.geoapify.com/:path*',
+          },
+        ]
+      },
 }

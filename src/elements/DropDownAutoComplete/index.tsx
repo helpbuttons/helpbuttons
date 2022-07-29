@@ -34,7 +34,7 @@ export function DropdownAutoComplete({
   return (
     <>
       <input
-        className="dropdown-nets__dropdown-trigger dropdown__dropdown"
+        className="form__input"
         autoComplete="on"
         onChange={onChangeInput}
         list=""
