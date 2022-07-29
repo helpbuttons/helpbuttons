@@ -9,10 +9,16 @@ import NavHeader from "components/nav/NavHeader"; //just for mobile
 import { useRef } from "store/Store";
 import { GlobalState, store } from "pages";
 import { Bounds } from "leaflet";
+import { useRouter } from "next/router";
 
 export default function Explore() {
   const selectedNetwork = useRef(store, (state: GlobalState) => state.networks.selectedNetwork);
   const visibleButtons = useRef(store, (state: GlobalState) => state.explore.visibleButtons);
+
+  const router = useRouter()
+
+  const lat = selectedNetwork ? selectedNetwork.location.coordinates[0] :router.query.lat;
+  const lng = selectedNetwork ? selectedNetwork.location.coordinates[1] : router.query.lng;
 
   const [showLeftColumn, setShowLeftColumn] = useState(true);
 
@@ -32,15 +38,13 @@ export default function Explore() {
           <List buttons={visibleButtons} showLeftColumn={showLeftColumn} onchange={(e) => { onchange(e) }} />
         )}
       </div>
-      {selectedNetwork && (
         <Map buttons={visibleButtons}
              initialLocation={{
-               lat: selectedNetwork.location.coordinates[0],
-               lng: selectedNetwork.location.coordinates[1],
+               lat,
+               lng,
              }}
              onBoundsChange={updateButtons}
              />
-      )}
       </div>
 
   );
