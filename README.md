@@ -42,6 +42,12 @@ You can use the pre-created data:
 
 **login:** user@email.com **password:** password
 
+## deploy
+
+! don't forget to edit the .env file!
+
+`$ docker-compose up -d`
+
 ## Main tech specifications used in this repo:
 
 Typescript, NestJS, TypeORM

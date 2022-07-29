@@ -6,4 +6,5 @@ export interface webAppConfigs {
   port: number;
   baseUrl: string;
   swaggerPath: string;
+  allowedCors: string;
 }

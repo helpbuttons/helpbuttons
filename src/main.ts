@@ -21,12 +21,12 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
-  // enable cors for the frontend.. still hardcoded.. needs to change
-  app.enableCors({ origin: 'http://localhost:3000' });
-
   const webAppConfigs = app.get<ConfigType<typeof webAppConfig>>(
     webAppConfig.KEY,
   );
+
+  app.enableCors({ origin: webAppConfigs.allowedCors });
+  app.setGlobalPrefix(webAppConfigs.baseUrl);
 
   app.use(bodyParser.json({limit: '50mb'}));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
