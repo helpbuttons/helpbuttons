@@ -13,6 +13,9 @@ Use 'npm ci' instead of 'npm install'. If your version of npm doesn't recognize 
 
 npm install -g npm
 
+copy the .env file and edit according to ur needs
+`$ cp .env.sample .env`
+
 Just use 'npm install' if you  modified the package.json locally.  
 
 ```bash
