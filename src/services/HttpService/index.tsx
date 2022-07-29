@@ -1,12 +1,11 @@
-import { BehaviorSubject, of } from "rxjs";
-import { catchError, map, tap } from "rxjs/operators";
+import { BehaviorSubject } from "rxjs";
+import { map } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
 
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 
 import { localStorageService, LocalStorageVars } from "services/LocalStorage";
-import { alertService } from "services/Alert";
 
 export function isHttpError(err: object) {
   return (err.status && err.request && err.response);

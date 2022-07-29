@@ -10,6 +10,7 @@ import "leaflet/dist/leaflet.css";
 import CardButtonMap from "components/map/CardButtonMap";
 import { MarkersButton, MarkerSelector } from "components/map/MarkerButton";
 import { ButtonService } from "services/Buttons";
+const { leafletTiles } = process.env;
 
 const AddMarker = ({ handleClick }) => {
   const [position, setPosition] = useState(null);
@@ -52,7 +53,7 @@ export default function Map({ buttons, style, addMarkerClick, initialLocation = 
     >
       <TileLayer
         attribution="&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors"
-        url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+        url={leafletTiles}
       />
       {buttons && <MarkersButton buttons={buttons} onBoundsChange={onBoundsChange}/>}
       {addMarkerClick && <AddMarker handleClick={addMarkerClick} />}
