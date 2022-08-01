@@ -3,7 +3,9 @@ module.exports = {
     reactStrictMode: true,
     env: {
         leafletTiles: process.env.LEAFLET_TILES,
-        backendUri: process.env.BACKEND_URI
+        backendUri: process.env.BACKEND_URI,
+        mapifyApiKey: process.env.MAPIFY_API_KEY,
+        frontendUri: process.env.FRONTEND_URI
     },
     serverRuntimeConfig: {
         secret: process.env.JWT_SECRET
@@ -16,5 +18,13 @@ module.exports = {
     },
     typescript:{
         ignoreBuildErrors: true,
-    }
+    },
+    rewrites: async () => {
+        return [
+          {
+            source: '/geoapify/:path*',
+            destination: 'https://api.geoapify.com/:path*',
+          },
+        ]
+      },
 }

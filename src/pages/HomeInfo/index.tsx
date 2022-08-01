@@ -12,48 +12,53 @@ import { Subject } from "rxjs";
 // import {
 //   setValueAndDebounce,
 // } from "./data";
-// import {
-//   DropdownAutoComplete,
-//   DropDownAutoCompleteOption,
-// } from "elements/DropDownAutoComplete";
+import {
+  DropdownAutoComplete,
+  DropDownAutoCompleteOption,
+} from "elements/DropDownAutoComplete";
 import { GlobalState, store } from "pages";
-import { setSelectedNetworkId } from "./data";
+import { setValueAndDebounce } from "state/HomeInfo";
+import router from "next/router";
 
 export default function HomeInfo() {
-  const selectedNetwork = useRef(store, (state: GlobalState) => state.networks.selectedNetwork);
-  const selectedNetworkLoading = useRef(store, (state: GlobalState) => state.networks.selectedNetworkLoading);
+  const selectedNetwork = useRef(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork
+  );
+  const selectedNetworkLoading = useRef(
+    store,
+    (state: GlobalState) => state.networks.selectedNetworkLoading
+  );
 
   return (
     <div className="info-overlay__container">
       <div className="info-overlay__content">
         <form className="info-overlay__location">
-            <label className="form__label label">Where do you start?</label>
-
-            <input
+          <label className="form__label label">Where do you start?</label>
+          <DropDownWhere />
+          {/* <input
               type="text"
               className="form__input"
               placeholder="Search Location"
-            ></input>
+            ></input> */}
         </form>
-        { selectedNetworkLoading && (
+        {selectedNetworkLoading && (
           <>
             <div className="info-overlay__card">Loading...</div>
-          </>)
-        }
-        { selectedNetwork && (
+          </>
+        )}
+        {selectedNetwork && (
           <div className="info-overlay__card">
             <div className="card">
               <div className="card__header">
                 <ImageContainer
-                    src={selectedNetwork.avatar}
-                    alt={selectedNetwork.name}
-                    width={50}
-                    height={50}
-                    localUrl
+                  src={selectedNetwork.avatar}
+                  alt={selectedNetwork.name}
+                  width={50}
+                  height={50}
+                  localUrl
                 />
-                <h3 className="card__header-title">
-                  {selectedNetwork.name}
-                </h3>
+                <h3 className="card__header-title">{selectedNetwork.name}</h3>
               </div>
               <div className="info-overlay__description">
                 {selectedNetwork.description}
@@ -61,6 +66,7 @@ export default function HomeInfo() {
             </div>
           </div>
         )}
+
         {/* Uncomment when we enable multi network */}
         {/* <div className="info-overlay__bottom"> */}
         {/*   <div className="info-overlay__nets"> */}
@@ -133,3 +139,64 @@ export default function HomeInfo() {
 //     </>
 //   );
 // }
+
+function DropDownWhere() {
+  const timeInMsBetweenStrokes = 150; //ms
+
+  const [options, setOptions] = useState([]);
+
+  const [sub, setSub] = useState(new Subject()); //evita la inicializaacion en cada renderizado
+  const [sub$, setSub$] = useState(
+    setValueAndDebounce(sub, timeInMsBetweenStrokes)
+  ); //para no sobrecargar el componente ,lo delegamos a una lib externa(solid);
+
+  const onChange = (inputText) => {
+    sub.next(inputText);
+  };
+
+  useEffect(() => {
+    let s = sub$.subscribe(
+      (rs: any) => {
+        setOptions(
+          rs.results.map((place) => {
+            return (
+              <DropDownAutoCompleteOption
+                key={place.place_id}
+                label={place.formatted}
+                value={JSON.stringify(place)}
+              />
+            );
+          })
+        );
+      },
+      (e) => {
+        console.log("error subscribe", e);
+      }
+    );
+    return () => {
+      s.unsubscribe(); //limpiamos
+    };
+  }, [sub$]); //first time
+
+  const setValue = (place) => {
+    place = JSON.parse(place);
+    router.push({
+      pathname: "/Explore",
+      query: { lat: place.lat, lng: place.lon },
+    });
+    // move to explore with this coordinates?!
+  };
+  // const setValue = (networkId, networkName) => {
+  //   setSelectedNetworkId(networkId);
+  // };
+  return (
+    <>
+      <DropdownAutoComplete
+        setValue={setValue}
+        onChange={onChange}
+        options={options}
+        placeholder="Search Location"
+      ></DropdownAutoComplete>
+    </>
+  );
+}

@@ -1,7 +1,6 @@
 import { BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
-
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 
@@ -65,14 +64,19 @@ export class HttpService {
                    body: object,
                    headers: object,
                   ): Observable<T | undefined> {
-    return ajax({
-      url: this.apiUrl + path,
-      method: method,
-      body: body,
-      headers: {...this._defaultHeaders(), ...headers},
-    }).pipe(
-      map(result => (result.response as T | undefined)),
-    );
+                    let url = path;
+                    if (path.indexOf("://") === -1)
+                    {
+                      url = this.apiUrl + path;
+                    }
+                    return ajax({
+                      url: url,
+                      method: method,
+                      body: body,
+                      headers: {...this._defaultHeaders(), ...headers},
+                    }).pipe(
+                      map(result => (result.response as T | undefined)),
+                    );
   }
 
   private _defaultHeaders(): object {

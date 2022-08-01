@@ -10,10 +10,16 @@ import { useRef } from "store/Store";
 import { GlobalState, store } from "pages";
 import { Bounds } from "leaflet";
 import { IButton } from "services/Buttons/button.type";
+import { useRouter } from "next/router";
 
 export default function Explore() {
   const selectedNetwork = useRef(store, (state: GlobalState) => state.networks.selectedNetwork);
   const mapBondsButtons = useRef(store, (state: GlobalState) => state.explore.mapBondsButtons);
+
+  const router = useRouter()
+
+  const lat = selectedNetwork ? selectedNetwork.location.coordinates[0] :router.query.lat;
+  const lng = selectedNetwork ? selectedNetwork.location.coordinates[1] : router.query.lng;
 
   const [showLeftColumn, setShowLeftColumn] = useState(true);
   const [filteredButtons, setFilteredButtons] = useState([]);
@@ -53,15 +59,14 @@ export default function Explore() {
           <List buttons={filteredButtons} showLeftColumn={showLeftColumn} onchange={(e) => { onchange(e) }} />
         )}
       </div>
-      {selectedNetwork && (
+      {filteredButtons && (
         <Map buttons={filteredButtons}
              initialLocation={{
-               lat: selectedNetwork.location.coordinates[0],
-               lng: selectedNetwork.location.coordinates[1],
+               lat,
+               lng,
              }}
              onBoundsChange={updateButtons}
              />
-      )}
       </div>
 
   );
