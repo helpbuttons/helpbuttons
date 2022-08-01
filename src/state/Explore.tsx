@@ -4,7 +4,6 @@ import { produce } from 'immer';
 
 import { WatchEvent } from 'store/Event';
 import { UpdateEvent } from '../store/Event';
-import { GlobalState } from 'store/Store';
 
 import { alertService } from 'services/Alert';
 import { errorService } from 'services/Error';
@@ -13,13 +12,14 @@ import { IButton } from 'services/Buttons/button.type';
 import { Bounds } from 'leaflet';
 import { of } from 'rxjs';
 import { isHttpError } from 'services/HttpService';
+import { GlobalState } from 'pages';
 
 export interface ExploreState {
-  visibleButtons: IButton[];
+  mapBondsButtons: IButton[];
 }
 
 export const exploreInitial = {
-  visibleButtons: [],
+  mapBondsButtons: [],
 }
 
 export class FindButtons implements WatchEvent {
@@ -37,7 +37,7 @@ export class ButtonsFound implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, newState => {
-      newState.explore.visibleButtons = this.buttons;
+      newState.explore.mapBondsButtons = this.buttons;
     });
   }
 }

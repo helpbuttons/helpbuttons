@@ -18,7 +18,7 @@ import { ExploreState, exploreInitial } from "state/Explore";
 
 // -- estado global --
 export interface GlobalState {
-  networks: networksState;
+  networks: NetworksState;
   users: UsersState;
   explore: ExploreState;
 }
