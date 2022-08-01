@@ -10,7 +10,7 @@ This software is currently being developed heavily, so be minded this might not 
 
 ### First, setup the .env file:
 
-`$ cp .env.example .env`
+`$ cp .env.sample .env`
 
 edit the .env file according to your needs.
 
@@ -22,7 +22,7 @@ edit the .env file according to your needs.
 ```
 $ yarn
 
-$ yarn start:dev
+$ yarn dev
 ```
 
 run the migrations:
