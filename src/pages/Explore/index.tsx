@@ -18,8 +18,9 @@ export default function Explore() {
 
   const router = useRouter()
 
-  const lat = selectedNetwork ? selectedNetwork.location.coordinates[0] :router.query.lat;
-  const lng = selectedNetwork ? selectedNetwork.location.coordinates[1] : router.query.lng;
+  const lat = (selectedNetwork && !router.query.lat) ? selectedNetwork.location.coordinates[0] : router.query.lat;
+  const lng = (selectedNetwork && !router.query.lng) ? selectedNetwork.location.coordinates[1] : router.query.lng;
+
 
   const [showLeftColumn, setShowLeftColumn] = useState(true);
   const [filteredButtons, setFilteredButtons] = useState([]);
@@ -67,6 +68,7 @@ export default function Explore() {
              }}
              onBoundsChange={updateButtons}
              />
+      )}
       </div>
 
   );
