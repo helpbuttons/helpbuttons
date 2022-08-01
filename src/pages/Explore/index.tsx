@@ -9,11 +9,12 @@ import NavHeader from "components/nav/NavHeader"; //just for mobile
 import { useRef } from "store/Store";
 import { GlobalState, store } from "pages";
 import { Bounds } from "leaflet";
+import { IButton } from "services/Buttons/button.type";
 import { useRouter } from "next/router";
 
 export default function Explore() {
   const selectedNetwork = useRef(store, (state: GlobalState) => state.networks.selectedNetwork);
-  const visibleButtons = useRef(store, (state: GlobalState) => state.explore.visibleButtons);
+  const mapBondsButtons = useRef(store, (state: GlobalState) => state.explore.mapBondsButtons);
 
   const router = useRouter()
 
@@ -21,6 +22,9 @@ export default function Explore() {
   const lng = selectedNetwork ? selectedNetwork.location.coordinates[1] : router.query.lng;
 
   const [showLeftColumn, setShowLeftColumn] = useState(true);
+  const [filteredButtons, setFilteredButtons] = useState([]);
+
+  const [buttonFilterTypes, setButtonFilterTypes] = useState(["need", "offer", "exchange"]);
 
   const onchange = (data) => {
       setShowLeftColumn(!showLeftColumn);
@@ -29,16 +33,34 @@ export default function Explore() {
   const updateButtons = (bounds: Bounds) => {
     store.emit(new FindButtons(selectedNetwork.id, bounds));
   }
+  const updateFiltersType = (type: string, value: boolean) => {
+    if (value === true) {
+      setButtonFilterTypes([...buttonFilterTypes, type]);
+    }
+    if (value === false) {
+      setButtonFilterTypes(previous => (
+        previous.filter((value, i) => value != type))
+      )
+        
+    }
+  }
+  useEffect(() => {
+    if (mapBondsButtons !== null)
+      setFilteredButtons(mapBondsButtons.filter((button: IButton) => {
+        return buttonFilterTypes.indexOf(button.type) >= 0
+      }))
+  }, [mapBondsButtons, buttonFilterTypes]);
   
   return (
     <div className="index__container">
       <div className={'index__content-left ' + (showLeftColumn ? '' : 'index__content-left--hide')}>
-        <NavHeader showSearch={showLeftColumn}/>
-        {visibleButtons && (
-          <List buttons={visibleButtons} showLeftColumn={showLeftColumn} onchange={(e) => { onchange(e) }} />
+        <NavHeader showSearch={showLeftColumn} updateFiltersType={updateFiltersType} />
+        {filteredButtons && (
+          <List buttons={filteredButtons} showLeftColumn={showLeftColumn} onchange={(e) => { onchange(e) }} />
         )}
       </div>
-        <Map buttons={visibleButtons}
+      {filteredButtons && (
+        <Map buttons={filteredButtons}
              initialLocation={{
                lat,
                lng,

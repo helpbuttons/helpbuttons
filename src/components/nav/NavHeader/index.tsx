@@ -1,15 +1,15 @@
 ///this is the mobile header - it has the search input in the middle and to icons on the sides. Left one ddisplays HeaderInfo with the netpicker and descripttion (in case it's in a net the trigger is the net's logo), right nav btn diisplays the filters
 import React, {useState} from "react";
 import Filters from "components/search/Filters";
-import FiltersMobile from "components/search/FiltersMobile"; //just for mobile
+import AdvancedFilters from "components/search/AdvancedFilters"; //just for mobile
 import { Link } from 'elements/Link';
 import { IoHomeOutline } from "react-icons/io5";
 
 
 
-function NavHeader(props) {
+function NavHeader({showSearch, updateFiltersType}) {
 
-  const [showSearch, setShowSearch] = useState(true);
+  // const [showSearch, setShowSearch] = useState(true);
 
   // const [showHideExtraFilters, setShowHideExtraFilters] = useState(true);
 
@@ -32,6 +32,9 @@ function NavHeader(props) {
   // const handleChange = event => {
   //     
   //     props.onchange(event.target.value);
+  // }
+  // const updateFiltersType = (type, value) => {
+  //   console.log(`changed ${type} to ${value}`)
   // }
 
   return(
@@ -68,9 +71,9 @@ function NavHeader(props) {
 
             </form>
 
-            <Filters />
+            <Filters updateFiltersType={updateFiltersType} />
 
-            { showHideFiltersMobile ? <FiltersMobile />  : null}
+            { showHideFiltersMobile ? <AdvancedFilters />  : null}
 
 
         </div>
