@@ -46,7 +46,7 @@ export class CreateButtonDto implements Partial<Button> {
     required: true,
     example: 39.23864,
   })
-  @IsLatitude()
+  @IsLatitude({message: 'invalid-latitude'})
   latitude: number;
 
   @ApiProperty({
@@ -58,7 +58,7 @@ export class CreateButtonDto implements Partial<Button> {
     required: true,
     example: -8.67096,
   })
-  @IsLongitude()
+  @IsLongitude({message: 'invalid-longitude'})
   longitude: number;
 }
 
