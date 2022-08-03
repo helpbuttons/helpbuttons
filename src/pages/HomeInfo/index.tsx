@@ -3,11 +3,7 @@
 import { useState, useEffect } from "react";
 import { ImageContainer } from "elements/ImageWrapper";
 import { useRef } from "store/Store";
-
-//components
-import Btn, { ContentAlignment, BtnType } from "elements/Btn";
-import { Link } from "elements/Link";
-
+import { useTranslation } from "next-i18next";
 import { Subject } from "rxjs";
 // import {
 //   setValueAndDebounce,
@@ -20,7 +16,12 @@ import { GlobalState, store } from "pages";
 import { setValueAndDebounce } from "state/HomeInfo";
 import router from "next/router";
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
+
 export default function HomeInfo() {
+  const { t } = useTranslation();
+
   const selectedNetwork = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork
@@ -34,7 +35,10 @@ export default function HomeInfo() {
     <div className="info-overlay__container">
       <div className="info-overlay__content">
         <form className="info-overlay__location">
-          <label className="form__label label">Where do you start?</label>
+          
+          <label className="form__label label">
+            {t("homeinfo.start")}
+          </label>
           <DropDownWhere />
           {/* <input
               type="text"
@@ -141,6 +145,8 @@ export default function HomeInfo() {
 // }
 
 function DropDownWhere() {
+  const { t } = useTranslation();
+  
   const timeInMsBetweenStrokes = 150; //ms
 
   const [options, setOptions] = useState([]);
@@ -195,8 +201,17 @@ function DropDownWhere() {
         setValue={setValue}
         onChange={onChange}
         options={options}
-        placeholder="Search Location"
+        placeholder={t("homeinfo.searchlocation")}
       ></DropdownAutoComplete>
     </>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      // Will be passed to the page component as props
+    },
+  };
 }

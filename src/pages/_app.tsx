@@ -7,16 +7,14 @@ import NavBottom from "components/nav/NavBottom"; //just for mobile
 import Alert from "components/overlay/Alert";
 import { httpService } from "services/HttpService";
 import { UserService } from 'services/Users';
-import { NetworkService } from 'services/Networks';
-import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
-
+import { appWithTranslation } from "next-i18next";
 import { GlobalState, store } from "pages";
 import { FetchDefaultNetwork } from "state/Networks";
 import { FetchUserData, SetCurrentUser } from "state/Users";
 
 import { useRef } from "store/Store";
 
-export default MyApp;
+export default appWithTranslation(MyApp);
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter();

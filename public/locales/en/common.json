@@ -1,0 +1,12 @@
+{
+  "menu": {
+    "explore": "Explore",
+    "create": "Create",
+    "profile": "Profile",
+    "activity": "Activity"
+  },
+  "homeinfo": {
+    "start": "Where do you start?",
+    "searchlocation": "Search location"
+  }
+}
