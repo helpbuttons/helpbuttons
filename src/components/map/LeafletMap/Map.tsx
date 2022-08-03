@@ -23,7 +23,6 @@ const AddMarker = ({ handleClick }) => {
       };
       setPosition(position);
       handleClick(position);
-      map.setView(e.latlng, map.getZoom());
     },
   });
 
