@@ -13,17 +13,20 @@ import FieldPassword from 'elements/Fields/FieldPassword';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { Link } from 'elements/Link';
 import { alertService } from 'services/Alert';
+import { useRouter } from 'next/router';
 
 export default function LoginForm() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
   const [ errorMsg, setErrorMsg ] = useState(undefined);
+  const router = useRouter();
 
   const onSubmit = (data) => {
     store.emit(new Login(data.email, data.password, onSuccess, onError));
   }
 
   const onSuccess = () => {
-    store.emit(new NavigateTo("/"));
+    const returnUrl :string = router.query.returnUrl.toString() || '/';
+    store.emit(new NavigateTo(returnUrl));
   }
 
   const onError = (err) => {
@@ -31,7 +34,8 @@ export default function LoginForm() {
       setErrorMsg("User or password not found");
     }
   }
-
+  const params : URLSearchParams = new URLSearchParams(router.query);
+  
   return (
             <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
               <div className="login__form">
@@ -64,7 +68,7 @@ export default function LoginForm() {
                     isSubmitting={isSubmitting}
                   />
                   <div className="popup__link">
-                    <Link href="/Signup">I don&apos;t have an account</Link>
+                    <Link href={`/Signup?${params.toString()}`}>I don&apos;t have an account</Link>
                   </div>
                 </div>
               </div>

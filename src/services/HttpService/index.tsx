@@ -7,7 +7,7 @@ const { publicRuntimeConfig } = getConfig();
 import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 
 export function isHttpError(err: object) {
-  return (err.status && err.request && err.response);
+  return (err.statusCode && err.message);
 }
 
 export class HttpService {

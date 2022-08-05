@@ -21,17 +21,20 @@ import PopupImg from 'components/popup/PopupImg';
 import PopupSection from 'components/popup/PopupSection';
 import { NavigateTo } from 'state/Routes';
 import { alertService } from 'services/Alert';
+import { useRouter } from 'next/router';
 
 export default function Signup() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
   const [ errorMsg, setErrorMsg ] = useState(undefined);
-
+  const router = useRouter();
+  
   const onSubmit = (data) => {
     store.emit(new SignupUser(data.email, data.password, onSuccess, onError));
   };
 
   const onSuccess = () => {
-    store.emit(new NavigateTo("/")); 
+    const returnUrl :string = router.query.returnUrl.toString() || '/';
+    store.emit(new NavigateTo(returnUrl));
   }
 
   const onError = (err) => {
@@ -39,6 +42,8 @@ export default function Signup() {
       setErrorMsg("This email already has registered");
     }
   }
+
+  const params : URLSearchParams = new URLSearchParams(router.query);
 
   return (
       <Popup title="Signup" linkFwd="/HomeInfo">
@@ -68,7 +73,7 @@ export default function Signup() {
                   <div className="form__btn-wrapper">
                       <Btn btnType={BtnType.splitIcon} caption="REGISTER" contentAlignment={ContentAlignment.center} isSubmitting={isSubmitting}/>
                       <div className="popup__link">
-                          <Link href="/Login">I have an account</Link>
+                          <Link href={`/Login?${params.toString()}`}>I have an account</Link>
                       </div>
                   </div>
               </div>

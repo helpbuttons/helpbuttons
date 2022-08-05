@@ -1,5 +1,5 @@
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import Form from "elements/Form";
 
@@ -22,6 +22,7 @@ import { NavigateTo } from "state/Routes";
 import FieldText from "elements/Fields/FieldText";
 import FieldError from "elements/Fields/FieldError";
 import { alertService } from "services/Alert";
+import Router from 'next/router';
 
 
 export default function ButtonNew() {
@@ -37,6 +38,7 @@ export default function ButtonNew() {
     handleSubmit,
     formState: { errors, isSubmitting },
     control,
+    reset,
   } = useForm();
 
   const [errorMsg, setErrorMsg] = useState(undefined);
@@ -48,13 +50,30 @@ export default function ButtonNew() {
   };
 
   const onSuccess = () => {
+    localStorageService.remove(LocalStorageVars.BUTTON_FORM);
     store.emit(new NavigateTo("/Explore"));
   };
 
-  const onError = (err) => {
-    alertService.error("Error on creating button " + err, {})
+  const onError = (err, data) => {
+    if (err == "unauthorized") {
+      localStorageService.save(LocalStorageVars.BUTTON_FORM, JSON.stringify({
+        data: data,
+        networkId: selectedNetwork.id
+      }))
+      Router.push({ pathname: '/Login', query: { returnUrl: 'ButtonNew' } });
+    }else {
+      alertService.error("Error on creating button " + err, {})
+    }
   };
 
+  useEffect(() => {
+    const buttonFormData = localStorageService.read(LocalStorageVars.BUTTON_FORM);
+    if (buttonFormData)
+    {
+      //TODO: should load the selectedNetworkId, but won't work because on the app.tsx is implemented to load always the default network, needs work
+      reset(JSON.parse(buttonFormData).data);
+    }
+  },[])
 
   return (
     <>
