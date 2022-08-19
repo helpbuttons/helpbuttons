@@ -16,10 +16,12 @@ import { GlobalState } from 'pages';
 
 export interface ExploreState {
   mapBondsButtons: IButton[];
+  draftButton: IButton;
 }
 
 export const exploreInitial = {
   mapBondsButtons: [],
+  draftButton: null,
 }
 
 export class FindButtons implements WatchEvent {
@@ -67,5 +69,15 @@ export class CreateButton implements WatchEvent {
         return of(undefined);
       })
     );
+  }
+}
+
+export class SaveButtonDraft implements UpdateEvent {
+  public constructor(private button: IButton) {}
+
+  public update(state: GlobalState) {
+    return produce(state, newState => {
+      newState.explore.draftButton = this.button;
+    });
   }
 }

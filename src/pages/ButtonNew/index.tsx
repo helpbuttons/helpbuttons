@@ -7,7 +7,7 @@ import Popup from "components/popup/Popup";
 import ButtonType from "components/button/ButtonType";
 
 import { GlobalState, store } from "pages";
-import { CreateButton } from "state/Explore";
+import { CreateButton, SaveButtonDraft } from "state/Explore";
 import { IButton } from "services/Buttons/button.type";
 import FieldLocation from "elements/Fields/FieldLocation";
 import { FieldTextArea } from "elements/Fields/FieldTextArea";
@@ -30,6 +30,8 @@ export default function ButtonNew() {
     store,
     (state: GlobalState) => state.networks.selectedNetwork
   );
+  const buttonDraft = useRef(store, (state: GlobalState) => state.explore.draftButton);
+
 
   const [date, setDate] = useState("");
 
@@ -50,16 +52,14 @@ export default function ButtonNew() {
   };
 
   const onSuccess = () => {
-    localStorageService.remove(LocalStorageVars.BUTTON_FORM);
     store.emit(new NavigateTo("/Explore"));
   };
 
   const onError = (err, data) => {
     if (err == "unauthorized") {
-      localStorageService.save(LocalStorageVars.BUTTON_FORM, JSON.stringify({
-        data: data,
-        networkId: selectedNetwork.id
-      }))
+      store.emit(
+        new SaveButtonDraft(data)
+      );
       Router.push({ pathname: '/Login', query: { returnUrl: 'ButtonNew' } });
     }else {
       alertService.error("Error on creating button " + err, {})
@@ -67,13 +67,11 @@ export default function ButtonNew() {
   };
 
   useEffect(() => {
-    const buttonFormData = localStorageService.read(LocalStorageVars.BUTTON_FORM);
-    if (buttonFormData)
+    if (buttonDraft) 
     {
-      //TODO: should load the selectedNetworkId, but won't work because on the app.tsx is implemented to load always the default network, needs work
-      reset(JSON.parse(buttonFormData).data);
+      reset(buttonDraft)
     }
-  },[])
+  },[buttonDraft])
 
   return (
     <>
