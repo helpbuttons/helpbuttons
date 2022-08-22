@@ -15,7 +15,7 @@ export class ValidationFilter implements ExceptionFilter {
         return response.status(400).json({
             statusCode: 400,
             success: false,
-            message: 'Error validating the data of the form',
+            message: 'validation-error',
             validationErrors: exception.validationErrors
         });
     }
