@@ -1,16 +1,17 @@
-import { forwardRef, useEffect, useState } from "react";
-import { useFieldArray } from "react-hook-form";
+import { useState } from "react";
+import { Controller, useFieldArray } from "react-hook-form";
 import FieldError from "../FieldError";
 
 export default function FieldTags({
   label,
   name,
   validationError,
-  control
+  control,
+  watch,
 }) {
-  const {  append, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
-    name: name
+    name: name,
   });
 
   const onInputChange = (e) => {
@@ -18,25 +19,17 @@ export default function FieldTags({
 
     setInput(inputText);
   };
-  const [tags, setTags] = useState([]); // Suggested tags, can be changed or removed
   const [input, setInput] = useState("");
 
-  const removeTag = (tagToRemove) => {
-    setTags((previousState) => {
-      previousState = previousState.filter(
-        (tag) => tag.toLowerCase() !== tagToRemove.toLowerCase()
-      );
-      remove(tagToRemove.toLowerCase())
-      return previousState;
-    });
-  };
+  const watchTags = watch(name, []);
 
   const addTag = (newTag: string) => {
-    if (tags.find((tag) => tag.toLowerCase() == newTag.toLocaleLowerCase())) {
+    if (
+      watchTags.find((tag) => tag.toLowerCase() == newTag.toLocaleLowerCase())
+    ) {
       return;
     }
-    append(newTag.toLowerCase());
-    setTags([...tags, newTag]);
+    append(newTag);
   };
 
   const inputKeyDown = (e) => {
@@ -47,22 +40,30 @@ export default function FieldTags({
       setInput("");
       e.preventDefault();
     } else if (e.key === "Backspace" && !val) {
-      removeTag(val);
+      remove(-1);
     }
   };
 
   return (
     <div className="tag__field">
-    <label className="label light">{label}</label>
-    <div className="card-button-list__tags">
+      <label className="label light">{label}</label>
+      <div className="card-button-list__tags">
         <ul className="tags__list">
-          {tags.map((tag, i) => (
-              <li className="tags__list-tag" key={`${tag}-${i}`}>
-                {tag}
-                    <button className="tag__btn" type="button" onClick={() => removeTag(tag)}>
-                    x
-                    </button>
-              </li>
+          {fields.map((item, index) => (
+            <li key={`${item.id}`} className="tags__list-tag">
+              <Controller
+                render={({ field: { value } }) => value}
+                name={`${name}.${index}`}
+                control={control}
+              />
+              <button
+                className="tag__btn"
+                type="button"
+                onClick={() => remove(index)}
+              >
+                x
+              </button>
+            </li>
           ))}
         </ul>
       </div>
@@ -70,10 +71,12 @@ export default function FieldTags({
         name={name}
         type="text"
         onChange={onInputChange}
-        className={`tag__input form__input ${validationError ? "validation-error" : ""}`}
+        className={`tag__input form__input ${
+          validationError ? "validation-error" : ""
+        }`}
         onKeyDown={inputKeyDown}
         value={input}
-        placeholder= "+Add"
+        placeholder="+Add"
         autoComplete="off"
       />
       <FieldError validationError={validationError} />

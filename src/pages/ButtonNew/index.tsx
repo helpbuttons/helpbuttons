@@ -1,5 +1,5 @@
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import Form from "elements/Form";
 
@@ -7,7 +7,7 @@ import Popup from "components/popup/Popup";
 import ButtonType from "components/button/ButtonType";
 
 import { GlobalState, store } from "pages";
-import { CreateButton } from "state/Explore";
+import { CreateButton, SaveButtonDraft } from "state/Explore";
 import { IButton } from "services/Buttons/button.type";
 import FieldLocation from "elements/Fields/FieldLocation";
 import { FieldTextArea } from "elements/Fields/FieldTextArea";
@@ -22,6 +22,7 @@ import { NavigateTo } from "state/Routes";
 import FieldText from "elements/Fields/FieldText";
 import FieldError from "elements/Fields/FieldError";
 import { alertService } from "services/Alert";
+import Router from 'next/router';
 
 
 export default function ButtonNew() {
@@ -29,6 +30,8 @@ export default function ButtonNew() {
     store,
     (state: GlobalState) => state.networks.selectedNetwork
   );
+  const buttonDraft = useRef(store, (state: GlobalState) => state.explore.draftButton);
+
 
   const [date, setDate] = useState("");
 
@@ -37,6 +40,9 @@ export default function ButtonNew() {
     handleSubmit,
     formState: { errors, isSubmitting },
     control,
+    reset,
+    watch,
+    setValue
   } = useForm();
 
   const [errorMsg, setErrorMsg] = useState(undefined);
@@ -51,10 +57,23 @@ export default function ButtonNew() {
     store.emit(new NavigateTo("/Explore"));
   };
 
-  const onError = (err) => {
-    alertService.error("Error on creating button " + err, {})
+  const onError = (err, data) => {
+    if (err == "unauthorized") {
+      store.emit(
+        new SaveButtonDraft(data)
+      );
+      Router.push({ pathname: '/Login', query: { returnUrl: 'ButtonNew' } });
+    }else {
+      alertService.error("Error on creating button " + err, {})
+    }
   };
 
+  useEffect(() => {
+    if (buttonDraft) 
+    {
+      reset(buttonDraft)
+    }
+  },[buttonDraft])
 
   return (
     <>
@@ -81,6 +100,7 @@ export default function ButtonNew() {
               name="tags"
               control={control}
               validationError={errors.tags}
+              watch={watch}
             />
 
           </div>
@@ -94,12 +114,13 @@ export default function ButtonNew() {
 
             {selectedNetwork && (
               <FieldLocation
-                control={control}
                 validationErrors={undefined}
                 initialLocation={{
                   lat: selectedNetwork.location.coordinates[0],
                   lng: selectedNetwork.location.coordinates[1],
                 }}
+                setValue={setValue}
+                watch={watch}
               />
             )}
 

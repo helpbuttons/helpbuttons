@@ -6,37 +6,23 @@ import "leaflet/dist/leaflet.css";
 
 import Map from "components/map/LeafletMap";
 import { useController } from "react-hook-form";
-export default function FieldLocation({ validationErrors, initialLocation, control }) {
+export default function FieldLocation({ validationErrors, initialLocation, setValue, watch }) {
   const [showHideMenu, setHideMenu] = useState(false);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-  const [radius, setRadius] = useState(1);
+ const [radius, setRadius] = useState(1);
   const style = { width: "90vw", height: "80vh" };
-  // const { field:latitude } = useController({ name: 'latitude' })
-  const { field : fieldLatitude } = useController({ name: 'latitude', control })
-  const { field : fieldLongitude } = useController({ name: 'longitude', control })
-
   const onClick = (e) => {
-
-    setLatitude((previousValue) => {
-      const newValue = e.coordinates[0];
-      fieldLatitude.onChange(newValue);
-      return newValue;
-    })
-    setLongitude((previousValue) => {
-      const newValue = e.coordinates[1];
-      fieldLongitude.onChange(newValue);
-      return newValue;
-    })
+    setValue('latitude', e.coordinates[0]);
+    setValue('longitude', e.coordinates[1]);
   };
 
-  const title = latitude || longitude ? `${latitude}, ${longitude} (radius: ${radius} km) ` : "Where ?";
+  const latitude = watch('latitude');
+  const longitude = watch('longitude');
 
   return (
     <>
       <div className="form__field">
         <div className="card-button__city card-button__everywhere">
-        {title}
+        {latitude || longitude ? `${latitude}, ${longitude} (radius: ${radius} km) ` : "Where ?"}
         </div>
         <div className="btn" onClick={() => setHideMenu(!showHideMenu)}>
           Change place
@@ -49,7 +35,7 @@ export default function FieldLocation({ validationErrors, initialLocation, contr
       {showHideMenu && (
         <div className="picker__close-container">
           <div className="picker--over picker-box-shadow picker__content picker__options-v">
-            <Map addMarkerClick={onClick} initialLocation={initialLocation} style={style} />
+            <Map addMarkerClick={onClick} initialLocation={latitude || longitude ? {lat: latitude,lng:longitude} : initialLocation} style={style} />
           </div>
 
           <div
