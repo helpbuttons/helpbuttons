@@ -41,6 +41,7 @@ export default function ButtonNew() {
     formState: { errors, isSubmitting },
     control,
     reset,
+    watch
   } = useForm();
 
   const [errorMsg, setErrorMsg] = useState(undefined);
@@ -98,6 +99,7 @@ export default function ButtonNew() {
               name="tags"
               control={control}
               validationError={errors.tags}
+              watch={watch}
             />
 
           </div>

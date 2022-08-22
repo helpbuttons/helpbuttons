@@ -1,17 +1,13 @@
-import { useState } from "react";
-import { useFieldArray } from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 import ImageUploading from "react-images-uploading";
 
 export default function FieldUploadImages({ name, label, maxNumber, control }) {
-  const [images, setImages] = useState([]);
-
-  const {  replace } = useFieldArray({
+  const { fields, replace, remove } = useFieldArray({
     control,
-    name: name
+    name: name,
   });
 
   const onChange = (imageList, addUpdateIndex) => {
-    setImages(imageList);
     replace(imageList);
   };
 
@@ -20,16 +16,12 @@ export default function FieldUploadImages({ name, label, maxNumber, control }) {
       <div className="form__field">
         <ImageUploading
           multiple
-          value={images}
+          value={fields}
           onChange={onChange}
           maxNumber={maxNumber}
           dataURLKey="data_url"
         >
-          {({
-            imageList,
-            onImageUpload,
-            onImageRemove,
-          }) => (
+          {({ onImageUpload }) => (
             // write your building UI
             <div className="upload__image-wrapper">
               <label
@@ -42,21 +34,22 @@ export default function FieldUploadImages({ name, label, maxNumber, control }) {
               >
                 {label}
               </label>
-              {imageList.map((image, index) => (
-                <div key={index} className="image-item">
-                  <img src={image.data_url} alt="" width="100" />
-                  <div className="image-item__btn-wrapper">
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onImageRemove(index);
-                      }}
-                    >
-                      Remove
+              <ul>
+                {fields.map((item, index) => (
+                  <div key={item.id} className="image-item">
+                    <Controller
+                      render={({ field: { value } }) => (
+                        <img src={value.data_url} alt="" width="100" />
+                      )}
+                      name={`${name}.${index}`}
+                      control={control}
+                    />
+                    <button type="button" onClick={() => remove(index)}>
+                      x
                     </button>
                   </div>
-                </div>
-              ))}
+                ))}
+              </ul>
             </div>
           )}
         </ImageUploading>
