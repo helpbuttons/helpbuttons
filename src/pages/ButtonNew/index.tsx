@@ -41,7 +41,8 @@ export default function ButtonNew() {
     formState: { errors, isSubmitting },
     control,
     reset,
-    watch
+    watch,
+    setValue
   } = useForm();
 
   const [errorMsg, setErrorMsg] = useState(undefined);
@@ -113,12 +114,13 @@ export default function ButtonNew() {
 
             {selectedNetwork && (
               <FieldLocation
-                control={control}
                 validationErrors={undefined}
                 initialLocation={{
                   lat: selectedNetwork.location.coordinates[0],
                   lng: selectedNetwork.location.coordinates[1],
                 }}
+                setValue={setValue}
+                watch={watch}
               />
             )}
 
