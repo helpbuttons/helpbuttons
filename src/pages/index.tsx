@@ -1,13 +1,6 @@
-import React, { useEffect, useMemo } from "react";
+import React from "react";
 import type { NextPage } from "next";
-import Head from "next/head";
 import { Store } from "store/Store";
-import { Event } from "store/Event";
-
-//services
-import { userService } from 'services/Users';
-import ButtonDataService from "services/Buttons";
-import { authenticationService } from 'services';
 
 //    Components
 import HomeInfo from "pages/HomeInfo";
@@ -15,6 +8,7 @@ import HomeInfo from "pages/HomeInfo";
 import { NetworksState, networksInitial } from "state/Networks";
 import { UsersState, usersInitial } from "state/Users";
 import { ExploreState, exploreInitial } from "state/Explore";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // -- estado global --
 export interface GlobalState {
@@ -36,3 +30,12 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      // Will be passed to the page component as props
+    },
+  };
+}
