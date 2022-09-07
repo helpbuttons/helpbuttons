@@ -11,12 +11,11 @@ import { IoGlobeOutline } from "react-icons/io5";
 import { useRef } from "store/Store";
 import { GlobalState, store } from 'pages';
 import {ImageContainer} from "elements/ImageWrapper";
-import { useTranslation } from 'next-i18next';
+import t from 'i18n';
 
 export default NavBottom;
 
 function NavBottom({logged}){
-  const { t } = useTranslation();
   const [user, setUser] = useState(null);
   
   return(

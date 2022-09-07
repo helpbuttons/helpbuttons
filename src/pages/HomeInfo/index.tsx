@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { ImageContainer } from "elements/ImageWrapper";
 import { useRef } from "store/Store";
-import { useTranslation } from "next-i18next";
 import { Subject } from "rxjs";
 // import {
 //   setValueAndDebounce,
@@ -15,12 +14,9 @@ import {
 import { GlobalState, store } from "pages";
 import { setValueAndDebounce } from "state/HomeInfo";
 import router from "next/router";
-
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-
+import t from "i18n";
 
 export default function HomeInfo() {
-  const { t } = useTranslation();
 
   const selectedNetwork = useRef(
     store,
@@ -145,7 +141,6 @@ export default function HomeInfo() {
 // }
 
 function DropDownWhere() {
-  const { t } = useTranslation();
   
   const timeInMsBetweenStrokes = 150; //ms
 
@@ -205,13 +200,4 @@ function DropDownWhere() {
       ></DropdownAutoComplete>
     </>
   );
-}
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-      // Will be passed to the page component as props
-    },
-  };
 }
