@@ -3,7 +3,9 @@
     "explore": "Explora",
     "create": "Crear",
     "profile": "Perfil",
-    "activity": "Atividad"
+    "activity": "Atividad",
+    "faqs": "Faqs",
+    "login": "Login"
   },
   "homeinfo": {
     "start": "Donde quieres empezar?",
