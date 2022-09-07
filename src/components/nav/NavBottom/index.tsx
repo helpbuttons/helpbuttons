@@ -11,11 +11,12 @@ import { IoGlobeOutline } from "react-icons/io5";
 import { useRef } from "store/Store";
 import { GlobalState, store } from 'pages';
 import {ImageContainer} from "elements/ImageWrapper";
+import { useTranslation } from 'next-i18next';
 
 export default NavBottom;
 
 function NavBottom({logged}){
-
+  const { t } = useTranslation();
   const [user, setUser] = useState(null);
   
   return(
@@ -26,7 +27,7 @@ function NavBottom({logged}){
             <IoGlobeOutline/>
             </div>
             <div className="nav-bottom__text">
-              Explore
+              {t("menu.explore")}
             </div>
         </NavLink>
 
@@ -35,7 +36,7 @@ function NavBottom({logged}){
                 <IoAddOutline/>
             </div>
             <div className="nav-bottom__text">
-              Create
+              {t("menu.create")}
             </div>
         </NavLink>
 
@@ -46,7 +47,7 @@ function NavBottom({logged}){
                   <IoHelpOutline />
               </div>
               <div className="nav-bottom__text">
-                Faqs
+                {t("menu.faqs")}
               </div>
           </NavLink>
 
@@ -60,7 +61,7 @@ function NavBottom({logged}){
                       <IoPersonOutline />
                   </div>
                   <div className="nav-bottom__text">
-                    Profile
+                    {t("menu.profile")}
                   </div>
               </NavLink>
 
@@ -69,7 +70,7 @@ function NavBottom({logged}){
                       <IoHeartOutline />
                   </div>
                   <div className="nav-bottom__text">
-                    Activity
+                    {t("menu.activity")}
                   </div>
               </NavLink>
             </>
@@ -83,7 +84,7 @@ function NavBottom({logged}){
                     <IoLogInOutline />
                 </div>
                 <div className="nav-bottom__text">
-                  Login
+                  {t("menu.login")}
                 </div>
             </NavLink>
 
