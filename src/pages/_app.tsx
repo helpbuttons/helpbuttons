@@ -33,39 +33,28 @@ function MyApp({ Component, pageProps }) {
     });
 
     useEffect(() => {
-        // on initial load - run auth check
-        authCheck(router.asPath);
+        // on route change start - hide page content by setting authorized to false
+        authCheck();
 
         // load the default network and make it available globally
         store.emit(new FetchDefaultNetwork());
-
-        // on route change start - hide page content by setting authorized to false
-        const hideContent = () => setAuthorized(false);
-        router.events.on('routeChangeStart', hideContent);
-
-        // on route change complete - run auth check
-        router.events.on('routeChangeComplete', authCheck);
-
-        // unsubscribe from events in useEffect return function
-        return () => {
-            router.events.off('routeChangeStart', hideContent);
-            router.events.off('routeChangeComplete', authCheck);
-        }
-
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    function authCheck(url) {
+    function authCheck() {
         // redirect to login page if accessing a private page and not logged in
         const publicPaths = ['/Login', '/Signup', '/RepositoryPage', '/Faqs', '/', '/ButtonNew', '/Explore', '/HomeInfo'];
-        const path = url.split('?')[0];
+        const path = router.asPath.split('?')[0];
 
         if (!UserService.isLoggedIn() && !publicPaths.includes(path)) {
-            router.push({
-                pathname: '/Login',
-                query: { returnUrl: router.asPath }
-            });
+            // and is not 404
+            if (path != '/Login') {
+                router.push({
+                    pathname: '/Login',
+                    query: { returnUrl: router.asPath }
+                }).catch((err) => {
+                    // console.log(err)
+                });
+            }
         } else {
             setAuthorized(true);
         }
