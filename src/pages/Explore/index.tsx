@@ -11,6 +11,7 @@ import { GlobalState, store } from "pages";
 import { Bounds } from "leaflet";
 import { IButton } from "services/Buttons/button.type";
 import { useRouter } from "next/router";
+import MapButtons from "components/map/LeafletMap/MapButtons";
 
 export default function Explore() {
   const selectedNetwork = useRef(store, (state: GlobalState) => state.networks.selectedNetwork);
@@ -61,13 +62,14 @@ export default function Explore() {
         )}
       </div>
       {selectedNetwork && (
-        <Map buttons={filteredButtons}
-             initialLocation={{
-               lat,
-               lng,
-             }}
-             onBoundsChange={updateButtons}
-             />
+        <MapButtons
+          initMapCenter={{
+            lat: selectedNetwork.location.coordinates[0],
+            lng: selectedNetwork.location.coordinates[1],
+          }}
+          buttons={filteredButtons}
+          onBoundsChange={updateButtons}
+        />
       )}
       </div>
 
