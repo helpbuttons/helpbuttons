@@ -115,7 +115,7 @@ export default function ButtonNew() {
             {selectedNetwork && (
               <FieldLocation
                 validationErrors={undefined}
-                initialLocation={{
+                initMapCenter={{
                   lat: selectedNetwork.location.coordinates[0],
                   lng: selectedNetwork.location.coordinates[1],
                 }}

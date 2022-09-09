@@ -1,24 +1,32 @@
 ///button marker over the map
-import React from "react";
+import React, { useState } from "react";
 
 import { Marker, Popup, useMapEvents } from "react-leaflet";
 import { iconButton, iconSelector } from "./IconButton";
 import CardButtonMap from "components/map/CardButtonMap";
 
-export function MarkerSelector({ position }) {
+export function MarkerSelector({ onClick, markerPosition }) {
+  const [position, setPosition] = useState(markerPosition);
+
+  const map = useMapEvents({
+    click: (e) => {
+      const position = {lat: e.latlng.lat,lng: e.latlng.lng};
+
+      setPosition(position);
+      onClick(position);
+    },
+  });
+  
   return (
-    <Marker
-      position={
-        position
-          ? {
-              lat: position.coordinates[0],
-              lng: position.coordinates[1],
-            }
-          : { lat: null, lng: null }
-      }
-      icon={iconSelector()}
-    >
-    </Marker>
+    <>
+    {position && 
+      <Marker
+        position={position}
+        icon={iconSelector()}
+      >
+      </Marker>
+    }
+    </>
   );
 }
 
