@@ -6,7 +6,6 @@ import { WatchEvent } from 'store/Event';
 import { UpdateEvent } from '../store/Event';
 
 import { alertService } from 'services/Alert';
-import { errorService } from 'services/Error';
 import { ButtonService } from 'services/Buttons';
 import { IButton } from 'services/Buttons/button.type';
 import { Bounds } from 'leaflet';

@@ -9,18 +9,21 @@ import { NetworksState, networksInitial } from "state/Networks";
 import { UsersState, usersInitial } from "state/Users";
 import { ExploreState, exploreInitial } from "state/Explore";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { Alert } from "state/Alerts";
 
 // -- estado global --
 export interface GlobalState {
   networks: NetworksState;
   users: UsersState;
   explore: ExploreState;
+  alerts: Alert[];
 }
 
 export const store = new Store<GlobalState>({
   networks: networksInitial,
   users: usersInitial,
   explore: exploreInitial,
+  alerts: []
 });
 
 const Home: NextPage = () => {
