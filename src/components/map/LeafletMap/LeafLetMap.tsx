@@ -7,7 +7,7 @@ import "leaflet/dist/leaflet.css";
 import { MarkersButton, MarkerSelector } from "components/map/MarkerButton";
 const { leafletTiles } = process.env;
 
-export default function LeafLetMap({ center, onBoundsChange = (e) => {}, onMarkerClick = (e) => {}, markerPosition = null, markersButtons = [], style = null}) {
+export default function LeafLetMap({ center, onBoundsChange = (e) => {}, onMarkerClick = false, markerPosition = null, markersButtons = [], style = null}) {
   const [zoom, setZoom] = useState(11);
   const getButtonsOnBounds = (map) => {
     onBoundsChange(map.getBounds())
