@@ -14,8 +14,8 @@ const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 export class UserService {
 
   //Signup in the new user
-  public static signup(email:string, password:string): Observable<any> {
-    return httpService.post<ICurrentUser>("/users/signup", {email, password}).pipe(
+  public static signup(email:string, password:string, name: string): Observable<any> {
+    return httpService.post<ICurrentUser>("/users/signup", {email, password, name}).pipe(
       tap((response) => httpService.setAccessToken(response?.token))
     );
   }
