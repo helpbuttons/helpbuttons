@@ -34,6 +34,17 @@ export class SignupRequestDto {
   email: string;
 
   @ApiProperty({
+    description: 'Name',
+    default: 'name',
+    type: String,
+    required: true,
+    isArray: false,
+    format: 'string',
+  })
+  @IsString()
+  name: string;
+
+  @ApiProperty({
     description: `User password should follow this conditions:
       1. At least 8 character
     `,
