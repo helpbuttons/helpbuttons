@@ -29,11 +29,12 @@ export default function Signup() {
   const router = useRouter();
   
   const onSubmit = (data) => {
-    store.emit(new SignupUser(data.email, data.password, onSuccess, onError));
+    store.emit(new SignupUser(data.email, data.password, data.name, onSuccess, onError));
   };
 
   const onSuccess = () => {
-    const returnUrl :string = router.query.returnUrl.toString() || '/';
+    const returnUrl :string = router.query.returnUrl ? router.query.returnUrl.toString() : '/' ;
+
     store.emit(new NavigateTo(returnUrl));
   }
 
@@ -57,6 +58,14 @@ export default function Signup() {
                         placeholder="email@email.em"
                         validationError={ errors.email }
                         {...register("email", { required: true })}
+                      ></FieldText>
+                      <FieldText 
+                        name="name" 
+                        label="Name" 
+                        classNameInput="squared"
+                        placeholder="name"
+                        validationError={ errors.name }
+                        {...register("name", { required: true })}
                       ></FieldText>
                       <FieldPassword 
                         name="password" 

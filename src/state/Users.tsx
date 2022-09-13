@@ -49,12 +49,13 @@ export class SignupUser implements WatchEvent {
   public constructor(
     private email: string,
     private password: string,
+    private name: string,
     private onSuccess,
     private onError
   ) {}
 
   public watch(state: GlobalState) {
-    return UserService.signup(this.email, this.password).pipe(
+    return UserService.signup(this.email, this.password, this.name).pipe(
       map((userData) => {
         if(userData) {
           return new FetchUserData(this.onSuccess, this.onError);
