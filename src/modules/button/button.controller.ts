@@ -78,7 +78,7 @@ export class ButtonController {
 
   @Get('findById/:buttonId')
   findOne(@Param('buttonId') buttonId: string) {
-    return this.buttonService.findOne(buttonId);
+    return this.buttonService.findById(buttonId);
   }
 
   @Patch('edit/:buttonId')

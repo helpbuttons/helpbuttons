@@ -31,6 +31,7 @@ export class AuthService {
       // interests,
       password: plainPassword,
       // realm,
+      name
     } = signupUserDto;
     const hashedPassword = await this.hashPassword(plainPassword);
     const roles = ['registered'];
@@ -48,6 +49,7 @@ export class AuthService {
       verificationToken,
       emailVerified,
       roles,
+      name,
     });
 
     await this.userCredentialService.createUserCredential({

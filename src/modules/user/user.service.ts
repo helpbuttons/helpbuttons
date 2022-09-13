@@ -18,6 +18,7 @@ export class UserService {
       verificationToken,
       roles,
       emailVerified,
+      name
     } = user;
     const createdUser = this.userRepository.create({
       id,
@@ -26,6 +27,7 @@ export class UserService {
       verificationToken,
       roles,
       emailVerified,
+      name
     });
 
     await this.userRepository.save(createdUser);

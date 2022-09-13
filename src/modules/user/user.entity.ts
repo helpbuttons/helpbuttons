@@ -30,6 +30,12 @@ export class User extends BaseEntity {
   username: string;
 
   @Column({
+    type: 'varchar',
+    length: 320,
+  })
+  name: string;
+
+  @Column({
     type: 'boolean',
     name: 'email_verified',
     nullable: true,

@@ -89,10 +89,10 @@ export class ButtonService {
     return button;
   }
 
-  findOne(id: string) {
+  findById(id: string) {
     return this.buttonRepository.findOne({
       where: { id },
-      relations: ['network', 'feed'],
+      relations: ['network', 'feed', 'owner'],
     });
   }
 

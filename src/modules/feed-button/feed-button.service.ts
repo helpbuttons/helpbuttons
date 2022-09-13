@@ -27,7 +27,7 @@ export class FeedButtonService {
     buttonId: string,
     images: File[],
   ) {
-    const button = await this.buttonService.findOne(buttonId);
+    const button = await this.buttonService.findById(buttonId);
     if (!button) {
       throw new HttpException(
         { message: 'button not found' },
