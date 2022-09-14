@@ -10,5 +10,8 @@
   "homeinfo": {
     "start": "Where do you start?",
     "searchlocation": "Search location"
+  },
+  "feed": {
+    "write": "Write message"
   }
 }

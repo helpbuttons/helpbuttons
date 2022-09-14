@@ -10,5 +10,8 @@
   "homeinfo": {
     "start": "Donde quieres empezar?",
     "searchlocation": "Buscar ubicacion"
+  },
+  "feed": {
+    "write": "Escribir mensaje"
   }
 }

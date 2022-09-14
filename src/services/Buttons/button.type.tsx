@@ -15,6 +15,8 @@ export interface IButton {
   longitude: number;
   // optional values
   networks?: [];
+  createdButtonsCount: number;
+  hearts: number;
   feedType?: enum; //enum {single,group} feed structure
   templateExtraData?: {}; //JSON template contains info about the image and the description (standard) and also about booleans, radius, checklist and every other field related to the network module
 }

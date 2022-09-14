@@ -16,11 +16,13 @@ import { GlobalState } from 'pages';
 export interface ExploreState {
   mapBondsButtons: IButton[];
   draftButton: IButton;
+  currentButton: IButton;
 }
 
 export const exploreInitial = {
   mapBondsButtons: [],
   draftButton: null,
+  currentButton: null
 }
 
 export class FindButtons implements WatchEvent {
@@ -77,6 +79,26 @@ export class SaveButtonDraft implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, newState => {
       newState.explore.draftButton = this.button;
+    });
+  }
+}
+
+export class FindButton implements WatchEvent {
+  public constructor(private buttonId: string) {}
+
+  public watch(state: GlobalState) {
+    return ButtonService.findById(this.buttonId).pipe(
+      map((button) => new ButtonFound(button)),
+    );
+  }
+}
+
+export class ButtonFound implements UpdateEvent {
+  public constructor(private button: IButton) {}
+
+  public update(state: GlobalState) {
+    return produce(state, newState => {
+      newState.explore.currentButton = this.button;
     });
   }
 }
