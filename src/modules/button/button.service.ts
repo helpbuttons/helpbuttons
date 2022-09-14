@@ -89,11 +89,17 @@ export class ButtonService {
     return button;
   }
 
-  findById(id: string) {
-    return this.buttonRepository.findOne({
+  async findById(id: string) {
+    let button: Button = await this.buttonRepository.findOne({
       where: { id },
       relations: ['network', 'feed', 'owner'],
     });
+    try {
+      let createdButtonsCount = await this.buttonRepository.count({where: {owner:  button.owner.id}});
+      return {...button, createdButtonsCount}
+    }catch(err){
+    }
+    return {...button};
   }
 
   update(id: string, updateDto: UpdateButtonDto) {
@@ -153,7 +159,7 @@ export class ButtonService {
       const buttonsIds = buttonsOnBounds.map((button) => button.id);
 
       return this.buttonRepository.find({
-        relations: ['network', 'feed'],
+        relations: ['network', 'feed', 'owner'],
         where: {
           id: In(buttonsIds),
         },
