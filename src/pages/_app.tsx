@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }) {
 
     function authCheck() {
         // redirect to login page if accessing a private page and not logged in
-        const publicPaths = ['/Login', '/Signup', '/RepositoryPage', '/Faqs', '/', '/ButtonNew', '/Explore', '/HomeInfo'];
+        const publicPaths = ['/Login', '/Signup', '/RepositoryPage', '/Faqs', '/', '/ButtonNew', '/Explore', '/HomeInfo', '/ButtonFile/[id]'];
         const path = router.asPath.split('?')[0];
 
         if (!UserService.isLoggedIn() && !publicPaths.includes(path)) {
