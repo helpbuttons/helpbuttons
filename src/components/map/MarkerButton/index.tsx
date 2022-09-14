@@ -57,15 +57,8 @@ export function MarkersButton({ buttons, onBoundsChange, ...props }) {
     <MarkerButton button={button} key={i}>
       <Popup className="card-button-map--wrapper">
         <CardButtonMap
-          key={button.id}
-          type={button.type}
-          userName={button.owner}
-          images={button.images}
-          buttonName={button.name}
-          tags={button.tags}
-          description={button.description}
-          date={button.date}
-          location={button.location}
+          key={i}
+          button={button}
         />
       </Popup>
     </MarkerButton>

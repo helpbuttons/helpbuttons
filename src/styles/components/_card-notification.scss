@@ -4,7 +4,7 @@ $card-notification-box-shadow: $box-shadow-card;
 $card-notification-busca-background: $color-red;
 $card-notification-ofrece-background: $color-green;
 $card-notification-paragraph-color: $color-gray;
-$card-notification-margin-bottom: 1rem;
+$card-notification-margin-bottom: 0.4rem;
 // convivences
 $card-notification-whitespace: .5rem;
 $card-notification-border-height: $border-general-height;
@@ -18,7 +18,7 @@ $card-notification-delete-size: 100px;
   background: $card-notification-background;
   border: $card-notification-border;
   border-radius: $border-radius-basic;
-  box-shadow: $card-notification-box-shadow;
+  // box-shadow: $card-notification-box-shadow;
   position: relative;
   margin-bottom: $card-notification-margin-bottom;
 }
@@ -94,7 +94,7 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification__text {
-  flex: 0 1 80%;
+  flex: 0 1 90%;
   margin-left: $margin-big;
 }
 

@@ -62,6 +62,7 @@ export class ButtonService {
 
   //Get button by id
   public static findById(id: string): Observable<any> {
+    return httpService.get<IButton>("/buttons/findById/" + id)
     //save the ajax object that can be .pipe by the observable
     const buttonWithHeaders$ = ajax({
       url: baseUrl + "/buttons/findById/" + id,

@@ -16,7 +16,7 @@ export default function ContentList ({buttons, ...props}) {
   }
   const markers = buttons.map((btn, i) => (
 
-      <CardButtonList key={btn.id} type={btn.type} userName={btn.owner} images={btn.images} buttonName={btn.name} tags={btn.tags} description={btn.description} date={btn.created_at} location={btn.location}/>
+      <CardButtonList key={i} button={btn}/>
 
   ));
 

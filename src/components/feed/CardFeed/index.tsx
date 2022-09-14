@@ -27,13 +27,6 @@ export default function CardFeed() {
               Lorem ipsum es el texto..
             </div>
           </div>
-          <button className="btn-circle card-notification__delete">
-            <div className="btn-circle__content">
-              <div className="btn-circle__icon">
-                <IoClose />
-              </div>
-            </div>
-          </button>
         </div>
       </div>
     </>

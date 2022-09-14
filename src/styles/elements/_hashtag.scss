@@ -20,14 +20,16 @@ $hashtag-color-gray: $color-gray;
   vertical-align: middle;
   width: auto;
   border-radius: $border-radius-semicircle;
-  padding: $hashtag-padding-y $hashtag-padding-x;
+  padding: 0.3rem 1.2rem;
   font-size: $font-size-general;
-  font-weight: $font-weight-bold;
-
+  line-height: 0.6rem;
   color: $hashtag-color-white;
-  border: none;
+  border: 1px solid grey;
+  color: black;
   text-decoration: none;
   margin: 0 $hashtag-margin-x $hashtag-margin-x 0;
+  text-transform: capitalize;
+  font-size: 0.9rem;
 
   &--yellow {
     background-color: $hashtag-color-corporative;

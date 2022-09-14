@@ -99,8 +99,16 @@ $card-button-list-border-height: $border-general-height;
 }
 
 .card-button-list__content {
-  padding: 1rem;
   width: 100%;
+  .card-button__hashtags{
+    .hashtag{
+      padding: 0.3rem 0.7rem;
+    }
+  }
+  .card-button__paragraph{
+    font-size: 0.8rem;
+    color: black;
+  }
 }
 
 .card-button-list__header {
@@ -446,3 +454,4 @@ $card-button-list-border-height: $border-general-height;
   }
 
 }
+
