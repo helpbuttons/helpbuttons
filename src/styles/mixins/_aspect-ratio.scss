@@ -1,0 +1,24 @@
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  display: block;
+  overflow: hidden; // esto es lo que hace que la imagen se corte (a propósito)
+  background: #33ff33; // si se ve verde es que no está la imagen cogiendo el 100% del espacio de la caja
+
+  &:before {
+    content: '';
+    display: block;
+    padding-top: ($height / $width) * 100%;
+    width: 100%;
+  }
+
+  > img {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    object-fit: cover; // esto en IE falla, por eso hay que reemplazarlo por un background: transparent ur() center no-repeat cover;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    top: 0;
+  }
+}

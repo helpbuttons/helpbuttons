@@ -1,0 +1,108 @@
+$checkbox-circle-content-background: $color-white;
+$checkbox-circle-content-background-hover: $color-black;
+$checkbox-circle-content-border: $border-general-height;
+$checkbox-circle-width: 100%;
+$checkbox-circle-color-white: $color-white;
+$checkbox-circle-color-black: $color-black;
+$checkbox-circle-color-corporative: $color-corporative;
+
+
+.checkbox-circle {
+  width: $checkbox-circle-width;
+  background: none;
+  border: none;
+  padding: 0;
+  justify-content:  space-around;
+
+  &:focus {
+    outline: none;
+  }
+  &__userTag{
+    flex: 0.2;
+    justify-content:  space-around;
+    align-items: center;
+
+    width: auto !important;
+  }
+}
+
+
+.checkbox-circle__label {
+  display: block;
+  width: $checkbox-circle-width;
+}
+
+.checkbox-circle__label {
+  display: block;
+  width: $checkbox-circle-width;
+}
+
+.checkbox-circle__content {
+  align-items: center;
+  background: $checkbox-circle-content-background;
+  border: $checkbox-circle-content-border;
+  display: flex;
+  font-size: $font-size-general;
+  padding:  1.5rem 2rem;
+  position: relative;
+  transition: background .2s;
+  height: 53px;
+  width: fit-content;
+  &--small {
+    padding: 15px 10px;
+  }
+  &--bordered {
+    border: 1px solid #e5e5e5;
+    border-radius: 50%;
+  }
+}
+
+.checkbox-circle__content:hover {
+  cursor: pointer;
+}
+
+.checkbox-circle__icon {
+  align-items: center;
+  display: flex;
+  height: 40px;
+  transition: transform .2s;
+  width: 40px;
+
+  .icon {
+    fill: red;
+    height: auto;
+    transition: transition .2s;
+    width: $checkbox-circle-width;
+  }
+}
+
+.checkbox-circle__text {
+  margin-left: 6%;
+  margin-bottom: 0;
+  line-height: 30px;
+  height: 30px;
+  min-height: 30px;
+}
+.checkbox-circle__checkbox {
+  display: none;
+
+  &:checked + .checkbox-circle__content {
+    background-color: $checkbox-circle-content-background-hover;
+
+    .icon {
+      fill: $checkbox-circle-color-white;
+    }
+  }
+
+  &:checked + .profile-buttons__checkbox-circle {
+    background: $checkbox-circle-color-black;
+    padding-right: 0;
+    color: $checkbox-circle-color-corporative;
+    min-width: 150px;
+  }
+
+  &:checked + .checkbox-circle__content::before {
+    background: transparent image-url('../../../public/assets/svg/icons/check.svg') center no-repeat;
+    background-size: 80%;
+  }
+}

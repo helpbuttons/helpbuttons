@@ -1,0 +1,17 @@
+$animation-spin: spin 2s infinite linear;
+$animation-button-create:  1s ease-in both;
+$transition-default: all .4s;
+$transition-default-slow: all 1s;
+
+.spinner {
+  animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

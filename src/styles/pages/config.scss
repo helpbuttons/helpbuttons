@@ -1,0 +1,25 @@
+
+.config__title{
+
+  text-align: center;
+  margin: $margin-big auto;
+
+}
+
+.config__iframe {
+  // border: 2px solid black;
+  border-radius: 5px;
+  text-align: center;
+  background-color: transparent;
+  height: auto;
+  margin:auto;
+  margin-top: 5px;
+  width: flex;
+  position: relative;
+  overflow: hidden;
+}
+.config__paypal {
+  display:inline-block;
+  margin:auto;
+
+}

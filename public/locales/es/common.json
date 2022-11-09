@@ -1,0 +1,17 @@
+{
+  "menu": {
+    "explore": "Explora",
+    "create": "Crear",
+    "profile": "Perfil",
+    "activity": "Atividad",
+    "faqs": "Faqs",
+    "login": "Login"
+  },
+  "homeinfo": {
+    "start": "Donde quieres empezar?",
+    "searchlocation": "Buscar ubicacion"
+  },
+  "feed": {
+    "write": "Escribir mensaje"
+  }
+}

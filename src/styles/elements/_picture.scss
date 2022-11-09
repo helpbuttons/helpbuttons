@@ -1,0 +1,39 @@
+$picture-width: fit-content;
+
+.picture {
+  width: $picture-width;
+  margin: auto;
+}
+
+.picture__img {
+  width: $picture-width;
+  margin: auto;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+
+}
+
+.picture-gallery{
+
+  height: auto;
+  width: 100%;
+  margin-top: $margin-small;
+  display: flex;
+  overflow-x: auto;
+
+}
+
+.picture-gallery__img{
+
+  flex: 0.8;
+
+}
+
+@media #{$breakpoints-medium} {
+  .picture__img {
+    width: $picture-width;
+    width: 100%;
+    height: 100%;
+  }
+}

@@ -1,0 +1,83 @@
+.trending-tags {
+  width: 100%;
+  z-index: 401;
+  background-color: $color-corporative;
+  position: relative;
+  margin-top: 10px;
+  padding: 30px 10px;
+  display: block;
+  min-width: 260px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  &__tag-name,
+  &__buttons-count {
+    font-size: $font-size-general;
+  }
+  &__title {
+   font-size: $font-size-general;
+   font-weight: thin;
+   margin-bottom: 1rem;
+  }
+  &__tag-name {
+    font-weight: bold;
+  }
+  &__tag-name,
+  &__buttons-count {
+    margin-bottom: 0;
+  }
+  &__buttons-count {
+    color: #8e8e8e;
+  }
+  &__tag-element {
+    & + .trending-tags__tag-element {
+      margin-top: 5px;
+    }
+  }
+  &__buttons-align {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  &__row
+  {
+    width: 100%;
+    display: table;
+
+  }
+
+  &__suscrib{
+    font-size: font-size-medium;
+    font-weight: thin;
+    margin-bottom: 0;
+    background-color: $color-corporative;
+    border: solid 2px;
+    padding: $hashtag-padding-x $hashtag-padding-y;
+    border-color: $color-black;
+    border-radius: $border-radius-semicircle;
+    &:hover {
+      background-color: $color-black;
+      color: $color-corporative;
+    }
+  }
+
+}
+
+hr {
+  border:none;
+  border-top:1px dotted $color-black;
+  color: $color-black;
+  background-color: transparent;
+  height:1px;
+  width:100%;
+}
+.trending-tags {
+
+  z-index: 1;
+  margin-top: 5px;
+  padding: 10px 1px;
+  &__buttons-count {
+    text-align: right;
+    justify-content:flex-start;
+    margin-right: 1rem;
+
+  }
+}

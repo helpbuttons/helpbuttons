@@ -1,0 +1,342 @@
+$marker-button-height: 70px;
+$marker-button-height-name: 20px;
+$marker-button-width-change: 25px;
+$marker-button-width: 70px;
+$marker-button-radius: $border-radius-circle;
+$marker-button-line: 0.2rem;
+$marker-arrow-width: 2px;
+$marker-arrow-height: 25px;
+
+
+
+
+.marker-button {
+
+  height: $marker-button-height;
+  width: $marker-button-width;
+  border: none;
+  position: relative;
+  margin: auto;
+  margin-bottom: 0;
+
+}
+
+.marker-button__image {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    border-style: solid;
+    z-index: 1;
+    object-fit: cover;
+    overflow: hidden;
+    border-width: $marker-button-line;
+    display: flex;
+}
+
+.marker-button--name-alone {
+
+  height: $marker-button-height-name;
+
+}
+
+.marker-button--grey {
+    opacity: 0.5;
+  }
+.marker-button--change {
+    &:before,
+    &:after {
+      content: "";
+      display: block;
+      width: $marker-button-width-change;
+      height: $marker-button-height;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      z-index: -1;
+    }
+    &:before {
+      left: 0;
+      background-color: $color-green;
+      border-bottom-left-radius: $marker-button-radius;
+      border-top-left-radius: $marker-button-radius;
+    }
+    &:after {
+      right: 0;
+      background-color: $color-red;
+      border-bottom-right-radius: $marker-button-radius;
+      border-top-right-radius: $marker-button-radius;
+    }
+
+    .marker-button__image {
+      border-color: transparent;
+
+    }
+    .marker-button__arrow {
+      &:after {
+        border-top-color: $color-green;
+      }
+    }
+  }
+
+.marker-button--swap {
+    &:before,
+    &:after {
+      content: "";
+      display: block;
+      width: 25px;
+      height: 50px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      z-index: -1;
+    }
+    &:before {
+      left: 0;
+      background-color: $color-red;
+      border-bottom-left-radius: $marker-button-radius;
+      border-top-left-radius: $marker-button-radius;
+    }
+    &:after {
+      right: 0;
+      background-color: $color-green;
+      border-bottom-right-radius: $marker-button-radius;
+      border-top-right-radius: $marker-button-radius;
+    }
+
+    .marker-button__image {
+      border-color: transparent;
+    }
+    .marker-button__arrow {
+      &:after {
+        border-top-color: $color-red;
+      }
+    }
+  }
+
+.marker-button--need {
+    .marker-button__image {
+      border-color: $color-red;
+      background-color: $color-red;
+    }
+
+    .marker-button__arrow {
+      &:after {
+        border-top-color: $color-red;
+      }
+    }
+  }
+
+.marker-button--offer {
+    .marker-button__image {
+      border-color: $color-green;
+      background-color: $color-green;
+    }
+    .marker-button__arrow {
+      &:after {
+        border-top-color: $color-green;
+      }
+    }
+  }
+
+.marker-button--yellow {
+    .marker-button__image {
+      border-color: $color-corporative;
+      background-color: $color-corporative;
+    }
+    .marker-button__arrow {
+      &:after {
+        border-top-color: $color-corporative;
+      }
+    }
+  }
+
+
+.marker-button--create {
+    .marker-button__image {
+      border-color: $color-corporative;
+      background-color: $color-corporative;
+    }
+    .marker-button__arrow {
+      &:after {
+        border-top-color: $color-corporative;
+      }
+    }
+  }
+
+.marker-button--neutro {
+    .marker-button__image {
+      border-color: $color-black;
+      background-color: transparent;
+    }
+    .marker-button__arrow {
+      &:after {
+        border-top-color: $color-black;
+      }
+    }
+  }
+
+
+
+.marker-button__arrow {
+    z-index: $z-index-03;
+    position: relative;
+    bottom: 0;
+    right: 0;
+    left: calc(50% - 8px);
+    margin: auto;
+    &:after,
+    &:before {
+      content: "";
+      display: block;
+      height: $marker-arrow-height;
+      width: $marker-arrow-width;
+      border-top: 10px solid transparent;
+      border-right: 6px solid transparent;
+      border-left: 6px solid transparent;
+      position: absolute;
+      bottom: -33px;
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+    }
+  }
+
+
+.marker-button__tracking_pos {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    border-top-color: $color-corporative;
+    border-color: $color-corporative;
+    background-color: $color-corporative;
+    &:after,
+    &:before {
+      content: "";
+      border-top-color: $color-green;
+      display: block;
+      height: 10px;
+      width: 5px;
+      border-top: 10px solid transparent;
+      border-right: 6px solid transparent;
+      border-left: 6px solid transparent;
+      position: absolute;
+      bottom: -9px;
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+    }
+  }
+
+.marker-button--cluster {
+
+  .marker-button__image {
+    border-color: $color-corporative;
+    background-color: $color-corporative;
+  }
+  .marker-button__arrow {
+    &:after {
+      border-top-color: $color-corporative;
+    }
+  }
+
+}
+
+
+.marker-button__tags {
+
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: fit-content;
+  padding: 0 0 $padding-small 0;
+  white-space: nowrap;
+  justify-content: center;
+  width: fit-content;
+  left: auto;
+  max-height: 50px;
+
+}
+
+.marker-button__link-tag {
+
+  position: absolute;
+  bottom: 102%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: $color-gray;
+  border-radius: $border-radius-semicircle;
+  color: $color-white;
+  font-size: $font-size-general;
+  font-weight: $font-weight-bold;
+  padding: $padding-small $padding-medium;
+
+}
+
+.marker-button__link-tag--alone {
+
+  @extend .marker-button__link-tag;
+
+
+}
+
+.marker-button__tags--offer {
+
+  .marker-button__link-tag {
+    background: $color-green;
+  }
+
+}
+
+.marker-button__tags--need {
+  .marker-button__link-tag {
+    background: $color-red;
+  }
+}
+
+.marker-button__tags--change {
+  .marker-button__link-tag {
+    &:before,
+    &:after {
+      content: "";
+      display: block;
+      width: 50%;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      z-index: -1;
+    }
+    &:before {
+      left: 0;
+      background-color: $color-green;
+      border-bottom-left-radius: 50px;
+      border-top-left-radius: 50px;
+    }
+    &:after {
+      right: 0;
+      background-color: $color-red;
+      border-bottom-right-radius: 50px;
+      border-top-right-radius: 50px;
+    }
+
+    .marker-button__image {
+      border-color: transparent;
+    }
+    .marker-button__arrow {
+      &:after {
+        border-top-color: $color-green;
+      }
+    }
+  }
+}
+
+.marker-button__tags--yellow {
+  .marker-button__link-tag {
+    color: $color-black;
+    background: $color-corporative;
+  }
+}

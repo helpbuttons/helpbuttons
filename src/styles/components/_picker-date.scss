@@ -1,0 +1,87 @@
+$picker-date-height: 40px;
+
+.picker-date__selected {
+  display: flex;
+  align-items: center;
+  font-size: $font-size-general;
+  border: 0;
+  width: 60%;
+  margin: $margin-small auto;
+  justify-content: space-evenly;
+}
+
+.picker-date__dropdown {
+  padding: $padding-medium $padding-big;
+  border-radius: $border-radius-circle;
+  border: $border-lines-width solid $color-gray;
+  width: auto;
+  height: $picker-date-height;
+
+  &:hover {
+    background-color: $color-black;
+    color: white;
+  }
+}
+
+.calendar .day {
+  position: relative;
+  width: calc(100% / 7);
+  height: 44px;
+  display: inline-block;
+  background-color: white;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.picker-date__dropdown-trigger {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  //padding: 5px;
+  width: 100%;
+  text-align: center;
+}
+
+.picker-date__dropdown-content {
+  overflow: auto;
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.picker-date__dropdown-option {
+  padding: $padding-medium $padding-big;
+  border-radius: $border-radius-circle;
+  border: $border-lines-width solid $color-gray;
+  height: $picker-date-height;
+  font-size: $font-size-general;
+  align-items: center;
+  display: flex;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-black;
+    color: white;
+  }
+}
+
+.picker-date__dropdown-content::-webkit-scrollbar:vertical {
+  width: 0;
+}
+
+.picker-date__dropdown-content::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.picker-date__points {
+  font-size: $font-size-general;
+}
+
+.picker-date__dropdown-content-gray {
+  background: #eeee;
+  border: none;
+}

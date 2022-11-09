@@ -1,0 +1,13 @@
+$size-medium: 991px;
+$size-large: 1024px;
+$size-xlarge: 1280px;
+$size-xxlarge: 1440px;
+$size-xxxlarge: 1680px;
+
+$breakpoints-medium: "only screen and (min-width: #{$size-medium})";
+$breakpoints-large: "only screen and (min-width: #{$size-large})";
+$breakpoints-xlarge: "only screen and (min-width: #{$size-xlarge})";
+$breakpoints-xxlarge: "only screen and (min-width: #{$size-xxlarge})";
+$breakpoints-xxxlarge: "only screen and (min-width: #{$size-xxxlarge})";
+
+// @media #{$breakpoints-large} {}

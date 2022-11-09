@@ -1,0 +1,65 @@
+$text-color-black: $color-black;
+$text-font-weight-ligth: $font-weight-ligth;
+$text-font-weight-bold: $font-weight-bold;
+$text-font-weight-regular: $font-weight-regular;
+$text-font-size-giant: 4rem;
+$text-font-size-big: 3rem;
+$text-font-size-medium: 2rem;
+$text-font-size-small: 1rem;
+$text-line-height-giant: 4.5rem;
+$text-line-height-big: 3.5rem;
+$text-line-height-medium: 2.5rem;
+$text-line-height-small: 1.5rem;
+
+.title__h1,
+.title__h2,
+.title__h3,
+.paragraph {
+  color: $text-color-black;
+}
+
+.title__h1 {
+  font-size: $text-font-size-giant;
+  font-weight: $text-font-weight-ligth;
+  line-height: $text-line-height-giant;
+}
+
+.title__h2 {
+  font-size: $text-font-size-big;
+  font-weight: $text-font-weight-bold;
+  line-height: $text-line-height-big;
+}
+
+.title__h3 {
+  font-size: $text-font-size-medium;
+  font-weight: $text-font-weight-bold;
+  line-height: $text-line-height-medium;
+}
+
+.paragraph {
+  font-size: $text-font-size-small;
+  font-weight: $text-font-weight-regular;
+  line-height: $text-line-height-small;
+
+  a {
+    color: $text-color-black;
+    border-bottom: 1px solid $text-color-black;
+    text-decoration: none;
+
+    &:hover {
+      border-bottom: 0;
+    }
+  }
+}
+
+.link {
+
+    color: $text-color-black;
+    border-bottom: 1px solid $text-color-black;
+    text-decoration: none;
+
+    &:hover {
+      border-bottom: 0;
+    }
+    
+}

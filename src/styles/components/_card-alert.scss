@@ -1,0 +1,76 @@
+$card-alert-padding: $padding-big;
+$card-alert-margin: $margin-big;
+$card-alert-text-margin: $margin-extra-small;
+$card-alert-radius: $border-radius-basic;
+$card-alert-icon-size: 30px;
+
+.card-alert {
+  padding: $card-alert-padding;
+  margin: 15px 0;
+  width: 100%;
+  height: auto;
+  justify-content: space-between;
+  border-radius: $card-alert-radius;
+  color: $color-dark-gray;
+  display: flex;
+}
+
+.card-alert__container {
+  position: absolute;
+  width: 100vw;
+  height: auto;
+  z-index: $z-index-05;
+  top: 0;
+}
+
+.card-alert--success {
+  background-color: $color-green;
+}
+
+.card-alert--error {
+  background-color: $color-red;
+}
+
+.card-alert--warning {
+  background-color: $color-corporative;
+}
+
+.card-alert--info {
+  background-color: $color-blue;
+}
+
+.card-alert__content {
+
+  display: flex;
+  height: 100%;
+  margin: auto 0;
+
+
+}
+
+.card-alert__icon {
+
+  margin-right: $margin-small;
+
+  svg {
+    width: $card-alert-icon-size;
+    height: auto;
+  }
+
+}
+
+.card-alert__title {
+
+  font-size: $font-size-general;
+  font-weight: bold;
+  margin: auto 0;
+  height: 100%;
+}
+
+.card-alert__top-text,
+.card-alert__subtitle {
+
+  margin-bottom: 0;
+  font-size: $font-size-small;
+
+}
