@@ -1,0 +1,9 @@
+{
+  "include": ["src/**/*", "src/**/*.json", "prisma/**/*.json"],
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "removeComments": true,
+    "sourceMap": false
+  },
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+}
