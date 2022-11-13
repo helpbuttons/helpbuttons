@@ -1,0 +1,41 @@
+$icon-width: 100%;
+$icon-width-medium: 50px;
+$icon-height-medium: 50px;
+$icon-color-white: $color-white;
+$icon-color-corporative: $color-corporative;
+$icon-font-size: $font-size-general;
+$icon-position-pixel: -20px;
+$icon-border-radius: 50%;
+
+.icon {
+  width: $icon-width;
+  height: auto;
+  &--white {
+    & g,
+    & path {
+      fill: $icon-color-white;
+    }
+  }
+  &--twitter {
+    height: 20px;
+    width: auto;
+  }
+}
+
+.clusterIcon {
+  width: $icon-width-medium;
+  height: $icon-height-medium;
+  border-color: $icon-color-corporative;
+  background-color: $icon-color-corporative;
+  border-radius: $icon-border-radius;
+  border-width:0;
+  border-style:solid;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size: $icon-font-size;
+  font-weight:bold;
+  left: $icon-position-pixel;
+  position: relative;
+  top: $icon-position-pixel;
+}

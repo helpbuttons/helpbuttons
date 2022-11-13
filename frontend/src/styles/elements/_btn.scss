@@ -1,0 +1,459 @@
+///convention: btn is the naming for regular buttons, to avoid conffusion with Buttons the posts of the app.
+$btn-with-icon-icon-width: 30px;
+$btn-with-icon-small-icon-width: 18px;
+$btn-filter-with-icon-icon-width: 18px;
+$btn-filter-border: 1px;
+$btn-background: $color-white;
+$btn-padding: $padding-medium;
+$btn-padding-y: $padding-medium;
+$btn-padding-x: $padding-big;
+$btn-filter-height: 35px;
+$btn-small-padding: $padding-small;
+$btn-filter-margin: 10px;
+$btn-filter-padding-y: 0;
+$btn-filter-height: 20px;
+$btn-hashtag-close-height: 13px;
+$btn-hashtag-close-margin: 7px;
+$btn-filter-icon-margin: $margin-extra-small;
+$btn-hashtag-bottom: 8px;
+$btn-hashtag-right-padding: 8px;
+$btn-hashtag-erase-height: 14px;
+$-border-height: $border-general-height;
+$btn-height: 54px;
+$btn-border-radius: $border-radius-semicircle;
+$btn-padding-big: $padding-big;
+$btn-max-height: 60px;
+$btn-height: 54px;
+$btn-circle-height: 54px;
+$btn-circle-small-height: 35px;
+$btn-circle-icon-height: 20px;
+
+
+$btn-border-radius-semicircle: $border-radius-semicircle;
+$btn-font-size-medium: $font-size-medium;
+
+
+//btn style used at the end of poopups and pickers
+.btn-menu-white {
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: $color-black;
+  padding: $btn-padding-big 0rem;
+  height: $btn-height;
+  width: 100%;
+  white-space: nowrap;
+  font-size: $font-size-general;
+  border-top: 1px solid $color-gray-border;
+  border-right: 1px solid $color-gray-border;
+
+  &:last-child {
+
+    border-right: none;
+
+  }
+
+}
+
+
+.btn {
+
+  @extend .btn-menu-white;
+  border: 1px solid $color-gray-border;
+
+  &:last-child {
+
+    border-right: 1px solid $color-gray-border;
+
+  }
+
+}
+
+
+//BOTONES sencillos de filtro redondos con fondo blanco que sirve de base a hashtags y checkbox,
+//TIENEN version con icon a la izquierda y versión con cruz para borrar
+
+.btn-filter {
+
+  padding: $btn-filter-padding-y $btn-padding-x ;
+  width: auto ;
+  background-color: $color-white;
+  font-size: $btn-font-size-medium;
+  display: flex ;
+  justify-content: space-between ;
+  align-items: center ;
+  height: 35px ;
+  white-space: nowrap;
+  line-height: 0rem ;
+  border: $btn-filter-border solid $color-gray-border;
+  border-radius: $btn-border-radius ;
+  text-decoration: none;
+  text-align: center ;
+  margin: 0 $margin-exxtra-small ;
+
+  a {
+
+    height: $btn-with-icon-small-icon-width;
+    width: $btn-with-icon-small-icon-width;
+
+  }
+
+  & svg {
+
+    height: $btn-with-icon-small-icon-width;
+    width: $btn-with-icon-small-icon-width;
+    padding-left: $padding-extra-small;
+
+  }
+
+
+  &:empty {
+
+    height: 1.25rem;
+    line-height: 2.25rem;
+
+  }
+
+}
+
+.btn-filter-with-icon {
+
+  @extend .btn-filter;
+  padding: $padding-medium !important;
+
+}
+
+//SIZE AND PLACEMENT ICON INSIDE btn FILTER
+.btn-filter__icon {
+
+  width: $btn-filter-with-icon-icon-width;
+  height: $btn-filter-with-icon-icon-width;
+  margin-right: $btn-filter-icon-margin;
+
+  & svg {
+
+    max-width: $btn-filter-with-icon-icon-width;
+    max-height: $btn-filter-with-icon-icon-width;
+
+  }
+
+  //GREEN CIRCLE OFFER
+  &.green {
+
+    border-radius: $btn-border-radius-semicircle;
+    background: $color-green;
+
+  }
+
+
+  //RED CIRCLE NEED
+  &.red {
+
+    border-radius: $btn-border-radius-semicircle;
+    background: $color-red;
+
+  }
+
+}
+
+.btn-filter__remove-icon {
+
+  width: $btn-filter-with-icon-icon-width;
+  height: $btn-filter-with-icon-icon-width;
+  margin-left: $btn-filter-icon-margin;
+  margin-right: 0;
+
+  border-radius: $border-radius-circle;
+  background-color: $color-black;
+
+  & svg {
+
+    max-width: $btn-filter-with-icon-icon-width;
+    max-height: $btn-filter-with-icon-icon-width;
+
+  }
+
+}
+
+//CURCLE ICON SPLIT IN TWO HALFS CIRCLE FOR EXCHANGE SYMBOL
+
+.btn-filter__split-icon {
+
+  width: $btn-filter-with-icon-icon-width;
+  height: $btn-filter-with-icon-icon-width;
+  border-radius: $btn-border-radius-semicircle;
+  margin-right: $btn-filter-icon-margin;
+  display: flex;
+
+}
+
+.btn-filter__split-icon--half {
+
+  width: 9px;
+
+  &.green-l {
+    background: $color-green;
+    border-radius: $btn-border-radius-semicircle 0 0 $btn-border-radius-semicircle;
+  }
+
+  &.red-r {
+    background: $color-red;
+    border-radius: 0 $btn-border-radius-semicircle $btn-border-radius-semicircle 0;
+  }
+
+}
+
+///REGULAR btnS FOR OPTIONS - OONE WITH AND ONE WITHOOUT ICONS
+.btn,
+.btn-with-icon {
+
+  align-items: center;
+  display: flex;
+  padding: 0 $btn-padding-big;
+  position: relative;
+  background: $color-white;
+  border: $border-lines-width solid $color-gray-border;
+  border-radius: $border-radius-circle;
+  height: $btn-height;
+  font-weight: $font-weight-bold;
+  margin-top: $margin-extra-small;
+  width: 100%;
+  color: $color-black;
+
+}
+
+
+//NORMAL btn WITH ICON ON THE CENTER
+
+.btn-with-icon {
+
+  gap: $margin-medium;
+
+}
+
+.btn-with-icon__header {
+
+  padding: 2px 1vw;
+  height: 48px;
+
+}
+
+.btn-with-icon__icon {
+
+  max-height: $btn-filter-with-icon-icon-width;
+  max-width: $btn-filter-with-icon-icon-width;
+
+}
+
+.btn-with-icon__text {
+
+  font-size: $font-size-general;
+
+}
+
+
+//CIRCLE btn LIKE OFFER/NEED FILTER, DELETE feed BUTTON, NAV IN CARD BUTTONS, AND OTHERS.
+
+.btn-circle {
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 50%;
+    width: $btn-circle-height;
+    min-width: $btn-circle-height;
+    height: $btn-circle-height;
+    background-color: $color-corporative;
+    border: none;
+
+}
+
+.btn-circle--small {
+
+  @extend .btn-circle;
+
+  border: none;
+  max-height: 35px;
+  max-width: 35px;
+  min-width: 35px;
+
+  & svg {
+    height: 18px;
+    width: 18px;
+  }
+
+}
+
+.btn-circle__icon {
+
+  display: flex;
+
+  & svg {
+
+    fill: $color-black;
+    height: $btn-circle-icon-height;
+    width: $btn-circle-icon-height;
+
+  }
+
+}
+
+.btn-circle__content {
+
+  align-items: center;
+  vertical-align: middle;
+  font-size: $font-size-general;
+
+}
+
+
+//DISABLED BUTTONS
+
+.btn[disabled],
+.btn-circle[disabled],
+.btn-with-icon[disabled],
+.btn-filter[disabled]
+{
+  background: $color-ligth-gray;
+  color: $color-gray;
+  border: $border-lines-width solid $color-gray-border;
+
+  & div {
+      background: transparent;
+  }
+
+  & svg {
+    fill: $color-gray;
+  }
+
+  &:hover {
+
+    cursor: default;
+    border-color:  $color-gray-border;
+    color: $color-gray;
+    background-color: $color-ligth-gray;
+
+    & svg {
+      fill: $color-gray;
+    }
+
+  }
+
+  &:active {
+
+    cursor: default;
+    color: $color-gray;
+    background-color: $color-ligth-gray;
+
+    & svg {
+      fill: $color-gray;
+    }
+
+  }
+
+  &:focus {
+
+    cursor: default;
+    color: $color-gray;
+    background-color: $color-ligth-gray;
+
+    & svg {
+      fill: $color-gray;
+    }
+
+  }
+
+}
+
+.btn,
+.btn-circle,
+.btn-with-icon,
+.btn-filter
+{
+
+  &:hover {
+
+    border-color:  $color-gray;
+    color: $color-white;
+    cursor: pointer;
+    background-color: $color-gray;
+
+    & svg {
+      fill: $color-white;
+    }
+
+  }
+
+  &:focus {
+
+    background-color: $color-gray;
+    color: $color-white;
+    border-color: $color-gray;
+
+    & svg {
+      fill: $color-white;
+    }
+
+  }
+
+  &:active {
+
+    background-color: $color-black;
+    color: $color-white;
+    border-color: $color-black;
+
+    & svg {
+      fill: $color-white;
+    }
+
+  }
+
+}
+
+
+//BLACK btn VARIATION
+
+.btn--black {
+
+  background: $color-black;
+  color: $color-white;
+
+}
+
+//CORPORATIVE btn VARIATION
+
+.btn--corporative {
+
+  background: $color-corporative;
+  border-color: $color-corporative;
+
+}
+
+
+//CENTER btn VARIATION
+
+.btn--center {
+
+  justify-content: center;
+
+}
+
+// UPLOAD IMAGE FUNCTIONALITY BUTTON
+
+.btn-file-upload{
+  display: none;
+}
+
+
+@media #{$breakpoints-large} {
+
+  .btn-filter {
+
+    margin: 0 5px;
+
+  }
+
+}

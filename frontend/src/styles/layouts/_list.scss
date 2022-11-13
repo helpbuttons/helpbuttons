@@ -1,0 +1,75 @@
+$list-container-hide-height: calc(70px - 230px);
+
+///shouldd be the posts list
+.list__container {
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  height: auto;
+  width: 100%;
+  position: fixed;
+  bottom: $footer-height-mobile;
+  z-index: $z-index-01;
+  transition: $transition-default-slow;
+
+}
+
+.list__content {
+
+  display: flex;
+  padding: $padding-small;
+  background-color: $color-ligth-gray;
+  flex-direction: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  z-index: $z-index-02;
+  height: auto;
+  min-height: $card-button-list-height;
+
+}
+
+.list__container--hide {
+
+  bottom: $list-container-hide-height;
+
+}
+
+.list__element {
+
+  height: 100%;
+
+}
+
+
+@media #{$breakpoints-xlarge} {
+
+  .list__container {
+
+    height:100%;
+    float: left;
+    position: relative;
+    overflow: auto;
+    bottom: 0;
+    flex-flow: row-reverse;
+
+
+  }
+
+  .list__content {
+
+    flex-direction: column;
+    width: 100%;
+    overflow-y: auto;
+
+  }
+
+  .list__element {
+
+    height: auto;
+    width: 100%;
+
+  }
+
+}

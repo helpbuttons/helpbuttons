@@ -1,0 +1,28 @@
+$label-color: $color-black;
+$label-font-size: $font-size-general;
+$label-margin: 1rem;
+$label-letter-spacing: 2px;
+$label-padding-bottom: .5rem;
+
+.label {
+  color: $label-color;
+  font-size: $label-font-size;
+  font-weight: bold;
+  letter-spacing: $label-letter-spacing;
+  padding-bottom: $label-padding-bottom;
+  text-transform: initial;
+  text-align: initial;
+  margin: $label-margin;
+
+  &.light {
+    color: $color-gray;
+    font-weight: lighter;
+  }
+}
+
+@media #{$breakpoints-xxlarge} {
+  .label {
+    text-align: initial;
+    margin: 0;
+  }
+}

@@ -1,0 +1,107 @@
+$message-border-radius: $border-radius-basic;
+$message-border-radius-semicircle: $border-radius-semicircle;
+$message-max-width: 300px;
+$message-min-width: 30px;
+$message-me-after-top: 1rem solid $color-corporative;
+$message-me-after-lateral: .75rem solid transparent;
+$message-padding-big: $padding-big;
+$message-you-margin-left:40px;
+
+.message {
+  border-radius: $message-border-radius;
+  max-width: $message-max-width;
+  padding: $padding-medium $padding-big;
+  word-break: break-word;
+  width: fit-content;
+  position: relative;
+}
+
+.message--me {
+
+    background: $color-white;
+    border-radius: $message-border-radius-semicircle $message-border-radius-semicircle 0 $message-border-radius-semicircle;
+    margin-left: auto;
+    margin-right: $margin-small;
+
+    .message__hour {
+
+        text-align: right;
+    }
+
+    .message__content {
+
+      text-align: right;
+
+    }
+}
+
+.message__hour {
+
+    font-size: .6rem;
+    color: $color-gray;
+}
+
+.message__header {
+
+    align-items: flex-end;
+
+}
+
+.message__avatar {
+
+    width: 35px;
+    left: -40px;
+    bottom: 0;
+    height: fit-content;
+    position: absolute;
+    border-radius: 100%;
+
+}
+
+.message__user-name {
+
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: $margin-extra-small;
+    font-weight: bold;
+
+}
+
+.message__user-name-container {
+
+      width: calc(100% - 80px);
+
+}
+
+.message__content {
+
+  font-size: $font-size-general;
+  margin-bottom: 10px;
+
+}
+
+
+
+.message--you {
+
+  background: $color-corporative;
+  margin-right: auto;
+  margin-left: $message-you-margin-left;
+  min-width: $message-min-width;
+  border-radius: $message-border-radius-semicircle $message-border-radius-semicircle $message-border-radius-semicircle 0;
+  margin-bottom: $margin-extra-small;
+
+  .message__hour {
+
+    text-align: left;
+
+  }
+
+  .message__content {
+
+    text-align: left;
+
+  }
+
+}

@@ -1,0 +1,76 @@
+$nav-header-border-radius: $border-radius-buttons;
+$nav-header-color-gray-border: $color-gray-border;
+$nav-header-padding: $padding-big;
+$nav-header-height: $header-height-mobile;
+$nav-header-color-corporative: $color-corporative;
+$nav-header-margin-big: $margin-big;
+$nav-header-icon-width: 20px;
+$nav-header-button-width: 47px;
+$nav-header-padding: $padding-big;
+$nav-header-new-message-radius: $border-radius-circle;
+
+.nav-header__container {
+  width: 100%;
+  position: relative;
+}
+
+.nav-header__content {
+
+  width: 100%;
+  display: flex;
+  position: relative;
+  height: $nav-header-height;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $color-corporative;
+  border-radius: 0 0 0 0;
+  padding-right: $padding-big;
+  z-index: $z-index-01;
+
+}
+
+.nav-header--hide {
+
+  display: none;
+  position: absolute;
+
+}
+
+.nav-header__content-message {
+  flex-grow:1;
+}
+
+.nav-header__content-input {
+  border-radius: $nav-header-border-radius;
+  border: 1px solid $nav-header-color-gray-border;
+  padding: 0 $nav-header-padding;
+}
+
+.nav-header__button {
+  border-radius: 50%;
+  border: none;
+
+  background: $nav-header-color-corporative !important;
+  width: $nav-header-button-width;
+}
+
+.nav-header__icon {
+  width: $nav-header-icon-width !important;
+  fill: black !important;
+}
+
+@media #{$breakpoints-xlarge} {
+
+  .nav-header__container {
+
+    background-color: $color-corporative;
+
+  }
+
+  .nav-header__content {
+
+    width: 100%;
+
+  }
+
+}

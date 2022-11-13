@@ -1,0 +1,38 @@
+$grid-padding-mobile: 20px;
+$grid-height-svg-forms: 30%;
+$gutter: 12px;
+$grid-max-width: 840px;
+$grid-width: 90%;
+$header-height-mobile: 70px;
+$footer-height-mobile: 70px;
+
+//standard heights
+$height-btn: 54px;
+$height-filter: 35px;
+$height-field: 80px;
+$height-false:90px;
+$height-wide-image: 200px;
+
+.grid {
+  padding-left: $grid-padding-mobile;
+  padding-right: $grid-padding-mobile;
+}
+
+.grid-one__column-mid-element {
+  margin-bottom: $margin-small;
+}
+
+.grid-three {
+  width: 100%;
+  display: block;
+}
+
+.grid-three__column {
+  width: auto;
+  margin: auto;
+  display: flex;
+}
+
+.grid__label {
+  padding: .5rem 0;
+}

@@ -1,0 +1,76 @@
+$hashtag-color: $color-white;
+$hashtag-back-color: $color-gray;
+$hashtag-border-radius: $border-radius-semicircle;
+$hashtag-hover-color: $color-white;
+$hashtag-padding-x: $padding-big;
+$hashtag-margin-x:$margin-extra-small;
+$hashtag-padding-y: $padding-small;
+$hashtag-busca-background: $color-red;
+$hashtag-ofrece-background: $color-green;
+$hashtag-padding-big: $padding-big;
+$hashtag-padding-extra-small: $padding-extra-small;
+$hashtag-color-corporative: $color-corporative;
+$hashtag-color-white: $color-white;
+$hashtag-color-black: $color-black;
+$hashtag-color-gray: $color-gray;
+
+.hashtag {
+
+  display: inline-block;
+  vertical-align: middle;
+  width: auto;
+  border-radius: $border-radius-semicircle;
+  padding: 0.3rem 1.2rem;
+  font-size: $font-size-general;
+  line-height: 0.6rem;
+  color: $hashtag-color-white;
+  border: 1px solid grey;
+  color: black;
+  text-decoration: none;
+  margin: 0 $hashtag-margin-x $hashtag-margin-x 0;
+  text-transform: capitalize;
+  font-size: 0.9rem;
+
+  &--yellow {
+    background-color: $hashtag-color-corporative;
+    color: $hashtag-color-black;
+  }
+  &--yellow-home {
+    background-color: $hashtag-color-black;
+    color: $hashtag-color-corporative
+  }
+  &--need {
+    background-color: $hashtag-busca-background;
+  }
+  &--offer {
+    background-color: $hashtag-ofrece-background;
+  }
+  &--white {
+    background-color: $hashtag-color-white;
+    color: $hashtag-color-black;
+    &:hover {
+      background-color: $hashtag-color-black;
+      color: $hashtag-color-white;
+    }
+  }
+
+  & svg {
+    height: 10px;
+    width: 10px;
+
+    background-color: $hashtag-color-gray;
+    padding: $hashtag-padding-extra-small;
+    border-radius: $hashtag-border-radius;
+  }
+}
+
+.hashtag--green-home {
+  background: $hashtag-ofrece-background;
+}
+
+.hashtag:hover {
+  color: $hashtag-hover-color;
+  cursor: pointer;
+  text-decoration: none;
+  background: $hashtag-color-black;
+}

@@ -1,0 +1,25 @@
+.recovery {
+  height: calc(100vh - 75px);
+  &__header {
+    height: 75px;
+    background: $color-corporative;
+  }
+  &__svg {
+    width: 5rem;
+    height: auto;
+  }
+  &__container {
+    min-height: 100%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 31.25rem;
+    background: $color-corporative;
+    position: relative;
+    z-index: 2;
+    border: none;
+    border-radius: 0 0 $border-radius-basic $border-radius-basic;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

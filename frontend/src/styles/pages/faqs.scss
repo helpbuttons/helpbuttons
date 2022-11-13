@@ -1,0 +1,36 @@
+.faqs__content {
+
+  margin: 0 $margin-extra-small;
+
+}
+
+.faqs__section {
+
+  margin: 0 $margin-small;
+
+}
+
+.faqs__title{
+
+  text-align: center;
+  margin: $margin-big auto;
+
+}
+
+.faqs__iframe {
+  // border: 2px solid black;
+  border-radius: 5px;
+  text-align: center;
+  background-color: transparent;
+  height: auto;
+  margin:auto;
+  margin-top: 5px;
+  width: flex;
+  position: relative;
+  overflow: hidden;
+}
+.faqs__paypal {
+  display:inline-block;
+  margin:auto;
+
+}

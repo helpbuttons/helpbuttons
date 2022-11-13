@@ -1,0 +1,38 @@
+$loading-icon-width: 20px;
+
+.loading-overlay__load-over-map{
+
+  z-index: 1500;
+  position: absolute;
+  left: 0;
+  top: 220px;
+
+}
+
+.loading-overlay__loading-icon {
+
+  background-color: $color-corporative;
+  border-radius: 50%;
+
+  & svg {
+
+    width: $loading-icon-width;
+    height: $loading-icon-width;
+
+  }
+}
+
+.loading-icon {
+
+  position: absolute;
+  width: $loading-icon-width;
+  height: $loading-icon-width;
+  margin-top: 10px;
+
+}
+
+.loading-icon__hidden {
+
+  display: none;
+  
+}

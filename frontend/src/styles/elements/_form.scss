@@ -1,0 +1,300 @@
+$form-input-height: 54px;
+$form-input-width: 100%;
+$form-field-max-width: $grid-max-width;
+$form-input-padding: $padding-medium;
+$form-input-font-size: $font-size-medium;
+
+
+.form {
+  * {
+    box-sizing: border-box;
+  }
+}
+
+
+.form__label {
+  z-index: $z-index-base;
+  top: 7px;
+  left: 24px;
+  font-size: $font-size-general;
+  font-weight: bold;
+
+}
+
+
+//form de la home
+.form__search {
+
+  color: $color-gray;
+  font-size: $font-size-general;
+  margin: 0;
+  line-height: 0;
+  width: auto;
+  display: block;
+  padding: $padding-huge $padding-medium $padding-small $padding-medium;
+  border: 0;
+  // border-radius: 0;
+  transition: $transition-default;
+
+  &:focus {
+  }
+
+  &:hover {
+    background: $color-ligth-gray;
+  }
+
+  & span {
+    display: none;
+  }
+}
+
+
+.form__search--time,
+.form__search--tags,
+.form__search--localization {
+  text-indent: 4px;
+}
+
+
+.form__field {
+  max-width:$form-field-max-width;
+  font-size: $font-size-medium;
+  margin-bottom: $margin-big;
+}
+
+
+.form__field--feed {
+  display: flex;
+  max-width: 100%;
+  padding: .5rem .5rem;
+  font-size: $font-size-medium;
+}
+
+
+.form__field--feed button {
+  background: $color-corporative;
+  border: none;
+  width: 69px;
+  //height: 47px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.form__input,
+.form__label {
+
+  width: 100%;
+
+}
+
+
+.form__label {
+
+  margin-bottom: .6rem;
+
+}
+
+
+//REVISE DE LAS CLASES DEL INPUT
+.form__input {
+
+  background: $color-white;
+  border: $border-lines-width solid $color-gray-border;
+  border-radius: $border-radius-circle;
+  box-sizing: border-box;
+  color: $color-black;
+  padding: $padding-big $padding-big;
+  font-size: $font-size-general;
+  height: $form-input-height;
+  margin: $margin-extra-small 0;
+
+  & ul {
+
+    width: 100%;
+
+  }
+
+  &:focus {
+
+    border-color: $color-gray;
+
+  }
+
+  &.squared {
+
+    border-radius: $border-general-height;
+    
+  }
+
+}
+
+
+.form__input-tags {
+
+  @extend .form__input;
+
+  & ul {
+    // overflow-x: scroll;
+    // overflow-y: hidden;
+    // white-space: nowrap;
+
+    display: flex;
+    flex-flow: row wrap;
+    padding: .25rem 0 0 0;
+  }
+
+  & li {
+    @extend .hashtag;
+    display: inline-block;
+
+  }
+
+  & .button-counter {
+    display: none;
+  }
+
+  & span {
+    display: none;
+  }
+
+}
+
+.form__input-tags--offer {
+
+  & li {
+    @extend .hashtag--offer;
+  }
+
+}
+
+.form__input-tags--need {
+
+  & li {
+    @extend .hashtag--need;
+  }
+
+}
+
+
+.form__options-v {
+
+  flex-flow: column nowrap;
+  justify-content: center;
+  margin: $margin-small auto !important;
+
+  .form__options-btn {
+    margin: $margin-small auto !important;
+
+  }
+}
+
+.form__options-h {
+
+  display: flex;
+  align-items: center;
+
+  .form__options-btn {
+    flex: 0 1 50%;
+
+  }
+
+}
+
+.form__options-text {
+
+  display: flex;
+  text-align: center;
+  align-items: center;
+  margin: $margin-medium;
+
+}
+
+
+.form__options-btn {
+
+  margin: 0 $margin-small !important;
+  width: 80% !important;
+
+  &:focus {
+    background: $color-corporative;
+  }
+
+  &:hover {
+    fill: $color-corporative;
+    border-color: $color-black;
+    color: $color-white;
+    cursor: pointer;
+    background-color: $color-black;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+
+}
+
+
+///DARK BACKGROUND
+.form__input--dark-bg {
+
+  @extend .form__input;
+  border-radius: $border-radius-circle;
+  border-color: transparent;
+  color: $color-black;
+
+  &:focus {
+
+    border-color: $color-gray;
+
+  }
+
+}
+
+
+.form__input-subtitle {
+
+  display: flex;
+  justify-content: space-between;
+
+
+}
+
+.form__input-subtitle--text {
+
+  margin: 0 0 $margin-exxtra-small $margin-small;
+  font-size: $font-size-small;
+
+}
+
+.form__input-subtitle-side {
+
+  display: flex;
+  flex-direction: column;
+
+}
+
+.form__input-subtitle--error {
+
+  @extend .form__input-subtitle--text;
+  color: $color-red;
+
+}
+
+
+@media #{$breakpoints-medium} {
+
+  .form__field--feed button {
+    width: 60px;
+  }
+
+  .form__options-h {
+    justify-content: space-between;
+  }
+
+}

@@ -1,0 +1,257 @@
+$picker-background: rgba(0,0,0,.2);
+$picker-header-height: 80px;
+$picker-max-width: 480px;
+$picker-border-radius: 25px;
+$picker-width: 240px;
+$picker-content-height: calc( 100vh - #{$picker-header-height });
+$picker-header-lateral: calc( 100% / 2 - #{$picker-max-width} / 2 );
+$picker-header-width: 100%;
+$picker-comments: 24px;
+$picker-padding: 2rem;
+$picker-paragraph-padding: 1rem 2rem;
+$picker-max-height-large: 720px;
+$picker-cualquircosa: red;
+$picker-comments-item-padding: 25px;
+
+
+.picker {
+  // Scroll picker content
+}
+
+.picker__content {
+
+  position: relative;
+  overflow: auto;
+  width: auto; //Revise antes era 100%
+  max-width: 350px;
+  overflow-y: visible !important;
+  max-height: 90vh;
+  background: $color-white !important;
+  overflow-x: hidden;
+  box-shadow: none;
+
+}
+
+
+// LISTA DE ICONOS EN COLUMNAS DE 3
+.picker__list-elem {
+
+  width: 70px;
+  height: 70px;
+  padding: $padding-big;
+  margin: $margin-extra-small;
+  float: left;
+  background: transparent;
+  border: none;
+  border-radius: $border-radius-circle;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-black;
+  }
+
+}
+
+.picker__list-elem--icon {
+
+  width: fit-content;
+
+}
+
+
+.picker__section {
+
+  padding: 1rem;
+
+}
+
+.picker-box-shadow {
+  box-shadow: none;
+}
+
+.picker__header {
+  width: 100%;
+
+  font-size: $font-size-medium;
+  font-weight: $font-weight-regular;
+  text-align: center;
+}
+
+// contents
+.picker__paragraph {
+
+  font-size: $font-size-general;
+  line-height: 1.5rem;
+  padding: $picker-paragraph-padding;
+}
+
+.picker__img {
+  height: 200px;
+
+  svg {
+    display: none; // Revise Ángel
+    width: 100%;
+    height: auto;
+  }
+}
+
+.picker__close-container {
+
+  width: 100%;
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+}
+
+.picker__close-overlay {
+  width: 100%;
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color:  $color-gray-transparent;
+}
+
+.picker__comments,
+.picker__options-v,
+.picker__options-h {
+  display: flex; // Static components
+}
+
+.picker__comments {
+  padding: $picker-comments;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.pickers__comments-item {
+  background: $color-ligth-gray;
+  margin: 8px 0;
+  padding: $picker-comments-item-padding 0;
+}
+
+.picker__options-btn--icon {
+  height: 20px;
+
+  & svg{
+    display: none;
+    height: 10px;
+  }
+}
+
+.picker__options-v {
+  flex-flow: column nowrap;
+}
+
+.picker__options-h {
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  .picker__options-btn {
+    flex: 0 1 50%;
+  }
+}
+
+.picker__row {
+
+  margin: $margin-small 0;
+  display: flex;
+  justify-content: space-evenly;
+
+}
+
+//Estilos a los botones del picker Revise
+.picker__option-btn {//revise
+  height: 60px;
+  background: transparent;
+  border: none;
+  text-align: initial;
+  border-bottom: 1px solid $color-gray-border;//Revise este color ahora es una variable
+  padding: 0 $picker-padding;//revise este padding puede ir en el txt
+  cursor: pointer;
+
+  &:last-child {
+    border-top: 1px solid $color-gray-border;//Revise este color ahora es una variable
+    border-bottom: none;
+  }
+
+  &:focus {
+    background: $color-corporative;
+  }
+}
+
+.picker__option-btn--active {
+  @extend .picker__option-btn;
+  text-align: initial;
+}
+
+.picker__option-btn--center {
+  @extend .picker__option-btn;
+  text-align: center;
+}
+
+.picker__option-btn-with-icon {
+  @extend .picker__option-btn;
+}
+
+.picker__option-btn--txt{
+  font-size: $font-size-general;
+}
+
+
+.picker--over {
+
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: auto;
+  height: auto;
+  z-index: $z-index-05;
+
+}
+
+@media #{$breakpoints-medium} {
+  .picker {
+
+  }
+
+  .picker__header,
+  .picker__content {
+    background: $color-white;
+    max-width: 600px;//revise voy a poner 600 px luego pasar a variable $picker-max-width
+  }
+
+  .picker--over {
+    width: 500px;
+  }
+
+  .picker__map--over{
+    position: absolute;
+    top: 10%;
+    width: 80%;
+    margin: auto;
+    z-index: $z-index-05;
+  }
+
+  //Revise: Esto puede ir en un breakpoint
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(0deg, #c9c9c9 0%,#c9c9c9 0%);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover{
+    background: #C9C9C9;
+  }
+  ::-webkit-scrollbar-track{
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: none;
+  }
+}

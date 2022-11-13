@@ -1,0 +1,93 @@
+.button-new-date {
+  width: 100%;
+
+
+  button:active {
+    background: $color-corporative;
+  }
+
+  &__body {
+
+    &:focus {
+      outline: none;
+    }
+    &--small-height {
+      & .button-new-location__text {
+        font-size: $font-size-general;
+        margin-bottom: 2rem;
+      }
+    }
+  }
+
+  .button-new-date__week-days {//revise
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: $margin-small 0;
+
+    button {
+      background: transparent;
+      border: none;
+      border: 1px solid $color-gray;
+      padding: $padding-medium 30px;
+      border-radius: $border-radius-semicircle;
+      width: 13%;
+      height: 30px;
+    }
+
+    .selected {
+      background: $color-corporative;
+    }
+
+    button:active {
+      background: $color-corporative;
+    }
+  }
+
+  &__radio-icons {
+    width: 100%;
+    height: 100%;
+    &--filled {
+      fill: white;
+    }
+  }
+
+  &__radio-buttons {
+    background: white;
+    background-size: 40px;
+    color: $color-black;
+    align-items: center;
+    border: 4px;
+    display: flex;
+    font-size: $font-size-general;
+    padding: 1.5rem 2rem;
+    position: relative;
+    transition: background .2s;
+    width: 100%;
+    &--filled {
+      background: $color-black url("../../../public/assets/svg/icons/check-blue.svg") 95% center no-repeat;
+      padding-right: 3.125rem;
+      background-size: 40px;
+      color: #fff;
+    }
+  }
+  &__buttons {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+  }
+  &__pickers-modal {
+    z-index: 1002;
+    overflow: visible;
+    &-content {
+      max-width: 350px;
+      width: 100%;
+      overflow-y: visible !important;
+      max-height: 90vh;
+      overflow-x: hidden;
+    }
+  }
+  &__button-outline {
+    outline: none !important;
+  }
+}

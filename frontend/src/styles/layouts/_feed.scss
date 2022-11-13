@@ -1,0 +1,95 @@
+$feed-border-radius: $border-radius-buttons;
+$feed-color-gray-border: $color-gray-border;
+$feed-padding: $padding-big;
+$feed-height: 58px;
+$feed-color-corporative: $color-corporative;
+$feed-margin-big: $margin-big;
+$feed-icon-width: 20px;
+$feed-button-width: 47px;
+$feed-padding: $padding-big;
+$feed-new-message-radius: $border-radius-circle;
+
+
+
+.feed-line {
+
+  position: absolute;
+  height: 100%;
+  width: 10px;
+  background-color: $color-black;
+  margin: 0 auto;
+  left: 50%;
+}
+
+.feed-section {
+  margin: $margin-small 0;
+}
+
+.feed-selector {
+  background-color: dimgray;
+  padding: $padding-big;
+}
+
+.feed-messages {
+  &__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  &__no-messages {
+    font-size: $font-size-general;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+  }
+  &__image {
+    width: 40%;
+    margin-top: $feed-margin-big;
+  }
+}
+
+.feeds__new-message {
+
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $color-white;
+  padding: $feed-padding;
+
+}
+
+.feeds__new-message-message {
+  flex-grow:1;
+  padding: 0 $padding-big;
+  margin: auto;
+}
+
+.feeds__new-message-input {
+  border: 1px solid $feed-color-gray-border;
+  padding: 0 $feed-padding;
+}
+
+.feeds__button {
+  border-radius: 50%;
+  border: none;
+
+  background: $feed-color-corporative !important;
+  width: $feed-button-width;
+}
+
+.feeds__icon {
+  width: $feed-icon-width !important;
+  fill: black !important;
+}
+
+.feed-container{
+  background: lightgrey;
+}
+
+.feed-element{
+  margin: 0px 20px 0px 20px;
+}

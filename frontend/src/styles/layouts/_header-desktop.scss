@@ -1,0 +1,13 @@
+.header-desktop {
+  z-index: $z-index-02; // Revise
+  position: relative;
+
+}
+
+// Avatar
+.header-desktop__user-header-menu {
+  background: #343a40;
+  padding: 8px;
+  border-radius: $border-radius-basic;
+  cursor: pointer;
+}
