@@ -47,7 +47,8 @@ $ docker-compose up -d api
 $ docker-compose exec api yarn migration:run
 $ docker-compose exec api yarn seed:run
 $ cd web
-$ npm run dev
+$ yarn
+$ yarn dev
 ```
 
 #### Main tech specifications used in this repo:
@@ -82,6 +83,7 @@ add: `POSTGRES_HOSTNAME=localhost`
 $ yarn migration:run
 $ yarn seed:run
 $ cd api
+$ yarn
 $ yarn dev
 ```
 
