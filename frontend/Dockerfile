@@ -1,12 +1,14 @@
-FROM node:16-bullseye-slim
+FROM node:16.17.1-alpine
+
+RUN mkdir -p /app/ && chown -R node:node /app
 WORKDIR /app
+COPY --chown=node:node . .
 
-COPY package.json package.json
-RUN npm i
+USER node
 
-COPY . .
-#RUN npm run build 
+RUN yarn
 
-EXPOSE 3001 
-#CMD [ "npm", "run", "start" ]
-CMD [ "tail", "-f", "/var/log/*"]
+ENV NEXT_TELEMETRY_DISABLED 1
+
+EXPOSE 3000
+CMD [ "yarn", "dev" ]

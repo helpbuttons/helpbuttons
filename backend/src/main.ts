@@ -24,9 +24,9 @@ async function bootstrap() {
   const webAppConfigs = app.get<ConfigType<typeof webAppConfig>>(
     webAppConfig.KEY,
   );
-
   app.enableCors({ origin: webAppConfigs.allowedCors });
-  app.setGlobalPrefix(webAppConfigs.baseUrl);
+
+  // app.setGlobalPrefix(webAppConfigs.baseUrl);
 
   app.use(bodyParser.json({limit: '50mb'}));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -52,7 +52,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup(webAppConfigs.swaggerPath, app, document);
+  SwaggerModule.setup('/docs/', app, document);
 
   await app.listen(webAppConfigs.port);
 }

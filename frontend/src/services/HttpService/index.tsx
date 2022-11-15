@@ -65,10 +65,11 @@ export class HttpService {
                    headers: object,
                   ): Observable<T | undefined> {
                     let url = path;
-                    if (path.indexOf("://") === -1)
+                    if (path.indexOf("//") === -1)
                     {
                       url = this.apiUrl + path;
                     }
+                    console.log(url)
                     return ajax({
                       url: url,
                       method: method,

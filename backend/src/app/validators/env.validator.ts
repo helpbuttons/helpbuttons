@@ -14,15 +14,13 @@ class EnvironmentVariables {
   @IsEnum(NodeEnv)
   NODE_ENV?: NodeEnv;
 
+  @IsOptional()
   @IsString()
-  HOST: string;
-
-  @IsInt()
-  PORT: number;
+  HOSTNAME?: string;
 
   @IsOptional()
   @IsString()
-  SWAGGER_PATH?: string;
+  ALLOWED_CORS?: string;
 }
 
 export function validate(config: Record<string, unknown>) {

@@ -17,7 +17,6 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly userCredentialService: UserCredentialService,
-    private readonly configService: ConfigService,
     @Inject(webAppConfig.KEY)
     private readonly webAppConfigs: ConfigType<typeof webAppConfig>,
     private readonly mailService: MailService,
@@ -64,7 +63,7 @@ export class AuthService {
 
     if (!user.emailVerified) {
       const activationUrl: string =
-        this.webAppConfigs.baseUrl + 'user/activate/'+ user.verificationToken;
+      `${this.webAppConfigs.hostName}:${this.webAppConfigs.port}/user/activate/${user.verificationToken}`;
 
       await this.mailService.sendActivationEmail({
         to: email,

@@ -7,11 +7,10 @@ export default registerAs('webAppConfigs', (): webAppConfigs => {
   const configs = {
     nodeEnv:
       (process.env?.NODE_ENV as NodeEnv) ?? NodeEnv.development,
-    host: process.env?.HOST ?? 'localhost',
-    port: Number(process.env?.PORT) ?? 3000,
-    baseUrl: process.env?.BASE_URL ?? '',
-    swaggerPath: process.env?.SWAGGER_PATH ?? 'docs',
-    allowedCors: process.env?.ALLOWED_CORS
+    host: '0.0.0.0',
+    port: 3001, //only internal
+    hostName: process.env.HOSTNAME ? process.env.HOSTNAME : 'localhost',
+    allowedCors: process.env.ALLOWED_CORS ? process.env.ALLOWED_CORS : 'http://localhost:3000',
   };
 
   return configs;

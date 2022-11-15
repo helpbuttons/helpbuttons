@@ -33,7 +33,7 @@ import { validate } from './validators/env.validator';
     // FIXME: READ this confs using ConfigService
     TypeOrmModule.forRoot(typeOrmModuleOptions),
     MulterModule.register({
-      dest: process.env.UPLOADS_PATH,
+      dest: process.env.UPLOADS_PATH ? process.env.UPLOADS_PATH : '.uploads/',
     }),
     ButtonModule,
     TagModule,

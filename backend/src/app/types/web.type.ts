@@ -4,7 +4,6 @@ export interface webAppConfigs {
   nodeEnv: NodeEnv;
   host: string;
   port: number;
-  baseUrl: string;
-  swaggerPath: string;
+  hostName: string;
   allowedCors: string;
 }
