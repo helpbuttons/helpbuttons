@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    build: frontend/
+    build: web/
     ports:
       - "${WEB_PORT}:3000"
     volumes:
@@ -9,10 +9,10 @@ services:
     env_file:
       - .env
     depends_on:
-      - backend
+      - api
 
-  backend:
-    build: backend/
+  api:
+    build: api/
     ports:
       - "${API_PORT}:3001"
     volumes:
@@ -30,7 +30,7 @@ services:
     command: ["postgres", "-c", "log_statement=all"]
     volumes:
       - ./db:/var/lib/postgresql/data:rw
-    # ports: # expose port, if u want to use only the db with docker
+    # ports:
     #   - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
