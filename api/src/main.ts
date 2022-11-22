@@ -1,17 +1,21 @@
 const fs = require('fs');
 
-// check config
-if (!isConfigFileCreated()) {
-  console.log('Starting setup mode...')
-  var setup = require('./setup').setup;
-  const app = setup();
-  app.listen
-}else {
-  var bootstrap = require('./bootstrap').bootstrap;
-  const app = bootstrap();
-  app.listen
-}
+init();
+
+async function init () {
+  let app;
+  // check config
+  if (!isConfigFileCreated()) {
+    console.log('Starting setup mode...');
+    var setup = require('./setup').setup;
+    app = await setup();
+  } else {
+    var bootstrap = require('./bootstrap').bootstrap;
+    app = await bootstrap();
+  }
+  await app.listen('3001');
+};
 
 function isConfigFileCreated() {
-  return fs.existsSync('config.json')
+  return fs.existsSync('config.json');
 }

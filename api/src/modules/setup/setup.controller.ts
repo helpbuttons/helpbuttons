@@ -1,4 +1,14 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+  UseFilters,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { SetupDto } from './setup.entity';
 import { SetupService } from './setup.service';
@@ -6,12 +16,11 @@ import { SetupService } from './setup.service';
 @ApiTags('setup')
 @Controller('setup')
 export class SetupController {
-
   constructor(private readonly setupService: SetupService) {}
-//   curl -X POST http://localhost:3001/setup/save
   @Post('save')
   async save(@Body() setupDto: SetupDto) {
-    this.setupService.save(setupDto)
+    await this.setupService.isDatabaseReady(setupDto);
+    await this.setupService.save(setupDto);
   }
 
   @Get('')
@@ -20,14 +29,7 @@ export class SetupController {
   }
 
   @Post('smtpTest')
-  async smtpTest(smtpUrl: string) {
-    let smtpOk:boolean = await this.setupService.smtpTest(smtpUrl);
-    if (!smtpOk) {
-      throw new HttpException(
-        { message: "SMTP configuration failed." },
-        HttpStatus.UNAUTHORIZED,
-      );
-    }
-    return "OK";
+  async smtpTest(@Body() smtpUrl: any) {
+    await this.setupService.smtpTest(smtpUrl.smtpUrl);
   }
 }

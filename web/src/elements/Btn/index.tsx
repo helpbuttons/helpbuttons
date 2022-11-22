@@ -28,6 +28,7 @@ interface BtnProps {
     btnType?: BtnType;
     disabled?: boolean;
     isSubmitting?: boolean;
+    onClick?: Function;
 }
 
 function BtnIcon({ icon, iconLink }: { icon: IconType }) {
@@ -73,6 +74,7 @@ export default function Btn({
     contentAlignment = null,
     disabled = false,
     isSubmitting = false,
+    onClick = {},
 }: BtnProps) {
     let classNames = [];
     const hasIcon = iconRight !== null || iconLeft !== null;
@@ -106,7 +108,7 @@ export default function Btn({
     const className = classNames.join(" ");
 
     return (
-        <button disabled={disabled} className={className}>
+        <button onClick={onClick} disabled={disabled} className={className}>
             {isSubmitting && <Spinner />}
             <BtnIcon icon={iconLeft} iconLink={iconLink}/>
             <CaptionNode caption={caption} hasIcon={hasIcon} />

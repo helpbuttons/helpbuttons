@@ -1,4 +1,5 @@
 import {TypeOrmModuleOptions} from "@nestjs/typeorm";
+import { DataSource } from "typeorm";
 
 var configFile = require('../../../config.json');
 
@@ -29,3 +30,18 @@ export const OrmConfig = {
     ],
 };
 export default OrmConfig;
+
+export const AppDataSource = new DataSource(
+    {
+    type: typeOrmModuleOptions.type,
+    host: typeOrmModuleOptions.host,
+    port: typeOrmModuleOptions.port,
+    username: typeOrmModuleOptions.username,
+    password: typeOrmModuleOptions.password,
+    database: typeOrmModuleOptions.database,
+    synchronize: false,
+    logging: true, 
+    entities: ['src/modules/**/*.entity.{ts,js}'],
+    migrations: ["src/data/migrations/*{.ts,.js}"],
+    migrationsTableName: "migrations",}
+)

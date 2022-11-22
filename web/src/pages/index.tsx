@@ -10,6 +10,7 @@ import { UsersState, usersInitial } from "state/Users";
 import { ExploreState, exploreInitial } from "state/Explore";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Alert } from "state/Alerts";
+import { IConfig } from "services/Setup/config.type";
 
 // -- estado global --
 export interface GlobalState {
@@ -17,13 +18,15 @@ export interface GlobalState {
   users: UsersState;
   explore: ExploreState;
   alerts: Alert[];
+  config: IConfig;
 }
 
 export const store = new Store<GlobalState>({
   networks: networksInitial,
   users: usersInitial,
   explore: exploreInitial,
-  alerts: []
+  alerts: [],
+  config: null,
 });
 
 const Home: NextPage = () => {

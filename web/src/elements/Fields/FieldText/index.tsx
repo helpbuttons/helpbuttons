@@ -18,6 +18,7 @@ const FieldText = React.forwardRef(({
     onChange,
     onBlur,
     validationError,
+    value,
 }, ref): IFieldText => {
     return (
         <div className="form__field">
@@ -30,6 +31,7 @@ const FieldText = React.forwardRef(({
                 onChange={onChange}
                 onBlur={onBlur}
                 className={`form__input ${classNameInput} ${validationError ? 'validation-error' : ''}`} 
+                value={value}
             />
             <FieldError validationError={validationError}/>
         </div>

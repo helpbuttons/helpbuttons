@@ -8,6 +8,7 @@ import { ButtonModule } from '@src/modules/button/button.module';
 import { FeedButtonModule } from '@src/modules/feed-button/feed-button.module';
 import { MailModule } from '@src/modules/mail/mail.module';
 import { NetworkModule } from '@src/modules/network/network.module';
+import { SetupModule } from '@src/modules/setup/setup.module';
 import { StorageModule } from '@src/modules/storage/storage.module';
 import { TagModule } from '@src/modules/tag/tag.module';
 import { TemplateButtonModule } from '@src/modules/template-button/template-button.module';
@@ -33,7 +34,7 @@ import { validate } from './validators/env.validator';
     // FIXME: READ this confs using ConfigService
     TypeOrmModule.forRoot(typeOrmModuleOptions),
     MulterModule.register({
-      dest: process.env.UPLOADS_PATH ? process.env.UPLOADS_PATH : '.uploads/',
+      dest: './uploads/',
     }),
     ButtonModule,
     TagModule,
@@ -43,7 +44,8 @@ import { validate } from './validators/env.validator';
     AuthModule,
     UserCredentialModule,
     StorageModule,
-    FeedButtonModule
+    FeedButtonModule,
+    SetupModule
   ],
   controllers: [AppController],
   providers: [AppService],

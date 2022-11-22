@@ -1,8 +1,6 @@
 import { BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
-import getConfig from "next/config";
-const { publicRuntimeConfig } = getConfig();
 
 import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 
@@ -22,11 +20,7 @@ export class HttpService {
     if (this.accessToken) {
       this.isAuthenticated$.next(true);
     }
-
-    this.apiUrl = publicRuntimeConfig.apiUrl;
-    if (this.apiUrl.indexOf("<front-host>") >= 0) {
-      this.apiUrl = this.apiUrl.replace("<front-host>", window.location.hostname);
-    }
+    this.apiUrl = '/api/';
   }
 
   public setAccessToken(accessToken?: string) {
@@ -69,7 +63,6 @@ export class HttpService {
                     {
                       url = this.apiUrl + path;
                     }
-                    console.log(url)
                     return ajax({
                       url: url,
                       method: method,
