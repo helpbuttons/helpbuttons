@@ -1,12 +1,14 @@
 import {TypeOrmModuleOptions} from "@nestjs/typeorm";
 
+var configFile = require('../../../config.json');
+
 export const typeOrmModuleOptions:TypeOrmModuleOptions = {
     type: 'postgres',
-    host: process.env.POSTGRES_HOSTNAME ? process.env.POSTGRES_HOSTNAME : 'db',
-    port: process.env.POSTGRES_PORT ? parseInt(<string>process.env.POSTGRES_PORT) : 5432,
-    username: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
+    host: configFile.postgresHostName ? configFile.postgresHostName : 'db',
+    port: configFile.postgresPort ? configFile.postgresPort : 5432,
+    username: configFile.postgresUser,
+    password: configFile.postgresPassword,
+    database: configFile.postgresDb,
     /* Note : it is unsafe to use synchronize: true for schema synchronization
     on production once you get data in your database. */
     // synchronize: true,
