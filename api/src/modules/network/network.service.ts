@@ -62,7 +62,7 @@ export class NetworkService {
   }
 
   async findOne(id: string): Promise<Network>{
-    const network = await this.networkRepository.findOne({id});
+    const network = await this.networkRepository.findOne({where:{id}});
     if (!network) {
       throw new NotFoundException('Network not found');
     }
@@ -71,7 +71,8 @@ export class NetworkService {
 
   async findAll(name: string): Promise<Network[]> {
     return await this.networkRepository.find({
-      name: ILike(`%${name}%`),
+      where:
+      {name: ILike(`%${name}%`),}
     });
   }
 
