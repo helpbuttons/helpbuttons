@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, MinLength } from 'class-validator';
+import { IsArray, IsOptional, MinLength } from 'class-validator';
 
 export class SetupDto {
   constructor(partial: Partial<SetupDto>) {
@@ -62,6 +62,7 @@ export class SetupDto {
     type: [String],
     required: false,
   })
+  @IsOptional()
   @IsArray({})
   allowedDomains: string[];
 }

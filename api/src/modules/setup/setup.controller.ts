@@ -19,8 +19,7 @@ export class SetupController {
   constructor(private readonly setupService: SetupService) {}
   @Post('save')
   async save(@Body() setupDto: SetupDto) {
-    await this.setupService.isDatabaseReady(setupDto);
-    await this.setupService.save(setupDto);
+    return this.setupService.save(setupDto);
   }
 
   @Get('')

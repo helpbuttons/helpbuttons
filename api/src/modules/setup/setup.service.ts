@@ -23,11 +23,22 @@ export class SetupService {
         return 'OK';
       })
       .catch((error) => {
-        throw new HttpException(error, HttpStatus.UNAUTHORIZED);
+        const msg = `Error connecting to smtp: ${JSON.stringify(error)}`;
+        console.log(`${HttpStatus.SERVICE_UNAVAILABLE} :: ${msg}`)
+        throw new HttpException(msg, HttpStatus.SERVICE_UNAVAILABLE);
       });
   }
 
+  isConfigFileCreated() {
+    return fs.existsSync('config.json');
+  }
+
   async save(setupDto: SetupDto) {
+    if(this.isConfigFileCreated()) {
+      throw new HttpException(`Please remove config.json before editing the configurations of your server!`, HttpStatus.CONFLICT);
+    }
+    await this.isDatabaseReady(setupDto);
+
     fs.writeFileSync(
       'config.json',
       JSON.stringify({
@@ -35,9 +46,14 @@ export class SetupService {
         ...{ jwtSecret: dbIdGenerator() },
       }),
     );
+
+    return "OK"
   }
 
   get() {
+    if(!this.isConfigFileCreated()){
+      throw new HttpException(`config.json nao existe!`, HttpStatus.BAD_REQUEST)
+    }
     const dataJSON = fs.readFileSync('config.json', 'utf8');
     const data: SetupDto = new SetupDto(JSON.parse(dataJSON));
 
@@ -66,7 +82,10 @@ export class SetupService {
     try {
       await pool.connect();
     } catch (error) {
-      throw new HttpException(error.message, HttpStatus.UNAUTHORIZED);
+      const msg = `Database connection error: ${error.message}`;
+      console.log(`${HttpStatus.SERVICE_UNAVAILABLE} :: ${msg}`)
+
+      throw new HttpException(msg, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     return Promise.resolve({
