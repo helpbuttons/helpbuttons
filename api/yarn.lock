@@ -5404,6 +5404,11 @@ nodemailer@^6.6.3:
   resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.7.7.tgz#e522fbd7507b81c51446d3f79c4603bf00083ddd"
   integrity sha512-pOLC/s+2I1EXuSqO5Wa34i3kXZG3gugDssH+ZNCevHad65tc8vQlCQpOLaUjopvkRQKm2Cki2aME7fEOPRy3bA==
 
+nodemailer@^6.8.0:
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.8.0.tgz#804bcc5256ee5523bc914506ee59f8de8f0b1cd5"
+  integrity sha512-EjYvSmHzekz6VNkNd12aUqAco+bOkRe3Of5jVhltqKhEsjw/y0PYPJfp83+s9Wzh1dspYAkUW/YNQ350NATbSQ==
+
 nopt@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-5.0.0.tgz#530942bb58a512fccafe53fe210f13a25355dc88"
@@ -5853,6 +5858,11 @@ postgres-interval@^1.1.0:
   integrity sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==
   dependencies:
     xtend "^4.0.0"
+
+postgres@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/postgres/-/postgres-3.3.2.tgz#91f2e209e4a08ca7101eb7178734e4c0e4d23eb3"
+  integrity sha512-NaPqFpUC6C7aCQkJXLvuO/3RKNKL4en8opY53YrcXK3//xXra6CZ2qX6290lxuQ1dW1LbRGYCmsawRlCxSBonQ==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
