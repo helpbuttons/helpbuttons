@@ -14,6 +14,7 @@ import { FetchUserData, SetCurrentUser } from 'state/Users';
 
 import { useRef } from 'store/Store';
 import SysadminConfig from './Setup/SysadminConfig';
+import { GetConfig } from 'state/Setup';
 
 export default appWithTranslation(MyApp);
 
@@ -21,9 +22,10 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [authorized, setAuthorized] = useState(false);
-
+  const [sysadminConfig, setSysadminConfig] = useState(false);
+  
   const config = useRef(store, (state: GlobalState) => state.config);
-
+  
   const currentUser = useRef(
     store,
     (state: GlobalState) => state.users.currentUser,
@@ -52,6 +54,12 @@ function MyApp({ Component, pageProps }) {
 
       // load the default network and make it available globally
       store.emit(new FetchDefaultNetwork());
+    }else if(!config) {
+      store.emit(new GetConfig(()=>{
+        console.log('got a new config!! from the api')
+      },()=>{
+        console.log('route to sysadmin setup!!');
+      }));
     }
   }, []);
 
@@ -93,19 +101,11 @@ function MyApp({ Component, pageProps }) {
         <title>Helpbuttons.org</title>
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
-
-      {config && (
         <div className={`${user ? '' : ''}`}>
           {authorized && <Component {...pageProps} />}
           <Alert />
           <NavBottom logged={!!currentUser} />
         </div>
-      )}
-      {!config && 
-        <SysadminConfig>
-            
-        </SysadminConfig>
-      }
     </>
   );
 }

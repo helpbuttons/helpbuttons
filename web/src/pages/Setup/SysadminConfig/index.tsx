@@ -17,8 +17,9 @@ import { store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { NavigateTo } from 'state/Routes';
-import { CreateConfig, SmtpTest } from 'state/Config';
+import { CreateConfig, GetConfig, SmtpTest } from 'state/Setup';
 import { useEffect } from 'react';
+import { HttpStatus } from 'services/HttpService/http-status.enum';
 export default SysadminConfig;
 
 function SysadminConfig() {
@@ -33,7 +34,6 @@ function SysadminConfig() {
     setValue
   } = useForm({
     defaultValues: {
-      hostName: "db",
       mapifyApiKey: '',
       leafletTiles: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       postgresHostName: 'db',
@@ -44,33 +44,38 @@ function SysadminConfig() {
       smtpUrl: 'smtp://info@helpbuttons.org:some-string@smtp.some-provider.com:587'
     }
   });
-  
-  //   // setValue('hostName', 'localhost');
-  //   // setValue('mapifyApiKey', '');
-  //   // setValue('leafletTiles', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-  //   // // setValue('postgresHostName', 'db');
-  //   // setValue('postgresDb', 'hb-db');
-  //   // setValue('postgresPassword', 'CHANGE_ME');
-  //   // setValue('postgresUser', 'postgres');
-  //   // setValue('postgresPort',5432);
-  //   // setValue('smtpUrl', 'smtp://info@helpbuttons.org:some-string@smtp.some-provider.com:587');
 
+  
   const onSubmit = (data) => {
-    store.emit(new CreateConfig(data, onSuccess, onError));
+    store.emit(new CreateConfig(data, () => {
+      store.emit(new GetConfig(onSuccess, onError))
+    }, onError));
   };
 
   const onSmtpTest = (data) => {
-    store.emit(new SmtpTest(data.smtpUrl, 
-      () => { alertService.success("SMTP is working!", {})}, 
-      () => { alertService.error("SMTP is not working!", {})}, ));
+    store.emit(new SmtpTest(data.smtpUrl, onSmtpSuccess,onSmtpError));
   };
   
+  const onSmtpError = (err) => {
+    alertService.error(`${JSON.stringify(err)}`)
+  };
+
+  const onSmtpSuccess = () => {
+    alertService.info(`SMTP connection succesful!`)
+  };
+
   const onSuccess = () => {
+    console.log('success')
     store.emit(new NavigateTo("/HomeInfo"));
   };
 
   const onError = (err, data) => {
-    alertService.error("Something is very wrong", {})
+    if(err.statusCode !== HttpStatus.CONFLICT) {
+      alertService.error(`Problem:: ${JSON.stringify(err)}`)
+      return;
+    }
+
+    store.emit(new GetConfig(onSuccess, onError));
   };
 
   return (
@@ -154,7 +159,7 @@ function SysadminConfig() {
                   />
                   <Btn 
                     btnType={BtnType.splitIcon} 
-                    caption="TEST DB && SAVE CONFIG" 
+                    caption="TEST DB & SAVE"
                     contentAlignment={ContentAlignment.center} 
                     isSubmitting={isSubmitting}
                     onClick={handleSubmit(onSubmit)}

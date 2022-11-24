@@ -12,6 +12,7 @@ import { Bounds } from "leaflet";
 import { IButton } from "services/Buttons/button.type";
 import { useRouter } from "next/router";
 import MapButtons from "components/map/LeafletMap/MapButtons";
+import { alertService } from "services/Alert";
 
 export default function Explore() {
   const selectedNetwork = useRef(store, (state: GlobalState) => state.networks.selectedNetwork);

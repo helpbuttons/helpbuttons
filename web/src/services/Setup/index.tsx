@@ -7,7 +7,7 @@ import { IConfig } from './config.type';
 export class SetupService {
 
   public static get(): Observable<IConfig | undefined> {
-    return httpService.get<IConfig>("/config");
+    return httpService.get<IConfig>("/setup");
   }
 
   public static smtpTest(smtpUrl: string): Observable<string> {
@@ -15,7 +15,6 @@ export class SetupService {
   }
 
   public static save(config: IConfig): Observable<any> {
-    console.log(config);
     return httpService.post<IConfig>("/setup/save", config).pipe();
   }
 }
