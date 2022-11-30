@@ -70,7 +70,7 @@ export default function  SysadminConfig() {
 
     setTimeout(() => {
       router.replace('/', )
-    }, 1000);
+    }, 2000);
     
   };
 
