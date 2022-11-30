@@ -4,6 +4,18 @@ import { HttpExceptionFilter } from './shared/middlewares/errors/global-http-exc
 
 export const setup = async () => {
   var app = await NestFactory.create(SetupModule);
+  app.use(function (req, res, next) {
+    const fs = require('fs');
+    if (fs.existsSync('config.json')) {
+      console.log('new configuration file found: config.json')
+      app.close();
+      var bootstrap = require('./bootstrap').bootstrap;
+      bootstrap();
+      next();
+    } else {
+      next();
+    }
+  });
   app.useGlobalFilters(new HttpExceptionFilter());
-  return app;
+  await app.listen('3001');
 };

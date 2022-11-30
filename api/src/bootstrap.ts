@@ -60,5 +60,5 @@ export const bootstrap = async () => {
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('doc', app, document);
-    return app;
+    await app.listen('3001');
   };

@@ -46,7 +46,8 @@ export class SetupService {
         ...{ jwtSecret: dbIdGenerator() },
       }),
     );
-
+    console.log('config.json written to api')
+    // throw new Error('config.json created, restart backend please.')
     return "OK"
   }
 

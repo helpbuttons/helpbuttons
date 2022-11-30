@@ -13,8 +13,9 @@ import { FetchDefaultNetwork } from 'state/Networks';
 import { FetchUserData, SetCurrentUser } from 'state/Users';
 
 import { useRef } from 'store/Store';
-import SysadminConfig from './Setup/SysadminConfig';
+import SysadminConfig from './SysadminConfig';
 import { GetConfig } from 'state/Setup';
+import { NavigateTo } from 'state/Routes';
 
 export default appWithTranslation(MyApp);
 
@@ -22,10 +23,9 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [authorized, setAuthorized] = useState(false);
-  const [sysadminConfig, setSysadminConfig] = useState(false);
-  
+
   const config = useRef(store, (state: GlobalState) => state.config);
-  
+
   const currentUser = useRef(
     store,
     (state: GlobalState) => state.users.currentUser,
@@ -48,19 +48,20 @@ function MyApp({ Component, pageProps }) {
   });
 
   useEffect(() => {
-    if (config) {
-      // on route change start - hide page content by setting authorized to false
-      authCheck();
+    // if (config) {
+    // on route change start - hide page content by setting authorized to false
+    authCheck();
+    // load the default network and make it available globally
+    const onSucces = (message) => {
+    };
 
-      // load the default network and make it available globally
-      store.emit(new FetchDefaultNetwork());
-    }else if(!config) {
-      store.emit(new GetConfig(()=>{
-        console.log('got a new config!! from the api')
-      },()=>{
-        console.log('route to sysadmin setup!!');
-      }));
-    }
+    const onError = (message) => {
+      router.push({
+        pathname: '/SysadminConfig',
+      });
+      console.error('Need to setup');
+    };
+    store.emit(new FetchDefaultNetwork(onSucces, onError));
   }, []);
 
   function authCheck() {
@@ -75,6 +76,7 @@ function MyApp({ Component, pageProps }) {
       '/Explore',
       '/HomeInfo',
       '/ButtonFile/[id]',
+      '/SysadminConfig',
     ];
     const path = router.asPath.split('?')[0];
 
@@ -101,11 +103,11 @@ function MyApp({ Component, pageProps }) {
         <title>Helpbuttons.org</title>
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
-        <div className={`${user ? '' : ''}`}>
-          {authorized && <Component {...pageProps} />}
-          <Alert />
-          <NavBottom logged={!!currentUser} />
-        </div>
+      <div className={`${user ? '' : ''}`}>
+        {authorized && <Component {...pageProps} />}
+        <Alert />
+        <NavBottom logged={!!currentUser} />
+      </div>
     </>
   );
 }
