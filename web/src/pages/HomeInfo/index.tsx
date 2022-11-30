@@ -28,10 +28,8 @@ export default function HomeInfo() {
     (state: GlobalState) => state.networks.selectedNetworkLoading
   );
 
-console.log('dsajdsa')
   useEffect(() => {
-    alertService.error('hello')
-    console.log('hello')
+
   }, []);
    
 
@@ -40,7 +38,6 @@ console.log('dsajdsa')
     <div className="info-overlay__container">
       <div className="info-overlay__content">
         <form className="info-overlay__location">
-          <div>lala</div>
           <label className="form__label label">
             {t("homeinfo.start")}
           </label>

@@ -20,9 +20,9 @@ import { NavigateTo } from 'state/Routes';
 import { CreateConfig, GetConfig, SmtpTest } from 'state/Setup';
 import { useEffect } from 'react';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
-export default SysadminConfig;
+import { useRouter } from 'next/router';
 
-function SysadminConfig() {
+export default function  SysadminConfig() {
     
   const {
     register,
@@ -34,18 +34,20 @@ function SysadminConfig() {
     setValue
   } = useForm({
     defaultValues: {
+      hostName: 'localhost',
       mapifyApiKey: '',
       leafletTiles: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      postgresHostName: 'db',
+      postgresHostName: 'localhost',
       postgresDb: 'hb-db',
       postgresUser: 'postgres',
-      postgresPassword: 'CHANGE_ME',
+      postgresPassword: 'doesntmatter',
       postgresPort: 5432,
       smtpUrl: 'smtp://info@helpbuttons.org:some-string@smtp.some-provider.com:587'
     }
   });
 
-  
+  const router = useRouter()
+
   const onSubmit = (data) => {
     store.emit(new CreateConfig(data, () => {
       store.emit(new GetConfig(onSuccess, onError))
@@ -65,8 +67,11 @@ function SysadminConfig() {
   };
 
   const onSuccess = () => {
-    console.log('success')
-    store.emit(new NavigateTo("/HomeInfo"));
+
+    setTimeout(() => {
+      router.replace('/', )
+    }, 1000);
+    
   };
 
   const onError = (err, data) => {

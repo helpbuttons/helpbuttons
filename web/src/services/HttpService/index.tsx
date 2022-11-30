@@ -5,7 +5,7 @@ import { ajax } from "rxjs/ajax";
 import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 
 export function isHttpError(err: object) {
-  return (err.statusCode && err.message);
+  return (err && err.statusCode && err.message);
 }
 
 export class HttpService {

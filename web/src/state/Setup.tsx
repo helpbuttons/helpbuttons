@@ -15,7 +15,21 @@ export class GetConfig implements WatchEvent {
     return SetupService.get().pipe(
       map((config :IConfig) => {
         store.emit(new ConfigFound(config))
+        this.onSuccess('got the config!')
       }),
+      catchError((error) => {
+        let err = error.response;
+        if (
+          isHttpError(err) &&
+          err.statusCode === HttpStatus.NOT_FOUND
+        ) {
+          // Unauthorized
+          this.onError('unauthorized');
+        } else {
+          throw error;
+        }
+        return of(undefined);
+      })
     );
   }
 }
