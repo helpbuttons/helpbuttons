@@ -6,18 +6,20 @@ import { Inject } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
-import mailConfig from './mail.config';
 import { join } from 'path';
+import webAppConfig from '@src/app/configs/web-app.config';
 
 export class MailerModuleConfig implements MailerOptionsFactory {
   constructor(
-    @Inject(mailConfig.KEY)
-    private readonly mailConfigs: ConfigType<typeof mailConfig>,
+    @Inject(webAppConfig.KEY)
+    private readonly webAppConfigs: ConfigType<typeof webAppConfig>
   ) {}
 
   createMailerOptions(): MailerOptions | Promise<MailerOptions> {
+    console.log('URL')
+    console.log(this.webAppConfigs.smtpUrl)
     return {
-      transport: this.mailConfigs.smtpUrl,
+      transport: this.webAppConfigs.smtpUrl,
       defaults: {
         from: '"No Replay|help button" <no-replay@https://helpbuttons.org>',
       },

@@ -15,6 +15,7 @@ import { GlobalState, store } from "pages";
 import { setValueAndDebounce } from "state/HomeInfo";
 import router from "next/router";
 import t from "i18n";
+import { alertService } from "services/Alert";
 
 export default function HomeInfo() {
 
@@ -27,11 +28,16 @@ export default function HomeInfo() {
     (state: GlobalState) => state.networks.selectedNetworkLoading
   );
 
+  useEffect(() => {
+
+  }, []);
+   
+
+  
   return (
     <div className="info-overlay__container">
       <div className="info-overlay__content">
         <form className="info-overlay__location">
-          
           <label className="form__label label">
             {t("homeinfo.start")}
           </label>

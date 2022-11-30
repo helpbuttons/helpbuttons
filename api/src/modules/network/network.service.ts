@@ -62,7 +62,7 @@ export class NetworkService {
   }
 
   async findOne(id: string): Promise<Network>{
-    const network = await this.networkRepository.findOne({id});
+    const network = await this.networkRepository.findOne({where:{id}});
     if (!network) {
       throw new NotFoundException('Network not found');
     }
@@ -71,17 +71,18 @@ export class NetworkService {
 
   async findAll(name: string): Promise<Network[]> {
     return await this.networkRepository.find({
-      name: ILike(`%${name}%`),
+      where:
+      {name: ILike(`%${name}%`),}
     });
   }
 
   async findDefaultNetwork(): Promise<Network>{
-    const defaultNetwork = await this.networkRepository.findOne({order: {created_at: "ASC"}});
-    if (!defaultNetwork)
+    const defaultNetwork = await this.networkRepository.find({order: {created_at: "ASC"}});
+    if (!defaultNetwork || defaultNetwork.length < 0)
     {
       throw new NotFoundException('Default network not found');
     }
-    return defaultNetwork;
+    return defaultNetwork[0];
   }
 
   update(id: string, updateDto: UpdateNetworkDto) {

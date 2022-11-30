@@ -1,12 +1,15 @@
 import {TypeOrmModuleOptions} from "@nestjs/typeorm";
+import { DataSource } from "typeorm";
+
+var configFile = require('../../../config.json');
 
 export const typeOrmModuleOptions:TypeOrmModuleOptions = {
     type: 'postgres',
-    host: process.env.POSTGRES_HOSTNAME ? process.env.POSTGRES_HOSTNAME : 'db',
-    port: process.env.POSTGRES_PORT ? parseInt(<string>process.env.POSTGRES_PORT) : 5432,
-    username: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
+    host: configFile.postgresHostName ? configFile.postgresHostName : 'db',
+    port: configFile.postgresPort ? configFile.postgresPort : 5432,
+    username: configFile.postgresUser,
+    password: configFile.postgresPassword,
+    database: configFile.postgresDb,
     /* Note : it is unsafe to use synchronize: true for schema synchronization
     on production once you get data in your database. */
     // synchronize: true,
@@ -27,3 +30,18 @@ export const OrmConfig = {
     ],
 };
 export default OrmConfig;
+
+export const AppDataSource = new DataSource(
+    {
+    type: typeOrmModuleOptions.type,
+    host: typeOrmModuleOptions.host,
+    port: typeOrmModuleOptions.port,
+    username: typeOrmModuleOptions.username,
+    password: typeOrmModuleOptions.password,
+    database: typeOrmModuleOptions.database,
+    synchronize: false,
+    logging: true, 
+    entities: ['src/modules/**/*.entity.{ts,js}'],
+    migrations: ["src/data/migrations/*{.ts,.js}"],
+    migrationsTableName: "migrations",}
+)

@@ -95,8 +95,9 @@ export class ButtonService {
       relations: ['network', 'feed', 'owner'],
     });
     try {
-      let createdButtonsCount = await this.buttonRepository.count({where: {owner:  button.owner.id}});
-      return {...button, createdButtonsCount}
+      // let createdButtonsCount = await this.buttonRepository.count({where: {owner:  button.owner.id}});
+      return {...button}
+      // , createdButtonsCount}
     }catch(err){
     }
     return {...button};

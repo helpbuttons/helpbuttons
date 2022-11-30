@@ -18,18 +18,22 @@ export const AlertType = {
 
 // convenience methods
 function success(message, options = {}) {
+    console.info(message);
     alert({ ...options, type: AlertType.Success, message });
 }
 
 function error(message, options = {}) {
+    console.error(message);
     alert({ ...options, type: AlertType.Error, message });
 }
 
 function info(message, options = {}) {
+    console.info(message);
     alert({ ...options, type: AlertType.Info, message });
 }
 
 function warn(message, options = {}) {
+    console.warn(message);
     alert({ ...options, type: AlertType.Warning, message });
 }
 

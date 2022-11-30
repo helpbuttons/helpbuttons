@@ -10,20 +10,19 @@ import { MailModule } from '../mail/mail.module';
 import { TagModule } from '../tag/tag.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
+var configFile = require('../../../config.json');
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: configFile.jwtSecret,
       signOptions: {expiresIn: '60s'}
     }),
     UserCredentialModule,
     UserModule,
     MailModule,
-    TagModule,
-  ],
+    TagModule],
   controllers: [AuthController],
   providers: [AuthService,LocalStrategy,JwtStrategy],
 })
