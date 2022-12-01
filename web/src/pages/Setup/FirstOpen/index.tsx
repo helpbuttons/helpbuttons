@@ -1,17 +1,12 @@
-// create admin!
-// username
-// email
-// password
-
 import Popup from "components/popup/Popup";
 import Btn, { BtnType, ContentAlignment } from "elements/Btn";
 import Form from "elements/Form";
 import { useRouter } from "next/router";
 import { useForm } from 'react-hook-form';
 
-export default CreateAdmin;
+export default FirstOpen;
 
-function CreateAdmin() {
+function FirstOpen() {
     const {
         handleSubmit,
         formState: { isSubmitting },
@@ -23,12 +18,12 @@ function CreateAdmin() {
     const router = useRouter()
 
     const onSubmit = (data) => {
-        router.replace('/Setup/FirstOpen')
+        router.replace('/Setup/InstanceCreation')
     };
     
     return (
     <>
-      <Popup title="Create Admin User">
+      <Popup title="First Open :D explain what is an instance">
         <Form classNameExtra="createAdmin">
           <div className="form__btn-wrapper">
                   <Btn 

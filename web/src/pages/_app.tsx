@@ -23,8 +23,10 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [authorized, setAuthorized] = useState(false);
+  const [isSetup, setIsSetup] = useState(false);
 
   const config = useRef(store, (state: GlobalState) => state.config);
+  const path = router.asPath.split('?')[0];
 
   const currentUser = useRef(
     store,
@@ -50,19 +52,29 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     // if (config) {
     // on route change start - hide page content by setting authorized to false
-    authCheck();
     // load the default network and make it available globally
-    const onSucces = (message) => {
-    };
+    const setupPaths = [
+      '/Setup/CreateAdmin',
+      '/Setup/FirstOpen',
+      '/Setup/InstanceCreation',
+      '/Setup/SysadminConfig',
+    ];
 
-    const onError = (message) => {
-      router.push({
-        pathname: '/SysadminConfig',
-      });
-      console.error('Need to setup');
-    };
-    store.emit(new FetchDefaultNetwork(onSucces, onError));
-  }, []);
+    if (!setupPaths.includes(path))
+    {
+      store.emit(new FetchDefaultNetwork(() => {
+        authCheck();
+      }, 
+      () => {
+        router.push({
+          pathname: '/Setup/SysadminConfig',
+        });
+      }));
+    }else {
+      setIsSetup(true);
+    }
+    
+  }, [path]);
 
   function authCheck() {
     // redirect to login page if accessing a private page and not logged in
@@ -76,8 +88,8 @@ function MyApp({ Component, pageProps }) {
       '/Explore',
       '/HomeInfo',
       '/ButtonFile/[id]',
-      '/SysadminConfig',
     ];
+
     const path = router.asPath.split('?')[0];
 
     if (!UserService.isLoggedIn() && !publicPaths.includes(path)) {
@@ -104,9 +116,19 @@ function MyApp({ Component, pageProps }) {
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
       <div className={`${user ? '' : ''}`}>
-        {authorized && <Component {...pageProps} />}
-        <Alert />
-        <NavBottom logged={!!currentUser} />
+        {authorized && 
+        <div>
+          <Component {...pageProps} />
+          <Alert />
+          <NavBottom logged={!!currentUser} />
+        </div>
+        }
+        {isSetup &&
+          <div>
+            <Component {...pageProps} />
+            <Alert />
+          </div>
+        }
       </div>
     </>
   );
