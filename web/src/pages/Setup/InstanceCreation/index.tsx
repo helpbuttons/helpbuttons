@@ -4,6 +4,7 @@ import Btn, { BtnType, ContentAlignment } from "elements/Btn";
 import Form from "elements/Form";
 import { useRouter } from "next/router";
 import { useForm } from 'react-hook-form';
+import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 
 // name, description, logo, background image, button template, color pallete, colors
 export default InstanceCreation;
@@ -20,6 +21,7 @@ function InstanceCreation() {
     const router = useRouter()
 
     const onSubmit = (data) => {
+        localStorageService.remove(LocalStorageVars.SETUP_STEP);
         router.replace('/HomeInfo')
     };
     

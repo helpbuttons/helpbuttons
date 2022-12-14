@@ -11,7 +11,7 @@ import FieldNumber from 'elements/Fields/FieldNumber';
 import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
-import Form from "elements/Form";
+import Form from 'elements/Form';
 import FormSubmit from 'elements/Form/FormSubmit';
 import { store } from 'pages';
 import { useForm } from 'react-hook-form';
@@ -21,9 +21,10 @@ import { CreateConfig, GetConfig, SmtpTest } from 'state/Setup';
 import { useEffect } from 'react';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { useRouter } from 'next/router';
+import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
+import { setupNextStep, SetupSteps } from '../steps';
 
-export default function  SysadminConfig() {
-    
+export default function SysadminConfig() {
   const {
     register,
     handleSubmit,
@@ -31,52 +32,57 @@ export default function  SysadminConfig() {
     control,
     reset,
     watch,
-    setValue
+    setValue,
   } = useForm({
     defaultValues: {
       hostName: 'localhost',
       mapifyApiKey: '',
-      leafletTiles: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      leafletTiles:
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       postgresHostName: 'localhost',
       postgresDb: 'hb-db',
       postgresUser: 'postgres',
       postgresPassword: 'doesntmatter',
       postgresPort: 5432,
-      smtpUrl: 'smtp://info@helpbuttons.org:some-string@smtp.some-provider.com:587'
-    }
+      smtpUrl:
+        'smtp://info@helpbuttons.org:some-string@smtp.some-provider.com:587',
+    },
   });
 
-  const router = useRouter()
+  const router = useRouter();
 
   const onSubmit = (data) => {
-    store.emit(new CreateConfig(data, () => {
-      store.emit(new GetConfig(onSuccess, onError))
-    }, onError));
+    store.emit(
+      new CreateConfig(
+        data,
+        () => {
+          setupNextStep(SetupSteps.CREATE_ADMIN_FORM);
+        },
+        (err, data) => {
+          if (err.statusCode !== HttpStatus.CONFLICT) {
+            alertService.error(`Problem:: ${JSON.stringify(err)}`);
+          }
+          if (err.statusCode === HttpStatus.CONFLICT) {
+            alertService.warn(`You already configured before please remove config.json from the backend, proceeding to create an admin account.`);
+            setupNextStep(SetupSteps.CREATE_ADMIN_FORM);
+          }
+        },
+      ),
+    );
   };
 
   const onSmtpTest = (data) => {
-    store.emit(new SmtpTest(data.smtpUrl, onSmtpSuccess,onSmtpError));
+    store.emit(
+      new SmtpTest(data.smtpUrl, onSmtpSuccess, onSmtpError),
+    );
   };
-  
+
   const onSmtpError = (err) => {
-    alertService.error(`${JSON.stringify(err)}`)
+    alertService.error(`${JSON.stringify(err)}`);
   };
 
   const onSmtpSuccess = () => {
-    alertService.info(`SMTP connection succesful!`)
-  };
-
-  const onSuccess = () => {
-    router.replace('/Setup/CreateAdmin')
-  };
-
-  const onError = (err, data) => {
-    if(err.statusCode !== HttpStatus.CONFLICT) {
-      alertService.error(`Problem:: ${JSON.stringify(err)}`)
-      return;
-    }
-
-    store.emit(new GetConfig(onSuccess, onError));
+    alertService.info(`SMTP connection succesful!`);
   };
 
   return (
@@ -90,18 +96,18 @@ export default function  SysadminConfig() {
               placeholder="localhost"
               validationError={errors.description}
               classNameExtra="squared"
-              {...register("hostName", {required: true})}
+              {...register('hostName', { required: true })}
             />
             <FieldText
               name="mapifyApiKey"
               label="Mapify ApiKey"
               placeholder="APIKEY"
-              {...register("mapifyApiKey")}
+              {...register('mapifyApiKey')}
             ></FieldText>
             <FieldText
               name="leafletTiles"
               label="Leaflet Tiles"
-              {...register("leafletTiles")}
+              {...register('leafletTiles')}
             ></FieldText>
 
             <FieldTags
@@ -115,58 +121,54 @@ export default function  SysadminConfig() {
             <FieldText
               name="postgresUser"
               label="Postgres User"
-              {...register("postgresUser")}
+              {...register('postgresUser')}
             ></FieldText>
-           <FieldText
+            <FieldText
               name="postgresPassword"
               label="Postgres password"
-              {...register("postgresPassword")}
+              {...register('postgresPassword')}
             ></FieldText>
             <FieldText
               name="postgresDb"
               label="Postgres DB name"
-              {...register("postgresDb")}
+              {...register('postgresDb')}
             ></FieldText>
 
             <FieldText
               name="postgresHostName"
               label="Postgres hostname"
-              {...register("postgresHostName")}
+              {...register('postgresHostName')}
             ></FieldText>
 
-          <FieldText
+            <FieldText
               name="postgresPort"
               label="Postgres port"
-              {...register("postgresPort")}
+              {...register('postgresPort')}
             ></FieldText>
-
 
             <FieldText
               name="smtpUrl"
               label="Smtp URL"
-              {...register("smtpUrl")}
+              {...register('smtpUrl')}
             ></FieldText>
-
-           
-
           </div>
           <div className="form__btn-wrapper">
-                  <Btn 
-                    btnType={BtnType.splitIcon} 
-                    caption="TEST SMTP" 
-                    contentAlignment={ContentAlignment.center} 
-                    isSubmitting={isSubmitting}
-                    onClick={handleSubmit(onSmtpTest)}
-                  />
-                  <Btn 
-                    btnType={BtnType.splitIcon} 
-                    caption="TEST DB & SAVE"
-                    contentAlignment={ContentAlignment.center} 
-                    isSubmitting={isSubmitting}
-                    onClick={handleSubmit(onSubmit)}
-                  />
+            <Btn
+              btnType={BtnType.splitIcon}
+              caption="TEST SMTP"
+              contentAlignment={ContentAlignment.center}
+              isSubmitting={isSubmitting}
+              onClick={handleSubmit(onSmtpTest)}
+            />
+            <Btn
+              btnType={BtnType.splitIcon}
+              caption="TEST DB & SAVE"
+              contentAlignment={ContentAlignment.center}
+              isSubmitting={isSubmitting}
+              onClick={handleSubmit(onSubmit)}
+            />
           </div>
-      </Form>            
+        </Form>
       </Popup>
     </>
   );

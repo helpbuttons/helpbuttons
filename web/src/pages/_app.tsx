@@ -16,6 +16,9 @@ import { useRef } from 'store/Store';
 import SysadminConfig from './SysadminConfig';
 import { GetConfig } from 'state/Setup';
 import { NavigateTo } from 'state/Routes';
+import { alertService } from 'services/Alert';
+import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
+import { SetupSteps } from './Setup/steps';
 
 export default appWithTranslation(MyApp);
 
@@ -53,29 +56,56 @@ function MyApp({ Component, pageProps }) {
     // if (config) {
     // on route change start - hide page content by setting authorized to false
     // load the default network and make it available globally
-    const setupPaths = [
-      '/Setup/CreateAdmin',
-      '/Setup/FirstOpen',
-      '/Setup/InstanceCreation',
-      '/Setup/SysadminConfig',
+    const setupPaths :string[] = [
+      SetupSteps.CREATE_ADMIN_FORM,
+      SetupSteps.FIRST_OPEN,
+      SetupSteps.INSTANCE_CREATION,
+      SetupSteps.SYSADMIN_CONFIG,
     ];
 
-    if (!setupPaths.includes(path))
-    {
-      store.emit(new FetchDefaultNetwork(() => {
-        authCheck();
-      }, 
-      () => {
-        router.push({
-          pathname: '/Setup/SysadminConfig',
-        });
-      }));
-    }else {
+    if (!setupPaths.includes(path)) {
+      store.emit(
+        new FetchDefaultNetwork(
+          () => {
+            authCheck();
+            if (!config && path != SetupSteps.SYSADMIN_CONFIG) {
+              getConfig();
+            }
+            const setupStep = localStorageService.read(LocalStorageVars.SETUP_STEP)
+            console.log(`step: ${setupStep}`)
+            if (setupStep) {
+              console.log('oi')
+              router.push(setupStep)
+            }
+          },
+          (error) => {
+            if (error) {
+             alertService.error(JSON.stringify(error))
+            }
+            router.push({
+              pathname: '/Setup/SysadminConfig',
+            });
+          },
+        ),
+      );
+    } else {
       setIsSetup(true);
     }
-    
-  }, [path]);
+  }, [path, isSetup, authorized]);
 
+  function getConfig() {
+    store.emit(
+      new GetConfig(
+        () => {
+          console.log('everything is fine!!');
+        },
+        (err) => {
+          console.error('oh noes.... whats going on?');
+          throw new Error(err);
+        },
+      ),
+    );
+  }
   function authCheck() {
     // redirect to login page if accessing a private page and not logged in
     const publicPaths = [
@@ -116,19 +146,19 @@ function MyApp({ Component, pageProps }) {
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
       <div className={`${user ? '' : ''}`}>
-        {authorized && 
-        <div>
-          <Component {...pageProps} />
-          <Alert />
-          <NavBottom logged={!!currentUser} />
-        </div>
-        }
-        {isSetup &&
+        {authorized && (
+          <div>
+            <Component {...pageProps} />
+            <Alert />
+            <NavBottom logged={!!currentUser} />
+          </div>
+        )}
+        {isSetup && (
           <div>
             <Component {...pageProps} />
             <Alert />
           </div>
-        }
+        )}
       </div>
     </>
   );

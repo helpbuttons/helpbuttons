@@ -43,14 +43,18 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
         }
       }),
       catchError((error) => {
+        if (!error.response) {
+          this.onError('backend is not running')
+          return of(undefined)
+        }
+
         const err = error.response;
         if (
           isHttpError(err) &&
           err.statusCode === HttpStatus.NOT_FOUND
         ) {
-          this.onError('api in setup mode? or down?');
-        } else {
-          throw err;
+          // do nothing, its ok! it will jump to the setup!
+          this.onError();
         }
         return of(undefined);
       }),
