@@ -41,15 +41,15 @@ export class AuthService {
       emailVerified = true;
     }
 
-    console.log('creating user...' + username)
+    console.log('createing user...' + email)
     const user = await this.userService.createUser({
       // realm,
-      username,
-      email,
+      email: email,
       verificationToken,
       emailVerified,
       roles,
-      name: null
+      username,
+      name: ''
     });
 
     await this.userCredentialService.createUserCredential({
