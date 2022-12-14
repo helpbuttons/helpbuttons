@@ -34,15 +34,12 @@ export class SignupRequestDto {
   email: string;
 
   @ApiProperty({
-    description: 'Name',
-    default: 'name',
+    default: '',
     type: String,
     required: true,
-    isArray: false,
-    format: 'string',
   })
   @IsString()
-  name: string;
+  username: string;
 
   @ApiProperty({
     description: `User password should follow this conditions:
