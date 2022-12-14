@@ -7,6 +7,7 @@ import getConfig from 'next/config';
 import { IUser, ICurrentUser } from "./network.type";
 import { httpService } from "services/HttpService";
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
+import { SignupRequestDto } from 'api-dtos/auth.dto';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -14,8 +15,8 @@ const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 export class UserService {
 
   //Signup in the new user
-  public static signup(email:string, password:string, name: string): Observable<any> {
-    return httpService.post<ICurrentUser>("/users/signup", {email, password, name}).pipe(
+  public static signup(signupRequestDto : SignupRequestDto): Observable<any> {
+    return httpService.post<ICurrentUser>("/users/signup", signupRequestDto).pipe(
       tap((response) => httpService.setAccessToken(response?.token))
     );
   }
