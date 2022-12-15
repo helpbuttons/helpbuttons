@@ -24,7 +24,6 @@
     "migration:generate": "yarn typeorm migration:generate -n",
     "migration:run": "yarn typeorm migration:run",
     "schema:drop": "yarn typeorm schema:drop",
-    "seed:run": "node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm-seeding/dist/cli.js --config src/app/configs/orm.config.ts seed",
     "typeorm": "node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js --config src/app/configs/orm.config.ts"
   },
   "dependencies": {
