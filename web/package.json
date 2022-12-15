@@ -7,11 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "svgr": "svgr icons -d elements/icons --icon"
+    "svgr": "svgr icons -d elements/icons --icon",
+    "connect-api": "cp ../api/src/**/**/*.dto.ts src/shared/dtos && cp ../api/src/**/**/*.entity.ts src/shared/entities"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.1",
+    "@nestjs/swagger": "^6.1.4",
     "@types/react-leaflet": "^2.8.2",
+    "class-validator": "^0.14.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "dotenv-webpack": "^7.1.0",

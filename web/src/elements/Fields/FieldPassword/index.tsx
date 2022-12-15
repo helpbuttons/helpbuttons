@@ -29,7 +29,7 @@ const FieldPassword = React.forwardRef(({
                 onChange={onChange}
                 onBlur={onBlur}
                 className={`form__input ${classNameInput} ${validationError ? 'validation-error' : ''}`} 
-                placeholder={placeholder}
+                placeholder={placeholder ? placeholder : label}
             />
             <FieldError validationError={validationError}/>
         </div>

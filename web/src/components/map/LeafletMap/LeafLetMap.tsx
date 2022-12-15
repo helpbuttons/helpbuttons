@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -8,14 +8,17 @@ import { MarkersButton, MarkerSelector } from "components/map/MarkerButton";
 import { useRef } from "store/Store";
 import { GlobalState, store } from "pages";
 import { IConfig } from "services/Setup/config.type";
+import { GetConfig } from "state/Setup";
+import { alertService } from "services/Alert";
 
-export default function LeafLetMap({ center, onBoundsChange = (e) => {}, onMarkerClick = false, markerPosition = null, markersButtons = [], style = null}) {
-  const [zoom, setZoom] = useState(11);
+export default function LeafLetMap({ center, onBoundsChange = (e) => {}, onMarkerClick = false, markerPosition = null, markersButtons = [], style = null, defaultZoom = 11}) {
+  const [zoom, setZoom] = useState(defaultZoom);
   const getButtonsOnBounds = (map) => {
     onBoundsChange(map.getBounds())
   }
-  const config :IConfig = useRef(store, (state: GlobalState) => state.config);
 
+  const config :IConfig = useRef(store, (state: GlobalState) => state.config);
+  
   return (
     <MapContainer
       center={center}
@@ -24,10 +27,12 @@ export default function LeafLetMap({ center, onBoundsChange = (e) => {}, onMarke
       style={style}
       whenCreated={(map) => getButtonsOnBounds(map)}
     >
-      <TileLayer
-        attribution="&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors"
-        url={config.leafletTiles}
-      />
+      {config && 
+        <TileLayer
+          attribution="&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors"
+          url={config.leafletTiles}
+        />
+      }
       {onMarkerClick && 
         <MarkerSelector onClick={onMarkerClick} markerPosition={markerPosition}/>
       }

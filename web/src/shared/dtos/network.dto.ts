@@ -35,14 +35,23 @@ export class CreateNetworkDto implements Partial<Network> {
   })
   description: string;
 
-  @ApiProperty({
-    enum: ['public', 'private'],
-    required: false,
-    name: 'privacy',
-    description: 'Public or private',
-  })
-  @IsEnum(['public', 'private'])
-  privacy: PrivacyType;
+  // @ApiProperty({
+  //   type: String,
+  // })
+  // @IsString()
+  // @MinLength(3, {
+  //   message: 'url is too short',
+  // })
+  // url: string;
+
+  // @ApiProperty({
+  //   enum: ['public', 'private'],
+  //   required: false,
+  //   name: 'privacy',
+  //   description: 'Public or private',
+  // })
+  // @IsEnum(['public', 'private'])
+  // privacy: PrivacyType;
 
   @ApiProperty({
     name: 'radius',
