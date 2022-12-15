@@ -24,9 +24,10 @@ function FirstOpen() {
     
     return (
     <>
-      <Popup title="First Open :D explain what is an instance">
+      <Popup title="WELCOME TO YOUR HELPBUTTONS INSTANCE">
         <Form classNameExtra="createAdmin">
           <div className="form__btn-wrapper">
+            <div><p>Here you´ll see your collaborative network description. </p><p>Create your first network with the options bellow.</p></div>
                   <Btn 
                     btnType={BtnType.splitIcon} 
                     caption="NEXT"

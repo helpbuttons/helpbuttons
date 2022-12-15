@@ -11,6 +11,7 @@ import Form from "elements/Form";
 import { store } from "pages";
 import { useForm } from 'react-hook-form';
 import { alertService } from "services/Alert";
+import { HttpStatus } from "services/HttpService/http-status.enum";
 import { CreateAdmin } from "state/Setup";
 import { setupNextStep, SetupSteps } from "../steps";
 
@@ -23,8 +24,12 @@ function CreateAdminForm() {
         register,
         setError
       } = useForm({
-        // defaultValues: {
-        // }
+        defaultValues: {
+          username: 'admin',
+          password: 'qwerty1234',
+          password_confirm: 'qwerty1234',
+          email: 'admin@admin.com'
+        }
       });
     
     const onSubmit = (data) => {
@@ -40,8 +45,12 @@ function CreateAdminForm() {
         setupNextStep(SetupSteps.FIRST_OPEN)
       }, 
       (err) => {
+        if(err?.statusCode === HttpStatus.CONFLICT) {
+          // alertService.warn('E-mail already registered, do you want to <a href="/Login">login</a>?')
+          alertService.warn(`You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your instance</a>?`)
+        }
         console.log(JSON.stringify(err))
-        alertService.error(`error.. ${JSON.stringify(err)}`)
+        // alertService.error(`error.. ${JSON.stringify(err)}`)
       }));
     };
     

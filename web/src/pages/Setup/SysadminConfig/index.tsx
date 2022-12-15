@@ -63,8 +63,7 @@ export default function SysadminConfig() {
             alertService.error(`Problem:: ${JSON.stringify(err)}`);
           }
           if (err.statusCode === HttpStatus.CONFLICT) {
-            alertService.warn(`You already configured before please remove config.json from the backend, proceeding to create an admin account.`);
-            setupNextStep(SetupSteps.CREATE_ADMIN_FORM);
+            alertService.warn(`You already created a configuration, please rmeove config.json from the api directory. Or if you want to continue this installation <a href="${SetupSteps.CREATE_ADMIN_FORM}">create an admin account</a>, or <a href="${SetupSteps.FIRST_OPEN}">configure your instance</a>?`)
           }
         },
       ),
