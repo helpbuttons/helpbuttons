@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^2.8.1",
     "@nestjs/swagger": "^6.1.4",
     "@types/react-leaflet": "^2.8.2",
+    "@typescript-eslint/eslint-plugin": "^5.46.1",
     "class-validator": "^0.14.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

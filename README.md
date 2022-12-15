@@ -5,17 +5,18 @@
 This is the repository for helpbuttons.org. check the hb-docs repo (https://github.com/helpbuttons/hb-docs).
 ## Getting Started
 
-copy the .env file and edit according to ur needs
-`$ cp env.sample .env`
+Edit the file db.env to setup your default values for configuration of the database
+`$ nano env.db`
 
+build all docker needed images
+`$ docker-compose build`
+
+then run helpbuttons
 `$ docker-compose up -d`
 
 then please setup the database scheme:
 `$ docker-compose exec backend yarn migration:run`
 
-And if you want to start with some sample data:
-
-`$ docker-compose exec backend yarn seed:run`
 **login:** user@email.com **password:** password
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
