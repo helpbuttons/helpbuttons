@@ -13,9 +13,7 @@ import { FetchDefaultNetwork } from 'state/Networks';
 import { FetchUserData, SetCurrentUser } from 'state/Users';
 
 import { useRef } from 'store/Store';
-import SysadminConfig from './SysadminConfig';
 import { GetConfig } from 'state/Setup';
-import { NavigateTo } from 'state/Routes';
 import { alertService } from 'services/Alert';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 import { SetupSteps } from './Setup/steps';
