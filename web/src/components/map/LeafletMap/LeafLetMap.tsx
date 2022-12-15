@@ -18,24 +18,6 @@ export default function LeafLetMap({ center, onBoundsChange = (e) => {}, onMarke
   }
 
   const config :IConfig = useRef(store, (state: GlobalState) => state.config);
-
-  function getConfig() {
-    store.emit(
-      new GetConfig(
-        () => {
-        },
-        (err) => {
-          alertService.error('Could not load configuration for leaflet, please contact the sysadmin')
-        },
-      ),
-    );
-  }
-
-  useEffect(() => {
-    if(!config) {
-      getConfig();
-    }
-  }, []);
   
   return (
     <MapContainer
