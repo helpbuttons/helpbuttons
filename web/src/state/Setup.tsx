@@ -1,4 +1,3 @@
-import { SignupRequestDto } from 'api-dtos/auth.dto';
 import produce from 'immer';
 import { GlobalState, store } from 'pages';
 import { of, tap } from 'rxjs';
@@ -8,7 +7,7 @@ import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { SetupService } from 'services/Setup';
 import { IConfig } from 'services/Setup/config.type';
 import { UserService } from 'services/Users';
-import { ICreateUser, IUser } from 'services/Users/user.type';
+import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 
 export class GetConfig implements WatchEvent {

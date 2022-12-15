@@ -10,6 +10,7 @@ import { isHttpError } from 'services/HttpService';
 import { of } from 'rxjs';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { store } from 'pages';
+import { CreateNetworkDto } from 'shared/dtos/network.dto';
 
 export interface NetworksState {
   // networks: INetwork[];
@@ -95,22 +96,30 @@ export class SelectedNetworkFetched implements UpdateEvent {
 //   ));
 // }
 //
-// export class CreateNetworkEvent implements WatchEvent {
-//     public constructor(
-//       private network: INetwork,
-//       private token: string,
-//       private successFunction,
-//       private failFunction
-//     ) {}
-//     public watch(state: GlobalState) {
-//       return NetworkService.new(this.network, this.token).pipe(
-//         tap((networkData) => {
-//           this.successFunction(networkData.response);
-//         }),
-//         catchError((error) => {
-//           return this.failFunction(error);
-//         })
-//       );
-//     }
-//   }
-//
+export class CreateNetwork implements WatchEvent {
+    public constructor(
+      private network,
+      private onSuccess,
+      private onError
+    ) {}
+    public watch(state: GlobalState) {
+      return NetworkService.new(this.network).pipe(
+        map((networkData) => {
+          this.onSuccess(networkData.response);
+        }),
+        catchError((error) => {
+          let err = error.response;
+          
+          if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
+            this.onError("unauthorized", this.network);
+          } else if (err.statusCode === 400 && err.message === "validation-error") {
+            this.onError(" validations error")
+          } else {
+            throw error;
+          }
+          return of(undefined);
+        })
+      );
+    }
+  }
+
