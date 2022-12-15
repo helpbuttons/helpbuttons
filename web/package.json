@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "svgr": "svgr icons -d elements/icons --icon",
-    "copy-api-dtos": "cp ../api/src/modules/auth/auth.dto.ts src/api-dtos/"
+    "copy-dtos": "cp ../api/src/**/**/*.dto.ts src/shared/dtos"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.1",
