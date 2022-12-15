@@ -7,7 +7,7 @@ import "leaflet/dist/leaflet.css";
 import Map from "components/map/LeafletMap";
 import { useController } from "react-hook-form";
 import MapSelector from "components/map/LeafletMap/MapSelector";
-export default function FieldLocation({ validationErrors, initMapCenter, setValue, watch }) {
+export default function FieldLocation({ validationErrors, initMapCenter, setValue, watch, defaultZoom }) {
   const [showHideMenu, setHideMenu] = useState(false);
  const [radius, setRadius] = useState(1);
   const onClick = (e) => {
@@ -35,7 +35,7 @@ export default function FieldLocation({ validationErrors, initMapCenter, setValu
       {showHideMenu && (
         <div className="picker__close-container">
           <div className="picker--over picker-box-shadow picker__content picker__options-v">
-            <MapSelector onMarkerClick={onClick} markerPosition={latitude ? {lat: latitude,lng:longitude}: null} initMapCenter={initMapCenter} />
+            <MapSelector onMarkerClick={onClick} markerPosition={latitude ? {lat: latitude,lng:longitude}: null} initMapCenter={initMapCenter} defaultZoom={defaultZoom}/>
           </div>
 
           <div
