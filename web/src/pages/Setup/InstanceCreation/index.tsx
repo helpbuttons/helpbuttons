@@ -39,8 +39,6 @@ function InstanceCreation() {
   const router = useRouter();
 
   const onSubmit = (data) => {
-    alertService.warn('implementing...')
-    // console.log(data);
     store.emit(new CreateNetwork({
       name: data.name,
       description: data.description,
@@ -48,6 +46,7 @@ function InstanceCreation() {
       latitude: '-8.0321',
       longitude: '3.32131',
       tags: data.tags,
+      privacy: 'public'
     },
       () => {
         alertService.info('done!, your network should be on the db')

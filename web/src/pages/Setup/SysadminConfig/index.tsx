@@ -49,13 +49,12 @@ export default function SysadminConfig() {
     },
   });
 
-  const router = useRouter();
-
   const onSubmit = (data) => {
     store.emit(
       new CreateConfig(
         data,
         () => {
+
           setupNextStep(SetupSteps.CREATE_ADMIN_FORM);
         },
         (err, data) => {

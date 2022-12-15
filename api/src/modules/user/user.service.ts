@@ -18,7 +18,8 @@ export class UserService {
       verificationToken,
       roles,
       emailVerified,
-      name
+      name,
+      email
     } = user;
     const createdUser = this.userRepository.create({
       id,
@@ -27,12 +28,11 @@ export class UserService {
       verificationToken,
       roles,
       emailVerified,
-      name
+      name,
+      email
     });
 
-    await this.userRepository.save(createdUser);
-
-    return createdUser;
+    return this.userRepository.save(createdUser);
   }
 
   async isEmailExists(email: string) {

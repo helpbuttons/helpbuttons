@@ -36,15 +36,6 @@ export class CreateNetworkDto implements Partial<Network> {
   description: string;
 
   @ApiProperty({
-    type: String,
-  })
-  @IsString()
-  @MinLength(3, {
-    message: 'url is too short',
-  })
-  url: string;
-
-  @ApiProperty({
     enum: ['public', 'private'],
     required: false,
     name: 'privacy',

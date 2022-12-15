@@ -17,7 +17,8 @@ export class NetworkService {
     private readonly storageService: StorageService,
   ) {}
 
-  async create(createDto: CreateNetworkDto, avatar: File) {
+  async create(createDto: CreateNetworkDto, logo: File){
+    // , jumbo: File) {
     // TODO:
     // add owner
     // validate geopoint
@@ -26,7 +27,7 @@ export class NetworkService {
       id: dbIdGenerator(),
       name: createDto.name,
       description: createDto.description,
-      url: createDto.url,
+      // url: createDto.url,
       radius: createDto.radius,
       latitude: createDto.latitude,
       longitude: createDto.longitude,
@@ -34,9 +35,9 @@ export class NetworkService {
       privacy: createDto.privacy,
       location: () =>
         `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
-      avatar: '',
+      logo: null,
+      jumbo: null
     };
-
     await getManager().transaction(
       async (transactionalEntityManager) => {
         if (Array.isArray(createDto.tags)) {
@@ -51,9 +52,12 @@ export class NetworkService {
         }
 
         // console.log(avatar);
-        if (typeof avatar !== 'undefined') {
-          network.avatar = await this.storageService.newImage(avatar);
+        if (typeof logo !== 'undefined') {
+          network.logo = await this.storageService.newImage(logo);
         }
+        // if (typeof jumbo !== 'undefined') {
+        //   network.jumbo = await this.storageService.newImage(jumbo);
+        // }
         await this.networkRepository.insert([network]);
       },
     );
@@ -76,13 +80,21 @@ export class NetworkService {
     });
   }
 
-  async findDefaultNetwork(): Promise<Network>{
-    const defaultNetwork = await this.networkRepository.find({order: {created_at: "ASC"}});
-    if (!defaultNetwork || defaultNetwork.length < 0)
-    {
-      throw new NotFoundException('Default network not found');
-    }
-    return defaultNetwork[0];
+  findDefaultNetwork(): Promise<Network>{
+    return this.networkRepository.find({order: {created_at: "ASC"}})
+    .then((networks) => {
+      if (networks.length < 1) {
+        throw new HttpException('Default network not found', HttpStatus.NOT_FOUND);
+      }
+      return networks[0];
+    })
+    .catch((error) => {
+      if (typeof error === typeof HttpException) {
+        throw error;
+      }
+      console.log(error)
+      throw new HttpException('🙆🏼‍♂️', HttpStatus.NOT_FOUND)
+    })
   }
 
   update(id: string, updateDto: UpdateNetworkDto) {

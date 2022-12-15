@@ -45,7 +45,10 @@ export class Network extends BaseEntity {
   tags: string[];
 
   @Column({ type: 'text', nullable: true })
-  avatar?: string;
+  logo?: string;
+
+  @Column({ type: 'text', nullable: true })
+  jumbo?: string;
 
   @OneToMany(() => Button, (button) => button.network)
   buttons: Network[];
