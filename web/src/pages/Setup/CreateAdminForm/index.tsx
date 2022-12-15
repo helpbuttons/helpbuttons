@@ -16,7 +16,7 @@ import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { IConfig } from 'services/Setup/config.type';
 import { CreateAdmin, GetConfig } from 'state/Setup';
 import { useRef } from 'store/Store';
-import { setupNextStep, SetupSteps } from '../steps';
+import { setupNextStep, SetupSteps } from '../../../shared/setupSteps';
 
 export default CreateAdminForm;
 

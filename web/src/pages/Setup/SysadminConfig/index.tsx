@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { useRouter } from 'next/router';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
-import { setupNextStep, SetupSteps } from '../steps';
+import { setupNextStep, SetupSteps } from '../../../shared/setupSteps';
 
 export default function SysadminConfig() {
   const {

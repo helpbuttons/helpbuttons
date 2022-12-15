@@ -16,7 +16,7 @@ import {
   LocalStorageVars,
 } from 'services/LocalStorage';
 import { CreateNetwork } from 'state/Networks';
-import { setupNextStep, SetupSteps } from '../steps';
+import { setupNextStep, SetupSteps } from '../../../shared/setupSteps';
 
 // name, description, logo, background image, button template, color pallete, colors
 export default InstanceCreation;

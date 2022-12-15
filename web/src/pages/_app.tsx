@@ -16,7 +16,7 @@ import { useRef } from 'store/Store';
 import { GetConfig } from 'state/Setup';
 import { alertService } from 'services/Alert';
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
-import { SetupSteps } from './Setup/steps';
+import { SetupSteps } from '../shared/setupSteps';
 
 export default appWithTranslation(MyApp);
 
