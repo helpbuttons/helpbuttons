@@ -21,33 +21,12 @@ import { setupNextStep, SetupSteps } from '../../../shared/setupSteps';
 export default CreateAdminForm;
 
 function CreateAdminForm() {
-  const config: IConfig = useRef(
-    store,
-    (state: GlobalState) => state.config,
-  );
-
-  function getConfig() {
-    store.emit(
-      new GetConfig(
-        () => {},
-        (err) => {
-          alertService.error(
-            'Could not load configuration for leaflet, please contact the sysadmin',
-          );
-        },
-      ),
-    );
-  }
-
-  useEffect(() => {
-    if (!config) {
-      getConfig();
-    }
-  }, []);
-
+  const errorMessageConfigJson = `Configuration config.json not found, please run the <a href='/Setup/SysadminConfig'>setup again</a>, or reload the server.`
+  const warningMessageMigrations = `Please run migrations, before continuing <u><pre>$ docker-compose exec api yarn migration:run</pre></u>
+  Please click here to <a href='/Setup/CreateAdminForm'>reload</a>`;
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty, isValid },
     register,
     setError,
   } = useForm({
@@ -58,6 +37,46 @@ function CreateAdminForm() {
       email: 'admin@admin.com',
     },
   });
+
+  const config: IConfig = useRef(
+    store,
+    (state: GlobalState) => state.config,
+  );
+
+  function getConfig() {
+    store.emit(
+      new GetConfig(
+        () => {},
+        (err) => {
+          console.log(err)
+          if(err == 'nosysadminconfig') {
+            alertService.error(
+              errorMessageConfigJson
+            );  
+          }
+          
+          if(err == 'nomigrations'){
+            alertService.warn(
+              warningMessageMigrations
+            );  
+          }
+        },
+      ),
+    );
+  }
+
+  useEffect(() => {
+    alertService.clearAll();
+    if (!config) {
+      alertService.error(errorMessageConfigJson)
+      getConfig();
+    }else {
+      if (config.databaseNumberMigrations < 1)
+        alertService.warn(warningMessageMigrations)
+    }
+    
+
+  }, [config]);
 
   const onSubmit = (data) => {
     if (data.password != data.password_confirm) {
@@ -140,6 +159,7 @@ function CreateAdminForm() {
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}
               onClick={handleSubmit(onSubmit)}
+              disabled={config?.databaseNumberMigrations < 1}
             />
           </div>
         </Form>

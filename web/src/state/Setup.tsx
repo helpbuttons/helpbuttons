@@ -27,6 +27,16 @@ export class GetConfig implements WatchEvent {
         ) {
           // Unauthorized
           this.onError('unauthorized');
+        } else if (
+          isHttpError(err) &&
+          err.statusCode === HttpStatus.BAD_REQUEST
+        ) {
+          this.onError('nosysadminconfig');
+        }else if (
+            isHttpError(err) &&
+            err.statusCode === HttpStatus.SERVICE_UNAVAILABLE
+          ) {
+            this.onError('nomigrations');
         } else {
           throw error;
         }

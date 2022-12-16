@@ -6,9 +6,12 @@ COPY --chown=node:node . .
 
 USER node
 
+ENV NEXT_TELEMETRY_DISABLED 1
+
 RUN yarn
 RUN yarn build
-ENV NEXT_TELEMETRY_DISABLED 1
+RUN rm .env
+RUN yarn hb jwt
 
 EXPOSE 3000
 CMD [ "yarn", "start" ]

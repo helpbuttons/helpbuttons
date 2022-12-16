@@ -11,6 +11,8 @@ services:
     build: api/
     depends_on:
       - db
+#    ports:
+#      - "3001:3001"
 
   db:
     image: postgis/postgis:13-master

@@ -39,7 +39,7 @@ export default function SysadminConfig() {
       mapifyApiKey: '',
       leafletTiles:
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      postgresHostName: 'localhost',
+      postgresHostName: 'db',
       postgresDb: 'hb-db',
       postgresUser: 'postgres',
       postgresPassword: 'doesntmatter',

@@ -15,11 +15,17 @@ then run helpbuttons
 `$ docker-compose up -d`
 
 then please setup the database scheme:
-`$ docker-compose exec backend yarn migration:run`
+`$ docker-compose exec api yarn migration:run`
 
 **login:** user@email.com **password:** password
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
+## For developers:
+you can setup the url of the api
+`$ docker-compose exec web yarn hb api_url http://localhost:3001/`
+
 
 ## Key Elements, Components and Layouts
 

@@ -3,6 +3,7 @@ WORKDIR /app
 
 COPY . .
 
+RUN rm -f config.json
 RUN yarn
 RUN yarn build
 

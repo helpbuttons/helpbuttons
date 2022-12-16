@@ -1,12 +1,13 @@
 import { store } from 'pages';
-import { AddAlert, RemoveAlert } from 'state/Alerts';
+import { AddAlert, RemoveAlert, RemoveAllAlerts } from 'state/Alerts';
 
 export const alertService = {
     success,
     error,
     info,
     warn,
-    clear
+    clear,
+    clearAll
 };
 
 export const AlertType = {
@@ -46,4 +47,8 @@ function alert(alert) {
 // clear alerts
 function clear(id : number) {
     store.emit(new RemoveAlert(id))
+}
+
+function clearAll(){
+    store.emit(new RemoveAllAlerts());
 }

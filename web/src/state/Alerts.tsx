@@ -32,3 +32,15 @@ export class RemoveAlert implements UpdateEvent {
     });
   }
 }
+
+
+export class RemoveAllAlerts implements UpdateEvent {
+
+  public constructor() {}
+
+  public update(state: GlobalState) {
+    return produce(state, newState => {
+      newState.alerts = [];
+    });
+  }
+}

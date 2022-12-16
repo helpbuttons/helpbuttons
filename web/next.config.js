@@ -26,7 +26,7 @@ module.exports = {
           },
           {
             source: '/api/:path*',
-            destination: `${process.env.API_URL}:path*`
+            destination: `${process.env.API_URL ? process.env.API_URL : 'http://api:3001/' }:path*`
           },
         ]
     },

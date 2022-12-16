@@ -37,6 +37,7 @@ export class SetupService {
     if(this.isConfigFileCreated()) {
       throw new HttpException(`Please remove config.json before editing the configurations of your server!`, HttpStatus.CONFLICT);
     }
+
     await this.isDatabaseReady(setupDto);
 
     fs.writeFileSync(
@@ -51,10 +52,14 @@ export class SetupService {
     return "OK"
   }
 
-  get() {
+  async get() {
     if(!this.isConfigFileCreated()){
       throw new HttpException(`config.json nao existe!`, HttpStatus.BAD_REQUEST)
     }
+
+    const config = require('../../../config.json')
+    const numberMigrations = await this.isDatabaseReady(config);
+   
     const dataJSON = fs.readFileSync('config.json', 'utf8');
     const data: SetupDto = new SetupDto(JSON.parse(dataJSON));
 
@@ -63,6 +68,7 @@ export class SetupService {
       mapifyApiKey: data.mapifyApiKey,
       leafletTiles: data.leafletTiles,
       allowedDomains: data.allowedDomains,
+      databaseNumberMigrations: numberMigrations,
     };
 
     return JSON.stringify(dataToWeb);
@@ -70,7 +76,7 @@ export class SetupService {
 
   async isDatabaseReady(
     setupDto: SetupDto,
-  ): Promise<{ message: string; code: number }> {
+  ): Promise<number> {
     const config = {
       host: setupDto.postgresHostName,
       port: setupDto.postgresPort,
@@ -81,17 +87,19 @@ export class SetupService {
     const pool = new Pool(config);
 
     try {
-      await pool.connect();
+      let poolconnection = await pool.connect();
+      const databaseMigrations = await poolconnection.query(`SELECT id from migrations`);
+      return databaseMigrations.rowCount;
     } catch (error) {
+      
+      if (error.code === '42P01') { //need to run migrations
+        const msg = `Database connection error: ${error.message}`;
+        return 0;
+      } 
       const msg = `Database connection error: ${error.message}`;
       console.log(`${HttpStatus.SERVICE_UNAVAILABLE} :: ${msg}`)
 
       throw new HttpException(msg, HttpStatus.SERVICE_UNAVAILABLE);
     }
-
-    return Promise.resolve({
-      message: `OK`,
-      code: HttpStatus.ACCEPTED,
-    });
   }
 }
