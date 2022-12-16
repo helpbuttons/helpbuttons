@@ -55,7 +55,7 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
           err.statusCode === HttpStatus.NOT_FOUND
         ) {
           // do nothing, its ok! it will jump to the setup!
-          this.onError();
+          this.onError('network-not-found');
         }
         return of(undefined);
       }),

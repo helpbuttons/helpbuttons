@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { SetupDto } from './setup.entity';
+import { SetupDto, SetupDtoOut } from './setup.entity';
 import * as fs from 'fs';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 const { Pool } = require('pg');
@@ -52,31 +52,34 @@ export class SetupService {
     return "OK"
   }
 
-  async get() {
+  get(): Promise<SetupDtoOut> {
     if(!this.isConfigFileCreated()){
-      throw new HttpException(`config.json nao existe!`, HttpStatus.BAD_REQUEST)
+      throw new HttpException(`config.json nao existe!`, HttpStatus.BAD_REQUEST);
     }
 
     const config = require('../../../config.json')
-    const numberMigrations = await this.isDatabaseReady(config);
-   
-    const dataJSON = fs.readFileSync('config.json', 'utf8');
-    const data: SetupDto = new SetupDto(JSON.parse(dataJSON));
-
-    const dataToWeb = {
-      hostName: data.hostName,
-      mapifyApiKey: data.mapifyApiKey,
-      leafletTiles: data.leafletTiles,
-      allowedDomains: data.allowedDomains,
-      databaseNumberMigrations: numberMigrations,
-    };
-
-    return JSON.stringify(dataToWeb);
+    return this.isDatabaseReady(config)
+    .then(({migrationsNumber,userCount }) => {
+      const dataJSON = fs.readFileSync('config.json', 'utf8');
+      const data: SetupDto = new SetupDto(JSON.parse(dataJSON));
+  
+      const dataToWeb : SetupDtoOut= {
+        hostName: data.hostName,
+        mapifyApiKey: data.mapifyApiKey,
+        leafletTiles: data.leafletTiles,
+        allowedDomains: data.allowedDomains,
+        databaseNumberMigrations: migrationsNumber,
+        userCount: userCount
+      };
+  
+      // return JSON.stringify(dataToWeb);
+      return dataToWeb;
+    });
   }
 
   async isDatabaseReady(
     setupDto: SetupDto,
-  ): Promise<number> {
+  ): Promise<{migrationsNumber :number, userCount :number}> {
     const config = {
       host: setupDto.postgresHostName,
       port: setupDto.postgresPort,
@@ -88,15 +91,25 @@ export class SetupService {
 
     try {
       let poolconnection = await pool.connect();
-      const databaseMigrations = await poolconnection.query(`SELECT id from migrations`);
-      return databaseMigrations.rowCount;
+      const migrationsNumber = await poolconnection.query(`SELECT count(id) from migrations`);
+
+      const userCount = await poolconnection.query(`SELECT count(id) from public.user`);
+      return {migrationsNumber: migrationsNumber.rows[0].count, userCount: userCount.rows[0].count};
     } catch (error) {
-      
+      console.log(error)
+      let msg = `Database connection error: ${error.message}`;
+
       if (error.code === '42P01') { //need to run migrations
-        const msg = `Database connection error: ${error.message}`;
-        return 0;
+        const msg = `need-migrations`;
+        return {migrationsNumber: 0, userCount: 0};
+      }
+      if (error?.errno === -3008 ) { //need to run migrations
+        msg = `db-hostname-error`;
       } 
-      const msg = `Database connection error: ${error.message}`;
+      if (error?.code === '28P01') 
+      {
+        msg = `db-connection-error`;
+      }
       console.log(`${HttpStatus.SERVICE_UNAVAILABLE} :: ${msg}`)
 
       throw new HttpException(msg, HttpStatus.SERVICE_UNAVAILABLE);

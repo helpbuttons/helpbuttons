@@ -66,3 +66,44 @@ export class SetupDto {
   @IsArray({})
   allowedDomains: string[];
 }
+
+export class SetupDtoOut {
+  constructor(partial: Partial<SetupDto>) {
+    Object.assign(this, partial);
+  }
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
+  hostName: string;
+
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
+  mapifyApiKey: string;
+
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
+  leafletTiles: string;
+  @ApiProperty({
+    type: [String],
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({})
+  allowedDomains: string[];
+
+  @ApiProperty({
+    required: true,
+  })
+  databaseNumberMigrations: number;
+
+  @ApiProperty({
+    required: true,
+  })
+  userCount: number;
+
+}

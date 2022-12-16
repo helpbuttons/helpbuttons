@@ -18,16 +18,16 @@ export class Network extends BaseEntity {
   @Column({})
   description: string;
 
-  // @Column({ nullable: true })
-  // url?: string;
+  @Column({ nullable: true })
+  url?: string;
 
-  // @Column({
-  //   type: 'enum',
-  //   enum: PrivacyType,
-  //   default: PrivacyType.PUBLIC,
-  //   nullable: true,
-  // })
-  // privacy: PrivacyType;
+  @Column({
+    type: 'enum',
+    enum: PrivacyType,
+    default: PrivacyType.PUBLIC,
+    nullable: true,
+  })
+  privacy: PrivacyType;
 
   @Column({ type: 'double precision' })
   radius: number;

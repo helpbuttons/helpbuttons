@@ -42,7 +42,7 @@ export default function SysadminConfig() {
       postgresHostName: 'db',
       postgresDb: 'hb-db',
       postgresUser: 'postgres',
-      postgresPassword: 'doesntmatter',
+      postgresPassword: 'PASSWORD',
       postgresPort: 5432,
       smtpUrl:
         'smtp://info@helpbuttons.org:some-string@smtp.some-provider.com:587',
@@ -58,8 +58,15 @@ export default function SysadminConfig() {
           setupNextStep(SetupSteps.CREATE_ADMIN_FORM);
         },
         (err, data) => {
-          if (err.statusCode !== HttpStatus.CONFLICT) {
-            alertService.error(`Problem:: ${JSON.stringify(err)}`);
+          if (err.statusCode === HttpStatus.SERVICE_UNAVAILABLE) {
+            if (err.message === 'db-hostname-error') {
+              alertService.error(`Database connection error, could not connect to database host '${data.postgresHostName}' not found`);
+            } else if (err.message === 'db-connection-error') {
+              alertService.error(`Database connection error, wrong credentials?`);
+            }else {
+              alertService.error(`Problem:: ${JSON.stringify(err)}`);
+            }
+            
           }
           if (err.statusCode === HttpStatus.CONFLICT) {
             alertService.warn(`You already created a configuration, please rmeove config.json from the api directory. Or if you want to continue this installation <a href="${SetupSteps.CREATE_ADMIN_FORM}">create an admin account</a>, or <a href="${SetupSteps.FIRST_OPEN}">configure your instance</a>?`)

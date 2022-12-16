@@ -43,41 +43,6 @@ function CreateAdminForm() {
     (state: GlobalState) => state.config,
   );
 
-  function getConfig() {
-    store.emit(
-      new GetConfig(
-        () => {},
-        (err) => {
-          console.log(err)
-          if(err == 'nosysadminconfig') {
-            alertService.error(
-              errorMessageConfigJson
-            );  
-          }
-          
-          if(err == 'nomigrations'){
-            alertService.warn(
-              warningMessageMigrations
-            );  
-          }
-        },
-      ),
-    );
-  }
-
-  useEffect(() => {
-    alertService.clearAll();
-    if (!config) {
-      alertService.error(errorMessageConfigJson)
-      getConfig();
-    }else {
-      if (config.databaseNumberMigrations < 1)
-        alertService.warn(warningMessageMigrations)
-    }
-    
-
-  }, [config]);
-
   const onSubmit = (data) => {
     if (data.password != data.password_confirm) {
       const passwordsWontMatch = {

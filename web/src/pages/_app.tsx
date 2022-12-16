@@ -15,8 +15,12 @@ import { FetchUserData, SetCurrentUser } from 'state/Users';
 import { useRef } from 'store/Store';
 import { GetConfig } from 'state/Setup';
 import { alertService } from 'services/Alert';
-import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
+import {
+  localStorageService,
+  LocalStorageVars,
+} from 'services/LocalStorage';
 import { SetupSteps } from '../shared/setupSteps';
+import { SetupDtoOut } from 'shared/entities/setup.entity';
 
 export default appWithTranslation(MyApp);
 
@@ -54,57 +58,109 @@ function MyApp({ Component, pageProps }) {
     // if (config) {
     // on route change start - hide page content by setting authorized to false
     // load the default network and make it available globally
-    const setupPaths :string[] = [
+    const setupPaths: string[] = [
       SetupSteps.CREATE_ADMIN_FORM,
       SetupSteps.FIRST_OPEN,
       SetupSteps.INSTANCE_CREATION,
       SetupSteps.SYSADMIN_CONFIG,
     ];
 
-    if (!setupPaths.includes(path)) {
-      store.emit(
-        new FetchDefaultNetwork(
-          () => {
-            authCheck();
-            if (!config && path != SetupSteps.SYSADMIN_CONFIG) {
-              getConfig();
-            }
-            const setupStep = localStorageService.read(LocalStorageVars.SETUP_STEP)
-            console.log(`step: ${setupStep}`)
-            if (setupStep) {
-              console.log('oi')
-              router.push(setupStep)
-            }
-          },
-          (error) => {
-            if (error) {
-             alertService.error(JSON.stringify(error))
-            }
+    if (path != SetupSteps.SYSADMIN_CONFIG && !config) {
+      console.log('tryiiing to load config');
+      getConfig(
+        (config: SetupDtoOut) => {
+          
+          console.log('loaded config....');
+          console.log(config);
+          if (config.databaseNumberMigrations < 1)
+          {
+            alertService.clearAll();
+            alertService.error(
+              `Missing migrations!`,
+            );
+            setIsSetup(true);
             router.push({
-              pathname: '/Setup/SysadminConfig',
+              pathname: SetupSteps.CREATE_ADMIN_FORM,
             });
-          },
-        ),
-      );
-    } else {
-      setIsSetup(true);
+          }else 
+          if (config.userCount < 1) {
+            alertService.clearAll();
+            alertService.error(
+              `Missing admin account, please <u><a href="${SetupSteps.CREATE_ADMIN_FORM}">create yours</a></u>!`,
+            );
+            setIsSetup(true);
+            router.push({
+              pathname: SetupSteps.CREATE_ADMIN_FORM,
+            });
+            return;
+          }
+          if (path != SetupSteps.CREATE_ADMIN_FORM) {
+            getDefaultNetwork(
+              () => {
+                setIsSetup(true);
+                console.log('all is ready!');
+              },
+              (error) => {
+                if (error === 'network-not-found') {
+                  if (config) {
+                    alertService.warn(
+                      `You didn't configured your instance yet. Go to the instance <a href="${SetupSteps.INSTANCE_CREATION}">configuration page</a>`,
+                    );
+                  } else {
+                    alertService.warn(
+                      `You dddidn't setup your instance yet. Go to the instance <a href="${SetupSteps.SYSADMIN_CONFIG}">setup page</a>`,
+                    );
+                  }
+                } else {
+                  alertService.error(JSON.stringify(error));
+                  console.error(error);
+                  router.push({
+                    pathname: SetupSteps.SYSADMIN_CONFIG,
+                  });
+                }
+              },
+            );
+          }
+        },
+        (err) => {
+
+          if(err == 'nosysadminconfig') {
+            alertService.error(
+              err
+            );  
+          }
+          
+          if(err == 'need-migrations'){
+            alertService.warn(
+              err
+            );  
+          }
+          router.push({
+            pathname: SetupSteps.SYSADMIN_CONFIG,
+          });
+          console.error('oh noes.... whats going on?');
+          alertService.error(
+            'Something went wrong, sending you to configuration wizard',
+          );
+        },
+      ); //if fails jumps to sysadmin config
+    } else if (
+      config 
+    ) {
+      console.log('authCheck');
+      authCheck([SetupSteps.SYSADMIN_CONFIG,SetupSteps.CREATE_ADMIN_FORM]);
     }
   }, [path, isSetup, authorized]);
 
-  function getConfig() {
-    store.emit(
-      new GetConfig(
-        () => {
-          console.log('everything is fine!!');
-        },
-        (err) => {
-          console.error('oh noes.... whats going on?');
-          throw new Error(err);
-        },
-      ),
-    );
+  function getConfig(onSuccess, onError) {
+    store.emit(new GetConfig(onSuccess, onError));
   }
-  function authCheck() {
+
+  function getDefaultNetwork(onSucess, onError) {
+    store.emit(new FetchDefaultNetwork(onSucess, onError));
+  }
+
+  function authCheck(allowedGuestPaths) {
     // redirect to login page if accessing a private page and not logged in
     const publicPaths = [
       '/Login',
@@ -120,7 +176,9 @@ function MyApp({ Component, pageProps }) {
 
     const path = router.asPath.split('?')[0];
 
-    if (!UserService.isLoggedIn() && !publicPaths.includes(path)) {
+    if (!UserService.isLoggedIn() && !publicPaths.includes(path)
+    //  && !allowedGuestPaths?.includes(path)
+     ) {
       // and is not 404
       if (path != '/Login') {
         router

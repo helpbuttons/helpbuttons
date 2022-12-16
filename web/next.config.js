@@ -13,7 +13,7 @@ module.exports = {
         apiUrl: '/api/' // TODO: remove ME!
     },
     images: {
-      domains: ['*'],
+      domains: ['picsum.photos'],
     },
     typescript:{
         ignoreBuildErrors: true,
