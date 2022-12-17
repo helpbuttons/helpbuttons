@@ -83,6 +83,12 @@ export class CreateNetworkDto implements Partial<Network> {
   @IsOptional()
   @IsArray({})
   tags: string[];
+
+  @IsOptional()
+  logo: string;
+
+  @IsOptional()
+  jumbo: string;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

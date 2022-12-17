@@ -17,7 +17,7 @@ export class NetworkService {
     private readonly storageService: StorageService,
   ) {}
 
-  async create(createDto: CreateNetworkDto, logo: File){
+  async create(createDto: CreateNetworkDto){
     // , jumbo: File) {
     // TODO:
     // add owner
@@ -51,13 +51,9 @@ export class NetworkService {
             });
         }
 
-        // console.log(avatar);
-        if (typeof logo !== 'undefined') {
-          network.logo = await this.storageService.newImage(logo);
-        }
-        // if (typeof jumbo !== 'undefined') {
-        //   network.jumbo = await this.storageService.newImage(jumbo);
-        // }
+        network.logo = await this.storageService.newImage64(createDto.logo);
+        network.jumbo = await this.storageService.newImage64(createDto.jumbo);
+        console.log(`network.logo ${network.logo} jumbo ${network.jumbo}`)
         await this.networkRepository.insert([network]);
       },
     );

@@ -7,8 +7,3 @@ export enum SetupSteps {
     FIRST_OPEN = '/Setup/FirstOpen',
     INSTANCE_CREATION = '/Setup/InstanceCreation',
   }
-
-export function setupNextStep(step: SetupSteps) {
-  localStorageService.save( LocalStorageVars.SETUP_STEP, step);
-  router.replace(step);
-}

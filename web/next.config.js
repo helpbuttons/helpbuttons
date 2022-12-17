@@ -30,5 +30,14 @@ module.exports = {
           },
         ]
     },
+    async redirects() {
+      return [
+        {
+          source: '/documentation',
+          destination: (process.env.API_URL ? process.env.API_URL : 'http://api:3001/') + 'doc/',
+          permanent: true,
+        },
+      ]
+    },
     i18n
 }

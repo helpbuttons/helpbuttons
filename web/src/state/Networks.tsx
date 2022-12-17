@@ -108,6 +108,10 @@ export class CreateNetwork implements WatchEvent {
           this.onSuccess(networkData.response);
         }),
         catchError((error) => {
+          if(!error.response){
+            this.onError(error, this.network);
+            throw error
+          }
           let err = error.response;
           
           if (isHttpError(err) && err.statusCode === 401) { // Unauthorized

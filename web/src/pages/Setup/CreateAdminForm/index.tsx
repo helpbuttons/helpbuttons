@@ -8,6 +8,7 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldText from 'elements/Fields/FieldText';
 import Form from 'elements/Form';
+import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -16,7 +17,7 @@ import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { IConfig } from 'services/Setup/config.type';
 import { CreateAdmin, GetConfig } from 'state/Setup';
 import { useRef } from 'store/Store';
-import { setupNextStep, SetupSteps } from '../../../shared/setupSteps';
+import { SetupSteps } from '../../../shared/setupSteps';
 
 export default CreateAdminForm;
 
@@ -61,7 +62,9 @@ function CreateAdminForm() {
           password: data.password,
         },
         () => {
-          setupNextStep(SetupSteps.FIRST_OPEN);
+          router.push({
+            pathname: SetupSteps.FIRST_OPEN,
+          });
         },
         (err) => {
           if (err?.statusCode === HttpStatus.CONFLICT) {

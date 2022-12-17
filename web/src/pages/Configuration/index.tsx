@@ -1,6 +1,7 @@
 // here we have the basic configuration of an instance
 import Popup from 'components/popup/Popup';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import FieldUploadImages from 'elements/Fields/FieldImagesUpload';
 import FieldUploadImage from 'elements/Fields/FieldImageUpload';
 import FieldLocation from 'elements/Fields/FieldLocation';
 import FieldTags from 'elements/Fields/FieldTags';
@@ -46,7 +47,9 @@ function Configuration() {
       latitude: '-8.0321',
       longitude: '3.32131',
       tags: data.tags,
-      privacy: 'public'
+      privacy: "public",
+      logo: data.logo[0].data_url,
+      jumbo: data.jumbo[0]?.data_url,
     },
       () => {
         alertService.info('done!, your network should be on the db')

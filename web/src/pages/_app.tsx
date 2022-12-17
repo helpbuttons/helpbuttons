@@ -65,89 +65,90 @@ function MyApp({ Component, pageProps }) {
       SetupSteps.SYSADMIN_CONFIG,
     ];
 
+    function getConfigError(err){
+
+      if(err == 'nosysadminconfig') {
+        alertService.error(
+          err
+        );  
+      }
+      
+      if(err == 'need-migrations'){
+        alertService.warn(
+          err
+        );  
+      }
+      router.push({
+        pathname: SetupSteps.SYSADMIN_CONFIG,
+      });
+      console.error('oh noes.... whats going on?');
+      alertService.error(
+        'Something went wrong, sending you to configuration wizard',
+      );
+  }
+
+    function getConfigSuccess (config: SetupDtoOut) {
+      if (config.databaseNumberMigrations < 1)
+      {
+        alertService.clearAll();
+        alertService.error(
+          `Missing migrations!`,
+        );
+        setIsSetup(true);
+        router.push({
+          pathname: SetupSteps.CREATE_ADMIN_FORM,
+        });
+      }else 
+      if (config.userCount < 1 &&  SetupSteps.CREATE_ADMIN_FORM != path) {
+        alertService.clearAll();
+        alertService.error(
+          `Missing admin account, please <u><a href="${SetupSteps.CREATE_ADMIN_FORM}">create yours</a></u>!`,
+        );
+        setIsSetup(true);
+        return;
+      }else if( SetupSteps.CREATE_ADMIN_FORM == path) {
+        setIsSetup(true);
+        return;
+      }
+      console.log('AAARGH')
+      if (path != SetupSteps.CREATE_ADMIN_FORM) {
+        getDefaultNetwork(
+          () => {
+            setIsSetup(true);
+            console.log('all is ready!');
+          },
+          (error) => {
+            if (error === 'network-not-found') {
+              if (config) {
+                alertService.warn(
+                  `You didn't configured your instance yet. Go to the instance <a href="${SetupSteps.INSTANCE_CREATION}">configuration page</a>`,
+                );
+              } else {
+                alertService.warn(
+                  `You dddidn't setup your instance yet. Go to the instance <a href="${SetupSteps.SYSADMIN_CONFIG}">setup page</a>`,
+                );
+              }
+              setIsSetup(true);
+            } else {
+              alertService.error(JSON.stringify(error));
+              console.error(error);
+              router.push({
+                pathname: SetupSteps.SYSADMIN_CONFIG,
+              });
+            }
+          },
+        );
+      }
+    }
+
+    
     if (path != SetupSteps.SYSADMIN_CONFIG && !config) {
       console.log('tryiiing to load config');
       getConfig(
-        (config: SetupDtoOut) => {
-          
-          console.log('loaded config....');
-          console.log(config);
-          if (config.databaseNumberMigrations < 1)
-          {
-            alertService.clearAll();
-            alertService.error(
-              `Missing migrations!`,
-            );
-            setIsSetup(true);
-            router.push({
-              pathname: SetupSteps.CREATE_ADMIN_FORM,
-            });
-          }else 
-          if (config.userCount < 1) {
-            alertService.clearAll();
-            alertService.error(
-              `Missing admin account, please <u><a href="${SetupSteps.CREATE_ADMIN_FORM}">create yours</a></u>!`,
-            );
-            setIsSetup(true);
-            router.push({
-              pathname: SetupSteps.CREATE_ADMIN_FORM,
-            });
-            return;
-          }
-          if (path != SetupSteps.CREATE_ADMIN_FORM) {
-            getDefaultNetwork(
-              () => {
-                setIsSetup(true);
-                console.log('all is ready!');
-              },
-              (error) => {
-                if (error === 'network-not-found') {
-                  if (config) {
-                    alertService.warn(
-                      `You didn't configured your instance yet. Go to the instance <a href="${SetupSteps.INSTANCE_CREATION}">configuration page</a>`,
-                    );
-                  } else {
-                    alertService.warn(
-                      `You dddidn't setup your instance yet. Go to the instance <a href="${SetupSteps.SYSADMIN_CONFIG}">setup page</a>`,
-                    );
-                  }
-                } else {
-                  alertService.error(JSON.stringify(error));
-                  console.error(error);
-                  router.push({
-                    pathname: SetupSteps.SYSADMIN_CONFIG,
-                  });
-                }
-              },
-            );
-          }
-        },
-        (err) => {
-
-          if(err == 'nosysadminconfig') {
-            alertService.error(
-              err
-            );  
-          }
-          
-          if(err == 'need-migrations'){
-            alertService.warn(
-              err
-            );  
-          }
-          router.push({
-            pathname: SetupSteps.SYSADMIN_CONFIG,
-          });
-          console.error('oh noes.... whats going on?');
-          alertService.error(
-            'Something went wrong, sending you to configuration wizard',
-          );
-        },
-      ); //if fails jumps to sysadmin config
-    } else if (
-      config 
-    ) {
-      console.log('authCheck');
+        getConfigSuccess,
+        getConfigError
+       ); //if fails jumps to sysadmin config
+    } else if (config) {
       authCheck([SetupSteps.SYSADMIN_CONFIG,SetupSteps.CREATE_ADMIN_FORM]);
     }
   }, [path, isSetup, authorized]);
@@ -177,7 +178,7 @@ function MyApp({ Component, pageProps }) {
     const path = router.asPath.split('?')[0];
 
     if (!UserService.isLoggedIn() && !publicPaths.includes(path)
-    //  && !allowedGuestPaths?.includes(path)
+     && !allowedGuestPaths?.includes(path)
      ) {
       // and is not 404
       if (path != '/Login') {

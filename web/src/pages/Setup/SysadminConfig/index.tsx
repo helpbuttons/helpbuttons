@@ -12,17 +12,13 @@ import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
-import FormSubmit from 'elements/Form/FormSubmit';
 import { store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { NavigateTo } from 'state/Routes';
 import { CreateConfig, GetConfig, SmtpTest } from 'state/Setup';
-import { useEffect } from 'react';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
-import { useRouter } from 'next/router';
-import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
-import { setupNextStep, SetupSteps } from '../../../shared/setupSteps';
+import { SetupSteps } from '../../../shared/setupSteps';
+import router from 'next/router';
 
 export default function SysadminConfig() {
   const {
@@ -54,8 +50,9 @@ export default function SysadminConfig() {
       new CreateConfig(
         data,
         () => {
-
-          setupNextStep(SetupSteps.CREATE_ADMIN_FORM);
+          router.push({
+            pathname: SetupSteps.CREATE_ADMIN_FORM,
+          });
         },
         (err, data) => {
           if (err.statusCode === HttpStatus.SERVICE_UNAVAILABLE) {

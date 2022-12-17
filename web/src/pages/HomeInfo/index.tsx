@@ -54,11 +54,16 @@ export default function HomeInfo() {
           </>
         )}
         {selectedNetwork && (
+          <><style jsx global>{`
+          .info-overlay__container {
+            background-image:  url(/api/${selectedNetwork.jumbo});
+           }
+         `}</style>          {/* : 'https://placekitten.com/800/500' */}
           <div className="info-overlay__card">
             <div className="card">
               <div className="card__header">
                 <ImageContainer
-                  src={selectedNetwork.avatar}
+                  src={selectedNetwork.logo}
                   alt={selectedNetwork.name}
                   width={50}
                   height={50}
@@ -71,6 +76,7 @@ export default function HomeInfo() {
               </div>
             </div>
           </div>
+          </>
         )}
 
         {/* Uncomment when we enable multi network */}

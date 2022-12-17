@@ -1,39 +1,18 @@
 import { Observable } from "rxjs";
-import { ajax } from "rxjs/ajax";
-import { GlobalState, store } from "pages/index";
-import { WatchEvent } from "store/Event";
-import { map, tap, take, catchError } from "rxjs/operators";
-import { localStorageService } from "services/LocalStorage";
 import { httpService } from "services/HttpService";
-import { UtilsService } from "services/Utils";
-import { UpdateEvent } from "store/Event";
-import { produce } from "immer";
 
 import getConfig from "next/config";
-import { CreateNetworkDto } from "shared/dtos/network.dto";
 import { Network } from "shared/entities/network.entity";
-const { publicRuntimeConfig } = getConfig();
-const baseUrl = `${publicRuntimeConfig.apiUrl}`;
-
 export class NetworkService {
 
   public static new(data: any): Observable<any> {
-    // let bodyData = {
-    //   name: data.name,
-    //   // url: data.url,
-    //   logo: logo,
-    //   jumbo: jumbo,
-    //   description: data.description,
-    //   latitude: data.latitude,
-    //   longitude: data.longitude,
-    //   tags: [],
-    //   radius: data.radius,
-    // };
 
-    const formData = UtilsService.objectToFormData(data);
-    return httpService.post("/networks/new", formData);
+    return httpService.post("/networks/new", data);
   }
-
+  // //Get network by id
+  public static findById(id: string = ""): Observable<Network | undefined> {
+    return httpService.get<Network>("/networks/findById/" + id);
+  }
   //Edit network
   // public static edit(data: Network, user: IUser): Observable<any> {
   //   //save the ajax object that can be .pipe by the observable
@@ -97,10 +76,7 @@ export class NetworkService {
   //   return networkWithHeaders$;
   // }
 
-  // //Get network by id
-  public static findById(id: string = ""): Observable<Network | undefined> {
-    return httpService.get<Network>("/networks/findById/" + id);
-  }
+
 
   // public static getNetworks(name: string) {
   //   const path = "/networks/find/" + name;

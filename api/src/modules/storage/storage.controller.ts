@@ -16,7 +16,7 @@ import {
 import { diskStorage } from 'multer';
 import { ApiTags } from '@nestjs/swagger';
 import { Auth } from '@src/shared/decorator/auth.decorator';
-import { editFileName, imageFileFilter } from './storage.utils';
+import { editFileName, imageFileFilter, uploadDir } from './storage.utils';
 import { StorageService } from './storage.service';
 
 
@@ -28,22 +28,8 @@ export class StorageController {
   constructor(private readonly storageService: StorageService) {}
 
   @Get('get/:imgpath')
-  seeUploadedFile(@Param('imgpath') image, @Res() res) {
-    return res.sendFile(image, { root: process.env.UPLOADS_PATH });
+  get(@Param('imgpath') image, @Res() res) {
+    return res.sendFile(image, { root: uploadDir });
   }
-
-  // @Post('upload-image')
-  // @UseInterceptors(
-  //   FileInterceptor('image', {
-  //     storage: diskStorage({
-  //       destination: process.env.UPLOADS_PATH,
-  //       filename: editFileName,
-  //     }),
-  //     fileFilter: imageFileFilter,
-  //   }),
-  // )
-  // async uploadedImage(@UploadedFile() file) {
-  //   return this.storageService.newImage(file);
-  // }
 
 }

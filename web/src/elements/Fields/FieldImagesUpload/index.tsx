@@ -8,6 +8,9 @@ export default function FieldUploadImages({ name, label, maxNumber, control }) {
   });
 
   const onChange = (imageList, addUpdateIndex) => {
+    const newImageList = imageList.map((item) => {
+      return item.data_url;
+    })
     replace(imageList);
   };
 
