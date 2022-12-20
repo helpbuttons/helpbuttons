@@ -16,10 +16,12 @@ import { setValueAndDebounce } from "state/HomeInfo";
 import router from "next/router";
 import t from "i18n";
 import { alertService } from "services/Alert";
+import { Network } from "shared/entities/network.entity";
+import NetworkLogo from "components/network/Components";
 
 export default function HomeInfo() {
 
-  const selectedNetwork = useRef(
+  const selectedNetwork : Network = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork
   );
@@ -27,13 +29,7 @@ export default function HomeInfo() {
     store,
     (state: GlobalState) => state.networks.selectedNetworkLoading
   );
-
-  useEffect(() => {
-
-  }, []);
    
-
-  
   return (
     <div className="info-overlay__container">
       <div className="info-overlay__content">
@@ -62,12 +58,8 @@ export default function HomeInfo() {
           <div className="info-overlay__card">
             <div className="card">
               <div className="card__header">
-                <ImageContainer
-                  src={selectedNetwork.logo}
-                  alt={selectedNetwork.name}
-                  width={50}
-                  height={50}
-                  localUrl
+                <NetworkLogo
+                  network={selectedNetwork}
                 />
                 <h3 className="card__header-title">{selectedNetwork.name}</h3>
               </div>

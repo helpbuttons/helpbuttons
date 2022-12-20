@@ -4,17 +4,18 @@ import { produce } from 'immer';
 import { WatchEvent, UpdateEvent, EffectEvent } from 'store/Event';
 import { GlobalState } from 'store/Store';
 
-import { INetwork } from 'services/Networks/network.type';
+
 import { NetworkService } from 'services/Networks';
 import { isHttpError } from 'services/HttpService';
 import { of } from 'rxjs';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { store } from 'pages';
 import { CreateNetworkDto } from 'shared/dtos/network.dto';
+import { Network } from 'shared/entities/network.entity';
 
 export interface NetworksState {
-  // networks: INetwork[];
-  selectedNetwork: INetwork;
+  // networks: Network[];
+  selectedNetwork: Network;
   selectedNetworkLoading: boolean;
 }
 
@@ -64,7 +65,7 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
 }
 
 export class SelectedNetworkFetched implements UpdateEvent {
-  public constructor(private network: INetwork) {}
+  public constructor(private network: Network) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -74,28 +75,6 @@ export class SelectedNetworkFetched implements UpdateEvent {
   }
 }
 
-// Uncomment when we enable multi networks
-//
-// export function createNewNetwork(network, token: string, setValidationErrors) {
-//   store.emit(new CreateNetworkEvent(network, token,
-//     (networkData :INetwork) => {
-//       localStorageService.save("network_id", networkData.id);
-//
-//       alertService.info(
-//         "You have created a network" + networkData.id.toString()
-//       );
-//
-//       Router.push("/");
-//     },
-//     (error) => {
-//     if (error.response && error.response.validationErrors) {
-//       setValidationErrors(error.response.validationErrors);
-//     }
-//     return errorService.handle(error);
-//     }
-//   ));
-// }
-//
 export class CreateNetwork implements WatchEvent {
     public constructor(
       private network,

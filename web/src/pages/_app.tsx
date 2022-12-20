@@ -121,11 +121,11 @@ function MyApp({ Component, pageProps }) {
             if (error === 'network-not-found') {
               if (config) {
                 alertService.warn(
-                  `You didn't configured your instance yet. Go to the instance <a href="${SetupSteps.INSTANCE_CREATION}">configuration page</a>`,
+                  `You didn't configured your network yet. Go to the network <a href="${SetupSteps.INSTANCE_CREATION}">configuration page</a>`,
                 );
               } else {
                 alertService.warn(
-                  `You dddidn't setup your instance yet. Go to the instance <a href="${SetupSteps.SYSADMIN_CONFIG}">setup page</a>`,
+                  `You dddidn't setup your network yet. Go to the network <a href="${SetupSteps.SYSADMIN_CONFIG}">setup page</a>`,
                 );
               }
               setIsSetup(true);

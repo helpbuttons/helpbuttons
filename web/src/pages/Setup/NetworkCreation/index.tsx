@@ -1,9 +1,9 @@
 import Configuration from "pages/Configuration";
 
 // name, description, logo, background image, button template, color pallete, colors
-export default InstanceCreation;
+export default NetworkCreation;
 
-function InstanceCreation() {
+function NetworkCreation() {
   
 
   return (

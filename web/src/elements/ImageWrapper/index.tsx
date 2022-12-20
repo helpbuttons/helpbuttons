@@ -89,13 +89,7 @@ export function ImageContainer({
   let classNames = [];
 
   const className = classNames.join(' ');
-  if (!src) {
-    return <></>;
-  }
-  if (localUrl) {
-    src = '/api/' + src;
-  }
-  // console.log('setting src: ' + src)
+  
   return (
     <img src={src} alt={alt} width={width} max-height={height} />
   );

@@ -1,4 +1,5 @@
-// here we have the basic configuration of an instance
+// here we have the basic configuration of an network
+import NetworkLogo from 'components/network/Components';
 import Popup from 'components/popup/Popup';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import FieldUploadImages from 'elements/Fields/FieldImagesUpload';
@@ -29,8 +30,8 @@ function Configuration() {
     register,
     control,
     setValue,
-    watch
-  } = useForm({
+    watch,
+    } = useForm({
     defaultValues: {
       name: "My permaculture network",
       description: "In this network we will use a map to share tools in-between our network"
@@ -56,7 +57,7 @@ function Configuration() {
         router.replace('/HomeInfo');
     }, 
     (err) => {
-      alertService.warn(`You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your instance</a>?`)
+      alertService.warn(`You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`)
       // console.log(JSON.stringify(err))
       console.log(err)
       console.log(data)
@@ -65,7 +66,7 @@ function Configuration() {
 
   return (
     <>
-      <Popup title="Create your instance">
+      <Popup title="Create your network">
         <Form classNameExtra="createAdmin">
           <p>Wizard to help on configuring your network</p>
           <p>
@@ -89,16 +90,25 @@ function Configuration() {
               validationError={errors.description}
               {...register('description', { required: true })}
             />
+
+            400x400px
             <FieldUploadImage
               name="logo"
               label="Choose logo"
               control={control}
+              width={50}
+              height={50}
             />
+
+            1500x500px
             <FieldUploadImage
               name="jumbo"
               label="Choose background image"
               control={control}
+              width={375}
+              height={125}
             />
+
             <FieldLocation
                 defaultZoom={1}
                 validationErrors={undefined}
@@ -110,7 +120,7 @@ function Configuration() {
                 watch={watch}
               />
             <FieldTags
-              label="Instance Tags"
+              label="Network Tags"
               placeholder="Food, tools, toys..."
               name="tags"
               control={control}

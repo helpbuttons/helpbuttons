@@ -69,7 +69,7 @@ function CreateAdminForm() {
         (err) => {
           if (err?.statusCode === HttpStatus.CONFLICT) {
             alertService.warn(
-              `You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your instance</a>?`,
+              `You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`,
             );
           }
           console.log(JSON.stringify(err));

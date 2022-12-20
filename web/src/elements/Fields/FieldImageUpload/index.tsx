@@ -1,7 +1,8 @@
+import { ImageContainer } from 'elements/ImageWrapper';
 import { useFieldArray } from 'react-hook-form';
 import ImageUploading from 'react-images-uploading';
 
-export default function FieldUploadImage({ name, label, control }) {
+export default function FieldUploadImage({ name, label, control, width = 100, height = 100, alt }) {
   const { fields, replace } = useFieldArray({
     control,
     name: name,
@@ -34,10 +35,11 @@ export default function FieldUploadImage({ name, label, control }) {
               </label>
               {imageList[0] && (
                 <>
-                  <img
+                  <ImageContainer
                     src={imageList[0].data_url}
-                    alt=""
-                    width="100"
+                    alt={alt}
+                    width={width}
+                    height={height}
                   />
                   <div className="image-item__btn-wrapper">
                     <button

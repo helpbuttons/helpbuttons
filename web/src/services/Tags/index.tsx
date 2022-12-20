@@ -1,8 +1,5 @@
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { BehaviorSubject } from 'rxjs';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
@@ -31,7 +28,7 @@ export class TagService {
 
   }
 
-  //Find array of tag model instances
+  //Find array of tag model networks
   public static find(tag: ITag): Observable<any> {
 
       //save the ajax object that can be .pipe by the observable
