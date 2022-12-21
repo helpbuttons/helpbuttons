@@ -57,6 +57,7 @@ function Configuration() {
         router.replace('/HomeInfo');
     }, 
     (err) => {
+
       alertService.warn(`You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`)
       // console.log(JSON.stringify(err))
       console.log(err)
@@ -64,6 +65,7 @@ function Configuration() {
     }));
   };
 
+  alertService.clearAll();
   return (
     <>
       <Popup title="Create your network">

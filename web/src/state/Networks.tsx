@@ -95,8 +95,8 @@ export class CreateNetwork implements WatchEvent {
           
           if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
             this.onError("unauthorized", this.network);
-          } else if (err.statusCode === 400 && err.message === "validation-error") {
-            this.onError(" validations error")
+          } else if (err.statusCode === 400 && err.message === "validation-error" && err.validationErrors) {
+            this.onError(err.validationErrors)
           } else {
             throw error;
           }
