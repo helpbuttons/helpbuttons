@@ -84,10 +84,10 @@ export class CreateNetworkDto implements Partial<Network> {
   @IsArray({})
   tags: string[];
 
-  @IsOptional()
+  @IsString()
   logo: string;
 
-  @IsOptional()
+  @IsString()
   jumbo: string;
 }
 
