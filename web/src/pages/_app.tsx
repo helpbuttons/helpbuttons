@@ -21,6 +21,7 @@ import {
 } from 'services/LocalStorage';
 import { SetupSteps } from '../shared/setupSteps';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
 export default appWithTranslation(MyApp);
 
@@ -106,11 +107,11 @@ function MyApp({ Component, pageProps }) {
         );
         setIsSetup(true);
         return;
-      }else if( SetupSteps.CREATE_ADMIN_FORM == path) {
+      }else if( SetupSteps.CREATE_ADMIN_FORM == path || SetupSteps.INSTANCE_CREATION == path) {
         setIsSetup(true);
         return;
       }
-      console.log('AAARGH')
+
       if (path != SetupSteps.CREATE_ADMIN_FORM) {
         getDefaultNetwork(
           () => {
@@ -198,6 +199,18 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+    <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+  <TileLayer
+    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  />
+  <Marker position={[51.505, -0.09]}>
+    <Popup>
+      A pretty CSS3 popup. <br /> Easily customizable.
+    </Popup>
+  </Marker>
+</MapContainer>
+
       <Head>
         <title>Helpbuttons.org</title>
         {/* eslint-disable-next-line @next/next/no-css-tags */}
