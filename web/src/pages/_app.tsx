@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }) {
     const setupPaths: string[] = [
       SetupSteps.CREATE_ADMIN_FORM,
       SetupSteps.FIRST_OPEN,
-      SetupSteps.INSTANCE_CREATION,
+      SetupSteps.NETWORK_CREATION,
       SetupSteps.SYSADMIN_CONFIG,
     ];
 
@@ -121,7 +121,7 @@ function MyApp({ Component, pageProps }) {
             if (error === 'network-not-found') {
               if (config) {
                 alertService.warn(
-                  `You didn't configured your network yet. Go to the network <a href="${SetupSteps.INSTANCE_CREATION}">configuration page</a>`,
+                  `You didn't configured your network yet. Go to the network <a href="${SetupSteps.NETWORK_CREATION}">configuration page</a>`,
                 );
               } else {
                 alertService.warn(

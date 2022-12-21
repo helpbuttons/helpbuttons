@@ -20,7 +20,7 @@ function FirstOpen() {
 
     const onSubmit = (data) => {
       router.push({
-        pathname: SetupSteps.INSTANCE_CREATION,
+        pathname: SetupSteps.NETWORK_CREATION,
       });
     };
     
