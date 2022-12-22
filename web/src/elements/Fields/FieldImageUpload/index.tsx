@@ -1,8 +1,9 @@
 import { ImageContainer } from 'elements/ImageWrapper';
 import { useFieldArray } from 'react-hook-form';
 import ImageUploading from 'react-images-uploading';
+import FieldError from '../FieldError';
 
-export default function FieldUploadImage({ name, label, control, width = 100, height = 100, alt }) {
+export default function FieldUploadImage({ name, label, control, width = 100, height = 100, alt = "", validationError}) {
   const { fields, replace } = useFieldArray({
     control,
     name: name,
@@ -56,6 +57,9 @@ export default function FieldUploadImage({ name, label, control, width = 100, he
             </div>
           )}
         </ImageUploading>
+        {validationError && 
+         <FieldError validationError={validationError} />
+        }
       </div>
     </>
   );

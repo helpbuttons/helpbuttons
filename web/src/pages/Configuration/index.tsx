@@ -31,10 +31,14 @@ function Configuration() {
     control,
     setValue,
     watch,
+    setError
     } = useForm({
     defaultValues: {
       name: "My permaculture network",
-      description: "In this network we will use a map to share tools in-between our network"
+      description: "In this network we will use a map to share tools in-between our network",
+      logo: "",
+      jumbo: "",
+      tags: []
     }
   });
 
@@ -49,7 +53,7 @@ function Configuration() {
       longitude: '3.32131',
       tags: data.tags,
       privacy: "public",
-      logo: data.logo[0].data_url,
+      logo: data.logo[0]?.data_url,
       jumbo: data.jumbo[0]?.data_url,
     },
       () => {
@@ -58,14 +62,31 @@ function Configuration() {
     }, 
     (err) => {
 
-      alertService.warn(`You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`)
-      // console.log(JSON.stringify(err))
-      console.log(err)
-      console.log(data)
+      if(err?.message.indexOf('validation-error') === 0)
+      {
+        const mimetypeError = 'invalid-mimetype-';
+        if(err?.validationErrors?.jumbo && err.validationErrors.jumbo.indexOf(mimetypeError) === 0 ){
+            const mimetype = err.validationErrors.jumbo.substr(mimetypeError.length);
+            const mimetypeErrorMessage = `invalid image mimetype: "${mimetype}"`;
+            setError('jumbo',{ type: 'custom', message: mimetypeErrorMessage
+          })
+        }else if(err?.validationErrors?.logo && err.validationErrors.logo.indexOf(mimetypeError) === 0 ){
+          const mimetype = err.validationErrors.logo.substr(mimetypeError.length);
+          const mimetypeErrorMessage = `invalid image mimetype: "${mimetype}"`;
+            setError('logo',{ type: 'custom', message: mimetypeErrorMessage
+          })
+        }else {
+          alertService.warn(`Validation errors ${JSON.stringify(err)}`)
+        }
+      }else{
+        alertService.warn(`You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`)
+        console.log(err)
+      }
+
     }));
   };
 
-  alertService.clearAll();
+  // alertService.clearAll();
   return (
     <>
       <Popup title="Create your network">
@@ -100,6 +121,8 @@ function Configuration() {
               control={control}
               width={50}
               height={50}
+              validationError={errors.logo}
+              {...register('logo', { required: true })}
             />
 
             1500x500px
@@ -109,6 +132,8 @@ function Configuration() {
               control={control}
               width={375}
               height={125}
+              validationError={errors.jumbo}
+              {...register('jumbo', { required: true })}
             />
 
             <FieldLocation

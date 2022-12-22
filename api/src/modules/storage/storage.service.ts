@@ -11,6 +11,8 @@ import { Repository } from 'typeorm';
 import { ImageFile } from './image-file.entity';
 import { writeFilePromise } from '@src/shared/helpers/io.helper';
 import { getFilesRoute, uploadDir } from './storage.utils';
+import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
+import { ValidationError } from 'class-validator';
 
 @Injectable()
 export class StorageService {
@@ -19,31 +21,17 @@ export class StorageService {
     private readonly imageFilesRepository: Repository<ImageFile>,
   ) {}
 
-  async newImage(file: any) {
-    console.log('FIXEMEEEEEEEEEEE');
-    return 'FIXEMEEEEEEEE';
-    // const fileimage = {
-    //   id: dbIdGenerator(),
-    //   name: file.filename,
-    //   mimetype: file.mimetype,
-    //   originalname: file.originalname,
-    // };
-    // await this.imageFilesRepository.insert([fileimage]);
-    // return fileimage.name;
-  }
 
   async newImage64(data64) : Promise<string | void> {
     const fs = require('fs');
-    // let a = 'base64ImageString';
     let [garbage, mimetype, data, fail] = data64
       .toString()
       .match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    // TODO ALLOWED MIMETYPES:
     if (
-      !(['image/jpeg', 'image/png', 'image/jpg'].includes(mimetype))
+      !(['image/jpeg', 'image/png', 'image/jpg', 'image/gif'].includes(mimetype))
     ) {
       console.log('image mimetype not allowed :: ', mimetype);
-      throw new HttpException (`'image mimetype not allowed :: ${mimetype}`, HttpStatus.EXPECTATION_FAILED)
+      throw new Error(`invalid-mimetype-${mimetype}`);
     }
 
     const fileImageName = `${dbIdGenerator()}.${

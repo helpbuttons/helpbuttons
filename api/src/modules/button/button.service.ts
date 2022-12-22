@@ -75,7 +75,7 @@ export class ButtonService {
         if (Array.isArray(images) && images.length > 0) {
           button.images = await Promise.all(
             images.map(async (imageFile) => {
-              return await await this.storageService.newImage(
+              return await await this.storageService.newImage64(
                 imageFile,
               );
             }),

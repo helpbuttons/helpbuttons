@@ -24,17 +24,7 @@ import { editFileName, imageFileFilter } from '../storage/storage.utils';
     constructor(private readonly networkService: NetworkService) {}
   
     @Post('new')
-    @UseInterceptors(FileInterceptor('logo', {
-      storage: diskStorage({
-        destination: process.env.UPLOADS_PATH,
-        filename: editFileName,
-      }),
-      fileFilter: imageFileFilter,
-    }
-    ))
-
-    create(@UploadedFile() logo,
-      @Body() createDto: CreateNetworkDto
+    create(@Body() createDto: CreateNetworkDto
     ){
       return this.networkService.create(createDto);
     }
