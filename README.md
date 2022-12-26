@@ -6,8 +6,10 @@ This software helps build collaborative tools for any activity, such as sharing 
 
 [<img src="https://static.fsf.org/nosvn/images/socials/mastodon.png" width="48">
 ](https://fosstodon.org/@helpbuttonsorg)
-[<img src="https://lh3.googleusercontent.com/-DE6obBjEEko/YJ_w7v1-0WI/AAAAAAAAI1c/LVh2thnkuk88FBGAbm0hpuzHSXZcwGjaACLcBGAsYHQ/image.png" witdh="48">](https://t.me/+ls0xkQlG8uBlZjZk)
-[<img src="https://apkbolt.com/wp-content/uploads/2018/08/Discord-Apk.png" width="48">](https://discord.gg/UBKWHuj2Vn)]
+[<img src="https://lh3.googleusercontent.com/-DE6obBjEEko/YJ_w7v1-0WI/AAAAAAAAI1c/LVh2thnkuk88FBGAbm0hpuzHSXZcwGjaACLcBGAsYHQ/image.png" width="48">
+](https://t.me/+ls0xkQlG8uBlZjZk)
+[<img src="https://apkbolt.com/wp-content/uploads/2018/08/Discord-Apk.png" width="48">
+](https://discord.gg/UBKWHuj2Vn)
 
 contact us: helpbuttons _at_ tutanota.com
 # Welcome to Helpbuttons Repository
