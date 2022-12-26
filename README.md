@@ -4,7 +4,7 @@ helpbuttons is a one-on-one social collaboration app with no money exchange. Fin
 
 This software helps build collaborative tools for any activity, such as sharing transport or seizing food. It connects people with specific needs to create networks. Mutual support groups, neighborhood communities, schools, town halls or emergency teams will benefit from it.
 
-[![](https://static.fsf.org/nosvn/images/socials/mastodon.png "mastodon symbol")](https://fosstodon.org/@helpbuttons)
+[![](https://static.fsf.org/nosvn/images/socials/mastodon.png "mastodon symbol") =50x](https://fosstodon.org/@helpbuttons)
 
 # Welcome to Helpbuttons Repository
 
