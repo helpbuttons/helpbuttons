@@ -11,6 +11,8 @@ This software helps build collaborative tools for any activity, such as sharing 
 [<img src="https://apkbolt.com/wp-content/uploads/2018/08/Discord-Apk.png" width="48">
 ](https://discord.gg/UBKWHuj2Vn)
 
+<a rel="me" href="https://fosstodon.org/@helpbuttonsorg">Mastodon</a>
+
 contact us: helpbuttons _at_ tutanota.com
 # Welcome to Helpbuttons Repository
 
