@@ -1,5 +1,11 @@
 ![HB cover](/web/public/assets/images/hb_landscape_02_small.jpg?raw=true "hb cover")
 
+helpbuttons is a one-on-one social collaboration app with no money exchange. Find volunteers, share, help and get recognition for your action in a simple way. We need people. If you believe in social collaboration beyond consumption.
+
+This software helps build collaborative tools for any activity, such as sharing transport or seizing food. It connects people with specific needs to create networks. Mutual support groups, neighborhood communities, schools, town halls or emergency teams will benefit from it.
+
+[![](https://static.fsf.org/nosvn/images/socials/mastodon.png "mastodon symbol")](https://fosstodon.org/@helpbuttons)
+
 # Welcome to Helpbuttons Repository
 
 This is the repository for helpbuttons.org. check the hb-docs repo (https://github.com/helpbuttons/hb-docs).
