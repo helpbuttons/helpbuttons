@@ -12,17 +12,13 @@ import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
-import FormSubmit from 'elements/Form/FormSubmit';
 import { store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { NavigateTo } from 'state/Routes';
 import { CreateConfig, GetConfig, SmtpTest } from 'state/Setup';
-import { useEffect } from 'react';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
-import { useRouter } from 'next/router';
-import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
-import { setupNextStep, SetupSteps } from '../../../shared/setupSteps';
+import { SetupSteps } from '../../../shared/setupSteps';
+import router from 'next/router';
 
 export default function SysadminConfig() {
   const {
@@ -42,7 +38,7 @@ export default function SysadminConfig() {
       postgresHostName: 'db',
       postgresDb: 'hb-db',
       postgresUser: 'postgres',
-      postgresPassword: 'doesntmatter',
+      postgresPassword: 'PASSWORD',
       postgresPort: 5432,
       smtpUrl:
         'smtp://info@helpbuttons.org:some-string@smtp.some-provider.com:587',
@@ -54,15 +50,23 @@ export default function SysadminConfig() {
       new CreateConfig(
         data,
         () => {
-
-          setupNextStep(SetupSteps.CREATE_ADMIN_FORM);
+          router.push({
+            pathname: SetupSteps.CREATE_ADMIN_FORM,
+          });
         },
         (err, data) => {
-          if (err.statusCode !== HttpStatus.CONFLICT) {
-            alertService.error(`Problem:: ${JSON.stringify(err)}`);
+          if (err.statusCode === HttpStatus.SERVICE_UNAVAILABLE) {
+            if (err.message === 'db-hostname-error') {
+              alertService.error(`Database connection error, could not connect to database host '${data.postgresHostName}' not found`);
+            } else if (err.message === 'db-connection-error') {
+              alertService.error(`Database connection error, wrong credentials?`);
+            }else {
+              alertService.error(`Problem:: ${JSON.stringify(err)}`);
+            }
+            
           }
           if (err.statusCode === HttpStatus.CONFLICT) {
-            alertService.warn(`You already created a configuration, please rmeove config.json from the api directory. Or if you want to continue this installation <a href="${SetupSteps.CREATE_ADMIN_FORM}">create an admin account</a>, or <a href="${SetupSteps.FIRST_OPEN}">configure your instance</a>?`)
+            alertService.warn(`You already created a configuration, please rmeove config.json from the api directory. Or if you want to continue this installation <a href="${SetupSteps.CREATE_ADMIN_FORM}">create an admin account</a>, or <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`)
           }
         },
       ),

@@ -17,7 +17,8 @@ export class GetConfig implements WatchEvent {
     return SetupService.get().pipe(
       map((config :IConfig) => {
         store.emit(new ConfigFound(config))
-        this.onSuccess('got the config!')
+        console.log(config)
+        this.onSuccess(config)
       }),
       catchError((error) => {
         let err = error.response;

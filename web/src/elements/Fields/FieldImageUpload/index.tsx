@@ -1,31 +1,27 @@
-import { useState } from "react";
-import ImageUploading from "react-images-uploading";
+import { ImageContainer } from 'elements/ImageWrapper';
+import { useFieldArray } from 'react-hook-form';
+import ImageUploading from 'react-images-uploading';
+import FieldError from '../FieldError';
 
-export default function FieldUploadImage({ name, label, handleChange }) {
-  const [images, setImages] = useState([]);
+export default function FieldUploadImage({ name, label, control, width = 100, height = 100, alt = "", validationError}) {
+  const { fields, replace } = useFieldArray({
+    control,
+    name: name,
+  });
 
   const onChange = (imageList, addUpdateIndex) => {
-    setImages(imageList);
-
-    const imageFilesList = imageList.map((imageData) => imageData.file);
-    
-    if (imageFilesList.length > 0)
-      handleChange(name, imageFilesList[0]);
+    replace(imageList);
   };
 
   return (
     <>
       <div className="form__field">
         <ImageUploading
-          value={images}
+          value={fields}
           onChange={onChange}
           dataURLKey="data_url"
         >
-          {({
-            imageList,
-            onImageUpload,
-            onImageRemove,
-          }) => (
+          {({ imageList, onImageUpload, onImageRemove }) => (
             // write your building UI
             <div className="upload__image-wrapper">
               <label
@@ -38,24 +34,32 @@ export default function FieldUploadImage({ name, label, handleChange }) {
               >
                 {label}
               </label>
-              {imageList.map((image, index) => (
-                <div key={index} className="image-item">
-                  <img src={image.data_url} alt="" width="100" />
+              {imageList[0] && (
+                <>
+                  <ImageContainer
+                    src={imageList[0].data_url}
+                    alt={alt}
+                    width={width}
+                    height={height}
+                  />
                   <div className="image-item__btn-wrapper">
                     <button
                       onClick={(e) => {
                         e.preventDefault();
-                        onImageRemove(index);
+                        onImageRemove(0);
                       }}
                     >
                       Remove
                     </button>
                   </div>
-                </div>
-              ))}
+                </>
+              )}
             </div>
           )}
         </ImageUploading>
+        {validationError && 
+         <FieldError validationError={validationError} />
+        }
       </div>
     </>
   );

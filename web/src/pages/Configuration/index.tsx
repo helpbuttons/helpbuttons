@@ -1,6 +1,8 @@
-// here we have the basic configuration of an instance
+// here we have the basic configuration of an network
+import NetworkLogo from 'components/network/Components';
 import Popup from 'components/popup/Popup';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import FieldUploadImages from 'elements/Fields/FieldImagesUpload';
 import FieldUploadImage from 'elements/Fields/FieldImageUpload';
 import FieldLocation from 'elements/Fields/FieldLocation';
 import FieldTags from 'elements/Fields/FieldTags';
@@ -15,24 +17,28 @@ import {
   localStorageService,
   LocalStorageVars,
 } from 'services/LocalStorage';
-import { CreateNetwork } from 'state/Networks';
-import { setupNextStep, SetupSteps } from '../../../shared/setupSteps';
+import { SetupSteps } from 'shared/setupSteps';
+import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
 
 // name, description, logo, background image, button template, color pallete, colors
-export default InstanceCreation;
+export default Configuration;
 
-function InstanceCreation() {
+function Configuration() {
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
     control,
     setValue,
-    watch
-  } = useForm({
+    watch,
+    setError
+    } = useForm({
     defaultValues: {
       name: "My permaculture network",
-      description: "In this network we will use a map to share tools in-between our network"
+      description: "In this network we will use a map to share tools in-between our network",
+      logo: "",
+      jumbo: "",
+      tags: []
     }
   });
 
@@ -46,24 +52,48 @@ function InstanceCreation() {
       latitude: '-8.0321',
       longitude: '3.32131',
       tags: data.tags,
-      privacy: 'public'
+      privacy: "public",
+      logo: data.logo[0]?.data_url,
+      jumbo: data.jumbo[0]?.data_url,
     },
       () => {
-        alertService.info('done!, your network should be on the db')
-        localStorageService.remove(LocalStorageVars.SETUP_STEP);
-        router.replace('/HomeInfo');
+        const onComplete = () => {
+          alertService.info('done!, your network should be on the db')
+          router.replace('/HomeInfo');
+        }
+        store.emit(new FetchDefaultNetwork(onComplete, onComplete));
+        
     }, 
     (err) => {
-      alertService.warn(`You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your instance</a>?`)
-      // console.log(JSON.stringify(err))
-      console.log(err)
-      console.log(data)
+
+      if(err?.message.indexOf('validation-error') === 0)
+      {
+        const mimetypeError = 'invalid-mimetype-';
+        if(err?.validationErrors?.jumbo && err.validationErrors.jumbo.indexOf(mimetypeError) === 0 ){
+            const mimetype = err.validationErrors.jumbo.substr(mimetypeError.length);
+            const mimetypeErrorMessage = `invalid image mimetype: "${mimetype}"`;
+            setError('jumbo',{ type: 'custom', message: mimetypeErrorMessage
+          })
+        }else if(err?.validationErrors?.logo && err.validationErrors.logo.indexOf(mimetypeError) === 0 ){
+          const mimetype = err.validationErrors.logo.substr(mimetypeError.length);
+          const mimetypeErrorMessage = `invalid image mimetype: "${mimetype}"`;
+            setError('logo',{ type: 'custom', message: mimetypeErrorMessage
+          })
+        }else {
+          alertService.warn(`Validation errors ${JSON.stringify(err)}`)
+        }
+      }else{
+        alertService.warn(`You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`)
+        console.log(err)
+      }
+
     }));
   };
 
+  // alertService.clearAll();
   return (
     <>
-      <Popup title="Create your instance">
+      <Popup title="Create your network">
         <Form classNameExtra="createAdmin">
           <p>Wizard to help on configuring your network</p>
           <p>
@@ -87,16 +117,29 @@ function InstanceCreation() {
               validationError={errors.description}
               {...register('description', { required: true })}
             />
+
+            400x400px
             <FieldUploadImage
               name="logo"
               label="Choose logo"
               control={control}
+              width={50}
+              height={50}
+              validationError={errors.logo}
+              {...register('logo', { required: true })}
             />
+
+            1500x500px
             <FieldUploadImage
               name="jumbo"
               label="Choose background image"
               control={control}
+              width={375}
+              height={125}
+              validationError={errors.jumbo}
+              {...register('jumbo', { required: true })}
             />
+
             <FieldLocation
                 defaultZoom={1}
                 validationErrors={undefined}
@@ -108,7 +151,7 @@ function InstanceCreation() {
                 watch={watch}
               />
             <FieldTags
-              label="Instance Tags"
+              label="Network Tags"
               placeholder="Food, tools, toys..."
               name="tags"
               control={control}

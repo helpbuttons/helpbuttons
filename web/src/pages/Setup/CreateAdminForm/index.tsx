@@ -8,6 +8,7 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldText from 'elements/Fields/FieldText';
 import Form from 'elements/Form';
+import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -16,7 +17,7 @@ import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { IConfig } from 'services/Setup/config.type';
 import { CreateAdmin, GetConfig } from 'state/Setup';
 import { useRef } from 'store/Store';
-import { setupNextStep, SetupSteps } from '../../../shared/setupSteps';
+import { SetupSteps } from '../../../shared/setupSteps';
 
 export default CreateAdminForm;
 
@@ -43,41 +44,6 @@ function CreateAdminForm() {
     (state: GlobalState) => state.config,
   );
 
-  function getConfig() {
-    store.emit(
-      new GetConfig(
-        () => {},
-        (err) => {
-          console.log(err)
-          if(err == 'nosysadminconfig') {
-            alertService.error(
-              errorMessageConfigJson
-            );  
-          }
-          
-          if(err == 'nomigrations'){
-            alertService.warn(
-              warningMessageMigrations
-            );  
-          }
-        },
-      ),
-    );
-  }
-
-  useEffect(() => {
-    alertService.clearAll();
-    if (!config) {
-      alertService.error(errorMessageConfigJson)
-      getConfig();
-    }else {
-      if (config.databaseNumberMigrations < 1)
-        alertService.warn(warningMessageMigrations)
-    }
-    
-
-  }, [config]);
-
   const onSubmit = (data) => {
     if (data.password != data.password_confirm) {
       const passwordsWontMatch = {
@@ -96,12 +62,14 @@ function CreateAdminForm() {
           password: data.password,
         },
         () => {
-          setupNextStep(SetupSteps.FIRST_OPEN);
+          router.push({
+            pathname: SetupSteps.FIRST_OPEN,
+          });
         },
         (err) => {
           if (err?.statusCode === HttpStatus.CONFLICT) {
             alertService.warn(
-              `You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your instance</a>?`,
+              `You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`,
             );
           }
           console.log(JSON.stringify(err));

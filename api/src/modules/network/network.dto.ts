@@ -9,6 +9,7 @@ import {
   IsOptional,
   IsEnum,
   IsString,
+  IsNotEmpty,
 } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
 
@@ -83,6 +84,12 @@ export class CreateNetworkDto implements Partial<Network> {
   @IsOptional()
   @IsArray({})
   tags: string[];
+
+  @IsNotEmpty()
+  logo: string;
+
+  @IsNotEmpty()
+  jumbo: string;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

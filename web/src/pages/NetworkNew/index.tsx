@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Popup from "components/popup/Popup";
-import { INetwork } from "services/Networks/network.type";
+
 // import { createNewNetwork } from "./data";
 import { store } from "pages/index";
 import FieldText from "elements/Fields/FieldText";
@@ -30,7 +30,7 @@ export default function NetworkNew() {
     longitude: null,
     radius: null,
   };
-  const [values, setValues] = useState<INetwork>(fields);
+  const [values, setValues] = useState<Network>(fields);
   const [validationErrors, setValidationErrors] = useState(fields);
 
   const {

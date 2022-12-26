@@ -4,17 +4,18 @@ import { produce } from 'immer';
 import { WatchEvent, UpdateEvent, EffectEvent } from 'store/Event';
 import { GlobalState } from 'store/Store';
 
-import { INetwork } from 'services/Networks/network.type';
+
 import { NetworkService } from 'services/Networks';
 import { isHttpError } from 'services/HttpService';
 import { of } from 'rxjs';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { store } from 'pages';
 import { CreateNetworkDto } from 'shared/dtos/network.dto';
+import { Network } from 'shared/entities/network.entity';
 
 export interface NetworksState {
-  // networks: INetwork[];
-  selectedNetwork: INetwork;
+  // networks: Network[];
+  selectedNetwork: Network;
   selectedNetworkLoading: boolean;
 }
 
@@ -55,7 +56,7 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
           err.statusCode === HttpStatus.NOT_FOUND
         ) {
           // do nothing, its ok! it will jump to the setup!
-          this.onError();
+          this.onError('network-not-found');
         }
         return of(undefined);
       }),
@@ -64,7 +65,7 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
 }
 
 export class SelectedNetworkFetched implements UpdateEvent {
-  public constructor(private network: INetwork) {}
+  public constructor(private network: Network) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -74,28 +75,6 @@ export class SelectedNetworkFetched implements UpdateEvent {
   }
 }
 
-// Uncomment when we enable multi networks
-//
-// export function createNewNetwork(network, token: string, setValidationErrors) {
-//   store.emit(new CreateNetworkEvent(network, token,
-//     (networkData :INetwork) => {
-//       localStorageService.save("network_id", networkData.id);
-//
-//       alertService.info(
-//         "You have created a network" + networkData.id.toString()
-//       );
-//
-//       Router.push("/");
-//     },
-//     (error) => {
-//     if (error.response && error.response.validationErrors) {
-//       setValidationErrors(error.response.validationErrors);
-//     }
-//     return errorService.handle(error);
-//     }
-//   ));
-// }
-//
 export class CreateNetwork implements WatchEvent {
     public constructor(
       private network,
@@ -108,13 +87,18 @@ export class CreateNetwork implements WatchEvent {
           this.onSuccess(networkData.response);
         }),
         catchError((error) => {
+          if(!error.response){
+            this.onError(error, this.network);
+            throw error
+          }
           let err = error.response;
           
           if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
             this.onError("unauthorized", this.network);
-          } else if (err.statusCode === 400 && err.message === "validation-error") {
-            this.onError(" validations error")
-          } else {
+          } else if (err.statusCode === HttpStatus.BAD_REQUEST && err.message === "validation-error" && err.validationErrors) {
+            this.onError(err)
+          } else{
+            this.onError(err)
             throw error;
           }
           return of(undefined);

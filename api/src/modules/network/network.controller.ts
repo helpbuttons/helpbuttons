@@ -24,28 +24,9 @@ import { editFileName, imageFileFilter } from '../storage/storage.utils';
     constructor(private readonly networkService: NetworkService) {}
   
     @Post('new')
-    @UseInterceptors(FileInterceptor('logo', {
-      storage: diskStorage({
-        destination: process.env.UPLOADS_PATH,
-        filename: editFileName,
-      }),
-      fileFilter: imageFileFilter,
-    }
-    ))
-    // @UseInterceptors(FileInterceptor('jumbo', {
-    //   storage: diskStorage({
-    //     destination: process.env.UPLOADS_PATH,
-    //     filename: editFileName,
-    //   }),
-    //   fileFilter: imageFileFilter,
-    // }
-    // ))
-    create(@UploadedFile() logo,
-    // @UploadedFile() jumbo,
-      @Body() createDto: CreateNetworkDto
+    create(@Body() createDto: CreateNetworkDto
     ){
-      return this.networkService.create(createDto, logo);
-      // , jumbo);
+      return this.networkService.create(createDto);
     }
   
     @Get('find/:name')

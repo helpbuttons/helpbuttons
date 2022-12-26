@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { ILike, Repository } from 'typeorm';
@@ -7,6 +12,7 @@ import { CreateNetworkDto, UpdateNetworkDto } from './network.dto';
 import { Network } from './network.entity';
 import { getManager } from 'typeorm';
 import { StorageService } from '../storage/storage.service';
+import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 
 @Injectable()
 export class NetworkService {
@@ -17,11 +23,7 @@ export class NetworkService {
     private readonly storageService: StorageService,
   ) {}
 
-  async create(createDto: CreateNetworkDto, logo: File){
-    // , jumbo: File) {
-    // TODO:
-    // add owner
-    // validate geopoint
+  async create(createDto: CreateNetworkDto) {
     createDto.radius = createDto.radius ? createDto.radius : 1;
     const network = {
       id: dbIdGenerator(),
@@ -36,7 +38,7 @@ export class NetworkService {
       location: () =>
         `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
       logo: null,
-      jumbo: null
+      jumbo: null,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -51,13 +53,25 @@ export class NetworkService {
             });
         }
 
-        // console.log(avatar);
-        if (typeof logo !== 'undefined') {
-          network.logo = await this.storageService.newImage(logo);
+        try {
+          network.logo = await this.storageService.newImage64(
+            createDto.logo,
+          );
+        } catch (err) {
+          throw new ValidationException({ logo: err.message });
         }
-        // if (typeof jumbo !== 'undefined') {
-        //   network.jumbo = await this.storageService.newImage(jumbo);
-        // }
+
+        try {
+          network.jumbo = await this.storageService.newImage64(
+            createDto.jumbo,
+          );
+        } catch (err) {
+          console.log(`errorjumboooooror: ${err.message}`);
+          throw new ValidationException({ jumbo: err.message });
+        }
+        console.log(
+          `network.logo ${network.logo} jumbo ${network.jumbo}`,
+        );
         await this.networkRepository.insert([network]);
       },
     );
@@ -65,8 +79,10 @@ export class NetworkService {
     return network;
   }
 
-  async findOne(id: string): Promise<Network>{
-    const network = await this.networkRepository.findOne({where:{id}});
+  async findOne(id: string): Promise<Network> {
+    const network = await this.networkRepository.findOne({
+      where: { id },
+    });
     if (!network) {
       throw new NotFoundException('Network not found');
     }
@@ -75,26 +91,29 @@ export class NetworkService {
 
   async findAll(name: string): Promise<Network[]> {
     return await this.networkRepository.find({
-      where:
-      {name: ILike(`%${name}%`),}
+      where: { name: ILike(`%${name}%`) },
     });
   }
 
-  findDefaultNetwork(): Promise<Network>{
-    return this.networkRepository.find({order: {created_at: "ASC"}})
-    .then((networks) => {
-      if (networks.length < 1) {
-        throw new HttpException('Default network not found', HttpStatus.NOT_FOUND);
-      }
-      return networks[0];
-    })
-    .catch((error) => {
-      if (typeof error === typeof HttpException) {
-        throw error;
-      }
-      console.log(error)
-      throw new HttpException('🙆🏼‍♂️', HttpStatus.NOT_FOUND)
-    })
+  findDefaultNetwork(): Promise<Network> {
+    return this.networkRepository
+      .find({ order: { created_at: 'ASC' } })
+      .then((networks) => {
+        if (networks.length < 1) {
+          throw new HttpException(
+            'Default network not found',
+            HttpStatus.NOT_FOUND,
+          );
+        }
+        return networks[0];
+      })
+      .catch((error) => {
+        if (typeof error === typeof HttpException) {
+          throw error;
+        }
+        console.log(error);
+        throw new HttpException('🙆🏼‍♂️', HttpStatus.NOT_FOUND);
+      });
   }
 
   update(id: string, updateDto: UpdateNetworkDto) {

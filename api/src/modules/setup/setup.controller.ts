@@ -10,7 +10,7 @@ import {
   UseFilters,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SetupDto } from './setup.entity';
+import { SetupDto, SetupDtoOut } from './setup.entity';
 import { SetupService } from './setup.service';
 
 @ApiTags('setup')
@@ -23,8 +23,11 @@ export class SetupController {
   }
 
   @Get('')
-  async get() {
-    return this.setupService.get();
+  async get(): Promise<SetupDtoOut> {
+    return this.setupService.get()
+    .then((setupDtoOut: SetupDtoOut) => {
+      return setupDtoOut
+    });
   }
 
   @Post('smtpTest')

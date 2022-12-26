@@ -3,7 +3,7 @@ import Btn, { BtnType, ContentAlignment } from "elements/Btn";
 import Form from "elements/Form";
 import { useRouter } from "next/router";
 import { useForm } from 'react-hook-form';
-import { setupNextStep, SetupSteps } from "../../../shared/setupSteps";
+import { SetupSteps } from "../../../shared/setupSteps";
 
 export default FirstOpen;
 
@@ -19,7 +19,9 @@ function FirstOpen() {
     const router = useRouter()
 
     const onSubmit = (data) => {
-        setupNextStep(SetupSteps.INSTANCE_CREATION);
+      router.push({
+        pathname: SetupSteps.NETWORK_CREATION,
+      });
     };
     
     return (
