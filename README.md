@@ -1,6 +1,6 @@
 ![HB cover](/web/public/assets/images/hb_landscape_02_small.jpg?raw=true "hb cover")
 
-# Welcome to Helpbuttons' Frontend Repository
+# Welcome to Helpbuttons Repository
 
 This is the repository for helpbuttons.org. check the hb-docs repo (https://github.com/helpbuttons/hb-docs).
 ## Getting Started
@@ -16,8 +16,6 @@ then run helpbuttons
 
 then please setup the database scheme:
 `$ docker-compose exec api yarn migration:run`
-
-**login:** user@email.com **password:** password
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
@@ -41,8 +39,6 @@ Please load and read complete documentation
 [hb-docs](https://github.com/helpbuttons/hb-docs)
 
 
-
-
 ## For developers:
 
 ### web
@@ -52,7 +48,6 @@ Please load and read complete documentation
 $ ln -s .env web/.env
 $ docker-compose up -d api
 $ docker-compose exec api yarn migration:run
-$ docker-compose exec api yarn seed:run
 $ cd web
 $ yarn
 $ yarn dev
@@ -83,12 +78,8 @@ Uncoment on docker-compose the lines
     #   - "5432:5432"
 ```
 
-Please edit the .env file... 
-add: `POSTGRES_HOSTNAME=localhost`
-
 ```
 $ yarn migration:run
-$ yarn seed:run
 $ cd api
 $ yarn
 $ yarn dev
