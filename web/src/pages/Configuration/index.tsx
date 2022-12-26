@@ -18,7 +18,7 @@ import {
   LocalStorageVars,
 } from 'services/LocalStorage';
 import { SetupSteps } from 'shared/setupSteps';
-import { CreateNetwork } from 'state/Networks';
+import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
 
 // name, description, logo, background image, button template, color pallete, colors
 export default Configuration;
@@ -57,8 +57,12 @@ function Configuration() {
       jumbo: data.jumbo[0]?.data_url,
     },
       () => {
-        alertService.info('done!, your network should be on the db')
-        router.replace('/HomeInfo');
+        const onComplete = () => {
+          alertService.info('done!, your network should be on the db')
+          router.replace('/HomeInfo');
+        }
+        store.emit(new FetchDefaultNetwork(onComplete, onComplete));
+        
     }, 
     (err) => {
 
