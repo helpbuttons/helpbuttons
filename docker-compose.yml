@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 services:
   web:
     build: web/
@@ -31,6 +31,28 @@ services:
       retries: 5
 
   graphhopper:
-    image: israelhikingmap/graphhopper
+    image: israelhikingmap/graphhopper:6.2
     ports:
       - "8989:8989"
+    volumes:
+      - ghdata:/data:rw
+      - type: bind
+        source: ./graphhopper/gh-config.yml
+        target: /data/gh-config.yml
+      - type: bind
+        source: ./graphhopper/portugal-latest.osm.pbf
+        target: /graphhopper/portugal-latest.osm.pbf
+    ports:
+      - 8989:8989
+    entrypoint: ./graphhopper.sh --host 0.0.0.0 -i portugal-latest.osm.pbf -o /data/default-gh/ -c /data/gh-config.yml
+    environment:
+      - JAVA_OPTS=-Xmx4g -Xms4g -XX:MaxPermSize=4096M
+
+volumes:
+  ghdata:
+    driver: local
+
+# deploy:
+#   resources:
+#     limits:
+#       memory: 4096m
