@@ -2,6 +2,7 @@ version: '3'
 services:
   web:
     build: web/
+    image: helpbuttons/helpbuttons-web:main
     ports:
       - "3000:3000"
     depends_on:
@@ -9,6 +10,10 @@ services:
 
   api:
     build: api/
+    image: helpbuttons/helpbuttons-api:main
+    volumes:
+      - ./config.json:/app/config.json
+      - ./uploads:/app/uploads
     depends_on:
       - db
 #    ports:
