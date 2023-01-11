@@ -12,9 +12,6 @@ module.exports = {
     publicRuntimeConfig: {
         apiUrl: '/api/' // TODO: remove ME!
     },
-    images: {
-      domains: ['picsum.photos', 'dummyimage.com'],
-    },
     typescript:{
         ignoreBuildErrors: true,
     },
