@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import configs from 'config.json';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { Repository } from 'typeorm';
 import { ImageFile } from './image-file.entity';

@@ -3,7 +3,7 @@ import { registerAs } from '@nestjs/config';
 import { NodeEnv } from '@src/shared/types';
 import { WebAppConfigs } from '../types/web.type';
 
-var configFile = require('../../../config.json');
+var configFile = require('@src/../../config.json');
 
 export default registerAs('webAppConfigs', (): WebAppConfigs => {
   const configs = 
