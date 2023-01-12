@@ -74,7 +74,7 @@ export default function Btn({
     contentAlignment = null,
     disabled = false,
     isSubmitting = false,
-    onClick = {},
+    onClick = () => {},
 }: BtnProps) {
     let classNames = [];
     const hasIcon = iconRight !== null || iconLeft !== null;

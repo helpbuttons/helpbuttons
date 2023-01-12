@@ -7,7 +7,7 @@ import getConfig from 'next/config';
 import { IUser, ICurrentUser } from "./network.type";
 import { httpService } from "services/HttpService";
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
-import { SignupRequestDto } from 'api-dtos/auth.dto';
+import { SignupRequestDto } from 'shared/dtos/auth.dto';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 

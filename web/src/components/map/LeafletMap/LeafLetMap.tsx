@@ -11,7 +11,7 @@ import { IConfig } from "services/Setup/config.type";
 import { GetConfig } from "state/Setup";
 import { alertService } from "services/Alert";
 
-export default function LeafLetMap({ center, onBoundsChange = (e) => {}, onMarkerClick = false, markerPosition = null, markersButtons = [], style = null, defaultZoom = 11}) {
+export default function LeafLetMap({ center, onBoundsChange = (e) => {}, onMarkerClick = false, markerPosition = null, markersButtons = [], style = null, defaultZoom = 11, markerImage = null, markerCaption = '?'}) {
   const [zoom, setZoom] = useState(defaultZoom);
   const getButtonsOnBounds = (map) => {
     onBoundsChange(map.getBounds())
@@ -33,10 +33,14 @@ export default function LeafLetMap({ center, onBoundsChange = (e) => {}, onMarke
           url={config.leafletTiles}
         />
       }
-      {onMarkerClick && 
-        <MarkerSelector onClick={onMarkerClick} markerPosition={markerPosition}/>
+      {markerPosition && 
+      <>
+        <MarkerSelector onClick={onMarkerClick} markerImage={markerImage} markerPosition={markerPosition} markerCaption={markerCaption}/>
+      </>
       }
-      <MarkersButton buttons={markersButtons} onBoundsChange={onBoundsChange}/>
+      {markersButtons && 
+        <MarkersButton buttons={markersButtons} onBoundsChange={onBoundsChange}/>
+      }
     </MapContainer>
   );
 }

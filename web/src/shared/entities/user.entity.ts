@@ -63,6 +63,9 @@ export class User extends BaseEntity {
   })
   roles: string[];
 
+  @Column({ type: 'text', nullable: true })
+  avatar?: string;
+
   @OneToOne(() => UserCredential)
   userCredential?: UserCredential;
 }

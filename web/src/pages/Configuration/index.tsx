@@ -23,6 +23,7 @@ import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
 // name, description, logo, background image, button template, color pallete, colors
 export default Configuration;
 
+const defaultMarker = {latitude: 41.6870, longitude: -7.7406};
 function Configuration() {
   const {
     handleSubmit,
@@ -38,7 +39,9 @@ function Configuration() {
       description: "In this network we will use a map to share tools in-between our network",
       logo: "",
       jumbo: "",
-      tags: []
+      tags: [],
+      latitude: defaultMarker.latitude,
+      longitude: defaultMarker.longitude,
     }
   });
 
@@ -49,8 +52,8 @@ function Configuration() {
       name: data.name,
       description: data.description,
       radius: 10,
-      latitude: '-8.0321',
-      longitude: '3.32131',
+      latitude: data.latitude,
+      longitude: data.longitude,
       tags: data.tags,
       privacy: "public",
       logo: data.logo[0]?.data_url,
@@ -93,8 +96,10 @@ function Configuration() {
   // alertService.clearAll();
   return (
     <>
-      <Popup title="Create your network">
-        <Form classNameExtra="createAdmin">
+      <Popup title="Create your network" linkFwd="/Setup/NetworkCreation">
+        <Form classNameExtra="createAdmin"
+        onSubmit={handleSubmit(onSubmit)}
+        >
           <p>Wizard to help on configuring your network</p>
           <p>
             <b>{window.location.origin}</b>
@@ -134,21 +139,21 @@ function Configuration() {
               name="jumbo"
               label="Choose background image"
               control={control}
-              width={375}
+              width={55}
               height={125}
               validationError={errors.jumbo}
               {...register('jumbo', { required: true })}
             />
 
             <FieldLocation
-                defaultZoom={1}
+                defaultZoom={10}
                 validationErrors={undefined}
-                initMapCenter={{
-                  lat: 0,
-                  lng: 0,
-                }}
+                initMapCenter={[defaultMarker.latitude, defaultMarker.longitude]}
+                // initMapCenter={["41.6869","-7.663206"]}
                 setValue={setValue}
                 watch={watch}
+                markerImage={watch('logo')[0]}
+                markerCaption={watch('name')}
               />
             <FieldTags
               label="Network Tags"
@@ -163,7 +168,6 @@ function Configuration() {
               caption="NEXT"
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}
-              onClick={handleSubmit(onSubmit)}
             />
           </div>
           </div>

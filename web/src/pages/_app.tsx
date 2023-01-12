@@ -40,12 +40,14 @@ function MyApp({ Component, pageProps }) {
 
   // Whenever we log in or log out, fetch user data
   httpService.isAuthenticated$.subscribe((isAuthenticated) => {
+    console.log('logged in? logged out')
     if (isAuthenticated && !currentUser) {
       store.emit(
         new FetchUserData(
           () => {},
           (err) => {
-            UserService.logout();
+            console.log('user service?? logout!!')
+            // UserService.logout();
           },
         ),
       );
@@ -55,6 +57,7 @@ function MyApp({ Component, pageProps }) {
   });
 
   useEffect(() => {
+    console.log('use efecting...')
     // if (config) {
     // on route change start - hide page content by setting authorized to false
     // load the default network and make it available globally
@@ -64,6 +67,24 @@ function MyApp({ Component, pageProps }) {
       SetupSteps.NETWORK_CREATION,
       SetupSteps.SYSADMIN_CONFIG,
     ];
+
+    if (path != SetupSteps.SYSADMIN_CONFIG && !config) {
+      console.log('tryiiing to load config');
+      getConfig(
+        getConfigSuccess,
+        getConfigError
+       ); //if fails jumps to sysadmin config
+    } else if (config) {
+      console.log('checking auth')
+      authCheck([SetupSteps.SYSADMIN_CONFIG,SetupSteps.CREATE_ADMIN_FORM]);
+    }else if (path == SetupSteps.SYSADMIN_CONFIG) {
+      alertService.clearAll();
+      setIsSetup(true);
+    }else {
+      router.push({
+        pathname: SetupSteps.SYSADMIN_CONFIG,
+      });
+    }
 
     function getConfigError(err){
 
@@ -90,7 +111,7 @@ function MyApp({ Component, pageProps }) {
     function getConfigSuccess (config: SetupDtoOut) {
       if (config.databaseNumberMigrations < 1)
       {
-        alertService.clearAll();
+        // alertService.clearAll();
         alertService.error(
           `Missing migrations!`,
         );
@@ -142,15 +163,7 @@ function MyApp({ Component, pageProps }) {
     }
 
     
-    if (path != SetupSteps.SYSADMIN_CONFIG && !config) {
-      console.log('tryiiing to load config');
-      getConfig(
-        getConfigSuccess,
-        getConfigError
-       ); //if fails jumps to sysadmin config
-    } else if (config) {
-      authCheck([SetupSteps.SYSADMIN_CONFIG,SetupSteps.CREATE_ADMIN_FORM]);
-    }
+   
   }, [path, isSetup, authorized]);
 
   function getConfig(onSuccess, onError) {
@@ -210,12 +223,16 @@ function MyApp({ Component, pageProps }) {
             <NavBottom logged={!!currentUser} />
           </div>
         )}
+
         {isSetup && (
           <div>
             <Component {...pageProps} />
             <Alert />
           </div>
         )}
+        {(!isSetup && !authorized) &&
+          <div>Loading...</div>
+        }
       </div>
     </>
   );

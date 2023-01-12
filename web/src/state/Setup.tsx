@@ -17,7 +17,6 @@ export class GetConfig implements WatchEvent {
     return SetupService.get().pipe(
       map((config :IConfig) => {
         store.emit(new ConfigFound(config))
-        console.log(config)
         this.onSuccess(config)
       }),
       catchError((error) => {
@@ -93,7 +92,6 @@ export class CreateConfig implements WatchEvent {
         ) {
           this.onError(err, this.config);
         } else {
-          console.log('oi')
           throw error;
         }
         return of(undefined);
@@ -177,7 +175,7 @@ export class CreateAdmin implements WatchEvent {
         ) {
           this.onError(err);
         } else {
-          console.log('oi')
+          ('oi')
           throw error;
         }
         return of(undefined);

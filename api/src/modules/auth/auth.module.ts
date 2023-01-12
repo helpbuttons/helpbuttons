@@ -10,6 +10,7 @@ import { MailModule } from '../mail/mail.module';
 import { TagModule } from '../tag/tag.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { StorageModule } from '../storage/storage.module';
 var configFile = require('../../../config.json');
 
 @Module({
@@ -22,7 +23,9 @@ var configFile = require('../../../config.json');
     UserCredentialModule,
     UserModule,
     MailModule,
-    TagModule],
+    StorageModule,
+    TagModule
+  ],
   controllers: [AuthController],
   providers: [AuthService,LocalStrategy,JwtStrategy],
 })

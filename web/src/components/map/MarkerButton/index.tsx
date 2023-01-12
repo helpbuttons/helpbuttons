@@ -2,10 +2,11 @@
 import React, { useState } from "react";
 
 import { Marker, Popup, useMapEvents } from "react-leaflet";
-import { iconButton, iconSelector } from "./IconButton";
+import { MarkerIcon, MarkerButton } from "./IconButton";
 import CardButtonMap from "components/map/CardButtonMap";
 
-export function MarkerSelector({ onClick, markerPosition }) {
+
+export function MarkerSelector({ onClick, markerPosition, markerImage = null, markerCaption= '?' }) {
   const [position, setPosition] = useState(markerPosition);
 
   const map = useMapEvents({
@@ -17,12 +18,13 @@ export function MarkerSelector({ onClick, markerPosition }) {
     },
   });
   
+  
   return (
     <>
     {position && 
       <Marker
         position={position}
-        icon={iconSelector()}
+        icon={MarkerIcon(markerCaption,markerImage)}
       >
       </Marker>
     }
@@ -30,7 +32,7 @@ export function MarkerSelector({ onClick, markerPosition }) {
   );
 }
 
-export function MarkerButton({ button, children }) {
+export function CardMarkerButton({ button, children }) {
   return (
     <Marker
       position={
@@ -41,7 +43,7 @@ export function MarkerButton({ button, children }) {
             }
           : { lat: null, lng: null }
       }
-      icon={iconButton(button)}
+      icon={MarkerButton(button)}
     >
       {children}
     </Marker>
@@ -50,19 +52,20 @@ export function MarkerButton({ button, children }) {
 export function MarkersButton({ buttons, onBoundsChange, ...props }) {
   const map = useMapEvents({
     moveend: (e) => {
-      onBoundsChange(map.getBounds());
+      onBoundsChange(map);
     },
   });
   const markers = buttons.map((button, i) => (
-    <MarkerButton button={button} key={i}>
+    <CardMarkerButton button={button} key={i}>
       <Popup className="card-button-map--wrapper">
         <CardButtonMap
           key={i}
           button={button}
         />
       </Popup>
-    </MarkerButton>
+    </CardMarkerButton>
   ));
 
+  // return <></>
   return markers;
 }

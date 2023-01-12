@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
+  IsNotEmpty,
   IsString,
   Matches,
   MinLength,
@@ -42,6 +43,14 @@ export class SignupRequestDto {
   username: string;
 
   @ApiProperty({
+    default: '',
+    type: String,
+    nullable: true,
+  })
+  @IsString()
+  name: string;
+
+  @ApiProperty({
     description: `User password should follow this conditions:
       1. At least 8 character
     `,
@@ -76,6 +85,9 @@ export class SignupRequestDto {
   // })
   // @IsString({ each: true })
   // interests: [string];
+
+  @IsNotEmpty()
+  avatar: string;
 }
 
 export class LoginRequestDto {
@@ -120,4 +132,5 @@ export class LoginRequestDto {
     message: `Password should contains at least two number.`,
   })
   password: string;
+
 }

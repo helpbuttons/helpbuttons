@@ -1,6 +1,6 @@
 import L from 'leaflet';
 
-function iconButton(button) {
+function MarkerButton(button) {
   return L.divIcon({
       className: 'marker-button',
       html:(
@@ -27,20 +27,22 @@ function iconButton(button) {
 }
 
 
-function iconSelector() {
+function MarkerIcon(title = '', image = '') {
   return L.divIcon({
       className: 'marker-button',
       html:(
 
             `<figure id='markerButton' class="marker-button marker-button--need">
                     <div class="avatar-medium marker-button__image">
+                    <img src="${image}"
+                         class="picture__img"/>
                     </div>
 
                     <span class="marker-button__arrow"></span>
 
                     <div class="marker-button__tags marker-button__tags--need">
                         <div class="marker-button__link-tag">
-                          
+                          ${title}
                         </div>
                     </div>
               </figure>`
@@ -51,4 +53,4 @@ function iconSelector() {
   });
 }
 
-export { iconButton, iconSelector };
+export { MarkerButton, MarkerIcon };

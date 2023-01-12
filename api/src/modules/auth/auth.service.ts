@@ -18,6 +18,8 @@ import { MailService } from '../mail/mail.service';
 import { ExtractJwt } from 'passport-jwt';
 import { catchError } from 'rxjs';
 import { User } from '../user/user.entity';
+import { StorageService } from '../storage/storage.service';
+import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 
 @Injectable()
 export class AuthService {
@@ -28,10 +30,13 @@ export class AuthService {
     private readonly webAppConfigs: ConfigType<typeof webAppConfig>,
     private readonly mailService: MailService,
     private jwtTokenService: JwtService,
+    private readonly storageService: StorageService
   ) {}
 
   @Transactional()
-  async signup(signupUserDto: SignupRequestDto) {
+  async signup(
+    signupUserDto: SignupRequestDto
+    ) {
     
     const verificationToken = publicNanoidGenerator();
     let emailVerified = false;
@@ -40,8 +45,27 @@ export class AuthService {
       emailVerified = true;
     }
 
+    const user: User = {
+      username: 'myusername',
+      email: 'mail@com.com',
+      roles : [],
+      name: 'something',
+    }
+    
+    try {
+      const imageUrl = await this.storageService.newImage64(
+        signupUserDto.avatar
+      );
+      if (typeof imageUrl === "string") {
+        user.avatar = imageUrl
+      }
+    } catch (err) {
+      throw new ValidationException({ avatar: err.message });
+    }
+    
     return this.createUser(signupUserDto, emailVerified)
       .then((user) => {
+ 
         return {
           user: user,
           credentials: this.createUserCredential(user.id, signupUserDto.password),
