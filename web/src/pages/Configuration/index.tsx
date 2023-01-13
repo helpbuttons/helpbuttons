@@ -56,8 +56,8 @@ function Configuration() {
       longitude: data.longitude,
       tags: data.tags,
       privacy: "public",
-      logo: data.logo[0]?.data_url,
-      jumbo: data.jumbo[0]?.data_url,
+      logo: data.logo,
+      jumbo: data.jumbo,
     },
       () => {
         const onComplete = () => {
@@ -127,7 +127,7 @@ function Configuration() {
             <FieldUploadImage
               name="logo"
               label="Choose logo"
-              control={control}
+              setValue={setValue}
               width={50}
               height={50}
               validationError={errors.logo}
@@ -138,7 +138,7 @@ function Configuration() {
             <FieldUploadImage
               name="jumbo"
               label="Choose background image"
-              control={control}
+              setValue={setValue}
               width={55}
               height={125}
               validationError={errors.jumbo}

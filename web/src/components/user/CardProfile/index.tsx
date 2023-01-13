@@ -10,6 +10,7 @@ import { IoHeartOutline } from "react-icons/io5";
 import { IoRibbonOutline } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
 import { IoHammerOutline } from "react-icons/io5";
+import UserAvatar from '../components';
 
 
 export default function CardProfile(props) {
@@ -28,8 +29,9 @@ export default function CardProfile(props) {
             <figure className="card-profile__avatar-container avatar">
 
               <div className="avatar-big">
+                <UserAvatar user={user}/>
 
-                <ImageWrapper imageType={ImageType.avatar} src="https://dummyimage.com/80/#ccc/fff" alt="avatar"/>
+                {/* <ImageWrapper imageType={ImageType.avatar} src={user.avatar} alt="avatar"/> */}
 
               </div>
 

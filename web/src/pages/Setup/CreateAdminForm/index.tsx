@@ -4,6 +4,7 @@
 // password
 
 import Popup from 'components/popup/Popup';
+import NewUserFields from 'components/user/NewUserFields';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldText from 'elements/Fields/FieldText';
@@ -30,12 +31,15 @@ function CreateAdminForm() {
     formState: { errors, isSubmitting, isDirty, isValid },
     register,
     setError,
+    control,
+    setValue
   } = useForm({
     defaultValues: {
       username: 'admin',
       password: 'qwerty1234',
       password_confirm: 'qwerty1234',
       email: 'admin@admin.com',
+      name: ' i am trhe admin'
     },
   });
 
@@ -60,6 +64,8 @@ function CreateAdminForm() {
           username: data.username,
           email: data.email,
           password: data.password,
+          name: data.name,
+          avatar: data.avatar
         },
         () => {
           router.push({
@@ -80,44 +86,17 @@ function CreateAdminForm() {
 
   return (
     <>
-      <Popup title="Create Admin User">
-        <Form classNameExtra="createAdmin">
+      <Popup title="Create Admin User" linkFwd="/Setup/NetworkCreation">
+        <Form 
+        onSubmit={handleSubmit(onSubmit)}classNameExtra="createAdmin">
           <div className="login__form">
             <div className="form__inputs-wrapper">
-              <FieldText
-                name="username"
-                label="Name"
-                classNameInput="squared"
-                validationError={errors.username}
-                {...register('username', { required: true })}
-              ></FieldText>
-              <FieldText
-                name="email"
-                label="Email address"
-                classNameInput="squared"
-                validationError={errors.email}
-                {...register('email', { required: true })}
-              ></FieldText>
-              <FieldPassword
-                name="password"
-                label="Password"
-                classNameInput="squared"
-                validationError={errors.password}
-                {...register('password', {
-                  required: true,
-                  minLength: 8,
-                })}
-              ></FieldPassword>
-              <FieldPassword
-                name="password_confirm"
-                label="Confirm password"
-                classNameInput="squared"
-                validationError={errors.password}
-                {...register('password_confirm', {
-                  required: true,
-                  minLength: 8,
-                })}
-              ></FieldPassword>
+            <NewUserFields
+                      control={control}
+                      register={register}
+                      errors={errors}
+                      setValue={setValue}
+                    />
             </div>
           </div>
           <div className="form__btn-wrapper">
@@ -126,7 +105,6 @@ function CreateAdminForm() {
               caption="NEXT"
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}
-              onClick={handleSubmit(onSubmit)}
               disabled={config?.databaseNumberMigrations < 1}
             />
           </div>
