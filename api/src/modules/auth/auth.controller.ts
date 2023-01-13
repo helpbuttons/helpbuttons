@@ -7,6 +7,8 @@ import {
   Request,
   Param,
   UseGuards,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -23,7 +25,13 @@ export class AuthController {
   @Post('signup')
   @UseInterceptors(SignupExtraRulesInterceptor)
   async signup(@Body() signupUserDto: SignupRequestDto) {
-    return await this.authService.signup(signupUserDto);
+    return this.authService.signup(signupUserDto).then((accessToken) => {
+      console.log(accessToken)
+      if (typeof accessToken === typeof undefined) {
+        throw new HttpException('could not create token', HttpStatus.BAD_GATEWAY)
+      }
+      return accessToken;
+    });
   }
 
   @Get('activate/:verificationToken')

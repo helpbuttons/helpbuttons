@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,28 +11,7 @@ export class UserService {
     private readonly userRepository: Repository<User>) {}
 
   async createUser(user: User) {
-    const id = dbIdGenerator();
-    const {
-      realm,
-      username,
-      verificationToken,
-      roles,
-      emailVerified,
-      name,
-      email
-    } = user;
-    const createdUser = this.userRepository.create({
-      id,
-      realm,
-      username,
-      verificationToken,
-      roles,
-      emailVerified,
-      name,
-      email
-    });
-
-    return this.userRepository.save(createdUser);
+    return this.userRepository.insert([user]);
   }
 
   async isEmailExists(email: string) {

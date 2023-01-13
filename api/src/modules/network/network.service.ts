@@ -111,7 +111,6 @@ export class NetworkService {
         if (typeof error === typeof HttpException) {
           throw error;
         }
-        console.log(error);
         throw new HttpException('🙆🏼‍♂️', HttpStatus.NOT_FOUND);
       });
   }
