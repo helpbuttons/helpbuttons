@@ -23,9 +23,9 @@ $picker-comments-item-padding: 25px;
   position: relative;
   overflow: auto;
   width: auto; //Revise antes era 100%
-  max-width: 350px;
+  // max-width: 350px;
   overflow-y: visible !important;
-  max-height: 90vh;
+  // max-height: 90vh;
   background: $color-white !important;
   overflow-x: hidden;
   box-shadow: none;
@@ -222,12 +222,12 @@ $picker-comments-item-padding: 25px;
   .picker__header,
   .picker__content {
     background: $color-white;
-    max-width: 600px;//revise voy a poner 600 px luego pasar a variable $picker-max-width
+    // max-width: 600px;//revise voy a poner 600 px luego pasar a variable $picker-max-width
   }
 
-  .picker--over {
-    width: 500px;
-  }
+  // .picker--over {
+  //   width: 500px;
+  // }
 
   .picker__map--over{
     position: absolute;
