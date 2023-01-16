@@ -1,5 +1,7 @@
+import { configFileName } from "./shared/helpers/config.helper";
+
 const fs = require('fs');
-if (fs.existsSync('config.json')) {
+if (fs.existsSync(configFileName)) {
   var bootstrap = require('./bootstrap').bootstrap;
   const app = bootstrap();
 } else {
