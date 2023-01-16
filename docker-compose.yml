@@ -2,17 +2,20 @@ version: '3'
 services:
   web:
     build: web/
-    image: helpbuttons/helpbuttons-web:main
+ #   image: helpbuttons/helpbuttons-web:main
+    volumes: 
+      - ./web/src:/app/src
     ports:
       - "3000:3000"
     depends_on:
       - api
+    entrypoint: yarn dev
 
   api:
     build: api/
-    image: helpbuttons/helpbuttons-api:main
+#    image: helpbuttons/helpbuttons-api:main
     volumes:
-      - ./config.json:/app/config.json
+  #    - ./config.json:/app/config.json
       - ./uploads:/app/uploads
     depends_on:
       - db

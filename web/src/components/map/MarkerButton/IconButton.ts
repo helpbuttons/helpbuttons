@@ -25,15 +25,24 @@ function MarkerButton(markerImage, markerType, markerCaption) {
   });
 }
 
+function makeImageUrl(image) {
+
+  const regex = /^data\:image/gm;
+  return ( image.match(regex).length > 0 ? image : 'api/'+image )
+
+}
+
 
 function MarkerIcon(title = '', image = '') {
+  image = makeImageUrl(image);
+  console.log(image);
   return L.divIcon({
       className: 'marker-button',
       html:(
 
             `<figure id='markerButton' class="marker-button marker-button--need">
                     <div class="avatar-medium marker-button__image">
-                    <img src="api/${image}"
+                    <img src="${image}"
                          class="picture__img"/>
                     </div>
 
