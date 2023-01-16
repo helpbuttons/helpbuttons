@@ -4,16 +4,14 @@ import { IoChevronForwardOutline } from "react-icons/io5";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { Link } from "elements/Link";
 import { CardButtonHeadMedium } from "components/button/CardButton";
+import { GlobalState, store } from "pages";
+import { useRef } from "store/Store";
+import { useEffect, useState } from "react";
 
 
 export default function CardButtonList({button}) {
-  let imageUrl = "";
-  if (button && button.images && button.images.length > 0) {
-    // TODO, make imageWrapper support multiple images...
-    imageUrl = button.images[0];
-  }
-
   return (
+    <>
     <div className="list__element">
       <div className={`card-button-list card-button-list--${button.type}`}>
         <div className="card-button-list__picture-container">
@@ -27,7 +25,7 @@ export default function CardButtonList({button}) {
           </div>
           <ImageWrapper
             imageType={ImageType.cardList}
-            src={imageUrl}
+            src={button.image}
             alt={button.description}
           />
         </div>
@@ -38,5 +36,6 @@ export default function CardButtonList({button}) {
         </div>
       </div>
     </div>
+    </>
   );
 }

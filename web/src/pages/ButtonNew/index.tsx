@@ -1,6 +1,6 @@
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
-import React, { useCallback, useEffect, useState } from "react";
-import { Controller, useForm, useFieldArray } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import Form from "elements/Form";
 
 import Popup from "components/popup/Popup";
@@ -8,21 +8,18 @@ import ButtonType from "components/button/ButtonType";
 
 import { GlobalState, store } from "pages";
 import { CreateButton, SaveButtonDraft } from "state/Explore";
-import { IButton } from "services/Buttons/button.type";
 import FieldLocation from "elements/Fields/FieldLocation";
 import { FieldTextArea } from "elements/Fields/FieldTextArea";
 import FormSubmit from "elements/Form/FormSubmit";
 import ButtonShare from "components/button/ButtonShare";
 import ButtonNewDate from "components/button/ButtonNewDate";
-import FieldUploadImages from "elements/Fields/FieldImagesUpload/index";
-import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 import FieldTags from "elements/Fields/FieldTags";
 import { useRef } from "store/Store";
 import { NavigateTo } from "state/Routes";
-import FieldText from "elements/Fields/FieldText";
-import FieldError from "elements/Fields/FieldError";
 import { alertService } from "services/Alert";
 import Router from 'next/router';
+import FieldUploadImage from "elements/Fields/FieldImageUpload";
+// import FieldUploadImage from "elements/Fields/FieldImageUpload";
 
 
 export default function ButtonNew() {
@@ -43,7 +40,16 @@ export default function ButtonNew() {
     reset,
     watch,
     setValue
-  } = useForm();
+  } = useForm(
+    { defaultValues: {
+      image: null,
+      latitude: "41.6869",
+      longitude: "-7.663206",
+      name: '',
+      type: '',
+      tags: []
+    }}
+  );
 
   const [errorMsg, setErrorMsg] = useState(undefined);
 
@@ -69,6 +75,7 @@ export default function ButtonNew() {
   };
 
   useEffect(() => {
+    console.log('oi')
     if (buttonDraft) 
     {
       reset(buttonDraft)
@@ -77,6 +84,7 @@ export default function ButtonNew() {
 
   return (
     <>
+    {selectedNetwork ? (
       <Popup title="Publish Button" linkFwd="/Explore">
         <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="publish_btn">
           <div className="publish_btn-first">
@@ -105,25 +113,23 @@ export default function ButtonNew() {
 
           </div>
           <div className="publish_btn-scd">
-            <FieldUploadImages
-              name="images"
+            <FieldUploadImage
+              name="image"
               label="+ Add image"
-              maxNumber="4"
-              control={control}
+              width={55}
+              height={125}
+              {...register('image', { required: true })}
+              validationError={errors.image}
+              setValue={setValue}
             />
-
-            {selectedNetwork && (
               <FieldLocation
+                defaultZoom={selectedNetwork.zoom}
                 validationErrors={undefined}
-                initMapCenter={{
-                  lat: selectedNetwork.location.coordinates[0],
-                  lng: selectedNetwork.location.coordinates[1],
-                }}
                 setValue={setValue}
                 watch={watch}
+                markerImage={watch('image')}
+                markerCaption={watch('type')}
               />
-            )}
-
             <ButtonNewDate title="When ?" setDate={setDate} date={date} />
             <ButtonShare />
           </div>
@@ -136,6 +142,11 @@ export default function ButtonNew() {
           </div>
         </Form>
       </Popup>
+    ) : 
+      (<div>
+        Loading network...
+      </div>)
+    }
     </>
   );
 }

@@ -14,6 +14,7 @@ import { getManager } from 'typeorm';
 import { NetworkService } from '../network/network.service';
 import { StorageService } from '../storage/storage.service';
 import { User } from '../user/user.entity';
+import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 
 @Injectable()
 export class ButtonService {
@@ -52,6 +53,7 @@ export class ButtonService {
       network: network,
       images: [],
       owner: user,
+      image: null
     };
 
     await getManager().transaction(
@@ -72,15 +74,23 @@ export class ButtonService {
             });
         }
 
-        if (Array.isArray(images) && images.length > 0) {
-          button.images = await Promise.all(
-            images.map(async (imageFile) => {
-              return await await this.storageService.newImage64(
-                imageFile,
-              );
-            }),
+        try {
+          button.image = await this.storageService.newImage64(
+            createDto.image,
           );
+        } catch (err) {
+          console.log(`errorjumboooooror: ${err.message}`);
+          throw new ValidationException({ image: err.message });
         }
+        // if (Array.isArray(images) && images.length > 0) {
+        //   button.images = await Promise.all(
+        //     images.map(async (imageFile) => {
+        //       return await await this.storageService.newImage64(
+        //         imageFile,
+        //       );
+        //     }),
+        //   );
+        // }
 
         await this.buttonRepository.insert([button]);
       },

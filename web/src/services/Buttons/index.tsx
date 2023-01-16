@@ -16,9 +16,7 @@ export class ButtonService {
     data: IButton,
     networkId: string
   ): Observable<any> {
-    const formData = UtilsService.objectToFormData(data);
-
-    return httpService.post("/buttons/new?networkId=" + networkId, formData);
+    return httpService.post("/buttons/new?networkId=" + networkId, data);
   }
 
   //Edit button
@@ -47,8 +45,9 @@ export class ButtonService {
 
   //Get buttons
   public static find(networkId: string, bounds: any): Observable<IButton[]> {
-    if (!bounds)
+    if (!bounds || !bounds._northEast)
     {
+      console.error('wrong bounds? ')
       return of([]);
     }
     return httpService.get<IButton[]>("/buttons/find/" + networkId, 

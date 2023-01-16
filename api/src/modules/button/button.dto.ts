@@ -6,6 +6,7 @@ import {
   IsLongitude,
   IsArray,
   IsOptional,
+  IsNotEmpty,
 } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
 
@@ -60,6 +61,9 @@ export class CreateButtonDto implements Partial<Button> {
   })
   @IsLongitude({message: 'invalid-longitude'})
   longitude: number;
+
+  @IsNotEmpty()
+  image: string;
 }
 
 export class UpdateButtonDto extends PartialType(CreateButtonDto) {}

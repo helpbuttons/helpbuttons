@@ -42,6 +42,9 @@ export class Button extends BaseEntity {
   })
   type: ButtonType;
 
+  @Column({ type: 'text', nullable: true })
+  image?: string;
+
   @Column('text', { array: true, nullable: true, default: [] })
   tags: string[];
 

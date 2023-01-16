@@ -2,6 +2,7 @@
 ///Btn is the project convention for tradittional buttons, in order to avoidd confussion with app's buttons
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router'
 
 export enum ImageType {
   avatar,
@@ -68,13 +69,14 @@ export default function ImageWrapper({
   }
 
   const className = classNames.join(' ');
+
   return (
-    <Image
-      src={src}
+    <img
+      src={`api/${src}`}
       alt={alt}
-      layout={layout}
-      width={width}
-      height={height}
+      // layout={layout}
+      width="100%"
+      height="100%"
     />
   );
 }

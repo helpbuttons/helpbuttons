@@ -90,6 +90,9 @@ export class CreateNetworkDto implements Partial<Network> {
 
   @IsNotEmpty()
   jumbo: string;
+
+  @IsNumber()
+  zoom: number;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

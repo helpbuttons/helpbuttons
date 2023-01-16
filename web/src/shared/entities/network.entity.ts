@@ -44,6 +44,9 @@ export class Network extends BaseEntity {
   @Column('text', { array: true, nullable: true, default: [] })
   tags: string[];
 
+  @Column('integer', { default: 10 })
+  zoom: number;
+
   @Column({ type: 'text', nullable: true })
   logo?: string;
 

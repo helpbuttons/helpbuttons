@@ -1,6 +1,5 @@
 import { ImageContainer } from 'elements/ImageWrapper';
 import { useState } from 'react';
-import { useFieldArray } from 'react-hook-form';
 import ImageUploading from 'react-images-uploading';
 
 import FieldError from '../FieldError';
@@ -16,7 +15,8 @@ export default function FieldUploadImage({ name, label, width = 100, height = 10
     console.log(imageList)
     // replace(image);
     setImages(imageList);
-    setValue(name, imageList[0].data_url)
+    if(imageList[0])
+      setValue(name, imageList[0].data_url)
   };
 
   return (
