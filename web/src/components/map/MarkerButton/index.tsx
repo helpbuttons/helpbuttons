@@ -1,20 +1,20 @@
 ///button marker over the map
 import React, { useState } from "react";
 
-import { Marker, Popup, useMapEvents } from "react-leaflet";
+import { Marker, useMapEvents } from "react-leaflet";
 import { MarkerIcon, MarkerButton } from "./IconButton";
 import CardButtonMap from "components/map/CardButtonMap";
 
 
 export function MarkerSelector({ onClick, markerPosition, markerImage = null, markerCaption= '?' }) {
   const [position, setPosition] = useState(markerPosition);
-
   const map = useMapEvents({
     click: (e) => {
       const position = {lat: e.latlng.lat,lng: e.latlng.lng};
 
       setPosition(position);
-      onClick(position);
+      onClick(position, map.getZoom());
+      map.setView([e.latlng.lat,e.latlng.lng], map.getZoom());
     },
   });
   
@@ -32,7 +32,7 @@ export function MarkerSelector({ onClick, markerPosition, markerImage = null, ma
   );
 }
 
-export function CardMarkerButton({ button, children }) {
+export function CardMarkerButton({ button, children, onMarkerClick = (buttonId) => {}}) {
   return (
     <Marker
       position={
@@ -43,26 +43,21 @@ export function CardMarkerButton({ button, children }) {
             }
           : { lat: null, lng: null }
       }
-      icon={MarkerButton(button)}
+      icon={MarkerButton(button.image, button.type, button.description)}
+      eventHandlers={{ click: (e) => {onMarkerClick(button.id)}}}
     >
       {children}
     </Marker>
   );
 }
-export function MarkersButton({ buttons, onBoundsChange, ...props }) {
+export function MarkersButton({ buttons, onBoundsChange,onMarkerClick, ...props }) {
   const map = useMapEvents({
     moveend: (e) => {
-      onBoundsChange(map);
+      onBoundsChange(map.getBounds());
     },
   });
   const markers = buttons.map((button, i) => (
-    <CardMarkerButton button={button} key={i}>
-      <Popup className="card-button-map--wrapper">
-        <CardButtonMap
-          key={i}
-          button={button}
-        />
-      </Popup>
+    <CardMarkerButton button={button} key={i} onMarkerClick={onMarkerClick}>
     </CardMarkerButton>
   ));
 

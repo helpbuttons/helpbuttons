@@ -63,7 +63,7 @@ export function CardButtonHeadMedium({ button }) {
             <div className="avatar-medium">
               <ImageWrapper
                 imageType={ImageType.avatar}
-                src="https://dummyimage.com/80/#ccc/fff"
+                src={button.owner.avatar}
                 alt="Avatar"
               />
             </div>

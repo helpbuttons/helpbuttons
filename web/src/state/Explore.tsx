@@ -102,3 +102,22 @@ export class ButtonFound implements UpdateEvent {
     });
   }
 }
+
+export class SetAsCurrentButton implements WatchEvent {
+  public constructor(private buttonId: string) {}
+
+  public watch(state: GlobalState) {
+    if (this.buttonId == state.explore.currentButton?.id) {
+      return of(undefined);
+    }
+    state.explore.mapBondsButtons.filter((button) => {
+      if(button.id == this.buttonId)
+      {
+        return new ButtonFound(button)
+      }
+    })
+    return ButtonService.findById(this.buttonId).pipe(
+      map((button) => new ButtonFound(button)),
+    );
+  }
+}
