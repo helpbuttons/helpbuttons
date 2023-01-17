@@ -19,15 +19,7 @@ export default function NewUserFields({register, errors, control, setValue, watc
         classNameInput="squared"
         placeholder="username"
         validationError={errors.username}
-        {...register('name', { required: true })}
-      ></FieldText>
-      <FieldText
-        name="name"
-        label="Name"
-        classNameInput="squared"
-        placeholder="name"
-        validationError={errors.name}
-        {...register('name', { required: true })}
+        {...register('username', { required: true })}
       ></FieldText>
       <FieldPassword
         name="password"

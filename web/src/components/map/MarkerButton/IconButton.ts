@@ -1,13 +1,13 @@
 import L from 'leaflet';
 function MarkerButton(markerImage, markerType, markerCaption) {
-  
+  markerImage = makeImageUrl(markerImage);
   return L.divIcon({
       className: 'marker-button',
       html:(
             `<figure id='markerButton' class="marker-button marker-button--${ markerType }">
                     <div class="avatar-medium marker-button__image">
-                      <img src="api/${markerImage}"
-                        alt="${markerCaption}" title="${markerCaption}" class="picture__img"/>
+                      <img src="${markerImage}"
+                        alt="${markerCaption} " title="${markerCaption}" class="picture__img"/>
                     </div>
 
                     <span class="marker-button__arrow"></span>
@@ -25,15 +25,31 @@ function MarkerButton(markerImage, markerType, markerCaption) {
   });
 }
 
+function makeImageUrl(image) {
+  // debugger;
+  if(!image) {
+    return 'fail.png';
+  }
+  const regex = /^data\:image/gm;
+  const matches = image.match(regex);
+  
+  if ( !matches )
+  {
+    return `api${image}`;
+  }
+  return image
+}
 
-function MarkerIcon(title = '', image = '') {
+function MarkerIcon(title = '', markerImage = '') {
+  markerImage = makeImageUrl(markerImage);
   return L.divIcon({
       className: 'marker-button',
       html:(
 
             `<figure id='markerButton' class="marker-button marker-button--need">
                     <div class="avatar-medium marker-button__image">
-                    <img src="api/${image}"
+                    <img src="${markerImage}"
+                         alt="${title}"
                          class="picture__img"/>
                     </div>
 

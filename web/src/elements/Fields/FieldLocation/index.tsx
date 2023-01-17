@@ -79,12 +79,6 @@ export default function FieldLocation({
               }
               markerCaption={markerCaption}
             />
-            <ImageContainer
-                    src={markerImage}
-                    alt="FAILED"
-                    width={50}
-                    height={50}
-                  />
             <LocationCoordinates
               longitude={longitude}
               latitude={latitude}
