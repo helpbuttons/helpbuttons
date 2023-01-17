@@ -4,7 +4,7 @@ import { configFileName } from '@src/shared/helpers/config.helper';
 import { NodeEnv } from '@src/shared/types';
 import { WebAppConfigs } from '../types/web.type';
 
-var configFile = require(`@src/../..${configFileName}`);
+var configFile = require(`@src/../../${configFileName}`);
 
 export default registerAs('webAppConfigs', (): WebAppConfigs => {
   const configs = 

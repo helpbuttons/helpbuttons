@@ -13,7 +13,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { StorageModule } from '../storage/storage.module';
 import { configFileName } from '@src/shared/helpers/config.helper';
 
-var configFile = require(`../../..${configFileName}`);
+var configFile = require(`../../../${configFileName}`);
 
 @Module({
   imports: [

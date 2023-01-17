@@ -1,7 +1,7 @@
-import { configFileName } from "./shared/helpers/config.helper";
+import { configFullPath } from "./shared/helpers/config.helper";
 
 const fs = require('fs');
-if (fs.existsSync(configFileName)) {
+if (fs.existsSync(configFullPath)) {
   var bootstrap = require('./bootstrap').bootstrap;
   const app = bootstrap();
 } else {
