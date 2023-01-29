@@ -28,7 +28,7 @@ export default function Explore() {
 
   const [buttonFilterTypes, setButtonFilterTypes] = useState(["need", "offer", "exchange"]);
 
-  const onchange = (data) => {
+  const onLeftColumnToggle = (data) => {
       setShowLeftColumn(!showLeftColumn);
   }
 
@@ -65,7 +65,7 @@ export default function Explore() {
       <div className={'index__content-left ' + (showLeftColumn ? '' : 'index__content-left--hide')}>
         <NavHeader showSearch={showLeftColumn} updateFiltersType={updateFiltersType} />
         {filteredButtons.length > 0 && 
-          <List buttons={filteredButtons} showLeftColumn={showLeftColumn}/>
+          <List buttons={filteredButtons} showLeftColumn={showLeftColumn} onLeftColumnToggle={onLeftColumnToggle}/>
         }
       </div>
         <ExploreButtonsMap

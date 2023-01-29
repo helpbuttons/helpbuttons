@@ -8,16 +8,11 @@ import ContentList from "components/list/ContentList";
 import Link from 'next/link'
 
 
-function List(props) {
-
-  const [showLeftColumn, setShowLeftColumn] = useState(true);
+function List({onLeftColumnToggle, buttons, showLeftColumn}) {
 
   const handleChange = event => {
-      props.onchange(event.target.value);
-      setShowLeftColumn(!showLeftColumn);
+      onLeftColumnToggle(event.target.value);
   }
-
-  const buttons = props.buttons;
 
   return (
       <>
