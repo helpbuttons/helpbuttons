@@ -27,7 +27,6 @@ export class NetworkService {
     createDto.radius = createDto.radius ? createDto.radius : 1;
     const network = {
       id: dbIdGenerator(),
-      name: createDto.name,
       description: createDto.description,
       // url: createDto.url,
       radius: createDto.radius,

@@ -1,8 +1,6 @@
 // here we have the basic configuration of an network
-import NetworkLogo from 'components/network/Components';
 import Popup from 'components/popup/Popup';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import FieldUploadImages from 'elements/Fields/FieldImagesUpload';
 import FieldUploadImage from 'elements/Fields/FieldImageUpload';
 import FieldLocation from 'elements/Fields/FieldLocation';
 import FieldTags from 'elements/Fields/FieldTags';
@@ -13,13 +11,9 @@ import { useRouter } from 'next/router';
 import { store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import {
-  localStorageService,
-  LocalStorageVars,
-} from 'services/LocalStorage';
 import { SetupSteps } from 'shared/setupSteps';
+import { getUrlOrigin } from 'shared/sys.helper';
 import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
-
 // name, description, logo, background image, button template, color pallete, colors
 export default Configuration;
 
@@ -42,6 +36,7 @@ function Configuration() {
       tags: [],
       latitude: defaultMarker.latitude,
       longitude: defaultMarker.longitude,
+      zoom: 10,
     }
   });
 
@@ -49,7 +44,6 @@ function Configuration() {
 
   const onSubmit = (data) => {
     store.emit(new CreateNetwork({
-      name: data.name,
       description: data.description,
       radius: 10,
       latitude: data.latitude,
@@ -58,6 +52,7 @@ function Configuration() {
       privacy: "public",
       logo: data.logo,
       jumbo: data.jumbo,
+      zoom: data.zoom,
     },
       () => {
         const onComplete = () => {
@@ -102,7 +97,7 @@ function Configuration() {
         >
           <p>Wizard to help on configuring your network</p>
           <p>
-            <b>{window.location.origin}</b>
+            <b>{getUrlOrigin()}</b>
           </p>
           <div className="login__form">
             <div className="form__inputs-wrapper">
@@ -148,11 +143,9 @@ function Configuration() {
             <FieldLocation
                 defaultZoom={10}
                 validationErrors={undefined}
-                initMapCenter={[defaultMarker.latitude, defaultMarker.longitude]}
-                // initMapCenter={["41.6869","-7.663206"]}
                 setValue={setValue}
                 watch={watch}
-                markerImage={watch('logo')[0]}
+                markerImage={watch('logo')}
                 markerCaption={watch('name')}
               />
             <FieldTags

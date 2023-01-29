@@ -1,6 +1,7 @@
 import {TypeOrmModuleOptions} from "@nestjs/typeorm";
+import { configFileName } from "@src/shared/helpers/config.helper";
 
-var configFile = require('../../../config.json');
+var configFile = require(`../../..${configFileName}`);
 
 export const typeOrmModuleOptions:TypeOrmModuleOptions = {
     type: 'postgres',

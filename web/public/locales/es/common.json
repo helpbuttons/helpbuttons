@@ -13,5 +13,6 @@
   },
   "feed": {
     "write": "Escribir mensaje"
-  }
+  },
+  "hostname" : "nombre de host"
 }

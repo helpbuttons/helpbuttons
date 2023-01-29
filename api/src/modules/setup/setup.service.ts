@@ -7,6 +7,7 @@ import {
 import { SetupDto, SetupDtoOut } from './setup.entity';
 import * as fs from 'fs';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { configFileName, configFullPath } from '@src/shared/helpers/config.helper';
 const { Pool } = require('pg');
 const nodemailer = require('nodemailer');
 
@@ -30,37 +31,36 @@ export class SetupService {
   }
 
   isConfigFileCreated() {
-    return fs.existsSync('config.json');
+    return fs.existsSync(configFullPath);
   }
 
   async save(setupDto: SetupDto) {
     if(this.isConfigFileCreated()) {
-      throw new HttpException(`Please remove config.json before editing the configurations of your server!`, HttpStatus.CONFLICT);
+      throw new HttpException(`Please remove ${configFullPath} before editing the configurations of your server!`, HttpStatus.CONFLICT);
     }
 
     await this.isDatabaseReady(setupDto);
 
     fs.writeFileSync(
-      'config.json',
+      configFullPath,
       JSON.stringify({
         ...setupDto,
         ...{ jwtSecret: dbIdGenerator() },
       }),
     );
-    console.log('config.json written to api')
-    // throw new Error('config.json created, restart backend please.')
+    console.log(`${configFullPath} written to api`)
     return "OK"
   }
 
   get(): Promise<SetupDtoOut> {
     if(!this.isConfigFileCreated()){
-      throw new HttpException(`config.json nao existe!`, HttpStatus.BAD_REQUEST);
+      throw new HttpException(`${configFullPath} nao existe!`, HttpStatus.BAD_REQUEST);
     }
 
-    const config = require('../../../config.json')
+    const config = require(`../../..${configFileName}`)
     return this.isDatabaseReady(config)
     .then(({migrationsNumber,userCount }) => {
-      const dataJSON = fs.readFileSync('config.json', 'utf8');
+      const dataJSON = fs.readFileSync(configFullPath, 'utf8');
       const data: SetupDto = new SetupDto(JSON.parse(dataJSON));
   
       const dataToWeb : SetupDtoOut= {

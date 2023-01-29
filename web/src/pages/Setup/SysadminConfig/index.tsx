@@ -6,11 +6,7 @@ import Popup from 'components/popup/Popup';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 
 //imported internal classes, variables, files or functions
-import PopupSection from 'components/popup/PopupSection';
-import FieldNumber from 'elements/Fields/FieldNumber';
-import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
-import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import { store } from 'pages';
 import { useForm } from 'react-hook-form';
@@ -19,6 +15,8 @@ import { CreateConfig, GetConfig, SmtpTest } from 'state/Setup';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { SetupSteps } from '../../../shared/setupSteps';
 import router from 'next/router';
+import t from 'i18n';
+import { getHostname } from 'shared/sys.helper';
 
 export default function SysadminConfig() {
   const {
@@ -31,7 +29,7 @@ export default function SysadminConfig() {
     setValue,
   } = useForm({
     defaultValues: {
-      hostName: 'localhost',
+      hostName: getHostname(),
       mapifyApiKey: '',
       leafletTiles:
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -57,16 +55,16 @@ export default function SysadminConfig() {
         (err, data) => {
           if (err.statusCode === HttpStatus.SERVICE_UNAVAILABLE) {
             if (err.message === 'db-hostname-error') {
-              alertService.error(`Database connection error, could not connect to database host '${data.postgresHostName}' not found`);
+              alertService.error(t(err.message,`Database connection error, could not connect to database host '${data.postgresHostName}' not found`));
             } else if (err.message === 'db-connection-error') {
-              alertService.error(`Database connection error, wrong credentials?`);
+              alertService.error(t(err.message,`Database connection error, wrong credentials?`));
             }else {
-              alertService.error(`Problem:: ${JSON.stringify(err)}`);
+              alertService.error(t("other-problem",`Problem:: ${JSON.stringify(err)}`));
             }
             
           }
           if (err.statusCode === HttpStatus.CONFLICT) {
-            alertService.warn(`You already created a configuration, please rmeove config.json from the api directory. Or if you want to continue this installation <a href="${SetupSteps.CREATE_ADMIN_FORM}">create an admin account</a>, or <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`)
+            alertService.warn(t("config-conflict", `You already created a configuration, please remove config.json from the api directory. Or if you want to continue this installation <a href="${SetupSteps.CREATE_ADMIN_FORM}">create an admin account</a>, or <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`))
           }
         },
       ),
@@ -84,7 +82,7 @@ export default function SysadminConfig() {
   };
 
   const onSmtpSuccess = () => {
-    alertService.info(`SMTP connection succesful!`);
+    alertService.info(t('smtp-success',`SMTP connection succesful!`));
   };
 
   return (
@@ -93,78 +91,79 @@ export default function SysadminConfig() {
         <Form classNameExtra="saveSetup">
           <div className="publish_setup-first">
             <FieldText
-              name="hostName"
-              label="hostName:"
+              name="hostname"
+              label={`${t("hostname","Hostname")}:`}
               placeholder="localhost"
               validationError={errors.description}
               classNameExtra="squared"
               {...register('hostName', { required: true })}
             />
-            <FieldText
+            {/* <FieldText
               name="mapifyApiKey"
+              label={`${t("hostname","Hostname")}:`}
               label="Mapify ApiKey"
               placeholder="APIKEY"
               {...register('mapifyApiKey')}
-            ></FieldText>
-            <FieldText
+            ></FieldText> */}
+            {/* <FieldText
               name="leafletTiles"
               label="Leaflet Tiles"
               {...register('leafletTiles')}
-            ></FieldText>
-
+            ></FieldText> */}
+{/* 
             <FieldTags
               label="domains allowed"
               name="domainsAllowed"
               control={control}
               validationError={errors.tags}
               watch={watch}
-            />
+            /> */}
 
             <FieldText
               name="postgresUser"
-              label="Postgres User"
+              label={`${t("postgresUser","postgresql username")}:`}
               {...register('postgresUser')}
             ></FieldText>
             <FieldText
               name="postgresPassword"
-              label="Postgres password"
+              label={`${t("postgresPassword","postgresql password")}:`}
               {...register('postgresPassword')}
             ></FieldText>
             <FieldText
               name="postgresDb"
-              label="Postgres DB name"
+              label={`${t("postgresDb","postgresql database name")}:`}
               {...register('postgresDb')}
             ></FieldText>
 
             <FieldText
               name="postgresHostName"
-              label="Postgres hostname"
+              label={`${t("postgresHostName","postgresql hostname")}:`}
               {...register('postgresHostName')}
             ></FieldText>
 
             <FieldText
               name="postgresPort"
-              label="Postgres port"
+              label={`${t("postgresPort","postgresql port")}:`}
               {...register('postgresPort')}
             ></FieldText>
 
             <FieldText
               name="smtpUrl"
-              label="Smtp URL"
+              label={`${t("smtpUrl","SMTP url")}:`}
               {...register('smtpUrl')}
             ></FieldText>
           </div>
           <div className="form__btn-wrapper">
             <Btn
               btnType={BtnType.splitIcon}
-              caption="TEST SMTP"
+              caption={t("test-smtp-button","Test smtp connection")}
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}
               onClick={handleSubmit(onSmtpTest)}
             />
             <Btn
               btnType={BtnType.splitIcon}
-              caption="TEST DB & SAVE"
+              caption={t("connect-db-save-config","Test database connection, save configuration and continue")}
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}
               onClick={handleSubmit(onSubmit)}

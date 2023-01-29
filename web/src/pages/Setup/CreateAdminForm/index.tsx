@@ -32,7 +32,8 @@ function CreateAdminForm() {
     register,
     setError,
     control,
-    setValue
+    setValue,
+    watch
   } = useForm({
     defaultValues: {
       username: 'admin',
@@ -96,6 +97,7 @@ function CreateAdminForm() {
                       register={register}
                       errors={errors}
                       setValue={setValue}
+                      watch={watch}
                     />
             </div>
           </div>

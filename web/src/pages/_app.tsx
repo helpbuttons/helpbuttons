@@ -38,124 +38,84 @@ function MyApp({ Component, pageProps }) {
     (state: GlobalState) => state.users.currentUser,
   );
 
-  // Whenever we log in or log out, fetch user data
-  httpService.isAuthenticated$.subscribe((isAuthenticated) => {
-    console.log('logged in? logged out');
-    if (isAuthenticated && !currentUser) {
-      store.emit(
-        new FetchUserData(
-          () => {},
-          (err) => {
-            console.log('user service?? logout!!');
-            // UserService.logout();
-          },
-        ),
-      );
-    } else if (!isAuthenticated && currentUser) {
-      store.emit(new SetCurrentUser(undefined));
-    }
-  });
+  const setupPaths: string[] = [
+    SetupSteps.CREATE_ADMIN_FORM,
+    SetupSteps.FIRST_OPEN,
+    SetupSteps.NETWORK_CREATION,
+    SetupSteps.SYSADMIN_CONFIG,
+  ];
+
+  // // Whenever we log in or log out, fetch user data
+
 
   useEffect(() => {
-    console.log('use efecting...');
-    // if (config) {
-    // on route change start - hide page content by setting authorized to false
-    // load the default network and make it available globally
-    const setupPaths: string[] = [
-      SetupSteps.CREATE_ADMIN_FORM,
-      SetupSteps.FIRST_OPEN,
-      SetupSteps.NETWORK_CREATION,
-      SetupSteps.SYSADMIN_CONFIG,
-    ];
 
-    if (path != SetupSteps.SYSADMIN_CONFIG && !config) {
-      console.log('tryiiing to load config');
-      getConfig(getConfigSuccess, getConfigError); //if fails jumps to sysadmin config
-    } else if (config) {
-      console.log('checking auth');
-      authCheck([
-        SetupSteps.SYSADMIN_CONFIG,
-        SetupSteps.CREATE_ADMIN_FORM,
-      ]);
-    } else if (path == SetupSteps.SYSADMIN_CONFIG) {
-      alertService.clearAll();
+    if (!config && SetupSteps.SYSADMIN_CONFIG.toString() == path) {
       setIsSetup(true);
-    } else {
-      router.push({
-        pathname: SetupSteps.SYSADMIN_CONFIG,
-      });
+    }else if (!config) {
+      getConfig(getConfigSuccess, getConfigError);
+    }else{
+      if (SetupSteps.CREATE_ADMIN_FORM.toString() == path) {
+        setIsSetup(true)
+      }else {
+        authCheck();
+      }
     }
 
     function getConfigError(err) {
+      console.error('getting config error:')
       if (err == 'nosysadminconfig') {
-        alertService.error(err);
+        alertService.error(
+          `Something went wrong, you can go to the <a href="${SetupSteps.SYSADMIN_CONFIG}"> configuration wizard</a>`,
+        );
+        return;
       }
 
       if (err == 'need-migrations') {
         alertService.warn(err);
+        return;
       }
-      router.push({
-        pathname: SetupSteps.SYSADMIN_CONFIG,
-      });
-      console.error('oh noes.... whats going on?');
+
+      console.log(err);
       alertService.error(
-        'Something went wrong, sending you to configuration wizard',
+        `Something went wrong, you can go to the <a href="${SetupSteps.SYSADMIN_CONFIG}" configuration wizard`,
       );
     }
 
     function getConfigSuccess(config: SetupDtoOut) {
       if (config.databaseNumberMigrations < 1) {
-        // alertService.clearAll();
-        alertService.error(`Missing migrations!`);
-        setIsSetup(true);
-        router.push({
-          pathname: SetupSteps.CREATE_ADMIN_FORM,
-        });
+        alertService.error(`Missing database schema, please run schema creation/migrations! and then <a href="/">click here</a>`);
+        return;
       } else if (
         config.userCount < 1 &&
         SetupSteps.CREATE_ADMIN_FORM != path
       ) {
-        alertService.clearAll();
-        alertService.error(
+        alertService.warn(
           `Missing admin account, please <u><a href="${SetupSteps.CREATE_ADMIN_FORM}">create yours</a></u>!`,
         );
-        setIsSetup(true);
-        return;
-      } else if (SetupSteps.CREATE_ADMIN_FORM == path) {
-        setIsSetup(true);
         return;
       }
 
-      if (path != SetupSteps.CREATE_ADMIN_FORM) {
+      if (!setupPaths.includes(path)) {
         getDefaultNetwork(
           () => {
-            setIsSetup(true);
+            // setIsSetup(true);
             console.log('all is ready!');
           },
           (error) => {
             if (error === 'network-not-found') {
-              if (config) {
-                alertService.warn(
-                  `You didn't configured your network yet. Go to the network <a href="${SetupSteps.NETWORK_CREATION}">configuration page</a>`,
-                );
-              } else {
-                alertService.warn(
-                  `You dddidn't setup your network yet. Go to the network <a href="${SetupSteps.SYSADMIN_CONFIG}">setup page</a>`,
-                );
-              }
-              setIsSetup(true);
+              alertService.warn(
+                `You didn't configured your network yet. Go to the network <a href="${SetupSteps.NETWORK_CREATION}">configuration page</a>`,
+              );
             } else {
               alertService.error(JSON.stringify(error));
-              console.error(error);
-              router.push({
-                pathname: SetupSteps.SYSADMIN_CONFIG,
-              });
             }
           },
         );
       }
     }
-  }, [path, isSetup, authorized]);
+
+  }, [path, isSetup, authorized, config]);
 
   function getConfig(onSuccess, onError) {
     store.emit(new GetConfig(onSuccess, onError));
@@ -165,7 +125,7 @@ function MyApp({ Component, pageProps }) {
     store.emit(new FetchDefaultNetwork(onSucess, onError));
   }
 
-  function authCheck(allowedGuestPaths) {
+  function authCheck() {
     // redirect to login page if accessing a private page and not logged in
     const publicPaths = [
       '/Login',
@@ -183,8 +143,7 @@ function MyApp({ Component, pageProps }) {
 
     if (
       !UserService.isLoggedIn() &&
-      !publicPaths.includes(path) &&
-      !allowedGuestPaths?.includes(path)
+      !publicPaths.includes(path)
     ) {
       // and is not 404
       if (path != '/Login') {
@@ -209,22 +168,25 @@ function MyApp({ Component, pageProps }) {
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
       <div className={`${user ? '' : ''}`}>
+        <Alert />
         {(() => {
-          if (authorized) {
-            return (<div>
-            <Component {...pageProps} />
-            <Alert />
-            <NavBottom logged={!!currentUser} />
-          </div>)
-          }else if (isSetup) {
-            return (<div>
-            issetup:
-            <Component {...pageProps} />
-            <Alert />
-          </div>)
-          }else{
-            return (<div>Loading...</div>)
+          if (config && authorized) {
+            return (
+              <div>
+                <Component {...pageProps} />
+
+                <NavBottom logged={!!currentUser} />
+              </div>
+            );
+          } else if (isSetup) {
+            return (
+              <div>
+                <Component {...pageProps} />
+              </div>
+            );
           }
+
+          return <div>Loading...</div>;
         })()}
       </div>
     </>
