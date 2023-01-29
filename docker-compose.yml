@@ -1,23 +1,27 @@
 version: '3'
 services:
   web:
-    build: web/
+#    build: web/
     image: helpbuttons/helpbuttons-web:main
     ports:
       - "3000:3000"
     depends_on:
       - api
+    networks:
+      - web
+      - api
 
   api:
-    build: api/
+#    build: api/
     image: helpbuttons/helpbuttons-api:main
     volumes:
-      - ./config.json:/app/config.json
+      - ./config/:/app/config/:rw
       - ./uploads:/app/uploads
     depends_on:
       - db
-#    ports:
-#      - "3001:3001"
+    networks:
+      - api
+      - db
 
   db:
     image: postgis/postgis:13-master
@@ -26,7 +30,7 @@ services:
     env_file:
       - env.db
     volumes:
-      - ./db:/var/lib/postgresql/data:rw
+      - /live/storage/helpbuttons/db:/var/lib/postgresql/data:rw
     ports:
       - "5432:5432"
     healthcheck:
@@ -34,3 +38,12 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - db
+
+networks:
+  web:
+    external:
+      name: web
+  api:
+  db:
