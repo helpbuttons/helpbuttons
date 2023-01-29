@@ -72,7 +72,7 @@ export default function ImageWrapper({
 
   return (
     <img
-      src={`api/${src}`}
+      src={`/api/${src}`}
       alt={alt}
       // layout={layout}
       width="100%"
