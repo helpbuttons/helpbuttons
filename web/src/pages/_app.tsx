@@ -15,10 +15,6 @@ import { FetchUserData, SetCurrentUser } from 'state/Users';
 import { useRef } from 'store/Store';
 import { GetConfig } from 'state/Setup';
 import { alertService } from 'services/Alert';
-import {
-  localStorageService,
-  LocalStorageVars,
-} from 'services/LocalStorage';
 import { SetupSteps } from '../shared/setupSteps';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 

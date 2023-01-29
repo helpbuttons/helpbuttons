@@ -16,7 +16,7 @@ export function getHref()
 export function getLocale()
 {
     const splitHref = getHref().split('/');
-    if (splitHref.length > 2)
+    if (splitHref.length > 2 && splitHref[3].length > 0)
     {
         return splitHref[3];
     }
