@@ -9,6 +9,7 @@ import { IConfig } from 'services/Setup/config.type';
 import { UserService } from 'services/Users';
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { UpdateEvent, WatchEvent } from 'store/Event';
+import { FetchUserData } from './Users';
 
 export class GetConfig implements WatchEvent {
   public constructor(private onSuccess, private onError) {}
@@ -148,8 +149,10 @@ export class CreateAdmin implements WatchEvent {
   ) {}
   public watch(state: GlobalState) {
     return UserService.signup(this.signupRequestDto).pipe(
-      map((configData) => {
-        this.onSuccess(configData);
+      map((userData) => {
+        if(userData) {
+          return new FetchUserData(this.onSuccess, this.onError);
+        }
       }),
       catchError((error) => {
         let err = error.response;
