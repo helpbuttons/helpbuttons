@@ -13,5 +13,8 @@
   },
   "feed": {
     "write": "Write message"
+  },
+  "explore": {
+    "emptyList": "Please browse the map to find more buttons"
   }
 }

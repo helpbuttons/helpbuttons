@@ -103,6 +103,15 @@ export class ButtonFound implements UpdateEvent {
   }
 }
 
+export class ClearCurrentButton implements UpdateEvent {
+  public constructor() {}
+
+  public update(state: GlobalState) {
+    return produce(state, newState => {
+      newState.explore.currentButton = null;
+    });
+  }
+}
 export class SetAsCurrentButton implements WatchEvent {
   public constructor(private buttonId: string) {}
 

@@ -64,9 +64,7 @@ export default function Explore() {
     <div className="index__container">
       <div className={'index__content-left ' + (showLeftColumn ? '' : 'index__content-left--hide')}>
         <NavHeader showSearch={showLeftColumn} updateFiltersType={updateFiltersType} />
-        {filteredButtons.length > 0 && 
-          <List buttons={filteredButtons} showLeftColumn={showLeftColumn} onLeftColumnToggle={onLeftColumnToggle}/>
-        }
+        <List buttons={filteredButtons} showLeftColumn={showLeftColumn} onLeftColumnToggle={onLeftColumnToggle}/>
       </div>
         <ExploreButtonsMap
           initMapCenter={{

@@ -32,7 +32,12 @@ function getTranslation(locale, key) {
   );
   if (selectedTranslations)
     if (keys.length > 1) {
-      return selectedTranslations.translations[keys[0]][keys[1]];
+      if (selectedTranslations.translations[keys[0]] && selectedTranslations.translations[keys[0]][keys[1]]) {
+        return selectedTranslations.translations[keys[0]][keys[1]];
+      }
+      
+      return `Add me to your translations file. (key: ${key} locale: ${locale})`;
+
     } else if (keys.length > 0) {
       return selectedTranslations.translations[keys[0]];
     }

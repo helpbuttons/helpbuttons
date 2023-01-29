@@ -54,7 +54,7 @@ export default function HomeInfo() {
           .info-overlay__container {
             background-image:  url(/api/${selectedNetwork.jumbo});
            }
-         `}</style>          {/* : 'https://placekitten.com/800/500' */}
+         `}</style>
           <div className="info-overlay__card">
             <div className="card">
               <div className="card__header">

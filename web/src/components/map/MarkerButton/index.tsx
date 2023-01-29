@@ -1,9 +1,11 @@
 ///button marker over the map
 import React, { useState } from "react";
 
-import { Marker, useMapEvents } from "react-leaflet";
+import { Marker, Popup, useMapEvents } from "react-leaflet";
 import { MarkerIcon, MarkerButton } from "./IconButton";
 import CardButtonMap from "components/map/CardButtonMap";
+import { store } from "pages";
+import { ClearCurrentButton } from "state/Explore";
 
 
 export function MarkerSelector({ onClick, markerPosition, markerImage = null, markerCaption= '?' }) {
@@ -32,7 +34,7 @@ export function MarkerSelector({ onClick, markerPosition, markerImage = null, ma
   );
 }
 
-export function CardMarkerButton({ button, children, onMarkerClick = (buttonId) => {}}) {
+export function CardMarkerButton({ button, children, onMarkerClick}) {
   return (
     <Marker
       position={
@@ -44,7 +46,7 @@ export function CardMarkerButton({ button, children, onMarkerClick = (buttonId) 
           : { lat: null, lng: null }
       }
       icon={MarkerButton(button.image, button.type, button.description)}
-      eventHandlers={{ click: (e) => {onMarkerClick(button.id)}}}
+      eventHandlers={{ click: (e) => {onMarkerClick(button.id, button.location.coordinates)}}}
     >
       {children}
     </Marker>
@@ -55,9 +57,24 @@ export function MarkersButton({ buttons, onBoundsChange,onMarkerClick, ...props 
     moveend: (e) => {
       onBoundsChange(map.getBounds());
     },
+    click: (e) => {
+      const position = {lat: e.latlng.lat,lng: e.latlng.lng};
+      map.setView([e.latlng.lat,e.latlng.lng], map.getZoom());
+      store.emit(new ClearCurrentButton())
+    },
   });
+  const onMarkerClicked = (buttonId, buttonCoordinates) => {
+    onMarkerClick(buttonId);
+    map.setView(buttonCoordinates, map.getZoom());
+  }
   const markers = buttons.map((button, i) => (
-    <CardMarkerButton button={button} key={i} onMarkerClick={onMarkerClick}>
+    <CardMarkerButton button={button} key={i} onMarkerClick={onMarkerClicked}>
+        <Popup className="card-button-map--wrapper">
+          <CardButtonMap
+            key={i}
+            button={button}
+          />
+        </Popup>
     </CardMarkerButton>
   ));
 

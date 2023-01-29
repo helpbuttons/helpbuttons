@@ -20,7 +20,7 @@ import { IButton } from "services/Buttons/button.type";
 export default function CardButtonFile() {
   const { id } = router.query;
   // get from the store!!
-  const button: IButton = useRef(
+  const currentButton: IButton = useRef(
     store,
     (state: GlobalState) => state.explore.currentButton
   );
@@ -37,13 +37,13 @@ export default function CardButtonFile() {
 
   return (
     <>
-      {button && (
+      {currentButton && (
         <>
           <div>
             <div
-              className={`card-button card-button card-button--${button.type}`}
+              className={`card-button card-button card-button--${currentButton.type}`}
             >
-              <CardButtonHeadBig button={button} />
+              <CardButtonHeadBig button={currentButton} />
             </div>
             <CardButtonImages />
             <CardButtonOptions />

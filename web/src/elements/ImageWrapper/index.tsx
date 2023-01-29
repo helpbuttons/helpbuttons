@@ -93,6 +93,6 @@ export function ImageContainer({
   const className = classNames.join(' ');
   
   return (
-    <img src={src} alt={alt} width={width} max-height={height} />
+    <img src={`/api/${src}`} alt={alt} width={width} max-height={height} />
   );
 }
