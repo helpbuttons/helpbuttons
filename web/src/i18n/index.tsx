@@ -11,7 +11,10 @@ const translations = [
   },
 ];
 export default function t(key: string, defaultValue: string = '') {
-  const locale = getLocale();
+  const availableLocales = translations.map(({locale, translations}) => {
+    return locale;
+  })
+  const locale = getLocale(availableLocales);
 
   const translatedString = getTranslation(locale, key);
   if (translatedString === false || !translatedString) {

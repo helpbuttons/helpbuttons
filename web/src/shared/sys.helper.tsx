@@ -13,10 +13,10 @@ export function getHref()
     return window.location.href
 }
 
-export function getLocale()
+export function getLocale(availableLocales)
 {
     const splitHref = getHref().split('/');
-    if (splitHref.length > 2 && splitHref[3].length > 0)
+    if (splitHref.length > 2 && availableLocales.includes(splitHref[3]))
     {
         return splitHref[3];
     }
