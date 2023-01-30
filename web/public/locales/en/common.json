@@ -16,5 +16,9 @@
   },
   "explore": {
     "emptyList": "Please browse the map to find more buttons"
+  },
+  "picker-specific-date": {
+    "pickday": "Choose a day",
+    "picktime": "Pick a time"
   }
 }

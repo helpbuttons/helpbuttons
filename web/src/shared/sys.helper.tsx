@@ -1,3 +1,5 @@
+import { translations } from "i18n";
+
 export function getHostname() 
 {
     return window.location.hostname;
@@ -13,10 +15,16 @@ export function getHref()
     return window.location.href
 }
 
-export function getLocale(availableLocales)
+export function getLocale(availableLocales = null)
 {
+    if ( !availableLocales ) {
+        availableLocales = translations.map(({locale}) => {
+            return locale;
+        })
+    }
     const splitHref = getHref().split('/');
-    if (splitHref.length > 2 && availableLocales.includes(splitHref[3]))
+    
+    if (splitHref && splitHref.length > 2 && availableLocales.includes(splitHref[3]))
     {
         return splitHref[3];
     }
