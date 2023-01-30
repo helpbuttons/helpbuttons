@@ -141,8 +141,6 @@ function MyApp({ Component, pageProps }) {
       return true;
     }
     return publicPaths.filter((allowedPath) => {
-      console.log(allowedPath)
-      console.log(pathToRegexp(allowedPath).exec(path))
       return pathToRegexp(allowedPath).exec(path);
     }).length > 0;
   }

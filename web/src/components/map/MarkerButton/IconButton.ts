@@ -1,7 +1,7 @@
 import L from 'leaflet';
 import { makeImageUrl } from 'shared/sys.helper';
 function MarkerButton(markerImage, markerType, markerCaption) {
-  markerImage = makeImageUrl(markerImage);
+  markerImage = makeImageUrl(markerImage,'/api/');
   return L.divIcon({
       className: 'marker-button',
       html:(
@@ -27,7 +27,7 @@ function MarkerButton(markerImage, markerType, markerCaption) {
 }
 
 function MarkerIcon(title = '', markerImage = '') {
-  markerImage = makeImageUrl(markerImage);
+  markerImage = makeImageUrl(markerImage, '/api/');
   return L.divIcon({
       className: 'marker-button',
       html:(

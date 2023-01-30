@@ -23,17 +23,16 @@ export function getLocale(availableLocales)
     return 'en';
 }
 
-export function makeImageUrl(image) {
+export function makeImageUrl(image, baseUrl = '') {
     // debugger;
     if(!image) {
       return 'fail.png';
     }
     const regex = /^data\:image/gm;
     const matches = image.match(regex);
-    
     if ( !matches )
     {
-      return `/api${image}`;
+      return `${baseUrl}${image}`;
     }
     return image
   }
