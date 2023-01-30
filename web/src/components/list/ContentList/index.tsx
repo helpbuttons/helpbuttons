@@ -4,13 +4,14 @@ import { map } from 'rxjs/operators';
 import { useState } from 'react'
 
 import CardButtonList from 'components/list/CardButtonList'
+import t from 'i18n';
 
 export default function ContentList ({buttons, ...props}) {
 
   if (buttons.length < 1) {
     return (
       <>
-        This network has no buttons
+        {t('explore.emptyList', 'Please browse the map to find more buttons')}
       </>
     );
   }

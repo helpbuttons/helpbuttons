@@ -15,12 +15,10 @@ import { FetchUserData, SetCurrentUser } from 'state/Users';
 import { useRef } from 'store/Store';
 import { GetConfig } from 'state/Setup';
 import { alertService } from 'services/Alert';
-import {
-  localStorageService,
-  LocalStorageVars,
-} from 'services/LocalStorage';
 import { SetupSteps } from '../shared/setupSteps';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
+
+import { pathToRegexp } from 'path-to-regexp';
 
 export default appWithTranslation(MyApp);
 
@@ -125,8 +123,8 @@ function MyApp({ Component, pageProps }) {
     store.emit(new FetchDefaultNetwork(onSucess, onError));
   }
 
-  function authCheck() {
-    // redirect to login page if accessing a private page and not logged in
+  function guestPathCheck(path)
+  {
     const publicPaths = [
       '/Login',
       '/Signup',
@@ -136,15 +134,25 @@ function MyApp({ Component, pageProps }) {
       '/ButtonNew',
       '/Explore',
       '/HomeInfo',
-      '/ButtonFile/[id]',
+      '/ButtonFile/:id',
     ];
 
+    if (publicPaths.includes(path)) {
+      return true;
+    }
+    return publicPaths.filter((allowedPath) => {
+      return pathToRegexp(allowedPath).exec(path);
+    }).length > 0;
+  }
+  function authCheck() {
+    // redirect to login page if accessing a private page and not logged in
     const path = router.asPath.split('?')[0];
 
     if (
       !UserService.isLoggedIn() &&
-      !publicPaths.includes(path)
+      !guestPathCheck(path)
     ) {
+      console.log('oiii')
       // and is not 404
       if (path != '/Login') {
         router

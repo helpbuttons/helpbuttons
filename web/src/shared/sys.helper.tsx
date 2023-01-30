@@ -13,12 +13,26 @@ export function getHref()
     return window.location.href
 }
 
-export function getLocale()
+export function getLocale(availableLocales)
 {
     const splitHref = getHref().split('/');
-    if (splitHref.length > 2)
+    if (splitHref.length > 2 && availableLocales.includes(splitHref[3]))
     {
         return splitHref[3];
     }
     return 'en';
 }
+
+export function makeImageUrl(image, baseUrl = '') {
+    // debugger;
+    if(!image) {
+      return 'fail.png';
+    }
+    const regex = /^data\:image/gm;
+    const matches = image.match(regex);
+    if ( !matches )
+    {
+      return `${baseUrl}${image}`;
+    }
+    return image
+  }

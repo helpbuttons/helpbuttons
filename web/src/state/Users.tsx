@@ -9,6 +9,8 @@ import { IUser } from 'services/Users/types';
 import { UserService } from 'services/Users';
 
 import { HttpService, isHttpError } from "services/HttpService";
+import { SignupRequestDto } from 'shared/dtos/auth.dto';
+import { HttpStatus } from 'services/HttpService/http-status.enum';
 
 export interface UsersState {
   currentUser: IUser;
@@ -47,15 +49,13 @@ export class Login implements WatchEvent {
 
 export class SignupUser implements WatchEvent {
   public constructor(
-    private email: string,
-    private password: string,
-    private name: string,
+    private signupRequestDto: SignupRequestDto,
     private onSuccess,
     private onError
   ) {}
 
   public watch(state: GlobalState) {
-    return UserService.signup(this.email, this.password, this.name).pipe(
+    return UserService.signup(this.signupRequestDto).pipe(
       map((userData) => {
         if(userData) {
           return new FetchUserData(this.onSuccess, this.onError);
@@ -63,7 +63,7 @@ export class SignupUser implements WatchEvent {
       }),
       catchError((err) => {
         if (isHttpError(err) &&
-            err.status === 400 &&
+            err.status === HttpStatus.BAD_REQUEST &&
             err.response.message === "email-already-exists") {
           this.onError("email-already-exists");
         } else {

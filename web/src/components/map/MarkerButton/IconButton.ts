@@ -1,6 +1,7 @@
 import L from 'leaflet';
+import { makeImageUrl } from 'shared/sys.helper';
 function MarkerButton(markerImage, markerType, markerCaption) {
-  markerImage = makeImageUrl(markerImage);
+  markerImage = makeImageUrl(markerImage,'/api/');
   return L.divIcon({
       className: 'marker-button',
       html:(
@@ -25,23 +26,8 @@ function MarkerButton(markerImage, markerType, markerCaption) {
   });
 }
 
-function makeImageUrl(image) {
-  // debugger;
-  if(!image) {
-    return 'fail.png';
-  }
-  const regex = /^data\:image/gm;
-  const matches = image.match(regex);
-  
-  if ( !matches )
-  {
-    return `api${image}`;
-  }
-  return image
-}
-
 function MarkerIcon(title = '', markerImage = '') {
-  markerImage = makeImageUrl(markerImage);
+  markerImage = makeImageUrl(markerImage, '/api/');
   return L.divIcon({
       className: 'marker-button',
       html:(

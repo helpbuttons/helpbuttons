@@ -11,7 +11,10 @@ const translations = [
   },
 ];
 export default function t(key: string, defaultValue: string = '') {
-  const locale = getLocale();
+  const availableLocales = translations.map(({locale, translations}) => {
+    return locale;
+  })
+  const locale = getLocale(availableLocales);
 
   const translatedString = getTranslation(locale, key);
   if (translatedString === false || !translatedString) {
@@ -29,7 +32,12 @@ function getTranslation(locale, key) {
   );
   if (selectedTranslations)
     if (keys.length > 1) {
-      return selectedTranslations.translations[keys[0]][keys[1]];
+      if (selectedTranslations.translations[keys[0]] && selectedTranslations.translations[keys[0]][keys[1]]) {
+        return selectedTranslations.translations[keys[0]][keys[1]];
+      }
+      
+      return `Add me to your translations file. (key: ${key} locale: ${locale})`;
+
     } else if (keys.length > 0) {
       return selectedTranslations.translations[keys[0]];
     }

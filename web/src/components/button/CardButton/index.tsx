@@ -16,11 +16,12 @@ import { GlobalState, store } from "pages";
 import { useEffect } from "react";
 import { FindButton } from "state/Explore";
 import { IButton } from "services/Buttons/button.type";
+import { makeImageUrl } from "shared/sys.helper";
 
 export default function CardButtonFile() {
   const { id } = router.query;
   // get from the store!!
-  const button: IButton = useRef(
+  const currentButton: IButton = useRef(
     store,
     (state: GlobalState) => state.explore.currentButton
   );
@@ -37,15 +38,15 @@ export default function CardButtonFile() {
 
   return (
     <>
-      {button && (
+      {currentButton && (
         <>
           <div>
             <div
-              className={`card-button card-button card-button--${button.type}`}
+              className={`card-button card-button card-button--${currentButton.type}`}
             >
-              <CardButtonHeadBig button={button} />
+              <CardButtonHeadBig button={currentButton} />
             </div>
-            <CardButtonImages />
+            <CardButtonImages button={currentButton}/>
             <CardButtonOptions />
           </div>
         </>
@@ -112,7 +113,7 @@ export function CardButtonHeadBig({ button }) {
             <div className="avatar-big">
               <ImageWrapper
                 imageType={ImageType.avatar}
-                src="https://dummyimage.com/80/#ccc/fff"
+                src={button.owner.avatar}
                 alt="Avatar"
               />
             </div>
@@ -168,7 +169,7 @@ export function CardButtonHeadActions({ button }) {
     </div>
   );
 }
-export function CardButtonImages() {
+export function CardButtonImages({button}) {
   return (
     <div className="card-button__picture">
       <div className="card-button__picture-nav">
@@ -179,11 +180,10 @@ export function CardButtonImages() {
           <IoChevronForwardOutline />
         </div>
       </div>
-
       <ImageWrapper
         imageType={ImageType.buttonCard}
-        src="https://dummyimage.com/1000/#ccc/fff"
-        alt="Avatar"
+        src={makeImageUrl(button.image)}
+        alt={button.description}
       />
     </div>
   );

@@ -2,91 +2,116 @@
 //imported from libraries
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
 
 //imported internal classes, variables, files or functions
 import { store } from 'pages/index';
 import { SignupUser } from 'state/Users';
 
 //imported react components
-import Alert from 'components/overlay/Alert';
 import { Link } from 'elements/Link';
 import Popup from 'components/popup/Popup';
-import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
-import FieldText from 'elements/Fields/FieldText';
-import FieldPassword from 'elements/Fields/FieldPassword';
+import Btn, {
+  ContentAlignment,
+  BtnType,
+  IconType,
+} from 'elements/Btn';
 import Form from 'elements/Form';
-import PopupOptions from 'components/popup/PopupOptions'
-import PopupImg from 'components/popup/PopupImg';
-import PopupSection from 'components/popup/PopupSection';
 import { NavigateTo } from 'state/Routes';
-import { alertService } from 'services/Alert';
 import { useRouter } from 'next/router';
+import NewUserFields, {
+  passwordsMatch,
+} from 'components/user/NewUserFields';
 
 export default function Signup() {
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
-  const [ errorMsg, setErrorMsg ] = useState(undefined);
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    watch,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: {
+      username: 'user',
+      password: 'qwerty1234',
+      password_confirm: 'qwerty1234',
+      email: 'user@user.com',
+    },
+  });
+  const [errorMsg, setErrorMsg] = useState(undefined);
   const router = useRouter();
-  
+
   const onSubmit = (data) => {
-    store.emit(new SignupUser(data.email, data.password, data.name, onSuccess, onError));
+    if (passwordsMatch(data, setError)) {
+      // store.emit(new SignupUser(data.email, data.password, data.name, onSuccess, onError));
+      store.emit(
+        new SignupUser(
+          {
+            username: data.username,
+            email: data.email,
+            password: data.password,
+            name: '',
+            avatar: data.avatar,
+          },
+          onSuccess,
+          onError,
+        ),
+      );
+    }
   };
 
   const onSuccess = () => {
-    const returnUrl :string = router.query.returnUrl ? router.query.returnUrl.toString() : '/' ;
+    const returnUrl: string = router.query.returnUrl
+      ? router.query.returnUrl.toString()
+      : '/';
 
     store.emit(new NavigateTo(returnUrl));
-  }
+  };
 
   const onError = (err) => {
-    if (err === "email-already-exists") {
-      setErrorMsg("This email already has registered");
+    if (err === 'email-already-exists') {
+      setErrorMsg('This email already has registered');
+    } else {
+      console.error(err);
     }
-  }
+  };
 
-  const params : URLSearchParams = new URLSearchParams(router.query);
+  const params: URLSearchParams = new URLSearchParams(router.query);
 
   return (
-      <Popup title="Signup" linkFwd="/HomeInfo">
-          <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
-              <div className="login__form">
-                  <div className="form__inputs-wrapper">
-                      <FieldText 
-                        name="email" 
-                        label="Email" 
-                        classNameInput="squared"
-                        placeholder="email@email.em"
-                        validationError={ errors.email }
-                        {...register("email", { required: true })}
-                      ></FieldText>
-                      <FieldText 
-                        name="name" 
-                        label="Name" 
-                        classNameInput="squared"
-                        placeholder="name"
-                        validationError={ errors.name }
-                        {...register("name", { required: true })}
-                      ></FieldText>
-                      <FieldPassword 
-                        name="password" 
-                        label="Password" 
-                        classNameInput="squared"
-                        placeholder="Type your password"
-                        validationError={ errors.password }
-                        {...register("password", { required: true, minLength: 8 })}
-                      ></FieldPassword>
-                  </div>
-                  { errorMsg && (
-                    <div className="form__input-subtitle--error">{ errorMsg }</div>
-                  )}
-                  <div className="form__btn-wrapper">
-                      <Btn btnType={BtnType.splitIcon} caption="REGISTER" contentAlignment={ContentAlignment.center} isSubmitting={isSubmitting}/>
-                      <div className="popup__link">
-                          <Link href={`/Login?${params.toString()}`}>I have an account</Link>
-                      </div>
-                  </div>
-              </div>
-          </Form>
-      </Popup>
+    <Popup title="Signup" linkFwd="/HomeInfo">
+      <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
+        <div className="login__form">
+          <div className="form__inputs-wrapper">
+            <NewUserFields
+              control={control}
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              watch={watch}
+            />
+          </div>
+          {errorMsg && (
+            <div className="form__input-subtitle--error">
+              {errorMsg}
+            </div>
+          )}
+          <div className="form__btn-wrapper">
+            <Btn
+              btnType={BtnType.splitIcon}
+              caption="REGISTER"
+              contentAlignment={ContentAlignment.center}
+              isSubmitting={isSubmitting}
+            />
+            <div className="popup__link">
+              <Link href={`/Login?${params.toString()}`}>
+                I have an account
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Form>
+    </Popup>
   );
 }
