@@ -25,6 +25,9 @@ Edit the file db.env to setup your default values for configuration of the datab
 build all docker needed images
 `$ docker-compose build`
 
+create a network for the containers:
+`$ docker network create web`
+
 then run helpbuttons
 `$ docker-compose up -d`
 
