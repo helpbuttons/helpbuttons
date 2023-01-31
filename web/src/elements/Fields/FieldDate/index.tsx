@@ -3,15 +3,19 @@ import { Picker, PickerSelector } from "components/picker/Picker";
 import PickerPeriodDate from "components/picker/PickerPeriodDate";
 import PickerDate from "components/picker/PickerDate";
 import React, { useState } from "react";
+import PickerSpecificDate from "components/picker/PickerSpecificDate";
+import { getLocale } from "shared/sys.helper";
 
-export default function ButtonNewDate({ title, exact, ...props }) {
+export default function FieldDate({ title, ...props }) {
   const [showHideMenu, setHideMenu] = useState(false);
   const [pickerMode, setPickerMode] = useState("");
-
+  const [date, setDate] = useState(new Date());
+  
   let closeMenu = () => {
     setHideMenu(false);
     setPickerMode("");
   };
+  // https://www.npmjs.com/package/react-time-picker
   return (
     <>
       <div className="form__field">
@@ -25,7 +29,22 @@ export default function ButtonNewDate({ title, exact, ...props }) {
       </div>
       {showHideMenu && (
         <Picker setHideMenu={setHideMenu} onClosed={closeMenu}>
-          {pickerMode == "" && (
+            <div className="btn" onClick={closeMenu}>
+            Done
+          </div>
+
+            <span>
+            You selected this time is{' '}
+            {date.toLocaleDateString(getLocale(), {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric'
+            })}
+          </span>
+          {/* {pickerMode == "" && (
             <PickerSelector
               label="Now"
               value="now"
@@ -45,10 +64,11 @@ export default function ButtonNewDate({ title, exact, ...props }) {
               value="periodic"
               onHandleChange={setPickerMode}
             />
-          )}
+          )} 
           {pickerMode == "now" && <PickerDate></PickerDate>}
-          {pickerMode == "specific" && <PickerPeriodDate></PickerPeriodDate>}
-          {pickerMode == "periodic" && <PickerPeriodDate></PickerPeriodDate>}
+          {pickerMode == "specific" && <PickerSpecificDate></PickerSpecificDate>}
+          {pickerMode == "periodic" && <PickerPeriodDate></PickerPeriodDate>}*/}
+          <PickerSpecificDate onChange={setDate} closeMenu={closeMenu}></PickerSpecificDate>
         </Picker>
       )}
     </>

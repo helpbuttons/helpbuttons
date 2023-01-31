@@ -1,6 +1,6 @@
 import { getLocale } from 'shared/sys.helper';
 
-const translations = [
+export const translations = [
   {
     locale: 'en',
     translations: require('../../public/locales/en/common.json'),

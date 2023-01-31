@@ -19,6 +19,7 @@ import { NavigateTo } from "state/Routes";
 import { alertService } from "services/Alert";
 import Router from 'next/router';
 import FieldUploadImage from "elements/Fields/FieldImageUpload";
+import FieldDate from "elements/Fields/FieldDate";
 // import FieldUploadImage from "elements/Fields/FieldImageUpload";
 
 
@@ -75,7 +76,6 @@ export default function ButtonNew() {
   };
 
   useEffect(() => {
-    console.log('oi')
     if (buttonDraft) 
     {
       reset(buttonDraft)
@@ -130,7 +130,12 @@ export default function ButtonNew() {
                 markerImage={watch('image')}
                 markerCaption={watch('type')}
               />
-            <ButtonNewDate title="When ?" setDate={setDate} date={date} />
+              <FieldDate
+                setValue={setValue}
+                watch={watch}
+                title="When ?"
+              />
+              {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} /> */}
             <ButtonShare />
           </div>
           <div className="publish__submit">
