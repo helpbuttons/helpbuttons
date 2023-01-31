@@ -16,15 +16,13 @@ export function DropdownAutoComplete({
     setInput(inputText);
     setShowSuggestions(true);
     onChange(userInput);
+
   };
 
   const onClick = (e) => {
-    setInput('');
-    setValue(
-      e.target.attributes.value.nodeValue,
-      e.target.attributes.label.nodeValue
-    );
     setShowSuggestions(false);
+    const place = e.target.value;
+    setValue(place);
   };
 
   const onInputClick = (e) => {

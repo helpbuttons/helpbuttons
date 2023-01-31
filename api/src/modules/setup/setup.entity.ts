@@ -65,6 +65,7 @@ export class SetupDto {
   @IsOptional()
   @IsArray({})
   allowedDomains: string[];
+
 }
 
 export class SetupDtoOut {
@@ -105,5 +106,4 @@ export class SetupDtoOut {
     required: true,
   })
   userCount: number;
-
 }
