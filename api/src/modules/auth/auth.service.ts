@@ -102,7 +102,7 @@ export class AuthService {
           if (typeof error === typeof HttpException) {
             throw error;
           } else if (error?.code === '23505') {
-            console.log('registered...');
+            console.log(error)
             throw new HttpException(
               'Email already registered? Do you want to login?',
               HttpStatus.CONFLICT,
