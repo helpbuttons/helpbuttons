@@ -14,7 +14,7 @@ import { IConfig } from 'services/Setup/config.type';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 
-export function DropDownWhere({placeholder}) {
+export function DropDownWhere({placeholder, onSelected}) {
     const timeInMsBetweenStrokes = 150; //ms
     
     const config: IConfig = useRef(
@@ -63,10 +63,7 @@ export function DropDownWhere({placeholder}) {
   
     const setValue = (place) => {
       place = JSON.parse(place);
-      router.push({
-        pathname: '/Explore',
-        query: place.geometry,
-      });
+      onSelected(place);
     };
     return (
       <>

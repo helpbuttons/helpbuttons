@@ -47,7 +47,12 @@ export default function HomeInfo() {
           <label className="form__label label">
             {t('homeinfo.start')}
           </label>
-          <DropDownWhere placeholder={t('homeinfo.searchlocation')} />
+          <DropDownWhere placeholder={t('homeinfo.searchlocation')} onSelected={(place) => {
+            router.push({
+              pathname: '/Explore',
+              query: place.geometry,
+            });
+          }}/>
         </form>
         {selectedNetworkLoading && (
           <>

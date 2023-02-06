@@ -152,7 +152,6 @@ function MyApp({ Component, pageProps }) {
       !UserService.isLoggedIn() &&
       !guestPathCheck(path)
     ) {
-      console.log('oiii')
       // and is not 404
       if (path != '/Login') {
         router
