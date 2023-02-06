@@ -148,7 +148,7 @@ export class AuthService {
     email: string,
     plainPassword: string,
   ): Promise<any> {
-    const user = await this.userService.findOne(email);
+    const user = await this.userService.findOneByEmail(email);
     if (!user) {
       return null;
     }
@@ -184,11 +184,4 @@ export class AuthService {
     return this.userService.findById(userId);
   }
 
-  // async login(userId)
-  // {
-  //   this.getCurrentUser(userId)
-  //   .then((user) => {
-  //     return this.getAccessToken(user);
-  //   })
-  // }
 }

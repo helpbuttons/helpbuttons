@@ -24,6 +24,9 @@ import {
   IoLogInOutline,
   IoPersonOutline,
 } from 'react-icons/io5';
+import { IConfig } from 'services/Setup/config.type';
+import { getHostname } from 'shared/sys.helper';
+import Link from 'next/link';
 
 export default function HomeInfo() {
   const selectedNetwork: Network = useRef(
@@ -37,9 +40,15 @@ export default function HomeInfo() {
 
   const currentUser = useRef(
     store,
-    (state: GlobalState) => state.users.currentUser,
+    (state: GlobalState) => state.loggedInUser,
   );
 
+
+  const config: IConfig = useRef(
+    store,
+    (state: GlobalState) => state.config,
+  );
+  
   return (
     <div className="info-overlay__container">
       <div className="info-overlay__content">
@@ -86,9 +95,12 @@ export default function HomeInfo() {
                   </h3>
                 </div>
                 <div className="info-overlay__description">
-                  <div># Buttons {0}</div>
-                  <div># Active Users {0}</div>
-                  <div>Administered by: @username</div>
+                  <div># Buttons {config.buttonCount}</div>
+                  <div># Active Users {config.userCount}</div>
+                  <div>Administered by:           <NavLink href={`/Profile/${config.administrator.username}`}>
+                    <span>{config.administrator.username}@{getHostname()}</span>
+                    </NavLink>
+                    </div>
                 </div>
               </div>
               <br />

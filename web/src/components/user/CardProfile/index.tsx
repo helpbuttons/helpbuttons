@@ -11,6 +11,8 @@ import { IoRibbonOutline } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
 import { IoHammerOutline } from "react-icons/io5";
 import UserAvatar from '../components';
+import { store } from 'pages';
+import { Logout } from 'state/Users';
 
 
 export default function CardProfile(props) {
@@ -18,6 +20,7 @@ export default function CardProfile(props) {
   const user = props.user;
 
   function logout() {
+      store.emit(new Logout());
       UserService.logout();
   }
 

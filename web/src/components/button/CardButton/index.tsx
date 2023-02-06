@@ -27,7 +27,7 @@ export default function CardButtonFile() {
   );
   const currentUser = useRef(
     store,
-    (state: GlobalState) => state.users.currentUser
+    (state: GlobalState) => state.loggedInUser
   );
 
   useEffect(() => {
