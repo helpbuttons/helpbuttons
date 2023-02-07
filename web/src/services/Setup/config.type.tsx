@@ -1,7 +1,4 @@
-export interface IConfig {
-    mapifyApiKey: string,
-    leafletTiles: string,
-    allowedDomains: string[],
-    databaseNumberMigrations: number,
-    hostName: string,
+import { SetupDtoOut } from "shared/entities/setup.entity";
+
+export interface IConfig extends SetupDtoOut{
 }

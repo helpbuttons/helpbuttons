@@ -69,7 +69,7 @@ export class SetupService {
         leafletTiles: data.leafletTiles,
         allowedDomains: data.allowedDomains,
         databaseNumberMigrations: migrationsNumber,
-        userCount: userCount
+        userCount: userCount,
       };
   
       // return JSON.stringify(dataToWeb);

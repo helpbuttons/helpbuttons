@@ -96,7 +96,6 @@ export class AuthService {
             );
           }
 
-          console.log('getting token');
           accessToken = await this.getAccessToken(newUserDto);
 
         } catch (error) {
@@ -184,4 +183,12 @@ export class AuthService {
   async getCurrentUser(userId) {
     return this.userService.findById(userId);
   }
+
+  // async login(userId)
+  // {
+  //   this.getCurrentUser(userId)
+  //   .then((user) => {
+  //     return this.getAccessToken(user);
+  //   })
+  // }
 }
