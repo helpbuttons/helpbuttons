@@ -11,11 +11,13 @@ import { ExploreState, exploreInitial } from "state/Explore";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Alert } from "state/Alerts";
 import { IConfig } from "services/Setup/config.type";
+import { User } from "shared/entities/user.entity";
 
 // -- estado global --
 export interface GlobalState {
   networks: NetworksState;
-  users: UsersState;
+  loggedInUser: User;
+  knownUsers: User[];
   explore: ExploreState;
   alerts: Alert[];
   config: IConfig;
@@ -23,7 +25,8 @@ export interface GlobalState {
 
 export const store = new Store<GlobalState>({
   networks: networksInitial,
-  users: usersInitial,
+  loggedInUser: null,
+  knownUsers: [],
   explore: exploreInitial,
   alerts: [],
   config: null,

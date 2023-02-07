@@ -25,10 +25,7 @@ export default function CardButtonFile() {
     store,
     (state: GlobalState) => state.explore.currentButton
   );
-  const currentUser = useRef(
-    store,
-    (state: GlobalState) => state.users.currentUser
-  );
+
 
   useEffect(() => {
     if (id != null) {

@@ -24,9 +24,9 @@ export class HttpService {
   }
 
   public setAccessToken(accessToken?: string) {
-    this.accessToken = accessToken;
-    if (this.accessToken) {
-      localStorageService.save(LocalStorageVars.ACCESS_TOKEN, this.accessToken);
+    if (accessToken) {
+      this.accessToken = accessToken;
+      localStorageService.save(LocalStorageVars.ACCESS_TOKEN, accessToken.toString());
       this.isAuthenticated$.next(true);
     } else {
       localStorageService.remove(LocalStorageVars.ACCESS_TOKEN);
@@ -37,11 +37,16 @@ export class HttpService {
   public get<T>(path: string,
                 body: object = {},
                 headers: object = {},
+                keepPath: boolean = false,
                ): Observable<T | undefined> {
     if (Object.keys(body).length > 0) {
       const query = new URLSearchParams(body);
       const queryString = query.toString();
       path += '?' + queryString;
+    }
+    if (path.indexOf("//") === -1 && !keepPath)
+    {
+      path = this.apiUrl + path;
     }
     return this._ajax("GET", path, {}, headers);
   }
@@ -49,7 +54,12 @@ export class HttpService {
   public post<T>(path: string,
                  body: object = {},
                  headers: object = {},
+                 keepPath: boolean = false,
                 ): Observable<T | undefined> {
+    if (path.indexOf("//") === -1 && !keepPath)
+    {
+      path = this.apiUrl + path;
+    }
     return this._ajax("POST", path, body, headers);
   }
 
@@ -58,19 +68,29 @@ export class HttpService {
                    body: object,
                    headers: object,
                   ): Observable<T | undefined> {
-                    let url = path;
-                    if (path.indexOf("//") === -1)
-                    {
-                      url = this.apiUrl + path;
-                    }
                     return ajax({
-                      url: url,
+                      url: path,
                       method: method,
                       body: body,
                       headers: {...this._defaultHeaders(), ...headers},
                     }).pipe(
                       map(result => (result.response as T | undefined)),
                     );
+  }
+
+  private __ajax<T>(method: string,
+    path: string,
+    body: object,
+    headers: object,
+   ): Observable<T | undefined> {
+     return ajax({
+       url: path,
+       method: method,
+       body: body,
+       headers: {...this._defaultHeaders(), ...headers},
+     }).pipe(
+       map(result => (result.response as T | undefined)),
+     );
   }
 
   private _defaultHeaders(): object {

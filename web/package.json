@@ -31,6 +31,7 @@
     "next": "11.1.0",
     "next-connect": "^0.13.0",
     "next-i18next": "^11.3.0",
+    "opencage-api-client": "^1.0.0",
     "path-to-regexp": "^6.2.1",
     "react": "17.0.2",
     "react-calendar": "^4.0.0",

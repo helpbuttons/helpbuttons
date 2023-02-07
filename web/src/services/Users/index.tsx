@@ -8,6 +8,7 @@ import { IUser, ICurrentUser } from "./network.type";
 import { httpService } from "services/HttpService";
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
+import { User } from 'shared/entities/user.entity';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -62,5 +63,10 @@ export class UserService {
 
   public static logout() {
     httpService.setAccessToken(undefined);
+  }
+
+  public static findUser(username: string)
+  {
+    return httpService.get<User>(`/users/find/${username}`);
   }
 }

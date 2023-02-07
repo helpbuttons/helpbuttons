@@ -38,7 +38,8 @@ export class NetworkService {
         `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
       logo: null,
       jumbo: null,
-      zoom: createDto.zoom
+      zoom: createDto.zoom,
+      name: createDto.name,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {

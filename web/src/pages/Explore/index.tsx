@@ -20,11 +20,25 @@ export default function Explore() {
 
   const router = useRouter()
 
-  const lat = (selectedNetwork && !router.query.lat) ? selectedNetwork.location.coordinates[0] : router.query.lat;
-  const lng = (selectedNetwork && !router.query.lng) ? selectedNetwork.location.coordinates[1] : router.query.lng;
+  let lat = 0
+  let lng = 0
+  let zoom = 2;
 
+  if (selectedNetwork)
+  {
+    lat = selectedNetwork.location.coordinates[0]
+    lng = selectedNetwork.location.coordinates[1]
+    zoom = selectedNetwork.zoom ;
+  }
+  if (router && router.query && router.query.lat)
+  {
+    lat = router.query.lat;
+    lng = router.query.lng;
+    zoom = 13;
+  }
+  
 
-  const [showLeftColumn, setShowLeftColumn] = useState(true);
+  const [showLeftColumn, setShowLeftColumn] = useState(false);
   const [filteredButtons, setFilteredButtons] = useState([]);
 
   const [buttonFilterTypes, setButtonFilterTypes] = useState(buttonTypes.map((buttonType) => buttonType.name));
@@ -64,18 +78,18 @@ export default function Explore() {
     {selectedNetwork &&
     <div className="index__container">
       <div className={'index__content-left ' + (showLeftColumn ? '' : 'index__content-left--hide')}>
-        <NavHeader showSearch={showLeftColumn} updateFiltersType={updateFiltersType} />
+        <NavHeader showSearch={true} updateFiltersType={updateFiltersType} />
         <List buttons={filteredButtons} showLeftColumn={showLeftColumn} onLeftColumnToggle={onLeftColumnToggle}/>
       </div>
         <ExploreButtonsMap
           initMapCenter={{
-            lat: selectedNetwork.location.coordinates[0],
-            lng: selectedNetwork.location.coordinates[1],
+            lat: lat,
+            lng: lng,
           }}
           buttons={filteredButtons}
           onBoundsChange={updateButtons}
           onMarkerClick={onMarkerClick}
-          defaultZoom={selectedNetwork.zoom}
+          defaultZoom={zoom}
         />
       </div>
 }</>

@@ -25,7 +25,12 @@ export default function LoginForm() {
   }
 
   const onSuccess = () => {
-    const returnUrl :string = router.query.returnUrl.toString() || '/';
+    let returnUrl :string = '/HomeInfo';
+    
+    if (router?.query?.returnUrl) {
+      returnUrl = router.query.returnUrl.toString()
+    }
+
     store.emit(new NavigateTo(returnUrl));
   }
 
