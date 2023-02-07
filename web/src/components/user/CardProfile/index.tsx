@@ -1,29 +1,16 @@
 //Profile Card with the the info displayed by the user in Profile page. It shows different options depending if it's other user profile or your profile when logged.
-import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
-import { IoClose } from "react-icons/io5";
-import { Link } from 'elements/Link';
-import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
-
-import { UserService } from 'services/Users';
 import { IoPersonOutline } from "react-icons/io5";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoRibbonOutline } from "react-icons/io5";
-import { IoLogOutOutline } from "react-icons/io5";
-import { IoHammerOutline } from "react-icons/io5";
+import { getHostname } from "shared/sys.helper";
 import UserAvatar from '../components';
-import { store } from 'pages';
-import { Logout } from 'state/Users';
 
 
 export default function CardProfile(props) {
 
   const user = props.user;
 
-  function logout() {
-      store.emit(new Logout());
-      UserService.logout();
-  }
-
+ 
   return (
     <>
       <div className="card-profile__container">
@@ -43,10 +30,10 @@ export default function CardProfile(props) {
             <div className="card-profile__content">
 
               <div className="card-profile__avatar-container-name">
-                { user.username }
+                { user.username }@{getHostname()}
               </div>
 
-              <figure className="card-profile__rating grid-three">
+              {/* <figure className="card-profile__rating grid-three">
 
                 <div className="paragraph grid-three__column">
                   90
@@ -68,13 +55,13 @@ export default function CardProfile(props) {
 
                 </div>
 
-              </figure>
+              </figure> */}
 
             </div>
 
         </div>
 
-        <div className="card-profile__data">
+        {/* <div className="card-profile__data">
 
             <div className="card-profile__description grid-one__column-mid-element">
               Descripcion
@@ -88,28 +75,9 @@ export default function CardProfile(props) {
               <div className="hashtag hashtag--yellow">tag</div>
             </div>
 
-        </div>
+        </div> */}
 
-        <div className="card-profile__actions">
-
-          <Link href="/Explore">
-            <div onClick={logout} className="btn-with-icon">
-
-              <div className="btn-with-icon__icon">
-                <IoLogOutOutline />
-              </div>
-              <span className="btn-with-icon__text">
-                Logout
-              </span>
-
-            </div>
-          </Link>
-
-          <Link href="/Config">
-            <Btn iconLeft={IconType.svg} iconLink={<IoHammerOutline />} caption="Config account"  />
-          </Link>
-
-        </div>
+        
 
       </div>
 

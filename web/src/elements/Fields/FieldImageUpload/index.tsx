@@ -8,12 +8,6 @@ export default function FieldUploadImage({ name, label, width = 100, height = 10
   const [images, setImages] = useState([]);
 
   const onChange = (imageList, addUpdateIndex) => {
-    // const image = imageList[0];
-    // // console.log('img :: ')
-    // // console.log(image)
-    // // console.log('img list')
-    console.log(imageList)
-    // replace(image);
     setImages(imageList);
     if(imageList[0])
       setValue(name, imageList[0].data_url)

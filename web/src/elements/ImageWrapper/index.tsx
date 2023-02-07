@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router'
+import { makeImageUrl } from 'shared/sys.helper';
 
 export enum ImageType {
   avatar,
@@ -72,7 +73,7 @@ export default function ImageWrapper({
 
   return (
     <img
-      src={`/api/${src}`}
+      src={makeImageUrl(src)}
       alt={alt}
       // layout={layout}
       width="100%"
@@ -93,6 +94,7 @@ export function ImageContainer({
   const className = classNames.join(' ');
   
   return (
-    <img src={`/api/${src}`} alt={alt} width={width} max-height={height} />
+    
+    <img src={makeImageUrl(src, '/api/')} alt={alt} width={width} max-height={height} />
   );
 }
