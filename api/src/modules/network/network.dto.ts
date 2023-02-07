@@ -20,6 +20,11 @@ export class CreateNetworkDto implements Partial<Network> {
     type: String,
     required: true,
   })
+  @IsString()
+  @MinLength(3, {
+    message: 'name is too short',
+  })
+  name: string;
 
   @ApiProperty({
     type: String,

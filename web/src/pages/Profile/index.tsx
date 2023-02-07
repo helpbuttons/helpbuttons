@@ -19,5 +19,7 @@ export default function ProfileRedirect() {
         }
         
     }, [currentUser])
-   return (<></>);
+   return (<>
+   
+   </>);
 }
