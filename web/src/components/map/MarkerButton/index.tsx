@@ -2,13 +2,14 @@
 import React, { useState } from "react";
 
 import { Marker, Popup, useMapEvents } from "react-leaflet";
-import { MarkerIcon, MarkerButton } from "./IconButton";
+import { MarkerIcon} from "./IconButton";
 import CardButtonMap from "components/map/CardButtonMap";
 import { store } from "pages";
 import { ClearCurrentButton } from "state/Explore";
+import { buttonTypes } from "shared/buttonTypes";
 
 
-export function MarkerSelector({ onClick, markerPosition, markerImage = null, markerCaption= '?' }) {
+export function MarkerSelector({ onClick, markerPosition, markerImage = null, markerCaption= '?', markerColor = 'red' }) {
   const [position, setPosition] = useState(markerPosition);
   const map = useMapEvents({
     click: (e) => {
@@ -26,7 +27,7 @@ export function MarkerSelector({ onClick, markerPosition, markerImage = null, ma
     {position && 
       <Marker
         position={position}
-        icon={MarkerIcon(markerCaption,markerImage)}
+        icon={MarkerIcon(markerCaption,markerImage,markerColor)}
       >
       </Marker>
     }
@@ -35,6 +36,9 @@ export function MarkerSelector({ onClick, markerPosition, markerImage = null, ma
 }
 
 export function CardMarkerButton({ button, children, onMarkerClick}) {
+  const buttonType = buttonTypes.find((buttonType) => {
+    return buttonType.name === button.type
+  })
   return (
     <Marker
       position={
@@ -45,7 +49,7 @@ export function CardMarkerButton({ button, children, onMarkerClick}) {
             }
           : { lat: null, lng: null }
       }
-      icon={MarkerButton(button.image, button.type, button.description)}
+      icon={MarkerIcon(button.title, button.image, buttonType.color)}
       eventHandlers={{ click: (e) => {onMarkerClick(button.id, button.location.coordinates)}}}
     >
       {children}

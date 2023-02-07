@@ -8,9 +8,6 @@ import {
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { IConfig } from 'services/Setup/config.type';
-import { GetConfig } from 'state/Setup';
-import { alertService } from 'services/Alert';
-import { SetAsCurrentButton } from 'state/Explore';
 
 export default function LeafLetMap({
   center,
@@ -23,6 +20,7 @@ export default function LeafLetMap({
   markerImage = null,
   markerCaption = '?',
   isMarkerSelector = false,
+  markerColor= 'red'
 }) {
   const [map, setMap] = useState(null)
   const [zoom, setZoom] = useState(defaultZoom);
@@ -36,8 +34,6 @@ export default function LeafLetMap({
     (state: GlobalState) => state.config,
   );
   useEffect(() => {
-    console.log('make this: ')
-    console.log(center)
     if(map && center) {
       console.log('setting center')
       map.setView(center, map.getZoom());
@@ -68,6 +64,7 @@ export default function LeafLetMap({
               markerImage={markerImage}
               markerPosition={markerPosition}
               markerCaption={markerCaption}
+              markerColor={markerColor}
             />)
           }else if (markersButtons) {
             return (<MarkersButton buttons={markersButtons} onBoundsChange={onBoundsChange}

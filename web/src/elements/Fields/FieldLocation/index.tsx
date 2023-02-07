@@ -16,7 +16,8 @@ export default function FieldLocation({
   watch,
   defaultZoom,
   markerImage,
-  markerCaption = '?'
+  markerCaption = '?',
+  markerColor
 }) {
   const [showHideMenu, setHideMenu] = useState(false);
   const [center, setCenter] = useState(["41.6869","-7.663206"]);
@@ -82,6 +83,7 @@ export default function FieldLocation({
                 markerImage ? markerImage : null
               }
               markerCaption={markerCaption}
+              markerColor={markerColor}
             />
             <LocationCoordinates
               longitude={longitude}

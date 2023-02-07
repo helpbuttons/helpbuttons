@@ -15,7 +15,6 @@ export default function Filters({ updateFiltersType }) {
     <div className="filters">
       <div className="checkbox-filter__container">
         {buttonTypes.map((buttonType) => (
-          // className={myCondition ? styles.variant1 : styles.variant2}
           <label
             key={buttonType.name}
             className="checkbox__filter-label"
@@ -25,14 +24,14 @@ export default function Filters({ updateFiltersType }) {
               className="checkbox-filter__checkbox"
               id="input-tos"
               defaultChecked={true}
-              value="need"
+              value={buttonType.name}
               onChange={buttonTypeChanged}
             ></input>
             <div className="checkbox-filter__content btn-filter-with-icon">
               <div
                 className={`btn-filter__icon ${buttonType.color}`}
               ></div>
-              <div className="checkbox__text">{buttonType.name}</div>
+              <div className="checkbox__text">{buttonType.caption}</div>
             </div>
           </label>
         ))}

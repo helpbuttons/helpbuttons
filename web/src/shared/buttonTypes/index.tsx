@@ -1,10 +1,17 @@
 export const buttonTypes = [
     {
-        name: "Offer",
+        name: "offer",
+        caption: "Offer",
         color: "red",
     },
     {
-        name: "Need",
+        name: "need",
+        caption: "Need",
         color: "green",
+    }
+    ,{
+        name: "exchange",
+        caption: "Exchange",
+        color: "yellow"
     }
 ];

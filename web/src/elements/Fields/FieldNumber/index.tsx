@@ -1,8 +1,8 @@
 import FieldError from "../FieldError";
 
-export default function FieldText({
+export default function FieldNumber({
     label,
-    handleChange,
+    handleChange = (e,v) => {},
     name,
     validationError,
 }) {
