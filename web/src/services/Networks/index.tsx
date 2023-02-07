@@ -3,9 +3,10 @@ import { httpService } from "services/HttpService";
 
 import getConfig from "next/config";
 import { Network } from "shared/entities/network.entity";
+import { CreateNetworkDto } from "shared/dtos/network.dto";
 export class NetworkService {
 
-  public static new(data: any): Observable<any> {
+  public static new(data: CreateNetworkDto): Observable<any> {
 
     return httpService.post("/networks/new", data);
   }

@@ -7,6 +7,9 @@ import MarkerSelectorMap from 'components/map/LeafletMap/MarkerSelectorMap';
 import { ImageContainer } from 'elements/ImageWrapper';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
+import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
+import router from 'next/router';
+import t from 'i18n';
 export default function FieldLocation({
   validationErrors,
   setValue,
@@ -17,8 +20,9 @@ export default function FieldLocation({
 }) {
   const [showHideMenu, setHideMenu] = useState(false);
   const [center, setCenter] = useState(["41.6869","-7.663206"]);
-  const [radius, setRadius] = useState(1);
+  const [markerPosition, setmarkerPosition] = useState(["41.6869","-7.663206"]);
 
+  const [radius, setRadius] = useState(1);
 
   const selectedNetwork = useRef(
     store,
@@ -83,6 +87,10 @@ export default function FieldLocation({
               longitude={longitude}
               latitude={latitude}
               radius={0}/>
+            <DropDownWhere placeholder={t('homeinfo.searchlocation')} onSelected={(place) => {
+              console.log(place);
+              // setCenter(place.coordinates)
+            }}/>
             <Btn
               btnType={BtnType.splitIcon}
               caption="Save"
