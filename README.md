@@ -62,7 +62,6 @@ Please load and read complete documentation
 
 #### development
 ```
-$ echo "API_URL=http://localhost:3001/" > web/.env
 $ docker-compose -f docker-compose.dev.yml up
 $ docker-compose exec api yarn migration:run
 ```
