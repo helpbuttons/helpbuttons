@@ -4,6 +4,8 @@ import Configuration from "pages/Configuration";
 export default NetworkCreation;
 
 function NetworkCreation() {
+  
+
   return (
     <Configuration></Configuration>
   );

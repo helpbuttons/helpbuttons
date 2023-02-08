@@ -77,7 +77,7 @@ export class SelectedNetworkFetched implements UpdateEvent {
 
 export class CreateNetwork implements WatchEvent {
     public constructor(
-      private network : CreateNetworkDto,
+      private network,
       private onSuccess,
       private onError
     ) {}

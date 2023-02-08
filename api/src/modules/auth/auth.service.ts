@@ -102,7 +102,7 @@ export class AuthService {
           if (typeof error === typeof HttpException) {
             throw error;
           } else if (error?.code === '23505') {
-            console.log(error)
+            console.log('registered...');
             throw new HttpException(
               'Email already registered? Do you want to login?',
               HttpStatus.CONFLICT,
@@ -148,7 +148,7 @@ export class AuthService {
     email: string,
     plainPassword: string,
   ): Promise<any> {
-    const user = await this.userService.findOneByEmail(email);
+    const user = await this.userService.findOne(email);
     if (!user) {
       return null;
     }
@@ -184,4 +184,11 @@ export class AuthService {
     return this.userService.findById(userId);
   }
 
+  // async login(userId)
+  // {
+  //   this.getCurrentUser(userId)
+  //   .then((user) => {
+  //     return this.getAccessToken(user);
+  //   })
+  // }
 }

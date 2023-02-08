@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Request } from '@nestjs/common';
+import { Controller, Get, Request } from '@nestjs/common';
 
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -13,11 +13,5 @@ export class UserController {
   @Get('whoAmI')
   whoAmI(@Request() req) {
     return req.user;
-  }
-
-  @Auth()
-  @Get('/find/:username')
-  find(@Param('username') username: string) {
-    return this.userService.findOne(username)
   }
 }
