@@ -1,4 +1,3 @@
-import type { AppProps } from 'next/app';
 import '../styles/app.scss';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
@@ -24,7 +23,6 @@ export default appWithTranslation(MyApp);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const [user, setUser] = useState(null);
   const [authorized, setAuthorized] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
 
@@ -175,27 +173,25 @@ function MyApp({ Component, pageProps }) {
         <title>Helpbuttons.org</title>
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
-      <div className={`${user ? '' : ''}`}>
-        <Alert />
-        {(() => {
-          if (config && authorized) {
-            return (
-              <div>
-                <Component {...pageProps} />
 
-                <NavBottom logged={!!currentUser} />
-              </div>
-            );
-          } else if (isSetup) {
-            return (
-              <div>
-                <Component {...pageProps} />
-              </div>
-            );
-          }
+      <div>
+        {authorized && (
+          <div>
+            <Component {...pageProps} />
+            <Alert />
+            <NavBottom logged={!!currentUser} />
+          </div>
+        )}
 
-          return <div>Loading...</div>;
-        })()}
+        {isSetup && (
+          <div>
+            <Component {...pageProps} />
+            <Alert />
+          </div>
+        )}
+        {(!isSetup && !authorized) &&
+          <div>Loading...</div>
+        }
       </div>
     </>
   );

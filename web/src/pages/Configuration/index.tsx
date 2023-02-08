@@ -141,7 +141,7 @@ function Configuration() {
             />
 
             <FieldLocation
-                defaultZoom={10}
+                defaultZoom={watch('zoom')}
                 validationErrors={undefined}
                 setValue={setValue}
                 watch={watch}

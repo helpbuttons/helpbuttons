@@ -8,7 +8,7 @@ import { GlobalState } from 'store/Store';
 import { IUser } from 'services/Users/types';
 import { UserService } from 'services/Users';
 
-import { HttpService, isHttpError } from "services/HttpService";
+import { isHttpError } from "services/HttpService";
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
 
@@ -62,10 +62,14 @@ export class SignupUser implements WatchEvent {
         }
       }),
       catchError((err) => {
+        console.log('catching...')
+        console.log(err)
+        debugger;
         if (isHttpError(err) &&
             err.status === HttpStatus.BAD_REQUEST &&
             err.response.message === "email-already-exists") {
-          this.onError("email-already-exists");
+              console.log('here??!')
+            this.onError("email-already-exists");
         } else {
           throw err;
         }
