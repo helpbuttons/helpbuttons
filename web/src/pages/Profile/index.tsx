@@ -1,25 +1,33 @@
-import router from "next/router";
-import { GlobalState, store } from "pages";
-import { useEffect } from "react";
-import { User } from "shared/entities/user.entity";
-import { useRef } from "store/Store";
+//Users buttons an profile info URL
+import NavHeader from 'components/nav/NavHeader'
+import CardProfile from 'components/user/CardProfile'
+import DynForm from 'elements/DynForm'
 
-export default function ProfileRedirect() {
-    const currentUser : User= useRef(
-        store,
-        (state: GlobalState) => state.loggedInUser
-      );
-      
-    useEffect(() => {
-        if (currentUser){
-            console.log(currentUser)
-            router.push({
-                pathname: `/Profile/${currentUser.username}`
-              });
-        }
-        
-    }, [currentUser])
-   return (<>
-   
-   </>);
+import { useRef } from "store/Store";
+import { GlobalState, store } from "pages";
+
+export default function Profile() {
+
+  const currentUser = useRef(store, (state: GlobalState) => state.users.currentUser);
+
+  return (
+
+    <>
+
+      <div className="body__content">
+
+        <div className="body__section">
+
+          { currentUser && (
+            <CardProfile user={ currentUser }/>
+          )}
+
+        </div>
+
+      </div>
+
+    </>
+
+
+  );
 }

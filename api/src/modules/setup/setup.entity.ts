@@ -1,7 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsOptional, MinLength } from 'class-validator';
-import { OneToOne } from 'typeorm';
-import { User } from '../user/user.entity';
 
 export class SetupDto {
   constructor(partial: Partial<SetupDto>) {
@@ -108,12 +106,4 @@ export class SetupDtoOut {
     required: true,
   })
   userCount: number;
-
-  @ApiProperty({
-    required: true,
-  })
-  buttonCount: number;
-
-  @OneToOne((type) => User)
-  administrator: User;
 }
