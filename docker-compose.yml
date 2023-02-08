@@ -1,10 +1,13 @@
 version: '3'
 services:
   web:
-#    build: web/
+    build: web/
     image: helpbuttons/helpbuttons-web:main
     ports:
       - "3000:3000"
+    volumes: 
+      - ./web/src:/app/src
+    entrypoint: yarn dev
     depends_on:
       - api
     networks:
@@ -12,7 +15,7 @@ services:
       - api
 
   api:
-#    build: api/
+    build: api/
     image: helpbuttons/helpbuttons-api:main
     volumes:
       - config:/app/config/:rw

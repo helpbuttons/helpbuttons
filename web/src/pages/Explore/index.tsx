@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import ExploreButtonsMap from "components/map/LeafletMap/ExploreButtonsMap";
 import { alertService } from "services/Alert";
 import List from "components/list/List";
+import { buttonTypes } from "shared/buttonTypes";
 
 export default function Explore() {
   const selectedNetwork = useRef(store, (state: GlobalState) => state.networks.selectedNetwork);
@@ -40,7 +41,7 @@ export default function Explore() {
   const [showLeftColumn, setShowLeftColumn] = useState(false);
   const [filteredButtons, setFilteredButtons] = useState([]);
 
-  const [buttonFilterTypes, setButtonFilterTypes] = useState(["need", "offer", "exchange"]);
+  const [buttonFilterTypes, setButtonFilterTypes] = useState(buttonTypes.map((buttonType) => buttonType.name));
 
   const onLeftColumnToggle = (data) => {
       setShowLeftColumn(!showLeftColumn);

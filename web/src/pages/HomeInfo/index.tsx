@@ -1,16 +1,6 @@
-//INFO AND RESULTS
-//libraries
-import { useState, useEffect } from 'react';
-import { ImageContainer } from 'elements/ImageWrapper';
 import { useRef } from 'store/Store';
-import { Subject } from 'rxjs';
-// import {
-//   setValueAndDebounce,
-// } from "./data";
 
 import { GlobalState, store } from 'pages';
-import { setValueAndDebounce } from 'state/HomeInfo';
-import router from 'next/router';
 import t from 'i18n';
 import { Network } from 'shared/entities/network.entity';
 import NetworkLogo from 'components/network/Components';
@@ -19,11 +9,10 @@ import NavLink from 'elements/Navlink';
 import {
   IoAddOutline,
   IoGlobeOutline,
-  IoHeartOutline,
   IoHelpOutline,
   IoLogInOutline,
-  IoPersonOutline,
 } from 'react-icons/io5';
+import { getHostname } from 'shared/sys.helper';
 
 export default function HomeInfo() {
   const selectedNetwork: Network = useRef(
@@ -39,6 +28,8 @@ export default function HomeInfo() {
     store,
     (state: GlobalState) => state.users.currentUser,
   );
+
+  const config = useRef(store, (state: GlobalState) => state.config);
 
   return (
     <div className="info-overlay__container">
@@ -81,9 +72,15 @@ export default function HomeInfo() {
                   </h3>
                 </div>
                 <div className="info-overlay__description">
-                  <div># Buttons {0}</div>
-                  <div># Active Users {0}</div>
-                  <div>Administered by: @username</div>
+
+                <span>Here you can see numbers of cooperation in this network</span>
+
+                  <div># Buttons {config.buttonCount}</div>
+                  <div># Active Users {config.userCount}</div>
+                  <div>Administered by:           <NavLink href={`/Profile/${config.administrator.username}`}>
+                    <span>{config.administrator.username}@{getHostname()}</span>
+                    </NavLink>
+                    </div>
                 </div>
               </div>
               <br />
