@@ -17,6 +17,8 @@ services:
     volumes:
       - config:/app/config/:rw
       - uploads:/app/uploads
+#   ports:
+#     - 3001:3001
     depends_on:
       - db
     networks:
