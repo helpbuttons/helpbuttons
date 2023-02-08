@@ -77,7 +77,7 @@ export default function Explore() {
     {selectedNetwork &&
     <div className="index__container">
       <div className={'index__content-left ' + (showLeftColumn ? '' : 'index__content-left--hide')}>
-        <NavHeader showSearch={true} updateFiltersType={updateFiltersType} />
+        <NavHeader showSearch={showLeftColumn} updateFiltersType={updateFiltersType} />
         <List buttons={filteredButtons} showLeftColumn={showLeftColumn} onLeftColumnToggle={onLeftColumnToggle}/>
       </div>
         <ExploreButtonsMap

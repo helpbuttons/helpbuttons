@@ -8,16 +8,12 @@ import { SetupDto, SetupDtoOut } from './setup.entity';
 import * as fs from 'fs';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { configFileName, configFullPath } from '@src/shared/helpers/config.helper';
-import { UserService } from '../user/user.service';
-import { User } from '../user/user.entity';
 const { Pool } = require('pg');
 const nodemailer = require('nodemailer');
 
 @Injectable()
 export class SetupService {
-  constructor(
-    private readonly userService: UserService,
-  ) {}
+  constructor() {}
 
   async smtpTest(smtpUrl: string): Promise<any> {
     const transporter = nodemailer.createTransport(smtpUrl);
@@ -62,12 +58,11 @@ export class SetupService {
     }
 
     const config = require(`../../..${configFileName}`)
-
     return this.isDatabaseReady(config)
-    .then(({migrationsNumber,userCount, administrator, buttonCount}) => {
+    .then(({migrationsNumber,userCount }) => {
       const dataJSON = fs.readFileSync(configFullPath, 'utf8');
       const data: SetupDto = new SetupDto(JSON.parse(dataJSON));
-      
+  
       const dataToWeb : SetupDtoOut= {
         hostName: data.hostName,
         mapifyApiKey: data.mapifyApiKey,
@@ -75,16 +70,16 @@ export class SetupService {
         allowedDomains: data.allowedDomains,
         databaseNumberMigrations: migrationsNumber,
         userCount: userCount,
-        administrator,
-        buttonCount: buttonCount,
       };
+  
+      // return JSON.stringify(dataToWeb);
       return dataToWeb;
     });
   }
 
   async isDatabaseReady(
     setupDto: SetupDto,
-  ): Promise<{migrationsNumber :number, userCount :number, administrator: User, buttonCount: number}> {
+  ): Promise<{migrationsNumber :number, userCount :number}> {
     const config = {
       host: setupDto.postgresHostName,
       port: setupDto.postgresPort,
@@ -99,17 +94,14 @@ export class SetupService {
       const migrationsNumber = await poolconnection.query(`SELECT count(id) from migrations`);
 
       const userCount = await poolconnection.query(`SELECT count(id) from public.user`);
-      const buttonCount = await poolconnection.query(`SELECT count(id) from button`);
-
-      const administrator = await this.userService.findAdministrator()
-      return {migrationsNumber: migrationsNumber.rows[0].count, userCount: userCount.rows[0].count, administrator, buttonCount: buttonCount.rows[0].count};
+      return {migrationsNumber: migrationsNumber.rows[0].count, userCount: userCount.rows[0].count};
     } catch (error) {
       console.log(error)
       let msg = `Database connection error: ${error.message}`;
 
       if (error.code === '42P01') { //need to run migrations
         const msg = `need-migrations`;
-        return {migrationsNumber: 0, userCount: 0, administrator: null, buttonCount: 0};
+        return {migrationsNumber: 0, userCount: 0};
       }
       if (error?.errno === -3008 ) { //need to run migrations
         msg = `db-hostname-error`;

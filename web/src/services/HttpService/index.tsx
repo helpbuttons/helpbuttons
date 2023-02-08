@@ -24,9 +24,9 @@ export class HttpService {
   }
 
   public setAccessToken(accessToken?: string) {
-    if (accessToken) {
-      this.accessToken = accessToken;
-      localStorageService.save(LocalStorageVars.ACCESS_TOKEN, accessToken.toString());
+    this.accessToken = accessToken;
+    if (this.accessToken) {
+      localStorageService.save(LocalStorageVars.ACCESS_TOKEN, this.accessToken);
       this.isAuthenticated$.next(true);
     } else {
       localStorageService.remove(LocalStorageVars.ACCESS_TOKEN);
