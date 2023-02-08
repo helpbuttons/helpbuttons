@@ -61,7 +61,19 @@ Please load and read complete documentation
 ```
 $ docker network create web
 $ docker-compose -f docker-compose.dev.yml build
-$ docker-compose -f docker-compose.dev.yml up
+$ docker-compose -f docker-compose.dev.yml up api -d 
+$ cd web 
+$ echo "API_URL=http://localhost:3001/" > .env
+$ yarn
+$ yarn dev
+```
+
+After you should go to the browser in:
+
+[http://localhost:3000](http://localhost:3000
+)
+
+```
 $ docker-compose exec api yarn migration:run
 ```
 
