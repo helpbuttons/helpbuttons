@@ -2,6 +2,7 @@ version: '3'
 services:
   web:
     build: web/
+    entrypoint: yarn dev
     ports:
       - "3000:3000"
     volumes:
@@ -14,6 +15,7 @@ services:
 
   api:
     build: api/
+    entrypoint: yarn dev
     volumes:
       - ./api/src:/app/src/:ro
       - config:/app/config/:rw
