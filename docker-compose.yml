@@ -15,8 +15,8 @@ services:
 #    build: api/
     image: helpbuttons/helpbuttons-api:main
     volumes:
-      - config
-      - uploads
+      - config:/app/config/:rw
+      - uploads:/app/uploads
     depends_on:
       - db
     networks:
@@ -30,7 +30,7 @@ services:
     env_file:
       - env.db
     volumes:
-      - db
+      - db:/var/lib/postgresql/data:rw
     ports:
       - "5432:5432"
     healthcheck:
