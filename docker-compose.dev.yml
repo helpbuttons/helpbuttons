@@ -1,24 +1,28 @@
 version: '3'
 services:
   web:
-#    build: web/
+    build: web/ # For development only to push to dockerhub
     image: helpbuttons/helpbuttons-web:main
+    entrypoint: yarn dev # For development 
     ports:
       - "3000:3000"
     depends_on:
       - api
+   volumes: # For development only
+     - ./env.web:/app/.env:ro
+     - ./web/src:/app/src/:ro
     networks:
       - web
       - api
 
   api:
-#    build: api/
+    build: api/ # For development only to push to dockerhub
     image: helpbuttons/helpbuttons-api:main
+    entrypoint: yarn dev # For development 
     volumes:
-      - config:/app/config/:rw
-      - uploads:/app/uploads
-#    ports:
-#      - 3001:3001
+      - ./config/:/app/config/:rw
+      - ./uploads:/app/uploads
+      - ./api/src:/app/src/:ro # for development only
     depends_on:
       - db
     networks:
@@ -32,7 +36,7 @@ services:
     env_file:
       - env.db
     volumes:
-      - db:/var/lib/postgresql/data:rw
+      - /live/storage/helpbuttons/db:/var/lib/postgresql/data:rw
     ports:
       - "5432:5432"
     healthcheck:
@@ -45,12 +49,7 @@ services:
 
 networks:
   web:
-    external: true
+    external:
+      name: web
   api:
   db:
-
-
-volumes:
-  db:
-  uploads:
-  config:
