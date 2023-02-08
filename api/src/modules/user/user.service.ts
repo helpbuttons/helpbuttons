@@ -17,18 +17,14 @@ export class UserService {
   async isEmailExists(email: string) {
     const user = await this.userRepository.findOne({
       where: {
-        email: email,
+        username: email,
       },
     });
     return user ? true : false;
   }
 
-  async findOneByEmail(email: string) {
-    return await this.userRepository.findOne({where: {email: `${email}`}});
-  }
-
-  async findOne(username: string) {
-    return await this.userRepository.findOne({where: {username: `${username}`}});
+  async findOne(email: string) {
+    return await this.userRepository.findOne({where: {username: `${email}`}});
   }
 
   async findById(id: string) {
@@ -36,9 +32,6 @@ export class UserService {
   }
 
 
-  async findAdministrator() {
-    return await this.userRepository.findOne({order: { id: 'DESC' }});
-  }
   whoAmI() {
     // TODO:
   }

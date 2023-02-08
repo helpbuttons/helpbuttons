@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
   MarkersButton,
@@ -24,7 +24,6 @@ export default function LeafLetMap({
   markerCaption = '?',
   isMarkerSelector = false,
 }) {
-  const [map, setMap] = useState(null)
   const [zoom, setZoom] = useState(defaultZoom);
   const getButtonsOnBounds = (map) => {
     onBoundsChange(map.getBounds());
@@ -35,32 +34,23 @@ export default function LeafLetMap({
     store,
     (state: GlobalState) => state.config,
   );
-  useEffect(() => {
-    console.log('make this: ')
-    console.log(center)
-    if(map && center) {
-      console.log('setting center')
-      map.setView(center, map.getZoom());
-    }
-    
-  }, [center]);
 
   return (
     <>
     
       {config && (
-        <>
         <MapContainer
           center={center}
           zoom={zoom}
           scrollWheelZoom={true}
           style={style}
           whenCreated={(map) => getButtonsOnBounds(map)}
-          >
+        >
           <TileLayer
             attribution="&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors"
             url={config.leafletTiles}
           />
+          
           {(() => {
           if (isMarkerSelector) {
             return (<MarkerSelector
@@ -78,7 +68,6 @@ export default function LeafLetMap({
           }
         })()}
         </MapContainer>
-        </>
       )}
     </>
   );
