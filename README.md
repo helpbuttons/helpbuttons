@@ -62,7 +62,7 @@ Please load and read complete documentation
 
 #### development
 ```
-$ ln -s .env web/.env
+$ echo "API_URL=http://localhost:3001/" > web/.env
 $ docker-compose up -d api
 $ docker-compose exec api yarn migration:run
 $ cd web

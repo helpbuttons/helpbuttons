@@ -44,7 +44,6 @@ services:
 networks:
   web:
     external: true
-      name: web
   api:
   db:
 
