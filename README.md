@@ -60,6 +60,7 @@ Please load and read complete documentation
 ### development
 ```
 $ docker network create web
+$ docker-compose -f docker-compose.dev.yml build
 $ docker-compose -f docker-compose.dev.yml up
 $ docker-compose exec api yarn migration:run
 ```
