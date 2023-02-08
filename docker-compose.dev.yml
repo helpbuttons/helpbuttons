@@ -1,8 +1,8 @@
 version: '3'
 services:
   web:
-#    build: web/
-    image: helpbuttons/helpbuttons-web:main
+   build: web/
+    # image: helpbuttons/helpbuttons-web:main
     ports:
       - "3000:3000"
     depends_on:
@@ -12,11 +12,14 @@ services:
       - api
 
   api:
-#    build: api/
-    image: helpbuttons/helpbuttons-api:main
+   build: api/
+    # image: helpbuttons/helpbuttons-api:main
     volumes:
+      - api/src:/app/src/:ro
       - config:/app/config/:rw
       - uploads:/app/uploads
+   ports:
+     - 3001:3001
     depends_on:
       - db
     networks:
