@@ -12,14 +12,22 @@ import {
   IsNotEmpty,
 } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
+import { Column } from 'typeorm';
+import { User } from '../user/user.entity';
 
 // https://github.com/typestack/class-validator
 
 export class CreateNetworkDto implements Partial<Network> {
+  
   @ApiProperty({
     type: String,
     required: true,
   })
+  @IsString()
+  @MinLength(3, {
+    message: 'name is too short',
+  })
+  name: string;
 
   @ApiProperty({
     type: String,
@@ -91,3 +99,9 @@ export class CreateNetworkDto implements Partial<Network> {
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}
+
+export class NetworkDto extends Network {
+
+  @Column({})
+  administrator: User;
+}

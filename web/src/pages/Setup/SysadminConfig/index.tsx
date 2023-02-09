@@ -11,7 +11,7 @@ import Form from 'elements/Form';
 import { store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { CreateConfig, GetConfig, SmtpTest } from 'state/Setup';
+import { CreateConfig, SmtpTest } from 'state/Setup';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { SetupSteps } from '../../../shared/setupSteps';
 import router from 'next/router';

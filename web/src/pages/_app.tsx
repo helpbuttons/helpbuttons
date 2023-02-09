@@ -10,7 +10,7 @@ import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
 import { FetchDefaultNetwork } from 'state/Networks';
-import { FetchUserData, SetCurrentUser } from 'state/Users';
+import { FetchUserData } from 'state/Users';
 
 import { useRef } from 'store/Store';
 import { GetConfig } from 'state/Setup';
@@ -31,9 +31,9 @@ function MyApp({ Component, pageProps }) {
   const config = useRef(store, (state: GlobalState) => state.config);
   const path = router.asPath.split('?')[0];
 
-  const currentUser = useRef(
+  const loggedInUser = useRef(
     store,
-    (state: GlobalState) => state.users.currentUser,
+    (state: GlobalState) => state.loggedInUser,
   );
 
   const setupPaths: string[] = [
@@ -148,11 +148,13 @@ function MyApp({ Component, pageProps }) {
     // redirect to login page if accessing a private page and not logged in
     const path = router.asPath.split('?')[0];
 
+    console.log('looking for authorization...')
     if (
       !UserService.isLoggedIn() &&
       !guestPathCheck(path)
     ) {
-      console.log('oiii')
+      console.log('1')
+
       // and is not 404
       if (path != '/Login') {
         router
@@ -164,8 +166,22 @@ function MyApp({ Component, pageProps }) {
             // console.log(err)
           });
       }
-    } else {
+    } else if (UserService.isLoggedIn()) {
+      console.log('2')
+
+      if (!loggedInUser)
+      {
+        store.emit(new FetchUserData(() => {setAuthorized(true)},() => { setAuthorized(false)}))
+      }
+      
+    }else if (guestPathCheck(path)) {
+      console.log('3')
+
       setAuthorized(true);
+    }else {
+      console.log('4')
+
+      setAuthorized(false);
     }
   }
 
@@ -183,7 +199,7 @@ function MyApp({ Component, pageProps }) {
               <div>
                 <Component {...pageProps} />
 
-                <NavBottom logged={!!currentUser} />
+                <NavBottom logged={!!loggedInUser} />
               </div>
             );
           } else if (isSetup) {

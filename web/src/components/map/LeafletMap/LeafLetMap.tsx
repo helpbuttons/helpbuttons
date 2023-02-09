@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
@@ -7,10 +7,7 @@ import {
 } from 'components/map/MarkerButton';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import { IConfig } from 'services/Setup/config.type';
-import { GetConfig } from 'state/Setup';
-import { alertService } from 'services/Alert';
-import { SetAsCurrentButton } from 'state/Explore';
+import { SetupDtoOut } from 'shared/entities/setup.entity';
 
 export default function LeafLetMap({
   center,
@@ -23,17 +20,32 @@ export default function LeafLetMap({
   markerImage = null,
   markerCaption = '?',
   isMarkerSelector = false,
+  markerColor= 'red'
 }) {
   const [zoom, setZoom] = useState(defaultZoom);
+  const [map, setMap] = useState(null)
   const getButtonsOnBounds = (map) => {
     onBoundsChange(map.getBounds());
   };
-
   
-  const config: IConfig = useRef(
+  const config: SetupDtoOut = useRef(
     store,
     (state: GlobalState) => state.config,
   );
+  useEffect(() => {
+    if(map && center) {
+      console.log('setting center')
+      map.setView(center, map.getZoom());
+    }
+    
+  }, [center]);
+
+
+  useEffect(() => {
+    if(map && center) {
+      map.setView(center, map.getZoom());
+    }
+  }, [center]);
 
   return (
     <>
@@ -58,6 +70,7 @@ export default function LeafLetMap({
               markerImage={markerImage}
               markerPosition={markerPosition}
               markerCaption={markerCaption}
+              markerColor={markerColor}
             />)
           }else if (markersButtons) {
             return (<MarkersButton buttons={markersButtons} onBoundsChange={onBoundsChange}

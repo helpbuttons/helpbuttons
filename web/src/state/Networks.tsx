@@ -2,14 +2,13 @@ import { catchError, tap, map } from 'rxjs/operators';
 import { produce } from 'immer';
 
 import { WatchEvent, UpdateEvent, EffectEvent } from 'store/Event';
-import { GlobalState } from 'store/Store';
 
 
 import { NetworkService } from 'services/Networks';
 import { isHttpError } from 'services/HttpService';
 import { of } from 'rxjs';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
-import { store } from 'pages';
+import { GlobalState, store } from 'pages';
 import { CreateNetworkDto } from 'shared/dtos/network.dto';
 import { Network } from 'shared/entities/network.entity';
 

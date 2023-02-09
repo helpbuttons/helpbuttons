@@ -1,9 +1,11 @@
 import { BaseEntity } from '@src/shared/types/base.entity';
+import { Exclude, Expose } from 'class-transformer';
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 import { UserCredential } from '../user-credential/user-credential.entity';
 
 @Entity()
+@Exclude()
 export class User extends BaseEntity {
   @PrimaryColumn({
     type: 'char',
@@ -22,6 +24,7 @@ export class User extends BaseEntity {
    * @summary
    * User email
    */
+  @Expose()
   @Column({
     type: 'varchar',
     unique: true,
@@ -36,6 +39,7 @@ export class User extends BaseEntity {
   })
   email: string;
 
+  @Expose()
   @Column({
     type: 'varchar',
     length: 320,
@@ -63,6 +67,7 @@ export class User extends BaseEntity {
   })
   roles: string[];
 
+  @Expose()
   @Column({ type: 'text', nullable: true })
   avatar?: string;
 

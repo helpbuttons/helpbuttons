@@ -1,0 +1,27 @@
+
+.marker-button-selector.corporative{
+    .marker-button__link-tag {
+      background: $color-corporative;
+    }
+  }
+  
+  .marker-button-selector.corporative {
+    .marker-button__image {
+      border-color: $color-corporative;
+      background-color: $color-corporative;
+    }
+  
+    .marker-button__arrow {
+      &:after {
+        border-top-color: $color-corporative;
+      }
+    }
+  }
+  
+
+  .btn-filter__icon {
+    &.corporative {
+      border-radius: $btn-border-radius-semicircle;
+      background: $color-corporative;
+    }
+  }

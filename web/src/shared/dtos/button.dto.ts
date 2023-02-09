@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Button, ButtonType } from './button.entity';
+import { Button } from './button.entity';
 import {
   MinLength,
   IsLatitude,
@@ -14,12 +14,19 @@ import { PartialType } from '@nestjs/swagger';
 
 export class CreateButtonDto implements Partial<Button> {
   @ApiProperty({
-    enum: ['need', 'offer', 'exchange'],
-    name: 'type',
     type: String,
-    required: false,
+    required: true,
   })
-  type: ButtonType;
+  @MinLength(3, {
+    message: 'button name is too short',
+  })
+  title: string;
+  
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
+  type: string;
 
   @ApiProperty({
     type: [String],

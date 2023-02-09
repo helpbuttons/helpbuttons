@@ -4,55 +4,61 @@ import 'leaflet/dist/leaflet.css';
 
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import MarkerSelectorMap from 'components/map/LeafletMap/MarkerSelectorMap';
-import { ImageContainer } from 'elements/ImageWrapper';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
+import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
+import router from 'next/router';
+import t from 'i18n';
 export default function FieldLocation({
   validationErrors,
   setValue,
   watch,
   defaultZoom,
   markerImage,
-  markerCaption = '?'
+  markerCaption = '?',
+  markerColor
 }) {
   const [showHideMenu, setHideMenu] = useState(false);
-  const [center, setCenter] = useState(["41.6869","-7.663206"]);
+  const [center, setCenter] = useState(['41.6869', '-7.663206']);
+  const [markerPosition, setmarkerPosition] = useState([
+    '41.6869',
+    '-7.663206',
+  ]);
   const [radius, setRadius] = useState(1);
-
 
   const selectedNetwork = useRef(
     store,
-    (state: GlobalState) => state.networks.selectedNetwork
+    (state: GlobalState) => state.networks.selectedNetwork,
   );
-  
+
   const onClick = (e, zoom) => {
     const newCenter = [
       (Math.round(e.lat * 10000) / 10000).toString(),
       (Math.round(e.lng * 10000) / 10000).toString(),
     ];
-    
+
     setValue('latitude', newCenter[0]);
     setValue('longitude', newCenter[1]);
-    setValue('zoom', zoom)
-    setCenter(newCenter)
+    setValue('zoom', zoom);
+    setCenter(newCenter);
   };
-  
+
   const latitude = watch('latitude');
   const longitude = watch('longitude');
 
   useEffect(() => {
-    if (selectedNetwork)
-    {
+    if (selectedNetwork) {
       setCenter(selectedNetwork.location.coordinates);
     }
-  }, [selectedNetwork])
+  }, [selectedNetwork]);
   return (
     <>
       <div className="form__field">
-          <LocationCoordinates
-              longitude={longitude}
-              latitude={latitude}
-              radius={0}/>
+        <LocationCoordinates
+          longitude={longitude}
+          latitude={latitude}
+          radius={0}
+        />
         <div
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}
@@ -74,15 +80,22 @@ export default function FieldLocation({
               }
               initMapCenter={center}
               defaultZoom={defaultZoom}
-              markerImage={
-                markerImage ? markerImage : null
-              }
+              markerImage={markerImage ? markerImage : null}
               markerCaption={markerCaption}
+              markerColor={markerColor}
             />
             <LocationCoordinates
               longitude={longitude}
               latitude={latitude}
-              radius={0}/>
+              radius={0}
+            />
+            {/* <DropDownWhere
+              placeholder={t('homeinfo.searchlocation')}
+              onSelected={(place) => {
+                console.log(place);
+                // setCenter(place.coordinates)
+              }}
+            /> */}
             <Btn
               btnType={BtnType.splitIcon}
               caption="Save"

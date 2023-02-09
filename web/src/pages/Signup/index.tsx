@@ -40,6 +40,7 @@ export default function Signup() {
     },
   });
   const [errorMsg, setErrorMsg] = useState(undefined);
+
   const router = useRouter();
 
   const onSubmit = (data) => {

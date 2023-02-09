@@ -44,6 +44,7 @@ function Configuration() {
 
   const onSubmit = (data) => {
     store.emit(new CreateNetwork({
+      name: data.name,
       description: data.description,
       radius: 10,
       latitude: data.latitude,
@@ -141,7 +142,7 @@ function Configuration() {
             />
 
             <FieldLocation
-                defaultZoom={10}
+                defaultZoom={watch('zoom')}
                 validationErrors={undefined}
                 setValue={setValue}
                 watch={watch}

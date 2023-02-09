@@ -8,6 +8,7 @@ import {
     Delete,
     UseInterceptors,
     UploadedFile,
+    ClassSerializerInterceptor,
   } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
   import { ApiTags } from '@nestjs/swagger';
@@ -28,32 +29,23 @@ import { editFileName, imageFileFilter } from '../storage/storage.utils';
     ){
       return this.networkService.create(createDto);
     }
-  
-    @Get('find/:name')
-    async findAll(@Param('name') name: string) {
-      return await this.networkService.findAll(name);
-    }
-  
-    @Get('findById/:networkId')
-    findOne(@Param('networkId') networkId: string) {
-      return this.networkService.findOne(networkId);
-    }
 
     @Get('findById')
     findDefaultNetwork() {
       return this.networkService.findDefaultNetwork();
     }
   
-    @Patch('edit/:networkId')
-    update(
-      @Param('networkId') networkId: string,
-      @Body() updateNetworkDto: UpdateNetworkDto,
-    ) {
-      return this.networkService.update(networkId, updateNetworkDto);
+    // @Patch('edit/:networkId')
+    // update(
+    //   @Param('networkId') networkId: string,
+    //   @Body() updateNetworkDto: UpdateNetworkDto,
+    // ) {
+    //   return this.networkService.update(networkId, updateNetworkDto);
+    // }
+
+    @Get('config')
+    async config() {
+      return this.networkService.getConfig()
     }
   
-    @Delete('delete/:networkId')
-    async remove(@Param('networkId') networkId: string) {
-      return this.networkService.remove(networkId);
-    }
   }

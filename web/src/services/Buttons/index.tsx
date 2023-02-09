@@ -5,8 +5,6 @@ import { IButton } from "./button.type";
 import { httpService } from "services/HttpService";
 import getConfig from "next/config";
 import { UtilsService } from "services/Utils";
-import { Bounds } from "leaflet";
-import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 

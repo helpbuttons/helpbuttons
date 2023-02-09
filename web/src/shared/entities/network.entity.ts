@@ -1,12 +1,11 @@
 import { BaseEntity } from '@src/shared/types/base.entity';
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, OneToMany, PrimaryColumn } from 'typeorm';
 import { Button } from '../button/button.entity';
 
 export enum PrivacyType {
   PUBLIC = 'public',
   PRIVATE = 'private',
 }
-@Entity()
 export class Network extends BaseEntity {
   @Column({})
   @PrimaryColumn()

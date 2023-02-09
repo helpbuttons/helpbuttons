@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ClassSerializerInterceptor } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -19,7 +19,7 @@ import { AppService } from './app.service';
 import { typeOrmModuleOptions } from './configs/orm.config';
 import webAppConfig from './configs/web-app.config';
 import { validate } from './validators/env.validator';
-
+import { APP_INTERCEPTOR } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -44,10 +44,13 @@ import { validate } from './validators/env.validator';
     AuthModule,
     UserCredentialModule,
     StorageModule,
-    FeedButtonModule,
-    SetupModule
+    FeedButtonModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor,
+    },],
 })
 export class AppModule {}
