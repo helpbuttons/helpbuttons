@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
@@ -7,7 +7,7 @@ import {
 } from 'components/map/MarkerButton';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import { IConfig } from 'services/Setup/config.type';
+import { SetupDtoOut } from 'services/Setup/config.type';
 
 export default function LeafLetMap({
   center,
@@ -23,14 +23,21 @@ export default function LeafLetMap({
 
 }) {
   const [zoom, setZoom] = useState(defaultZoom);
+  const [map, setMap] = useState(null)
   const getButtonsOnBounds = (map) => {
     onBoundsChange(map.getBounds());
   };
   
-  const config: IConfig = useRef(
+  const config: SetupDtoOut = useRef(
     store,
     (state: GlobalState) => state.config,
   );
+
+  useEffect(() => {
+    if(map && center) {
+      map.setView(center, map.getZoom());
+    }
+  }, [center]);
 
   return (
     <>

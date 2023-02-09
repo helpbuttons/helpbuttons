@@ -4,8 +4,9 @@ import { of, tap } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { isHttpError } from 'services/HttpService';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
+import { NetworkService } from 'services/Networks';
 import { SetupService } from 'services/Setup';
-import { IConfig } from 'services/Setup/config.type';
+import { SetupDtoOut } from 'services/Setup/config.type';
 import { UserService } from 'services/Users';
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { UpdateEvent, WatchEvent } from 'store/Event';
@@ -15,8 +16,8 @@ export class GetConfig implements WatchEvent {
   public constructor(private onSuccess, private onError) {}
 
   public watch(state: GlobalState) {
-    return SetupService.get().pipe(
-      map((config :IConfig) => {
+    return NetworkService.get().pipe(
+      map((config :SetupDtoOut) => {
         store.emit(new ConfigFound(config))
         this.onSuccess(config)
       }),
@@ -48,7 +49,7 @@ export class GetConfig implements WatchEvent {
 }
 
 export class ConfigFound implements UpdateEvent {
-  public constructor(private config: IConfig) {
+  public constructor(private config: SetupDtoOut) {
   }
 
   public update(state: GlobalState) {
@@ -60,7 +61,7 @@ export class ConfigFound implements UpdateEvent {
 
 export class CreateConfig implements WatchEvent {
   public constructor(
-    private config: IConfig,
+    private config: SetupDtoOut,
     private onSuccess,
     private onError,
   ) {}

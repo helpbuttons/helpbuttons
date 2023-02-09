@@ -11,15 +11,13 @@ import { IoRibbonOutline } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
 import { IoHammerOutline } from "react-icons/io5";
 import UserAvatar from '../components';
+import { getHostname } from 'shared/sys.helper';
 
 
 export default function CardProfile(props) {
 
   const user = props.user;
 
-  function logout() {
-      UserService.logout();
-  }
 
   return (
     <>
@@ -40,10 +38,10 @@ export default function CardProfile(props) {
             <div className="card-profile__content">
 
               <div className="card-profile__avatar-container-name">
-                { user.username }
+                { user.username }@{getHostname()}
               </div>
 
-              <figure className="card-profile__rating grid-three">
+              {/* <figure className="card-profile__rating grid-three">
 
                 <div className="paragraph grid-three__column">
                   90
@@ -65,7 +63,7 @@ export default function CardProfile(props) {
 
                 </div>
 
-              </figure>
+              </figure> */}
 
             </div>
 
@@ -84,27 +82,6 @@ export default function CardProfile(props) {
             <div className="card-profile__tags grid-one__column-mid-element">
               <div className="hashtag hashtag--yellow">tag</div>
             </div>
-
-        </div>
-
-        <div className="card-profile__actions">
-
-          <Link href="/Explore">
-            <div onClick={logout} className="btn-with-icon">
-
-              <div className="btn-with-icon__icon">
-                <IoLogOutOutline />
-              </div>
-              <span className="btn-with-icon__text">
-                Logout
-              </span>
-
-            </div>
-          </Link>
-
-          <Link href="/Config">
-            <Btn iconLeft={IconType.svg} iconLink={<IoHammerOutline />} caption="Config account"  />
-          </Link>
 
         </div>
 

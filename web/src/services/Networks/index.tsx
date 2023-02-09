@@ -3,15 +3,21 @@ import { httpService } from "services/HttpService";
 
 import getConfig from "next/config";
 import { Network } from "shared/entities/network.entity";
+import { CreateNetworkDto } from "shared/dtos/network.dto";
+import { SetupDtoOut } from "shared/entities/setup.entity";
 export class NetworkService {
 
-  public static new(data: any): Observable<any> {
+  public static new(data: CreateNetworkDto): Observable<any> {
 
     return httpService.post("/networks/new", data);
   }
   // //Get network by id
   public static findById(id: string = ""): Observable<Network | undefined> {
     return httpService.get<Network>("/networks/findById/" + id);
+  }
+
+  public static get(): Observable<SetupDtoOut | undefined> {
+    return httpService.get<SetupDtoOut>("/networks/config");
   }
 
 }

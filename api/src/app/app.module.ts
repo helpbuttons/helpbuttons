@@ -44,8 +44,7 @@ import { validate } from './validators/env.validator';
     AuthModule,
     UserCredentialModule,
     StorageModule,
-    FeedButtonModule,
-    SetupModule
+    FeedButtonModule
   ],
   controllers: [AppController],
   providers: [AppService],

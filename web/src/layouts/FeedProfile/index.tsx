@@ -1,6 +1,6 @@
 //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
+import Dropdown from 'elements/Dropdown/DropDown';
 import CardNotification from '../../components/feed/CardNotification'
-import Dropdown from '../../elements/Dropdown'
 
 export default function FeedProfile() {
   return (
@@ -9,7 +9,7 @@ export default function FeedProfile() {
 
       <div className="feed-selector">
 
-          <Dropdown />
+          <Dropdown/>
 
       </div>
 

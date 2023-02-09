@@ -3,14 +3,14 @@ import { of } from 'rxjs';
 import { produce } from 'immer';
 
 import { WatchEvent, UpdateEvent, EffectEvent } from 'store/Event';
-import { GlobalState } from 'store/Store';
 
 import { IUser } from 'services/Users/types';
 import { UserService } from 'services/Users';
 
-import { isHttpError } from "services/HttpService";
+import { HttpService, isHttpError } from "services/HttpService";
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
+import { GlobalState } from 'pages';
 
 export interface UsersState {
   currentUser: IUser;
@@ -32,11 +32,15 @@ export class Login implements WatchEvent {
     return UserService.login(this.email, this.password).pipe(
       map(userData => {
         if (userData) {
+          console.log(userData)
+          new HttpService().setAccessToken(userData.token);
           return new FetchUserData(this.onSuccess, this.onError);
         }
       }),
-      catchError((err) => {
-        if (isHttpError(err) && err.status === 401) { // Unauthorized
+      catchError((error) => {
+        let err = error.response;
+
+        if (isHttpError(err) && err.statusCode === HttpStatus.UNAUTHORIZED) { // Unauthorized
           this.onError("login-incorrect");
         } else {
           throw err;
@@ -62,14 +66,10 @@ export class SignupUser implements WatchEvent {
         }
       }),
       catchError((err) => {
-        console.log('catching...')
-        console.log(err)
-        debugger;
         if (isHttpError(err) &&
             err.status === HttpStatus.BAD_REQUEST &&
             err.response.message === "email-already-exists") {
-              console.log('here??!')
-            this.onError("email-already-exists");
+          this.onError("email-already-exists");
         } else {
           throw err;
         }
@@ -105,8 +105,39 @@ export class SetCurrentUser implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, newState => {
-      newState.users.currentUser = this.currentUser;
+      newState.loggedInUser = this.currentUser;
     });
   }
 }
 
+export class AddUserToKnownUsers implements UpdateEvent {
+  public constructor(private newUser: IUser) {}
+
+  public update(state: GlobalState) {
+    return produce(state, newState => {
+      newState.knownUsers.push(this.newUser)
+    });
+  }
+}
+
+
+
+export class FindUser implements WatchEvent {
+  public constructor (private username, private onSuccess = undefined, private onError = undefined) {}
+
+  public watch(state: GlobalState) {
+    return UserService.findUser(this.username).pipe(
+      map(userData => new AddUserToKnownUsers(userData)),
+    );
+  }
+}
+
+export class Logout implements UpdateEvent {
+  public constructor() {}
+
+  public update(state: GlobalState) {
+    return produce(state, newState => {
+      newState.loggedInUser = null;
+    });
+  }
+}

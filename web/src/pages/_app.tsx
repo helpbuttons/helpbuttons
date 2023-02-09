@@ -1,3 +1,4 @@
+import type { AppProps } from 'next/app';
 import '../styles/app.scss';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
@@ -9,7 +10,7 @@ import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
 import { FetchDefaultNetwork } from 'state/Networks';
-import { FetchUserData, SetCurrentUser } from 'state/Users';
+import { FetchUserData } from 'state/Users';
 
 import { useRef } from 'store/Store';
 import { GetConfig } from 'state/Setup';
@@ -23,15 +24,16 @@ export default appWithTranslation(MyApp);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const [user, setUser] = useState(null);
   const [authorized, setAuthorized] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
 
   const config = useRef(store, (state: GlobalState) => state.config);
   const path = router.asPath.split('?')[0];
 
-  const currentUser = useRef(
+  const loggedInUser = useRef(
     store,
-    (state: GlobalState) => state.users.currentUser,
+    (state: GlobalState) => state.loggedInUser,
   );
 
   const setupPaths: string[] = [
@@ -146,11 +148,13 @@ function MyApp({ Component, pageProps }) {
     // redirect to login page if accessing a private page and not logged in
     const path = router.asPath.split('?')[0];
 
+    console.log('looking for authorization...')
     if (
       !UserService.isLoggedIn() &&
       !guestPathCheck(path)
     ) {
-      console.log('oiii')
+      console.log('1')
+
       // and is not 404
       if (path != '/Login') {
         router
@@ -162,8 +166,22 @@ function MyApp({ Component, pageProps }) {
             // console.log(err)
           });
       }
-    } else {
+    } else if (UserService.isLoggedIn()) {
+      console.log('2')
+
+      if (!loggedInUser)
+      {
+        store.emit(new FetchUserData(() => {setAuthorized(true)},() => { setAuthorized(false)}))
+      }
+      
+    }else if (guestPathCheck(path)) {
+      console.log('3')
+
       setAuthorized(true);
+    }else {
+      console.log('4')
+
+      setAuthorized(false);
     }
   }
 
@@ -173,25 +191,27 @@ function MyApp({ Component, pageProps }) {
         <title>Helpbuttons.org</title>
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
+      <div className={`${user ? '' : ''}`}>
+        <Alert />
+        {(() => {
+          if (config && authorized) {
+            return (
+              <div>
+                <Component {...pageProps} />
 
-      <div>
-        {authorized && (
-          <div>
-            <Component {...pageProps} />
-            <Alert />
-            <NavBottom logged={!!currentUser} />
-          </div>
-        )}
+                <NavBottom logged={!!loggedInUser} />
+              </div>
+            );
+          } else if (isSetup) {
+            return (
+              <div>
+                <Component {...pageProps} />
+              </div>
+            );
+          }
 
-        {isSetup && (
-          <div>
-            <Component {...pageProps} />
-            <Alert />
-          </div>
-        )}
-        {(!isSetup && !authorized) &&
-          <div>Loading...</div>
-        }
+          return <div>Loading...</div>;
+        })()}
       </div>
     </>
   );

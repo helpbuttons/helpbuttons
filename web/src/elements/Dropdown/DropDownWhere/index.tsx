@@ -10,14 +10,14 @@ import { setValueAndDebounce } from 'state/HomeInfo';
 import router from 'next/router';
 import t from 'i18n';
 import { DropdownAutoComplete, DropDownAutoCompleteOption } from '../DropDownAutoComplete';
-import { IConfig } from 'services/Setup/config.type';
+import { SetupDtoOut } from 'services/Setup/config.type';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 
 export function DropDownWhere({placeholder}) {
     const timeInMsBetweenStrokes = 150; //ms
     
-    const config: IConfig = useRef(
+    const config: SetupDtoOut = useRef(
       store,
       (state: GlobalState) => state.config,
     );
