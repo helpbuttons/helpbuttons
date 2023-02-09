@@ -44,7 +44,6 @@ function Configuration() {
 
   const onSubmit = (data) => {
     store.emit(new CreateNetwork({
-      name: data.name,
       description: data.description,
       radius: 10,
       latitude: data.latitude,
