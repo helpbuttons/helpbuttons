@@ -8,8 +8,6 @@ import { SetupDto, SetupDtoOut } from './setup.entity';
 import * as fs from 'fs';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { configFileName, configFullPath } from '@src/shared/helpers/config.helper';
-import { UserService } from '../user/user.service';
-import { User } from '../user/user.entity';
 const { Pool } = require('pg');
 const nodemailer = require('nodemailer');
 
@@ -61,12 +59,11 @@ export class SetupService {
     }
 
     const config = require(`../../..${configFileName}`)
-
     return this.isDatabaseReady(config)
     .then(({migrationsNumber,userCount, buttonCount}) => {
       const dataJSON = fs.readFileSync(configFullPath, 'utf8');
       const data: SetupDto = new SetupDto(JSON.parse(dataJSON));
-      
+  
       const dataToWeb : SetupDtoOut= {
         hostName: data.hostName,
         mapifyApiKey: data.mapifyApiKey,
@@ -76,6 +73,8 @@ export class SetupService {
         userCount: userCount,
         buttonCount: buttonCount,
       };
+  
+      // return JSON.stringify(dataToWeb);
       return dataToWeb;
     });
   }

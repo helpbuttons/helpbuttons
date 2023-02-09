@@ -57,16 +57,27 @@ Please load and read complete documentation
 
 
 ## For developers:
-
-### web
-
-#### development
+### development
 ```
-$ docker-compose -f docker-compose.dev.yml up
+$ docker network create web
+$ docker-compose -f docker-compose.dev.yml build
+$ docker-compose -f docker-compose.dev.yml up api -d 
+$ cd web 
+$ echo "API_URL=http://localhost:3001/" > .env
+$ yarn
+$ yarn dev
+```
+
+After you should go to the browser in:
+
+[http://localhost:3000](http://localhost:3000
+)
+
+```
 $ docker-compose exec api yarn migration:run
 ```
 
-#### Main tech specifications used in this repo:
+### Main tech specifications used in this repo:
 
 Typescript, React, NextJS, Leaflet, CSS, HTML
 
@@ -78,25 +89,6 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-### API
-#### development
-```
-$ ln -s .env api/.env
-$ docker-compose up -d db
-```
-Uncoment on docker-compose the lines 
-```
-    # ports:
-    #   - "5432:5432"
-```
-
-```
-$ yarn migration:run
-$ cd api
-$ yarn
-$ yarn dev
-```
 
 
 #### Main tech specifications used in this repo:

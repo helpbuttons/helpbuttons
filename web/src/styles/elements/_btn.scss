@@ -145,14 +145,10 @@ $btn-font-size-medium: $font-size-medium;
     background: $color-green;
 
   }
-
-
-  //RED CIRCLE NEED
-  &.red {
-
+   
+  &.yellow {
     border-radius: $btn-border-radius-semicircle;
-    background: $color-red;
-
+    background: $color-corporative;
   }
 
 }

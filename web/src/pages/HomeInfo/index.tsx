@@ -12,9 +12,10 @@ import {
   IoHelpOutline,
   IoLogInOutline,
 } from 'react-icons/io5';
-import { IConfig } from 'services/Setup/config.type';
 import { getHostname } from 'shared/sys.helper';
 import { NetworkDto } from 'shared/dtos/network.dto';
+import { IConfig } from 'services/Setup/config.type';
+
 
 export default function HomeInfo() {
   const selectedNetwork: NetworkDto = useRef(
@@ -28,15 +29,14 @@ export default function HomeInfo() {
 
   const currentUser = useRef(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.users.currentUser,
   );
-
 
   const config: IConfig = useRef(
     store,
     (state: GlobalState) => state.config,
   );
-  
+
   return (
     <div className="info-overlay__container">
       <div className="info-overlay__content">
@@ -44,12 +44,7 @@ export default function HomeInfo() {
           <label className="form__label label">
             {t('homeinfo.start')}
           </label>
-          <DropDownWhere placeholder={t('homeinfo.searchlocation')} onSelected={(place) => {
-            router.push({
-              pathname: '/Explore',
-              query: place.geometry,
-            });
-          }}/>
+          <DropDownWhere placeholder={t('homeinfo.searchlocation')} />
         </form>
         {selectedNetworkLoading && (
           <>
@@ -89,6 +84,7 @@ export default function HomeInfo() {
                     <span>{selectedNetwork.administrator.username}@{getHostname()}</span>
                     </NavLink>
                     </div>
+
                 </div>
               </div>
               <br />

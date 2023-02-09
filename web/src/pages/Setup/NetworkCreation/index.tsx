@@ -9,8 +9,8 @@ export default NetworkCreation;
 
 function NetworkCreation() {
   
- 
   useEffect(() => {
+    
     store.emit(new FetchDefaultNetwork(() => {
       router.push({
         pathname: '/HomeInfo',
@@ -21,6 +21,7 @@ function NetworkCreation() {
     },));
     
   }, [])
+
   return (
     <Configuration></Configuration>
   );

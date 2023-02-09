@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
   MarkersButton,
@@ -8,9 +8,6 @@ import {
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { IConfig } from 'services/Setup/config.type';
-import { GetConfig } from 'state/Setup';
-import { alertService } from 'services/Alert';
-import { SetAsCurrentButton } from 'state/Explore';
 
 export default function LeafLetMap({
   center,
@@ -23,8 +20,8 @@ export default function LeafLetMap({
   markerImage = null,
   markerCaption = '?',
   isMarkerSelector = false,
+  markerColor= 'red'
 }) {
-  const [map, setMap] = useState(null)
   const [zoom, setZoom] = useState(defaultZoom);
   const getButtonsOnBounds = (map) => {
     onBoundsChange(map.getBounds());
@@ -36,8 +33,6 @@ export default function LeafLetMap({
     (state: GlobalState) => state.config,
   );
   useEffect(() => {
-    console.log('make this: ')
-    console.log(center)
     if(map && center) {
       console.log('setting center')
       map.setView(center, map.getZoom());
@@ -45,22 +40,23 @@ export default function LeafLetMap({
     
   }, [center]);
 
+
   return (
     <>
     
       {config && (
-        <>
         <MapContainer
           center={center}
           zoom={zoom}
           scrollWheelZoom={true}
           style={style}
           whenCreated={(map) => getButtonsOnBounds(map)}
-          >
+        >
           <TileLayer
             attribution="&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors"
             url={config.leafletTiles}
           />
+          
           {(() => {
           if (isMarkerSelector) {
             return (<MarkerSelector
@@ -68,6 +64,7 @@ export default function LeafLetMap({
               markerImage={markerImage}
               markerPosition={markerPosition}
               markerCaption={markerCaption}
+              markerColor={markerColor}
             />)
           }else if (markersButtons) {
             return (<MarkersButton buttons={markersButtons} onBoundsChange={onBoundsChange}
@@ -78,7 +75,6 @@ export default function LeafLetMap({
           }
         })()}
         </MapContainer>
-        </>
       )}
     </>
   );

@@ -11,17 +11,14 @@ import { Network } from '../network/network.entity';
 import { User } from '../user/user.entity';
 // https://stackoverflow.com/a/67557083
 
-export enum ButtonType {
-  OFFER = 'offer',
-  NEED = 'need',
-  EXCHANGE = 'exchange',
-}
-
 @Entity()
 export class Button extends BaseEntity {
   @Column({})
   @PrimaryColumn()
   public id: string;
+
+  @Column({})
+  title: string;
 
   @Column({})
   description: string;
@@ -35,12 +32,8 @@ export class Button extends BaseEntity {
   @Column({ type: 'geometry' })
   location: object;
 
-  @Column({
-    type: 'enum',
-    enum: ButtonType,
-    default: ButtonType.NEED,
-  })
-  type: ButtonType;
+  @Column({})
+  type: string;
 
   @Column({ type: 'text', nullable: true })
   image?: string;

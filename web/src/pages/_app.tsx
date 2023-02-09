@@ -10,7 +10,7 @@ import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
 import { FetchDefaultNetwork } from 'state/Networks';
-import { FetchUserData } from 'state/Users';
+import { FetchUserData, SetCurrentUser } from 'state/Users';
 
 import { useRef } from 'store/Store';
 import { GetConfig } from 'state/Setup';
@@ -31,9 +31,9 @@ function MyApp({ Component, pageProps }) {
   const config = useRef(store, (state: GlobalState) => state.config);
   const path = router.asPath.split('?')[0];
 
-  const loggedInUser = useRef(
+  const currentUser = useRef(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.users.currentUser,
   );
 
   const setupPaths: string[] = [
@@ -152,6 +152,7 @@ function MyApp({ Component, pageProps }) {
       !UserService.isLoggedIn() &&
       !guestPathCheck(path)
     ) {
+      console.log('oiii')
       // and is not 404
       if (path != '/Login') {
         router
@@ -163,16 +164,8 @@ function MyApp({ Component, pageProps }) {
             // console.log(err)
           });
       }
-    } else if (UserService.isLoggedIn()) {
-      if (!loggedInUser)
-      {
-        store.emit(new FetchUserData(() => {setAuthorized(true)},() => { setAuthorized(false)}))
-      }
-      
-    }else if (guestPathCheck(path)) {
+    } else {
       setAuthorized(true);
-    }else {
-      setAuthorized(false);
     }
   }
 
@@ -190,7 +183,7 @@ function MyApp({ Component, pageProps }) {
               <div>
                 <Component {...pageProps} />
 
-                <NavBottom logged={!!loggedInUser} />
+                <NavBottom logged={!!currentUser} />
               </div>
             );
           } else if (isSetup) {

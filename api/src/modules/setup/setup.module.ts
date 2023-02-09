@@ -5,7 +5,7 @@ import { SetupService } from './setup.service';
 
 @Module({
   imports: [
-    TypeOrmModule,
+    TypeOrmModule
   ],
   controllers: [SetupController],
   providers: [SetupService],

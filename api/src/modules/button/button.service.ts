@@ -53,7 +53,8 @@ export class ButtonService {
       network: network,
       images: [],
       owner: user,
-      image: null
+      image: null,
+      title: createDto.title
     };
 
     await getManager().transaction(
