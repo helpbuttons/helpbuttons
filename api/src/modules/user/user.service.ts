@@ -36,7 +36,7 @@ export class UserService {
   }
 
 
-  async findAdministrator() {
+  async findAdministrator() :Promise<User> {
     return await this.userRepository.findOne({order: { id: 'DESC' }});
   }
   whoAmI() {

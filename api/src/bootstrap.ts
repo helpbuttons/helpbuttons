@@ -41,7 +41,7 @@ export const bootstrap = async () => {
     app.useGlobalFilters(new ValidationFilter());
     app.useGlobalPipes(
       new ValidationPipe({
-        skipMissingProperties: false,
+        transform: true,
         exceptionFactory: (errors: ValidationError[]) => {
           const errMsg = {};
           errors.forEach((err) => {

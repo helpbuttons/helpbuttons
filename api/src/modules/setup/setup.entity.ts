@@ -113,7 +113,4 @@ export class SetupDtoOut {
     required: true,
   })
   buttonCount: number;
-
-  @OneToOne((type) => User)
-  administrator: User;
 }

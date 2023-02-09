@@ -16,7 +16,6 @@ const nodemailer = require('nodemailer');
 @Injectable()
 export class SetupService {
   constructor(
-    private readonly userService: UserService,
   ) {}
 
   async smtpTest(smtpUrl: string): Promise<any> {
@@ -64,7 +63,7 @@ export class SetupService {
     const config = require(`../../..${configFileName}`)
 
     return this.isDatabaseReady(config)
-    .then(({migrationsNumber,userCount, administrator, buttonCount}) => {
+    .then(({migrationsNumber,userCount, buttonCount}) => {
       const dataJSON = fs.readFileSync(configFullPath, 'utf8');
       const data: SetupDto = new SetupDto(JSON.parse(dataJSON));
       
@@ -75,7 +74,6 @@ export class SetupService {
         allowedDomains: data.allowedDomains,
         databaseNumberMigrations: migrationsNumber,
         userCount: userCount,
-        administrator,
         buttonCount: buttonCount,
       };
       return dataToWeb;
@@ -84,7 +82,7 @@ export class SetupService {
 
   async isDatabaseReady(
     setupDto: SetupDto,
-  ): Promise<{migrationsNumber :number, userCount :number, administrator: User, buttonCount: number}> {
+  ): Promise<{migrationsNumber :number, userCount :number, buttonCount: number}> {
     const config = {
       host: setupDto.postgresHostName,
       port: setupDto.postgresPort,
@@ -101,15 +99,14 @@ export class SetupService {
       const userCount = await poolconnection.query(`SELECT count(id) from public.user`);
       const buttonCount = await poolconnection.query(`SELECT count(id) from button`);
 
-      const administrator = await this.userService.findAdministrator()
-      return {migrationsNumber: migrationsNumber.rows[0].count, userCount: userCount.rows[0].count, administrator, buttonCount: buttonCount.rows[0].count};
+      return {migrationsNumber: migrationsNumber.rows[0].count, userCount: userCount.rows[0].count, buttonCount: buttonCount.rows[0].count};
     } catch (error) {
       console.log(error)
       let msg = `Database connection error: ${error.message}`;
 
       if (error.code === '42P01') { //need to run migrations
         const msg = `need-migrations`;
-        return {migrationsNumber: 0, userCount: 0, administrator: null, buttonCount: 0};
+        return {migrationsNumber: 0, userCount: 0, buttonCount: 0};
       }
       if (error?.errno === -3008 ) { //need to run migrations
         msg = `db-hostname-error`;

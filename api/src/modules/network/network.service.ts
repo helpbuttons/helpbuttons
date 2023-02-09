@@ -8,11 +8,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { ILike, Repository } from 'typeorm';
 import { TagService } from '../tag/tag.service';
-import { CreateNetworkDto, UpdateNetworkDto } from './network.dto';
+import { CreateNetworkDto, NetworkDto, UpdateNetworkDto } from './network.dto';
 import { Network } from './network.entity';
 import { getManager } from 'typeorm';
 import { StorageService } from '../storage/storage.service';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
+import { UserService } from '../user/user.service';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class NetworkService {
@@ -21,6 +23,7 @@ export class NetworkService {
     private readonly networkRepository: Repository<Network>,
     private readonly tagService: TagService,
     private readonly storageService: StorageService,
+    private readonly userService: UserService,
   ) {}
 
   async create(createDto: CreateNetworkDto) {
@@ -96,7 +99,9 @@ export class NetworkService {
     });
   }
 
-  findDefaultNetwork(): Promise<Network> {
+  findDefaultNetwork(): Promise<NetworkDto> {
+    // const
+
     return this.networkRepository
       .find({ order: { created_at: 'ASC' } })
       .then((networks) => {
@@ -107,6 +112,10 @@ export class NetworkService {
           );
         }
         return networks[0];
+      }).then((defaultNetwork) => {
+        return this.userService.findAdministrator().then((administrator :User) => {
+          return {...defaultNetwork,  administrator }
+        })
       })
       .catch((error) => {
         if (typeof error === typeof HttpException) {

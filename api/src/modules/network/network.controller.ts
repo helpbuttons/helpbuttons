@@ -8,6 +8,7 @@ import {
     Delete,
     UseInterceptors,
     UploadedFile,
+    ClassSerializerInterceptor,
   } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
   import { ApiTags } from '@nestjs/swagger';
@@ -28,17 +29,8 @@ import { editFileName, imageFileFilter } from '../storage/storage.utils';
     ){
       return this.networkService.create(createDto);
     }
-  
-    @Get('find/:name')
-    async findAll(@Param('name') name: string) {
-      return await this.networkService.findAll(name);
-    }
-  
-    @Get('findById/:networkId')
-    findOne(@Param('networkId') networkId: string) {
-      return this.networkService.findOne(networkId);
-    }
-
+    
+    @UseInterceptors(ClassSerializerInterceptor)
     @Get('findById')
     findDefaultNetwork() {
       return this.networkService.findDefaultNetwork();
@@ -52,8 +44,4 @@ import { editFileName, imageFileFilter } from '../storage/storage.utils';
       return this.networkService.update(networkId, updateNetworkDto);
     }
   
-    @Delete('delete/:networkId')
-    async remove(@Param('networkId') networkId: string) {
-      return this.networkService.remove(networkId);
-    }
   }

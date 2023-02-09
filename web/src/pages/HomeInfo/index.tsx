@@ -1,35 +1,23 @@
-//INFO AND RESULTS
-//libraries
-import { useState, useEffect } from 'react';
-import { ImageContainer } from 'elements/ImageWrapper';
 import { useRef } from 'store/Store';
-import { Subject } from 'rxjs';
-// import {
-//   setValueAndDebounce,
-// } from "./data";
 
 import { GlobalState, store } from 'pages';
-import { setValueAndDebounce } from 'state/HomeInfo';
 import router from 'next/router';
 import t from 'i18n';
-import { Network } from 'shared/entities/network.entity';
 import NetworkLogo from 'components/network/Components';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import NavLink from 'elements/Navlink';
 import {
   IoAddOutline,
   IoGlobeOutline,
-  IoHeartOutline,
   IoHelpOutline,
   IoLogInOutline,
-  IoPersonOutline,
 } from 'react-icons/io5';
 import { IConfig } from 'services/Setup/config.type';
 import { getHostname } from 'shared/sys.helper';
-import Link from 'next/link';
+import { NetworkDto } from 'shared/dtos/network.dto';
 
 export default function HomeInfo() {
-  const selectedNetwork: Network = useRef(
+  const selectedNetwork: NetworkDto = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
@@ -97,8 +85,8 @@ export default function HomeInfo() {
                 <div className="info-overlay__description">
                   <div># Buttons {config.buttonCount}</div>
                   <div># Active Users {config.userCount}</div>
-                  <div>Administered by:           <NavLink href={`/Profile/${config.administrator.username}`}>
-                    <span>{config.administrator.username}@{getHostname()}</span>
+                  <div>Administered by:           <NavLink href={`/Profile/${selectedNetwork.administrator.username}`}>
+                    <span>{selectedNetwork.administrator.username}@{getHostname()}</span>
                     </NavLink>
                     </div>
                 </div>

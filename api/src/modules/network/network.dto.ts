@@ -12,6 +12,8 @@ import {
   IsNotEmpty,
 } from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
+import { Column } from 'typeorm';
+import { User } from '../user/user.entity';
 
 // https://github.com/typestack/class-validator
 
@@ -96,3 +98,9 @@ export class CreateNetworkDto implements Partial<Network> {
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}
+
+export class NetworkDto extends PartialType(CreateNetworkDto) {
+
+  @Column({})
+  administrator: User;
+}
