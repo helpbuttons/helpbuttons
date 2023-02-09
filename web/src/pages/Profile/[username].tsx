@@ -1,7 +1,5 @@
 //Users buttons an profile info URL
-import NavHeader from 'components/nav/NavHeader';
 import CardProfile from 'components/user/CardProfile';
-import DynForm from 'elements/DynForm';
 
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -26,7 +24,6 @@ export default function Profile() {
   );
 
   function logout() {
-    store.emit(new Logout());
     UserService.logout();
   }
 
@@ -38,8 +35,6 @@ export default function Profile() {
         return user.username == username;
       });
       if (newUserProfile.length > 0) {
-        console.log('found user profile');
-        console.log(newUserProfile);
         setUserProfile(newUserProfile[0]);
       } else {
         // console.log('getting unknown user')

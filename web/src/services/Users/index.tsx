@@ -2,13 +2,14 @@ import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map, tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { store } from './index';
 import getConfig from 'next/config';
 import { IUser, ICurrentUser } from "./network.type";
 import { httpService } from "services/HttpService";
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { User } from 'shared/entities/user.entity';
+import { Logout } from 'state/Users';
+import { store } from 'pages';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -67,6 +68,7 @@ export class UserService {
   }
 
   public static logout() {
-    httpService.setAccessToken(undefined);
+    store.emit(new Logout());
+    httpService.clearAccessToken();
   }
 }
