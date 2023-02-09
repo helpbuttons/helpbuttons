@@ -87,7 +87,7 @@ export default function SysadminConfig() {
 
   return (
     <>
-      <Popup title="Save configurations" linkFwd="/Explore">
+      <Popup title="Save configurations" linkFwd={null}>
         <Form classNameExtra="saveSetup">
           <div className="publish_setup-first">
             <FieldText
