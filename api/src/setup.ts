@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
-import { SetupModule } from '@src/modules/setup/setup.module';
+import { SetupModule } from './modules/setup/setup.module';
+// import { SetupModule } from '@src/modules/setup/setup.module';
 import { configFullPath } from './shared/helpers/config.helper';
 import { HttpExceptionFilter } from './shared/middlewares/errors/global-http-exception-filter.middleware';
 

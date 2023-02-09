@@ -56,7 +56,7 @@ export class ButtonService {
       image: null,
       title: createDto.title
     };
-
+    console.log(button)
     await getManager().transaction(
       async (transactionalEntityManager) => {
         if (Array.isArray(button.tags)) {

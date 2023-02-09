@@ -14,7 +14,7 @@ import {
 } from 'react-icons/io5';
 import { getHostname } from 'shared/sys.helper';
 import { NetworkDto } from 'shared/dtos/network.dto';
-import { IConfig } from 'services/Setup/config.type';
+import { SetupDto } from 'shared/entities/setup.entity';
 
 
 export default function HomeInfo() {
@@ -29,10 +29,10 @@ export default function HomeInfo() {
 
   const currentUser = useRef(
     store,
-    (state: GlobalState) => state.users.currentUser,
+    (state: GlobalState) => state.loggedInUser,
   );
 
-  const config: IConfig = useRef(
+  const config: SetupDto = useRef(
     store,
     (state: GlobalState) => state.config,
   );
@@ -44,7 +44,12 @@ export default function HomeInfo() {
           <label className="form__label label">
             {t('homeinfo.start')}
           </label>
-          <DropDownWhere placeholder={t('homeinfo.searchlocation')} />
+          <DropDownWhere placeholder={t('homeinfo.searchlocation')} onSelected={(place) => {
+            router.push({
+              pathname: '/Explore',
+              query: place.geometry,
+            });
+          }}/>
         </form>
         {selectedNetworkLoading && (
           <>

@@ -32,7 +32,7 @@ then run helpbuttons
 `$ docker-compose up -d`
 
 then please setup the database scheme:
-`$ docker-compose exec api yarn migration:run`
+`$ docker-compose run api yarn migration:run`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

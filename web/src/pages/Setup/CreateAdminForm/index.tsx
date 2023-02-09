@@ -9,8 +9,8 @@ import { GlobalState, store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { HttpStatus } from 'services/HttpService/http-status.enum';
-import { IConfig } from 'services/Setup/config.type';
-import { CreateAdmin, GetConfig } from 'state/Setup';
+import { SetupDtoOut } from 'services/Setup/config.type';
+import { CreateAdmin } from 'state/Setup';
 import { useRef } from 'store/Store';
 import { SetupSteps } from '../../../shared/setupSteps';
 
@@ -38,7 +38,7 @@ function CreateAdminForm() {
     },
   });
 
-  const config: IConfig = useRef(
+  const config: SetupDtoOut = useRef(
     store,
     (state: GlobalState) => state.config,
   );
@@ -99,7 +99,7 @@ function CreateAdminForm() {
               caption="NEXT"
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}
-              disabled={config?.databaseNumberMigrations < 1}
+              disabled={config?.databaseNumberMigrations < 1 && config?.administrator == null}
             />
           </div>
         </Form>

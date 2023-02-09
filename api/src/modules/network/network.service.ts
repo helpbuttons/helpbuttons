@@ -2,7 +2,6 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
-  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
@@ -15,6 +14,8 @@ import { StorageService } from '../storage/storage.service';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.entity';
+import { SetupDtoOut } from '../setup/setup.entity';
+import { getConfig } from '@src/shared/helpers/config.helper';
 
 @Injectable()
 export class NetworkService {
@@ -41,7 +42,8 @@ export class NetworkService {
         `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
       logo: null,
       jumbo: null,
-      zoom: createDto.zoom
+      zoom: createDto.zoom,
+      name: createDto.name,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -82,16 +84,6 @@ export class NetworkService {
     return network;
   }
 
-  async findOne(id: string): Promise<Network> {
-    const network = await this.networkRepository.findOne({
-      where: { id },
-    });
-    if (!network) {
-      throw new NotFoundException('Network not found');
-    }
-    return network;
-  }
-
   async findAll(name: string): Promise<Network[]> {
     return await this.networkRepository.find({
       where: { name: ILike(`%${name}%`) },
@@ -124,33 +116,12 @@ export class NetworkService {
       });
   }
 
-  update(id: string, updateDto: UpdateNetworkDto) {
-    let location = {};
-
-    if (updateDto.latitude > 0 && updateDto.longitude > 0) {
-      location = {
-        location: () =>
-          `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
-      };
-    } else {
-      delete updateDto.latitude;
-      delete updateDto.longitude;
-    }
-
-    let network = {
-      ...updateDto,
-      ...location,
-      id,
-    };
-
-    if (network.tags) {
-      this.tagService.updateTags('network', network.id, network.tags);
-    }
-
-    return this.networkRepository.save([network]);
+  async findOne(id: string): Promise<Network> {
+    return this.findDefaultNetwork()
   }
 
-  remove(id: string) {
-    return this.networkRepository.delete({ id });
+
+  getConfig(): Promise<SetupDtoOut> {
+    return getConfig();
   }
 }

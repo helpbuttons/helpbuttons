@@ -1,5 +1,4 @@
 import { ImageContainer } from "elements/ImageWrapper"
-import { Network } from "shared/entities/network.entity"
 
 export default function NetworkLogo({network}) {
   

@@ -29,19 +29,23 @@ import { editFileName, imageFileFilter } from '../storage/storage.utils';
     ){
       return this.networkService.create(createDto);
     }
-    
-    @UseInterceptors(ClassSerializerInterceptor)
+
     @Get('findById')
     findDefaultNetwork() {
       return this.networkService.findDefaultNetwork();
     }
   
-    @Patch('edit/:networkId')
-    update(
-      @Param('networkId') networkId: string,
-      @Body() updateNetworkDto: UpdateNetworkDto,
-    ) {
-      return this.networkService.update(networkId, updateNetworkDto);
+    // @Patch('edit/:networkId')
+    // update(
+    //   @Param('networkId') networkId: string,
+    //   @Body() updateNetworkDto: UpdateNetworkDto,
+    // ) {
+    //   return this.networkService.update(networkId, updateNetworkDto);
+    // }
+
+    @Get('config')
+    async config() {
+      return this.networkService.getConfig()
     }
   
   }
