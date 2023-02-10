@@ -124,7 +124,7 @@ export default function ButtonNew() {
               <FieldTextArea
                 name="title"
                 label="Title"
-                placeholder="Abacates"
+                placeholder="Write a title for your button"
                 validationError={errors.title}
                 {...register('title', { required: true })}
               />
