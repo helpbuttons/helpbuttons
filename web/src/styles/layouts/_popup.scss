@@ -34,16 +34,6 @@ body {
   flex-flow: column;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.popup::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.popup {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
 
 //POPUP HEADERS
 .popup__header--trans,
@@ -346,7 +336,9 @@ body {
 
   .popup {
 
-    margin: 0 auto;
+    margin: 0px auto;
+    padding-bottom: $nav-bottom-height;
+    padding-top:  $padding-big;
     max-width: $popup-max-width;
 
     // Centering
@@ -396,4 +388,15 @@ body {
       border-radius: 0 0 25px 25px;//REVISE
     }
   }
+}
+
+@media #{$breakpoints-xlarge} {
+
+  .popup {
+
+    padding-bottom: $padding-big;
+    margin-bottom: 0 !important;
+   
+  }
+
 }

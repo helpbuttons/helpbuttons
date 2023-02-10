@@ -239,21 +239,4 @@ $picker-comments-item-padding: 25px;
     z-index: $z-index-05;
   }
 
-  //Revise: Esto puede ir en un breakpoint
-  ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(0deg, #c9c9c9 0%,#c9c9c9 0%);
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-thumb:hover{
-    background: #C9C9C9;
-  }
-  ::-webkit-scrollbar-track{
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: none;
-  }
 }

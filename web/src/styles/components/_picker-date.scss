@@ -69,13 +69,7 @@ $picker-date-height: 40px;
   }
 }
 
-.picker-date__dropdown-content::-webkit-scrollbar:vertical {
-  width: 0;
-}
 
-.picker-date__dropdown-content::-webkit-scrollbar {
-  -webkit-appearance: none;
-}
 
 .picker-date__points {
   font-size: $font-size-general;
