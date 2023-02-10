@@ -14,8 +14,12 @@ export default function Faqs() {
 
         <div className="popup__section">
 
+            <Accordion title="What's <Instance name>">
+              Description of Network instance
+            </Accordion>
+
             <Accordion title="What's Helpbuttons">
-            Helpbuttons.org is an opensource platform for collaborative network making. It's a CMS for cooperative websites -like uber, glovo, blablacar and so many others- specialized in connecting unknown people by purposes in real life. 
+              Helpbuttons.org is the software used to make this app. It's an opensource platform for collaborative network making -like airnbnb, blablacar and so many others, but opensource- specialized in connecting unknown people by purposes in real life. 
             </Accordion>
 
             <Accordion title="What's for">
@@ -35,7 +39,7 @@ export default function Faqs() {
             </Accordion>
 
             <Accordion title="Ethics Policies">
-              
+
             </Accordion>
 
             <Accordion title="Privacy Policies">
