@@ -1,24 +1,24 @@
 import { Observable, of } from "rxjs";
 import { ajax } from "rxjs/ajax";
-import { IButton } from "./button.type";
 
 import { httpService } from "services/HttpService";
 import getConfig from "next/config";
 import { UtilsService } from "services/Utils";
+import { Button } from "shared/entities/button.entity";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
 export class ButtonService {
 
   public static new(
-    data: IButton,
+    data: Button,
     networkId: string
   ): Observable<any> {
     return httpService.post("/buttons/new?networkId=" + networkId, data);
   }
 
   //Edit button
-  public static edit(data: IButton): Observable<any> {
+  public static edit(data: Button): Observable<any> {
     //save the ajax object that can be .pipe by the observable
     const buttonWithHeaders$ = ajax({
       url: baseUrl + "/buttons/edit/" + id,
@@ -42,13 +42,13 @@ export class ButtonService {
   }
 
   //Get buttons
-  public static find(networkId: string, bounds: any): Observable<IButton[]> {
+  public static find(networkId: string, bounds: any): Observable<Button[]> {
     if (!bounds || !bounds._northEast)
     {
       console.error('wrong bounds? ')
       return of([]);
     }
-    return httpService.get<IButton[]>("/buttons/find/" + networkId, 
+    return httpService.get<Button[]>("/buttons/find/" + networkId, 
     {
       northEast_lat: bounds._northEast.lat.toString(),
       northEast_lng: bounds._northEast.lng.toString(),
@@ -59,7 +59,7 @@ export class ButtonService {
 
   //Get button by id
   public static findById(id: string): Observable<any> {
-    return httpService.get<IButton>("/buttons/findById/" + id)
+    return httpService.get<Button>("/buttons/findById/" + id)
     //save the ajax object that can be .pipe by the observable
     const buttonWithHeaders$ = ajax({
       url: baseUrl + "/buttons/findById/" + id,
