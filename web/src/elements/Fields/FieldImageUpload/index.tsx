@@ -4,13 +4,13 @@ import ImageUploading from 'react-images-uploading';
 
 import FieldError from '../FieldError';
 
-export default function FieldUploadImage({ name, label, width = 100, height = 100, alt = "", validationError, setValue}) {
+export default function FieldImageUpload({ name, label, width = 100, height = 100, alt = "", validationError, setValue}) {
   const [images, setImages] = useState([]);
-
   const onChange = (imageList, addUpdateIndex) => {
     setImages(imageList);
-    if(imageList[0])
+    if(imageList.length > 0){
       setValue(name, imageList[0].data_url)
+    }
   };
 
   return (
@@ -22,6 +22,7 @@ export default function FieldUploadImage({ name, label, width = 100, height = 10
           maxNumber={1}
           dataURLKey="data_url"
         >
+          
           {({ imageList, onImageUpload, onImageRemove }) => (
             // write your building UI
             <div className="upload__image-wrapper">
@@ -29,6 +30,7 @@ export default function FieldUploadImage({ name, label, width = 100, height = 10
                 htmlFor="files"
                 className="btn"
                 onClick={(e) => {
+                  setImages([]);
                   e.preventDefault();
                   onImageUpload();
                 }}

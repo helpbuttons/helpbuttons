@@ -14,7 +14,7 @@ import FieldLocation from "elements/Fields/FieldLocation";
 import FieldRadio from "elements/Fields/FieldRadio";
 import FieldRadioOption from "elements/Fields/FieldRadio/option";
 import PopupSection from "components/popup/PopupSection";
-import FieldUploadImage from "elements/Fields/FieldImageUpload";
+import FieldImageUpload from "elements/Fields/FieldImageUpload";
 import { localStorageService, LocalStorageVars } from "services/LocalStorage";
 
 export default function NetworkNew() {
@@ -60,7 +60,7 @@ export default function NetworkNew() {
               label="Name"
               validationError={validationErrors.name}
             ></FieldText>
-             <FieldUploadImage
+             <FieldImageUpload
               name="avatar"
               handleChange={setValue}
               label="+ Add avatar"

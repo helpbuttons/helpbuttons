@@ -18,11 +18,12 @@ import { useRef } from 'store/Store';
 import { NavigateTo } from 'state/Routes';
 import { alertService } from 'services/Alert';
 import Router from 'next/router';
-import FieldUploadImage from 'elements/Fields/FieldImageUpload';
+import FieldImageUpload from 'elements/Fields/FieldImageUpload';
 import FieldDate from 'elements/Fields/FieldDate';
 import FieldText from 'elements/Fields/FieldNumber';
 import { buttonTypes } from 'shared/buttonTypes';
-// import FieldUploadImage from "elements/Fields/FieldImageUpload";
+import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
+// import FieldImageUpload from "elements/Fields/FieldImageUpload";
 
 export default function ButtonNew() {
   const selectedNetwork = useRef(
@@ -48,6 +49,7 @@ export default function ButtonNew() {
   } = useForm({
     defaultValues: {
       image: null,
+      description: 'hlkdsahdlksah ldka',
       latitude: '41.6869',
       longitude: '-7.663206',
       type: '',
@@ -92,10 +94,9 @@ export default function ButtonNew() {
       reset(buttonDraft);
     }
     // debugger;
-    console.log(touchedFields)
     const subscription = watch((value, { name, type }) => {
       const values = getValues()
-      if ( values.image != null && values.title.length > 0 && values.type.length > 0)
+      if ( values?.image?.length > 0 && values.title.length > 0 && values.type.length > 0)
       {
         setIsReadyForLocationAndTime(true);
       }else {
@@ -155,13 +156,13 @@ export default function ButtonNew() {
               />
             </div>
             <div className="publish_btn-scd">
-              <FieldUploadImage
+              <FieldImageUploads
                 name="image"
                 label="+ Add image"
-                width={55}
-                height={125}
+                // width={55}
+                // height={125}
                 {...register('image', { required: true })}
-                validationError={errors.image}
+                // validationError={errors.image}
                 setValue={setValue}
               />
                               {markerColor}
@@ -173,7 +174,7 @@ export default function ButtonNew() {
                     validationErrors={undefined}
                     setValue={setValue}
                     watch={watch}
-                    markerImage={watch('image')}
+                    markerImage={watch('image')[0]}
                     markerCaption={watch('title')}
                     markerColor={markerColor}
                   />

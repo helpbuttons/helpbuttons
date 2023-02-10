@@ -15,13 +15,13 @@ import { useRef } from "store/Store";
 import { GlobalState, store } from "pages";
 import { useEffect } from "react";
 import { FindButton } from "state/Explore";
-import { IButton } from "services/Buttons/button.type";
 import { makeImageUrl } from "shared/sys.helper";
+import { Button } from "shared/entities/button.entity";
 
 export default function CardButtonFile() {
   const { id } = router.query;
   // get from the store!!
-  const currentButton: IButton = useRef(
+  const currentButton: Button = useRef(
     store,
     (state: GlobalState) => state.explore.currentButton
   );

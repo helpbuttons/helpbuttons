@@ -1,7 +1,7 @@
 // here we have the basic configuration of an network
 import Popup from 'components/popup/Popup';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import FieldUploadImage from 'elements/Fields/FieldImageUpload';
+import FieldImageUpload from 'elements/Fields/FieldImageUpload';
 import FieldLocation from 'elements/Fields/FieldLocation';
 import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
@@ -120,7 +120,7 @@ function Configuration() {
             />
 
             400x400px
-            <FieldUploadImage
+            <FieldImageUpload
               name="logo"
               label="Choose logo"
               setValue={setValue}
@@ -131,7 +131,7 @@ function Configuration() {
             />
 
             1500x500px
-            <FieldUploadImage
+            <FieldImageUpload
               name="jumbo"
               label="Choose background image"
               setValue={setValue}
