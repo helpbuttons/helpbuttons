@@ -66,7 +66,9 @@ export default function HomeInfo() {
             <div className="info-overlay__card">
               <div className="card">
                 <div className="card__header">
-                  <NetworkLogo network={selectedNetwork} />
+                  <div className="avatar-medium">
+                    <NetworkLogo network={selectedNetwork} />
+                  </div>
                   <h3 className="card__header-title">
                     {selectedNetwork.name}
                   </h3>
@@ -100,7 +102,6 @@ export default function HomeInfo() {
                 <div>
                   <NavLink
                     href="/Explore"
-                    className="nav-bottom__link"
                   >
                     <span>
                       <IoGlobeOutline />
@@ -112,7 +113,6 @@ export default function HomeInfo() {
                 <div>
                   <NavLink
                     href="/ButtonNew"
-                    className="nav-bottom__link"
                   >
                     <span>
                       <IoAddOutline />
@@ -124,7 +124,6 @@ export default function HomeInfo() {
                 <div>
                   <NavLink
                     href="/Explore"
-                    className="nav-bottom__link"
                   >
                     <span>
                       <IoHelpOutline />
@@ -152,7 +151,6 @@ export default function HomeInfo() {
                   <div>
                     <NavLink
                       href="/Profile"
-                      className="nav-bottom__link"
                     >
                       <span>
                         <IoLogInOutline />
@@ -167,8 +165,7 @@ export default function HomeInfo() {
                   <div>
                     <NavLink
                       href="/Login"
-                      className="nav-bottom__link"
-                    >
+                      >
                       <span>
                         <IoLogInOutline />
                         {t('menu.login')}
