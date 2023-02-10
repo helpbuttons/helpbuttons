@@ -42,16 +42,16 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 
  }
 
-.info-overlay__location {
+.info-overlay__search-section {
 
-  background-color: $color-transparent;
+  background-color: $color-corporative;
   margin: 0 $padding-big;
   padding: $padding-big;
   border-radius: 0 0 25px 25px;
 
   .label {
 
-    color: $color-white;
+    color: $color-dark-gray;
   
   }
 
@@ -94,8 +94,17 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
       .card__header-title {
   
         margin-left: $margin-small;
+
+        &.network-title {
+  
+          font-size: $font-size-huge;
+          line-height: $font-size-huge;
+    
+        }
   
       }
+
+
 
     }
 

@@ -40,7 +40,7 @@ export default function HomeInfo() {
   return (
     <div className="info-overlay__container">
       <div className="info-overlay__content">
-        <form className="info-overlay__location">
+        <form className="info-overlay__search-section">
           <label className="form__label label">
             {t('homeinfo.start')}
           </label>
@@ -69,7 +69,7 @@ export default function HomeInfo() {
                   <div className="avatar-medium">
                     <NetworkLogo network={selectedNetwork} />
                   </div>
-                  <h3 className="card__header-title">
+                  <h3 className="card__header-title network-title">
                     {selectedNetwork.name}
                   </h3>
                 </div>

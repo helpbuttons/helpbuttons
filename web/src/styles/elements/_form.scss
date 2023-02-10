@@ -3,7 +3,7 @@ $form-input-width: 100%;
 $form-field-max-width: $grid-max-width;
 $form-input-padding: $padding-medium;
 $form-input-font-size: $font-size-medium;
-
+$form-input-border-radius: $border-general-height;
 
 .form {
   * {
@@ -106,7 +106,7 @@ $form-input-font-size: $font-size-medium;
 
   background: $color-white;
   border: $border-lines-width solid $color-gray-border;
-  border-radius: $border-radius-circle;
+  border-radius: $form-input-border-radius;
   box-sizing: border-box;
   color: $color-black;
   padding: $padding-big $padding-big;
@@ -126,11 +126,12 @@ $form-input-font-size: $font-size-medium;
 
   }
 
-  &.squared {
+  &.round {
 
-    border-radius: $border-general-height;
-    
+    border-radius: $border-radius-circle;
+
   }
+
 
 }
 

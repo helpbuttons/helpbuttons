@@ -1,4 +1,4 @@
-$textarea-textarea-border-radius: $border-radius-semicircle;
+$textarea-textarea-border-radius: $border-general-height;
 $textarea-textarea-padding-big: $padding-big;
 $textarea-textarea-width: 100%;
 $textarea-textarea-height: 250px;
@@ -26,9 +26,6 @@ $textarea-textarea-color-gray: $color-gray;
     outline: 0;
   }
 
-  &.squared {
-    border-radius: $border-general-height;
-  }
 }
 
 .textarea {
