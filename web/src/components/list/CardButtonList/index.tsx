@@ -41,9 +41,7 @@ export default function CardButtonList({button}) {
           />
         </div>
         <div className="card-button-list__content">
-          <Link href={`/ButtonFile/${button.id}`}>
             <CardButtonHeadMedium button={button}/>
-          </Link>
         </div>
       </div>
     </div>
