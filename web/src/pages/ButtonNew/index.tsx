@@ -122,6 +122,11 @@ export default function ButtonNew() {
             classNameExtra="publish_btn"
           >
             <div className="publish_btn-first">
+              <ButtonType
+                name="type"
+                {...register('type', { required: true })}
+                validationError={errors.type}
+              />
               <FieldTextArea
                 name="title"
                 label="Title"
@@ -141,11 +146,7 @@ export default function ButtonNew() {
                 })}
               />
 
-              <ButtonType
-                name="type"
-                {...register('type', { required: true })}
-                validationError={errors.type}
-              />
+              
               {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
               <FieldTags
                 label="Tag suggestions"
