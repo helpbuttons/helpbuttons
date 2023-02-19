@@ -41,9 +41,7 @@ $dropdown-nets-max-width: $grid-max-width;
   transition: all 0.2s ease-in-out;
 
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+
   &:hover {
     cursor: pointer;
   }
