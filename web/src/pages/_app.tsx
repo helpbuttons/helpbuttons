@@ -78,7 +78,7 @@ function MyApp({ Component, pageProps }) {
 
       console.log(err);
       alertService.error(
-        `Something went wrong, you can go to the <a href="${SetupSteps.SYSADMIN_CONFIG}" configuration wizard`,
+        `Something went wrong, you can go to the <a href="${SetupSteps.SYSADMIN_CONFIG}" configuration wizard</a>`,
       );
     }
 
