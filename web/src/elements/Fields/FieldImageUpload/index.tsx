@@ -1,46 +1,54 @@
 import { ImageContainer } from 'elements/ImageWrapper';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useWatch } from 'react-hook-form';
 import ImageUploading from 'react-images-uploading';
 
 import FieldError from '../FieldError';
 
-export default function FieldImageUpload({ name, label, width = 100, height = 100, alt = "", validationError, setValue}) {
-  const [images, setImages] = useState([]);
+export default function FieldImageUpload({ name, label, width = 100, height = 100, alt = "", validationError, control, setValue}) {
+
+  const [image, setImage] = useState(null)
   const onChange = (imageList, addUpdateIndex) => {
-    setImages(imageList);
-    if(imageList.length > 0){
+    setImage(imageList[0].data_url)
+    if(imageList.length > 0) {
       setValue(name, imageList[0].data_url)
     }
   };
 
+  const value = useWatch({control, name: name});
+
+  useEffect(() => {
+    if (value) {
+      setImage(value);
+    }
+  }, [value])
   return (
     <>
       <div className="form__field">
         <ImageUploading
-          value={images}
+          value={image}
           onChange={onChange}
           maxNumber={1}
           dataURLKey="data_url"
         >
-          
-          {({ imageList, onImageUpload, onImageRemove }) => (
+          {({ onImageUpload, onImageRemove }) => (
             // write your building UI
             <div className="upload__image-wrapper">
               <label
                 htmlFor="files"
                 className="btn"
                 onClick={(e) => {
-                  setImages([]);
+                  setImage(null);
                   e.preventDefault();
                   onImageUpload();
                 }}
               >
                 {label}
               </label>
-              {imageList[0] && (
+              {image && (
                 <>
                   <ImageContainer
-                    src={imageList[0].data_url}
+                    src={image}
                     alt={alt}
                     width={width}
                     height={height}

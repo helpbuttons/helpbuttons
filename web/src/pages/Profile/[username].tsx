@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { IoHammerOutline, IoLogOutOutline } from 'react-icons/io5';
 import Btn, { IconType } from 'elements/Btn';
 import { UserService } from 'services/Users';
+import { Role } from 'shared/types/roles';
 
 export default function Profile() {
   const [userProfile, setUserProfile] = useState(null);
@@ -27,17 +28,18 @@ export default function Profile() {
     UserService.logout();
   }
 
-
   const username = router.query.username as string;
   useEffect(() => {
-    if (knownUsers) {
-      const newUserProfile = knownUsers.filter((user: User) => {
-        return user.username == username;
-      });
+    let newUserProfile = '';
+    if (!userProfile) {
+      if (knownUsers) {
+        newUserProfile = knownUsers.filter((user: User) => {
+          return user?.username == username;
+        });
+      }
       if (newUserProfile.length > 0) {
         setUserProfile(newUserProfile[0]);
       } else {
-        // console.log('getting unknown user')
         store.emit(
           new FindUser(username, (user) => {
             setUserProfile(user);
@@ -45,12 +47,16 @@ export default function Profile() {
         );
       }
     }
-  }, [knownUsers]);
+  }, [userProfile]);
   return (
     <>
       <div className="body__content">
         <div className="body__section">
-          {userProfile && <CardProfile user={userProfile} />}
+          {userProfile && (
+            <>
+              <CardProfile user={userProfile} />
+            </>
+          )}
 
           {userProfile?.username == loggedInUser?.username && (
             <div className="card-profile__actions">
@@ -70,6 +76,17 @@ export default function Profile() {
                   caption="Config account"
                 />
               </Link>
+              {loggedInUser?.role == Role.admin && (
+                <div>
+                  <Link href="/Configuration">
+                    <Btn
+                      iconLeft={IconType.svg}
+                      iconLink={<IoHammerOutline />}
+                      caption="Configure network"
+                    />
+                  </Link>
+                </div>
+              )}
             </div>
           )}
         </div>

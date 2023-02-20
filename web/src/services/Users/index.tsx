@@ -64,7 +64,8 @@ export class UserService {
 
   public static findUser(username: string)
   {
-    return httpService.get<User>(`/users/find/${username}`);
+
+    return httpService.get<User>(`users/find/${username}`);
   }
 
   public static logout() {
