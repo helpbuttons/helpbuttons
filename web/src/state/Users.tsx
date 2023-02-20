@@ -75,6 +75,10 @@ export class SignupUser implements WatchEvent {
           err.response.message === 'email-already-exists'
         ) {
           this.onError('email-already-exists');
+        }else if(isHttpError(err.response) &&
+        err.status === HttpStatus.CONFLICT &&
+        err.response.message === 'username-already-exists'){
+          this.onError('username-already-exists');
         } else {
           throw err;
         }

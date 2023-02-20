@@ -53,7 +53,7 @@ export class AuthService {
     {
       userRole = Role.admin;
     }
-    const newUserDto: User = {
+    const newUserDto = {
       username: signupUserDto.username,
       email: signupUserDto.email,
       role: userRole,
@@ -61,27 +61,20 @@ export class AuthService {
       verificationToken: publicNanoidGenerator(),
       emailVerified: emailVerified,
       id: dbIdGenerator(),
+      avatar: null
     };
 
     await getManager().transaction(
       async (transactionalEntityManager) => {
         try {
-          const imageUrl = await this.storageService.newImage64(
+          newUserDto.avatar = await this.storageService.newImage64(
             signupUserDto.avatar,
           );
-          if (typeof imageUrl === 'string') {
-            newUserDto.avatar = imageUrl;
-          } else {
-            throw new ValidationException({
-              avatar: 'failed to get avatar url',
-            });
-          }
         } catch (err) {
-          throw new ValidationException({
-            avatar: 'failed to get avatar url',
-          });
+          console.log(`avatar: ${err.message}`);
+          throw new ValidationException({ image: err.message });
         }
-
+        
         try {
           await this.userService
             .createUser(newUserDto)
@@ -108,9 +101,8 @@ export class AuthService {
           if (typeof error === typeof HttpException) {
             throw error;
           } else if (error?.code === '23505') {
-            console.log('registered...');
             throw new HttpException(
-              'Email already registered? Do you want to login?',
+              'username-already-exists',
               HttpStatus.CONFLICT,
             );
           } else {
