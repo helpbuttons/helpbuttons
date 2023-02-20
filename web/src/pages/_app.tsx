@@ -19,7 +19,7 @@ import { SetupSteps } from '../shared/setupSteps';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 
 import { pathToRegexp } from 'path-to-regexp';
-import { allowedPathsPerRole } from './pagesRoles';
+import { allowedPathsPerRole } from '../shared/pagesRoles';
 import { Role } from 'shared/types/roles';
 
 export default appWithTranslation(MyApp);
