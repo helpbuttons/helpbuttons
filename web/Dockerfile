@@ -6,13 +6,13 @@ WORKDIR /app
 COPY --chown=node:node . /app/
 RUN rm -f .env
 
-USER node
-
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN yarn
 RUN yarn hb jwt
 RUN yarn build
+
+USER node
 
 EXPOSE 3000
 CMD [ "yarn", "start" ]

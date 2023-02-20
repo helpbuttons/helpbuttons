@@ -1,12 +1,13 @@
 FROM node:16-bullseye-slim
 WORKDIR /app
 
-USER node 
 COPY --chown=node:node . /app/
+RUN chown node:node /app/node_modules
 
-RUN rm -f config.json
 RUN yarn
 RUN yarn build
+
+USER node 
 
 EXPOSE 3001 
 CMD [ "yarn", "start" ]
