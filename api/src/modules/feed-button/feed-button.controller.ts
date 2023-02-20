@@ -27,7 +27,7 @@ import {
 } from '../storage/storage.utils';
 import { CurrentUser } from '@src/shared/decorator/current-user';
 import { User } from '../user/user.entity';
-import { Auth } from '@src/shared/decorator/auth.decorator';
+import { OnlyRegistered } from '@src/shared/decorator/roles.decorator';
 
 @ApiTags('buttons')
 @Controller('feed')
@@ -36,7 +36,7 @@ export class FeedButtonController {
     private readonly feedbuttonService: FeedButtonService,
   ) {}
 
-  @Auth()
+  @OnlyRegistered()
   @Post('new')
   @UseInterceptors(
     FilesInterceptor('images[]', 4, {
@@ -61,7 +61,7 @@ export class FeedButtonController {
     );
   }
 
-  @Auth()
+  @OnlyRegistered()
   // only author can run this!
   @Delete('delete/:feedButtonId')
   async remove(@Param('feedButtonId') feedButtonId: string) {

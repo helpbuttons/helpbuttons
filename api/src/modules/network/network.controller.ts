@@ -3,17 +3,10 @@ import {
     Get,
     Post,
     Body,
-    Patch,
-    Param,
-    Delete,
-    UseInterceptors,
-    UploadedFile,
-    ClassSerializerInterceptor,
   } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
   import { ApiTags } from '@nestjs/swagger';
-import { diskStorage } from 'multer';
-import { editFileName, imageFileFilter } from '../storage/storage.utils';
+import { AllowedRoles, AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
+import { Role } from '@src/shared/types/roles';
   
   import { CreateNetworkDto, UpdateNetworkDto } from './network.dto';
   import { NetworkService } from './network.service';
@@ -30,19 +23,21 @@ import { editFileName, imageFileFilter } from '../storage/storage.utils';
       return this.networkService.create(createDto);
     }
 
+    @AllowGuest()
     @Get('findById')
     findDefaultNetwork() {
       return this.networkService.findDefaultNetwork();
     }
-  
-    // @Patch('edit/:networkId')
-    // update(
-    //   @Param('networkId') networkId: string,
-    //   @Body() updateNetworkDto: UpdateNetworkDto,
-    // ) {
-    //   return this.networkService.update(networkId, updateNetworkDto);
-    // }
+    
+    @OnlyAdmin()
+    @Post('update')
+    update(
+      @Body() updateNetworkDto: UpdateNetworkDto,
+    ) {
+      return this.networkService.update(updateNetworkDto);
+    }
 
+    @AllowGuest()
     @Get('config')
     async config() {
       return this.networkService.getConfig()

@@ -24,6 +24,7 @@ import { User } from '../user/user.entity';
 import { StorageService } from '../storage/storage.service';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { getManager } from 'typeorm';
+import { Role } from '@src/shared/types/roles';
 
 @Injectable()
 export class AuthService {
@@ -47,10 +48,15 @@ export class AuthService {
       emailVerified = true;
     }
 
+    let userRole = Role.registered;
+    if (!this.userService.findAdministrator())
+    {
+      userRole = Role.admin;
+    }
     const newUserDto: User = {
       username: signupUserDto.username,
       email: signupUserDto.email,
-      roles: ['registered'],
+      role: userRole,
       name: signupUserDto.name,
       verificationToken: publicNanoidGenerator(),
       emailVerified: emailVerified,

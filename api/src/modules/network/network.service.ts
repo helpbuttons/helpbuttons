@@ -16,6 +16,8 @@ import { UserService } from '../user/user.service';
 import { User } from '../user/user.entity';
 import { SetupDtoOut } from '../setup/setup.entity';
 import { getConfig } from '@src/shared/helpers/config.helper';
+import { isImageData } from '@src/shared/helpers/imageIsFile';
+import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 
 @Injectable()
 export class NetworkService {
@@ -28,7 +30,6 @@ export class NetworkService {
   ) {}
 
   async create(createDto: CreateNetworkDto) {
-    createDto.radius = createDto.radius ? createDto.radius : 1;
     const network = {
       id: dbIdGenerator(),
       description: createDto.description,
@@ -120,6 +121,67 @@ export class NetworkService {
     return this.findDefaultNetwork()
   }
 
+
+  async update(updateDto: UpdateNetworkDto){
+    const defaultNetwork = await this.findDefaultNetwork();
+
+    const network = {
+      id: defaultNetwork.id,
+      description: updateDto.description,
+      // url: createDto.url,
+      radius: updateDto.radius,
+      latitude: updateDto.latitude,
+      longitude: updateDto.longitude,
+      tags: updateDto.tags,
+      privacy: updateDto.privacy,
+      location: () =>
+        `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
+      logo: null,
+      jumbo: null,
+      zoom: updateDto.zoom,
+      name: updateDto.name,
+    } ;
+    await getManager().transaction(
+      async (transactionalEntityManager) => {
+        if (Array.isArray(updateDto.tags)) {
+          await this.tagService
+            .addTags('network', network.id, updateDto.tags)
+            .catch((err) => {
+              throw new HttpException(
+                { message: err.message },
+                HttpStatus.BAD_REQUEST,
+              );
+            });
+        }
+
+        if (isImageData(updateDto.logo))
+        {
+          try {
+            network.logo = await this.storageService.newImage64(
+              updateDto.logo,
+            );
+          } catch (err) {
+            throw new ValidationException({ logo: err.message });
+          }
+        }
+        
+        if (isImageData(updateDto.jumbo))
+        {
+          try {
+            network.jumbo = await this.storageService.newImage64(
+              updateDto.jumbo,
+            );
+          } catch (err) {
+            throw new ValidationException({ jumbo: err.message });
+          }
+        }
+
+        await this.networkRepository.update(defaultNetwork.id, removeUndefined(network));
+      },
+    );
+
+    return network;
+  }
 
   getConfig(): Promise<SetupDtoOut> {
     return getConfig();

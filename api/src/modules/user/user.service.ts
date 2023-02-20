@@ -3,6 +3,7 @@ import { User } from './user.entity';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Role } from '@src/shared/types/roles';
 
 @Injectable()
 export class UserService {
@@ -28,15 +29,15 @@ export class UserService {
   }
 
   async findAdministrator() {
-    // TODO: for now is returning the first ever created user.
-    return await this.userRepository.findOne({order: { id: 'DESC' }});
+    // returning only the first admin
+    return await this.userRepository.findOne({where: {role: Role.admin}, order: { id: 'DESC' }});
   }
 
   async findOneByEmail(email: string) {
     return await this.userRepository.findOne({where: {email: `${email}`}});
   }
 
-  async findOne(username: string) {
+  async findByUsername(username: string) {
     return await this.userRepository.findOne({where: {username: `${username}`}});
   }
   
