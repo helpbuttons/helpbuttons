@@ -2,8 +2,7 @@ FROM node:16-bullseye-slim
 WORKDIR /app
 
 USER node 
-COPY --chown=node:node . .
-
+COPY --chown=node:node . /app/
 
 RUN rm -f config.json
 RUN yarn
