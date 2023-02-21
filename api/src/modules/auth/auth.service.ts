@@ -38,7 +38,6 @@ export class AuthService {
     private readonly storageService: StorageService,
   ) {}
 
-  @Transactional()
   async signup(signupUserDto: SignupRequestDto) {
     const verificationToken = publicNanoidGenerator();
     let emailVerified = false;
@@ -49,8 +48,7 @@ export class AuthService {
     }
 
     let userRole = Role.registered;
-    if (!this.userService.findAdministrator())
-    {
+    if (!this.userService.findAdministrator()) {
       userRole = Role.admin;
     }
     const newUserDto = {
@@ -61,60 +59,51 @@ export class AuthService {
       verificationToken: publicNanoidGenerator(),
       emailVerified: emailVerified,
       id: dbIdGenerator(),
-      avatar: null
+      avatar: null,
     };
 
-    await getManager().transaction(
-      async (transactionalEntityManager) => {
-        try {
-          newUserDto.avatar = await this.storageService.newImage64(
-            signupUserDto.avatar,
-          );
-        } catch (err) {
-          console.log(`avatar: ${err.message}`);
-          throw new ValidationException({ image: err.message });
-        }
-        
-        try {
-          await this.userService
-            .createUser(newUserDto)
-            .then((user) => {
-              return this.createUserCredential(
-                newUserDto.id,
-                signupUserDto.password,
-              );
-            });
+    try {
+      newUserDto.avatar = await this.storageService.newImage64(
+        signupUserDto.avatar,
+      );
+    } catch (err) {
+      console.log(`avatar: ${err.message}`);
+      throw new ValidationException({ image: err.message });
+    }
 
-          if (!newUserDto.emailVerified) {
-            await this.sendActivationEmail(newUserDto).then(
-              (mailActivation) => {
-                console.log(
-                  `activation mail sent: ${newUserDto.email}`,
-                );
-              },
-            );
-          }
+    try {
+      await this.userService.createUser(newUserDto).then((user) => {
+        return this.createUserCredential(
+          newUserDto.id,
+          signupUserDto.password,
+        );
+      });
 
-          accessToken = await this.getAccessToken(newUserDto);
+      if (!newUserDto.emailVerified) {
+        await this.sendActivationEmail(newUserDto).then(
+          (mailActivation) => {
+            console.log(`activation mail sent: ${newUserDto.email}`);
+          },
+        );
+      }
 
-        } catch (error) {
-          if (typeof error === typeof HttpException) {
-            throw error;
-          } else if (error?.code === '23505') {
-            throw new HttpException(
-              'username-already-exists',
-              HttpStatus.CONFLICT,
-            );
-          } else {
-            console.log(error);
-            throw new HttpException(
-              'unknown error',
-              HttpStatus.SERVICE_UNAVAILABLE,
-            );
-          }
-        }
-      },
-    );
+      accessToken = await this.getAccessToken(newUserDto);
+    } catch (error) {
+      if (typeof error === typeof HttpException) {
+        throw error;
+      } else if (error?.code === '23505') {
+        throw new HttpException(
+          'username-already-exists',
+          HttpStatus.CONFLICT,
+        );
+      } else {
+        console.log(error);
+        throw new HttpException(
+          'unknown error',
+          HttpStatus.SERVICE_UNAVAILABLE,
+        );
+      }
+    }
 
     return accessToken;
   }
