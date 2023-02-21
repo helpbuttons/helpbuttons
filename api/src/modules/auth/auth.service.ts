@@ -5,7 +5,6 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { hash, verify } from 'argon2';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { JwtService } from '@nestjs/jwt';
 import { LoginRequestDto, SignupRequestDto } from './auth.dto';
@@ -25,6 +24,8 @@ import { StorageService } from '../storage/storage.service';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { getManager } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
+import { UserCredential } from '../user-credential/user-credential.entity';
+import { checkHash, generateHash } from '@src/shared/helpers/generate-hash.helper';
 
 @Injectable()
 export class AuthService {
@@ -48,7 +49,7 @@ export class AuthService {
     }
 
     let userRole = Role.registered;
-    if (!this.userService.findAdministrator()) {
+    if (!(await this.userService.findAdministrator())) {
       userRole = Role.admin;
     }
     const newUserDto = {
@@ -68,54 +69,42 @@ export class AuthService {
       );
     } catch (err) {
       console.log(`avatar: ${err.message}`);
-      throw new ValidationException({ image: err.message });
     }
-
-    try {
-      await this.userService.createUser(newUserDto).then((user) => {
+    return this.userService
+      .createUser(newUserDto)
+      .then((user) => {
         return this.createUserCredential(
           newUserDto.id,
           signupUserDto.password,
         );
-      });
-
-      if (!newUserDto.emailVerified) {
-        await this.sendActivationEmail(newUserDto).then(
-          (mailActivation) => {
-            console.log(`activation mail sent: ${newUserDto.email}`);
-          },
-        );
-      }
-
-      accessToken = await this.getAccessToken(newUserDto);
-    } catch (error) {
-      if (typeof error === typeof HttpException) {
-        throw error;
-      } else if (error?.code === '23505') {
-        throw new HttpException(
-          'username-already-exists',
-          HttpStatus.CONFLICT,
-        );
-      } else {
+      })
+      .then((user) => {
+        if (!newUserDto.emailVerified) {
+          return this.sendActivationEmail(newUserDto).then(
+            (mailActivation) => {
+              console.log(
+                `activation mail sent: ${newUserDto.email}`,
+              );
+            },
+          );
+        }
+        return user;
+      })
+      .then((userCredentials) => {
+        return this.getAccessToken(newUserDto);
+      })
+      .catch((error) => {
+        console.log('failed to create user credentials');
         console.log(error);
-        throw new HttpException(
-          'unknown error',
-          HttpStatus.SERVICE_UNAVAILABLE,
-        );
-      }
-    }
-
-    return accessToken;
+      });
   }
-  private createUserCredential(
+  private async createUserCredential(
     userId,
     plainPassword,
-  ): User | PromiseLike<User> | any {
-    return this.hashPassword(plainPassword).then((hashedPassword) => {
-      return this.userCredentialService.createUserCredential({
-        userId: userId,
-        password: hashedPassword,
-      });
+  ): Promise<void | UserCredential> {
+    return this.userCredentialService.createUserCredential({
+      userId: userId,
+      password: generateHash(plainPassword),
     });
   }
 
@@ -147,7 +136,7 @@ export class AuthService {
       return null;
     }
 
-    if (!(await verify(userCredential.password, plainPassword))) {
+    if (!(await checkHash(plainPassword, userCredential.password))) {
       return null;
     }
 
@@ -162,20 +151,7 @@ export class AuthService {
     };
     return accesstoken;
   }
-
-  hashPassword(password: string) {
-    return hash(password);
-  }
-
   async getCurrentUser(userId) {
     return this.userService.findById(userId);
   }
-
-  // async login(userId)
-  // {
-  //   this.getCurrentUser(userId)
-  //   .then((user) => {
-  //     return this.getAccessToken(user);
-  //   })
-  // }
 }

@@ -195,7 +195,6 @@ function MyApp({ Component, pageProps }) {
             return (
               <div>
                 <Component {...pageProps} />
-
                 <NavBottom logged={!!loggedInUser} />
               </div>
             );
