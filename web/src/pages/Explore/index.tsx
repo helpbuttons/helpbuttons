@@ -7,7 +7,6 @@ import NavHeader from "components/nav/NavHeader"; //just for mobile
 import { useRef } from "store/Store";
 import { GlobalState, store } from "pages";
 import { Bounds } from "leaflet";
-import { IButton } from "services/Buttons/button.type";
 import { useRouter } from "next/router";
 import ExploreButtonsMap from "components/map/LeafletMap/ExploreButtonsMap";
 import { alertService } from "services/Alert";
@@ -63,7 +62,7 @@ export default function Explore() {
   }
   useEffect(() => {
     if (mapBondsButtons !== null)
-      setFilteredButtons(mapBondsButtons.filter((button: IButton) => {
+      setFilteredButtons(mapBondsButtons.filter((button: Button) => {
         return buttonFilterTypes.indexOf(button.type) >= 0
       }))
   }, [mapBondsButtons, buttonFilterTypes]);

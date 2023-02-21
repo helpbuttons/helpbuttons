@@ -7,16 +7,16 @@ import { UpdateEvent } from '../store/Event';
 
 import { alertService } from 'services/Alert';
 import { ButtonService } from 'services/Buttons';
-import { IButton } from 'services/Buttons/button.type';
 import { Bounds } from 'leaflet';
 import { of } from 'rxjs';
 import { isHttpError } from 'services/HttpService';
 import { GlobalState } from 'pages';
+import { Button } from 'shared/entities/button.entity';
 
 export interface ExploreState {
-  mapBondsButtons: IButton[];
-  draftButton: IButton;
-  currentButton: IButton;
+  mapBondsButtons: Button[];
+  draftButton: Button;
+  currentButton: Button;
 }
 
 export const exploreInitial = {
@@ -36,7 +36,7 @@ export class FindButtons implements WatchEvent {
 }
 
 export class ButtonsFound implements UpdateEvent {
-  public constructor(private buttons: IButton[]) {}
+  public constructor(private buttons: Button[]) {}
 
   public update(state: GlobalState) {
     return produce(state, newState => {
@@ -47,7 +47,7 @@ export class ButtonsFound implements UpdateEvent {
 
 export class CreateButton implements WatchEvent {
   public constructor(
-    private button: IButton,
+    private button: Button,
     private networkId: string,
     private onSuccess,
     private onError
@@ -74,7 +74,7 @@ export class CreateButton implements WatchEvent {
 }
 
 export class SaveButtonDraft implements UpdateEvent {
-  public constructor(private button: IButton) {}
+  public constructor(private button: Button) {}
 
   public update(state: GlobalState) {
     return produce(state, newState => {
@@ -94,7 +94,7 @@ export class FindButton implements WatchEvent {
 }
 
 export class ButtonFound implements UpdateEvent {
-  public constructor(private button: IButton) {}
+  public constructor(private button: Button) {}
 
   public update(state: GlobalState) {
     return produce(state, newState => {

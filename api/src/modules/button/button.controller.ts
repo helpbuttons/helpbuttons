@@ -22,16 +22,16 @@ import {
   editFileName,
   imageFileFilter,
 } from '../storage/storage.utils';
-import { Auth } from '@src/shared/decorator/auth.decorator';
 import { CurrentUser } from '@src/shared/decorator/current-user';
 import { User } from '../user/user.entity';
+import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
 
 @ApiTags('buttons')
 @Controller('buttons')
 export class ButtonController {
   constructor(private readonly buttonService: ButtonService) {}
 
-  @Auth()
+  @OnlyRegistered()
   @Post('new')
   @UseInterceptors(
     FilesInterceptor('images[]', 4, {
@@ -56,6 +56,7 @@ export class ButtonController {
     );
   }
 
+  @AllowGuest()
   @Get('/find/:networkId')
   async findAll(
     @Param('networkId') networkId: string,
@@ -76,6 +77,7 @@ export class ButtonController {
     });
   }
 
+  @AllowGuest()
   @Get('findById/:buttonId')
   findOne(@Param('buttonId') buttonId: string) {
     return this.buttonService.findById(buttonId);

@@ -19,6 +19,8 @@ import { SetupSteps } from '../shared/setupSteps';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 
 import { pathToRegexp } from 'path-to-regexp';
+import { allowedPathsPerRole } from '../shared/pagesRoles';
+import { Role } from 'shared/types/roles';
 
 export default appWithTranslation(MyApp);
 
@@ -76,7 +78,7 @@ function MyApp({ Component, pageProps }) {
 
       console.log(err);
       alertService.error(
-        `Something went wrong, you can go to the <a href="${SetupSteps.SYSADMIN_CONFIG}" configuration wizard`,
+        `Something went wrong, you can go to the <a href="${SetupSteps.SYSADMIN_CONFIG}">configuration wizard</a>`,
       );
     }
 
@@ -123,38 +125,27 @@ function MyApp({ Component, pageProps }) {
     store.emit(new FetchDefaultNetwork(onSucess, onError));
   }
 
-  function guestPathCheck(path)
+  function pagesRolesCheck(path, role: Role)
   {
-    const publicPaths = [
-      '/Login',
-      '/Signup',
-      '/RepositoryPage',
-      '/Faqs',
-      '/',
-      '/ButtonNew',
-      '/Explore',
-      '/HomeInfo',
-      '/ButtonFile/:id',
-    ];
+    const allowedPaths = allowedPathsPerRole.filter((allowedPerRole) => allowedPerRole.role == role)[0].paths;
 
-    if (publicPaths.includes(path)) {
+    if (allowedPaths.includes(path)) {
       return true;
     }
-    return publicPaths.filter((allowedPath) => {
+    return allowedPaths.filter((allowedPath) => {
       return pathToRegexp(allowedPath).exec(path);
     }).length > 0;
+
   }
   function authCheck() {
     // redirect to login page if accessing a private page and not logged in
     const path = router.asPath.split('?')[0];
 
-    console.log('looking for authorization...')
+    
     if (
       !UserService.isLoggedIn() &&
-      !guestPathCheck(path)
+      !pagesRolesCheck(path, Role.guest)
     ) {
-      console.log('1')
-
       // and is not 404
       if (path != '/Login') {
         router
@@ -163,24 +154,30 @@ function MyApp({ Component, pageProps }) {
             query: { returnUrl: router.asPath },
           })
           .catch((err) => {
-            // console.log(err)
+            console.log(err)
           });
       }
-    } else if (UserService.isLoggedIn()) {
-      console.log('2')
-
+    } else if (UserService.isLoggedIn() ) {
+      
       if (!loggedInUser)
       {
         store.emit(new FetchUserData(() => {setAuthorized(true)},() => { setAuthorized(false)}))
+      }else if (pagesRolesCheck(path, Role.admin)) {
+        console.log(loggedInUser)
+        if (loggedInUser.role != Role.admin)
+        {
+          alertService.error('You are not allowed')
+          console.log(loggedInUser.roles)
+          setAuthorized(false)
+          router.push('/HomeInfo');  
+        }else {
+          setAuthorized(true)
+        }
       }
       
-    }else if (guestPathCheck(path)) {
-      console.log('3')
-
+    }else if (pagesRolesCheck(path, Role.guest)) {
       setAuthorized(true);
     }else {
-      console.log('4')
-
       setAuthorized(false);
     }
   }
@@ -198,7 +195,6 @@ function MyApp({ Component, pageProps }) {
             return (
               <div>
                 <Component {...pageProps} />
-
                 <NavBottom logged={!!loggedInUser} />
               </div>
             );

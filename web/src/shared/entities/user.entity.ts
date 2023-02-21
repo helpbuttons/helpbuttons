@@ -1,4 +1,5 @@
 import { BaseEntity } from '@src/shared/types/base.entity';
+import { Role } from '@src/shared/types/roles';
 import { Exclude, Expose } from 'class-transformer';
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
@@ -62,10 +63,12 @@ export class User extends BaseEntity {
   })
   verificationToken?: string;
 
-  @Column('varchar', {
-    array: true,
+  @Expose()
+  @Column({
+    type: 'text',
+    default: Role.registered
   })
-  roles: string[];
+  role: string;
 
   @Expose()
   @Column({ type: 'text', nullable: true })

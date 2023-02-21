@@ -1,5 +1,5 @@
 //Main card of the Button that is used inside ButtonFile component and in ButtonNewPublish for the preview. It has all the Data that a button has andd displays it according to the main buttonTemplate and network that buttton selected.
-import Image from "next/image";
+import Image from 'next/image';
 import {
   IoChevronForwardOutline,
   IoHeartDislikeOutline,
@@ -7,25 +7,26 @@ import {
   IoHeartOutline,
   IoRibbonOutline,
   IoAddCircleOutline,
-} from "react-icons/io5";
-import ImageWrapper, { ImageType } from "elements/ImageWrapper";
+} from 'react-icons/io5';
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
-import router from "next/router";
-import { useRef } from "store/Store";
-import { GlobalState, store } from "pages";
-import { useEffect } from "react";
-import { FindButton } from "state/Explore";
-import { IButton } from "services/Buttons/button.type";
-import { makeImageUrl } from "shared/sys.helper";
+import router from 'next/router';
+import { useRef } from 'store/Store';
+import { GlobalState, store } from 'pages';
+import { useEffect, useState } from 'react';
+import { FindButton } from 'state/Explore';
+import { getShareLink, makeImageUrl } from 'shared/sys.helper';
+import { Button } from 'shared/entities/button.entity';
+import Link from 'next/link';
 
 export default function CardButtonFile() {
   const { id } = router.query;
   // get from the store!!
-  const currentButton: IButton = useRef(
+  const currentButton: Button = useRef(
     store,
-    (state: GlobalState) => state.explore.currentButton
+    (state: GlobalState) => state.explore.currentButton,
   );
-  
+
   useEffect(() => {
     if (id != null) {
       store.emit(new FindButton(id));
@@ -42,7 +43,7 @@ export default function CardButtonFile() {
             >
               <CardButtonHeadBig button={currentButton} />
             </div>
-            <CardButtonImages button={currentButton}/>
+            <CardButtonImages button={currentButton} />
             <CardButtonOptions />
           </div>
         </>
@@ -54,55 +55,82 @@ export default function CardButtonFile() {
 export function CardButtonHeadMedium({ button }) {
   return (
     <>
-      <div className="card-button__content">
-        <div className="card-button__header">
-          <div className="card-button__avatar">
-            <div className="avatar-medium">
-              <ImageWrapper
-                imageType={ImageType.avatar}
-                src={button.owner.avatar}
-                alt="Avatar"
-              />
+    <CardButtonSubmenu button={button}/>
+      <a href={`/ButtonFile/${button.id}`}>
+        <div className="card-button__content">
+          <div className="card-button__header">
+            <div className="card-button__avatar">
+              <div className="avatar-medium">
+                <ImageWrapper
+                  imageType={ImageType.avatar}
+                  src={button.owner.avatar}
+                  alt="Avatar"
+                />
+              </div>
+            </div>
+
+            <div className="card-button__info">
+              <div className="card-button__name">
+                {button.owner.name}
+              </div>
+
+              <div className="card-button__status card-button__status">
+                <span
+                  className={`card-button__status--${button.type}`}
+                >
+                  {button.type}
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="card-button__info">
-            <div className="card-button__name">{button.owner.name}</div>
+          <div className="card-button__hashtags">
+            {button.tags.map((tag) => {
+              return <div className="hashtag">{tag}</div>;
+            })}
+          </div>
 
-            <div className="card-button__status card-button__status">
-              <span className={`card-button__status--${button.type}`}>
-                {button.type}
-              </span>
+          <div className="card-button__paragraph">
+            <p>{button.description}</p>
+          </div>
+
+          <div>
+            <div className="card-button__city card-button__everywhere ">
+              {button.latitude}, {button.longitude}
             </div>
+
+            <div className="card-button__date">Now</div>
           </div>
-
-          <div className="card-button__submenu card-button__trigger"></div>
         </div>
-
-        <div className="card-button__hashtags">
-          {button.tags.map((tag) => {
-            return <div className="hashtag">{tag}</div>;
-          })}
-        </div>
-
-        <div className="card-button__paragraph">
-          <p>{button.description}</p>
-        </div>
-
-        <div>
-          <div className="card-button__city card-button__everywhere ">
-            {button.latitude}, {button.longitude}
-          </div>
-
-          <div className="card-button__date">Now</div>
-        </div>
-      </div>
+      </a>
     </>
   );
 }
+
+function CardButtonSubmenu ({button}){
+  const [showSubmenu, setShowSubmenu] = useState(false);
+  const linkButton = getShareLink(`/Button/${button.id}`)
+  return (
+    <section>
+            <div onClick={() => {setShowSubmenu(!showSubmenu)}} className="card-button__edit-icon card-button__submenu"></div>
+            {showSubmenu && 
+              <datalist className="dropdown-nets__dropdown-content" id='listid'>
+                <option className="dropdown-nets__dropdown-option" label='Share Button'></option>
+                <option className="dropdown-nets__dropdown-option" label='Copy Link' onClick={() => {navigator.clipboard.writeText(linkButton)}}></option>
+                <option className="dropdown-nets__dropdown-option" label='Edit Button' onClick={() => {router.push(`/ButtonEdit/${button.id}`)}}></option>
+                <option className="dropdown-nets__dropdown-option" label='Delete Button' onClick={() => {router.push(`/ButtonRemove/${button.id}`)}}></option>
+              </datalist>
+            }
+          </section>
+  )
+
+}
 export function CardButtonHeadBig({ button }) {
+
   return (
     <>
+      <CardButtonSubmenu button={button}/>
+
       <div className="card-button__content">
         <div className="card-button__header">
           <div className="card-button__avatar">
@@ -116,16 +144,17 @@ export function CardButtonHeadBig({ button }) {
           </div>
 
           <div className="card-button__info">
-            <div className="card-button__name">{button.owner.name}</div>
+            <div className="card-button__name">
+              {button.owner.name}
+            </div>
             <div className="card-button__status card-button__status">
               <span className={`card-button__status--${button.type}`}>
                 {button.type}
               </span>
             </div>
-            <CardButtonHeadActions button={button}/>
+            <CardButtonHeadActions button={button} />
           </div>
 
-          <div className="card-button__submenu card-button__trigger"></div>
         </div>
 
         <div className="card-button__hashtags">
@@ -165,7 +194,7 @@ export function CardButtonHeadActions({ button }) {
     </div>
   );
 }
-export function CardButtonImages({button}) {
+export function CardButtonImages({ button }) {
   return (
     <div className="card-button__picture">
       <div className="card-button__picture-nav">
@@ -194,7 +223,9 @@ export function CardButtonOptions() {
       <div className="card-button__dropdown-container">
         <div className="card-button__dropdown-arrow"></div>
         <div className="card-button__dropdown-content">
-          <div className="card-button__trigger-options">Editar botón</div>
+          <div className="card-button__trigger-options">
+            Editar botón
+          </div>
 
           <button className="card-button__trigger-options card-button__trigger-button">
             Quitar botón de la red

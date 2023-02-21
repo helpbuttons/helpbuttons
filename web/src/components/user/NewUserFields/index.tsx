@@ -1,4 +1,4 @@
-import FieldUploadImage from 'elements/Fields/FieldImageUpload';
+import FieldImageUpload from 'elements/Fields/FieldImageUpload';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldText from 'elements/Fields/FieldText';
 import { getHostname } from 'shared/sys.helper';
@@ -50,7 +50,7 @@ export default function NewUserFields({
         })}
       ></FieldPassword>
       150x150px
-      <FieldUploadImage
+      <FieldImageUpload
         name="avatar"
         label="Choose avatar"
         control={control}

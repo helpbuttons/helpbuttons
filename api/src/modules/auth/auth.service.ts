@@ -5,7 +5,6 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { hash, verify } from 'argon2';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { JwtService } from '@nestjs/jwt';
 import { LoginRequestDto, SignupRequestDto } from './auth.dto';
@@ -24,6 +23,9 @@ import { User } from '../user/user.entity';
 import { StorageService } from '../storage/storage.service';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { getManager } from 'typeorm';
+import { Role } from '@src/shared/types/roles';
+import { UserCredential } from '../user-credential/user-credential.entity';
+import { checkHash, generateHash } from '@src/shared/helpers/generate-hash.helper';
 
 @Injectable()
 export class AuthService {
@@ -37,7 +39,6 @@ export class AuthService {
     private readonly storageService: StorageService,
   ) {}
 
-  @Transactional()
   async signup(signupUserDto: SignupRequestDto) {
     const verificationToken = publicNanoidGenerator();
     let emailVerified = false;
@@ -47,88 +48,63 @@ export class AuthService {
       emailVerified = true;
     }
 
-    const newUserDto: User = {
+    let userRole = Role.registered;
+    if (!(await this.userService.findAdministrator())) {
+      userRole = Role.admin;
+    }
+    const newUserDto = {
       username: signupUserDto.username,
       email: signupUserDto.email,
-      roles: ['registered'],
+      role: userRole,
       name: signupUserDto.name,
       verificationToken: publicNanoidGenerator(),
       emailVerified: emailVerified,
       id: dbIdGenerator(),
+      avatar: null,
     };
 
-    await getManager().transaction(
-      async (transactionalEntityManager) => {
-        try {
-          const imageUrl = await this.storageService.newImage64(
-            signupUserDto.avatar,
-          );
-          if (typeof imageUrl === 'string') {
-            newUserDto.avatar = imageUrl;
-          } else {
-            throw new ValidationException({
-              avatar: 'failed to get avatar url',
-            });
-          }
-        } catch (err) {
-          throw new ValidationException({
-            avatar: 'failed to get avatar url',
-          });
-        }
-
-        try {
-          await this.userService
-            .createUser(newUserDto)
-            .then((user) => {
-              return this.createUserCredential(
-                newUserDto.id,
-                signupUserDto.password,
+    try {
+      newUserDto.avatar = await this.storageService.newImage64(
+        signupUserDto.avatar,
+      );
+    } catch (err) {
+      console.log(`avatar: ${err.message}`);
+    }
+    return this.userService
+      .createUser(newUserDto)
+      .then((user) => {
+        return this.createUserCredential(
+          newUserDto.id,
+          signupUserDto.password,
+        );
+      })
+      .then((user) => {
+        if (!newUserDto.emailVerified) {
+          return this.sendActivationEmail(newUserDto).then(
+            (mailActivation) => {
+              console.log(
+                `activation mail sent: ${newUserDto.email}`,
               );
-            });
-
-          if (!newUserDto.emailVerified) {
-            await this.sendActivationEmail(newUserDto).then(
-              (mailActivation) => {
-                console.log(
-                  `activation mail sent: ${newUserDto.email}`,
-                );
-              },
-            );
-          }
-
-          accessToken = await this.getAccessToken(newUserDto);
-
-        } catch (error) {
-          if (typeof error === typeof HttpException) {
-            throw error;
-          } else if (error?.code === '23505') {
-            console.log('registered...');
-            throw new HttpException(
-              'Email already registered? Do you want to login?',
-              HttpStatus.CONFLICT,
-            );
-          } else {
-            console.log(error);
-            throw new HttpException(
-              'unknown error',
-              HttpStatus.SERVICE_UNAVAILABLE,
-            );
-          }
+            },
+          );
         }
-      },
-    );
-
-    return accessToken;
+        return user;
+      })
+      .then((userCredentials) => {
+        return this.getAccessToken(newUserDto);
+      })
+      .catch((error) => {
+        console.log('failed to create user credentials');
+        console.log(error);
+      });
   }
-  private createUserCredential(
+  private async createUserCredential(
     userId,
     plainPassword,
-  ): User | PromiseLike<User> | any {
-    return this.hashPassword(plainPassword).then((hashedPassword) => {
-      return this.userCredentialService.createUserCredential({
-        userId: userId,
-        password: hashedPassword,
-      });
+  ): Promise<void | UserCredential> {
+    return this.userCredentialService.createUserCredential({
+      userId: userId,
+      password: generateHash(plainPassword),
     });
   }
 
@@ -160,7 +136,7 @@ export class AuthService {
       return null;
     }
 
-    if (!(await verify(userCredential.password, plainPassword))) {
+    if (!(await checkHash(plainPassword, userCredential.password))) {
       return null;
     }
 
@@ -175,20 +151,7 @@ export class AuthService {
     };
     return accesstoken;
   }
-
-  hashPassword(password: string) {
-    return hash(password);
-  }
-
   async getCurrentUser(userId) {
     return this.userService.findById(userId);
   }
-
-  // async login(userId)
-  // {
-  //   this.getCurrentUser(userId)
-  //   .then((user) => {
-  //     return this.getAccessToken(user);
-  //   })
-  // }
 }

@@ -69,6 +69,7 @@ export function MarkersButton({ buttons, onBoundsChange,onMarkerClick, ...props 
   });
   const onMarkerClicked = (buttonId, buttonCoordinates) => {
     onMarkerClick(buttonId);
+    console.log('clickeddd' + buttonId)
     map.setView(buttonCoordinates, map.getZoom());
   }
   const markers = buttons.map((button, i) => (

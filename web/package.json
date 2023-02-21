@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "svgr": "svgr icons -d elements/icons --icon",
-    "connect-api": "cp ../api/src/**/**/*.dto.ts src/shared/dtos && cp ../api/src/**/**/*.entity.ts src/shared/entities",
+    "connect-api": "cp ../api/src/**/**/*.dto.ts src/shared/dtos && cp ../api/src/**/**/*.entity.ts src/shared/entities && cp -r ../api/src/shared/types/ src/shared/",
     "hb": "tsx hb.ts"
   },
   "dependencies": {

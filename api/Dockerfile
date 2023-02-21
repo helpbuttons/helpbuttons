@@ -1,11 +1,8 @@
-FROM node:16-bullseye-slim
+FROM node:16.17.1-alpine
 WORKDIR /app
 
-USER node 
-COPY --chown=node:node . .
+COPY . /app/
 
-
-RUN rm -f config.json
 RUN yarn
 RUN yarn build
 

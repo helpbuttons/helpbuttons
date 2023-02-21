@@ -1,5 +1,9 @@
 import { translations } from "i18n";
 
+export function getShareLink(link)
+{
+    return `${getUrlOrigin()}${link}`;
+}
 export function getHostname() 
 {
     return window.location.hostname;
@@ -32,7 +36,6 @@ export function getLocale(availableLocales = null)
 }
 
 export function makeImageUrl(image, baseUrl = '') {
-    // debugger;
     if(!image) {
       return 'fail.png';
     }
@@ -44,3 +47,5 @@ export function makeImageUrl(image, baseUrl = '') {
     }
     return image
   }
+
+export const defaultMarker = {latitude: 41.6870, longitude: -7.7406};

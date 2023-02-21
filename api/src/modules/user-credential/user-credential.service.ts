@@ -25,7 +25,7 @@ export class UserCredentialService {
         password: hashedPassword,
       });
 
-    await this.userCredentialRepository.save(createdUserCredential);
+    return await this.userCredentialRepository.save(createdUserCredential);
   }
 
   async findOne(id: string) {

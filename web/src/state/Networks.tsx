@@ -106,3 +106,34 @@ export class CreateNetwork implements WatchEvent {
     }
   }
 
+  export class UpdateNetwork implements WatchEvent {
+    public constructor(
+      private network,
+      private onSuccess,
+      private onError
+    ) {}
+    public watch(state: GlobalState) {
+      return NetworkService.update(this.network).pipe(
+        map((networkData) => {
+          this.onSuccess(networkData.response);
+        }),
+        catchError((error) => {
+          if(!error.response){
+            this.onError(error, this.network);
+            throw error
+          }
+          let err = error.response;
+          
+          if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
+            this.onError("unauthorized", this.network);
+          } else if (err.statusCode === HttpStatus.BAD_REQUEST && err.message === "validation-error" && err.validationErrors) {
+            this.onError(err)
+          } else{
+            this.onError(err)
+            throw error;
+          }
+          return of(undefined);
+        })
+      );
+    }
+  }

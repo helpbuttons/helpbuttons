@@ -1,24 +1,21 @@
-// here we have the basic configuration of an network
-import Popup from 'components/popup/Popup';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import FieldUploadImage from 'elements/Fields/FieldImageUpload';
-import FieldLocation from 'elements/Fields/FieldLocation';
-import FieldTags from 'elements/Fields/FieldTags';
-import FieldText from 'elements/Fields/FieldText';
-import { FieldTextArea } from 'elements/Fields/FieldTextArea';
-import Form from 'elements/Form';
-import { useRouter } from 'next/router';
-import { store } from 'pages';
+import NetworkForm from 'components/network/NetworkForm';
+import router from 'next/router';
+import { GlobalState, store } from 'pages';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { SetupSteps } from 'shared/setupSteps';
-import { getUrlOrigin } from 'shared/sys.helper';
-import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
-// name, description, logo, background image, button template, color pallete, colors
+import { NetworkDto } from 'shared/dtos/network.dto';
+import { FetchDefaultNetwork, UpdateNetwork } from 'state/Networks';
+import { useRef } from 'store/Store';
+
 export default Configuration;
 
-const defaultMarker = {latitude: 41.6870, longitude: -7.7406};
 function Configuration() {
+  const selectedNetwork: NetworkDto = useRef(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -26,24 +23,15 @@ function Configuration() {
     control,
     setValue,
     watch,
-    setError
-    } = useForm({
-    defaultValues: {
-      name: "My permaculture network",
-      description: "In this network we will use a map to share tools in-between our network",
-      logo: "",
-      jumbo: "",
-      tags: [],
-      latitude: defaultMarker.latitude,
-      longitude: defaultMarker.longitude,
-      zoom: 10,
-    }
-  });
+    setError,
+    reset,
+  } = useForm({});
 
-  const router = useRouter();
-
+  useEffect(() => {
+    reset(selectedNetwork);
+  }, [selectedNetwork])
   const onSubmit = (data) => {
-    store.emit(new CreateNetwork({
+    store.emit(new UpdateNetwork({
       name: data.name,
       description: data.description,
       radius: 10,
@@ -82,91 +70,28 @@ function Configuration() {
           alertService.warn(`Validation errors ${JSON.stringify(err)}`)
         }
       }else{
-        alertService.warn(`You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`)
         console.log(err)
       }
 
     }));
   };
-
-  // alertService.clearAll();
   return (
     <>
-      <Popup title="Create your network" linkFwd="/Setup/NetworkCreation">
-        <Form classNameExtra="createAdmin"
-        onSubmit={handleSubmit(onSubmit)}
-        >
-          <p>Wizard to help on configuring your network</p>
-          <p>
-            <b>{getUrlOrigin()}</b>
-          </p>
-          <div className="login__form">
-            <div className="form__inputs-wrapper">
-            <FieldText
-              name="name"
-              label="Name"
-              placeholder="Network of permaculture farmers from Vilanova"
-              classNameInput="squared"
-              validationError={errors.name}
-              {...register('name', { required: true })}
-            />
-            <FieldTextArea
-              name="description"
-              label="Description"
-              placeholder="Welcome to the network of sharing ..."
-              classNameInput="squared"
-              validationError={errors.description}
-              {...register('description', { required: true })}
-            />
-
-            400x400px
-            <FieldUploadImage
-              name="logo"
-              label="Choose logo"
-              setValue={setValue}
-              width={50}
-              height={50}
-              validationError={errors.logo}
-              {...register('logo', { required: true })}
-            />
-
-            1500x500px
-            <FieldUploadImage
-              name="jumbo"
-              label="Choose background image"
-              setValue={setValue}
-              width={55}
-              height={125}
-              validationError={errors.jumbo}
-              {...register('jumbo', { required: true })}
-            />
-
-            <FieldLocation
-                defaultZoom={watch('zoom')}
-                validationErrors={undefined}
-                setValue={setValue}
-                watch={watch}
-                markerImage={watch('logo')}
-                markerCaption={watch('name')}
-              />
-            <FieldTags
-              label="Network Tags"
-              placeholder="Food, tools, toys..."
-              name="tags"
-              control={control}
-              validationError={errors.tags}
-              watch={watch}
-            />
-            <Btn
-              btnType={BtnType.splitIcon}
-              caption="NEXT"
-              contentAlignment={ContentAlignment.center}
-              isSubmitting={isSubmitting}
-            />
-          </div>
-          </div>
-        </Form>
-      </Popup>
+      {selectedNetwork && (
+        <NetworkForm
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          register={register}
+          setValue={setValue}
+          watch={watch}
+          isSubmitting={isSubmitting}
+          control={control}
+          errors={errors}
+          captionAction="Save"
+          linkFwd="/HomeInfo"
+          description=""
+        />
+      )}
     </>
   );
 }

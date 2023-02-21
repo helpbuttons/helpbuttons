@@ -1,6 +1,8 @@
-import { Controller, Get, Param, Request } from '@nestjs/common';
+import { Controller, Get, HttpException, Param, Request } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
+import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
+import { Role } from '@src/shared/types/roles';
 import { Auth } from '@src/shared/decorator/auth.decorator';
 
 @ApiTags('User')
@@ -8,15 +10,18 @@ import { Auth } from '@src/shared/decorator/auth.decorator';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Auth()
+  @OnlyRegistered()
   @Get('whoAmI')
   whoAmI(@Request() req) {
     return req.user;
   }
 
-  @Auth()
+  @AllowGuest()
   @Get('/find/:username')
   find(@Param('username') username: string) {
-    return this.userService.findOne(username)
+    return this.userService.findByUsername(username)
+    .then((user) => {
+      return user
+    })
   }
 }
