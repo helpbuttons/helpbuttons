@@ -26,6 +26,7 @@
 @import "elements/checkbox";
 @import "elements/radio";
 @import "elements/checkbox-circle";
+@import "elements/scrollbar";
 
 // elements (form)
 @import "elements/form";
@@ -101,7 +102,16 @@
 
 
 html, body {
-  background-color: $color-blue;
+  background-color: $color-dark-gray;
+  height: 100vh;
+  background: repeating-linear-gradient(
+    45deg,
+    $color-gray 0px,
+    $color-dark-gray 1px,
+    $color-gray 2px,
+    $color-gray 20px
+  );
+
 }
 
 .notifications-index {

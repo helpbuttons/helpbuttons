@@ -40,7 +40,7 @@ export default function HomeInfo() {
   return (
     <div className="info-overlay__container">
       <div className="info-overlay__content">
-        <form className="info-overlay__location">
+        <form className="info-overlay__search-section">
           <label className="form__label label">
             {t('homeinfo.start')}
           </label>
@@ -66,8 +66,10 @@ export default function HomeInfo() {
             <div className="info-overlay__card">
               <div className="card">
                 <div className="card__header">
-                  <NetworkLogo network={selectedNetwork} />
-                  <h3 className="card__header-title">
+                  <div className="avatar-medium">
+                    <NetworkLogo network={selectedNetwork} />
+                  </div>
+                  <h3 className="card__header-title network-title">
                     {selectedNetwork.name}
                   </h3>
                 </div>
@@ -100,7 +102,6 @@ export default function HomeInfo() {
                 <div>
                   <NavLink
                     href="/Explore"
-                    className="nav-bottom__link"
                   >
                     <span>
                       <IoGlobeOutline />
@@ -112,7 +113,6 @@ export default function HomeInfo() {
                 <div>
                   <NavLink
                     href="/ButtonNew"
-                    className="nav-bottom__link"
                   >
                     <span>
                       <IoAddOutline />
@@ -124,7 +124,6 @@ export default function HomeInfo() {
                 <div>
                   <NavLink
                     href="/Explore"
-                    className="nav-bottom__link"
                   >
                     <span>
                       <IoHelpOutline />
@@ -152,7 +151,6 @@ export default function HomeInfo() {
                   <div>
                     <NavLink
                       href="/Profile"
-                      className="nav-bottom__link"
                     >
                       <span>
                         <IoLogInOutline />
@@ -167,8 +165,7 @@ export default function HomeInfo() {
                   <div>
                     <NavLink
                       href="/Login"
-                      className="nav-bottom__link"
-                    >
+                      >
                       <span>
                         <IoLogInOutline />
                         {t('menu.login')}

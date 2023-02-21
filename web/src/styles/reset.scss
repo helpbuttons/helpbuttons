@@ -74,8 +74,8 @@ td {
 }
 body {
   line-height: $text-line-height-small;
-  color: black;
-  background: white;
+  color: $color-black;
+  background: $color-ligth-gray;
   height: 100vh;
 }
 html,
@@ -120,4 +120,7 @@ input {
 
 button {
   font-family: $font-family-first;
+}
+a {
+  color: $color-corporative;  
 }
