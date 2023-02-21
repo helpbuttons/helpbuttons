@@ -10,7 +10,7 @@ import FieldLocation from 'elements/Fields/FieldLocation';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import FormSubmit from 'elements/Form/FormSubmit';
 import ButtonShare from 'components/button/ButtonShare';
-import ButtonNewDate from 'components/button/ButtonNewDate';
+// import ButtonNewDate from 'components/button/ButtonNewDate';
 import FieldTags from 'elements/Fields/FieldTags';
 import { useRef } from 'store/Store';
 import { NavigateTo } from 'state/Routes';
@@ -52,6 +52,8 @@ export default function ButtonForm({onSubmit}) {
           type: '',
           tags: [],
           title: 'ma title',
+          radius: 1,
+          address: ''
         },
       });
     
@@ -155,11 +157,11 @@ export default function ButtonForm({onSubmit}) {
                 markerCaption={watch('title')}
                 markerColor={markerColor}
               />
-              <FieldDate
+              {/* <FieldDate
                 setValue={setValue}
                 watch={watch}
                 title="When ?"
-              />
+              /> */}
             </>
           )}
           {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} /> */}

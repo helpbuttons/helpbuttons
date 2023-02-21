@@ -5,6 +5,19 @@ export class GeoService {
   public static find(address: string): Observable<any> {
     return this.findOpenCage(address);
   }
+  
+  public static findPromise(address: string) {
+    const options = JSON.parse(address);
+    if (!options.address || options.address.length < 2) {
+      return of(undefined);
+    }
+    return opencage
+      .geocode({
+        q: options.address,
+        key: options.apikey,
+      });
+  }
+
   public static findGeoApify(address: string): Observable<any> {
     const path = `/geoapify/v1/geocode/autocomplete?text=${address}&format=json&apiKey=${process.env.mapifyApiKey}`;
     return httpService.get(path);
@@ -12,7 +25,7 @@ export class GeoService {
 
   public static findOpenCage(address: string): Observable<any> {
     const options = JSON.parse(address);
-    if (!options.address || address.length < 2) {
+    if (!options.address || options.address.length < 2) {
       return of(undefined);
     }
     return opencage
