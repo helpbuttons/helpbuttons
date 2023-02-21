@@ -13,9 +13,9 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import router from 'next/router';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FindButton } from 'state/Explore';
-import { makeImageUrl } from 'shared/sys.helper';
+import { getShareLink, makeImageUrl } from 'shared/sys.helper';
 import { Button } from 'shared/entities/button.entity';
 import Link from 'next/link';
 
@@ -55,6 +55,7 @@ export default function CardButtonFile() {
 export function CardButtonHeadMedium({ button }) {
   return (
     <>
+    <CardButtonSubmenu button={button}/>
       <a href={`/ButtonFile/${button.id}`}>
         <div className="card-button__content">
           <div className="card-button__header">
@@ -81,8 +82,6 @@ export function CardButtonHeadMedium({ button }) {
                 </span>
               </div>
             </div>
-
-            {/* <div className="card-button__submenu card-button__trigger"></div> */}
           </div>
 
           <div className="card-button__hashtags">
@@ -107,9 +106,31 @@ export function CardButtonHeadMedium({ button }) {
     </>
   );
 }
+
+function CardButtonSubmenu ({button}){
+  const [showSubmenu, setShowSubmenu] = useState(false);
+  const linkButton = getShareLink(`/Button/${button.id}`)
+  return (
+    <section>
+            <div onClick={() => {setShowSubmenu(!showSubmenu)}} className="card-button__edit-icon card-button__submenu"></div>
+            {showSubmenu && 
+              <datalist className="dropdown-nets__dropdown-content" id='listid'>
+                <option className="dropdown-nets__dropdown-option" label='Share Button'></option>
+                <option className="dropdown-nets__dropdown-option" label='Copy Link' onClick={() => {navigator.clipboard.writeText(linkButton)}}></option>
+                <option className="dropdown-nets__dropdown-option" label='Edit Button' onClick={() => {router.push(`/ButtonEdit/${button.id}`)}}></option>
+                <option className="dropdown-nets__dropdown-option" label='Delete Button' onClick={() => {router.push(`/ButtonRemove/${button.id}`)}}></option>
+              </datalist>
+            }
+          </section>
+  )
+
+}
 export function CardButtonHeadBig({ button }) {
+
   return (
     <>
+      <CardButtonSubmenu button={button}/>
+
       <div className="card-button__content">
         <div className="card-button__header">
           <div className="card-button__avatar">
@@ -134,7 +155,6 @@ export function CardButtonHeadBig({ button }) {
             <CardButtonHeadActions button={button} />
           </div>
 
-          <div className="card-button__submenu card-button__trigger"></div>
         </div>
 
         <div className="card-button__hashtags">

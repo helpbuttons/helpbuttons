@@ -1,5 +1,9 @@
 import { translations } from "i18n";
 
+export function getShareLink(link)
+{
+    return `${getUrlOrigin()}${link}`;
+}
 export function getHostname() 
 {
     return window.location.hostname;

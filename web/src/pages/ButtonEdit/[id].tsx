@@ -6,16 +6,17 @@ import { useRef } from 'store/Store';
 import Router from 'next/router';
 import { alertService } from 'services/Alert';
 
-export default function ButtonNew() {
+export default function ButtonEdit() {
   const selectedNetwork = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
   
   const onSubmit = (data) => {
-    store.emit(
-      new CreateButton(data, selectedNetwork.id, onSuccess, onError),
-    );
+    console.log('not implemented yet..')
+    // store.emit(
+      // new UpdateButton(data, selectedNetwork.id, onSuccess, onError),
+    // );
   };
 
   const onSuccess = () => {
@@ -24,7 +25,6 @@ export default function ButtonNew() {
 
   const onError = (err, data) => {
     if (err == 'unauthorized') {
-      store.emit(new SaveButtonDraft(data));
       Router.push({
         pathname: '/Login',
         query: { returnUrl: 'ButtonNew' },
@@ -35,7 +35,8 @@ export default function ButtonNew() {
   };
   return (
     <>
-      <ButtonForm onSubmit={onSubmit}></ButtonForm>
+    TO IMPLEMENT
+      {/* <ButtonForm onSubmit={onSubmit}></ButtonForm> */}
     </>
   );
 }
