@@ -54,7 +54,8 @@ export class ButtonService {
       images: [],
       owner: user,
       image: null,
-      title: createDto.title
+      title: createDto.title,
+      address: createDto.address
     };
     console.log(button)
     await getManager().transaction(
@@ -83,15 +84,6 @@ export class ButtonService {
           console.log(`errorjumboooooror: ${err.message}`);
           throw new ValidationException({ image: err.message });
         }
-        // if (Array.isArray(images) && images.length > 0) {
-        //   button.images = await Promise.all(
-        //     images.map(async (imageFile) => {
-        //       return await await this.storageService.newImage64(
-        //         imageFile,
-        //       );
-        //     }),
-        //   );
-        // }
 
         await this.buttonRepository.insert([button]);
       },

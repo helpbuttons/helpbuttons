@@ -12,6 +12,7 @@ import { of } from 'rxjs';
 import { isHttpError } from 'services/HttpService';
 import { GlobalState } from 'pages';
 import { Button } from 'shared/entities/button.entity';
+import { GeoService } from 'services/Geo';
 
 export interface ExploreState {
   mapBondsButtons: Button[];
@@ -42,6 +43,20 @@ export class ButtonsFound implements UpdateEvent {
     return produce(state, newState => {
       newState.explore.mapBondsButtons = this.buttons;
     });
+  }
+}
+
+export class FindAddress implements WatchEvent {
+  public constructor(private q: string, private onSuccess, private onError) {}
+
+  public watch(state: GlobalState) {
+    const t =  GeoService.findPromise(this.q)
+    .then((place) =>
+      this.onSuccess(place)  
+    )
+    .catch((error) => {
+      this.onError(error)
+    })
   }
 }
 

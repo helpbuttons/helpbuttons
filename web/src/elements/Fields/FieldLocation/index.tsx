@@ -9,6 +9,9 @@ import { GlobalState, store } from 'pages';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import router from 'next/router';
 import t from 'i18n';
+import { GeoService } from 'services/Geo';
+import { FindAddress } from 'state/Explore';
+import { SetupDtoOut } from 'shared/entities/setup.entity';
 export default function FieldLocation({
   validationErrors,
   setValue,
@@ -18,17 +21,23 @@ export default function FieldLocation({
   markerCaption = '?',
   markerColor
 }) {
+
   const [showHideMenu, setHideMenu] = useState(false);
   const [center, setCenter] = useState(['41.6869', '-7.663206']);
+  const [address, setAddress] = useState('-');
   const [markerPosition, setmarkerPosition] = useState([
     '41.6869',
     '-7.663206',
   ]);
-  const [radius, setRadius] = useState(1);
 
   const selectedNetwork = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
+  const config: SetupDtoOut = useRef(
+    store,
+    (state: GlobalState) => state.config,
   );
 
   const onClick = (e, zoom) => {
@@ -39,8 +48,19 @@ export default function FieldLocation({
 
     setValue('latitude', newCenter[0]);
     setValue('longitude', newCenter[1]);
+    setValue('radius', 1);
     setValue('zoom', zoom);
     setCenter(newCenter);
+
+    store.emit(new FindAddress(JSON.stringify({apikey: config.mapifyApiKey,address: newCenter.join('+')}), (place) => {
+      const address =  place.results[0].formatted;
+      
+      setValue('address', address);
+      setAddress(address)
+    },
+    () => {
+      console.log('error')
+    }));
   };
 
   const latitude = watch('latitude');
@@ -57,6 +77,7 @@ export default function FieldLocation({
         <LocationCoordinates
           longitude={longitude}
           latitude={latitude}
+          address={address}
           radius={0}
         />
         <div
@@ -87,6 +108,7 @@ export default function FieldLocation({
             <LocationCoordinates
               longitude={longitude}
               latitude={latitude}
+              address={address}
               radius={0}
             />
             {/* <DropDownWhere
@@ -114,12 +136,14 @@ export default function FieldLocation({
   );
 }
 
-function LocationCoordinates({ longitude, latitude, radius }) {
+function LocationCoordinates({ longitude, latitude, radius, address }) {
   return (
     <div className="card-button__city card-button__everywhere">
+      {address} 
       {latitude || longitude
-        ? `${latitude}, ${longitude} (radius: ${radius} km) `
+        ? ` (${latitude}, ${longitude})`
         : 'Where ?'}
+        {/* (radius: ${radius} km) */}
     </div>
   );
 }

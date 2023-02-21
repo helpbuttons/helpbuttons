@@ -71,6 +71,12 @@ export class CreateButtonDto implements Partial<Button> {
 
   @IsNotEmpty()
   image: string;
+
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
+  address: string;
 }
 
 export class UpdateButtonDto extends PartialType(CreateButtonDto) {}
