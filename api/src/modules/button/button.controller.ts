@@ -9,6 +9,8 @@ import {
   Query,
   UseInterceptors,
   UploadedFiles,
+  HttpStatus,
+  HttpException,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -26,6 +28,7 @@ import { CurrentUser } from '@src/shared/decorator/current-user';
 import { User } from '../user/user.entity';
 import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
 import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator';
+import { Role } from '@src/shared/types/roles';
 
 @ApiTags('buttons')
 @Controller('buttons')
@@ -92,12 +95,21 @@ export class ButtonController {
   update(
     @Param('buttonId') buttonId: string,
     @Body() updateDto: UpdateButtonDto,
+    @CurrentUser() user: User,
   ) {
+    this.buttonService.isOwner(user, buttonId)
     return this.buttonService.update(buttonId, updateDto);
   }
 
+  // only allow owner of buttonId or Admin
   @Delete('delete/:buttonId')
-  async remove(@Param('buttonId') buttonId: string) {
+  async remove(
+    @Param('buttonId') buttonId: string,
+    @CurrentUser() user: User,
+    ) {
+    this.buttonService.isOwner(user, buttonId)
     return this.buttonService.remove(buttonId);
   }
+
+  
 }

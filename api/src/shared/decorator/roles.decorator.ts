@@ -1,6 +1,5 @@
 import { applyDecorators, SetMetadata, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
-import { JwtAuthGuard } from "@src/modules/auth/guards/jwt-auth.guard";
 import { Role } from "../types/roles";
 import { Auth } from "./auth.decorator";
 

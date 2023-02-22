@@ -15,6 +15,7 @@ import { NetworkService } from '../network/network.service';
 import { StorageService } from '../storage/storage.service';
 import { User } from '../user/user.entity';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
+import { Role } from '@src/shared/types/roles';
 
 @Injectable()
 export class ButtonService {
@@ -179,5 +180,14 @@ export class ButtonService {
 
   remove(id: string) {
     return this.buttonRepository.delete({ id });
+  }
+
+  public isOwner(currentUser, buttonId)
+  {
+    if(currentUser.role == Role.admin || currentUser.id == buttonId)
+    {
+      return true;
+    }
+    throw new HttpException('need-ownership', HttpStatus.FORBIDDEN)
   }
 }
