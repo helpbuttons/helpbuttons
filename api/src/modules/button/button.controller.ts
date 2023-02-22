@@ -91,8 +91,9 @@ export class ButtonController {
   findOne(@Param('buttonId') buttonId: string) {
     return this.buttonService.findById(buttonId);
   }
-
-  @Patch('edit/:buttonId')
+  
+  @OnlyRegistered()
+  @Post('update/:buttonId')
   update(
     @Param('buttonId') buttonId: string,
     @Body() updateDto: UpdateButtonDto,

@@ -25,10 +25,11 @@ export default function FieldLocation({
   const [showHideMenu, setHideMenu] = useState(false);
   const [center, setCenter] = useState(['41.6869', '-7.663206']);
   const [address, setAddress] = useState('-');
-  const [markerPosition, setmarkerPosition] = useState([
-    '41.6869',
-    '-7.663206',
-  ]);
+  const [latitude, setLatitude] = useState(null)
+  const [longitude, setLongitude] = useState(null)
+  const [radius, setRadius] = useState(1)
+
+  
 
   const selectedNetwork = useRef(
     store,
@@ -63,13 +64,14 @@ export default function FieldLocation({
     }));
   };
 
-  const latitude = watch('latitude');
-  const longitude = watch('longitude');
-
   useEffect(() => {
     if (selectedNetwork) {
       setCenter(selectedNetwork.location.coordinates);
     }
+    setAddress(watch('address'));
+    setLatitude(watch('latitude'))
+    setLongitude(watch('longitude'))
+    setRadius(watch('radius'))
   }, [selectedNetwork]);
   return (
     <>
@@ -78,7 +80,7 @@ export default function FieldLocation({
           longitude={longitude}
           latitude={latitude}
           address={address}
-          radius={0}
+          radius={radius}
         />
         <div
           className="btn"

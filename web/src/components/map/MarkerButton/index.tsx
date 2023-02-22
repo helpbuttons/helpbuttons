@@ -69,14 +69,12 @@ export function MarkersButton({ buttons, onBoundsChange,onMarkerClick, ...props 
   });
   const onMarkerClicked = (buttonId, buttonCoordinates) => {
     onMarkerClick(buttonId);
-    console.log('clickeddd' + buttonId)
     map.setView(buttonCoordinates, map.getZoom());
   }
   const markers = buttons.map((button, i) => (
     <CardMarkerButton button={button} key={i} onMarkerClick={onMarkerClicked}>
         <Popup className="card-button-map--wrapper">
           <CardButtonMap
-            key={i}
             button={button}
           />
         </Popup>

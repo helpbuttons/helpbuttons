@@ -47,6 +47,7 @@ export class TagService {
   ) {
     let tagsToInsert = tags.map((tag) => {
       return {
+        id: dbIdGenerator(),
         modelName: modelName,
         modelId: modelId,
         tag: tag,

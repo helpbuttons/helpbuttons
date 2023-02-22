@@ -74,10 +74,10 @@ function NetworkForm({
               400x400px
               <FieldImageUpload
                 name="logo"
-                label="Choose logo"
-                setValue={setValue}
+                label="Choose logo"                
                 width={200}
                 height={200}
+                setValue={setValue}
                 validationError={errors.logo}
                 control={control}
                 {...register('logo', { required: true })}
