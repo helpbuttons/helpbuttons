@@ -77,7 +77,8 @@ export class ButtonService {
   }
 
   //Delete button
-  public static _delete(id: any): Observable<any> {
+  public static delete(id: any): Observable<any> {
+    return httpService.delete<any>("buttons/delete/"+id);
     //save the ajax object that can be .pipe by the observable
     const buttonWithHeaders$ = ajax({
       url: baseUrl + "/buttons/delete/" + id,

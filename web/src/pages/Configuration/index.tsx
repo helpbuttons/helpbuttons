@@ -38,7 +38,7 @@ function Configuration() {
       latitude: data.latitude,
       longitude: data.longitude,
       tags: data.tags,
-      privacy: "public",
+      privacy: data.privacy,
       logo: data.logo,
       jumbo: data.jumbo,
       zoom: data.zoom,

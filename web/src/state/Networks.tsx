@@ -7,10 +7,10 @@ import { WatchEvent, UpdateEvent, EffectEvent } from 'store/Event';
 import { NetworkService } from 'services/Networks';
 import { isHttpError } from 'services/HttpService';
 import { of } from 'rxjs';
-import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { GlobalState, store } from 'pages';
 import { CreateNetworkDto } from 'shared/dtos/network.dto';
 import { Network } from 'shared/entities/network.entity';
+import { HttpStatus } from 'shared/types/http-status.enum';
 
 export interface NetworksState {
   // networks: Network[];

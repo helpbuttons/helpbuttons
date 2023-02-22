@@ -17,7 +17,6 @@ import { AllowGuest } from '@src/shared/decorator/roles.decorator';
 export class StorageController {
   constructor(private readonly storageService: StorageService) {}
 
-  @AllowGuest()
   @Get('get/:imgpath')
   get(@Param('imgpath') image, @Res() res) {
     return res.sendFile(image, { root: uploadDir });

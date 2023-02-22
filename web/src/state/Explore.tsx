@@ -13,6 +13,8 @@ import { isHttpError } from 'services/HttpService';
 import { GlobalState } from 'pages';
 import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
+import { errorsList, ErrorText } from 'shared/types/errorsList';
+import { HttpStatus } from 'shared/types/http-status.enum';
 
 export interface ExploreState {
   mapBondsButtons: Button[];
@@ -142,6 +144,45 @@ export class SetAsCurrentButton implements WatchEvent {
     })
     return ButtonService.findById(this.buttonId).pipe(
       map((button) => new ButtonFound(button)),
+    );
+  }
+}
+
+export class ButtonDelete implements WatchEvent {
+  public constructor(private buttonId: string, private onSuccess, private onError) {}
+
+  public watch(state: GlobalState) {
+    return ButtonService.delete(this.buttonId).pipe(
+      map((rowsAffected) => {
+        console.log(rowsAffected)
+        if (rowsAffected > 0){
+          this.onSuccess()
+        }else {
+          this.onError('error-deleting')
+        }
+      }),
+      catchError((error) =>
+      {
+        const err = error.response;
+        if (
+          isHttpError(err) &&
+          err.statusCode === HttpStatus.FORBIDDEN
+        ) {
+          // do nothing, its ok! it will jump to the setup!
+          const errorText: ErrorText[] = errorsList.filter(({name}) => {
+            return err.message == name
+          })
+          if (errorText && errorText.length > 0)
+          {
+            console.log(errorText[0].caption)
+            this.onError(errorText[0].caption);
+          }else{
+            this.onError(error.message);
+          }
+          
+        }
+        return of(undefined);
+      })
     );
   }
 }

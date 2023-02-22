@@ -9,8 +9,8 @@ import { UserService } from 'services/Users';
 
 import { HttpService, isHttpError } from 'services/HttpService';
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
-import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { GlobalState } from 'pages';
+import { HttpStatus } from 'shared/types/http-status.enum';
 
 export interface UsersState {
   currentUser: IUser;

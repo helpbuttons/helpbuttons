@@ -1,8 +1,9 @@
 import {
   HttpException,
-  HttpStatus,
   Injectable,
 } from '@nestjs/common';
+import { HttpStatus } from '@src/shared/types/http-status.enum';
+
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { Repository } from 'typeorm';

@@ -9,7 +9,10 @@ import {
   Query,
   UseInterceptors,
   UploadedFiles,
+  HttpException,
 } from '@nestjs/common';
+import { HttpStatus } from '@src/shared/types/http-status.enum';
+
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 
@@ -25,11 +28,15 @@ import {
 import { CurrentUser } from '@src/shared/decorator/current-user';
 import { User } from '../user/user.entity';
 import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
+import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator';
+import { Role } from '@src/shared/types/roles';
 
 @ApiTags('buttons')
 @Controller('buttons')
 export class ButtonController {
-  constructor(private readonly buttonService: ButtonService) {}
+  constructor(
+    private readonly buttonService: ButtonService
+    ) {}
 
   @OnlyRegistered()
   @Post('new')
@@ -57,6 +64,7 @@ export class ButtonController {
   }
 
   @AllowGuest()
+  @AllowIfNetworkIsPublic()
   @Get('/find/:networkId')
   async findAll(
     @Param('networkId') networkId: string,
@@ -78,6 +86,7 @@ export class ButtonController {
   }
 
   @AllowGuest()
+  @AllowIfNetworkIsPublic()
   @Get('findById/:buttonId')
   findOne(@Param('buttonId') buttonId: string) {
     return this.buttonService.findById(buttonId);
@@ -87,12 +96,23 @@ export class ButtonController {
   update(
     @Param('buttonId') buttonId: string,
     @Body() updateDto: UpdateButtonDto,
+    @CurrentUser() user: User,
   ) {
+    this.buttonService.isOwner(user, buttonId)
     return this.buttonService.update(buttonId, updateDto);
   }
 
+  // only allow owner of buttonId or Admin
+  @OnlyRegistered()
   @Delete('delete/:buttonId')
-  async remove(@Param('buttonId') buttonId: string) {
-    return this.buttonService.remove(buttonId);
+  async delete(
+    @Param('buttonId') buttonId: string,
+    @CurrentUser() user: User,
+    ) {
+      this.buttonService.isOwner(user, buttonId)
+      const response = this.buttonService.delete(buttonId);
+      return response;
   }
+
+  
 }

@@ -4,11 +4,12 @@ import {
   Get,
   HttpCode,
   HttpException,
-  HttpStatus,
   Param,
   Post,
   UseFilters,
 } from '@nestjs/common';
+import { HttpStatus } from '@src/shared/types/http-status.enum';
+
 import { ApiTags } from '@nestjs/swagger';
 import { SetupDto, SetupDtoOut } from './setup.entity';
 import { SetupService } from './setup.service';

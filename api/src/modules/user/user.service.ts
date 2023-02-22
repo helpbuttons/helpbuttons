@@ -1,9 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
+import { HttpStatus } from '@src/shared/types/http-status.enum';
 
 @Injectable()
 export class UserService {
