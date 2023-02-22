@@ -76,18 +76,7 @@ export class CreateButton implements WatchEvent {
       map((buttonData) => {
         this.onSuccess();
       }),
-      catchError((error) => {
-        let err = error.response;
-        
-        if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
-          this.onError("unauthorized", this.button);
-        } else if (err.statusCode === 400 && err.message === "validation-error") {
-          this.onError(" validations error")
-        } else {
-          throw error;
-        }
-        return of(undefined);
-      })
+      catchError((error) => handleError(this.onError,error))
     );
   }
 }
