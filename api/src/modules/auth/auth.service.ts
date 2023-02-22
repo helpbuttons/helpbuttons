@@ -1,6 +1,5 @@
 import {
   HttpException,
-  HttpStatus,
   Inject,
   Injectable,
 } from '@nestjs/common';

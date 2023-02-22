@@ -9,9 +9,10 @@ import {
   Query,
   UseInterceptors,
   UploadedFiles,
-  HttpStatus,
   HttpException,
 } from '@nestjs/common';
+import { HttpStatus } from '@src/shared/types/http-status.enum';
+
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 

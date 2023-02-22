@@ -1,4 +1,3 @@
-import {HttpStatus} from 'http-status'
 const HttpStatusCodes = require('http-status');
 
 export enum ErrorName{
@@ -9,7 +8,7 @@ export enum ErrorName{
 export interface ErrorText {
     name: ErrorName,
     caption: string;
-    status: HttpStatus;
+    status: number;
 }
 
 export const errorsList: ErrorText[] = 

@@ -2,9 +2,10 @@ import {
   CanActivate,
   ExecutionContext,
   HttpException,
-  HttpStatus,
   Injectable,
 } from '@nestjs/common';
+import { HttpStatus } from '@src/shared/types/http-status.enum';
+
 import { Reflector } from '@nestjs/core';
 import { PrivacyType } from '@src/modules/network/network.entity';
 import { NetworkService } from '@src/modules/network/network.service';

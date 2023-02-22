@@ -8,9 +8,9 @@ import {
   Param,
   UseGuards,
   HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { HttpStatus } from '@src/shared/types/http-status.enum';
 
 import { LoginRequestDto, SignupRequestDto } from './auth.dto';
 import { AuthService } from './auth.service';
