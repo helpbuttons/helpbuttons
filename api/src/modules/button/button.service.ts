@@ -172,7 +172,8 @@ export class ButtonService {
         },
       });
     } catch (err) {
-      throw new NotFoundException('no buttons found');
+      console.log(err)
+      return [];
     }
   }
 

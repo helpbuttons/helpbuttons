@@ -4,6 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
 import { Role } from '@src/shared/types/roles';
 import { Auth } from '@src/shared/decorator/auth.decorator';
+import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator';
 
 @ApiTags('User')
 @Controller('users')
@@ -17,6 +18,7 @@ export class UserController {
   }
 
   @AllowGuest()
+  @AllowIfNetworkIsPublic()
   @Get('/find/:username')
   find(@Param('username') username: string) {
     return this.userService.findByUsername(username)

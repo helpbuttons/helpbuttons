@@ -8,6 +8,7 @@ export const AllowedRoles = (roles: Role[]) => SetMetadata('roles', roles)
 
 export function AllowGuest() {    
     return applyDecorators(
+        Auth(),
         AllowedRoles([Role.guest, Role.registered, Role.admin])
     );
 }

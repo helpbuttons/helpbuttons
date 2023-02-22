@@ -25,11 +25,14 @@ import {
 import { CurrentUser } from '@src/shared/decorator/current-user';
 import { User } from '../user/user.entity';
 import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
+import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator';
 
 @ApiTags('buttons')
 @Controller('buttons')
 export class ButtonController {
-  constructor(private readonly buttonService: ButtonService) {}
+  constructor(
+    private readonly buttonService: ButtonService
+    ) {}
 
   @OnlyRegistered()
   @Post('new')
@@ -57,6 +60,7 @@ export class ButtonController {
   }
 
   @AllowGuest()
+  @AllowIfNetworkIsPublic()
   @Get('/find/:networkId')
   async findAll(
     @Param('networkId') networkId: string,
@@ -78,6 +82,7 @@ export class ButtonController {
   }
 
   @AllowGuest()
+  @AllowIfNetworkIsPublic()
   @Get('findById/:buttonId')
   findOne(@Param('buttonId') buttonId: string) {
     return this.buttonService.findById(buttonId);
