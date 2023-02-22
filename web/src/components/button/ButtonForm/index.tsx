@@ -1,6 +1,5 @@
 //Create new button and edit button URL, with three steps with different layouts in the following order: NewType --> NewData --> NewPublish --> Share
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
 
 import Popup from 'components/popup/Popup';
@@ -13,16 +12,12 @@ import ButtonShare from 'components/button/ButtonShare';
 // import ButtonNewDate from 'components/button/ButtonNewDate';
 import FieldTags from 'elements/Fields/FieldTags';
 import { useRef } from 'store/Store';
-import { NavigateTo } from 'state/Routes';
-import FieldImageUpload from 'elements/Fields/FieldImageUpload';
-import FieldDate from 'elements/Fields/FieldDate';
-import FieldText from 'elements/Fields/FieldNumber';
 import { buttonTypes } from 'shared/buttonTypes';
-import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 // import FieldImageUpload from "elements/Fields/FieldImageUpload";
 import { GlobalState, store } from 'pages';
+import FieldImageUpload from 'elements/Fields/FieldImageUpload';
 
-export default function ButtonForm({onSubmit}) {
+export default function ButtonForm({onSubmit, watch, reset, getValues, handleSubmit, register, errors, control, setValue, isSubmitting}) {
     const selectedNetwork = useRef(
         store,
         (state: GlobalState) => state.networks.selectedNetwork,
@@ -34,32 +29,7 @@ export default function ButtonForm({onSubmit}) {
     
       const [date, setDate] = useState('');
     
-      const {
-        register,
-        handleSubmit,
-        formState: { isDirty,dirtyFields, touchedFields, errors, isSubmitting },
-        control,
-        reset,
-        watch,
-        setValue,
-        getValues
-      } = useForm({
-        defaultValues: {
-          image: null,
-          description: 'hlkdsahdlksah ldka',
-          latitude: '41.6869',
-          longitude: '-7.663206',
-          type: '',
-          tags: [],
-          title: 'ma title',
-          radius: 1,
-          address: ''
-        },
-      });
-    
       const [errorMsg, setErrorMsg] = useState(undefined);
-    
-      
     
       const [isReadyForLocationAndTime, setIsReadyForLocationAndTime] =
         useState(false);
@@ -137,14 +107,16 @@ export default function ButtonForm({onSubmit}) {
           />
         </div>
         <div className="publish_btn-scd">
-          <FieldImageUploads
+          <FieldImageUpload
             name="image"
             label="+ Add image"
             // width={55}
             // height={125}
+            setValue={setValue}
+            validationError={errors.logo}
+            control={control}
             {...register('image', { required: true })}
             // validationError={errors.image}
-            setValue={setValue}
           />
           {isReadyForLocationAndTime && (
             <>
@@ -153,7 +125,7 @@ export default function ButtonForm({onSubmit}) {
                 validationErrors={undefined}
                 setValue={setValue}
                 watch={watch}
-                markerImage={watch('image')[0]}
+                markerImage={watch('image')}
                 markerCaption={watch('title')}
                 markerColor={markerColor}
               />

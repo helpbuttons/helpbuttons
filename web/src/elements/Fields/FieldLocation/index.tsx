@@ -70,6 +70,7 @@ export default function FieldLocation({
     if (selectedNetwork) {
       setCenter(selectedNetwork.location.coordinates);
     }
+    setAddress(watch('address'));
   }, [selectedNetwork]);
   return (
     <>

@@ -15,6 +15,8 @@ import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
 import { errorsList, ErrorText } from 'shared/types/errorsList';
 import { HttpStatus } from 'shared/types/http-status.enum';
+import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
+import { handleError } from './helper';
 
 export interface ExploreState {
   mapBondsButtons: Button[];
@@ -101,11 +103,12 @@ export class SaveButtonDraft implements UpdateEvent {
 }
 
 export class FindButton implements WatchEvent {
-  public constructor(private buttonId: string) {}
+  public constructor(private buttonId: string, private onSuccess,private onError) {}
 
   public watch(state: GlobalState) {
     return ButtonService.findById(this.buttonId).pipe(
-      map((button) => new ButtonFound(button)),
+      map((button) => this.onSuccess(button)),
+      catchError((error) => handleError(this.onError,error))
     );
   }
 }
@@ -161,28 +164,26 @@ export class ButtonDelete implements WatchEvent {
           this.onError('error-deleting')
         }
       }),
-      catchError((error) =>
-      {
-        const err = error.response;
-        if (
-          isHttpError(err) &&
-          err.statusCode === HttpStatus.FORBIDDEN
-        ) {
-          // do nothing, its ok! it will jump to the setup!
-          const errorText: ErrorText[] = errorsList.filter(({name}) => {
-            return err.message == name
-          })
-          if (errorText && errorText.length > 0)
-          {
-            console.log(errorText[0].caption)
-            this.onError(errorText[0].caption);
-          }else{
-            this.onError(error.message);
-          }
-          
-        }
-        return of(undefined);
-      })
+      catchError((error) => handleError(this.onError, error))
+    );
+  }
+}
+
+
+export class UpdateButton implements WatchEvent {
+  public constructor(
+    private buttonId: string,
+    private button: UpdateButtonDto,
+    private onSuccess,
+    private onError
+  ) {}
+  public watch(state: GlobalState) {
+    return ButtonService.update(this.buttonId, this.button).pipe(
+      map((data) => {
+        console.log(data)
+        this.onSuccess(data);
+      }),
+      catchError((error) => handleError(this.onError, error))
     );
   }
 }

@@ -5,6 +5,7 @@ import { httpService } from "services/HttpService";
 import getConfig from "next/config";
 import { UtilsService } from "services/Utils";
 import { Button } from "shared/entities/button.entity";
+import { UpdateButtonDto } from "shared/dtos/button.dto";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -17,31 +18,10 @@ export class ButtonService {
     return httpService.post("/buttons/new?networkId=" + networkId, data);
   }
 
-  //Edit button
-  public static edit(data: Button): Observable<any> {
-    //save the ajax object that can be .pipe by the observable
-    const buttonWithHeaders$ = ajax({
-      url: baseUrl + "/buttons/edit/" + id,
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-      body: {
-        name: data.name,
-        type: data.type,
-        tags: data.tags,
-        description: data.description,
-        geoPlace: data.geoPlace,
-        owner: data.owner,
-        templateButtonId: data.templateButtonId,
-      },
-    });
-
-    return buttonWithHeaders$;
+  public static update(buttonId: string, data: UpdateButtonDto): Observable<any> {
+    return httpService.post("/buttons/update/" + buttonId, data);
   }
 
-  //Get buttons
   public static find(networkId: string, bounds: any): Observable<Button[]> {
     if (!bounds || !bounds._northEast)
     {
@@ -57,59 +37,11 @@ export class ButtonService {
     });
   }
 
-  //Get button by id
   public static findById(id: string): Observable<any> {
     return httpService.get<Button>("/buttons/findById/" + id)
-    //save the ajax object that can be .pipe by the observable
-    const buttonWithHeaders$ = ajax({
-      url: baseUrl + "/buttons/findById/" + id,
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-      body: {
-        id: id,
-      },
-    });
-
-    return buttonWithHeaders$;
   }
 
-  //Delete button
   public static delete(id: any): Observable<any> {
     return httpService.delete<any>("buttons/delete/"+id);
-    //save the ajax object that can be .pipe by the observable
-    const buttonWithHeaders$ = ajax({
-      url: baseUrl + "/buttons/delete/" + id,
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-      body: {
-        id: id,
-      },
-    });
-
-    return buttonWithHeaders$;
-  }
-
-  //Delete all buttons
-  public static deleteAll(id: any): Observable<any> {
-    //save the ajax object that can be .pipe by the observable
-    const buttonWithHeaders$ = ajax({
-      url: baseUrl + "/buttons",
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-      body: {
-        id: id,
-      },
-    });
-
-    return buttonWithHeaders$;
   }
 }

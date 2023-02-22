@@ -18,32 +18,29 @@ import { FindButton } from 'state/Explore';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
 import { Button } from 'shared/entities/button.entity';
 import Link from 'next/link';
+import { alertService } from 'services/Alert';
 
 export default function CardButtonFile() {
   const { id } = router.query;
   // get from the store!!
-  const currentButton: Button = useRef(
-    store,
-    (state: GlobalState) => state.explore.currentButton,
-  );
-
+  const [button, setButton] = useState<Button>(null)
   useEffect(() => {
     if (id != null) {
-      store.emit(new FindButton(id));
+      store.emit(new FindButton(id, setButton, (errorMessage) => {alertService.error(errorMessage)}));
     }
   }, [id]);
 
   return (
     <>
-      {currentButton && (
+      {button && (
         <>
           <div>
             <div
-              className={`card-button card-button card-button--${currentButton.type}`}
+              className={`card-button card-button card-button--${button.type}`}
             >
-              <CardButtonHeadBig button={currentButton} />
+              <CardButtonHeadBig button={button} />
             </div>
-            <CardButtonImages button={currentButton} />
+            <CardButtonImages button={button} />
             <CardButtonOptions />
           </div>
         </>

@@ -1,42 +1,108 @@
-import ButtonForm from "components/button/ButtonForm";
+import ButtonForm from 'components/button/ButtonForm';
 import { GlobalState, store } from 'pages';
-import { CreateButton, SaveButtonDraft } from 'state/Explore';
+import {
+  CreateButton,
+  FindButton,
+  SaveButtonDraft,
+  UpdateButton,
+} from 'state/Explore';
 import { NavigateTo } from 'state/Routes';
 import { useRef } from 'store/Store';
 import Router from 'next/router';
 import { alertService } from 'services/Alert';
+import router from 'next/router';
+import { Button } from 'shared/entities/button.entity';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { UpdateButtonDto } from 'shared/dtos/button.dto';
 
 export default function ButtonEdit() {
   const selectedNetwork = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
-  
+
+  const id = router.query.id as string;
+
+  const {
+    register,
+    handleSubmit,
+    formState: {
+      isDirty,
+      dirtyFields,
+      touchedFields,
+      errors,
+      isSubmitting,
+    },
+    control,
+    reset,
+    watch,
+    setValue,
+    getValues,
+  } = useForm();
+
+  const [button, setButton] = useState<Button>(null);
+
   const onSubmit = (data) => {
-    console.log('not implemented yet..')
-    // store.emit(
-      // new UpdateButton(data, selectedNetwork.id, onSuccess, onError),
-    // );
+    store.emit(
+      new UpdateButton(id,
+        {
+          title: data.title,
+          type: data.type,
+          tags: data.tags,
+          description: data.description,
+          latitudfe: data.latitude,
+          longitude: data.longitude,
+          image: data.image,
+          address: data.address
+        },
+        onSuccess({lat: data.latitude, lng: data.longitude}),
+        onError,
+      ),
+    );
   };
 
-  const onSuccess = () => {
-    store.emit(new NavigateTo('/Explore'));
+  const onSuccess = (location: {lat: number, lng: number}) => {
+    router.push({
+      pathname: '/Explore',
+      query: location,
+    });
   };
 
-  const onError = (err, data) => {
-    if (err == 'unauthorized') {
-      Router.push({
-        pathname: '/Login',
-        query: { returnUrl: 'ButtonNew' },
-      });
-    } else {
-      alertService.error('Error on creating button ' + err, {});
+  const onError = (errorMessage) => alertService.error(errorMessage)
+
+  useEffect(() => {
+    if (id != null) {
+      store.emit(
+        new FindButton(
+          id,
+          (buttonFetched) => {
+            setButton(buttonFetched);
+            reset(buttonFetched);
+          },
+          (errorMessage) => {
+            alertService.error(errorMessage);
+          },
+        ),
+      );
     }
-  };
+  }, [id]);
   return (
     <>
-    TO IMPLEMENT
-      {/* <ButtonForm onSubmit={onSubmit}></ButtonForm> */}
+    {button &&
+      <ButtonForm
+        watch={watch}
+        reset={reset}
+        getValues={getValues}
+        handleSubmit={handleSubmit}
+        register={register}
+        errors={errors}
+        control={control}
+        setValue={setValue}
+        isSubmitting={isSubmitting}
+        onSubmit={onSubmit}
+      ></ButtonForm>
+    }
     </>
   );
 }

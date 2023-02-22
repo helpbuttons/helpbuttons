@@ -18,6 +18,7 @@ import { ValidationException } from '@src/shared/middlewares/errors/validation-f
 import { Role } from '@src/shared/types/roles';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName, errorsList } from '@src/shared/types/errorsList';
+import { isImageData } from '@src/shared/helpers/imageIsFile';
 
 @Injectable()
 export class ButtonService {
@@ -109,9 +110,8 @@ export class ButtonService {
     return {...button};
   }
 
-  update(id: string, updateDto: UpdateButtonDto) {
+  async update(id: string, updateDto: UpdateButtonDto) {
     let location = {};
-
     if (updateDto.latitude > 0 && updateDto.longitude > 0) {
       location = {
         location: () =>
@@ -129,8 +129,23 @@ export class ButtonService {
     };
 
     if (button.tags) {
-      this.tagService.updateTags('button', button.id, button.tags);
+      await this.tagService.updateTags('button', id, button.tags);
     }
+
+    if (isImageData(updateDto.image))
+    {
+      try {
+        const newImage = await this.storageService.newImage64(
+          updateDto.image,
+        );
+        if (newImage){
+          button.image = newImage;
+        }
+      } catch (err) {
+        throw new ValidationException({ logo: err.message });
+      }
+    }
+    
 
     return this.buttonRepository.save([button]);
   }
