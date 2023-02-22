@@ -13,8 +13,8 @@ import { isHttpError } from 'services/HttpService';
 import { GlobalState } from 'pages';
 import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
-import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { errorsList, ErrorText } from 'shared/types/errorsList';
+import { HttpStatus } from 'shared/types/http-status.enum';
 
 export interface ExploreState {
   mapBondsButtons: Button[];
@@ -164,15 +164,14 @@ export class ButtonDelete implements WatchEvent {
       catchError((error) =>
       {
         const err = error.response;
-        console.log(err)
         if (
           isHttpError(err) &&
           err.statusCode === HttpStatus.FORBIDDEN
         ) {
-          console.log('catch 403')
           // do nothing, its ok! it will jump to the setup!
-          const errorText: ErrorText[] = errorsList.filter(({name}) => err.message == name)
-          // console.log(errorText)
+          const errorText: ErrorText[] = errorsList.filter(({name}) => {
+            return err.message == name
+          })
           if (errorText && errorText.length > 0)
           {
             console.log(errorText[0].caption)
@@ -182,11 +181,7 @@ export class ButtonDelete implements WatchEvent {
           }
           
         }
-        console.log('ups')
         return of(undefined);
-        console.log(error)
-        this.onError(JSON.stringify(error))
-        return of(undefined)
       })
     );
   }

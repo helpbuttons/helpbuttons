@@ -189,7 +189,7 @@ export class ButtonService {
   {
     if(!currentUser || !currentUser.role)
     {
-      throw new CustomHttpException(ErrorName.NoButtonOwnerShip)
+      throw new CustomHttpException(ErrorName.NeedToBeRegistered)
     }
 
     if(currentUser.role == Role.admin || currentUser.id == buttonId)

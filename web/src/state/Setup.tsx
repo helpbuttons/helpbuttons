@@ -3,12 +3,12 @@ import { GlobalState, store } from 'pages';
 import { of, tap } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { isHttpError } from 'services/HttpService';
-import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { NetworkService } from 'services/Networks';
 import { SetupService } from 'services/Setup';
 import { SetupDtoOut } from 'services/Setup/config.type';
 import { UserService } from 'services/Users';
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
+import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { FetchUserData } from './Users';
 

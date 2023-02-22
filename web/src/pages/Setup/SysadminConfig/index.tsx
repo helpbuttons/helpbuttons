@@ -12,11 +12,11 @@ import { store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { CreateConfig, SmtpTest } from 'state/Setup';
-import { HttpStatus } from 'services/HttpService/http-status.enum';
 import { SetupSteps } from '../../../shared/setupSteps';
 import router from 'next/router';
 import t from 'i18n';
 import { getHostname } from 'shared/sys.helper';
+import { HttpStatus } from 'shared/types/http-status.enum';
 
 export default function SysadminConfig() {
   const {

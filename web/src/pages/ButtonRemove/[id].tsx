@@ -12,11 +12,10 @@ export default function ButtonFile() {
         // console.log(buttonId);
         if(buttonId) {
             store.emit(new ButtonDelete(buttonId, () => {
-                alertService.success('Scucceful removing the button')
+                alertService.success('Button removed')
                 router.push('/Explore')
-            },(error) => {
-                // console.log(error)
-                alertService.error('could not remove button')
+            },(errorMessage) => {
+                alertService.error(errorMessage)
                 router.push('/Explore')
             }),
             )    
