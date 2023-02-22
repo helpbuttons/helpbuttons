@@ -103,12 +103,18 @@ export class ButtonController {
 
   // only allow owner of buttonId or Admin
   @Delete('delete/:buttonId')
-  async remove(
+  async delete(
     @Param('buttonId') buttonId: string,
     @CurrentUser() user: User,
     ) {
+      // console.log(buttonId)
+      // console.log(user)
     this.buttonService.isOwner(user, buttonId)
-    return this.buttonService.remove(buttonId);
+    console.log(`deleting... button ${buttonId}`)
+
+    
+        const response = this.buttonService.delete(buttonId);
+        return response;
   }
 
   

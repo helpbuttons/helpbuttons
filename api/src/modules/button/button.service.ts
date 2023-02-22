@@ -16,6 +16,8 @@ import { StorageService } from '../storage/storage.service';
 import { User } from '../user/user.entity';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { Role } from '@src/shared/types/roles';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
+import { ErrorName, errorsList } from '@src/shared/types/errorsList';
 
 @Injectable()
 export class ButtonService {
@@ -178,16 +180,22 @@ export class ButtonService {
     }
   }
 
-  remove(id: string) {
-    return this.buttonRepository.delete({ id });
+  async delete(id: string) {
+    const res = await this.buttonRepository.delete({ id })
+    return res.affected;
   }
 
   public isOwner(currentUser, buttonId)
   {
+    if(!currentUser || !currentUser.role)
+    {
+      throw new CustomHttpException(ErrorName.NoButtonOwnerShip)
+    }
+
     if(currentUser.role == Role.admin || currentUser.id == buttonId)
     {
       return true;
     }
-    throw new HttpException('need-ownership', HttpStatus.FORBIDDEN)
+    throw new CustomHttpException(ErrorName.NoButtonOwnerShip)
   }
 }

@@ -47,6 +47,23 @@ export class HttpService {
     this.isAuthenticated$.next(false);
   }
 
+  public delete<T>(
+    path: string,
+    body: object = {},
+    headers: object = {},
+    keepPath: boolean = false,
+  ): Observable<T | undefined> {
+    if (Object.keys(body).length > 0) {
+      const query = new URLSearchParams(body);
+      const queryString = query.toString();
+      path += '?' + queryString;
+    }
+    if (path.indexOf('//') === -1 && !keepPath) {
+      path = this.apiUrl + path;
+    }
+    return this._ajax('DELETE', path, {}, headers);
+  }
+
   public get<T>(
     path: string,
     body: object = {},

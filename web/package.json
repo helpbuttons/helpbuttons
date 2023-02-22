@@ -24,6 +24,7 @@
     "formik": "^2.2.9",
     "fs": "^0.0.1-security",
     "http-proxy": "^1.18.1",
+    "http-status": "^1.6.2",
     "immer": "^9.0.6",
     "leaflet": "^1.7.1",
     "leaflet-geosearch": "^3.6.0",
