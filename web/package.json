@@ -12,6 +12,7 @@
     "hb": "tsx hb.ts"
   },
   "dependencies": {
+    "@fontsource/nunito": "^4.5.12",
     "@hookform/resolvers": "^2.8.1",
     "@nestjs/swagger": "^6.1.4",
     "@types/react-leaflet": "^2.8.2",
