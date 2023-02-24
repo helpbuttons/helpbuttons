@@ -71,6 +71,12 @@ export class User extends BaseEntity {
   role: string;
 
   @Expose()
+  @Column({
+    type: 'text'
+  })
+  description: string;
+  
+  @Expose()
   @Column({ type: 'text', nullable: true })
   avatar?: string;
 

@@ -1,4 +1,4 @@
-import { applyDecorators, SetMetadata, UseGuards } from "@nestjs/common";
+import { applyDecorators, ClassSerializerInterceptor, SetMetadata, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import { Role } from "../types/roles";
 import { Auth } from "./auth.decorator";
@@ -8,7 +8,8 @@ export const AllowedRoles = (roles: Role[]) => SetMetadata('roles', roles)
 export function AllowGuest() {    
     return applyDecorators(
         Auth(),
-        AllowedRoles([Role.guest, Role.registered, Role.admin])
+        AllowedRoles([Role.guest, Role.registered, Role.admin]),
+        UseInterceptors(ClassSerializerInterceptor)
     );
 }
 

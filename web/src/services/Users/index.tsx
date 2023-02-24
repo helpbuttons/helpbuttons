@@ -10,6 +10,7 @@ import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { User } from 'shared/entities/user.entity';
 import { Logout } from 'state/Users';
 import { store } from 'pages';
+import { UserUpdateDto } from 'shared/dtos/user.dto';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -71,5 +72,9 @@ export class UserService {
   public static logout() {
     store.emit(new Logout());
     httpService.clearAccessToken();
+  }
+
+  public static update(data: UserUpdateDto): Observable<any> {
+    return httpService.post<UserUpdateDto>("/users/update", data);
   }
 }

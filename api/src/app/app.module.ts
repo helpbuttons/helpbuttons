@@ -1,4 +1,4 @@
-import { Module, ClassSerializerInterceptor } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,7 +8,6 @@ import { ButtonModule } from '@src/modules/button/button.module';
 import { FeedButtonModule } from '@src/modules/feed-button/feed-button.module';
 import { MailModule } from '@src/modules/mail/mail.module';
 import { NetworkModule } from '@src/modules/network/network.module';
-import { SetupModule } from '@src/modules/setup/setup.module';
 import { StorageModule } from '@src/modules/storage/storage.module';
 import { TagModule } from '@src/modules/tag/tag.module';
 import { TemplateButtonModule } from '@src/modules/template-button/template-button.module';
@@ -19,7 +18,6 @@ import { AppService } from './app.service';
 import { typeOrmModuleOptions } from './configs/orm.config';
 import webAppConfig from './configs/web-app.config';
 import { validate } from './validators/env.validator';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -47,10 +45,6 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     FeedButtonModule
   ],
   controllers: [AppController],
-  providers: [AppService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ClassSerializerInterceptor,
-    },],
+  providers: [AppService],
 })
 export class AppModule {}

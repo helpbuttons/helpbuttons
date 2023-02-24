@@ -1,10 +1,9 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
-import { HttpStatus } from '@src/shared/types/http-status.enum';
+import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 
 @Injectable()
 export class UserService {
@@ -41,5 +40,8 @@ export class UserService {
   async findByUsername(username: string) {
     return await this.userRepository.findOne({where: {username: `${username}`}});
   }
-  
+ 
+  async update(userId : string, newUser) {
+    return this.userRepository.update(userId, removeUndefined(newUser))
+  }
 }

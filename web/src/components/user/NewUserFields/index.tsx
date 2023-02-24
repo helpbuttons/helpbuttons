@@ -1,4 +1,4 @@
-import FieldImageUpload from 'elements/Fields/FieldImageUpload';
+import {FieldImageUpload} from 'elements/Fields/FieldImageUpload';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldText from 'elements/Fields/FieldText';
 import { getHostname } from 'shared/sys.helper';

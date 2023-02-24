@@ -1,8 +1,4 @@
-import {
-  HttpException,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { JwtService } from '@nestjs/jwt';
@@ -24,7 +20,14 @@ import { ValidationException } from '@src/shared/middlewares/errors/validation-f
 import { getManager } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { UserCredential } from '../user-credential/user-credential.entity';
-import { checkHash, generateHash } from '@src/shared/helpers/generate-hash.helper';
+import {
+  checkHash,
+  generateHash,
+} from '@src/shared/helpers/generate-hash.helper';
+import { UserUpdateDto } from '../user/user.dto';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
+import { ErrorName } from '@src/shared/types/errorsList';
+import { isImageData } from '@src/shared/helpers/imageIsFile';
 
 @Injectable()
 export class AuthService {
@@ -60,6 +63,7 @@ export class AuthService {
       emailVerified: emailVerified,
       id: dbIdGenerator(),
       avatar: null,
+      description: ''
     };
 
     try {
@@ -152,5 +156,46 @@ export class AuthService {
   }
   async getCurrentUser(userId) {
     return this.userService.findById(userId);
+  }
+
+  async update(data: UserUpdateDto, currentUser) {
+    if (data.set_new_password) {
+      // save new credentials
+      if (
+        !(await checkHash(data.password_new, currentUser.password))
+      ) {
+        throw new CustomHttpException(
+          ErrorName.CurrentPasswordWontMatch,
+        );
+      }
+    }
+
+    let newUser = {
+      avatar: null,
+      email: data.email,
+      name: data.name,
+      description: data.description
+    };
+
+    if (isImageData(data.avatar)) {
+      try {
+        newUser.avatar = await this.storageService.newImage64(
+          data.avatar,
+        );
+      } catch (err) {
+        console.log(`avatar: ${err.message}`);
+      }
+    }
+    return this.userService
+      .update(currentUser.id, newUser)
+      .then(() => {
+        if (data.set_new_password) {
+          return this.createUserCredential(
+            currentUser.id,
+            data.password_new,
+          ).then(() => true);
+        }
+        return Promise.resolve(true);
+      });
   }
 }
