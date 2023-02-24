@@ -10,7 +10,11 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { CurrentUser } from '@src/shared/decorator/current-user';
+import { OnlyRegistered } from '@src/shared/decorator/roles.decorator';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
+import { UserUpdateDto } from '../user/user.dto';
+import { User } from '../user/user.entity';
 
 import { LoginRequestDto, SignupRequestDto } from './auth.dto';
 import { AuthService } from './auth.service';
@@ -26,7 +30,6 @@ export class AuthController {
   @UseInterceptors(SignupExtraRulesInterceptor)
   async signup(@Body() signupUserDto: SignupRequestDto) {
     return this.authService.signup(signupUserDto).then((accessToken) => {
-      console.log(accessToken)
       if (typeof accessToken === typeof undefined) {
         throw new HttpException('could not create token', HttpStatus.BAD_GATEWAY)
       }
@@ -43,5 +46,11 @@ export class AuthController {
   @Post('login')
   async login(@Request() req) {
     return req.user;
+  }
+
+  @OnlyRegistered()
+  @Post('update')
+  async update(@Body() data: UserUpdateDto, @CurrentUser() user: User) {
+    return this.authService.update(data, user);
   }
 }

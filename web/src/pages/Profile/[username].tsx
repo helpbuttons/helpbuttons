@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { User } from 'shared/entities/user.entity';
 import { FindUser, Logout } from 'state/Users';
 import Link from 'next/link';
-import { IoHammerOutline, IoLogOutOutline } from 'react-icons/io5';
+import { IoAlarm, IoHammerOutline, IoLogOutOutline } from 'react-icons/io5';
 import Btn, { IconType } from 'elements/Btn';
 import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
@@ -28,6 +28,9 @@ export default function Profile() {
     UserService.logout();
   }
 
+  const removeProfile = () => {
+    console.log('remove myself!')
+  }
   const username = router.query.username as string;
   useEffect(() => {
     let newUserProfile = '';
@@ -52,43 +55,57 @@ export default function Profile() {
     <>
       <div className="body__content">
         <div className="body__section">
-          {userProfile && (
-            <>
-              <CardProfile user={userProfile} />
-            </>
-          )}
+          <div className="card-profile__container">
+            {userProfile && (
+              <>
+                <CardProfile user={userProfile} />
+              </>
+            )}
 
-          {userProfile?.username == loggedInUser?.username && (
-            <div className="card-profile__actions">
-              <Link href="/Explore">
-                <div onClick={logout} className="btn-with-icon">
-                  <div className="btn-with-icon__icon">
-                    <IoLogOutOutline />
+            <Link href="/ProfileEdit">
+              <Btn
+                iconLeft={IconType.svg}
+                iconLink={<IoHammerOutline />}
+                caption="Edit profile"
+              />
+            </Link>
+            {userProfile?.username == loggedInUser?.username && (
+              <div className="card-profile__actions">
+                <Link href="/Explore">
+                  <div onClick={logout} className="btn-with-icon">
+                    <div className="btn-with-icon__icon">
+                      <IoLogOutOutline />
+                    </div>
+                    <span className="btn-with-icon__text">
+                      Logout
+                    </span>
                   </div>
-                  <span className="btn-with-icon__text">Logout</span>
-                </div>
-              </Link>
+                </Link>
 
-              <Link href="/Config">
-                <Btn
-                  iconLeft={IconType.svg}
-                  iconLink={<IoHammerOutline />}
-                  caption="Config account"
-                />
-              </Link>
-              {loggedInUser?.role == Role.admin && (
-                <div>
-                  <Link href="/Configuration">
-                    <Btn
-                      iconLeft={IconType.svg}
-                      iconLink={<IoHammerOutline />}
-                      caption="Configure network"
-                    />
-                  </Link>
-                </div>
-              )}
-            </div>
-          )}
+                {loggedInUser?.role == Role.admin && (
+                  <div>
+                    <Link href="/Configuration">
+                      <Btn
+                        iconLeft={IconType.svg}
+                        iconLink={<IoHammerOutline />}
+                        caption="Administration"
+                      />
+                    </Link>
+                  </div>
+                )}
+                <Link href="/HomeInfo">
+                  <div onClick={removeProfile} className="btn-with-icon">
+                    <div className="btn-with-icon__icon">
+                      <IoAlarm />
+                    </div>
+                    <span className="btn-with-icon__text">
+                      Deactivate Account
+                    </span>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

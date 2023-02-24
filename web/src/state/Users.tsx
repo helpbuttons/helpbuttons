@@ -11,6 +11,8 @@ import { HttpService, isHttpError } from 'services/HttpService';
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { GlobalState } from 'pages';
 import { HttpStatus } from 'shared/types/http-status.enum';
+import { handleError } from './helper';
+import { UserUpdateDto } from 'shared/dtos/user.dto';
 
 export interface UsersState {
   currentUser: IUser;
@@ -156,5 +158,22 @@ export class Logout implements UpdateEvent {
     return produce(state, (newState) => {
       newState.loggedInUser = null;
     });
+  }
+}
+
+
+export class UpdateProfile implements WatchEvent {
+  public constructor(
+    private data :UserUpdateDto, 
+    private onSuccess,
+    private onError
+  ) {}
+  public watch(state: GlobalState) {
+    return UserService.update(this.data).pipe(
+      map((data) => {
+        this.onSuccess(data);
+      }),
+      catchError((error) => handleError(this.onError, error))
+    );
   }
 }

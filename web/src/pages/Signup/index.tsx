@@ -71,8 +71,6 @@ export default function Signup() {
   };
 
   const onError = (err) => {
-    console.log('oiiii')
-    console.log(err)
     if (err === 'email-already-exists') {
       setErrorMsg('This email already has registered');
     } else if (err === 'username-already-exists') {

@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, Param, Request } from '@nestjs/common';
+import { Controller, Get, Param, Request } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
 import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';

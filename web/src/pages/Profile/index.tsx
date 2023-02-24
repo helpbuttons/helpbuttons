@@ -12,7 +12,6 @@ export default function ProfileRedirect() {
       
     useEffect(() => {
         if (currentUser){
-            console.log(currentUser)
             router.push({
                 pathname: `/Profile/${currentUser.username}`
               });

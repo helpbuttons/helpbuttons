@@ -22,7 +22,7 @@ export class RolesGuard implements CanActivate {
 
     // console.log(`${JSON.stringify(user)} route: ${route.path} role: ${user.role}`)
     let userRole = Role.guest;
-    if (user.role) {
+    if (user && user.role) {
       userRole = user.role;
     }
     if (!requiredRoles) {

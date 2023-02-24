@@ -1,7 +1,4 @@
-import { HttpStatus } from '@src/shared/types/http-status.enum';
-
-
-
+import { HttpStatus } from './http-status.enum';
 export interface ErrorText {
     name: ErrorName,
     caption: string;
@@ -10,7 +7,8 @@ export interface ErrorText {
 
 export enum ErrorName{
     NoButtonOwnerShip = 'no-button-ownership',
-    NeedToBeRegistered = 'need-registered'
+    NeedToBeRegistered = 'need-registered',
+    CurrentPasswordWontMatch = 'current-password-mismatch'
 }
 
 export const errorsList: ErrorText[] = 
@@ -24,4 +22,10 @@ export const errorsList: ErrorText[] =
         name: ErrorName.NeedToBeRegistered,
         caption: `You need to be registered to use this functionality`,
         status: HttpStatus.FORBIDDEN
-    }]
+    },
+    {
+        name: ErrorName.CurrentPasswordWontMatch,
+        caption: `The "current password" you type is not correct`,
+        status: HttpStatus.NOT_ACCEPTABLE
+    }
+]

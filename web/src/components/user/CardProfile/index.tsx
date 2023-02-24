@@ -21,7 +21,6 @@ export default function CardProfile(props) {
 
   return (
     <>
-      <div className="card-profile__container">
         <div className="card-profile__container-avatar-content">
 
             <figure className="card-profile__avatar-container avatar">
@@ -36,9 +35,11 @@ export default function CardProfile(props) {
             </figure>
 
             <div className="card-profile__content">
-
+            
               <div className="card-profile__avatar-container-name">
-                { user.username }@{getHostname()}
+                {user.name}
+                <span style={{"color" : "lightgrey", "fontSize": "80%"}}>&nbsp;&nbsp;{ user.username }@{getHostname()}</span>
+                
               </div>
 
               {/* <figure className="card-profile__rating grid-three">
@@ -70,23 +71,22 @@ export default function CardProfile(props) {
         </div>
 
         <div className="card-profile__data">
-
+        <div className="card-profile__tags grid-one__column-mid-element">
+              <div className="hashtag hashtag--yellow">tag</div>
+            </div>
             <div className="card-profile__description grid-one__column-mid-element">
               Descripcion
             </div>
 
-            <div className="card-profile__phone grid-one__column-mid-element">
-              09099190109091
-            </div>
+            {/* <div className="card-profile__phone grid-one__column-mid-element">
+              TODO: 
+              - place
 
-            <div className="card-profile__tags grid-one__column-mid-element">
-              <div className="hashtag hashtag--yellow">tag</div>
-            </div>
+            </div> */}
+
+           
 
         </div>
-
-      </div>
-
     </>
   );
 }

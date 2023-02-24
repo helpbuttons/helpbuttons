@@ -1,11 +1,12 @@
 import { ImageContainer } from 'elements/ImageWrapper';
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import ImageUploading from 'react-images-uploading';
 
 import FieldError from '../FieldError';
 
-export default function FieldImageUpload({ name, label, width = 100, height = 100, alt = "", validationError, control, setValue}) {
+export const FieldImageUpload = React.forwardRef(({ name, label, width = 100, height = 100, alt = "", validationError, control, setValue}, ref) => {
 
   const [image, setImage] = useState(null)
   const onChange = (imageList, addUpdateIndex) => {
@@ -74,4 +75,9 @@ export default function FieldImageUpload({ name, label, width = 100, height = 10
       </div>
     </>
   );
-}
+});
+// export default function FieldImageUpload({ name, label, width = 100, height = 100, alt = "", validationError, control, setValue}) {
+
+//   return (<></>)
+
+// }
