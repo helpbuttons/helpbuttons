@@ -22,6 +22,7 @@ export default function Profile() {
 
   function logout() {
     UserService.logout();
+    router.push("/HomeInfo")
   }
 
   const removeProfile = () => {
