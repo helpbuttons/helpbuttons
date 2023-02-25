@@ -89,12 +89,7 @@ export class FetchUserData implements WatchEvent {
         }
       }),
       map((userData) => new SetCurrentUser(userData)),
-      catchError((err) => {
-        if (this.onError) {
-          this.onError(err);
-        }
-        return of(undefined);
-      }),
+      catchError((error) => handleError(this.onError, error))
     );
   }
 }

@@ -72,19 +72,16 @@ function MyApp({ Component, pageProps }) {
       );
     }
     if (!authorized) {
-      if (UserService.isLoggedIn()) {
+      if (UserService.isLoggedIn()) { // check if local storage has a token
         if (!loggedInUser) {
           if (!isLoadingUser) {
-            console.log('getting user ');
-
             store.emit(
               new FetchUserData(
                 () => {
-                  console.log('got user');
                   setIsLoadingUser(false);
                 },
-                () => {
-                  console.log('failed to get user');
+                (error) => { // if local storage has a token, and fails to fetchUserData then delete storage token
+                  UserService.logout();
                   setIsLoadingUser(false);
                 },
               ),
