@@ -45,7 +45,9 @@ export default function ButtonNew() {
 
   const onSubmit = (data) => {
     store.emit(
-      new CreateButton(data, selectedNetwork.id, onSuccess({lat: data.latitude, lng: data.longitude}), onError),
+      new CreateButton(data, selectedNetwork.id, 
+        onSuccess({lat: data.latitude, lng: data.longitude}), 
+        onError),
     );
   };
 
@@ -58,13 +60,13 @@ export default function ButtonNew() {
 
   const onError = (err, data) => {
     if (err == 'unauthorized') {
-      store.emit(new SaveButtonDraft(data));
+      alertService.error('You need to login or registering an account');
       Router.push({
         pathname: '/Login',
         query: { returnUrl: 'ButtonNew' },
       });
     } else {
-      alertService.error('Error on creating button ' + err, {});
+      alertService.error(err);
     }
   };
   return (

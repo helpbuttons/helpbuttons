@@ -10,7 +10,7 @@ import { ButtonService } from 'services/Buttons';
 import { Bounds } from 'leaflet';
 import { of } from 'rxjs';
 import { isHttpError } from 'services/HttpService';
-import { GlobalState } from 'pages';
+import { GlobalState, store } from 'pages';
 import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
 import { HttpStatus } from 'shared/types/http-status.enum';
@@ -73,9 +73,19 @@ export class CreateButton implements WatchEvent {
   public watch(state: GlobalState) {
     return ButtonService.new(this.button, this.networkId).pipe(
       map((buttonData) => {
+        new ButtonFound(buttonData),
         this.onSuccess();
       }),
-      catchError((error) => handleError(this.onError,error))
+      catchError((error) => {
+        const err = error.response;
+
+        if (isHttpError(err) && err.statusCode  == HttpStatus.FORBIDDEN) {
+          this.onError('unauthorized')
+          store.emit(new SaveButtonDraft(this.button));
+          return of(undefined);
+        }
+        return handleError(this.onError,error)
+      })
     );
   }
 }
