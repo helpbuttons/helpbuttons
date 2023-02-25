@@ -28,6 +28,10 @@ export class UserService {
     return await this.userRepository.findOne({where: {id}});
   }
 
+  async userCount()
+  {
+    return await this.userRepository.count();
+  }
   async findAdministrator() {
     // returning only the first admin
     return await this.userRepository.findOne({where: {role: Role.admin}, order: { id: 'DESC' }});

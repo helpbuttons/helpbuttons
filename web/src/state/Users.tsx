@@ -70,22 +70,7 @@ export class SignupUser implements WatchEvent {
           return new FetchUserData(this.onSuccess, this.onError);
         }
       }),
-      catchError((err) => {
-        if (
-          isHttpError(err) &&
-          err.status === HttpStatus.BAD_REQUEST &&
-          err.response.message === 'email-already-exists'
-        ) {
-          this.onError('email-already-exists');
-        }else if(isHttpError(err.response) &&
-        err.status === HttpStatus.CONFLICT &&
-        err.response.message === 'username-already-exists'){
-          this.onError('username-already-exists');
-        } else {
-          throw err;
-        }
-        return of(undefined);
-      }),
+      catchError((error) => handleError(this.onError,error))
     );
   }
 }

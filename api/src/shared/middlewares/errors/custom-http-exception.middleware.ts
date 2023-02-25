@@ -1,7 +1,7 @@
 import { HttpException } from "@nestjs/common";
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
-import { ErrorName, errorsList } from "@src/shared/types/errorsList";
+import { ErrorName, errorsList } from "@src/shared/types/error.list";
 
 export class CustomHttpException extends HttpException{
     constructor(response: ErrorName){

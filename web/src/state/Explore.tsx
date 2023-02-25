@@ -13,7 +13,6 @@ import { isHttpError } from 'services/HttpService';
 import { GlobalState } from 'pages';
 import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
-import { errorsList, ErrorText } from 'shared/types/errorsList';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
 import { handleError } from './helper';

@@ -21,6 +21,7 @@ import { useRouter } from 'next/router';
 import NewUserFields, {
   passwordsMatch,
 } from 'components/user/NewUserFields';
+import { alertService } from 'services/Alert';
 
 export default function Signup() {
   const {
@@ -69,16 +70,8 @@ export default function Signup() {
 
     store.emit(new NavigateTo(returnUrl));
   };
-
-  const onError = (err) => {
-    if (err === 'email-already-exists') {
-      setErrorMsg('This email already has registered');
-    } else if (err === 'username-already-exists') {
-      setErrorMsg('Username is already in use');
-    }else{
-      console.error(err);
-    }
-  };
+  
+  const onError = (errorMessage) => alertService.error(errorMessage)
 
   const params: URLSearchParams = new URLSearchParams(router.query);
 
