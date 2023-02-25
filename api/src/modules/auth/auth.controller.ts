@@ -19,7 +19,6 @@ import { User } from '../user/user.entity';
 import { LoginRequestDto, SignupRequestDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { SignupExtraRulesInterceptor } from './signup-extra-rules.interceptor';
 
 @ApiTags('User')
 @Controller('users')
@@ -27,7 +26,6 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  @UseInterceptors(SignupExtraRulesInterceptor)
   async signup(@Body() signupUserDto: SignupRequestDto) {
     return this.authService.signup(signupUserDto).then((accessToken) => {
       if (typeof accessToken === typeof undefined) {

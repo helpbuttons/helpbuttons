@@ -26,8 +26,9 @@ import {
 } from '@src/shared/helpers/generate-hash.helper';
 import { UserUpdateDto } from '../user/user.dto';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
-import { ErrorName } from '@src/shared/types/errorsList';
+import { ErrorName } from '@src/shared/types/error.list';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
+import { ValidationError } from 'class-validator';
 
 @Injectable()
 export class AuthService {
@@ -51,9 +52,11 @@ export class AuthService {
     }
 
     let userRole = Role.registered;
-    if (!(await this.userService.findAdministrator())) {
+    const userCount = await this.userService.userCount();
+    if (userCount < 1) {
       userRole = Role.admin;
     }
+
     const newUserDto = {
       username: signupUserDto.username,
       email: signupUserDto.email,
@@ -66,12 +69,23 @@ export class AuthService {
       description: ''
     };
 
+    const emailExists = await this.userService.isEmailExists(signupUserDto.email);
+    if (emailExists)
+    {
+      throw new CustomHttpException(ErrorName.EmailAlreadyRegistered)
+    }
+
+    const usernameExists = await this.userService.findByUsername(signupUserDto.username);
+    if (usernameExists)
+    {
+      throw new CustomHttpException(ErrorName.UsernameAlreadyRegistered)
+    }
     try {
       newUserDto.avatar = await this.storageService.newImage64(
         signupUserDto.avatar,
       );
     } catch (err) {
-      console.log(`avatar: ${err.message}`);
+      throw new CustomHttpException(ErrorName.InvalidMimetype)
     }
     return this.userService
       .createUser(newUserDto)
@@ -97,8 +111,8 @@ export class AuthService {
         return this.getAccessToken(newUserDto);
       })
       .catch((error) => {
-        console.log('failed to create user credentials');
-        console.log(error);
+        console.error(error)
+        throw new CustomHttpException(ErrorName.UnspecifiedInternalServerError)
       });
   }
   private async createUserCredential(

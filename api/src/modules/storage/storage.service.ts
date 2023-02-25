@@ -11,8 +11,7 @@ import { Repository } from 'typeorm';
 import { ImageFile } from './image-file.entity';
 import { writeFilePromise } from '@src/shared/helpers/io.helper';
 import { getFilesRoute, uploadDir } from './storage.utils';
-import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
-import { ValidationError } from 'class-validator';
+import { ErrorName } from '@src/shared/types/error.list';
 
 @Injectable()
 export class StorageService {
@@ -31,7 +30,7 @@ export class StorageService {
       !(['image/jpeg', 'image/png', 'image/jpg', 'image/gif'].includes(mimetype))
     ) {
       console.log('image mimetype not allowed :: ', mimetype);
-      throw new Error(`invalid-mimetype-${mimetype}`);
+      throw ErrorName.InvalidMimetype;
     }
 
     const fileImageName = `${dbIdGenerator()}.${
