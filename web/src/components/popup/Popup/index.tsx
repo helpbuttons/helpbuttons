@@ -4,22 +4,14 @@
 import PopupHeader from 'components/popup/PopupHeader';
 
 
-export default function Popup({children, title, linkFwd, ...props}) {
+export default function Popup({children, title, linkFwd = null, ...props}) {
 
   return (
-
           <div className="popup">
-
               <PopupHeader linkFwd={linkFwd}>{title}</PopupHeader>
-
-
               <div className="popup__content">
-
                     {children}
-
               </div>
-
-
           </div>
   );
 

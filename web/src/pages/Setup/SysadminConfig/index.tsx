@@ -98,13 +98,13 @@ export default function SysadminConfig() {
               classNameExtra="squared"
               {...register('hostName', { required: true })}
             />
-            {/* <FieldText
-              name="mapifyApiKey"
-              label={`${t("hostname","Hostname")}:`}
-              label="Mapify ApiKey"
-              placeholder="APIKEY"
-              {...register('mapifyApiKey')}
-            ></FieldText> */}
+            <FieldText
+                name="mapifyApiKey"
+                label="OpenCage ApiKey"
+                classNameInput="squared"
+                validationError={errors.mapifyApiKey}
+                {...register('mapifyApiKey', { required: true })}
+              />
             {/* <FieldText
               name="leafletTiles"
               label="Leaflet Tiles"

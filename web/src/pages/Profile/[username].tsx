@@ -61,50 +61,6 @@ export default function Profile() {
                 <CardProfile user={userProfile} />
               </>
             )}
-
-            <Link href="/ProfileEdit">
-              <Btn
-                iconLeft={IconType.svg}
-                iconLink={<IoHammerOutline />}
-                caption="Edit profile"
-              />
-            </Link>
-            {userProfile?.username == loggedInUser?.username && (
-              <div className="card-profile__actions">
-                <Link href="/Explore">
-                  <div onClick={logout} className="btn-with-icon">
-                    <div className="btn-with-icon__icon">
-                      <IoLogOutOutline />
-                    </div>
-                    <span className="btn-with-icon__text">
-                      Logout
-                    </span>
-                  </div>
-                </Link>
-
-                {loggedInUser?.role == Role.admin && (
-                  <div>
-                    <Link href="/Configuration">
-                      <Btn
-                        iconLeft={IconType.svg}
-                        iconLink={<IoHammerOutline />}
-                        caption="Administration"
-                      />
-                    </Link>
-                  </div>
-                )}
-                <Link href="/HomeInfo">
-                  <div onClick={removeProfile} className="btn-with-icon">
-                    <div className="btn-with-icon__icon">
-                      <IoAlarm />
-                    </div>
-                    <span className="btn-with-icon__text">
-                      Deactivate Account
-                    </span>
-                  </div>
-                </Link>
-              </div>
-            )}
           </div>
         </div>
       </div>

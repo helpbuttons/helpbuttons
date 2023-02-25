@@ -7,7 +7,6 @@ export const allowedPathsPerRole =
         paths: [
             '/Login',
             '/Signup',
-            '/RepositoryPage',
             '/Faqs',
             '/',
             '/ButtonNew',
@@ -16,10 +15,12 @@ export const allowedPathsPerRole =
             '/ButtonFile/:id',
         ]
     },
-    // {
-    //     role: Role.registered,
-    //     paths: []
-    // },
+    {
+        role: Role.registered,
+        paths: [
+            '/Profile'
+        ]
+    },
     {
         role: Role.admin,
         paths:

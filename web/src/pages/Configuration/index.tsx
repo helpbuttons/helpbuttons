@@ -1,4 +1,5 @@
 import NetworkForm from 'components/network/NetworkForm';
+import Popup from 'components/popup/Popup';
 import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect } from 'react';
@@ -28,7 +29,9 @@ function Configuration() {
   } = useForm({});
 
   useEffect(() => {
-    reset(selectedNetwork);
+    if(selectedNetwork){
+      reset(selectedNetwork);
+    }
   }, [selectedNetwork])
   const onSubmit = (data) => {
     store.emit(new UpdateNetwork({
@@ -78,6 +81,7 @@ function Configuration() {
   return (
     <>
       {selectedNetwork && (
+        <Popup title="Configure network" LinkFwd="/Profile">
         <NetworkForm
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
@@ -88,9 +92,10 @@ function Configuration() {
           control={control}
           errors={errors}
           captionAction="Save"
-          linkFwd="/HomeInfo"
+          linkFwd="/Profile"
           description=""
         />
+        </Popup>
       )}
     </>
   );

@@ -1,7 +1,7 @@
 // here we have the basic configuration of an network
 import Popup from 'components/popup/Popup';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import FieldImageUpload from 'elements/Fields/FieldImageUpload';
+import {FieldImageUpload} from 'elements/Fields/FieldImageUpload';
 import FieldLocation from 'elements/Fields/FieldLocation';
 import { FieldPrivacy } from 'elements/Fields/FieldPrivacy';
 import FieldTags from 'elements/Fields/FieldTags';
@@ -32,12 +32,12 @@ function NetworkForm({
   errors,
   linkFwd,
   description,
+  showClose = true,
 }) {
   const router = useRouter();
 
   return (
     <>
-      <Popup title="Create your network" linkFwd={linkFwd}>
         <Form
           classNameExtra="createAdmin"
           onSubmit={handleSubmit(onSubmit)}
@@ -72,6 +72,7 @@ function NetworkForm({
                 {...register('privacy', { required: true })}
               />
               400x400px
+              
               <FieldImageUpload
                 name="logo"
                 label="Choose logo"                
@@ -92,8 +93,7 @@ function NetworkForm({
                 validationError={errors.jumbo}
                 control={control}
                 {...register('jumbo', { required: true })}
-              />
-              
+              />              
               <FieldLocation
                 defaultZoom={watch('zoom')}
                 validationErrors={undefined}
@@ -115,11 +115,10 @@ function NetworkForm({
                 caption={captionAction}
                 contentAlignment={ContentAlignment.center}
                 isSubmitting={isSubmitting}
-              />
+              /> 
             </div>
           </div>
         </Form>
-      </Popup>
     </>
   );
 }

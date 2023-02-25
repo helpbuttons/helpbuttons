@@ -15,7 +15,7 @@ import { useRef } from 'store/Store';
 import { buttonTypes } from 'shared/buttonTypes';
 // import FieldImageUpload from "elements/Fields/FieldImageUpload";
 import { GlobalState, store } from 'pages';
-import FieldImageUpload from 'elements/Fields/FieldImageUpload';
+import {FieldImageUpload} from 'elements/Fields/FieldImageUpload';
 
 export default function ButtonForm({onSubmit, watch, reset, getValues, handleSubmit, register, errors, control, setValue, isSubmitting}) {
     const selectedNetwork = useRef(

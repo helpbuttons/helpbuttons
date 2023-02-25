@@ -1,4 +1,5 @@
 import NetworkForm from 'components/network/NetworkForm';
+import Popup from 'components/popup/Popup';
 import router from 'next/router';
 import { store } from 'pages';
 import Configuration from 'pages/Configuration';
@@ -31,6 +32,7 @@ function NetworkCreation() {
       latitude: defaultMarker.latitude,
       longitude: defaultMarker.longitude,
       zoom: 10,
+      privacy: "public"
     }
   });
 
@@ -97,6 +99,7 @@ function NetworkCreation() {
   }, []);
 
   return (
+    <Popup title="Create your network">
     <NetworkForm
       captionAction="Next"
       handleSubmit={handleSubmit}
@@ -108,7 +111,9 @@ function NetworkCreation() {
       control={control}
       errors={errors}
       linkFwd="/Setup/NetworkCreation"
+      showClose={false}
       description="Wizard to help on configuring your network"
     />
+    </Popup>
   );
 }

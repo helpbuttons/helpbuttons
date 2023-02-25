@@ -21,6 +21,7 @@ import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { pathToRegexp } from 'path-to-regexp';
 import { allowedPathsPerRole } from '../shared/pagesRoles';
 import { Role } from 'shared/types/roles';
+import { isRoleAllowed } from 'shared/sys.helper';
 
 export default appWithTranslation(MyApp);
 
@@ -29,6 +30,8 @@ function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null);
   const [authorized, setAuthorized] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
+  const [isLoadingUser, setIsLoadingUser] = useState(false);
+  const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
 
   const config = useRef(store, (state: GlobalState) => state.config);
   const path = router.asPath.split('?')[0];
@@ -38,6 +41,11 @@ function MyApp({ Component, pageProps }) {
     (state: GlobalState) => state.loggedInUser,
   );
 
+  const selectedNetwork = useRef(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
     SetupSteps.FIRST_OPEN,
@@ -45,142 +53,88 @@ function MyApp({ Component, pageProps }) {
     SetupSteps.SYSADMIN_CONFIG,
   ];
 
-  // // Whenever we log in or log out, fetch user data
-
-
   useEffect(() => {
-
-    if (!config && SetupSteps.SYSADMIN_CONFIG.toString() == path) {
+    if (setupPaths.includes(path)) {
       setIsSetup(true);
-    }else if (!config) {
-      getConfig(getConfigSuccess, getConfigError);
-    }else{
-      if (SetupSteps.CREATE_ADMIN_FORM.toString() == path) {
-        setIsSetup(true)
-      }else {
-        authCheck();
-      }
+      return;
     }
 
-    function getConfigError(err) {
-      console.error('getting config error:')
-      if (err == 'nosysadminconfig') {
-        alertService.error(
-          `Something went wrong, you can go to the <a href="${SetupSteps.SYSADMIN_CONFIG}"> configuration wizard</a>`,
-        );
-        return;
-      }
+    if(path != SetupSteps.SYSADMIN_CONFIG){
+      fetchDefaultNetwork();
+    }
 
-      if (err == 'need-migrations') {
-        alertService.warn(err);
-        return;
-      }
-
-      console.log(err);
-      alertService.error(
-        `Something went wrong, you can go to the <a href="${SetupSteps.SYSADMIN_CONFIG}">configuration wizard</a>`,
+    if (!config && SetupSteps.SYSADMIN_CONFIG.toString() != path) {
+      store.emit(
+        new GetConfig(
+          () => console.log(`got config`),
+          () => router.push(SetupSteps.SYSADMIN_CONFIG),
+        ),
       );
     }
+    if (!authorized) {
+      if (UserService.isLoggedIn()) {
+        if (!loggedInUser) {
+          if (!isLoadingUser) {
+            console.log('getting user ');
 
-    function getConfigSuccess(config: SetupDtoOut) {
-      if (config.databaseNumberMigrations < 1) {
-        alertService.error(`Missing database schema, please run schema creation/migrations! and then <a href="/">click here</a>`);
-        return;
-      } else if (
-        config.userCount < 1 &&
-        SetupSteps.CREATE_ADMIN_FORM != path
-      ) {
-        alertService.warn(
-          `Missing admin account, please <u><a href="${SetupSteps.CREATE_ADMIN_FORM}">create yours</a></u>!`,
-        );
-        return;
-      }
-
-      if (!setupPaths.includes(path)) {
-        getDefaultNetwork(
-          () => {
-            // setIsSetup(true);
-            console.log('all is ready!');
-          },
-          (error) => {
-            if (error === 'network-not-found') {
-              alertService.warn(
-                `You didn't configured your network yet. Go to the network <a href="${SetupSteps.NETWORK_CREATION}">configuration page</a>`,
-              );
-            } else {
-              alertService.error(JSON.stringify(error));
-            }
-          },
-        );
-      }
-    }
-
-  }, [path, isSetup, authorized, config]);
-
-  function getConfig(onSuccess, onError) {
-    store.emit(new GetConfig(onSuccess, onError));
-  }
-
-  function getDefaultNetwork(onSucess, onError) {
-    store.emit(new FetchDefaultNetwork(onSucess, onError));
-  }
-
-  function pagesRolesCheck(path, role: Role)
-  {
-    const allowedPaths = allowedPathsPerRole.filter((allowedPerRole) => allowedPerRole.role == role)[0].paths;
-
-    if (allowedPaths.includes(path)) {
-      return true;
-    }
-    return allowedPaths.filter((allowedPath) => {
-      return pathToRegexp(allowedPath).exec(path);
-    }).length > 0;
-
-  }
-  function authCheck() {
-    // redirect to login page if accessing a private page and not logged in
-    const path = router.asPath.split('?')[0];
-
-    
-    if (
-      !UserService.isLoggedIn() &&
-      !pagesRolesCheck(path, Role.guest)
-    ) {
-      // and is not 404
-      if (path != '/Login') {
-        router
-          .push({
-            pathname: '/Login',
-            query: { returnUrl: router.asPath },
-          })
-          .catch((err) => {
-            console.log(err)
-          });
-      }
-    } else if (UserService.isLoggedIn() ) {
-      
-      if (!loggedInUser)
-      {
-        store.emit(new FetchUserData(() => {setAuthorized(true)},() => { setAuthorized(false)}))
-      }else if (pagesRolesCheck(path, Role.admin)) {
-        console.log(loggedInUser)
-        if (loggedInUser.role != Role.admin)
-        {
-          alertService.error('You are not allowed')
-          console.log(loggedInUser.roles)
-          setAuthorized(false)
-          router.push('/HomeInfo');  
-        }else {
-          setAuthorized(true)
+            store.emit(
+              new FetchUserData(
+                () => {
+                  console.log('got user');
+                  setIsLoadingUser(false);
+                },
+                () => {
+                  console.log('failed to get user');
+                  setIsLoadingUser(false);
+                },
+              ),
+            );
+          }
+          setIsLoadingUser(true);
+        } else {
+          setAuthorized(isRoleAllowed(loggedInUser.role, path));
         }
+      } else {
+        setAuthorized(isRoleAllowed(Role.guest, path));
       }
-      
-    }else if (pagesRolesCheck(path, Role.guest)) {
-      setAuthorized(true);
-    }else {
-      setAuthorized(false);
     }
-  }
+
+    function fetchDefaultNetwork() {
+      if (config && !selectedNetwork) {
+        if (isLoadingNetwork) {
+          return false;
+        }
+        setIsLoadingNetwork(true);
+        store.emit(
+          new FetchDefaultNetwork(
+            () => {
+              console.log('all is ready!');
+            },
+            (error) => {
+              if (error === 'network-not-found') {
+                if (config.databaseNumberMigrations < 1) {
+                  alertService.error(
+                    `Missing database schema, please run schema creation/migrations! and then <a href="/">click here</a>`,
+                  );
+                  return;
+                } else if (
+                  config.userCount < 1 &&
+                  SetupSteps.CREATE_ADMIN_FORM != path
+                ) {
+                  router.push(SetupSteps.CREATE_ADMIN_FORM);
+                } else {
+                  router.push(SetupSteps.FIRST_OPEN);
+                }
+              } else {
+                alertService.error('unknown error');
+                console.error(error);
+              }
+            },
+          ),
+        );
+      }
+    }
+  }, [path, isSetup, authorized, config, loggedInUser]);
 
   return (
     <>
@@ -191,7 +145,7 @@ function MyApp({ Component, pageProps }) {
       <div className={`${user ? '' : ''}`}>
         <Alert />
         {(() => {
-          if (config && authorized) {
+          if (config && authorized && selectedNetwork) {
             return (
               <div>
                 <Component {...pageProps} />

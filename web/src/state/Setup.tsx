@@ -28,7 +28,7 @@ export class GetConfig implements WatchEvent {
           err.statusCode === HttpStatus.NOT_FOUND
         ) {
           // Unauthorized
-          this.onError('unauthorized');
+          this.onError('not-found');
         } else if (
           isHttpError(err) &&
           err.statusCode === HttpStatus.BAD_REQUEST
