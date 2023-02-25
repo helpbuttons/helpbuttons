@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "yarn write-version",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "svgr": "svgr icons -d elements/icons --icon",
     "connect-api": "cp ../api/src/**/**/*.dto.ts src/shared/dtos && cp ../api/src/**/**/*.entity.ts src/shared/entities && cp -r ../api/src/shared/types/ src/shared/",
-    "hb": "tsx hb.ts"
+    "hb": "tsx hb.ts",
+    "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.tsx"
   },
   "dependencies": {
     "@fontsource/nunito": "^4.5.12",
