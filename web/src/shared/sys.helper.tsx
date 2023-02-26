@@ -1,9 +1,6 @@
 import { translations } from 'i18n';
-import router from 'next/router';
 import { pathToRegexp } from 'path-to-regexp';
-import { UserService } from 'services/Users';
 import { allowedPathsPerRole } from './pagesRoles';
-import { SetupSteps } from './setupSteps';
 import { Role } from './types/roles';
 
 export function getShareLink(link) {
@@ -85,3 +82,5 @@ export function isRoleAllowed(role : Role, path): boolean {
     );
   }
 }
+
+export const minMobileWidth = 600;
