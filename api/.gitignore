@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 uploads/
+/src/shared/commit.ts
+
 # testing
 /coverage
 

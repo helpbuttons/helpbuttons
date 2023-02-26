@@ -22,6 +22,7 @@ import { pathToRegexp } from 'path-to-regexp';
 import { allowedPathsPerRole } from '../shared/pagesRoles';
 import { Role } from 'shared/types/roles';
 import { isRoleAllowed } from 'shared/sys.helper';
+import { version } from 'shared/commit';
 
 export default appWithTranslation(MyApp);
 
@@ -137,6 +138,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <title>Helpbuttons.org</title>
+        <meta name="commit" content={version.git} />
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
       <div className={`${user ? '' : ''}`}>

@@ -4,6 +4,7 @@ import {
   SetupDtoOut,
 } from '@src/modules/setup/setup.entity';
 import * as fs from 'fs';
+import { version } from '../commit';
 const { Pool } = require('pg');
 
 export const configFileName: string = '/config/config.json';
@@ -97,6 +98,7 @@ export const getConfig = async () => {
         databaseNumberMigrations: migrationsNumber,
         userCount: userCount,
         buttonCount: buttonCount,
+        commit: version.git
       };
 
       return dataToWeb;
