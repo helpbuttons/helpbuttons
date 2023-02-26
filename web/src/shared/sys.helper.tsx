@@ -82,5 +82,3 @@ export function isRoleAllowed(role : Role, path): boolean {
     );
   }
 }
-
-export const minMobileWidth = 600;

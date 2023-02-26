@@ -67,11 +67,14 @@ export default function Explore() {
   };
 
   const responsiveShowLeftColumn = (width, height) => {
-    if (showLeftColumn === null && width > minMobileWidth) 
+    if (showLeftColumn !== null ) 
     {
-      return true;
+      return showLeftColumn
     }
-    return showLeftColumn
+    if(height < 400)
+      return false;
+    return true
+    
   };
 
   useEffect(() => {
