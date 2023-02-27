@@ -20,7 +20,7 @@ export default function LeafLetMap({
   markerImage = null,
   markerCaption = '?',
   isMarkerSelector = false,
-  markerColor= 'gray'
+  markerColor= 'red'
 }) {
   const [zoom, setZoom] = useState(defaultZoom);
   const [map, setMap] = useState(null)
