@@ -12,6 +12,7 @@ import ExploreButtonsMap from 'components/map/LeafletMap/ExploreButtonsMap';
 import List from 'components/list/List';
 import { buttonTypes } from 'shared/buttonTypes';
 import ReactResizeDetector from 'react-resize-detector';
+import { minMobileWidth } from 'shared/sys.helper';
 
 export default function Explore() {
   const selectedNetwork = useRef(
