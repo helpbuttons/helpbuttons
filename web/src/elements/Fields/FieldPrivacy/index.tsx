@@ -1,11 +1,14 @@
+import React from 'react';
 import { useState } from 'react';
 
-export function FieldPrivacy({
+
+export const FieldPrivacy = React.forwardRef(({
   name,
   setValue,
   textPublic,
   textPrivate,
-}) {
+}, ref) => {
+
   const [isPrivate, setPrivate] = useState(false);
   const changePrivacy = () => {
     setPrivate(!isPrivate);
@@ -25,7 +28,7 @@ export function FieldPrivacy({
             <svg
               stroke="currentColor"
               fill="currentColor"
-              stroke-width="0"
+              strokeWidth="0"
               viewBox="0 0 512 512"
               height="1em"
               width="1em"
@@ -41,4 +44,4 @@ export function FieldPrivacy({
       </label>
     </div>
   );
-}
+});
