@@ -19,7 +19,7 @@ export default function FieldLocation({
   defaultZoom,
   markerImage,
   markerCaption = '?',
-  markerColor
+  markerColor = 'gray'
 }) {
 
   const [showHideMenu, setHideMenu] = useState(false);

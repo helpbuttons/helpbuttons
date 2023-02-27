@@ -9,7 +9,7 @@ import { ClearCurrentButton } from "state/Explore";
 import { buttonTypes } from "shared/buttonTypes";
 
 
-export function MarkerSelector({ onClick, markerPosition, markerImage = null, markerCaption= '?', markerColor = 'red' }) {
+export function MarkerSelector({ onClick, markerPosition, markerImage = null, markerCaption= '?', markerColor}) {
   const [position, setPosition] = useState(markerPosition);
   const map = useMapEvents({
     click: (e) => {
