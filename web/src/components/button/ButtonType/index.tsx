@@ -29,19 +29,20 @@ const ButtonType = React.forwardRef(
     return (
       <>
         <FieldRadio label="Button type:">
-          {buttonTypes.map((buttonType) => (
-            <>
+          {buttonTypes.map((buttonType, idx) => (
+            <div key={idx}>
               <FieldRadioOption
                 onChange={onChange}
                 onBlur={onBlur}
                 name={name}
                 ref={ref}
                 value={buttonType.name}
+                key={idx}
               >
               <div className={`btn-filter__icon ${buttonType.color}`}></div>
               <div className="btn-with-icon__text">{buttonType.caption}</div>
               </FieldRadioOption>
-            </>
+            </div>
             
           ))}
         </FieldRadio>
