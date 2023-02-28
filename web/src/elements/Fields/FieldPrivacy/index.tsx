@@ -1,11 +1,12 @@
+import React from 'react';
 import { useState } from 'react';
 
-export function FieldPrivacy({
+const FieldPrivacy = React.forwardRef({
   name,
   setValue,
   textPublic,
   textPrivate,
-}) {
+}, ref) => {
   const [isPrivate, setPrivate] = useState(false);
   const changePrivacy = () => {
     setPrivate(!isPrivate);
