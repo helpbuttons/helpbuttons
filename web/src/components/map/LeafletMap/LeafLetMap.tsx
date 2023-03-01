@@ -32,14 +32,6 @@ export default function LeafLetMap({
     store,
     (state: GlobalState) => state.config,
   );
-  useEffect(() => {
-    if(map && center) {
-      console.log('setting center')
-      map.setView(center, map.getZoom());
-    }
-    
-  }, [center]);
-
 
   useEffect(() => {
     if(map && center) {
