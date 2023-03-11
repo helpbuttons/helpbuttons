@@ -16,15 +16,20 @@ export class PostService {
     private buttonService: ButtonService,
   ) {}
 
-  new(message: string, buttonId: string, author: User){
-    return this.buttonService.findById(buttonId).then(
-      (button ) => {
-        return this.postRepository.insert([{
-         id: dbIdGenerator(), message, button, author
-        }]);
-    })
+  new(message: string, buttonId: string, author: User) {
+    return this.buttonService.findById(buttonId).then((button) => {
+      return this.postRepository.insert([
+        {
+          id: dbIdGenerator(),
+          message,
+          button,
+          author,
+        },
+      ]);
+    });
   }
 
+  
   findById(id: string) {
     return this.postRepository.findOne({
       where: { id },
@@ -41,6 +46,14 @@ export class PostService {
         return true;
       }
       return false;
+    });
+  }
+
+  public findByButtonId(buttonId) {
+    return this.postRepository.find({
+      where: { button: { id: buttonId } },
+      relations: ['comments', 'author', 'comments.author'],
+      order: { created_at: 'DESC', comments: { created_at: 'DESC' } },
     });
   }
 }

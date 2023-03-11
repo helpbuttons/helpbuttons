@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, HttpException, HttpStatus, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CurrentUser } from "@src/shared/decorator/current-user";
 import { OnlyRegistered } from "@src/shared/decorator/roles.decorator";
@@ -37,6 +37,16 @@ export class PostController {
     }
 
     @OnlyRegistered()
+    @Post('new/comment/:postId')
+    newComment(
+      @Body() message: MessageDto,
+      @Param('postId') postId: string,
+      @CurrentUser() user: User,
+    ){
+      return this.commentService.new(message.message, postId, user);
+    }
+
+    @OnlyRegistered()
     @Post('update')
     update(
       @Param('postId') postId: string,
@@ -52,7 +62,6 @@ export class PostController {
         }
       )
      
-      // return this.postService.update(postId, message, buttonId, user);
     }
     
 
@@ -105,5 +114,13 @@ export class PostController {
         //   throw new CustomHttpException(ErrorName.NoOwnerShip)
         // }        // const response = this.postService.delete(postId);
         // return response;
+    }
+
+    @Get('findByButtonId/:buttonId')
+    async findByButtonId(
+      @Param('buttonId') buttonId: string
+    )
+    {
+      return this.postService.findByButtonId(buttonId)
     }
   }

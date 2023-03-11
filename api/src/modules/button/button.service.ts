@@ -96,16 +96,8 @@ export class ButtonService {
     let button: Button = await this.buttonRepository.findOne({
       where: { id },
       relations: [
-        'network',
-        'feed',
-        'feed.comments',
-        'feed.author',
-        'feed.comments.author',
         'owner',
       ],
-      order: {
-        feed: { created_at: 'DESC', comments: { created_at: 'DESC' } },
-      },
     });
     try {
       return { ...button };

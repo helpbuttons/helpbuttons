@@ -16,22 +16,14 @@ import DebugToJSON from 'elements/Debug';
 
 export default function ButtonFile() {
   const id = router.query.id;
-  // get from the store!!
-  // const [button, setButton] = useState<Button>(null);
-  // FeedButton
-  // const [feed, setFeed] = useState<any>(null);
-  const loggedInUser = useRef(
-    store,
-    (state: GlobalState) => state.loggedInUser,
-  );
 
   const currentButton: Button = useRef(
     store,
     (state: GlobalState) => state.explore.currentButton,
   );
-
+  
   useEffect(() => {
-    if (id !== null) {
+    if (id !== null && !currentButton) {
       store.emit(new SetAsCurrentButton(id));
       store.emit(
         new FindButton(
@@ -45,61 +37,17 @@ export default function ButtonFile() {
         ),
       );
     }
-    // if (!feed && currentButton) {
-    //   const singleFeedItem = {
-    //     author: currentButton.owner,
-    //     message: 'my message',
-    //     created: '2023-03-02T18:40:24.126Z',
-    //     modified: Date(),
-    //     comments: [
-    //       {
-    //         author: currentButton.owner,
-    //         message: 'comment from someone',
-    //         created: Date(),
-    //         modified: Date(),
-    //       },
-    //       {
-    //         author: currentButton.owner,
-    //         message: 'comment from someone',
-    //         created: Date(),
-    //         modified: Date(),
-    //       },
-    //     ],
-    //     reactions: [
-    //       {
-    //         ':like:': 10,
-    //         ':heart:': 5,
-    //       },
-    //     ],
-    //   };
-    //   const feed = [singleFeedItem, singleFeedItem, singleFeedItem];
-    //   setFeed(feed);
-    // }
+    
   }, [id, currentButton]);
 
   return (
     <>
       {currentButton && (
-        
         <>
           <div className="body__content">
             <div className="body__section">
-            <DebugToJSON data={currentButton}/>
               <CardButton button={currentButton} />
-
-              {loggedInUser && 
-              <div className="button-file__action-section">
-                <div className="button-file__action-section--field">
-                  <PostNew buttonId={currentButton.id} />
-                </div>
-              </div>
-              }
-              {currentButton && (
-                <>
-                <Feed feed={currentButton.feed} buttonId={currentButton.id} />
-                <Feed feed={currentButton.feed} buttonId={currentButton.id} />
-                </>
-              )}
+              <Feed buttonId={currentButton.id} />
             </div>
           </div>
         </>

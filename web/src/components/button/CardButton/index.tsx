@@ -170,8 +170,8 @@ export function CardButtonHeadBig({ button }) {
         </div>
 
         <div className="card-button__hashtags">
-          {button.tags.map((tag) => {
-            return <div className="hashtag">{tag}</div>;
+          {button.tags.map((tag, idx) => {
+            return <div className="hashtag" key={idx}>{tag}</div>;
           })}
         </div>
 
