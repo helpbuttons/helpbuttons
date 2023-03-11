@@ -1,18 +1,19 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from '@src/modules/auth/auth.module';
 import { ButtonModule } from '@src/modules/button/button.module';
-import { FeedButtonModule } from '@src/modules/feed-button/feed-button.module';
 import { MailModule } from '@src/modules/mail/mail.module';
 import { NetworkModule } from '@src/modules/network/network.module';
+// import { PostModule } from '@src/modules/post/post.module';
 import { StorageModule } from '@src/modules/storage/storage.module';
 import { TagModule } from '@src/modules/tag/tag.module';
 import { TemplateButtonModule } from '@src/modules/template-button/template-button.module';
 import { UserCredentialModule } from '@src/modules/user-credential/user-credential.module';
 import { UserModule } from '@src/modules/user/user.module';
+import { AppLogger } from '@src/shared/middlewares/app-logger.middleware';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { typeOrmModuleOptions } from './configs/orm.config';
@@ -42,9 +43,14 @@ import { validate } from './validators/env.validator';
     AuthModule,
     UserCredentialModule,
     StorageModule,
-    FeedButtonModule
+    // PostModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(AppLogger).forRoutes('*');
+  }
+}
