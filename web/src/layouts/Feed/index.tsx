@@ -37,36 +37,36 @@ export default function Feed({ buttonId }) {
   }, [buttonId]);
 
   // if (!feed && currentButton) {
-    //   const singleFeedItem = {
-    //     author: currentButton.owner,
-    //     message: 'my message',
-    //     created: '2023-03-02T18:40:24.126Z',
-    //     modified: Date(),
-    //     comments: [
-    //       {
-    //         author: currentButton.owner,
-    //         message: 'comment from someone',
-    //         created: Date(),
-    //         modified: Date(),
-    //       },
-    //       {
-    //         author: currentButton.owner,
-    //         message: 'comment from someone',
-    //         created: Date(),
-    //         modified: Date(),
-    //       },
-    //     ],
-    //     reactions: [
-    //       {
-    //         ':like:': 10,
-    //         ':heart:': 5,
-    //       },
-    //     ],
-    //   };
-    //   const feed = [singleFeedItem, singleFeedItem, singleFeedItem];
-    //   setFeed(feed);
-    // }
-    
+  //   const singleFeedItem = {
+  //     author: currentButton.owner,
+  //     message: 'my message',
+  //     created: '2023-03-02T18:40:24.126Z',
+  //     modified: Date(),
+  //     comments: [
+  //       {
+  //         author: currentButton.owner,
+  //         message: 'comment from someone',
+  //         created: Date(),
+  //         modified: Date(),
+  //       },
+  //       {
+  //         author: currentButton.owner,
+  //         message: 'comment from someone',
+  //         created: Date(),
+  //         modified: Date(),
+  //       },
+  //     ],
+  //     reactions: [
+  //       {
+  //         ':like:': 10,
+  //         ':heart:': 5,
+  //       },
+  //     ],
+  //   };
+  //   const feed = [singleFeedItem, singleFeedItem, singleFeedItem];
+  //   setFeed(feed);
+  // }
+
   return (
     <div className="feed-container">
       {/* <div className="feed-selector">
@@ -108,32 +108,34 @@ export default function Feed({ buttonId }) {
                         : ''}
                     </a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a
-                      onClick={() => {
-                        setShowNewCommentDialog(
-                          !showNewCommentDialog,
-                        );
-                      }}
-                    >
-                      Leave comment +
-                    </a>
-                    {showNewCommentDialog && (
-                    <PostCommentNew
-                      postId={post.id}
-                      onSubmit={() => {
-                        reloadPosts(buttonId);
-                        setShowComments(true)
-                        setShowNewCommentDialog(false)
-                      }}
+                    {loggedInUser && (
+                      <>
+                        <a
+                          onClick={() => {
+                            setShowNewCommentDialog(
+                              !showNewCommentDialog,
+                            );
+                          }}
+                        >
+                          Leave comment +
+                        </a>
+                        {showNewCommentDialog && (
+                          <PostCommentNew
+                            postId={post.id}
+                            onSubmit={() => {
+                              reloadPosts(buttonId);
+                              setShowComments(true);
+                              setShowNewCommentDialog(false);
+                            }}
+                          />
+                        )}
+                      </>
+                    )}
+                    <PostComments
+                      comments={post.comments}
+                      showComments={showComments}
                     />
-                  )}
-                  <PostComments
-                    comments={post.comments}
-                    showComments={showComments}
-                  />
-
-                  
-                   </div>
+                  </div>
                 </div>
               </div>
             );
