@@ -1,69 +1,109 @@
 //the button url itself
-import { IoPaperPlaneOutline } from "react-icons/io5";
-import { IoAddOutline } from "react-icons/io5";
 
-import CardButton from 'components/button/CardButton'
-import CardNotification from 'components/feed/CardNotification'
+import CardButton from 'components/button/CardButton';
 
-import Feed from 'layouts/Feed'
-import t from "i18n";
-
+import Feed from 'layouts/Feed';
+import t from 'i18n';
+import router from 'next/router';
+import { useEffect, useState } from 'react';
+import { Button } from 'shared/entities/button.entity';
+import { GlobalState, store } from 'pages';
+import { FindButton, SetAsCurrentButton } from 'state/Explore';
+import { alertService } from 'services/Alert';
+import { useRef } from 'store/Store';
+import PostNew from 'components/feed/PostNew';
+import DebugToJSON from 'elements/Debug';
 
 export default function ButtonFile() {
+  const id = router.query.id;
+  // get from the store!!
+  // const [button, setButton] = useState<Button>(null);
+  // FeedButton
+  // const [feed, setFeed] = useState<any>(null);
+  const loggedInUser = useRef(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+  );
+
+  const currentButton: Button = useRef(
+    store,
+    (state: GlobalState) => state.explore.currentButton,
+  );
+
+  useEffect(() => {
+    if (id !== null) {
+      store.emit(new SetAsCurrentButton(id));
+      store.emit(
+        new FindButton(
+          id,
+          () => {
+            console.log('button loaded');
+          },
+          (errorMessage) => {
+            alertService.error(errorMessage);
+          },
+        ),
+      );
+    }
+    // if (!feed && currentButton) {
+    //   const singleFeedItem = {
+    //     author: currentButton.owner,
+    //     message: 'my message',
+    //     created: '2023-03-02T18:40:24.126Z',
+    //     modified: Date(),
+    //     comments: [
+    //       {
+    //         author: currentButton.owner,
+    //         message: 'comment from someone',
+    //         created: Date(),
+    //         modified: Date(),
+    //       },
+    //       {
+    //         author: currentButton.owner,
+    //         message: 'comment from someone',
+    //         created: Date(),
+    //         modified: Date(),
+    //       },
+    //     ],
+    //     reactions: [
+    //       {
+    //         ':like:': 10,
+    //         ':heart:': 5,
+    //       },
+    //     ],
+    //   };
+    //   const feed = [singleFeedItem, singleFeedItem, singleFeedItem];
+    //   setFeed(feed);
+    // }
+  }, [id, currentButton]);
 
   return (
-
     <>
+      {currentButton && (
+        
+        <>
+          <div className="body__content">
+            <div className="body__section">
+            <DebugToJSON data={currentButton}/>
+              <CardButton button={currentButton} />
 
-        <div className="body__content">
-
-        <div className="body__section">
-
-
-            <CardButton />
-
-
-          {/* ACTION SECTION - HERE COME BASIC INTERACTION BUTTONS AND MESSAGE INPUT */}
-          <div className="button-file__action-section">
-
-            <div className="button-file__action-section--field">
-
-              <form className="feeds__new-message" >
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        <IoAddOutline />
-                      </div>
-                    </div>
-                  </button>
-                  <div className="feeds__new-message-message">
-                    <input placeholder={t('feed.write')} className="form__input feeds__new-message-input"></input>
-                  </div>
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        <IoPaperPlaneOutline />
-                      </div>
-                    </div>
-                  </button>
-
-              </form>
-
+              {loggedInUser && 
+              <div className="button-file__action-section">
+                <div className="button-file__action-section--field">
+                  <PostNew buttonId={currentButton.id} />
+                </div>
+              </div>
+              }
+              {currentButton && (
+                <>
+                <Feed feed={currentButton.feed} buttonId={currentButton.id} />
+                <Feed feed={currentButton.feed} buttonId={currentButton.id} />
+                </>
+              )}
             </div>
-
           </div>
-
-        {/* FEED SECTION - HERE COME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES */}
-        <Feed />
-
-      </div>
-      </div>
-
-
-
+        </>
+      )}
     </>
-
-
   );
 }

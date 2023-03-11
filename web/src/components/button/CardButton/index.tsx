@@ -1,38 +1,19 @@
 //Main card of the Button that is used inside ButtonFile component and in ButtonNewPublish for the preview. It has all the Data that a button has andd displays it according to the main buttonTemplate and network that buttton selected.
-import Image from 'next/image';
 import {
   IoChevronForwardOutline,
-  IoHeartDislikeOutline,
   IoChevronBackOutline,
   IoHeartOutline,
-  IoRibbonOutline,
   IoAddCircleOutline,
 } from 'react-icons/io5';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 import router from 'next/router';
-import { useRef } from 'store/Store';
-import { GlobalState, store } from 'pages';
-import { useEffect, useState } from 'react';
-import { FindButton } from 'state/Explore';
+import {  useState } from 'react';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
-import { Button } from 'shared/entities/button.entity';
-import Link from 'next/link';
-import { alertService } from 'services/Alert';
 
-export default function CardButtonFile() {
-  const { id } = router.query;
-  // get from the store!!
-  const [button, setButton] = useState<Button>(null);
-  useEffect(() => {
-    if (id != null) {
-      store.emit(
-        new FindButton(id, setButton, (errorMessage) => {
-          alertService.error(errorMessage);
-        }),
-      );
-    }
-  }, [id]);
+
+export default function CardButtonFile({button}) {
+  
 
   return (
     <>

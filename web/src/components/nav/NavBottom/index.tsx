@@ -8,9 +8,7 @@ import { IoHeartOutline } from "react-icons/io5";
 import { IoLogInOutline } from "react-icons/io5";
 import { IoHelpOutline } from "react-icons/io5";
 import { IoGlobeOutline } from "react-icons/io5";
-import { useRef } from "store/Store";
-import { GlobalState, store } from 'pages';
-import {ImageContainer} from "elements/ImageWrapper";
+
 import t from 'i18n';
 
 export default NavBottom;

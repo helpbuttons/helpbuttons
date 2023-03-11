@@ -110,4 +110,8 @@ export class SetupDtoOut {
     required: true,
   })
   buttonCount: number;
+
+  @ApiProperty({
+  })
+  commit: string;
 }
