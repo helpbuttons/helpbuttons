@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ButtonService } from './button.service';
 import { ButtonController } from './button.controller';
@@ -6,6 +6,7 @@ import { Button } from './button.entity';
 import { TagModule } from '../tag/tag.module';
 import { NetworkModule } from '../network/network.module';
 import { StorageModule } from '../storage/storage.module';
+import { PostModule } from '../post/post.module';
 
 
 @Module({
@@ -13,7 +14,8 @@ import { StorageModule } from '../storage/storage.module';
     TypeOrmModule.forFeature([Button]),
     TagModule,
     NetworkModule,
-    StorageModule
+    StorageModule,
+    forwardRef(() => PostModule)
   ],
   controllers: [
     ButtonController

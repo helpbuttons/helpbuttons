@@ -2,7 +2,6 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
-  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
@@ -16,8 +15,6 @@ import { StorageService } from '../storage/storage.service';
 import { User } from '../user/user.entity';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { Role } from '@src/shared/types/roles';
-import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
-import { ErrorName } from '@src/shared/types/error.list';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 
 @Injectable()
@@ -59,9 +56,8 @@ export class ButtonService {
       owner: user,
       image: null,
       title: createDto.title,
-      address: createDto.address
+      address: createDto.address,
     };
-    console.log(button)
     await getManager().transaction(
       async (transactionalEntityManager) => {
         if (Array.isArray(button.tags)) {
@@ -99,15 +95,22 @@ export class ButtonService {
   async findById(id: string) {
     let button: Button = await this.buttonRepository.findOne({
       where: { id },
-      relations: ['network', 'feed', 'owner'],
+      relations: [
+        'network',
+        'feed',
+        'feed.comments',
+        'feed.author',
+        'feed.comments.author',
+        'owner',
+      ],
+      order: {
+        feed: { created_at: 'DESC', comments: { created_at: 'DESC' } },
+      },
     });
     try {
-      // let createdButtonsCount = await this.buttonRepository.count({where: {owner:  button.owner.id}});
-      return {...button}
-      // , createdButtonsCount}
-    }catch(err){
-    }
-    return {...button};
+      return { ...button };
+    } catch (err) {}
+    return { ...button };
   }
 
   async update(id: string, updateDto: UpdateButtonDto) {
@@ -132,20 +135,18 @@ export class ButtonService {
       await this.tagService.updateTags('button', id, button.tags);
     }
 
-    if (isImageData(updateDto.image))
-    {
+    if (isImageData(updateDto.image)) {
       try {
         const newImage = await this.storageService.newImage64(
           updateDto.image,
         );
-        if (newImage){
+        if (newImage) {
           button.image = newImage;
         }
       } catch (err) {
         throw new ValidationException({ logo: err.message });
       }
     }
-    
 
     return this.buttonRepository.save([button]);
   }
@@ -190,27 +191,25 @@ export class ButtonService {
         },
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       return [];
     }
   }
 
   async delete(id: string) {
-    const res = await this.buttonRepository.delete({ id })
+    const res = await this.buttonRepository.delete({ id });
     return res.affected;
   }
 
-  public isOwner(currentUser, buttonId)
-  {
-    if(!currentUser || !currentUser.role)
-    {
-      throw new CustomHttpException(ErrorName.NeedToBeRegistered)
-    }
-
-    if(currentUser.role == Role.admin || currentUser.id == buttonId)
-    {
-      return true;
-    }
-    throw new CustomHttpException(ErrorName.NoButtonOwnerShip)
+  public isOwner(currentUser: User, buttonId: string) {
+    return this.findById(buttonId).then((button) => {
+      if (
+        currentUser.role == Role.admin ||
+        currentUser.id == button.owner.id
+      ) {
+        return true;
+      }
+      return false;
+    });
   }
 }
