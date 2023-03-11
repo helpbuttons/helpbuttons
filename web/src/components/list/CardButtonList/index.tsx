@@ -12,17 +12,8 @@ import { Button } from "shared/entities/button.entity";
 
 export default function CardButtonList({button}) {
 
-  const currentButton: Button = useRef(
-    store,
-    (state: GlobalState) => state.explore.currentButton
-  );
-
   return (
     <>
-    {currentButton?.id == button.id &&
-      <span>!</span> 
-      //  this is the chosen button 
-    }
     <div className="list__element">
       <div className={`card-button-list card-button-list--${button.type}`}>
         <div className="card-button-list__picture-container">

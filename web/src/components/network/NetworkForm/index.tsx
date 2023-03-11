@@ -9,11 +9,6 @@ import FieldText from 'elements/Fields/FieldText';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import { useRouter } from 'next/router';
-import { store } from 'pages';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { alertService } from 'services/Alert';
-import { SetupSteps } from 'shared/setupSteps';
 import { getUrlOrigin } from 'shared/sys.helper';
 import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
 // name, description, logo, background image, button template, color pallete, colors

@@ -54,6 +54,6 @@ export class Network extends BaseEntity {
   jumbo?: string;
 
   @OneToMany(() => Button, (button) => button.network)
-  buttons: Network[];
+  buttons: Button[];
   // missing, templates, buttons, friendNetworks, owner
 }
