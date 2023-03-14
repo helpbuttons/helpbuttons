@@ -39,7 +39,12 @@ export class GetConfig implements WatchEvent {
             err.statusCode === HttpStatus.SERVICE_UNAVAILABLE
           ) {
             this.onError('nomigrations');
+        } else if (
+          error.status === HttpStatus.INTERNAL_SERVER_ERROR
+        ) {
+          this.onError('nobackend');
         } else {
+          console.log(error)
           throw error;
         }
         return of(undefined);
