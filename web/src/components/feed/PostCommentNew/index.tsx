@@ -6,10 +6,14 @@ import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { CreateNewPostComment } from 'state/Posts';
 
+
 export default function PostCommentNew({ postId, onSubmit }) {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
+    setFocus,
     formState: { errors, isSubmitting },
   } = useForm();
 
@@ -27,6 +31,7 @@ export default function PostCommentNew({ postId, onSubmit }) {
       ),
     );
   };
+
   return (
     <Form
       onSubmit={handleSubmit(onSubmitLocal)}
@@ -38,6 +43,9 @@ export default function PostCommentNew({ postId, onSubmit }) {
         placeholder="Write your comment"
         validationError={errors.description}
         classNameExtra="squared"
+        watch={watch}
+        setFocus={setFocus}
+        setValue={setValue}
         {...register('message', {
           required: true,
           minLength: 10,
