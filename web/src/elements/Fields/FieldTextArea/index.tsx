@@ -31,23 +31,17 @@ export const FieldTextArea = React.forwardRef(({
 
   const handleChange = (event) => {
     // onChange()
-
+    return;
     
     const firstDoublePoint = event.target.value.search(":") ;
     const countDoublePoint = event.target.value.split(":") ;
     const cursorPosition = event.target.selectionEnd
 
-    // console.log(` coming ${firstDoublePoint} count ${countDoublePoint.length} -> ${countDoublePoint.length % 2}`)
-    
-    // console.log(event.target.value)
-    // console.log(`firstdoublepoint: ${firstDoublePoint} | ${JSON.stringify(countDoublePoint)} - ${countDoublePoint.length%2}`)
     if (firstDoublePoint > 0 && countDoublePoint.length % 2 == 0) {
       const searchString = countDoublePoint[countDoublePoint.length-1];
       if (searchString) 
       {
-        // console.log(`search ${searchString}`);
         const emojis = SearchIndex.search(searchString).then((emojies ) => {
-          // console.log(emojies)
           if (emojies && emojies.length > 0)
           {
             setFoundEmojies(emojies)
@@ -59,8 +53,6 @@ export const FieldTextArea = React.forwardRef(({
       }else {
         setFoundEmojies([])
       }
-      // const emojis = await SearchIndex.search()
-      // console.log(emojis)
     }else {
       setFoundEmojies([])
     }
