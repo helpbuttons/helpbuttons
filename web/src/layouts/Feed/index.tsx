@@ -10,7 +10,7 @@ import { alertService } from 'services/Alert';
 import { LoadPosts } from 'state/Posts';
 import { useRef } from 'store/Store';
 
-export default function Feed({ buttonId }) {
+export default function Feed({ buttonId, buttonOwnerId = -1 }) {
   const [posts, setPosts] = useState(null);
   const [showNewCommentDialog, setShowNewCommentDialog] =
     useState(false);
@@ -72,7 +72,7 @@ export default function Feed({ buttonId }) {
       {/* <div className="feed-selector">
         <Dropdown />
       </div> */}
-      {loggedInUser && buttonId && (
+      {loggedInUser && buttonId  && buttonOwnerId == loggedInUser.id && (
         <PostNew
           buttonId={buttonId}
           onSubmit={() => {
@@ -80,6 +80,7 @@ export default function Feed({ buttonId }) {
           }}
         />
       )}
+      &nbsp;
       <div className="feed-line"></div>
 
       <div className="feed-section">
@@ -140,6 +141,11 @@ export default function Feed({ buttonId }) {
               </div>
             );
           })}
+          {(posts && posts.length == 0) && 
+            <>
+            No posts here
+            </>
+          }
       </div>
     </div>
   );

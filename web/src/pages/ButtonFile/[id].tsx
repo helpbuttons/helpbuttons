@@ -47,7 +47,7 @@ export default function ButtonFile() {
           <div className="body__content">
             <div className="body__section">
               <CardButton button={currentButton} />
-              <Feed buttonId={currentButton.id} />
+              <Feed buttonId={currentButton.id} buttonOwnerId={currentButton.owner.id} />
             </div>
           </div>
         </>
