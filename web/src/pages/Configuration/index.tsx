@@ -26,6 +26,7 @@ function Configuration() {
     watch,
     setError,
     reset,
+    setFocus
   } = useForm({});
 
   useEffect(() => {
@@ -87,6 +88,7 @@ function Configuration() {
           onSubmit={onSubmit}
           register={register}
           setValue={setValue}
+          setFocus={setFocus}
           watch={watch}
           isSubmitting={isSubmitting}
           control={control}

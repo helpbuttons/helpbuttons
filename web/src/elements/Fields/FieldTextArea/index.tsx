@@ -27,6 +27,7 @@ export const FieldTextArea = React.forwardRef(({
 }, ref): IFieldTextArea => {
 
   const [foundEmojies, setFoundEmojies] = useState([])
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
 
   const handleChange = (event) => {
@@ -57,24 +58,25 @@ export const FieldTextArea = React.forwardRef(({
       setFoundEmojies([])
     }
   }
-  const addEmojiToMessage = (emoji) => {
-    const inputField = 'message';
-    const message = watch(inputField)
+  const addEmojiToTextArea = (emoji) => {
+    const value = watch(name)
     // console.log(emoji)
-    setValue(inputField, `${message}:${emoji.id}:`)
-    setFocus(inputField, { shouldSelect: false })
+    setValue(name, `${value}${emoji.native}`)
+    setFocus(name, { shouldSelect: false })
   }
-
+  const handleShowEmojiPicker = () => {
+    setShowEmojiPicker(!showEmojiPicker)
+  }
     return (
       <>
       <div className="form__field">
         <p className="popup__paragraph">{label}</p>
         {/* {JSON.stringify(foundEmojies)} */}
-        {foundEmojies.map((emoji, idx) => {
+        {/* {foundEmojies.map((emoji, idx) => {
           
           return (<p>{emoji.id} - {emoji.skins[0].native}</p>)
-        })
-        }
+        }) */}
+        
         <textarea
           onChange={handleChange}
           name={name}
@@ -83,8 +85,11 @@ export const FieldTextArea = React.forwardRef(({
           ref={ref}
         ></textarea>
         
-        <Picker data={data} onEmojiSelect={addEmojiToMessage} />
-
+        {/* <div onClick={setShowPicker(!showPicker)}>😀</div> */}
+        <div onClick={handleShowEmojiPicker}>😀</div>
+        {showEmojiPicker && 
+        <Picker data={data} onEmojiSelect={addEmojiToTextArea} />
+        }
         <FieldError validationError={validationError} />
       </div>
     </>

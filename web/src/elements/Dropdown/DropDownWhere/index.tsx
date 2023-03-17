@@ -13,6 +13,7 @@ import { DropdownAutoComplete, DropDownAutoCompleteOption } from '../DropDownAut
 import { SetupDtoOut } from 'services/Setup/config.type';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
+import { alertService } from 'services/Alert';
 
 export function DropDownWhere({placeholder}) {
     const timeInMsBetweenStrokes = 150; //ms
@@ -49,7 +50,8 @@ export function DropDownWhere({placeholder}) {
               }),
             );
           }else{
-            console.error('rs undefined??! 176 homeinfo')
+            alertService.warn('API opencage not working, do you have an adblocker? Or contact the administrator')
+            console.error('API opencage not working, do you have an adblocker? Or contact the administrator')
           }
         },
         (e) => {

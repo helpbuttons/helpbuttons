@@ -26,6 +26,7 @@ function NetworkForm({
   control,
   errors,
   linkFwd,
+  setFocus,
   description,
   showClose = true,
 }) {
@@ -57,6 +58,9 @@ function NetworkForm({
                 placeholder="Welcome to the network of sharing ..."
                 classNameInput="squared"
                 validationError={errors.description}
+                watch={watch}
+                setValue={setValue}
+                setFocus={setFocus}
                 {...register('description', { required: true })}
               />
               <FieldPrivacy
