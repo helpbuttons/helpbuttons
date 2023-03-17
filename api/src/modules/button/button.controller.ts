@@ -3,15 +3,12 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Query,
   UseInterceptors,
   UploadedFiles,
-  HttpException,
 } from '@nestjs/common';
-import { HttpStatus } from '@src/shared/types/http-status.enum';
 
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -27,16 +24,18 @@ import {
 } from '../storage/storage.utils';
 import { CurrentUser } from '@src/shared/decorator/current-user';
 import { User } from '../user/user.entity';
-import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
+import {
+  AllowGuest,
+  OnlyRegistered,
+} from '@src/shared/decorator/roles.decorator';
 import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator';
-import { Role } from '@src/shared/types/roles';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
+import { ErrorName } from '@src/shared/types/error.list';
 
 @ApiTags('buttons')
 @Controller('buttons')
 export class ButtonController {
-  constructor(
-    private readonly buttonService: ButtonService
-    ) {}
+  constructor(private readonly buttonService: ButtonService) {}
 
   @OnlyRegistered()
   @Post('new')
@@ -91,7 +90,7 @@ export class ButtonController {
   findOne(@Param('buttonId') buttonId: string) {
     return this.buttonService.findById(buttonId);
   }
-  
+
   @OnlyRegistered()
   @Post('update/:buttonId')
   update(
@@ -99,8 +98,14 @@ export class ButtonController {
     @Body() updateDto: UpdateButtonDto,
     @CurrentUser() user: User,
   ) {
-    this.buttonService.isOwner(user, buttonId)
-    return this.buttonService.update(buttonId, updateDto);
+    return this.buttonService
+      .isOwner(user, buttonId)
+      .then((isOwner) => {
+        if (!isOwner) {
+          throw new CustomHttpException(ErrorName.NoOwnerShip);
+        }
+        return this.buttonService.update(buttonId, updateDto);
+      });
   }
 
   // only allow owner of buttonId or Admin
@@ -109,11 +114,14 @@ export class ButtonController {
   async delete(
     @Param('buttonId') buttonId: string,
     @CurrentUser() user: User,
-    ) {
-      this.buttonService.isOwner(user, buttonId)
-      const response = this.buttonService.delete(buttonId);
-      return response;
+  ) {
+    return this.buttonService
+      .isOwner(user, buttonId)
+      .then((isOwner) => {
+        if (!isOwner) {
+          throw new CustomHttpException(ErrorName.NoOwnerShip);
+        }
+        return this.buttonService.delete(buttonId);
+      });
   }
-
-  
 }

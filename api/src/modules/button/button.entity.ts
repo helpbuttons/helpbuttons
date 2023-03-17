@@ -6,8 +6,8 @@ import {
   OneToMany,
   PrimaryColumn,
 } from 'typeorm';
-import { FeedButton } from '../feed-button/feed-button.entity';
 import { Network } from '../network/network.entity';
+import { Post } from '../post/post.entity';
 import { User } from '../user/user.entity';
 // https://stackoverflow.com/a/67557083
 
@@ -50,8 +50,8 @@ export class Button extends BaseEntity {
   @ManyToOne(() => Network, (network) => network.buttons)
   network: Network;
 
-  @OneToMany(() => FeedButton, (feed) => feed.button)
-  feed: FeedButton[];
+  @OneToMany(() => Post, (feed) => feed.button)
+  feed: Post[];
 
   @ManyToOne((type) => User)
   owner: User;

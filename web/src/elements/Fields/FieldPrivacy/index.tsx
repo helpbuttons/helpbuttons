@@ -1,12 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 
-const FieldPrivacy = React.forwardRef({
-  name,
-  setValue,
-  textPublic,
-  textPrivate,
-}, ref) => {
+export const FieldPrivacy = 
+React.forwardRef(
+  ({
+      name,
+      setValue,
+      textPublic,
+      textPrivate,
+    }, ref) => {
   const [isPrivate, setPrivate] = useState(false);
   const changePrivacy = () => {
     setPrivate(!isPrivate);
@@ -42,4 +44,4 @@ const FieldPrivacy = React.forwardRef({
       </label>
     </div>
   );
-}
+});

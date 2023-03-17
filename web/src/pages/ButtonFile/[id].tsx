@@ -1,69 +1,57 @@
 //the button url itself
-import { IoPaperPlaneOutline } from "react-icons/io5";
-import { IoAddOutline } from "react-icons/io5";
 
-import CardButton from 'components/button/CardButton'
-import CardNotification from 'components/feed/CardNotification'
+import CardButton from 'components/button/CardButton';
 
-import Feed from 'layouts/Feed'
-import t from "i18n";
-
+import Feed from 'layouts/Feed';
+import t from 'i18n';
+import router from 'next/router';
+import { useEffect, useState } from 'react';
+import { Button } from 'shared/entities/button.entity';
+import { GlobalState, store } from 'pages';
+import { FindButton, SetAsCurrentButton } from 'state/Explore';
+import { alertService } from 'services/Alert';
+import { useRef } from 'store/Store';
+import PostNew from 'components/feed/PostNew';
+import DebugToJSON from 'elements/Debug';
 
 export default function ButtonFile() {
+  const id = router.query.id;
+
+  const currentButton: Button = useRef(
+    store,
+    (state: GlobalState) => state.explore.currentButton,
+  );
+  
+  useEffect(() => {
+    if (id !== null && !currentButton) {
+      store.emit(new SetAsCurrentButton(id));
+      store.emit(
+        new FindButton(
+          id,
+          () => {
+            console.log('button loaded');
+          },
+          (errorMessage) => {
+            alertService.error(errorMessage);
+          },
+        ),
+      );
+    }
+    
+  }, [id, currentButton]);
 
   return (
-
     <>
-
-        <div className="body__content">
-
-        <div className="body__section">
-
-
-            <CardButton />
-
-
-          {/* ACTION SECTION - HERE COME BASIC INTERACTION BUTTONS AND MESSAGE INPUT */}
-          <div className="button-file__action-section">
-
-            <div className="button-file__action-section--field">
-
-              <form className="feeds__new-message" >
-
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        <IoAddOutline />
-                      </div>
-                    </div>
-                  </button>
-                  <div className="feeds__new-message-message">
-                    <input placeholder={t('feed.write')} className="form__input feeds__new-message-input"></input>
-                  </div>
-                  <button className="btn-circle">
-                    <div className="btn-circle__content">
-                      <div className="btn-circle__icon">
-                        <IoPaperPlaneOutline />
-                      </div>
-                    </div>
-                  </button>
-
-              </form>
-
+      {currentButton && (
+        <>
+          <div className="body__content">
+            <div className="body__section">
+              <CardButton button={currentButton} />
+              <Feed buttonId={currentButton.id} buttonOwnerId={currentButton.owner.id} />
             </div>
-
           </div>
-
-        {/* FEED SECTION - HERE COME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES */}
-        <Feed />
-
-      </div>
-      </div>
-
-
-
+        </>
+      )}
     </>
-
-
   );
 }
