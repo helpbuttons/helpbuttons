@@ -40,6 +40,8 @@ export default function ProfileEdit() {
     setValue,
     setError,
     reset,
+    watch,
+    setFocus,
     formState: { errors, isSubmitting },
   } = useForm({});
   const [errorMsg, setErrorMsg] = useState(undefined);
@@ -124,6 +126,9 @@ export default function ProfileEdit() {
                     name="description"
                     label="Description"
                     classNameInput="squared"
+                    watch={watch}
+                    setValue={setValue}
+                    setFocus={setFocus}
                     validationError={errors.description}
                     {...register('description', { required: true })}
                   />
