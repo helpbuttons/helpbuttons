@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { configFileName } from '@src/shared/helpers/config.helper';
+import { configFileName } from '@src/shared/helpers/config-name.const';
 
 import { NodeEnv } from '@src/shared/types';
 import { WebAppConfigs } from '../types/web.type';

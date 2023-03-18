@@ -7,7 +7,7 @@ import {
 import { SetupDto, SetupDtoOut } from './setup.entity';
 import * as fs from 'fs';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { checkDatabase, configFileName, configFullPath, getConfig, isConfigFileCreated } from '@src/shared/helpers/config.helper';
+import { checkDatabase, configFullPath, getConfig, isConfigFileCreated } from '@src/shared/helpers/config.helper';
 const nodemailer = require('nodemailer');
 
 @Injectable()

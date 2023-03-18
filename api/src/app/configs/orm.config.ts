@@ -1,9 +1,10 @@
-import {TypeOrmModuleOptions} from "@nestjs/typeorm";
-import { configFileName } from "@src/shared/helpers/config.helper";
+
+import { configFileName } from "../../shared/helpers/config-name.const";
+import { DataSourceOptions } from "typeorm";
 
 var configFile = require(`../../..${configFileName}`);
 
-export const typeOrmModuleOptions:TypeOrmModuleOptions = {
+export const dataSourceOptions:DataSourceOptions = {
     type: 'postgres',
     host: configFile.postgresHostName ? configFile.postgresHostName : 'db',
     port: configFile.postgresPort ? configFile.postgresPort : 5432,
@@ -13,20 +14,7 @@ export const typeOrmModuleOptions:TypeOrmModuleOptions = {
     /* Note : it is unsafe to use synchronize: true for schema synchronization
     on production once you get data in your database. */
     // synchronize: true,
-    autoLoadEntities: true,
-}
-
-export const OrmConfig = {
-    ...typeOrmModuleOptions,
-    migrationsTableName: "migrations",
-    migrations: ["src/data/migrations/*{.ts,.js}"],
-    seeds: ['src/data/seeds/*.seed.{ts,js}'],
-    factories: ['src/data/factories/*{.ts,.js}'],
-    cli: {
-        "migrationsDir": "src/data/migrations"
+    extra: {
+        query_timeout: 2500
     },
-    entities: [
-        'src/modules/**/*.entity.{ts,js}',
-    ],
-};
-export default OrmConfig;
+}
