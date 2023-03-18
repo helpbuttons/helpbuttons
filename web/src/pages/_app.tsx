@@ -62,7 +62,6 @@ function MyApp({ Component, pageProps }) {
     }
 
     if(path != SetupSteps.SYSADMIN_CONFIG){
-      console.log('getting config1...')
       fetchDefaultNetwork();
     }
 
@@ -71,11 +70,13 @@ function MyApp({ Component, pageProps }) {
         new GetConfig(
           () => console.log(`got config`),
           (error) => {
-            if(error == 'nobackend') {
-              setNobackend(true)
-              return;
+            if (error == 'not-found'){
+              router.push(SetupSteps.SYSADMIN_CONFIG)
+            }else {
+              alertService.error(JSON.stringify(error))
             }
-            router.push(SetupSteps.SYSADMIN_CONFIG)
+            
+            return;
           },
         ),
       );
