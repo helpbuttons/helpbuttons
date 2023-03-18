@@ -11,7 +11,7 @@ import { TagModule } from '../tag/tag.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { StorageModule } from '../storage/storage.module';
-import { configFileName } from '@src/shared/helpers/config.helper';
+import { configFileName } from '@src/shared/helpers/config-name.const';
 
 var configFile = require(`../../../${configFileName}`);
 

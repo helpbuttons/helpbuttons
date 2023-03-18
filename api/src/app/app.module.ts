@@ -16,7 +16,7 @@ import { UserModule } from '@src/modules/user/user.module';
 import { AppLogger } from '@src/shared/middlewares/app-logger.middleware';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { typeOrmModuleOptions } from './configs/orm.config';
+import { dataSourceOptions } from './configs/orm.config';
 import webAppConfig from './configs/web-app.config';
 import { validate } from './validators/env.validator';
 @Module({
@@ -31,7 +31,7 @@ import { validate } from './validators/env.validator';
     }),
     MailModule,
     // FIXME: READ this confs using ConfigService
-    TypeOrmModule.forRoot(typeOrmModuleOptions),
+    TypeOrmModule.forRoot(dataSourceOptions),
     MulterModule.register({
       dest: './uploads/',
     }),
