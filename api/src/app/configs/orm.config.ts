@@ -14,6 +14,10 @@ export const typeOrmModuleOptions:TypeOrmModuleOptions = {
     on production once you get data in your database. */
     // synchronize: true,
     autoLoadEntities: true,
+    keepConnectionAlive: false,
+    extra: {
+        query_timeout: 2500
+    }
 }
 
 export const OrmConfig = {
