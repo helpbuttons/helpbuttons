@@ -17,7 +17,7 @@ import { buttonTypes } from 'shared/buttonTypes';
 import { GlobalState, store } from 'pages';
 import {FieldImageUpload} from 'elements/Fields/FieldImageUpload';
 
-export default function ButtonForm({onSubmit, watch, reset, getValues, handleSubmit, register, errors, control, setValue, isSubmitting}) {
+export default function ButtonForm({onSubmit, watch, reset, getValues, handleSubmit, register, errors, control, setValue, setFocus, isSubmitting}) {
     const selectedNetwork = useRef(
         store,
         (state: GlobalState) => state.networks.selectedNetwork,
@@ -82,6 +82,9 @@ export default function ButtonForm({onSubmit, watch, reset, getValues, handleSub
             label="Title"
             placeholder="Write a title for your button"
             validationError={errors.title}
+            watch={watch}
+            setValue={setValue}
+            setFocus={setFocus}
             {...register('title', { required: true })}
           />
           <FieldTextArea
@@ -90,6 +93,9 @@ export default function ButtonForm({onSubmit, watch, reset, getValues, handleSub
             placeholder="Write a description for your button"
             validationError={errors.description}
             classNameExtra="squared"
+            watch={watch}
+            setValue={setValue}
+            setFocus={setFocus}
             {...register('description', {
               required: true,
               minLength: 10,

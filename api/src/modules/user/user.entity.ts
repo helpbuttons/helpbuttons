@@ -8,6 +8,7 @@ import { UserCredential } from '../user-credential/user-credential.entity';
 @Entity()
 @Exclude()
 export class User extends BaseEntity {
+  @Expose()
   @PrimaryColumn({
     type: 'char',
     length: 36,

@@ -5,9 +5,9 @@ import {
 } from '@src/modules/setup/setup.entity';
 import * as fs from 'fs';
 import { version } from '../commit';
+import { configFileName } from './config-name.const';
 const { Pool } = require('pg');
 
-export const configFileName: string = '/config/config.json';
 export const configFullPath: string = `.${configFileName}`;
 
 export const isConfigFileCreated = async () => {

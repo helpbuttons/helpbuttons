@@ -21,10 +21,12 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "compose:up": "docker-compose up",
     "compose:down": "docker-compose down --remove-orphans",
-    "migration:generate": "yarn typeorm migration:generate -n",
-    "migration:run": "if yarn typeorm migration:run; then echo '\nAll migrations are run,\nnow please continue the configuration of your database in \n\\033[0;32mhttp://localhost:3000/\\033[0m\n'; else echo -e 'All is ok' && echo -e \" \\033[32;5mTitle of the Program\\033[0m\"; fi",
+    "typeorm": "node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js -d src/app/configs/type-orm.config.ts",
+    "migration:run": "npm run typeorm migration:run",
+    "migration:generate": "npm run typeorm migration:generate src/data/migrations/$npm_config_name",
+    "migration:create": "npm run typeorm -- migration:create src/data/migrations/",
+    "migration:revert": "npm run typeorm -- -d src/app/configs/type-orm.config.ts migration:revert",
     "schema:drop": "yarn typeorm schema:drop",
-    "typeorm": "node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js --config src/app/configs/orm.config.ts",
     "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.ts"
   },
   "dependencies": {

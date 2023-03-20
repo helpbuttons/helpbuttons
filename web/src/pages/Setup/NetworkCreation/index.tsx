@@ -18,6 +18,7 @@ function NetworkCreation() {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
+    setFocus,
     control,
     setValue,
     watch,
@@ -107,6 +108,7 @@ function NetworkCreation() {
       register={register}
       setValue={setValue}
       watch={watch}
+      setFocus={setFocus}
       isSubmitting={isSubmitting}
       control={control}
       errors={errors}

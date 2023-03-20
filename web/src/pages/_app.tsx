@@ -33,6 +33,7 @@ function MyApp({ Component, pageProps }) {
   const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
+  const [noBackend, setNobackend] = useState(false);
 
   const config = useRef(store, (state: GlobalState) => state.config);
   const path = router.asPath.split('?')[0];
@@ -68,7 +69,15 @@ function MyApp({ Component, pageProps }) {
       store.emit(
         new GetConfig(
           () => console.log(`got config`),
-          () => router.push(SetupSteps.SYSADMIN_CONFIG),
+          (error) => {
+            if (error == 'not-found'){
+              router.push(SetupSteps.SYSADMIN_CONFIG)
+            }else {
+              alertService.error(JSON.stringify(error))
+            }
+            
+            return;
+          },
         ),
       );
     }
@@ -98,10 +107,7 @@ function MyApp({ Component, pageProps }) {
     }
 
     function fetchDefaultNetwork() {
-      if (config && !selectedNetwork) {
-        if (isLoadingNetwork) {
-          return false;
-        }
+      if (config && !selectedNetwork && !isLoadingNetwork) {
         setIsLoadingNetwork(true);
         store.emit(
           new FetchDefaultNetwork(
@@ -132,7 +138,7 @@ function MyApp({ Component, pageProps }) {
         );
       }
     }
-  }, [path, isSetup, authorized, config, loggedInUser]);
+  }, [path, config, loggedInUser]);
 
   return (
     <>
@@ -157,6 +163,8 @@ function MyApp({ Component, pageProps }) {
                 <Component {...pageProps} />
               </div>
             );
+          }else if(noBackend) {
+            return(<>NO BACKEND!!</>)
           }
 
           return <div>Loading...</div>;

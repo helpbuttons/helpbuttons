@@ -11,14 +11,18 @@ import Form from 'elements/Form';
 import { store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { CreateConfig, SmtpTest } from 'state/Setup';
+import { CreateConfig, GetConfig, SmtpTest } from 'state/Setup';
 import { SetupSteps } from '../../../shared/setupSteps';
 import router from 'next/router';
 import t from 'i18n';
 import { getHostname } from 'shared/sys.helper';
 import { HttpStatus } from 'shared/types/http-status.enum';
+import { useEffect, useState } from 'react';
 
 export default function SysadminConfig() {
+  const [noConfigFoundConfirmed, setNoConfigFoundConfirmed] =
+    useState(false);
+
   const {
     register,
     handleSubmit,
@@ -43,6 +47,25 @@ export default function SysadminConfig() {
     },
   });
 
+  useEffect(() => {
+    if (!noConfigFoundConfirmed) {
+      store.emit(
+        new GetConfig(
+          () => alertService.error('u shouldnt be here'),
+          (error) => {
+            if (error == 'not-found') {
+              setNoConfigFoundConfirmed(true);
+            } else {
+              alertService.error(JSON.stringify(error));
+            }
+
+            return;
+          },
+        ),
+      );
+    }
+  }, [noConfigFoundConfirmed]);
+
   const onSubmit = (data) => {
     store.emit(
       new CreateConfig(
@@ -55,16 +78,35 @@ export default function SysadminConfig() {
         (err, data) => {
           if (err.statusCode === HttpStatus.SERVICE_UNAVAILABLE) {
             if (err.message === 'db-hostname-error') {
-              alertService.error(t(err.message,`Database connection error, could not connect to database host '${data.postgresHostName}' not found`));
+              alertService.error(
+                t(
+                  err.message,
+                  `Database connection error, could not connect to database host '${data.postgresHostName}' not found`,
+                ),
+              );
             } else if (err.message === 'db-connection-error') {
-              alertService.error(t(err.message,`Database connection error, wrong credentials?`));
-            }else {
-              alertService.error(t("other-problem",`Problem:: ${JSON.stringify(err)}`));
+              alertService.error(
+                t(
+                  err.message,
+                  `Database connection error, wrong credentials?`,
+                ),
+              );
+            } else {
+              alertService.error(
+                t(
+                  'other-problem',
+                  `Problem:: ${JSON.stringify(err)}`,
+                ),
+              );
             }
-            
           }
           if (err.statusCode === HttpStatus.CONFLICT) {
-            alertService.warn(t("config-conflict", `You already created a configuration, please remove config.json from the api directory. Or if you want to continue this installation <a href="${SetupSteps.CREATE_ADMIN_FORM}">create an admin account</a>, or <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`))
+            alertService.warn(
+              t(
+                'config-conflict',
+                `You already created a configuration, please remove config.json from the api directory. Or if you want to continue this installation <a href="${SetupSteps.CREATE_ADMIN_FORM}">create an admin account</a>, or <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`,
+              ),
+            );
           }
         },
       ),
@@ -82,35 +124,38 @@ export default function SysadminConfig() {
   };
 
   const onSmtpSuccess = () => {
-    alertService.info(t('smtp-success',`SMTP connection succesful!`));
+    alertService.info(
+      t('smtp-success', `SMTP connection succesful!`),
+    );
   };
 
   return (
     <>
-      <Popup title="Save configurations" linkFwd={null}>
-        <Form classNameExtra="saveSetup">
-          <div className="publish_setup-first">
-            <FieldText
-              name="hostname"
-              label={`${t("hostname","Hostname")}:`}
-              placeholder="localhost"
-              validationError={errors.description}
-              classNameExtra="squared"
-              {...register('hostName', { required: true })}
-            />
-            <FieldText
+      {noConfigFoundConfirmed && (
+        <Popup title="Save configurations" linkFwd={null}>
+          <Form classNameExtra="saveSetup">
+            <div className="publish_setup-first">
+              <FieldText
+                name="hostname"
+                label={`${t('hostname', 'Hostname')}:`}
+                placeholder="localhost"
+                validationError={errors.description}
+                classNameExtra="squared"
+                {...register('hostName', { required: true })}
+              />
+              <FieldText
                 name="mapifyApiKey"
                 label="OpenCage ApiKey"
                 classNameInput="squared"
                 validationError={errors.mapifyApiKey}
                 {...register('mapifyApiKey', { required: true })}
               />
-            {/* <FieldText
+              {/* <FieldText
               name="leafletTiles"
               label="Leaflet Tiles"
               {...register('leafletTiles')}
             ></FieldText> */}
-{/* 
+              {/* 
             <FieldTags
               label="domains allowed"
               name="domainsAllowed"
@@ -119,58 +164,74 @@ export default function SysadminConfig() {
               watch={watch}
             /> */}
 
-            <FieldText
-              name="postgresUser"
-              label={`${t("postgresUser","postgresql username")}:`}
-              {...register('postgresUser')}
-            ></FieldText>
-            <FieldText
-              name="postgresPassword"
-              label={`${t("postgresPassword","postgresql password")}:`}
-              {...register('postgresPassword')}
-            ></FieldText>
-            <FieldText
-              name="postgresDb"
-              label={`${t("postgresDb","postgresql database name")}:`}
-              {...register('postgresDb')}
-            ></FieldText>
+              <FieldText
+                name="postgresUser"
+                label={`${t('postgresUser', 'postgresql username')}:`}
+                {...register('postgresUser')}
+              ></FieldText>
+              <FieldText
+                name="postgresPassword"
+                label={`${t(
+                  'postgresPassword',
+                  'postgresql password',
+                )}:`}
+                {...register('postgresPassword')}
+              ></FieldText>
+              <FieldText
+                name="postgresDb"
+                label={`${t(
+                  'postgresDb',
+                  'postgresql database name',
+                )}:`}
+                {...register('postgresDb')}
+              ></FieldText>
 
-            <FieldText
-              name="postgresHostName"
-              label={`${t("postgresHostName","postgresql hostname")}:`}
-              {...register('postgresHostName')}
-            ></FieldText>
+              <FieldText
+                name="postgresHostName"
+                label={`${t(
+                  'postgresHostName',
+                  'postgresql hostname',
+                )}:`}
+                {...register('postgresHostName')}
+              ></FieldText>
 
-            <FieldText
-              name="postgresPort"
-              label={`${t("postgresPort","postgresql port")}:`}
-              {...register('postgresPort')}
-            ></FieldText>
+              <FieldText
+                name="postgresPort"
+                label={`${t('postgresPort', 'postgresql port')}:`}
+                {...register('postgresPort')}
+              ></FieldText>
 
-            <FieldText
-              name="smtpUrl"
-              label={`${t("smtpUrl","SMTP url")}:`}
-              {...register('smtpUrl')}
-            ></FieldText>
-          </div>
-          <div className="form__btn-wrapper">
-            <Btn
-              btnType={BtnType.splitIcon}
-              caption={t("test-smtp-button","Test smtp connection")}
-              contentAlignment={ContentAlignment.center}
-              isSubmitting={isSubmitting}
-              onClick={handleSubmit(onSmtpTest)}
-            />
-            <Btn
-              btnType={BtnType.splitIcon}
-              caption={t("connect-db-save-config","Test database connection, save configuration and continue")}
-              contentAlignment={ContentAlignment.center}
-              isSubmitting={isSubmitting}
-              onClick={handleSubmit(onSubmit)}
-            />
-          </div>
-        </Form>
-      </Popup>
+              <FieldText
+                name="smtpUrl"
+                label={`${t('smtpUrl', 'SMTP url')}:`}
+                {...register('smtpUrl')}
+              ></FieldText>
+            </div>
+            <div className="form__btn-wrapper">
+              <Btn
+                btnType={BtnType.splitIcon}
+                caption={t(
+                  'test-smtp-button',
+                  'Test smtp connection',
+                )}
+                contentAlignment={ContentAlignment.center}
+                isSubmitting={isSubmitting}
+                onClick={handleSubmit(onSmtpTest)}
+              />
+              <Btn
+                btnType={BtnType.splitIcon}
+                caption={t(
+                  'connect-db-save-config',
+                  'Test database connection, save configuration and continue',
+                )}
+                contentAlignment={ContentAlignment.center}
+                isSubmitting={isSubmitting}
+                onClick={handleSubmit(onSubmit)}
+              />
+            </div>
+          </Form>
+        </Popup>
+      )}
     </>
   );
 }
