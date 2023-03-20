@@ -16,8 +16,9 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
     setValue,
     setFocus
   } = props;
-  
+
   const [foundEmojies, setFoundEmojies] = useState([])
+  const [showEmojiDropDown, setShowEmojiDropDown] = useState(false)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
 
@@ -34,24 +35,29 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
         const emojis = SearchIndex.search(searchString).then((emojies ) => {
           if (emojies && emojies.length > 0)
           {
+            setShowEmojiDropDown(true)
             setFoundEmojies(emojies)
-          }else {
-            setFoundEmojies([])
+            return;
           }
-            
         })
-      }else {
-        setFoundEmojies([])
       }
-    }else {
-      setFoundEmojies([])
     }
+    setShowEmojiDropDown(false)
+    setFoundEmojies([])
   }
+  const addEmojiToTextAreaFromDropDown = (emoji) => {
+    setShowEmojiDropDown(false)
+    addEmojiToTextArea({native: emoji})
+  }
+
   const addEmojiToTextArea = (emoji) => {
+    // console.log(emoji)
     const value = watch(name)
     // console.log(emoji)
     setValue(name, `${value}${emoji.native}`)
     setFocus(name, { shouldSelect: false })
+    setShowEmojiPicker(false)
+    return true;
   }
   const handleShowEmojiPicker = () => {
     setShowEmojiPicker(!showEmojiPicker)
@@ -60,11 +66,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
       <>
       <div className="form__field">
         <p className="popup__paragraph">{label}</p>
-        {/* {JSON.stringify(foundEmojies)} */}
-        {/* {foundEmojies.map((emoji, idx) => {
-          
-          return (<p>{emoji.id} - {emoji.skins[0].native}</p>)
-        }) */}
+        
         
         <textarea
           onChange={handleChange}
@@ -73,11 +75,17 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
           placeholder={placeholder}
           ref={ref}
         ></textarea>
-        
-        {/* <div onClick={setShowPicker(!showPicker)}>😀</div> */}
+        <>
+        {showEmojiDropDown && 
+        foundEmojies.map((emoji, idx) => {
+          
+          return (<p onClick={() => addEmojiToTextAreaFromDropDown(emoji.skins[0].native)}>{emoji.skins[0].native} (:{emoji.id}:)</p>)
+        })
+        }
+        </>
         <div onClick={handleShowEmojiPicker}>😀</div>
         {showEmojiPicker && 
-        <Picker data={data} onEmojiSelect={addEmojiToTextArea} />
+          <Picker data={data} onEmojiSelect={addEmojiToTextArea} />
         }
         <FieldError validationError={validationError} />
       </div>
