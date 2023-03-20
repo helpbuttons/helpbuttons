@@ -4,19 +4,10 @@ import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { SearchIndex } from 'emoji-mart'
 
-interface IFieldTextArea {
-  label: string,
-  onChange: Function,
-  name: string,
-  validationError: any,
-  placeholder: string,
-  classNameExtra?: string
-}
+export const FieldTextArea = React.forwardRef((props, ref) => {
 
-
-export const FieldTextArea = React.forwardRef(({
+  const {
     label,
-    onChange,
     name,
     validationError,
     placeholder,
@@ -24,15 +15,13 @@ export const FieldTextArea = React.forwardRef(({
     watch,
     setValue,
     setFocus
-}, ref): IFieldTextArea => {
-
+  } = props;
+  
   const [foundEmojies, setFoundEmojies] = useState([])
 
 
   const handleChange = (event) => {
-    // onChange()
-    return;
-    
+   
     const firstDoublePoint = event.target.value.search(":") ;
     const countDoublePoint = event.target.value.split(":") ;
     const cursorPosition = event.target.selectionEnd
