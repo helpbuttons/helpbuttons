@@ -34,10 +34,10 @@ export default function Signup() {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      username: 'user',
-      password: 'qwerty1234',
-      password_confirm: 'qwerty1234',
-      email: 'user@user.com',
+      username: '',
+      password: '',
+      password_confirm: '',
+      email: '',
     },
   });
   const [errorMsg, setErrorMsg] = useState(undefined);

@@ -51,7 +51,7 @@ export default function SysadminConfig() {
     if (!noConfigFoundConfirmed) {
       store.emit(
         new GetConfig(
-          () => alertService.error('u shouldnt be here'),
+          () => {alertService.error('u shouldnt be here'); router.push('/')},
           (error) => {
             if (error == 'not-found') {
               setNoConfigFoundConfirmed(true);
