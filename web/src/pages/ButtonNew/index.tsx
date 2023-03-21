@@ -7,6 +7,7 @@ import Router from 'next/router';
 import { alertService } from 'services/Alert';
 import { useForm } from 'react-hook-form';
 import router from 'next/router';
+import { defaultMarker } from 'shared/sys.helper';
 
 export default function ButtonNew() {
   const {
@@ -27,12 +28,12 @@ export default function ButtonNew() {
   } = useForm({
     defaultValues: {
       image: null,
-      description: 'hlkdsahdlksah ldka',
-      latitude: '41.6869',
-      longitude: '-7.663206',
+      description: '',
+      latitude: defaultMarker.latitude,
+      longitude: defaultMarker.longitude,
       type: '',
       tags: [],
-      title: 'ma title',
+      title: '',
       radius: 1,
       address: '',
     },

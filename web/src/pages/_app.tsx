@@ -58,31 +58,30 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (setupPaths.includes(path)) {
       setIsSetup(true);
-      return;
-    }
-
-    if(path != SetupSteps.SYSADMIN_CONFIG){
-      fetchDefaultNetwork();
     }
 
     if (!config && SetupSteps.SYSADMIN_CONFIG.toString() != path) {
       store.emit(
         new GetConfig(
-          () => console.log(`got config`),
+          (config) => {
+            console.log(`got config`);
+            fetchDefaultNetwork(config);
+          },
           (error) => {
-            if (error == 'not-found'){
-              router.push(SetupSteps.SYSADMIN_CONFIG)
-            }else {
-              alertService.error(JSON.stringify(error))
+            if (error == 'not-found') {
+              router.push(SetupSteps.SYSADMIN_CONFIG);
+            } else {
+              alertService.error(JSON.stringify(error));
             }
-            
+
             return;
           },
         ),
       );
     }
     if (!authorized) {
-      if (UserService.isLoggedIn()) { // check if local storage has a token
+      if (UserService.isLoggedIn()) {
+        // check if local storage has a token
         if (!loggedInUser) {
           if (!isLoadingUser) {
             store.emit(
@@ -90,7 +89,8 @@ function MyApp({ Component, pageProps }) {
                 () => {
                   setIsLoadingUser(false);
                 },
-                (error) => { // if local storage has a token, and fails to fetchUserData then delete storage token
+                (error) => {
+                  // if local storage has a token, and fails to fetchUserData then delete storage token
                   UserService.logout();
                   setIsLoadingUser(false);
                 },
@@ -106,8 +106,8 @@ function MyApp({ Component, pageProps }) {
       }
     }
 
-    function fetchDefaultNetwork() {
-      if (config && !selectedNetwork && !isLoadingNetwork) {
+    function fetchDefaultNetwork(configuration) {
+      if (configuration && !selectedNetwork && !isLoadingNetwork) {
         setIsLoadingNetwork(true);
         store.emit(
           new FetchDefaultNetwork(
@@ -116,22 +116,35 @@ function MyApp({ Component, pageProps }) {
             },
             (error) => {
               if (error === 'network-not-found') {
-                if (config.databaseNumberMigrations < 1) {
+                if (configuration.databaseNumberMigrations < 1) {
                   alertService.error(
                     `Missing database schema, please run schema creation/migrations! and then <a href="/">click here</a>`,
                   );
                   return;
                 } else if (
-                  config.userCount < 1 &&
+                  configuration.userCount < 1 &&
                   SetupSteps.CREATE_ADMIN_FORM != path
                 ) {
+                  alertService.error(
+                    `Need to create an admin account <a href="${SetupSteps.CREATE_ADMIN_FORM}">click here</a>`,
+                  );
                   router.push(SetupSteps.CREATE_ADMIN_FORM);
+                  }else if (
+                    SetupSteps.NETWORK_CREATION == path ||
+                    SetupSteps.FIRST_OPEN == path
+                  ) {
+                    router.push({
+                      pathname: '/Login',
+                      query: { returnUrl: path },
+                    });
+                   
                 } else {
-                  router.push(SetupSteps.FIRST_OPEN);
+                  alertService.warn('unknown error');
+                  console.error(error);
+                  router.push({
+                    pathname:  SetupSteps.FIRST_OPEN,
+                  });
                 }
-              } else {
-                alertService.error('unknown error');
-                console.error(error);
               }
             },
           ),
@@ -163,8 +176,8 @@ function MyApp({ Component, pageProps }) {
                 <Component {...pageProps} />
               </div>
             );
-          }else if(noBackend) {
-            return(<>NO BACKEND!!</>)
+          } else if (noBackend) {
+            return <>NO BACKEND!!</>;
           }
 
           return <div>Loading...</div>;

@@ -30,11 +30,11 @@ function CreateAdminForm() {
     watch,
   } = useForm({
     defaultValues: {
-      username: 'admin',
-      password: 'qwerty1234',
-      password_confirm: 'qwerty1234',
-      email: 'admin@admin.com',
-      name: ' i am trhe admin',
+      username: '',
+      password: '',
+      password_confirm: '',
+      email: '',
+      name: '',
     },
   });
 
