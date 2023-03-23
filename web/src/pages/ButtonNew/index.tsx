@@ -20,6 +20,7 @@ export default function ButtonNew() {
       errors,
       isSubmitting,
     },
+    setFocus,
     control,
     reset,
     watch,
@@ -43,8 +44,9 @@ export default function ButtonNew() {
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
-
+  const watchAllFields = watch(); // when pass nothing as argument, you are watching everything
   const onSubmit = (data) => {
+    console.log(data)
     store.emit(
       new CreateButton(data, selectedNetwork.id, 
         onSuccess({lat: data.latitude, lng: data.longitude}), 
@@ -53,6 +55,7 @@ export default function ButtonNew() {
   };
 
     const onSuccess = (location: {lat: number, lng: number}) => {
+      console.log('success creating button')
     router.push({
       pathname: '/Explore',
       query: location,
@@ -60,6 +63,7 @@ export default function ButtonNew() {
   };
 
   const onError = (err, data) => {
+    console.log('fail creating button')
     if (err == 'unauthorized') {
       alertService.error('You need to login or registering an account');
       Router.push({
@@ -81,6 +85,7 @@ export default function ButtonNew() {
         errors={errors}
         control={control}
         setValue={setValue}
+        setFocus={setFocus}
         isSubmitting={isSubmitting}
         onSubmit={onSubmit}
       ></ButtonForm>

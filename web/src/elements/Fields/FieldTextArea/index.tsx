@@ -4,8 +4,8 @@ import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { SearchIndex } from 'emoji-mart'
 
-export const FieldTextArea = React.forwardRef((props, ref) => {
 
+export const FieldTextArea = React.forwardRef((props, ref) => {
   const {
     label,
     name,
@@ -44,6 +44,8 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
     }
     setShowEmojiDropDown(false)
     setFoundEmojies([])
+    setValue(name, `${event.target.value}`)
+    return true;
   }
   const addEmojiToTextAreaFromDropDown = (emoji) => {
     setShowEmojiDropDown(false)
@@ -69,7 +71,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
         
         
         <textarea
-          onChange={handleChange}
+          onChange={(event) => {handleChange(event)}}
           name={name}
           className={`${classNameExtra} textarea__textarea`}
           placeholder={placeholder}

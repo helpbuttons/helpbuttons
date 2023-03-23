@@ -124,7 +124,6 @@ export default function ButtonForm({onSubmit, watch, reset, getValues, handleSub
             {...register('image', { required: true })}
             // validationError={errors.image}
           />
-          {isReadyForLocationAndTime && (
             <>
               <FieldLocation
                 defaultZoom={selectedNetwork.zoom}
@@ -141,7 +140,6 @@ export default function ButtonForm({onSubmit, watch, reset, getValues, handleSub
                 title="When ?"
               /> */}
             </>
-          )}
           {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} /> */}
           <ButtonShare />
         </div>

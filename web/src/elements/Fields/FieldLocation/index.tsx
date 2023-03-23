@@ -82,12 +82,13 @@ export default function FieldLocation({
           address={address}
           radius={radius}
         />
-        <div
+        <button
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}
+          
         >
           Change place
-        </div>
+        </button>
         {/* <FieldError validationError={validationErrors.latitude} />
         <FieldError validationError={validationErrors.longitude} />
         <FieldError validationError={validationErrors.radius} /> */}
@@ -103,8 +104,8 @@ export default function FieldLocation({
               }
               initMapCenter={center}
               defaultZoom={defaultZoom}
-              markerImage={markerImage ? markerImage : null}
-              markerCaption={markerCaption}
+              markerImage={markerImage ? markerImage : selectedNetwork.logo}
+              markerCaption={markerCaption ? markerCaption : 'Please select a type'}
               markerColor={markerColor}
             />
             <LocationCoordinates
