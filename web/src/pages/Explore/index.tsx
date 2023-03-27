@@ -1,6 +1,5 @@
 //EXPLORE MAP
 import React, { useState, useEffect, useCallback } from 'react';
-import { AutoSizer } from 'react-virtualized';
 
 //components
 import { FindButtons, SetAsCurrentButton } from 'state/Explore';
@@ -12,6 +11,7 @@ import { useRouter } from 'next/router';
 import List from 'components/list/List';
 import { buttonTypes } from 'shared/buttonTypes';
 import ExploreMap from 'components/map/Map/ExploreMap';
+import { Button } from 'shared/entities/button.entity';
 
 export default function Explore() {
   const selectedNetwork = useRef(
@@ -40,7 +40,7 @@ export default function Explore() {
     zoom = 13;
   }
 
-  const [showLeftColumn, setShowLeftColumn] = useState(null);
+  const [showLeftColumn, setShowLeftColumn] = useState(true);
   const [filteredButtons, setFilteredButtons] = useState([]);
 
   const [buttonFilterTypes, setButtonFilterTypes] = useState(
@@ -90,31 +90,24 @@ export default function Explore() {
 
   return (
     <>
-      {/* {({ width, height }) => <div>{`${width}x${height}`}</div>} */}
       {selectedNetwork && (
         <div className="index__container">
-          <AutoSizer>
-            {({ width, height }) => (
-              <div
-                ref={(ref) => refCallback(ref, width)}
-                className={
-                  'index__content-left ' +
-                  (showLeftColumn ? '' : 'index__content-left--hide')
-                }
-              >
-                <NavHeader
-                  showSearch={true}
-                  updateFiltersType={updateFiltersType}
-                />
-                <List
-                  buttons={filteredButtons}
-                  showLeftColumn={showLeftColumn}
-                  onLeftColumnToggle={onLeftColumnToggle}
-                />
-              </div>
-            )}
-          </AutoSizer>
-
+          <div
+            className={
+              'index__content-left ' +
+              (showLeftColumn ? '' : 'index__content-left--hide')
+            }
+          >
+            <NavHeader
+              showSearch={true}
+              updateFiltersType={updateFiltersType}
+            />
+            <List
+              buttons={filteredButtons}
+              showLeftColumn={showLeftColumn}
+              onLeftColumnToggle={onLeftColumnToggle}
+            />
+          </div>
           <ExploreMap
             center={[
               selectedNetwork.latitude,

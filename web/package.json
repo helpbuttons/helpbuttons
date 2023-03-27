@@ -55,7 +55,6 @@
     "react-redux": "^7.2.4",
     "react-time-picker": "^5.2.0",
     "react-timekeeper": "^2.2.1",
-    "react-virtualized": "^9.22.3",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "rxjs": "^7.3.0",
