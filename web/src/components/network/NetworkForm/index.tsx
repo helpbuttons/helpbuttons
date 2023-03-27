@@ -1,4 +1,5 @@
 // here we have the basic configuration of an network
+import Popup from 'components/popup/Popup';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import {FieldImageUpload} from 'elements/Fields/FieldImageUpload';
 import FieldLocation from 'elements/Fields/FieldLocation';
@@ -9,6 +10,7 @@ import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import { useRouter } from 'next/router';
 import { getUrlOrigin } from 'shared/sys.helper';
+import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
 // name, description, logo, background image, button template, color pallete, colors
 export default NetworkForm;
 
@@ -27,12 +29,8 @@ function NetworkForm({
   setFocus,
   description,
   showClose = true,
-  selectedNetwork = null
 }) {
   const router = useRouter();
-
-  const watchLogo = watch('logo')
-  const watchTitle = watch('title')
 
   return (
     <>
@@ -94,17 +92,15 @@ function NetworkForm({
                 validationError={errors.jumbo}
                 control={control}
                 {...register('jumbo', { required: true })}
-              />
+              />              
               <FieldLocation
-              validationErrors={undefined}
-              setValue={setValue}
-              watch={watch}
-              markerImage={watchLogo}
-              markerCaption={watchTitle}
-              markerColor='yellow'
-              selectedNetwork={selectedNetwork}
+                defaultZoom={watch('zoom')}
+                validationErrors={undefined}
+                setValue={setValue}
+                watch={watch}
+                markerImage={watch('logo')}
+                markerCaption={watch('name')}
               />
-             
               <FieldTags
                 label="Network Tags"
                 placeholder="Food, tools, toys..."

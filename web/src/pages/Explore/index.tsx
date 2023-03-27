@@ -8,10 +8,10 @@ import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { Bounds } from 'leaflet';
 import { useRouter } from 'next/router';
+import ExploreButtonsMap from 'components/map/LeafletMap/ExploreButtonsMap';
 import List from 'components/list/List';
 import { buttonTypes } from 'shared/buttonTypes';
 import ReactResizeDetector from 'react-resize-detector';
-import ExploreMap from 'components/map/Map/ExploreMap';
 
 export default function Explore() {
   const selectedNetwork = useRef(
@@ -66,14 +66,14 @@ export default function Explore() {
   };
 
   const responsiveShowLeftColumn = (width, height) => {
-    if (showLeftColumn !== null) {
-      return showLeftColumn;
+    if (showLeftColumn !== null ) 
+    {
+      return showLeftColumn
     }
-    if (height < 400) {
-      return true;
-    } else {
+    if(height < 400)
       return false;
-    }
+    return true
+    
   };
 
   useEffect(() => {
@@ -95,47 +95,38 @@ export default function Explore() {
       {selectedNetwork && (
         <div className="index__container">
           <ReactResizeDetector handleWidth handleHeight>
-            {({ width, height, targetRef }) => (
-              <div
-                ref={targetRef}
-                className={
-                  'index__content-left ' +
-                  (responsiveShowLeftColumn(width, height)
-                    ? ''
-                    : 'index__content-left--hide')
-                }
-              >
-                <NavHeader
-                  showSearch={true}
-                  updateFiltersType={updateFiltersType}
-                />
-                <List
-                  buttons={filteredButtons}
-                  showLeftColumn={responsiveShowLeftColumn(
-                    width,
-                    height,
-                  )}
-                  onLeftColumnToggle={onLeftColumnToggle}
-                />
-              </div>
-            )}
+          {({ width, height, targetRef }) => 
+            <div ref={targetRef}
+              className={
+                'index__content-left ' +
+                (responsiveShowLeftColumn(width, height) ? '' : 'index__content-left--hide')
+              }
+            >
+              <NavHeader
+                showSearch={true}
+                updateFiltersType={updateFiltersType}
+              />
+              <List
+                buttons={filteredButtons}
+                showLeftColumn={responsiveShowLeftColumn(width, height)}
+                onLeftColumnToggle={onLeftColumnToggle}
+              />
+            </div>
+          }
           </ReactResizeDetector>
-         
-                <ExploreMap
-                  center={[
-                    selectedNetwork.latitude,
-                    selectedNetwork.longitude,
-                  ]}
-                  markers={filteredButtons}
-                  handleBoundsChange={(bounds) => {
-                    updateButtons(bounds)
-                  }}
-                  defaultZoom={selectedNetwork.zoom}
-                /> 
-              </div>
-           
-      )}
 
+          <ExploreButtonsMap
+            initMapCenter={{
+              lat: lat,
+              lng: lng,
+            }}
+            buttons={filteredButtons}
+            onBoundsChange={updateButtons}
+            onMarkerClick={onMarkerClick}
+            defaultZoom={zoom}
+          />
+        </div>
+      )}
     </>
   );
 }
