@@ -3,116 +3,112 @@ import React, { useEffect, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
 
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import MarkerSelectorMap from 'components/map/LeafletMap/MarkerSelectorMap';
+import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
-import router from 'next/router';
-import t from 'i18n';
-import { GeoService } from 'services/Geo';
 import { FindAddress } from 'state/Explore';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 export default function FieldLocation({
   validationErrors,
   setValue,
   watch,
-  defaultZoom,
   markerImage,
   markerCaption = '?',
-  markerColor
+  markerColor,
+  selectedNetwork = null,
 }) {
-
-  const [showHideMenu, setHideMenu] = useState(false);
-  const [center, setCenter] = useState(['41.6869', '-7.663206']);
-  const [address, setAddress] = useState('-');
-  const [latitude, setLatitude] = useState(null)
-  const [longitude, setLongitude] = useState(null)
-  const [radius, setRadius] = useState(1)
-
-  
-
-  const selectedNetwork = useRef(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
-
   const config: SetupDtoOut = useRef(
     store,
     (state: GlobalState) => state.config,
   );
 
-  const onClick = (e, zoom) => {
-    const newCenter = [
-      (Math.round(e.lat * 10000) / 10000).toString(),
-      (Math.round(e.lng * 10000) / 10000).toString(),
-    ];
+  const watchLatitude = watch('latitude');
+  const watchLongitude = watch('longitude');
+  const watchZoom = watch('zoom');
+  const watchRadius = watch('radius');
 
-    setValue('latitude', newCenter[0]);
-    setValue('longitude', newCenter[1]);
-    setValue('radius', 1);
-    setValue('zoom', zoom);
-    setCenter(newCenter);
-
-    store.emit(new FindAddress(JSON.stringify({apikey: config.mapifyApiKey,address: newCenter.join('+')}), (place) => {
-      const address =  place.results[0].formatted;
-      
-      setValue('address', address);
-      setAddress(address)
-    },
-    () => {
-      console.log('error')
-    }));
+  const [showHideMenu, setHideMenu] = useState(false);
+  const [address, setAddress] = useState('-');
+  const [radius, setRadius] = useState(1);
+  const [latLng, setLatLng] = useState(selectedNetwork ? [selectedNetwork.latitude,selectedNetwork.longitude]: [41.687,-7.7406])
+  const [zoom, setZoom] = useState(selectedNetwork ? selectedNetwork.zoom : 10)
+  
+  const updateZoom = (newZoom) => {
+    setZoom(newZoom)
+    setValue('zoom', newZoom);
   };
 
-  useEffect(() => {
-    if (selectedNetwork) {
-      setCenter(selectedNetwork.location.coordinates);
-    }
-    setAddress(watch('address'));
-    setLatitude(watch('latitude'))
-    setLongitude(watch('longitude'))
-    setRadius(watch('radius'))
-  }, [selectedNetwork]);
+  const updateLocation = (newLatLng) => {
+    const decimals = 1000000;
+    setLatLng([(Math.round(newLatLng[0] * decimals) / decimals), (Math.round(newLatLng[1] * decimals) / decimals)]);
+
+    setValue(
+      'latitude',
+      latLng[0].toString(),
+    );
+    setValue(
+      'longitude',
+      latLng[1].toString(),
+    );
+    setAddress('...')
+    store.emit(
+      new FindAddress(
+        JSON.stringify({
+          apikey: config.mapifyApiKey,
+          address: newLatLng.join('+'),
+        }),
+        (place) => {
+          const address = place.results[0].formatted;
+
+          setValue('address', address);
+          setAddress(address);
+        },
+        () => {
+          console.log(
+            'error, no address found, mapifyapi not configured?',
+          );
+        },
+      ),
+    );
+  };
+
   return (
     <>
       <div className="form__field">
         <LocationCoordinates
-          longitude={longitude}
-          latitude={latitude}
+          latitude={watchLatitude}
+          longitude={watchLongitude}
           address={address}
-          radius={radius}
         />
-        <button
+        <div
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}
-          
         >
           Change place
-        </button>
+        </div>
+       
         {/* <FieldError validationError={validationErrors.latitude} />
         <FieldError validationError={validationErrors.longitude} />
         <FieldError validationError={validationErrors.radius} /> */}
       </div>
 
-      {showHideMenu && (
+      {showHideMenu && latLng && (
         <div className="picker__close-container">
           <div className="picker--over picker-box-shadow picker__content picker__options-v">
             <MarkerSelectorMap
-              onMarkerClick={onClick}
-              markerPosition={
-                latitude ? { lat: latitude, lng: longitude } : null
-              }
-              initMapCenter={center}
-              defaultZoom={defaultZoom}
-              markerImage={markerImage ? markerImage : selectedNetwork.logo}
-              markerCaption={markerCaption ? markerCaption : 'Please select a type'}
+              updateMarkerPosition={updateLocation}
+              handleZoomChange={updateZoom}
+              defaultZoom={zoom}
+              markerImage={markerImage}
+              markerCaption={markerCaption ? markerCaption : '...'}
               markerColor={markerColor}
+              markerPosition={latLng}
             />
             <LocationCoordinates
-              longitude={longitude}
-              latitude={latitude}
+              latitude={latLng[0]}
+              longitude={latLng[1]}
               address={address}
-              radius={0}
             />
             {/* <DropDownWhere
               placeholder={t('homeinfo.searchlocation')}
@@ -139,14 +135,18 @@ export default function FieldLocation({
   );
 }
 
-function LocationCoordinates({ longitude, latitude, radius, address }) {
+function LocationCoordinates({
+  latitude,
+  longitude,
+  address,
+}) {
   return (
     <div className="card-button__city card-button__everywhere">
-      {address} 
-      {latitude || longitude
+      <p>{address}</p>
+      <p>{latitude || longitude
         ? ` (${latitude}, ${longitude})`
-        : 'Where ?'}
-        {/* (radius: ${radius} km) */}
+        : 'Where ?'}</p>
+      {/* (radius: ${radius} km) */}
     </div>
   );
 }

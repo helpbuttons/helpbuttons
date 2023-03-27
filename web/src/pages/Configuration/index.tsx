@@ -96,6 +96,7 @@ function Configuration() {
           captionAction="Save"
           linkFwd="/Profile"
           description=""
+          selectedNetwork={selectedNetwork}
         />
         </Popup>
       )}

@@ -46,7 +46,6 @@ export default function ButtonNew() {
   );
   const watchAllFields = watch(); // when pass nothing as argument, you are watching everything
   const onSubmit = (data) => {
-    console.log(data)
     store.emit(
       new CreateButton(data, selectedNetwork.id, 
         onSuccess({lat: data.latitude, lng: data.longitude}), 
