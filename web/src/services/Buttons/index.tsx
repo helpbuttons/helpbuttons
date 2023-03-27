@@ -23,17 +23,17 @@ export class ButtonService {
   }
 
   public static find(networkId: string, bounds: any): Observable<Button[]> {
-    if (!bounds || !bounds.ne)
+    if (!bounds || !bounds._northEast)
     {
       console.error('wrong bounds? ')
       return of([]);
     }
     return httpService.get<Button[]>("/buttons/find/" + networkId, 
     {
-      northEast_lat: bounds.ne[0].toString(),
-      northEast_lng: bounds.ne[1].toString(),
-      southWest_lat: bounds.sw[0].toString(),
-      southWest_lng: bounds.sw[1].toString(),
+      northEast_lat: bounds._northEast.lat.toString(),
+      northEast_lng: bounds._northEast.lng.toString(),
+      southWest_lat: bounds._southWest.lat.toString(),
+      southWest_lng: bounds._southWest.lng.toString(),
     });
   }
 
