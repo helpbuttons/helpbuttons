@@ -61,6 +61,7 @@ export default function ExploreMap({
                 >
                   {markers.map((button: Button, idx) => (
                     <Marker
+                      onClick={(e) => {console.log('clicked button ' + e)}}
                       key={idx}
                       anchor={[button.latitude, button.longitude]}
                     >

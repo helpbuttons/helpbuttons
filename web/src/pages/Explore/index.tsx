@@ -1,5 +1,6 @@
 //EXPLORE MAP
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { AutoSizer } from 'react-virtualized';
 
 //components
 import { FindButtons, SetAsCurrentButton } from 'state/Explore';
@@ -10,7 +11,6 @@ import { Bounds } from 'leaflet';
 import { useRouter } from 'next/router';
 import List from 'components/list/List';
 import { buttonTypes } from 'shared/buttonTypes';
-import ReactResizeDetector from 'react-resize-detector';
 import ExploreMap from 'components/map/Map/ExploreMap';
 
 export default function Explore() {
@@ -65,17 +65,6 @@ export default function Explore() {
     }
   };
 
-  const responsiveShowLeftColumn = (width, height) => {
-    if (showLeftColumn !== null) {
-      return showLeftColumn;
-    }
-    if (height < 400) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   useEffect(() => {
     if (mapBondsButtons !== null)
       setFilteredButtons(
@@ -89,20 +78,28 @@ export default function Explore() {
     store.emit(new SetAsCurrentButton(buttonId));
   };
 
+  const refCallback = useCallback((ref, width) => {
+    if (ref) {
+      if (width > 450) {
+        setShowLeftColumn(true);
+      } else {
+        setShowLeftColumn(false);
+      }
+    }
+  }, []);
+
   return (
     <>
       {/* {({ width, height }) => <div>{`${width}x${height}`}</div>} */}
       {selectedNetwork && (
         <div className="index__container">
-          <ReactResizeDetector handleWidth handleHeight>
-            {({ width, height, targetRef }) => (
+          <AutoSizer>
+            {({ width, height }) => (
               <div
-                ref={targetRef}
+                ref={(ref) => refCallback(ref, width)}
                 className={
                   'index__content-left ' +
-                  (responsiveShowLeftColumn(width, height)
-                    ? ''
-                    : 'index__content-left--hide')
+                  (showLeftColumn ? '' : 'index__content-left--hide')
                 }
               >
                 <NavHeader
@@ -111,31 +108,26 @@ export default function Explore() {
                 />
                 <List
                   buttons={filteredButtons}
-                  showLeftColumn={responsiveShowLeftColumn(
-                    width,
-                    height,
-                  )}
+                  showLeftColumn={showLeftColumn}
                   onLeftColumnToggle={onLeftColumnToggle}
                 />
               </div>
             )}
-          </ReactResizeDetector>
-         
-                <ExploreMap
-                  center={[
-                    selectedNetwork.latitude,
-                    selectedNetwork.longitude,
-                  ]}
-                  markers={filteredButtons}
-                  handleBoundsChange={(bounds) => {
-                    updateButtons(bounds)
-                  }}
-                  defaultZoom={selectedNetwork.zoom}
-                /> 
-              </div>
-           
-      )}
+          </AutoSizer>
 
+          <ExploreMap
+            center={[
+              selectedNetwork.latitude,
+              selectedNetwork.longitude,
+            ]}
+            markers={filteredButtons}
+            handleBoundsChange={(bounds) => {
+              updateButtons(bounds);
+            }}
+            defaultZoom={selectedNetwork.zoom}
+          />
+        </div>
+      )}
     </>
   );
 }
