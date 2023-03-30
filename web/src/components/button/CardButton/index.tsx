@@ -39,7 +39,6 @@ export function CardButtonHeadMedium({ button }) {
     <>
       <CardButtonSubmenu button={button} />
       <a href={`/ButtonFile/${button.id}`}>
-        ya
         <div className="card-button__content">
           <div className="card-button__header">
             <div className="card-button__avatar">

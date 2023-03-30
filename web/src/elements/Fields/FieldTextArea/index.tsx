@@ -44,6 +44,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
     }
     setShowEmojiDropDown(false)
     setFoundEmojies([])
+    setValue(name, `${event.target.value}`)
   }
   const addEmojiToTextAreaFromDropDown = (emoji) => {
     setShowEmojiDropDown(false)
@@ -69,7 +70,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
         
         
         <textarea
-          onChange={handleChange}
+          onChange={(event) => {handleChange(event)}}
           name={name}
           className={`${classNameExtra} textarea__textarea`}
           placeholder={placeholder}
