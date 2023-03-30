@@ -18,7 +18,8 @@ $index-mobile-fixed-z-index: $z-index-05;
 @media #{$breakpoints-xlarge} {
   .index__container {
     position: fixed;
-    display: block;
+    display: flex;
+    flex-direction: row;
   }
   .index__content-left {
     flex-direction: column;
@@ -26,6 +27,7 @@ $index-mobile-fixed-z-index: $z-index-05;
     float: left;
     height: 100%;
     transition: $transition-default-slow;
+    min-width: 40vw;
   }
   .index__content-left--hide {
     flex-direction: column;

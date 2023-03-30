@@ -1,5 +1,5 @@
 //EXPLORE MAP
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 //components
 import { FindButtons, SetAsCurrentButton } from 'state/Explore';
@@ -8,10 +8,10 @@ import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { Bounds } from 'leaflet';
 import { useRouter } from 'next/router';
-import ExploreButtonsMap from 'components/map/LeafletMap/ExploreButtonsMap';
 import List from 'components/list/List';
 import { buttonTypes } from 'shared/buttonTypes';
-import ReactResizeDetector from 'react-resize-detector';
+import ExploreMap from 'components/map/Map/ExploreMap';
+import { Button } from 'shared/entities/button.entity';
 
 export default function Explore() {
   const selectedNetwork = useRef(
@@ -40,7 +40,7 @@ export default function Explore() {
     zoom = 13;
   }
 
-  const [showLeftColumn, setShowLeftColumn] = useState(null);
+  const [showLeftColumn, setShowLeftColumn] = useState(true);
   const [filteredButtons, setFilteredButtons] = useState([]);
 
   const [buttonFilterTypes, setButtonFilterTypes] = useState(
@@ -64,7 +64,6 @@ export default function Explore() {
       );
     }
   };
-
   const responsiveShowLeftColumn = (width, height) => {
     if (showLeftColumn !== null ) 
     {
@@ -75,6 +74,7 @@ export default function Explore() {
     return true
     
   };
+
 
   useEffect(() => {
     if (mapBondsButtons !== null)
@@ -89,41 +89,46 @@ export default function Explore() {
     store.emit(new SetAsCurrentButton(buttonId));
   };
 
+  const refCallback = useCallback((ref, width) => {
+    if (ref) {
+      if (width > 450) {
+        setShowLeftColumn(true);
+      } else {
+        setShowLeftColumn(false);
+      }
+    }
+  }, []);
+
   return (
     <>
-      {/* {({ width, height }) => <div>{`${width}x${height}`}</div>} */}
       {selectedNetwork && (
         <div className="index__container">
-          <ReactResizeDetector handleWidth handleHeight>
-          {({ width, height, targetRef }) => 
-            <div ref={targetRef}
-              className={
-                'index__content-left ' +
-                (responsiveShowLeftColumn(width, height) ? '' : 'index__content-left--hide')
-              }
-            >
-              <NavHeader
-                showSearch={true}
-                updateFiltersType={updateFiltersType}
-              />
-              <List
-                buttons={filteredButtons}
-                showLeftColumn={responsiveShowLeftColumn(width, height)}
-                onLeftColumnToggle={onLeftColumnToggle}
-              />
-            </div>
-          }
-          </ReactResizeDetector>
-
-          <ExploreButtonsMap
-            initMapCenter={{
-              lat: lat,
-              lng: lng,
+          <div
+            className={
+              'index__content-left ' +
+              (showLeftColumn ? '' : 'index__content-left--hide')
+            }
+          >
+            <NavHeader
+              showSearch={true}
+              updateFiltersType={updateFiltersType}
+            />
+            <List
+              buttons={filteredButtons}
+              showLeftColumn={showLeftColumn}
+              onLeftColumnToggle={onLeftColumnToggle}
+            />
+          </div>
+          <ExploreMap
+            center={[
+              selectedNetwork.latitude,
+              selectedNetwork.longitude,
+            ]}
+            markers={filteredButtons}
+            handleBoundsChange={(bounds) => {
+              updateButtons(bounds);
             }}
-            buttons={filteredButtons}
-            onBoundsChange={updateButtons}
-            onMarkerClick={onMarkerClick}
-            defaultZoom={zoom}
+            defaultZoom={selectedNetwork.zoom}
           />
         </div>
       )}
