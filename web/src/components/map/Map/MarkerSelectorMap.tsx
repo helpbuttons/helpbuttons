@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import React from 'react';
-import { Draggable, Map, Marker } from 'pigeon-maps';
+import { Draggable, Map, Marker, Overlay, ZoomControl } from 'pigeon-maps';
 import { stamenTerrain } from 'pigeon-maps/providers';
-import { MarkerButton } from './MarkerButton';
+import { MarkerButton, MarkerButtonIcon } from './MarkerButton';
 import { makeImageUrl } from 'shared/sys.helper';
 
 export default function MarkerSelectorMap({
@@ -48,8 +48,12 @@ export default function MarkerSelectorMap({
   };
 
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
+    console.log('changed..?!')
     handleZoomChange(zoom)
+    updateMarkerPosition(center);
+    setPosition(center);
   };
+  const onMapMove = ({})
   return (
     <>
       <Map
@@ -61,9 +65,8 @@ export default function MarkerSelectorMap({
         onClick={mapClicked}
         onBoundsChanged={onBoundsChanged}
       >
-        <Marker anchor={markerPosition} >
-                        <img src={makeImageUrl(markerImage, '/api/')} width={40} height={40}/>
-                    </Marker>
+        <ZoomControl />
+        <MarkerButtonIcon anchor={markerPosition} offset={[35, 65]} color={markerColor} image={markerImage} title={markerCaption}/>
         
       </Map>
     </>
