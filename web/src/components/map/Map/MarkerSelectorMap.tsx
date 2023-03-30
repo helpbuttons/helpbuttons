@@ -11,7 +11,7 @@ export default function MarkerSelectorMap({
   defaultZoom = 11,
   markerImage,
   markerCaption,
-  markerColor,
+  markerColor = 'yellow',
   handleZoomChange = (zoom) => {}
 }) {
   const [mapWidth, setMapWidth] = useState(0);
@@ -39,13 +39,6 @@ export default function MarkerSelectorMap({
   useEffect(() => {
     return updateWindowListener();
   }, []);
-  const mapClicked = ({ event, latLng, pixel }) => {
-    console.log('handle marker position change')
-    console.log(latLng)
-    updateMarkerPosition(latLng);
-    setPosition(latLng);
-    // debugger;
-  };
 
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     console.log('changed..?!')
@@ -62,12 +55,10 @@ export default function MarkerSelectorMap({
         defaultCenter={markerPosition}
         defaultZoom={defaultZoom}
         provider={stamenTerrain}
-        onClick={mapClicked}
         onBoundsChanged={onBoundsChanged}
       >
         <ZoomControl />
-        <MarkerButtonIcon anchor={markerPosition} offset={[35, 65]} color={markerColor} image={markerImage} title={markerCaption}/>
-        
+        <MarkerButtonIcon anchor={markerPosition} offset={[35, 65]} color={markerColor} image={makeImageUrl(markerImage, '/api/')} title={markerCaption}/>
       </Map>
     </>
   );

@@ -80,6 +80,7 @@ function MarkerButtonPopup(props: MarkerButtonPopupProps) {
         </div>)
 
 }
+
 export function MarkerButtonIcon(props: MarkerButtonIconProps) {
   return (
     <div
@@ -102,7 +103,7 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
         <div className="avatar-medium marker-button__image">
           <img
             src={props.image}
-            alt="${title}"
+            alt={props.title}
             className="picture__img"
           />
         </div>
