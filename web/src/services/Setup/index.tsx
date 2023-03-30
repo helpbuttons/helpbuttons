@@ -1,4 +1,3 @@
-import { Icon } from 'leaflet';
 import { Observable, tap } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { httpService } from 'services/HttpService';

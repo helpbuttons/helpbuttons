@@ -1,6 +1,5 @@
 import { PigeonProps } from 'pigeon-maps';
-import React, { useState } from 'react';
-import { Popup } from 'react-leaflet';
+import React from 'react';
 import { buttonTypes } from 'shared/buttonTypes';
 import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/sys.helper';

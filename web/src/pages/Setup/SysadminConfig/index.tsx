@@ -35,8 +35,6 @@ export default function SysadminConfig() {
     defaultValues: {
       hostName: getHostname(),
       mapifyApiKey: '',
-      leafletTiles:
-        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       postgresHostName: 'db',
       postgresDb: 'hb-db',
       postgresUser: 'postgres',
@@ -150,20 +148,6 @@ export default function SysadminConfig() {
                 validationError={errors.mapifyApiKey}
                 {...register('mapifyApiKey', { required: true })}
               />
-              {/* <FieldText
-              name="leafletTiles"
-              label="Leaflet Tiles"
-              {...register('leafletTiles')}
-            ></FieldText> */}
-              {/* 
-            <FieldTags
-              label="domains allowed"
-              name="domainsAllowed"
-              control={control}
-              validationError={errors.tags}
-              watch={watch}
-            /> */}
-
               <FieldText
                 name="postgresUser"
                 label={`${t('postgresUser', 'postgresql username')}:`}
