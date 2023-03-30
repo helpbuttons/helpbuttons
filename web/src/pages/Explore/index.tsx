@@ -6,12 +6,12 @@ import { FindButtons, SetAsCurrentButton } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import { Bounds } from 'leaflet';
 import { useRouter } from 'next/router';
 import List from 'components/list/List';
 import { buttonTypes } from 'shared/buttonTypes';
 import ExploreMap from 'components/map/Map/ExploreMap';
 import { Button } from 'shared/entities/button.entity';
+import { Bounds } from 'pigeon-maps';
 
 export default function Explore() {
   const selectedNetwork = useRef(
