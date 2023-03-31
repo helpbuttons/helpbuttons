@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 //components
-import { FindButtons, SetAsCurrentButton } from 'state/Explore';
+import { FindButtons, updateExploreMapZoom, updateMapCenter, updateShowLeftColumn } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -22,25 +22,28 @@ export default function Explore() {
     store,
     (state: GlobalState) => state.explore.mapBondsButtons,
   );
+  const currentButton = useRef( store,
+    (state: GlobalState) => state.explore.currentButton,
+  );
+  const mapZoom = useRef( store,
+    (state: GlobalState) => state.explore.mapZoom,
+  );
+  const mapCenter = useRef( store,
+    (state: GlobalState) => state.explore.mapCenter,
+  );
+  const showLeftColumn = useRef( store,
+    (state: GlobalState) => state.explore.showLeftColumn,
+  );
 
   const router = useRouter();
 
-  let lat = 0;
-  let lng = 0;
-  let zoom = 2;
-
-  if (selectedNetwork) {
-    lat = selectedNetwork.location.coordinates[0];
-    lng = selectedNetwork.location.coordinates[1];
-    zoom = selectedNetwork.zoom;
-  }
   if (router && router.query && router.query.lat) {
-    lat = router.query.lat;
-    lng = router.query.lng;
-    zoom = 13;
+    const lat = router.query.lat;
+    const lng = router.query.lng;
+    store.emit(new updateMapCenter([lat, lng]))
+    store.emit(new updateExploreMapZoom(selectedNetwork.zoom))
   }
 
-  const [showLeftColumn, setShowLeftColumn] = useState(true);
   const [filteredButtons, setFilteredButtons] = useState([]);
 
   const [buttonFilterTypes, setButtonFilterTypes] = useState(
@@ -48,7 +51,7 @@ export default function Explore() {
   );
 
   const onLeftColumnToggle = (data) => {
-    setShowLeftColumn(!showLeftColumn);
+    store.emit(new updateShowLeftColumn(!showLeftColumn))
   };
 
   const updateButtons = (bounds: Bounds) => {
@@ -64,44 +67,26 @@ export default function Explore() {
       );
     }
   };
-  const responsiveShowLeftColumn = (width, height) => {
-    if (showLeftColumn !== null ) 
-    {
-      return showLeftColumn
-    }
-    if(height < 400)
-      return false;
-    return true
-    
-  };
 
 
   useEffect(() => {
-    if (mapBondsButtons !== null)
+    if (mapBondsButtons !== null){
       setFilteredButtons(
         mapBondsButtons.filter((button: Button) => {
           return buttonFilterTypes.indexOf(button.type) >= 0;
         }),
       );
-  }, [mapBondsButtons, buttonFilterTypes]);
-
-  const onMarkerClick = (buttonId) => {
-    store.emit(new SetAsCurrentButton(buttonId));
-  };
-
-  const refCallback = useCallback((ref, width) => {
-    if (ref) {
-      if (width > 450) {
-        setShowLeftColumn(true);
-      } else {
-        setShowLeftColumn(false);
       }
-    }
-  }, []);
+      if (mapZoom == -1 && selectedNetwork)
+      {
+        store.emit(new updateMapCenter(selectedNetwork.location.coordinates))
+        store.emit(new updateExploreMapZoom(selectedNetwork.zoom))
+      }
+  }, [mapBondsButtons, buttonFilterTypes, selectedNetwork, mapZoom]);
 
   return (
     <>
-      {selectedNetwork && (
+      {(selectedNetwork && mapZoom > 0) && (
         <div className="index__container">
           <div
             className={
@@ -120,15 +105,11 @@ export default function Explore() {
             />
           </div>
           <ExploreMap
-            center={[
-              selectedNetwork.latitude,
-              selectedNetwork.longitude,
-            ]}
-            markers={filteredButtons}
-            handleBoundsChange={(bounds) => {
-              updateButtons(bounds);
-            }}
-            defaultZoom={selectedNetwork.zoom}
+            mapCenter={mapCenter}
+            mapZoom={mapZoom}
+            filteredButtons={filteredButtons}
+            currentButton={currentButton}
+            handleBoundsChange={updateButtons}
           />
         </div>
       )}

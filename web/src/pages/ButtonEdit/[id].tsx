@@ -39,6 +39,7 @@ export default function ButtonEdit() {
     watch,
     setValue,
     getValues,
+    setFocus,
   } = useForm();
 
   const [button, setButton] = useState<Button>(null);
@@ -98,6 +99,7 @@ export default function ButtonEdit() {
         register={register}
         errors={errors}
         control={control}
+        setFocus={setFocus}
         setValue={setValue}
         isSubmitting={isSubmitting}
         onSubmit={onSubmit}
