@@ -37,9 +37,8 @@ export function MarkerButton(props: MarkerButtonProps) {
   const { color } = buttonTypes.find((buttonType) => {
     return buttonType.name === props.button.type;
   });
-  const handleMarkerClicked = (buttonId) => {
-    props.handleMarkerClicked(buttonId);
-    console.log('clicked ' + buttonId);
+  const handleMarkerClicked = (button: Button) => {
+    props.handleMarkerClicked(button);
   };
 
   return (
@@ -48,19 +47,14 @@ export function MarkerButton(props: MarkerButtonProps) {
       color={color}
       image={makeImageUrl(props.button.image, '/api/')}
       title={props.button.title}
-      onClick={() => handleMarkerClicked(props.button.id)}
+      onClick={() => handleMarkerClicked(props.button)}
       />
-      {props.currentButtonId == props.button.id && (
-        <MarkerButtonPopup
-          {...props}
-          offset={[500,0]}
-        />
-      )}
+      
     </>
   );
 }
 
-function MarkerButtonPopup(props: MarkerButtonPopupProps) {
+export function MarkerButtonPopup(props: MarkerButtonPopupProps) {
   return (
   <div
           style={{

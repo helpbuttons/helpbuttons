@@ -7,7 +7,7 @@ import { UpdateEvent } from '../store/Event';
 
 import { alertService } from 'services/Alert';
 import { ButtonService } from 'services/Buttons';
-import { Bounds } from 'pigeon-maps';
+import { Bounds, Point } from 'pigeon-maps';
 import { of } from 'rxjs';
 import { isHttpError } from 'services/HttpService';
 import { GlobalState, store } from 'pages';
@@ -17,16 +17,28 @@ import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
 import { handleError } from './helper';
 
+interface ExploreMapProps {
+  defaultCenter: Point;
+  defaultZoom: number;
+  markers: Button[];
+  handleBoundsChange: Function;
+}
 export interface ExploreState {
-  mapBondsButtons: Button[];
-  draftButton: Button;
-  currentButton: Button;
+  draftButton: Button
+  showLeftColumn: boolean
+  mapCenter
+  mapZoom
+  currentButton: Button
+  mapBondsButtons: Button[]
 }
 
 export const exploreInitial = {
-  mapBondsButtons: [],
   draftButton: null,
-  currentButton: null
+  showLeftColumn: true,
+  mapCenter: [0,0],
+  mapZoom: -1,
+  currentButton: null,
+  mapBondsButtons: [],
 }
 
 export class FindButtons implements WatchEvent {
@@ -149,6 +161,7 @@ export class SetAsCurrentButton implements WatchEvent {
   }
 }
 
+
 export class ButtonDelete implements WatchEvent {
   public constructor(private buttonId: string, private onSuccess, private onError) {}
 
@@ -182,5 +195,45 @@ export class UpdateButton implements WatchEvent {
       }),
       catchError((error) => handleError(this.onError, error))
     );
+  }
+}
+
+export class updateMapCenter implements UpdateEvent {
+  public constructor(private mapCenter: Point) {}
+
+  public update(state: GlobalState) {
+    return produce(state, newState => {
+      newState.explore.mapCenter = this.mapCenter;
+    });
+  }
+}
+
+export class updateExploreMapZoom implements UpdateEvent {
+  public constructor(private mapZoom: number) {}
+
+  public update(state: GlobalState) {
+    return produce(state, newState => {
+      newState.explore.mapZoom = this.mapZoom;
+    });
+  }
+}
+
+export class updateCurrentButton implements UpdateEvent {
+  public constructor(private button: Button) {}
+
+  public update(state: GlobalState) {
+    return produce(state, newState => {
+      newState.explore.currentButton = this.button;
+    });
+  }
+}
+
+export class updateShowLeftColumn implements UpdateEvent {
+  public constructor(private toggle: boolean) {}
+
+  public update(state: GlobalState) {
+    return produce(state, newState => {
+      newState.explore.showLeftColumn = this.toggle;
+    });
   }
 }
