@@ -4,8 +4,8 @@ import Filters from "components/search/Filters";
 import AdvancedFilters from "components/search/AdvancedFilters"; //just for mobile
 import { Link } from 'elements/Link';
 import { IoHomeOutline } from "react-icons/io5";
-import { DropDownWhere } from "elements/Dropdown/DropDownWhere";
 import t from "i18n";
+import DropDownSearchLocation from "elements/DropDownSearchLocation";
 
 
 
@@ -64,11 +64,10 @@ function NavHeader({showSearch, updateFiltersType, handleSelectedPlace}) {
                 <div className="nav-header__content-message">
 
                   {showSearch &&
-                    <DropDownWhere
-                    onFocus={() => setShowHideFiltersMobile(true)} onBlur={() => setShowHideFiltersMobile(false)}
-                    placeholder={t('homeinfo.searchlocation')}
-                    handleSelectedPlace={handleSelectedPlace}
-                  />
+                    <DropDownSearchLocation
+                      placeholder={t('homeinfo.searchlocation')}
+                      handleSelectedPlace={handleSelectedPlace}
+                    />
 
                   }
 

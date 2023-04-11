@@ -4,7 +4,6 @@ import { GlobalState, store } from 'pages';
 import router from 'next/router';
 import t from 'i18n';
 import NetworkLogo from 'components/network/Components';
-import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import NavLink from 'elements/Navlink';
 import {
   IoAddOutline,
@@ -15,6 +14,7 @@ import {
 import { getHostname } from 'shared/sys.helper';
 import { NetworkDto } from 'shared/dtos/network.dto';
 import { SetupDto } from 'shared/entities/setup.entity';
+import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 
 export default function HomeInfo() {
   const selectedNetwork: NetworkDto = useRef(
@@ -50,9 +50,9 @@ export default function HomeInfo() {
           <label className="form__label label">
             {t('homeinfo.start')}
           </label>
-          <DropDownWhere
-            placeholder={t('homeinfo.searchlocation')}
-            handleSelectedPlace={handleSelectedPlace}
+          <DropDownSearchLocation
+          placeholder={t('homeinfo.searchlocation')}
+          handleSelectedPlace={handleSelectedPlace}
           />
         </form>
         {selectedNetworkLoading && (

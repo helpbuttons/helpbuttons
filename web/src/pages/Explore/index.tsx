@@ -1,5 +1,5 @@
 //EXPLORE MAP
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 
 //components
 import { FindButtons, updateExploreMapZoom, updateMapCenter, updateShowLeftColumn } from 'state/Explore';
@@ -83,7 +83,7 @@ function Explore({ router }) {
         }),
       );
       }
-      if (mapZoom == -1 && selectedNetwork)
+      if ((!mapCenter || !mapZoom) && selectedNetwork)
       {
         if(loadCoordinatesFromNetwork){
           store.emit(new updateMapCenter(selectedNetwork.location.coordinates))
@@ -95,6 +95,7 @@ function Explore({ router }) {
 
   const handleSelectedPlace = (place) => {
     store.emit(new updateMapCenter([place.geometry.lat, place.geometry.lng]))
+    store.emit(new updateExploreMapZoom(16))
   };
 
   return (
