@@ -6,18 +6,15 @@ import { FindButtons, updateExploreMapZoom, updateMapCenter, updateShowLeftColum
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import { useRouter } from 'next/router';
+import { withRouter } from 'next/router';
 import List from 'components/list/List';
 import { buttonTypes } from 'shared/buttonTypes';
 import ExploreMap from 'components/map/Map/ExploreMap';
 import { Button } from 'shared/entities/button.entity';
-import { Bounds } from 'pigeon-maps';
+import { Bounds, Point } from 'pigeon-maps';
 
-export default function Explore() {
-  const selectedNetwork = useRef(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
+function Explore({ router }) {
+  
   const mapBondsButtons = useRef(
     store,
     (state: GlobalState) => state.explore.mapBondsButtons,
@@ -34,15 +31,10 @@ export default function Explore() {
   const showLeftColumn = useRef( store,
     (state: GlobalState) => state.explore.showLeftColumn,
   );
-
-  const router = useRouter();
-
-  if (router && router.query && router.query.lat) {
-    const lat = router.query.lat;
-    const lng = router.query.lng;
-    store.emit(new updateMapCenter([lat, lng]))
-    store.emit(new updateExploreMapZoom(selectedNetwork.zoom))
-  }
+  const selectedNetwork = useRef(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
 
   const [filteredButtons, setFilteredButtons] = useState([]);
 
@@ -54,6 +46,11 @@ export default function Explore() {
     store.emit(new updateShowLeftColumn(!showLeftColumn))
   };
 
+  const handleBoundsChange = (bounds, center :Point, zoom) => {
+    store.emit(new updateMapCenter(center))
+    store.emit(new updateExploreMapZoom(zoom))
+    updateButtons(bounds)
+  }
   const updateButtons = (bounds: Bounds) => {
     store.emit(new FindButtons(selectedNetwork.id, bounds));
   };
@@ -70,6 +67,15 @@ export default function Explore() {
 
 
   useEffect(() => {
+    let loadCoordinatesFromNetwork = true
+    if (router && router.query && router.query.lat) {
+      const lat = parseFloat(router.query.lat);
+      const lng = parseFloat(router.query.lng);
+      store.emit(new updateExploreMapZoom(16));
+      store.emit(new updateMapCenter([lat, lng]))
+      loadCoordinatesFromNetwork = false;
+    }
+  
     if (mapBondsButtons !== null){
       setFilteredButtons(
         mapBondsButtons.filter((button: Button) => {
@@ -79,14 +85,21 @@ export default function Explore() {
       }
       if (mapZoom == -1 && selectedNetwork)
       {
-        store.emit(new updateMapCenter(selectedNetwork.location.coordinates))
+        if(loadCoordinatesFromNetwork){
+          store.emit(new updateMapCenter(selectedNetwork.location.coordinates))
+        }
         store.emit(new updateExploreMapZoom(selectedNetwork.zoom))
       }
-  }, [mapBondsButtons, buttonFilterTypes, selectedNetwork, mapZoom]);
+
+  }, [mapBondsButtons, buttonFilterTypes, selectedNetwork, router]);
+
+  const handleSelectedPlace = (place) => {
+    store.emit(new updateMapCenter([place.geometry.lat, place.geometry.lng]))
+  };
 
   return (
     <>
-      {(selectedNetwork && mapZoom > 0) && (
+      {(selectedNetwork && mapZoom > 0 && mapCenter) && (
         <div className="index__container">
           <div
             className={
@@ -94,9 +107,11 @@ export default function Explore() {
               (showLeftColumn ? '' : 'index__content-left--hide')
             }
           >
+
             <NavHeader
               showSearch={true}
               updateFiltersType={updateFiltersType}
+              handleSelectedPlace={handleSelectedPlace}
             />
             <List
               buttons={filteredButtons}
@@ -109,10 +124,12 @@ export default function Explore() {
             mapZoom={mapZoom}
             filteredButtons={filteredButtons}
             currentButton={currentButton}
-            handleBoundsChange={updateButtons}
+            handleBoundsChange={handleBoundsChange}
           />
         </div>
       )}
     </>
   );
 }
+
+export default withRouter(Explore)

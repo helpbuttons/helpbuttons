@@ -35,7 +35,7 @@ export interface ExploreState {
 export const exploreInitial = {
   draftButton: null,
   showLeftColumn: true,
-  mapCenter: [0,0],
+  mapCenter: null,
   mapZoom: -1,
   currentButton: null,
   mapBondsButtons: [],

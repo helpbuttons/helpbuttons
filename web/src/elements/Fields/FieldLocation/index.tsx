@@ -39,7 +39,7 @@ export default function FieldLocation({
   };
 
   const updateLocation = (newLatLng) => {
-    const decimals = 1000000;
+    const decimals = 10000;
     setLatLng([(Math.round(newLatLng[0] * decimals) / decimals), (Math.round(newLatLng[1] * decimals) / decimals)]);
 
     setValue(
@@ -141,11 +141,15 @@ function LocationCoordinates({
 }) {
   return (
     <div className="card-button__city card-button__everywhere">
-      <p>{address}</p>
-      <p>{latitude || longitude
-        ? ` (${latitude}, ${longitude})`
-        : 'Where ?'}</p>
-      {/* (radius: ${radius} km) */}
+      {address.length > 1 ? 
+        <>
+          <span>{address}</span>
+          <span> ({latitude},{longitude})</span>
+          {/* (radius: ${radius} km) */}
+        </>
+        :
+        'Where ?'
+      }
     </div>
   );
 }

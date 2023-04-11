@@ -10,17 +10,19 @@ export default function PostNew({ buttonId, onSubmit }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmitLocal = (data) => {
+    console.log('submitted')
     store.emit(
       new CreateNewPost(
         buttonId,
         data,
         () => {
           alertService.info('message posted');
-          console.log('reload posts..')
+          setValue('message', '')
           onSubmit()
         },
         (errorMessage) => alertService.error(errorMessage),
@@ -46,12 +48,8 @@ export default function PostNew({ buttonId, onSubmit }) {
                 })}
               ></input>
             </div>
-            <button type="submit" className="btn-circle">
-              <div className="btn-circle__content">
-                <div className="btn-circle__icon">
-                  <IoPaperPlaneOutline />
-                </div>
-              </div>
+            <button type="submit" className="btn-circle btn-circle__icon btn-circle__content">
+              <IoPaperPlaneOutline />
             </button>
           </Form>
         </div>

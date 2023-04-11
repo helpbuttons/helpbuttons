@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Map, ZoomControl } from 'pigeon-maps';
 import { stamenTerrain } from 'pigeon-maps/providers';
 import { Button } from 'shared/entities/button.entity';
@@ -10,20 +10,17 @@ import { SetAsCurrentButton, updateCurrentButton, updateExploreMapZoom, updateMa
 
 export default function ExploreMap(
     {
-      mapCenter,
-      mapZoom,
       filteredButtons,
       currentButton,
       handleBoundsChange,
+      mapZoom,
+      mapCenter
     }) {
-
+  
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
-    handleBoundsChange(bounds);
-    store.emit(new updateMapCenter(center))
-    store.emit(new updateExploreMapZoom(zoom))
+    handleBoundsChange(bounds, center, zoom);
   };
 
-  
   const handleMarkerClicked = (button: Button) => {
     store.emit(new updateMapCenter([button.latitude, button.longitude]))
     store.emit(new updateCurrentButton(button))
