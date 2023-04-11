@@ -16,7 +16,6 @@ import { getHostname } from 'shared/sys.helper';
 import { NetworkDto } from 'shared/dtos/network.dto';
 import { SetupDto } from 'shared/entities/setup.entity';
 
-
 export default function HomeInfo() {
   const selectedNetwork: NetworkDto = useRef(
     store,
@@ -37,6 +36,13 @@ export default function HomeInfo() {
     (state: GlobalState) => state.config,
   );
 
+  const handleSelectedPlace = (place) => {
+    router.push({
+      pathname: '/Explore',
+      query: place.geometry,
+    });
+  };
+
   return (
     <div className="info-overlay__container">
       <div className="info-overlay__content">
@@ -44,12 +50,10 @@ export default function HomeInfo() {
           <label className="form__label label">
             {t('homeinfo.start')}
           </label>
-          <DropDownWhere placeholder={t('homeinfo.searchlocation')} onSelected={(place) => {
-            router.push({
-              pathname: '/Explore',
-              query: place.geometry,
-            });
-          }}/>
+          <DropDownWhere
+            placeholder={t('homeinfo.searchlocation')}
+            handleSelectedPlace={handleSelectedPlace}
+          />
         </form>
         {selectedNetworkLoading && (
           <>
@@ -87,11 +91,17 @@ export default function HomeInfo() {
                 <div className="info-overlay__description">
                   <div># Buttons {config.buttonCount}</div>
                   <div># Active Users {config.userCount}</div>
-                  <div>Administered by:           <NavLink href={`/Profile/${selectedNetwork.administrator.username}`}>
-                    <span>{selectedNetwork.administrator.username}@{getHostname()}</span>
+                  <div>
+                    Administered by:
+                    <NavLink
+                      href={`/Profile/${selectedNetwork.administrator.username}`}
+                    >
+                      <span>
+                        {selectedNetwork.administrator.username}@
+                        {getHostname()}
+                      </span>
                     </NavLink>
-                    </div>
-
+                  </div>
                 </div>
               </div>
               <br />
@@ -100,9 +110,7 @@ export default function HomeInfo() {
                   <h3 className="card__header-title">Actions</h3>
                 </div>
                 <div>
-                  <NavLink
-                    href="/Explore"
-                  >
+                  <NavLink href="/Explore">
                     <span>
                       <IoGlobeOutline />
                       {t('menu.explore')}
@@ -111,9 +119,7 @@ export default function HomeInfo() {
                   - See & Search the buttons on this map
                 </div>
                 <div>
-                  <NavLink
-                    href="/ButtonNew"
-                  >
+                  <NavLink href="/ButtonNew">
                     <span>
                       <IoAddOutline />
                       {t('menu.create')}
@@ -122,9 +128,7 @@ export default function HomeInfo() {
                   - Create your buttons and collaborate
                 </div>
                 <div>
-                  <NavLink
-                    href="/Explore"
-                  >
+                  <NavLink href="/Explore">
                     <span>
                       <IoHelpOutline />
                       {t('menu.faqs')}
@@ -148,24 +152,20 @@ export default function HomeInfo() {
 
                 {currentUser && (
                   <>
-                  <div>
-                    <NavLink
-                      href="/Profile"
-                    >
-                      <span>
-                        <IoLogInOutline />
-                        {t('menu.profile')}
-                      </span>
-                    </NavLink>
-                    - Check your profile
-                  </div>
+                    <div>
+                      <NavLink href="/Profile">
+                        <span>
+                          <IoLogInOutline />
+                          {t('menu.profile')}
+                        </span>
+                      </NavLink>
+                      - Check your profile
+                    </div>
                   </>
                 )}
                 {!currentUser && (
                   <div>
-                    <NavLink
-                      href="/Login"
-                      >
+                    <NavLink href="/Login">
                       <span>
                         <IoLogInOutline />
                         {t('menu.login')}

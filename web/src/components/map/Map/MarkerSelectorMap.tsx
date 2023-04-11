@@ -18,8 +18,8 @@ export default function MarkerSelectorMap({
   const [mapHeight, setMapHeight] = useState(0);
   const [markerWidth, setMarkerWidth] = useState(0);
   const [markerHeight, setMarkerHeight] = useState(0);
-  const [position, setPosition] = useState(markerPosition);
 
+ 
   const updateWindowDimensions = () => {
     const windowH = window.innerHeight * 0.8;
     const windowW = window.innerWidth * 0.7;
@@ -41,21 +41,25 @@ export default function MarkerSelectorMap({
   }, []);
 
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
-    console.log('changed..?!')
-    handleZoomChange(zoom)
     updateMarkerPosition(center);
-    setPosition(center);
+    handleZoomChange(zoom)
+
   };
-  const onMapMove = ({})
+
+  const handleMapClicked = ({event, latLng, pixel}) => {
+    updateMarkerPosition(latLng);
+  }
+
   return (
     <>
       <Map
         height={mapHeight}
         width={mapWidth}
-        defaultCenter={markerPosition}
+        center={markerPosition}
         defaultZoom={defaultZoom}
         provider={stamenTerrain}
         onBoundsChanged={onBoundsChanged}
+        onClick={handleMapClicked}
       >
         <ZoomControl />
         <MarkerButtonIcon anchor={markerPosition} offset={[35, 65]} color={markerColor} image={makeImageUrl(markerImage, '/api/')} title={markerCaption}/>

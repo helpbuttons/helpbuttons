@@ -82,7 +82,7 @@ export function CardButtonHeadMedium({ button }) {
 
           <div>
             <div className="card-button__city card-button__everywhere ">
-              {button.latitude}, {button.longitude}
+              {button.address}
             </div>
 
             <div className="card-button__date">Now</div>
@@ -181,7 +181,7 @@ export function CardButtonHeadBig({ button }) {
 
         <div className="card-button__locDate">
           <div className="card-button__city card-button__everywhere ">
-            {button.latitude}, {button.longitude}
+            {button.address}
           </div>
 
           <div className="card-button__date">Now</div>
