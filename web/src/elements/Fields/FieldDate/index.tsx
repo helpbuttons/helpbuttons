@@ -52,7 +52,7 @@ export default function FieldDate({
               >
                 Once
               </div>
-              <div
+              {/* <div
                 className="btn"
                 // onClick={() => setDateType(DateTypes.MULTIPLE)}
               >
@@ -63,7 +63,7 @@ export default function FieldDate({
                 // onClick={() => setDateType(DateTypes.RECURRENT)}
               >
                 Recurrent
-              </div>
+              </div> */}
             </>
           )}
 
