@@ -18,4 +18,5 @@ export const dataSourceOptions:DataSourceOptions = {
     extra: {
         query_timeout: 2500
     },
+    maxQueryExecutionTime: 3000
 }
