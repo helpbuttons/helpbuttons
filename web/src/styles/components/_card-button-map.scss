@@ -54,41 +54,6 @@ $card-button-map-border-height: $border-general-height;
   }
 }
 
-// .card-button-map--offer:after,
-// .card-button-map--need:after,
-// .card-button-map--exchange:after {
-//   content: '';
-//   border-radius: 0;
-//   display: inline-block;
-//   height: $card-button-map-border-height;
-//   left: 0;
-//   position: absolute;
-//   top: 0;
-//   width: 100%;
-// }
-
-// .card-button-map--offer:after {
-//   background: $color-green;
-// }
-
-// .card-button-map--need:after {
-//   background: $color-red;
-// }
-
-// .card-button-map--exchange:after,
-// .card-button-map--exchange:before {
-//   width: 50%;
-// }
-
-// .card-button-map--exchange:after {
-//   background: $color-green;
-// }
-
-// .card-button-map--exchange:before {
-//   background: $color-red;
-//   left: auto;
-//   right: 0;
-// }
 
 .card-button-map__content {
   padding: 1rem;
