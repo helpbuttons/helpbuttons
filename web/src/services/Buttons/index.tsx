@@ -6,6 +6,7 @@ import getConfig from "next/config";
 import { UtilsService } from "services/Utils";
 import { Button } from "shared/entities/button.entity";
 import { UpdateButtonDto } from "shared/dtos/button.dto";
+import { Bounds } from "pigeon-maps";
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -22,7 +23,15 @@ export class ButtonService {
     return httpService.post("/buttons/update/" + buttonId, data);
   }
 
-  public static find(networkId: string, bounds: any): Observable<Button[]> {
+  public static findJson(optionsJson: string): Observable<Button[]> {
+    const options = JSON.parse(optionsJson)
+     if (!options.networkId || options.networkId.length < 2) {
+      return of([]);
+    }
+    return this.find(options.networkId, options.bounds)
+  }
+
+  public static find(networkId: string, bounds: Bounds): Observable<Button[]> {
     if (!bounds || !bounds.ne)
     {
       console.error('wrong bounds? ')
