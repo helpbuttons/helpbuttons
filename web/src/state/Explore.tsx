@@ -17,6 +17,8 @@ import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
 import { handleError } from './helper';
 
+import { debounceTime } from "rxjs";
+import { switchMap } from "rxjs/operators";
 interface ExploreMapProps {
   defaultCenter: Point;
   defaultZoom: number;
@@ -39,6 +41,14 @@ export const exploreInitial = {
   mapZoom: -1,
   currentButton: null,
   mapBondsButtons: [],
+}
+
+export function setButtonsAndDebounce(sub, ms) {
+    return sub.asObservable().pipe(
+      debounceTime(ms),
+      switchMap((options : string, id) => ButtonService.findJson(options)
+      )
+    );
 }
 
 export class FindButtons implements WatchEvent {

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 //components
-import { FindButtons, updateExploreMapZoom, updateMapCenter, updateShowLeftColumn } from 'state/Explore';
+import { setButtonsAndDebounce, updateExploreMapZoom, updateMapCenter, updateShowLeftColumn } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -12,6 +12,7 @@ import { buttonTypes } from 'shared/buttonTypes';
 import ExploreMap from 'components/map/Map/ExploreMap';
 import { Button } from 'shared/entities/button.entity';
 import { Bounds, Point } from 'pigeon-maps';
+import { Subject } from 'rxjs';
 
 function Explore({ router }) {
   
@@ -36,6 +37,34 @@ function Explore({ router }) {
     (state: GlobalState) => state.networks.selectedNetwork,
   );
 
+
+  const timeInMsBetweenStrokes = 150; //ms
+  const [sub, setSub] = useState(new Subject()); 
+  const [sub$, setSub$] = useState(
+    setButtonsAndDebounce(sub, timeInMsBetweenStrokes),
+  ); 
+  
+  useEffect(() => {
+    let s = sub$.subscribe(
+      (rs: any) => {
+        if (rs) {
+          setFilteredButtons(rs)
+        } else {
+          console.error(
+            'error getting buttons?!',
+          );
+        }
+      },
+      (e) => {
+        console.log('error subscribe', e);
+      },
+    );
+    return () => {
+      s.unsubscribe(); //limpiamos
+    };
+  }, [sub$]); //first time
+  
+
   const [filteredButtons, setFilteredButtons] = useState([]);
 
   const [buttonFilterTypes, setButtonFilterTypes] = useState(
@@ -52,8 +81,13 @@ function Explore({ router }) {
     updateButtons(bounds)
   }
   const updateButtons = (bounds: Bounds) => {
-    store.emit(new FindButtons(selectedNetwork.id, bounds));
+    sub.next(
+      JSON.stringify({
+      networkId: selectedNetwork.id,
+      bounds: bounds,
+      }));
   };
+
   const updateFiltersType = (type: string, value: boolean) => {
     if (value === true) {
       setButtonFilterTypes([...buttonFilterTypes, type]);
