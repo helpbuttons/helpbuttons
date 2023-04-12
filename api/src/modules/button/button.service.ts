@@ -57,6 +57,7 @@ export class ButtonService {
       image: null,
       title: createDto.title,
       address: createDto.address,
+      when: createDto.when,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {

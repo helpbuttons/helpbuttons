@@ -23,9 +23,9 @@
     "compose:down": "docker-compose down --remove-orphans",
     "typeorm": "node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js -d src/app/configs/type-orm.config.ts",
     "migration:run": "npm run typeorm migration:run",
-    "migration:generate": "npm run typeorm migration:generate src/data/migrations/$npm_config_name",
-    "migration:create": "npm run typeorm -- migration:create src/data/migrations/",
-    "migration:revert": "npm run typeorm -- -d src/app/configs/type-orm.config.ts migration:revert",
+    "migration:generate": "npm run typeorm migration:generate",
+    "migration:create": "npm run typeorm migration:create src/data/migrations/",
+    "migration:revert": "npm run typeorm migration:revert",
     "schema:drop": "yarn typeorm schema:drop",
     "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.ts"
   },
@@ -56,7 +56,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.3.0",
-    "typeorm": "0.3.12",
+    "typeorm": "0.3.14",
     "typeorm-seeding": "^1.6.1",
     "typeorm-transactional-cls-hooked": "^0.1.21"
   },

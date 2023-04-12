@@ -11,6 +11,7 @@ import router from 'next/router';
 import {  useState } from 'react';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
 import { buttonTypes } from 'shared/buttonTypes';
+import { ShowWhen } from 'elements/Fields/FieldDate';
 
 
 export default function CardButtonFile({button}) {
@@ -91,7 +92,7 @@ export function CardButtonHeadMedium({ button }) {
               {button.address}
             </div>
 
-            <div className="card-button__date">Now</div>
+            <ShowWhen when={button.when}/>
           </div>
         </div>
       </a>
@@ -195,7 +196,7 @@ export function CardButtonHeadBig({ button }) {
             {button.address}
           </div>
 
-          <div className="card-button__date">Now</div>
+          <ShowWhen when={button.when}/>
         </div>
       </div>
     </>

@@ -6,11 +6,10 @@ import Calendar from 'react-calendar';
 import TimeKeeper from 'react-timekeeper';
 
 import 'react-calendar/dist/Calendar.css';
-import { getLocale } from 'shared/sys.helper';
 
-export default function PickerPeriodDate({ closeMenu, onChange }) {
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState('13:12');
+export default function PickerPeriodDate({defaultDate, closeMenu, onChange }) {
+  const [date, setDate] = useState(defaultDate);
+  const [time, setTime] = useState(defaultDate.getTime());
   const [showTime, setShowTime] = useState(false);
   const [showCalendar, setShowCalendar] = useState(true);
 
@@ -37,19 +36,20 @@ export default function PickerPeriodDate({ closeMenu, onChange }) {
                       value={date}
                     />
                   </div>
+                  <div
+                    className="btn"
+                    onClick={() => {
+                      setShowCalendar(false);
+                      setShowTime(true);
+                    }}
+                  >
+                    Change time
+                  </div>
                 </>
               )}
               {showTime && (
                 <>
-                  <div
-                    className="btn"
-                    onClick={() => {
-                      setShowCalendar(true);
-                      setShowTime(false);
-                    }}
-                  >
-                    Change day
-                  </div>
+                  
                   <header className="picker__header ">
                     {t('picker-specific-date.picktime')}
                   </header>
@@ -65,6 +65,15 @@ export default function PickerPeriodDate({ closeMenu, onChange }) {
                         setTime(data.formatted24);
                       }}
                     />
+                  </div>
+                  <div
+                    className="btn"
+                    onClick={() => {
+                      setShowCalendar(true);
+                      setShowTime(false);
+                    }}
+                  >
+                    Change day
                   </div>
                 </>
               )}

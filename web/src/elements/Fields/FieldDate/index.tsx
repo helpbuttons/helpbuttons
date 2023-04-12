@@ -1,76 +1,141 @@
 //is the component or element integrated in buttonNewPublish. Right before activate button. It displays the current selected date and a button to chang it, that ddisplays a picker with the date options for the net that's selecte
-import { Picker, PickerSelector } from "components/picker/Picker";
-import PickerPeriodDate from "components/picker/PickerPeriodDate";
-import PickerDate from "components/picker/PickerDate";
-import React, { useState } from "react";
-import PickerSpecificDate from "components/picker/PickerSpecificDate";
-import { getLocale } from "shared/sys.helper";
+import { Picker } from 'components/picker/Picker';
+import React, { useState } from 'react';
+import PickerSpecificDate from 'components/picker/PickerSpecificDate';
+import {
+  DateTypes,
+  readableDate,
+  readableTimeLeftToDate,
+} from 'shared/date.utils';
+import DebugToJSON from 'elements/Debug';
 
-export default function FieldDate({ title, ...props }) {
+export default function FieldDate({
+  title,
+  dateType,
+  dates,
+  setDateType,
+  setDate,
+  ...props
+}) {
   const [showHideMenu, setHideMenu] = useState(false);
-  const [pickerMode, setPickerMode] = useState("");
-  const [date, setDate] = useState(new Date());
-  
+  const [pickerMode, setPickerMode] = useState('');
+
   let closeMenu = () => {
     setHideMenu(false);
-    setPickerMode("");
   };
+
   // https://www.npmjs.com/package/react-time-picker
   return (
     <>
       <div className="form__field">
-        <div className="card-button__date">
-          {props.date && props.date}
-          {!props.date && title}
-        </div>
-        <div className="btn" onClick={() => setHideMenu(!showHideMenu)}>
+        <ShowDate dates={dates} dateType={dateType} title={title} />
+        <div
+          className="btn"
+          onClick={() => setHideMenu(!showHideMenu)}
+        >
           Change date
         </div>
       </div>
       {showHideMenu && (
-        <Picker setHideMenu={setHideMenu} onClosed={closeMenu}>
-            <div className="btn" onClick={closeMenu}>
-            Done
-          </div>
+        <Picker closeAction={closeMenu}>
+          {!dateType && (
+            <>
+              <div
+                className="btn"
+                onClick={() => setDateType(DateTypes.ALWAYS_ON)}
+              >
+                Always
+              </div>
+              <div
+                className="btn"
+                onClick={() => setDateType(DateTypes.ONCE)}
+              >
+                Once
+              </div>
+              <div
+                className="btn"
+                // onClick={() => setDateType(DateTypes.MULTIPLE)}
+              >
+                Multiple days
+              </div>
+              <div
+                className="btn"
+                // onClick={() => setDateType(DateTypes.RECURRENT)}
+              >
+                Recurrent
+              </div>
+            </>
+          )}
 
-            <span>
-            You selected this time is{' '}
-            {date.toLocaleDateString(getLocale(), {
-              weekday: 'short',
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
-              hour: 'numeric',
-              minute: 'numeric'
-            })}
-          </span>
-          {/* {pickerMode == "" && (
-            <PickerSelector
-              label="Now"
-              value="now"
-              onHandleChange={setPickerMode}
-            />
+          {dateType == DateTypes.ALWAYS_ON && <></>}
+          {dateType == DateTypes.ONCE && (
+            <>
+              <PickerSpecificDate
+                defaultDate={
+                  dates && dates[0] ? dates[0] : new Date()
+                }
+                onChange={(datetime) => setDate([datetime])}
+                closeMenu={closeMenu}
+              ></PickerSpecificDate>
+            </>
           )}
-          {pickerMode == "" && (
-            <PickerSelector
-              label="Specific"
-              value="specific"
-              onHandleChange={setPickerMode}
-            />
+          {dateType == DateTypes.MULTIPLE && <></>}
+          {dateType == DateTypes.RECURRENT && <></>}
+          {dateType && (
+            <div
+              className="btn"
+              onClick={() => {
+                setDateType(null);
+              }}
+            >
+              Change to other type
+            </div>
           )}
-          {pickerMode == "" && (
-            <PickerSelector
-              label="Periodic Date"
-              value="periodic"
-              onHandleChange={setPickerMode}
-            />
-          )} 
-          {pickerMode == "now" && <PickerDate></PickerDate>}
-          {pickerMode == "specific" && <PickerSpecificDate></PickerSpecificDate>}
-          {pickerMode == "periodic" && <PickerPeriodDate></PickerPeriodDate>}*/}
-          <PickerSpecificDate onChange={setDate} closeMenu={closeMenu}></PickerSpecificDate>
+          {dateType && (
+            <>
+              <ShowDate
+                dates={dates}
+                dateType={dateType}
+                title={title}
+              />
+              <div className="btn" onClick={closeMenu}>
+                Done
+              </div>
+            </>
+          )}
         </Picker>
       )}
     </>
+  );
+}
+export function ShowWhen({ when }) {
+  const options = JSON.parse(when);
+  return (
+    <>
+      {(
+        <ShowDate
+          dates={options?.dates}
+          dateType={options?.type}
+          title={'Always'}
+        />
+      )}
+    </>
+  );
+}
+export function ShowDate({ dates, dateType, title }) {
+  return (
+    <div className="card-button__date">
+      {(!dateType || !dates) && <>{title}</>}
+      {dateType == DateTypes.ALWAYS_ON && <>Always</>}
+      {dateType == DateTypes.ONCE && dates && dates.length > 0 && (
+        <>
+          {`${readableDate(dates[0])} (${readableTimeLeftToDate(
+            dates[0].toString(),
+          )})`}
+        </>
+      )}
+      {dateType == DateTypes.MULTIPLE && <></>}
+      {dateType == DateTypes.RECURRENT && <></>}
+    </div>
   );
 }
