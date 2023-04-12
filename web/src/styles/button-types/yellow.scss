@@ -1,11 +1,11 @@
 
-.marker-button-selector.corporative{
+.marker-button-selector.yellow{
     .marker-button__link-tag {
       background: $color-corporative;
     }
   }
   
-  .marker-button-selector.corporative {
+  .marker-button-selector.yellow {
     .marker-button__image {
       border-color: $color-corporative;
       background-color: $color-corporative;
@@ -20,8 +20,61 @@
   
 
   .btn-filter__icon {
-    &.corporative {
+    &.yellow {
       border-radius: $btn-border-radius-semicircle;
       background: $color-corporative;
     }
   }
+
+// button card color
+.card-button-map.yellow:after{
+  content: '';
+  border-radius: 0;
+  display: inline-block;
+  height: $card-button-map-border-height;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: $color-corporative;
+}
+
+
+.card-button-list.yellow:after{
+  content: '';
+  border-radius: 0;
+  display: inline-block;
+  height: $card-button-list-border-height;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: $color-corporative;
+}
+.card-button__status .yellow{
+  color: $color-corporative;
+}
+
+.card-button__file.yellow:after{
+  background: $color-corporative
+}
+
+// .card-button-list--exchange:after,
+// .card-button-list--exchange:before {
+//   width: 50%;
+// }
+
+// .card-button-list--exchange-swap:after,
+// .card-button-list--exchange-swap:before {
+//   width: 50%;
+// }
+
+// .card-button-list--exchange:after {
+//   background: $color-green;
+// }
+
+// .card-button-list--exchange:before {
+//   background: $color-red;
+//   left: auto;
+//   right: 0;
+// }

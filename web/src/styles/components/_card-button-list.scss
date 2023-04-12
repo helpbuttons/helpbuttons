@@ -44,59 +44,6 @@ $card-button-list-border-height: $border-general-height;
 
 }
 
-.card-button-list--offer:after,
-.card-button-list--need:after,
-.card-button-list--exchange:after,
-.card-button-list--exchange:before,
-.card-button-list--exchange-swap:after,
-.card-button-list--exchange-swap:before {
-  content: '';
-  border-radius: 0;
-  display: inline-block;
-  height: $card-button-list-border-height;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
-
-.card-button-list--offer:after {
-  background: $color-green;
-}
-
-.card-button-list--need:after {
-  background: $color-red;
-}
-
-.card-button-list--exchange:after,
-.card-button-list--exchange:before {
-  width: 50%;
-}
-
-.card-button-list--exchange-swap:after,
-.card-button-list--exchange-swap:before {
-  width: 50%;
-}
-
-.card-button-list--exchange:after {
-  background: $color-green;
-}
-
-.card-button-list--exchange:before {
-  background: $color-red;
-  left: auto;
-  right: 0;
-}
-
-.card-button-list--exchange-swap:after {
-  background: $color-red;
-}
-
-.card-button-list--exchange-swap:before {
-  background: $color-green;
-  left: auto;
-  right: 0;
-}
 
 .card-button-list__content {
   width: 100%;

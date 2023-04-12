@@ -25,3 +25,43 @@
       background: $color-red;
     }
   }
+
+// button card color
+.card-button-map.corporative:after{
+  content: '';
+  border-radius: 0;
+  display: inline-block;
+  height: $card-button-map-border-height;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.card-button-map.corporative:after {
+  background: $color-red;
+}
+
+.card-button-map.corporative:after {
+  background: $color-red;
+}
+
+.card-button-list.red:after{
+  content: '';
+  border-radius: 0;
+  display: inline-block;
+  height: $card-button-list-border-height;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: $color-red;
+}
+
+.card-button__status .red{
+  color: $color-red;
+}
+
+.card-button__file.red:after{
+  background: $color-red
+}

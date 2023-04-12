@@ -10,10 +10,13 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import router from 'next/router';
 import {  useState } from 'react';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
+import { buttonTypes } from 'shared/buttonTypes';
 
 
 export default function CardButtonFile({button}) {
-  
+  const { color } = buttonTypes.find((buttonType) => {
+    return buttonType.name === button.type;
+  });
 
   return (
     <>
@@ -21,7 +24,7 @@ export default function CardButtonFile({button}) {
         <>
           <div>
             <div
-              className={`card-button card-button card-button--${button.type}`}
+              className={`card-button card-button__file ${color}`}
             >
               <CardButtonHeadBig button={button} />
             </div>
@@ -35,6 +38,9 @@ export default function CardButtonFile({button}) {
 }
 
 export function CardButtonHeadMedium({ button }) {
+  const { color } = buttonTypes.find((buttonType) => {
+    return buttonType.name === button.type;
+  });
   return (
     <>
       <CardButtonSubmenu button={button} />
@@ -58,7 +64,7 @@ export function CardButtonHeadMedium({ button }) {
 
               <div className="card-button__status card-button__status">
                 <span
-                  className={`card-button__status--${button.type}`}
+                  className={`card-button ${color}`}
                 >
                   {button.type}
                 </span>
@@ -140,6 +146,11 @@ function CardButtonSubmenu({ button }) {
   );
 }
 export function CardButtonHeadBig({ button }) {
+
+  const { color } = buttonTypes.find((buttonType) => {
+    return buttonType.name === button.type;
+  });
+
   return (
     <>
       <CardButtonSubmenu button={button} />
@@ -161,7 +172,7 @@ export function CardButtonHeadBig({ button }) {
               {button.owner.name}
             </div>
             <div className="card-button__status card-button__status">
-              <span className={`card-button__status--${button.type}`}>
+              <span className={`card-button__status ${color}`}>
                 {button.type}
               </span>
             </div>

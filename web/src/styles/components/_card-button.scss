@@ -22,26 +22,9 @@ $card-button-border-height: $border-general-height;
   }
 }
 
-.card-button--white {
-  background: $color-white;
-}
 
-.card-button {
-  &--exchange-swap-deactivated,
-  &--exchange-deactivated,
-  &--offer-deactivated,
-  &--need-deactivated {
-    opacity: 0.5;
-    background: grey;
-  }
-}
-
-.card-button--offer:after,
-.card-button--need:after,
-.card-button--exchange:after,
-.card-button--exchange:before,
-.card-button--exchange-swap:after,
-.card-button--exchange-swap:before {
+.card-button:after,
+.card-button:before {
   content: '';
   border-radius: 0;
   display: inline-block;
@@ -52,43 +35,7 @@ $card-button-border-height: $border-general-height;
   width: 100%;
 }
 
-.card-button--offer:after {
-  background: $color-green;
-}
 
-.card-button--need:after {
-  background: $color-red;
-}
-
-.card-button--exchange:after,
-.card-button--exchange:before {
-  width: 50%;
-}
-
-.card-button--exchange-swap:after,
-.card-button--exchange-swap:before {
-  width: 50%;
-}
-
-.card-button--exchange:after {
-  background: $color-green;
-}
-
-.card-button--exchange:before {
-  background: $color-red;
-  left: auto;
-  right: 0;
-}
-
-.card-button--exchange-swap:after {
-  background: $color-red;
-}
-
-.card-button--exchange-swap:before {
-  background: $color-green;
-  left: auto;
-  right: 0;
-}
 
 .card-button__content {
   padding: 1rem;
@@ -166,16 +113,9 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__status {
-  color: $color-gray;
   font-size: $font-size-general;
   font-weight: bold;
   text-transform: capitalize;
-  &--offer {
-    color: $color-green;
-  }
-  &--need {
-    color: $color-red;
-  }
 }
 
 .card-button__name {

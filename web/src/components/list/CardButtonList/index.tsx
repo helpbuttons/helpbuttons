@@ -7,15 +7,19 @@ import { CardButtonHeadMedium } from "components/button/CardButton";
 import { GlobalState, store } from "pages";
 import { useRef } from "store/Store";
 import { Button } from "shared/entities/button.entity";
+import { buttonTypes } from "shared/buttonTypes";
 
 
 
 export default function CardButtonList({button}) {
 
+  const { color } = buttonTypes.find((buttonType) => {
+    return buttonType.name === button.type;
+  });
   return (
     <>
     <div className="list__element">
-      <div className={`card-button-list card-button-list--${button.type}`}>
+      <div className={`card-button-list ${color}`}>
         <div className="card-button-list__picture-container">
           <div className="card-button-list__nav">
             <div className="arrow btn-circle__icon">
