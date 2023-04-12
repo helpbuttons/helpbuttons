@@ -9,6 +9,9 @@ export enum DateTypes {
 }
 
 export function readableTimeLeftToDate(date: Date) {
+  if(typeof date !== typeof Date) {
+    date = new Date(date)
+  }
   // in miliseconds
   var units = {
     year: 24 * 60 * 60 * 1000 * 365,
@@ -36,6 +39,9 @@ export function readableTimeLeftToDate(date: Date) {
 }
 
 export function readableDate(date: Date) {
+  if(typeof date !== typeof Date) {
+    date = new Date(date)
+  }
   return date.toLocaleDateString(getLocale(), {
     weekday: 'short',
     year: 'numeric',

@@ -37,6 +37,7 @@ export default function ButtonNew() {
       title: '',
       radius: 1,
       address: '',
+      when: {dates: [], type: null}
     },
   });
 
