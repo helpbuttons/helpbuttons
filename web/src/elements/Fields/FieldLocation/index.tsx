@@ -8,6 +8,8 @@ import { GlobalState, store } from 'pages';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import { FindAddress } from 'state/Explore';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
+import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import t from 'i18n';
 export default function FieldLocation({
   validationErrors,
   setValue,
@@ -36,6 +38,10 @@ export default function FieldLocation({
   const updateZoom = (newZoom) => {
     setZoom(newZoom)
     setValue('zoom', newZoom);
+  };
+
+  const handleSelectedPlace = (place) => {
+    updateLocation([place.geometry.lat, place.geometry.lng])
   };
 
   const updateLocation = (newLatLng) => {
@@ -109,13 +115,10 @@ export default function FieldLocation({
               longitude={latLng[1]}
               address={address}
             />
-            {/* <DropDownWhere
+            <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
-              onSelected={(place) => {
-                console.log(place);
-                // setCenter(place.coordinates)
-              }}
-            /> */}
+              handleSelectedPlace={handleSelectedPlace}
+            />
             <Btn
               btnType={BtnType.splitIcon}
               caption="Save"
