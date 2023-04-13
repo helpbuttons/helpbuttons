@@ -2,7 +2,13 @@
 import React, { useState, useEffect } from 'react';
 
 //components
-import { setButtonsAndDebounce, updateExploreMapZoom, updateMapCenter, updateShowLeftColumn } from 'state/Explore';
+import {
+  ButtonsFound,
+  setButtonsAndDebounce,
+  updateExploreMapZoom,
+  updateMapCenter,
+  updateShowLeftColumn,
+} from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -12,24 +18,31 @@ import { buttonTypes } from 'shared/buttonTypes';
 import ExploreMap from 'components/map/Map/ExploreMap';
 import { Button } from 'shared/entities/button.entity';
 import { Bounds, Point } from 'pigeon-maps';
-import { Subject } from 'rxjs';
+import { filter, Subject } from 'rxjs';
+
+interface ButtonFilters {
+  showButtonTypes: string[];
+}
 
 function Explore({ router }) {
-  
   const mapBondsButtons = useRef(
     store,
     (state: GlobalState) => state.explore.mapBondsButtons,
   );
-  const currentButton = useRef( store,
+  const currentButton = useRef(
+    store,
     (state: GlobalState) => state.explore.currentButton,
   );
-  const mapZoom = useRef( store,
+  const mapZoom = useRef(
+    store,
     (state: GlobalState) => state.explore.mapZoom,
   );
-  const mapCenter = useRef( store,
+  const mapCenter = useRef(
+    store,
     (state: GlobalState) => state.explore.mapCenter,
   );
-  const showLeftColumn = useRef( store,
+  const showLeftColumn = useRef(
+    store,
     (state: GlobalState) => state.explore.showLeftColumn,
   );
   const selectedNetwork = useRef(
@@ -37,22 +50,27 @@ function Explore({ router }) {
     (state: GlobalState) => state.networks.selectedNetwork,
   );
 
-
+  
+  const defaultFilters: ButtonFilters = {
+    showButtonTypes: buttonTypes.map((buttonType) => buttonType.name),
+  };
+  const [filteredButtons, setFilteredButtons] = useState([]);
+  const [filters, setFilters] =
+    useState<ButtonFilters>(defaultFilters);
+  
   const timeInMsBetweenStrokes = 150; //ms
-  const [sub, setSub] = useState(new Subject()); 
+  const [sub, setSub] = useState(new Subject());
   const [sub$, setSub$] = useState(
     setButtonsAndDebounce(sub, timeInMsBetweenStrokes),
-  ); 
-  
+  );
+
   useEffect(() => {
     let s = sub$.subscribe(
       (rs: any) => {
         if (rs) {
-          setFilteredButtons(rs)
+          store.emit(new ButtonsFound(rs));
         } else {
-          console.error(
-            'error getting buttons?!',
-          );
+          console.error('error getting buttons?!');
         }
       },
       (e) => {
@@ -63,78 +81,99 @@ function Explore({ router }) {
       s.unsubscribe(); //limpiamos
     };
   }, [sub$]); //first time
+
   
-
-  const [filteredButtons, setFilteredButtons] = useState([]);
-
-  const [buttonFilterTypes, setButtonFilterTypes] = useState(
-    buttonTypes.map((buttonType) => buttonType.name),
-  );
-
-  const onLeftColumnToggle = (data) => {
-    store.emit(new updateShowLeftColumn(!showLeftColumn))
-  };
-
-  const handleBoundsChange = (bounds, center :Point, zoom) => {
-    store.emit(new updateMapCenter(center))
-    store.emit(new updateExploreMapZoom(zoom))
-    updateButtons(bounds)
-  }
-  const updateButtons = (bounds: Bounds) => {
-    sub.next(
-      JSON.stringify({
-      networkId: selectedNetwork.id,
-      bounds: bounds,
-      }));
-  };
-
-  const updateFiltersType = (type: string, value: boolean) => {
-    if (value === true) {
-      setButtonFilterTypes([...buttonFilterTypes, type]);
-    }
-    if (value === false) {
-      setButtonFilterTypes((previous) =>
-        previous.filter((value, i) => value != type),
-      );
-    }
-  };
-
-
   useEffect(() => {
-    let loadCoordinatesFromNetwork = true
+    let loadCoordinatesFromNetwork = true;
     if (router && router.query && router.query.lat) {
       const lat = parseFloat(router.query.lat);
       const lng = parseFloat(router.query.lng);
       store.emit(new updateExploreMapZoom(16));
-      store.emit(new updateMapCenter([lat, lng]))
+      store.emit(new updateMapCenter([lat, lng]));
       loadCoordinatesFromNetwork = false;
     }
-  
-    if (mapBondsButtons !== null){
-      setFilteredButtons(
-        mapBondsButtons.filter((button: Button) => {
-          return buttonFilterTypes.indexOf(button.type) >= 0;
+
+    if ((!mapCenter || !mapZoom) && selectedNetwork) {
+      if (loadCoordinatesFromNetwork) {
+        store.emit(
+          new updateMapCenter(selectedNetwork.location.coordinates),
+        );
+      }
+      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
+    }
+  }, [selectedNetwork, router]);
+
+  useEffect(() => {
+    if (mapBondsButtons && filters) {
+      applyButtonFilters(mapBondsButtons, filters);
+    }
+  },[mapBondsButtons, filters])
+
+  const onLeftColumnToggle = (data) => {
+    store.emit(new updateShowLeftColumn(!showLeftColumn));
+  };
+
+  const handleBoundsChange = (bounds, center: Point, zoom) => {
+    const getButtonsForBounds = (bounds: Bounds) => {
+      setFilters({ ...filters });
+      sub.next(
+        JSON.stringify({
+          networkId: selectedNetwork.id,
+          bounds: bounds,
         }),
       );
-      }
-      if ((!mapCenter || !mapZoom) && selectedNetwork)
-      {
-        if(loadCoordinatesFromNetwork){
-          store.emit(new updateMapCenter(selectedNetwork.location.coordinates))
-        }
-        store.emit(new updateExploreMapZoom(selectedNetwork.zoom))
-      }
 
-  }, [mapBondsButtons, buttonFilterTypes, selectedNetwork, router]);
+      store.emit(new updateMapCenter(center));
+      store.emit(new updateExploreMapZoom(zoom));
+      getButtonsForBounds(bounds);
+    };
+  };
+
+  const updateFiltersType = (type: string, value: boolean) => {
+    const showButtonType = (type: string) => {
+      const newButtonTypes = filters.showButtonTypes.filter(
+        (name) => name != type,
+      );
+      if (filters.showButtonTypes.indexOf(type) > -1) {
+        return filters; // nothing to do
+      }
+      newButtonTypes.push(type);
+
+      setFilters({ ...filters, showButtonTypes: newButtonTypes });
+    };
+
+    const hideButtonType = (type: string) => {
+      const newButtonTypes = filters.showButtonTypes.filter(
+        (name) => name != type,
+      );
+      setFilters({ ...filters, showButtonTypes: newButtonTypes });
+    };
+
+    if (value) {
+      showButtonType(type);
+    } else {
+      hideButtonType(type);
+    }
+  };
+
+  const applyButtonFilters = (buttons, filters) => {
+    setFilteredButtons(
+      buttons.filter((button: Button) => {
+        return filters.showButtonTypes.indexOf(button.type) > -1;
+      }),
+    );
+  };
 
   const handleSelectedPlace = (place) => {
-    store.emit(new updateMapCenter([place.geometry.lat, place.geometry.lng]))
-    store.emit(new updateExploreMapZoom(16))
+    store.emit(
+      new updateMapCenter([place.geometry.lat, place.geometry.lng]),
+    );
+    store.emit(new updateExploreMapZoom(16));
   };
 
   return (
     <>
-      {(selectedNetwork && mapZoom > 0 && mapCenter) && (
+      {selectedNetwork && mapZoom > 0 && mapCenter && (
         <div className="index__container">
           <div
             className={
@@ -142,7 +181,6 @@ function Explore({ router }) {
               (showLeftColumn ? '' : 'index__content-left--hide')
             }
           >
-
             <NavHeader
               showSearch={true}
               updateFiltersType={updateFiltersType}
@@ -167,4 +205,4 @@ function Explore({ router }) {
   );
 }
 
-export default withRouter(Explore)
+export default withRouter(Explore);

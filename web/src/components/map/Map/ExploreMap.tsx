@@ -43,7 +43,7 @@ export default function ExploreMap(
           >
             <ZoomControl />
             {filteredButtons.map((button: Button, idx) => (
-              <MarkerButton anchor={[button.latitude, button.longitude]} offset={[35, 65]} button={button} handleMarkerClicked={handleMarkerClicked} currentButtonId={currentButton?.id}/>
+              <MarkerButton key={idx} anchor={[button.latitude, button.longitude]} offset={[35, 65]} button={button} handleMarkerClicked={handleMarkerClicked} currentButtonId={currentButton?.id}/>
             ))}
 
             {currentButton && 
