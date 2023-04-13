@@ -19,6 +19,6 @@
   },
   "picker-specific-date": {
     "pickday": "Choose a day",
-    "picktime": "Pick a time"
+    "picktime": "From..."
   }
 }

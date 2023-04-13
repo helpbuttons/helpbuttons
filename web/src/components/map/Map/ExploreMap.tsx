@@ -35,7 +35,7 @@ export default function ExploreMap(
         {(mapZoom && mapCenter) && 
           <Map
             center={mapCenter}
-            defaultZoom={mapZoom}
+            zoom={mapZoom}
             provider={stamenTerrain}
             onBoundsChanged={onBoundsChanged}
             zoomSnap={true}

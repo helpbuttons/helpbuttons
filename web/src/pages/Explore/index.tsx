@@ -22,6 +22,7 @@ import { filter, Subject } from 'rxjs';
 
 interface ButtonFilters {
   showButtonTypes: string[];
+  bounds: Bounds;
 }
 
 function Explore({ router }) {
@@ -50,14 +51,6 @@ function Explore({ router }) {
     (state: GlobalState) => state.networks.selectedNetwork,
   );
 
-  
-  const defaultFilters: ButtonFilters = {
-    showButtonTypes: buttonTypes.map((buttonType) => buttonType.name),
-  };
-  const [filteredButtons, setFilteredButtons] = useState([]);
-  const [filters, setFilters] =
-    useState<ButtonFilters>(defaultFilters);
-  
   const timeInMsBetweenStrokes = 150; //ms
   const [sub, setSub] = useState(new Subject());
   const [sub$, setSub$] = useState(
@@ -82,32 +75,13 @@ function Explore({ router }) {
     };
   }, [sub$]); //first time
 
-  
-  useEffect(() => {
-    let loadCoordinatesFromNetwork = true;
-    if (router && router.query && router.query.lat) {
-      const lat = parseFloat(router.query.lat);
-      const lng = parseFloat(router.query.lng);
-      store.emit(new updateExploreMapZoom(16));
-      store.emit(new updateMapCenter([lat, lng]));
-      loadCoordinatesFromNetwork = false;
-    }
-
-    if ((!mapCenter || !mapZoom) && selectedNetwork) {
-      if (loadCoordinatesFromNetwork) {
-        store.emit(
-          new updateMapCenter(selectedNetwork.location.coordinates),
-        );
-      }
-      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
-    }
-  }, [selectedNetwork, router]);
-
-  useEffect(() => {
-    if (mapBondsButtons && filters) {
-      applyButtonFilters(mapBondsButtons, filters);
-    }
-  },[mapBondsButtons, filters])
+  const defaultFilters: ButtonFilters = {
+    showButtonTypes: buttonTypes.map((buttonType) => buttonType.name),
+    bounds: null,
+  };
+  const [filteredButtons, setFilteredButtons] = useState([]);
+  const [filters, setFilters] =
+    useState<ButtonFilters>(defaultFilters);
 
   const onLeftColumnToggle = (data) => {
     store.emit(new updateShowLeftColumn(!showLeftColumn));
@@ -115,7 +89,7 @@ function Explore({ router }) {
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     const getButtonsForBounds = (bounds: Bounds) => {
-      setFilters({ ...filters });
+      setFilters({ ...filters, bounds: bounds });
       sub.next(
         JSON.stringify({
           networkId: selectedNetwork.id,
@@ -125,8 +99,9 @@ function Explore({ router }) {
 
       store.emit(new updateMapCenter(center));
       store.emit(new updateExploreMapZoom(zoom));
-      getButtonsForBounds(bounds);
+      
     };
+    getButtonsForBounds(bounds);
   };
 
   const updateFiltersType = (type: string, value: boolean) => {
@@ -164,6 +139,47 @@ function Explore({ router }) {
     );
   };
 
+  useEffect(() => {
+    let loadCoordinatesFromNetwork = true;
+    if (router && router.query && router.query.lat) {
+      const lat = parseFloat(router.query.lat);
+      const lng = parseFloat(router.query.lng);
+      store.emit(new updateExploreMapZoom(16));
+      store.emit(new updateMapCenter([lat, lng]));
+      loadCoordinatesFromNetwork = false;
+    }
+
+    if ((!mapCenter || !mapZoom) && selectedNetwork) {
+      if (loadCoordinatesFromNetwork) {
+        store.emit(
+          new updateMapCenter(selectedNetwork.location.coordinates),
+        );
+      }
+      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
+    }    
+  }, [ selectedNetwork, router]);
+
+  useEffect(() => {
+    if(navigator)
+    {
+      console.log('getting position:')
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log("Latitude is :", position.coords.latitude);
+
+      console.log("Longitude is :", position.coords.longitude);
+      store.emit(
+        new updateMapCenter([position.coords.latitude,position.coords.longitude]),
+      );
+      store.emit(new updateExploreMapZoom(16));
+    });
+  }
+  }, [navigator])
+
+  useEffect(() => {
+    if (mapBondsButtons && filters) {
+      applyButtonFilters(mapBondsButtons, filters);
+    }
+  }, [mapBondsButtons, filters])
   const handleSelectedPlace = (place) => {
     store.emit(
       new updateMapCenter([place.geometry.lat, place.geometry.lng]),
