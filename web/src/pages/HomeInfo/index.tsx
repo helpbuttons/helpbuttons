@@ -15,6 +15,8 @@ import { getHostname } from 'shared/sys.helper';
 import { NetworkDto } from 'shared/dtos/network.dto';
 import { SetupDto } from 'shared/entities/setup.entity';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import { useEffect } from 'react';
+import { updateExploreMapZoom, updateMapCenter } from 'state/Explore';
 
 export default function HomeInfo() {
   const selectedNetwork: NetworkDto = useRef(
@@ -36,6 +38,18 @@ export default function HomeInfo() {
     (state: GlobalState) => state.config,
   );
 
+  useEffect(() => {
+    if(navigator)
+    {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      store.emit(
+        new updateMapCenter([position.coords.latitude,position.coords.longitude]),
+      );
+      store.emit(new updateExploreMapZoom(12));
+    });
+  }
+  }, [navigator])
+  
   const handleSelectedPlace = (place) => {
     router.push({
       pathname: '/Explore',
