@@ -116,6 +116,11 @@ $card-button-border-height: $border-general-height;
   font-size: $font-size-general;
   font-weight: bold;
   text-transform: capitalize;
+  color:  var(--button-color);
+}
+
+.card-button__file:after{
+  background:  var(--button-color)
 }
 
 .card-button__name {

@@ -36,6 +36,18 @@ $card-button-list-border-height: $border-general-height;
 
 }
 
+.card-button-list:after{
+  content: '';
+  border-radius: 0;
+  display: inline-block;
+  height: $card-button-list-border-height;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background:  var(--button-color);
+}
+
 
 .card-button-list--deactivated {
 

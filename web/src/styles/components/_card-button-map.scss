@@ -31,6 +31,21 @@ $card-button-map-border-height: $border-general-height;
   }
 }
 
+.card-button-map:after{
+  content: '';
+  border-radius: 0;
+  display: inline-block;
+  height: $card-button-map-border-height;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.card-button-map:after {
+  background:  var(--button-color);
+}
+
 .card-button-map--wrapper {
   .leaflet-popup-content-wrapper{
     background: transparent;

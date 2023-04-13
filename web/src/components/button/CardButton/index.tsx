@@ -10,12 +10,12 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import router from 'next/router';
 import {  useState } from 'react';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
-import { buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import { ShowWhen } from 'elements/Fields/FieldDate';
 
 
 export default function CardButtonFile({button}) {
-  const { color } = buttonTypes.find((buttonType) => {
+  const { cssColor } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
 
@@ -25,8 +25,8 @@ export default function CardButtonFile({button}) {
         <>
           <div>
             <div
-              className={`card-button card-button__file ${color}`}
-            >
+              className="card-button card-button__file"
+              style={buttonColorStyle(cssColor)}>
               <CardButtonHeadBig button={button} />
             </div>
             <CardButtonImages button={button} />
@@ -39,7 +39,7 @@ export default function CardButtonFile({button}) {
 }
 
 export function CardButtonHeadMedium({ button }) {
-  const { color } = buttonTypes.find((buttonType) => {
+  const { cssColor} = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
   return (
@@ -64,9 +64,7 @@ export function CardButtonHeadMedium({ button }) {
               </div>
 
               <div className="card-button__status card-button__status">
-                <span
-                  className={`card-button ${color}`}
-                >
+                <span className="card-button" style={buttonColorStyle(cssColor)}>
                   {button.type}
                 </span>
               </div>
@@ -148,7 +146,7 @@ function CardButtonSubmenu({ button }) {
 }
 export function CardButtonHeadBig({ button }) {
 
-  const { color } = buttonTypes.find((buttonType) => {
+  const { cssColor } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
 
@@ -173,7 +171,7 @@ export function CardButtonHeadBig({ button }) {
               {button.owner.name}
             </div>
             <div className="card-button__status card-button__status">
-              <span className={`card-button__status ${color}`}>
+              <span className="card-button__status" style={buttonColorStyle(cssColor)}>
                 {button.type}
               </span>
             </div>

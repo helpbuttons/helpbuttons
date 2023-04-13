@@ -1,6 +1,6 @@
 //Filters is the component under the search bar sectioon of the home page and other pages. It consist of several items all with btn-fillter class, and its parts can be altered by the btn templates of the selected network.
 
-import { buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 
 //if the filters are too many, it ddisplays a "more filters" option at the end that brings the PopupExtraFilters
 
@@ -28,8 +28,8 @@ export default function Filters({ updateFiltersType }) {
               onChange={buttonTypeChanged}
             ></input>
             <div className="checkbox-filter__content btn-filter-with-icon">
-              <div
-                className={`btn-filter__icon ${buttonType.color}`}
+              <div style={buttonColorStyle(buttonType.cssColor)}
+                className="btn-filter__icon"
               ></div>
               <div className="checkbox__text">{buttonType.caption}</div>
             </div>
