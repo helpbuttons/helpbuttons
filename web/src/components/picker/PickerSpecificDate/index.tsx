@@ -10,9 +10,6 @@ import 'react-calendar/dist/Calendar.css';
 export default function PickerPeriodDate({defaultDate, closeMenu, onChange }) {
   const [date, setDate] = useState(defaultDate);
   const [time, setTime] = useState(defaultDate.getTime());
-  const [showTime, setShowTime] = useState(false);
-  const [showCalendar, setShowCalendar] = useState(true);
-
   return (
     <>
       <section className="repository__section">
@@ -20,7 +17,6 @@ export default function PickerPeriodDate({defaultDate, closeMenu, onChange }) {
           
           <div className="picker__section">
             <div className="picker__section__pick">
-              {showCalendar && (
                 <>
                   <header className="picker__header ">
                     {t('picker-specific-date.pickday')}
@@ -28,26 +24,13 @@ export default function PickerPeriodDate({defaultDate, closeMenu, onChange }) {
                   <div className="picker__row">
                     <Calendar
                       onChange={(e) => {
-                        setShowTime(true);
-                        setShowCalendar(false);
                         setDate(e);
                         onChange(e);
                       }}
                       value={date}
                     />
                   </div>
-                  <div
-                    className="btn"
-                    onClick={() => {
-                      setShowCalendar(false);
-                      setShowTime(true);
-                    }}
-                  >
-                    Change time
-                  </div>
                 </>
-              )}
-              {showTime && (
                 <>
                   
                   <header className="picker__header ">
@@ -66,17 +49,7 @@ export default function PickerPeriodDate({defaultDate, closeMenu, onChange }) {
                       }}
                     />
                   </div>
-                  <div
-                    className="btn"
-                    onClick={() => {
-                      setShowCalendar(true);
-                      setShowTime(false);
-                    }}
-                  >
-                    Change day
-                  </div>
                 </>
-              )}
             </div>
           </div>
         </div>

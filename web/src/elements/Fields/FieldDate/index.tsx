@@ -81,16 +81,7 @@ export default function FieldDate({
           )}
           {dateType == DateTypes.MULTIPLE && <></>}
           {dateType == DateTypes.RECURRENT && <></>}
-          {dateType && (
-            <div
-              className="btn"
-              onClick={() => {
-                setDateType(null);
-              }}
-            >
-              Change to other type
-            </div>
-          )}
+          
           {dateType && (
             <>
               <ShowDate
@@ -101,6 +92,16 @@ export default function FieldDate({
               <div className="btn" onClick={closeMenu}>
                 Done
               </div>
+              {dateType && (
+              <div
+              className="btn"
+              onClick={() => {
+                setDateType(null);
+              }}
+            >
+              Reset
+            </div>
+            )}
             </>
           )}
         </Picker>
