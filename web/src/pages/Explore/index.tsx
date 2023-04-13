@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import {
   ButtonsFound,
   setButtonsAndDebounce,
+  updateCurrentButton,
   updateExploreMapZoom,
   updateMapCenter,
   updateShowLeftColumn,
@@ -19,6 +20,7 @@ import ExploreMap from 'components/map/Map/ExploreMap';
 import { Button } from 'shared/entities/button.entity';
 import { Bounds, Point } from 'pigeon-maps';
 import { filter, Subject } from 'rxjs';
+import { current } from 'immer';
 
 interface ButtonFilters {
   showButtonTypes: string[];
@@ -90,7 +92,6 @@ function Explore({ router }) {
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     const getButtonsForBounds = (bounds: Bounds) => {
       setFilters({ ...filters, bounds: bounds });
-      console.log(`getting more buttons: ${selectedNetwork.id} - ${JSON.stringify(bounds)}`)
       sub.next(
         JSON.stringify({
           networkId: selectedNetwork.id,
@@ -138,6 +139,11 @@ function Explore({ router }) {
         return filters.showButtonTypes.indexOf(button.type) > -1;
       }),
     );
+
+    if(currentButton && (filters.showButtonTypes.indexOf(currentButton.type) < 0))
+    {
+      store.emit(new updateCurrentButton(null))
+    }
   };
 
   useEffect(() => {
@@ -159,22 +165,6 @@ function Explore({ router }) {
       store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
     }    
   }, [ selectedNetwork, router]);
-
-  useEffect(() => {
-    if(navigator)
-    {
-      console.log('getting position:')
-    navigator.geolocation.getCurrentPosition(function(position) {
-      console.log("Latitude is :", position.coords.latitude);
-
-      console.log("Longitude is :", position.coords.longitude);
-      store.emit(
-        new updateMapCenter([position.coords.latitude,position.coords.longitude]),
-      );
-      store.emit(new updateExploreMapZoom(16));
-    });
-  }
-  }, [navigator])
 
   useEffect(() => {
     if (mapBondsButtons && filters) {
