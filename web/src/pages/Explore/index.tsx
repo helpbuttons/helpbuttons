@@ -90,6 +90,7 @@ function Explore({ router }) {
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     const getButtonsForBounds = (bounds: Bounds) => {
       setFilters({ ...filters, bounds: bounds });
+      console.log(`getting more buttons: ${selectedNetwork.id} - ${JSON.stringify(bounds)}`)
       sub.next(
         JSON.stringify({
           networkId: selectedNetwork.id,
@@ -180,6 +181,7 @@ function Explore({ router }) {
       applyButtonFilters(mapBondsButtons, filters);
     }
   }, [mapBondsButtons, filters])
+
   const handleSelectedPlace = (place) => {
     store.emit(
       new updateMapCenter([place.geometry.lat, place.geometry.lng]),
