@@ -37,6 +37,7 @@ function NetworkCreation() {
       longitude: defaultMarker.longitude,
       zoom: 10,
       privacy: 'public',
+      address: '',
     },
   });
 
@@ -59,6 +60,7 @@ function NetworkCreation() {
           logo: data.logo,
           jumbo: data.jumbo,
           zoom: data.zoom,
+          address: data.address
         },
         () => {
           const onComplete = () => {
@@ -125,7 +127,6 @@ function NetworkCreation() {
         },
       ),
     );
-    console.log('ei')
   }, [loggedInUser]);
 
   return (

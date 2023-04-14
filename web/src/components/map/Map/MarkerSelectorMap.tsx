@@ -53,9 +53,8 @@ export default function MarkerSelectorMap({
   useEffect(() => {
     const handleWheel = (event) => {
       const addToZoom = -event.deltaY / SCROLL_PIXELS_FOR_ZOOM_LEVEL
-      console.log(zoom)
-      console.log(addToZoom)
-      handleZoomChange((zoom + addToZoom))
+      
+      handleZoomChange(Math.round(zoom + addToZoom))
       updateMarkerPosition(markerPosition);
     }
     document.addEventListener('wheel', handleWheel);

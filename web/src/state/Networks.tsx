@@ -40,7 +40,7 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
       map((network) => {
         store.emit(new SelectedNetworkFetched(network));
         if (network && this.onSuccess) {
-          this.onSuccess();
+          this.onSuccess(network);
         }
       }),
       catchError((error) => {

@@ -92,10 +92,14 @@ export class CreateNetworkDto implements Partial<Network> {
   logo: string;
 
   @IsNotEmpty()
+  address: string;
+
+  @IsNotEmpty()
   jumbo: string;
 
   @IsNumber()
   zoom: number;
+  
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

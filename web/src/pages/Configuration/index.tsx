@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { NetworkDto } from 'shared/dtos/network.dto';
+import { updateExploreMapZoom, updateMapCenter } from 'state/Explore';
 import { FetchDefaultNetwork, UpdateNetwork } from 'state/Networks';
 import { useRef } from 'store/Store';
 
@@ -46,14 +47,16 @@ function Configuration() {
       logo: data.logo,
       jumbo: data.jumbo,
       zoom: data.zoom,
+      address: data.address,
     },
       () => {
-        const onComplete = () => {
+        const onComplete = (network) => {
+          store.emit(new updateMapCenter(network.location.coordinates))
+          store.emit(new updateExploreMapZoom(network.zoom))
           alertService.info('done!, your network should be on the db')
           router.replace('/HomeInfo');
         }
         store.emit(new FetchDefaultNetwork(onComplete, onComplete));
-        
     }, 
     (err) => {
 

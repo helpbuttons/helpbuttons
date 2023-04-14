@@ -65,7 +65,12 @@ function MyApp({ Component, pageProps }) {
         new GetConfig(
           (config) => {
             console.log(`got config`);
-            fetchDefaultNetwork(config);
+            if (
+              path != SetupSteps.CREATE_ADMIN_FORM &&
+              path != SetupSteps.SYSADMIN_CONFIG
+            ) {
+              fetchDefaultNetwork(config);
+            }
           },
           (error) => {
             if (error == 'not-found') {
@@ -78,6 +83,14 @@ function MyApp({ Component, pageProps }) {
           },
         ),
       );
+    }
+    if (
+      !authorized &&
+      config &&
+      config.userCount < 1 &&
+      path == SetupSteps.CREATE_ADMIN_FORM
+    ) {
+      setAuthorized(true);
     }
     if (!authorized) {
       if (UserService.isLoggedIn()) {
@@ -102,7 +115,21 @@ function MyApp({ Component, pageProps }) {
           setAuthorized(isRoleAllowed(loggedInUser.role, path));
         }
       } else {
-        setAuthorized(isRoleAllowed(Role.guest, path));
+        if (config) {
+          if (
+            config.userCount < 1 &&
+            path == SetupSteps.CREATE_ADMIN_FORM
+          ) {
+            setAuthorized(true);
+          } else {
+            setAuthorized(isRoleAllowed(Role.guest, path));
+          }
+        } else if (
+          path != SetupSteps.CREATE_ADMIN_FORM &&
+          path != SetupSteps.SYSADMIN_CONFIG
+        ) {
+          setAuthorized(isRoleAllowed(Role.guest, path));
+        }
       }
     }
 
@@ -129,20 +156,19 @@ function MyApp({ Component, pageProps }) {
                     `Need to create an admin account <a href="${SetupSteps.CREATE_ADMIN_FORM}">click here</a>`,
                   );
                   router.push(SetupSteps.CREATE_ADMIN_FORM);
-                  }else if (
-                    SetupSteps.NETWORK_CREATION == path ||
-                    SetupSteps.FIRST_OPEN == path
-                  ) {
-                    router.push({
-                      pathname: '/Login',
-                      query: { returnUrl: path },
-                    });
-                   
+                } else if (
+                  SetupSteps.NETWORK_CREATION == path ||
+                  SetupSteps.FIRST_OPEN == path
+                ) {
+                  router.push({
+                    pathname: '/Login',
+                    query: { returnUrl: path },
+                  });
                 } else {
                   alertService.warn('unknown error');
                   console.error(error);
                   router.push({
-                    pathname:  SetupSteps.FIRST_OPEN,
+                    pathname: SetupSteps.FIRST_OPEN,
                   });
                 }
               }

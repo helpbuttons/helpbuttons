@@ -81,6 +81,11 @@ you might need to run also (if you never built the project before)
 
 `$ cd api && yarn write-version`
 
+
+also don't forget to run the migrations on the api
+
+`$ docker-compose -f docker-compose.dev.yml run api yarn migration:run`
+
 and then run the web with:
 
 `$ cd web && yarn && yarn write-version && yarn dev`
@@ -89,11 +94,6 @@ you probably need to edit the .env file of web to point to the api:
 
 `$ echo "API_URL=http://localhost:3001/" > web/.env`
 
-
-
-also don't forget to run the migrations on the api
-
-`$ docker-compose -f docker-compose.dev.yml run api yarn migration:run`
 
 ### develop api
 You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 

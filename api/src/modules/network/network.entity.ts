@@ -53,6 +53,9 @@ export class Network extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   jumbo?: string;
 
+  @Column({nullable: true})
+  address: string;
+
   @OneToMany(() => Button, (button) => button.network)
   buttons: Button[];
   // missing, templates, buttons, friendNetworks, owner

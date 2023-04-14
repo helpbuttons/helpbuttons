@@ -101,7 +101,6 @@ function Explore({ router }) {
 
       store.emit(new updateMapCenter(center));
       store.emit(new updateExploreMapZoom(zoom));
-      
     };
     getButtonsForBounds(bounds);
   };
@@ -140,15 +139,22 @@ function Explore({ router }) {
       }),
     );
 
-    if(currentButton && (filters.showButtonTypes.indexOf(currentButton.type) < 0))
-    {
-      store.emit(new updateCurrentButton(null))
+    if (
+      currentButton &&
+      filters.showButtonTypes.indexOf(currentButton.type) < 0
+    ) {
+      store.emit(new updateCurrentButton(null));
     }
   };
 
   useEffect(() => {
     let loadCoordinatesFromNetwork = true;
-    if (router && router.query && router.query.lat && selectedNetwork) {
+    if (
+      router &&
+      router.query &&
+      router.query.lat &&
+      selectedNetwork
+    ) {
       const lat = parseFloat(router.query.lat);
       const lng = parseFloat(router.query.lng);
       store.emit(new updateMapCenter([lat, lng]));
@@ -160,24 +166,21 @@ function Explore({ router }) {
       }
     }
 
-    if ((!mapCenter || !mapZoom) && selectedNetwork) {
-      if (loadCoordinatesFromNetwork) {
-        store.emit(
-          new updateMapCenter(selectedNetwork.location.coordinates),
-        );
-      }
-      if(!mapZoom)
-      {
-        store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
-      }
-    }    
-  }, [ selectedNetwork, router]);
+    if (!mapCenter && selectedNetwork && loadCoordinatesFromNetwork) {
+      store.emit(
+        new updateMapCenter(selectedNetwork.location.coordinates),
+      );
+    }
+    if (mapZoom < 0 && selectedNetwork) {
+      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
+    }
+  }, [selectedNetwork, router]);
 
   useEffect(() => {
     if (mapBondsButtons && filters) {
       applyButtonFilters(mapBondsButtons, filters);
     }
-  }, [mapBondsButtons, filters])
+  }, [mapBondsButtons, filters]);
 
   const handleSelectedPlace = (place) => {
     store.emit(

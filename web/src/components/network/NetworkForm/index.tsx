@@ -31,8 +31,6 @@ function NetworkForm({
 }) {
   const router = useRouter();
 
-  const watchLogo = watch('logo')
-  const watchTitle = watch('title')
 
   return (
     <>
@@ -96,14 +94,25 @@ function NetworkForm({
                 {...register('jumbo', { required: true })}
               />
               <FieldLocation
-              validationErrors={undefined}
-              setValue={setValue}
-              watch={watch}
-              markerImage={watchLogo}
-              markerCaption={watchTitle}
-              markerColor='yellow'
-              selectedNetwork={selectedNetwork}
-              />
+                  setMarkerPosition={([lat,lng]) => {
+                      setValue('latitude',lat)
+                      setValue('longitude',lng)
+                  }}
+                  setMarkerAddress={(address) => {
+                    setValue('address', address)
+                  }}
+                  setZoom={(zoom) => {
+                    setValue('zoom', zoom)
+                  }}
+                  markerZoom={watch('zoom')}
+                  markerAddress={watch('address')}
+                  markerImage={watch('logo') ? watch('logo') : getUrlOrigin() + '/apple-touch-icon.png'}
+                  markerCaption={watch('title')}
+                  markerColor={'yellow'}
+                  markerPosition={[watch('latitude'),watch('longitude')]}
+                  selectedNetwork={selectedNetwork}
+                  validationError={errors.location}
+                />
              
               <FieldTags
                 label="Network Tags"

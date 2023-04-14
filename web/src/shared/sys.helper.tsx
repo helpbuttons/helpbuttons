@@ -43,6 +43,11 @@ export function makeImageUrl(image, baseUrl = '') {
   const regex = /^data\:image/gm;
   const matches = image.match(regex);
   if (!matches) {
+    const regexHref = /^(http|https)/gm;
+    if(image.match(regexHref))
+    {
+      return image
+    }
     return `${baseUrl}${image}`;
   }
   return image;
