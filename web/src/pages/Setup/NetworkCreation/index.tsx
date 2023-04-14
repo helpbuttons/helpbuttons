@@ -69,7 +69,7 @@ function NetworkCreation() {
             );
             router.replace('/HomeInfo');
           };
-          store.emit(new FetchDefaultNetwork(onComplete, onComplete));
+          store.emit(new FetchDefaultNetwork(onComplete, (error) => {console.log(error)}));
         },
         (err) => {
           if (err?.message.indexOf('validation-error') === 0) {
@@ -113,22 +113,6 @@ function NetworkCreation() {
       ),
     );
   };
-
-  useEffect(() => {
-    store.emit(
-      new FetchDefaultNetwork(
-        () => {
-          router.push({
-            pathname: '/HomeInfo',
-          });
-        },
-        (error) => {
-          // do nothing, let the user configure the network
-        },
-      ),
-    );
-  }, [loggedInUser]);
-
   return (
     <>
       {loggedInUser?.role == Role.admin && (
