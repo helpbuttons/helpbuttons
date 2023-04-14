@@ -83,6 +83,10 @@ run the web in watch mode:
 
 you might need to run also (if you never built the project before)
 `$ yarn write-version`
+
+also don't forget to run the migrations on the api
+`$ cd api yarn migration:run`
+
 ## Key Elements, Components and Layouts
 
 To see a preview of all the styled key pieces that conform the app, open http://localhost:3000/RepositoryPage.
@@ -96,27 +100,6 @@ https://react-icons.github.io/react-icons/icons?name=bs
 Please load and read complete documentation
 [hb-docs](https://github.com/helpbuttons/hb-docs)
 
-
-## For developers:
-### development
-```
-$ docker network create web
-$ docker-compose -f docker-compose.dev.yml build
-$ docker-compose -f docker-compose.dev.yml up api -d 
-$ cd web 
-$ echo "API_URL=http://localhost:3001/" > .env
-$ yarn
-$ yarn dev
-```
-
-After you should go to the browser in:
-
-[http://localhost:3000](http://localhost:3000
-)
-
-```
-$ docker-compose exec api yarn migration:run
-```
 
 ### Main tech specifications used in this repo:
 
