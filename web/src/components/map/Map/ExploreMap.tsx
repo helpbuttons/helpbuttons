@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Map, ZoomControl } from 'pigeon-maps';
-import { osm } from 'pigeon-maps/providers';
+import { Map, ZoomControl } from '../../../../pigeon-maps';
+import { osm } from '../../../../pigeon-maps/providers';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton, MarkerButtonPopup } from './MarkerButton';
 import { store } from 'pages';

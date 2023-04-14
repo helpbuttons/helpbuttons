@@ -11,7 +11,8 @@
     "svgr": "svgr icons -d elements/icons --icon",
     "connect-api": "cp ../api/src/**/**/*.dto.ts src/shared/dtos && cp ../api/src/**/**/*.entity.ts src/shared/entities && cp -r ../api/src/shared/types/ src/shared/",
     "hb": "tsx hb.ts",
-    "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.tsx"
+    "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.tsx",
+    "install-pg-maps": "git clone https://github.com/albjeremias/pigeon-maps.git && cd pigeon-maps && yarn"
   },
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
@@ -37,7 +38,6 @@
     "next-i18next": "^11.3.0",
     "opencage-api-client": "^1.0.0",
     "path-to-regexp": "^6.2.1",
-    "pigeon-maps": "https://github.com/albjeremias/pigeon-maps.git",
     "react": "17.0.2",
     "react-calendar": "^4.0.0",
     "react-clock": "^3.1.0",
@@ -53,6 +53,7 @@
     "react-timekeeper": "^2.2.1",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
+    "rimraf": "^5.0.0",
     "rxjs": "^7.3.0",
     "sass": "^1.38.2",
     "tsx": "^3.12.1",

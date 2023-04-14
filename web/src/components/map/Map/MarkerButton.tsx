@@ -1,4 +1,4 @@
-import { PigeonProps } from 'pigeon-maps';
+import { PigeonProps } from '../../../../pigeon-maps';
 import React from 'react';
 import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import { Button } from 'shared/entities/button.entity';
