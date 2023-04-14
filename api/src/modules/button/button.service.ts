@@ -16,7 +16,6 @@ import { User } from '../user/user.entity';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { Role } from '@src/shared/types/roles';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
-
 @Injectable()
 export class ButtonService {
   constructor(
@@ -85,12 +84,11 @@ export class ButtonService {
           console.log(`errorjumboooooror: ${err.message}`);
           throw new ValidationException({ image: err.message });
         }
-
-        await this.buttonRepository.insert([button]);
+        await this.buttonRepository.insert([button])
       },
     );
 
-    return button;
+    return await button;
   }
 
   async findById(id: string) {

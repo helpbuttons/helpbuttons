@@ -56,7 +56,6 @@ export function makeImageUrl(image, baseUrl = '') {
 export const defaultMarker = { latitude: 41.687, longitude: -7.7406 };
 
 export function isRoleAllowed(role: Role, path): boolean {
-  // console.log(`path: ${path} role ${role}`)
   if (pagesRolesCheck(path, role)) {
     return true;
   }

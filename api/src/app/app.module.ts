@@ -19,6 +19,9 @@ import { AppService } from './app.service';
 import { dataSourceOptions } from './configs/orm.config';
 import webAppConfig from './configs/web-app.config';
 import { validate } from './validators/env.validator';
+import {EventEmitterModule } from '@nestjs/event-emitter' 
+import { PostModule } from '@src/modules/post/post.module';
+import { ActivityModule } from '@src/modules/activity/activity.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -43,7 +46,9 @@ import { validate } from './validators/env.validator';
     AuthModule,
     UserCredentialModule,
     StorageModule,
-    // PostModule
+    EventEmitterModule.forRoot(),
+    PostModule,
+    ActivityModule
   ],
   controllers: [AppController],
   providers: [AppService],

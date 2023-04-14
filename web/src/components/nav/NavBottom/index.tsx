@@ -62,7 +62,7 @@ function NavBottom({logged}){
                   </div>
               </NavLink>
 
-              <NavLink href="/Notifications" className="nav-bottom__link nav-bottom__link--active">
+              <NavLink href="/Activity" className="nav-bottom__link nav-bottom__link--active">
                   <div className="nav-bottom__icon">
                       <IoHeartOutline />
                   </div>

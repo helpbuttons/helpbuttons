@@ -31,11 +31,16 @@ import {
 import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
+import { EventEmitter2 } from '@nestjs/event-emitter'
+import { ActivityEventName, emitActivity } from '@src/app/app.event';
 
 @ApiTags('buttons')
 @Controller('buttons')
 export class ButtonController {
-  constructor(private readonly buttonService: ButtonService) {}
+  constructor(
+    private readonly buttonService: ButtonService,
+    private eventEmitter: EventEmitter2
+    ) {}
 
   @OnlyRegistered()
   @Post('new')
@@ -59,7 +64,12 @@ export class ButtonController {
       networkId,
       images,
       user,
-    );
+    ).then((button) => {
+      console.log('button is here:')
+      console.log(button)
+      emitActivity(this.eventEmitter,ActivityEventName.NewButton, button)
+      return button;
+    });
   }
 
   @AllowGuest()

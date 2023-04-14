@@ -11,6 +11,7 @@ import { ExploreState, exploreInitial } from "state/Explore";
 import { Alert } from "state/Alerts";
 import { SetupDtoOut } from "services/Setup/config.type";
 import { User } from "shared/entities/user.entity";
+import { Activity } from "shared/entities/activity.entity";
 
 // -- estado global --
 export interface GlobalState {
@@ -20,6 +21,7 @@ export interface GlobalState {
   explore: ExploreState;
   alerts: Alert[];
   config: SetupDtoOut;
+  activities: Activity[];
 }
 
 export const store = new Store<GlobalState>({
@@ -29,6 +31,7 @@ export const store = new Store<GlobalState>({
   explore: exploreInitial,
   alerts: [],
   config: null,
+  activities: []
 });
 
 const Home: NextPage = () => {
