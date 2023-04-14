@@ -16,7 +16,6 @@ services:
 
   api:
     build: api/
-    entrypoint: /bin/sh -c "yarn && yarn dev"
     volumes:
       - ./api/src:/app/src/:ro
       - config:/app/config/:rw
