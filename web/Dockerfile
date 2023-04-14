@@ -10,8 +10,8 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN apk add git
 
-RUN yarn
 RUN yarn hb jwt
+RUN yarn install-pg-maps
 RUN yarn build
 
 EXPOSE 3000
