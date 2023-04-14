@@ -57,6 +57,9 @@ export default function HomeInfo() {
   };
 
   return (
+    <>
+    {selectedNetwork && (
+      <div style={{ "--network-jumbo": `url('/api/${selectedNetwork.jumbo}'` } as React.CSSProperties}>
     <div className="info-overlay__container">
       <div className="info-overlay__content">
         <form className="info-overlay__search-section">
@@ -73,13 +76,9 @@ export default function HomeInfo() {
             <div className="info-overlay__card">Loading...</div>
           </>
         )}
-        {selectedNetwork && (
+        
           <>
-            <style jsx global>{`
-              .info-overlay__container {
-                background-image: url(/api/${selectedNetwork.jumbo});
-              }
-            `}</style>
+           
             <div className="info-overlay__card">
               {navigatorCoordinates && 
               <div className="card">
@@ -205,8 +204,8 @@ export default function HomeInfo() {
 
             <div className="info-overlay__card"></div>
           </>
-        )}
+        
       </div>
-    </div>
+    </div></div>)}</>
   );
 }
