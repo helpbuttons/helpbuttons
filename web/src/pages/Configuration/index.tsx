@@ -56,7 +56,7 @@ function Configuration() {
           alertService.info('done!, your network should be on the db')
           router.replace('/HomeInfo');
         }
-        store.emit(new FetchDefaultNetwork(onComplete, onComplete));
+        store.emit(new FetchDefaultNetwork(onComplete, (error) => {console.log(error)}));
     }, 
     (err) => {
 

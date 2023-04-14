@@ -66,8 +66,7 @@ function MyApp({ Component, pageProps }) {
           (config) => {
             console.log(`got config`);
             if (
-              path != SetupSteps.CREATE_ADMIN_FORM &&
-              path != SetupSteps.SYSADMIN_CONFIG
+              !setupPaths.includes(path)
             ) {
               fetchDefaultNetwork(config);
             }
@@ -157,15 +156,16 @@ function MyApp({ Component, pageProps }) {
                   );
                   router.push(SetupSteps.CREATE_ADMIN_FORM);
                 } else if (
-                  SetupSteps.NETWORK_CREATION == path ||
-                  SetupSteps.FIRST_OPEN == path
+                  loggedInUser &&
+                  (SetupSteps.NETWORK_CREATION == path ||
+                  SetupSteps.FIRST_OPEN == path)
                 ) {
                   router.push({
                     pathname: '/Login',
                     query: { returnUrl: path },
                   });
                 } else {
-                  alertService.warn('unknown error');
+                  console.error('network not found')
                   console.error(error);
                   router.push({
                     pathname: SetupSteps.FIRST_OPEN,
