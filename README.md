@@ -21,70 +21,88 @@ This is the repository for helpbuttons.org. check the hb-docs repo (https://gith
 
 ### Using docker
 Edit the file db.env to setup your default values for configuration of the database
+
 `$ nano env.db`
 
 build all docker needed images
+
 `$ docker-compose build`
 
 create a network for the containers:
+
 `$ docker network create web`
 
 then run helpbuttons
+
 `$ docker-compose up -d`
 
 then please setup the database scheme:
+
 `$ docker-compose run api yarn migration:run`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 #### Upgrade
+
 `$ docker-compose pull`
 
 `$ docker-compose run api yarn migration:run`
 
 #### Other options
 you can setup the url of the api
+
 `$ docker-compose exec web yarn hb api_url http://localhost:3001/`
 
 ### Using node
 
 #### Database
 You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
+
 `$ docker-compose -f docker-compose.dev.yml up -d db`
 
 #### Api
 Then you need to build the api:
+
 `$ cd api && yarn && yarn build && cd ..`
  
 #### web - frontend
+
 `$ cd web && yarn && yarn build`
 
 ### Developers
 
 ### Develop web
 You can run the api & database in docker you can do:
+
 `$ docker-compose -f docker-compose.dev.yml up -d db api`
 
 and then run the web with:
+
 `$ cd web && yarn && yarn dev`
 
 you probably need to edit the .env file of web to point to the api:
+
 `$ echo "API_URL=http://localhost:3001/" > web/.env`
 
 ### develop api
 You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
+
 `$ docker-compose -f docker-compose.dev.yml up -d db`
 
 run the api in watch mode:
+
 `$ cd api && yarn && yarn dev`
 
 run the web in watch mode:
+
 `$ cd api && yarn && yarn web`
 
 you might need to run also (if you never built the project before)
+
 `$ yarn write-version`
 
 also don't forget to run the migrations on the api
+
 `$ cd api yarn migration:run`
 
 ## Key Elements, Components and Layouts
