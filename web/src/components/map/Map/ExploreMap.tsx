@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Map, ZoomControl } from 'pigeon-maps';
-import { stamenTerrain } from 'pigeon-maps/providers';
+import { osm } from 'pigeon-maps/providers';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton, MarkerButtonPopup } from './MarkerButton';
 import { store } from 'pages';
@@ -46,7 +46,7 @@ export default function ExploreMap(
           <Map
             center={mapCenter}
             zoom={mapZoom}
-            provider={stamenTerrain}
+            provider={osm}
             onBoundsChanged={onBoundsChanged}
             zoomSnap={true}
             wheelEvents={false}

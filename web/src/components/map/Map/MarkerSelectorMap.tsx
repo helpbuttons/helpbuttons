@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import React from 'react';
 import { Draggable, Map, Marker, Overlay, ZoomControl } from 'pigeon-maps';
-import { stamenTerrain } from 'pigeon-maps/providers';
+import { osm } from 'pigeon-maps/providers';
 import { MarkerButton, MarkerButtonIcon } from './MarkerButton';
 import { makeImageUrl } from 'shared/sys.helper';
 
@@ -72,7 +72,7 @@ export default function MarkerSelectorMap({
         wheelEvents={false}
         center={markerPosition}
         zoom={zoom}
-        provider={stamenTerrain}
+        provider={osm}
         onBoundsChanged={onBoundsChanged}
         onClick={handleMapClicked}
       >
