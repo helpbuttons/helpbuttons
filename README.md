@@ -19,28 +19,103 @@ contact us: helpbuttons _at_ tutanota.com
 This is the repository for helpbuttons.org. check the hb-docs repo (https://github.com/helpbuttons/hb-docs).
 ## Getting Started
 
+### Using docker
 Edit the file db.env to setup your default values for configuration of the database
+
 `$ nano env.db`
 
 build all docker needed images
+
 `$ docker-compose build`
 
 create a network for the containers:
+
 `$ docker network create web`
 
 then run helpbuttons
+
 `$ docker-compose up -d`
 
 then please setup the database scheme:
+
 `$ docker-compose run api yarn migration:run`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+#### Upgrade
 
-## For developers:
+`$ docker-compose pull`
+
+`$ docker-compose run api yarn migration:run`
+
+#### Other options
 you can setup the url of the api
+
 `$ docker-compose exec web yarn hb api_url http://localhost:3001/`
 
+### Using node
+
+#### Database
+You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
+
+`$ docker-compose -f docker-compose.dev.yml up -d db`
+
+#### Api
+Then you need to build the api:
+
+`$ cd api && yarn && yarn build && cd ..`
+ 
+#### web - frontend
+
+`$ cd web && yarn && yarn build`
+
+### Developers
+
+### Develop web
+
+You can run the api & database in docker you can do:
+
+`$ docker-compose -f docker-compose.dev.yml up -d db api`
+
+you might need to run also (if you never built the project before)
+
+`$ cd api && yarn write-version`
+
+
+also don't forget to run the migrations on the api
+
+`$ docker-compose -f docker-compose.dev.yml run api yarn migration:run`
+
+and then run the web with:
+
+`$ cd web && yarn && yarn write-version && yarn dev`
+
+you probably need to edit the .env file of web to point to the api:
+
+`$ echo "API_URL=http://localhost:3001/" > web/.env`
+
+
+### develop api
+You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
+
+`$ docker-compose -f docker-compose.dev.yml up -d db`
+
+run the api in watch mode:
+
+`$ cd api && yarn && yarn dev`
+
+run the web in watch mode:
+
+`$ cd api && yarn && yarn web`
+
+### developer-extras
+you might need to run also (if you never built the project before)
+
+`$ yarn write-version`
+
+also don't forget to run the migrations on the api
+
+`$ cd api yarn migration:run`
 
 ## Key Elements, Components and Layouts
 
@@ -55,27 +130,6 @@ https://react-icons.github.io/react-icons/icons?name=bs
 Please load and read complete documentation
 [hb-docs](https://github.com/helpbuttons/hb-docs)
 
-
-## For developers:
-### development
-```
-$ docker network create web
-$ docker-compose -f docker-compose.dev.yml build
-$ docker-compose -f docker-compose.dev.yml up api -d 
-$ cd web 
-$ echo "API_URL=http://localhost:3001/" > .env
-$ yarn
-$ yarn dev
-```
-
-After you should go to the browser in:
-
-[http://localhost:3000](http://localhost:3000
-)
-
-```
-$ docker-compose exec api yarn migration:run
-```
 
 ### Main tech specifications used in this repo:
 
@@ -114,3 +168,4 @@ You can check out [the nestjs GitHub repository](https://github.com/nestjs/nest)
 
 - If you need to drop the scheme and restart fresh you run
 `$ yarn schema:drop` or `$ docker-compose exec api yarn schema:drop`
+

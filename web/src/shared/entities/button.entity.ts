@@ -46,6 +46,9 @@ export class Button extends BaseEntity {
 
   @Column('text', { array: true, nullable: true })
   images: string[];
+  
+  @Column('text', {nullable: true })
+  when: string;
 
   @ManyToOne(() => Network, (network) => network.buttons)
   network: Network;

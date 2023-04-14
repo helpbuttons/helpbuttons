@@ -69,6 +69,7 @@ export default function FieldLocation({
           latitude={markerPosition[0]}
           longitude={markerPosition[1]}
           address={markerAddress}
+          zoom={markerZoom}
         />
         <div
           className="btn"
@@ -76,10 +77,6 @@ export default function FieldLocation({
         >
           Change place
         </div>
-       
-        {/* <FieldError validationError={validationErrors.latitude} />
-        <FieldError validationError={validationErrors.longitude} />
-        <FieldError validationError={validationErrors.radius} /> */}
       </div>
 
       {showHideMenu && markerPosition && (
@@ -87,7 +84,7 @@ export default function FieldLocation({
           <div className="picker--over picker-box-shadow picker__content picker__options-v">
             <MarkerSelectorMap
               updateMarkerPosition={updateLocation}
-              handleZoomChange={setZoom}
+              handleZoomChange={(zoom) => setZoom(zoom)}
               zoom={markerZoom}
               markerImage={markerImage ? markerImage : selectedNetwork.logo}
               markerCaption={markerCaption ? markerCaption : '?'}
@@ -98,6 +95,7 @@ export default function FieldLocation({
               latitude={markerPosition[0]}
               longitude={markerPosition[1]}
               address={markerAddress}
+              zoom={markerZoom}
             />
             <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
@@ -126,6 +124,7 @@ function LocationCoordinates({
   latitude,
   longitude,
   address,
+  zoom = -1
 }) {
   return (
     <div className="card-button__city card-button__everywhere">
@@ -133,6 +132,8 @@ function LocationCoordinates({
         <>
           <span>{address}</span>
           <span> ({latitude},{longitude})</span>
+          {zoom > 0 && 
+            <span>[{zoom}]</span>}
           {/* (radius: ${radius} km) */}
         </>
         :

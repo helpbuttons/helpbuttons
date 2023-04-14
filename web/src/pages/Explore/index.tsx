@@ -101,7 +101,6 @@ function Explore({ router }) {
 
       store.emit(new updateMapCenter(center));
       store.emit(new updateExploreMapZoom(zoom));
-      
     };
     getButtonsForBounds(bounds);
   };
@@ -140,37 +139,48 @@ function Explore({ router }) {
       }),
     );
 
-    if(currentButton && (filters.showButtonTypes.indexOf(currentButton.type) < 0))
-    {
-      store.emit(new updateCurrentButton(null))
+    if (
+      currentButton &&
+      filters.showButtonTypes.indexOf(currentButton.type) < 0
+    ) {
+      store.emit(new updateCurrentButton(null));
     }
   };
 
   useEffect(() => {
     let loadCoordinatesFromNetwork = true;
-    if (router && router.query && router.query.lat && selectedNetwork) {
+    if (
+      router &&
+      router.query &&
+      router.query.lat &&
+      selectedNetwork
+    ) {
       const lat = parseFloat(router.query.lat);
       const lng = parseFloat(router.query.lng);
-      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
       store.emit(new updateMapCenter([lat, lng]));
       loadCoordinatesFromNetwork = false;
+
+      if (router.query.zoom) {
+        const queryZoom = parseFloat(router.query.zoom);
+        store.emit(new updateExploreMapZoom(queryZoom));
+      }
     }
 
-    if ((!mapCenter || !mapZoom) && selectedNetwork) {
-      if (loadCoordinatesFromNetwork) {
-        store.emit(
-          new updateMapCenter(selectedNetwork.location.coordinates),
-        );
-      }
+    if (!mapCenter && selectedNetwork && loadCoordinatesFromNetwork) {
+      store.emit(
+        new updateMapCenter(selectedNetwork.location.coordinates),
+      );
+    }
+    if (mapZoom < 0 && selectedNetwork) {
       store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
-    }    
-  }, [ selectedNetwork, router]);
+    }
+  }, [selectedNetwork, router]);
 
   useEffect(() => {
     if (mapBondsButtons && filters) {
       applyButtonFilters(mapBondsButtons, filters);
     }
-  }, [mapBondsButtons, filters])
+  }, [mapBondsButtons, filters]);
 
   const handleSelectedPlace = (place) => {
     store.emit(

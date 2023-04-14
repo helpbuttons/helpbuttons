@@ -21,6 +21,12 @@ export class SetupDto {
     type: String,
     required: true,
   })
+  leafletTiles: string;
+
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
   postgresUser: string;
 
   @ApiProperty({
@@ -77,6 +83,11 @@ export class SetupDtoOut {
   })
   mapifyApiKey: string;
 
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
+  leafletTiles: string;
   @ApiProperty({
     type: [String],
     required: false,

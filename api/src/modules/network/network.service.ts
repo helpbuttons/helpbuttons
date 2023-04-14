@@ -46,6 +46,7 @@ export class NetworkService {
       jumbo: null,
       zoom: createDto.zoom,
       name: createDto.name,
+      address: createDto.address
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -141,6 +142,7 @@ export class NetworkService {
       jumbo: null,
       zoom: updateDto.zoom,
       name: updateDto.name,
+      address: updateDto.address
     } ;
     await getManager().transaction(
       async (transactionalEntityManager) => {
