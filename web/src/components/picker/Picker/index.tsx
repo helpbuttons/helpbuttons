@@ -3,12 +3,12 @@ import NextLink from "next/link";
 import { IoClose } from "react-icons/io5";
 
 ///small popup to pick small data by the user
-export function Picker({ setHideMenu, onClosed, children }) {
+export function Picker({ closeAction, children }) {
   return (
     <>
       <div className="picker__close-container">
         <div className="picker--over picker-box-shadow picker__content picker__options-v">
-          <a onClick={onClosed} className="popup__header-button">
+          <a onClick={closeAction} className="popup__header-button">
             <div className="btn-circle__icon">
               <IoClose />
             </div>
@@ -18,7 +18,7 @@ export function Picker({ setHideMenu, onClosed, children }) {
       </div>
       <div
         className="picker__close-overlay"
-        onClick={() => setHideMenu(false)}
+        onClick={closeAction}
       ></div>
     </>
   );

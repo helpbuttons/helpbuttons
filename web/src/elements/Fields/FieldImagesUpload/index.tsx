@@ -7,6 +7,7 @@ export default function FieldImageUploads({
   label,
   maxNumber,
   setValue,
+  validationError
 }) {
   const [images, setImages] = useState([]);
 
@@ -70,6 +71,9 @@ export default function FieldImageUploads({
           )}
         </ImageUploading>
       </div>
+      {validationError && 
+      <span style={{color: 'red'}}>{validationError}</span>
+      }
     </>
   );
 }

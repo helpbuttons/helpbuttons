@@ -1,6 +1,6 @@
 import { PigeonProps } from 'pigeon-maps';
 import React from 'react';
-import { buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/sys.helper';
 import CardButtonMap from '../CardButtonMap';
@@ -18,10 +18,10 @@ interface MarkerButtonIconProps extends PigeonProps {
   style?: React.CSSProperties;
   className?: string;
   children?: React.ReactNode;
-  color: string;
   image: string;
   title: string;
   onClick?: any;
+  cssColor: string;
 }
 
 interface MarkerButtonPopupProps extends PigeonProps {
@@ -34,7 +34,7 @@ export function MarkerButton(props: MarkerButtonProps) {
   const width = 100;
   const height = 100;
 
-  const { color } = buttonTypes.find((buttonType) => {
+  const { cssColor } = buttonTypes.find((buttonType) => {
     return buttonType.name === props.button.type;
   });
   const handleMarkerClicked = (button: Button) => {
@@ -44,7 +44,7 @@ export function MarkerButton(props: MarkerButtonProps) {
   return (
     <>
       <MarkerButtonIcon {...props}
-      color={color}
+      cssColor={cssColor}
       image={makeImageUrl(props.button.image, '/api/')}
       title={props.button.title}
       onClick={() => handleMarkerClicked(props.button)}
@@ -75,7 +75,9 @@ export function MarkerButtonPopup(props: MarkerButtonPopupProps) {
 }
 
 export function MarkerButtonIcon(props: MarkerButtonIconProps) {
+
   return (
+    <div style={buttonColorStyle(props.cssColor)}>
     <div
       style={{
         position: 'absolute',
@@ -91,7 +93,7 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
       <figure
         id="markerButton"
         onClick={props.onClick}
-        className={`marker-button marker-button-selector ${props.color}`}
+        className="marker-button marker-button-selector"
       >
         <div className="avatar-medium marker-button__image">
           <img
@@ -103,12 +105,13 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
 
         <span className="marker-button__arrow"></span>
 
-        <div className={`marker-button__tags marker-button-selector-title ${props.color}`}>
-          <div className="marker-button__link-tag">
+        <div className="marker-button__tags marker-button-selector-title"
+        >
+          <div className="marker-button__link-tag" >
             {props.title}
           </div>
         </div>
       </figure>
-    </div>
+    </div></div>
   );
 }

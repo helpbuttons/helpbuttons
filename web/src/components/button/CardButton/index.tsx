@@ -10,10 +10,14 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import router from 'next/router';
 import {  useState } from 'react';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
+import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import { ShowWhen } from 'elements/Fields/FieldDate';
 
 
 export default function CardButtonFile({button}) {
-  
+  const { cssColor } = buttonTypes.find((buttonType) => {
+    return buttonType.name === button.type;
+  });
 
   return (
     <>
@@ -21,8 +25,8 @@ export default function CardButtonFile({button}) {
         <>
           <div>
             <div
-              className={`card-button card-button card-button--${button.type}`}
-            >
+              className="card-button card-button__file"
+              style={buttonColorStyle(cssColor)}>
               <CardButtonHeadBig button={button} />
             </div>
             <CardButtonImages button={button} />
@@ -35,6 +39,9 @@ export default function CardButtonFile({button}) {
 }
 
 export function CardButtonHeadMedium({ button }) {
+  const { cssColor} = buttonTypes.find((buttonType) => {
+    return buttonType.name === button.type;
+  });
   return (
     <>
       <CardButtonSubmenu button={button} />
@@ -57,9 +64,7 @@ export function CardButtonHeadMedium({ button }) {
               </div>
 
               <div className="card-button__status card-button__status">
-                <span
-                  className={`card-button__status--${button.type}`}
-                >
+                <span className="card-button" style={buttonColorStyle(cssColor)}>
                   {button.type}
                 </span>
               </div>
@@ -85,7 +90,7 @@ export function CardButtonHeadMedium({ button }) {
               {button.address}
             </div>
 
-            <div className="card-button__date">Now</div>
+            <ShowWhen when={button.when}/>
           </div>
         </div>
       </a>
@@ -140,6 +145,11 @@ function CardButtonSubmenu({ button }) {
   );
 }
 export function CardButtonHeadBig({ button }) {
+
+  const { cssColor } = buttonTypes.find((buttonType) => {
+    return buttonType.name === button.type;
+  });
+
   return (
     <>
       <CardButtonSubmenu button={button} />
@@ -161,7 +171,7 @@ export function CardButtonHeadBig({ button }) {
               {button.owner.name}
             </div>
             <div className="card-button__status card-button__status">
-              <span className={`card-button__status--${button.type}`}>
+              <span className="card-button__status" style={buttonColorStyle(cssColor)}>
                 {button.type}
               </span>
             </div>
@@ -184,7 +194,7 @@ export function CardButtonHeadBig({ button }) {
             {button.address}
           </div>
 
-          <div className="card-button__date">Now</div>
+          <ShowWhen when={button.when}/>
         </div>
       </div>
     </>

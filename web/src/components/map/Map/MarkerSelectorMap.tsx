@@ -8,7 +8,7 @@ import { makeImageUrl } from 'shared/sys.helper';
 export default function MarkerSelectorMap({
   updateMarkerPosition = (latLng) => {},
   markerPosition,
-  defaultZoom = 11,
+  zoom = 11,
   markerImage,
   markerCaption,
   markerColor = 'yellow',
@@ -18,6 +18,7 @@ export default function MarkerSelectorMap({
   const [mapHeight, setMapHeight] = useState(0);
   const [markerWidth, setMarkerWidth] = useState(0);
   const [markerHeight, setMarkerHeight] = useState(0);
+  const SCROLL_PIXELS_FOR_ZOOM_LEVEL = 150
 
  
   const updateWindowDimensions = () => {
@@ -43,26 +44,41 @@ export default function MarkerSelectorMap({
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     updateMarkerPosition(center);
     handleZoomChange(zoom)
-
   };
 
   const handleMapClicked = ({event, latLng, pixel}) => {
     updateMarkerPosition(latLng);
   }
 
+  useEffect(() => {
+    const handleWheel = (event) => {
+      const addToZoom = -event.deltaY / SCROLL_PIXELS_FOR_ZOOM_LEVEL
+      console.log(zoom)
+      console.log(addToZoom)
+      handleZoomChange((zoom + addToZoom))
+      updateMarkerPosition(markerPosition);
+    }
+    document.addEventListener('wheel', handleWheel);
+    return () => {
+      document.removeEventListener('wheel', handleWheel);
+    };
+  } ,[zoom])
+  
+  
   return (
     <>
       <Map
         height={mapHeight}
         width={mapWidth}
+        wheelEvents={false}
         center={markerPosition}
-        defaultZoom={defaultZoom}
+        zoom={zoom}
         provider={stamenTerrain}
         onBoundsChanged={onBoundsChanged}
         onClick={handleMapClicked}
       >
         <ZoomControl />
-        <MarkerButtonIcon anchor={markerPosition} offset={[35, 65]} color={markerColor} image={makeImageUrl(markerImage, '/api/')} title={markerCaption}/>
+        <MarkerButtonIcon anchor={markerPosition} offset={[35, 65]} cssColor={markerColor} image={makeImageUrl(markerImage, '/api/')} title={markerCaption}/>
       </Map>
     </>
   );

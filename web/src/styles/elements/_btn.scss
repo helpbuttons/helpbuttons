@@ -138,19 +138,11 @@ $btn-font-size-medium: $font-size-medium;
 
   }
 
-  //GREEN CIRCLE OFFER
-  &.green {
+}
 
-    border-radius: $btn-border-radius-semicircle;
-    background: $color-green;
-
-  }
-   
-  &.yellow {
-    border-radius: $btn-border-radius-semicircle;
-    background: $color-corporative;
-  }
-
+.btn-filter__icon {
+  border-radius: $btn-border-radius-semicircle;
+  background: var(--button-color);
 }
 
 .btn-filter__remove-icon {

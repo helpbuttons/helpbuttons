@@ -7,15 +7,21 @@ import { CardButtonHeadMedium } from "components/button/CardButton";
 import { GlobalState, store } from "pages";
 import { useRef } from "store/Store";
 import { Button } from "shared/entities/button.entity";
+import { buttonColorStyle, buttonTypes } from "shared/buttonTypes";
 
 
 
 export default function CardButtonList({button}) {
 
+  const { cssColor } = buttonTypes.find((buttonType) => {
+    return buttonType.name === button.type;
+  });
+
   return (
     <>
     <div className="list__element">
-      <div className={`card-button-list card-button-list--${button.type}`}>
+    <div style={buttonColorStyle(cssColor)}>
+      <div className="card-button-list">
         <div className="card-button-list__picture-container">
           <div className="card-button-list__nav">
             <div className="arrow btn-circle__icon">
@@ -35,6 +41,7 @@ export default function CardButtonList({button}) {
             <CardButtonHeadMedium button={button}/>
         </div>
       </div>
+    </div>
     </div>
     </>
   );

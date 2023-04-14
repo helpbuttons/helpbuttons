@@ -37,7 +37,7 @@
     "next-i18next": "^11.3.0",
     "opencage-api-client": "^1.0.0",
     "path-to-regexp": "^6.2.1",
-    "pigeon-maps": "^0.21.3",
+    "pigeon-maps": "https://github.com/albjeremias/pigeon-maps.git",
     "react": "17.0.2",
     "react-calendar": "^4.0.0",
     "react-clock": "^3.1.0",

@@ -17,6 +17,7 @@ import { buttonTypes } from 'shared/buttonTypes';
 import { GlobalState, store } from 'pages';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import { Network } from 'shared/entities/network.entity';
+import FieldDate from 'elements/Fields/FieldDate';
 
 export default function ButtonForm({
   onSubmit,
@@ -31,7 +32,7 @@ export default function ButtonForm({
   setFocus,
   isSubmitting,
 }) {
-  const selectedNetwork :Network = useRef(
+  const selectedNetwork: Network = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
@@ -47,8 +48,6 @@ export default function ButtonForm({
   const [isReadyForLocationAndTime, setIsReadyForLocationAndTime] =
     useState(false);
   const [markerColor, setMarkerColor] = useState(null);
-
-  const watchFields = watch(['image', 'title', 'type']);
   useEffect(() => {
     if (buttonDraft) {
       reset(buttonDraft);
@@ -69,7 +68,7 @@ export default function ButtonForm({
         return buttonType.name === values.type;
       });
       if (buttonType) {
-        setMarkerColor(buttonType.color);
+        setMarkerColor(buttonType.cssColor);
       }
     });
     return () => subscription.unsubscribe();
@@ -77,6 +76,7 @@ export default function ButtonForm({
 
   return (
     <>
+    
       {selectedNetwork ? (
         <Popup title="Publish Button" linkFwd="/Explore">
           <Form
@@ -130,26 +130,39 @@ export default function ButtonForm({
                 // width={55}
                 // height={125}
                 setValue={setValue}
-                validationError={errors.logo}
                 control={control}
                 {...register('image', { required: true })}
-                // validationError={errors.image}
+                validationError={errors.image}
               />
               <>
                 <FieldLocation
-                  validationErrors={undefined}
-                  setValue={setValue}
-                  watch={watch}
+                  setMarkerPosition={([lat,lng]) => {
+                      setValue('latitude',lat)
+                      setValue('longitude',lng)
+                  }}
+                  setMarkerAddress={(address) => {
+                    console.log('new addresss' + address)
+                    setValue('address', address)
+                  }}
+                  setZoom={(zoom) => {
+                    setValue('zoom', zoom)
+                  }}
+                  markerZoom={watch('zoom')}
+                  markerAddress={watch('address')}
                   markerImage={watch('image')}
                   markerCaption={watch('title')}
                   markerColor={markerColor}
+                  markerPosition={[watch('latitude'),watch('longitude')]}
                   selectedNetwork={selectedNetwork}
+                  validationError={errors.location}
                 />
-                {/* <FieldDate
-                setValue={setValue}
-                watch={watch}
-                title="When ?"
-              /> */}
+                <FieldDate
+                  dateType={watch('when.type')}
+                  dates={watch('when.dates')}
+                  setDateType={(value) => setValue('when.type', value)}
+                  setDate={(value) => setValue('when.dates', value)}
+                  title="When ?"
+                />
               </>
               {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} /> */}
               <ButtonShare />

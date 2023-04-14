@@ -8,49 +8,40 @@ import { GlobalState, store } from 'pages';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import { FindAddress } from 'state/Explore';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
+import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import t from 'i18n';
 export default function FieldLocation({
-  validationErrors,
-  setValue,
-  watch,
+  validationError,
+  setMarkerPosition,
   markerImage,
   markerCaption = '?',
   markerColor,
+  markerPosition,
+  markerAddress,
+  markerZoom,
   selectedNetwork = null,
+  setMarkerAddress,
+  setZoom,
 }) {
   const config: SetupDtoOut = useRef(
     store,
     (state: GlobalState) => state.config,
   );
 
-  const watchLatitude = watch('latitude');
-  const watchLongitude = watch('longitude');
-  const watchZoom = watch('zoom');
-  const watchRadius = watch('radius');
-
   const [showHideMenu, setHideMenu] = useState(false);
-  const [address, setAddress] = useState('-');
-  const [radius, setRadius] = useState(1);
-  const [latLng, setLatLng] = useState(selectedNetwork ? [selectedNetwork.latitude,selectedNetwork.longitude]: [41.687,-7.7406])
-  const [zoom, setZoom] = useState(selectedNetwork ? selectedNetwork.zoom : 10)
-  
-  const updateZoom = (newZoom) => {
-    setZoom(newZoom)
-    setValue('zoom', newZoom);
+  const handleSelectedPlace = (place) => {
+    updateLocation([place.geometry.lat, place.geometry.lng])
   };
 
   const updateLocation = (newLatLng) => {
+    if(newLatLng && markerPosition && markerPosition[0] == newLatLng[0] && markerPosition[1] == newLatLng[1] )
+    {
+      return;
+    }
     const decimals = 10000;
-    setLatLng([(Math.round(newLatLng[0] * decimals) / decimals), (Math.round(newLatLng[1] * decimals) / decimals)]);
-
-    setValue(
-      'latitude',
-      latLng[0].toString(),
-    );
-    setValue(
-      'longitude',
-      latLng[1].toString(),
-    );
-    setAddress('...')
+    setMarkerPosition([(Math.round(newLatLng[0] * decimals) / decimals), (Math.round(newLatLng[1] * decimals) / decimals)]);
+    
+    setMarkerAddress('...')
     store.emit(
       new FindAddress(
         JSON.stringify({
@@ -59,9 +50,8 @@ export default function FieldLocation({
         }),
         (place) => {
           const address = place.results[0].formatted;
-
-          setValue('address', address);
-          setAddress(address);
+          setMarkerAddress(address);
+          setZoom(selectedNetwork.zoom)
         },
         () => {
           console.log(
@@ -76,9 +66,9 @@ export default function FieldLocation({
     <>
       <div className="form__field">
         <LocationCoordinates
-          latitude={watchLatitude}
-          longitude={watchLongitude}
-          address={address}
+          latitude={markerPosition[0]}
+          longitude={markerPosition[1]}
+          address={markerAddress}
         />
         <div
           className="btn"
@@ -92,30 +82,27 @@ export default function FieldLocation({
         <FieldError validationError={validationErrors.radius} /> */}
       </div>
 
-      {showHideMenu && latLng && (
+      {showHideMenu && markerPosition && (
         <div className="picker__close-container">
           <div className="picker--over picker-box-shadow picker__content picker__options-v">
             <MarkerSelectorMap
               updateMarkerPosition={updateLocation}
-              handleZoomChange={updateZoom}
-              defaultZoom={zoom}
+              handleZoomChange={setZoom}
+              zoom={markerZoom}
               markerImage={markerImage ? markerImage : selectedNetwork.logo}
               markerCaption={markerCaption ? markerCaption : '?'}
               markerColor={markerColor ? markerColor : 'yellow'}
-              markerPosition={latLng}
+              markerPosition={markerPosition}
             />
             <LocationCoordinates
-              latitude={latLng[0]}
-              longitude={latLng[1]}
-              address={address}
+              latitude={markerPosition[0]}
+              longitude={markerPosition[1]}
+              address={markerAddress}
             />
-            {/* <DropDownWhere
+            <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
-              onSelected={(place) => {
-                console.log(place);
-                // setCenter(place.coordinates)
-              }}
-            /> */}
+              handleSelectedPlace={handleSelectedPlace}
+            />
             <Btn
               btnType={BtnType.splitIcon}
               caption="Save"
@@ -130,6 +117,7 @@ export default function FieldLocation({
           ></div>
         </div>
       )}
+      <span style={{color:'red'}}>{validationError}</span>
     </>
   );
 }
@@ -141,7 +129,7 @@ function LocationCoordinates({
 }) {
   return (
     <div className="card-button__city card-button__everywhere">
-      {address.length > 1 ? 
+      {address && address.length > 1 ? 
         <>
           <span>{address}</span>
           <span> ({latitude},{longitude})</span>

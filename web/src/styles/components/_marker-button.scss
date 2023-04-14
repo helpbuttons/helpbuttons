@@ -293,43 +293,21 @@ $marker-arrow-height: 25px;
 
 
 
-.marker-button-selector.green{
+.marker-button-selector{
   .marker-button__link-tag {
-    background: $color-green;
+    background: var(--button-color);
   }
 }
 
-
-.marker-button-selector.green {
+.marker-button-selector {
   .marker-button__image {
-    border-color: $color-green;
-    background-color: $color-green;
+    border-color: var(--button-color);
+    background-color: var(--button-color);
   }
 
   .marker-button__arrow {
     &:after {
-      border-top-color: $color-green;
-    }
-  }
-}
-
-
-.marker-button-selector.yellow{
-  .marker-button__link-tag {
-    background: $color-corporative;
-  }
-}
-
-
-.marker-button-selector.yellow {
-  .marker-button__image {
-    border-color: $color-corporative;
-    background-color: $color-corporative;
-  }
-
-  .marker-button__arrow {
-    &:after {
-      border-top-color: $color-corporative;
+      border-top-color: var(--button-color);
     }
   }
 }

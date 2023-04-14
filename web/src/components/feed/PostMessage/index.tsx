@@ -1,5 +1,5 @@
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
-import { dateLeft } from "shared/sys.helper";
+import { readableTimeLeftToDate } from "shared/date.utils";
 
 export default function PostMessage({ post }) {
   return (
@@ -11,7 +11,7 @@ export default function PostMessage({ post }) {
         <h2 className="card-notification__title"></h2>
       </div>
       <div className="card-notification__date card-notification__date--nflex">
-        <span>{dateLeft(post.created_at)}</span>
+        <span>{readableTimeLeftToDate(post.created_at)}</span>
         <div>
           <div className="avatar-small">
             <ImageWrapper

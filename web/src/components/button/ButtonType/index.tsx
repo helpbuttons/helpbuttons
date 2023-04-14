@@ -6,7 +6,7 @@ import React from 'react';
 import { useState } from 'react';
 
 import { IoClose } from 'react-icons/io5';
-import { buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 type IconType = 'cross' | 'red';
 
 function RadioIcon({ icon }: { icon: IconType }) {
@@ -30,7 +30,7 @@ const ButtonType = React.forwardRef(
       <>
         <FieldRadio label="Button type:">
           {buttonTypes.map((buttonType, idx) => (
-            <div key={idx}>
+            <div key={idx} style={buttonColorStyle(buttonType.cssColor)}>
               <FieldRadioOption
                 onChange={onChange}
                 onBlur={onBlur}
@@ -39,7 +39,7 @@ const ButtonType = React.forwardRef(
                 value={buttonType.name}
                 key={idx}
               >
-              <div className={`btn-filter__icon ${buttonType.color}`}></div>
+              <div className="btn-filter__icon"></div>
               <div className="btn-with-icon__text">{buttonType.caption}</div>
               </FieldRadioOption>
             </div>
