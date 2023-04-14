@@ -15,7 +15,7 @@ import { getHostname } from 'shared/sys.helper';
 import { NetworkDto } from 'shared/dtos/network.dto';
 import { SetupDto } from 'shared/entities/setup.entity';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { updateExploreMapZoom, updateMapCenter } from 'state/Explore';
 
 export default function HomeInfo() {
@@ -38,14 +38,13 @@ export default function HomeInfo() {
     (state: GlobalState) => state.config,
   );
 
+  const [navigatorCoordinates, setNavigatorCoordinates] = useState(null)
+  
   useEffect(() => {
     if(navigator)
     {
     navigator.geolocation.getCurrentPosition(function(position) {
-      store.emit(
-        new updateMapCenter([position.coords.latitude,position.coords.longitude]),
-      );
-      store.emit(new updateExploreMapZoom(12));
+      setNavigatorCoordinates(position.coords)
     });
   }
   }, [navigator])
@@ -82,6 +81,14 @@ export default function HomeInfo() {
               }
             `}</style>
             <div className="info-overlay__card">
+              {navigatorCoordinates && 
+              <div className="card">
+                <div className="card__header">
+                  <h3 className="card__header-title">Do you want to navigate to check buttons in your region? <a href={`/Explore?lat=${navigatorCoordinates.latitude}&lng=${navigatorCoordinates.longitude}&zoom=13`}>Click here</a></h3>
+                </div>
+              </div>
+              }
+              <br/>
               <div className="card">
                 <div className="card__header">
                   <div className="avatar-medium">

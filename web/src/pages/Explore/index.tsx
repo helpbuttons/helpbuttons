@@ -151,9 +151,13 @@ function Explore({ router }) {
     if (router && router.query && router.query.lat && selectedNetwork) {
       const lat = parseFloat(router.query.lat);
       const lng = parseFloat(router.query.lng);
-      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
       store.emit(new updateMapCenter([lat, lng]));
       loadCoordinatesFromNetwork = false;
+
+      if (router.query.zoom) {
+        const queryZoom = parseFloat(router.query.zoom);
+        store.emit(new updateExploreMapZoom(queryZoom));
+      }
     }
 
     if ((!mapCenter || !mapZoom) && selectedNetwork) {
@@ -162,7 +166,10 @@ function Explore({ router }) {
           new updateMapCenter(selectedNetwork.location.coordinates),
         );
       }
-      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
+      if(!mapZoom)
+      {
+        store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
+      }
     }    
   }, [ selectedNetwork, router]);
 
