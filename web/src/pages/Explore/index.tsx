@@ -18,7 +18,7 @@ import List from 'components/list/List';
 import { buttonTypes } from 'shared/buttonTypes';
 import ExploreMap from 'components/map/Map/ExploreMap';
 import { Button } from 'shared/entities/button.entity';
-import { Bounds, Point } from 'pigeon-maps';
+import { Bounds, Point } from '../../../pigeon-maps';
 import { filter, Subject } from 'rxjs';
 import { current } from 'immer';
 
