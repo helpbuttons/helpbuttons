@@ -101,6 +101,11 @@ export default function HomeInfo() {
                 <div className="info-overlay__description">
                   {selectedNetwork.description}
                 </div>
+                <div className="info-overlay__hashtags">
+                  {selectedNetwork.tags.map((tag) => {return (
+                    <div className="hashtag">{tag}</div>)})
+                  }
+                </div>
               </div>
               <br />
               <div className="card">

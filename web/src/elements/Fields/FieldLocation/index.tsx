@@ -69,7 +69,6 @@ export default function FieldLocation({
           latitude={markerPosition[0]}
           longitude={markerPosition[1]}
           address={markerAddress}
-          zoom={markerZoom}
         />
         <div
           className="btn"
@@ -95,7 +94,6 @@ export default function FieldLocation({
               latitude={markerPosition[0]}
               longitude={markerPosition[1]}
               address={markerAddress}
-              zoom={markerZoom}
             />
             <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
@@ -124,7 +122,6 @@ function LocationCoordinates({
   latitude,
   longitude,
   address,
-  zoom = -1
 }) {
   return (
     <div className="card-button__city card-button__everywhere">
@@ -132,8 +129,6 @@ function LocationCoordinates({
         <>
           <span>{address}</span>
           <span> ({latitude},{longitude})</span>
-          {zoom > 0 && 
-            <span>[{zoom}]</span>}
           {/* (radius: ${radius} km) */}
         </>
         :
