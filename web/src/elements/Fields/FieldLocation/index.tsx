@@ -51,7 +51,6 @@ export default function FieldLocation({
         (place) => {
           const address = place.results[0].formatted;
           setMarkerAddress(address);
-          setZoom(selectedNetwork.zoom)
         },
         () => {
           console.log(
