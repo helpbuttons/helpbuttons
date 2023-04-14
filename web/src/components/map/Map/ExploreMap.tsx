@@ -5,7 +5,7 @@ import { Button } from 'shared/entities/button.entity';
 import { MarkerButton, MarkerButtonPopup } from './MarkerButton';
 import { store } from 'pages';
 import { SetAsCurrentButton, updateCurrentButton, updateExploreMapZoom, updateMapCenter } from 'state/Explore';
-
+const SCROLL_PIXELS_FOR_ZOOM_LEVEL = 150
 
 
 export default function ExploreMap(
@@ -29,7 +29,17 @@ export default function ExploreMap(
     store.emit(new updateMapCenter(latLng))
     store.emit(new updateCurrentButton(null))
   }
-
+  const mapRef = React.createRef();
+  useEffect(() => {
+    const handleWheel = (event) => {
+      const addToZoom = -event.deltaY / SCROLL_PIXELS_FOR_ZOOM_LEVEL
+      store.emit(new updateExploreMapZoom(mapZoom + addToZoom))
+    }
+    document.addEventListener('wheel', handleWheel);
+    return () => {
+      document.removeEventListener('wheel', handleWheel);
+    };
+  }, [mapZoom])
   return (
     <>
         {(mapZoom && mapCenter) && 
@@ -39,6 +49,7 @@ export default function ExploreMap(
             provider={stamenTerrain}
             onBoundsChanged={onBoundsChanged}
             zoomSnap={true}
+            wheelEvents={false}
             onClick={handleMapClicked}
           >
             <ZoomControl />

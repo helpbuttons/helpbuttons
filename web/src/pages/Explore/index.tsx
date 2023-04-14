@@ -148,10 +148,10 @@ function Explore({ router }) {
 
   useEffect(() => {
     let loadCoordinatesFromNetwork = true;
-    if (router && router.query && router.query.lat) {
+    if (router && router.query && router.query.lat && selectedNetwork) {
       const lat = parseFloat(router.query.lat);
       const lng = parseFloat(router.query.lng);
-      store.emit(new updateExploreMapZoom(16));
+      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
       store.emit(new updateMapCenter([lat, lng]));
       loadCoordinatesFromNetwork = false;
     }

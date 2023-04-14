@@ -48,8 +48,6 @@ export default function ButtonForm({
   const [isReadyForLocationAndTime, setIsReadyForLocationAndTime] =
     useState(false);
   const [markerColor, setMarkerColor] = useState(null);
-
-  const watchFields = watch(['image', 'title', 'type']);
   useEffect(() => {
     if (buttonDraft) {
       reset(buttonDraft);
@@ -70,7 +68,7 @@ export default function ButtonForm({
         return buttonType.name === values.type;
       });
       if (buttonType) {
-        setMarkerColor(buttonType.color);
+        setMarkerColor(buttonType.cssColor);
       }
     });
     return () => subscription.unsubscribe();
@@ -138,13 +136,25 @@ export default function ButtonForm({
               />
               <>
                 <FieldLocation
-                  validationErrors={undefined}
-                  setValue={setValue}
-                  watch={watch}
+                  setMarkerPosition={([lat,lng]) => {
+                      setValue('latitude',lat)
+                      setValue('longitude',lng)
+                  }}
+                  setMarkerAddress={(address) => {
+                    console.log('new addresss' + address)
+                    setValue('address', address)
+                  }}
+                  setZoom={(zoom) => {
+                    setValue('zoom', zoom)
+                  }}
+                  markerZoom={watch('zoom')}
+                  markerAddress={watch('address')}
                   markerImage={watch('image')}
                   markerCaption={watch('title')}
                   markerColor={markerColor}
+                  markerPosition={[watch('latitude'),watch('longitude')]}
                   selectedNetwork={selectedNetwork}
+                  validationError={errors.location}
                 />
                 <FieldDate
                   dateType={watch('when.type')}

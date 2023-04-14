@@ -48,7 +48,7 @@ export default function PostNew({ buttonId, onSubmit }) {
                 })}
               ></input>
             </div>
-            <button type="submit" className="btn-circle btn-circle__icon btn-circle__content">
+            <button type="submit" onClick={onSubmitLocal} className="btn-circle btn-circle__icon btn-circle__content">
               <IoPaperPlaneOutline />
             </button>
           </Form>
