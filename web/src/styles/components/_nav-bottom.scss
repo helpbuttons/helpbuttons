@@ -1,5 +1,5 @@
-$nav-bottom-padding: 8px;
-$nav-bottom-icon-size: 30px;
+$nav-bottom-padding: 5px;
+$nav-bottom-icon-size: 27px;
 $nav-bottom-icon-size-desktop: 100px;
 $nav-bottom-link-create-size: 58px;
 $nav-bottom-link-create-margin: -28px;
@@ -59,8 +59,8 @@ $nav-bottom-border: 32px;
 
 .nav-bottom__text {
 
-  padding-top: .05rem;
-  font-size: $font-size-general;
+  padding-top: .01rem;
+  font-size: $font-size-small;
   text-decoration: none;
   font-weight: 700;
 }
