@@ -1,5 +1,5 @@
 $nav-bottom-padding: 5px;
-$nav-bottom-icon-size: 27px;
+$nav-bottom-icon-size: 24px;
 $nav-bottom-icon-size-desktop: 100px;
 $nav-bottom-link-create-size: 58px;
 $nav-bottom-link-create-margin: -28px;
@@ -62,6 +62,7 @@ $nav-bottom-border: 32px;
   padding-top: .01rem;
   font-size: $font-size-small;
   text-decoration: none;
+  line-height: $text-line-height-xsmall;
   font-weight: 700;
 }
 

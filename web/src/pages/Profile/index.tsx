@@ -40,15 +40,16 @@ export default function Profile() {
               </>
             )}
 
-            <Link href="/ProfileEdit">
-              <Btn
-                iconLeft={IconType.svg}
-                iconLink={<IoHammerOutline />}
-                caption="Edit profile"
-              />
-            </Link>
+
             {loggedInUser?.username == loggedInUser?.username && (
               <div className="card-profile__actions">
+                <Link href="/ProfileEdit">
+                  <Btn
+                    iconLeft={IconType.svg}
+                    iconLink={<IoHammerOutline />}
+                    caption="Edit profile"
+                  />
+                </Link>
                 <Link href="/Explore">
                   <div onClick={logout} className="btn-with-icon">
                     <div className="btn-with-icon__icon">

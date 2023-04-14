@@ -12,11 +12,12 @@ $drag-tab-icon-size: 30px;
 
 .drag-tab {
 
-  width: 100%;
+  width: 2rem;
   position: absolute;
   height: $drag-tab-height;
   background-color: $color-white;
   margin: 0;
+  margin-left: $margin-extra-small;
   z-index: $z-index-01;
   bottom: $drag-tab-bottom;
   border-radius: $border-radius-circle $border-radius-circle 0 0;

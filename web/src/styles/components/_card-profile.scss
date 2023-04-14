@@ -67,13 +67,16 @@ $avatar-margin: $padding-big;
 }
 
 .card-profile__container {
+  
   display: flex;
   height: auto;
   flex-direction: column;
   flex: 1;
   background-color: $color-white;
-  border-radius: $border-radius-circle;
+  border-radius: 0;
   padding: $padding-big;
+  margin-bottom: $footer-height-mobile;
+
 }
 
 .card-profile__content {
@@ -138,6 +141,16 @@ $avatar-margin: $padding-big;
 }
 
 @media #{$breakpoints-xlarge} {
+
+  .card-profile__container {
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    flex: 1;
+    background-color: $color-white;
+    border-radius: $border-radius-circle;
+    padding: $padding-big;
+  }
 
   .card-profile__rating {
     display: flex;
