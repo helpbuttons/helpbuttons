@@ -1,21 +1,22 @@
 version: '3'
 services:
   # there is a bug and docker is not spawning yarn dev not accessible through the network
-  # web:
-  #   build: web/
-  #   entrypoint: /bin/sh -c "yarn && yarn dev"
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./web/src:/app/src/:ro
-  #   depends_on:
-  #     - api
-  #   networks:
-  #     - web
-  #     - api
+  web:
+    build: web/
+    image: helpbuttons/helpbuttons-web:dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web/src:/app/src/:ro
+    depends_on:
+      - api
+    networks:
+      - web
+      - api
 
   api:
     build: api/
+    image: helpbuttons/helpbuttons-api:main
     volumes:
       - ./api/src:/app/src/:ro
       - config:/app/config/:rw
