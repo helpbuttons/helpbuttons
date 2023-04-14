@@ -84,6 +84,9 @@ you probably need to edit the .env file of web to point to the api:
 
 `$ echo "API_URL=http://localhost:3001/" > web/.env`
 
+you might need to run also (if you never built the project before)
+
+`$ yarn write-version`
 ### develop api
 You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
 
@@ -97,6 +100,7 @@ run the web in watch mode:
 
 `$ cd api && yarn && yarn web`
 
+### developer-extras
 you might need to run also (if you never built the project before)
 
 `$ yarn write-version`
