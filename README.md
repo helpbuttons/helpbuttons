@@ -81,6 +81,13 @@ you might need to run also (if you never built the project before)
 
 `$ cd api && yarn write-version`
 
+you need to generate a jwt key
+
+`$ cd web && yarn hb jwt` (in the web folder)
+
+and install the custom pigeon-maps:
+
+`$ cd web && yarn install-pg-maps`
 
 also don't forget to run the migrations on the api
 
