@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ActivityEventName } from '@src/app/app.event';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { ActivityEventName } from '@src/shared/types/activity.list';
 import { Repository } from 'typeorm';
 import { Activity } from './activity.entity';
 
