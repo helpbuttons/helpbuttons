@@ -67,12 +67,16 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification__avatar {
+  
   flex: 0 1 60px;
   position: relative;
+  height: 3rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
   border-radius: 50%;
   justify-content: center;
-  max-height: 3.375rem;
-  max-width: 3.375rem;
+
   & .avatar {
     height: 100%;
   }

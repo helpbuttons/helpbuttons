@@ -8,17 +8,20 @@ $drag-tab-line-height: 5px;
 $drag-tab-line-height-desktop: 100px;
 $drag-tab-line-left-desktop: 20px;
 $drag-tab-line-position-desktop: calc(50% - 50px);
-$drag-tab-icon-size: 30px;
+$drag-tab-icon-size: 25px;
 
 .drag-tab {
 
-  width: 2rem;
+  width: auto;
   position: absolute;
-  height: $drag-tab-height;
+  display: flex;
+  flex-direction: column;
+  height: auto;
   background-color: $color-white;
   margin: 0;
   margin-left: $margin-extra-small;
   z-index: $z-index-01;
+  padding: $padding-small;
   bottom: $drag-tab-bottom;
   border-radius: $border-radius-circle $border-radius-circle 0 0;
   transition: $transition-default-slow;
@@ -27,13 +30,14 @@ $drag-tab-icon-size: 30px;
 
 .drag-tab__line {
 
-  position: relative;
-  display: flex;
-  border-radius: $border-radius-circle;
-  margin: $margin-extra-small auto;
-  background-color: $color-ligth-gray;
-  width: 20%;
-  height: $drag-tab-line-height;
+  // position: relative;
+  // display: flex;
+  // border-radius: $border-radius-circle;
+  // margin: $margin-extra-small auto;
+  // background-color: $color-ligth-gray;
+  // width: 20%;
+  // height: $drag-tab-line-height;
+  display: none;
 
 }
 
@@ -41,13 +45,31 @@ $drag-tab-icon-size: 30px;
   
   transition: $transition-default-slow;
   bottom: $drag-tab-bottom-height;
+  
+  .drag-tab__counter {
+
+  }
 
 }
 
 .drag-tab__icon {
 
-  display: none;
+  display: flex;
 
+  svg {
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    width: $drag-tab-icon-size;
+    height: $drag-tab-icon-size;
+  }
+
+}
+
+.drag-tab__counter {
+
+  margin: auto;
+  font-size: $font-size-small;
+  
 }
 
 
@@ -55,7 +77,8 @@ $drag-tab-icon-size: 30px;
   .drag-tab {
 
     position: absolute;
-    width: $drag-tab-width-desktop;
+    width: auto;
+    flex-direction: row-reverse;
     bottom:0px;
     left: 40%;
     margin: 0 0 $margin-big 0;
@@ -84,6 +107,7 @@ $drag-tab-icon-size: 30px;
     display: flex;
 
     svg {
+      transform: rotate(0deg);
       width: $drag-tab-icon-size;
       height: $drag-tab-icon-size;
     }

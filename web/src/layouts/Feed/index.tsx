@@ -88,54 +88,55 @@ export default function Feed({ buttonId, buttonOwnerId = -1 }) {
           posts.map((post, idx) => {
             return (
               <div className="feed-element" key={idx}>
-                <div className="card-notification__text">
-                  <PostMessage post={post} />
-                  <div
-                    style={{
-                      backgroundColor: '#C0C0C0',
-                      textAlign: 'right',
-                    }}
-                  >
-                    <a
-                      onClick={() => {
-                        setShowComments(!showComments);
-                      }}
-                    >
-                      {post.comments.length > 0
-                        ? '+' +
-                          post.comments.length +
-                          ' comment' +
-                          (post.comments.length > 1 ? 's' : '')
-                        : ''}
-                    </a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    {loggedInUser && (
-                      <>
+
+              <div className="card-notification card-notification--need">
+                <div className="card-notification__content">
+
+                    <div className="card-notification__text">
+                      <PostMessage post={post} />
+                      <div>
                         <a
                           onClick={() => {
-                            setShowNewCommentDialog(
-                              !showNewCommentDialog,
-                            );
+                            setShowComments(!showComments);
                           }}
                         >
-                          Leave comment +
+                          {post.comments.length > 0
+                            ? '+' +
+                              post.comments.length +
+                              ' comment' +
+                              (post.comments.length > 1 ? 's' : '')
+                            : ''}
                         </a>
-                        {showNewCommentDialog && (
-                          <PostCommentNew
-                            postId={post.id}
-                            onSubmit={() => {
-                              reloadPosts(buttonId);
-                              setShowComments(true);
-                              setShowNewCommentDialog(false);
-                            }}
-                          />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {loggedInUser && (
+                          <>
+                            <button class="btn-filter-with-icon"
+                              onClick={() => {
+                                setShowNewCommentDialog(
+                                  !showNewCommentDialog,
+                                );
+                              }}
+                            >
+                              Leave comment +
+                            </button>
+                            {showNewCommentDialog && (
+                              <PostCommentNew
+                                postId={post.id}
+                                onSubmit={() => {
+                                  reloadPosts(buttonId);
+                                  setShowComments(true);
+                                  setShowNewCommentDialog(false);
+                                }}
+                              />
+                            )}
+                          </>
                         )}
-                      </>
-                    )}
-                    <PostComments
-                      comments={post.comments}
-                      showComments={showComments}
-                    />
+                        <PostComments
+                          comments={post.comments}
+                          showComments={showComments}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -44,12 +44,11 @@ export function CardButtonHeadMedium({ button }) {
   });
   return (
     <>
-      <CardButtonSubmenu button={button} />
       <a href={`/ButtonFile/${button.id}`}>
         <div className="card-button__content">
           <div className="card-button__header">
             <div className="card-button__avatar">
-              <div className="avatar-medium">
+              <div className="avatar-small">
                 <ImageWrapper
                   imageType={ImageType.avatar}
                   src={button.owner.avatar}
@@ -71,19 +70,56 @@ export function CardButtonHeadMedium({ button }) {
             </div>
           </div>
 
-          <div className="card-button__hashtags">
-            {button.tags.map((tag, idx) => {
-              return (
-                <div className="hashtag" key={idx}>
-                  {tag}
-                </div>
-              );
-            })}
+          <div className="card-button__title">
+            {button.title}
           </div>
 
           <div className="card-button__paragraph">
             <p>{button.description}</p>
           </div>
+
+          <div>
+            <div className="card-button__city card-button__everywhere ">
+              {button.address}
+            </div>
+
+            <ShowWhen when={button.when}/>
+          </div>
+        </div>
+      </a>
+    </>
+  );
+}
+
+
+export function CardButtonHeadSmall({ button }) {
+  const { cssColor} = buttonTypes.find((buttonType) => {
+    return buttonType.name === button.type;
+  });
+  return (
+    <>
+    
+      <a href={`/ButtonFile/${button.id}`}>
+        <div className="card-button-map__content">
+          <div className="card-button-map__header">
+            <div className="card-button-map__info">
+              <div className="card-button__name">
+                {button.owner.name}
+              </div>
+
+              <div className="card-button__status card-button__status">
+                <span className="card-button" style={buttonColorStyle(cssColor)}>
+                  {button.type}
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="card-button__title">
+            {button.title}
+          </div>
+
 
           <div>
             <div className="card-button__city card-button__everywhere ">
@@ -110,36 +146,42 @@ function CardButtonSubmenu({ button }) {
         className="card-button__edit-icon card-button__submenu"
       ></div>
       {showSubmenu && (
-        <datalist
-          className="dropdown-nets__dropdown-content"
-          id="listid"
-        >
-          <option
-            className="dropdown-nets__dropdown-option"
-            label="Share Button"
-          ></option>
-          <option
-            className="dropdown-nets__dropdown-option"
-            label="Copy Link"
-            onClick={() => {
-              navigator.clipboard.writeText(linkButton);
-            }}
-          ></option>
-          <option
-            className="dropdown-nets__dropdown-option"
-            label="Edit Button"
-            onClick={() => {
-              router.push(`/ButtonEdit/${button.id}`);
-            }}
-          ></option>
-          <option
-            className="dropdown-nets__dropdown-option"
-            label="Delete Button"
-            onClick={() => {
-              router.push(`/ButtonRemove/${button.id}`);
-            }}
-          ></option>
-        </datalist>
+        <div className="card-button__dropdown-container">
+
+          <div className="card-button__dropdown-arrow"></div>
+        
+          <datalist
+            className="card-button__dropdown-content"
+            id="listid"
+          >
+            <option
+              className="card-button__trigger-options"
+              label="Share Button"
+            ></option>
+            <option
+              className="card-button__trigger-options card-button__trigger-button"
+              label="Copy Link"
+              onClick={() => {
+                navigator.clipboard.writeText(linkButton);
+              }}
+            ></option>
+            <option
+              className="card-button__trigger-options"
+              label="Edit Button"
+              onClick={() => {
+                router.push(`/ButtonEdit/${button.id}`);
+              }}
+            ></option>
+            <option
+              className="card-button__trigger-options"
+              label="Delete Button"
+              onClick={() => {
+                router.push(`/ButtonRemove/${button.id}`);
+              }}
+            ></option>
+          </datalist>
+
+        </div>
       )}
     </section>
   );

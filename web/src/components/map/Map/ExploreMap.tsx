@@ -59,7 +59,7 @@ export default function ExploreMap(
 
             {currentButton && 
               <MarkerButtonPopup
-              anchor={[currentButton.latitude, currentButton.longitude]} offset={[130, 328]} button={currentButton}
+              anchor={[currentButton.latitude, currentButton.longitude]} offset={[155, 328]} button={currentButton}
             />
             }
             

@@ -4,9 +4,12 @@ $card-button-box-shadow: $box-shadow-card;
 $card-button-ofrece-background: $color-green;
 $card-button-paragraph-color: $color-gray;
 $card-button-margin-bottom: 1rem;
+$card-button-margin-bottom: 1rem;
+$card-button-avatar-height: 50px;
 $card-button-picture-max-height: 300px;
 $card-button-situation-background-size: 14px;
 $card-button__submenu-show-width: 120px;
+$card-button__submenu-top-arrow-right: 5px;
 $card-button__submenu-show-left: calc( #{$card-button__submenu-show-width} / -2 );
 $card-button-size-icon-before: 18px;
 
@@ -140,7 +143,7 @@ $card-button-border-height: $border-general-height;
 .card-button__situation {
   color: $color-gray;
   display: flex;
-  font-size: $font-size-general;
+  font-size: $font-size-small;
   font-weight: bold;
   flex-flow: row nowrap;
   padding: .5rem 0 $card-button-whitespace 0;
@@ -188,6 +191,8 @@ $card-button-border-height: $border-general-height;
   font-size: $font-size-general;
   white-space: pre-line;
   text-align: left;
+  height: 3rem;
+  overflow: hidden;
 
   & p {
     margin-top: 0;//Revise
@@ -257,13 +262,15 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button .avatar {
-  width: 70px;
-  height: 70px;
+  width: $card-button-avatar-height;
+  height: $card-button-avatar-height;
 }
 
 .card-button__edit-icon {
   width: 30px;
   height: 30px;
+  position: absolute;
+  right: 0;
 }
 
 .card-button__options-menu {
@@ -272,23 +279,26 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__dropdown-container {
-  background: none;
-  box-shadow: none;
-  max-width: 200px;
-  width: 100%;
-  z-index: 10002;
+  display: block;
+  position: absolute;
+  z-index: $z-index-01;
+  right: 0;
+  top: 2rem;
 }
 
 .card-button__dropdown-content {
-  background: $color-black;
+  background: $color-dark-gray;
+  display: block;
   border-radius: 2px;
   height: 100%;
   overflow-y: auto;
   color: white;
   padding-top: 10px;
   padding-bottom: 10px;
+
   & > a:hover {
-    text-decoration: none;
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
 
@@ -297,9 +307,9 @@ $card-button-border-height: $border-general-height;
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 20px solid $color-black;
+  border-bottom: 20px solid $color-dark-gray;
   margin-left: auto;
-  margin-right: 21px;
+  margin-right: $card-button__submenu-top-arrow-right;
 }
 
 .card-button__trigger {
@@ -353,7 +363,7 @@ $card-button-border-height: $border-general-height;
 .card-button__city-list,
 .card-button__date {
   color: black;
-  font-size: $font-size-general;
+  font-size: $font-size-small;
   font-weight: bold;
   text-align: left;
 }

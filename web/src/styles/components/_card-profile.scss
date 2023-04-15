@@ -67,9 +67,9 @@ $avatar-margin: $padding-big;
 }
 
 .card-profile__container {
-  
+
   display: flex;
-  height: auto;
+  height: 100vh;
   flex-direction: column;
   flex: 1;
   background-color: $color-white;
@@ -91,7 +91,7 @@ $avatar-margin: $padding-big;
   justify-content: flex-end;
   display: flex;
   flex-direction: column;
-  bottom: 0;
+  bottom: $nav-bottom-height;
   position: relative;
   flex: auto;
 }
@@ -143,13 +143,15 @@ $avatar-margin: $padding-big;
 @media #{$breakpoints-xlarge} {
 
   .card-profile__container {
-    display: flex;
-    height: auto;
-    flex-direction: column;
-    flex: 1;
-    background-color: $color-white;
-    border-radius: $border-radius-circle;
-    padding: $padding-big;
+    // display: flex;
+    // height: auto;
+    // flex-direction: column;
+    // flex: 1;
+    // background-color: $color-white;
+    // border-radius: $border-radius-circle;
+    // padding: $padding-big;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
 
   .card-profile__rating {

@@ -12,19 +12,19 @@ export default function PostMessage({ post }) {
       </div>
       <div className="card-notification__date card-notification__date--nflex">
         <span>{readableTimeLeftToDate(post.created_at)}</span>
-        <div>
-          <div className="avatar-small">
-            <ImageWrapper
-              imageType={ImageType.avatar}
-              src={post.author.avatar}
-              alt="Avatar"
-            />
-          </div>{' '}
-          {post.author.name}{' '}
-          <span style={{ color: 'gray' }}>
-            @{post.author.username}
-          </span>
-        </div>
+      </div>
+      <div className="card-notification__avatar">
+        <div className="avatar-small">
+          <ImageWrapper
+            imageType={ImageType.avatar}
+            src={post.author.avatar}
+            alt="Avatar"
+          />
+        </div>{' '}
+        {post.author.name}{' '}
+        <span style={{ color: 'gray' }}>
+          @{post.author.username}
+        </span>
       </div>
     </>
   );
