@@ -38,7 +38,6 @@ export default function PostCommentNew({ postId, onSubmit }) {
       classNameExtra="publish_btn"
     >
       <FieldTextArea
-        label="Comment:"
         name="message"
         placeholder="Write your comment"
         validationError={errors.description}

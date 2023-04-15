@@ -30,6 +30,8 @@ function List({onLeftColumnToggle, buttons, showLeftColumn}) {
 
           </div>
 
+          <span className="drag-tab__counter">100</span>
+
         </div>
 
         <div className={'list__container ' + (showLeftColumn ? '' : 'list__container--hide')}>

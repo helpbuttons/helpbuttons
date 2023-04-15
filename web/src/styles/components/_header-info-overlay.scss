@@ -69,9 +69,10 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 
   .card {
 
-    border-radius: 25px;
+    border-radius: 10px;
     background-color: $color-transparent;
     padding: $padding-big;
+    margin: $margin-small 0;
     max-height: 100%;
     height: fit-content;
     overflow: auto;

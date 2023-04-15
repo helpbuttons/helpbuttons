@@ -1,4 +1,4 @@
-$list-container-hide-height: calc(70px - 230px);
+$list-container-hide-height: calc($footer-height-mobile - 230px);
 
 ///shouldd be the posts list
 .list__container {

@@ -1,5 +1,5 @@
-$nav-bottom-padding: 8px;
-$nav-bottom-icon-size: 30px;
+$nav-bottom-padding: 5px;
+$nav-bottom-icon-size: 24px;
 $nav-bottom-icon-size-desktop: 100px;
 $nav-bottom-link-create-size: 58px;
 $nav-bottom-link-create-margin: -28px;
@@ -10,7 +10,7 @@ $nav-bottom-create-message-width: 100px;
 $nav-bottom-create-message-left: calc(( #{$nav-bottom--desktop-width} / 2) - (#{$nav-bottom-create-message-width} / 8) ) ;
 $nav-bottom-width: 640px;
 $nav-bottom-height: $footer-height-mobile;
-$nav-bottom-height-desktop: 500px;
+$nav-bottom-height-desktop: 22rem;
 $nav-bottom-border: 32px;
 
 .nav-bottom {
@@ -59,9 +59,10 @@ $nav-bottom-border: 32px;
 
 .nav-bottom__text {
 
-  padding-top: .05rem;
-  font-size: $font-size-general;
+  padding-top: .01rem;
+  font-size: $font-size-small;
   text-decoration: none;
+  line-height: $text-line-height-xsmall;
   font-weight: 700;
 }
 

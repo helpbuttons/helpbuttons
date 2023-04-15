@@ -87,7 +87,6 @@ export default function HomeInfo() {
                 </div>
               </div>
               }
-              <br/>
               <div className="card">
                 <div className="card__header">
                   <div className="avatar-medium">
@@ -106,7 +105,6 @@ export default function HomeInfo() {
                   }
                 </div>
               </div>
-              <br />
               <div className="card">
                 <div className="card__header">
                   <h3 className="card__header-title">
@@ -129,7 +127,6 @@ export default function HomeInfo() {
                   </div>
                 </div>
               </div>
-              <br />
               <div className="card">
                 <div className="card__header">
                   <h3 className="card__header-title">Actions</h3>

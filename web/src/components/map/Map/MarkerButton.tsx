@@ -60,7 +60,7 @@ export function MarkerButtonPopup(props: MarkerButtonPopupProps) {
           style={{
             position: 'absolute',
             transform: `translate(${props.left}px, ${props.top}px)`,
-            backgroundColor: 'white',
+            backgroundColor: 'transparent',
             ...(props.style || {}),
           }}
           className={
