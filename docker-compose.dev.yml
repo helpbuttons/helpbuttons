@@ -16,7 +16,7 @@ services:
 
   api:
     build: api/
-    image: helpbuttons/helpbuttons-api:main
+    image: helpbuttons/helpbuttons-api:dev
     volumes:
       - ./api/src:/app/src/:ro
       - config:/app/config/:rw
