@@ -100,7 +100,6 @@ function Explore({ router }) {
       );
 
       store.emit(new updateMapCenter(center));
-      store.emit(new updateExploreMapZoom(zoom));
     };
     getButtonsForBounds(bounds);
   };
@@ -160,7 +159,7 @@ function Explore({ router }) {
       store.emit(new updateMapCenter([lat, lng]));
       loadCoordinatesFromNetwork = false;
 
-      if (router.query.zoom) {
+      if (router.query.zoom > 0) {
         const queryZoom = parseFloat(router.query.zoom);
         store.emit(new updateExploreMapZoom(queryZoom));
       }
@@ -171,7 +170,7 @@ function Explore({ router }) {
         new updateMapCenter(selectedNetwork.location.coordinates),
       );
     }
-    if (mapZoom < 0 && selectedNetwork) {
+    if (mapZoom < 0 && selectedNetwork && !router.query.zoom) {
       store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
     }
   }, [selectedNetwork, router]);
