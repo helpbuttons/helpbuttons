@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/web/pigeon-maps/
 
 # testing
 /coverage
