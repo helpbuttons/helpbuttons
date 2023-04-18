@@ -73,7 +73,7 @@ export default function HomeInfo() {
         </form>
         {selectedNetworkLoading && (
           <>
-            <div className="info-overlay__card">Loading...</div>
+            <div className="info-overlay__card">{t('homeinfo.loading')}</div>
           </>
         )}
         

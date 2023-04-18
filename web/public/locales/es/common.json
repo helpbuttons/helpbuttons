@@ -9,10 +9,11 @@
   },
   "homeinfo": {
     "start": "Donde quieres empezar?",
-    "searchlocation": "Buscar ubicacion"
+    "searchlocation": "Buscar ubicacion",
+    "loading": "not set"
   },
   "feed": {
     "write": "Escribir mensaje"
   },
-  "hostname" : "nombre de host"
+  "hostname": "nombre de host"
 }
