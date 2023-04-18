@@ -19,7 +19,7 @@ export default function PickerPeriodDate({defaultDate, closeMenu, onChange }) {
             <div className="picker__section__pick">
                 <>
                   <header className="picker__header ">
-                    {t('picker-specific-date.pickday')}
+                    {t('calendarOnce.pickday')}
                   </header>
                   <div className="picker__row">
                     <Calendar
@@ -34,7 +34,7 @@ export default function PickerPeriodDate({defaultDate, closeMenu, onChange }) {
                 <>
                   
                   <header className="picker__header ">
-                    {t('picker-specific-date.picktime')}
+                    {t('calendarOnce.picktime')}
                   </header>
 
                   <div className="picker__row">

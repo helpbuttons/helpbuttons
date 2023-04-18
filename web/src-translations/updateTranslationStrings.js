@@ -17,12 +17,11 @@ const saveTranslatioFile = (locale, data) => {
   return fs.writeFileSync(`../public/locales/${locale}/common.json`, JSON.stringify(data, null, 2));
 };
 
-const allLocales = ['es', 'en'];
+const allLocales = ['en'];
 
 const syncTranslations = (foundTranslations) => {
   let allTranslations = [];
-  let localesToUpdate = [];
-
+  
   allTranslations = allLocales.map((locale) => {
     return {locale: locale, translations: require(translatioFile(locale))};
   });
@@ -30,10 +29,6 @@ const syncTranslations = (foundTranslations) => {
     allTranslations = allTranslations.map(({locale, translations}) => {
       if(!_.get(translations, foundTranslation))
       {
-        if(!localesToUpdate[locale])
-        {
-          localesToUpdate.push(locale)
-        }
         console.log(`Adding new ${foundTranslation} to ${locale}`)
         _.set(translations, foundTranslation, foundTranslation);
       }
@@ -43,10 +38,8 @@ const syncTranslations = (foundTranslations) => {
 
   allTranslations.forEach(({locale, translations}) => {
     // only save en language, so that weblate updates if index is not found
-    if(locale.indexOf(localesToUpdate) && locale == 'en'){
       console.log(`saving ${locale}`)
       saveTranslatioFile(locale,translations)
-    }
       
   })
 };
