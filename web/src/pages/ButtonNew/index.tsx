@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import router from 'next/router';
 import { defaultMarker } from 'shared/sys.helper';
 import { ErrorName } from 'shared/types/error.list';
+import t from 'i18n';
 
 export default function ButtonNew() {
   const {
@@ -87,6 +88,7 @@ export default function ButtonNew() {
         setFocus={setFocus}
         isSubmitting={isSubmitting}
         onSubmit={onSubmit}
+        title={t('common.publishTitle', ['button'])}
       ></ButtonForm>
     </>
   );

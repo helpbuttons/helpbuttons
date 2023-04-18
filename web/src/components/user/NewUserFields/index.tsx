@@ -1,6 +1,7 @@
 import {FieldImageUpload} from 'elements/Fields/FieldImageUpload';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldText from 'elements/Fields/FieldText';
+import t from 'i18n';
 import { getHostname } from 'shared/sys.helper';
 
 export default function NewUserFields({
@@ -14,35 +15,35 @@ export default function NewUserFields({
     <>
       <FieldText
         name="email"
-        label="Email"
+        label={t('user.email')}
         classNameInput="squared"
-        placeholder="email@email.em"
+        placeholder={t('user.emailPlaceHolder')}
         validationError={errors.email}
         {...register('email', { required: true })}
       ></FieldText>
       <FieldText
         name="username"
-        label={`Username ${watch('username')}@${
+        label={`${t('user.username')} ${watch('username')}@${
           getHostname()
         }`}
         classNameInput="squared"
-        placeholder="username"
+        placeholder={t('user.usernamePlaceHolder')}
         validationError={errors.username}
         {...register('username', { required: true })}
       ></FieldText>
       <FieldPassword
         name="password"
-        label="Password"
+        label={t('user.password')}
         classNameInput="squared"
-        placeholder="Type your password"
+        placeholder={t('user.passwordPlaceHolder')}
         validationError={errors.password}
         {...register('password', { required: true, minLength: 8 })}
       ></FieldPassword>
       <FieldPassword
         name="password_confirm"
-        label="Password confirmation"
+        label={t('user.passwordConfirmation')}
         classNameInput="squared"
-        placeholder="Type your password again please"
+        placeholder={t('user.passwordConfirmationPlaceHolder')}
         validationError={errors.password}
         {...register('password_confirm', {
           required: true,
@@ -52,7 +53,7 @@ export default function NewUserFields({
       150x150px
       <FieldImageUpload
         name="avatar"
-        label="Choose avatar"
+        label={t('common.choose', ['avatar'])}
         control={control}
         width={150}
         height={150}
@@ -68,7 +69,7 @@ export function passwordsMatch(data, setError) {
   if (data.password != data.password_confirm) {
     const passwordsWontMatch = {
       type: 'custom',
-      message: "passwords won't match",
+      message: t('user.passwordMismatch'),
     };
     setError('password', passwordsWontMatch);
     setError('password_confirm', passwordsWontMatch);
