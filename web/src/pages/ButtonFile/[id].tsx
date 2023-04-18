@@ -11,8 +11,8 @@ import { GlobalState, store } from 'pages';
 import { FindButton, SetAsCurrentButton } from 'state/Explore';
 import { alertService } from 'services/Alert';
 import { useRef } from 'store/Store';
-import PostNew from 'components/feed/PostNew';
-import DebugToJSON from 'elements/Debug';
+import { LoadabledComponent } from 'components/loading';
+import { current } from 'immer';
 
 export default function ButtonFile() {
   const id = router.query.id;
@@ -41,17 +41,13 @@ export default function ButtonFile() {
   }, [id, currentButton]);
 
   return (
-    <>
-      {currentButton && (
-        <>
-          <div className="body__content">
-            <div className="body__section">
-              <CardButton button={currentButton} />
-              <Feed buttonId={currentButton.id} buttonOwnerId={currentButton.owner.id} />
-            </div>
+    <LoadabledComponent loading={(!currentButton || (currentButton && !currentButton.id))}>
+        <div className="body__content">
+          <div className="body__section">
+            <CardButton button={currentButton} />
+            <Feed button={currentButton}/>
           </div>
-        </>
-      )}
-    </>
+        </div>
+    </LoadabledComponent>
   );
 }

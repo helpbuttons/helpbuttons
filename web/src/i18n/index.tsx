@@ -49,7 +49,8 @@ function getTranslation(locale, key) {
         return selectedTranslations.translations[keys[0]][keys[1]];
       }
       
-      return `Add me to your translations file. (key: ${key} locale: ${locale})`;
+      console.log(`missing ${key} from locale ${locale}`)
+      return false;
 
     } else if (keys.length > 0) {
       return selectedTranslations.translations[keys[0]];

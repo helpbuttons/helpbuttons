@@ -1,3 +1,4 @@
+import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import t from 'i18n';
 import { store } from 'pages';
@@ -6,24 +7,25 @@ import { IoPaperPlaneOutline } from 'react-icons/io5';
 import { alertService } from 'services/Alert';
 import { CreateNewPost } from 'state/Posts';
 
-export default function PostNew({ buttonId, onSubmit }) {
+export default function PostNew({ buttonId, reloadPosts }) {
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
+    setFocus,
     formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmitLocal = (data) => {
-    console.log('submitted')
     store.emit(
       new CreateNewPost(
         buttonId,
-        data,
+        {message: data.message},
         () => {
-          alertService.info('message posted');
+          alertService.info(t('common.saveSuccess', ['post']));
           setValue('message', '')
-          onSubmit()
+          reloadPosts()
         },
         (errorMessage) => alertService.error(errorMessage),
       ),
@@ -39,16 +41,18 @@ export default function PostNew({ buttonId, onSubmit }) {
             classNameExtra="feeds__new-message"
           >
             <div className="feeds__new-message-message">
-              <input
-                placeholder={t('feed.write')}
-                className="form__input feeds__new-message-input"
-                {...register('message', {
-                  required: true,
-                  minLength: 10,
-                })}
-              ></input>
+              <FieldTextArea
+                name="title"
+                label={t('post.write')}
+                placeholder={t('post.placeholderWrite')}
+                validationError={errors.title}
+                watch={watch}
+                setValue={setValue}
+                setFocus={setFocus}
+                {...register('message', { required: true })}
+              />
             </div>
-            <button type="submit" onClick={onSubmitLocal} className="btn-circle btn-circle__icon btn-circle__content">
+            <button type="submit" className="btn-circle btn-circle__icon btn-circle__content">
               <IoPaperPlaneOutline />
             </button>
           </Form>

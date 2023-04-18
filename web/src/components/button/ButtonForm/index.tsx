@@ -93,7 +93,7 @@ export default function ButtonForm({
             <FieldTextArea
               name="title"
               label={t('button.title')}
-              placeholder={t('button.place_holder_title')}
+              placeholder={t('button.placeHolderTitle')}
               validationError={errors.title}
               watch={watch}
               setValue={setValue}
@@ -103,7 +103,7 @@ export default function ButtonForm({
             <FieldTextArea
               label={t('button.description')}
               name="description"
-              placeholder={t('button.place_holder_description')}
+              placeholder={t('button.placeHolderDescription')}
               validationError={errors.description}
               classNameExtra="squared"
               watch={watch}

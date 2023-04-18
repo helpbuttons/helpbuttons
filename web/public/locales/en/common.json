@@ -37,7 +37,8 @@
     "publish": "Publish",
     "save": "Save",
     "reset": "Reset",
-    "done": "Done"
+    "done": "Done",
+    "saveSuccess": "{0} saved"
   },
   "button": {
     "type": "Please choose which kind of button you would like to created",
@@ -48,7 +49,9 @@
     "where": "Where ?",
     "changePlace": "Change place",
     "when": "When ?",
-    "changeDate": "Change date"
+    "changeDate": "Change date",
+    "placeHolderTitle": "button.placeHolderTitle",
+    "placeHolderDescription": "button.placeHolderDescription"
   },
   "calendarOnce": {
     "pickday": "Pick a day",
@@ -56,10 +59,16 @@
     "label": "Once"
   },
   "calendarAlways": {
-    "label": "Always"
+    "label": "calendarAlways.Always"
   },
   "validation": {
-   "fieldRequired": "{0} is required.",
-   "tooShort": "{0} is too short."
+    "fieldRequired": "{0} is required.",
+    "tooShort": "{0} is too short."
+  },
+  "post": {
+    "comment": "comment",
+    "newComment": "+Comment",
+    "write": "Post a new status",
+    "placeholderWrite": "what are you thinking?"
   }
 }
