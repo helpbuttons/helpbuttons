@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { Role } from 'shared/types/roles';
 import { useRef } from 'store/Store';
 import { SetupSteps } from '../../../shared/setupSteps';
+import t from 'i18n';
 
 export default FirstOpen;
 
@@ -36,21 +37,16 @@ function FirstOpen() {
   return (
     <>
       {loggedInUser?.role == Role.admin && (
-        <Popup title="WELCOME TO YOUR HELPBUTTONS INSTANCE">
+        <Popup title={t('setup.welcomeMessage')}>
           <Form classNameExtra="createAdmin">
             <div className="form__btn-wrapper">
               <div>
-                <p>
-                  Here you´ll see your collaborative network
-                  description.{' '}
-                </p>
-                <p>
-                  Create your first network with the options bellow.
-                </p>
+                {t('setup.welcomeMessageLong')}
+                
               </div>
               <Btn
                 btnType={BtnType.splitIcon}
-                caption="NEXT"
+                caption={t('common.next')}
                 contentAlignment={ContentAlignment.center}
                 isSubmitting={isSubmitting}
                 onClick={handleSubmit(onSubmit)}
