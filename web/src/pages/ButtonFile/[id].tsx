@@ -32,7 +32,7 @@ export default function ButtonFile() {
             console.log('button loaded');
           },
           (errorMessage) => {
-            alertService.error(errorMessage);
+            alertService.error(errorMessage.caption);
           },
         ),
       );

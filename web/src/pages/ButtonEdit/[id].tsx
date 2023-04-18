@@ -70,7 +70,7 @@ export default function ButtonEdit() {
     });
   };
 
-  const onError = (errorMessage) => alertService.error(errorMessage)
+  const onError = (errorMessage) => alertService.error(errorMessage.caption)
 
   useEffect(() => {
     if (id != null) {
@@ -82,7 +82,7 @@ export default function ButtonEdit() {
             reset(buttonFetched);
           },
           (errorMessage) => {
-            alertService.error(errorMessage);
+            alertService.error(errorMessage.caption);
           },
         ),
       );

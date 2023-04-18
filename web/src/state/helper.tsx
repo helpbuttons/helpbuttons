@@ -12,9 +12,9 @@ export function handleError(onError, error) {
       return (err.message == name && err.statusCode == status);
     });
     if (errorText && errorText.length > 0) {
-      onError(errorText[0].caption);
+      onError({caption: errorText[0].caption, errorName: err.message});
     } else {
-      console.error(error)
+      console.error(`could not find error "${err.message}" [${err.statusCode}] `)
       onError(error.message);
     }
   }

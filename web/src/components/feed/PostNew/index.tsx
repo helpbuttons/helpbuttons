@@ -27,7 +27,7 @@ export default function PostNew({ buttonId, reloadPosts }) {
           setValue('message', '')
           reloadPosts()
         },
-        (errorMessage) => alertService.error(errorMessage),
+        (errorMessage) => alertService.error(errorMessage.caption),
       ),
     );
   };

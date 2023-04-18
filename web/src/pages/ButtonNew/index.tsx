@@ -8,6 +8,7 @@ import { alertService } from 'services/Alert';
 import { useForm } from 'react-hook-form';
 import router from 'next/router';
 import { defaultMarker } from 'shared/sys.helper';
+import { ErrorName } from 'shared/types/error.list';
 
 export default function ButtonNew() {
   const {
@@ -37,7 +38,7 @@ export default function ButtonNew() {
       title: '',
       radius: 1,
       address: '',
-      when: {dates: [], type: null}
+      when: { dates: [], type: null },
     },
   });
 
@@ -47,31 +48,31 @@ export default function ButtonNew() {
   );
   const onSubmit = (data) => {
     store.emit(
-      new CreateButton(data, selectedNetwork.id, 
-        onSuccess({lat: data.latitude, lng: data.longitude}), 
-        onError),
+      new CreateButton(
+        data,
+        selectedNetwork.id,
+        onSuccess({ lat: data.latitude, lng: data.longitude }),
+        onError,
+      ),
     );
   };
 
-    const onSuccess = (location: {lat: number, lng: number}) => {
+  const onSuccess = (location: { lat: number; lng: number }) => {
     router.push({
       pathname: '/Explore',
       query: location,
     });
   };
-
-  const onError = (err, data) => {
-    console.log('fail creating button')
-    if (err == 'unauthorized') {
-      alertService.error('You need to login or registering an account');
+  const onError = (err) => {
+    if (err.errorName == ErrorName.NeedToBeRegistered) {
+      alertService.error(err.caption);
       Router.push({
-        pathname: '/Login',
-        query: { returnUrl: 'ButtonNew' },
+            pathname: '/Login',
+            query: { returnUrl: 'ButtonNew' },
       });
-    } else {
-      alertService.error(err);
     }
   };
+
   return (
     <>
       <ButtonForm

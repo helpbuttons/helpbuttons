@@ -28,7 +28,7 @@ export default function Feed({ button }: { button: Button }) {
       new LoadPosts(
         buttonId,
         (posts) => setPosts(posts),
-        (errorMessage) => alertService.error(errorMessage),
+        (errorMessage) => alertService.error(errorMessage.caption),
       ),
     );
   };
