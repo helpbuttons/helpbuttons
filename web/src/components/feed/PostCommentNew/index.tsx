@@ -27,7 +27,7 @@ export default function PostCommentNew({ postId, onSubmit }) {
           console.log('reload posts..');
           onSubmit();
         },
-        (errorMessage) => alertService.error(errorMessage),
+        (errorMessage) => alertService.error(errorMessage.caption),
       ),
     );
   };

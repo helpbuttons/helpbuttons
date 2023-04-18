@@ -71,7 +71,7 @@ export default function Signup() {
     store.emit(new NavigateTo(returnUrl));
   };
   
-  const onError = (errorMessage) => alertService.error(errorMessage)
+  const onError = (errorMessage) => alertService.error(errorMessage.caption)
 
   const params: URLSearchParams = new URLSearchParams(router.query);
 

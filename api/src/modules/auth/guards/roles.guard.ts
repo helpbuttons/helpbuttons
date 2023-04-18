@@ -4,6 +4,8 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
+import { ErrorName } from '@src/shared/types/error.list';
 import { Role } from '@src/shared/types/roles';
 import { Observable } from 'rxjs';
 
@@ -32,6 +34,7 @@ export class RolesGuard implements CanActivate {
     if (requiredRoles.includes(userRole)) {
       return true;
     }
-    return false;
+    throw new CustomHttpException(ErrorName.NeedToBeRegistered);
+    
   }
 }

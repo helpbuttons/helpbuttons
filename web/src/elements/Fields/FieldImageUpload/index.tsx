@@ -5,6 +5,7 @@ import { useWatch } from 'react-hook-form';
 import ImageUploading from 'react-images-uploading';
 
 import FieldError from '../FieldError';
+import t from 'i18n';
 
 export const FieldImageUpload = React.forwardRef(({ name, label, width = 100, height = 100, alt = "", validationError, control, setValue}, ref) => {
 
@@ -61,7 +62,7 @@ export const FieldImageUpload = React.forwardRef(({ name, label, width = 100, he
                         onImageRemove(0);
                       }}
                     >
-                      Remove
+                      {t('common.remove')}
                     </button>
                   </div>
                 </>

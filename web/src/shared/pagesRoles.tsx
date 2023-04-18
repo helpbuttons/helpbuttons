@@ -18,7 +18,8 @@ export const allowedPathsPerRole =
     {
         role: Role.registered,
         paths: [
-            '/Profile'
+            '/Profile',
+            '/Activity'
         ]
     },
     {

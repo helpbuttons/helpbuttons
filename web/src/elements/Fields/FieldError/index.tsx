@@ -1,3 +1,8 @@
+import t from "i18n";
+
+const fieldName = (validationError) => {
+    return validationError.ref?.name ? validationError.ref.name : 'field' ;
+}
 export default function FieldError({
     validationError
 }) {
@@ -8,10 +13,10 @@ export default function FieldError({
         } else {
             switch (validationError.type) {
                 case "required":
-                    message = "This field is required";
+                    message = t('validation.fieldRequired' , [fieldName(validationError)]);
                     break;
                 case "minLength":
-                    message = "The value is too short";
+                    message = t('validation.tooShort' , [fieldName(validationError)]);
                     break;
                 // We can add more cases as we need them
             }

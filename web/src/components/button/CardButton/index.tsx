@@ -52,7 +52,7 @@ export function CardButtonHeadMedium({ button }) {
                 <ImageWrapper
                   imageType={ImageType.avatar}
                   src={button.owner.avatar}
-                  alt="Avatar"
+                  alt={button.title}
                 />
               </div>
             </div>

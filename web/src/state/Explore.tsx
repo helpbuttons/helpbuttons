@@ -98,16 +98,7 @@ export class CreateButton implements WatchEvent {
         new ButtonFound(buttonData),
         this.onSuccess();
       }),
-      catchError((error) => {
-        const err = error.response;
-
-        if (isHttpError(err) && err.statusCode  == HttpStatus.FORBIDDEN) {
-          this.onError('unauthorized')
-          store.emit(new SaveButtonDraft(this.button));
-          return of(undefined);
-        }
-        return handleError(this.onError,error)
-      })
+      catchError((error) => handleError(this.onError, error))
     );
   }
 }

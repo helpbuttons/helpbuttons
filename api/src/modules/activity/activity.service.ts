@@ -16,8 +16,6 @@ export class ActivityService {
   @OnEvent(ActivityEventName.NewButton)
   async notifyUser(payload: any) {
     
-    console.log('processing this data:')
-    console.log(payload.data)
     this.activityRepository.insert([{
       id: dbIdGenerator(),
       owner: payload.data.owner,

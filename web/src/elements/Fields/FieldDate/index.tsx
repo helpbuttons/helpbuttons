@@ -8,6 +8,7 @@ import {
   readableTimeLeftToDate,
 } from 'shared/date.utils';
 import DebugToJSON from 'elements/Debug';
+import t from 'i18n';
 
 export default function FieldDate({
   title,
@@ -33,7 +34,7 @@ export default function FieldDate({
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}
         >
-          Change date
+          {t('button.changeDate')}
         </div>
       </div>
       {showHideMenu && (
@@ -44,13 +45,13 @@ export default function FieldDate({
                 className="btn"
                 onClick={() => setDateType(DateTypes.ALWAYS_ON)}
               >
-                Always
+                {t('calendarAlways.label')}
               </div>
               <div
                 className="btn"
                 onClick={() => setDateType(DateTypes.ONCE)}
               >
-                Once
+                {t('calendarOnce.label')}
               </div>
               {/* <div
                 className="btn"
@@ -90,7 +91,7 @@ export default function FieldDate({
                 title={title}
               />
               <div className="btn" onClick={closeMenu}>
-                Done
+                {t('common.done')}
               </div>
               {dateType && (
               <div
@@ -99,7 +100,7 @@ export default function FieldDate({
                 setDateType(null);
               }}
             >
-              Reset
+              {t('common.reset')}
             </div>
             )}
             </>
@@ -117,7 +118,7 @@ export function ShowWhen({ when }) {
         <ShowDate
           dates={options?.dates}
           dateType={options?.type}
-          title={'Always'}
+          title={t('calendarAlways.label')}
         />
       )}
     </>
@@ -127,7 +128,7 @@ export function ShowDate({ dates, dateType, title }) {
   return (
     <div className="card-button__date">
       {(!dateType || !dates) && <>{title}</>}
-      {dateType == DateTypes.ALWAYS_ON && <>Always</>}
+      {dateType == DateTypes.ALWAYS_ON && <>{t('calendarAlways.label')}</>}
       {dateType == DateTypes.ONCE && dates && dates.length > 0 && (
         <>
           {`${readableDate(dates[0])} (${readableTimeLeftToDate(

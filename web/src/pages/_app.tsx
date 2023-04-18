@@ -23,6 +23,7 @@ import { allowedPathsPerRole } from '../shared/pagesRoles';
 import { Role } from 'shared/types/roles';
 import { isRoleAllowed } from 'shared/sys.helper';
 import { version } from 'shared/commit';
+import Loading from 'components/loading';
 
 export default appWithTranslation(MyApp);
 
@@ -206,8 +207,8 @@ function MyApp({ Component, pageProps }) {
             return <>NO BACKEND!!</>;
           }
 
-          return <div>Loading...</div>;
-        })()}
+          return <Loading/>;
+        })()}        
       </div>
     </>
   );

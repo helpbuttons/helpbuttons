@@ -4,13 +4,15 @@ import PostComments from 'components/feed/PostComments';
 import PostMessage from 'components/feed/PostMessage';
 import PostNew from 'components/feed/PostNew';
 import Dropdown from 'elements/Dropdown/DropDown';
+import t from 'i18n';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { alertService } from 'services/Alert';
+import { Button } from 'shared/entities/button.entity';
 import { LoadPosts } from 'state/Posts';
 import { useRef } from 'store/Store';
 
-export default function Feed({ buttonId, buttonOwnerId = -1 }) {
+export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
   const [showNewCommentDialog, setShowNewCommentDialog] =
     useState(false);
@@ -26,15 +28,15 @@ export default function Feed({ buttonId, buttonOwnerId = -1 }) {
       new LoadPosts(
         buttonId,
         (posts) => setPosts(posts),
-        (errorMessage) => alertService.error(errorMessage),
+        (errorMessage) => alertService.error(errorMessage.caption),
       ),
     );
   };
   useEffect(() => {
-    if (!posts && buttonId) {
-      reloadPosts(buttonId);
+    if (!posts && button && button.id) {
+      reloadPosts(button.id);
     }
-  }, [buttonId]);
+  }, [button]);
 
   // if (!feed && currentButton) {
   //   const singleFeedItem = {
@@ -72,26 +74,25 @@ export default function Feed({ buttonId, buttonOwnerId = -1 }) {
       {/* <div className="feed-selector">
         <Dropdown />
       </div> */}
-      {loggedInUser && buttonId  && buttonOwnerId == loggedInUser.id && (
-        <PostNew
-          buttonId={buttonId}
-          onSubmit={() => {
-            reloadPosts(buttonId);
-          }}
-        />
-      )}
+      {loggedInUser &&
+        button.id &&
+        button.owner.id == loggedInUser.id && (
+          <PostNew
+            buttonId={button.id}
+            reloadPosts={() => {
+              reloadPosts(button.id);
+            }}
+          />
+        )}
       &nbsp;
       <div className="feed-line"></div>
-
       <div className="feed-section">
         {posts &&
           posts.map((post, idx) => {
             return (
               <div className="feed-element" key={idx}>
-
-              <div className="card-notification card-notification--need">
-                <div className="card-notification__content">
-
+                <div className="card-notification card-notification--need">
+                  <div className="card-notification__content">
                     <div className="card-notification__text">
                       <PostMessage post={post} />
                       <div>
@@ -101,29 +102,31 @@ export default function Feed({ buttonId, buttonOwnerId = -1 }) {
                           }}
                         >
                           {post.comments.length > 0
-                            ? '+' +
-                              post.comments.length +
-                              ' comment' +
-                              (post.comments.length > 1 ? 's' : '')
+                            ? `+${post.comments.length} ${t(
+                                'post.comment',
+                              )}${
+                                post.comments.length > 1 ? 's' : ''
+                              }`
                             : ''}
                         </a>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {loggedInUser && (
                           <>
-                            <button class="btn-filter-with-icon"
+                            <button
+                              className="btn-filter-with-icon"
                               onClick={() => {
                                 setShowNewCommentDialog(
                                   !showNewCommentDialog,
                                 );
                               }}
                             >
-                              Leave comment +
+                              {t('post.newComment')}
                             </button>
                             {showNewCommentDialog && (
                               <PostCommentNew
                                 postId={post.id}
                                 onSubmit={() => {
-                                  reloadPosts(buttonId);
+                                  reloadPosts(button.id);
                                   setShowComments(true);
                                   setShowNewCommentDialog(false);
                                 }}
@@ -142,11 +145,7 @@ export default function Feed({ buttonId, buttonOwnerId = -1 }) {
               </div>
             );
           })}
-          {(posts && posts.length == 0) && 
-            <>
-            No posts here
-            </>
-          }
+        {!posts || posts.length == 0 && <>{t('common.notfound', ['posts'])}</>}
       </div>
     </div>
   );

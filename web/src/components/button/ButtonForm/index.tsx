@@ -18,6 +18,8 @@ import { GlobalState, store } from 'pages';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import { Network } from 'shared/entities/network.entity';
 import FieldDate from 'elements/Fields/FieldDate';
+import t from 'i18n';
+import { LoadabledComponent } from 'components/loading';
 
 export default function ButtonForm({
   onSubmit,
@@ -75,110 +77,108 @@ export default function ButtonForm({
   }, [buttonDraft, watch]);
 
   return (
-    <>
-    
-      {selectedNetwork ? (
-        <Popup title="Publish Button" linkFwd="/Explore">
-          <Form
-            onSubmit={handleSubmit(onSubmit)}
-            classNameExtra="publish_btn"
-          >
-            <div className="publish_btn-first">
-              <ButtonType
-                name="type"
-                {...register('type', { required: true })}
-                validationError={errors.type}
-              />
-              <FieldTextArea
-                name="title"
-                label="Title"
-                placeholder="Write a title for your button"
-                validationError={errors.title}
-                watch={watch}
-                setValue={setValue}
-                setFocus={setFocus}
-                {...register('title', { required: true })}
-              />
-              <FieldTextArea
-                label="Description:"
-                name="description"
-                placeholder="Write a description for your button"
-                validationError={errors.description}
-                classNameExtra="squared"
-                watch={watch}
-                setValue={setValue}
-                setFocus={setFocus}
-                {...register('description', {
-                  required: true,
-                  minLength: 10,
-                })}
-              />
+    <LoadabledComponent loading={!selectedNetwork}>
+      <Popup title="Publish Button" linkFwd="/Explore">
+        <Form
+          onSubmit={handleSubmit(onSubmit)}
+          classNameExtra="publish_btn"
+        >
+          <div className="publish_btn-first">
+            <ButtonType
+              name="type"
+              label={t('button.type')}
+              {...register('type', { required: true })}
+              validationError={errors.type}
+            />
+            <FieldTextArea
+              name="title"
+              label={t('button.title')}
+              placeholder={t('button.placeHolderTitle')}
+              validationError={errors.title}
+              watch={watch}
+              setValue={setValue}
+              setFocus={setFocus}
+              {...register('title', { required: true })}
+            />
+            <FieldTextArea
+              label={t('button.description')}
+              name="description"
+              placeholder={t('button.placeHolderDescription')}
+              validationError={errors.description}
+              classNameExtra="squared"
+              watch={watch}
+              setValue={setValue}
+              setFocus={setFocus}
+              {...register('description', {
+                required: true,
+                minLength: 10,
+              })}
+            />
 
-              {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
-              <FieldTags
-                label="Tag suggestions"
-                name="tags"
-                control={control}
-                validationError={errors.tags}
-                watch={watch}
+            {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
+            <FieldTags
+              name="tags"
+              label={t('button.tags')}
+              control={control}
+              validationError={errors.tags}
+              watch={watch}
+            />
+          </div>
+          <div className="publish_btn-scd">
+            <FieldImageUpload
+              name="image"
+              label={t('button.images')}
+              // width={55}
+              // height={125}
+              setValue={setValue}
+              control={control}
+              {...register('image', { required: true })}
+              validationError={errors.image}
+            />
+            <>
+              <FieldLocation
+                setMarkerPosition={([lat, lng]) => {
+                  setValue('latitude', lat);
+                  setValue('longitude', lng);
+                }}
+                setMarkerAddress={(address) => {
+                  setValue('address', address);
+                }}
+                setZoom={(zoom) => {
+                  setValue('zoom', zoom);
+                }}
+                markerZoom={watch('zoom')}
+                markerAddress={watch('address')}
+                markerImage={watch('image')}
+                markerCaption={watch('title')}
+                markerColor={markerColor}
+                markerPosition={[
+                  watch('latitude'),
+                  watch('longitude'),
+                ]}
+                selectedNetwork={selectedNetwork}
+                validationError={errors.location}
               />
-            </div>
-            <div className="publish_btn-scd">
-              <FieldImageUpload
-                name="image"
-                label="+ Add image"
-                // width={55}
-                // height={125}
-                setValue={setValue}
-                control={control}
-                {...register('image', { required: true })}
-                validationError={errors.image}
+              <FieldDate
+                dateType={watch('when.type')}
+                dates={watch('when.dates')}
+                setDateType={(value) => setValue('when.type', value)}
+                setDate={(value) => setValue('when.dates', value)}
+                title={t('button.when')}
               />
-              <>
-                <FieldLocation
-                  setMarkerPosition={([lat,lng]) => {
-                      setValue('latitude',lat)
-                      setValue('longitude',lng)
-                  }}
-                  setMarkerAddress={(address) => {
-                    console.log('new addresss' + address)
-                    setValue('address', address)
-                  }}
-                  setZoom={(zoom) => {
-                    setValue('zoom', zoom)
-                  }}
-                  markerZoom={watch('zoom')}
-                  markerAddress={watch('address')}
-                  markerImage={watch('image')}
-                  markerCaption={watch('title')}
-                  markerColor={markerColor}
-                  markerPosition={[watch('latitude'),watch('longitude')]}
-                  selectedNetwork={selectedNetwork}
-                  validationError={errors.location}
-                />
-                <FieldDate
-                  dateType={watch('when.type')}
-                  dates={watch('when.dates')}
-                  setDateType={(value) => setValue('when.type', value)}
-                  setDate={(value) => setValue('when.dates', value)}
-                  title="When ?"
-                />
-              </>
-              {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} /> */}
-              <ButtonShare />
-            </div>
-            <div className="publish__submit">
-              <FormSubmit
-                classNameExtra="create_btn"
-                title="Publish"
-                isSubmitting={isSubmitting}
-              />
-            </div>
-          </Form>
-        </Popup>
-      ) : (
-        <div>Loading network...</div>
-      )}
-    </>
+            </>
+            {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} /> */}
+            <ButtonShare />
+          </div>
+          <div className="publish__submit">
+            <FormSubmit
+              classNameExtra="create_btn"
+              title={t('common.publish')}
+              isSubmitting={isSubmitting}
+            />
+          </div>
+        </Form>
+      </Popup>
+    </LoadabledComponent>
   );
 }

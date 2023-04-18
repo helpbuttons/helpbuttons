@@ -85,7 +85,7 @@ export default function ProfileEdit() {
   };
 
   const onError = (errorMessage) => {
-    alertService.error(errorMessage);
+    alertService.error(errorMessage.caption);
   };
 
   useEffect(() => {

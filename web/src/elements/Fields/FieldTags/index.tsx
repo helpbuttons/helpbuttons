@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Controller, useFieldArray } from "react-hook-form";
 import FieldError from "../FieldError";
+import t from "i18n";
 
 export default function FieldTags({
   label,
@@ -76,7 +77,7 @@ export default function FieldTags({
         }`}
         onKeyDown={inputKeyDown}
         value={input}
-        placeholder="+Add"
+        placeholder={t('common.add')}
         autoComplete="off"
       />
       <FieldError validationError={validationError} />

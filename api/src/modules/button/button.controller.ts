@@ -66,8 +66,6 @@ export class ButtonController {
       images,
       user,
     ).then((button) => {
-      console.log('button is here:')
-      console.log(button)
       emitActivity(this.eventEmitter,ActivityEventName.NewButton, button)
       return button;
     });

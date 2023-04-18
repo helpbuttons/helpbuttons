@@ -73,7 +73,7 @@ export default function FieldLocation({
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}
         >
-          Change place
+          {t('button.changePlace')}
         </div>
       </div>
 
@@ -100,7 +100,7 @@ export default function FieldLocation({
             />
             <Btn
               btnType={BtnType.splitIcon}
-              caption="Save"
+              caption={t('common.save')}
               contentAlignment={ContentAlignment.center}
               onClick={() => setHideMenu(!showHideMenu)}
             />
@@ -131,7 +131,7 @@ function LocationCoordinates({
           {/* (radius: ${radius} km) */}
         </>
         :
-        'Where ?'
+        <>{t('button.where')}</>
       }
     </div>
   );

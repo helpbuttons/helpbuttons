@@ -9,7 +9,8 @@
   },
   "homeinfo": {
     "start": "Where do you start?",
-    "searchlocation": "Search location"
+    "searchlocation": "Search location",
+    "loading": "not set"
   },
   "feed": {
     "write": "Write message"
@@ -17,8 +18,57 @@
   "explore": {
     "emptyList": "Please browse the map to find more buttons"
   },
-  "picker-specific-date": {
-    "pickday": "Choose a day",
-    "picktime": "From..."
+  "setup": {
+    "hostname": "Hostname",
+    "postgresUser": "Postgresql user",
+    "postgresPassword": "Postgresql password",
+    "postgresDb": "Postgresql database name",
+    "postgresHostName": "Postgresql HostName",
+    "postgresPort": "Postgresql Port",
+    "smtpUrl": "Smtp url"
+  },
+  "activities": {
+    "newbutton": "You created this <a href={0}>button</a> was created in <a href={`/Explore/?latitude={1}&longitude={2}`}>{3}</a>"
+  },
+  "common": {
+    "notfound": "No {0} found. Sorry. 🤔",
+    "add": "Add",
+    "remove": "Remove",
+    "publish": "Publish",
+    "save": "Save",
+    "reset": "Reset",
+    "done": "Done",
+    "saveSuccess": "{0} saved"
+  },
+  "button": {
+    "type": "Please choose which kind of button you would like to created",
+    "title": "Title",
+    "description": "Description",
+    "tags": "Related interests",
+    "images": "Images",
+    "where": "Where ?",
+    "changePlace": "Change place",
+    "when": "When ?",
+    "changeDate": "Change date",
+    "placeHolderTitle": "button.placeHolderTitle",
+    "placeHolderDescription": "button.placeHolderDescription"
+  },
+  "calendarOnce": {
+    "pickday": "Pick a day",
+    "picktime": "Pick a time",
+    "label": "Once"
+  },
+  "calendarAlways": {
+    "label": "calendarAlways.Always"
+  },
+  "validation": {
+    "fieldRequired": "{0} is required.",
+    "tooShort": "{0} is too short."
+  },
+  "post": {
+    "comment": "comment",
+    "newComment": "+Comment",
+    "write": "Post a new status",
+    "placeholderWrite": "what are you thinking?"
   }
 }
