@@ -35,14 +35,15 @@ const syncTranslations = (foundTranslations) => {
           localesToUpdate.push(locale)
         }
         console.log(`Adding new ${foundTranslation} to ${locale}`)
-        _.set(translations, foundTranslation, 'not set');
+        _.set(translations, foundTranslation, foundTranslation);
       }
       return {locale, translations}
     })
   });
 
   allTranslations.forEach(({locale, translations}) => {
-    if(locale.indexOf(localesToUpdate)){
+    // only save en language, so that weblate updates if index is not found
+    if(locale.indexOf(localesToUpdate) && locale == 'en'){
       console.log(`saving ${locale}`)
       saveTranslatioFile(locale,translations)
     }
@@ -52,12 +53,12 @@ const syncTranslations = (foundTranslations) => {
 
 const getTranslations = () => {
   exec(
-    `grep -ro {t\\(\\'[a-zA-Z]*\\.[a-zA-Z]*\\'\\)} ../src/ | cut -f 2 -d:`,
+    `grep -ro {t\\(\\'[a-zA-Z]*\\.[a-zA-Z]*\\' ../src/ | cut -f 2 -d:`,
     (error, stdout, stderr) => {
       const strings = stdout.split('\n');
       let searchingTranslations = strings.map((value) => {
         value = value.replaceAll("{t('", '');
-        value = value.replaceAll("')}", '');
+        value = value.replaceAll("'", '');
         return value;
       });
       searchingTranslations = searchingTranslations.filter(

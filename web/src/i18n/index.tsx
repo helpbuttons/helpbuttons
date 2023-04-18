@@ -1,4 +1,5 @@
 import { getLocale } from 'shared/sys.helper';
+import ReactHtmlParser from 'react-html-parser';
 
 export const translations = [
   {
@@ -10,18 +11,30 @@ export const translations = [
     translations: require('../../public/locales/es/common.json'),
   },
 ];
-export default function t(key: string, defaultValue: string = '') {
+export default function t(key: string, args: string[] = []) {
   const availableLocales = translations.map(({locale, translations}) => {
     return locale;
   })
   const locale = getLocale(availableLocales);
 
-  const translatedString = getTranslation(locale, key);
+  let translatedString = getTranslation(locale, key);
   if (translatedString === false || !translatedString) {
-    return defaultValue;
+    translatedString = getTranslation('en', key)
   }
 
-  return translatedString;
+  if (args && args.length > 0) {
+    translatedString = format(translatedString, args)
+  }
+  return ReactHtmlParser(translatedString);
+}
+
+function format(string, args) {
+    return string.replace(/{(\d+)}/g, function(match, number) {
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    })
 }
 
 function getTranslation(locale, key) {

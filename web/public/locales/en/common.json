@@ -21,5 +21,20 @@
   "picker-specific-date": {
     "pickday": "Choose a day",
     "picktime": "From..."
+  },
+  "setup": {
+    "hostname": "setup.hostname",
+    "postgresUser": "setup.postgresUser",
+    "postgresPassword": "setup.postgresPassword",
+    "postgresDb": "setup.postgresDb",
+    "postgresHostName": "setup.postgresHostName",
+    "postgresPort": "setup.postgresPort",
+    "smtpUrl": "setup.smtpUrl"
+  },
+  "activities": {
+    "newbutton": "You created this <a href={0}>button</a> was created in <a href={`/Explore/?latitude={1}&longitude={2}`}>{3}</a>"
+  },
+  "common": {
+    "notfound": "No {0} found. Sorry. 🤔"
   }
 }

@@ -1,29 +1,24 @@
 //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
-import DebugToJSON from 'elements/Debug';
-import Dropdown from 'elements/Dropdown/DropDown';
 import CardNotification from '../../components/feed/CardNotification'
+import t from 'i18n';
 
 export default function FeedProfile({activities}) {
   return (
 
     <div className="feed-container">
-
-      {/* <div className="feed-selector">
-
-          <Dropdown/>
-
-      </div> */}
       <div className="feed-line"></div>
 
       <div className="feed-section">
 
-        {activities.map((activity) => {
+        {activities && activities.map((activity, key) => {
           return (
-          <div className="feed-element">
+          <div className="feed-element" key={key}>
             <CardNotification activity={activity}/>
           </div>)
         })}
-        
+        {(!activities || activities.length < 1) && 
+          (<div className="feed-element">{t('common.notfound', ['activities'])}</div>)
+        }
       </div>
 
     </div>

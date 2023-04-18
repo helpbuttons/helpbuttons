@@ -135,7 +135,7 @@ export default function SysadminConfig() {
             <div className="publish_setup-first">
               <FieldText
                 name="hostname"
-                label={`${t('hostname', 'Hostname')}:`}
+                label={`${t('setup.hostname')}:`}
                 placeholder="localhost"
                 validationError={errors.description}
                 classNameExtra="squared"
@@ -150,64 +150,49 @@ export default function SysadminConfig() {
               />
               <FieldText
                 name="postgresUser"
-                label={`${t('postgresUser', 'postgresql username')}:`}
+                label={`${t('setup.postgresUser')}`}
                 {...register('postgresUser')}
               ></FieldText>
               <FieldText
                 name="postgresPassword"
-                label={`${t(
-                  'postgresPassword',
-                  'postgresql password',
-                )}:`}
+                label={`${t('setup.postgresPassword')}`}
                 {...register('postgresPassword')}
               ></FieldText>
               <FieldText
                 name="postgresDb"
-                label={`${t(
-                  'postgresDb',
-                  'postgresql database name',
-                )}:`}
+                label={`${t('setup.postgresDb')}`}
                 {...register('postgresDb')}
               ></FieldText>
 
               <FieldText
                 name="postgresHostName"
-                label={`${t(
-                  'postgresHostName',
-                  'postgresql hostname',
-                )}:`}
+                label={`${t('setup.postgresHostName')}:`}
                 {...register('postgresHostName')}
               ></FieldText>
 
               <FieldText
                 name="postgresPort"
-                label={`${t('postgresPort', 'postgresql port')}:`}
+                label={`${t('setup.postgresPort')}:`}
                 {...register('postgresPort')}
               ></FieldText>
 
               <FieldText
                 name="smtpUrl"
-                label={`${t('smtpUrl', 'SMTP url')}:`}
+                label={`${t('setup.smtpUrl')}:`}
                 {...register('smtpUrl')}
               ></FieldText>
             </div>
             <div className="form__btn-wrapper">
               <Btn
                 btnType={BtnType.splitIcon}
-                caption={t(
-                  'test-smtp-button',
-                  'Test smtp connection',
-                )}
+                caption={t('setup.test-smtp-button')}
                 contentAlignment={ContentAlignment.center}
                 isSubmitting={isSubmitting}
                 onClick={handleSubmit(onSmtpTest)}
               />
               <Btn
                 btnType={BtnType.splitIcon}
-                caption={t(
-                  'connect-db-save-config',
-                  'Test database connection, save configuration and continue',
-                )}
+                caption={t('setup.connect-db-save-config')}
                 contentAlignment={ContentAlignment.center}
                 isSubmitting={isSubmitting}
                 onClick={handleSubmit(onSubmit)}

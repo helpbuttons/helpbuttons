@@ -10,13 +10,14 @@ import { makeImageUrl } from 'shared/sys.helper';
 import { Network } from 'shared/entities/network.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
+import t from 'i18n';
 
 export default function CardNotification({ activity = {} }) {
   const notification = (activity) => {
-    if(activity.button) {
+    if(activity.eventName == ActivityEventName.NewButton) {
       return (
         <ButtonNotification
-          button={activity.button}
+          button={activity.data}
           action={activity.eventName}
         />
       )
@@ -90,7 +91,7 @@ export function ButtonNotification({
               <ImageWrapper
                 imageType={ImageType.avatar}
                 src={makeImageUrl(button.image)}
-                alt="Avatar"
+                alt={button.title}
               />
             </div>
 {/* 
@@ -106,8 +107,9 @@ export function ButtonNotification({
               </div>
             </div>
             <h2 className="card-notification__title">
-              You created this <a href={`/ButtonFile/${button.id}`}>button</a> was
-              created in <a href={`/Explore/?latitude=${button.latitude}&longitude=${button.longitude}`}>{button.address}</a>
+            { t('activities.newbutton', [button.id, button.latitude.toString(), button.longitude.toString(), button.address]) }
+              {}
+              
             </h2>
             <div className="card-notification__paragraph"></div>
           </div>
