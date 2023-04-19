@@ -116,7 +116,7 @@ function NetworkForm({
                 />
              
               <FieldTags
-                label={t('common.tags')}
+                label={t('configuration.tags')}
                 placeholder={t('common.add')}
                 validationError={errors.tags}
                 setTags={(tags) => {
