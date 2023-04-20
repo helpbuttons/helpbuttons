@@ -85,7 +85,21 @@
     "passwordPlaceHolder": "Type your password",
     "passwordConfirmation": "Password confirmation",
     "passwordConfirmationPlaceHolder": "Type your password again please",
-    "passwordMismatch": "passwords won't match"
+    "newPassword": "Type your new password",
+    "newPasswordPlaceHolder": "Your new password",
+    "passwordMismatch": "passwords won't match",
+    "loginButton": "ENTER",
+    "noAccount": "I don&apos;t have an account",
+    "tags": "Related interests",
+    "description": "Description",
+    "editProfile": "Edit profile",
+    "name": "Profile name",
+    "namePlaceHolder": "Name",
+    "avatar": "Choose avatar",
+    "setNewPassword": "set a new password",
+    "dontChangePassword": "Don't change password",
+    "logout": "Logout",
+    "deactivate": "Deactivate Account"
   },
   "calendarOnce": {
     "pickday": "Pick a day",

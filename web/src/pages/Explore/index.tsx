@@ -21,6 +21,7 @@ import { Button } from 'shared/entities/button.entity';
 import { Bounds, Point } from '../../../pigeon-maps';
 import { filter, Subject } from 'rxjs';
 import { current } from 'immer';
+import { LoadabledComponent } from 'components/loading';
 
 interface ButtonFilters {
   showButtonTypes: string[];
@@ -190,7 +191,8 @@ function Explore({ router }) {
 
   return (
     <>
-      {selectedNetwork && mapZoom > 0 && mapCenter && (
+    <LoadabledComponent loading={!(selectedNetwork && mapZoom > 0 && mapCenter)}>
+      
         <div className="index__container">
           <div
             className={
@@ -217,7 +219,7 @@ function Explore({ router }) {
             handleBoundsChange={handleBoundsChange}
           />
         </div>
-      )}
+        </LoadabledComponent>
     </>
   );
 }

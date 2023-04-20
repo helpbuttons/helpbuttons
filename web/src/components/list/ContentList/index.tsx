@@ -11,7 +11,7 @@ export default function ContentList ({buttons, ...props}) {
   if (buttons.length < 1) {
     return (
       <>
-        {t('explore.emptyList', 'Please browse the map to find more buttons')}
+        {t('explore.emptyList')}
       </>
     );
   }
