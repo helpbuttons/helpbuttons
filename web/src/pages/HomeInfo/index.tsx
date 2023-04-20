@@ -12,14 +12,14 @@ import {
   IoLogInOutline,
 } from 'react-icons/io5';
 import { getHostname } from 'shared/sys.helper';
-import { NetworkDto } from 'shared/dtos/network.dto';
-import { SetupDto } from 'shared/entities/setup.entity';
+import { SetupDtoOut } from 'shared/entities/setup.entity';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { useEffect, useState } from 'react';
 import { updateExploreMapZoom, updateMapCenter } from 'state/Explore';
+import { Network } from 'shared/entities/network.entity';
 
 export default function HomeInfo() {
-  const selectedNetwork: NetworkDto = useRef(
+  const selectedNetwork: Network = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
@@ -33,7 +33,7 @@ export default function HomeInfo() {
     (state: GlobalState) => state.loggedInUser,
   );
 
-  const config: SetupDto = useRef(
+  const config: SetupDtoOut = useRef(
     store,
     (state: GlobalState) => state.config,
   );
@@ -83,7 +83,7 @@ export default function HomeInfo() {
               {navigatorCoordinates && 
               <div className="card">
                 <div className="card__header">
-                  <h3 className="card__header-title">Do you want to navigate to check buttons in your region? <a href={`/Explore?lat=${navigatorCoordinates.latitude}&lng=${navigatorCoordinates.longitude}&zoom=13`}>Click here</a></h3>
+                  <h3 className="card__header-title">{t('homeinfo.locationDetected')}<a href={`/Explore?lat=${navigatorCoordinates.latitude}&lng=${navigatorCoordinates.longitude}&zoom=13`}>{t('common.click')}</a></h3>
                 </div>
               </div>
               }
@@ -108,14 +108,14 @@ export default function HomeInfo() {
               <div className="card">
                 <div className="card__header">
                   <h3 className="card__header-title">
-                    Network Stats
+                    {t('homeinfo.stats')}
                   </h3>
                 </div>
                 <div className="info-overlay__description">
-                  <div># Buttons {config.buttonCount}</div>
-                  <div># Active Users {config.userCount}</div>
+                  <div>{t('homeinfo.buttons', [config.buttonCount.toString()])}</div>
+                  <div>{t('homeinfo.users', [config.userCount.toString()])}</div>
                   <div>
-                    Administered by:
+                    {t('homeinfo.administeredby')}
                     <NavLink
                       href={`/Profile/${selectedNetwork.administrator.username}`}
                     >
@@ -129,7 +129,7 @@ export default function HomeInfo() {
               </div>
               <div className="card">
                 <div className="card__header">
-                  <h3 className="card__header-title">Actions</h3>
+                  <h3 className="card__header-title">{t('homeinfo.actions')}</h3>
                 </div>
                 <div>
                   <NavLink href="/Explore">
@@ -138,7 +138,7 @@ export default function HomeInfo() {
                       {t('menu.explore')}
                     </span>
                   </NavLink>
-                  - See & Search the buttons on this map
+                  <p>{t('homeinfo.exploreSubtitle')}</p>
                 </div>
                 <div>
                   <NavLink href="/ButtonNew">
@@ -147,7 +147,7 @@ export default function HomeInfo() {
                       {t('menu.create')}
                     </span>
                   </NavLink>
-                  - Create your buttons and collaborate
+                  <p>{t('homeinfo.createSubtitle')}</p>
                 </div>
                 <div>
                   <NavLink href="/Explore">
@@ -156,22 +156,8 @@ export default function HomeInfo() {
                       {t('menu.faqs')}
                     </span>
                   </NavLink>
-                  - See all the info available about this app
+                  <p>{t('homeinfo.faqsSubtitle')}</p>
                 </div>
-
-                {/* <div>
-                  <NavLink
-                    href="/Explore"
-                    className="nav-bottom__link"
-                  >
-                    <span>
-                      <IoGlobeOutline />
-                      {t('menu.explore')}
-                    </span>
-                  </NavLink>
-                  - See & Search the buttons on this map
-                </div> */}
-
                 {currentUser && (
                   <>
                     <div>
@@ -181,7 +167,7 @@ export default function HomeInfo() {
                           {t('menu.profile')}
                         </span>
                       </NavLink>
-                      - Check your profile
+                      <p>{t('homeinfo.profileSubtitle')}</p>
                     </div>
                   </>
                 )}
@@ -193,7 +179,7 @@ export default function HomeInfo() {
                         {t('menu.login')}
                       </span>
                     </NavLink>
-                    - Enter or create your account!
+                    <p>{t('homeinfo.loginSubtitle')}</p>
                   </div>
                 )}
               </div>

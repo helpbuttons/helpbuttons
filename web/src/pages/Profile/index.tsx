@@ -12,6 +12,7 @@ import { IoAlarm, IoHammerOutline, IoLogOutOutline } from 'react-icons/io5';
 import Btn, { IconType } from 'elements/Btn';
 import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
+import t from 'i18n';
 
 export default function Profile() {
 
@@ -47,7 +48,7 @@ export default function Profile() {
                   <Btn
                     iconLeft={IconType.svg}
                     iconLink={<IoHammerOutline />}
-                    caption="Edit profile"
+                    caption={t('user.editProfile')}
                   />
                 </Link>
                 <Link href="/Explore">
@@ -56,7 +57,7 @@ export default function Profile() {
                       <IoLogOutOutline />
                     </div>
                     <span className="btn-with-icon__text">
-                      Logout
+                      {t('user.logout')}
                     </span>
                   </div>
                 </Link>
@@ -67,7 +68,7 @@ export default function Profile() {
                       <Btn
                         iconLeft={IconType.svg}
                         iconLink={<IoHammerOutline />}
-                        caption="Administration"
+                        caption={t('configuration.title')}
                       />
                     </Link>
                   </div>
@@ -78,7 +79,7 @@ export default function Profile() {
                       <IoAlarm />
                     </div>
                     <span className="btn-with-icon__text">
-                      Deactivate Account
+                      {t('user.deactivate')}
                     </span>
                   </div>
                 </Link>

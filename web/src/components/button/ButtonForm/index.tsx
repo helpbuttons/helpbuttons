@@ -33,6 +33,7 @@ export default function ButtonForm({
   setValue,
   setFocus,
   isSubmitting,
+  title,
 }) {
   const selectedNetwork: Network = useRef(
     store,
@@ -78,7 +79,7 @@ export default function ButtonForm({
 
   return (
     <LoadabledComponent loading={!selectedNetwork}>
-      <Popup title="Publish Button" linkFwd="/Explore">
+      <Popup title={title} linkFwd="/Explore">
         <Form
           onSubmit={handleSubmit(onSubmit)}
           classNameExtra="publish_btn"
@@ -117,11 +118,13 @@ export default function ButtonForm({
 
             {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
             <FieldTags
-              name="tags"
               label={t('button.tags')}
-              control={control}
+              placeholder={t('common.add')}
               validationError={errors.tags}
-              watch={watch}
+              setTags={(tags) => {
+                setValue('tags', tags)
+              }}
+              tags={watch('tags')}
             />
           </div>
           <div className="publish_btn-scd">

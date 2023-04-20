@@ -1,5 +1,6 @@
 import NetworkForm from 'components/network/NetworkForm';
 import Popup from 'components/popup/Popup';
+import t from 'i18n';
 import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import Configuration from 'pages/Configuration';
@@ -28,8 +29,7 @@ function NetworkCreation() {
   } = useForm({
     defaultValues: {
       name: '',
-      description:
-        '',
+      description: '',
       logo: '',
       jumbo: '',
       tags: [],
@@ -60,16 +60,18 @@ function NetworkCreation() {
           logo: data.logo,
           jumbo: data.jumbo,
           zoom: data.zoom,
-          address: data.address
+          address: data.address,
         },
         () => {
           const onComplete = () => {
-            alertService.info(
-              'done!, your network should be on the db',
-            );
+            alertService.info(t('common.saveSuccess', ['instance']));
             router.replace('/HomeInfo');
           };
-          store.emit(new FetchDefaultNetwork(onComplete, (error) => {console.log(error)}));
+          store.emit(
+            new FetchDefaultNetwork(onComplete, (error) => {
+              console.log(error);
+            }),
+          );
         },
         (err) => {
           if (err?.message.indexOf('validation-error') === 0) {
@@ -81,7 +83,10 @@ function NetworkCreation() {
               const mimetype = err.validationErrors.jumbo.substr(
                 mimetypeError.length,
               );
-              const mimetypeErrorMessage = `invalid image mimetype: "${mimetype}"`;
+              const mimetypeErrorMessage = t(
+                'common.invalidMimeType',
+                ['jumbo', mimetype],
+              );
               setError('jumbo', {
                 type: 'custom',
                 message: mimetypeErrorMessage,
@@ -93,7 +98,10 @@ function NetworkCreation() {
               const mimetype = err.validationErrors.logo.substr(
                 mimetypeError.length,
               );
-              const mimetypeErrorMessage = `invalid image mimetype: "${mimetype}"`;
+              const mimetypeErrorMessage = t(
+                'common.invalidMimeType',
+                ['logo', mimetype],
+              );
               setError('logo', {
                 type: 'custom',
                 message: mimetypeErrorMessage,
@@ -104,9 +112,6 @@ function NetworkCreation() {
               );
             }
           } else {
-            alertService.warn(
-              `You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`,
-            );
             console.log(err);
           }
         },
@@ -116,9 +121,9 @@ function NetworkCreation() {
   return (
     <>
       {loggedInUser?.role == Role.admin && (
-        <Popup title="Create your network">
+        <Popup title={t('setup.configureInstanceTitle')}>
           <NetworkForm
-            captionAction="Next"
+            captionAction={t('setup.finish')}
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
             register={register}
@@ -130,7 +135,7 @@ function NetworkCreation() {
             errors={errors}
             linkFwd="/Setup/NetworkCreation"
             showClose={false}
-            description="Wizard to help on configuring your network"
+            description={t('setup.configureInstanceDescription')}
           />
         </Popup>
       )}

@@ -10,7 +10,18 @@
   "homeinfo": {
     "start": "Where do you start?",
     "searchlocation": "Search location",
-    "loading": "not set"
+    "loading": "...",
+    "exploreSubtitle": "- See & Search the buttons on this map",
+    "createSubtitle": "- Create your buttons and collaborate",
+    "faqsSubtitle": "- See & Search the buttons on this map",
+    "profileSubtitle": "- Check your profile",
+    "loginSubtitle": "- Enter or create your account!",
+    "locationDetected": "Do you want to navigate to check buttons in your region?",
+    "stats": "Instance stats",
+    "buttons": "# {0} buttons in this instance",
+    "users": "# {0} users in this instance",
+    "administeredby": "Administered by ",
+    "actions": "Actions"
   },
   "feed": {
     "write": "Write message"
@@ -25,7 +36,13 @@
     "postgresDb": "Postgresql database name",
     "postgresHostName": "Postgresql HostName",
     "postgresPort": "Postgresql Port",
-    "smtpUrl": "Smtp url"
+    "smtpUrl": "Smtp url",
+    "createAdminTitle": "Create administrator account",
+    "welcomeMessage": "WELCOME TO YOUR HELPBUTTONS INSTANCE",
+    "welcomeMessageLong": "<p>Here you´ll see your collaborative network description.</p><p>Create your first network with the options bellow.</p>",
+    "finish": "Finish setup",
+    "configureInstanceDescription": "Wizard to help on configuring your network",
+    "configureInstanceTitle": "Setup the last details of your instance"
   },
   "activities": {
     "newbutton": "You created this <a href={0}>button</a> was created in <a href={`/Explore/?latitude={1}&longitude={2}`}>{3}</a>"
@@ -38,7 +55,13 @@
     "save": "Save",
     "reset": "Reset",
     "done": "Done",
-    "saveSuccess": "{0} saved"
+    "saveSuccess": "{0} saved",
+    "invalidMimeType": "{0} has invalid myme type ({1})",
+    "publishTitle": "Publish new {0}",
+    "editTitle": "Edit {0}",
+    "next": "Next",
+    "choose": "Choose {0}",
+    "click": "Click here"
   },
   "button": {
     "type": "Please choose which kind of button you would like to created",
@@ -53,13 +76,38 @@
     "placeHolderTitle": "button.placeHolderTitle",
     "placeHolderDescription": "button.placeHolderDescription"
   },
+  "user": {
+    "email": "Email",
+    "emailPlaceHolder": "email@example.tld",
+    "username": "Username",
+    "usernamePlaceHolder": "username",
+    "password": "Password",
+    "passwordPlaceHolder": "Type your password",
+    "passwordConfirmation": "Password confirmation",
+    "passwordConfirmationPlaceHolder": "Type your password again please",
+    "newPassword": "Type your new password",
+    "newPasswordPlaceHolder": "Your new password",
+    "passwordMismatch": "passwords won't match",
+    "loginButton": "ENTER",
+    "noAccount": "I don&apos;t have an account",
+    "tags": "Related interests",
+    "description": "Description",
+    "editProfile": "Edit profile",
+    "name": "Profile name",
+    "namePlaceHolder": "Name",
+    "avatar": "Choose avatar",
+    "setNewPassword": "set a new password",
+    "dontChangePassword": "Don't change password",
+    "logout": "Logout",
+    "deactivate": "Deactivate Account"
+  },
   "calendarOnce": {
     "pickday": "Pick a day",
     "picktime": "Pick a time",
     "label": "Once"
   },
   "calendarAlways": {
-    "label": "calendarAlways.Always"
+    "label": "Always"
   },
   "validation": {
     "fieldRequired": "{0} is required.",
@@ -70,5 +118,17 @@
     "newComment": "+Comment",
     "write": "Post a new status",
     "placeholderWrite": "what are you thinking?"
+  },
+  "configuration": {
+    "title": "Administrator settings",
+    "description": "You can modify different settings of your instance",
+    "namePlaceHolder": "Network of permaculture farmers from Vilanova",
+    "descriptionPlaceHolder": "Welcome to the network of sharing ...",
+    "privacySetPrivate": "Click here to set it up as a private network",
+    "privacySetPublic": "Click here to set it back to a public network",
+    "logo": "Logo",
+    "jumbo": "Jumbo",
+    "tags": "Related interests",
+    "tagsPlaceHolder": "Food, tools, toys..."
   }
 }

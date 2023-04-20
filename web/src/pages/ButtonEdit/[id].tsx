@@ -15,6 +15,7 @@ import { Button } from 'shared/entities/button.entity';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { UpdateButtonDto } from 'shared/dtos/button.dto';
+import t from 'i18n';
 
 export default function ButtonEdit() {
   const selectedNetwork = useRef(
@@ -103,6 +104,7 @@ export default function ButtonEdit() {
         setValue={setValue}
         isSubmitting={isSubmitting}
         onSubmit={onSubmit}
+        title={t('common.editTitle', ['button'])}
       ></ButtonForm>
     }
     </>

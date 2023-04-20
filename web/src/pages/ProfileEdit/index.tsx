@@ -31,6 +31,7 @@ import FieldPassword from 'elements/Fields/FieldPassword';
 import { getHostname } from 'shared/sys.helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
+import t from 'i18n';
 
 export default function ProfileEdit() {
   const {
@@ -71,8 +72,8 @@ export default function ProfileEdit() {
       // check passwords match.. send to backend
       if (dataToSubmit.password_new != dataToSubmit.password_new_confirm)
       {
-        setError('password_new',  { type: 'custom', message: "new passwords won\'t match"})
-        setError('password_new_confirm',  { type: 'custom', message: 'new passwords won\'t match'})
+        setError('password_new',  { type: 'custom', message: t('user.passwordMismatch')})
+        setError('password_new_confirm',  { type: 'custom', message: t('user.passwordMismatch')})
       }
     }
     
@@ -102,29 +103,29 @@ export default function ProfileEdit() {
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="login"
             >
-              <div>Edit my profile </div>
+              <div>{t('user.editProfile')} </div>
               {loggedInUser.username}@{getHostname()}
               <div className="login__form">
                 <div className="form__inputs-wrapper">
                   <FieldText
                     name="name"
-                    label="Profile name"
+                    label={t('user.name')}
                     classNameInput="squared"
-                    placeholder="Name"
+                    placeholder={t('user.namePlaceHolder')}
                     validationError={errors.email}
                     {...register('name', { required: true })}
                   ></FieldText>
                   <FieldText
                     name="email"
-                    label="Email"
+                    label={t('user.email')}
                     classNameInput="squared"
-                    placeholder="email@email.em"
+                    placeholder={t('user.emailPlaceHolder')}
                     validationError={errors.email}
                     {...register('email', { required: true })}
                   ></FieldText>
                   <FieldTextArea
                     name="description"
-                    label="Description"
+                    label={t('user.description')}
                     classNameInput="squared"
                     watch={watch}
                     setValue={setValue}
@@ -136,7 +137,7 @@ export default function ProfileEdit() {
                   150x150px
                   <FieldImageUpload
                     name="avatar"
-                    label="Choose avatar"
+                    label={t('user.avatar')}
                     control={control}
                     width={150}
                     height={150}
@@ -156,20 +157,20 @@ export default function ProfileEdit() {
                 <div className="form__btn-wrapper">
                 <div
                     className="btn"
-                    // onClick={() =>
-                    //   setSetNewPassword(!setNewPassword)
-                    // }                    
+                    onClick={() =>
+                      setSetNewPassword(!setNewPassword)
+                    }                    
                   >
-                    {!setNewPassword ? 'Set a new password': 'Don\'t change password' }
+                    {!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
                     
                   </div>
                 {setNewPassword && (
                     <>
                       <FieldPassword
                         name="password_current"
-                        label="Password"
+                        label={t('user.password')}
                         classNameInput="squared"
-                        placeholder="Type your current password"
+                        placeholder={t('user.passwordPlaceHolder')}
                         validationError={errors.password}
                         {...register('password_current', {
                           minLength: 8,
@@ -178,9 +179,9 @@ export default function ProfileEdit() {
 
                       <FieldPassword
                         name="password_new"
-                        label="New password confirmation"
+                        label={t('user.newPassword')}
                         classNameInput="squared"
-                        placeholder="Type your the new password you want"
+                        placeholder={t('user.newPasswordPlaceHolder')}
                         validationError={errors.password}
                         {...register('password_new', {
                           minLength: 8,
@@ -188,9 +189,9 @@ export default function ProfileEdit() {
                       ></FieldPassword>
                        <FieldPassword
                         name="password_new_confirm"
-                        label="New password confirmation"
+                        label={t('user.passwordPlaceHolder')}
                         classNameInput="squared"
-                        placeholder="Type your new password again please"
+                        placeholder={t('user.passwordConfirmationPlaceHolder')}
                         validationError={errors.password}
                         {...register('password_new_confirm', {
                           minLength: 8,
@@ -200,7 +201,7 @@ export default function ProfileEdit() {
                   )}
                   <Btn
                     btnType={BtnType.splitIcon}
-                    caption="Save"
+                    caption={t('common.save')}
                     contentAlignment={ContentAlignment.center}
                     isSubmitting={isSubmitting}
                   />

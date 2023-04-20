@@ -13,13 +13,11 @@ import { HttpStatus } from 'shared/types/http-status.enum';
 import { CreateAdmin } from 'state/Setup';
 import { useRef } from 'store/Store';
 import { SetupSteps } from '../../../shared/setupSteps';
+import t from 'i18n';
 
 export default CreateAdminForm;
 
 function CreateAdminForm() {
-  const errorMessageConfigJson = `Configuration config.json not found, please run the <a href='/Setup/SysadminConfig'>setup again</a>, or reload the server.`;
-  const warningMessageMigrations = `Please run migrations, before continuing <u><pre>$ docker-compose exec api yarn migration:run</pre></u>
-  Please click here to <a href='/Setup/CreateAdminForm'>reload</a>`;
   const {
     handleSubmit,
     formState: { errors, isSubmitting, isDirty, isValid },
@@ -75,7 +73,7 @@ function CreateAdminForm() {
   return (
     <>
       <Popup
-        title="Create Admin User"
+        title={t('setup.createAdminTitle')}
         linkFwd="/Setup/NetworkCreation"
       >
         <Form
@@ -96,7 +94,7 @@ function CreateAdminForm() {
           <div className="form__btn-wrapper">
             <Btn
               btnType={BtnType.splitIcon}
-              caption="NEXT"
+              caption={t('common.next')}
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}
               disabled={config?.databaseNumberMigrations < 1 && config?.administrator == null}

@@ -7,6 +7,7 @@ import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
+import t from 'i18n';
 import { useRouter } from 'next/router';
 import { getUrlOrigin } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
@@ -14,7 +15,7 @@ export default NetworkForm;
 
 const defaultMarker = { latitude: 41.687, longitude: -7.7406 };
 function NetworkForm({
-  captionAction = 'NEXT',
+  captionAction = t('common.save'),
   handleSubmit,
   onSubmit,
   register,
@@ -47,7 +48,7 @@ function NetworkForm({
               <FieldText
                 name="name"
                 label="Name"
-                placeholder="Network of permaculture farmers from Vilanova"
+                placeholder={t('configuration.namePlaceHolder')}
                 classNameInput="squared"
                 validationError={errors.name}
                 {...register('name', { required: true })}
@@ -55,7 +56,7 @@ function NetworkForm({
               <FieldTextArea
                 name="description"
                 label="Description"
-                placeholder="Welcome to the network of sharing ..."
+                placeholder={t('configuration.descriptionPlaceHolder')}
                 classNameInput="squared"
                 validationError={errors.description}
                 watch={watch}
@@ -66,15 +67,15 @@ function NetworkForm({
               <FieldPrivacy
                 name='privacy'
                 setValue={setValue}
-                textPrivate="Click here to set it up as a private network"
-                textPublic="Click here to set it back to a public network"
+                textPrivate={t('configuration.privacySetPrivate')}
+                textPublic={t('configuration.privacySetPublic')}
                 {...register('privacy', { required: true })}
               />
               400x400px
               
               <FieldImageUpload
                 name="logo"
-                label="Choose logo"                
+                label={t('configuration.logo')}
                 width={200}
                 height={200}
                 setValue={setValue}
@@ -85,7 +86,7 @@ function NetworkForm({
               1500x500px
               <FieldImageUpload
                 name="jumbo"
-                label="Choose background image"
+                label={t('configuration.jumbo')}
                 setValue={setValue}
                 width={750}
                 height={250}
@@ -115,12 +116,13 @@ function NetworkForm({
                 />
              
               <FieldTags
-                label="Network Tags"
-                placeholder="Food, tools, toys..."
-                name="tags"
-                control={control}
+                label={t('configuration.tags')}
+                placeholder={t('common.add')}
                 validationError={errors.tags}
-                watch={watch}
+                setTags={(tags) => {
+                  setValue('tags', tags)
+                }}
+                tags={watch('tags')}
               />
               <Btn
                 btnType={BtnType.splitIcon}

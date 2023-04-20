@@ -152,9 +152,6 @@ function MyApp({ Component, pageProps }) {
                   configuration.userCount < 1 &&
                   SetupSteps.CREATE_ADMIN_FORM != path
                 ) {
-                  alertService.error(
-                    `Need to create an admin account <a href="${SetupSteps.CREATE_ADMIN_FORM}">click here</a>`,
-                  );
                   router.push(SetupSteps.CREATE_ADMIN_FORM);
                 } else if (
                   loggedInUser &&

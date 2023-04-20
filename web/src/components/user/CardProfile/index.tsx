@@ -12,6 +12,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { IoHammerOutline } from "react-icons/io5";
 import UserAvatar from '../components';
 import { getHostname } from 'shared/sys.helper';
+import t from 'i18n';
 
 
 export default function CardProfile(props) {
@@ -72,10 +73,10 @@ export default function CardProfile(props) {
 
         <div className="card-profile__data">
         <div className="card-profile__tags grid-one__column-mid-element">
-              <div className="hashtag hashtag--yellow">tag</div>
+              <div className="hashtag hashtag--yellow">{t('user.tags')}</div>
             </div>
             <div className="card-profile__description grid-one__column-mid-element">
-              Descripcion
+              {t('user.description')}
             </div>
 
             {/* <div className="card-profile__phone grid-one__column-mid-element">

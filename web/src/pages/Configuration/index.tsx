@@ -1,5 +1,6 @@
 import NetworkForm from 'components/network/NetworkForm';
 import Popup from 'components/popup/Popup';
+import t from 'i18n';
 import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect } from 'react';
@@ -53,7 +54,7 @@ function Configuration() {
         const onComplete = (network) => {
           store.emit(new updateMapCenter(network.location.coordinates))
           store.emit(new updateExploreMapZoom(network.zoom))
-          alertService.info('done!, your network should be on the db')
+          alertService.info(t('common.saveSuccess', ['Configuration']))
           router.replace('/HomeInfo');
         }
         store.emit(new FetchDefaultNetwork(onComplete, (error) => {console.log(error)}));
@@ -65,12 +66,12 @@ function Configuration() {
         const mimetypeError = 'invalid-mimetype-';
         if(err?.validationErrors?.jumbo && err.validationErrors.jumbo.indexOf(mimetypeError) === 0 ){
             const mimetype = err.validationErrors.jumbo.substr(mimetypeError.length);
-            const mimetypeErrorMessage = `invalid image mimetype: "${mimetype}"`;
+            const mimetypeErrorMessage = t('common.invalidMimeType', ['jumbo',mimetype]);
             setError('jumbo',{ type: 'custom', message: mimetypeErrorMessage
           })
         }else if(err?.validationErrors?.logo && err.validationErrors.logo.indexOf(mimetypeError) === 0 ){
           const mimetype = err.validationErrors.logo.substr(mimetypeError.length);
-          const mimetypeErrorMessage = `invalid image mimetype: "${mimetype}"`;
+          const mimetypeErrorMessage = t('common.invalidMimeType', ['logo',mimetype]);
             setError('logo',{ type: 'custom', message: mimetypeErrorMessage
           })
         }else {
@@ -85,7 +86,7 @@ function Configuration() {
   return (
     <>
       {selectedNetwork && (
-        <Popup title="Configure network" LinkFwd="/Profile">
+        <Popup title={t('configuration.title')} LinkFwd="/Profile">
         <NetworkForm
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
@@ -96,9 +97,9 @@ function Configuration() {
           isSubmitting={isSubmitting}
           control={control}
           errors={errors}
-          captionAction="Save"
+          captionAction={t('common.save')}
           linkFwd="/Profile"
-          description=""
+          description={t('configuration.description')}
           selectedNetwork={selectedNetwork}
         />
         </Popup>

@@ -13,6 +13,7 @@ import FieldPassword from 'elements/Fields/FieldPassword';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { Link } from 'elements/Link';
 import { useRouter } from 'next/router';
+import t from 'i18n';
 
 export default function LoginForm() {
   const {
@@ -51,17 +52,17 @@ export default function LoginForm() {
         <div className="form__inputs-wrapper">
           <FieldText
             name="email"
-            label="Email"
+            label={t('user.email')}
             classNameInput="squared"
-            placeholder="email@email.em"
+            placeholder={t('user.emailPlaceHolder')}
             validationError={errors.email}
             {...register('email', { required: true })}
           ></FieldText>
           <FieldPassword
             name="password"
-            label="Password"
+            label={t('user.password')}
             classNameInput="squared"
-            placeholder="Type your password"
+            placeholder={t('user.passwordPlaceHolder')}
             validationError={errors.password}
             {...register('password', { required: true })}
           ></FieldPassword>
@@ -74,13 +75,13 @@ export default function LoginForm() {
         <div className="form__btn-wrapper">
           <Btn
             btnType={BtnType.splitIcon}
-            caption="ENTER"
+            caption={t('user.loginButton')}
             contentAlignment={ContentAlignment.center}
             isSubmitting={isSubmitting}
           />
           <div className="popup__link">
             <Link href={`/Signup?${params.toString()}`}>
-              I don&apos;t have an account
+              {t('user.noAccount')}
             </Link>
           </div>
         </div>
