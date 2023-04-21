@@ -7,7 +7,7 @@ import { UpdateEvent } from '../store/Event';
 
 import { alertService } from 'services/Alert';
 import { ButtonService } from 'services/Buttons';
-import { Bounds, Point } from '../../pigeon-maps';
+import { Bounds, Point } from 'pigeon-maps';
 import { of } from 'rxjs';
 import { isHttpError } from 'services/HttpService';
 import { GlobalState, store } from 'pages';
