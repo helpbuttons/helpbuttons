@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Map, ZoomControl } from '../../../../pigeon-maps';
-import { osm } from '../../../../pigeon-maps/providers';
+import { Map, ZoomControl } from 'pigeon-maps';
+import { osm } from 'pigeon-maps/providers';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton, MarkerButtonPopup } from './MarkerButton';
 import { store } from 'pages';
@@ -13,35 +13,38 @@ export default function ExploreMap(
       filteredButtons,
       currentButton,
       handleBoundsChange,
-      mapZoom,
-      mapCenter
+      mapDefaultZoom,
+      mapDefaultCenter
     }) {
   
-  const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
+      const [mapZoom,setMapZoom] = useState(mapDefaultZoom)
+    const [mapCenter, setMapCenter] = useState(mapDefaultCenter)
+
+    const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
+    
+    store.emit(new updateMapCenter(center));
+    store.emit(new updateExploreMapZoom(zoom));
+
+    setMapZoom(zoom)
+    setMapCenter(center)
+
     handleBoundsChange(bounds, center, zoom);
   };
 
   const handleMarkerClicked = (button: Button) => {
+    setMapCenter([button.latitude, button.longitude])
     store.emit(new updateMapCenter([button.latitude, button.longitude]))
     store.emit(new updateCurrentButton(button))
   }
   const handleMapClicked = ({ event, latLng, pixel }) => {
+    setMapCenter(latLng)
     store.emit(new updateMapCenter(latLng))
     store.emit(new updateCurrentButton(null))
   }
-  const mapRef = React.createRef();
-  useEffect(() => {
-    const handleWheel = (event) => {
-      const addToZoom = -event.deltaY / SCROLL_PIXELS_FOR_ZOOM_LEVEL
-      store.emit(new updateExploreMapZoom(mapZoom + addToZoom))
-    }
-    document.addEventListener('wheel', handleWheel);
-    return () => {
-      document.removeEventListener('wheel', handleWheel);
-    };
-  }, [mapZoom])
+  
   return (
     <>
+    {mapZoom}
         {(mapZoom && mapCenter) && 
           <Map
             center={mapCenter}
@@ -49,7 +52,7 @@ export default function ExploreMap(
             provider={osm}
             onBoundsChanged={onBoundsChanged}
             zoomSnap={true}
-            wheelEvents={false}
+            // wheelEvents={true}
             onClick={handleMapClicked}
           >
             <ZoomControl />

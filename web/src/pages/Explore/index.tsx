@@ -99,8 +99,6 @@ function Explore({ router }) {
           bounds: bounds,
         }),
       );
-
-      store.emit(new updateMapCenter(center));
     };
     getButtonsForBounds(bounds);
   };
@@ -212,8 +210,8 @@ function Explore({ router }) {
             />
           </div>
           <ExploreMap
-            mapCenter={mapCenter}
-            mapZoom={mapZoom}
+            mapDefaultCenter={mapCenter}
+            mapDefaultZoom={mapZoom}
             filteredButtons={filteredButtons}
             currentButton={currentButton}
             handleBoundsChange={handleBoundsChange}
