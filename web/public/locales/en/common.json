@@ -45,7 +45,9 @@
     "configureInstanceTitle": "Setup the last details of your instance"
   },
   "activities": {
-    "newbutton": "You created this <a href={0}>button</a> was created in <a href={`/Explore/?latitude={1}&longitude={2}`}>{3}</a>"
+    "newbutton": "You created this <a href='/ButtonFile/{0}'>{1}</a> was created in <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
+    "newpost": "There is a new post '{0}' posted to the button <a href='/ButtonFile/{1}'>{2}</a>",
+    "newcomment": "There is a new comment '{0}' posted to the post '{1}' you can view the button <a href='/ButtonFile/{2}'>{3}</a>"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -73,8 +75,8 @@
     "changePlace": "Change place",
     "when": "When ?",
     "changeDate": "Change date",
-    "placeHolderTitle": "button.placeHolderTitle",
-    "placeHolderDescription": "button.placeHolderDescription"
+    "placeHolderTitle": "Write a title for your button",
+    "placeHolderDescription": "Write a description for your button"
   },
   "user": {
     "email": "Email",

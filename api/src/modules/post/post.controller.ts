@@ -9,6 +9,9 @@ import { User } from "../user/user.entity";
 import { CommentService } from "./comment.service";
 import { MessageDto } from "./post.dto";
 import { PostService } from "./post.service";
+import { ActivityEventName } from "@src/shared/types/activity.list";
+import { notifyUser } from "@src/app/app.event";
+import { EventEmitter2 } from "@nestjs/event-emitter";
 
 @ApiTags('post')
 @Controller('post')
@@ -16,7 +19,8 @@ export class PostController {
   constructor(
     private readonly postService: PostService,
     private readonly buttonService: ButtonService,
-    private readonly commentService: CommentService
+    private readonly commentService: CommentService,
+    private eventEmitter: EventEmitter2,
     ) {}
 
     @OnlyRegistered()
@@ -31,7 +35,10 @@ export class PostController {
           if(!isOwner){
             throw new CustomHttpException(ErrorName.NoOwnerShip)
           }
-          return this.postService.new(message.message, buttonId, user);
+          return this.postService.new(message.message, buttonId, user).then((post) => {
+            notifyUser(this.eventEmitter,ActivityEventName.NewPost,post, post.button.owner)
+          return post;  
+          })
         }
       )
     }
@@ -43,7 +50,11 @@ export class PostController {
       @Param('postId') postId: string,
       @CurrentUser() user: User,
     ){
-      return this.commentService.new(message.message, postId, user);
+      return this.commentService.new(message.message, postId, user).then((comment) => {
+        notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, comment, comment.post.author)
+      return comment;  
+      })
+      
     }
 
     @OnlyRegistered()
@@ -76,16 +87,6 @@ export class PostController {
         // }
         // const response = this.postService.delete(postId);
         // return response;
-    }
-
-    @OnlyRegistered()
-    @Post('new/message')
-    newMessage(
-      @Body() message: MessageDto,
-      @Param('postId') postId: string,
-      @CurrentUser() user: User,
-    ){
-      // return this.commentService.new(message, postId, user);
     }
 
     @OnlyRegistered()

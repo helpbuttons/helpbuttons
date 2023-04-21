@@ -18,14 +18,15 @@ export class PostService {
 
   new(message: string, buttonId: string, author: User) {
     return this.buttonService.findById(buttonId).then((button) => {
+      const post = {
+        id: dbIdGenerator(),
+        message,
+        button,
+        author,
+      };
       return this.postRepository.insert([
-        {
-          id: dbIdGenerator(),
-          message,
-          button,
-          author,
-        },
-      ]);
+        post
+      ]).then(result => post);
     });
   }
 
@@ -33,7 +34,7 @@ export class PostService {
   findById(id: string) {
     return this.postRepository.findOne({
       where: { id },
-      relations: ['author'],
+      relations: ['author', 'button'],
     });
   }
 

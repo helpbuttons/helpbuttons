@@ -11,6 +11,8 @@ import { Network } from 'shared/entities/network.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import t from 'i18n';
+import { Post } from 'shared/entities/post.entity';
+import { Comment } from 'shared/entities/comment.entity';
 
 export default function CardNotification({ activity = {} }) {
   const notification = (activity) => {
@@ -21,7 +23,17 @@ export default function CardNotification({ activity = {} }) {
           action={activity.eventName}
         />
       )
-    }else {
+    }else if(activity.eventName == ActivityEventName.NewPost){
+      return <PostNotification
+                post={JSON.parse(activity.data)}
+                action={activity.eventName}
+            />
+    }else if(activity.eventName == ActivityEventName.NewPostComment){
+      return <CommentNotification
+                comment={JSON.parse(activity.data)}
+                action={activity.eventName}
+          />
+    }else{
       return (
         <Notification text={activity.eventName} created_at={activity.created_at}/>
       )
@@ -107,7 +119,98 @@ export function ButtonNotification({
               </div>
             </div>
             <h2 className="card-notification__title">
-            { t('activities.newbutton', [button.id, button.latitude.toString(), button.longitude.toString(), button.address]) }
+            { t('activities.newbutton', [button.id, button.title, button.latitude.toString(), button.longitude.toString(), button.address]) }
+              {}
+              
+            </h2>
+            <div className="card-notification__paragraph"></div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export function PostNotification({
+  post,
+  action,
+}: {
+  post: Post;
+  action: string;
+}) {
+  console.log(post)
+  return (
+    <>
+      <div className="card-notification card-notification">
+        <div className="card-notification__content">
+          <div className="card-notification__avatar">
+            <div className="avatar-medium">
+              <ImageWrapper
+                imageType={ImageType.avatar}
+                src={makeImageUrl(post.button.image)}
+                alt={post.message}
+              />
+            </div>
+{/* 
+            <div className="card-notification__icon">
+              <IoClose />
+            </div> */}
+          </div>
+          <div className="card-notification__text">
+            <div className="card-notification__header">
+              <div className="card-notification__info">{/*action*/}</div>
+              <div className="card-notification__date">
+                {readableTimeLeftToDate(post.created_at)}
+              </div>
+            </div>
+            <h2 className="card-notification__title">
+            { t('activities.newpost', [post.message,post.button.id, post.button.title]) }
+              {}
+              
+            </h2>
+            <div className="card-notification__paragraph"></div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+
+export function CommentNotification({
+  comment,
+  action,
+}: {
+  comment: Comment;
+  action: string;
+}) {
+  console.log(comment)
+  return (
+    <>
+      <div className="card-notification card-notification">
+        <div className="card-notification__content">
+          <div className="card-notification__avatar">
+            <div className="avatar-medium">
+              <ImageWrapper
+                imageType={ImageType.avatar}
+                src={makeImageUrl(comment.button.image)}
+                alt={comment.message}
+              />
+            </div>
+{/* 
+            <div className="card-notification__icon">
+              <IoClose />
+            </div> */}
+          </div>
+          <div className="card-notification__text">
+            <div className="card-notification__header">
+              <div className="card-notification__info">{/*action*/}</div>
+              <div className="card-notification__date">
+                {readableTimeLeftToDate(comment.created_at)}
+              </div>
+            </div>
+            <h2 className="card-notification__title">
+            { t('activities.newcomment', [comment.message,comment.post.message,comment.button.id, comment.button.title]) }
               {}
               
             </h2>

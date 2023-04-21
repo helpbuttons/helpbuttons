@@ -32,7 +32,7 @@ import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator'
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
 import { EventEmitter2 } from '@nestjs/event-emitter'
-import { emitActivity } from '@src/app/app.event';
+import { notifyUser } from '@src/app/app.event';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 
 @ApiTags('buttons')
@@ -66,7 +66,7 @@ export class ButtonController {
       images,
       user,
     ).then((button) => {
-      emitActivity(this.eventEmitter,ActivityEventName.NewButton, button)
+      notifyUser(this.eventEmitter,ActivityEventName.NewButton,button, button.owner)
       return button;
     });
   }

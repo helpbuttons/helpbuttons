@@ -13,21 +13,25 @@ export class ActivityService {
     private readonly activityRepository: Repository<Activity>,
   ) {}
 
+  @OnEvent(ActivityEventName.NewPost)
+  @OnEvent(ActivityEventName.NewPostComment)
   @OnEvent(ActivityEventName.NewButton)
-  async notifyUser(payload: any) {
-    
-    this.activityRepository.insert([{
+  async notifyOwner(payload: any) {
+    const activity = {
       id: dbIdGenerator(),
-      owner: payload.data.owner,
+      owner: payload.destination,
       eventName: payload.activityEventName,
       data: JSON.stringify(payload.data)
-    }])
+    };
+    this.activityRepository.insert([activity])
   }
+
 
   findByUserId(userId: string) {
     return this.activityRepository.find({
       where: { owner: { id: userId } },
       relations: ['owner'],
+      order: { created_at: 'DESC' },
     });
   }
 

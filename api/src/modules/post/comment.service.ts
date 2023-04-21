@@ -15,15 +15,17 @@ export class CommentService {
   ) {}
 
   new(message: string, postId: string, author: User) {
+    
     return this.postSerice.findById(postId).then((post) => {
-      return this.commentRepository.insert([
-        {
-          id: dbIdGenerator(),
-          message,
-          post,
-          author,
-        },
-      ]);
+      const comment = {
+        id: dbIdGenerator(),
+        message,
+        post,
+        author,
+      };
+      return this.commentRepository.insert([comment]).then((result) => {
+        return {...comment, button: post.button}
+      });
     });
   }
 }
