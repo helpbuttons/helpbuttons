@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import React from 'react';
-import { Draggable, Map, Marker, Overlay, ZoomControl } from '../../../../pigeon-maps';
-import { osm } from '../../../../pigeon-maps/providers';
+import { Draggable, Map, Marker, Overlay, ZoomControl } from 'pigeon-maps';
+import { osm } from 'pigeon-maps/providers';
 import { MarkerButton, MarkerButtonIcon } from './MarkerButton';
 import { makeImageUrl } from 'shared/sys.helper';
 
