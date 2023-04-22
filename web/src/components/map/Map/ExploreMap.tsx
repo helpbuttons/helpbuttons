@@ -1,73 +1,83 @@
 import React, { useEffect, useState } from 'react';
-import { Map, ZoomControl } from 'pigeon-maps';
-import { osm } from 'pigeon-maps/providers';
+import { Point } from 'pigeon-maps';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton, MarkerButtonPopup } from './MarkerButton';
 import { store } from 'pages';
-import { SetAsCurrentButton, updateCurrentButton, updateExploreMapZoom, updateMapCenter } from 'state/Explore';
-const SCROLL_PIXELS_FOR_ZOOM_LEVEL = 150
+import {
+  updateCurrentButton,
+  updateExploreMapZoom,
+  updateMapCenter,
+} from 'state/Explore';
+import { HbMap } from '.';
+const SCROLL_PIXELS_FOR_ZOOM_LEVEL = 150;
 
+export default function ExploreMap({
+  filteredButtons,
+  currentButton,
+  handleBoundsChange,
+  mapDefaultZoom,
+  mapDefaultCenter,
+}) {
+  const [mapCenter, setMapCenter] = useState<Point>(mapDefaultCenter);
 
-export default function ExploreMap(
-    {
-      filteredButtons,
-      currentButton,
-      handleBoundsChange,
-      mapDefaultZoom,
-      mapDefaultCenter
-    }) {
-  
-      const [mapZoom,setMapZoom] = useState(mapDefaultZoom)
-    const [mapCenter, setMapCenter] = useState(mapDefaultCenter)
-
-    const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
-    
+  const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     store.emit(new updateMapCenter(center));
     store.emit(new updateExploreMapZoom(zoom));
-
-    setMapZoom(zoom)
-    setMapCenter(center)
 
     handleBoundsChange(bounds, center, zoom);
   };
 
   const handleMarkerClicked = (button: Button) => {
-    setMapCenter([button.latitude, button.longitude])
-    store.emit(new updateMapCenter([button.latitude, button.longitude]))
-    store.emit(new updateCurrentButton(button))
-  }
+    setMapCenter([button.latitude, button.longitude]);
+    store.emit(
+      new updateMapCenter([button.latitude, button.longitude]),
+    );
+    store.emit(new updateCurrentButton(button));
+  };
   const handleMapClicked = ({ event, latLng, pixel }) => {
-    setMapCenter(latLng)
-    store.emit(new updateMapCenter(latLng))
-    store.emit(new updateCurrentButton(null))
-  }
+    setMapCenter(latLng);
+
+    store.emit(new updateMapCenter(latLng));
+    store.emit(new updateCurrentButton(null));
+  };
+
+  useEffect(() => {
+
+  })
   
   return (
     <>
-    {mapZoom}
-        {(mapZoom && mapCenter) && 
-          <Map
-            center={mapCenter}
-            zoom={mapZoom}
-            provider={osm}
-            onBoundsChanged={onBoundsChanged}
-            zoomSnap={true}
-            // wheelEvents={true}
-            onClick={handleMapClicked}
-          >
-            <ZoomControl />
-            {filteredButtons.map((button: Button, idx) => (
-              <MarkerButton key={idx} anchor={[button.latitude, button.longitude]} offset={[35, 65]} button={button} handleMarkerClicked={handleMarkerClicked} currentButtonId={currentButton?.id}/>
-            ))}
-
-            {currentButton && 
-              <MarkerButtonPopup
-              anchor={[currentButton.latitude, currentButton.longitude]} offset={[155, 328]} button={currentButton}
+      imhere
+      {mapDefaultZoom && mapDefaultCenter && (
+        <HbMap
+          mapCenter={mapCenter}
+          defaultZoom={mapDefaultCenter}
+          handleBoundsChange={onBoundsChanged}
+          handleMapClick={handleMapClicked}
+        >
+          {filteredButtons.map((button: Button, idx) => (
+            <MarkerButton
+              key={idx}
+              anchor={[button.latitude, button.longitude]}
+              offset={[35, 65]}
+              button={button}
+              handleMarkerClicked={handleMarkerClicked}
+              currentButtonId={currentButton?.id}
             />
-            }
-            
-          </Map>
-          }
+          ))}
+
+          {currentButton && (
+            <MarkerButtonPopup
+              anchor={[
+                currentButton.latitude,
+                currentButton.longitude,
+              ]}
+              offset={[155, 328]}
+              button={currentButton}
+            />
+          )}
+        </HbMap>
+      )}
     </>
   );
 }

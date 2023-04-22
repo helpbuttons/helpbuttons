@@ -19,9 +19,12 @@ import { buttonTypes } from 'shared/buttonTypes';
 import ExploreMap from 'components/map/Map/ExploreMap';
 import { Button } from 'shared/entities/button.entity';
 import { Bounds, Point } from 'pigeon-maps';
-import { filter, Subject } from 'rxjs';
-import { current } from 'immer';
+import { Subject } from 'rxjs';
 import { LoadabledComponent } from 'components/loading';
+import {
+  LocalStorageVars,
+  localStorageService,
+} from 'services/LocalStorage';
 
 interface ButtonFilters {
   showButtonTypes: string[];
@@ -91,6 +94,11 @@ function Explore({ router }) {
   };
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
+    localStorageService.save(
+      LocalStorageVars.EXPLORE_SETTINGS,
+      JSON.stringify({ bounds, center, zoom, currentButton }),
+    );
+
     const getButtonsForBounds = (bounds: Bounds) => {
       setFilters({ ...filters, bounds: bounds });
       sub.next(
@@ -146,31 +154,33 @@ function Explore({ router }) {
   };
 
   useEffect(() => {
-    let loadCoordinatesFromNetwork = true;
-    if (
-      router &&
-      router.query &&
-      router.query.lat &&
-      selectedNetwork
-    ) {
+    if (selectedNetwork) {
+      store.emit(
+        new updateMapCenter(selectedNetwork.location.coordinates),
+      );
+      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
+    }
+
+    const exploreSettings = localStorageService.read(
+      LocalStorageVars.EXPLORE_SETTINGS,
+    );
+    if (exploreSettings && exploreSettings.length > 0) {
+      const { center, zoom, currentButton } =
+        JSON.parse(exploreSettings);
+      store.emit(new updateMapCenter(center));
+      store.emit(new updateExploreMapZoom(zoom));
+      if (currentButton)
+        store.emit(new updateCurrentButton(currentButton));
+    }
+
+    if (router && router.query && router.query.lat) {
       const lat = parseFloat(router.query.lat);
       const lng = parseFloat(router.query.lng);
       store.emit(new updateMapCenter([lat, lng]));
-      loadCoordinatesFromNetwork = false;
-
       if (router.query.zoom > 0) {
         const queryZoom = parseFloat(router.query.zoom);
         store.emit(new updateExploreMapZoom(queryZoom));
       }
-    }
-
-    if (!mapCenter && selectedNetwork && loadCoordinatesFromNetwork) {
-      store.emit(
-        new updateMapCenter(selectedNetwork.location.coordinates),
-      );
-    }
-    if (mapZoom < 0 && selectedNetwork && !router.query.zoom) {
-      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
     }
   }, [selectedNetwork, router]);
 
@@ -189,8 +199,7 @@ function Explore({ router }) {
 
   return (
     <>
-    <LoadabledComponent loading={!(selectedNetwork && mapZoom > 0 && mapCenter)}>
-      
+      <LoadabledComponent loading={!mapZoom || !mapCenter}>
         <div className="index__container">
           <div
             className={
@@ -217,7 +226,7 @@ function Explore({ router }) {
             handleBoundsChange={handleBoundsChange}
           />
         </div>
-        </LoadabledComponent>
+      </LoadabledComponent>
     </>
   );
 }
