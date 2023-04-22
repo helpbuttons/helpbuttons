@@ -3,7 +3,7 @@ import { Map, Point, ZoomControl } from 'pigeon-maps'
 import { useEffect, useState } from 'react'
 import { osm } from 'pigeon-maps/providers';
 
-export function HbMap({children, mapCenter, defaultZoom, handleBoundsChange, handleMapClick}) {
+export function HbMap({children, mapCenter, defaultZoom, handleBoundsChange, handleMapClick, width = null, height= null}) {
   const [zoom, setZoom] = useState(11)
   const [mapInternalCenter, setMapCenter] = useState(mapCenter)
   useEffect(() => {
@@ -25,8 +25,8 @@ export function HbMap({children, mapCenter, defaultZoom, handleBoundsChange, han
       zoomSnap={true}
       onClick={handleMapClick}
       provider={osm}
-      width={'60vw'}
-      height={'60vh'}
+      width={width}
+      height={height}
     >
       <ZoomControl />
       {children}

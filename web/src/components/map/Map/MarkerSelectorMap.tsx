@@ -33,6 +33,8 @@ export default function MarkerSelectorMap({
         defaultZoom={zoom}
         handleBoundsChange={onBoundsChanged}
         handleMapClick={handleMapClicked}
+        width={'60vw'}
+        height={'60vh'}
       >
         <MarkerButtonIcon anchor={markerPosition} offset={[35, 65]} cssColor={markerColor} image={makeImageUrl(markerImage, '/api/')} title={markerCaption}/>
       </HbMap>
