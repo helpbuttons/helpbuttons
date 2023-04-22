@@ -13,6 +13,7 @@ import Btn, { IconType } from 'elements/Btn';
 import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
 import t from 'i18n';
+import { LoadabledComponent } from 'components/loading';
 
 export default function Profile() {
 
@@ -35,12 +36,8 @@ export default function Profile() {
       <div className="body__content">
         <div className="body__section">
           <div className="card-profile__container">
-            {loggedInUser && (
-              <>
-                <CardProfile user={loggedInUser} />
-              </>
-            )}
-
+            <LoadabledComponent loading={!loggedInUser}>
+              <CardProfile user={loggedInUser} />
 
             {loggedInUser?.username == loggedInUser?.username && (
               <div className="card-profile__actions">
@@ -85,6 +82,7 @@ export default function Profile() {
                 </Link>
               </div>
             )}
+            </LoadabledComponent>
           </div>
         </div>
       </div>

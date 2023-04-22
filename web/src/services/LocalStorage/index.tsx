@@ -7,7 +7,8 @@ export const localStorageService = {
 export enum LocalStorageVars {
   ACCESS_TOKEN = 'access_token',
   TOKEN_TYPE = 'token_type',
-  NETWORK_SELECTED = 'network_id'
+  NETWORK_SELECTED = 'network_id',
+  EXPLORE_SETTINGS='explore_settings'
 }
 
 // add variable to localStorage to not loose on refresh
