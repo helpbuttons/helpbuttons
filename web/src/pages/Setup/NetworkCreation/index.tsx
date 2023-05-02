@@ -61,6 +61,8 @@ function NetworkCreation() {
           jumbo: data.jumbo,
           zoom: data.zoom,
           address: data.address,
+          hexagons: data.hexagons,
+          resolution: data.resolution
         },
         () => {
           const onComplete = () => {

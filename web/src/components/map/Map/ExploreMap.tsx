@@ -47,13 +47,13 @@ export default function ExploreMap({
   
   return (
     <>
-      imhere
       {mapDefaultZoom && mapDefaultCenter && (
         <HbMap
           mapCenter={mapCenter}
           defaultZoom={mapDefaultCenter}
           handleBoundsChange={onBoundsChanged}
           handleMapClick={handleMapClicked}
+          setMapCenter={setMapCenter}
         >
           {filteredButtons.map((button: Button, idx) => (
             <MarkerButton

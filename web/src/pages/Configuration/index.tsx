@@ -1,11 +1,13 @@
 import NetworkForm from 'components/network/NetworkForm';
 import Popup from 'components/popup/Popup';
+import DebugToJSON from 'elements/Debug';
 import t from 'i18n';
 import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
+import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 import { NetworkDto } from 'shared/dtos/network.dto';
 import { updateExploreMapZoom, updateMapCenter } from 'state/Explore';
 import { FetchDefaultNetwork, UpdateNetwork } from 'state/Networks';
@@ -49,11 +51,14 @@ function Configuration() {
       jumbo: data.jumbo,
       zoom: data.zoom,
       address: data.address,
+      hexagons: data.hexagons,
+      resolution: data.resolution
     },
       () => {
         const onComplete = (network) => {
-          store.emit(new updateMapCenter(network.location.coordinates))
+          store.emit(new updateMapCenter([network.latitude, network.longitude]))
           store.emit(new updateExploreMapZoom(network.zoom))
+          localStorageService.remove(LocalStorageVars.EXPLORE_SETTINGS)
           alertService.info(t('common.saveSuccess', ['Configuration']))
           router.replace('/HomeInfo');
         }
@@ -87,6 +92,7 @@ function Configuration() {
     <>
       {selectedNetwork && (
         <Popup title={t('configuration.title')} LinkFwd="/Profile">
+          
         <NetworkForm
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}

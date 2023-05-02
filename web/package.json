@@ -29,6 +29,7 @@
     "emoji-mart": "^5.5.2",
     "formik": "^2.2.9",
     "fs": "^0.0.1-security",
+    "h3-js": "^4.1.0",
     "http-proxy": "^1.18.1",
     "http-status": "^1.6.2",
     "immer": "^9.0.6",

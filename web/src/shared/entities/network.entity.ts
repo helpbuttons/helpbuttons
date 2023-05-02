@@ -58,5 +58,8 @@ export class Network extends BaseEntity {
 
   @OneToMany(() => Button, (button) => button.network)
   buttons: Button[];
+
+  @Column({nullable: true, default: []})
+  hexagons: string[];
   // missing, templates, buttons, friendNetworks, owner
 }

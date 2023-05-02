@@ -5,6 +5,7 @@ export default function FieldNumber({
     handleChange = (e,v) => {},
     name,
     validationError,
+    value,
 }) {
     const onChange = (e) => {
         handleChange(name, e.target.valueAsNumber);
@@ -19,6 +20,7 @@ export default function FieldNumber({
                       step="any"
                       onChange={onChange}
                       className={`form__input ${validationError ? 'validation-error' : ''}`} 
+                      value={value}
                     />
          <FieldError validationError={validationError}/>
         </div>
