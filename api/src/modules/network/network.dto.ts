@@ -109,6 +109,9 @@ export class CreateNetworkDto implements Partial<Network> {
 
   @IsNumber()
   resolution: number;
+
+  @IsString()
+  tiletype: string;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

@@ -42,7 +42,7 @@ function Configuration() {
     store.emit(new UpdateNetwork({
       name: data.name,
       description: data.description,
-      radius: 10,
+      radius: data.radius,
       latitude: data.latitude,
       longitude: data.longitude,
       tags: data.tags,
@@ -52,7 +52,8 @@ function Configuration() {
       zoom: data.zoom,
       address: data.address,
       hexagons: data.hexagons,
-      resolution: data.resolution
+      resolution: data.resolution,
+      tiletype: data.tiletype
     },
       () => {
         const onComplete = (network) => {

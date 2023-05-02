@@ -48,7 +48,8 @@ export class NetworkService {
       name: createDto.name,
       address: createDto.address,
       resolution: createDto.resolution,
-      hexagons: createDto.hexagons
+      hexagons: createDto.hexagons,
+      tiletype: createDto.tiletype
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -146,7 +147,8 @@ export class NetworkService {
       name: updateDto.name,
       address: updateDto.address,
       resolution: updateDto.resolution,
-      hexagons: updateDto.hexagons
+      hexagons: updateDto.hexagons,
+      tiletype: updateDto.tiletype
     } ;
     await getManager().transaction(
       async (transactionalEntityManager) => {

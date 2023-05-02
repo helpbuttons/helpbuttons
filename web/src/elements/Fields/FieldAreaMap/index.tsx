@@ -21,11 +21,14 @@ export default function FieldAreaMap({
   setZoom,
   setLatitude,
   setLongitude,
+  setTileType,
+  tileType,
+  setRadius,
+  radius
 }) {
   const [showHideMenu, setHideMenu] = useState(false);
   const [center, setCenter] = useState(defaultCenter);
   const [geoJsonData, setGeoJsonData] = useState(null);
-  const [radius, setRadius] = useState(6);
 
   const handleSelectedPlace = (place) => {
     setCenter([place.geometry.lat, place.geometry.lng]);
@@ -78,6 +81,8 @@ export default function FieldAreaMap({
               setZoom={setZoom}
               width={'60vw'}
               height={'60vh'}
+              setTileType={setTileType}
+              tileType={tileType}
             />
             {address}
             <DropDownSearchLocation

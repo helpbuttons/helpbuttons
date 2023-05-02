@@ -115,6 +115,10 @@ function NetworkForm({
               validationError={errors.location}
               setLatitude={(latitude) => setValue('latitude',latitude)}
               setLongitude={(longitude) => setValue('longitude',longitude)}
+              tileType={watch('tiletype')}
+              setTileType={(tiletype) => setValue('tiletype', tiletype)}
+              radius={watch('radius')}
+              setRadius={(radius) => {setValue('radius', radius), setValue('resolution', radius)}}
             />
             <FieldTags
               label={t('configuration.tags')}

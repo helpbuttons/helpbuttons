@@ -17,6 +17,7 @@ export default function ExploreMap({
   handleBoundsChange,
   mapDefaultZoom,
   mapDefaultCenter,
+  tileType,
 }) {
   const [mapCenter, setMapCenter] = useState<Point>(mapDefaultCenter);
 
@@ -54,6 +55,7 @@ export default function ExploreMap({
           handleBoundsChange={onBoundsChanged}
           handleMapClick={handleMapClicked}
           setMapCenter={setMapCenter}
+          tileType={tileType}
         >
           {filteredButtons.map((button: Button, idx) => (
             <MarkerButton
