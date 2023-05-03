@@ -199,9 +199,8 @@ function Explore({ router }) {
 
   return (
     <>
-    {selectedNetwork && 
-      <LoadabledComponent loading={ !selectedNetwork}>
-
+   
+    <>
         <div className="index__container">
           <div
             className={
@@ -220,6 +219,7 @@ function Explore({ router }) {
               onLeftColumnToggle={onLeftColumnToggle}
             />
           </div>
+          {(selectedNetwork && mapCenter && mapZoom) && 
           <ExploreMap
             mapDefaultCenter={mapCenter}
             mapDefaultZoom={mapZoom}
@@ -228,9 +228,10 @@ function Explore({ router }) {
             handleBoundsChange={handleBoundsChange}
             tileType={selectedNetwork.tiletype}
           />
+          }
+
         </div>
-      </LoadabledComponent>
-      }
+      </>
     </>
   );
 }

@@ -14,15 +14,15 @@ import { useRef } from 'store/Store';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { StamenMapTypes } from './TileProviders';
 
-export function RadiusMap({
+export function NetworkEditMap({
   center,
   setCenter,
-  defaultZoom,
+  zoom,
   updateAreaSelected,
   setAddress,
   geoJsonData,
-  radius,
-  setRadius,
+  resolution,
+  setResolution,
   setZoom,
   width,
   height,
@@ -62,13 +62,8 @@ export function RadiusMap({
       ),
     );
   };
-
-  const boundsChange = ({ center, zoom, bounds }) => {
-    setZoom(Math.floor(zoom));
-  };
-
   const handleClick = ({ event, latLng, pixel }) => {
-    updateSelectedHex(latLng, radius);
+    updateSelectedHex(latLng, resolution);
     updateLocation(latLng);
   };
 
@@ -80,7 +75,7 @@ export function RadiusMap({
   useEffect(() => {
     if(!geoJsonData)
     {
-      updateAreaSelected(center, radius);
+      updateAreaSelected(center, resolution);
     }
   }, [geoJsonData])
   return (
@@ -88,14 +83,14 @@ export function RadiusMap({
       <FieldNumber
         handleChange={(name, value) => {
           updateSelectedHex(center, value);
-          setRadius(value);
+          setResolution(value);
         }}
-        label={'radius'}
-        name={'radius'}
-        value={radius}
+        label={'resolution'}
+        name={'resolution'}
+        value={resolution}
         validationError={undefined}
       />{' '}
-      {Math.floor(getHexagonAreaAvg(radius, UNITS.km2) * 100) / 100}{' '}
+      {Math.floor(getHexagonAreaAvg(resolution, UNITS.km2) * 100) / 100}{' '}
       km2
       
       <Btn
@@ -140,8 +135,8 @@ export function RadiusMap({
       
       <HbMap
         mapCenter={center}
-        defaultZoom={defaultZoom}
-        handleBoundsChange={boundsChange}
+        mapZoom={zoom}
+        setMapZoom={setZoom}
         handleMapClick={handleClick}
         setMapCenter={setCenter}
         width={width}

@@ -4,17 +4,17 @@ import React, { useEffect, useState } from 'react';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
-import { RadiusMap } from 'components/map/Map/RadiusMap';
 import { cellToLatLng, latLngToCell } from 'h3-js';
 import {
   convertHexesToGeoJson,
   featuresToGeoJson,
   roundCoords,
 } from 'shared/honeycomb.utils';
+import { NetworkEditMap } from 'components/map/Map/NetworkEditMap';
 export default function FieldAreaMap({
   validationError,
   setArea,
-  defaultZoom,
+  zoom,
   defaultCenter,
   setAddress,
   address,
@@ -23,9 +23,10 @@ export default function FieldAreaMap({
   setLongitude,
   setTileType,
   tileType,
-  setRadius,
-  radius
+  setResolution,
+  resolution
 }) {
+
   const [showHideMenu, setHideMenu] = useState(false);
   const [center, setCenter] = useState(defaultCenter);
   const [geoJsonData, setGeoJsonData] = useState(null);
@@ -34,9 +35,9 @@ export default function FieldAreaMap({
     setCenter([place.geometry.lat, place.geometry.lng]);
     const hex = updateJsonData(
       [place.geometry.lat, place.geometry.lng],
-      radius,
+      resolution,
     );
-    setArea({ hex, resolution: radius });
+    setArea({ hex, resolution: resolution });
   };
 
   const updateJsonData = (center, resolution) => {
@@ -62,25 +63,24 @@ export default function FieldAreaMap({
           {t('button.changePlace')}
         </div>
       </div>
-
       {showHideMenu && (
         <div className="picker__close-container">
           <div className="picker--over picker-box-shadow picker__content picker__options-v">
-            <RadiusMap
+            <NetworkEditMap
               updateAreaSelected={(center, resolution) => {
                 const hex = updateJsonData(center, resolution);
                 setArea({ hex, resolution });
               }}
               setAddress={setAddress}
               center={center}
-              defaultZoom={defaultZoom}
               setCenter={setCenter}
               geoJsonData={geoJsonData}
-              radius={radius}
-              setRadius={setRadius}
+              resolution={resolution}
+              setResolution={setResolution}
+              zoom={zoom}
               setZoom={setZoom}
               width={'60vw'}
-              height={'60vh'}
+              height={'40vh'}
               setTileType={setTileType}
               tileType={tileType}
             />

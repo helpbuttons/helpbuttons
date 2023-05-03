@@ -12,15 +12,21 @@ import {
 export function HbMap({
   children,
   mapCenter,
-  defaultZoom,
-  handleBoundsChange,
+  mapZoom,
+  setMapZoom,
+  handleBoundsChange = (objectRet) => {},
   handleMapClick,
   width = null,
   height = null,
   setMapCenter,
   tileType,
 }) {
-  const [zoom, setZoom] = useState(11);
+  // const [zoom, setZoom] = useState(11);
+
+  const setZoom = (zoom) => {
+    setMapZoom(Math.floor(zoom));
+  }
+  
 
   const tileProvider = (x, y, z, dpr) => {
     switch (tileType) {
@@ -35,7 +41,7 @@ export function HbMap({
   return (
     <Map
       center={mapCenter}
-      zoom={zoom}
+      zoom={mapZoom}
       onBoundsChanged={({ center, zoom, bounds }) => {
         setZoom(zoom);
         setMapCenter(center);
@@ -46,7 +52,7 @@ export function HbMap({
         };
         handleBoundsChange(objectRet);
       }}
-      zoomSnap={true}
+      zoomSnap={false}
       onClick={handleMapClick}
       provider={tileProvider}
       width={width}

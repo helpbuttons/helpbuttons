@@ -20,7 +20,7 @@ export default function ExploreMap({
   tileType,
 }) {
   const [mapCenter, setMapCenter] = useState<Point>(mapDefaultCenter);
-
+  const [mapZoom, setMapZoom] = useState(mapDefaultZoom);
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     store.emit(new updateMapCenter(center));
     store.emit(new updateExploreMapZoom(zoom));
@@ -40,18 +40,16 @@ export default function ExploreMap({
 
     store.emit(new updateMapCenter(latLng));
     store.emit(new updateCurrentButton(null));
-  };
-
-  useEffect(() => {
-
-  })
+  }; 
   
   return (
     <>
-      {mapDefaultZoom && mapDefaultCenter && (
+      {(mapZoom && mapCenter) && (
+        <>
         <HbMap
           mapCenter={mapCenter}
-          defaultZoom={mapDefaultCenter}
+          mapZoom={mapZoom}
+          setMapZoom={setMapZoom}
           handleBoundsChange={onBoundsChanged}
           handleMapClick={handleMapClicked}
           setMapCenter={setMapCenter}
@@ -79,6 +77,7 @@ export default function ExploreMap({
             />
           )}
         </HbMap>
+        </>
       )}
     </>
   );

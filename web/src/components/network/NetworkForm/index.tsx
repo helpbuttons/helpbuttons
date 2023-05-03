@@ -93,9 +93,7 @@ function NetworkForm({
               {...register('jumbo', { required: true })}
             />
             <FieldAreaMap
-              defaultZoom={
-                watch('zoom') ? watch('zoom') : selectedNetwork.zoom
-              }
+              zoom={watch('zoom') ? watch('zoom') : selectedNetwork.zoom}
               defaultCenter={
                 watch('latitude')
                   ? [watch('latitude'), watch('longitude')]
@@ -117,8 +115,8 @@ function NetworkForm({
               setLongitude={(longitude) => setValue('longitude',longitude)}
               tileType={watch('tiletype')}
               setTileType={(tiletype) => setValue('tiletype', tiletype)}
-              radius={watch('radius')}
-              setRadius={(radius) => {setValue('radius', radius), setValue('resolution', radius)}}
+              resolution={watch('resolution')}
+              setResolution={(resolution) => {setValue('resolution', resolution)}}
             />
             <FieldTags
               label={t('configuration.tags')}
