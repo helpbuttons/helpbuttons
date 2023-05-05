@@ -24,7 +24,8 @@ services:
       - db
 
   db:
-    image: postgis/postgis:13-master
+    # image: postgis/postgis:13-master
+    build: postgres/
     restart: always
     command: ["postgres", "-c", "log_statement=all"]
     env_file:
