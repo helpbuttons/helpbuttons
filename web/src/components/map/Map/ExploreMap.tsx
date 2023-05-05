@@ -53,7 +53,6 @@ export default function ExploreMap({
           handleBoundsChange={onBoundsChanged}
           handleMapClick={handleMapClicked}
           setMapCenter={setMapCenter}
-          tileType={tileType}
         >
           {filteredButtons.map((button: Button, idx) => (
             <MarkerButton

@@ -154,25 +154,9 @@ function Explore({ router }) {
   };
 
   useEffect(() => {
-    if (selectedNetwork) {
-      store.emit(
-        new updateMapCenter(selectedNetwork.location.coordinates),
-      );
-      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
-    }
-
     const exploreSettings = localStorageService.read(
       LocalStorageVars.EXPLORE_SETTINGS,
     );
-    if (exploreSettings && exploreSettings.length > 0) {
-      const { center, zoom, currentButton } =
-        JSON.parse(exploreSettings);
-      store.emit(new updateMapCenter(center));
-      store.emit(new updateExploreMapZoom(zoom));
-      if (currentButton)
-        store.emit(new updateCurrentButton(currentButton));
-    }
-
     if (router && router.query && router.query.lat) {
       const lat = parseFloat(router.query.lat);
       const lng = parseFloat(router.query.lng);
@@ -180,7 +164,22 @@ function Explore({ router }) {
       if (router.query.zoom > 0) {
         const queryZoom = parseFloat(router.query.zoom);
         store.emit(new updateExploreMapZoom(queryZoom));
+      }else {
+        store.emit(new updateExploreMapZoom(13));
       }
+
+    }else if (exploreSettings && exploreSettings.length > 0) {
+      const { center, zoom, currentButton } =
+        JSON.parse(exploreSettings);
+      store.emit(new updateMapCenter(center));
+      store.emit(new updateExploreMapZoom(zoom));
+      if (currentButton)
+        store.emit(new updateCurrentButton(currentButton));
+    }else if (selectedNetwork) {
+      store.emit(
+        new updateMapCenter(selectedNetwork.location.coordinates),
+      );
+      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
     }
   }, [selectedNetwork, router]);
 

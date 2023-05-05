@@ -7,13 +7,14 @@ import { Point } from 'pigeon-maps';
 export default function MarkerSelectorMap({
   updateMarkerPosition = (latLng) => {},
   markerPosition,
-  zoom = 11,
+  defaultZoom = 11,
   markerImage,
   markerCaption,
   markerColor = 'yellow',
   handleZoomChange = (zoom) => {}
 }) {
   const [mapCenter, setMapCenter] = useState<Point>(markerPosition);
+  const [mapZoom, setMapZoom] = useState(defaultZoom);
 
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     updateMarkerPosition(center);
@@ -30,12 +31,12 @@ export default function MarkerSelectorMap({
     <>
       <HbMap
         mapCenter={mapCenter}
-        defaultZoom={zoom}
+        mapZoom={mapZoom}
+        setMapZoom={setMapZoom}
         handleBoundsChange={onBoundsChanged}
         handleMapClick={handleMapClicked}
         width={'60vw'}
-        height={'60vh'}
-      >
+        height={'60vh'} setMapCenter={setMapCenter}>
         <MarkerButtonIcon anchor={markerPosition} offset={[35, 65]} cssColor={markerColor} image={makeImageUrl(markerImage, '/api/')} title={markerCaption}/>
       </HbMap>
     </>

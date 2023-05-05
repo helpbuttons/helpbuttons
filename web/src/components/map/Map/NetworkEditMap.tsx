@@ -141,7 +141,7 @@ export function NetworkEditMap({
         setMapCenter={setCenter}
         width={width}
         height={height}
-        tileType={tileType}
+        forceTileType={tileType}
       >
         {geoJsonData && (
           <GeoJson

@@ -8,6 +8,9 @@ import {
   stamenTiles,
   stamenTilesTerrain,
 } from './TileProviders';
+import { Network } from 'shared/entities/network.entity';
+import { useRef } from 'store/Store';
+import { GlobalState, store } from 'pages';
 
 export function HbMap({
   children,
@@ -19,10 +22,16 @@ export function HbMap({
   width = null,
   height = null,
   setMapCenter,
-  tileType,
+  forceTileType = null,
 }) {
   // const [zoom, setZoom] = useState(11);
 
+  const [tileType, setTileType] = useState('osm')
+  const selectedNetwork: Network = useRef(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+  
   const setZoom = (zoom) => {
     setMapZoom(Math.floor(zoom));
   }
@@ -38,6 +47,18 @@ export function HbMap({
     }
     return osm(x, y, z);
   };
+
+  useEffect(() => {
+    if(selectedNetwork)
+    {
+      setTileType(selectedNetwork.tiletype)
+    }
+    if(forceTileType)
+    {
+      setTileType(forceTileType) 
+    }
+  }, [selectedNetwork, forceTileType])
+
   return (
     <Map
       center={mapCenter}
