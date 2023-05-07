@@ -1,41 +1,29 @@
-export enum StamenMapTypes {
+export enum HbMapTiles {
   TONER = 'toner',
   TERRAIN = 'terrain',
   WATERCOLOR = 'watercolor',
+  OSM = 'osm',
 }
-export function stamenTiles(
-  mapType: StamenMapTypes,
+export function HbTiles(
+  mapType: HbMapTiles,
   x: number,
   y: number,
   z: number,
   dpr: number,
-) :string {
-    return `https://stamen-tiles.a.ssl.fastly.net/${mapType}/${z}/${x}/${y}${(dpr >= 2 ? '@2x' : '')}.png`;
-}
-
-export function stamenTilesToner(
-  x: number,
-  y: number,
-  z: number,
-  dpr: number,
-) {
-  return stamenTiles(StamenMapTypes.TONER, x, y, z, dpr);
+): string {
+  if (mapType == HbMapTiles.OSM) {
+    return osm(x,y,z)
+  }
+  return `https://stamen-tiles.a.ssl.fastly.net/${mapType}/${z}/${x}/${y}${
+    dpr >= 2 ? '@2x' : ''
+  }.png`;
 }
 
-export function stamenTilesWaterColor(
+export function osm(
   x: number,
   y: number,
-  z: number,
-  dpr: number,
+  z: number
 ) {
-    return stamenTiles(StamenMapTypes.WATERCOLOR, x, y, z, dpr);
-}
-
-export function stamenTilesTerrain(
-  x: number,
-  y: number,
-  z: number,
-  dpr: number,
-) {
-    return stamenTiles(StamenMapTypes.TERRAIN, x, y, z, dpr);
+  const s = String.fromCharCode(97 + ((x + y + z) % 3));
+    return `https://${s}.tile.openstreetmap.org/${z}/${x}/${y}.png`;
 }

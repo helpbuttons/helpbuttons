@@ -44,8 +44,6 @@ export default function ExploreMap({
   
   return (
     <>
-      {(mapZoom && mapCenter) && (
-        <>
         <HbMap
           mapCenter={mapCenter}
           mapZoom={mapZoom}
@@ -77,7 +75,5 @@ export default function ExploreMap({
           )}
         </HbMap>
         </>
-      )}
-    </>
   );
 }

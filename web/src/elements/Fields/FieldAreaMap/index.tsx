@@ -6,7 +6,7 @@ import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
 import { cellToLatLng, latLngToCell } from 'h3-js';
 import {
-  convertHexesToGeoJson,
+  convertHexesToFeatures,
   featuresToGeoJson,
   roundCoords,
 } from 'shared/honeycomb.utils';
@@ -16,8 +16,6 @@ export default function FieldAreaMap({
   setArea,
   zoom,
   defaultCenter,
-  setAddress,
-  address,
   setZoom,
   setLatitude,
   setLongitude,
@@ -43,7 +41,7 @@ export default function FieldAreaMap({
   const updateJsonData = (center, resolution) => {
     const hex = latLngToCell(center[0], center[1], resolution);
     setGeoJsonData(
-      featuresToGeoJson(convertHexesToGeoJson([hex], resolution)),
+      featuresToGeoJson(convertHexesToFeatures([hex], resolution)),
     );
     center = roundCoords(center)
     setLatitude(center[0])
@@ -71,7 +69,6 @@ export default function FieldAreaMap({
                 const hex = updateJsonData(center, resolution);
                 setArea({ hex, resolution });
               }}
-              setAddress={setAddress}
               center={center}
               setCenter={setCenter}
               geoJsonData={geoJsonData}
@@ -84,7 +81,6 @@ export default function FieldAreaMap({
               setTileType={setTileType}
               tileType={tileType}
             />
-            {address}
             <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
               handleSelectedPlace={handleSelectedPlace}

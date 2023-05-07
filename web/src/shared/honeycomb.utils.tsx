@@ -3,7 +3,6 @@ import {
   cellToChildren,
 } from 'h3-js';
 import { featureToH3Set, h3SetToFeature } from 'geojson2h3';
-import { min } from 'class-validator';
 import _ from 'lodash';
 
 export const maxResolution = 10;
@@ -46,7 +45,13 @@ export function convertBoundsToGeoJsonHexagons(
   return hexs;
 }
 
-export function convertHexesToGeoJson(
+
+export function getGeoJsonHexesForBounds(bounds, resolution)
+{
+  const hexagons = convertBoundsToGeoJsonHexagons(bounds,resolution);
+  return  convertHexesToFeatures(hexagons, resolution)
+}
+export function convertHexesToFeatures(
   hexagones: string[],
   resolution,
 ) {
@@ -66,7 +71,6 @@ export function convertHexesToGeoJson(
 
 export function getDegreesBleed(zoom: number, bounds: Bounds) : Bounds
 {
-  console.log(bounds)
   let extende = 0.001;
   if (zoom < 5) {
     extende = 3
@@ -87,27 +91,33 @@ export function getDegreesBleed(zoom: number, bounds: Bounds) : Bounds
 
   return newBounds;
 }
+
 export function getResolution(zoom) {
-  if (zoom > 14) {
-    return maxResolution;
-  } else if (zoom > 13) {
-    return maxResolution - 1;
-  } else if (zoom > 11) {
-    return maxResolution - 2;
-  } else if (zoom > 10) {
-    return maxResolution - 3;
-  } else if (zoom > 8) {
-    return maxResolution - 4;
-  } else if (zoom > 7) {
-    return maxResolution - 5;
-  } else if (zoom > 6) {
-    return maxResolution - 6;
-  } else if (zoom > 4) {
-    return maxResolution - 7;
-  } else if (zoom > 3) {
-    return maxResolution - 8;
+  switch (zoom) {
+    case 4:
+    case 5:
+      return 2;
+    case 6:
+      return 3;
+    case 7:
+    case 8:
+      return 4;
+    case 9:
+      return 5;
+    case 10:
+    case 11:
+      return 6;
+    case 12:
+    case 13:
+      return 7;
+    case 14:
+    case 15:
+    case 16:
+      return 8;
+
+    default: 
+      return 1;
   }
-  return 1;
 }
 export function getBottomHexes(hex) {
   return cellToChildren(hex, maxResolution);
@@ -135,4 +145,10 @@ export function showHex(hexClicked, resolution, bottomSelectedHexes) {
 
 export function roundCoords(point){
   return [Math.floor(point[0] * 10000) / 10000, Math.floor(point[1] * 10000) / 10000];
+}
+
+export function getGeoJsonHexesPolygonsForButtons(hexes, resolution)
+{
+  console.log(hexes)
+  return convertHexesToFeatures(hexes, resolution)
 }

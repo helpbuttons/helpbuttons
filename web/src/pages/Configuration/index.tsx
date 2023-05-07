@@ -9,7 +9,6 @@ import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 import { NetworkDto } from 'shared/dtos/network.dto';
-import { updateExploreMapZoom, updateMapCenter } from 'state/Explore';
 import { FetchDefaultNetwork, UpdateNetwork } from 'state/Networks';
 import { useRef } from 'store/Store';
 
@@ -50,16 +49,17 @@ function Configuration() {
       logo: data.logo,
       jumbo: data.jumbo,
       zoom: data.zoom,
-      address: data.address,
+      address: 'depecrated',
       hexagons: data.hexagons,
       resolution: data.resolution,
       tiletype: data.tiletype
     },
       () => {
         const onComplete = (network) => {
-          store.emit(new updateMapCenter([network.latitude, network.longitude]))
-          store.emit(new updateExploreMapZoom(network.zoom))
-          localStorageService.remove(LocalStorageVars.EXPLORE_SETTINGS)
+          localStorageService.save(
+            LocalStorageVars.EXPLORE_SETTINGS,
+            JSON.stringify({ bounds: null, center: [network.latitude, network.longitude], zoom: network.zoom, currentButton: null }),
+          );
           alertService.info(t('common.saveSuccess', ['Configuration']))
           router.replace('/HomeInfo');
         }

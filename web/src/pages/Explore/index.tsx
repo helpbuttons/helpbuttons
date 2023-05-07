@@ -6,8 +6,6 @@ import {
   ButtonsFound,
   setButtonsAndDebounce,
   updateCurrentButton,
-  updateExploreMapZoom,
-  updateMapCenter,
   updateShowLeftColumn,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
@@ -25,7 +23,9 @@ import {
   LocalStorageVars,
   localStorageService,
 } from 'services/LocalStorage';
+import HexagonExploreMap from 'components/map/Map/HexagonExploreMap';
 
+const defaultZoomPlace = 13;
 interface ButtonFilters {
   showButtonTypes: string[];
   bounds: Bounds;
@@ -39,14 +39,6 @@ function Explore({ router }) {
   const currentButton = useRef(
     store,
     (state: GlobalState) => state.explore.currentButton,
-  );
-  const mapZoom = useRef(
-    store,
-    (state: GlobalState) => state.explore.mapZoom,
-  );
-  const mapCenter = useRef(
-    store,
-    (state: GlobalState) => state.explore.mapCenter,
   );
   const showLeftColumn = useRef(
     store,
@@ -62,6 +54,8 @@ function Explore({ router }) {
   const [sub$, setSub$] = useState(
     setButtonsAndDebounce(sub, timeInMsBetweenStrokes),
   );
+  const [mapCenter, setMapCenter] = useState<Point>([0,0])
+  const [mapZoom, setMapZoom] = useState(13)
 
   useEffect(() => {
     let s = sub$.subscribe(
@@ -153,6 +147,7 @@ function Explore({ router }) {
     }
   };
 
+
   useEffect(() => {
     const exploreSettings = localStorageService.read(
       LocalStorageVars.EXPLORE_SETTINGS,
@@ -160,26 +155,28 @@ function Explore({ router }) {
     if (router && router.query && router.query.lat) {
       const lat = parseFloat(router.query.lat);
       const lng = parseFloat(router.query.lng);
-      store.emit(new updateMapCenter([lat, lng]));
+      setMapCenter([lat, lng]);
       if (router.query.zoom > 0) {
-        const queryZoom = parseFloat(router.query.zoom);
-        store.emit(new updateExploreMapZoom(queryZoom));
+        setMapZoom(router.query.zoom);
       }else {
-        store.emit(new updateExploreMapZoom(13));
+        setMapZoom(defaultZoomPlace);
       }
-
+      console.log('loading from router...')
     }else if (exploreSettings && exploreSettings.length > 0) {
       const { center, zoom, currentButton } =
         JSON.parse(exploreSettings);
-      store.emit(new updateMapCenter(center));
-      store.emit(new updateExploreMapZoom(zoom));
-      if (currentButton)
+        setMapZoom(zoom)
+        setMapCenter(center)
+
+      if (currentButton){
         store.emit(new updateCurrentButton(currentButton));
+        setMapCenter(currentButton.location)
+      }
+      console.log('loading from exploresettings...')
     }else if (selectedNetwork) {
-      store.emit(
-        new updateMapCenter(selectedNetwork.location.coordinates),
-      );
-      store.emit(new updateExploreMapZoom(selectedNetwork.zoom));
+      setMapCenter(selectedNetwork.location.coordinates)
+      setMapZoom(selectedNetwork.zoom)
+      console.log('loading from network... ' + selectedNetwork.zoom + ' (' + JSON.stringify(selectedNetwork.location))
     }
   }, [selectedNetwork, router]);
 
@@ -190,10 +187,8 @@ function Explore({ router }) {
   }, [mapBondsButtons, filters]);
 
   const handleSelectedPlace = (place) => {
-    store.emit(
-      new updateMapCenter([place.geometry.lat, place.geometry.lng]),
-    );
-    store.emit(new updateExploreMapZoom(16));
+    setMapCenter([place.geometry.lat, place.geometry.lng])
+    setMapZoom(defaultZoomPlace)
   };
 
   return (
@@ -218,17 +213,15 @@ function Explore({ router }) {
               onLeftColumnToggle={onLeftColumnToggle}
             />
           </div>
-          {(selectedNetwork && mapCenter && mapZoom) && 
-          <ExploreMap
-            mapDefaultCenter={mapCenter}
-            mapDefaultZoom={mapZoom}
+          <HexagonExploreMap
+            mapCenter={mapCenter}
+            mapZoom={mapZoom}
             filteredButtons={filteredButtons}
             currentButton={currentButton}
             handleBoundsChange={handleBoundsChange}
-            tileType={selectedNetwork.tiletype}
+            setMapCenter={setMapCenter}
+            setMapZoom={setMapZoom}
           />
-          }
-
         </div>
       </>
     </>

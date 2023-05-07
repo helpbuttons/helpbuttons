@@ -103,10 +103,6 @@ function NetworkForm({
                 setValue('hexagons',[hex])
                 setValue('resolution',resolution)
               }}
-              setAddress={(address) =>{
-                setValue('address', address)
-              }}
-              address={watch('address')}
               setZoom={(zoom) => {
                 setValue('zoom', zoom)
               }}

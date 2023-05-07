@@ -7,19 +7,17 @@ import {
   getHexagonAreaAvg,
 } from 'h3-js';
 
-import { FindAddress } from 'state/Explore';
 import { GlobalState, store } from 'pages';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import { StamenMapTypes } from './TileProviders';
+import { HbMapTiles } from './TileProviders';
 
 export function NetworkEditMap({
   center,
   setCenter,
   zoom,
   updateAreaSelected,
-  setAddress,
   geoJsonData,
   resolution,
   setResolution,
@@ -35,36 +33,8 @@ export function NetworkEditMap({
   );
 
   const [showSelectTileType, setShowSelectTileType] = useState<boolean>(false)
-  // const [tileType, setTileType] = useState<StamenMapTypes>()
-  const updateLocation = (newLatLng) => {
-    setAddress('...');
-    store.emit(
-      new FindAddress(
-        JSON.stringify({
-          apikey: config.mapifyApiKey,
-          address: newLatLng.join('+'),
-        }),
-        (place) => {
-          const village = place.results[0].components.village
-            ? place.results[0].components.village
-            : place.results[0].components.city;
-          const address = `${village ? village : ''} ${
-            place.results[0].components.county
-          }, ${place.results[0].components.country}`;
-
-          setAddress(address);
-        },
-        () => {
-          console.log(
-            'error, no address found, mapifyapi not configured?',
-          );
-        },
-      ),
-    );
-  };
   const handleClick = ({ event, latLng, pixel }) => {
     updateSelectedHex(latLng, resolution);
-    updateLocation(latLng);
   };
 
   const updateSelectedHex = (center, radius) => {
@@ -107,28 +77,28 @@ export function NetworkEditMap({
         caption={'osm'}
         contentAlignment={ContentAlignment.center}
         // onClick={handleSubmit(onSmtpTest)}
-        onClick={(e) => {e.preventDefault(); setTileType(null)}}
+        onClick={(e) => {e.preventDefault(); setTileType( HbMapTiles.OSM)}}
         />
         <Btn
         btnType={BtnType.splitIcon}
         caption={'terrain'}
         contentAlignment={ContentAlignment.center}
         // onClick={handleSubmit(onSmtpTest)}
-        onClick={(e) => {e.preventDefault(); setTileType(StamenMapTypes.TERRAIN)}}
+        onClick={(e) => {e.preventDefault(); setTileType(HbMapTiles.TERRAIN)}}
         />
         <Btn
         btnType={BtnType.splitIcon}
         caption={'toner'}
         contentAlignment={ContentAlignment.center}
         // onClick={handleSubmit(onSmtpTest)}
-        onClick={(e) => {e.preventDefault(); setTileType(StamenMapTypes.TONER)}}
+        onClick={(e) => {e.preventDefault(); setTileType(HbMapTiles.TONER)}}
         />
         <Btn
         btnType={BtnType.splitIcon}
         caption={'watercolor'}
         contentAlignment={ContentAlignment.center}
         // onClick={handleSubmit(onSmtpTest)}
-        onClick={(e) => {e.preventDefault(); setTileType(StamenMapTypes.WATERCOLOR)}}
+        onClick={(e) => {e.preventDefault(); setTileType(HbMapTiles.WATERCOLOR)}}
         />
       </div>
     }
