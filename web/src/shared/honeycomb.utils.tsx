@@ -1,11 +1,10 @@
 import { Bounds } from 'pigeon-maps';
 import {
-  cellToChildren,
+  cellToChildren, cellToLatLng,
 } from 'h3-js';
 import { featureToH3Set, h3SetToFeature } from 'geojson2h3';
 import _ from 'lodash';
-
-export const maxResolution = 10;
+import { maxResolution } from './types/honeycomb.const';
 
 export function convertBoundsToGeoJsonPolygon(bounds: Bounds) {
   return {
@@ -27,7 +26,7 @@ export function featuresToGeoJson(features) {
 }
 
 
-function convertBoundsToPolygon(bounds: Bounds) {
+export function convertBoundsToPolygon(bounds: Bounds) {
   return [
     [bounds.sw[1], bounds.sw[0]],
     [bounds.sw[1], bounds.ne[0]],
@@ -147,8 +146,43 @@ export function roundCoords(point){
   return [Math.floor(point[0] * 10000) / 10000, Math.floor(point[1] * 10000) / 10000];
 }
 
-export function getGeoJsonHexesPolygonsForButtons(hexes, resolution)
-{
-  console.log(hexes)
-  return convertHexesToFeatures(hexes, resolution)
+export function convertH3DensityToFeatures(
+  hexagones,
+) {
+
+  if(hexagones.length < 1)
+  {
+    return []
+  }
+  return _.map(hexagones, (hexes, idx) => {
+    // return {hex:idx, count: hex.length}
+    const geojsonHex = h3SetToFeature([idx]);
+    return {
+      ...geojsonHex,
+      properties: {
+        ...geojsonHex.properties,
+        hex: idx,
+        center: cellToLatLng(idx),
+        count: hexes.length
+      },
+    };
+  })
+  // console.log(allgood)
+
+  // console.log(hexagones)
+  // return h3HexagonsCount.map((data) => {
+    // console.log(hex)
+  //   console.log(arr)
+  // console.log(data)
+    // const geojsonHex = h3SetToFeature([hex]);
+    // return {
+    //   ...geojsonHex,
+    //   properties: {
+    //     ...geojsonHex.properties,
+    //     hex: hex,
+    //     count: 
+    //     idx: idx,
+    //   },
+    // };
+  // });
 }

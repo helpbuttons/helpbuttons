@@ -58,5 +58,8 @@ export class Button extends BaseEntity {
 
   @ManyToOne((type) => User)
   owner: User;
+
+  @Column('text')
+  hexagon: string;
   // missing, network relations, template, owner, tags
 }

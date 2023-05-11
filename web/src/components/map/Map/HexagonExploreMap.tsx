@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GeoJson, Point } from 'pigeon-maps';
+import { GeoJson, Overlay } from 'pigeon-maps';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton, MarkerButtonPopup } from './MarkerButton';
 import { store } from 'pages';
@@ -7,7 +7,9 @@ import {
   updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
-import { featuresToGeoJson, getGeoJsonHexesForBounds, getGeoJsonHexesPolygonsForButtons, getResolution } from 'shared/honeycomb.utils';
+import { convertH3DensityToFeatures, featuresToGeoJson, getGeoJsonHexesForBounds, getResolution } from 'shared/utils/honeycomb.utils';
+import { cellToParent } from 'h3-js';
+import _ from 'lodash';
 
 export default function HexagonExploreMap({
   filteredButtons,
@@ -19,7 +21,7 @@ export default function HexagonExploreMap({
   setMapCenter,
 }) {
   const [boundsFeatures, setBoundsFeatures] = useState([]);
-
+  const [h3ButtonsDensityFeatures, setH3ButtonsDensityFeatures] = useState([])
   const onBoundsChanged = ({ center, zoom, bounds }) => {
     const newGeoJsonHexesBounds = getGeoJsonHexesForBounds(bounds,getResolution(zoom));
     if(newGeoJsonHexesBounds.length > 500)
@@ -45,6 +47,10 @@ export default function HexagonExploreMap({
     store.emit(new updateCurrentButton(null));
   };
 
+  useEffect(() => {
+    const hexagonsOnResolution = filteredButtons.map((button) => cellToParent(button.hexagon, getResolution(mapZoom)))
+    setH3ButtonsDensityFeatures(convertH3DensityToFeatures(_.groupBy(hexagonsOnResolution)))
+  }, [filteredButtons])
   return (
     <HbMap
       mapCenter={mapCenter}
@@ -55,26 +61,6 @@ export default function HexagonExploreMap({
       handleMapClick={handleMapClicked}
     >
       
-      {filteredButtons.map((button: Button, idx) => (
-        // here draw hexagons depending on the buttons!
-        // <GeoJson data=getGeoJsonHexesPolygonsForButtons(filteredButtons, getResolution(zoom))
-        <MarkerButton
-          key={idx}
-          anchor={[button.latitude, button.longitude]}
-          offset={[35, 65]}
-          button={button}
-          handleMarkerClicked={handleMarkerClicked}
-          currentButtonId={currentButton?.id}
-        />
-      ))}
-
-      {currentButton && (
-        <MarkerButtonPopup
-          anchor={[currentButton.latitude, currentButton.longitude]}
-          offset={[155, 328]}
-          button={currentButton}
-        />
-      )}
       <GeoJson
               data={featuresToGeoJson(boundsFeatures)}
               onClick={(feature) => {console.log(feature.payload.properties.hex)}}
@@ -95,9 +81,8 @@ export default function HexagonExploreMap({
                 };
               }}
             /> 
-            {true && 
               <GeoJson
-              data={featuresToGeoJson(getGeoJsonHexesPolygonsForButtons(['863944607ffffff','88394461dbfffff'], getResolution(mapZoom)))}
+              data={featuresToGeoJson(h3ButtonsDensityFeatures)}
               onClick={(feature) => {console.log(feature.payload)}}
               styleCallback={(feature, hover) => {
                 if (hover) {
@@ -117,7 +102,14 @@ export default function HexagonExploreMap({
                 };
               }}
             />
-              }
+            {h3ButtonsDensityFeatures.map((feature) => {
+              return (
+              <Overlay anchor={feature.properties.center}>
+                {feature.properties.count}
+             </Overlay>
+              )
+            })}
+             
     </HbMap>
   );
 }

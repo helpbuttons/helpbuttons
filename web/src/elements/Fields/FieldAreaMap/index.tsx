@@ -9,7 +9,7 @@ import {
   convertHexesToFeatures,
   featuresToGeoJson,
   roundCoords,
-} from 'shared/honeycomb.utils';
+} from 'shared/utils/honeycomb.utils';
 import { NetworkEditMap } from 'components/map/Map/NetworkEditMap';
 export default function FieldAreaMap({
   validationError,
