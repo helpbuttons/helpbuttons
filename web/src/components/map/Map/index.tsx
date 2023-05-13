@@ -1,7 +1,7 @@
 // import React, { useState } from 'react'
 import { Map, Point, ZoomControl } from 'pigeon-maps';
 import { useEffect, useState } from 'react';
-import { roundCoords } from 'shared/utils/honeycomb.utils';
+import { roundCoords } from 'shared/honeycomb.utils';
 import {
   HbMapTiles,
   HbTiles,

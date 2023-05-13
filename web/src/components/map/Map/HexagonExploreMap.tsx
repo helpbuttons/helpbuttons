@@ -7,7 +7,7 @@ import {
   updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
-import { convertH3DensityToFeatures, featuresToGeoJson, getGeoJsonHexesForBounds, getResolution } from 'shared/utils/honeycomb.utils';
+import { convertH3DensityToFeatures, featuresToGeoJson, getGeoJsonHexesForBounds, getResolution } from 'shared/honeycomb.utils';
 import { cellToParent } from 'h3-js';
 import _ from 'lodash';
 

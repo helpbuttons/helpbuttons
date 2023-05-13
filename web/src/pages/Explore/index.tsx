@@ -213,7 +213,7 @@ function Explore({ router }) {
               onLeftColumnToggle={onLeftColumnToggle}
             />
           </div>
-          <HexagonExploreMap
+          <ExploreMap
             mapCenter={mapCenter}
             mapZoom={mapZoom}
             filteredButtons={filteredButtons}
