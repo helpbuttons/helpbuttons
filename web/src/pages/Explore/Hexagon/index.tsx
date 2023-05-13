@@ -29,7 +29,7 @@ import * as h3 from 'h3-js'
 import {
   convertBoundsToPolygon,
   getResolution,
-} from 'shared/utils/honeycomb.utils';
+} from 'shared/honeycomb.utils';
 import _ from 'lodash';
 
 const defaultZoomPlace = 13;
