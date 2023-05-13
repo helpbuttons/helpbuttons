@@ -5,8 +5,6 @@ import { MarkerButton, MarkerButtonPopup } from './MarkerButton';
 import { store } from 'pages';
 import {
   updateCurrentButton,
-  updateExploreMapZoom,
-  updateMapCenter,
 } from 'state/Explore';
 import { HbMap } from '.';
 const SCROLL_PIXELS_FOR_ZOOM_LEVEL = 150;
@@ -15,45 +13,34 @@ export default function ExploreMap({
   filteredButtons,
   currentButton,
   handleBoundsChange,
-  mapDefaultZoom,
-  mapDefaultCenter,
+  mapCenter,
+  mapZoom,
+  setMapCenter,
+  setMapZoom,
 }) {
-  const [mapCenter, setMapCenter] = useState<Point>(mapDefaultCenter);
-
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
-    store.emit(new updateMapCenter(center));
-    store.emit(new updateExploreMapZoom(zoom));
-
     handleBoundsChange(bounds, center, zoom);
   };
 
   const handleMarkerClicked = (button: Button) => {
     setMapCenter([button.latitude, button.longitude]);
-    store.emit(
-      new updateMapCenter([button.latitude, button.longitude]),
-    );
     store.emit(new updateCurrentButton(button));
   };
   const handleMapClicked = ({ event, latLng, pixel }) => {
     setMapCenter(latLng);
 
-    store.emit(new updateMapCenter(latLng));
     store.emit(new updateCurrentButton(null));
-  };
-
-  useEffect(() => {
-
-  })
+  }; 
   
   return (
     <>
-      imhere
-      {mapDefaultZoom && mapDefaultCenter && (
         <HbMap
           mapCenter={mapCenter}
-          defaultZoom={mapDefaultCenter}
+          mapZoom={mapZoom}
+          setMapZoom={setMapZoom}
           handleBoundsChange={onBoundsChanged}
           handleMapClick={handleMapClicked}
+          setMapCenter={setMapCenter}
         >
           {filteredButtons.map((button: Button, idx) => (
             <MarkerButton
@@ -77,7 +64,6 @@ export default function ExploreMap({
             />
           )}
         </HbMap>
-      )}
-    </>
+        </>
   );
 }

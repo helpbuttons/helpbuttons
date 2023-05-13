@@ -17,12 +17,6 @@ export const buttonTypes = [
         color: "custom",
         cssColor: "#EA5648"
     },
-    {
-        name: "futbol",
-        caption: "partido de futebol",
-        color: "custom",
-        cssColor: "#18AAD2"
-    }
 ];
 
 export const buttonColorStyle = (cssColor: string) => {

@@ -198,27 +198,6 @@ export class UpdateButton implements WatchEvent {
     );
   }
 }
-
-export class updateMapCenter implements UpdateEvent {
-  public constructor(private mapCenter: Point) {}
-
-  public update(state: GlobalState) {
-    return produce(state, newState => {
-      newState.explore.mapCenter = this.mapCenter;
-    });
-  }
-}
-
-export class updateExploreMapZoom implements UpdateEvent {
-  public constructor(private mapZoom: number) {}
-
-  public update(state: GlobalState) {
-    return produce(state, newState => {
-      newState.explore.mapZoom = this.mapZoom;
-    });
-  }
-}
-
 export class updateCurrentButton implements UpdateEvent {
   public constructor(private button: Button) {}
 

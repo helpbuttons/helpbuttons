@@ -100,6 +100,18 @@ export class CreateNetworkDto implements Partial<Network> {
   @IsNumber()
   zoom: number;
   
+  @ApiProperty({
+    type: [String],
+    required: false,
+  })
+  @IsArray({})
+  hexagons: string[];
+
+  @IsNumber()
+  resolution: number;
+
+  @IsString()
+  tiletype: string;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

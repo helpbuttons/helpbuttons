@@ -1,13 +1,14 @@
 import NetworkForm from 'components/network/NetworkForm';
 import Popup from 'components/popup/Popup';
+import DebugToJSON from 'elements/Debug';
 import t from 'i18n';
 import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
+import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 import { NetworkDto } from 'shared/dtos/network.dto';
-import { updateExploreMapZoom, updateMapCenter } from 'state/Explore';
 import { FetchDefaultNetwork, UpdateNetwork } from 'state/Networks';
 import { useRef } from 'store/Store';
 
@@ -40,7 +41,7 @@ function Configuration() {
     store.emit(new UpdateNetwork({
       name: data.name,
       description: data.description,
-      radius: 10,
+      radius: data.radius,
       latitude: data.latitude,
       longitude: data.longitude,
       tags: data.tags,
@@ -48,12 +49,17 @@ function Configuration() {
       logo: data.logo,
       jumbo: data.jumbo,
       zoom: data.zoom,
-      address: data.address,
+      address: 'depecrated',
+      hexagons: data.hexagons,
+      resolution: data.resolution,
+      tiletype: data.tiletype
     },
       () => {
         const onComplete = (network) => {
-          store.emit(new updateMapCenter(network.location.coordinates))
-          store.emit(new updateExploreMapZoom(network.zoom))
+          localStorageService.save(
+            LocalStorageVars.EXPLORE_SETTINGS,
+            JSON.stringify({ bounds: null, center: [network.latitude, network.longitude], zoom: network.zoom, currentButton: null }),
+          );
           alertService.info(t('common.saveSuccess', ['Configuration']))
           router.replace('/HomeInfo');
         }
@@ -87,6 +93,7 @@ function Configuration() {
     <>
       {selectedNetwork && (
         <Popup title={t('configuration.title')} LinkFwd="/Profile">
+          
         <NetworkForm
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}

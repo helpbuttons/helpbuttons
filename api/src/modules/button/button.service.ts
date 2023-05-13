@@ -187,6 +187,44 @@ export class ButtonService {
     }
   }
 
+  // NOT USED.. for the record stays here
+  async findh3(bounds: any, resolution: number) {
+    try {
+
+      const h3Buttons = await this.buttonRepository
+        .query(`
+        SELECT hexagon, count(hexagon) FROM
+        (
+        select h3_cell_to_parent(cast(hexagon as h3index),${resolution}) as hexagon from
+        (SELECT id, hexagon 
+        FROM button
+        WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON((
+          ${bounds.southWest.lat}
+          ${bounds.northEast.lng},
+        
+          ${bounds.northEast.lat}
+          ${bounds.northEast.lng},
+        
+          ${bounds.northEast.lat}
+          ${bounds.southWest.lng},
+        
+          ${bounds.southWest.lat}
+          ${bounds.southWest.lng},
+        
+          ${bounds.southWest.lat}
+          ${bounds.northEast.lng}
+        
+        ))'), button.location)) AS buttonsH3) AS hexagonGrouped
+        group by hexagon
+        `);
+          
+return h3Buttons;
+    } catch (err) {
+      console.log(err);
+      return [];
+    }
+  }
+
   async delete(id: string) {
     const res = await this.buttonRepository.delete({ id });
     return res.affected;
