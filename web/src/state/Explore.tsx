@@ -52,10 +52,10 @@ export function setButtonsAndDebounce(sub, ms) {
 }
 
 export class FindButtons implements WatchEvent {
-  public constructor(private networkId: string, private bounds: Bounds) {}
+  public constructor( private bounds: Bounds) {}
 
   public watch(state: GlobalState) {
-    return ButtonService.find(this.networkId, this.bounds).pipe(
+    return ButtonService.find(this.bounds).pipe(
       map((buttons) => new ButtonsFound(buttons)),
     );
   }

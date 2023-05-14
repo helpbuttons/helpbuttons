@@ -1,55 +1,94 @@
 //this is the component integrated in buttonNewPublish to display the location. It shows the current location and has a button to change the location that displays a picker with the differents location options for the network
 import React, { useEffect, useState } from 'react';
+import { getDistance } from 'geolib';
 
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
-import { cellToLatLng, latLngToCell } from 'h3-js';
-import {
-  convertHexesToFeatures,
-  featuresToGeoJson,
-  roundCoords,
-} from 'shared/honeycomb.utils';
 import { NetworkEditMap } from 'components/map/Map/NetworkEditMap';
+import { HbMapTiles } from 'components/map/Map/TileProviders';
+import circleToPolygon from 'circle-to-polygon';
+
+
 export default function FieldAreaMap({
   validationError,
-  setArea,
-  zoom,
-  defaultCenter,
-  setZoom,
-  setLatitude,
-  setLongitude,
-  setTileType,
-  tileType,
-  setResolution,
-  resolution
+  selectedNetwork,
+  onChange,
 }) {
 
+  const [mapSettings, setMapSettings] = useState(() => {
+    return {
+      center: [0,0],
+      zoom: 3,
+      tileType: HbMapTiles.OSM,
+      radius: 10000,
+      slider:  {
+        min: 1000,
+        max: 3000,
+        step: 100,
+        onChange: (newRadius) => setRadius(newRadius)
+      },
+      geometry: circleToPolygon([0,0], 10000),
+      marker:{
+        caption: '',
+        image: 'fail.png'
+      }
+    }
+  })
+  const getSliderSettings = (mapZoom, bounds) => {
+    const boundsDistanceInMeters = getDistance({latitude: bounds.ne[0], longitude:bounds.ne[1] }, {latitude: bounds.sw[0], longitude:bounds.sw[1] })
+        
+    return {
+      min: 100,
+      max: Math.floor(boundsDistanceInMeters / 2),
+      step: 100,
+      radius: mapSettings.radius,
+      onChange: (newRadius) => setRadius(newRadius)
+    }
+  }
+
+  
   const [showHideMenu, setHideMenu] = useState(false);
-  const [center, setCenter] = useState(defaultCenter);
-  const [geoJsonData, setGeoJsonData] = useState(null);
+
+  const setRadius = (newRadius) => {
+    setMapSettings((prevSettings) => {return {...prevSettings, radius: newRadius, geometry: circleToPolygon([prevSettings.center[1],prevSettings.center[0]], newRadius)}})
+  }
+
+  const setMapTile = (mapTile) => {
+    setMapSettings((prevSettings) => {return {...prevSettings, tileType: mapTile}})
+  }
+
+  const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
+    setMapSettings((prevSettings) => {
+      return {...prevSettings, center, zoom, slider: getSliderSettings(zoom, bounds), geometry: circleToPolygon([center[1],center[0]], prevSettings.radius)}
+    })
+  }
 
   const handleSelectedPlace = (place) => {
-    setCenter([place.geometry.lat, place.geometry.lng]);
-    const hex = updateJsonData(
-      [place.geometry.lat, place.geometry.lng],
-      resolution,
-    );
-    setArea({ hex, resolution: resolution });
+    setMapSettings((prevSettings) => {
+      return {...prevSettings, center: [place.geometry.lat, place.geometry.lng], zoom:16,geometry: circleToPolygon([place.geometry.lat, place.geometry.lng], prevSettings.radius)}
+    })
   };
+  const handleMapClick = ({latLng}) => {
+    setMapSettings((prevSettings) => {
+      return {...prevSettings, center: latLng, geometry: circleToPolygon(latLng, prevSettings.radius)}
+    })
+  }
 
-  const updateJsonData = (center, resolution) => {
-    const hex = latLngToCell(center[0], center[1], resolution);
-    setGeoJsonData(
-      featuresToGeoJson(convertHexesToFeatures([hex], resolution)),
-    );
-    center = roundCoords(center)
-    setLatitude(center[0])
-    setLongitude(center[1])
+  useEffect(() => {
+    onChange({zoom: mapSettings.zoom, center: mapSettings.center, radius: mapSettings.radius, tileType: mapSettings.tileType})
+  }, [mapSettings])
+  
 
-    setCenter(cellToLatLng(hex));
-    return hex;
-  };
+  useEffect(() => {
+    if(mapSettings.center[0] == 0)
+    {
+      setMapSettings((prevSettings) => {
+        return {...prevSettings, center: [selectedNetwork.latitude, selectedNetwork.longitude], zoom: selectedNetwork.zoom, tileType: selectedNetwork.tiletype, radius: selectedNetwork.radius, marker:{caption: selectedNetwork.name, image: selectedNetwork.logo }}
+      })
+    }
+    
+  }, [selectedNetwork])
 
   return (
     <>
@@ -65,21 +104,10 @@ export default function FieldAreaMap({
         <div className="picker__close-container">
           <div className="picker--over picker-box-shadow picker__content picker__options-v">
             <NetworkEditMap
-              updateAreaSelected={(center, resolution) => {
-                const hex = updateJsonData(center, resolution);
-                setArea({ hex, resolution });
-              }}
-              center={center}
-              setCenter={setCenter}
-              geoJsonData={geoJsonData}
-              resolution={resolution}
-              setResolution={setResolution}
-              zoom={zoom}
-              setZoom={setZoom}
-              width={'60vw'}
-              height={'40vh'}
-              setTileType={setTileType}
-              tileType={tileType}
+              mapSettings={mapSettings}
+              onBoundsChanged={onBoundsChanged}
+              handleMapClick={handleMapClick}
+              setMapTile={setMapTile}
             />
             <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}

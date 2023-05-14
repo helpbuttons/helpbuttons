@@ -73,15 +73,14 @@ export class ButtonController {
 
   @AllowGuest()
   @AllowIfNetworkIsPublic()
-  @Get('/find/:networkId')
+  @Get('/find/')
   async findAll(
-    @Param('networkId') networkId: string,
     @Query('northEast_lat') northEast_lat: string,
     @Query('northEast_lng') northEast_lng: string,
     @Query('southWest_lat') southWest_lat: string,
     @Query('southWest_lng') southWest_lng: string,
   ) {
-    return await this.buttonService.findAll(networkId, {
+    return await this.buttonService.findAll({
       northEast: {
         lat: northEast_lat,
         lng: northEast_lng,

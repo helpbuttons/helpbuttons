@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Point } from 'pigeon-maps';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton, MarkerButtonPopup } from './MarkerButton';
-import { store } from 'pages';
+import { GlobalState, store } from 'pages';
 import {
   updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
+import { useRef } from 'store/Store';
+import { HbMapTiles } from './TileProviders';
 const SCROLL_PIXELS_FOR_ZOOM_LEVEL = 150;
 
 export default function ExploreMap({
@@ -16,18 +18,21 @@ export default function ExploreMap({
   mapCenter,
   mapZoom,
   setMapCenter,
-  setMapZoom,
 }) {
+  const selectedNetwork = useRef(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     handleBoundsChange(bounds, center, zoom);
   };
 
   const handleMarkerClicked = (button: Button) => {
-    setMapCenter([button.latitude, button.longitude]);
+    setMapCenter(() => [button.latitude, button.longitude]);
     store.emit(new updateCurrentButton(button));
   };
   const handleMapClicked = ({ event, latLng, pixel }) => {
-    setMapCenter(latLng);
+    setMapCenter(() => latLng);
 
     store.emit(new updateCurrentButton(null));
   }; 
@@ -37,10 +42,9 @@ export default function ExploreMap({
         <HbMap
           mapCenter={mapCenter}
           mapZoom={mapZoom}
-          setMapZoom={setMapZoom}
-          handleBoundsChange={onBoundsChanged}
+          onBoundsChanged={onBoundsChanged}
           handleMapClick={handleMapClicked}
-          setMapCenter={setMapCenter}
+          tileType={selectedNetwork ? selectedNetwork.tiletype : HbMapTiles.OSM}
         >
           {filteredButtons.map((button: Button, idx) => (
             <MarkerButton

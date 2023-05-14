@@ -25,19 +25,16 @@ export class ButtonService {
 
   public static findJson(optionsJson: string): Observable<Button[]> {
     const options = JSON.parse(optionsJson)
-     if (!options.networkId || options.networkId.length < 2) {
-      return of([]);
-    }
-    return this.find(options.networkId, options.bounds)
+    return this.find(options.bounds)
   }
 
-  public static find(networkId: string, bounds: Bounds): Observable<Button[]> {
+  public static find(bounds: Bounds): Observable<Button[]> {
     if (!bounds || !bounds.ne)
     {
       console.error('wrong bounds? ')
       return of([]);
     }
-    return httpService.get<Button[]>("/buttons/find/" + networkId, 
+    return httpService.get<Button[]>("/buttons/find/", 
     {
       northEast_lat: bounds.ne[0].toString(),
       northEast_lng: bounds.ne[1].toString(),

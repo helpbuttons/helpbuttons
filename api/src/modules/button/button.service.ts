@@ -142,14 +142,13 @@ export class ButtonService {
     return this.buttonRepository.save([button]);
   }
 
-  async findAll(networkId: string, bounds: any) {
+  async findAll(bounds: any) {
     try {
       const buttonsOnBounds = await this.buttonRepository
         .createQueryBuilder('button')
         .select('id')
         .where(
           `
-      button.networkId = '${networkId}' AND
       ST_Contains(ST_GEOMFROMTEXT('POLYGON((
       ${bounds.southWest.lat}
       ${bounds.northEast.lng},

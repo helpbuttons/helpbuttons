@@ -97,7 +97,6 @@ function Explore({ router }) {
       setFilters({ ...filters, bounds: bounds });
       sub.next(
         JSON.stringify({
-          networkId: selectedNetwork.id,
           bounds: bounds,
         }),
       );
@@ -155,18 +154,18 @@ function Explore({ router }) {
     if (router && router.query && router.query.lat) {
       const lat = parseFloat(router.query.lat);
       const lng = parseFloat(router.query.lng);
-      setMapCenter([lat, lng]);
+      setMapCenter(() => [lat, lng]);
       if (router.query.zoom > 0) {
-        setMapZoom(router.query.zoom);
+        setMapZoom(() => router.query.zoom);
       }else {
-        setMapZoom(defaultZoomPlace);
+        setMapZoom(() => defaultZoomPlace);
       }
       console.log('loading from router...')
     }else if (exploreSettings && exploreSettings.length > 0) {
       const { center, zoom, currentButton } =
         JSON.parse(exploreSettings);
-        setMapZoom(zoom)
-        setMapCenter(center)
+        setMapZoom(() => zoom)
+        setMapCenter(() => center)
 
       if (currentButton){
         store.emit(new updateCurrentButton(currentButton));
@@ -174,8 +173,8 @@ function Explore({ router }) {
       }
       console.log('loading from exploresettings...')
     }else if (selectedNetwork) {
-      setMapCenter(selectedNetwork.location.coordinates)
-      setMapZoom(selectedNetwork.zoom)
+      setMapCenter(() => selectedNetwork.location.coordinates)
+      setMapZoom(() => selectedNetwork.zoom)
       console.log('loading from network... ' + selectedNetwork.zoom + ' (' + JSON.stringify(selectedNetwork.location))
     }
   }, [selectedNetwork, router]);
@@ -187,8 +186,8 @@ function Explore({ router }) {
   }, [mapBondsButtons, filters]);
 
   const handleSelectedPlace = (place) => {
-    setMapCenter([place.geometry.lat, place.geometry.lng])
-    setMapZoom(defaultZoomPlace)
+    setMapCenter(() => [place.geometry.lat, place.geometry.lng])
+    setMapZoom(() => defaultZoomPlace)
   };
 
   return (
@@ -220,7 +219,6 @@ function Explore({ router }) {
             currentButton={currentButton}
             handleBoundsChange={handleBoundsChange}
             setMapCenter={setMapCenter}
-            setMapZoom={setMapZoom}
           />
         </div>
       </>
