@@ -5,10 +5,7 @@ import { roundCoords } from 'shared/honeycomb.utils';
 import {
   HbMapTiles,
   HbTiles,
-} from './TileProviders';
-import { Network } from 'shared/entities/network.entity';
-import { useRef } from 'store/Store';
-import { GlobalState, store } from 'pages';
+} from './Map.consts';
 
 interface HbMapProps {
   center: Point, 

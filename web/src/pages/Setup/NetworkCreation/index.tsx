@@ -33,11 +33,9 @@ function NetworkCreation() {
       logo: '',
       jumbo: '',
       tags: [],
-      latitude: defaultMarker.latitude,
-      longitude: defaultMarker.longitude,
-      zoom: 10,
       privacy: 'public',
       address: '',
+      exploreSettings: null
     },
   });
 
@@ -52,18 +50,11 @@ function NetworkCreation() {
         {
           name: data.name,
           description: data.description,
-          radius: 10,
-          latitude: data.latitude,
-          longitude: data.longitude,
           tags: data.tags,
           privacy: 'public',
           logo: data.logo,
           jumbo: data.jumbo,
-          zoom: data.zoom,
-          address: data.address,
-          hexagons: data.hexagons,
-          resolution: data.resolution,
-          tiletype: data.tiletype
+          exploreSettings: data.exploreSettings
         },
         () => {
           const onComplete = () => {

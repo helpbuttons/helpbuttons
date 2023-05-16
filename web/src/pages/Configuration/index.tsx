@@ -41,18 +41,11 @@ function Configuration() {
     store.emit(new UpdateNetwork({
       name: data.name,
       description: data.description,
-      radius: data.radius,
-      latitude: data.latitude,
-      longitude: data.longitude,
       tags: data.tags,
       privacy: data.privacy,
       logo: data.logo,
       jumbo: data.jumbo,
-      zoom: data.zoom,
-      address: 'depecrated',
-      hexagons: data.hexagons,
-      resolution: data.resolution,
-      tiletype: data.tiletype
+      exploreSettings: data.exploreSettings
     },
       () => {
         const onComplete = (network) => {
@@ -107,7 +100,7 @@ function Configuration() {
           captionAction={t('common.save')}
           linkFwd="/Profile"
           description={t('configuration.description')}
-          selectedNetwork={selectedNetwork}
+          defaultExploreSettings={selectedNetwork.exploreSettings}
         />
         </Popup>
       )}

@@ -7,7 +7,7 @@ import {
   updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
-import { convertH3DensityToFeatures, featuresToGeoJson, getGeoJsonHexesForBounds, getResolution } from 'shared/honeycomb.utils';
+import { convertH3DensityToFeatures, featuresToGeoJson, getBoundsHexFeatures, getResolution } from 'shared/honeycomb.utils';
 import { cellToParent } from 'h3-js';
 import _ from 'lodash';
 
@@ -15,26 +15,13 @@ export default function HexagonExploreMap({
   filteredButtons,
   currentButton,
   handleBoundsChange,
-  mapZoom,
-  mapCenter,
-  setMapZoom,
-  setMapCenter,
+  exploreSettings,
+  setMapCenter
 }) {
-  const [boundsFeatures, setBoundsFeatures] = useState([]);
+  const [boundsFeatures, setBoundsFeatures] = useState(featuresToGeoJson([]));
   const [h3ButtonsDensityFeatures, setH3ButtonsDensityFeatures] = useState([])
   const onBoundsChanged = ({ center, zoom, bounds }) => {
-    const newGeoJsonHexesBounds = getGeoJsonHexesForBounds(bounds,getResolution(zoom));
-    if(newGeoJsonHexesBounds.length > 500)
-    {
-      try {
-        throw new Error('Too many features, throwing for safety');
-    } catch(e) {
-        console.log(e.stack);
-        return;
-    }
-    }
-    setBoundsFeatures(newGeoJsonHexesBounds);
-
+    setBoundsFeatures(() => {return getBoundsHexFeatures(bounds,zoom)})
     handleBoundsChange(bounds, center, zoom);
   };
 
@@ -48,21 +35,85 @@ export default function HexagonExploreMap({
   };
 
   useEffect(() => {
-    const hexagonsOnResolution = filteredButtons.map((button) => cellToParent(button.hexagon, getResolution(mapZoom)))
-    setH3ButtonsDensityFeatures(convertH3DensityToFeatures(_.groupBy(hexagonsOnResolution)))
+    console.log(`zoom: ${exploreSettings.zoom} - res: ${getResolution(exploreSettings.zoom)}`)
+    const hexagonsOnResolution = filteredButtons.map((button) => cellToParent(button.hexagon, getResolution(exploreSettings.zoom)))
+
+    // const getButtonsForBounds = (bounds: Bounds) => {
+    //   sub.next(
+    //     JSON.stringify({
+    //       bounds: bounds,
+    //     }),
+    //   );
+    // };
+    /*localStorageService.save(
+      LocalStorageVars.EXPLORE_SETTINGS,
+      JSON.stringify({ bounds, center, zoom, currentButton }),
+    );
+
+    const requestedH3Cells = polygonToCells(
+      convertBoundsToPolygon(bounds),
+      getResolution(exploreSettings.zoom),
+    );
+
+    // console.log(' z:'+mapZoom)
+    let contains = (arr, target) =>
+      target.every((v) => arr.includes(v));
+
+    const union = _.union(allFetchedBounds, requestedH3Cells).slice(-5000)// maximum allocation of hexagons
+    // union = union.slice(5000)
+    console.log('union: ' + allFetchedBounds.length + ' ' + union.length)
+    setAllFetchedBounds(() => union);
+    setFilters(() => {return { ...filters, bounds: bounds }});
+    // console.log('contains' + contains(['a','b','c'], ['b','c','d']))
+    // debugger;
+    // console.log()
+    if (contains(allFetchedBounds, requestedH3Cells)) {
+      console.log('setting buttons from cache...');
+      
+      const _boundsButtons = cachedButtons.filter((button) => {
+        const hexx =  cellToParent(button.hexagon, getResolution(exploreSettings.zoom));
+        const hexxxFromcoords = latLngToCell(button.latitude, button.longitude, getResolution(exploreSettings.zoom))
+        // console.log(`is ${hexx} valid? ${h3.isValidCell(hexx)} res: ${h3.getResolution(hexx)}`)
+        // if(h3.getResolution(hexx) ==)
+        
+        const distancess = requestedH3Cells.map((hexing) => {
+          console.log(`${hexing} (${h3.getResolution(hexing)})?! ${hexxxFromcoords} ${hexx} (${h3.getResolution(hexx)})`)
+          try{
+          console.log(`${h3.gridDistance(hexing, hexx)}`)
+        }catch(err)
+        {
+          console.log(err)
+        }
+          return 0;
+          // return h3.gridDistance(hexing, hexx)
+        })
+        console.log(distancess)
+        const res = requestedH3Cells.includes(
+          hexx
+        );
+        return true
+      });
+      console.log('found buttons: ' + _boundsButtons.length);
+
+      setBoundsButtons(() => _boundsButtons);
+    } else {
+      console.log('getting buttons from api...');
+      getButtonsForBounds(bounds);
+    }*/
+
+    setH3ButtonsDensityFeatures(() => convertH3DensityToFeatures(_.groupBy(hexagonsOnResolution)))
   }, [filteredButtons])
   return (
+    <> Found : {filteredButtons.length}
     <HbMap
-      mapCenter={mapCenter}
-      setMapCenter={setMapCenter}
-      mapZoom={mapZoom}
-      setMapZoom={setMapZoom}
-      handleBoundsChange={onBoundsChanged}
+      mapCenter={exploreSettings.center}
+      mapZoom={exploreSettings.zoom}
+      onBoundsChanged={onBoundsChanged}
       handleMapClick={handleMapClicked}
     >
       
       <GeoJson
-              data={featuresToGeoJson(boundsFeatures)}
+              data={boundsFeatures}
               onClick={(feature) => {console.log(feature.payload.properties.hex)}}
               styleCallback={(feature, hover) => {
                 if (hover) {
@@ -80,7 +131,7 @@ export default function HexagonExploreMap({
                   r: '20',
                 };
               }}
-            /> 
+            />
               <GeoJson
               data={featuresToGeoJson(h3ButtonsDensityFeatures)}
               onClick={(feature) => {console.log(feature.payload)}}
@@ -110,6 +161,6 @@ export default function HexagonExploreMap({
               )
             })}
              
-    </HbMap>
+    </HbMap></>
   );
 }

@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }) {
       setIsSetup(true);
     }
 
-    if (!config && SetupSteps.SYSADMIN_CONFIG.toString() != path) {
+    if (!config && (SetupSteps.SYSADMIN_CONFIG.toString() != path && path != '/Login')) {
       store.emit(
         new GetConfig(
           (config) => {
@@ -88,7 +88,7 @@ function MyApp({ Component, pageProps }) {
       !authorized &&
       config &&
       config.userCount < 1 &&
-      path == SetupSteps.CREATE_ADMIN_FORM
+      (path == SetupSteps.CREATE_ADMIN_FORM || path == '/Login')
     ) {
       setAuthorized(true);
     }
@@ -194,7 +194,7 @@ function MyApp({ Component, pageProps }) {
                 <NavBottom logged={!!loggedInUser} />
               </div>
             );
-          } else if (isSetup) {
+          } else if (isSetup || path == '/Login') {
             return (
               <div>
                 <Component {...pageProps} />

@@ -28,7 +28,7 @@ function NetworkForm({
   setFocus,
   description,
   showClose = true,
-  selectedNetwork = null,
+  defaultExploreSettings = null,
 }) {
   const router = useRouter();
 
@@ -93,14 +93,14 @@ function NetworkForm({
               {...register('jumbo', { required: true })}
             />
             <FieldAreaMap
-              selectedNetwork={selectedNetwork}
+              defaultExploreSettings={defaultExploreSettings}
+              marker={{
+                caption: watch('name'),
+                image: watch('logo')}
+              }
               validationError={errors.location}
-              onChange={({center, zoom, tileType, radius}) => {
-                setValue('zoom', zoom)
-                setValue('tiletype', tileType)
-                setValue('radius', radius)
-                setValue('latitude', center[0])
-                setValue('longitude', center[1])
+              onChange={(exploreSettings) => {
+                setValue('exploreSettings', exploreSettings);
               }}
             />
             <FieldTags

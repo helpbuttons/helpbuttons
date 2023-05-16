@@ -29,23 +29,8 @@ export class Network extends BaseEntity {
   })
   privacy: PrivacyType;
 
-  @Column({ type: 'double precision' })
-  radius: number;
-
-  @Column({ type: 'double precision' })
-  public latitude: number;
-
-  @Column({ type: 'double precision' })
-  public longitude: number;
-
-  @Column({ type: 'geometry' })
-  location: string;
-
   @Column('text', { array: true, nullable: true, default: [] })
   tags: string[];
-
-  @Column('integer', { default: 10 })
-  zoom: number;
 
   @Column({ type: 'text', nullable: true })
   logo?: string;
@@ -59,13 +44,6 @@ export class Network extends BaseEntity {
   @OneToMany(() => Button, (button) => button.network)
   buttons: Button[];
 
-  @Column('text',{array: true,nullable: true, default: []})
-  hexagons: string[];
-
-  @Column({default: 10})
-  resolution: number;
-
-  @Column({default: 'osm'})
-  tiletype: string;
-  // missing, templates, buttons, friendNetworks, owner
+  @Column()
+  exploreSettings: string;
 }

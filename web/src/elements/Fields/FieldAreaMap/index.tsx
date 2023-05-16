@@ -5,23 +5,25 @@ import { getDistance } from 'geolib';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
-import { NetworkEditMap } from 'components/map/Map/NetworkEditMap';
-import { HbMapTiles } from 'components/map/Map/TileProviders';
+import { NetworkMapConfigure } from 'components/map/Map/NetworkMapConfigure';
+import { BrowseType, HbMapTiles } from 'components/map/Map/Map.consts';
 import circleToPolygon from 'circle-to-polygon';
-
+import { getBoundsHexFeatures } from 'shared/honeycomb.utils';
 
 export default function FieldAreaMap({
   validationError,
-  selectedNetwork,
+  defaultExploreSettings,
   onChange,
+  marker,
 }) {
 
   const [mapSettings, setMapSettings] = useState(() => {
-    return {
+    return {...{
       center: [0,0],
       zoom: 3,
       tileType: HbMapTiles.OSM,
       radius: 10000,
+      bounds: null,
       slider:  {
         min: 1000,
         max: 3000,
@@ -29,11 +31,9 @@ export default function FieldAreaMap({
         onChange: (newRadius) => setRadius(newRadius)
       },
       geometry: circleToPolygon([0,0], 10000),
-      marker:{
-        caption: '',
-        image: 'fail.png'
-      }
-    }
+      browseType: BrowseType.PINS,
+      honeyCombFeatures: null,
+    }, ...defaultExploreSettings}
   })
   const getSliderSettings = (mapZoom, bounds) => {
     const boundsDistanceInMeters = getDistance({latitude: bounds.ne[0], longitude:bounds.ne[1] }, {latitude: bounds.sw[0], longitude:bounds.sw[1] })
@@ -47,7 +47,6 @@ export default function FieldAreaMap({
     }
   }
 
-  
   const [showHideMenu, setHideMenu] = useState(false);
 
   const setRadius = (newRadius) => {
@@ -58,9 +57,17 @@ export default function FieldAreaMap({
     setMapSettings((prevSettings) => {return {...prevSettings, tileType: mapTile}})
   }
 
+  const setBrowseType = (browseType) => {
+    setMapSettings((prevSettings) => {return {...prevSettings, browseType}})
+  }
+
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     setMapSettings((prevSettings) => {
-      return {...prevSettings, center, zoom, slider: getSliderSettings(zoom, bounds), geometry: circleToPolygon([center[1],center[0]], prevSettings.radius)}
+      if(prevSettings.browseType == BrowseType.HONEYCOMB)
+      {
+        return {...prevSettings, center, zoom, slider: getSliderSettings(zoom, bounds), geometry: circleToPolygon([center[1],center[0]], prevSettings.radius), bounds: bounds, honeyCombFeatures: getBoundsHexFeatures(bounds,zoom)}
+      }
+      return {...prevSettings, center, zoom, slider: getSliderSettings(zoom, bounds), geometry: circleToPolygon([center[1],center[0]], prevSettings.radius), bounds: bounds}
     })
   }
 
@@ -76,19 +83,8 @@ export default function FieldAreaMap({
   }
 
   useEffect(() => {
-    onChange({zoom: mapSettings.zoom, center: mapSettings.center, radius: mapSettings.radius, tileType: mapSettings.tileType})
+    onChange({zoom: mapSettings.zoom, center: mapSettings.center, radius: mapSettings.radius, tileType: mapSettings.tileType, browseType: mapSettings.browseType})
   }, [mapSettings])
-  
-
-  useEffect(() => {
-    if(mapSettings.center[0] == 0)
-    {
-      setMapSettings((prevSettings) => {
-        return {...prevSettings, center: [selectedNetwork.latitude, selectedNetwork.longitude], zoom: selectedNetwork.zoom, tileType: selectedNetwork.tiletype, radius: selectedNetwork.radius, marker:{caption: selectedNetwork.name, image: selectedNetwork.logo }}
-      })
-    }
-    
-  }, [selectedNetwork])
 
   return (
     <>
@@ -103,16 +99,18 @@ export default function FieldAreaMap({
       {showHideMenu && (
         <div className="picker__close-container">
           <div className="picker--over picker-box-shadow picker__content picker__options-v">
-            <NetworkEditMap
+            <NetworkMapConfigure
               mapSettings={mapSettings}
               onBoundsChanged={onBoundsChanged}
               handleMapClick={handleMapClick}
               setMapTile={setMapTile}
+              marker={marker}
+              setBrowseType={setBrowseType}
             />
-            <DropDownSearchLocation
+            {/* <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
               handleSelectedPlace={handleSelectedPlace}
-            />
+            /> */}
             <Btn
               btnType={BtnType.splitIcon}
               caption={t('common.save')}

@@ -49,38 +49,6 @@ export class CreateNetworkDto implements Partial<Network> {
   privacy: PrivacyType;
 
   @ApiProperty({
-    name: 'radius',
-    description: 'radius in km',
-    type: Number,
-    example: 10,
-  })
-  radius: number;
-
-  @ApiProperty({
-    name: 'latitude',
-    title: 'Latitude',
-    description: 'Latitude of the button',
-    type: Number,
-    isArray: false,
-    required: true,
-    example: 39.23864,
-  })
-  @IsLatitude()
-  latitude: number;
-
-  @ApiProperty({
-    name: 'longitude',
-    title: 'Longitude',
-    description: 'Longitude of the button',
-    type: Number,
-    isArray: false,
-    required: true,
-    example: -8.67096,
-  })
-  @IsLongitude()
-  longitude: number;
-
-  @ApiProperty({
     type: [String],
     required: false,
   })
@@ -92,26 +60,10 @@ export class CreateNetworkDto implements Partial<Network> {
   logo: string;
 
   @IsNotEmpty()
-  address: string;
-
-  @IsNotEmpty()
   jumbo: string;
 
-  @IsNumber()
-  zoom: number;
-  
-  @ApiProperty({
-    type: [String],
-    required: false,
-  })
-  @IsArray({})
-  hexagons: string[];
-
-  @IsNumber()
-  resolution: number;
-
-  @IsString()
-  tiletype: string;
+  @IsNotEmpty()
+  exploreSettings: string;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}
