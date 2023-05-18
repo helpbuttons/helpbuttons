@@ -8,6 +8,7 @@ import {
   Query,
   UseInterceptors,
   UploadedFiles,
+  ParseArrayPipe,
 } from '@nestjs/common';
 
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -90,6 +91,17 @@ export class ButtonController {
         lng: southWest_lng,
       },
     });
+  }
+
+  @AllowGuest()
+  @AllowIfNetworkIsPublic()
+  @Post('/findh3/:resolution')
+  async findh3(
+    @Param('resolution') resolution: number,
+    @Body('hexagons', new ParseArrayPipe({ items: String, separator: ',' }))
+    hexagons: string[],
+  ) {
+    return await this.buttonService.findh3(resolution, hexagons);
   }
 
   @AllowGuest()

@@ -27,6 +27,10 @@ export function featuresToGeoJson(features) {
 
 
 export function convertBoundsToPolygon(bounds: Bounds) {
+  if(!bounds)
+  {
+    throw new Error('bounds are null ')
+  }
   return [
     [bounds.sw[1], bounds.sw[0]],
     [bounds.sw[1], bounds.ne[0]],
@@ -63,6 +67,8 @@ export function convertHexesToFeatures(
         hex: hex,
         resolution,
         idx: idx,
+        center: cellToLatLng(hex),
+        count: 0,
       },
     };
   });
@@ -178,7 +184,7 @@ export function getBoundsHexFeatures(bounds, mapZoom)
   );
   if (newGeoJsonHexesBounds.length > 500) {
     console.error(`Too many features, throwing for safety. numfeatures: ${newGeoJsonHexesBounds.length} zoom: ${mapZoom}`)
-    return featuresToGeoJson([])
+    return []
   }
-  return featuresToGeoJson(newGeoJsonHexesBounds)
+  return newGeoJsonHexesBounds
 }

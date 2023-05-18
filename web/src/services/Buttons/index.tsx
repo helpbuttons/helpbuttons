@@ -25,22 +25,26 @@ export class ButtonService {
 
   public static findJson(optionsJson: string): Observable<Button[]> {
     const options = JSON.parse(optionsJson)
-    return this.find(options.bounds)
-  }
-
-  public static find(bounds: Bounds): Observable<Button[]> {
-    if (!bounds || !bounds.ne)
+    if(!options.hexagons)
     {
-      console.error('wrong bounds? ')
+      console.error('no hexagons defined...')
       return of([]);
     }
-    return httpService.get<Button[]>("/buttons/find/", 
+    if(!options.resolution)
     {
-      northEast_lat: bounds.ne[0].toString(),
-      northEast_lng: bounds.ne[1].toString(),
-      southWest_lat: bounds.sw[0].toString(),
-      southWest_lng: bounds.sw[1].toString(),
-    });
+      console.error('resolution not defined...')
+      return of([]);
+    }
+    return this.find(options.resolution, options.hexagons)
+  }
+
+  public static find(resolution :number,hexagons: string[]): Observable<Button[]> {
+    if (hexagons.length < 1)
+    {
+      console.error('empty hexagons...')
+      return of([]);
+    }
+    return httpService.post<Button[]>(`/buttons/findh3/${resolution}`,{hexagons});
   }
 
   public static findById(id: string): Observable<any> {

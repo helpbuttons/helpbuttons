@@ -24,6 +24,8 @@ export function getLocale(availableLocales = null) {
       return locale;
     });
   }
+
+  try{
   const splitHref = getHref().split('/');
 
   if (
@@ -33,12 +35,16 @@ export function getLocale(availableLocales = null) {
   ) {
     return splitHref[3];
   }
+  }catch(err)
+  {
+    
+  }
   return 'en';
 }
 
 export function makeImageUrl(image, baseUrl = '') {
   if (!image) {
-    return 'fail.png';
+    return '/assets/images/noIcon.png';
   }
   const regex = /^data\:image/gm;
   const matches = image.match(regex);
