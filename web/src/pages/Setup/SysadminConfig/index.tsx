@@ -51,7 +51,7 @@ export default function SysadminConfig() {
         new GetConfig(
           () => {alertService.error('u shouldnt be here'); router.push('/')},
           (error) => {
-            if (error == 'not-found') {
+            if (error == 'not-found' || error=='nosysadminconf') {
               setNoConfigFoundConfirmed(true);
             } else {
               alertService.error(JSON.stringify(error));
@@ -79,21 +79,20 @@ export default function SysadminConfig() {
               alertService.error(
                 t(
                   err.message,
-                  `Database connection error, could not connect to database host '${data.postgresHostName}' not found`,
+                  [data.postgresHostName] 
                 ),
               );
             } else if (err.message === 'db-connection-error') {
               alertService.error(
                 t(
-                  err.message,
-                  `Database connection error, wrong credentials?`,
+                  err.message
                 ),
               );
             } else {
               alertService.error(
                 t(
                   'other-problem',
-                  `Problem:: ${JSON.stringify(err)}`,
+                  [JSON.stringify(err)],
                 ),
               );
             }
@@ -102,7 +101,7 @@ export default function SysadminConfig() {
             alertService.warn(
               t(
                 'config-conflict',
-                `You already created a configuration, please remove config.json from the api directory. Or if you want to continue this installation <a href="${SetupSteps.CREATE_ADMIN_FORM}">create an admin account</a>, or <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`,
+                [SetupSteps.CREATE_ADMIN_FORM,SetupSteps.FIRST_OPEN]
               ),
             );
           }
@@ -123,7 +122,7 @@ export default function SysadminConfig() {
 
   const onSmtpSuccess = () => {
     alertService.info(
-      t('smtp-success', `SMTP connection succesful!`),
+      t('smtp-success'),
     );
   };
 
