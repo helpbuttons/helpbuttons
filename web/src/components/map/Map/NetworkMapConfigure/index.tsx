@@ -27,9 +27,9 @@ export function NetworkMapConfigure({
       <MapTileSelector
         setMapTile={setMapTile}
       />
-      <BrowseTypeSelector
+      {/* <BrowseTypeSelector
         setBrowseType={setBrowseType}
-      />
+      /> */}
       {t('configure.centerOfMap')}
       {(mapSettings.browseType != BrowseType.LIST) && 
       <HbMap
@@ -41,7 +41,7 @@ export function NetworkMapConfigure({
         tileType={mapSettings.tileType}
         handleMapClick={handleMapClick}
       >
-        {(mapSettings.browseType == BrowseType.HONEYCOMB && mapSettings.honeyCombFeatures) && 
+        {/* {(mapSettings.browseType == BrowseType.HONEYCOMB && mapSettings.honeyCombFeatures) && 
             <GeoJson
             data={mapSettings.honeyCombFeatures}
             onClick={(feature) => {
@@ -64,7 +64,7 @@ export function NetworkMapConfigure({
               };
             }}
           />
-        }
+        } */}
 
         {(mapSettings.browseType == BrowseType.PINS) && 
             <MarkerButtonIcon

@@ -17,7 +17,9 @@ interface HbMapProps {
   width?: number,
   height?: number,
   maxZoom: 16,
-  minZoom: 4
+  minZoom: 4,
+  onAnimationStart: () => {},
+  onAnimationStop: () => {}
 }
 export function HbMap({
   children,
@@ -28,6 +30,7 @@ export function HbMap({
   width = null,
   height = null,
   tileType = HbMapTiles.OSM,
+  setMapIsMoving = null,
 }) { 
 
   const tileProvider = (x, y, z, dpr) => {
@@ -49,7 +52,9 @@ export function HbMap({
       onClick: ({ event, latLng, pixel }) => {handleMapClick({latLng})},
       provider: tileProvider,
       maxZoom: 16,
-      minZoom: 4
+      minZoom: 4,
+      onAnimationStart: () => setMapIsMoving(true),
+      onAnimationStop: () => setMapIsMoving(false)
     }
     if (width !== null)
     {

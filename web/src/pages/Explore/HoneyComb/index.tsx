@@ -54,7 +54,7 @@ function HoneyComb({ router }) {
     };
   });
 
-  const timeInMsBetweenStrokes = 100; //ms
+  const timeInMsBetweenStrokes = 150; //ms
   const [hexagonClicked, setHexagonClicked] = useState();
   const [hexagonsToFetch, setHexagonsToFetch] = useState({
     resolution: 1,
@@ -233,6 +233,7 @@ function HoneyComb({ router }) {
             ) == hexagonClicked,
         );
       });
+      // setExploreSettings((prevSettings) => {return {...prevSettings, center: cellToLatLng(hexagonClicked)}})
     } else {
       setListButtons(() => filteredButtons.slice(0, 20));
       // TODO HERE SHOULD LOAD AS SOON AS THE USER SCROLLS!

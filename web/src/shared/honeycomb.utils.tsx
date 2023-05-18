@@ -80,13 +80,12 @@ export function getDegreesBleed(zoom: number, bounds: Bounds) : Bounds
   if (zoom < 5) {
     extende = 3
   } else if (Math.abs(zoom - 5) < 3) {
-    extende = 1.5
+    extende = 2
   } else if (zoom < 10) {
     extende = 0.5
   } else if (zoom < 17) {
     extende = 0.01
   }
-
   let newBounds = bounds;
 
   newBounds.sw[0] = newBounds.sw[0] - extende;
@@ -179,7 +178,7 @@ export function convertH3DensityToFeatures(
 export function getBoundsHexFeatures(bounds, mapZoom)
 {
   const newGeoJsonHexesBounds = getGeoJsonHexesForBounds(
-    bounds,
+    getDegreesBleed(mapZoom, bounds),
     getResolution(mapZoom),
   );
   if (newGeoJsonHexesBounds.length > 500) {

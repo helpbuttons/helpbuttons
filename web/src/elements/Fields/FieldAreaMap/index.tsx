@@ -31,7 +31,7 @@ export default function FieldAreaMap({
         onChange: (newRadius) => setRadius(newRadius)
       },
       geometry: circleToPolygon([0,0], 10000),
-      browseType: BrowseType.PINS,
+      browseType: BrowseType.HONEYCOMB,
       honeyCombFeatures: null,
     }, ...defaultExploreSettings}
   })

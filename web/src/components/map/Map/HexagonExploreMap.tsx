@@ -32,8 +32,8 @@ export default function HexagonExploreMap({
   setHexagonClicked,
   hexagonClicked,
 }) {
-
-  const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(0);
+  const [mapIsMoving, setMapIsMoving] = useState(false)
+  const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
   const [resolution, setResolution] = useState(1);
   const [h3ButtonsDensityFeatures, setH3ButtonsDensityFeatures] =
     useState([]);
@@ -42,11 +42,6 @@ export default function HexagonExploreMap({
   };
 
   let cachedHexes = [];
-
-  const handleMarkerClicked = (button: Button) => {
-    setMapCenter([button.latitude, button.longitude]);
-    store.emit(new updateCurrentButton(button));
-  };
   const handleMapClicked = ({ event, latLng, pixel }) => {
     setMapCenter(latLng);
     store.emit(new updateCurrentButton(null));
@@ -59,13 +54,11 @@ export default function HexagonExploreMap({
     if (getResolution(exploreSettings.zoom) != resolution) {
       setResolution(() => getResolution(exploreSettings.zoom));
     }
-    setHexagonClicked(() => null); // unselect all hexagons
+    // setHexagonClicked(() => null); // unselect all hexagons
 
     if (exploreSettings.bounds) {
 
-      if (exploreSettings.prevZoom == 0) {
-        console.log('im loading... ');
-      } else if (exploreSettings.zoom > exploreSettings.prevZoom) {
+      if (exploreSettings.zoom > exploreSettings.prevZoom) {
         // TODO: zooming in.. should not fetch from database.. 
         // this is not affecting the filtered buttons... so it won't update to new resolution.. how do it update resolution?
         // wont update filteredButtons, resolution will change
@@ -132,27 +125,27 @@ export default function HexagonExploreMap({
     setMaxButtonsHexagon(() =>
       h3ButtonsDensityFeatures.reduce((accumulator, currentValue) => {
         return Math.max(accumulator, currentValue.properties.count);
-      }, 1),
+      }, maxButtonsHexagon),
     );
   }, [h3ButtonsDensityFeatures]);
   return (
     <>
-      Found : {filteredButtons.length} zoom: {exploreSettings.zoom}{' '}
-      resolution: {resolution} - max: {maxButtonsHexagon}
       <HbMap
         mapCenter={exploreSettings.center}
         mapZoom={exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
         handleMapClick={handleMapClicked}
         tileType={exploreSettings.tileType}
+        setMapIsMoving={setMapIsMoving}
       >
         <GeoJson>
           {h3ButtonsDensityFeatures.map((buttonFeature) => (
             <GeoJsonFeature
               onClick={(feature) => {
+                if(!mapIsMoving){
                 setHexagonClicked(
                   () => feature.payload.properties.hex,
-                );
+                );}
               }}
               feature={buttonFeature}
               key={buttonFeature.properties.hex}
