@@ -18,7 +18,6 @@ export function NetworkMapConfigure({
 
   return (
     <>
-      {mapSettings.center}
       {/* <RadiusSelector
         slider={mapSettings.slider}
         radius={mapSettings.radius}

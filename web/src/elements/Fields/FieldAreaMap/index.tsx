@@ -20,7 +20,7 @@ export default function FieldAreaMap({
   const [mapSettings, setMapSettings] = useState(() => {
     return {...{
       center: [0,0],
-      zoom: 3,
+      zoom: 4,
       tileType: HbMapTiles.OSM,
       radius: 10000,
       bounds: null,

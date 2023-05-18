@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Bounds,
   GeoJson,
   GeoJsonFeature,
   Overlay,
 } from 'pigeon-maps';
-import { Button } from 'shared/entities/button.entity';
-import { MarkerButton, MarkerButtonPopup } from './MarkerButton';
 import { store } from 'pages';
 import { updateCurrentButton } from 'state/Explore';
 import { HbMap } from '.';
 import {
   convertBoundsToGeoJsonHexagons,
   convertH3DensityToFeatures,
-  featuresToGeoJson,
   getBoundsHexFeatures,
   getResolution,
 } from 'shared/honeycomb.utils';
 import { cellToParent } from 'h3-js';
 import _ from 'lodash';
-import { usePrevious } from 'shared/custom.hooks';
-import { filter } from 'rxjs';
 
 export default function HexagonExploreMap({
   filteredButtons,
@@ -136,16 +130,14 @@ export default function HexagonExploreMap({
         onBoundsChanged={onBoundsChanged}
         handleMapClick={handleMapClicked}
         tileType={exploreSettings.tileType}
-        setMapIsMoving={setMapIsMoving}
       >
         <GeoJson>
           {h3ButtonsDensityFeatures.map((buttonFeature) => (
             <GeoJsonFeature
               onClick={(feature) => {
-                if(!mapIsMoving){
                 setHexagonClicked(
                   () => feature.payload.properties.hex,
-                );}
+                )
               }}
               feature={buttonFeature}
               key={buttonFeature.properties.hex}
