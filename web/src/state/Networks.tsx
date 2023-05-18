@@ -69,6 +69,7 @@ export class SelectedNetworkFetched implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.networks.selectedNetwork = this.network;
+      newState.networks.selectedNetwork.exploreSettings = JSON.parse(this.network.exploreSettings);
       newState.networks.selectedNetworkLoading = false;
     });
   }

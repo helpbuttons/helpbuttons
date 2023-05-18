@@ -142,14 +142,13 @@ export class ButtonService {
     return this.buttonRepository.save([button]);
   }
 
-  async findAll(networkId: string, bounds: any) {
+  async findAll(bounds: any) {
     try {
       const buttonsOnBounds = await this.buttonRepository
         .createQueryBuilder('button')
         .select('id')
         .where(
           `
-      button.networkId = '${networkId}' AND
       ST_Contains(ST_GEOMFROMTEXT('POLYGON((
       ${bounds.southWest.lat}
       ${bounds.northEast.lng},
@@ -167,7 +166,7 @@ export class ButtonService {
       ${bounds.northEast.lng}
     
     ))'), button.location)`,
-        )
+        ).limit(1000)
         .execute();
 
       const buttonsIds = buttonsOnBounds.map((button) => button.id);
@@ -188,37 +187,29 @@ export class ButtonService {
   }
 
   // NOT USED.. for the record stays here
-  async findh3(bounds: any, resolution: number) {
+  async findh3(resolution, hexagons) {
     try {
+      if(hexagons && hexagons.length > 500)
+      {
+        throw new HttpException('too many hexagons requested, aborting',HttpStatus.PAYLOAD_TOO_LARGE)
+      }
+      const buttonsOnHexagons = await this.buttonRepository
+        .createQueryBuilder('button')
+        .select('id')
+        .where(`h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons)`,{ hexagons:hexagons })
+        .limit(1000)
+        .execute();
+        const buttonsIds = buttonsOnHexagons.map((button) => button.id);
 
-      const h3Buttons = await this.buttonRepository
-        .query(`
-        SELECT hexagon, count(hexagon) FROM
-        (
-        select h3_cell_to_parent(cast(hexagon as h3index),${resolution}) as hexagon from
-        (SELECT id, hexagon 
-        FROM button
-        WHERE ST_Contains(ST_GEOMFROMTEXT('POLYGON((
-          ${bounds.southWest.lat}
-          ${bounds.northEast.lng},
-        
-          ${bounds.northEast.lat}
-          ${bounds.northEast.lng},
-        
-          ${bounds.northEast.lat}
-          ${bounds.southWest.lng},
-        
-          ${bounds.southWest.lat}
-          ${bounds.southWest.lng},
-        
-          ${bounds.southWest.lat}
-          ${bounds.northEast.lng}
-        
-        ))'), button.location)) AS buttonsH3) AS hexagonGrouped
-        group by hexagon
-        `);
-          
-return h3Buttons;
+        return this.buttonRepository.find({
+          relations: ['feed', 'owner'],
+          where: {
+            id: In(buttonsIds),
+          },
+          order: {
+            created_at: 'DESC',
+          },
+        });
     } catch (err) {
       console.log(err);
       return [];

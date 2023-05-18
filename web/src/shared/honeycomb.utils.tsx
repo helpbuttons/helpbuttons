@@ -27,6 +27,10 @@ export function featuresToGeoJson(features) {
 
 
 export function convertBoundsToPolygon(bounds: Bounds) {
+  if(!bounds)
+  {
+    throw new Error('bounds are null ')
+  }
   return [
     [bounds.sw[1], bounds.sw[0]],
     [bounds.sw[1], bounds.ne[0]],
@@ -63,6 +67,8 @@ export function convertHexesToFeatures(
         hex: hex,
         resolution,
         idx: idx,
+        center: cellToLatLng(hex),
+        count: 0,
       },
     };
   });
@@ -94,11 +100,12 @@ export function getDegreesBleed(zoom: number, bounds: Bounds) : Bounds
 export function getResolution(zoom) {
   switch (zoom) {
     case 4:
+      return 1;
     case 5:
       return 2;
     case 6:
-      return 3;
     case 7:
+      return 3;
     case 8:
       return 4;
     case 9:
@@ -167,22 +174,17 @@ export function convertH3DensityToFeatures(
       },
     };
   })
-  // console.log(allgood)
+}
 
-  // console.log(hexagones)
-  // return h3HexagonsCount.map((data) => {
-    // console.log(hex)
-  //   console.log(arr)
-  // console.log(data)
-    // const geojsonHex = h3SetToFeature([hex]);
-    // return {
-    //   ...geojsonHex,
-    //   properties: {
-    //     ...geojsonHex.properties,
-    //     hex: hex,
-    //     count: 
-    //     idx: idx,
-    //   },
-    // };
-  // });
+export function getBoundsHexFeatures(bounds, mapZoom)
+{
+  const newGeoJsonHexesBounds = getGeoJsonHexesForBounds(
+    bounds,
+    getResolution(mapZoom),
+  );
+  if (newGeoJsonHexesBounds.length > 500) {
+    console.error(`Too many features, throwing for safety. numfeatures: ${newGeoJsonHexesBounds.length} zoom: ${mapZoom}`)
+    return []
+  }
+  return newGeoJsonHexesBounds
 }

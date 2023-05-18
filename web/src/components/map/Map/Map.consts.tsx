@@ -27,3 +27,10 @@ export function osm(
   const s = String.fromCharCode(97 + ((x + y + z) % 3));
     return `https://${s}.tile.openstreetmap.org/${z}/${x}/${y}.png`;
 }
+
+
+export enum BrowseType {
+  PINS = 'pins',
+  HONEYCOMB = 'honeycomb',
+  LIST = 'list',
+}

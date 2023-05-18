@@ -12,8 +12,8 @@ export const buttonTypes = [
         cssColor: "#19AF96"
     }
     ,{
-        name: "exchange",
-        caption: "Exchange",
+        name: "service",
+        caption: "Service",
         color: "custom",
         cssColor: "#EA5648"
     },

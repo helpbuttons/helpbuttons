@@ -21,9 +21,11 @@ export default function t(key: string, args: string[] = []) {
   if (translatedString === false || !translatedString) {
     translatedString = getTranslation('en', key)
   }
-
   if (args && args.length > 0) {
     translatedString = format(translatedString, args)
+  }
+  if(!translatedString){ // if string not found on translations, show key
+    translatedString = key;
   }
   return ReactHtmlParser(translatedString);
 }
@@ -48,10 +50,7 @@ function getTranslation(locale, key) {
       if (selectedTranslations.translations[keys[0]] && selectedTranslations.translations[keys[0]][keys[1]]) {
         return selectedTranslations.translations[keys[0]][keys[1]];
       }
-      
-      console.log(`missing ${key} from locale ${locale}`)
       return false;
-
     } else if (keys.length > 0) {
       return selectedTranslations.translations[keys[0]];
     }

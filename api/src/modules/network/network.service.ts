@@ -35,21 +35,12 @@ export class NetworkService {
       id: dbIdGenerator(),
       description: createDto.description,
       // url: createDto.url,
-      radius: createDto.radius,
-      latitude: createDto.latitude,
-      longitude: createDto.longitude,
       tags: createDto.tags,
       privacy: createDto.privacy,
-      location: () =>
-        `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
       logo: null,
       jumbo: null,
-      zoom: createDto.zoom,
       name: createDto.name,
-      address: createDto.address,
-      resolution: createDto.resolution,
-      hexagons: createDto.hexagons,
-      tiletype: createDto.tiletype
+      exploreSettings: createDto.exploreSettings
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -134,21 +125,12 @@ export class NetworkService {
       id: defaultNetwork.id,
       description: updateDto.description,
       // url: createDto.url,
-      radius: updateDto.radius,
-      latitude: updateDto.latitude,
-      longitude: updateDto.longitude,
       tags: updateDto.tags,
       privacy: updateDto.privacy,
-      location: () =>
-        `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
       logo: null,
       jumbo: null,
-      zoom: updateDto.zoom,
       name: updateDto.name,
-      address: updateDto.address,
-      resolution: updateDto.resolution,
-      hexagons: updateDto.hexagons,
-      tiletype: updateDto.tiletype
+      exploreSettings: updateDto.exploreSettings
     } ;
     await getManager().transaction(
       async (transactionalEntityManager) => {

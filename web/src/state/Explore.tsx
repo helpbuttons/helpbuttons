@@ -17,8 +17,9 @@ import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
 import { handleError } from './helper';
 
-import { debounceTime } from "rxjs";
-import { switchMap } from "rxjs/operators";
+import { debounceTime } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { convertBoundsToGeoJsonHexagons } from 'shared/honeycomb.utils';
 interface ExploreMapProps {
   defaultCenter: Point;
   defaultZoom: number;
@@ -26,12 +27,12 @@ interface ExploreMapProps {
   handleBoundsChange: Function;
 }
 export interface ExploreState {
-  draftButton: Button
-  showLeftColumn: boolean
-  mapCenter
-  mapZoom
-  currentButton: Button
-  mapBondsButtons: Button[]
+  draftButton: Button;
+  showLeftColumn: boolean;
+  mapCenter;
+  mapZoom;
+  currentButton: Button;
+  mapBondsButtons: Button[];
 }
 
 export const exploreInitial = {
@@ -41,47 +42,37 @@ export const exploreInitial = {
   mapZoom: -1,
   currentButton: null,
   mapBondsButtons: [],
-}
-
-export function setButtonsAndDebounce(sub, ms) {
-    return sub.asObservable().pipe(
-      debounceTime(ms),
-      switchMap((options : string, id) => ButtonService.findJson(options)
-      )
-    );
-}
+};
 
 export class FindButtons implements WatchEvent {
-  public constructor(private networkId: string, private bounds: Bounds) {}
+  public constructor(
+    private resolution: number,
+    private hexagons: string[],
+    private onSuccess,
+    private onError,
+  ) {}
 
   public watch(state: GlobalState) {
-    return ButtonService.find(this.networkId, this.bounds).pipe(
-      map((buttons) => new ButtonsFound(buttons)),
+    return ButtonService.find(this.resolution, this.hexagons).pipe(
+      map((buttons) => this.onSuccess(buttons)),
+      catchError((error) => handleError(this.onError, error)),
     );
-  }
-}
-
-export class ButtonsFound implements UpdateEvent {
-  public constructor(private buttons: Button[]) {}
-
-  public update(state: GlobalState) {
-    return produce(state, newState => {
-      newState.explore.mapBondsButtons = this.buttons;
-    });
   }
 }
 
 export class FindAddress implements WatchEvent {
-  public constructor(private q: string, private onSuccess, private onError) {}
+  public constructor(
+    private q: string,
+    private onSuccess,
+    private onError,
+  ) {}
 
   public watch(state: GlobalState) {
-    const t =  GeoService.findPromise(this.q)
-    .then((place) =>
-      this.onSuccess(place)  
-    )
-    .catch((error) => {
-      this.onError(error)
-    })
+    const t = GeoService.findPromise(this.q)
+      .then((place) => this.onSuccess(place))
+      .catch((error) => {
+        this.onError(error);
+      });
   }
 }
 
@@ -90,15 +81,14 @@ export class CreateButton implements WatchEvent {
     private button: Button,
     private networkId: string,
     private onSuccess,
-    private onError
+    private onError,
   ) {}
   public watch(state: GlobalState) {
     return ButtonService.new(this.button, this.networkId).pipe(
       map((buttonData) => {
-        new ButtonFound(buttonData),
-        this.onSuccess();
+        new ButtonFound(buttonData), this.onSuccess();
       }),
-      catchError((error) => handleError(this.onError, error))
+      catchError((error) => handleError(this.onError, error)),
     );
   }
 }
@@ -107,19 +97,23 @@ export class SaveButtonDraft implements UpdateEvent {
   public constructor(private button: Button) {}
 
   public update(state: GlobalState) {
-    return produce(state, newState => {
+    return produce(state, (newState) => {
       newState.explore.draftButton = this.button;
     });
   }
 }
 
 export class FindButton implements WatchEvent {
-  public constructor(private buttonId: string, private onSuccess,private onError) {}
+  public constructor(
+    private buttonId: string,
+    private onSuccess,
+    private onError,
+  ) {}
 
   public watch(state: GlobalState) {
     return ButtonService.findById(this.buttonId).pipe(
       map((button) => this.onSuccess(button)),
-      catchError((error) => handleError(this.onError,error))
+      catchError((error) => handleError(this.onError, error)),
     );
   }
 }
@@ -128,7 +122,7 @@ export class ButtonFound implements UpdateEvent {
   public constructor(private button: Button) {}
 
   public update(state: GlobalState) {
-    return produce(state, newState => {
+    return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
     });
   }
@@ -138,7 +132,7 @@ export class ClearCurrentButton implements UpdateEvent {
   public constructor() {}
 
   public update(state: GlobalState) {
-    return produce(state, newState => {
+    return produce(state, (newState) => {
       newState.explore.currentButton = null;
     });
   }
@@ -151,50 +145,51 @@ export class SetAsCurrentButton implements WatchEvent {
       return of(undefined);
     }
     state.explore.mapBondsButtons.filter((button) => {
-      if(button.id == this.buttonId)
-      {
-        return new ButtonFound(button)
+      if (button.id == this.buttonId) {
+        return new ButtonFound(button);
       }
-    })
+    });
     return ButtonService.findById(this.buttonId).pipe(
       map((button) => new ButtonFound(button)),
     );
   }
 }
 
-
 export class ButtonDelete implements WatchEvent {
-  public constructor(private buttonId: string, private onSuccess, private onError) {}
+  public constructor(
+    private buttonId: string,
+    private onSuccess,
+    private onError,
+  ) {}
 
   public watch(state: GlobalState) {
     return ButtonService.delete(this.buttonId).pipe(
       map((rowsAffected) => {
-        console.log(rowsAffected)
-        if (rowsAffected > 0){
-          this.onSuccess()
-        }else {
-          this.onError('error-deleting')
+        console.log(rowsAffected);
+        if (rowsAffected > 0) {
+          this.onSuccess();
+        } else {
+          this.onError('error-deleting');
         }
       }),
-      catchError((error) => handleError(this.onError, error))
+      catchError((error) => handleError(this.onError, error)),
     );
   }
 }
-
 
 export class UpdateButton implements WatchEvent {
   public constructor(
     private buttonId: string,
     private button: UpdateButtonDto,
     private onSuccess,
-    private onError
+    private onError,
   ) {}
   public watch(state: GlobalState) {
     return ButtonService.update(this.buttonId, this.button).pipe(
       map((data) => {
         this.onSuccess(data);
       }),
-      catchError((error) => handleError(this.onError, error))
+      catchError((error) => handleError(this.onError, error)),
     );
   }
 }
@@ -202,7 +197,7 @@ export class updateCurrentButton implements UpdateEvent {
   public constructor(private button: Button) {}
 
   public update(state: GlobalState) {
-    return produce(state, newState => {
+    return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
     });
   }
@@ -212,7 +207,7 @@ export class updateShowLeftColumn implements UpdateEvent {
   public constructor(private toggle: boolean) {}
 
   public update(state: GlobalState) {
-    return produce(state, newState => {
+    return produce(state, (newState) => {
       newState.explore.showLeftColumn = this.toggle;
     });
   }

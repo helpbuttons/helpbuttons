@@ -43,45 +43,24 @@ export function MarkerButton(props: MarkerButtonProps) {
 
   return (
     <>
-      <MarkerButtonIcon {...props}
-      cssColor={cssColor}
-      image={makeImageUrl(props.button.image, '/api/')}
-      title={props.button.title}
-      onClick={() => handleMarkerClicked(props.button)}
+      <MarkerButtonIcon
+        {...props}
+        cssColor={cssColor}
+        image={makeImageUrl(props.button.image, '/api/')}
+        title={props.button.title}
+        onClick={() => handleMarkerClicked(props.button)}
       />
-      
     </>
   );
 }
 
 export function MarkerButtonPopup(props: MarkerButtonPopupProps) {
   return (
-  <div
-          style={{
-            position: 'absolute',
-            transform: `translate(${props.left}px, ${props.top}px)`,
-            backgroundColor: 'transparent',
-            ...(props.style || {}),
-          }}
-          className={
-            props.className
-              ? `${props.className} pigeon-click-block`
-              : 'pigeon-click-block'
-          }
-        >
-          <CardButtonMap button={props.button} />
-        </div>)
-
-}
-
-export function MarkerButtonIcon(props: MarkerButtonIconProps) {
-
-  return (
-    <div style={buttonColorStyle(props.cssColor)}>
     <div
       style={{
         position: 'absolute',
         transform: `translate(${props.left}px, ${props.top}px)`,
+        backgroundColor: 'transparent',
         ...(props.style || {}),
       }}
       className={
@@ -90,28 +69,48 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
           : 'pigeon-click-block'
       }
     >
-      <figure
-        id="markerButton"
-        onClick={props.onClick}
-        className="marker-button marker-button-selector"
+      <CardButtonMap button={props.button} />
+    </div>
+  );
+}
+
+export function MarkerButtonIcon(props: MarkerButtonIconProps) {
+  return (
+    <div style={buttonColorStyle(props.cssColor)}>
+      <div
+        style={{
+          position: 'absolute',
+          transform: `translate(${props.left}px, ${props.top}px)`,
+          ...(props.style || {}),
+        }}
+        className={
+          props.className
+            ? `${props.className} pigeon-click-block`
+            : 'pigeon-click-block'
+        }
       >
-        <div className="avatar-medium marker-button__image">
-          <img
-            src={props.image}
-            alt={props.title}
-            className="picture__img"
-          />
-        </div>
-
-        <span className="marker-button__arrow"></span>
-
-        <div className="marker-button__tags marker-button-selector-title"
+        <figure
+          id="markerButton"
+          onClick={props.onClick}
+          className="marker-button marker-button-selector"
         >
-          <div className="marker-button__link-tag" >
-            {props.title}
+          <div className="avatar-medium marker-button__image">
+            <img
+              src={props.image}
+              alt={props.title}
+              className="picture__img"
+            />
           </div>
-        </div>
-      </figure>
-    </div></div>
+
+          <span className="marker-button__arrow"></span>
+
+          <div className="marker-button__tags marker-button-selector-title">
+            <div className="marker-button__link-tag">
+              {props.title}
+            </div>
+          </div>
+        </figure>
+      </div>
+    </div>
   );
 }

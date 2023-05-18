@@ -1,42 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { GeoJson, Overlay } from 'pigeon-maps';
+import {
+  Bounds,
+  GeoJson,
+  GeoJsonFeature,
+  Overlay,
+} from 'pigeon-maps';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton, MarkerButtonPopup } from './MarkerButton';
 import { store } from 'pages';
-import {
-  updateCurrentButton,
-} from 'state/Explore';
+import { updateCurrentButton } from 'state/Explore';
 import { HbMap } from '.';
-import { convertH3DensityToFeatures, featuresToGeoJson, getGeoJsonHexesForBounds, getResolution } from 'shared/honeycomb.utils';
+import {
+  convertBoundsToGeoJsonHexagons,
+  convertH3DensityToFeatures,
+  featuresToGeoJson,
+  getBoundsHexFeatures,
+  getResolution,
+} from 'shared/honeycomb.utils';
 import { cellToParent } from 'h3-js';
 import _ from 'lodash';
+import { usePrevious } from 'shared/custom.hooks';
+import { filter } from 'rxjs';
 
 export default function HexagonExploreMap({
   filteredButtons,
   currentButton,
   handleBoundsChange,
-  mapZoom,
-  mapCenter,
-  setMapZoom,
+  exploreSettings,
   setMapCenter,
+  setHexagonsToFetch,
+  setHexagonClicked,
+  hexagonClicked,
 }) {
-  const [boundsFeatures, setBoundsFeatures] = useState([]);
-  const [h3ButtonsDensityFeatures, setH3ButtonsDensityFeatures] = useState([])
-  const onBoundsChanged = ({ center, zoom, bounds }) => {
-    const newGeoJsonHexesBounds = getGeoJsonHexesForBounds(bounds,getResolution(zoom));
-    if(newGeoJsonHexesBounds.length > 500)
-    {
-      try {
-        throw new Error('Too many features, throwing for safety');
-    } catch(e) {
-        console.log(e.stack);
-        return;
-    }
-    }
-    setBoundsFeatures(newGeoJsonHexesBounds);
 
+  const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(0);
+  const [resolution, setResolution] = useState(1);
+  const [h3ButtonsDensityFeatures, setH3ButtonsDensityFeatures] =
+    useState([]);
+  const onBoundsChanged = ({ center, zoom, bounds }) => {
     handleBoundsChange(bounds, center, zoom);
   };
+
+  let cachedHexes = [];
 
   const handleMarkerClicked = (button: Button) => {
     setMapCenter([button.latitude, button.longitude]);
@@ -48,68 +53,153 @@ export default function HexagonExploreMap({
   };
 
   useEffect(() => {
-    const hexagonsOnResolution = filteredButtons.map((button) => cellToParent(button.hexagon, getResolution(mapZoom)))
-    setH3ButtonsDensityFeatures(convertH3DensityToFeatures(_.groupBy(hexagonsOnResolution)))
-  }, [filteredButtons])
+    if (exploreSettings.loading) {
+      return;
+    }
+    if (getResolution(exploreSettings.zoom) != resolution) {
+      setResolution(() => getResolution(exploreSettings.zoom));
+    }
+    setHexagonClicked(() => null); // unselect all hexagons
+
+    if (exploreSettings.bounds) {
+
+      if (exploreSettings.prevZoom == 0) {
+        console.log('im loading... ');
+      } else if (exploreSettings.zoom > exploreSettings.prevZoom) {
+        // TODO: zooming in.. should not fetch from database.. 
+        // this is not affecting the filtered buttons... so it won't update to new resolution.. how do it update resolution?
+        // wont update filteredButtons, resolution will change
+        // change hexagons to children
+        const boundsHexes = convertBoundsToGeoJsonHexagons(
+          exploreSettings.bounds,
+          resolution,
+        );
+        setHexagonsToFetch({resolution,hexagons: boundsHexes});
+      } else if (exploreSettings.zoom < exploreSettings.prevZoom) {
+        // zooming out.. 
+        // request more buttons .. useEffect filteredButtons will create new density map!
+
+        // getButtonsForBounds(exploreSettings.bounds)
+        // will update filteredButtons, resolution will change
+        const boundsHexes = convertBoundsToGeoJsonHexagons(
+          exploreSettings.bounds,
+          resolution,
+        );
+        setHexagonsToFetch({resolution,hexagons: boundsHexes}); 
+        // TODO: for new hexagons... subtract already cache hexagons
+      } else {
+        // panning, 
+        // TODO should only fetch new hexagons.
+        // will update filteredButtons, but resolution won't change, where do I draw the hexagons?
+        // getButtonsForBounds(exploreSettings.bounds)
+        const boundsHexes = convertBoundsToGeoJsonHexagons(
+          exploreSettings.bounds,
+          resolution,
+        );
+        cachedHexes = _.union(boundsHexes, cachedHexes);
+        setHexagonsToFetch({resolution,hexagons: boundsHexes}); // hexagons missing
+      }
+    }
+  }, [exploreSettings]);
+
+  useEffect(() => {
+    
+    
+    setH3ButtonsDensityFeatures(() => {
+      if(!exploreSettings.bounds)
+      {
+        return []
+      }
+      const boundsFeatures = getBoundsHexFeatures(
+        exploreSettings.bounds,
+        exploreSettings.zoom,
+      )
+      const hexagonsOnResolution = filteredButtons.map((button) =>
+        cellToParent(button.hexagon, resolution),
+      );
+      const densityMap = convertH3DensityToFeatures(
+        _.groupBy(hexagonsOnResolution),
+      );
+      return _.unionBy(
+        densityMap,
+        boundsFeatures,
+        'properties.hex',
+      );
+    });
+  }, [resolution, filteredButtons]);
+
+  useEffect(() => {
+    setMaxButtonsHexagon(() =>
+      h3ButtonsDensityFeatures.reduce((accumulator, currentValue) => {
+        return Math.max(accumulator, currentValue.properties.count);
+      }, 1),
+    );
+  }, [h3ButtonsDensityFeatures]);
   return (
-    <HbMap
-      mapCenter={mapCenter}
-      setMapCenter={setMapCenter}
-      mapZoom={mapZoom}
-      setMapZoom={setMapZoom}
-      handleBoundsChange={onBoundsChanged}
-      handleMapClick={handleMapClicked}
-    >
-      
-      <GeoJson
-              data={featuresToGeoJson(boundsFeatures)}
-              onClick={(feature) => {console.log(feature.payload.properties.hex)}}
-              styleCallback={(feature, hover) => {
-                if (hover) {
-                  return {
-                    fill: '#ffdd028c',
-                    strokeWidth: '0.3',
-                    stroke: '#ffdd02ff',
-                    r: '20',
-                  };
-                }
-                return {
-                  fill: '#d4e6ec11',
-                  strokeWidth: '0.3',
-                  stroke: '#ffdd02ff',
-                  r: '20',
-                };
+    <>
+      Found : {filteredButtons.length} zoom: {exploreSettings.zoom}{' '}
+      resolution: {resolution} - max: {maxButtonsHexagon}
+      <HbMap
+        mapCenter={exploreSettings.center}
+        mapZoom={exploreSettings.zoom}
+        onBoundsChanged={onBoundsChanged}
+        handleMapClick={handleMapClicked}
+        tileType={exploreSettings.tileType}
+      >
+        <GeoJson>
+          {h3ButtonsDensityFeatures.map((buttonFeature) => (
+            <GeoJsonFeature
+              onClick={(feature) => {
+                setHexagonClicked(
+                  () => feature.payload.properties.hex,
+                );
               }}
-            /> 
-              <GeoJson
-              data={featuresToGeoJson(h3ButtonsDensityFeatures)}
-              onClick={(feature) => {console.log(feature.payload)}}
+              feature={buttonFeature}
+              key={buttonFeature.properties.hex}
               styleCallback={(feature, hover) => {
+                if (feature.properties.hex == hexagonClicked) {
+                  return {
+                    fill: 'red',
+                    strokeWidth: '0.3',
+                    stroke: 'red',
+                    r: '20',
+                    opacity: 1,
+                  };
+                }
                 if (hover) {
                   return {
-                    fill: '#ffdd028c',
-                    strokeWidth: '0.3',
-                    stroke: '#ffdd02ff',
+                    fill: '#ffdd02e0',
+                    strokeWidth: '1.5',
+                    stroke: 'black',
                     r: '20',
                   };
                 }
                 return {
-                  fill: 'black',
-                  opacity: 0.5,
-                  strokeWidth: '0.3',
-                  stroke: '#ffdd02ff',
+                  fill: '#ffdd02e0',
+                  strokeWidth: '1',
+                  stroke: 'grey',
                   r: '20',
+                  opacity:
+                    (buttonFeature.properties.count * 100) /
+                    (maxButtonsHexagon - maxButtonsHexagon / 4) /
+                    100,
                 };
               }}
             />
-            {h3ButtonsDensityFeatures.map((feature) => {
-              return (
-              <Overlay anchor={feature.properties.center}>
-                {feature.properties.count}
-             </Overlay>
-              )
-            })}
-             
-    </HbMap>
+          ))}
+        </GeoJson>
+        {h3ButtonsDensityFeatures.map((feature) => {
+          if (feature.properties.count > 0)
+            return (
+              <Overlay
+                anchor={feature.properties.center}
+                key={feature.properties.hex}
+              >
+                {feature.properties.count.toString()}
+              </Overlay>
+            );
+        })}
+      </HbMap>
+    </>
   );
 }

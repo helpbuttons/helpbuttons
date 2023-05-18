@@ -34,17 +34,18 @@ export class ButtonsSeeder implements Seeder {
       location: () =>
         `ST_MakePoint(${buttonData.Location.latitude}, ${buttonData.Location.longitude})`,
       network: network,
-      images: [],
       owner: network.administrator,
-      image: null,
       title: buttonData.Title,
-      address: buttonData.address,
       when: JSON.stringify({ dates: [], type: 'alwaysOn' }),
       hexagon: latLngToCell(buttonData.Location.latitude,buttonData.Location.longitude, maxResolution)
     };
      return this.buttonRepository.insert([button]).then((result) => {
       return result;
-    }).catch((error) => {console.log('error');console.log(error); throw Error('error')})
+    }).catch((error) => {
+      console.log('error');
+      console.log(error); 
+      console.log(button)
+      throw Error('error')})
     })
 
     await Promise.all(buttons)

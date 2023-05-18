@@ -9,6 +9,7 @@ import { Role } from 'shared/types/roles';
 import { useRef } from 'store/Store';
 import { SetupSteps } from '../../../shared/setupSteps';
 import t from 'i18n';
+import Link from 'next/link';
 
 export default FirstOpen;
 
@@ -55,6 +56,9 @@ function FirstOpen() {
           </Form>
         </Popup>
       )}
+      {!loggedInUser && 
+        <Link href="/Login">Please login here</Link>
+      }
     </>
   );
 }
