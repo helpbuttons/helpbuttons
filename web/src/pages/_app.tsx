@@ -73,7 +73,7 @@ function MyApp({ Component, pageProps }) {
             }
           },
           (error) => {
-            if (error == 'not-found') {
+            if (error == 'not-found' || error == 'nosysadminconfig') {
               router.push(SetupSteps.SYSADMIN_CONFIG);
             } else {
               alertService.error(JSON.stringify(error));
