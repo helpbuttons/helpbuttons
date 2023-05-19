@@ -28,7 +28,6 @@ interface ExploreMapProps {
 }
 export interface ExploreState {
   draftButton: Button;
-  showLeftColumn: boolean;
   mapCenter;
   mapZoom;
   currentButton: Button;
@@ -37,7 +36,6 @@ export interface ExploreState {
 
 export const exploreInitial = {
   draftButton: null,
-  showLeftColumn: true,
   mapCenter: null,
   mapZoom: -1,
   currentButton: null,
@@ -199,16 +197,6 @@ export class updateCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
-    });
-  }
-}
-
-export class updateShowLeftColumn implements UpdateEvent {
-  public constructor(private toggle: boolean) {}
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.showLeftColumn = this.toggle;
     });
   }
 }

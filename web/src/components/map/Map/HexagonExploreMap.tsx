@@ -15,6 +15,7 @@ import {
 } from 'shared/honeycomb.utils';
 import { cellToParent } from 'h3-js';
 import _ from 'lodash';
+import { useDebounce } from 'shared/custom.hooks';
 
 export default function HexagonExploreMap({
   filteredButtons,
@@ -29,6 +30,9 @@ export default function HexagonExploreMap({
   const [mapIsMoving, setMapIsMoving] = useState(false)
   const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
   const [resolution, setResolution] = useState(1);
+  const [boundsFeatures, setBoundsFeatures] = useState([])
+  const debouncedBoundsFeatures = useDebounce(boundsFeatures, 150);
+
   const [h3ButtonsDensityFeatures, setH3ButtonsDensityFeatures] =
     useState([]);
   const onBoundsChanged = ({ center, zoom, bounds }) => {
@@ -51,7 +55,12 @@ export default function HexagonExploreMap({
     // setHexagonClicked(() => null); // unselect all hexagons
 
     if (exploreSettings.bounds) {
-
+      setBoundsFeatures(() => {
+        return getBoundsHexFeatures(
+          exploreSettings.bounds,
+          exploreSettings.zoom,
+        );
+      })
       if (exploreSettings.zoom > exploreSettings.prevZoom) {
         // TODO: zooming in.. should not fetch from database.. 
         // this is not affecting the filtered buttons... so it won't update to new resolution.. how do it update resolution?
@@ -97,10 +106,6 @@ export default function HexagonExploreMap({
       {
         return []
       }
-      const boundsFeatures = getBoundsHexFeatures(
-        exploreSettings.bounds,
-        exploreSettings.zoom,
-      )
       const hexagonsOnResolution = filteredButtons.map((button) =>
         cellToParent(button.hexagon, resolution),
       );
@@ -109,7 +114,7 @@ export default function HexagonExploreMap({
       );
       return _.unionBy(
         densityMap,
-        boundsFeatures,
+        debouncedBoundsFeatures,
         'properties.hex',
       );
     });
@@ -142,7 +147,7 @@ export default function HexagonExploreMap({
               feature={buttonFeature}
               key={buttonFeature.properties.hex}
               styleCallback={(feature, hover) => {
-                if (feature.properties.hex == hexagonClicked) {
+                if (feature.properties.hex == hexagonClicked && buttonFeature.properties.count > 0) {
                   return {
                     fill: 'red',
                     strokeWidth: '0.3',

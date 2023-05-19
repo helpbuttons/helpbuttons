@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import {
   FindButtons,
   updateCurrentButton,
-  updateShowLeftColumn,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef } from 'store/Store';
@@ -30,8 +29,7 @@ import {
   BrowseType,
   HbMapTiles,
 } from 'components/map/Map/Map.consts';
-import { getAreaOfPolygon } from 'geolib';
-import { useDebounce } from 'shared/custom.hooks';
+import { useDebounce, useToggle } from 'shared/custom.hooks';
 
 const defaultZoomPlace = 13;
 interface ButtonFilters {
@@ -56,6 +54,8 @@ function HoneyComb({ router }) {
 
   const timeInMsBetweenStrokes = 150; //ms
   const [hexagonClicked, setHexagonClicked] = useState();
+  const debouncedHexagonClicked = useDebounce(hexagonClicked, 150);
+
   const [hexagonsToFetch, setHexagonsToFetch] = useState({
     resolution: 1,
     hexagons: [],
@@ -94,10 +94,7 @@ function HoneyComb({ router }) {
     store,
     (state: GlobalState) => state.explore.currentButton,
   );
-  const showLeftColumn = useRef(
-    store,
-    (state: GlobalState) => state.explore.showLeftColumn,
-  );
+
   const selectedNetwork = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -113,9 +110,7 @@ function HoneyComb({ router }) {
   const [filters, setFilters] =
     useState<ButtonFilters>(defaultFilters);
 
-  const onLeftColumnToggle = (data) => {
-    store.emit(new updateShowLeftColumn(!showLeftColumn));
-  };
+  const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     setExploreSettings((previousExploreSettings) => {
@@ -222,15 +217,16 @@ function HoneyComb({ router }) {
       store.emit(new updateCurrentButton(null));
     }
 
-    if (hexagonClicked) {
+    if (debouncedHexagonClicked) {
+      toggleShowLeftColumn(true)
       setListButtons(() => {
         return filteredButtons.filter(
           (button: Button) =>
-            hexagonClicked &&
+          debouncedHexagonClicked &&
             cellToParent(
               button.hexagon,
               getResolution(exploreSettings.zoom),
-            ) == hexagonClicked,
+            ) == debouncedHexagonClicked,
         );
       });
       // setExploreSettings((prevSettings) => {return {...prevSettings, center: cellToLatLng(hexagonClicked)}})
@@ -238,7 +234,7 @@ function HoneyComb({ router }) {
       setListButtons(() => filteredButtons.slice(0, 20));
       // TODO HERE SHOULD LOAD AS SOON AS THE USER SCROLLS!
     }
-  }, [fetchedButtons, filters, hexagonClicked]);
+  }, [fetchedButtons, filters, debouncedHexagonClicked]);
 
   const handleSelectedPlace = (place) => {
     setMapCenter([place.geometry.lat, place.geometry.lng]);
@@ -263,7 +259,7 @@ function HoneyComb({ router }) {
             <List
               buttons={listButtons}
               showLeftColumn={showLeftColumn}
-              onLeftColumnToggle={onLeftColumnToggle}
+              onLeftColumnToggle={toggleShowLeftColumn}
             />
           </div>
           <LoadabledComponent loading={exploreSettings.loading}>
@@ -275,7 +271,7 @@ function HoneyComb({ router }) {
               setMapCenter={setMapCenter}
               setHexagonsToFetch={setHexagonsToFetch}
               setHexagonClicked={setHexagonClicked}
-              hexagonClicked={hexagonClicked}
+              hexagonClicked={debouncedHexagonClicked}
             />
           </LoadabledComponent>
         </div>

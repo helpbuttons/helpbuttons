@@ -30,7 +30,7 @@ function List({onLeftColumnToggle, buttons, showLeftColumn}) {
 
           </div>
 
-          <span className="drag-tab__counter">100</span>
+          <span className="drag-tab__counter"></span>
 
         </div>
 

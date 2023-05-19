@@ -19,7 +19,6 @@ export class ButtonsSeeder implements Seeder {
 
   async seed(): Promise<any> {
     var allPoints = require('./data/points-flc.json');
-    console.log(allPoints.results[0]);
     const network = await this.networkService.findDefaultNetwork();
 
     const buttons = await allPoints.results.map(async (buttonData, idx) => {
