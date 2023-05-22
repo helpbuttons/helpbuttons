@@ -69,13 +69,19 @@ Then you need to build the api:
 
 `$ cd web && yarn && yarn build`
 
-### Developers
+## Developers
 
 ### Develop web
 
 You can run the api & database in docker you can do:
 
-`$ docker-compose up -d db`
+`$ docker-compose build db api`
+
+`$ docker-compose up -d db api`
+
+if the database you use is not in dev mode add your port to your docker-compose.yml:
+
+`ports: - 5432:5432`
 
 you might need to run also (if you never built the project before)
 
@@ -101,7 +107,7 @@ you probably need to edit the .env file of web to point to the api:
 ### develop api
 You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
 
-`$ docker-compose -f docker-compose.dev.yml up -d db`
+`$ docker-compose up -d db`
 
 run the api in watch mode:
 

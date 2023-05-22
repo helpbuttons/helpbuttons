@@ -136,48 +136,48 @@ export default function HexagonExploreMap({
         handleMapClick={handleMapClicked}
         tileType={exploreSettings.tileType}
       >
-        <GeoJson
-          style={{
-            display: !fetchingNewResolution ? 'block' : 'none',
-          }}
-          data={featuresToGeoJson(h3ButtonsDensityFeatures)}
-          styleCallback={(feature, hover) => {
-            if (
-              feature.properties.hex == hexagonClicked &&
-              feature.properties.count > 0
-            ) {
-              return {
-                fill: 'red',
-                strokeWidth: '0.3',
-                stroke: 'red',
-                r: '20',
-                opacity: 1,
-              };
-            }
-            if (hover && !fetchingNewResolution) {
-              return {
-                fill: '#ffdd02e0',
-                strokeWidth: '1.5',
-                stroke: 'black',
-                r: '20',
-              };
-            }
-            return {
-              fill: '#ffdd02e0',
-              strokeWidth: '1',
-              stroke: 'grey',
-              r: '20',
-              opacity:
-                (feature.properties.count * 100) /
-                (maxButtonsHexagon - maxButtonsHexagon / 4) /
-                100,
-            };
-          }}
-          onClick={(clicked) => {
-            const { event, anchor, payload } = clicked;
-            setHexagonClicked(() => payload.properties.hex);
-          }}
-        />
+        <GeoJson>
+          {h3ButtonsDensityFeatures.map((buttonFeature) => (
+            <GeoJsonFeature
+              onClick={(feature) => {
+                setHexagonClicked(
+                  () => feature.payload.properties.hex,
+                )
+              }}
+              feature={buttonFeature}
+              key={buttonFeature.properties.hex}
+              styleCallback={(feature, hover) => {
+                if (feature.properties.hex == hexagonClicked && buttonFeature.properties.count > 0) {
+                  return {
+                    fill: 'red',
+                    strokeWidth: '0.3',
+                    stroke: 'red',
+                    r: '20',
+                    opacity: 1,
+                  };
+                }
+                if (hover) {
+                  return {
+                    fill: '#ffdd02e0',
+                    strokeWidth: '5',
+                    stroke: 'black',
+                    r: '20',
+                  };
+                }
+                return {
+                  fill: '#ffdd02e0',
+                  strokeWidth: '2',
+                  stroke: 'black',
+                  r: '20',
+                  opacity:
+                    0.02 + (buttonFeature.properties.count * 100) /
+                    (maxButtonsHexagon - maxButtonsHexagon / 4) /
+                    100,
+                };
+              }}
+            />
+          ))}
+        </GeoJson>
         {h3ButtonsDensityFeatures.map((feature) => {
           if (feature.properties.count > 0)
             return (
