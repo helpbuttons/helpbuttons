@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GeoJson, Overlay } from 'pigeon-maps';
+import { GeoJson, GeoJsonFeature, Overlay } from 'pigeon-maps';
 import { store } from 'pages';
 import { updateCurrentButton } from 'state/Explore';
 import { HbMap } from '.';
@@ -137,7 +137,7 @@ export default function HexagonExploreMap({
         tileType={exploreSettings.tileType}
       >
         <GeoJson>
-          {h3ButtonsDensityFeatures.map((buttonFeature) => (
+          {!fetchingNewResolution && h3ButtonsDensityFeatures.map((buttonFeature) => (
             <GeoJsonFeature
               onClick={(feature) => {
                 setHexagonClicked(
@@ -178,13 +178,10 @@ export default function HexagonExploreMap({
             />
           ))}
         </GeoJson>
-        {h3ButtonsDensityFeatures.map((feature) => {
+        {!fetchingNewResolution && h3ButtonsDensityFeatures.map((feature) => {
           if (feature.properties.count > 0)
             return (
-              <Overlay
-                style={{
-                  display: !fetchingNewResolution ? 'block' : 'none',
-                }}
+              <Overlay                
                 anchor={feature.properties.center}
                 key={feature.properties.hex}
               >
