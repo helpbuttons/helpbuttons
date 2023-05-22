@@ -3,7 +3,7 @@ services:
   # there is a bug and docker is not spawning yarn dev not accessible through the network
   web:
     build: web/
-    image: helpbuttons/helpbuttons-web:dev
+#    image: helpbuttons/helpbuttons-web:dev
     ports:
       - "3000:3000"
     volumes:
@@ -16,7 +16,7 @@ services:
 
   api:
     build: api/
-    image: helpbuttons/helpbuttons-api:dev
+#    image: helpbuttons/helpbuttons-api:dev
     volumes:
       - ./api/src:/app/src/:ro
       - config:/app/config/:rw
@@ -30,7 +30,7 @@ services:
       - db
 
   db:
-    image: postgis/postgis:13-master
+    build: postgres/
     restart: always
     command: ["postgres", "-c", "log_statement=all"]
     env_file:
