@@ -4,6 +4,7 @@ import { GlobalState, store } from 'pages';
 import router from 'next/router';
 import t from 'i18n';
 import NetworkLogo from 'components/network/Components';
+import { HeaderSearch } from 'elements/HeaderSearch'; 
 import NavLink from 'elements/Navlink';
 import {
   IoAddOutline,
@@ -63,13 +64,11 @@ export default function HomeInfo() {
     <div className="info-overlay__container">
       <div className="info-overlay__content">
         <form className="info-overlay__search-section">
-          <label className="form__label label">
-            {t('homeinfo.start')}
-          </label>
-          <DropDownSearchLocation
-          placeholder={t('homeinfo.searchlocation')}
-          handleSelectedPlace={handleSelectedPlace}
-          />
+
+          <NavLink href="/Explore">
+              <HeaderSearch/>
+          </NavLink>
+          
         </form>
         {selectedNetworkLoading && (
           <>

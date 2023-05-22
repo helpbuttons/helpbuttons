@@ -8,24 +8,15 @@ export default function AdvancedFilters() {
   <form className="filters--vertical">
 
       <div className="form__field">
-                      <DropDownSearchLocation
-                        placeholder={t('homeinfo.searchlocation')}
-                        // handleSelectedPlace={handleSelectedPlace}
-                      />
-
         <label className="form__label label">
-          Origen de tu viaje :
+          ¿Qué buscas?
         </label>
-        <input type="text" className="form__input" placeholder="Search Location"></input>
-        <label className="form__label label">
-          Destino :
-        </label>
-        <input type="text" className="form__input" placeholder="Search Location"></input>
+        <input type="text" className="form__input" placeholder="Search whatever you want"></input>
       </div>
 
       <div className="form__field">
         <label className="form__label label">
-          Cuándo viajas :
+          Tipos de botón
         </label>
         <button className="btn-with-icon">
           <div className="btn-filter__split-icon">
@@ -33,45 +24,53 @@ export default function AdvancedFilters() {
             <div className="btn-filter__split-icon--half red-r"></div>
           </div>
           <div className="btn-with-icon__text">
-            Seleccionar fechas
+            Need
+          </div>
+        </button>
+        <button className="btn-with-icon">
+          <div className="btn-filter__split-icon">
+            <div className="btn-filter__split-icon--half green-l"></div>
+            <div className="btn-filter__split-icon--half red-r"></div>
+          </div>
+          <div className="btn-with-icon__text">
+            Offer
+          </div>
+        </button>
+        <button className="btn-with-icon">
+          <div className="btn-filter__split-icon">
+            <div className="btn-filter__split-icon--half green-l"></div>
+            <div className="btn-filter__split-icon--half red-r"></div>
+          </div>
+          <div className="btn-with-icon__text">
+            Service
           </div>
         </button>
       </div>
 
-      <hr></hr>
-
+      <div className="form__field">
+        <label className="form__label label">
+          ¿Dónde buscas?
+        </label>
+        <input type="text" className="form__input" placeholder="Search Location"></input>
+        <DropDownSearchLocation
+          placeholder={t('homeinfo.searchlocation')}
+          // handleSelectedPlace={handleSelectedPlace}
+        />
+      </div>
 
       <div className="form__field">
         <label className="form__label label">
-          Tipos de botón
+          Distancia de búsqueda
         </label>
-
-        <div className="form__options-h">
-          <div className="checkbox">
-            <label className="checkbox__label">
-              <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
-              <div className="checkbox__content form__options-btn">
-                <div className="checkbox__icon red"></div>
-                <div className="checkbox__text">
-                  Necesito Ahora
-                </div>
-              </div>
-            </label>
-          </div>
-          <div className="checkbox">
-            <label className="checkbox__label">
-              <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
-              <div className="checkbox__content form__options-btn">
-                <div className="checkbox__icon red"></div>
-                <div className="checkbox__text">
-                  Necesito Ahora
-                </div>
-              </div>
-            </label>
-          </div>
-        </div>
-
+        <select className="dropdown__dropdown">
+          <option value="status" className="dropdown-select__option">10km</option>
+          <option value="status" className="dropdown-select__option">100km</option>
+          <option value="status" className="dropdown-select__option">200km</option>
+          <option value="status" className="dropdown-select__option">300km</option>
+        </select>
       </div>
+
+      <hr></hr>
 
       <div className="form__field">
         <label className="form__label label">

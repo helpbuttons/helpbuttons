@@ -48,6 +48,7 @@ $info-line-height: 1.3;
 
 .header-search__info {
   font-size: $font-size-small;
+  font-weight: $font-weight-regular;
   position: absolute;
   top: 1rem;
   margin-left: $header-search-filter-bar-padding;
@@ -138,6 +139,7 @@ $info-line-height: 1.3;
 
 .header-search__tool {
   padding: 4px;
+  color: $color-black;
   background: $color-white;
   box-shadow: $box-shadow-tool;
 }
