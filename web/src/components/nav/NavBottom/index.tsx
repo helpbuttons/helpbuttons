@@ -8,6 +8,7 @@ import { IoHeartOutline } from "react-icons/io5";
 import { IoLogInOutline } from "react-icons/io5";
 import { IoHelpOutline } from "react-icons/io5";
 import { IoGlobeOutline } from "react-icons/io5";
+import { IoHomeOutline } from "react-icons/io5";
 
 import t from 'i18n';
 
@@ -19,6 +20,16 @@ function NavBottom({logged}){
   return(
 
     <nav id="bottom-nav" className="nav-bottom">
+
+        <NavLink href="/HomeInfo" className="nav-bottom__link nav-bottom__link--active">
+            <div className="nav-bottom__icon">
+            <IoHomeOutline/>
+            </div>
+            <div className="nav-bottom__text">
+              {t("menu.home")}
+            </div>
+        </NavLink>
+
         <NavLink href="/Explore" className="nav-bottom__link nav-bottom__link--active">
             <div className="nav-bottom__icon">
             <IoGlobeOutline/>

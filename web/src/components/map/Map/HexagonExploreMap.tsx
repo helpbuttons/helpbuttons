@@ -159,18 +159,18 @@ export default function HexagonExploreMap({
                 if (hover) {
                   return {
                     fill: '#ffdd02e0',
-                    strokeWidth: '1.5',
+                    strokeWidth: '5',
                     stroke: 'black',
                     r: '20',
                   };
                 }
                 return {
                   fill: '#ffdd02e0',
-                  strokeWidth: '1',
-                  stroke: 'grey',
+                  strokeWidth: '2',
+                  stroke: 'black',
                   r: '20',
                   opacity:
-                    (buttonFeature.properties.count * 100) /
+                    0.02 + (buttonFeature.properties.count * 100) /
                     (maxButtonsHexagon - maxButtonsHexagon / 4) /
                     100,
                 };

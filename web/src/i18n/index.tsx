@@ -21,7 +21,7 @@ export default function t(key: string, args: string[] = []) {
   if (translatedString === false || !translatedString) {
     translatedString = getTranslation('en', key)
   }
-  if (args && args.length > 0) {
+  if (args && args.length > 0 && translatedString) {
     translatedString = format(translatedString, args)
   }
   if(!translatedString){ // if string not found on translations, show key

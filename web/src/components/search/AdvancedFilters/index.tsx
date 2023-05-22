@@ -1,3 +1,6 @@
+import t from "i18n";
+import DropDownSearchLocation from "elements/DropDownSearchLocation";
+
 //Mobile filters section that includes not only the filters but some search input fields, maybe needed to make a separate component from the rest of esktop elements
 export default function AdvancedFilters() {
   return (
@@ -5,6 +8,11 @@ export default function AdvancedFilters() {
   <form className="filters--vertical">
 
       <div className="form__field">
+                      <DropDownSearchLocation
+                        placeholder={t('homeinfo.searchlocation')}
+                        // handleSelectedPlace={handleSelectedPlace}
+                      />
+
         <label className="form__label label">
           Origen de tu viaje :
         </label>

@@ -2,6 +2,7 @@
 import { IoClose } from "react-icons/io5";
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import CheckBox from 'elements/Checkbox'
+import { IoSearch } from "react-icons/io5";
 import BtnCircle from 'elements/BtnCircle'
 
 function Repository() {
@@ -1204,20 +1205,7 @@ function Repository() {
 
                 <div className="header-search__label">Qué</div>
                 <input type="text" className="header-search--tags" placeholder='Selecciona fecha'></input>
-
-              </div>
-
-              <div className="header-search__column">
-
-                  <div className="header-search__label">Dónde</div>
-                  <input type="text" className="header-search--location" placeholder='Selecciona lugar'></input>
-
-              </div>
-
-              <div className="header-search__column">
-
-                <div className="header-search__label">Cuándo</div>
-                <input type="text" className="header-search--time" placeholder='Selecciona fecha'></input>
+                <div className="header-search__icon"><IoSearch/></div>
 
               </div>
 

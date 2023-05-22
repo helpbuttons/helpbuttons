@@ -2,6 +2,8 @@
 import React, {useState} from "react";
 import Filters from "components/search/Filters";
 import AdvancedFilters from "components/search/AdvancedFilters"; //just for mobile
+import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn';
+import { HeaderSearch } from 'elements/HeaderSearch'; 
 import { Link } from 'elements/Link';
 import { IoHomeOutline } from "react-icons/io5";
 import t from "i18n";
@@ -47,36 +49,16 @@ function NavHeader({showSearch, updateFiltersType, handleSelectedPlace}) {
 
             <form className="nav-header__content">
 
-                <Link href="/HomeInfo" className="btn-circle">
-
-                  <div className="btn-circle__content">
-
-                    <div className="btn-circle__icon">
-
-                      <IoHomeOutline />
-
-                    </div>
-
-                  </div>
-
-                </Link>
-
                 <div className="nav-header__content-message">
 
-                  {showSearch &&
-                    <DropDownSearchLocation
-                      placeholder={t('homeinfo.searchlocation')}
-                      handleSelectedPlace={handleSelectedPlace}
-                    />
-
-                  }
+                <HeaderSearch/>
 
                 </div>
 
             </form>
 
             <Filters updateFiltersType={updateFiltersType} />
-
+            <AdvancedFilters />
             { showHideFiltersMobile ? <AdvancedFilters />  : null}
 
 
