@@ -58,7 +58,7 @@ you can setup the url of the api
 #### Database
 You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
 
-`$ docker-compose -f docker-compose.dev.yml up -d db`
+`$ docker-compose up -d db`
 
 #### Api
 Then you need to build the api:
@@ -75,23 +75,19 @@ Then you need to build the api:
 
 You can run the api & database in docker you can do:
 
-`$ docker-compose -f docker-compose.dev.yml up -d db api`
+`$ docker-compose up -d db`
 
 you might need to run also (if you never built the project before)
 
-`$ cd api && yarn write-version`
+`$ cd api && yarn dev`
 
 you need to generate a jwt key
 
 `$ cd web && yarn hb jwt` (in the web folder)
 
-and install the custom pigeon-maps:
-
-`$ cd web && yarn install-pg-maps`
-
 also don't forget to run the migrations on the api
 
-`$ docker-compose -f docker-compose.dev.yml run api yarn migration:run`
+`$ yarn migration:run`
 
 and then run the web with:
 

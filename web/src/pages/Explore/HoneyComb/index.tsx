@@ -52,15 +52,14 @@ function HoneyComb({ router }) {
     };
   });
 
-  const timeInMsBetweenStrokes = 150; //ms
   const [hexagonClicked, setHexagonClicked] = useState();
-  const debouncedHexagonClicked = useDebounce(hexagonClicked, 150);
+  const debouncedHexagonClicked = useDebounce(hexagonClicked, 30);
 
   const [hexagonsToFetch, setHexagonsToFetch] = useState({
     resolution: 1,
     hexagons: [],
   });
-  const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, timeInMsBetweenStrokes);
+  const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, 100);
   const [fetchedButtons, setFetchedButtons] = useState([]);
   const [isFetchingButton, setIsFetchingButtons] = useState(false);
 
@@ -271,7 +270,7 @@ function HoneyComb({ router }) {
               setMapCenter={setMapCenter}
               setHexagonsToFetch={setHexagonsToFetch}
               setHexagonClicked={setHexagonClicked}
-              hexagonClicked={debouncedHexagonClicked}
+              hexagonClicked={hexagonClicked}
             />
           </LoadabledComponent>
         </div>
