@@ -51,7 +51,7 @@ function NavHeader({showSearch, updateFiltersType, handleSelectedPlace}) {
 
                 <div className="nav-header__content-message">
 
-                <HeaderSearch/>
+                <HeaderSearch setShowHideFiltersMobile={setShowHideFiltersMobile}/>
 
                 </div>
 
@@ -59,7 +59,7 @@ function NavHeader({showSearch, updateFiltersType, handleSelectedPlace}) {
 
             <Filters updateFiltersType={updateFiltersType} />
             <AdvancedFilters />
-            { showHideFiltersMobile ? <AdvancedFilters />  : null}
+            { showHideFiltersMobile ? <AdvancedFilters setShowHideFiltersMobile={setShowHideFiltersMobile} />  : null}
 
 
         </div>

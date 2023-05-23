@@ -1,8 +1,13 @@
 import t from "i18n";
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import React, {useState} from "react";
 import DropDownSearchLocation from "elements/DropDownSearchLocation";
 
 //Mobile filters section that includes not only the filters but some search input fields, maybe needed to make a separate component from the rest of esktop elements
 export default function AdvancedFilters() {
+
+  const [showHideFiltersMobile, setShowHideFiltersMobile] = useState(false);
+
   return (
 
   <div className="filters__container">
@@ -89,12 +94,20 @@ export default function AdvancedFilters() {
         </div>
 
         <div className="filters__actions">
-                <div className="link form__options-text">
-                CANCEL
-                </div>
-                <div className="btn btn--black btn--center">
-                  SAVE
-                </div>
+
+                <Btn
+                  btnType={BtnType.splitIcon}
+                  caption="CANCEL"
+                  contentAlignment={ContentAlignment.center}
+                  onClick={(e) => {setShowHideFiltersMobile(false)}}
+                />
+
+                <Btn
+                  btnType={BtnType.splitIcon}
+                  caption="SAVE"
+                  contentAlignment={ContentAlignment.center}
+                  onClick={(e) => {setShowHideFiltersMobile(false); debugger;}}
+                />
         </div>
 
     </form>
