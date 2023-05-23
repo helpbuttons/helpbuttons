@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { GeoJson, GeoJsonFeature, Overlay } from 'pigeon-maps';
 import { store } from 'pages';
+import { useRef } from 'store/Store';
 import { updateCurrentButton } from 'state/Explore';
 import { HbMap } from '.';
 import {
@@ -42,6 +43,11 @@ export default function HexagonExploreMap({
     setMapCenter(latLng);
     store.emit(new updateCurrentButton(null));
   };
+
+  const selectedNetwork = useRef(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
 
   useEffect(() => {
     if (exploreSettings.loading) {
@@ -135,7 +141,17 @@ export default function HexagonExploreMap({
         onBoundsChanged={onBoundsChanged}
         handleMapClick={handleMapClicked}
         tileType={exploreSettings.tileType}
-      >
+      > 
+        {selectedNetwork &&
+
+          <div className="search-map__network-title">
+              {selectedNetwork.name}
+              <div className="search-map__sign">
+                made with <a href="https://helpbuttons.org">Helpbuttons</a>
+              </div>
+          </div>
+
+        }  
         <GeoJson>
           {!fetchingNewResolution && h3ButtonsDensityFeatures.map((buttonFeature) => (
             <GeoJsonFeature
@@ -149,28 +165,29 @@ export default function HexagonExploreMap({
               styleCallback={(feature, hover) => {
                 if (feature.properties.hex == hexagonClicked && buttonFeature.properties.count > 0) {
                   return {
-                    fill: 'red',
-                    strokeWidth: '0.3',
-                    stroke: 'red',
+                    fill: '#FFDD02',
+                    strokeWidth: '4',
+                    stroke: '#2F80ED',
                     r: '20',
-                    opacity: 1,
+                    opacity: 0.8,
                   };
                 }
                 if (hover) {
                   return {
-                    fill: '#ffdd02e0',
-                    strokeWidth: '5',
-                    stroke: 'black',
+                    fill: 'transparent',
+                    strokeWidth: '4',
+                    stroke: '#18AAD2',
                     r: '20',
+                    opacity: 0.7,
                   };
                 }
                 return {
-                  fill: '#ffdd02e0',
+                  fill: '#18AAD2',
                   strokeWidth: '2',
-                  stroke: 'black',
+                  stroke: '#18AAD2',
                   r: '20',
                   opacity:
-                    0.02 + (buttonFeature.properties.count * 100) /
+                    0.04 + (buttonFeature.properties.count * 100) /
                     (maxButtonsHexagon - maxButtonsHexagon / 4) /
                     100,
                 };

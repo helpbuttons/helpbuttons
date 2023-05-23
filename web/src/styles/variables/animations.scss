@@ -2,6 +2,7 @@ $animation-spin: spin 2s infinite linear;
 $animation-button-create:  1s ease-in both;
 $transition-default: all .4s;
 $transition-default-slow: all 1s;
+$transition-no: all 0s;
 
 .spinner {
   animation: spin 2s infinite linear;

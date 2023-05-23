@@ -262,6 +262,7 @@ function HoneyComb({ router }) {
             />
           </div>
           <LoadabledComponent loading={exploreSettings.loading}>
+            
             <HexagonExploreMap
               exploreSettings={exploreSettings}
               filteredButtons={filteredButtons}

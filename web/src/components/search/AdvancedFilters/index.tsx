@@ -89,16 +89,16 @@ export default function AdvancedFilters() {
         </div>
 
         <div className="filters__actions">
-                <div className="btn form__options-btn">
+                <div className="link form__options-text">
                 CANCEL
                 </div>
-                <div className="btn form__options-btn">
+                <div className="btn btn--black btn--center">
                   SAVE
                 </div>
         </div>
 
     </form>
-    
+
   </div>
 
 );

@@ -21,7 +21,9 @@ export default function Explore() {
         }
       },[selectedNetwork])
     return (
+ 
         <LoadabledComponent loading={!browseType}>
+
             { browseType == BrowseType.HONEYCOMB &&
                 <HoneyComb/>
             }

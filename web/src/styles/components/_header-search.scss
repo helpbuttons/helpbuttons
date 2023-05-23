@@ -141,7 +141,14 @@ $info-line-height: 1.3;
   padding: 4px;
   color: $color-black;
   background: $color-white;
-  box-shadow: $box-shadow-tool;
+  border-radius: $border-radius-basic;
+
+  &:hover {
+
+    cursor: pointer;
+    box-shadow: $box-shadow-tool;
+
+  }
 }
 
 .header-search--tags,

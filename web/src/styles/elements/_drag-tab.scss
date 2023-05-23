@@ -57,6 +57,7 @@ $drag-tab-icon-size: 25px;
   display: flex;
 
   svg {
+    transition: $transition-no;
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
     width: $drag-tab-icon-size;
