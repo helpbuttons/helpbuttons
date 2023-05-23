@@ -37,14 +37,16 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - db
+      - db  
+    #uncomment if using docker-compose up db and yarn dev for backend and not docker-compose.dev
+    # ports: 
+    #   - 5432:5432
 
 networks:
   web:
     external: true
   api:
   db:
-
 
 volumes:
   db:
