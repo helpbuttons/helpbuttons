@@ -6,6 +6,7 @@ export enum BtnType {
     corporative,
     splitIcon,
     filter,
+    submit,
 }
 
 export enum IconType {
@@ -88,6 +89,9 @@ export default function Btn({
     switch (btnType) {
         case BtnType.corporative:
             classNames.push("btn btn--corporative");
+            break;
+        case BtnType.submit:
+            classNames.push("btn btn--black");
             break;
         case BtnType.filter:
             if (hasIcon) {

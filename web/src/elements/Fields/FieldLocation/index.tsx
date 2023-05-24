@@ -1,6 +1,6 @@
 //this is the component integrated in buttonNewPublish to display the location. It shows the current location and has a button to change the location that displays a picker with the differents location options for the network
 import React, { useEffect, useState } from 'react';
-
+import { Picker } from 'components/picker/Picker';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 import { useRef } from 'store/Store';
@@ -27,6 +27,10 @@ export default function FieldLocation({
     store,
     (state: GlobalState) => state.config,
   );
+
+  let closeMenu = () => {
+    setHideMenu(false);
+  };
 
   const [showHideMenu, setHideMenu] = useState(false);
   const handleSelectedPlace = (place) => {
@@ -78,39 +82,36 @@ export default function FieldLocation({
       </div>
 
       {showHideMenu && markerPosition && (
-        <div className="picker__close-container">
-          <div className="picker--over picker-box-shadow picker__content picker__options-v">
-            <MarkerSelectorMap
-              updateMarkerPosition={updateLocation}
-              handleZoomChange={(zoom) => setZoom(zoom)}
-              zoom={markerZoom}
-              markerImage={markerImage ? markerImage : selectedNetwork.logo}
-              markerCaption={markerCaption ? markerCaption : '?'}
-              markerColor={markerColor ? markerColor : 'yellow'}
-              markerPosition={markerPosition}
-            />
-            <LocationCoordinates
-              latitude={markerPosition[0]}
-              longitude={markerPosition[1]}
-              address={markerAddress}
-            />
-            <DropDownSearchLocation
-              placeholder={t('homeinfo.searchlocation')}
-              handleSelectedPlace={handleSelectedPlace}
-            />
-            <Btn
-              btnType={BtnType.splitIcon}
-              caption={t('common.save')}
-              contentAlignment={ContentAlignment.center}
-              onClick={() => setHideMenu(!showHideMenu)}
-            />
-          </div>
+       
+            <Picker closeAction={closeMenu}>
 
-          <div
-            className="picker__close-overlay"
-            onClick={() => setHideMenu(false)}
-          ></div>
-        </div>
+              <MarkerSelectorMap
+                updateMarkerPosition={updateLocation}
+                handleZoomChange={(zoom) => setZoom(zoom)}
+                zoom={markerZoom}
+                markerImage={markerImage ? markerImage : selectedNetwork.logo}
+                markerCaption={markerCaption ? markerCaption : '?'}
+                markerColor={markerColor ? markerColor : 'yellow'}
+                markerPosition={markerPosition}
+              />
+              <LocationCoordinates
+                latitude={markerPosition[0]}
+                longitude={markerPosition[1]}
+                address={markerAddress}
+              />
+              <DropDownSearchLocation
+                placeholder={t('homeinfo.searchlocation')}
+                handleSelectedPlace={handleSelectedPlace}
+              />
+              <Btn
+                btnType={BtnType.submit}
+                caption={t('common.save')}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => setHideMenu(!showHideMenu)}
+              />
+
+            </Picker>
+
       )}
       <span style={{color:'red'}}>{validationError}</span>
     </>

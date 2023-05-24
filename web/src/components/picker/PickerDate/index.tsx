@@ -57,7 +57,8 @@ export default function PickerDate() {
   };
 
   return (
-    <div className="calendar picker_content">
+    <div className="calendar picker__content">
+
       <div className="header">
         <div
           className="previous"

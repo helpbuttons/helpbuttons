@@ -2,6 +2,7 @@
 import { Picker } from 'components/picker/Picker';
 import React, { useState } from 'react';
 import PickerSpecificDate from 'components/picker/PickerSpecificDate';
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import {
   DateTypes,
   readableDate,
@@ -90,19 +91,24 @@ export default function FieldDate({
                 dateType={dateType}
                 title={title}
               />
-              <div className="btn" onClick={closeMenu}>
-                {t('common.done')}
-              </div>
-              {dateType && (
-              <div
-              className="btn"
-              onClick={() => {
-                setDateType(null);
-              }}
-            >
-              {t('common.reset')}
-            </div>
-            )}
+
+              <Btn
+                btnType={BtnType.submit}
+                caption={t('common.done')}
+                contentAlignment={ContentAlignment.center}
+                onClick={closeMenu}
+              />
+
+              {dateType && (   
+                <Btn
+                btnType={BtnType.submit}
+                caption={t('common.reset')}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => {
+                  setDateType(null);
+                }}
+                />
+              )}
             </>
           )}
         </Picker>

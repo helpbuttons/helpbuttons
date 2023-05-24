@@ -8,11 +8,19 @@ export function Picker({ closeAction, children }) {
     <>
       <div className="picker__close-container">
         <div className="picker--over picker-box-shadow picker__content picker__options-v">
-          <a onClick={closeAction} className="popup__header-button">
-            <div className="btn-circle__icon">
-              <IoClose />
+          <div  className="picker__header">
+            <div  className="picker__header-content">
+              <div  className="picker__header-left"></div>
+              <div  className="picker__header-center">Choose a date</div>
+              <div  className="picker__header-right">
+                <a onClick={closeAction} className="picker__header-button">
+                  <div className="btn-circle__icon">
+                    <IoClose />
+                  </div>
+                </a>
+              </div>
             </div>
-          </a>
+          </div>
           {children}
         </div>
       </div>

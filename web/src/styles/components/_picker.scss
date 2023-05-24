@@ -3,11 +3,14 @@ $picker-header-height: 80px;
 $picker-max-width: 480px;
 $picker-border-radius: 25px;
 $picker-width: 240px;
+$picker-min-width: 240px;
 $picker-content-height: calc( 100vh - #{$picker-header-height });
 $picker-header-lateral: calc( 100% / 2 - #{$picker-max-width} / 2 );
 $picker-header-width: 100%;
+$picker-header-lateral: calc( 100% / 2 - #{$picker-max-width} / 2 );
+$picker-header-icon-width: 20px;
 $picker-comments: 24px;
-$picker-padding: 2rem;
+$picker-padding: $padding-big;
 $picker-paragraph-padding: 1rem 2rem;
 $picker-max-height-large: 720px;
 $picker-cualquircosa: red;
@@ -22,13 +25,16 @@ $picker-comments-item-padding: 25px;
 
   position: relative;
   overflow: auto;
-  width: auto; //Revise antes era 100%
-  // max-width: 350px;
+  width: 100vw; //Revise antes era 100%
+  min-width: $picker-min-width;
   overflow-y: visible !important;
   // max-height: 90vh;
+  padding: $picker-padding;
+  padding-top: 0;
   background: $color-white !important;
   overflow-x: hidden;
   box-shadow: none;
+  border-radius: $picker-border-radius ;
 
 }
 
@@ -38,7 +44,7 @@ $picker-comments-item-padding: 25px;
 
   width: 70px;
   height: 70px;
-  padding: $padding-big;
+  padding: $picker-padding;
   margin: $margin-extra-small;
   float: left;
   background: transparent;
@@ -71,12 +77,87 @@ $picker-comments-item-padding: 25px;
   box-shadow: none;
 }
 
+
+
+//picker HEADERS
 .picker__header {
   width: 100%;
 
   font-size: $font-size-medium;
   font-weight: $font-weight-regular;
   text-align: center;
+}
+
+.picker__header--trans,
+.picker__header {
+
+  width: 100%;
+  padding: .5rem;
+  position:  relative;
+  height: $picker-header-height;
+
+}
+
+.picker__header--trans {
+  background: transparent;
+}
+
+
+.picker__header-center {
+  flex: 0 1 $picker-header-width;
+  text-align: center;
+  padding: 0 10px;
+
+  .icon {
+    max-width: 100%;
+    max-height: 25px;
+    height: auto;
+  }
+}
+
+.picker__header-nav {
+}
+
+.picker__header-left {
+  @extend .picker__header-nav;
+  text-align: left;
+}
+
+.picker__header-right {
+  @extend .picker__header-nav;
+  text-align: right;
+}
+
+.picker__header-content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.picker__header-title  {
+  font-size: $font-size-general;
+
+  font-weight: $font-weight-bold;
+  color: $color-dark-gray;
+  letter-spacing: 2px;
+}
+
+.picker__header-button {
+  background-color: transparent;
+  border-style: none;
+  cursor: pointer;
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  .icon {
+    width: $picker-header-icon-width;
+    height: auto;
+    max-height: 25px;
+  }
 }
 
 // contents
@@ -210,7 +291,7 @@ $picker-comments-item-padding: 25px;
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%,-50%);
-  width: auto;
+  width: 100%;
   height: auto;
   z-index: $z-index-05;
 
@@ -224,12 +305,12 @@ $picker-comments-item-padding: 25px;
   .picker__header,
   .picker__content {
     background: $color-white;
-    // max-width: 600px;//revise voy a poner 600 px luego pasar a variable $picker-max-width
+    max-width: $picker-max-width;//revise voy a poner 600 px luego pasar a variable $picker-max-width
   }
 
-  // .picker--over {
-  //   width: 500px;
-  // }
+  .picker--over {
+    max-width: 500px;
+  }
 
   .picker__map--over{
     position: absolute;
