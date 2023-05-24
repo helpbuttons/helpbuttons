@@ -200,8 +200,9 @@ h1 {
 }
 
 footer {
-    position: fixed;
-    top: 10px;
+    position: absolute;
+    display: block;
+    bottom: 10px;
     right: 20px;
 }
 footer a {
@@ -250,11 +251,7 @@ footer a:hover {
         justify-content: left;
     }
 
-    footer {
-        position: fixed;
-        top: 0;
-        right: 10px;
-    }
+  
     footer a {
  
         font-size: 0.8em;
