@@ -1,10 +1,18 @@
  body, html {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Nunito', sans-serif !important;
     height: 100%;
     margin: 0;
     background-color: rgb(255, 221, 2);
-    color: #333;
+    color: #ffffff;
     overflow: auto; /* allow scrolling */
+}
+
+strong {
+    font-weight: bolder;
+}
+
+.links {
+    right: 30px;
 }
 
 section {
@@ -14,58 +22,62 @@ section {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    overflow: hidden;
     position: relative;
 }
 
-/* Rest of your CSS... */
-.column {
-    width: 50%;
-}
-.column img {
-    width: 100%;
-    height: auto;
-}
 h1 {
     color: white;
     font-size: 4em;
 
 }
 h2 {
-    font-size: calc(4em / 4);
+    font-size: calc(7em / 4);
     
 }
+
 button.cta-button {
     background-color: #333;
+    font-family: 'Nunito', sans-serif !important;
     color: white;
-    padding: 10px;
+    font-size: 1.8em;
+    font-weight: bold;
+    padding: 10px 60px;
     border: none;
     cursor: pointer;
+    border-radius: 0.5rem;
     transition: transform 0.3s ease-in-out;
+
 }
+
 button.cta-button:hover, button.cta-button:active {
     transform: rotate(5deg);
 }
-.image-container img {
-    width: 100%;
+
+.image-container {
     height: 100%;
-}
-footer {
     position: relative;
-    top: 0;
-    right: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    font-size: 0.8em;
-}
-footer a {
-    color: #333;
-    text-decoration: none;
+    width: auto;
+    
 }
 
-body, html {
-    /* Your previous CSS... */
+.image-container img {
+    z-index: -1;
+    width: auto;
+    height: 100%;
 }
+
+.text-content {
+    z-index: 1;
+    position: absolute;
+    display: block;
+    text-align: center;
+    top: 50%; /* adjust as needed */
+    left: 50%; /* adjust as needed */
+    transform: translate(-50%, -50%); /* centers the text */
+    color: #fff; /* change as needed */
+}
+
 
 section {
     /* Your previous CSS... */
@@ -75,7 +87,6 @@ section {
 .column {
     /* Your previous CSS... */
     box-sizing: border-box;
-    padding: 0 15px;
 }
 
 .column img {
@@ -83,17 +94,6 @@ section {
     max-width: 100%;
 }
 /* 
-
-.scroll-down span {
-    width: 10px;
-    height: 10px;
-    border-bottom: 2px solid #fff;
-    border-right: 2px solid #fff;
-    transform: rotate(-45deg);
-    animation: scroll-down 2s infinite;
-    margin-left: 10px;
-} */
-
 
 /* RESPONSIVENESS */
 @media (max-width: 768px) {
@@ -106,7 +106,7 @@ section {
     }
 
     h2 {
-        font-size: calc(2em / 4);
+        font-size: calc(4em / 4);
     }
 }
 
@@ -115,10 +115,15 @@ section {
     display: block;
     background-color: #eee; /* change this to any color you like */
     padding: 10px;
+    width: 30%;
+    text-align: center;
+    
 }
 
+
+
 h3 {
-    color: #333;
+    color:#f8f8f8;
     font-size: 1.5em;
     font-weight: bold;
 }
@@ -127,11 +132,10 @@ h3 {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    padding: 2rem;
+
 }
 
-.column {
-    flex: 1 0 20%; /* grow | shrink | basis */
-}
 
  .scroll-down {
     position: fixed;
@@ -190,41 +194,25 @@ section {
     justify-content: center;
     flex-direction: column;
 }
-.column {
-    width: 50%;
-}
-.column img {
-    width: 100%;
-    height: auto;
-}
+
 h1 {
     color: white;
 }
-h2 {
-    font-size: calc(1em / 4);
-}
-button.cta-button {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
-}
-button.cta-button:hover, button.cta-button:active {
-    transform: rotate(5deg);
-}
-.image-container img {
-    width: 100%;
-    height: 100%;
-}
+
 footer {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    position: fixed;
+    top: 10px;
+    right: 20px;
 }
 footer a {
-    color: #333;
+    color: #ffffff;
+    font-weight:bold;
+    font-size: 0.9em;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color:rgb(56, 56, 56);
 }
 
 .hide {
@@ -237,12 +225,39 @@ footer a {
 }
 
 .column {
+
     flex: 1 0 20%; /* Adjust as needed */
+    color: #eee;
+    margin: 10px;
+    border-radius: 10px;
+
+}
+
+.column--button {
+    
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 768px) {
     .column {
         flex: 0 0 100%;
+    }
+    .column--button {
+        align-items: left;
+        justify-content: left;
+    }
+
+    footer {
+        position: fixed;
+        top: 0;
+        right: 10px;
+    }
+    footer a {
+ 
+        font-size: 0.8em;
     }
 }
 
@@ -253,17 +268,25 @@ footer a {
 }
 
 #section2 {
-    background-color: rgb(0, 134, 179);  /* Blue */
+    background-color: rgb(151, 148, 142);  /* Blue */
 }
 
 #section3 {
-    background-color: rgb(235, 64, 52);  /* Red */
+    background-color: rgb(232, 232, 232);  /* Red */
 }
 
 #section4 {
-    background-color: rgb(0, 153, 76);  /* Green */
+    background-color: rgb(151, 148, 142);  /* Green */
 }
 
 #section5 {
-    background-color: rgb(191, 0, 179);  /* Purple */
+    background-color: rgb(56, 56, 56);  /* Purple */
+
+    .button {
+        background-color: transparent;
+        color:white;
+        text-decoration:underline;
+        font-size: 1rem;
+        border:none;
+    }
 }

@@ -2,18 +2,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let currentSection = 0;
     const sections = document.querySelectorAll("section");
-    const scrollButtons = document.querySelectorAll('.scroll-down');
+    const scrollButtons = document.querySelector('.scroll-down');
 
     function changeSection(index) {
         sections.forEach(section => {
             section.style.transform = `translateY(-${index * 100}vh)`;
             section.style.transition = 'transform 0.5s ease-in-out';
         });
-        
+
         if (index === sections.length - 1) {
-            arrow.classList.add('hide');
+            scrollButtons.classList.add('hide');
         } else {
-            arrow.classList.remove('hide');
+            scrollButtons.classList.remove('hide');
         }
     }
 
@@ -46,12 +46,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Scroll-down arrow click event
-    scrollButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            if (currentSection < sections.length - 1) {
-                currentSection++;
-                changeSection(currentSection);
-            }
-        });
+    scrollButtons.addEventListener('click', function() {
+        if (currentSection < sections.length - 1) {
+            currentSection++;
+            changeSection(currentSection);
+        }
     });
+    
 });
