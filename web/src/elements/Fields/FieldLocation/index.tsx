@@ -22,6 +22,7 @@ export default function FieldLocation({
   selectedNetwork = null,
   setMarkerAddress,
   setZoom,
+  label,
 }) {
   const config: SetupDtoOut = useRef(
     store,
@@ -72,6 +73,7 @@ export default function FieldLocation({
           latitude={markerPosition[0]}
           longitude={markerPosition[1]}
           address={markerAddress}
+          label={label}
         />
         <div
           className="btn"
@@ -122,6 +124,7 @@ function LocationCoordinates({
   latitude,
   longitude,
   address,
+  label,
 }) {
   return (
     <div className="card-button__city card-button__everywhere">
@@ -132,7 +135,7 @@ function LocationCoordinates({
           {/* (radius: ${radius} km) */}
         </>
         :
-        <>{t('button.where')}</>
+        <>{label}</>
       }
     </div>
   );

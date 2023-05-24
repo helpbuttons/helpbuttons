@@ -21,6 +21,15 @@ $form-input-border-radius: $border-general-height;
 
 }
 
+.form__explain {
+  z-index: $z-index-base;
+  top: 7px;
+  left: 24px;
+  font-size: $font-size-general;
+  font-weight: $font-weight-light;
+
+}
+
 
 //form de la home
 .form__search {
@@ -87,13 +96,14 @@ $form-input-border-radius: $border-general-height;
 
 
 .form__input,
+.form__explain,
 .form__label {
 
   width: 100%;
 
 }
 
-
+.form__explain,
 .form__label {
 
   margin-bottom: .6rem;

@@ -49,7 +49,7 @@ export default function FieldTags({
   };
   return (
     <div className="tag__field">
-      <label className="label light">{label}</label>
+      <label className="form__label">{label}</label>
       <div className="card-button-list__tags">
         <ul className="tags__list">
           {tags &&

@@ -17,7 +17,7 @@ export default function FeedProfile({activities}) {
           </div>)
         })}
         {(!activities || activities.length < 1) && 
-          (<div className="feed-element">{t('common.notfound', ['activities'])}</div>)
+          (<div className="feed-element">{t('activities.noactivity', ['activities'])}</div>)
         }
       </div>
 

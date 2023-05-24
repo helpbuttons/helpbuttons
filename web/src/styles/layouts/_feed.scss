@@ -1,5 +1,6 @@
 $feed-border-radius: $border-radius-buttons;
 $feed-color-gray-border: $color-gray-border;
+$feed-post-color: $color-gray;
 $feed-padding: $padding-big;
 $feed-height: 58px;
 $feed-color-corporative: $color-corporative;
@@ -24,6 +25,7 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-section {
   padding-bottom: $footer-height-mobile;
+
 }
 
 .feed-selector {
@@ -93,4 +95,8 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-element{
   margin: 0px 20px 0px 20px;
+  padding: 10px;
+  color: $feed-post-color;
+  border-radius: $feed-border-radius;
+  
 }

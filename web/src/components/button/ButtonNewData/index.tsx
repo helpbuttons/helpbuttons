@@ -16,7 +16,7 @@ export default function ButtonNewData({ exact, ...props }) {
     <>
           <div className="form__field">
 
-            <p className="popup__paragraph">
+            <p className="form__title">
               Describe your purpose:
             </p>
 
@@ -29,7 +29,7 @@ export default function ButtonNewData({ exact, ...props }) {
 
             <div className="form__field">
 
-              <p className="popup__paragraph">
+              <p className="form__title">
                 Choose tags that better suite your purpose :
               </p>
 

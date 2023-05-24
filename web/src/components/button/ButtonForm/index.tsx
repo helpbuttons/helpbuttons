@@ -87,13 +87,14 @@ export default function ButtonForm({
           <div className="publish_btn-first">
             <ButtonType
               name="type"
-              label={t('button.type')}
+              label={t('button.typeLabel')}
               {...register('type', { required: true })}
               validationError={errors.type}
+              explain={t('button.typeExplain')}
             />
             <FieldTextArea
               name="title"
-              label={t('button.title')}
+              label={t('button.titleLabel')}
               placeholder={t('button.placeHolderTitle')}
               validationError={errors.title}
               watch={watch}
@@ -102,7 +103,7 @@ export default function ButtonForm({
               {...register('title', { required: true })}
             />
             <FieldTextArea
-              label={t('button.description')}
+              label={t('button.descriptionLabel')}
               name="description"
               placeholder={t('button.placeHolderDescription')}
               validationError={errors.description}
@@ -118,7 +119,7 @@ export default function ButtonForm({
 
             {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
             <FieldTags
-              label={t('button.tags')}
+              label={t('button.tagsLabel')}
               placeholder={t('common.add')}
               validationError={errors.tags}
               setTags={(tags) => {
@@ -130,7 +131,7 @@ export default function ButtonForm({
           <div className="publish_btn-scd">
             <FieldImageUpload
               name="image"
-              label={t('button.images')}
+              label={t('button.imagesLabel')}
               // width={55}
               // height={125}
               setValue={setValue}
@@ -140,6 +141,7 @@ export default function ButtonForm({
             />
             <>
               <FieldLocation
+                label={t('button.whereLabel')}
                 setMarkerPosition={([lat, lng]) => {
                   setValue('latitude', lat);
                   setValue('longitude', lng);
@@ -167,7 +169,7 @@ export default function ButtonForm({
                 dates={watch('when.dates')}
                 setDateType={(value) => setValue('when.type', value)}
                 setDate={(value) => setValue('when.dates', value)}
-                title={t('button.when')}
+                title={t('button.whenLabel')}
               />
             </>
             {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} /> */}

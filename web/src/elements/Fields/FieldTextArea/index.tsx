@@ -66,7 +66,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
     return (
       <>
       <div className="form__field">
-        <p className="popup__paragraph">{label}</p>
+        <p className="form__label">{label}</p>
         
         
         <textarea

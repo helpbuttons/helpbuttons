@@ -25,10 +25,10 @@ function RadioIcon({ icon }: { icon: IconType }) {
 }
 
 const ButtonType = React.forwardRef(
-  ({ name, onChange, onBlur, validationError, label }, ref) => {
+  ({ name, onChange, onBlur, validationError, label, explain }, ref) => {
     return (
       <>
-        <FieldRadio label={label}>
+        <FieldRadio label={label} explain={explain}>
           {buttonTypes.map((buttonType, idx) => (
             <div key={idx} style={buttonColorStyle(buttonType.cssColor)}>
               <FieldRadioOption

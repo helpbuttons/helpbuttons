@@ -47,7 +47,8 @@
   "activities": {
     "newbutton": "You created this <a href='/ButtonFile/{0}'>{1}</a> was created in <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
     "newpost": "There is a new post '{0}' posted to the button <a href='/ButtonFile/{1}'>{2}</a>",
-    "newcomment": "There is a new comment '{0}' posted to the post '{1}' you can view the button <a href='/ButtonFile/{2}'>{3}</a>"
+    "newcomment": "There is a new comment '{0}' posted to the post '{1}' you can view the button <a href='/ButtonFile/{2}'>{3}</a>",
+    "noactivity": "You have no activity yet! Start publishing or interact with others!"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -66,15 +67,18 @@
     "click": "Click here"
   },
   "button": {
-    "type": "Please choose which kind of button you would like to created",
-    "title": "Title",
-    "description": "Description",
-    "tags": "Related interests",
-    "images": "Images",
-    "where": "Where ?",
-    "changePlace": "Change place",
-    "when": "When ?",
-    "changeDate": "Change date",
+    "typeLabel":"Button type",
+    "typeExplain":"Please choose which kind of button would you like to create",
+    "titleLabel": "Title",
+    "titleExplain":"Please choose which kind of button would you like to create",
+    "descriptionLabel": "Description",
+    "descriptionExplain": "Description",
+    "tagsLabel": "Related interests",
+    "imagesLabel": "Upload Images",
+    "whereLabel": "Where ?",
+    "changePlaceLabel": "Change place",
+    "whenLabel": "When ?",
+    "changeDateLabel": "Change date",
     "placeHolderTitle": "Write a title for your button",
     "placeHolderDescription": "Write a description for your button"
   },
