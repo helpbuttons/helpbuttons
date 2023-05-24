@@ -7,6 +7,7 @@ export enum BtnType {
     splitIcon,
     filter,
     submit,
+    link,
 }
 
 export enum IconType {
@@ -92,6 +93,9 @@ export default function Btn({
             break;
         case BtnType.submit:
             classNames.push("btn btn--black");
+            break;
+        case BtnType.link:
+            classNames.push("btn--link");
             break;
         case BtnType.filter:
             if (hasIcon) {

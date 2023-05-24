@@ -96,14 +96,14 @@ export default function AdvancedFilters() {
         <div className="filters__actions">
 
                 <Btn
-                  btnType={BtnType.splitIcon}
+                  btnType={BtnType.link}
                   caption="CANCEL"
                   contentAlignment={ContentAlignment.center}
                   onClick={(e) => {setShowHideFiltersMobile(false)}}
                 />
 
                 <Btn
-                  btnType={BtnType.splitIcon}
+                  btnType={BtnType.submit}
                   caption="SAVE"
                   contentAlignment={ContentAlignment.center}
                   onClick={(e) => {setShowHideFiltersMobile(false); debugger;}}
