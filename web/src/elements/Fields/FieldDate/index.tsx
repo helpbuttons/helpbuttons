@@ -35,7 +35,7 @@ export default function FieldDate({
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}
         >
-          {t('button.changeDate')}
+          {t('button.changeDateLabel')}
         </div>
       </div>
       {showHideMenu && (

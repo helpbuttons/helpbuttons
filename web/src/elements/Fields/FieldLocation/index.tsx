@@ -79,7 +79,7 @@ export default function FieldLocation({
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}
         >
-          {t('button.changePlace')}
+          {t('button.changePlaceLabel')}
         </div>
       </div>
 

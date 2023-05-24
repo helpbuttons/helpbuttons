@@ -1,6 +1,6 @@
 ///convention: btn is the naming for regular buttons, to avoid conffusion with Buttons the posts of the app.
-$btn-with-icon-icon-width: 30px;
-$btn-with-icon-small-icon-width: 18px;
+$btn-with-icon-icon-width: $icon-width-medium;
+$btn-with-icon-small-icon-width: $icon-width-small;
 $btn-filter-with-icon-icon-width: 18px;
 $btn-filter-border: 1px;
 $btn-background: $color-white;
@@ -229,8 +229,15 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn-with-icon__icon {
 
-  max-height: $btn-filter-with-icon-icon-width;
-  max-width: $btn-filter-with-icon-icon-width;
+  max-height: $btn-with-icon-icon-width;
+  max-width: $btn-with-icon-icon-width;
+
+  & svg {
+
+    width: $btn-with-icon-icon-width;
+    height: $btn-with-icon-icon-width;
+
+  }
 
 }
 
