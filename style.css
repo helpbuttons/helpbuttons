@@ -1,0 +1,269 @@
+ body, html {
+    font-family: 'Nunito', sans-serif;
+    height: 100%;
+    margin: 0;
+    background-color: rgb(255, 221, 2);
+    color: #333;
+    overflow: auto; /* allow scrolling */
+}
+
+section {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Rest of your CSS... */
+.column {
+    width: 50%;
+}
+.column img {
+    width: 100%;
+    height: auto;
+}
+h1 {
+    color: white;
+    font-size: 4em;
+
+}
+h2 {
+    font-size: calc(4em / 4);
+    
+}
+button.cta-button {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+button.cta-button:hover, button.cta-button:active {
+    transform: rotate(5deg);
+}
+.image-container img {
+    width: 100%;
+    height: 100%;
+}
+footer {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    font-size: 0.8em;
+}
+footer a {
+    color: #333;
+    text-decoration: none;
+}
+
+body, html {
+    /* Your previous CSS... */
+}
+
+section {
+    /* Your previous CSS... */
+    position: relative; /* add this */
+}
+
+.column {
+    /* Your previous CSS... */
+    box-sizing: border-box;
+    padding: 0 15px;
+}
+
+.column img {
+    /* Your previous CSS... */
+    max-width: 100%;
+}
+/* 
+
+.scroll-down span {
+    width: 10px;
+    height: 10px;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+    transform: rotate(-45deg);
+    animation: scroll-down 2s infinite;
+    margin-left: 10px;
+} */
+
+
+/* RESPONSIVENESS */
+@media (max-width: 768px) {
+    .column {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: calc(2em / 4);
+    }
+}
+
+.column img {
+    max-width: 100%;
+    display: block;
+    background-color: #eee; /* change this to any color you like */
+    padding: 10px;
+}
+
+h3 {
+    color: #333;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.columns-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.column {
+    flex: 1 0 20%; /* grow | shrink | basis */
+}
+
+ .scroll-down {
+    position: fixed;
+    bottom: 20px;
+    z-index: 10;
+    left: 50%;
+    width: 30px;
+    height: 50px;
+    margin-left: -15px;
+    text-align: center;
+}
+
+.scroll-down:hover {
+    cursor: pointer;
+}
+ 
+ 
+.scroll-down:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-left: -10px;
+    margin-top: -10px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg);
+    animation: scroll-down 2s infinite;
+}
+/*
+@keyframes scroll-down {
+    0%, 100% {
+        transform: rotate(-45deg),transform: translateY(0);
+    }
+    50% {
+        transform: rotate(-45deg), transform: translateY(15px);
+    }
+}  */
+
+
+body, html {
+    font-family: 'Nunito', sans-serif;
+    height: 100%;
+    margin: 0;
+    background-color: rgb(255, 221, 2);
+    color: #333;
+    overflow: hidden;
+}
+section {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.column {
+    width: 50%;
+}
+.column img {
+    width: 100%;
+    height: auto;
+}
+h1 {
+    color: white;
+}
+h2 {
+    font-size: calc(1em / 4);
+}
+button.cta-button {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+button.cta-button:hover, button.cta-button:active {
+    transform: rotate(5deg);
+}
+.image-container img {
+    width: 100%;
+    height: 100%;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+footer a {
+    color: #333;
+}
+
+.hide {
+    display: none;
+}
+
+.columns-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.column {
+    flex: 1 0 20%; /* Adjust as needed */
+}
+
+@media (max-width: 768px) {
+    .column {
+        flex: 0 0 100%;
+    }
+}
+
+
+
+#section1 {
+    background-color: rgb(255, 221, 2);  /* Yellow */
+}
+
+#section2 {
+    background-color: rgb(0, 134, 179);  /* Blue */
+}
+
+#section3 {
+    background-color: rgb(235, 64, 52);  /* Red */
+}
+
+#section4 {
+    background-color: rgb(0, 153, 76);  /* Green */
+}
+
+#section5 {
+    background-color: rgb(191, 0, 179);  /* Purple */
+}
