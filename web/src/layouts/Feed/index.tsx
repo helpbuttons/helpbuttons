@@ -146,7 +146,7 @@ export default function Feed({ button }: { button: Button }) {
               </div>
             );
           })}
-        {!posts || posts.length == 0 && <>{t('common.notfound', ['posts'])}</>}
+        {!posts || posts.length == 0 && <> <div className='feed__empty-message'>{t('common.notfound', ['posts'])}</div></>}
       </div>
     </div>
   );

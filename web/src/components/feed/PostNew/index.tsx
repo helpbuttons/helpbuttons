@@ -1,3 +1,4 @@
+import FieldText from 'elements/Fields/FieldText';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import t from 'i18n';
@@ -41,7 +42,7 @@ export default function PostNew({ buttonId, reloadPosts }) {
             classNameExtra="feeds__new-message"
           >
             <div className="feeds__new-message-message">
-              <FieldTextArea
+              <FieldText
                 name="title"
                 label={t('post.write')}
                 placeholder={t('post.placeholderWrite')}

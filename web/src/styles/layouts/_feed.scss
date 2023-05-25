@@ -26,6 +26,13 @@ $feed-new-message-radius: $border-radius-circle;
 }
 
 .feed-section {
+
+  padding-bottom: calc($footer-height-mobile + $padding-small*4);
+
+}
+
+.feed-section--activity {
+
   padding-top: $feed-selector-height;
   padding-bottom: calc($footer-height-mobile + $padding-small*4);
 
@@ -34,17 +41,27 @@ $feed-new-message-radius: $border-radius-circle;
 .feed-selector {
   height: $feed-selector-height;
   width: 100%;
+  max-width: $body-max-width;
   background-color: dimgray;
   padding: $padding-big;
 }
 
 .feed-selector--activity {
   z-index: $z-index-03;
-  width: 100%;
   position: absolute;
-  background-color: dimgray;
-  padding: $padding-big;
   top: 0;
+}
+
+.feed__empty-message {
+
+  width: 100%;
+  margin: auto;
+  font-size: $font-size-general;
+  font-weight: $font-weight-bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .feed-messages {
@@ -112,4 +129,12 @@ $feed-new-message-radius: $border-radius-circle;
   color: $feed-post-color;
   border-radius: $feed-border-radius;
   
+}
+
+@media #{$breakpoints-xlarge} {
+
+  .feed-selector--activity {
+    max-width: 200px;
+  }
+
 }
