@@ -16,6 +16,7 @@ import { User } from '../user/user.entity';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { Role } from '@src/shared/types/roles';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
+import { maxResolution } from '@src/shared/types/honeycomb.const';
 @Injectable()
 export class ButtonService {
   constructor(
@@ -57,6 +58,7 @@ export class ButtonService {
       title: createDto.title,
       address: createDto.address,
       when: createDto.when,
+      hexagon: () => `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
