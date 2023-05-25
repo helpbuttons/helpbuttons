@@ -1,8 +1,10 @@
 $feed-border-radius: $border-radius-buttons;
 $feed-color-gray-border: $color-gray-border;
 $feed-post-color: $color-gray;
+$feed-padding-card: $padding-small;
 $feed-padding: $padding-big;
 $feed-height: 58px;
+$feed-selector-height: 5.3rem;
 $feed-color-corporative: $color-corporative;
 $feed-margin-big: $margin-big;
 $feed-icon-width: 20px;
@@ -24,13 +26,25 @@ $feed-new-message-radius: $border-radius-circle;
 }
 
 .feed-section {
-  padding-bottom: $footer-height-mobile;
+  padding-top: $feed-selector-height;
+  padding-bottom: calc($footer-height-mobile + $padding-small*4);
 
 }
 
 .feed-selector {
+  height: $feed-selector-height;
+  width: 100%;
   background-color: dimgray;
   padding: $padding-big;
+}
+
+.feed-selector--activity {
+  z-index: $z-index-03;
+  width: 100%;
+  position: absolute;
+  background-color: dimgray;
+  padding: $padding-big;
+  top: 0;
 }
 
 .feed-messages {
@@ -94,8 +108,7 @@ $feed-new-message-radius: $border-radius-circle;
 }
 
 .feed-element{
-  margin: 0px 20px 0px 20px;
-  padding: 10px;
+  padding: $feed-padding-card $feed-padding-card 0 $feed-padding-card;
   color: $feed-post-color;
   border-radius: $feed-border-radius;
   

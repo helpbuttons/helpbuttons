@@ -1,11 +1,15 @@
 //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
-import CardNotification from '../../components/feed/CardNotification'
+import CardNotification from '../../components/feed/CardNotification';
+import Dropdown from 'elements/Dropdown/DropDown';
 import t from 'i18n';
 
 export default function FeedProfile({activities}) {
   return (
 
     <div className="feed-container">
+      <div className="feed-selector feed-selector--activity">
+        <Dropdown />
+      </div>
       <div className="feed-line"></div>
 
       <div className="feed-section">

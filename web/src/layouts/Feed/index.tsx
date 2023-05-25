@@ -37,6 +37,7 @@ export default function Feed({ button }: { button: Button }) {
       reloadPosts(button.id);
     }
   }, [button]);
+  
 
   // if (!feed && currentButton) {
   //   const singleFeedItem = {

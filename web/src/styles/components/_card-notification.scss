@@ -19,9 +19,23 @@ $card-notification-delete-size: 100px;
   border: $card-notification-border;
   border-radius: $border-radius-basic;
   // box-shadow: $card-notification-box-shadow;
+  display: block;
+  text-decoration: none; /* remove underline */
   position: relative;
-  margin-bottom: $card-notification-margin-bottom;
+  color: $color-gray;
+
+  a {
+    font-weight: $font-weight-bold;
+    color: $color-black;
+  }
 }
+
+.card-notification:hover {
+ 
+  box-shadow: $card-notification-box-shadow;
+  
+}
+
 
 .card-notification--offer:after,
 .card-notification--need:after,
@@ -115,8 +129,10 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification__date {
-  flex: 0 1 30%;
+  flex: 0 1 50%;
+  color: $color-gray;
   text-align: right;
+  font-size: $font-size-small;
 }
 
 .card-notification__date--nflex {
@@ -148,7 +164,7 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification__title {
-  color: $color-black;
+  color: $color-gray;
   font-size: $font-size-general;
   padding: .5rem 0 0 0;
   text-align: left;

@@ -96,7 +96,7 @@ export function ButtonNotification({
 }) {
   return (
     <>
-      <div className="card-notification card-notification">
+      <a href={"/ButtonFile/"+button.id} className="card-notification card-notification">
         <div className="card-notification__content">
           <div className="card-notification__avatar">
             <div className="avatar-medium">
@@ -126,7 +126,7 @@ export function ButtonNotification({
             <div className="card-notification__paragraph"></div>
           </div>
         </div>
-      </div>
+      </a>
     </>
   );
 }
