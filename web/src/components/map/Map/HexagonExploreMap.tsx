@@ -144,12 +144,14 @@ export default function HexagonExploreMap({
       > 
         {selectedNetwork &&
 
-          <div className="search-map__network-title">
-              {selectedNetwork.name}
-              <div className="search-map__sign">
-                made with <a href="https://helpbuttons.org">Helpbuttons</a>
-              </div>
-          </div>
+          <Overlay anchor={(100,100)} >
+            <div className="search-map__network-title">
+                {selectedNetwork.name}
+                <div className="search-map__sign">
+                  made with <a href="https://helpbuttons.org">Helpbuttons</a>
+                </div>
+            </div>
+          </Overlay>
 
         }  
         <GeoJson>
