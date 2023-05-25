@@ -165,17 +165,17 @@ export default function HexagonExploreMap({
               styleCallback={(feature, hover) => {
                 if (feature.properties.hex == hexagonClicked && buttonFeature.properties.count > 0) {
                   return {
-                    fill: '#FFDD02',
-                    strokeWidth: '4',
-                    stroke: '#2F80ED',
+                    fill: 'white',
+                    strokeWidth: '1',
+                    stroke: '#18AAD2',
                     r: '20',
                     opacity: 0.8,
                   };
                 }
                 if (hover) {
                   return {
-                    fill: 'transparent',
-                    strokeWidth: '4',
+                    fill: 'white',
+                    strokeWidth: '0.7',
                     stroke: '#18AAD2',
                     r: '20',
                     opacity: 0.7,
@@ -187,7 +187,7 @@ export default function HexagonExploreMap({
                   stroke: '#18AAD2',
                   r: '20',
                   opacity:
-                    0.04 + (buttonFeature.properties.count * 100) /
+                    0.2 + (buttonFeature.properties.count * 50) /
                     (maxButtonsHexagon - maxButtonsHexagon / 4) /
                     100,
                 };

@@ -4,17 +4,36 @@
     }
 
     svg {
-        stroke: black;
+        // stroke: black;   
     }
 }
 
 .pigeon-zoom-buttons {
 
     right: 10px !important;
+    top: 10px !important;
     display: block;
     left: auto !important;
 
 }
+
+
+
+@media #{$breakpoints-xlarge} {
+
+    .pigeon-zoom-buttons {
+
+        right: 30px !important;
+        top: 30px !important;
+        display: block;
+        left: auto !important;
+    
+    }
+  
+}
+
+
+
 
 
 
