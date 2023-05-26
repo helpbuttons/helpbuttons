@@ -36,6 +36,13 @@ $hashtag-color-gray: $color-gray;
     color: $hashtag-color-black;
     border: none;
   }
+
+  &--blue {
+    background-color: $color-blue;
+    color: $color-white;
+    border: none;
+  }
+
   &--yellow-home {
     background-color: $hashtag-color-black;
     color: $hashtag-color-corporative

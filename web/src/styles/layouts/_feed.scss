@@ -100,11 +100,20 @@ $feed-new-message-radius: $border-radius-circle;
   flex-grow:1;
   padding: 0 $padding-big;
   margin: auto;
+
+  .form__field {
+
+    margin: 0;
+
+  }
+
 }
 
 .feeds__new-message-input {
+  
   border: 1px solid $feed-color-gray-border;
   padding: 0 $feed-padding;
+
 }
 
 .feeds__button {

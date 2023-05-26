@@ -121,8 +121,8 @@
   },
   "post": {
     "comment": "comment",
-    "newComment": "+Comment",
-    "write": "Post a new status",
+    "newComment": "Comment",
+    "write": "Post a new update",
     "placeholderWrite": "what are you thinking?"
   },
   "configuration": {
