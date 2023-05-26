@@ -1,1 +1,1 @@
-export const version = {'git' : 'c2c57a0f4c2820b1a0fceff4007ef5e62b43e05a'}
+export const version = {'git' : '8fa8c9ed5470a60fbeaf20460d56bc7ff4502675'}

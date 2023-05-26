@@ -5,7 +5,8 @@
     "profile": "Profile",
     "activity": "Activity",
     "faqs": "Faqs",
-    "login": "Login"
+    "login": "Login",
+    "home": "Home"
   },
   "homeinfo": {
     "start": "Where do you start?",
