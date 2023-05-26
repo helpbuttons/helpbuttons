@@ -45,7 +45,7 @@
     "configureInstanceTitle": "Setup the last details of your instance"
   },
   "activities": {
-    "newbutton": "You created this <a href='/ButtonFile/{0}'>{1}</a> was created in <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
+    "newbutton": "You created <a href='/ButtonFile/{0}'>{1}</a> in <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
     "newpost": "There is a new post '{0}' posted to the button <a href='/ButtonFile/{1}'>{2}</a>",
     "newcomment": "There is a new comment '{0}' posted to the post '{1}' you can view the button <a href='/ButtonFile/{2}'>{3}</a>",
     "noactivity": "You have no activity yet! Start publishing or interact with others!"
@@ -121,8 +121,8 @@
   },
   "post": {
     "comment": "comment",
-    "newComment": "+Comment",
-    "write": "Post a new status",
+    "newComment": "Comment",
+    "write": "Post a new update",
     "placeholderWrite": "what are you thinking?"
   },
   "configuration": {

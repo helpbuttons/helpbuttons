@@ -227,6 +227,10 @@ export function CardButtonHeadBig({ button }) {
           })}
         </div>
 
+        <div className="card-button__title">
+            {button.title}
+        </div>
+
         <div className="card-button__paragraph">
           <p>{button.description}</p>
         </div>

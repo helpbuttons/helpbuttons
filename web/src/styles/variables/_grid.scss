@@ -4,7 +4,7 @@ $gutter: 12px;
 $grid-max-width: 840px;
 $grid-width: 90%;
 $header-height-mobile: 50px;
-$footer-height-mobile: 60px;
+$footer-height-mobile: calc(40px + $padding-small*2);
 
 //standard heights
 $height-btn: 54px;

@@ -898,14 +898,23 @@ function Repository() {
                     Lorem ipsum es el texto..
                   </div>
                 </div>
-                <button className="btn-circle card-notification__delete">
+                {/* <button className="btn-circle card-notification__delete">
                   <div className="btn-circle__content">
                     <div className="btn-circle__icon">
                       <IoClose />
                     </div>
                   </div>
-                </button>
+                </button> */}
+
               </div>
+              <div className="card-notification__answer-btn">
+                  <Btn
+                    btnType={BtnType.corporative}
+                    caption={"Answer"}
+                    contentAlignment={ContentAlignment.center}
+                  />
+                </div>
+
             </div>
 
 

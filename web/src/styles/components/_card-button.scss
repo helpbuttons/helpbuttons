@@ -136,8 +136,10 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__title {
+  font-weight: $font-weight-bold;
   color: $color-gray;
   font-size: $font-size-general;
+  padding: $padding-big 0;
 }
 
 .card-button__situation {
@@ -244,6 +246,7 @@ $card-button-border-height: $border-general-height;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  display: none; //revise if image navigation
 
 }
 

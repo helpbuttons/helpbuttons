@@ -35,7 +35,7 @@ export default function PostCommentNew({ postId, onSubmit }) {
   return (
     <Form
       onSubmit={handleSubmit(onSubmitLocal)}
-      classNameExtra="publish_btn"
+      classNameExtra="feeds__new-message-message"
     >
       <FieldTextArea
         name="message"
@@ -52,7 +52,7 @@ export default function PostCommentNew({ postId, onSubmit }) {
       />
       <div className="publish__submit">
         <FormSubmit
-          classNameExtra="create_btn"
+          classNameExtra="btn--black btn btn--center"
           title="Publish"
           isSubmitting={isSubmitting}
         />
