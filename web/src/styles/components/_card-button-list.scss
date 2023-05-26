@@ -6,7 +6,7 @@ $card-button-list-ofrece-background: $color-green;
 $card-button-list-paragraph-color: $color-gray;
 $card-button-list-margin-bottom: $margin-extra-small;
 $card-button-list-width: 450px;
-$card-button-list-height: 230px;
+$card-button-list-height: 215px;
 $card-button-list-image-height: 200px;
 $card-button-list-image-width: 200px;
 $card-button-list-margin: 0.5rem;
@@ -27,6 +27,7 @@ $card-button-list-border-height: $border-general-height;
   width: $card-button-list-width;
   box-shadow: $card-button-list-box-shadow;
   position: relative;
+  max-height: $card-button-list-height;
   height: $card-button-list-height;
   display: flex;
   line-height: $text-line-height-small;
@@ -93,11 +94,13 @@ $card-button-list-border-height: $border-general-height;
   padding-left: $padding-small;
 
 
+
 }
 
 .card-button-list__nav .arrow {
 
   @extend .btn-circle--small ;
+  display: none; //revise when several images can be added to button
 
 }
 

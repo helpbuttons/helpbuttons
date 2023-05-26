@@ -39,7 +39,7 @@ export default function CardProfile(props) {
             
               <div className="card-profile__avatar-container-name">
                 {user.name}
-                <span style={{"color" : "lightgrey", "fontSize": "80%"}}>&nbsp;&nbsp;{ user.username }@{getHostname()}</span>
+                <span>{ user.username }@{getHostname()}</span>
                 
               </div>
 
@@ -73,7 +73,7 @@ export default function CardProfile(props) {
 
         <div className="card-profile__data">
         <div className="card-profile__tags grid-one__column-mid-element">
-              <div className="hashtag hashtag--yellow">{t('user.tags')}</div>
+              <div className="hashtag">{t('user.tags')}</div>
             </div>
             <div className="card-profile__description grid-one__column-mid-element">
               {t('user.description')}

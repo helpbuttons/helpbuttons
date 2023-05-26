@@ -137,6 +137,10 @@ $feed-new-message-radius: $border-radius-circle;
   padding: $feed-padding-card $feed-padding-card 0 $feed-padding-card;
   color: $feed-post-color;
   border-radius: $feed-border-radius;
+
+  .card-notification__content {
+    padding-top: 0;
+  }
   
 }
 

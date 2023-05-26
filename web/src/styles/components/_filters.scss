@@ -39,16 +39,29 @@ $filters-padding: 10px;
   bottom: 0;
   display: flex;
   border-top: 1px dashed $color-gray-border ;
-  justify-content:space-between;
+  justify-content: space-between;
   flex-direction: row !important;
   background-color: $color-ligth-gray;
   padding: $padding-medium $padding-medium;
 
   .btn {
 
-    width: 20% ;
+    display: flex;
 
   }
+
+}
+
+.filters__actions > button:nth-child(1) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 4; /* Takes up 2/5 of the width */
+}
+
+.filters__actions > button:nth-child(2) {
+  flex: 5; /* Takes up 3/5 of the width */
+  margin-right: 10%;
 
 }
 
@@ -88,7 +101,7 @@ $filters-padding: 10px;
     position: fixed;
     bottom: 0;
     padding: 0;
-    width: 38vw;
+    width: 33vw;
     margin: 0;
   
   }

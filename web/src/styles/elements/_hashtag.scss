@@ -13,6 +13,7 @@ $hashtag-color-corporative: $color-corporative;
 $hashtag-color-white: $color-white;
 $hashtag-color-black: $color-black;
 $hashtag-color-gray: $color-gray;
+$hashtag-color-l-gray: $color-med-gray;
 
 .hashtag {
 
@@ -23,13 +24,13 @@ $hashtag-color-gray: $color-gray;
   padding: 0.3rem 1.2rem;
   font-size: $font-size-general;
   line-height: 0.6rem;
-  color: $hashtag-color-white;
-  border: 1px solid grey;
-  color: black;
+  border: 2px solid $hashtag-color-l-gray;
   text-decoration: none;
   margin: 0 $hashtag-margin-x $hashtag-margin-x 0;
   text-transform: capitalize;
   font-size: 0.9rem;
+  color: $hashtag-color-l-gray;
+  background-color: transparent;
 
   &--yellow {
     background-color: $hashtag-color-corporative;

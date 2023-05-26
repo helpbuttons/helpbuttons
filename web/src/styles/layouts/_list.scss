@@ -1,4 +1,4 @@
-$list-container-hide-height: calc($footer-height-mobile - 230px);
+$list-container-hide-height: calc($footer-height-mobile - 215px);
 
 ///shouldd be the posts list
 .list__container {
@@ -8,9 +8,8 @@ $list-container-hide-height: calc($footer-height-mobile - 230px);
   width: 100%;
   overflow: hidden;
   height: auto;
-  width: 100%;
   position: fixed;
-  bottom: $footer-height-mobile;
+  bottom: $footer-height-mobile + $padding-small*2;
   z-index: $z-index-01;
   transition: $transition-default-slow;
 
@@ -19,7 +18,7 @@ $list-container-hide-height: calc($footer-height-mobile - 230px);
 .list__content {
 
   display: flex;
-  padding: $padding-small;
+  padding-top: $padding-small;
   background-color: $color-ligth-gray;
   flex-direction: row;
   overflow-x: scroll;
@@ -39,6 +38,7 @@ $list-container-hide-height: calc($footer-height-mobile - 230px);
 .list__element {
 
   height: 100%;
+  padding-right: $padding-small;
 
 }
 
@@ -53,7 +53,6 @@ $list-container-hide-height: calc($footer-height-mobile - 230px);
     overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
-
 
   }
 
