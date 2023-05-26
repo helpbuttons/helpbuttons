@@ -8,7 +8,6 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
   width: 100%;
   overflow: hidden;
   height: auto;
-  width: 100%;
   position: fixed;
   bottom: $footer-height-mobile + $padding-small*2;
   z-index: $z-index-01;
@@ -54,7 +53,6 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
     overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
-
 
   }
 

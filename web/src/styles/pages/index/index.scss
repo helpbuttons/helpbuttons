@@ -23,15 +23,15 @@ $index-mobile-fixed-z-index: $z-index-05;
   }
   .index__content-left {
     flex-direction: column;
-    width: 40vw;
+    width: 35vw;
     float: left;
     height: 100%;
     transition: $transition-default-slow;
-    min-width: 40vw;
+    min-width: 35vw;
   }
   .index__content-left--hide {
     flex-direction: column;
-    margin-left: -40vw;
+    margin-left: -35vw;
     right: -200px;
   }
 }
