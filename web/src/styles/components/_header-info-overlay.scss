@@ -46,9 +46,9 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 .info-overlay__search-section {
 
   background-color: $color-corporative;
-  margin: 0 $padding-big;
   padding: $padding-big;
   border-radius: 0 0 25px 25px;
+  width: auto;
 
   .label {
 
@@ -82,7 +82,8 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      margin-bottom: $margin-big;
+      margin-bottom: 0;
+      padding-bottom: $padding-small;
   
       .card__header-image {
   
@@ -110,16 +111,47 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 
     }
 
+    hr {
+
+      background-color: $color-white;
+
+    }
+
   }
 
   .info-overlay__description {
 
     overflow:auto;
     white-space: normal;
+    padding: $padding-medium 0;
 
   }
 
 }
+
+.card__section {
+
+  border-radius: $border-radius-basic;
+  background-color: transparent;
+  padding: $padding-small;
+  font-weight: $font-weight-regular;
+  margin-top: $margin-small;
+  color: $color-ligth-gray;
+  font-size: $font-size-small;
+  border-color: $color-ligth-gray;
+  border: 0px solid $color-ligth-gray;
+  line-height: $text-line-height-medium;
+
+  a{
+    // @extend .btn--corporative;
+    @extend .btn;
+    // @extend .btn--center;
+    @extend .btn-with-icon;
+
+  }
+
+}
+
 
 .info-overlay__bottom {
 

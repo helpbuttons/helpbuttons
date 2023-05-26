@@ -2,7 +2,7 @@ $drag-tab-height: $height-btn;
 $drag-tab-width-desktop: 44px;
 $drag-tab-height-desktop: 200px;
 $drag-tab-card-height: $card-button-list-height;
-$drag-tab-bottom-height: $nav-bottom-height;
+$drag-tab-bottom-height: $footer-height-mobile + $padding-small*2;
 $drag-tab-bottom: calc(#{$drag-tab-card-height} + #{$drag-tab-bottom-height});
 $drag-tab-line-height: 5px;
 $drag-tab-line-height-desktop: 100px;

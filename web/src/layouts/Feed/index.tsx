@@ -100,12 +100,8 @@ export default function Feed({ button }: { button: Button }) {
                       
                     </div>
                   </div>
-                  <div className="card-notification__content">
-                      
-
-                      <PostMessage post={post} />
-
-                  </div>
+                
+                  <PostMessage post={post} />
 
                   {loggedInUser && (
                           <>
@@ -117,7 +113,7 @@ export default function Feed({ button }: { button: Button }) {
                               > 
                                 {post.comments.length > 0
                                   ? `${
-                                    showComments ? 'Cerrar' : 'Ver'
+                                    showComments ? 'Ocultar' : 'Ver'
                                   } ${post.comments.length} ${t(
                                       'post.comment',
                                     )}${

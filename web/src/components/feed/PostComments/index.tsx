@@ -13,8 +13,8 @@ export default function PostComments({ showComments, comments }) {
             {comments.map((comment) => {
               return (
                 <>
-                <PostMessage post={comment} />
                 <hr/>
+                <PostMessage post={comment} />
                 </>
               )
               })}

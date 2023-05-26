@@ -110,6 +110,7 @@ export default function HomeInfo() {
                     {t('homeinfo.stats')}
                   </h3>
                 </div>
+                <hr></hr>
                 <div className="info-overlay__description">
                   <div>{t('homeinfo.buttons', [config.buttonCount.toString()])}</div>
                   <div>{t('homeinfo.users', [config.userCount.toString()])}</div>
@@ -130,55 +131,56 @@ export default function HomeInfo() {
                 <div className="card__header">
                   <h3 className="card__header-title">{t('homeinfo.actions')}</h3>
                 </div>
-                <div>
+                <hr></hr>
+                <div className='card__section'>
+                <p>{t('homeinfo.exploreSubtitle')}</p>
                   <NavLink href="/Explore">
+                    <IoGlobeOutline />
                     <span>
-                      <IoGlobeOutline />
                       {t('menu.explore')}
                     </span>
                   </NavLink>
-                  <p>{t('homeinfo.exploreSubtitle')}</p>
                 </div>
-                <div>
+                <div className='card__section'>
+                <p>{t('homeinfo.createSubtitle')}</p>
                   <NavLink href="/ButtonNew">
+                    <IoAddOutline />
                     <span>
-                      <IoAddOutline />
-                      {t('menu.create')}
+                      {t("menu.create")}
                     </span>
                   </NavLink>
-                  <p>{t('homeinfo.createSubtitle')}</p>
                 </div>
-                <div>
+                <div className='card__section'>
+                <p>{t('homeinfo.faqsSubtitle')}</p>
                   <NavLink href="/Explore">
+                    <IoHelpOutline />
                     <span>
-                      <IoHelpOutline />
                       {t('menu.faqs')}
                     </span>
                   </NavLink>
-                  <p>{t('homeinfo.faqsSubtitle')}</p>
                 </div>
                 {currentUser && (
                   <>
-                    <div>
+                    <div className='card__section'>
+                    <p>{t('homeinfo.profileSubtitle')}</p>
                       <NavLink href="/Profile">
+                        <IoLogInOutline />
                         <span>
-                          <IoLogInOutline />
                           {t('menu.profile')}
                         </span>
                       </NavLink>
-                      <p>{t('homeinfo.profileSubtitle')}</p>
                     </div>
                   </>
                 )}
                 {!currentUser && (
-                  <div>
+                  <div className='card__section'>
+                    <p>{t('homeinfo.loginSubtitle')}</p>
                     <NavLink href="/Login">
+                      <IoLogInOutline />
                       <span>
-                        <IoLogInOutline />
                         {t('menu.login')}
                       </span>
                     </NavLink>
-                    <p>{t('homeinfo.loginSubtitle')}</p>
                   </div>
                 )}
               </div>

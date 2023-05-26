@@ -58,14 +58,13 @@ export function CardButtonHeadMedium({ button }) {
             </div>
 
             <div className="card-button__info">
-              <div className="card-button__name">
-                {button.owner.name}
-              </div>
-
               <div className="card-button__status card-button__status">
                 <span className="card-button" style={buttonColorStyle(cssColor)}>
                   {button.type}
                 </span>
+              </div>
+              <div className="card-button__name">
+                {button.owner.name} @{button.owner.username}
               </div>
             </div>
           </div>
@@ -74,17 +73,11 @@ export function CardButtonHeadMedium({ button }) {
             {button.title}
           </div>
 
-          <div className="card-button__paragraph">
-            <p>{button.description}</p>
-          </div>
-
-          <div>
             <div className="card-button__city card-button__everywhere ">
               {button.address}
             </div>
 
             <ShowWhen when={button.when}/>
-          </div>
         </div>
       </a>
     </>
@@ -209,30 +202,30 @@ export function CardButtonHeadBig({ button }) {
           </div>
 
           <div className="card-button__info">
-            <div className="card-button__name">
-              {button.owner.name}
-            </div>
             <div className="card-button__status card-button__status">
               <span className="card-button__status" style={buttonColorStyle(cssColor)}>
                 {button.type}
               </span>
             </div>
+            <div className="card-button__name">
+              {button.owner.name}
+            </div>
             <CardButtonHeadActions button={button} />
           </div>
+        </div>
+
+        <div className="card-button__title">
+            {button.title}
+          </div>
+
+        <div className="card-button__paragraph">
+          <p>{button.description}</p>
         </div>
 
         <div className="card-button__hashtags">
           {button.tags.map((tag, idx) => {
             return <div className="hashtag" key={idx}>{tag}</div>;
           })}
-        </div>
-
-        <div className="card-button__title">
-            {button.title}
-        </div>
-
-        <div className="card-button__paragraph">
-          <p>{button.description}</p>
         </div>
 
         <div className="card-button__locDate">
