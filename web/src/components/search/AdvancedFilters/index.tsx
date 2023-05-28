@@ -1,7 +1,8 @@
 import t from "i18n";
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import React, {useState} from "react";
+import router from 'next/router';
 
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import DropDownSearchLocation from "elements/DropDownSearchLocation";
 import FieldText from 'elements/Fields/FieldText';
 
@@ -112,7 +113,7 @@ export default function AdvancedFilters({
                         btnType={BtnType.submit}
                         caption="SAVE"
                         contentAlignment={ContentAlignment.center}
-                        onClick={(e) => {setShowFilters(false);}}
+                        onClick={(e) => {setShowFilters(false); router.push('/Explore')}}
                       />
               </div>
 

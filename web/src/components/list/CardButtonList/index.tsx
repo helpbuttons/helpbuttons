@@ -37,9 +37,9 @@ export default function CardButtonList({button}) {
             alt={button.description}
           />
         </div>
-        <div className="card-button-list__content">
+        <a className="card-button-list__content" href={`/ButtonFile/${button.id}`}>
             <CardButtonHeadMedium button={button}/>
-        </div>
+        </a>
       </div>
     </div>
     </div>

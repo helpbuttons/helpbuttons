@@ -1,5 +1,6 @@
 ///this is the mobile header - it has the search input in the middle and to icons on the sides. Left one ddisplays HeaderInfo with the netpicker and descripttion (in case it's in a net the trigger is the net's logo), right nav btn diisplays the filters
 import React, {useState} from "react";
+
 import Filters from "components/search/Filters";
 import AdvancedFilters from "components/search/AdvancedFilters"; //just for mobile
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn';
@@ -13,9 +14,9 @@ import DropDownSearchLocation from "elements/DropDownSearchLocation";
 
 function NavHeader({showSearch, updateFiltersType, handleSelectedPlace}) {
 
-  // const [showSearch, setShowSearch] = useState(true);
+  const [showFiltersBar, setshowFiltersBar] = useState(true);
 
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
   // const [showHideExtraFilters, setShowHideExtraFilters] = useState(true);
 
@@ -57,7 +58,7 @@ function NavHeader({showSearch, updateFiltersType, handleSelectedPlace}) {
 
             </form>
 
-            <Filters updateFiltersType={updateFiltersType} />            
+            { showFiltersBar ? <Filters updateFiltersType={updateFiltersType} /> : null }         
             { showFilters ? <AdvancedFilters setShowFilters={setShowFilters} showFilters={showFilters}/>  : null}
 
 

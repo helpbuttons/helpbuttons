@@ -65,12 +65,11 @@ export default function HomeInfo() {
       <div className="info-overlay__content">
         <form className="info-overlay__search-section">
 
-          <NavLink href="/Explore">
             <NavHeader
                 showSearch={true}
                 handleSelectedPlace={handleSelectedPlace}
+                showFilters={false}
               />
-          </NavLink>
           
         </form>
         {selectedNetworkLoading && (
