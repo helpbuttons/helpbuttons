@@ -22,6 +22,7 @@ export interface GlobalState {
   alerts: Alert[];
   config: SetupDtoOut;
   activities: Activity[];
+  showFilters: boolean;
 }
 
 export const store = new Store<GlobalState>({
@@ -31,7 +32,8 @@ export const store = new Store<GlobalState>({
   explore: exploreInitial,
   alerts: [],
   config: null,
-  activities: []
+  activities: [],
+  showFilters: false
 });
 
 const Home: NextPage = () => {

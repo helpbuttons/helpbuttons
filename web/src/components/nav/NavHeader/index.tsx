@@ -15,9 +15,9 @@ function NavHeader({showSearch, updateFiltersType, handleSelectedPlace}) {
 
   // const [showSearch, setShowSearch] = useState(true);
 
-  // const [showHideExtraFilters, setShowHideExtraFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(true);
 
-  const [showHideFiltersMobile, setShowHideFiltersMobile] = useState(false);
+  // const [showHideExtraFilters, setShowHideExtraFilters] = useState(true);
 
   // const [showHideFilters, setShowHideFilters] = useState(true);
   //
@@ -51,15 +51,14 @@ function NavHeader({showSearch, updateFiltersType, handleSelectedPlace}) {
 
                 <div className="nav-header__content-message">
 
-                <HeaderSearch setShowHideFiltersMobile={setShowHideFiltersMobile}/>
+                <HeaderSearch setShowFilters={setShowFilters} showFilters={showFilters}/>
 
                 </div>
 
             </form>
 
-            <Filters updateFiltersType={updateFiltersType} />
-            <AdvancedFilters />
-            { showHideFiltersMobile ? <AdvancedFilters setShowHideFiltersMobile={setShowHideFiltersMobile} />  : null}
+            <Filters updateFiltersType={updateFiltersType} />            
+            { showFilters ? <AdvancedFilters setShowFilters={setShowFilters} showFilters={showFilters}/>  : null}
 
 
         </div>

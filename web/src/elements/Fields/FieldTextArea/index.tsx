@@ -14,7 +14,8 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
     classNameExtra,
     watch,
     setValue,
-    setFocus
+    setFocus,
+    explain,
   } = props;
 
   const [foundEmojies, setFoundEmojies] = useState([])
@@ -67,7 +68,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
       <>
       <div className="form__field">
         <p className="form__label">{label}</p>
-        
+        <p className="form__explain">{explain}</p>
         
         <textarea
           onChange={(event) => {handleChange(event)}}
