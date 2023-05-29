@@ -1,6 +1,6 @@
 import { Bounds } from 'pigeon-maps';
 import {
-  cellToChildren, cellToLatLng, latLngToCell,
+  cellToChildren, cellToLatLng, cellToParent, latLngToCell,
 } from 'h3-js';
 import { featureToH3Set, h3SetToFeature } from 'geojson2h3';
 import _ from 'lodash';
@@ -165,16 +165,19 @@ export function convertH3DensityToFeatures(
   {
     return []
   }
-  return _.map(hexagones, (hexes, idx) => {
+  return hexagones.map((hex) => {
+    // console.log(hex)
     // return {hex:idx, count: hex.length}
-    const geojsonHex = h3SetToFeature([idx]);
+    const geojsonHex = h3SetToFeature([hex.hexagon]);
+    // console.log(hexes.hexagon)
     return {
       ...geojsonHex,
       properties: {
         ...geojsonHex.properties,
-        hex: idx,
-        center: cellToLatLng(idx),
-        count: hexes.length
+        hex: hex.hexagon,
+        center: cellToLatLng(hex.hexagon),
+        count: hex.groupByType.reduce((sum, type) => sum + type.buttons.length, 0),
+        byType: hex.groupByType
       },
     };
   })
@@ -191,4 +194,56 @@ export function getBoundsHexFeatures(bounds, mapZoom)
     return []
   }
   return newGeoJsonHexesBounds
+}
+
+export function calculateDensityMap(filteredButtons, resolution) {
+
+  const reducer = (groupBy, button) => {
+    // console.log(button)
+    if (Array.isArray(button)) {
+      return button.reduce(reducer, groupBy);
+    } else {
+      const { hexagon, ...rest } = button;
+      const group = groupBy.find(
+        (button) => cellToParent(button.hexagon,resolution) === cellToParent(hexagon, resolution),
+      );
+      if (group) {
+        group.buttons.push(rest);
+      } else {
+        groupBy.push({
+          hexagon: cellToParent(button.hexagon,resolution),
+          buttons: [rest],
+        });
+      }
+      return groupBy;
+    }
+  };
+
+  const reducing = (groupBy, hex) => {
+    if (Array.isArray(hex)) {
+      return hex.reduce(reducer, groupBy);
+    } else {
+      const { type, ...rest } = hex;
+      const group = groupBy.find(
+        (button) => button.type === type
+      );
+      if (group) {
+        group.buttons.push(rest);
+      } else {
+        groupBy.push({
+          type,
+          buttons: [rest],
+        });
+      }
+      return groupBy;
+    }
+  };
+
+
+  const groupBy = filteredButtons.reduce(reducer, []);
+  const groupbyType = groupBy.map(hex => {return {hexagon: hex.hexagon, groupByType: hex.buttons.reduce(reducing, [])}})
+
+  return convertH3DensityToFeatures(
+    groupbyType,
+  );
 }

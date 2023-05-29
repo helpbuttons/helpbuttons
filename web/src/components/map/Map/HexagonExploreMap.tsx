@@ -5,15 +5,14 @@ import { useRef } from 'store/Store';
 import { updateCurrentButton } from 'state/Explore';
 import { HbMap } from '.';
 import {
+  calculateDensityMap,
   convertBoundsToGeoJsonHexagons,
-  convertH3DensityToFeatures,
-  featuresToGeoJson,
   getBoundsHexFeatures,
   getResolution,
 } from 'shared/honeycomb.utils';
-import { cellToParent } from 'h3-js';
 import _ from 'lodash';
 import { useDebounce, useToggle } from 'shared/custom.hooks';
+import { buttonTypes } from 'shared/buttonTypes';
 
 export default function HexagonExploreMap({
   filteredButtons,
@@ -108,12 +107,8 @@ export default function HexagonExploreMap({
       if (!exploreSettings.bounds) {
         return [];
       }
-      const hexagonsOnResolution = filteredButtons.map((button) =>
-        cellToParent(button.hexagon, resolution),
-      );
-      const densityMap = convertH3DensityToFeatures(
-        _.groupBy(hexagonsOnResolution),
-      );
+      
+      const densityMap = calculateDensityMap(filteredButtons, resolution)
       return _.unionBy(
         densityMap,
         debouncedBoundsFeatures,
@@ -141,76 +136,105 @@ export default function HexagonExploreMap({
         onBoundsChanged={onBoundsChanged}
         handleMapClick={handleMapClicked}
         tileType={exploreSettings.tileType}
-      > 
-        {selectedNetwork &&
-
-          <Overlay anchor={[100,100]} >
+      >
+        {selectedNetwork && (
+          <Overlay anchor={[100, 100]}>
             <div className="search-map__network-title">
-                {selectedNetwork.name}
-                <div className="search-map__sign">
-                  made with <a href="https://helpbuttons.org">Helpbuttons</a>
-                </div>
+              {selectedNetwork.name}
+              <div className="search-map__sign">
+                made with{' '}
+                <a href="https://helpbuttons.org">Helpbuttons</a>
+              </div>
             </div>
           </Overlay>
-
-        }
+        )}
         <GeoJson>
-          {!fetchingNewResolution && h3ButtonsDensityFeatures.map((buttonFeature) => (
-            <GeoJsonFeature
-              onClick={(feature) => {
-                setHexagonClicked(
-                  () => feature.payload.properties.hex,
-                )
-              }}
-              feature={buttonFeature}
-              key={buttonFeature.properties.hex}
-              styleCallback={(feature, hover) => {
-                if (feature.properties.hex == hexagonClicked && buttonFeature.properties.count > 0) {
+          {!fetchingNewResolution &&
+            h3ButtonsDensityFeatures.map((buttonFeature) => (
+              <GeoJsonFeature
+                onClick={(feature) => {
+                  setHexagonClicked(
+                    () => feature.payload.properties.hex,
+                  );
+                }}
+                feature={buttonFeature}
+                key={buttonFeature.properties.hex}
+                styleCallback={(feature, hover) => {
+                  if (
+                    feature.properties.hex == hexagonClicked &&
+                    buttonFeature.properties.count > 0
+                  ) {
+                    return {
+                      fill: 'white',
+                      strokeWidth: '1',
+                      stroke: '#18AAD2',
+                      r: '20',
+                      opacity: 0.8,
+                    };
+                  }
+                  if (hover) {
+                    return {
+                      fill: 'white',
+                      strokeWidth: '0.7',
+                      stroke: '#18AAD2',
+                      r: '20',
+                      opacity: 0.7,
+                    };
+                  }
+                  if (buttonFeature.properties.count < 1) {
+                    return {
+                      fill: 'transparent',
+                      strokeWidth: '1',
+                      stroke: '#18AAD2',
+                      r: '20',
+                      opacity:
+                        0.2 +
+                        (buttonFeature.properties.count * 50) /
+                          (maxButtonsHexagon -
+                            maxButtonsHexagon / 4) /
+                          100,
+                    };
+                  }
                   return {
-                    fill: 'white',
-                    strokeWidth: '1',
+                    fill: '#18AAD2',
+                    strokeWidth: '2',
                     stroke: '#18AAD2',
                     r: '20',
-                    opacity: 0.8,
+                    opacity:
+                      0.2 +
+                      (buttonFeature.properties.count * 50) /
+                        (maxButtonsHexagon - maxButtonsHexagon / 4) /
+                        100,
                   };
-                }
-                if (hover) {
-                  return {
-                    fill: 'white',
-                    strokeWidth: '0.7',
-                    stroke: '#18AAD2',
-                    r: '20',
-                    opacity: 0.7,
-                  };
-                }
-                return {
-                  fill: '#18AAD2',
-                  strokeWidth: '2',
-                  stroke: '#18AAD2',
-                  r: '20',
-                  opacity:
-                    0.2 + (buttonFeature.properties.count * 50) /
-                    (maxButtonsHexagon - maxButtonsHexagon / 4) /
-                    100,
-                };
-              }}
-            />
-          ))}
+                }}
+              />
+            ))}
         </GeoJson>
-        {!fetchingNewResolution && h3ButtonsDensityFeatures.map((feature) => {
-          if (feature.properties.count > 0)
-            return (
-              <Overlay                
-                anchor={feature.properties.center}
-                key={feature.properties.hex}
-                offset={[10, 15]}
-              >
-                <span style={{'color' : 'yellow', fontSize: '2em'}}>
-                {feature.properties.count.toString()}
-                </span>
-              </Overlay>
-            );
-        })}
+        {!fetchingNewResolution &&
+          h3ButtonsDensityFeatures.map((feature) => {
+            if (
+              feature.properties.count > 0 &&
+              feature.properties.hex == hexagonClicked
+            )
+              return (
+                <Overlay
+                  anchor={feature.properties.center}
+                  offset={[10, 20]}
+                  key={feature.properties.hex}
+                >
+                  {buttonTypes.map((buttonType, idx) => {
+                    return (
+                      <span style={{ color: buttonType.cssColor }}>
+                        <p>
+                          {buttonType.caption}:{' '}
+                          {feature.properties.count.toString()}
+                        </p>
+                      </span>
+                    );
+                  })}
+                </Overlay>
+              );
+          })}
       </HbMap>
     </>
   );

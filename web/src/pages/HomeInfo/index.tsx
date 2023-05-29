@@ -16,8 +16,8 @@ import { getHostname } from 'shared/sys.helper';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { useEffect, useState } from 'react';
-import { updateExploreMapZoom, updateMapCenter } from 'state/Explore';
 import { Network } from 'shared/entities/network.entity';
+import { useToggle } from 'shared/custom.hooks';
 
 export default function HomeInfo() {
   const selectedNetwork: Network = useRef(
@@ -40,7 +40,8 @@ export default function HomeInfo() {
   );
 
   const [navigatorCoordinates, setNavigatorCoordinates] = useState(null)
-  
+  const [showFiltersForm, toggleShowFiltersForm] = useToggle(false)
+
   useEffect(() => {
     if(navigator)
     {
@@ -66,9 +67,8 @@ export default function HomeInfo() {
         <form className="info-overlay__search-section">
 
             <NavHeader
-                showSearch={true}
-                handleSelectedPlace={handleSelectedPlace}
-                showFilters={false}
+                showFiltersForm={showFiltersForm}
+                toggleShowFiltersForm={toggleShowFiltersForm}
               />
           
         </form>

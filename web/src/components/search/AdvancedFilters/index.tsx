@@ -1,6 +1,5 @@
 import t from "i18n";
-import React, {useState} from "react";
-import router from 'next/router';
+import React from "react";
 
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import DropDownSearchLocation from "elements/DropDownSearchLocation";
@@ -8,11 +7,11 @@ import FieldText from 'elements/Fields/FieldText';
 
 
 //Mobile filters section that includes not only the filters but some search input fields, maybe needed to make a separate component from the rest of esktop elements
-export default function AdvancedFilters({toggleShow}) {
+export default function AdvancedFilters({toggleShowFiltersForm}) {
 
   return (
     <>
-      { showFilters && (
+      
         <div className="filters__container">
           <form className="filters--vertical">
 
@@ -20,9 +19,9 @@ export default function AdvancedFilters({toggleShow}) {
                     name="title"
                     label="Qué buscas"
                     placeholder="Escribe aquí lo que quieras"
-                    watch={watch}
-                    setValue={setValue}
-                    setFocus={setFocus}
+                    // watch={watch}
+                    // setValue={setValue}
+                    // setFocus={setFocus}
                     explain="Explain what's for here"
               />
 
@@ -90,21 +89,20 @@ export default function AdvancedFilters({toggleShow}) {
                   btnType={BtnType.link}
                   caption="CANCEL"
                   contentAlignment={ContentAlignment.center}
-                  onClick={(e) => {toggleShow(false)}}
+                  onClick={(e) => {toggleShowFiltersForm(false)}}
                 />
 
                 <Btn
                   btnType={BtnType.submit}
                   caption="SAVE"
                   contentAlignment={ContentAlignment.center}
-                  onClick={(e) => {toggleShow(false)}}
+                  onClick={(e) => {toggleShowFiltersForm(false)}}
                 />
         </div>
 
           </form>
 
         </div>
-      )}
     </>
 );
 }

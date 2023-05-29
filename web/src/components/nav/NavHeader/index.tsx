@@ -13,35 +13,18 @@ import { useToggle } from "shared/custom.hooks";
 
 
 
-function NavHeader({showSearch, updateFiltersType, handleSelectedPlace}) {
+function NavHeader({showSearch, showFiltersForm, toggleShowFiltersForm}) {
 
-  const [showFiltersBar, setshowFiltersBar] = useState(true);
-
-  const [showFilters, setShowFilters] = useState(false);
-
-  // const [showHideExtraFilters, setShowHideExtraFilters] = useState(true);
-
-  // const [showHideFilters, setShowHideFilters] = useState(true);
-  //
-  // const [showHideInfoOverlay, setShowHideInfoOverlay] = useState(true);
-  //
-  // const [showSearch, setShowSearch] = useState(true);
-  //
-  // const [name, setName] = useState(true);
-  //
-  // const [tag, setTag] = useState(true);
-  //
-  // const [search, setSearch] = useState(true);
-  //
-  // const [results, setResults] = useState(true);
-
-  // const handleChange = event => {
-  //     
-  //     props.onchange(event.target.value);
-  // }
-  // const updateFiltersType = (type, value) => {
-  //   console.log(`changed ${type} to ${value}`)
-  // }
+  const filters = {
+    query: 'xxx',
+    helpButtonTypes: [], // 
+    where: {address: 'Albacete', center: [100,100], radius: '25'},
+    when: 'any',
+    results: {
+      count: 48,
+    }
+  }
+  
 
   return(
 
@@ -53,14 +36,15 @@ function NavHeader({showSearch, updateFiltersType, handleSelectedPlace}) {
 
                 <div className="nav-header__content-message">
 
-                <HeaderSearch setShowFilters={setShowFilters} showFilters={showFilters}/>
+                <HeaderSearch filters={filters} toggleShowFiltersForm={toggleShowFiltersForm}/>
 
                 </div>
 
             </form>
 
-            { showFiltersBar ? <Filters updateFiltersType={updateFiltersType} /> : null }         
-            { showFilters ? <AdvancedFilters setShowFilters={setShowFilters} showFilters={showFilters}/>  : null}
+            { showFiltersForm &&
+             <AdvancedFilters toggleShowFiltersForm={toggleShowFiltersForm} />
+             }
 
 
         </div>
