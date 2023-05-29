@@ -1,43 +1,52 @@
-import React, { useState } from 'react';
-import { MarkerButtonIcon } from './MarkerButton';
-import { makeImageUrl } from 'shared/sys.helper';
+import React, { useEffect, useState } from 'react';
 import { HbMap } from '.';
-import { Point } from 'pigeon-maps';
+import { GeoJson, Point } from 'pigeon-maps';
+import { latLngToGeoJson } from 'shared/honeycomb.utils';
 
 export default function MarkerSelectorMap({
-  updateMarkerPosition = (latLng) => {},
   markerPosition,
+  setMarkerPosition,
   defaultZoom = 11,
-  markerImage,
-  markerCaption,
-  markerColor = 'yellow',
-  handleZoomChange = (zoom) => {}
+  markerColor
 }) {
   const [mapCenter, setMapCenter] = useState<Point>(markerPosition);
   const [mapZoom, setMapZoom] = useState(defaultZoom);
+  const [markerHexagonGeoJson, setMarkerHexagonGeoJson] = useState(null)
 
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
-    updateMarkerPosition(center);
-    handleZoomChange(zoom)
+    setMarkerPosition(center);
+
   };
 
-  const handleMapClicked = ({event, latLng, pixel}) => {
+  const handleMapClicked = ({ event, latLng, pixel }) => {
     setMapCenter(latLng);
 
-    updateMarkerPosition(latLng);
-  }
-  
+    setMarkerPosition(latLng);
+  };
+
+  useEffect(() => {
+    let polygons = latLngToGeoJson(markerPosition[0], markerPosition[1]);
+
+    setMarkerHexagonGeoJson(polygons)
+
+  }, [markerPosition])
   return (
     <>
       <HbMap
         mapCenter={mapCenter}
         mapZoom={mapZoom}
-        setMapZoom={setMapZoom}
-        handleBoundsChange={onBoundsChanged}
+        onBoundsChanged={onBoundsChanged}
         handleMapClick={handleMapClicked}
         width={'100%'}
-        height={'60vh'} setMapCenter={setMapCenter}>
-        <MarkerButtonIcon anchor={markerPosition} offset={[35, 65]} cssColor={markerColor} image={makeImageUrl(markerImage, '/api/')} title={markerCaption}/>
+        height={'60vh'}
+      >
+            <GeoJson
+              data={markerHexagonGeoJson}
+              styleCallback={(feature, hover) => {
+                return {fill: markerColor}
+              }}
+              
+            />
       </HbMap>
     </>
   );

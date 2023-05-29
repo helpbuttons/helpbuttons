@@ -1,6 +1,6 @@
 import { Bounds } from 'pigeon-maps';
 import {
-  cellToChildren, cellToLatLng,
+  cellToChildren, cellToLatLng, latLngToCell,
 } from 'h3-js';
 import { featureToH3Set, h3SetToFeature } from 'geojson2h3';
 import _ from 'lodash';
@@ -74,6 +74,11 @@ export function convertHexesToFeatures(
   });
 }
 
+export function latLngToGeoJson(lat, lng)
+{
+  const hex = latLngToCell(lat, lng, maxResolution)
+  return featuresToGeoJson([h3SetToFeature([hex])])
+}
 export function getDegreesBleed(zoom: number, bounds: Bounds) : Bounds
 {
   let extende = 0.001;

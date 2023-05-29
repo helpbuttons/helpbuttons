@@ -142,25 +142,17 @@ export default function ButtonForm({
             <>
               <FieldLocation
                 label={t('button.whereLabel')}
-                setMarkerPosition={([lat, lng]) => {
+                updateMarkerPosition={([lat, lng]) => {
                   setValue('latitude', lat);
                   setValue('longitude', lng);
                 }}
-                setMarkerAddress={(address) => {
+                updateAddress={(address) => {
                   setValue('address', address);
                 }}
-                setZoom={(zoom) => {
-                  setValue('zoom', zoom);
-                }}
-                markerZoom={watch('zoom')}
                 markerAddress={watch('address')}
                 markerImage={watch('image')}
                 markerCaption={watch('title')}
                 markerColor={markerColor}
-                markerPosition={[
-                  watch('latitude'),
-                  watch('longitude'),
-                ]}
                 selectedNetwork={selectedNetwork}
                 validationError={errors.location}
               />

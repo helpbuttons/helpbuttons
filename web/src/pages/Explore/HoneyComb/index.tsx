@@ -2,10 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 //components
-import {
-  FindButtons,
-  updateCurrentButton,
-} from 'state/Explore';
+import { FindButtons, updateCurrentButton } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -20,10 +17,8 @@ import {
   localStorageService,
 } from 'services/LocalStorage';
 import HexagonExploreMap from 'components/map/Map/HexagonExploreMap';
-import { cellToParent} from 'h3-js';
-import {
-  getResolution,
-} from 'shared/honeycomb.utils';
+import { cellToParent } from 'h3-js';
+import { getResolution } from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import {
   BrowseType,
@@ -63,31 +58,28 @@ function HoneyComb({ router }) {
   const [fetchedButtons, setFetchedButtons] = useState([]);
   const [isFetchingButton, setIsFetchingButtons] = useState(false);
 
-  useEffect(
-    () => {
-      if (debounceHexagonsToFetch) {
-        setIsFetchingButtons(true);
-        store.emit(
-          new FindButtons(
-            debounceHexagonsToFetch.resolution,
-            debounceHexagonsToFetch.hexagons,
-            (buttons) => {
-              setIsFetchingButtons(() => false);
-              setFetchedButtons(() => buttons);
-            },
-            (error) => {
-              setFetchedButtons([]);
-              setIsFetchingButtons(false);
-            },
-          ),
-        );
-      } else {
-        setFetchedButtons([]);
-        setIsFetchingButtons(false);
-      }
-    },
-    [debounceHexagonsToFetch],
-  );
+  useEffect(() => {
+    if (debounceHexagonsToFetch) {
+      setIsFetchingButtons(true);
+      store.emit(
+        new FindButtons(
+          debounceHexagonsToFetch.resolution,
+          debounceHexagonsToFetch.hexagons,
+          (buttons) => {
+            setIsFetchingButtons(() => false);
+            setFetchedButtons(() => buttons);
+          },
+          (error) => {
+            setFetchedButtons([]);
+            setIsFetchingButtons(false);
+          },
+        ),
+      );
+    } else {
+      setFetchedButtons([]);
+      setIsFetchingButtons(false);
+    }
+  }, [debounceHexagonsToFetch]);
 
   const currentButton = useRef(
     store,
@@ -99,7 +91,6 @@ function HoneyComb({ router }) {
     (state: GlobalState) => state.networks.selectedNetwork,
   );
 
-
   const defaultFilters: ButtonFilters = {
     showButtonTypes: buttonTypes.map((buttonType) => buttonType.name),
     bounds: null,
@@ -108,7 +99,7 @@ function HoneyComb({ router }) {
   const [listButtons, setListButtons] = useState([]);
   const [filters, setFilters] =
     useState<ButtonFilters>(defaultFilters);
-
+  const [queryCenter, setQueryCenter] = useState<Point>(null);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
@@ -166,34 +157,18 @@ function HoneyComb({ router }) {
     const exploreSettings = localStorageService.read(
       LocalStorageVars.EXPLORE_SETTINGS,
     );
-    if (router && router.query && router.query.lat) {
-      const lat = parseFloat(router.query.lat);
-      const lng = parseFloat(router.query.lng);
-      return;
-      setExploreSettings((prevSettings) => {
-        return { ...prevSettings, center: [lat, lng] };
-      });
-      if (router.query.zoom > 0) {
-        setExploreSettings((prevSettings) => {
-          return { ...prevSettings, zoom: router.query.zoom };
-        });
-      }
-      console.log('loading from router...');
-      // }else if (exploreSettings && exploreSettings.length > 0) {
-      // LOAD explore zoom and center from storage...?!
-      //   const { center, zoom, currentButton } =
-      //     JSON.parse(exploreSettings);
-      //     setMapZoom(() => zoom)
-      //     setMapCenter(() => center)
 
-      //   if (currentButton){
-      //     store.emit(new updateCurrentButton(currentButton));
-      //     setMapCenter(currentButton.location)
-      //   }
-      //   console.log('loading from exploresettings...')
-    } else if (selectedNetwork) {
-      console.log('load from network');
+    if (selectedNetwork) {
       setExploreSettings((prevSettings) => {
+        if (queryCenter) {
+          return {
+            ...prevSettings,
+            ...selectedNetwork.exploreSettings,
+            loading: false,
+            center: queryCenter,
+            zoom: defaultZoomPlace
+          };
+        }
         return {
           ...prevSettings,
           ...selectedNetwork.exploreSettings,
@@ -201,11 +176,19 @@ function HoneyComb({ router }) {
         };
       });
     }
-  }, [selectedNetwork, router]);
+  }, [selectedNetwork]);
+  
+  useEffect(() => {
+    if (router && router.query && router.query.lat) {
+      const lat = parseFloat(router.query.lat);
+      const lng = parseFloat(router.query.lng);
+      setQueryCenter(() => [lat, lng]);
+    }
+  }, [router]);
 
   useEffect(() => {
     setFilteredButtons(() =>
-    fetchedButtons.filter((button: Button) => {
+      fetchedButtons.filter((button: Button) => {
         return filters.showButtonTypes.indexOf(button.type) > -1;
       }),
     );
@@ -217,11 +200,11 @@ function HoneyComb({ router }) {
     }
 
     if (debouncedHexagonClicked) {
-      toggleShowLeftColumn(true)
+      toggleShowLeftColumn(true);
       setListButtons(() => {
         return filteredButtons.filter(
           (button: Button) =>
-          debouncedHexagonClicked &&
+            debouncedHexagonClicked &&
             cellToParent(
               button.hexagon,
               getResolution(exploreSettings.zoom),
@@ -262,7 +245,6 @@ function HoneyComb({ router }) {
             />
           </div>
           <LoadabledComponent loading={exploreSettings.loading}>
-            
             <HexagonExploreMap
               exploreSettings={exploreSettings}
               filteredButtons={filteredButtons}

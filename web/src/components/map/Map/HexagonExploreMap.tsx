@@ -144,7 +144,7 @@ export default function HexagonExploreMap({
       > 
         {selectedNetwork &&
 
-          <Overlay anchor={(100,100)} >
+          <Overlay anchor={[100,100]} >
             <div className="search-map__network-title">
                 {selectedNetwork.name}
                 <div className="search-map__sign">
@@ -153,7 +153,7 @@ export default function HexagonExploreMap({
             </div>
           </Overlay>
 
-        }  
+        }
         <GeoJson>
           {!fetchingNewResolution && h3ButtonsDensityFeatures.map((buttonFeature) => (
             <GeoJsonFeature
@@ -203,8 +203,11 @@ export default function HexagonExploreMap({
               <Overlay                
                 anchor={feature.properties.center}
                 key={feature.properties.hex}
+                offset={[10, 15]}
               >
+                <span style={{'color' : 'yellow', fontSize: '2em'}}>
                 {feature.properties.count.toString()}
+                </span>
               </Overlay>
             );
         })}

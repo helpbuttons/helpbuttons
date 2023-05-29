@@ -10,18 +10,16 @@ import { FindAddress } from 'state/Explore';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
+import { Point } from 'pigeon-maps';
 export default function FieldLocation({
   validationError,
-  setMarkerPosition,
   markerImage,
   markerCaption = '?',
   markerColor,
-  markerPosition,
   markerAddress,
-  markerZoom,
   selectedNetwork = null,
-  setMarkerAddress,
-  setZoom,
+  updateAddress,
+  updateMarkerPosition,
   label,
 }) {
   const config: SetupDtoOut = useRef(
@@ -29,33 +27,26 @@ export default function FieldLocation({
     (state: GlobalState) => state.config,
   );
 
+  const [markerPosition, setMarkerPosition] = useState<Point>([0, 0]);
   let closeMenu = () => {
     setHideMenu(false);
   };
 
   const [showHideMenu, setHideMenu] = useState(false);
   const handleSelectedPlace = (place) => {
-    updateLocation([place.geometry.lat, place.geometry.lng])
+    setMarkerPosition([place.geometry.lat, place.geometry.lng])
   };
-
-  const updateLocation = (newLatLng) => {
-    if(newLatLng && markerPosition && markerPosition[0] == newLatLng[0] && markerPosition[1] == newLatLng[1] )
-    {
-      return;
-    }
-    const decimals = 10000;
-    setMarkerPosition([(Math.round(newLatLng[0] * decimals) / decimals), (Math.round(newLatLng[1] * decimals) / decimals)]);
-    
-    setMarkerAddress('...')
+  
+  const requestAddressForPosition = (markerPosition) => {
     store.emit(
       new FindAddress(
         JSON.stringify({
           apikey: config.mapifyApiKey,
-          address: newLatLng.join('+'),
+          address: markerPosition.join('+'),
         }),
         (place) => {
           const address = place.results[0].formatted;
-          setMarkerAddress(address);
+          updateAddress(address);
         },
         () => {
           console.log(
@@ -64,8 +55,27 @@ export default function FieldLocation({
         },
       ),
     );
-  };
+  }
+  useEffect(() => {
+    updateMarkerPosition(markerPosition);
+    updateAddress('...');
+    if(!config)
+    {
+      console.error('config not defined.. could not get address for location')
+      return;
+    } else {
+      requestAddressForPosition(markerPosition)
+    }
+    
+  }, [markerPosition]);
 
+  useEffect(() => {
+    if(selectedNetwork)
+    {
+      console.log(selectedNetwork.exploreSettings.center)
+      setMarkerPosition(selectedNetwork.exploreSettings.center)
+    }
+  }, [selectedNetwork])
   return (
     <>
       <div className="form__field">
@@ -84,38 +94,31 @@ export default function FieldLocation({
       </div>
 
       {showHideMenu && markerPosition && (
-       
-            <Picker closeAction={closeMenu}>
-
-              <MarkerSelectorMap
-                updateMarkerPosition={updateLocation}
-                handleZoomChange={(zoom) => setZoom(zoom)}
-                zoom={markerZoom}
-                markerImage={markerImage ? markerImage : selectedNetwork.logo}
-                markerCaption={markerCaption ? markerCaption : '?'}
-                markerColor={markerColor ? markerColor : 'yellow'}
-                markerPosition={markerPosition}
-              />
-              <LocationCoordinates
-                latitude={markerPosition[0]}
-                longitude={markerPosition[1]}
-                address={markerAddress}
-              />
-              <DropDownSearchLocation
-                placeholder={t('homeinfo.searchlocation')}
-                handleSelectedPlace={handleSelectedPlace}
-              />
-              <Btn
-                btnType={BtnType.submit}
-                caption={t('common.save')}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => setHideMenu(!showHideMenu)}
-              />
-
-            </Picker>
-
+        <Picker closeAction={closeMenu}>
+          <MarkerSelectorMap
+            setMarkerPosition={setMarkerPosition}
+            defaultZoom={selectedNetwork.zoom}
+            markerColor={markerColor ? markerColor : 'yellow'}
+            markerPosition={markerPosition}
+          />
+          <LocationCoordinates
+            latitude={markerPosition[0]}
+            longitude={markerPosition[1]}
+            address={markerAddress}
+          />
+          <DropDownSearchLocation
+            placeholder={t('homeinfo.searchlocation')}
+            handleSelectedPlace={handleSelectedPlace}
+          />
+          <Btn
+            btnType={BtnType.submit}
+            caption={t('common.save')}
+            contentAlignment={ContentAlignment.center}
+            onClick={() => setHideMenu(!showHideMenu)}
+          />
+        </Picker>
       )}
-      <span style={{color:'red'}}>{validationError}</span>
+      <span style={{ color: 'red' }}>{validationError}</span>
     </>
   );
 }
@@ -128,15 +131,18 @@ function LocationCoordinates({
 }) {
   return (
     <div className="card-button__city card-button__everywhere">
-      {address && address.length > 1 ? 
+      {address && address.length > 1 ? (
         <>
           <span>{address}</span>
-          <span> ({latitude},{longitude})</span>
+          <span>
+            {' '}
+            ({latitude},{longitude})
+          </span>
           {/* (radius: ${radius} km) */}
         </>
-        :
+      ) : (
         <>{label}</>
-      }
+      )}
     </div>
   );
 }

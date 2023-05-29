@@ -8,23 +8,7 @@ import FieldText from 'elements/Fields/FieldText';
 
 
 //Mobile filters section that includes not only the filters but some search input fields, maybe needed to make a separate component from the rest of esktop elements
-export default function AdvancedFilters({
-  onSubmit,
-  watch,
-  reset,
-  getValues,
-  handleSubmit,
-  register,
-  errors,
-  control,
-  setValue,
-  setFocus,
-  isSubmitting,
-  title,
-  showFilters,
-  setShowFilters,
-}) {
-
+export default function AdvancedFilters({toggleShow}) {
 
   return (
     <>
@@ -102,20 +86,20 @@ export default function AdvancedFilters({
 
               <div className="filters__actions">
 
-                      <Btn
-                        btnType={BtnType.link}
-                        caption="CANCEL"
-                        contentAlignment={ContentAlignment.center}
-                        onClick={(e) => {setShowFilters(false)}}
-                      />
+                <Btn
+                  btnType={BtnType.link}
+                  caption="CANCEL"
+                  contentAlignment={ContentAlignment.center}
+                  onClick={(e) => {toggleShow(false)}}
+                />
 
-                      <Btn
-                        btnType={BtnType.submit}
-                        caption="SAVE"
-                        contentAlignment={ContentAlignment.center}
-                        onClick={(e) => {setShowFilters(false); router.push('/Explore')}}
-                      />
-              </div>
+                <Btn
+                  btnType={BtnType.submit}
+                  caption="SAVE"
+                  contentAlignment={ContentAlignment.center}
+                  onClick={(e) => {toggleShow(false)}}
+                />
+        </div>
 
           </form>
 
