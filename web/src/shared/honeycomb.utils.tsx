@@ -52,7 +52,7 @@ export function convertBoundsToGeoJsonHexagons(
 export function getGeoJsonHexesForBounds(bounds, resolution)
 {
   const hexagons = convertBoundsToGeoJsonHexagons(bounds,resolution);
-  return  convertHexesToFeatures(hexagons, resolution)
+  return convertHexesToFeatures(hexagons, resolution)
 }
 export function convertHexesToFeatures(
   hexagones: string[],
@@ -166,18 +166,16 @@ export function convertH3DensityToFeatures(
     return []
   }
   return hexagones.map((hex) => {
-    // console.log(hex)
-    // return {hex:idx, count: hex.length}
     const geojsonHex = h3SetToFeature([hex.hexagon]);
-    // console.log(hexes.hexagon)
     return {
       ...geojsonHex,
       properties: {
         ...geojsonHex.properties,
         hex: hex.hexagon,
-        center: cellToLatLng(hex.hexagon),
-        count: hex.groupByType.reduce((sum, type) => sum + type.buttons.length, 0),
-        byType: hex.groupByType
+        center: hex.center,
+        count: hex.count,
+        groupByType: hex.groupByType,
+        buttons: hex.buttons
       },
     };
   })
@@ -199,7 +197,6 @@ export function getBoundsHexFeatures(bounds, mapZoom)
 export function calculateDensityMap(filteredButtons, resolution) {
 
   const reducer = (groupBy, button) => {
-    // console.log(button)
     if (Array.isArray(button)) {
       return button.reduce(reducer, groupBy);
     } else {
@@ -211,7 +208,7 @@ export function calculateDensityMap(filteredButtons, resolution) {
         group.buttons.push(rest);
       } else {
         groupBy.push({
-          hexagon: cellToParent(button.hexagon,resolution),
+          hexagon: cellToParent(button.hexagon,resolution),          
           buttons: [rest],
         });
       }
@@ -239,11 +236,12 @@ export function calculateDensityMap(filteredButtons, resolution) {
     }
   };
 
-
   const groupBy = filteredButtons.reduce(reducer, []);
-  const groupbyType = groupBy.map(hex => {return {hexagon: hex.hexagon, groupByType: hex.buttons.reduce(reducing, [])}})
-
-  return convertH3DensityToFeatures(
-    groupbyType,
-  );
+  
+  const groupbyType = groupBy.map(hex => {
+    const group = hex.buttons.reduce(reducing, [])
+    const groups = group.map((g) => {return {type: g.type, count: g.buttons.length}})
+    return {hexagon: hex.hexagon, groupByType: groups, polygon: h3SetToFeature([hex.hexagon]), count: hex.buttons.length, center: cellToLatLng(hex.hexagon), buttons: hex.buttons}
+  })
+  return groupbyType;
 }

@@ -8,13 +8,12 @@ import {
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 import router from 'next/router';
-import {  useState } from 'react';
+import { useState } from 'react';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
 import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import { ShowWhen } from 'elements/Fields/FieldDate';
 
-
-export default function CardButtonFile({button}) {
+export default function CardButtonFile({ button }) {
   const { cssColor } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
@@ -26,7 +25,8 @@ export default function CardButtonFile({button}) {
           <div>
             <div
               className="card-button card-button__file"
-              style={buttonColorStyle(cssColor)}>
+              style={buttonColorStyle(cssColor)}
+            >
               <CardButtonHeadBig button={button} />
             </div>
             <CardButtonImages button={button} />
@@ -39,59 +39,54 @@ export default function CardButtonFile({button}) {
 }
 
 export function CardButtonHeadMedium({ button }) {
-  const { cssColor} = buttonTypes.find((buttonType) => {
+  const { cssColor } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
   return (
-    <>
-      <a href={`/ButtonFile/${button.id}`}>
-        <div className="card-button__content">
-          <div className="card-button__header">
-            <div className="card-button__avatar">
-              <div className="avatar-small">
-                <ImageWrapper
-                  imageType={ImageType.avatar}
-                  src={button.owner.avatar}
-                  alt={button.title}
-                />
-              </div>
-            </div>
-
-            <div className="card-button__info">
-              <div className="card-button__status card-button__status">
-                <span className="card-button" style={buttonColorStyle(cssColor)}>
-                  {button.type}
-                </span>
-              </div>
-              <div className="card-button__name">
-                {button.owner.name} @{button.owner.username}
-              </div>
+      <div className="card-button__content">
+        <div className="card-button__header">
+          <div className="card-button__avatar">
+            <div className="avatar-small">
+              <ImageWrapper
+                imageType={ImageType.avatar}
+                src={button.owner.avatar}
+                alt={button.title}
+              />
             </div>
           </div>
 
-          <div className="card-button__title">
-            {button.title}
-          </div>
-
-            <div className="card-button__city card-button__everywhere ">
-              {button.address}
+          <div className="card-button__info">
+            <div className="card-button__status card-button__status">
+              <span
+                className="card-button"
+                style={buttonColorStyle(cssColor)}
+              >
+                {button.type}
+              </span>
             </div>
-
-            <ShowWhen when={button.when}/>
+            <div className="card-button__name">
+              {button.owner.name} @{button.owner.username}
+            </div>
+          </div>
         </div>
-      </a>
-    </>
+
+        <div className="card-button__title">{button.title}</div>
+
+        <div className="card-button__city card-button__everywhere ">
+          {button.address}
+        </div>
+
+        <ShowWhen when={button.when} />
+      </div>
   );
 }
 
-
 export function CardButtonHeadSmall({ button }) {
-  const { cssColor} = buttonTypes.find((buttonType) => {
+  const { cssColor } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
   return (
     <>
-    
       <a href={`/ButtonFile/${button.id}`}>
         <div className="card-button-map__content">
           <div className="card-button-map__header">
@@ -101,25 +96,24 @@ export function CardButtonHeadSmall({ button }) {
               </div>
 
               <div className="card-button__status card-button__status">
-                <span className="card-button" style={buttonColorStyle(cssColor)}>
+                <span
+                  className="card-button"
+                  style={buttonColorStyle(cssColor)}
+                >
                   {button.type}
                 </span>
               </div>
             </div>
-
           </div>
 
-          <div className="card-button__title">
-            {button.title}
-          </div>
-
+          <div className="card-button__title">{button.title}</div>
 
           <div>
             <div className="card-button__city card-button__everywhere ">
               {button.address}
             </div>
 
-            <ShowWhen when={button.when}/>
+            <ShowWhen when={button.when} />
           </div>
         </div>
       </a>
@@ -140,9 +134,8 @@ function CardButtonSubmenu({ button }) {
       ></div>
       {showSubmenu && (
         <div className="card-button__dropdown-container">
-
           <div className="card-button__dropdown-arrow"></div>
-        
+
           <datalist
             className="card-button__dropdown-content"
             id="listid"
@@ -173,14 +166,12 @@ function CardButtonSubmenu({ button }) {
               }}
             ></option>
           </datalist>
-
         </div>
       )}
     </section>
   );
 }
 export function CardButtonHeadBig({ button }) {
-
   const { cssColor } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
@@ -203,7 +194,10 @@ export function CardButtonHeadBig({ button }) {
 
           <div className="card-button__info">
             <div className="card-button__status card-button__status">
-              <span className="card-button__status" style={buttonColorStyle(cssColor)}>
+              <span
+                className="card-button__status"
+                style={buttonColorStyle(cssColor)}
+              >
                 {button.type}
               </span>
             </div>
@@ -214,9 +208,7 @@ export function CardButtonHeadBig({ button }) {
           </div>
         </div>
 
-        <div className="card-button__title">
-            {button.title}
-          </div>
+        <div className="card-button__title">{button.title}</div>
 
         <div className="card-button__paragraph">
           <p>{button.description}</p>
@@ -224,7 +216,11 @@ export function CardButtonHeadBig({ button }) {
 
         <div className="card-button__hashtags">
           {button.tags.map((tag, idx) => {
-            return <div className="hashtag" key={idx}>{tag}</div>;
+            return (
+              <div className="hashtag" key={idx}>
+                {tag}
+              </div>
+            );
           })}
         </div>
 
@@ -233,7 +229,7 @@ export function CardButtonHeadBig({ button }) {
             {button.address}
           </div>
 
-          <ShowWhen when={button.when}/>
+          <ShowWhen when={button.when} />
         </div>
       </div>
     </>

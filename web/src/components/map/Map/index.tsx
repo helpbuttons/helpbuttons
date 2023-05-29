@@ -19,6 +19,7 @@ interface HbMapProps {
   maxZoom: 16,
   minZoom: 4,
 }
+
 export function HbMap({
   children,
   mapCenter,
@@ -63,7 +64,7 @@ export function HbMap({
   })
 
   useEffect(() => {
-    setMapProps((prevMapProps) => {return {...prevMapProps, provider: tileProvider, center: mapCenter, zoom: mapZoom}})
+    setMapProps((prevMapProps) => {return {...prevMapProps, provider: tileProvider}})
   },
   [tileType, mapZoom, mapCenter])
 
