@@ -19,10 +19,12 @@ const FieldText = React.forwardRef(({
     onBlur,
     validationError,
     value,
+    explain,
 }, ref): IFieldText => {
     return (
         <div className="form__field">
             <label className="label">{label}</label>
+            <p className="form__explain">{explain}</p>
             <input
                 name={name} 
                 ref={ref}

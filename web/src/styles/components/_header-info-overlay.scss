@@ -46,8 +46,8 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 .info-overlay__search-section {
 
   background-color: $color-corporative;
-  padding: $padding-big;
-  border-radius: 0 0 25px 25px;
+  padding: 0;
+  border-radius: 25px 25px 25px 25px;
   width: auto;
 
   .label {
@@ -135,7 +135,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   background-color: transparent;
   padding: $padding-small;
   font-weight: $font-weight-regular;
-  margin-top: $margin-small;
+  margin-top: $margin-extra-small;
   color: $color-ligth-gray;
   font-size: $font-size-small;
   border-color: $color-ligth-gray;

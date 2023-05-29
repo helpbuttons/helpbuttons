@@ -1,10 +1,10 @@
 import { useRef } from 'store/Store';
-
 import { GlobalState, store } from 'pages';
+
 import router from 'next/router';
 import t from 'i18n';
 import NetworkLogo from 'components/network/Components';
-import { HeaderSearch } from 'elements/HeaderSearch'; 
+import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import NavLink from 'elements/Navlink';
 import {
   IoAddOutline,
@@ -65,9 +65,11 @@ export default function HomeInfo() {
       <div className="info-overlay__content">
         <form className="info-overlay__search-section">
 
-          <NavLink href="/Explore">
-              <HeaderSearch/>
-          </NavLink>
+            <NavHeader
+                showSearch={true}
+                handleSelectedPlace={handleSelectedPlace}
+                showFilters={false}
+              />
           
         </form>
         {selectedNetworkLoading && (

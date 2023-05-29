@@ -35,14 +35,14 @@ export default function ButtonForm({
   isSubmitting,
   title,
 }) {
-  const selectedNetwork: Network = useRef(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
-  const buttonDraft = useRef(
-    store,
-    (state: GlobalState) => state.explore.draftButton,
-  );
+    const selectedNetwork: Network = useRef(
+      store,
+      (state: GlobalState) => state.networks.selectedNetwork,
+    );
+    const buttonDraft = useRef(
+      store,
+      (state: GlobalState) => state.explore.draftButton,
+    );
 
   const [date, setDate] = useState('');
 
