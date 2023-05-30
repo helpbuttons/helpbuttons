@@ -20,12 +20,12 @@ $nav-header-new-message-radius: $border-radius-circle;
   width: 100%;
   display: flex;
   position: relative;
-  height: $nav-header-height;
+  // height: $nav-header-height;
   justify-content: space-between;
   align-items: center;
   background-color: $color-corporative;
   border-radius: 0 0 0 0;
-  padding: $padding-medium;
+  padding: $padding-small $nav-header-padding;
   z-index: $z-index-01;
 
 }

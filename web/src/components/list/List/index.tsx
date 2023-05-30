@@ -37,9 +37,9 @@ function List({onLeftColumnToggle, buttons, showLeftColumn}) {
         <div className={'list__container ' + (showLeftColumn ? '' : 'list__container--hide')}>
 
 
-        <div className="list__content">
-          <ContentList buttons={buttons} />
-              </div>
+          <div className="list__content">
+            <ContentList buttons={buttons} />
+          </div>
 
         </div>
 

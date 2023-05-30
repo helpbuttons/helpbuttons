@@ -28,7 +28,9 @@
     "write": "Write message"
   },
   "explore": {
-    "emptyList": "Please browse the map to find more buttons"
+    "noResults": "Sorry, there are no results here",
+    "emptyList": "Please browse the map and touch to find more buttons",
+    "createEmpty": "Create mine"
   },
   "setup": {
     "hostname": "Hostname",

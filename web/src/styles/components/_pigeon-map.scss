@@ -18,7 +18,50 @@
 
 }
 
+.pigeon-map__hex-info {
 
+    display: flex;
+    justify-content: center; /* Horizontally aligns children at the center */
+    align-items: center; /* Vertically aligns children at the center */
+    height: 100%; /* Or any specific height */
+    flex-wrap: wrap;
+
+}
+
+.pigeon-map__custom-block {
+
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.pigeon-map__hex-wrap {
+
+    top: 50%;
+    transform: translateX(20%) translateY(-50%);
+    left: 50%;
+
+}
+
+.pigeon-map__hex-info--icon {
+
+    @extend .btn-filter__icon;
+    width: 12px;
+    height: 12px;
+    margin-bottom: 2px;
+    margin-right: 4px;
+
+}
+
+.pigeon-map__hex-info--text {
+
+    line-height: 18px;
+
+}
 
 @media #{$breakpoints-xlarge} {
 

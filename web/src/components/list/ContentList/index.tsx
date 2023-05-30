@@ -11,7 +11,15 @@ export default function ContentList ({buttons, ...props}) {
   if (buttons.length < 1) {
     return (
       <>
+      <div className='list__empty-message'>
+        <div className='list__empty-message--prev'>
+        {t('explore.noResults')}
+        </div>
         {t('explore.emptyList')}
+        <button className='btn btn--center list__empty-message--create'>
+        {t('explore.createEmpty')}
+        </button>
+      </div>
       </>
     );
   }

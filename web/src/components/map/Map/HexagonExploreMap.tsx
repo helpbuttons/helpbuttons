@@ -198,34 +198,37 @@ export default function HexagonExploreMap({
         {!isFetchingHexagons && hexagonClicked && (
           <Overlay
             anchor={hexagonClicked.properties.center}
-            offset={[40, 40]}
+            offset={[20, 0]}
+            className='pigeon-map__custom-block'
             key={hexagonClicked.properties.hex}
           >
-            {hexagonClicked.properties.groupByType.map(
-              (hexagonBtnType, idx) => {
-                const btnType = buttonTypes.find((type) => {
-                  return type.name == hexagonBtnType.type;
-                });
-                return (
-                  <span
-                    style={{
-                      color: btnType.cssColor,
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    <div
-                      key={idx}
-                      style={buttonColorStyle(btnType.cssColor)}
+            <div className='pigeon-map__hex-wrap'>
+              {hexagonClicked.properties.groupByType.map(
+                (hexagonBtnType, idx) => {
+                  const btnType = buttonTypes.find((type) => {
+                    return type.name == hexagonBtnType.type;
+                  });
+                  return (
+                    <span className="pigeon-map__hex-element"
+                      style={{
+                        color: btnType.cssColor,
+                        fontWeight: 'bold',
+                      }}
                     >
-                        <div className="btn-filter__icon"></div>
-                        <div >
-                          {hexagonClicked.properties.count.toString()}
-                        </div>
-                    </div>
-                  </span>
-                );
-              },
-            )}
+                      <div className="pigeon-map__hex-info"
+                        key={idx}
+                        style={buttonColorStyle(btnType.cssColor)}
+                      >
+                          <div className="btn-filter__icon pigeon-map__hex-info--icon"></div>
+                          <div className="pigeon-map__hex-info--text" >
+                            {hexagonClicked.properties.count.toString()}
+                          </div>
+                      </div>
+                    </span>
+                  );
+                },
+              )}
+            </div>
           </Overlay>
         )}
         {isFetchingHexagons && (

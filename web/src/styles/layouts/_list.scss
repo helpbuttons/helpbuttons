@@ -42,6 +42,31 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
 
 }
 
+.list__empty-message{
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  align-items: center;
+  padding: $padding-big;
+  font-size: $font-size-small;
+
+}
+
+.list__empty-message--prev{
+
+ font-weight: $font-weight-bold;
+
+}
+
+.list__empty-message--create{
+
+  width: 50%;
+
+}
 
 @media #{$breakpoints-xlarge} {
 
