@@ -9,7 +9,7 @@ $feed-color-corporative: $color-corporative;
 $feed-margin-big: $margin-big;
 $feed-icon-width: 20px;
 $feed-button-width: 47px;
-$feed-padding: $padding-big;
+$feed-padding: $padding-medium;
 $feed-new-message-radius: $border-radius-circle;
 
 
@@ -91,6 +91,7 @@ $feed-new-message-radius: $border-radius-circle;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row;
   background-color: $color-white;
   padding: $feed-padding;
 

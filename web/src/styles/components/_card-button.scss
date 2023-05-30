@@ -53,7 +53,13 @@ $card-button-border-height: $border-general-height;
 
 
 .card-button__content {
-  padding: 1rem;
+
+  padding: $padding-medium;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  width: 100%;
+
 }
 
 .card-button__header {
@@ -61,7 +67,6 @@ $card-button-border-height: $border-general-height;
   flex-flow: row nowrap;
   overflow-x: hidden;
   justify-content: space-between;
-  padding-bottom: $card-button-whitespace;
 }
 
 .card-button__avatar {
@@ -76,8 +81,9 @@ $card-button-border-height: $border-general-height;
 .card-button__info {
   flex: 100%;
   width: 0rem;
-  padding-left: 1rem;
+  margin-left: $margin-extra-small;
   text-align: left;
+  align-items: start;
 }
 
 
@@ -131,6 +137,7 @@ $card-button-border-height: $border-general-height;
   font-size: $font-size-general;
   font-weight: bold;
   text-transform: capitalize;
+  line-height: 1;
   color:  var(--button-color);
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -145,7 +152,7 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__name {
-  font-size: $font-size-general;
+  font-size: $font-size-small;
   text-overflow: ellipsis;
   //overflow-x: hidden;
   font-weight: bold;
@@ -164,6 +171,13 @@ $card-button-border-height: $border-general-height;
   color: $color-black;
   font-size: $font-size-title;
   padding: $padding-small 0;
+  flex-grow: 1; 
+  display: block;
+
+}
+
+.card-button__title:first-letter {
+  text-transform: uppercase;
 }
 
 .card-button__situation {
@@ -219,6 +233,7 @@ $card-button-border-height: $border-general-height;
   text-align: left;
   height: 3rem;
   overflow: hidden;
+  display: block;
 
   & p {
     margin-top: 0;//Revise
@@ -229,6 +244,12 @@ $card-button-border-height: $border-general-height;
     cursor: pointer;
   }
 }
+
+
+.card-button__paragraph:first-letter {
+  text-transform: uppercase;
+}
+
 
 .card-button__phone {
   word-break: break-word;
@@ -471,5 +492,11 @@ $card-button-border-height: $border-general-height;
 .card-button__locDate {
   display: flex;
   justify-content: space-between;
+}
+
+
+.card-button__locDate--small {
+  margin-top:auto;
+
 }
 

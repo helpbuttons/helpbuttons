@@ -75,8 +75,9 @@ export function CardButtonHeadMedium({ button }) {
         <div className="card-button__city card-button__everywhere ">
           {button.address}
         </div>
-
+        
         <ShowWhen when={button.when} />
+
       </div>
   );
 }
@@ -108,13 +109,11 @@ export function CardButtonHeadSmall({ button }) {
 
           <div className="card-button__title">{button.title}</div>
 
-          <div>
-            <div className="card-button__city card-button__everywhere ">
-              {button.address}
-            </div>
-
-            <ShowWhen when={button.when} />
+          <div className="card-button__city card-button__everywhere ">
+            {button.address}
           </div>
+          <ShowWhen when={button.when} />
+
         </div>
       </a>
     </>
