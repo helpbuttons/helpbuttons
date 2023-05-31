@@ -75,16 +75,16 @@ $card-notification-delete-size: 100px;
 
 .card-notification__content {
   display: flex;
-  justify-content: space-between;
   padding: 1rem;
   position: relative;
 }
 
 .card-notification__avatar {
   
-  flex: 0 1 60px;
+  flex: 0 1 10px;
   position: relative;
   height: 3rem;
+  margin-right: 1rem;
   display: flex;
   flex-flow: column;
   justify-content: flex-end;

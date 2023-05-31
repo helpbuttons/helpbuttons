@@ -109,3 +109,12 @@
   width: 100%;
   margin: 1rem 0rem;
 }
+
+.highlight,h3,h2 {
+  font-weight: $font-weight-bold;
+}
+
+li,ol,ul,h2 {
+  padding: $padding-medium;
+}
+
