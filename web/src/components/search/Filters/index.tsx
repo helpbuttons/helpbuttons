@@ -4,11 +4,19 @@ import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 
 //if the filters are too many, it ddisplays a "more filters" option at the end that brings the PopupExtraFilters
 
-export default function Filters({ updateFiltersType }) {
+export default function Filters({ setSelectedTypes }) {
   const buttonTypeChanged = (e) => {
     const buttonTypeName = e.target.value;
     const value = e.target.checked;
-    updateFiltersType(buttonTypeName, value);
+
+    setSelectedTypes((prevSelected) => {
+      let newSelected = prevSelected.filter((selected) =>  buttonTypeName != selected)
+      if (value == true) {
+        newSelected.push(buttonTypeName)
+        return Array.from(new Set(newSelected));
+      }
+      return Array.from(new Set(newSelected))
+    });
   };
 
   return (
@@ -28,10 +36,13 @@ export default function Filters({ updateFiltersType }) {
               onChange={buttonTypeChanged}
             ></input>
             <div className="checkbox-filter__content btn-filter-with-icon">
-              <div style={buttonColorStyle(buttonType.cssColor)}
+              <div
+                style={buttonColorStyle(buttonType.cssColor)}
                 className="btn-filter__icon"
               ></div>
-              <div className="checkbox__text">{buttonType.caption}</div>
+              <div className="checkbox__text">
+                {buttonType.caption}
+              </div>
             </div>
           </label>
         ))}

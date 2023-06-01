@@ -26,13 +26,11 @@ export default function HexagonExploreMap({
   isFetchingHexagons,
 }) {
   const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
-  const [boundsFeatures, setBoundsFeatures] = useState([]);
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([]);
 
   const onBoundsChanged = ({ center, zoom, bounds }) => {
     handleBoundsChange(bounds, center, zoom);
-
     setCenterBounds(center);
   };
 
@@ -54,48 +52,15 @@ export default function HexagonExploreMap({
     setHexagonClicked(() => null); // unselect all hexagons
 
     if (exploreSettings.bounds) {
-      if (exploreSettings.zoom > exploreSettings.prevZoom) {
-        // TODO: zooming in.. should not fetch from database..
-        // this is not affecting the filtered buttons... so it won't update to new resolution.. how do it update resolution?
-        // wont update filteredButtons, resolution will change
-        // change hexagons to children
-        const boundsHexes = convertBoundsToGeoJsonHexagons(
-          exploreSettings.bounds,
-          getResolution(exploreSettings.zoom),
-        );
-        setHexagonsToFetch({
-          resolution: getResolution(exploreSettings.zoom),
-          hexagons: boundsHexes,
-        });
-      } else if (exploreSettings.zoom < exploreSettings.prevZoom) {
-        // zooming out..
-        // request more buttons .. useEffect filteredButtons will create new density map!
-
-        // getButtonsForBounds(exploreSettings.bounds)
-        // will update filteredButtons, resolution will change
-        const boundsHexes = convertBoundsToGeoJsonHexagons(
-          exploreSettings.bounds,
-          getResolution(exploreSettings.zoom),
-        );
-        setHexagonsToFetch({
-          resolution: getResolution(exploreSettings.zoom),
-          hexagons: boundsHexes,
-        });
-        // TODO: for new hexagons... subtract already cache hexagons
-      } else {
-        // panning,
-        // TODO should only fetch new hexagons.
-        // will update filteredButtons, but resolution won't change, where do I draw the hexagons?
-        // getButtonsForBounds(exploreSettings.bounds)
-        const boundsHexes = convertBoundsToGeoJsonHexagons(
-          exploreSettings.bounds,
-          getResolution(exploreSettings.zoom),
-        );
-        setHexagonsToFetch({
-          resolution: getResolution(exploreSettings.zoom),
-          hexagons: boundsHexes,
-        }); // hexagons missing
-      }
+      const boundsHexes = convertBoundsToGeoJsonHexagons(
+        exploreSettings.bounds,
+        getResolution(exploreSettings.zoom),
+      );
+      
+      setHexagonsToFetch({
+        resolution: getResolution(exploreSettings.zoom),
+        hexagons: boundsHexes,
+      });
     }
   }, [exploreSettings]);
 
@@ -188,10 +153,11 @@ export default function HexagonExploreMap({
           {!isFetchingHexagons && hexagonClicked && (
             <GeoJsonFeature
               feature={hexagonClicked}
-              key="clicked"
+              key={`clicked_${hexagonClicked.properties.hex}`}
               styleCallback={(feature, hover) => {
                 return { fill: 'white' };
               }}
+              onClick={() => {setHexagonClicked(() => null)}}
             />
           )}
         </GeoJson>
@@ -221,7 +187,7 @@ export default function HexagonExploreMap({
                       >
                           <div className="btn-filter__icon pigeon-map__hex-info--icon"></div>
                           <div className="pigeon-map__hex-info--text" >
-                            {hexagonClicked.properties.count.toString()}
+                            {hexagonBtnType.count.toString()}
                           </div>
                       </div>
                     </span>
