@@ -7,8 +7,22 @@
     overflow: auto; /* allow scrolling */
 }
 
+columns-wrapper {
+    background-image: radial-gradient(#212121 20%, transparent 20%),
+        radial-gradient(#fafafa 20%, transparent 20%);
+    background-color: #e53935;
+    background-position: 0 0, 50px 50px;
+    background-size: 100px 100px;
+  }
+
 strong {
-    font-weight: bolder;
+    font-weight: 1000;
+}
+
+.black {
+
+    color: #333;
+
 }
 
 .links {
@@ -26,6 +40,20 @@ section {
     position: relative;
 }
 
+.prices {
+
+    
+    color: #333;
+
+    .column {
+
+        background-color:#333;
+        border-radius: 1rem;
+        padding: 2rem;
+        padding-top: 0;
+
+    }
+}
 h1 {
     color: white;
     font-size: 4em;
@@ -62,11 +90,20 @@ button.cta-button:hover, button.cta-button:active {
 }
 
 .image-container img {
-    z-index: -1;
-    width: auto;
-    height: 100%;
+    z-index: -10;
+    width: 100vw;
+    height: auto; 
 }
 
+.normal {
+    font-size: 0.5em;
+}
+
+.name {
+
+    font-size: 1.5em;
+
+}
 .text-content {
     z-index: 1;
     position: absolute;
@@ -75,7 +112,7 @@ button.cta-button:hover, button.cta-button:active {
     top: 50%; /* adjust as needed */
     left: 50%; /* adjust as needed */
     transform: translate(-50%, -50%); /* centers the text */
-    color: #fff; /* change as needed */
+    color: #333; /* change as needed */
 }
 
 
@@ -133,6 +170,7 @@ h3 {
     justify-content: space-between;
     flex-wrap: wrap;
     padding: 2rem;
+    z-index: 10;
 
 }
 
@@ -256,6 +294,12 @@ footer a:hover {
  
         font-size: 0.8em;
     }
+
+    .image-container img {
+        z-index: -10;
+        width: auto;
+        height: 100vh; 
+    }
 }
 
 
@@ -265,7 +309,11 @@ footer a:hover {
 }
 
 #section2 {
-    background-color: rgb(151, 148, 142);  /* Blue */
+    background-image: radial-gradient(#767676 20%, transparent 20%),
+        radial-gradient(#707070 20%, transparent 20%);
+    background-color: #767676;
+    background-position: 0 0, 50px 50px;
+    background-size: 100px 100px;
 }
 
 #section3 {
@@ -273,11 +321,19 @@ footer a:hover {
 }
 
 #section4 {
-    background-color: rgb(151, 148, 142);  /* Green */
+    background-image: radial-gradient(#767676 20%, transparent 20%),
+        radial-gradient(#707070 20%, transparent 20%);
+    background-color: #767676;
+    background-position: 0 0, 50px 50px;
+    background-size: 100px 100px;
 }
 
 #section5 {
-    background-color: rgb(56, 56, 56);  /* Purple */
+    background-image: radial-gradient(#767676 20%, transparent 20%),
+    radial-gradient(#707070 20%, transparent 20%);
+    background-color: gold;
+    background-position: 0 0, 50px 50px;
+    background-size: 100px 100px;
 
     .button {
         background-color: transparent;
@@ -289,6 +345,11 @@ footer a:hover {
 }
 
 #section6 {
-    background-color: rgb(151, 148, 142);  /* Blue */
+
+    background-image: radial-gradient(#767676 20%, transparent 20%),
+        radial-gradient(#707070 20%, transparent 20%);
+    background-color: #767676;
+    background-position: 0 0, 50px 50px;
+    background-size: 100px 100px;
 }
 

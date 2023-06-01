@@ -10,7 +10,8 @@
     <meta property="og:url" content="Your website url">
     <title>Helpbuttons</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,200;1,300;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="scroll-down">
@@ -18,27 +19,33 @@
     </div>
     <!-- Section 1 -->
     <section id="section1">
-        <h1><lighr>This is</light> <strong>Helpbuttons</strong></h1>
-        <h2>Make your own collaborative tools.</h2>
+        <div class="image-container">
+            <img src="https://www.dropbox.com/s/1w0oneocbczkn6f/hb_illustrations_02_low.png?raw=1" alt="Background image">
+            <div class="text-content">    
+                <h1><div class="normal">This is</div> <div class="name">Helpbuttons</div></h1>
+                    <h2>Make your own collaborative tools.</h2>
+                    <button class="cta-button">Start</button>
+            </div>
+        </div>
     </section>
     <!-- Section 2 -->
     <section id="section2">
-        <div class="columns-wrapper">
-            <div class="column">
-                <h2>Yes, we all wanted this.</h2>
-                <p>An open-source, free tool designed to foster collaborative networks. Collaborate and federate with local groups or establish global connections, spanning various fields. Share community resources, developments, and achievements, both locally and globally.</p>
+            <div class="columns-wrapper">
+                <div class="column">
+                    <h2>Save money and time</h2>
+                    <p>An open-source, free tool designed to foster collaborative networks. Collaborate and federate with local groups or establish global connections, spanning various fields. Share community resources, developments, and achievements, both locally and globally. Make your own colab-app with no effor. </p>
+                </div>
+                <div class="column column--button">
+                    <button class="cta-button">Try Demo</button>
+                </div>
             </div>
-            <div class="column column--button">
-                <button class="cta-button">Try Demo</button>
-            </div>
-        </div>
     </section>
     <!-- Section 3 -->
     <section id="section3">
         <div class="image-container">
-            <img src="https://ggsc.s3.amazonaws.com/images/uploads/Just_Thinking_About_Cooperation_Can_Make_Us_Less_Prejudiced.jpg" alt="Background image">
+            <img src="https://www.dropbox.com/s/52tb8ikcnsbkb0p/hb_illustrations_01_low.jpg?raw=1" alt="Background image">
             <div class="text-content">
-                <h1>¿Developer?</h1>
+                <h1 class="black">¿Developer?</h1>
                 <h2>Try the software in your own server</h2>
                 <button class="cta-button">Download</button>
             </div>
@@ -64,7 +71,7 @@
     </section>
     <!-- Section 5 -->
     <section id="section5">
-        <div class="columns-wrapper">
+        <div class="columns-wrapper prices">
 
             <div class="column">
                 <h3 class="title">Basic</h3>
@@ -94,13 +101,6 @@
                 <button class="button">Buy</button>
             </div>
         </div>
-        <footer>
-            <div class="links">
-                <a href="https://watchoutfreedom.com"> Helpbuttons is a project by Wof!</a>/
-                <a href="https://twitter.com/helpbuttons">Twitter</a>/
-                <a href="https://github.com/helpbuttons">Github</a> 
-            </div>
-        </footer>
     </section>
     <!-- Section 6 -->
     <section id="section6">
@@ -110,9 +110,16 @@
                 <p>You can contribute by translating the app into your language. Every bit of help makes this tool more accessible and efficient.</p>
             </div>
             <div class="column column--button">
-                <a href="your_translations_server_link"><button class="cta-button">Go to Translations Server</button></a>
+                <a href="your_translations_server_link"><button class="cta-button">Go to Server</button></a>
             </div>
         </div>
+        <footer>
+            <div class="links">
+                <a href="https://watchoutfreedom.com"> Helpbuttons is a project by Wof!</a>/
+                <a href="https://twitter.com/helpbuttons">Twitter</a>/
+                <a href="https://github.com/helpbuttons">Github</a> 
+            </div>
+        </footer>
     </section>
  
     <script src="script.js"></script>
