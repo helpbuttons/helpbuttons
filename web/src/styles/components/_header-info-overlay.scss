@@ -102,6 +102,12 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   
           font-size: $font-size-huge;
           line-height: $font-size-huge;
+
+          ::first-letter {
+
+            text-transform: uppercase;
+
+          }
     
         }
   

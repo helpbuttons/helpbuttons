@@ -103,6 +103,15 @@ you probably need to edit the .env file of web to point to the api:
 
 `$ echo "API_URL=http://localhost:3001/" > web/.env`
 
+### common errors
+
+If you find this error with yarn dev in web directory
+
+`Error: error:0308010C:digital envelope routines:: unsupported`
+
+try this command and retry:
+
+`export NODE_OPTIONS=--openssl-legacy-provider`
 
 ### develop api
 You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
