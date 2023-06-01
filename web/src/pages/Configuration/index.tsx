@@ -49,10 +49,6 @@ function Configuration() {
     },
       () => {
         const onComplete = (network) => {
-          localStorageService.save(
-            LocalStorageVars.EXPLORE_SETTINGS,
-            JSON.stringify({ bounds: null, center: [network.latitude, network.longitude], zoom: network.zoom, currentButton: null }),
-          );
           alertService.info(t('common.saveSuccess', ['Configuration']))
           router.replace('/HomeInfo');
         }

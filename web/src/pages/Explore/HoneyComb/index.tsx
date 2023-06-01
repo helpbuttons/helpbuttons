@@ -47,6 +47,7 @@ function HoneyComb({ router }) {
     (state: GlobalState) => state.networks.selectedNetwork,
   );
 
+
   const [exploreSettings, setExploreSettings] = useState(() => {
     return {
       center: [0, 0],
@@ -60,6 +61,21 @@ function HoneyComb({ router }) {
       loading: true,
     };
   });
+
+
+  const setMapCenter = (latLng) => {
+    setExploreSettings((prevSettings) => {
+      return { ...prevSettings, center: latLng };
+    });
+  };
+
+  const setMapZoom = (zoom: number) => {
+    setExploreSettings((prevSettings) => {
+      return { ...prevSettings, zoom };
+    });
+  };
+
+  syncCenter({router, selectedNetwork, setExploreSettings, exploreSettings})
 
   const [hexagonClicked, setHexagonClicked] = useState();
   const debouncedHexagonClicked = useDebounce(hexagonClicked, 70);
@@ -158,57 +174,6 @@ function HoneyComb({ router }) {
       };
     });
   };
-
-  const setMapCenter = (latLng) => {
-    setExploreSettings((prevSettings) => {
-      return { ...prevSettings, center: latLng };
-    });
-  };
-
-  const setMapZoom = (zoom) => {
-    setExploreSettings((prevSettings) => {
-      return { ...prevSettings, zoom };
-    });
-  };
-
-  useEffect(() => {
-    const exploreSettings = localStorageService.read(
-      LocalStorageVars.EXPLORE_SETTINGS,
-    );
-
-    if (selectedNetwork) {
-      setExploreSettings((prevSettings) => {
-        if (queryCenter) {
-          return {
-            ...prevSettings,
-            ...selectedNetwork.exploreSettings,
-            loading: false,
-            center: queryCenter,
-            zoom: defaultZoomPlace,
-          };
-        }
-        return {
-          ...prevSettings,
-          ...selectedNetwork.exploreSettings,
-          loading: false,
-        };
-      });
-    }
-  }, [selectedNetwork]);
-
-  useEffect(() => {
-    if (router && router.query) {
-      if (router.query.lat) {
-        const lat = parseFloat(router.query.lat);
-        const lng = parseFloat(router.query.lng);
-        setQueryCenter(() => [lat, lng]);
-      }
-      if (router.query.showFilters) {
-        toggleShowFiltersForm(true);
-      }
-    }
-  }, [router]);
-
   useEffect(() => {
     console.log('filtering YEaH...')
     if (fetchedButtons) {
@@ -415,3 +380,69 @@ function HoneyComb({ router }) {
 }
 
 export default withRouter(HoneyComb);
+
+
+function syncCenter({router, selectedNetwork, setExploreSettings, exploreSettings})
+{
+  let queryExploreSettings = {};
+
+  const getUrlParams = (path) => {
+    const findHash = path.indexOf('#');
+    if (findHash){
+      let params = new URLSearchParams(router.asPath.substr(findHash + 1))
+      return params;
+    }
+    return []
+  }
+
+  useEffect(() => {
+    
+    if (router && router.asPath) {
+      const params = getUrlParams(router.asPath)
+      
+      const lat =  parseFloat(params.get('lat'));
+      const lng =  parseFloat(params.get('lng'));
+      const zoom =  parseInt(params.get('zoom'));
+      
+      if (lat && lng) {
+        queryExploreSettings = {...queryExploreSettings, center: [lat,lng]}
+      }
+      if (zoom) {
+        queryExploreSettings = {...queryExploreSettings, zoom: zoom}
+      }
+      console.log(queryExploreSettings)
+    }
+    if(selectedNetwork)
+    {
+      setExploreSettings((prevSettings) => {
+        const localStorageExploreSettings = localStorageService.read(
+          LocalStorageVars.EXPLORE_SETTINGS,
+        );
+        let locaStorageVars = {}
+        if (localStorageExploreSettings)
+        {
+          locaStorageVars = JSON.parse(localStorageExploreSettings)
+        }
+        return {
+          ...prevSettings,
+          ...selectedNetwork.exploreSettings,
+          ...locaStorageVars,
+          ...queryExploreSettings,
+          loading: false,
+        };
+        
+      });
+    }
+  }, [router, selectedNetwork]);
+
+  useEffect(() => {
+    if(!exploreSettings.loading)
+    {
+      window.location.replace(`#?zoom=${exploreSettings.zoom}&lat=${exploreSettings.center[0]}&lng=${exploreSettings.center[1]}`)
+      localStorageService.save(
+        LocalStorageVars.EXPLORE_SETTINGS,
+        JSON.stringify(exploreSettings),
+      );
+    }
+  },[exploreSettings])
+}
