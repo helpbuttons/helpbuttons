@@ -3,44 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Helpbuttons.org, cooperate with the world. The opensource tool for making collaborative networks.">
-    <meta property="og:title" content="Helpbuttons.org">
-    <meta property="og:description" content="Helpbuttons.org, cooperate with the world. The opensource tool for making collaborative networks.">
+    <meta name="description" content="Helpbuttons.org, cooperate with the world. The opensource tool for making collaborative networks." data-i18n="metaDescription">
+    <meta property="og:title" content="Helpbuttons.org" data-i18n="ogTitle">
+    <meta property="og:description" content="Helpbuttons.org, cooperate with the world. The opensource tool for making collaborative networks." data-i18n="ogDescription">
     <meta property="og:image" content="Your OG image link">
     <meta property="og:url" content="Your website url">
-    <title>Helpbuttons</title>
+
+    <meta name="keywords" content="Helpbuttons, Collaborative Tools, Open Source">
+    <meta name="robots" content="index, follow">
+
+    <title data-i18n="title">Helpbuttons</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://unpkg.com/i18next@21.6.3/dist/umd/i18next.min.js"></script> <!-- Include the i18next library -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,200;1,300;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Language Selector -->
+    <header>
+        <select id="lang-select">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="pt">Portugués</option>
+            <!-- ... -->
+        </select>
+    </header>
+
     <div class="scroll-down">
         <span></span>
     </div>
     <!-- Section 1 -->
     <section id="section1">
-        <h1><lighr>This is</light> <strong>Helpbuttons</strong></h1>
-        <h2>Make your own collaborative tools.</h2>
+        <div class="image-container">
+            <img src="https://www.dropbox.com/s/1w0oneocbczkn6f/hb_illustrations_02_low.png?raw=1" alt="Background image">
+            <div class="text-content">    
+                <h1><div class="normal" data-i18n="section1.normalText">This is</div> <div class="name" data-i18n="section1.nameText">Helpbuttons</div></h1>
+                    <h2 data-i18n="section1.h2Text">Make your own collaborative tools.</h2>
+                    <button class="cta-button" data-i18n="section1.buttonText">Start</button>
+            </div>
+        </div>
     </section>
     <!-- Section 2 -->
     <section id="section2">
-        <div class="columns-wrapper">
-            <div class="column">
-                <h2>Yes, we all wanted this.</h2>
-                <p>An open-source, free tool designed to foster collaborative networks. Collaborate and federate with local groups or establish global connections, spanning various fields. Share community resources, developments, and achievements, both locally and globally.</p>
+            <div class="columns-wrapper">
+                <div class="column">
+                    <h2 data-i18n="section2.h2Text">Save money and time</h2>
+                    <p data-i18n="section2.pText">An open-source, free tool designed to foster collaborative networks. Collaborate and federate with local groups or establish global connections, spanning various fields. Share community resources, developments, and achievements, both locally and globally. Make your own online market, elder assitance, food sharing, transport sharing app, etc with no effor.</p>
+                </div>
+               
+
+ <div class="column column--button">
+                    <button class="cta-button" data-i18n="section2.buttonText">Try Demo</button>
+                </div>
             </div>
-            <div class="column column--button">
-                <button class="cta-button">Try Demo</button>
-            </div>
-        </div>
     </section>
     <!-- Section 3 -->
     <section id="section3">
         <div class="image-container">
-            <img src="https://ggsc.s3.amazonaws.com/images/uploads/Just_Thinking_About_Cooperation_Can_Make_Us_Less_Prejudiced.jpg" alt="Background image">
+            <img src="https://www.dropbox.com/s/52tb8ikcnsbkb0p/hb_illustrations_01_low.jpg?raw=1" alt="Background image">
             <div class="text-content">
-                <h1>¿Developer?</h1>
-                <h2>Try the software in your own server</h2>
-                <button class="cta-button">Download</button>
+                <h1 class="black" data-i18n="section3.h1Text">¿Developer?</h1>
+                <h2 data-i18n="section3.h2Text">Try the software in your own server</h2>
+                <button class="cta-button" data-i18n="section3.buttonText">Download</button>
             </div>
         </div>
         
@@ -49,56 +73,70 @@
     <section id="section4">
         <div class="columns-wrapper">
             <div class="column">
-                <h3>Organize cooperation</h3>
-                <p>Establish a network tailored to your collective, enabling the publishing, assistance, communication, and organization of data all through a single tool.</p>
+                <h3 data-i18n="section4.column1.h3Text">Organize cooperation</h3>
+                <p data-i18n="section4.column1.pText">Establish a network tailored to your collective, enabling the publishing, assistance, communication, and organization of data all through a single tool.</p>
             </div>
             <div class="column">
-                <h3>Choose your style</h3>
-                <p>Select your preferred method of cooperation. Utilize maps, lists, app aesthetic, and form options that best suit your objectives.</p>
+                <h3 data-i18n="section4.column2.h3Text">Choose your style</h3>
+                <p data-i18n="section4.column2.pText">Select your preferred method of cooperation. Utilize maps, lists, app aesthetic, and form options that best suit your objectives.</p>
             </div>
             <div class="column">
-                <h3>Maintain privacy</h3>
-                <p>Cooperate without revealing users positions thanks to different display modes. Communicate within the app or externally with complete freedom.</p>
+                <h3 data-i18n="section4.column3.h3Text">Maintain privacy</h3>
+                <p data-i18n="section4.column3.pText">Cooperate without revealing users positions thanks to different display modes. Communicate within the app or externally with complete freedom.</p>
             </div>
         </div>
     </section>
     <!-- Section 5 -->
     <section id="section5">
-        <div class="columns-wrapper">
+        <div class="columns-wrapper prices">
 
             <div class="column">
-                <h3 class="title">Basic</h3>
+                <h3 class="title" data-i18n="section5.column1.h3Text">Free</h3>
                 <ul>
-                    <li>
+                    <li data-i18n="section5.column1.li1Text">
                         All the buttons you want and unlimited users.
                     </li>
-                    <li>
+                    <li data-i18n="section5.column1.li2Text">
                         Just help us to continue developing with a donation :)
                     </li>
                 </ul>
-                <button class="button">Donate</button>
+                <button class="button" data-i18n="section5.column1.buttonText">Donate</button>
             </div>
             <div class="column">
-                <h3 class="title">Premium</h3>
+                <h3 class="title" data-i18n="section5.column2.h3Text">Premium</h3>
                 <ul>
-                    <li>
+                    <li data-i18n="section5.column2.li1Text">
                         Unlock all customization options
                     </li>
-                    <li>
+                    <li data-i18n="section5.column2.li2Text">
                         Use our servers capabilities
                     </li>
-                    <li>
+                    <li data-i18n="section5.column2.li3Text">
                         Direct support from our crew
                     </li>
                 </ul>
-                <button class="button">Buy</button>
+                <button class="button" data-i18n="section5.column2.buttonText">Buy</button>
+            </div>
+        </div>
+    </section
+
+>
+    <!-- Section 6 -->
+    <section id="section6">
+        <div class="columns-wrapper">
+            <div class="column">
+                <h2 data-i18n="section6.h2Text">Contribute with Translations</h2>
+                <p data-i18n="section6.pText">You can contribute by translating the app into your language. Every bit of help makes this tool more accessible and efficient.</p>
+            </div>
+            <div class="column column--button">
+                <a href="your_translations_server_link"><button class="cta-button" data-i18n="section6.buttonText">Go to Server</button></a>
             </div>
         </div>
         <footer>
             <div class="links">
-                <a href="https://watchoutfreedom.com"> Helpbuttons is a project by Wof!</a>/
-                <a href="https://twitter.com/helpbuttons">Twitter</a>/
-                <a href="https://github.com/helpbuttons">Github</a> 
+                <a href="https://watchoutfreedom.com" rel="nofollow" data-i18n="footer.link1"> Helpbuttons is a project by Wof!</a>
+                <a href="https://twitter.com/helpbuttons" data-i18n="footer.link2">Twitter</a>/
+                <a href="https://github.com/helpbuttons" data-i18n="footer.link3">Github</a> 
             </div>
         </footer>
     </section>

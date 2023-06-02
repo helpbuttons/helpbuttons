@@ -14,13 +14,13 @@
     "loading": "...",
     "exploreSubtitle": "See & Search the buttons on this map",
     "createSubtitle": "Create your buttons and collaborate",
-    "faqsSubtitle": "See & Search the buttons on this map",
+    "faqsSubtitle": "Read more about this app",
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
     "locationDetected": "Do you want to navigate to check buttons in your region?",
     "stats": "Instance stats",
-    "buttons": "# {0} buttons in this instance",
-    "users": "# {0} users in this instance",
+    "buttons": "{0} buttons in this instance",
+    "users": "{0} users in this instance",
     "administeredby": "Administered by ",
     "actions": "Actions"
   },
@@ -117,6 +117,12 @@
   },
   "calendarAlways": {
     "label": "Always"
+  },
+  "picker": {
+    "headerText": "Choose a location"
+  },
+  "pickerDate": {
+    "headerText": "Choose date & hour"
   },
   "validation": {
     "fieldRequired": "{0} is required.",

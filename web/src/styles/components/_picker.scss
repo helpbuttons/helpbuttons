@@ -69,7 +69,7 @@ $picker-comments-item-padding: 25px;
 }
 .picker__section {
 
-  padding: 1rem;
+  // padding: 1rem;
   
 }
 
@@ -285,6 +285,16 @@ $picker-comments-item-padding: 25px;
   font-size: $font-size-general;
 }
 
+.picker__map {
+
+  border-radius: $border-radius-basic;
+  overflow: hidden;
+  height: auto;
+  width: auto;
+  display: flex;
+  margin-bottom: $margin-medium;
+
+}
 
 .picker--over {
 
