@@ -94,21 +94,21 @@ export default function FieldLocation({
       </div>
 
       {showHideMenu && markerPosition && (
-        <Picker closeAction={closeMenu}>
+        <Picker closeAction={closeMenu} headerText={t('picker.headerText')}>
+          <DropDownSearchLocation
+            placeholder={t('homeinfo.searchlocation')}
+            handleSelectedPlace={handleSelectedPlace}
+          />
+           <LocationCoordinates
+            latitude={markerPosition[0]}
+            longitude={markerPosition[1]}
+            address={markerAddress}
+          />
           <MarkerSelectorMap
             setMarkerPosition={setMarkerPosition}
             defaultZoom={selectedNetwork.zoom}
             markerColor={markerColor ? markerColor : 'yellow'}
             markerPosition={markerPosition}
-          />
-          <LocationCoordinates
-            latitude={markerPosition[0]}
-            longitude={markerPosition[1]}
-            address={markerAddress}
-          />
-          <DropDownSearchLocation
-            placeholder={t('homeinfo.searchlocation')}
-            handleSelectedPlace={handleSelectedPlace}
           />
           <Btn
             btnType={BtnType.submit}
@@ -130,7 +130,7 @@ function LocationCoordinates({
   label,
 }) {
   return (
-    <div className="card-button__city card-button__everywhere">
+    <div className="card-button__city card-button__everywhere form__label">
       {address && address.length > 1 ? (
         <>
           <span>{address}</span>

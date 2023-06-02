@@ -118,6 +118,12 @@
   "calendarAlways": {
     "label": "Always"
   },
+  "picker": {
+    "headerText": "Choose a location"
+  },
+  "pickerDate": {
+    "headerText": "Choose date & hour"
+  },
   "validation": {
     "fieldRequired": "{0} is required.",
     "tooShort": "{0} is too short."
