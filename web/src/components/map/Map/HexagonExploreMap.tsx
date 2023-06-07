@@ -23,7 +23,7 @@ export default function HexagonExploreMap({
   setHexagonsToFetch,
   setHexagonClicked,
   hexagonClicked,
-  isFetchingHexagons,
+  isRedrawingMap,
 }) {
   const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
   const [centerBounds, setCenterBounds] = useState<Point>(null);
@@ -56,7 +56,6 @@ export default function HexagonExploreMap({
         exploreSettings.bounds,
         getResolution(exploreSettings.zoom),
       );
-      
       setHexagonsToFetch({
         resolution: getResolution(exploreSettings.zoom),
         hexagons: boundsHexes,
@@ -150,7 +149,7 @@ export default function HexagonExploreMap({
               }}
             />
           ))}
-          {!isFetchingHexagons && hexagonClicked && (
+          {!isRedrawingMap && hexagonClicked && (
             <GeoJsonFeature
               feature={hexagonClicked}
               key={`clicked_${hexagonClicked.properties.hex}`}
@@ -161,7 +160,7 @@ export default function HexagonExploreMap({
             />
           )}
         </GeoJson>
-        {!isFetchingHexagons && hexagonClicked && (
+        {!isRedrawingMap && hexagonClicked && (
           <Overlay
             anchor={hexagonClicked.properties.center}
             offset={[20, 0]}
@@ -197,7 +196,7 @@ export default function HexagonExploreMap({
             </div>
           </Overlay>
         )}
-        {isFetchingHexagons && (
+        {isRedrawingMap && (
           <Overlay anchor={centerBounds}>
             <Loading />
           </Overlay>

@@ -8,9 +8,7 @@ import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { withRouter } from 'next/router';
 import List from 'components/list/List';
-import { buttonTypes } from 'shared/buttonTypes';
-import { Button } from 'shared/entities/button.entity';
-import { Bounds, Point } from 'pigeon-maps';
+import { Point } from 'pigeon-maps';
 import { LoadabledComponent } from 'components/loading';
 import {
   LocalStorageVars,
@@ -19,7 +17,9 @@ import {
 import HexagonExploreMap from 'components/map/Map/HexagonExploreMap';
 import { cellToLatLng } from 'h3-js';
 import {
-  calculateDensityMap, getResolution,
+  calculateDensityMap,
+  getResolution,
+  recalculateDensityMap,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import {
@@ -33,6 +33,7 @@ import {
   ButtonFilters,
   defaultFilters,
 } from 'components/search/AdvancedFilters/filters.type';
+import { Button } from 'shared/entities/button.entity';
 
 const defaultZoomPlace = 13;
 
@@ -47,280 +48,32 @@ function HoneyComb({ router }) {
     (state: GlobalState) => state.networks.selectedNetwork,
   );
 
-
-  const [exploreSettings, setExploreSettings] = useState(() => {
-    return {
-      center: [0, 0],
-      zoom: 4,
-      tileType: HbMapTiles.OSM,
-      // radius: 10000,
-      bounds: null,
-      browseType: BrowseType.PINS,
-      honeyCombFeatures: null,
-      prevZoom: 0,
-      loading: true,
-    };
-  });
-
-
-  const setMapCenter = (latLng) => {
-    setExploreSettings((prevSettings) => {
-      return { ...prevSettings, center: latLng };
-    });
-  };
-
-  const setMapZoom = (zoom: number) => {
-    setExploreSettings((prevSettings) => {
-      return { ...prevSettings, zoom };
-    });
-  };
-
-  syncCenter({router, selectedNetwork, setExploreSettings, exploreSettings})
-
-  const [hexagonClicked, setHexagonClicked] = useState();
-  const debouncedHexagonClicked = useDebounce(hexagonClicked, 70);
-
-  const [hexagonsToFetch, setHexagonsToFetch] = useState({
-    resolution: 1,
-    hexagons: [],
-  });
-  const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, 100);
-  const [fetchedButtons, setFetchedButtons] = useState(null);
-  const [isFetchingHexagons, setIsFetchingHexagons] = useState(false);
-  const [filteredButtons, setFilteredButtons] = useState([]);
-  const [listButtons, setListButtons] = useState([]);
-  const [filters, setFilters] =
-    useState<ButtonFilters>(defaultFilters);
-  const [queryCenter, setQueryCenter] = useState<Point>(null);
+  const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
 
-  const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
-  const [cachedH3Hexes, setCacheH3Hexes] = useState([]);
-  const [nonCachedHexesToFetch, setNonCachedHexesToFetch] = useState(
-    [],
-  );
-  const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
+  const {
+    setMapCenter,
+    setMapZoom,
+    exploreSettings,
+    setExploreSettings,
+  } = useExploreSettings({ router, selectedNetwork });
 
-  useEffect(() => {
-    if (debounceHexagonsToFetch.hexagons.length > 0) {
-      seth3TypeDensityHexes(() => {
-        return debounceHexagonsToFetch.hexagons.map((hexagon) => {
-          const cacheHit = cachedH3Hexes.find(
-            (cachedHex) => cachedHex.hexagon == hexagon,
-          );
-          if (cacheHit) {
-            return cacheHit;
-          }
-          const center = cellToLatLng(hexagon);
-          return {
-            hexagon,
-            groupByType: [],
-            polygon: h3SetToFeature([hexagon]),
-            count: -1,
-            center: [center[1], center[0]],
-          };
-        });
-      });
+  const {
+    filters,
+    listButtons,
+    h3TypeDensityHexes,
+    handleBoundsChange,
+    setHexagonsToFetch,
+    setHexagonClicked,
+    hexagonClicked,
+    isRedrawingMap,
+    setFilters,
+  } = useHexagonMap({
+    setExploreSettings,
+    toggleShowLeftColumn,
+    exploreSettings,
+  });
 
-      setNonCachedHexesToFetch(() => {
-        return debounceHexagonsToFetch.hexagons.reduce(
-          (hexagonsToFetch, hexagon) => {
-            const cacheHit = cachedH3Hexes.find(
-              (cachedHex) => cachedHex.hexagon == hexagon,
-            );
-            if (!cacheHit) {
-              hexagonsToFetch.push(hexagon);
-            }
-            return hexagonsToFetch;
-          },
-          [],
-        );
-      });
-    } else {
-      // here should do something...?!
-      setIsFetchingHexagons(() => false);
-    }
-  }, [debounceHexagonsToFetch]);
-
-  useEffect(() => {
-    if (nonCachedHexesToFetch.length > 0) {
-      store.emit(
-        new FindButtons(
-          debounceHexagonsToFetch.resolution,
-          nonCachedHexesToFetch,
-          (buttons) => {
-            setFetchedButtons(() => buttons);
-          },
-          (error) => {
-            setFetchedButtons([]);
-            console.log('THERE WAS A HARD CORE ERROR');
-            console.error(error);
-          },
-        ),
-      );
-    }else {
-      setIsFetchingHexagons(() => false);
-    }
-  }, [nonCachedHexesToFetch]);
-  const handleBoundsChange = (bounds, center: Point, zoom) => {
-    setIsFetchingHexagons(() => true);
-    setExploreSettings((previousExploreSettings) => {
-      return {
-        ...previousExploreSettings,
-        prevZoom: previousExploreSettings.zoom,
-        zoom: zoom,
-        bounds: bounds,
-        center: center,
-      };
-    });
-  };
-  useEffect(() => {
-    console.log('filtering YEaH...')
-    if (fetchedButtons) {
-      setFilteredButtons(() => {
-        console.log('filtering again...')
-        console.log(filters)
-
-        let helpButtonsFiltered = fetchedButtons;
-        console.log(fetchedButtons.length)
-        helpButtonsFiltered = fetchedButtons.filter(
-          (button: Button) => {
-            if (filters.helpButtonTypes.length > 0) {
-              return (
-                filters.helpButtonTypes.indexOf(button.type) > -1
-              );
-            }
-            if(filters.query && filters.query.length > 0)
-            {
-              return (
-                (button.title.indexOf(filters.query) > -1 || button.description.indexOf(filters.query) > -1)
-              )
-            }
-            return true;
-          },
-        );
-
-        console.log(helpButtonsFiltered.length)
-        return helpButtonsFiltered
-      });
-    }
-    
-    // TODO HERE SHOULD LOAD AS SOON AS THE USER SCROLLS!
-  }, [fetchedButtons, filters]);
-
-  useEffect(() => {
-    if (debouncedHexagonClicked) {
-      toggleShowLeftColumn(true);
-      setListButtons(() => {
-        if (
-          debouncedHexagonClicked.properties.buttons &&
-          debouncedHexagonClicked.properties.buttons.length > 0
-        ) {
-          return debouncedHexagonClicked.properties.buttons;
-        }
-        return [];
-      });
-    }else{
-      setListButtons(() => filteredButtons)
-    }
-  }, [debouncedHexagonClicked]);
-
-  useEffect(() => {
-    const newHexagons = calculateDensityMap(
-      filteredButtons,
-      getResolution(exploreSettings.zoom),
-    );
-    const reducer = (allHexagons, h3hexagon) => {
-      if (Array.isArray(h3hexagon)) {
-        return h3hexagon.reduce(reducer, allHexagons);
-      } else {
-        const { hexagon, ...rest } = h3hexagon;
-        const exists = allHexagons.find(
-          (itrh3hexagon) => itrh3hexagon.hexagon === hexagon,
-        );
-        if (!exists) {
-          allHexagons.push({
-            ...rest,
-            hexagon: h3hexagon.hexagon,
-          });
-        } else {
-          if (exists.count < 0) {
-            allHexagons = allHexagons.filter(
-              (itrh3Hexagon) => itrh3Hexagon == hexagon,
-            );
-            allHexagons.push(exists);
-          }
-        }
-
-        return allHexagons;
-      }
-    };
-
-    setCacheH3Hexes((previousCachedH3Hexes) => {
-      const nonCached = nonCachedHexesToFetch.reduce(
-        (allHexagons, hexagon) => {
-          allHexagons.push({
-            hexagon,
-            groupByType: [],
-            polygon: h3SetToFeature([hexagon]),
-            count: 0,
-            center: cellToLatLng(hexagon),
-          });
-          return allHexagons;
-        },
-        previousCachedH3Hexes,
-      );
-
-      return newHexagons.reduce((allHexes, hex) => {
-        allHexes = allHexes.filter(
-          (nonCachedHex) => nonCachedHex.hexagon !== hex.hexagon,
-        );
-        allHexes.push(hex);
-        return allHexes;
-      }, nonCached);
-    });
-
-    seth3TypeDensityHexes((prevH3TypeDensityHexes) => {
-      const nonCached = nonCachedHexesToFetch.reduce(
-        (allHexagons, hexagon) => {
-          allHexagons.push({
-            hexagon,
-            groupByType: [],
-            polygon: h3SetToFeature([hexagon]),
-            count: 0,
-            center: cellToLatLng(hexagon),
-          });
-          return allHexagons;
-        },
-        [],
-      );
-      const boundsHexagons = newHexagons.reduce((allHexes, hex) => {
-        allHexes = allHexes.filter(
-          (nonCachedHex) => nonCachedHex.hexagon !== hex.hexagon,
-        );
-        allHexes.push(hex);
-        return allHexes;
-      }, prevH3TypeDensityHexes);
-
-      return boundsHexagons.map((hexagon) => {
-        if (hexagon.count > -1) {
-          return hexagon;
-        } else {
-          return { ...hexagon, count: 0 };
-        }
-      });
-    });
-    setListButtons(() => filteredButtons);
-  }, [filteredButtons]);
-
-  useEffect(() => {
-    setResults((prevResults) => {
-      return { count: listButtons.length };
-    });
-    setIsFetchingHexagons(() => false);
-  }, [listButtons]);
-
-  const [results, setResults] = useState({ count: 100 });
   const handleSelectedPlace = (place) => {
     setMapCenter([place.geometry.lat, place.geometry.lng]);
     setMapZoom(defaultZoomPlace);
@@ -341,7 +94,7 @@ function HoneyComb({ router }) {
                 <NavHeader
                   showFiltersForm={showFiltersForm}
                   toggleShowFiltersForm={toggleShowFiltersForm}
-                  filters={{ ...filters, results }}
+                  filters={{ ...filters, count: listButtons.length }}
                   exploreSettings={exploreSettings}
                 />
                 <List
@@ -360,7 +113,7 @@ function HoneyComb({ router }) {
                   setHexagonsToFetch={setHexagonsToFetch}
                   setHexagonClicked={setHexagonClicked}
                   hexagonClicked={hexagonClicked}
-                  isFetchingHexagons={isFetchingHexagons}
+                  isRedrawingMap={isRedrawingMap}
                 />
               </LoadabledComponent>
             </>
@@ -369,7 +122,11 @@ function HoneyComb({ router }) {
               toggleShowFiltersForm={toggleShowFiltersForm}
               mapZoom={exploreSettings.zoom}
               mapBounds={exploreSettings.bounds}
-              setFilters={(filters) => { setFilters(() => {console.log(filters); return {...defaultFilters,...filters}})}}
+              setFilters={(filters) => {
+                setFilters(() => {
+                  return { ...defaultFilters, ...filters };
+                });
+              }}
               filters={filters}
             />
           )}
@@ -381,47 +138,74 @@ function HoneyComb({ router }) {
 
 export default withRouter(HoneyComb);
 
+function useExploreSettings({ router, selectedNetwork }) {
+  const [exploreSettings, setExploreSettings] = useState(() => {
+    return {
+      center: [0, 0],
+      zoom: 4,
+      tileType: HbMapTiles.OSM,
+      // radius: 10000,
+      bounds: null,
+      browseType: BrowseType.PINS,
+      honeyCombFeatures: null,
+      prevZoom: 0,
+      loading: true,
+    };
+  });
 
-function syncCenter({router, selectedNetwork, setExploreSettings, exploreSettings})
-{
+  const setMapCenter = (latLng) => {
+    setExploreSettings((prevSettings) => {
+      return { ...prevSettings, center: latLng };
+    });
+  };
+
+  const setMapZoom = (zoom: number) => {
+    setExploreSettings((prevSettings) => {
+      return { ...prevSettings, zoom };
+    });
+  };
   let queryExploreSettings = {};
 
   const getUrlParams = (path) => {
     const findHash = path.indexOf('#');
-    if (findHash){
-      let params = new URLSearchParams(router.asPath.substr(findHash + 1))
+    if (findHash) {
+      let params = new URLSearchParams(
+        router.asPath.substr(findHash + 1),
+      );
       return params;
     }
-    return []
-  }
+    return [];
+  };
 
   useEffect(() => {
-    
     if (router && router.asPath) {
-      const params = getUrlParams(router.asPath)
-      
-      const lat =  parseFloat(params.get('lat'));
-      const lng =  parseFloat(params.get('lng'));
-      const zoom =  parseInt(params.get('zoom'));
-      
+      const params = getUrlParams(router.asPath);
+
+      const lat = parseFloat(params.get('lat'));
+      const lng = parseFloat(params.get('lng'));
+      const zoom = parseInt(params.get('zoom'));
+
       if (lat && lng) {
-        queryExploreSettings = {...queryExploreSettings, center: [lat,lng]}
+        queryExploreSettings = {
+          ...queryExploreSettings,
+          center: [lat, lng],
+        };
       }
       if (zoom) {
-        queryExploreSettings = {...queryExploreSettings, zoom: zoom}
+        queryExploreSettings = {
+          ...queryExploreSettings,
+          zoom: zoom,
+        };
       }
-      console.log(queryExploreSettings)
     }
-    if(selectedNetwork)
-    {
+    if (selectedNetwork) {
       setExploreSettings((prevSettings) => {
         const localStorageExploreSettings = localStorageService.read(
           LocalStorageVars.EXPLORE_SETTINGS,
         );
-        let locaStorageVars = {}
-        if (localStorageExploreSettings)
-        {
-          locaStorageVars = JSON.parse(localStorageExploreSettings)
+        let locaStorageVars = {};
+        if (localStorageExploreSettings) {
+          locaStorageVars = JSON.parse(localStorageExploreSettings);
         }
         return {
           ...prevSettings,
@@ -430,19 +214,229 @@ function syncCenter({router, selectedNetwork, setExploreSettings, exploreSetting
           ...queryExploreSettings,
           loading: false,
         };
-        
       });
     }
   }, [router, selectedNetwork]);
 
   useEffect(() => {
-    if(!exploreSettings.loading)
-    {
-      window.location.replace(`#?zoom=${exploreSettings.zoom}&lat=${exploreSettings.center[0]}&lng=${exploreSettings.center[1]}`)
+    if (!exploreSettings.loading) {
+      window.location.replace(
+        `#?zoom=${exploreSettings.zoom}&lat=${exploreSettings.center[0]}&lng=${exploreSettings.center[1]}`,
+      );
       localStorageService.save(
         LocalStorageVars.EXPLORE_SETTINGS,
         JSON.stringify(exploreSettings),
       );
     }
-  },[exploreSettings])
+  }, [exploreSettings]);
+
+  return {
+    setMapCenter,
+    setMapZoom,
+    exploreSettings,
+    setExploreSettings,
+  };
+}
+
+function useHexagonMap({
+  setExploreSettings,
+  toggleShowLeftColumn,
+  exploreSettings,
+}) {
+  const [hexagonClicked, setHexagonClicked] = useState(null);
+  const debouncedHexagonClicked = useDebounce(hexagonClicked, 70);
+
+  const [hexagonsToFetch, setHexagonsToFetch] = useState({
+    resolution: 1,
+    hexagons: [],
+  });
+  const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, 100);
+  const [isRedrawingMap, setIsRedrawingMap] = useState(false);
+  const [fullMapfilteredButtons, setFullMapFilteredButtons] = useState([])
+  const [listButtons, setListButtons] = useState([]);
+  const [filters, setFilters] =
+    useState<ButtonFilters>(defaultFilters);
+  const [densityMapNeedsUpdate, setDensityMapNeedsUpdate] =
+    useToggle(true);
+
+  const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
+  const [cachedH3Hexes, setCacheH3Hexes] = useState([]);
+  const calculateNonCachedHexagons = (
+    debounceHexagonsToFetch,
+    cachedH3Hexes,
+  ) => {
+    return debounceHexagonsToFetch.hexagons.reduce(
+      (hexagonsToFetch, hexagon) => {
+        const cacheHit = cachedH3Hexes.find(
+          (cachedHex) => cachedHex.hexagon == hexagon,
+        );
+        if (!cacheHit) {
+          hexagonsToFetch.push(hexagon);
+        }
+        return hexagonsToFetch;
+      },
+      [],
+    );
+  };
+
+  const recalculateCacheH3Hexes = (
+    newDensityMapHexagons,
+    previousCachedH3Hexes,
+  ) => {
+    const uniqueArray = (a) =>
+      Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
+        JSON.parse(s),
+      );
+    const mergeCache = [
+      ...previousCachedH3Hexes,
+      ...newDensityMapHexagons,
+    ];
+    return uniqueArray(mergeCache);
+  };
+
+  useEffect(() => {
+    setIsRedrawingMap(() => true);
+
+    if (debounceHexagonsToFetch.hexagons.length > 0) {
+
+      const hexesToFetch = calculateNonCachedHexagons(
+        debounceHexagonsToFetch,
+        cachedH3Hexes,
+      );
+      if (hexesToFetch.length > 0) {
+        store.emit(
+          new FindButtons(
+            debounceHexagonsToFetch.resolution,
+            hexesToFetch,
+            (buttons) => {
+              const newDensityMapHexagons = calculateDensityMap(
+                buttons,
+                getResolution(exploreSettings.zoom),
+                hexesToFetch,
+              );
+
+              setCacheH3Hexes((previousCachedH3Hexes) => {
+                return recalculateCacheH3Hexes(
+                  newDensityMapHexagons,
+                  previousCachedH3Hexes,
+                );
+              });
+              setDensityMapNeedsUpdate(() => true);
+            },
+            (error) => {
+              // setFetchedButtons([]);
+              console.log('THERE WAS A HARD CORE ERROR');
+              console.error(error);
+            },
+          ),
+        );
+      } else {
+        setDensityMapNeedsUpdate(() => true); 
+      }
+    }
+  }, [debounceHexagonsToFetch]);
+
+  useEffect(() => {
+    const mapHexagons = cachedH3Hexes.filter((cachedHex) => {
+      return debounceHexagonsToFetch.hexagons.find((hexagon) => hexagon == cachedHex.hexagon)
+    })
+    const { filteredButtons, filteredHexagons } = applyFilters(
+      filters,
+      mapHexagons,
+    );
+    seth3TypeDensityHexes(() => {
+      return filteredHexagons
+    });
+    setFullMapFilteredButtons(() => filteredButtons) //used for when user unclicks map
+    setListButtons(() => filteredButtons);
+    setIsRedrawingMap(() => false);
+  }, [densityMapNeedsUpdate]);
+
+  const applyFilters = (filters, cachedHexagons) => {
+    const applyButtonTypesFilter = (button, buttonTypes) => {
+      if (buttonTypes.length > 0) {
+        return buttonTypes.indexOf(button.type) > -1;
+      }
+      return true;
+    };
+
+    const applyQueryFilter = (button, query) => {
+      if (query && query.length > 0) {
+        return (
+          button.title.indexOf(query) > -1 ||
+          button.description.indexOf(query) > -1
+        );
+      }
+      return true;
+    };
+    const res = cachedHexagons.reduce(
+      ({ filteredButtons, filteredHexagons }, hexagonCached) => {
+        hexagonCached.buttons = hexagonCached.buttons.filter(
+          (button: Button) => {
+            if (
+              !applyButtonTypesFilter(button, filters.helpButtonTypes)
+            ) {
+              return false;
+            }
+            if (!applyQueryFilter(button, filters.query)) {
+              return false;
+            }
+
+            return true;
+          },
+        );
+
+        filteredHexagons.push(hexagonCached);
+        return {
+          filteredButtons: filteredButtons.concat(
+            hexagonCached.buttons,
+          ),
+          filteredHexagons: filteredHexagons,
+        };
+      },
+      { filteredButtons: [], filteredHexagons: [] },
+    );
+    return {filteredButtons: res.filteredButtons, filteredHexagons: recalculateDensityMap(res.filteredHexagons)}
+  };
+
+  const handleBoundsChange = (bounds, center: Point, zoom) => {
+    setExploreSettings((previousExploreSettings) => {
+      return {
+        ...previousExploreSettings,
+        prevZoom: previousExploreSettings.zoom,
+        zoom: zoom,
+        bounds: bounds,
+        center: center,
+      };
+    });
+  };
+
+  useEffect(() => {
+    if (debouncedHexagonClicked) {
+      toggleShowLeftColumn(true);
+      setListButtons(() => {
+        if (
+          debouncedHexagonClicked.properties.buttons &&
+          debouncedHexagonClicked.properties.buttons.length > 0
+        ) {
+          return debouncedHexagonClicked.properties.buttons;
+        }
+        return [];
+      });
+    }else {
+      setListButtons(() => fullMapfilteredButtons);
+    }
+  }, [debouncedHexagonClicked]);
+
+  return {
+    filters,
+    listButtons,
+    h3TypeDensityHexes,
+    handleBoundsChange,
+    setHexagonsToFetch,
+    setHexagonClicked,
+    hexagonClicked,
+    isRedrawingMap,
+    setFilters,
+  };
 }

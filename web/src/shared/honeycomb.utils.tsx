@@ -1,6 +1,9 @@
 import { Bounds } from 'pigeon-maps';
 import {
-  cellToChildren, cellToLatLng, cellToParent, latLngToCell,
+  cellToChildren,
+  cellToLatLng,
+  cellToParent,
+  latLngToCell,
 } from 'h3-js';
 import { featureToH3Set, h3SetToFeature } from 'geojson2h3';
 import _ from 'lodash';
@@ -17,19 +20,16 @@ export function convertBoundsToGeoJsonPolygon(bounds: Bounds) {
   };
 }
 
-
 export function featuresToGeoJson(features) {
   return {
-    "type": "FeatureCollection",
-    "features": features
+    type: 'FeatureCollection',
+    features: features,
   };
 }
 
-
 export function convertBoundsToPolygon(bounds: Bounds) {
-  if(!bounds)
-  {
-    throw new Error('bounds are null ')
+  if (!bounds) {
+    throw new Error('bounds are null ');
   }
   return [
     [bounds.sw[1], bounds.sw[0]],
@@ -48,11 +48,9 @@ export function convertBoundsToGeoJsonHexagons(
   return hexs;
 }
 
-
-export function getGeoJsonHexesForBounds(bounds, resolution)
-{
-  const hexagons = convertBoundsToGeoJsonHexagons(bounds,resolution);
-  return convertHexesToFeatures(hexagons, resolution)
+export function getGeoJsonHexesForBounds(bounds, resolution) {
+  const hexagons = convertBoundsToGeoJsonHexagons(bounds, resolution);
+  return convertHexesToFeatures(hexagons, resolution);
 }
 export function convertHexesToFeatures(
   hexagones: string[],
@@ -74,22 +72,23 @@ export function convertHexesToFeatures(
   });
 }
 
-export function latLngToGeoJson(lat, lng)
-{
-  const hex = latLngToCell(lat, lng, maxResolution)
-  return featuresToGeoJson([h3SetToFeature([hex])])
+export function latLngToGeoJson(lat, lng) {
+  const hex = latLngToCell(lat, lng, maxResolution);
+  return featuresToGeoJson([h3SetToFeature([hex])]);
 }
-export function getDegreesBleed(zoom: number, bounds: Bounds) : Bounds
-{
+export function getDegreesBleed(
+  zoom: number,
+  bounds: Bounds,
+): Bounds {
   let extende = 0.001;
   if (zoom < 5) {
-    extende = 3
+    extende = 3;
   } else if (Math.abs(zoom - 5) < 3) {
-    extende = 2
+    extende = 2;
   } else if (zoom < 10) {
-    extende = 0.5
+    extende = 0.5;
   } else if (zoom < 17) {
-    extende = 0.01
+    extende = 0.01;
   }
   let newBounds = bounds;
 
@@ -125,7 +124,7 @@ export function getResolution(zoom) {
     case 16:
       return 8;
 
-    default: 
+    default:
       return 1;
   }
 }
@@ -142,7 +141,6 @@ export function hideHex(hexClicked, resolution, bottomSelectedHexes) {
 }
 
 export function showHex(hexClicked, resolution, bottomSelectedHexes) {
-
   if (maxResolution == resolution) {
     const selectecHexes = bottomSelectedHexes.filter(
       (hex) => hexClicked != hex,
@@ -153,17 +151,16 @@ export function showHex(hexClicked, resolution, bottomSelectedHexes) {
   return _.difference(bottomSelectedHexes, bottomHexes);
 }
 
-export function roundCoords(point){
-  return [Math.floor(point[0] * 10000) / 10000, Math.floor(point[1] * 10000) / 10000];
+export function roundCoords(point) {
+  return [
+    Math.floor(point[0] * 10000) / 10000,
+    Math.floor(point[1] * 10000) / 10000,
+  ];
 }
 
-export function convertH3DensityToFeatures(
-  hexagones,
-) {
-
-  if(hexagones.length < 1)
-  {
-    return []
+export function convertH3DensityToFeatures(hexagones) {
+  if (hexagones.length < 1) {
+    return [];
   }
   return hexagones.map((hex) => {
     const geojsonHex = h3SetToFeature([hex.hexagon]);
@@ -175,42 +172,70 @@ export function convertH3DensityToFeatures(
         center: hex.center,
         count: hex.count,
         groupByType: hex.groupByType,
-        buttons: hex.buttons
+        buttons: hex.buttons,
       },
     };
-  })
+  });
 }
 
-export function getBoundsHexFeatures(bounds, mapZoom)
-{
+export function getBoundsHexFeatures(bounds, mapZoom) {
   const newGeoJsonHexesBounds = getGeoJsonHexesForBounds(
     getDegreesBleed(mapZoom, bounds),
     getResolution(mapZoom),
   );
   if (newGeoJsonHexesBounds.length > 500) {
-    console.error(`Too many features, throwing for safety. numfeatures: ${newGeoJsonHexesBounds.length} zoom: ${mapZoom}`)
-    return []
+    console.error(
+      `Too many features, throwing for safety. numfeatures: ${newGeoJsonHexesBounds.length} zoom: ${mapZoom}`,
+    );
+    return [];
   }
-  return newGeoJsonHexesBounds
+  return newGeoJsonHexesBounds;
 }
 
-export function calculateDensityMap(filteredButtons, resolution) {
+export function recalculateDensityMap(hexagonsDensityMap) {
+  return hexagonsDensityMap.map((hexagon) => {
+    const hexagonByTypeCount = hexagon.groupByType.map((groupByType) => {
+      
+      return {
+        ...groupByType,
+        count: hexagon.buttons.filter((button) => button.type === groupByType.type).length
+      }
+    })
 
+    return {...hexagon, count: hexagon.buttons.length, groupByType: hexagonByTypeCount}
+  })
+}
+
+export function calculateDensityMap(
+  filteredButtons,
+  resolution,
+  hexesRequested,
+) {
   const reducer = (groupBy, button) => {
     if (Array.isArray(button)) {
       return button.reduce(reducer, groupBy);
     } else {
       const { hexagon, ...rest } = button;
       const group = groupBy.find(
-        (button) => cellToParent(button.hexagon,resolution) === cellToParent(hexagon, resolution),
+        (button) =>
+          cellToParent(button.hexagon, resolution) ===
+          cellToParent(hexagon, resolution),
       );
       if (group) {
-        group.buttons.push(rest);
+        group.buttons.push(button);
       } else {
-        groupBy.push({
-          hexagon: cellToParent(button.hexagon,resolution),          
-          buttons: [rest],
-        });
+        try {
+          const cell = cellToParent(button.hexagon, resolution);
+          groupBy.push({
+            hexagon: cell,
+            buttons: [button],
+          });
+        } catch (error) {
+          console.log(button.hexagon)
+          console.log(button);
+          console.error(error);
+          console.trace();
+        }
       }
       return groupBy;
     }
@@ -221,9 +246,7 @@ export function calculateDensityMap(filteredButtons, resolution) {
       return hex.reduce(reducer, groupBy);
     } else {
       const { type, ...rest } = hex;
-      const group = groupBy.find(
-        (button) => button.type === type
-      );
+      const group = groupBy.find((button) => button.type === type);
       if (group) {
         group.buttons.push(rest);
       } else {
@@ -237,11 +260,36 @@ export function calculateDensityMap(filteredButtons, resolution) {
   };
 
   const groupBy = filteredButtons.reduce(reducer, []);
-  
-  const groupbyType = groupBy.map(hex => {
-    const group = hex.buttons.reduce(reducing, [])
-    const groups = group.map((g) => {return {type: g.type, count: g.buttons.length}})
-    return {hexagon: hex.hexagon, groupByType: groups, polygon: h3SetToFeature([hex.hexagon]), count: hex.buttons.length, center: cellToLatLng(hex.hexagon), buttons: hex.buttons}
-  })
+  const hexesRequestedEmpty = hexesRequested.reduce(
+    (allHexes, hexagon) => {
+      if (groupBy.find((hex) => hex.hexagon == hexagon)) {
+        return allHexes;
+      }
+      allHexes.push({
+        hexagon,
+        buttons: [],
+      });
+      return allHexes;
+    },
+    [],
+  );
+
+  const allHexagons = [...hexesRequestedEmpty, ...groupBy];
+
+  const groupbyType = allHexagons.map((hex) => {
+    const group = hex.buttons.reduce(reducing, []);
+    const groups = group.map((g) => {
+      return { type: g.type, count: g.buttons.length };
+    });
+    return {
+      hexagon: hex.hexagon,
+      groupByType: groups,
+      polygon: h3SetToFeature([hex.hexagon]),
+      count: hex.buttons.length,
+      center: cellToLatLng(hex.hexagon),
+      buttons: hex.buttons,
+    };
+  });
+
   return groupbyType;
 }

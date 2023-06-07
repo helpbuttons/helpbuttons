@@ -13,7 +13,7 @@ function HeaderSearch({filters, toggleShowFiltersForm}) {
             <div className="header-search__form">
 
               <div className="header-search__column" onClick={(e) => {toggleShowFiltersForm(true)}}>
-                <SearchText count={filters.results.count} where={filters.where}/>
+                <SearchText count={filters.count} where={filters.where}/>
                 <SearchInfo helpButtonTypes={filters.helpButtonTypes} when={filters.when}/>
                 {filters.query}
                 <div className="header-search__info"></div>

@@ -17,7 +17,7 @@ export const useToggle = (initialState = false) => {
   // This function change the boolean value to it's opposite value
   const toggle = useCallback((value) => typeof value === "boolean" ? setState(state => value) : setState(state => !state), []);
   
-  return [state, toggle]
+  return [state, toggle] as const
 }
 
 

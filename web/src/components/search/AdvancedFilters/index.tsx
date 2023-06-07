@@ -32,7 +32,9 @@ export default function AdvancedFilters({
     formState: { errors, isSubmitting },
     register,
     setValue,
-  } = useForm({});
+  } = useForm({defaultValues: {
+    query: filters.query
+  }});
 
   const [selectedTypes, setSelectedTypes]= useState(() => {
     return buttonTypes.map((type) => type.name)
@@ -47,6 +49,8 @@ export default function AdvancedFilters({
     if(data.query)
     {
       filters.query = data.query
+    }else{
+      filters.query = ''
     }
 
     if(data.type){
