@@ -252,7 +252,8 @@ function useHexagonMap({
   });
   const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, 100);
   const [isRedrawingMap, setIsRedrawingMap] = useState(false);
-  const [fullMapfilteredButtons, setFullMapFilteredButtons] = useState([])
+  const [fullMapfilteredButtons, setFullMapFilteredButtons] =
+    useState([]);
   const [listButtons, setListButtons] = useState([]);
   const [filters, setFilters] =
     useState<ButtonFilters>(defaultFilters);
@@ -260,14 +261,14 @@ function useHexagonMap({
     useToggle(true);
 
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
-  const [cachedH3Hexes, setCacheH3Hexes] = useState([]);
+  let cachedH3Hexes = React.useRef([]);
   const calculateNonCachedHexagons = (
     debounceHexagonsToFetch,
     cachedH3Hexes,
   ) => {
     return debounceHexagonsToFetch.hexagons.reduce(
       (hexagonsToFetch, hexagon) => {
-        const cacheHit = cachedH3Hexes.find(
+        const cacheHit = cachedH3Hexes.current.find(
           (cachedHex) => cachedHex.hexagon == hexagon,
         );
         if (!cacheHit) {
@@ -279,26 +280,21 @@ function useHexagonMap({
     );
   };
 
-  const recalculateCacheH3Hexes = (
-    newDensityMapHexagons,
-    previousCachedH3Hexes,
-  ) => {
+  const recalculateCacheH3Hexes = (newDensityMapHexagons) => {
     const uniqueArray = (a) =>
       Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
         JSON.parse(s),
       );
-    const mergeCache = [
-      ...previousCachedH3Hexes,
+    cachedH3Hexes.current = uniqueArray([
+      ...cachedH3Hexes.current,
       ...newDensityMapHexagons,
-    ];
-    return uniqueArray(mergeCache);
+    ]);
   };
 
   useEffect(() => {
     setIsRedrawingMap(() => true);
 
     if (debounceHexagonsToFetch.hexagons.length > 0) {
-
       const hexesToFetch = calculateNonCachedHexagons(
         debounceHexagonsToFetch,
         cachedH3Hexes,
@@ -315,12 +311,7 @@ function useHexagonMap({
                 hexesToFetch,
               );
 
-              setCacheH3Hexes((previousCachedH3Hexes) => {
-                return recalculateCacheH3Hexes(
-                  newDensityMapHexagons,
-                  previousCachedH3Hexes,
-                );
-              });
+              recalculateCacheH3Hexes(newDensityMapHexagons);
               setDensityMapNeedsUpdate(() => true);
             },
             (error) => {
@@ -331,23 +322,26 @@ function useHexagonMap({
           ),
         );
       } else {
-        setDensityMapNeedsUpdate(() => true); 
+        setDensityMapNeedsUpdate(() => true);
       }
     }
   }, [debounceHexagonsToFetch]);
 
   useEffect(() => {
-    const mapHexagons = cachedH3Hexes.filter((cachedHex) => {
-      return debounceHexagonsToFetch.hexagons.find((hexagon) => hexagon == cachedHex.hexagon)
-    })
+    const mapHexagons = cachedH3Hexes.current.filter((cachedHex) => {
+      return debounceHexagonsToFetch.hexagons.find(
+        (hexagon) => hexagon == cachedHex.hexagon,
+      );
+    });
+
     const { filteredButtons, filteredHexagons } = applyFilters(
       filters,
       mapHexagons,
     );
     seth3TypeDensityHexes(() => {
-      return filteredHexagons
+      return filteredHexagons;
     });
-    setFullMapFilteredButtons(() => filteredButtons) //used for when user unclicks map
+    setFullMapFilteredButtons(() => filteredButtons); //used for when user unclicks map
     setListButtons(() => filteredButtons);
     setIsRedrawingMap(() => false);
   }, [densityMapNeedsUpdate]);
@@ -371,7 +365,7 @@ function useHexagonMap({
     };
     const res = cachedHexagons.reduce(
       ({ filteredButtons, filteredHexagons }, hexagonCached) => {
-        hexagonCached.buttons = hexagonCached.buttons.filter(
+        const moreButtons = hexagonCached.buttons.filter(
           (button: Button) => {
             if (
               !applyButtonTypesFilter(button, filters.helpButtonTypes)
@@ -386,17 +380,21 @@ function useHexagonMap({
           },
         );
 
-        filteredHexagons.push(hexagonCached);
+        filteredHexagons.push({
+          ...hexagonCached,
+          buttons: moreButtons,
+        });
         return {
-          filteredButtons: filteredButtons.concat(
-            hexagonCached.buttons,
-          ),
+          filteredButtons: filteredButtons.concat(moreButtons),
           filteredHexagons: filteredHexagons,
         };
       },
       { filteredButtons: [], filteredHexagons: [] },
     );
-    return {filteredButtons: res.filteredButtons, filteredHexagons: recalculateDensityMap(res.filteredHexagons)}
+    return {
+      filteredButtons: res.filteredButtons,
+      filteredHexagons: recalculateDensityMap(res.filteredHexagons),
+    };
   };
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
@@ -423,7 +421,7 @@ function useHexagonMap({
         }
         return [];
       });
-    }else {
+    } else {
       setListButtons(() => fullMapfilteredButtons);
     }
   }, [debouncedHexagonClicked]);

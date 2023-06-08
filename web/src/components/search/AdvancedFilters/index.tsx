@@ -128,6 +128,7 @@ export default function AdvancedFilters({
               btnType={BtnType.submit}
               caption="Save filters"
               contentAlignment={ContentAlignment.center}
+              submit={true}
             />
           </div>
         </Form>
