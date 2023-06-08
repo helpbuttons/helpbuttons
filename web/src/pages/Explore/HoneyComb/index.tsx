@@ -56,7 +56,7 @@ function HoneyComb({ router }) {
     setMapZoom,
     exploreSettings,
     setExploreSettings,
-  } = useExploreSettings({ router, selectedNetwork });
+  } = useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm });
 
   const {
     filters,
@@ -92,10 +92,8 @@ function HoneyComb({ router }) {
                 }
               >
                 <NavHeader
-                  showFiltersForm={showFiltersForm}
                   toggleShowFiltersForm={toggleShowFiltersForm}
                   filters={{ ...filters, count: listButtons.length }}
-                  exploreSettings={exploreSettings}
                 />
                 <List
                   buttons={listButtons}
@@ -138,7 +136,7 @@ function HoneyComb({ router }) {
 
 export default withRouter(HoneyComb);
 
-function useExploreSettings({ router, selectedNetwork }) {
+function useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm }) {
   const [exploreSettings, setExploreSettings] = useState(() => {
     return {
       center: [0, 0],
@@ -152,7 +150,7 @@ function useExploreSettings({ router, selectedNetwork }) {
       loading: true,
     };
   });
-
+  let urlParams = new URLSearchParams()
   const setMapCenter = (latLng) => {
     setExploreSettings((prevSettings) => {
       return { ...prevSettings, center: latLng };
@@ -184,6 +182,7 @@ function useExploreSettings({ router, selectedNetwork }) {
       const lat = parseFloat(params.get('lat'));
       const lng = parseFloat(params.get('lng'));
       const zoom = parseInt(params.get('zoom'));
+      const showFilters = params.get('showFilters');
 
       if (lat && lng) {
         queryExploreSettings = {
@@ -197,6 +196,12 @@ function useExploreSettings({ router, selectedNetwork }) {
           zoom: zoom,
         };
       }
+      if(showFilters == 'true')
+      {
+        toggleShowFiltersForm(true)
+        params.delete('showFilters')
+      }
+      urlParams = params
     }
     if (selectedNetwork) {
       setExploreSettings((prevSettings) => {
@@ -219,9 +224,14 @@ function useExploreSettings({ router, selectedNetwork }) {
   }, [router, selectedNetwork]);
 
   useEffect(() => {
+    
     if (!exploreSettings.loading) {
+      urlParams.append('zoom', exploreSettings.zoom)
+      urlParams.append('lat', exploreSettings.center[0])
+      urlParams.append('lng', exploreSettings.center[1])
+
       window.location.replace(
-        `#?zoom=${exploreSettings.zoom}&lat=${exploreSettings.center[0]}&lng=${exploreSettings.center[1]}`,
+        `#?${urlParams.toString()}`,
       );
       localStorageService.save(
         LocalStorageVars.EXPLORE_SETTINGS,

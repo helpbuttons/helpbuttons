@@ -5,12 +5,19 @@ import { HeaderSearch } from 'elements/HeaderSearch';
 import router from 'next/router';
 
 function NavHeader({ toggleShowFiltersForm, filters, isHome = false}) {
+  const onSearchBarClick = (e) => {
+    e.preventDefault()
+    if (isHome)
+    {
+      router.push(`/Explore#?showFilters=true`)
+    }
+  }
   return (
     <>
       <div className="nav-header__container">
           <form className="nav-header__content">
             
-            <div className="nav-header__content-message" onClick={(e) => {e.preventDefault(); router.push(`/Explore?showFilters=true`)}}>
+            <div className="nav-header__content-message" onClick={onSearchBarClick}>
               <HeaderSearch
                 filters={filters}
                 toggleShowFiltersForm={toggleShowFiltersForm}
