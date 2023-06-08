@@ -1,9 +1,9 @@
-$drag-tab-height: $height-btn;
+$drag-tab-height: 60px;
 $drag-tab-width-desktop: 44px;
 $drag-tab-height-desktop: 200px;
 $drag-tab-card-height: $card-button-list-height;
 $drag-tab-bottom-height: $footer-height-mobile + $padding-small*2;
-$drag-tab-bottom: calc(#{$drag-tab-card-height} + #{$drag-tab-bottom-height});
+$drag-tab-bottom: calc(#{$drag-tab-card-height} + #{$drag-tab-bottom-height} - #{$drag-tab-height});
 $drag-tab-line-height: 5px;
 $drag-tab-line-height-desktop: 100px;
 $drag-tab-line-left-desktop: 20px;
@@ -22,9 +22,16 @@ $drag-tab-icon-size: 25px;
   margin-left: $margin-extra-small;
   z-index: $z-index-01;
   padding: $padding-small;
+  padding-bottom: 70px;
   bottom: $drag-tab-bottom;
   border-radius: $border-radius-circle $border-radius-circle 0 0;
   transition: $transition-default-slow;
+
+  :hover {
+
+    cursor: pointer;
+
+  }
 
 }
 
@@ -44,7 +51,7 @@ $drag-tab-icon-size: 25px;
 .drag-tab--open {
   
   transition: $transition-default-slow;
-  bottom: $drag-tab-bottom-height;
+  bottom: 0;
   
   .drag-tab__counter {
 

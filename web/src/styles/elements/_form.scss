@@ -144,6 +144,34 @@ $form-input-border-radius: $border-general-height;
 
 
 }
+//react select plugin styles modification //REVISE
+.form__input--plugin {
+
+  @extend .form__input;
+
+  padding: 0;
+  border: none;
+
+  .css-13cymwt-control {
+
+    height: $form-input-height;
+
+  }
+
+  .css-1fdsijx-ValueContainer {
+
+    height: $form-input-height;
+
+  }
+
+  .css-1nmdiq5-menu {
+
+    position: absolute;
+    z-index: $z-index-06;
+    
+  }
+
+}
 
 
 .form__input-tags {

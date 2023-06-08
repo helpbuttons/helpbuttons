@@ -3,7 +3,7 @@ import NextLink from "next/link";
 import { IoClose } from "react-icons/io5";
 
 ///small popup to pick small data by the user
-export function Picker({ closeAction, children }) {
+export function Picker({ closeAction, headerText, children }) {
   return (
     <>
       <div className="picker__close-container">
@@ -11,7 +11,7 @@ export function Picker({ closeAction, children }) {
           <div  className="picker__header">
             <div  className="picker__header-content">
               <div  className="picker__header-left"></div>
-              <div  className="picker__header-center">Choose a date</div>
+              <div  className="picker__header-center">{headerText}</div>
               <div  className="picker__header-right">
                 <a onClick={closeAction} className="picker__header-button">
                   <div className="btn-circle__icon">

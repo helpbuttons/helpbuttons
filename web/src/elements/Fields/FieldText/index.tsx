@@ -23,7 +23,7 @@ const FieldText = React.forwardRef(({
 }, ref): IFieldText => {
     return (
         <div className="form__field">
-            <label className="label">{label}</label>
+            <label className="form__label">{label}</label>
             <p className="form__explain">{explain}</p>
             <input
                 name={name} 

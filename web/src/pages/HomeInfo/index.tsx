@@ -121,7 +121,7 @@ export default function HomeInfo() {
                 </div>
                 <hr></hr>
                 <div className="info-overlay__description">
-                  <div>{t('homeinfo.buttons', [config.buttonCount.toString()])}</div>
+                  <div>{t('homeinfo.buttons', [config.buttonCount.toString()])}. 0 tipo1, 3 tipo2, 0 tipo3.</div>
                   <div>{t('homeinfo.users', [config.userCount.toString()])}</div>
                   <div>
                     {t('homeinfo.administeredby')}
@@ -161,7 +161,7 @@ export default function HomeInfo() {
                 </div>
                 <div className='card__section'>
                 <p>{t('homeinfo.faqsSubtitle')}</p>
-                  <NavLink href="/Explore">
+                  <NavLink href="/Faqs">
                     <IoHelpOutline />
                     <span>
                       {t('menu.faqs')}

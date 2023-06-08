@@ -32,22 +32,24 @@ export default function MarkerSelectorMap({
   }, [markerPosition])
   return (
     <>
-      <HbMap
-        mapCenter={mapCenter}
-        mapZoom={mapZoom}
-        onBoundsChanged={onBoundsChanged}
-        handleMapClick={handleMapClicked}
-        width={'100%'}
-        height={'60vh'}
-      >
-            <GeoJson
-              data={markerHexagonGeoJson}
-              styleCallback={(feature, hover) => {
-                return {fill: markerColor}
-              }}
-              
-            />
-      </HbMap>
+     <div className='picker__map'>
+        <HbMap
+          mapCenter={mapCenter}
+          mapZoom={mapZoom}
+          onBoundsChanged={onBoundsChanged}
+          handleMapClick={handleMapClicked}
+          width={'100%'}
+          height={'60vh'}
+        >
+              <GeoJson
+                data={markerHexagonGeoJson}
+                styleCallback={(feature, hover) => {
+                  return {fill: markerColor}
+                }}
+                
+              />
+        </HbMap>
+      </div>
     </>
   );
 }

@@ -7,6 +7,7 @@ import ButtonType from 'components/button/ButtonType';
 
 import FieldLocation from 'elements/Fields/FieldLocation';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
+import FieldText from 'elements/Fields/FieldText';
 import FormSubmit from 'elements/Form/FormSubmit';
 import ButtonShare from 'components/button/ButtonShare';
 // import ButtonNewDate from 'components/button/ButtonNewDate';
@@ -92,13 +93,14 @@ export default function ButtonForm({
               validationError={errors.type}
               explain={t('button.typeExplain')}
             />
-            <FieldTextArea
+            <FieldText
               name="title"
               label={t('button.titleLabel')}
               placeholder={t('button.placeHolderTitle')}
               validationError={errors.title}
               watch={watch}
               setValue={setValue}
+              explain={"Short title to know what's your button about"}
               setFocus={setFocus}
               {...register('title', { required: true })}
             />

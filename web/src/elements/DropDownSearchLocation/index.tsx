@@ -56,7 +56,6 @@ export default function DropDownSearchLocation({handleSelectedPlace, placeholder
 
   return (
     <>
-    <div className="App">
       <Select
         isSearchable
         onChange={setSelectedOption}
@@ -72,11 +71,10 @@ export default function DropDownSearchLocation({handleSelectedPlace, placeholder
             );
             }
         }}
+        className='form__input--plugin'
         placeholder={placeholder}
         noOptionsMessage= { () => 'Type to search location' }
       />
-    
-    </div>
     </>
   );
 }

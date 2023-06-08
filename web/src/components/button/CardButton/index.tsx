@@ -75,7 +75,7 @@ export function CardButtonHeadMedium({ button }) {
         <div className="card-button__city card-button__everywhere ">
           {button.address}
         </div>
-        
+
         <ShowWhen when={button.when} />
 
       </div>
@@ -201,7 +201,7 @@ export function CardButtonHeadBig({ button }) {
               </span>
             </div>
             <div className="card-button__name">
-              {button.owner.name}
+              {button.owner.name} @{button.owner.username} 
             </div>
             <CardButtonHeadActions button={button} />
           </div>
@@ -238,15 +238,24 @@ export function CardButtonHeadBig({ button }) {
 export function CardButtonHeadActions({ button }) {
   return (
     <div className="card-button__rating">
-      <span className="btn-circle__icon">
+      {/* <span className="btn-circle__icon">
         <IoHeartOutline />
         {button.hearts}
-      </span>
+      </span> */}
 
-      <span className="btn-circle__icon">
-        <IoAddCircleOutline />
-        {button.createdButtonsCount}
-      </span>
+      {button.hearts && (
+            <span className="btn-circle__icon">
+               <IoHeartOutline />
+              {button.hearts}
+            </span>
+          )}
+
+      {button.createdButtonsCount && (
+            <span className="btn-circle__icon">
+              <IoAddCircleOutline />
+              {button.createdButtonsCount}
+            </span>
+          )}
     </div>
   );
 }

@@ -39,7 +39,7 @@ export default function FieldDate({
         </div>
       </div>
       {showHideMenu && (
-        <Picker closeAction={closeMenu}>
+        <Picker closeAction={closeMenu} headerText={t("pickerDate.headerText")}>
           {!dateType && (
             <>
               <div

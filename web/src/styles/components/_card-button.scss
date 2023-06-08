@@ -70,7 +70,7 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__avatar {
-  flex: 0 1 15%;
+  flex: 0 1 12%;
   & > button {
     border: none;
     background: none;
@@ -90,6 +90,8 @@ $card-button-border-height: $border-general-height;
 .card-button__rating {
   margin-left: 0;
   display: flex;
+  align-items: center;
+  vertical-align: baseline;
   span {
     align-items: center;
     padding-right: 1rem;
@@ -164,6 +166,10 @@ $card-button-border-height: $border-general-height;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
+}
+
+.card-button__name:first-letter {
+  text-transform: uppercase;
 }
 
 .card-button__title {
@@ -492,6 +498,7 @@ $card-button-border-height: $border-general-height;
 .card-button__locDate {
   display: flex;
   justify-content: space-between;
+  gap: $margin-extra-small;
 }
 
 

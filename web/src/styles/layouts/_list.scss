@@ -15,6 +15,15 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
 
 }
 
+// .list__container::before {
+
+//   content: "";
+//   display: block;
+//   height: 5px;
+//   background: white;
+
+// }
+
 .list__content {
 
   display: flex;
