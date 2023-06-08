@@ -34,6 +34,7 @@ import {
   defaultFilters,
 } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
+import { isPointWithinRadius } from 'geolib';
 
 const defaultZoomPlace = 13;
 
@@ -112,6 +113,7 @@ function HoneyComb({ router }) {
                   setHexagonClicked={setHexagonClicked}
                   hexagonClicked={hexagonClicked}
                   isRedrawingMap={isRedrawingMap}
+                  filters={filters}
                 />
               </LoadabledComponent>
             </>
@@ -373,6 +375,14 @@ function useHexagonMap({
       }
       return true;
     };
+
+    const applyWhereFilter = (button : Button, where) => {
+      if(where.center && where.radius)
+      {
+        return isPointWithinRadius({latitude: button.latitude, longitude: button.longitude}, {latitude: where.center[0], longitude: where.center[1]}, where.radius*1000)
+      }
+      return true;
+    }
     const res = cachedHexagons.reduce(
       ({ filteredButtons, filteredHexagons }, hexagonCached) => {
         const moreButtons = hexagonCached.buttons.filter(
@@ -385,7 +395,9 @@ function useHexagonMap({
             if (!applyQueryFilter(button, filters.query)) {
               return false;
             }
-
+            if (!applyWhereFilter(button, filters.where)) {
+              return false;
+            }
             return true;
           },
         );

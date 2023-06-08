@@ -24,6 +24,7 @@ export default function HexagonExploreMap({
   setHexagonClicked,
   hexagonClicked,
   isRedrawingMap,
+  filters,
 }) {
   const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
   const [centerBounds, setCenterBounds] = useState<Point>(null);
@@ -156,7 +157,9 @@ export default function HexagonExploreMap({
               styleCallback={(feature, hover) => {
                 return { fill: 'white' };
               }}
-              onClick={() => {setHexagonClicked(() => null)}}
+              onClick={() => {
+                setHexagonClicked(() => null);
+              }}
             />
           )}
         </GeoJson>
@@ -164,30 +167,40 @@ export default function HexagonExploreMap({
           <Overlay
             anchor={hexagonClicked.properties.center}
             offset={[20, 0]}
-            className='pigeon-map__custom-block'
+            className="pigeon-map__custom-block"
             key={hexagonClicked.properties.hex}
           >
-            <div className='pigeon-map__hex-wrap'>
+            <div className="pigeon-map__hex-wrap">
               {hexagonClicked.properties.groupByType.map(
                 (hexagonBtnType, idx) => {
+                  if(hexagonBtnType.count < 1)
+                  {
+                    return ;
+                  }
+                  if(!(filters.helpButtonTypes.indexOf(hexagonBtnType.type) > -1))
+                  {
+                    return;
+                  }
                   const btnType = buttonTypes.find((type) => {
                     return type.name == hexagonBtnType.type;
                   });
                   return (
-                    <span className="pigeon-map__hex-element"
+                    <span
+                      className="pigeon-map__hex-element"
                       style={{
                         color: btnType.cssColor,
                         fontWeight: 'bold',
                       }}
                     >
-                      <div className="pigeon-map__hex-info"
+                      <div
+                        className="pigeon-map__hex-info"
                         key={idx}
                         style={buttonColorStyle(btnType.cssColor)}
                       >
-                          <div className="btn-filter__icon pigeon-map__hex-info--icon"></div>
-                          <div className="pigeon-map__hex-info--text" >
-                            {hexagonBtnType.count.toString()}
-                          </div>
+                        <div className="btn-filter__icon pigeon-map__hex-info--icon"></div>
+                        <div className="pigeon-map__hex-info--text">
+                          {hexagonBtnType.count.toString()}
+                        </div>
                       </div>
                     </span>
                   );

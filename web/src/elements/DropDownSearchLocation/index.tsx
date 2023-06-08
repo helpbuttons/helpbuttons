@@ -7,11 +7,11 @@ import { GlobalState, store } from 'pages';
 import { useRef } from 'store/Store';
 
 
-export default function DropDownSearchLocation({handleSelectedPlace, placeholder}) {
+export default function DropDownSearchLocation({handleSelectedPlace = (place) => {console.log(place)}, placeholder}) {
 //   const [selectedOption, setSelectedOption] = useState(null);
   const [options, setOptions] = useState([]);
   
-  const timeInMsBetweenStrokes = 150; //ms
+  const timeInMsBetweenStrokes = 80; //ms
   const config: SetupDtoOut = useRef(
     store,
     (state: GlobalState) => state.config,
@@ -55,7 +55,6 @@ export default function DropDownSearchLocation({handleSelectedPlace, placeholder
   }, [sub$]); //first time
 
   return (
-    <>
       <Select
         isSearchable
         onChange={setSelectedOption}
@@ -75,6 +74,5 @@ export default function DropDownSearchLocation({handleSelectedPlace, placeholder
         placeholder={placeholder}
         noOptionsMessage= { () => 'Type to search location' }
       />
-    </>
   );
 }
