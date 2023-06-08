@@ -56,7 +56,6 @@ export default function ButtonForm({
     if (buttonDraft) {
       reset(buttonDraft);
     }
-    // debugger;
     const subscription = watch((value, { name, type }) => {
       const values = getValues();
       if (
