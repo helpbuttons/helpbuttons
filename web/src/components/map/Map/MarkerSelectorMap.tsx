@@ -34,7 +34,7 @@ export default function MarkerSelectorMap({
     <>
      <div className='picker__map'>
         <HbMap
-          mapCenter={mapCenter}
+          mapCenter={markerPosition}
           mapZoom={mapZoom}
           onBoundsChanged={onBoundsChanged}
           handleMapClick={handleMapClicked}
