@@ -15,7 +15,20 @@ function List({
     onLeftColumnToggle(event.target.value);
   };
 
-  const helpButtons = buttons.slice(0, 20);
+  let [numberButtons, setNumberButtons] = React.useState(5);
+  const handleScroll = (e) => {
+    
+    const edge = e.target.scrollWidth - e.target.scrollLeft === e.target.clientWidth;
+    if (edge) { 
+      setNumberButtons((prevValue) => { 
+        const newValue = prevValue + 2 
+        if (newValue < buttons.length)
+          return newValue
+        return prevValue
+      })
+    }
+  }
+
   return (
     <>
       {!showFiltersForm && (
@@ -45,8 +58,8 @@ function List({
               (showLeftColumn ? '' : 'list__container--hide')
             }
           >
-            <div className="list__content">
-              <ContentList buttons={helpButtons} />
+            <div className="list__content" onScroll={handleScroll}>
+              <ContentList buttons={buttons.slice(0, numberButtons)} />
             </div>
           </div>
         </>
