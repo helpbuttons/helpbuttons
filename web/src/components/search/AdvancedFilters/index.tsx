@@ -121,7 +121,7 @@ export default function AdvancedFilters({
           >
             {buttonTypes.map((buttonType) => {
               return (
-                <div style={buttonColorStyle(buttonType.cssColor)}>
+                <div key={buttonType.name} style={buttonColorStyle(buttonType.cssColor)}>
                   <CheckBox
                     defaultValue={
                       helpButtonTypes.indexOf(

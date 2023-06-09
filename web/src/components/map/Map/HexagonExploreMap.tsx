@@ -189,6 +189,7 @@ export default function HexagonExploreMap({
                         color: btnType.cssColor,
                         fontWeight: 'bold',
                       }}
+                      key={btnType.name}
                     >
                       <div
                         className="pigeon-map__hex-info"
