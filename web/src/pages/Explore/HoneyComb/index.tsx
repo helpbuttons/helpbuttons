@@ -51,7 +51,7 @@ function HoneyComb({ router }) {
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
   const [filters, setFilters] =
-  useState(defaultFilters);
+  useState<ButtonFilters>(defaultFilters);
 
   const {
     setMapCenter,
@@ -75,10 +75,12 @@ function HoneyComb({ router }) {
     filters,
   });
 
-  const handleSelectedPlace = (place) => {
-    setMapCenter([place.geometry.lat, place.geometry.lng]);
-    setMapZoom(defaultZoomPlace);
-  };
+  useEffect(() => {
+    
+    if (filters.where.center){
+      setExploreSettings((prevExploreSettings) => {return {...prevExploreSettings, center: filters.where.center}});
+    }
+  }, [filters])
 
   return (
     <>

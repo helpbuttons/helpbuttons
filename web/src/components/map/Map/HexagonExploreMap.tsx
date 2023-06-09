@@ -35,11 +35,6 @@ export default function HexagonExploreMap({
     setCenterBounds(center);
   };
 
-  const handleMapClicked = ({ event, latLng, pixel }) => {
-    setMapCenter(latLng);
-    store.emit(new updateCurrentButton(null));
-  };
-
   const selectedNetwork = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -81,7 +76,6 @@ export default function HexagonExploreMap({
         mapCenter={exploreSettings.center}
         mapZoom={exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
-        handleMapClick={handleMapClicked}
         tileType={exploreSettings.tileType}
       >
         {selectedNetwork && (

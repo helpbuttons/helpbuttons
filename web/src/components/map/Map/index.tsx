@@ -25,7 +25,7 @@ export function HbMap({
   mapCenter,
   mapZoom,
   onBoundsChanged = (objectRet) => {},
-  handleMapClick,
+  handleMapClick = () => {},
   width = null,
   height = null,
   tileType = HbMapTiles.OSM,
@@ -64,7 +64,7 @@ export function HbMap({
   })
 
   useEffect(() => {
-    setMapProps((prevMapProps) => {return {...prevMapProps, provider: tileProvider}})
+    setMapProps((prevMapProps) => {return {...prevMapProps, provider: tileProvider, center: mapCenter}})
   },
   [tileType, mapZoom, mapCenter])
 
