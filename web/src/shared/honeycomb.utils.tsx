@@ -103,12 +103,12 @@ export function getDegreesBleed(
 export function getResolution(zoom) {
   switch (zoom) {
     case 4:
-      return 1;
+      return 2;
     case 5:
       return 2;
     case 6:
-    case 7:
       return 3;
+    case 7:
     case 8:
       return 4;
     case 9:
@@ -117,8 +117,9 @@ export function getResolution(zoom) {
     case 11:
       return 6;
     case 12:
-    case 13:
       return 7;
+    case 13:
+      return 8;
     case 14:
     case 15:
     case 16:

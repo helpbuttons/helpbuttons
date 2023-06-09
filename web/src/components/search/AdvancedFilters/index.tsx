@@ -10,8 +10,10 @@ import { Bounds } from 'pigeon-maps';
 import { ButtonFilters, defaultFilters } from './filters.type';
 import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
-import { buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import { roundCoords } from 'shared/honeycomb.utils';
+import FieldCheckbox from 'elements/Fields/FieldCheckbox';
+import CheckBox, { CheckBoxIcon } from 'elements/Checkbox';
 
 //Mobile filters section that includes not only the filters but some search input fields, maybe needed to make a separate component from the rest of esktop elements
 export default function AdvancedFilters({
@@ -32,7 +34,7 @@ export default function AdvancedFilters({
     formState: { errors, isSubmitting },
     register,
     setValue,
-    watch
+    watch,
   } = useForm({
     defaultValues: {
       query: filters.query,
@@ -41,15 +43,15 @@ export default function AdvancedFilters({
         address: filters.where.address,
         center: filters.where.center,
         radius: filters.where.radius,
-      }
+      },
     },
   });
 
-  const [selectedTypes, setSelectedTypes] = useState(() => {
-    return buttonTypes.map((type) => type.name);
-  });
+  const [selectedTypes, setSelectedTypes] = useState(filters.helpButtonTypes);
   const clearFilters = (e) => {
     e.preventDefault();
+    setValue('query', '')
+
     toggleShowFiltersForm(false);
   };
   const onSubmit = (data) => {
@@ -73,17 +75,35 @@ export default function AdvancedFilters({
     toggleShowFiltersForm(false);
   };
 
-  const address = watch('place.address')
-  const center = watch('place.center')
-  const radius = watch('place.radius')
+  const address = watch('place.address');
+  const center = watch('place.center');
+  const radius = watch('place.radius');
 
   const handleSelectedPlace = (place) => {
-    setValue('place.address', place.formatted)
-    setValue('place.center', [place.geometry.lat,place.geometry.lng])
-  }
+    setValue('place.address', place.formatted);
+    setValue('place.center', [
+      place.geometry.lat,
+      place.geometry.lng,
+    ]);
+  };
+
+  const uniqueArray = (a) =>
+      Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
+        JSON.parse(s),
+      );
+
+  const setButtonTypeValue = (name, value) => {
+    setSelectedTypes((prevValues) => {
+      if (value)
+      {
+        return uniqueArray([...prevValues, name]);  
+      }
+      return uniqueArray(prevValues.filter((prevValue) => prevValue != name));
+    });
+  };
+
   return (
     <>
-    {JSON.stringify(filters)}
       <div className="filters__container">
         <Form
           classNameExtra="filters--vertical"
@@ -97,13 +117,42 @@ export default function AdvancedFilters({
             {...register('query')}
           />
 
-          <HelpButtonTypes onChange={setSelectedTypes} values={filters.helpButtonTypes}/>
-
+          <FieldCheckbox
+            label={'Tipos de botón'}
+            validationError={null}
+            explain={'exlpain'}
+          >
+            {buttonTypes.map((buttonType) => {
+              return (
+                <div style={buttonColorStyle(buttonType.cssColor)}>
+                  <CheckBox
+                    defaultValue={
+                      filters.helpButtonTypes.indexOf(
+                        buttonType.name,
+                      ) > -1
+                    }
+                    name={buttonType.name}
+                    handleChange={(name, newValue) => {
+                      setButtonTypeValue(name, newValue);
+                    }}
+                  >
+                    <div className="btn-filter__icon"></div>
+                    <div className="btn-with-icon__text">
+                      {buttonType.caption}
+                    </div>
+                  </CheckBox>
+                </div>
+              );
+            })}
+          </FieldCheckbox>
           <div className="form__field">
             <label className="form__label label">
-              ¿Dónde buscas? { (address && center) &&
-                <>({address} - {roundCoords(center).toString()})</>
-              }
+              ¿Dónde buscas?{' '}
+              {address && center && (
+                <>
+                  ({address} - {roundCoords(center).toString()})
+                </>
+              )}
             </label>
             <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
@@ -115,8 +164,15 @@ export default function AdvancedFilters({
             <label className="form__label label">
               Distancia de búsqueda ({radius} km)
             </label>
-            <div style={{backgroundColor: 'black'}}>
-            <Slider min={1} max={300} onChange={(radiusValue) => setValue('place.radius', radiusValue)} defaultValue={radius} />
+            <div style={{ backgroundColor: 'black' }}>
+              <Slider
+                min={1}
+                max={300}
+                onChange={(radiusValue) =>
+                  setValue('place.radius', radiusValue)
+                }
+                defaultValue={radius}
+              />
             </div>
           </div>
 
@@ -139,49 +195,6 @@ export default function AdvancedFilters({
           </div>
         </Form>
       </div>
-    </>
-  );
-}
-
-const HelpButtonTypes = ({onChange = (newValues) => console.log(newValues), values}) => {  
-  return (
-    <div className="form__field">
-      <label className="form__label label">Tipos de botón</label>
-      <FieldMultiCheckbox availableValues={buttonTypes} onChange={onChange} defaultValues={values}/>
-    </div>
-  );
-};
-
-
-const FieldMultiCheckbox = ({availableValues = [], onChange, defaultValues}) => {
-  const [values, setValues] = useState(defaultValues);
-  const toggleValue = (value) => {
-    setValues((prevValues) => {
-      if (prevValues.indexOf(value) > -1) {
-        return prevValues.filter(
-          (prevValue) => prevValue != value,
-        );
-      }
-      return [...prevValues, value]
-    });
-  };
-
-  useEffect(() => {
-    onChange(values);
-  }, [values])
-
-  return (
-    <>
-      {availableValues.map((value) => (
-        <div key={value.name}>
-          {value.caption}
-          <input
-            type="checkbox"
-            checked={values.indexOf(value.name) > -1}
-            onChange={(e) => toggleValue(value.name)}
-          />
-        </div>
-      ))}
     </>
   );
 }

@@ -84,7 +84,6 @@ function HoneyComb({ router }) {
     <>
       <>
         <div className="index__container">
-          {!showFiltersForm ? (
             <>
               <div
                 className={
@@ -96,11 +95,21 @@ function HoneyComb({ router }) {
                   toggleShowFiltersForm={toggleShowFiltersForm}
                   filters={{ ...filters, count: listButtons.length }}
                 />
+                 {!showFiltersForm ? (
                 <List
                   buttons={listButtons}
                   showLeftColumn={showLeftColumn}
                   onLeftColumnToggle={toggleShowLeftColumn}
                 />
+                ) : (
+                  <AdvancedFilters
+                    toggleShowFiltersForm={toggleShowFiltersForm}
+                    mapZoom={exploreSettings.zoom}
+                    mapBounds={exploreSettings.bounds}
+                    setFilters={setFilters}
+                    filters={filters}
+                  />
+                )}
               </div>
               <LoadabledComponent loading={exploreSettings.loading}>
                 <HexagonExploreMap
@@ -117,19 +126,7 @@ function HoneyComb({ router }) {
                 />
               </LoadabledComponent>
             </>
-          ) : (
-            <AdvancedFilters
-              toggleShowFiltersForm={toggleShowFiltersForm}
-              mapZoom={exploreSettings.zoom}
-              mapBounds={exploreSettings.bounds}
-              setFilters={(filters) => {
-                setFilters(() => {
-                  return { ...defaultFilters, ...filters };
-                });
-              }}
-              filters={filters}
-            />
-          )}
+          
         </div>
       </>
     </>
@@ -357,6 +354,11 @@ function useHexagonMap({
     setListButtons(() => filteredButtons);
     setIsRedrawingMap(() => false);
   }, [densityMapNeedsUpdate]);
+
+  useEffect(() => {
+    setHexagonClicked(() => null)
+    setDensityMapNeedsUpdate(() => true)
+  }, [filters])
 
   const applyFilters = (filters, cachedHexagons) => {
     const applyButtonTypesFilter = (button, buttonTypes) => {
