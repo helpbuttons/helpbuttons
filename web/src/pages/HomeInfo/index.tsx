@@ -14,10 +14,9 @@ import {
 } from 'react-icons/io5';
 import { getHostname } from 'shared/sys.helper';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { useEffect, useState } from 'react';
 import { Network } from 'shared/entities/network.entity';
-import { useToggle } from 'shared/custom.hooks';
+import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 
 export default function HomeInfo() {
   const selectedNetwork: Network = useRef(
@@ -40,7 +39,7 @@ export default function HomeInfo() {
   );
 
   const [navigatorCoordinates, setNavigatorCoordinates] = useState(null)
-  const [showFiltersForm, toggleShowFiltersForm] = useToggle(false)
+  const [filters, setFilters] = useState(defaultFilters)
 
   useEffect(() => {
     if(navigator)
@@ -58,6 +57,15 @@ export default function HomeInfo() {
     });
   };
 
+  useEffect(() => {
+    if(config)
+    {
+      setFilters((prevFilters) => {
+        return {...prevFilters, results: {count: config.buttonCount}}
+      })
+    }
+  }, [config])
+  
   return (
     <>
     {selectedNetwork && (
@@ -65,12 +73,11 @@ export default function HomeInfo() {
     <div className="info-overlay__container">
       <div className="info-overlay__content">
         <form className="info-overlay__search-section">
-
             <NavHeader
-                showFiltersForm={showFiltersForm}
-                toggleShowFiltersForm={toggleShowFiltersForm}
+                toggleShowFiltersForm={() => {}}
+                filters={filters}
+                isHome={true}
               />
-          
         </form>
         {selectedNetworkLoading && (
           <>

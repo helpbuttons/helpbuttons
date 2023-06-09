@@ -16,8 +16,8 @@ interface HbMapProps {
   provider: (x: any, y: any, z: any, dpr: any) => string,
   width?: number,
   height?: number,
-  maxZoom: 16,
-  minZoom: 4,
+  maxZoom: number,
+  minZoom: number,
 }
 
 export function HbMap({
@@ -25,7 +25,7 @@ export function HbMap({
   mapCenter,
   mapZoom,
   onBoundsChanged = (objectRet) => {},
-  handleMapClick,
+  handleMapClick = () => {},
   width = null,
   height = null,
   tileType = HbMapTiles.OSM,
@@ -49,7 +49,7 @@ export function HbMap({
       zoomSnap: true,
       onClick: ({ event, latLng, pixel }) => {handleMapClick({latLng})},
       provider: tileProvider,
-      maxZoom: 16,
+      maxZoom: 14,
       minZoom: 4,
     }
     if (width !== null)
@@ -64,7 +64,7 @@ export function HbMap({
   })
 
   useEffect(() => {
-    setMapProps((prevMapProps) => {return {...prevMapProps, provider: tileProvider}})
+    setMapProps((prevMapProps) => {return {...prevMapProps, provider: tileProvider, center: mapCenter}})
   },
   [tileType, mapZoom, mapCenter])
 

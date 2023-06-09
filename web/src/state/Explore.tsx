@@ -20,6 +20,7 @@ import { handleError } from './helper';
 import { debounceTime } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { convertBoundsToGeoJsonHexagons } from 'shared/honeycomb.utils';
+import { ButtonFilters, defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 interface ExploreMapProps {
   defaultCenter: Point;
   defaultZoom: number;
@@ -32,6 +33,7 @@ export interface ExploreState {
   mapZoom;
   currentButton: Button;
   mapBondsButtons: Button[];
+  filters: ButtonFilters;
 }
 
 export const exploreInitial = {
@@ -40,6 +42,7 @@ export const exploreInitial = {
   mapZoom: -1,
   currentButton: null,
   mapBondsButtons: [],
+  filters: defaultFilters
 };
 
 export class FindButtons implements WatchEvent {
@@ -197,6 +200,16 @@ export class updateCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
+    });
+  }
+}
+
+export class updateFilters implements UpdateEvent {
+  public constructor(private filters: ButtonFilters) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.filters = this.filters;
     });
   }
 }

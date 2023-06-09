@@ -1,5 +1,7 @@
 import { IoSearch } from "react-icons/io5";
 import React, {useState} from "react";
+import { useRef } from "store/Store";
+import { GlobalState, store } from "pages";
 
 ///search button in explore and home
 function HeaderSearch({filters, toggleShowFiltersForm}) {
@@ -10,9 +12,11 @@ function HeaderSearch({filters, toggleShowFiltersForm}) {
 
             <div className="header-search__form">
 
-              <div className="header-search__column" onClick={(e) => {toggleShowFiltersForm()}}>
-                <div className="header-search__label">{filters.results.count} helpbuttons · {filters.where.address} · {filters.where.radius}km</div>
-                <div className="header-search__info">{ButtonTypesText(filters.helpButtonTypes)} · {WhenText(filters.when)}</div>
+              <div className="header-search__column" onClick={(e) => {toggleShowFiltersForm(true)}}>
+                <SearchText count={filters.count} where={filters.where}/>
+                <SearchInfo helpButtonTypes={filters.helpButtonTypes} when={filters.when}/>
+                {filters.query}
+                <div className="header-search__info"></div>
                 <div className="header-search__icon"><IoSearch/></div>
               </div>
 
@@ -25,21 +29,47 @@ function HeaderSearch({filters, toggleShowFiltersForm}) {
 
 export { HeaderSearch };
 
-
-function ButtonTypesText(filteredTypes) {
-  if (filteredTypes.length < 1)
-  {
-    return 'Any helpbutton type'
+function SearchText({count, where}) {
+  const selectedNetwork = useRef(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+  
+  const address = (where) => {
+    if(where.address && where.radius)
+    {
+      return `· ${where.address} · ${where.radius}km`
+    }
+    if(selectedNetwork){
+      return `in ${selectedNetwork.name}`
+    }else{
+      return ``
+    }
   }
 
-  return filteredTypes.toString();
+  return <div className="header-search__label">{count} helpbuttons found {address(where)}</div>
 }
 
-function WhenText(when) {
-  if (when == 'any')
-  {
-    return 'Any time'
+function SearchInfo({helpButtonTypes, when})
+{
+  const types = (helpButtonTypes) => {
+    if (helpButtonTypes.length < 1)
+    {
+      return ''
+    }
+  
+    return helpButtonTypes.toString();
+  }
+  const whenText = (when) => {
+    if (when == 'any')
+    {
+      return '· Always'
+    }
+  
+    return '';
   }
 
-  return '...';
+  return <div className="header-search__info">{types(helpButtonTypes)} · {whenText(when)}</div>
 }
+
+

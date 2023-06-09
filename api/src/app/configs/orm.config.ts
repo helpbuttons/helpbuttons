@@ -15,8 +15,9 @@ export const dataSourceOptions:DataSourceOptions = {
     /* Note : it is unsafe to use synchronize: true for schema synchronization
     on production once you get data in your database. */
     // synchronize: true,
+    // https://github.com/typeorm/typeorm/issues/3388#issuecomment-673242516
     extra: {
-        query_timeout: 2500
+        max: 10,
+        connectionTimeoutMillis: 2000,
     },
-    maxQueryExecutionTime: 3000
 }

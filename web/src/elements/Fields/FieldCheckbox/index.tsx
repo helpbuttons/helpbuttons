@@ -4,15 +4,16 @@ import FieldError from "../FieldError";
 
 export default function FieldCheckbox({
     label,
-    value,
-    handleChange,
-    name,
+    explain,
+    children,
     validationError
 }) {
     return (
         <div className="form__field">
-        <label className="label">{label}</label>
-            <CheckBox icon="cross" name={name} value={value} handleChange={handleChange}/>
+            <p className="form__label">{label}</p>
+            <p className="form__explain">{explain}</p>
+            <div>{children}</div>
+            {/* <CheckBox icon="cross" name={name} value={value} handleChange={handleChange}/> */}
             <FieldError validationError={validationError}/>
         </div>
         

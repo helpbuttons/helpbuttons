@@ -23,22 +23,16 @@ export default function HexagonExploreMap({
   setHexagonsToFetch,
   setHexagonClicked,
   hexagonClicked,
-  isFetchingHexagons,
+  isRedrawingMap,
+  filters,
 }) {
   const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
-  const [boundsFeatures, setBoundsFeatures] = useState([]);
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([]);
 
   const onBoundsChanged = ({ center, zoom, bounds }) => {
     handleBoundsChange(bounds, center, zoom);
-
     setCenterBounds(center);
-  };
-
-  const handleMapClicked = ({ event, latLng, pixel }) => {
-    setMapCenter(latLng);
-    store.emit(new updateCurrentButton(null));
   };
 
   const selectedNetwork = useRef(
@@ -54,48 +48,14 @@ export default function HexagonExploreMap({
     setHexagonClicked(() => null); // unselect all hexagons
 
     if (exploreSettings.bounds) {
-      if (exploreSettings.zoom > exploreSettings.prevZoom) {
-        // TODO: zooming in.. should not fetch from database..
-        // this is not affecting the filtered buttons... so it won't update to new resolution.. how do it update resolution?
-        // wont update filteredButtons, resolution will change
-        // change hexagons to children
-        const boundsHexes = convertBoundsToGeoJsonHexagons(
-          exploreSettings.bounds,
-          getResolution(exploreSettings.zoom),
-        );
-        setHexagonsToFetch({
-          resolution: getResolution(exploreSettings.zoom),
-          hexagons: boundsHexes,
-        });
-      } else if (exploreSettings.zoom < exploreSettings.prevZoom) {
-        // zooming out..
-        // request more buttons .. useEffect filteredButtons will create new density map!
-
-        // getButtonsForBounds(exploreSettings.bounds)
-        // will update filteredButtons, resolution will change
-        const boundsHexes = convertBoundsToGeoJsonHexagons(
-          exploreSettings.bounds,
-          getResolution(exploreSettings.zoom),
-        );
-        setHexagonsToFetch({
-          resolution: getResolution(exploreSettings.zoom),
-          hexagons: boundsHexes,
-        });
-        // TODO: for new hexagons... subtract already cache hexagons
-      } else {
-        // panning,
-        // TODO should only fetch new hexagons.
-        // will update filteredButtons, but resolution won't change, where do I draw the hexagons?
-        // getButtonsForBounds(exploreSettings.bounds)
-        const boundsHexes = convertBoundsToGeoJsonHexagons(
-          exploreSettings.bounds,
-          getResolution(exploreSettings.zoom),
-        );
-        setHexagonsToFetch({
-          resolution: getResolution(exploreSettings.zoom),
-          hexagons: boundsHexes,
-        }); // hexagons missing
-      }
+      const boundsHexes = convertBoundsToGeoJsonHexagons(
+        exploreSettings.bounds,
+        getResolution(exploreSettings.zoom),
+      );
+      setHexagonsToFetch({
+        resolution: getResolution(exploreSettings.zoom),
+        hexagons: boundsHexes,
+      });
     }
   }, [exploreSettings]);
 
@@ -116,7 +76,6 @@ export default function HexagonExploreMap({
         mapCenter={exploreSettings.center}
         mapZoom={exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
-        handleMapClick={handleMapClicked}
         tileType={exploreSettings.tileType}
       >
         {selectedNetwork && (
@@ -185,44 +144,61 @@ export default function HexagonExploreMap({
               }}
             />
           ))}
-          {!isFetchingHexagons && hexagonClicked && (
+          {!isRedrawingMap && hexagonClicked && (
             <GeoJsonFeature
               feature={hexagonClicked}
-              key="clicked"
+              key={`clicked_${hexagonClicked.properties.hex}`}
               styleCallback={(feature, hover) => {
                 return { fill: 'white' };
+              }}
+              onClick={() => {
+                setHexagonClicked(() => null);
               }}
             />
           )}
         </GeoJson>
-        {!isFetchingHexagons && hexagonClicked && (
+        {!isRedrawingMap && hexagonClicked && (
           <Overlay
             anchor={hexagonClicked.properties.center}
             offset={[20, 0]}
-            className='pigeon-map__custom-block'
+            className="pigeon-map__custom-block"
             key={hexagonClicked.properties.hex}
           >
-            <div className='pigeon-map__hex-wrap'>
+            <div className="pigeon-map__hex-wrap">
               {hexagonClicked.properties.groupByType.map(
                 (hexagonBtnType, idx) => {
+                  if (hexagonBtnType.count < 1) {
+                    return;
+                  }
+                  if (
+                    !(
+                      filters.helpButtonTypes.indexOf(
+                        hexagonBtnType.type,
+                      ) > -1
+                    )
+                  ) {
+                    return;
+                  }
                   const btnType = buttonTypes.find((type) => {
                     return type.name == hexagonBtnType.type;
                   });
                   return (
-                    <span className="pigeon-map__hex-element"
+                    <span
+                      className="pigeon-map__hex-element"
                       style={{
                         color: btnType.cssColor,
                         fontWeight: 'bold',
                       }}
                     >
-                      <div className="pigeon-map__hex-info"
+                      <div
+                        className="pigeon-map__hex-info"
                         key={idx}
                         style={buttonColorStyle(btnType.cssColor)}
                       >
-                          <div className="btn-filter__icon pigeon-map__hex-info--icon"></div>
-                          <div className="pigeon-map__hex-info--text" >
-                            {hexagonClicked.properties.count.toString()}
-                          </div>
+                        <div className="btn-filter__icon pigeon-map__hex-info--icon"></div>
+                        <div className="pigeon-map__hex-info--text">
+                          {hexagonBtnType.count.toString()}
+                        </div>
                       </div>
                     </span>
                   );
@@ -231,7 +207,7 @@ export default function HexagonExploreMap({
             </div>
           </Overlay>
         )}
-        {isFetchingHexagons && (
+        {isRedrawingMap && (
           <Overlay anchor={centerBounds}>
             <Loading />
           </Overlay>

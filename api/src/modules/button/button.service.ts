@@ -199,7 +199,7 @@ export class ButtonService {
         .createQueryBuilder('button')
         .select('id')
         .where(`h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons)`,{ hexagons:hexagons })
-        .limit(1000)
+        .limit(10000)
         .execute();
         const buttonsIds = buttonsOnHexagons.map((button) => button.id);
 
