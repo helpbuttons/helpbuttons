@@ -117,6 +117,7 @@ function NetworkForm({
               caption={captionAction}
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}
+              submit={true}
             />
           </div>
         </div>

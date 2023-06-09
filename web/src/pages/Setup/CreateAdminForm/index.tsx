@@ -93,6 +93,7 @@ function CreateAdminForm() {
           </div>
           <div className="form__btn-wrapper">
             <Btn
+              submit={true}
               btnType={BtnType.splitIcon}
               caption={t('common.next')}
               contentAlignment={ContentAlignment.center}

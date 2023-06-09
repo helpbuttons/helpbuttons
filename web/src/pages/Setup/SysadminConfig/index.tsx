@@ -190,6 +190,7 @@ export default function SysadminConfig() {
                 onClick={handleSubmit(onSmtpTest)}
               />
               <Btn
+                submit={true}
                 btnType={BtnType.splitIcon}
                 caption={t('setup.connect-db-save-config')}
                 contentAlignment={ContentAlignment.center}

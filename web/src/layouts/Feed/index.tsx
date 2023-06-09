@@ -122,6 +122,7 @@ export default function Feed({ button }: { button: Button }) {
                                   : ''}
                               </a>
                               <Btn
+                                submit={true}
                                 btnType={BtnType.corporative}
                                 caption={t('post.newComment')}
                                 contentAlignment={ContentAlignment.center}

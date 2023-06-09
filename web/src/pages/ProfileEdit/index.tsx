@@ -200,6 +200,7 @@ export default function ProfileEdit() {
                     </>
                   )}
                   <Btn
+                    submit={true}
                     btnType={BtnType.splitIcon}
                     caption={t('common.save')}
                     contentAlignment={ContentAlignment.center}

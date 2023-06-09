@@ -46,6 +46,7 @@ function FirstOpen() {
                 
               </div>
               <Btn
+                submit={true}
                 btnType={BtnType.splitIcon}
                 caption={t('common.next')}
                 contentAlignment={ContentAlignment.center}
