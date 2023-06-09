@@ -22,12 +22,7 @@ export default function AdvancedFilters({
   mapBounds,
   filters,
   setFilters,
-}: {
-  toggleShowFiltersForm: any;
-  mapZoom: number;
-  mapBounds: Bounds;
-  filters: ButtonFilters;
-  setFilters: any;
+  showFiltersForm
 }) {
   const {
     handleSubmit,
@@ -47,37 +42,37 @@ export default function AdvancedFilters({
     },
   });
 
-  const [selectedTypes, setSelectedTypes] = useState(filters.helpButtonTypes);
   const clearFilters = (e) => {
     e.preventDefault();
-    setValue('query', '')
+    // setValue('query', '')
 
     toggleShowFiltersForm(false);
   };
   const onSubmit = (data) => {
-    let filters = defaultFilters;
+    let newFilters = {...filters, initialized: true};
     if (data.query) {
-      filters.query = data.query;
+      newFilters.query = data.query;
     } else {
-      filters.query = '';
+      newFilters.query = '';
     }
 
-    filters.helpButtonTypes = selectedTypes;
+    newFilters.helpButtonTypes = data.helpButtonTypes;
 
     if (data.place) {
-      filters.where = {
+      newFilters.where = {
         address: data.place.address,
         center: data.place.center,
         radius: data.place.radius,
       };
     }
-    setFilters(() => filters);
+    setFilters(() => newFilters);
     toggleShowFiltersForm(false);
   };
 
   const address = watch('place.address');
   const center = watch('place.center');
   const radius = watch('place.radius');
+  const helpButtonTypes = watch('helpButtonTypes')
 
   const handleSelectedPlace = (place) => {
     setValue('place.address', place.formatted);
@@ -93,17 +88,19 @@ export default function AdvancedFilters({
       );
 
   const setButtonTypeValue = (name, value) => {
-    setSelectedTypes((prevValues) => {
-      if (value)
+    if (value)
       {
-        return uniqueArray([...prevValues, name]);  
+        setValue('helpButtonTypes', uniqueArray([...helpButtonTypes, name]))
+        return;
       }
-      return uniqueArray(prevValues.filter((prevValue) => prevValue != name));
-    });
+      setValue('helpButtonTypes', uniqueArray(helpButtonTypes.filter((prevValue) => prevValue != name)))
   };
 
   return (
     <>
+    {showFiltersForm &&
+
+    
       <div className="filters__container">
         <Form
           classNameExtra="filters--vertical"
@@ -127,7 +124,7 @@ export default function AdvancedFilters({
                 <div style={buttonColorStyle(buttonType.cssColor)}>
                   <CheckBox
                     defaultValue={
-                      filters.helpButtonTypes.indexOf(
+                      helpButtonTypes.indexOf(
                         buttonType.name,
                       ) > -1
                     }
@@ -195,6 +192,7 @@ export default function AdvancedFilters({
           </div>
         </Form>
       </div>
+      }
     </>
   );
 }

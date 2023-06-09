@@ -15,7 +15,6 @@ import {
   localStorageService,
 } from 'services/LocalStorage';
 import HexagonExploreMap from 'components/map/Map/HexagonExploreMap';
-import { cellToLatLng } from 'h3-js';
 import {
   calculateDensityMap,
   getResolution,
@@ -51,6 +50,8 @@ function HoneyComb({ router }) {
 
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
+  const [filters, setFilters] =
+  useState(defaultFilters);
 
   const {
     setMapCenter,
@@ -60,7 +61,6 @@ function HoneyComb({ router }) {
   } = useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm });
 
   const {
-    filters,
     listButtons,
     h3TypeDensityHexes,
     handleBoundsChange,
@@ -68,11 +68,11 @@ function HoneyComb({ router }) {
     setHexagonClicked,
     hexagonClicked,
     isRedrawingMap,
-    setFilters,
   } = useHexagonMap({
     setExploreSettings,
     toggleShowLeftColumn,
     exploreSettings,
+    filters,
   });
 
   const handleSelectedPlace = (place) => {
@@ -95,21 +95,20 @@ function HoneyComb({ router }) {
                   toggleShowFiltersForm={toggleShowFiltersForm}
                   filters={{ ...filters, count: listButtons.length }}
                 />
-                 {!showFiltersForm ? (
-                <List
+                <List  
+                  showFiltersForm={showFiltersForm}
                   buttons={listButtons}
                   showLeftColumn={showLeftColumn}
                   onLeftColumnToggle={toggleShowLeftColumn}
                 />
-                ) : (
                   <AdvancedFilters
+                    showFiltersForm={showFiltersForm}
                     toggleShowFiltersForm={toggleShowFiltersForm}
                     mapZoom={exploreSettings.zoom}
                     mapBounds={exploreSettings.bounds}
                     setFilters={setFilters}
                     filters={filters}
                   />
-                )}
               </div>
               <LoadabledComponent loading={exploreSettings.loading}>
                 <HexagonExploreMap
@@ -223,7 +222,6 @@ function useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm }) 
   }, [router, selectedNetwork]);
 
   useEffect(() => {
-    
     if (!exploreSettings.loading) {
       urlParams.append('zoom', exploreSettings.zoom)
       urlParams.append('lat', exploreSettings.center[0])
@@ -251,6 +249,7 @@ function useHexagonMap({
   setExploreSettings,
   toggleShowLeftColumn,
   exploreSettings,
+  filters,
 }) {
   const [hexagonClicked, setHexagonClicked] = useState(null);
   const debouncedHexagonClicked = useDebounce(hexagonClicked, 70);
@@ -264,8 +263,6 @@ function useHexagonMap({
   const [fullMapfilteredButtons, setFullMapFilteredButtons] =
     useState([]);
   const [listButtons, setListButtons] = useState([]);
-  const [filters, setFilters] =
-    useState<ButtonFilters>(defaultFilters);
   const [densityMapNeedsUpdate, setDensityMapNeedsUpdate] =
     useToggle(true);
 
@@ -319,7 +316,6 @@ function useHexagonMap({
                 getResolution(exploreSettings.zoom),
                 hexesToFetch,
               );
-
               recalculateCacheH3Hexes(newDensityMapHexagons);
               setDensityMapNeedsUpdate(() => true);
             },
@@ -342,7 +338,6 @@ function useHexagonMap({
         (hexagon) => hexagon == cachedHex.hexagon,
       );
     });
-
     const { filteredButtons, filteredHexagons } = applyFilters(
       filters,
       mapHexagons,
@@ -451,7 +446,6 @@ function useHexagonMap({
   }, [debouncedHexagonClicked]);
 
   return {
-    filters,
     listButtons,
     h3TypeDensityHexes,
     handleBoundsChange,
@@ -459,6 +453,5 @@ function useHexagonMap({
     setHexagonClicked,
     hexagonClicked,
     isRedrawingMap,
-    setFilters,
   };
 }

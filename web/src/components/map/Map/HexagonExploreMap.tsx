@@ -173,12 +173,16 @@ export default function HexagonExploreMap({
             <div className="pigeon-map__hex-wrap">
               {hexagonClicked.properties.groupByType.map(
                 (hexagonBtnType, idx) => {
-                  if(hexagonBtnType.count < 1)
-                  {
-                    return ;
+                  if (hexagonBtnType.count < 1) {
+                    return;
                   }
-                  if(!(filters.helpButtonTypes.indexOf(hexagonBtnType.type) > -1))
-                  {
+                  if (
+                    !(
+                      filters.helpButtonTypes.indexOf(
+                        hexagonBtnType.type,
+                      ) > -1
+                    )
+                  ) {
                     return;
                   }
                   const btnType = buttonTypes.find((type) => {

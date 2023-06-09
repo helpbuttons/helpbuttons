@@ -10,5 +10,5 @@ export interface ButtonFilters {
   export const defaultFilters: ButtonFilters = {
     helpButtonTypes: buttonTypes.map(btnType => btnType.name),
     query: '',
-    where: { address: null, center: null, radius: null },
+    where: { address: null, center: null, radius: 10 },
   };
