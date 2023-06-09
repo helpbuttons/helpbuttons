@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 //components
-import { FindButtons } from 'state/Explore';
+import { FindButtons, updateFilters } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -48,10 +48,19 @@ function HoneyComb({ router }) {
     (state: GlobalState) => state.networks.selectedNetwork,
   );
 
+  const filters = useRef(
+    store,
+    (state: GlobalState) => state.explore.filters,
+  );
+  console.log(filters)
+  const setFilters = (newFilters) => {
+    store.emit(new updateFilters(newFilters));
+  }
+
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
-  const [filters, setFilters] =
-  useState<ButtonFilters>(defaultFilters);
+  // const [filters, setFilters] =
+  // useState<ButtonFilters>(defaultFilters);
 
   const {
     setMapCenter,
@@ -77,14 +86,14 @@ function HoneyComb({ router }) {
 
   useEffect(() => {
     
-    if (filters.where.center){
+    if (filters && filters.where.center){
       setExploreSettings((prevExploreSettings) => {return {...prevExploreSettings, center: filters.where.center}});
     }
   }, [filters])
 
   return (
-    <>
       <>
+      <LoadabledComponent loading={!filters}>
         <div className="index__container">
             <>
               <div
@@ -129,8 +138,8 @@ function HoneyComb({ router }) {
             </>
           
         </div>
+        </LoadabledComponent>
       </>
-    </>
   );
 }
 
