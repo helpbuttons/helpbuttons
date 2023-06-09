@@ -52,7 +52,6 @@ function HoneyComb({ router }) {
     store,
     (state: GlobalState) => state.explore.filters,
   );
-  console.log(filters)
   const setFilters = (newFilters) => {
     store.emit(new updateFilters(newFilters));
   }
@@ -334,6 +333,7 @@ function useHexagonMap({
               // setFetchedButtons([]);
               console.log('THERE WAS A HARD CORE ERROR');
               console.error(error);
+              setIsRedrawingMap(() => false);
             },
           ),
         );
