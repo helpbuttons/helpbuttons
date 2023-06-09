@@ -95,6 +95,7 @@ export default function Signup() {
           )}
           <div className="form__btn-wrapper">
             <Btn
+              submit={true}
               btnType={BtnType.splitIcon}
               caption="REGISTER"
               contentAlignment={ContentAlignment.center}
