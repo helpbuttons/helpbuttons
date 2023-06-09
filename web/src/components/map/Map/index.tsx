@@ -9,7 +9,7 @@ import {
 
 interface HbMapProps {
   center: Point, 
-  zoom: number,
+  defaultZoom: number,
   onBoundsChanged: ({ center, zoom, bounds, initial }: { center: any; zoom: any; bounds: any; initial: any; }) => void,
   zoomSnap: boolean,
   onClick: ({ event, latLng, pixel }) => void,
@@ -38,7 +38,7 @@ export function HbMap({
   const [mapProps, setMapProps] = useState(() => {
     let mapProps: HbMapProps = {
       center: mapCenter, 
-      zoom: mapZoom,
+      defaultZoom: mapZoom,
       onBoundsChanged: ({ center, zoom, bounds, initial }) => {
         onBoundsChanged({
           center: roundCoords(center),
