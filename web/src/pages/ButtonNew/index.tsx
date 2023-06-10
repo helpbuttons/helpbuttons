@@ -59,10 +59,7 @@ export default function ButtonNew() {
   };
 
   const onSuccess = (location: { lat: number; lng: number }) => {
-    router.push({
-      pathname: '/Explore',
-      query: location,
-    });
+    router.push(`/Explore#?lat=${location.lat}&lng=${location.lng}`);
   };
   const onError = (err) => {
     if (err.errorName == ErrorName.NeedToBeRegistered) {
