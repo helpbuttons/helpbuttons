@@ -161,7 +161,7 @@ export default function AdvancedFilters({
             <label className="form__label">
             {t('buttonFilters.distance')} ({radius} km)
             </label>
-            <div style={{ backgroundColor: 'black' }}>
+            <div style={{ padding: '1rem' }}>
               <Slider
                 min={1}
                 max={300}
@@ -172,9 +172,6 @@ export default function AdvancedFilters({
               />
             </div>
           </div>
-
-          <hr></hr>
-
           <div className="filters__actions">
             <Btn
               btnType={BtnType.link}

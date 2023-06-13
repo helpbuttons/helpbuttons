@@ -27,8 +27,6 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 
 .info-overlay__content {
 
-  display: grid;
-  grid-template-rows:auto 1fr auto;
   @extend .form__field;
   margin: auto;
   font-family: inherit;
@@ -194,6 +192,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   .info-overlay__content {
 
     padding-bottom: 0px;
+    height: 100vh;
 
   }
 
