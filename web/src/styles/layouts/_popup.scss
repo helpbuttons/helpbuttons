@@ -27,6 +27,7 @@ body {
   background: $color-white;
   box-shadow: unset;
   padding: 0;
+  z-index: $z-index-04;
 
   // Header Top Content Bottom
   display: flex;
@@ -121,10 +122,10 @@ body {
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  margin-bottom: $footer-height-mobile;
   // border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;//REVISE
   display: flex;
   flex-direction: column;
+  padding-bottom: 4rem;
   justify-content: space-between;
 
 }
@@ -132,7 +133,6 @@ body {
 .popup__section {
 
   padding: 1rem 1rem;
-  padding-bottom: 300px;
 }
 
 .popup__img {

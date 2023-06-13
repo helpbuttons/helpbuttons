@@ -32,6 +32,15 @@
     "emptyList": "Please browse the map and touch to find more buttons",
     "createEmpty": "Create mine"
   },
+  "buttonFilters": {
+    "queryLabel": "What do you search",
+    "queryExplain": "Write whatever you want to find",
+    "queryPlaceHolder": "Friends, food, toys, clothes,...",
+    "where": "Where",
+    "whereExplain": "Search the place where you want to go",
+    "distance": "Search Distance"
+
+  },
   "setup": {
     "hostname": "Hostname",
     "postgresUser": "Postgresql user",

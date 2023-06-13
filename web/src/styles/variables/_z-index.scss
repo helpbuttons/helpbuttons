@@ -1,9 +1,9 @@
 // z-index
 
-$z-index-base: 10;
+$z-index-base: 10; /// under everything
 $z-index-01: 100;
 $z-index-02: 200;
-$z-index-03: 300;
-$z-index-04: 400;
-$z-index-05: 500;
-$z-index-06: 600;
+$z-index-03: 300; // navigation menus
+$z-index-04: 400; /// popups, navigation menus
+$z-index-05: 500; //data pickers menuselects
+$z-index-06: 600; ///over everything, just loaders, alerts messages

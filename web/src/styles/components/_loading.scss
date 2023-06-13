@@ -9,7 +9,7 @@
     border-top-color: yellow;
     animation: spin 1s ease-in-out infinite;
     -webkit-animation: spin 1s ease-in-out infinite;
-    z-index: 1500;
+    z-index: $z-index-06;
     // position: absolute;
     left: 0;
     top: 220px;

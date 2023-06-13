@@ -2,7 +2,7 @@
 export default function Form({children, onSubmit, classNameExtra}
 ) {
     return (
-        <form onSubmit={onSubmit} className={`${classNameExtra} popup__section`}>
+        <form onSubmit={onSubmit} className={`${classNameExtra}`}>
             {children}
         </form>
     );
