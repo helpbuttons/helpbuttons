@@ -12,8 +12,6 @@ export default function Faqs() {
     <>
       <Popup title="Faqs" linkFwd="/Explore">
 
-        <div className="popup__section">
-
         <Accordion title="What's <Instance name>">
           Here would come the description of your <span class="highlight">Network instance</span>.
         </Accordion>
@@ -88,8 +86,6 @@ export default function Faqs() {
         <Accordion title="Contact">
           Please direct your questions to the following email: help@helpbuttons.org
         </Accordion>
-
-        </div>
 
       </Popup>
 

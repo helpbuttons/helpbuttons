@@ -24,7 +24,7 @@ $filters-padding: 10px;
   top: 0;
   display: flex;
   flex-direction: column;
-  background: $color-ligth-gray;
+  background: $color-corporative;
   overflow-y: scroll;
   padding: $padding-big $padding-big 200px $padding-big;
   z-index: $z-index-06;
@@ -41,7 +41,7 @@ $filters-padding: 10px;
   border-top: 1px dashed $color-gray-border ;
   justify-content: space-between;
   flex-direction: row !important;
-  background-color: $color-ligth-gray;
+  background-color: $color-corporative;
   padding: $padding-medium $padding-medium;
 
   .btn {

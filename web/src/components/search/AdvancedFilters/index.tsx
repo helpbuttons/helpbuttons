@@ -115,9 +115,9 @@ export default function AdvancedFilters({
           />
 
           <FieldCheckbox
-            label={'Tipos de botón'}
+            label={'Button types'}
             validationError={null}
-            explain={'Filtra los resultados por tipo'}
+            explain={'Filter results by type'}
           >
             {buttonTypes.map((buttonType) => {
               return (
@@ -143,7 +143,7 @@ export default function AdvancedFilters({
             })}
           </FieldCheckbox>
           <div className="form__field">
-            <label className="form__label label">
+            <label className="form__label">
               {t('buttonFilters.where')}
               {address && center && (
                 <>
@@ -158,8 +158,8 @@ export default function AdvancedFilters({
           </div>
 
           <div className="form__field">
-            <label className="form__label label">
-            {t('buttonFilters.where')} ({radius} km)
+            <label className="form__label">
+            {t('buttonFilters.distance')} ({radius} km)
             </label>
             <div style={{ backgroundColor: 'black' }}>
               <Slider
