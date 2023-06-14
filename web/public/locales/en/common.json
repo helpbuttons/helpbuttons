@@ -141,7 +141,7 @@
     "comment": "comment",
     "newComment": "Comment",
     "write": "Post a new update",
-    "placeholderWrite": "what are you thinking?"
+    "placeholderWrite": "Write a new update for your button"
   },
   "configuration": {
     "title": "Administrator settings",

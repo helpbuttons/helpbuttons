@@ -44,7 +44,6 @@ export default function PostNew({ buttonId, reloadPosts }) {
             <div className="feeds__new-message-message">
               <FieldText
                 name="title"
-                label={t('post.write')}
                 placeholder={t('post.placeholderWrite')}
                 validationError={errors.title}
                 watch={watch}

@@ -7,17 +7,17 @@ import ImageUploading from 'react-images-uploading';
 import FieldError from '../FieldError';
 import t from 'i18n';
 
-export const FieldImageUpload = React.forwardRef(({ name, label, width = 100, height = 100, alt = "", validationError, control, setValue}, ref) => {
+export const FieldImageUpload = React.forwardRef(({ name, label, width = 100, height = 100, alt = "", validationError, control, setValue }, ref) => {
 
   const [image, setImage] = useState(null)
   const onChange = (imageList, addUpdateIndex) => {
     setImage(imageList[0].data_url)
-    if(imageList.length > 0) {
+    if (imageList.length > 0) {
       setValue(name, imageList[0].data_url)
     }
   };
 
-  const value = useWatch({control, name: name});
+  const value = useWatch({ control, name: name });
 
   useEffect(() => {
     if (value) {
@@ -35,7 +35,7 @@ export const FieldImageUpload = React.forwardRef(({ name, label, width = 100, he
         >
           {({ onImageUpload, onImageRemove }) => (
             // write your building UI
-            <div className="upload__image-wrapper">
+            <div className="form__image-upload-wrapper">
               <label
                 htmlFor="files"
                 className="btn"
@@ -55,8 +55,9 @@ export const FieldImageUpload = React.forwardRef(({ name, label, width = 100, he
                     width={width}
                     height={height}
                   />
-                  <div className="image-item__btn-wrapper">
+                  <div className="">
                     <button
+                      className='form__image-upload--remove-icon-btn'
                       onClick={(e) => {
                         e.preventDefault();
                         onImageRemove(0);
@@ -70,8 +71,8 @@ export const FieldImageUpload = React.forwardRef(({ name, label, width = 100, he
             </div>
           )}
         </ImageUploading>
-        {validationError && 
-         <FieldError validationError={validationError} />
+        {validationError &&
+          <FieldError validationError={validationError} />
         }
       </div>
     </>

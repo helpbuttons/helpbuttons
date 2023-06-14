@@ -16,6 +16,8 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import Form from 'elements/Form';
+import FormSubmit from 'elements/Form/FormSubmit';
+
 import { NavigateTo } from 'state/Routes';
 import { useRouter } from 'next/router';
 import NewUserFields, {
@@ -105,7 +107,6 @@ export default function ProfileEdit() {
             >
               <div>{t('user.editProfile')} </div>
               {loggedInUser.username}@{getHostname()}
-              <div className="login__form">
                 <div className="form__inputs-wrapper">
                   <FieldText
                     name="name"
@@ -152,62 +153,57 @@ export default function ProfileEdit() {
                   </div>
                 )}
 
-
-
-                <div className="form__btn-wrapper">
                 <div
-                    className="btn"
+                    className="btn accordion"
                     onClick={() =>
                       setSetNewPassword(!setNewPassword)
                     }                    
                   >
                     {!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
                     
-                  </div>
-                {setNewPassword && (
-                    <>
-                      <FieldPassword
-                        name="password_current"
-                        label={t('user.password')}
-                        classNameInput="squared"
-                        placeholder={t('user.passwordPlaceHolder')}
-                        validationError={errors.password}
-                        {...register('password_current', {
-                          minLength: 8,
-                        })}
-                      ></FieldPassword>
-
-                      <FieldPassword
-                        name="password_new"
-                        label={t('user.newPassword')}
-                        classNameInput="squared"
-                        placeholder={t('user.newPasswordPlaceHolder')}
-                        validationError={errors.password}
-                        {...register('password_new', {
-                          minLength: 8,
-                        })}
-                      ></FieldPassword>
-                       <FieldPassword
-                        name="password_new_confirm"
-                        label={t('user.passwordPlaceHolder')}
-                        classNameInput="squared"
-                        placeholder={t('user.passwordConfirmationPlaceHolder')}
-                        validationError={errors.password}
-                        {...register('password_new_confirm', {
-                          minLength: 8,
-                        })}
-                      ></FieldPassword>
-                    </>
-                  )}
-                  <Btn
-                    submit={true}
-                    btnType={BtnType.splitIcon}
-                    caption={t('common.save')}
-                    contentAlignment={ContentAlignment.center}
-                    isSubmitting={isSubmitting}
-                  />
                 </div>
-              </div>
+                  {setNewPassword && (
+                      <>
+                        <FieldPassword
+                          name="password_current"
+                          label={t('user.password')}
+                          classNameInput="squared"
+                          placeholder={t('user.passwordPlaceHolder')}
+                          validationError={errors.password}
+                          {...register('password_current', {
+                            minLength: 8,
+                          })}
+                        ></FieldPassword>
+
+                        <FieldPassword
+                          name="password_new"
+                          label={t('user.newPassword')}
+                          classNameInput="squared"
+                          placeholder={t('user.newPasswordPlaceHolder')}
+                          validationError={errors.password}
+                          {...register('password_new', {
+                            minLength: 8,
+                          })}
+                        ></FieldPassword>
+                        <FieldPassword
+                          name="password_new_confirm"
+                          label={t('user.passwordPlaceHolder')}
+                          classNameInput="squared"
+                          placeholder={t('user.passwordConfirmationPlaceHolder')}
+                          validationError={errors.password}
+                          {...register('password_new_confirm', {
+                            minLength: 8,
+                          })}
+                        ></FieldPassword>
+                      </>
+                    )}
+                    <div className="publish__submit">
+                      <FormSubmit
+                        classNameExtra="create_btn"
+                        title={t('common.save')}
+                        isSubmitting={isSubmitting}
+                      />
+                    </div>
             </Form>
           </Popup>
         </>

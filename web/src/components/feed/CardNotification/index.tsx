@@ -56,7 +56,13 @@ export function Notification({
     (state: GlobalState) => state.networks.selectedNetwork,
   );
   return (
+ 
     <div className="card-notification card-notification">
+         <div className="card-notification__comment-count">
+          <div className='card-notification__label'>
+            <div className='hashtag hashtag--blue'>Notification</div>
+          </div>
+        </div>
         <div className="card-notification__content">
           <div className="card-notification__avatar">
             <div className="avatar-medium">
@@ -97,6 +103,11 @@ export function ButtonNotification({
   return (
     <>
       <a href={"/ButtonFile/"+button.id} className="card-notification card-notification">
+        <div className="card-notification__comment-count">
+          <div className='card-notification__label'>
+            <div className='hashtag hashtag--blue'>New Button</div>
+          </div>
+        </div>
         <div className="card-notification__content">
           <div className="card-notification__avatar">
             <div className="avatar-medium">
@@ -141,7 +152,12 @@ export function PostNotification({
   console.log(post)
   return (
     <>
-      <div className="card-notification card-notification">
+      <div className="card-notification">
+        <div className="card-notification__comment-count">
+          <div className='card-notification__label'>
+            <div className='hashtag hashtag--blue'>New Post</div>
+          </div>
+        </div>
         <div className="card-notification__content">
           <div className="card-notification__avatar">
             <div className="avatar-medium">
@@ -187,7 +203,12 @@ export function CommentNotification({
   console.log(comment)
   return (
     <>
-      <div className="card-notification card-notification">
+      <div className="card-notification">
+        <div className="card-notification__comment-count">
+          <div className='card-notification__label'>
+            <div className='hashtag hashtag--blue'>New comment</div>
+          </div>
+        </div>
         <div className="card-notification__content">
           <div className="card-notification__avatar">
             <div className="avatar-medium">

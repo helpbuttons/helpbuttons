@@ -325,6 +325,33 @@ $form-input-border-radius: $border-general-height;
 
 }
 
+.form__image-upload-wrapper {
+
+  @extend .form__field;
+
+}
+
+.form__image-upload {
+
+  height: 90px;
+  width: 90px;
+  margin: $margin-extra-small;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.form__image-upload--remove-icon {
+
+  position: absolute;
+  margin: auto;
+  height: 20px;
+  width: 20px;
+  top: -10px;
+  right: -10px;
+  
+}
 
 @media #{$breakpoints-medium} {
 
