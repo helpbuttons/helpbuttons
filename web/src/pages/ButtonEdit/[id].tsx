@@ -65,10 +65,7 @@ export default function ButtonEdit() {
   };
 
   const onSuccess = (location: {lat: number, lng: number}) => {
-    router.push({
-      pathname: '/Explore',
-      query: location,
-    });
+    router.push(`/Explore#?lat=${location.lat}&lng=${location.lng}`);
   };
 
   const onError = (errorMessage) => alertService.error(errorMessage.caption)
