@@ -3,6 +3,8 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import ImageUploading from 'react-images-uploading';
+import { IoChevronBackOutline } from "react-icons/io5";
+import { IoClose } from 'react-icons/io5';
 
 import FieldError from '../FieldError';
 import t from 'i18n';
@@ -47,27 +49,29 @@ export const FieldImageUpload = React.forwardRef(({ name, label, width = 100, he
               >
                 {label}
               </label>
-              {image && (
-                <>
-                  <ImageContainer
-                    src={image}
-                    alt={alt}
-                    width={width}
-                    height={height}
-                  />
-                  <div className="">
-                    <button
-                      className='form__image-upload--remove-icon-btn'
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onImageRemove(0);
-                      }}
-                    >
-                      {t('common.remove')}
-                    </button>
-                  </div>
-                </>
-              )}
+              <div className='form__image-upload-preview--wrap'>
+                {image && (
+                    <div className='form__image-upload-preview--file'>
+                        <div className='form__image-upload-preview--image'>
+                          <ImageContainer
+                            src={image}
+                            alt={alt}
+                            width={width}
+                            height={height}
+                          />
+                        </div>
+                      <button
+                        className='form__image-upload--remove-icon'
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onImageRemove(0);
+                        }}
+                      >
+                        <div className="btn-circle__icon"><IoClose/></div>
+                      </button>
+                    </div>
+                )}
+              </div>
             </div>
           )}
         </ImageUploading>

@@ -331,25 +331,57 @@ $form-input-border-radius: $border-general-height;
 
 }
 
-.form__image-upload {
+.form__image-upload-preview--wrap {
+
+  position: relative;
+  height: auto;
+  display: block;
+  margin: $margin-extra-small 0;
+
+}
+
+.form__image-upload-preview--image {
 
   height: 90px;
   width: 90px;
   margin: $margin-extra-small;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  border-radius: $border-radius-semicircle;
+
+  img {
+
+    height: 100%;
+    width: auto;
+
+  }
+
+}
+
+.form__image-upload-preview--file {
+
+  position: relative;
+  height: auto;
+  width: 90px;
 
 }
 
 .form__image-upload--remove-icon {
 
-  position: absolute;
+  @extend .btn-circle;
+
+  position: absolute !important;
   margin: auto;
   height: 20px;
+  padding: $padding-small;
   width: 20px;
-  top: -10px;
-  right: -10px;
+  bottom: 0;
+  right: 0;
+  bottom: -20px;
+  right: -20px;
   
 }
 
