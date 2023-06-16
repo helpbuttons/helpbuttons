@@ -109,6 +109,8 @@ export default function FieldLocation({
             defaultZoom={selectedNetwork.zoom}
             markerColor={markerColor ? markerColor : 'yellow'}
             markerPosition={markerPosition}
+            markerCaption={markerCaption}
+            markerImage={markerImage}
           />
           <Btn
             btnType={BtnType.submit}
