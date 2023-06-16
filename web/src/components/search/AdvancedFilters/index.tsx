@@ -44,12 +44,18 @@ export default function AdvancedFilters({
 
   const clearFilters = (e) => {
     e.preventDefault();
-    // setValue('query', '')
+    setValue('query', defaultFilters.query)
+    setValue('helpButtonTypes', defaultFilters.helpButtonTypes)
+    setValue('place.address', null)
+    setValue('place.center', null)
+    setValue('place.radius', defaultFilters.where.radius)
+    
+    setFilters(() => defaultFilters);
 
     toggleShowFiltersForm(false);
   };
   const onSubmit = (data) => {
-    let newFilters = {...filters, initialized: true};
+    let newFilters = {...filters};
     if (data.query) {
       newFilters.query = data.query;
     } else {
