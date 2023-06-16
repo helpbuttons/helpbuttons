@@ -63,10 +63,11 @@ export default function ButtonNew() {
   };
   const onError = (err) => {
     if (err.errorName == ErrorName.NeedToBeRegistered) {
+      store.emit(new SaveButtonDraft(getValues()));
       alertService.error(err.caption);
       Router.push({
-            pathname: '/Login',
-            query: { returnUrl: 'ButtonNew' },
+        pathname: '/Login',
+        query: { returnUrl: 'ButtonNew' },
       });
     }
   };

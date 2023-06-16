@@ -21,6 +21,8 @@ import { Network } from 'shared/entities/network.entity';
 import FieldDate from 'elements/Fields/FieldDate';
 import t from 'i18n';
 import { LoadabledComponent } from 'components/loading';
+import Router from 'next/router';
+import { SaveButtonDraft } from 'state/Explore';
 
 export default function ButtonForm({
   onSubmit,
@@ -56,6 +58,9 @@ export default function ButtonForm({
     if (buttonDraft) {
       reset(buttonDraft);
     }
+  }, [buttonDraft]);
+
+  useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       const values = getValues();
       if (
@@ -75,11 +80,15 @@ export default function ButtonForm({
       }
     });
     return () => subscription.unsubscribe();
-  }, [buttonDraft, watch]);
-
+  }, [watch]);
+  const closeClicked = () => {
+    store.emit(new SaveButtonDraft(getValues()));
+    Router.push('/Explore')
+  }
+  
   return (
     <LoadabledComponent loading={!selectedNetwork}>
-      <Popup title={title} linkFwd="/Explore">
+      <Popup title={title} onCloseClicked={closeClicked}>
         <Form
           onSubmit={handleSubmit(onSubmit)}
           classNameExtra="publish_btn"

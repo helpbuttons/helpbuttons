@@ -1,14 +1,18 @@
 ///Header for popups, with cclose option and optional other elements
 import { IoClose } from "react-icons/io5";
 import { Link } from 'elements/Link';
+import Router from 'next/router';
 
-interface PopupHeader {
-  children?: any,
-  linkBack?: string, 
-  linkFwd?: string
-}
 
-export default function PopupHeader({children, linkBack, linkFwd}: PopupHeader) {
+export default function PopupHeader({children, linkBack = null,linkFwd = null, onCloseClicked = () => {}}) {
+  const onCloseClick = () =>
+  {
+    if(linkFwd){
+      Router.push(linkFwd);
+    }else{
+      onCloseClicked();
+    }
+  }
   return (
 
     <>
@@ -29,12 +33,12 @@ export default function PopupHeader({children, linkBack, linkFwd}: PopupHeader) 
             </h1>
           </div>
           <div className="popup__header-right">
-            {linkFwd &&
-              <Link href={linkFwd} className="popup__header-button">
+            {(onCloseClicked || linkFwd) &&
+              <div onClick={onCloseClick} className="popup__header-button">
                 <div className="btn-circle__icon">
                   <IoClose />
                 </div>
-              </Link>
+              </div>
             }
           </div>
         </header>

@@ -28,7 +28,7 @@ interface ExploreMapProps {
   handleBoundsChange: Function;
 }
 export interface ExploreState {
-  draftButton: Button;
+  draftButton: any;
   mapCenter;
   mapZoom;
   currentButton: Button;
@@ -95,11 +95,11 @@ export class CreateButton implements WatchEvent {
 }
 
 export class SaveButtonDraft implements UpdateEvent {
-  public constructor(private button: Button) {}
+  public constructor(private buttonDraft) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.draftButton = this.button;
+      newState.explore.draftButton = this.buttonDraft;
     });
   }
 }
