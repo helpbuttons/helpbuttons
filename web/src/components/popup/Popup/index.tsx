@@ -4,11 +4,11 @@
 import PopupHeader from 'components/popup/PopupHeader';
 
 
-export default function Popup({children, title, linkFwd = null, ...props}) {
+export default function Popup({children, title, linkFwd = null,onCloseClicked = () => {}, ...props}) {
 
   return (
           <div className="popup">
-              <PopupHeader linkFwd={linkFwd}>{title}</PopupHeader>
+              <PopupHeader linkFwd={linkFwd} onCloseClicked={onCloseClicked}>{title}</PopupHeader>
               <div className="popup__content">
                     {children}
               </div>
