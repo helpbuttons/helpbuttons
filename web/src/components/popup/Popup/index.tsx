@@ -10,7 +10,9 @@ export default function Popup({children, title, linkFwd = null,onCloseClicked = 
           <div className="popup">
               <PopupHeader linkFwd={linkFwd} onCloseClicked={onCloseClicked}>{title}</PopupHeader>
               <div className="popup__content">
+                <div className="popup__section">
                     {children}
+                </div>
               </div>
           </div>
   );

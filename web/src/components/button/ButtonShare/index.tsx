@@ -17,7 +17,7 @@ export default function ButtonShare() {
 
     {showHideMenu &&
 
-        <div className="popup__section">
+        <div className="">
 
 
                 <p className="popup__paragraph">

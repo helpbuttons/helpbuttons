@@ -70,15 +70,16 @@ export default function HomeInfo() {
     <>
     {selectedNetwork && (
       <div style={{ "--network-jumbo": `url('/api/${selectedNetwork.jumbo}'` } as React.CSSProperties}>
+    <form className="info-overlay__search-section">
+        <NavHeader
+            toggleShowFiltersForm={() => {}}
+            filters={filters}
+            isHome={true}
+          />
+    </form>
     <div className="info-overlay__container">
       <div className="info-overlay__content">
-        <form className="info-overlay__search-section">
-            <NavHeader
-                toggleShowFiltersForm={() => {}}
-                filters={filters}
-                isHome={true}
-              />
-        </form>
+
         {selectedNetworkLoading && (
           <>
             <div className="info-overlay__card">{t('homeinfo.loading')}</div>

@@ -3,6 +3,7 @@ $feed-color-gray-border: $color-gray-border;
 $feed-post-color: $color-gray;
 $feed-padding-card: $padding-small;
 $feed-padding: $padding-big;
+$feed-padding-top: 5.5rem;
 $feed-height: 58px;
 $feed-selector-height: 5.3rem;
 $feed-color-corporative: $color-corporative;
@@ -90,10 +91,16 @@ $feed-new-message-radius: $border-radius-circle;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: end;
   flex-direction: row;
   background-color: $color-white;
   padding: $feed-padding;
+
+  button {
+
+    margin: $margin-extra-small 0;
+
+  }
 
 }
 
@@ -132,6 +139,9 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-container{
   background: lightgrey;
+  padding-top: $feed-padding-top;
+  min-height: 100%;
+  height: auto;
 }
 
 .feed-element{
@@ -149,7 +159,7 @@ $feed-new-message-radius: $border-radius-circle;
 @media #{$breakpoints-xlarge} {
 
   .feed-selector--activity {
-    max-width: 200px;
+    
   }
 
 }

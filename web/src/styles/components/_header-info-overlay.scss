@@ -27,8 +27,6 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 
 .info-overlay__content {
 
-  display: grid;
-  grid-template-rows:auto 1fr auto;
   @extend .form__field;
   margin: auto;
   font-family: inherit;
@@ -37,8 +35,9 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   min-width: fit-content;
   background-color: transparent;
   width: 100%;
-  height: 100%;
+  height: auto;
   box-sizing: border-box;
+  margin-top: $margin-small;
   margin-bottom: $info-content-mobile-bottom-padding;
 
  }
@@ -193,6 +192,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   .info-overlay__content {
 
     padding-bottom: 0px;
+    height: 100vh;
 
   }
 
