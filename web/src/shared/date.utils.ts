@@ -12,6 +12,7 @@ export function readableTimeLeftToDate(date: Date) {
   if(typeof date !== typeof Date) {
     date = new Date(date)
   }
+
   // in miliseconds
   var units = {
     year: 24 * 60 * 60 * 1000 * 365,
@@ -32,10 +33,17 @@ export function readableTimeLeftToDate(date: Date) {
     // "Math.abs" accounts for both "past" & "future" scenarios
     for (var u in units)
       if (Math.abs(elapsed) > units[u] || u == 'second')
+      {
         return rtf.format(Math.round(elapsed / units[u]), u);
+      }
+        
   };
 
-  return getRelativeTime(date);
+  const timeZoneOffset = new Date().getTimezoneOffset();
+  let utcDate = new Date(date);
+  utcDate.setMinutes(utcDate.getMinutes() - timeZoneOffset);
+
+  return getRelativeTime(utcDate);
 }
 
 export function readableDate(date: Date) {
@@ -51,18 +59,3 @@ export function readableDate(date: Date) {
     minute: 'numeric',
   });
 }
-
-
-// export const dateToApi = (dates, type) => {
-//   return JSON.stringify(
-//     {
-//       type: type,
-//       dates: dates
-//     }
-//   )
-// }
-
-
-// export const dateFromApi = (date) => {
-  
-// }

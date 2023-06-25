@@ -10,35 +10,34 @@ import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
+import { Post } from 'shared/entities/post.entity';
 import { LoadPosts } from 'state/Posts';
 import { useRef } from 'store/Store';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
-  const [showNewCommentDialog, setShowNewCommentDialog] =
-    useState(false);
-  const [showComments, setShowComments] = useState(false);
 
   const loggedInUser = useRef(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
 
-  const reloadPosts = (buttonId) => {
-    store.emit(
-      new LoadPosts(
-        buttonId,
-        (posts) => setPosts(posts),
-        (errorMessage) => alertService.error(errorMessage.caption),
-      ),
-    );
+  const reloadPosts = () => {
+    if (button && button.id) {
+      store.emit(
+        new LoadPosts(
+          button.id,
+          (posts) => setPosts(posts),
+          (errorMessage) => alertService.error(errorMessage.caption),
+        ),
+      );
+    } else {
+      console.error('not button yet?');
+    }
   };
   useEffect(() => {
-    if (!posts && button && button.id) {
-      reloadPosts(button.id);
-    }
+    reloadPosts();
   }, [button]);
-  
 
   // if (!feed && currentButton) {
   //   const singleFeedItem = {
@@ -81,80 +80,95 @@ export default function Feed({ button }: { button: Button }) {
         button.owner.id == loggedInUser.id && (
           <PostNew
             buttonId={button.id}
-            reloadPosts={() => {
-              reloadPosts(button.id);
-            }}
+            onCreate={() => reloadPosts()}
           />
         )}
       &nbsp;
       <div className="feed-line"></div>
       <div className="feed-section">
         {posts &&
-          posts.map((post, idx) => {
-            return (
-              <div className="feed-element" key={idx}>
-                <div className="card-notification">
-                  <div className="card-notification__comment-count">
-                    <div className='card-notification__label'>
-                      <div className='hashtag hashtag--blue'>New update</div>
-                      
-                    </div>
-                  </div>
-                
-                  <PostMessage post={post} />
-
-                  {loggedInUser && (
-                          <>
-                            <div className="card-notification__answer-btn">
-                              <a className='card-notification__comment-count'
-                                onClick={() => {
-                                  setShowComments(!showComments);
-                                }}
-                              > 
-                                {post.comments.length > 0
-                                  ? `${
-                                    showComments ? 'Ocultar' : 'Ver'
-                                  } ${post.comments.length} ${t(
-                                      'post.comment',
-                                    )}${
-                                      post.comments.length > 1 ? 's' : ''
-                                    }`
-                                  : ''}
-                              </a>
-                              <Btn
-                                submit={true}
-                                btnType={BtnType.corporative}
-                                caption={t('post.newComment')}
-                                contentAlignment={ContentAlignment.center}
-                                onClick={() => {
-                                  setShowNewCommentDialog(
-                                    !showNewCommentDialog,
-                                  );
-                                }}
-                              />
-                            </div>
-
-                              {showNewCommentDialog && (
-                                <PostCommentNew
-                                  postId={post.id}
-                                  onSubmit={() => {
-                                    reloadPosts(button.id);
-                                    setShowComments(true);
-                                    setShowNewCommentDialog(false);
-                                  }}
-                                />
-                              )}
-                          </>
-                        )}
-                        <PostComments
-                          comments={post.comments}
-                          showComments={showComments}
-                        />
-                </div>
+          posts.map((post, idx) => (
+            <FeedElement
+              key={idx}
+              post={post}
+              loggedInUser={loggedInUser}
+              onNewComment={() => {
+                reloadPosts();
+              }}
+            />
+          ))}
+        {!posts ||
+          (posts.length == 0 && (
+            <>
+              {' '}
+              <div className="feed__empty-message">
+                {t('common.notfound', ['posts'])}
               </div>
-            );
-          })}
-        {!posts || posts.length == 0 && <> <div className='feed__empty-message'>{t('common.notfound', ['posts'])}</div></>}
+            </>
+          ))}
+      </div>
+    </div>
+  );
+}
+export function FeedElement({ post, loggedInUser, onNewComment }) {
+  const [showNewCommentDialog, setShowNewCommentDialog] =
+    useState(false);
+  const [showComments, setShowComments] = useState(false);
+
+  return (
+    <div className="feed-element">
+      <div className="card-notification">
+        <div className="card-notification__comment-count">
+          <div className="card-notification__label">
+            <div className="hashtag hashtag--blue">New update</div>
+          </div>
+        </div>
+
+        <PostMessage post={post} />
+
+        <>
+          <div className="card-notification__answer-btn">
+            <a
+              className="card-notification__comment-count"
+              onClick={() => {
+                setShowComments(!showComments);
+              }}
+            >
+              {post.comments.length > 0
+                ? `${showComments ? 'Ocultar' : 'Ver'} ${
+                    post.comments.length
+                  } ${t('post.comment')}${
+                    post.comments.length > 1 ? 's' : ''
+                  }`
+                : ''}
+            </a>
+            {loggedInUser && (
+              <Btn
+                submit={true}
+                btnType={BtnType.corporative}
+                caption={t('post.newComment')}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => {
+                  setShowNewCommentDialog(!showNewCommentDialog);
+                }}
+              />
+            )}
+          </div>
+
+          {(showNewCommentDialog && loggedInUser )&& (
+            <PostCommentNew
+              postId={post.id}
+              onSubmit={() => {
+                onNewComment();
+                setShowComments(true);
+                setShowNewCommentDialog(false);
+              }}
+            />
+          )}
+        </>
+        {showComments && (
+            <PostComments comments={post.comments} />
+        )}
       </div>
     </div>
   );

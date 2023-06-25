@@ -1,28 +1,25 @@
-import PostMessage from "../PostMessage";
+import PostMessage from '../PostMessage';
+import t from 'i18n';
 
-export default function PostComments({ showComments, comments }) {
-
-  
-    
-
+export default function PostComments({ comments }) {
   return (
     <>
-      
-          {showComments && (
-            <>
+      <>
+        {comments.length > 0 && (
+          <>
             {comments.map((comment) => {
               return (
-                <>
-                <hr/>
-                <PostMessage post={comment} />
-                </>
-              )
-              })}
+                <div style={{"padding" : '2em', backgroundColor: 'lightgrey'}}>
+                  <hr />
+                  <PostMessage post={comment} />
+                </div>
+              );
+            })}
+          </>
+        )}
 
-            </>
-          )}
-          
-           
+        {comments.length < 1 && <>{t('post.NoComments')}</>}
+      </>
     </>
   );
 }

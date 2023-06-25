@@ -1,30 +1,34 @@
+import Btn, { BtnType } from 'elements/Btn';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
-import FormSubmit from 'elements/Form/FormSubmit';
+import { ContentAlignment } from 'elements/ImageWrapper';
+import t from 'i18n';
 import { store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { CreateNewPostComment } from 'state/Posts';
 
-
 export default function PostCommentNew({ postId, onSubmit }) {
   const {
     register,
-    handleSubmit,
     setValue,
     watch,
     setFocus,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const onSubmitLocal = (data) => {
+  const onSubmitLocal = (e) => {
+    e.preventDefault()
+    const data = getValues();
+    console.log(data);
+    console.log('submitting');
     store.emit(
       new CreateNewPostComment(
         postId,
         data,
         () => {
           alertService.info('comment posted');
-          console.log('reload posts..');
           onSubmit();
         },
         (errorMessage) => alertService.error(errorMessage.caption),
@@ -34,7 +38,7 @@ export default function PostCommentNew({ postId, onSubmit }) {
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmitLocal)}
+      onSubmit={onSubmitLocal}
       classNameExtra="feeds__new-message-message"
     >
       <FieldTextArea
@@ -51,11 +55,12 @@ export default function PostCommentNew({ postId, onSubmit }) {
         })}
       />
       <div className="publish__submit">
-        <FormSubmit
-          classNameExtra="btn--black btn btn--center"
-          title="Publish"
-          isSubmitting={isSubmitting}
-        />
+        <Btn
+                submit={true}
+                btnType={BtnType.corporative}
+                caption={t('post.newCommentSave')}
+                contentAlignment={ContentAlignment.center}
+              />
       </div>
     </Form>
   );
