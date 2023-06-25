@@ -8,7 +8,7 @@ import { IoPaperPlaneOutline } from 'react-icons/io5';
 import { alertService } from 'services/Alert';
 import { CreateNewPost } from 'state/Posts';
 
-export default function PostNew({ buttonId, reloadPosts }) {
+export default function PostNew({ buttonId, onCreate }) {
   const {
     register,
     handleSubmit,
@@ -26,7 +26,7 @@ export default function PostNew({ buttonId, reloadPosts }) {
         () => {
           alertService.info(t('common.saveSuccess', ['post']));
           setValue('message', '')
-          reloadPosts()
+          onCreate()
         },
         (errorMessage) => alertService.error(errorMessage.caption),
       ),

@@ -40,7 +40,7 @@ export class LoadPosts implements WatchEvent {
 export class CreateNewPostComment implements WatchEvent {
   public constructor(
     private postId: string,
-    private message: MessageDto,
+    private message,
     private onSuccess,
     private onError,
   ) {}

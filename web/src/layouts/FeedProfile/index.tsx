@@ -7,9 +7,9 @@ export default function FeedProfile({activities}) {
   return (
 
     <div className="feed-container">
-      <div className="feed-selector feed-selector--activity">
+      {/* <div className="feed-selector feed-selector--activity">
         <Dropdown />
-      </div>
+      </div> */}
       <div className="feed-line"></div>
 
       <div className="feed-section">
