@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    build: web/
+    # build: web/
     image: helpbuttons/helpbuttons-web:main
     ports:
       - "3000:3000"
@@ -12,7 +12,7 @@ services:
       - api
 
   api:
-    build: api/
+    # build: api/
     image: helpbuttons/helpbuttons-api:main
     volumes:
       - config:/app/config/:rw
@@ -24,7 +24,8 @@ services:
       - db
 
   db:
-    build: postgres/
+    # build: postgres/
+    image: helpbuttons/helpbuttons-psql:main
     restart: always
     command: ["postgres", "-c", "log_statement=all"]
     env_file:
@@ -44,9 +45,10 @@ services:
 
 networks:
   web:
-    external: true
   api:
+    internal: true
   db:
+    internal: true
 
 volumes:
   db:
