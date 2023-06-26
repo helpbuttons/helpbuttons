@@ -8,29 +8,24 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 //imported internal classes, variables, files or functions
 import FieldText from 'elements/Fields/FieldText';
 import Form from 'elements/Form';
-import { store } from 'pages';
+import { GlobalState, store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { CreateConfig, GetConfig, SmtpTest } from 'state/Setup';
+import { CreateConfig, SmtpTest } from 'state/Setup';
 import { SetupSteps } from '../../../shared/setupSteps';
 import router from 'next/router';
 import t from 'i18n';
 import { getHostname } from 'shared/sys.helper';
 import { HttpStatus } from 'shared/types/http-status.enum';
+import { useRef } from 'store/Store';
 import { useEffect, useState } from 'react';
 
 export default function SysadminConfig() {
-  const [noConfigFoundConfirmed, setNoConfigFoundConfirmed] =
-    useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    control,
-    reset,
-    watch,
-    setValue,
+    formState: { errors},
   } = useForm({
     defaultValues: {
       hostName: getHostname(),
@@ -45,33 +40,28 @@ export default function SysadminConfig() {
     },
   });
 
-  useEffect(() => {
-    if (!noConfigFoundConfirmed) {
-      store.emit(
-        new GetConfig(
-          () => {alertService.error('u shouldnt be here'); router.push('/')},
-          (error) => {
-            if (error == 'not-found' || error=='nosysadminconf') {
-              setNoConfigFoundConfirmed(true);
-            } else {
-              alertService.error(JSON.stringify(error));
-            }
+  const config = useRef(store, (state: GlobalState) => state.config);
 
-            return;
-          },
-        ),
-      );
-    }
-  }, [noConfigFoundConfirmed]);
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const onSubmit = (data) => {
+    setIsSubmitting(true)
+    if (config)
+    {
+      router.push({
+        pathname: '/',
+      });
+    }
     store.emit(
       new CreateConfig(
         data,
         () => {
-          router.push({
-            pathname: SetupSteps.CREATE_ADMIN_FORM,
-          });
+          setTimeout(() => {
+            setIsSubmitting(true)
+            router.push({
+              pathname: SetupSteps.CREATE_ADMIN_FORM,
+            });
+          }, 2000);
         },
         (err, data) => {
           if (err.statusCode === HttpStatus.SERVICE_UNAVAILABLE) {
@@ -128,7 +118,7 @@ export default function SysadminConfig() {
 
   return (
     <>
-      {noConfigFoundConfirmed && (
+      {!config && (
         <Popup title="Save configurations" linkFwd={null}>
           <Form classNameExtra="saveSetup">
             <div className="publish_setup-first">

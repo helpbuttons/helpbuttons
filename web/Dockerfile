@@ -4,7 +4,6 @@ RUN mkdir -p /app/
 WORKDIR /app
 
 COPY . /app/
-RUN rm -f .env
 
 ENV NEXT_TELEMETRY_DISABLED 1
 

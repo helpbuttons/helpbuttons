@@ -10,10 +10,11 @@ import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { SetupDtoOut } from 'services/Setup/config.type';
 import { HttpStatus } from 'shared/types/http-status.enum';
-import { CreateAdmin } from 'state/Setup';
+import { CreateAdmin, GetConfig } from 'state/Setup';
 import { useRef } from 'store/Store';
 import { SetupSteps } from '../../../shared/setupSteps';
 import t from 'i18n';
+import { useEffect, useState } from 'react';
 
 export default CreateAdminForm;
 
@@ -40,6 +41,43 @@ function CreateAdminForm() {
     store,
     (state: GlobalState) => state.config,
   );
+
+  const getConfig = () => {
+    store.emit(
+      new GetConfig(
+        (configuration) => {
+          console.log('config got!')
+        },
+        (error) => {
+          
+          if(error == 'not-found')
+          {
+            router.push(SetupSteps.SYSADMIN_CONFIG);
+            return;
+          }
+
+          console.log(error)
+          return;
+        },
+      ),
+    );
+  }
+
+  const [disableSave, setDisableSave] = useState(true);
+
+  useEffect(() => {
+    if(config && config.databaseNumberMigrations > 0 && config.administrator == null)
+    {
+      setDisableSave(false)
+    }
+    if (config && config.databaseNumberMigrations < 1)
+    {
+      alertService.warn(
+        `Please need to run migrations on the database.`
+      );
+    }
+    
+  }, [config])
 
   const onSubmit = (data) => {
     if (passwordsMatch(data, setError)) {
@@ -98,8 +136,16 @@ function CreateAdminForm() {
               caption={t('common.next')}
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}
-              disabled={config?.databaseNumberMigrations < 1 && config?.administrator == null}
+              disabled={disableSave}
             />
+            {disableSave && 
+              <Btn
+                btnType={BtnType.splitIcon}
+                caption={t('common.reloadConfig')}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => getConfig()}
+              />
+            }
           </div>
         </Form>
       </Popup>

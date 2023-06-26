@@ -61,7 +61,9 @@ function MyApp({ Component, pageProps }) {
       setIsSetup(true);
     }
 
-    if (!config && (SetupSteps.SYSADMIN_CONFIG.toString() != path && path != '/Login')) {
+    if (!config) {
+      
+      
       store.emit(
         new GetConfig(
           (config) => {
@@ -73,12 +75,18 @@ function MyApp({ Component, pageProps }) {
             }
           },
           (error) => {
+            if(SetupSteps.SYSADMIN_CONFIG.toString() == path || SetupSteps.CREATE_ADMIN_FORM.toString() == path)
+            {
+              return;
+            }
             if (error == 'not-found' || error == 'nosysadminconfig') {
               router.push(SetupSteps.SYSADMIN_CONFIG);
-            } else {
-              alertService.error(JSON.stringify(error));
             }
 
+            if (error == 'nobackend') {
+              alertService.error(`Backend not found, something went terribly wrong.`)
+            }
+            console.log(error)
             return;
           },
         ),
@@ -143,13 +151,8 @@ function MyApp({ Component, pageProps }) {
             },
             (error) => {
               if (error === 'network-not-found') {
-                if (configuration.databaseNumberMigrations < 1) {
-                  alertService.error(
-                    `Missing database schema, please run schema creation/migrations! and then <a href="/">click here</a>`,
-                  );
-                  return;
-                } else if (
-                  configuration.userCount < 1 &&
+                if (
+                  (configuration.databaseNumberMigrations < 1 || configuration.userCount < 1) &&
                   SetupSteps.CREATE_ADMIN_FORM != path
                 ) {
                   router.push(SetupSteps.CREATE_ADMIN_FORM);
