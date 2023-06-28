@@ -1,5 +1,5 @@
 import React from "react";
-import type { NextPage } from "next";
+import type { Metadata, NextPage } from "next";
 import { Store } from "store/Store";
 
 //    Components
@@ -12,6 +12,10 @@ import { Alert } from "state/Alerts";
 import { SetupDtoOut } from "services/Setup/config.type";
 import { User } from "shared/entities/user.entity";
 import { Activity } from "shared/entities/activity.entity";
+export const metadata: Metadata = {
+  title: 'Home',
+  description: 'Welcome to Next.js',
+}
 
 // -- estado global --
 export interface GlobalState {
