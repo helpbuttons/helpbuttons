@@ -44,9 +44,9 @@ export default function HomeInfo() {
   useEffect(() => {
     if(navigator)
     {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      setNavigatorCoordinates(position.coords)
-    });
+    // navigator.geolocation.getCurrentPosition(function(position) {
+    //   setNavigatorCoordinates(position.coords)
+    // });
   }
   }, [navigator])
   
