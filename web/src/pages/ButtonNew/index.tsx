@@ -10,6 +10,9 @@ import router from 'next/router';
 import { defaultMarker } from 'shared/sys.helper';
 import { ErrorName } from 'shared/types/error.list';
 import t from 'i18n';
+import { Button } from 'shared/entities/button.entity';
+import { CreateNewPost } from 'state/Posts';
+import { readableDate } from 'shared/date.utils';
 
 export default function ButtonNew() {
   const {
@@ -52,14 +55,32 @@ export default function ButtonNew() {
       new CreateButton(
         data,
         selectedNetwork.id,
-        onSuccess({ lat: data.latitude, lng: data.longitude }),
+        onSuccess,
         onError,
       ),
     );
   };
 
-  const onSuccess = (location: { lat: number; lng: number }) => {
-    router.push(`/Explore#?lat=${location.lat}&lng=${location.lng}`);
+  const jumpToExploreButton = (buttonData) => {
+    router.push(`/Explore#?lat=${buttonData.latitude}&lng=${buttonData.longitude}`);
+  }
+  const onSuccess = (buttonData : Button) => {
+    console.log(buttonData)
+    store.emit(
+      new CreateNewPost(
+        buttonData.id,
+        {
+          message: t('button.firstPost', [readableDate(buttonData.created_at)], true)
+        },
+        () => {
+          jumpToExploreButton(buttonData)
+        },
+        (errorMessage) => {
+          console.error(errorMessage)
+          jumpToExploreButton(buttonData)
+        },
+      ),
+    );    
   };
   const onError = (err) => {
     if (err.errorName == ErrorName.NeedToBeRegistered) {

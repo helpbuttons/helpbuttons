@@ -87,7 +87,7 @@ export class CreateButton implements WatchEvent {
   public watch(state: GlobalState) {
     return ButtonService.new(this.button, this.networkId).pipe(
       map((buttonData) => {
-        new ButtonFound(buttonData), this.onSuccess();
+        new ButtonFound(buttonData), this.onSuccess(buttonData);
       }),
       catchError((error) => handleError(this.onError, error)),
     );
