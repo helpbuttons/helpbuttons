@@ -117,7 +117,11 @@
     "setNewPassword": "set a new password",
     "dontChangePassword": "Don't change password",
     "logout": "Logout",
-    "deactivate": "Deactivate Account"
+    "deactivate": "Deactivate Account",
+    "loginLink": "I have an account",
+    "register": "REGISTER",
+    "sendLoginToken": "Send login token",
+    "loginClick": "One click login"
   },
   "calendarOnce": {
     "pickday": "Pick a day",

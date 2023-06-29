@@ -22,6 +22,7 @@ import NewUserFields, {
   passwordsMatch,
 } from 'components/user/NewUserFields';
 import { alertService } from 'services/Alert';
+import t from 'i18n';
 
 export default function Signup() {
   const {
@@ -97,13 +98,13 @@ export default function Signup() {
             <Btn
               submit={true}
               btnType={BtnType.splitIcon}
-              caption="REGISTER"
+              caption={t('user.register')}
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}
             />
             <div className="popup__link">
               <Link href={`/Login?${params.toString()}`}>
-                I have an account
+              {t('user.loginLink')}
               </Link>
             </div>
           </div>

@@ -13,10 +13,6 @@ export default registerAs('webAppConfigs', (): WebAppConfigs => {
     nodeEnv: NodeEnv.development,
     host: '0.0.0.0',
     port: 3001, //only internal
-    hostName: configFile.hostName ? configFile.hostName : 'localhost',
-    allowedCors: `http://${configFile.hostName}:${configFile.webPort}`,
-    smtpUrl: configFile.smtpUrl,
-    jwtSecret: configFile.jwtSecret
   };
 
   return configs;

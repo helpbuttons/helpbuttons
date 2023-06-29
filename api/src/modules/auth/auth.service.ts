@@ -9,7 +9,6 @@ import {
   publicNanoidGenerator,
 } from '@src/shared/helpers/nanoid-generator.helper';
 import { UserCredentialService } from '../user-credential/user-credential.service';
-import webAppConfig from '@src/app/configs/web-app.config';
 import { NodeEnv } from '@src/shared/types';
 import { MailService } from '../mail/mail.service';
 import { ExtractJwt } from 'passport-jwt';
@@ -29,14 +28,13 @@ import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-
 import { ErrorName } from '@src/shared/types/error.list';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { ValidationError } from 'class-validator';
-
+import { configFileName } from '@src/shared/helpers/config-name.const';
+const config = require(`../../..${configFileName}`);
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly userCredentialService: UserCredentialService,
-    @Inject(webAppConfig.KEY)
-    private readonly webAppConfigs: ConfigType<typeof webAppConfig>,
     private readonly mailService: MailService,
     private jwtTokenService: JwtService,
     private readonly storageService: StorageService,
@@ -46,10 +44,6 @@ export class AuthService {
     const verificationToken = publicNanoidGenerator();
     let emailVerified = false;
     let accessToken = {};
-
-    if (this.webAppConfigs.nodeEnv === NodeEnv.development) {
-      emailVerified = true;
-    }
 
     let userRole = Role.registered;
     const userCount = await this.userService.userCount();
@@ -66,26 +60,30 @@ export class AuthService {
       emailVerified: emailVerified,
       id: dbIdGenerator(),
       avatar: null,
-      description: ''
+      description: '',
     };
 
-    const emailExists = await this.userService.isEmailExists(signupUserDto.email);
-    if (emailExists)
-    {
-      throw new CustomHttpException(ErrorName.EmailAlreadyRegistered)
+    const emailExists = await this.userService.isEmailExists(
+      signupUserDto.email,
+    );
+    if (emailExists) {
+      throw new CustomHttpException(ErrorName.EmailAlreadyRegistered);
     }
 
-    const usernameExists = await this.userService.findByUsername(signupUserDto.username);
-    if (usernameExists)
-    {
-      throw new CustomHttpException(ErrorName.UsernameAlreadyRegistered)
+    const usernameExists = await this.userService.findByUsername(
+      signupUserDto.username,
+    );
+    if (usernameExists) {
+      throw new CustomHttpException(
+        ErrorName.UsernameAlreadyRegistered,
+      );
     }
     try {
       newUserDto.avatar = await this.storageService.newImage64(
         signupUserDto.avatar,
       );
     } catch (err) {
-      throw new CustomHttpException(ErrorName.InvalidMimetype)
+      throw new CustomHttpException(ErrorName.InvalidMimetype);
     }
     return this.userService
       .createUser(newUserDto)
@@ -97,7 +95,7 @@ export class AuthService {
       })
       .then((user) => {
         if (!newUserDto.emailVerified) {
-          return this.sendActivationEmail(newUserDto).then(
+          return this.sendLoginToken(newUserDto).then(
             (mailActivation) => {
               console.log(
                 `activation mail sent: ${newUserDto.email}`,
@@ -111,8 +109,10 @@ export class AuthService {
         return this.getAccessToken(newUserDto);
       })
       .catch((error) => {
-        console.error(error)
-        throw new CustomHttpException(ErrorName.UnspecifiedInternalServerError)
+        console.error(error);
+        throw new CustomHttpException(
+          ErrorName.UnspecifiedInternalServerError,
+        );
       });
   }
   private async createUserCredential(
@@ -125,16 +125,27 @@ export class AuthService {
     });
   }
 
-  private sendActivationEmail(user: User) {
-    const activationUrl: string = `${this.webAppConfigs.hostName}:${this.webAppConfigs.port}/user/activate/${user.verificationToken}`;
+  private sendLoginToken(user: User) {
+    const activationUrl: string = `${config.hostName}/LoginClick/${user.verificationToken}`;
+
+    if (user.emailVerified === true) {
+      return this.mailService.sendLoginTokenEmail({
+        to: user.email,
+        activationUrl,
+      });
+    }
     return this.mailService.sendActivationEmail({
       to: user.email,
       activationUrl,
     });
   }
 
-  activate(verificationToken: string) {
-    // TODO:
+  async loginToken(verificationToken: string) {
+    return await this.userService
+      .loginToken(verificationToken)
+      .then((user: User) => {
+        return this.getAccessToken(user);
+      });
   }
 
   async validateUser(
@@ -188,7 +199,7 @@ export class AuthService {
       avatar: null,
       email: data.email,
       name: data.name,
-      description: data.description
+      description: data.description,
     };
 
     if (isImageData(data.avatar)) {
@@ -208,6 +219,19 @@ export class AuthService {
             currentUser.id,
             data.password_new,
           ).then(() => true);
+        }
+        return Promise.resolve(true);
+      });
+  }
+
+  async requestNewLoginToken(email: string) {
+    return await this.userService
+      .findOneByEmail(email)
+      .then((user: User) => {
+        const newUser = {...user, verificationToken: publicNanoidGenerator()};
+        this.userService.update(user.id, newUser)
+        if (user && user.emailVerified === false) {
+          this.sendLoginToken(newUser);
         }
         return Promise.resolve(true);
       });

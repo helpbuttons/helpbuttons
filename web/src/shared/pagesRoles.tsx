@@ -13,6 +13,8 @@ export const allowedPathsPerRole =
             '/Explore',
             '/HomeInfo',
             '/ButtonFile/:id',
+            '/LoginClick',
+            '/LoginClick/:loginToken'
         ]
     },
     {

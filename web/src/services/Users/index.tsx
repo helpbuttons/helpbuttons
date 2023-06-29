@@ -40,29 +40,6 @@ export class UserService {
     return httpService.get<IUser>("/users/whoami");
   }
 
-  //Login user
-  public static activate(token: any): Observable<any> {
-
-      //save the ajax object that can be .pipe by the observable
-      const userWithHeaders$ = ajax({
-
-          url: baseUrl+"/users/activate/"+token,
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "accept": "application/json",
-          },
-          body: {
-
-            "verificationToken": token,
-
-          },
-      });
-
-    return userWithHeaders$;
-
-  }
-
   public static findUser(username: string)
   {
 
@@ -76,5 +53,14 @@ export class UserService {
 
   public static update(data: UserUpdateDto): Observable<any> {
     return httpService.post<UserUpdateDto>("/users/update", data);
+  }
+
+  public static requestNewLoginToken(email:string): Observable<ICurrentUser | undefined> {
+    return httpService.get<ICurrentUser>(`/users/requestNewLoginToken/${email}`);
+  }
+
+  public static loginToken(token :string): Observable<ICurrentUser | undefined> {
+    return httpService.get<ICurrentUser>(`/users/loginToken/${token}`).pipe(
+      tap((user) => httpService.setAccessToken(user?.token)));
   }
 }

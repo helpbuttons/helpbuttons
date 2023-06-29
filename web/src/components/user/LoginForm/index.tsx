@@ -85,6 +85,11 @@ export default function LoginForm() {
               {t('user.noAccount')}
             </Link>
           </div>
+          <div className="popup__link">
+            <Link href={`/LoginClick?${params.toString()}`}>
+              {t('user.loginClick')}
+            </Link>
+          </div>
         </div>
       </div>
     </Form>

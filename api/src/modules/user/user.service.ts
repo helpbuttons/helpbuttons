@@ -4,12 +4,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>) {}
+    private readonly userRepository: Repository<User>,
+    private readonly mailService: MailService,
+    ) {}
 
   async createUser(user: User) {
     return this.userRepository.insert([user]);
@@ -47,5 +50,12 @@ export class UserService {
  
   async update(userId : string, newUser) {
     return this.userRepository.update(userId, removeUndefined(newUser))
+  }
+
+  loginToken(verificationToken: string)
+  {
+    return this.userRepository.findOne({where: {verificationToken: `${verificationToken}`}}).then((user: User) => {
+      return this.userRepository.update(user.id, {...removeUndefined(user), verificationToken: '', emailVerified: true}).then(() => {return user})
+    });
   }
 }

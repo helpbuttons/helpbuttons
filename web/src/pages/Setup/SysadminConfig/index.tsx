@@ -15,7 +15,7 @@ import { CreateConfig, SmtpTest } from 'state/Setup';
 import { SetupSteps } from '../../../shared/setupSteps';
 import router from 'next/router';
 import t from 'i18n';
-import { getHostname } from 'shared/sys.helper';
+import { getUrlOrigin } from 'shared/sys.helper';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { useRef } from 'store/Store';
 import { useEffect, useState } from 'react';
@@ -28,7 +28,7 @@ export default function SysadminConfig() {
     formState: { errors},
   } = useForm({
     defaultValues: {
-      hostName: getHostname(),
+      hostName: getUrlOrigin(),
       mapifyApiKey: '',
       postgresHostName: 'db',
       postgresDb: 'hb-db',
@@ -125,7 +125,7 @@ export default function SysadminConfig() {
               <FieldText
                 name="hostname"
                 label={`${t('setup.hostname')}:`}
-                placeholder="localhost"
+                placeholder="http://localhost:port"
                 validationError={errors.description}
                 classNameExtra="squared"
                 {...register('hostName', { required: true })}
