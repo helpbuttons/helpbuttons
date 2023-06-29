@@ -6,7 +6,6 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { initializeTransactionalContext } from 'typeorm-transactional-cls-hooked';
 
 import { AppModule } from '@src/app/app.module';
-import webAppConfig from './app/configs/web-app.config';
 import * as bodyParser from 'body-parser';
 
 // Middleware
@@ -15,6 +14,7 @@ import {
   ValidationException,
   ValidationFilter,
 } from './shared/middlewares/errors/validation-filter.middleware';
+import { configFileName } from './shared/helpers/config-name.const';
 
 export const bootstrap = async () => {
     /**
@@ -26,12 +26,9 @@ export const bootstrap = async () => {
     var path = require('path');
   
     const app = await NestFactory.create(AppModule);
-  
-    const webAppConfigs = app.get<ConfigType<typeof webAppConfig>>(
-      webAppConfig.KEY,
-    );
-  
-    app.enableCors({ origin: webAppConfigs.allowedCors });
+    const configs = require(`@src/../../${configFileName}`);
+
+    app.enableCors({ origin: configs.hostName });
   
     app.use(bodyParser.json({ limit: '50mb' }));
     app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));

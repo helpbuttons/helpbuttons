@@ -7,7 +7,7 @@ const config: Config.InitialOptions = {
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
     moduleDirectories: ['node_modules', '.'],
     verbose: true,
-    moduleFileExtensions: ['js', 'json', 'ts'],
+    moduleFileExtensions: ['js', 'json', 'ts', 'hbs'],
     rootDir: 'src',
     testRegex: '.*\\.spec\\.ts$',
     transform: {

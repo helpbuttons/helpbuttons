@@ -35,9 +35,14 @@ export class AuthController {
     });
   }
 
-  @Get('activate/:verificationToken')
-  activate(@Param('verificationToken') verificationToken: string) {
-    return this.authService.activate(verificationToken);
+  @Get('requestNewLoginToken/:email')
+  requestNewLoginToken(@Param('email') email: string) {
+    return this.authService.requestNewLoginToken(email);
+  }
+
+  @Get('loginToken/:verificationToken')
+  loginToken(@Param('verificationToken') verificationToken: string) {
+    return this.authService.loginToken(verificationToken);
   }
 
   @UseGuards(LocalAuthGuard)
