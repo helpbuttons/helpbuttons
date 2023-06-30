@@ -92,7 +92,8 @@
     "whenLabel": "When ?",
     "changeDateLabel": "Change date",
     "placeHolderTitle": "Write a title for your button",
-    "placeHolderDescription": "Write a description for your button"
+    "placeHolderDescription": "Write a description for your button",
+    "firstPost": "User created this button at {0}, leave a comment if you want"
   },
   "user": {
     "email": "Email",
