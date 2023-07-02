@@ -1,32 +1,27 @@
-import { LoadabledComponent } from "components/loading";
-import { BrowseType } from "components/map/Map/Map.consts";
-import { GlobalState, store } from "pages";
-import { useEffect, useState } from "react";
-import { useRef } from "store/Store";
-import HoneyComb from "./HoneyComb";
 
+import SEO from 'components/seo';
+import HoneyComb from './HoneyComb';
+import NavBottom from 'components/nav/NavBottom';
+import { NextPageContext } from 'next';
+import { store } from 'pages';
+import { ServerPropsService } from 'services/ServerProps';
+import { setNetwork } from 'state/Networks';
 
-export default function Explore() {
-    const [browseType, setBrowseType] = useState(null)
-    const selectedNetwork = useRef(
-        store,
-        (state: GlobalState) => state.networks.selectedNetwork,
-      );
+export default function Explore({metadata, selectedNetwork, config}) {
+  const browseType = selectedNetwork.exploreSettings.browseType;
+  // temporary hack to avoid deep refactor
+  store.emit(new setNetwork(selectedNetwork));
+  
+  return (
+    <>
+      <SEO {...metadata}/>
+      <HoneyComb />
+      <NavBottom />
+    </>
+  );
+}
 
-      useEffect(() => {
-        if(selectedNetwork){
-            setBrowseType(() => {
-                return selectedNetwork.exploreSettings.browseType
-            })
-        }
-      },[selectedNetwork])
-    return (
- 
-        <LoadabledComponent loading={!browseType}>
-
-            { browseType == BrowseType.HONEYCOMB &&
-                <HoneyComb/>
-            }
-        </LoadabledComponent> 
-    )
+export const getStaticProps = async (ctx: NextPageContext) => {
+  const serverProps = await ServerPropsService.general('Explore', ctx)
+  return {props: serverProps}
 }

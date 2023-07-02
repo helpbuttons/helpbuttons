@@ -180,6 +180,8 @@ function MyApp({ Component, pageProps }) {
     }
   }, [path, config, loggedInUser]);
 
+  const pageName = path.split('/')[1]
+
   return (
     <>
       <Head>
@@ -194,10 +196,10 @@ function MyApp({ Component, pageProps }) {
             return (
               <div>
                 <Component {...pageProps} />
-                <NavBottom logged={!!loggedInUser} />
+                <NavBottom/>
               </div>
             );
-          } else if (isSetup || path == '/Login') {
+          } else if (isSetup || ['Login','HomeInfo','Explore','ButtonFile'].indexOf(pageName) > -1) {
             return (
               <div>
                 <Component {...pageProps} />

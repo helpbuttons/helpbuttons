@@ -40,9 +40,10 @@ export const store = new Store<GlobalState>({
   showFilters: false
 });
 
+
 const Home: NextPage = () => {
   return (
-      <HomeInfo />
+      <></>
   );
 };
 
