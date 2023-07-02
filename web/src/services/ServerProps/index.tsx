@@ -18,8 +18,14 @@ export class ServerPropsService {
     const title = subtitle
       ? `${networkConfigData.name} - ${subtitle}`
       : networkConfigData.name;
+    let hostname;
+    
+    try {
+      ({ hostname } = new URL(configData.hostName));
+    } catch (error) {
+      hostname = 'error';
+    }
 
-    const {hostname, pathname} = new URL(configData.hostName)
     return {
       metadata: {
         title: title,
@@ -32,8 +38,7 @@ export class ServerPropsService {
         pageurl: `${configData.hostName}${ctx.resolvedUrl}`,
       },
       selectedNetwork: networkConfigData,
-      config: {...configData, hostname},
-      
+      config: { ...configData, hostname },
     };
   }
 }
