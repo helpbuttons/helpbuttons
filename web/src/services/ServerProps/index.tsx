@@ -3,6 +3,8 @@ import { makeImageUrl } from 'shared/sys.helper';
 export class ServerPropsService {
   public static async general(subtitle, ctx) {
     const baseURL = process.env.API_EXTERNAL_URL;
+    console.log('getting metadata from: ')
+    console.log(baseURL)
     const configURL = `${baseURL}networks/config`;
     const networkConfigURL = `${baseURL}networks/findById`;
 
