@@ -6,24 +6,38 @@ export class ServerPropsService {
     const configURL = `${baseURL}networks/config`;
     const networkConfigURL = `${baseURL}networks/findById`;
 
-    const configRes = await fetch(configURL, {
-      next: { revalidate: 30 },
-    });
-    const networkConfigRes = await fetch(networkConfigURL, {
-      next: { revalidate: 30 },
-    });
+   
+    let configData = {hostName: 'error',};
+    try {
+      const configRes = await fetch(configURL, {
+        next: { revalidate: 30 },
+      });  
+      configData = await configRes.json();
+    } catch (error) {
+      console.log(error);
+      throw new Error('getting config ' + configURL)
+    }
 
-    const configData = await configRes.json();
-    const networkConfigData = await networkConfigRes.json();
+    let networkConfigData = {name: 'error',  description: 'error', logo: 'error' };
+    try {
+      const networkConfigRes = await fetch(networkConfigURL, {
+        next: { revalidate: 30 },
+      });
+      networkConfigData = await networkConfigRes.json();
+    } catch (error) {
+      console.log(error);
+      throw new Error('getting network configuration ' + networkConfigURL)
+    }
     const title = subtitle
       ? `${networkConfigData.name} - ${subtitle}`
       : networkConfigData.name;
     let hostname;
-    
+
     try {
       ({ hostname } = new URL(configData.hostName));
     } catch (error) {
-      hostname = 'error';
+      console.log(error)
+      throw new Error('getting hostname from config hostname ' + JSON.stringify(configData))
     }
 
     return {
