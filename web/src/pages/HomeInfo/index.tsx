@@ -189,7 +189,7 @@ export default function HomeInfo({metadata, selectedNetwork, config}) {
   );
 }
 
-export const getStaticProps = async (ctx: NextPageContext) => {
+export const getServerSideProps = async (ctx: NextPageContext) => {
   const serverProps = await ServerPropsService.general('Home', ctx)
   return {props: serverProps}
 }

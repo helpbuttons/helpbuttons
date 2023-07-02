@@ -21,7 +21,7 @@ export default function Explore({metadata, selectedNetwork, config}) {
   );
 }
 
-export const getStaticProps = async (ctx: NextPageContext) => {
+export const getServerSideProps = async (ctx: NextPageContext) => {
   const serverProps = await ServerPropsService.general('Explore', ctx)
   return {props: serverProps}
 }
