@@ -29,7 +29,8 @@ export class setNetwork implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.networks.selectedNetwork = this.selectedNetwork;
+      const selectedNetwork = {...this.selectedNetwork, exploreSettings: JSON.parse(this.selectedNetwork.exploreSettings)}
+      newState.networks.selectedNetwork = selectedNetwork;
     });
   }
 }
