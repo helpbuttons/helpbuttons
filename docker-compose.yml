@@ -7,6 +7,8 @@ services:
       - "3000:3000"
     depends_on:
       - api
+    environment:
+      - API_URL=http://localhost:3001
     networks:
       - web
       - api
@@ -28,8 +30,10 @@ services:
     image: helpbuttons/helpbuttons-psql:main
     restart: always
     command: ["postgres", "-c", "log_statement=all"]
-    env_file:
-      - env.db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=doesntmatter
+      - POSTGRES_DB=hb-db
     volumes:
       - db:/var/lib/postgresql/data:rw
     healthcheck:
@@ -38,7 +42,8 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - db  
+      - db
+      # - web
     #uncomment if using docker-compose up db and yarn dev for backend and not docker-compose.dev
     # ports: 
     #   - 5432:5432
