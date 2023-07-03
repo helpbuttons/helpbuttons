@@ -23,7 +23,7 @@ module.exports = {
           },
           {
             source: '/api/:path*',
-            destination: `${process.env.API_INTERNAL_URL}/:path*`
+            destination: `${process.env.API_URL}/:path*`
           },
           {
             source: '/opencage/:path*',
@@ -35,7 +35,7 @@ module.exports = {
       return [
         {
           source: '/documentation',
-          destination: `${process.env.API_INTERNAL_URL}/doc/`,
+          destination: `${process.env.API_URL}/doc/`,
           permanent: true,
         },
         {
