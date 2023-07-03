@@ -199,7 +199,7 @@ function MyApp({ Component, pageProps }) {
                 <NavBottom/>
               </div>
             );
-          } else if (isSetup || ['Login','HomeInfo','Explore','ButtonFile'].indexOf(pageName) > -1) {
+          } else if (isSetup || ['Login','HomeInfo','ButtonFile'].indexOf(pageName) > -1) {
             return (
               <div>
                 <Component {...pageProps} />
