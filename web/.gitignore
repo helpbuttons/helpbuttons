@@ -74,3 +74,6 @@ lerna-debug.log*
 *.env
 
 .uploads/*
+
+src/web/shared/commit.tsx
+src/api/shared/commit.tsx

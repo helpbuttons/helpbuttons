@@ -24,6 +24,8 @@ import { Role } from 'shared/types/roles';
 import { isRoleAllowed } from 'shared/sys.helper';
 import { version } from 'shared/commit';
 import Loading from 'components/loading';
+import { getMetadata } from 'services/ServerProps';
+import SEO from 'components/seo';
 
 export default appWithTranslation(MyApp);
 
@@ -38,6 +40,8 @@ function MyApp({ Component, pageProps }) {
 
   const config = useRef(store, (state: GlobalState) => state.config);
   const path = router.asPath.split('?')[0];
+
+  const [metadata, setMetadata] = useState(null)
 
   const loggedInUser = useRef(
     store,
@@ -85,6 +89,7 @@ function MyApp({ Component, pageProps }) {
 
             if (error == 'nobackend') {
               alertService.error(`Backend not found, something went terribly wrong.`)
+              router.push('/Error')
             }
             console.log(error)
             return;
@@ -180,6 +185,17 @@ function MyApp({ Component, pageProps }) {
     }
   }, [path, config, loggedInUser]);
 
+  useEffect(() => {
+    if(config && selectedNetwork)
+    {
+      setMetadata(() => {
+        return getMetadata('lala', selectedNetwork, config, 'fail')
+      })
+    }
+  },[config, selectedNetwork])
+  
+  const pageName = path.split('/')[1]
+
   return (
     <>
       <Head>
@@ -187,6 +203,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="commit" content={version.git} />
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
+      {metadata && <SEO {...metadata}/>}
       <div className={`${user ? '' : ''}`}>
         <Alert />
         {(() => {
@@ -194,10 +211,10 @@ function MyApp({ Component, pageProps }) {
             return (
               <div>
                 <Component {...pageProps} />
-                <NavBottom logged={!!loggedInUser} />
+                <NavBottom/>
               </div>
             );
-          } else if (isSetup || path == '/Login') {
+          } else if (isSetup || ['Login','HomeInfo','ButtonFile'].indexOf(pageName) > -1) {
             return (
               <div>
                 <Component {...pageProps} />

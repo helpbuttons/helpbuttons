@@ -193,3 +193,12 @@ export class CreateAdmin implements WatchEvent {
   }
 }
 
+export class setConfig implements UpdateEvent {
+  public constructor(private config) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.config = this.config;
+    });
+  }
+}

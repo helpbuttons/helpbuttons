@@ -11,11 +11,17 @@ import { IoGlobeOutline } from "react-icons/io5";
 import { IoHomeOutline } from "react-icons/io5";
 
 import t from 'i18n';
+import { GlobalState, store } from 'pages';
+import { useRef } from 'store/Store';
 
 export default NavBottom;
 
-function NavBottom({logged}){
-  const [user, setUser] = useState(null);
+function NavBottom(){
+  const loggedInUser = useRef(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+  );
+
   
   return(
 
@@ -48,7 +54,7 @@ function NavBottom({logged}){
             </div>
         </NavLink>
 
-        {!logged &&
+        {!loggedInUser &&
 
           <NavLink href="/Faqs" className="nav-bottom__link nav-bottom__link--active">
               <div className="nav-bottom__icon">
@@ -61,7 +67,7 @@ function NavBottom({logged}){
 
         }
 
-        {logged && (
+        {loggedInUser && (
             <>
 
               <NavLink href="/Profile" className="nav-bottom__link nav-bottom__link--active">
@@ -85,7 +91,7 @@ function NavBottom({logged}){
 
         )}
 
-        { !logged && (
+        { !loggedInUser && (
 
             <NavLink href="/Login" className="nav-bottom__link nav-bottom__link--active">
                 <div className="nav-bottom__icon">

@@ -24,6 +24,16 @@ export const networksInitial = {
   selectedNetworkLoading: false,
 };
 
+export class setNetwork implements UpdateEvent {
+  public constructor(private selectedNetwork) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      const selectedNetwork = {...this.selectedNetwork, exploreSettings: JSON.parse(this.selectedNetwork.exploreSettings)}
+      newState.networks.selectedNetwork = selectedNetwork;
+    });
+  }
+}
 export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
   public constructor(private onSuccess, private onError) {}
 

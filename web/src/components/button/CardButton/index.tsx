@@ -8,10 +8,13 @@ import {
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 import router from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
 import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import { ShowWhen } from 'elements/Fields/FieldDate';
+import { SetupDtoOut } from 'shared/entities/setup.entity';
+import { useRef } from 'store/Store';
+import { GlobalState, store } from 'pages';
 
 export default function CardButtonFile({ button }) {
   const { cssColor } = buttonTypes.find((buttonType) => {
@@ -122,7 +125,21 @@ export function CardButtonHeadSmall({ button }) {
 
 function CardButtonSubmenu({ button }) {
   const [showSubmenu, setShowSubmenu] = useState(false);
-  const linkButton = getShareLink(`/Button/${button.id}`);
+  const config: SetupDtoOut = useRef(
+    store,
+    (state: GlobalState) => state.config,
+  );
+  
+  const [linkButton, setLinkButton] = useState(null)
+  useEffect(() => {
+    if(config)
+    {
+      setLinkButton(() => {
+        const shareLink =  getShareLink(`/ButtonFile/${button.id}`);
+        return shareLink;
+      })
+    }
+  }, [config])
   return (
     <section>
       <div
