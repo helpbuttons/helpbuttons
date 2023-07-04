@@ -4,9 +4,9 @@ import {
 } from '@nestjs/common';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { ILike, Repository } from 'typeorm';
+import { EntityManager, ILike, Repository } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateNetworkDto, NetworkDto, UpdateNetworkDto } from './network.dto';
 import { Network } from './network.entity';
@@ -28,6 +28,8 @@ export class NetworkService {
     private readonly tagService: TagService,
     private readonly storageService: StorageService,
     private readonly userService: UserService,
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
   ) {}
 
   async create(createDto: CreateNetworkDto) {
@@ -104,6 +106,11 @@ export class NetworkService {
         return this.userService.findAdministrator().then((administrator :User) => {
           return {...defaultNetwork,  administrator }
         })
+      }).then((defaultNetwork) => {
+        return this.entityManager.query(`select * from network_button_types`).then((networkByButtonTypes) => {
+          console.log(networkByButtonTypes)
+          return {...defaultNetwork, buttonTypes: networkByButtonTypes}
+        });
       })
       .catch((error) => {
         if (typeof error === typeof HttpException) {
