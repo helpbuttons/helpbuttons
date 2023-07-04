@@ -135,7 +135,7 @@ function CardButtonSubmenu({ button }) {
     if(config)
     {
       setLinkButton(() => {
-        const shareLink =  getShareLink(`/Button/${button.id}`);
+        const shareLink =  getShareLink(`/ButtonFile/${button.id}`);
         return shareLink;
       })
     }
