@@ -58,13 +58,13 @@ export default function SysadminConfig() {
         data,
         () => {
           setTimeout(() => {
-            setIsSubmitting(true)
             router.push({
               pathname: SetupSteps.CREATE_ADMIN_FORM,
             });
           }, 2000);
         },
         (err, data) => {
+          setIsSubmitting(false)
           if (err.statusCode === HttpStatus.SERVICE_UNAVAILABLE) {
             if (err.message === 'db-hostname-error') {
               alertService.error(
@@ -82,8 +82,7 @@ export default function SysadminConfig() {
             } else {
               alertService.error(
                 t(
-                  'other-problem',
-                  [JSON.stringify(err)],
+                  err.message
                 ),
               );
             }
@@ -108,7 +107,12 @@ export default function SysadminConfig() {
   };
 
   const onSmtpError = (err) => {
-    alertService.error(`${JSON.stringify(err)}`);
+    if(err?.response)
+    {
+      alertService.error(err?.response.message);
+    }else{
+      alertService.error(`${JSON.stringify(err)}`);
+    }
   };
 
   const onSmtpSuccess = () => {

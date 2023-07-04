@@ -12,17 +12,26 @@ import {
   IoHelpOutline,
   IoLogInOutline,
 } from 'react-icons/io5';
-import { SetupDtoOut } from 'shared/entities/setup.entity';
-import { useEffect, useState } from 'react';
-import { Network } from 'shared/entities/network.entity';
 import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 import NavBottom from 'components/nav/NavBottom';
 import SEO from 'components/seo';
 import { ServerPropsService } from 'services/ServerProps';
 import { NextPageContext } from 'next';
+import { SetupSteps } from 'shared/setupSteps';
+import { useEffect, useState } from 'react';
 
 export default function HomeInfo({metadata, selectedNetwork, config}) {
 
+  useEffect(() => {
+    if(!config){
+      router.push(SetupSteps.SYSADMIN_CONFIG)
+    }
+  }, [])
+  if (!config)
+  {
+    
+    return ( <></> ) ;
+  }
   const currentUser = useRef(
     store,
     (state: GlobalState) => state.loggedInUser,
@@ -190,6 +199,11 @@ export default function HomeInfo({metadata, selectedNetwork, config}) {
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
-  const serverProps = await ServerPropsService.general('Home', ctx)
-  return {props: serverProps}
+  try{
+    const serverProps = await ServerPropsService.general('Home', ctx)
+    return {props: serverProps}
+  }catch(err){
+    return {props: {metadata: null, selectedNetwork: null, config: null, noconfig: true}}
+  }
+  
 }

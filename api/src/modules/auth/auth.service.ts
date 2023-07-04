@@ -100,8 +100,11 @@ export class AuthService {
               console.log(
                 `activation mail sent: ${newUserDto.email}`,
               );
-            },
-          );
+            }
+          ).catch((err) => {
+            console.log(err)
+            return user
+          });
         }
         return user;
       })

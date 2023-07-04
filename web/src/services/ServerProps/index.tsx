@@ -27,9 +27,7 @@ export class ServerPropsService {
       console.log(error);
       throw new Error('getting network configuration ' + networkConfigURL)
     }
-    const title = subtitle
-      ? `${networkConfigData.name} - ${subtitle}`
-      : networkConfigData.name;
+    
     let hostname;
 
     try {
@@ -40,18 +38,27 @@ export class ServerPropsService {
     }
 
     return {
-      metadata: {
-        title: title,
-        description: networkConfigData.description,
-        image: `${makeImageUrl(
-          networkConfigData.logo,
-          configData.hostName + '/api',
-        )}`,
-        siteTitle: networkConfigData.name,
-        pageurl: `${configData.hostName}${ctx.resolvedUrl}`,
-      },
+      metadata: getMetadata(subtitle, networkConfigData, configData.hostName, ctx.resolvedUrl),
       selectedNetwork: networkConfigData,
       config: { ...configData, hostname },
     };
   }
+}
+
+
+export function getMetadata(subtitle, selectedNetwork, baseUrl, uri)
+{
+  const title = subtitle
+      ? `${selectedNetwork.name} - ${subtitle}`
+      : selectedNetwork.name;
+  return {
+  title: title,
+    description: selectedNetwork.description,
+    image: `${makeImageUrl(
+      selectedNetwork.logo,
+      baseUrl + '/api',
+    )}`,
+    siteTitle: selectedNetwork.name,
+    pageurl: `${baseUrl}${uri}`,
+  };
 }
