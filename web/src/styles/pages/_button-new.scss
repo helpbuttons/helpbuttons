@@ -69,24 +69,24 @@
 
     }
 
-    .publish__submit {  
 
-        margin: 1rem;
-        margin-bottom: 35px;
+}
 
-        .create_btn {
-            
-            width: 100%;
-            background-color: $color-gray-btn;
-            color: $color-white;
-            height: 54px;
-            font-weight: bold;
-            font-size: $font-size-general;
-            border-radius: $border-radius-circle;
-    
-        }
+.publish__submit {  
+
+    margin: 1rem 0;
+    margin-bottom: 35px;
+
+    .create_btn {
+        
+        width: 100%;
+        background-color: $color-gray-btn;
+        color: $color-white;
+        height: 54px;
+        font-weight: bold;
+        font-size: $font-size-general;
+        border-radius: $border-radius-circle;
 
     }
-
 
 }
