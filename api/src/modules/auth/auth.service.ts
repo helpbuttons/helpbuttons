@@ -95,15 +95,14 @@ export class AuthService {
       })
       .then((user) => {
         if (!newUserDto.emailVerified) {
-          return this.sendLoginToken(newUserDto).then(
+          this.sendLoginToken(newUserDto).then(
             (mailActivation) => {
               console.log(
                 `activation mail sent: ${newUserDto.email}`,
               );
             }
-          ).catch((err) => {
-            console.log(err)
-            return user
+          ).catch((error) => {
+            console.log(`error sending email: `, JSON.stringify(error))
           });
         }
         return user;
