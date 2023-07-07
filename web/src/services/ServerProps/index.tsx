@@ -27,6 +27,10 @@ export class ServerPropsService {
       console.log(error);
       throw new Error('getting network configuration ' + networkConfigURL)
     }
+    if (networkConfigData?.statusCode && networkConfigData?.statusCode == 404)
+    {
+      throw new Error('getting network configuration ' + networkConfigURL)
+    }
     
     let hostname;
 
@@ -36,7 +40,7 @@ export class ServerPropsService {
       console.log(error)
       throw new Error('getting hostname from config hostname ' + JSON.stringify(configData))
     }
-
+    
     return {
       metadata: getMetadata(subtitle, networkConfigData, configData.hostName, ctx.resolvedUrl),
       selectedNetwork: networkConfigData,
