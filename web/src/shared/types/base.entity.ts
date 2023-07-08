@@ -1,6 +1,8 @@
+import { Expose } from 'class-transformer';
 import { UpdateDateColumn, CreateDateColumn } from 'typeorm';
 
 export class BaseEntity {
+  @Expose()
   @CreateDateColumn({
     default: () => 'CURRENT_TIMESTAMP',
     type: 'timestamp',

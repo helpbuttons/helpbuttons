@@ -57,4 +57,9 @@ export class PostService {
       order: { created_at: 'DESC', comments: { created_at: 'DESC' } },
     });
   }
+
+  public deleteAllFromButton(buttonId: string)
+  {
+    return this.postRepository.delete({button: {id: buttonId}});
+  }
 }

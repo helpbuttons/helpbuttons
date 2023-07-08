@@ -23,8 +23,8 @@ export class Button extends BaseEntity {
   @Column({})
   description: string;
 
-  @Column({})
-  address: string;
+  @Column({nullable: true})
+  address?: string;
 
   @Column({ type: 'double precision' })
   public latitude: number;
