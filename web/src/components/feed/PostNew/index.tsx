@@ -1,6 +1,7 @@
 import FieldText from 'elements/Fields/FieldText';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
+import TextEditor from 'elements/TextEditor';
 import t from 'i18n';
 import { store } from 'pages';
 import { useForm } from 'react-hook-form';
@@ -42,7 +43,8 @@ export default function PostNew({ buttonId, onCreate }) {
             classNameExtra="feeds__new-message"
           >
             <div className="feeds__new-message-message">
-              <FieldText
+            <TextEditor/>
+              {/* <FieldText
                 name="title"
                 placeholder={t('post.placeholderWrite')}
                 validationError={errors.title}
@@ -50,12 +52,13 @@ export default function PostNew({ buttonId, onCreate }) {
                 setValue={setValue}
                 setFocus={setFocus}
                 {...register('message', { required: true })}
-              />
+              /> */}
             </div>
             <button type="submit" className="btn-circle btn-circle__icon btn-circle__content">
               <IoPaperPlaneOutline />
             </button>
           </Form>
+          
         </div>
       </div>
     </>
