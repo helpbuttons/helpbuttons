@@ -65,6 +65,12 @@ export class SetupDto {
   @IsOptional()
   @IsArray({})
   allowedDomains: string[];
+
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
+  from: string;
 }
 
 export class SetupDtoOut {

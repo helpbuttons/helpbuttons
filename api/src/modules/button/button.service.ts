@@ -1,7 +1,9 @@
 import {
   HttpException,
   HttpStatus,
+  Inject,
   Injectable,
+  forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
@@ -17,6 +19,9 @@ import { ValidationException } from '@src/shared/middlewares/errors/validation-f
 import { Role } from '@src/shared/types/roles';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { maxResolution } from '@src/shared/types/honeycomb.const';
+import { PostService } from '../post/post.service';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
+import { ErrorName } from '@src/shared/types/error.list';
 @Injectable()
 export class ButtonService {
   constructor(
@@ -25,6 +30,8 @@ export class ButtonService {
     private readonly tagService: TagService,
     private readonly networkService: NetworkService,
     private readonly storageService: StorageService,
+    @Inject(forwardRef(() => PostService))
+    private postService: PostService,
   ) {}
 
   async create(
@@ -218,9 +225,16 @@ export class ButtonService {
     }
   }
 
-  async delete(id: string) {
-    const res = await this.buttonRepository.delete({ id });
-    return res.affected;
+  async delete(buttonId: string) {
+    return this.postService.deleteAllFromButton(buttonId).then(() => {
+      return this.buttonRepository.delete({ id: buttonId }).then((res) => {
+        if (res.affected < 1)
+        {
+          throw new CustomHttpException(ErrorName.nothingToDelete)
+        }
+        return 'ok'; 
+      })
+    })
   }
 
   public isOwner(currentUser: User, buttonId: string) {

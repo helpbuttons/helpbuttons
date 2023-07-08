@@ -165,13 +165,8 @@ export class ButtonDelete implements WatchEvent {
 
   public watch(state: GlobalState) {
     return ButtonService.delete(this.buttonId).pipe(
-      map((rowsAffected) => {
-        console.log(rowsAffected);
-        if (rowsAffected > 0) {
-          this.onSuccess();
-        } else {
-          this.onError('error-deleting');
-        }
+      map((res) => {
+        this.onSuccess();
       }),
       catchError((error) => handleError(this.onError, error)),
     );

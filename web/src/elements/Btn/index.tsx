@@ -23,7 +23,7 @@ export enum ContentAlignment {
 }
 interface BtnProps {
     caption: string;
-    iconLink: string;
+    iconLink?: string;
     iconLeft?: IconType;
     iconRight?: IconType;
     contentAlignment?: ContentAlignment;
@@ -31,7 +31,7 @@ interface BtnProps {
     disabled?: boolean;
     isSubmitting?: boolean;
     onClick?: Function;
-    submit: boolean;
+    submit?: boolean;
 }
 
 function BtnIcon({ icon, iconLink }: { icon: IconType }) {
