@@ -223,7 +223,7 @@ function useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm }) 
         return {
           ...prevSettings,
           ...selectedNetwork.exploreSettings,
-          ...locaStorageVars,
+          // ...locaStorageVars,
           ...queryExploreSettings,
           loading: false,
         };
