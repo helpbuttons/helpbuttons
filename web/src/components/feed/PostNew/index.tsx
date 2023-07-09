@@ -1,6 +1,6 @@
-import FieldText from 'elements/Fields/FieldText';
-import { FieldTextArea } from 'elements/Fields/FieldTextArea';
+import { useEditor } from '@wysimark/react';
 import Form from 'elements/Form';
+import TextEditor from 'elements/TextEditor';
 import t from 'i18n';
 import { store } from 'pages';
 import { useForm } from 'react-hook-form';
@@ -18,17 +18,22 @@ export default function PostNew({ buttonId, onCreate }) {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const editor = useEditor({
+    initialMarkdown: '',
+  });
+
   const onSubmitLocal = (data) => {
     store.emit(
       new CreateNewPost(
         buttonId,
         {message: data.message},
         () => {
-          alertService.info(t('common.saveSuccess', ['post']));
+          alertService.success(t('common.saveSuccess', ['post']));
           setValue('message', '')
+          editor.resetMarkdown('')
           onCreate()
         },
-        (errorMessage) => alertService.error(errorMessage.caption),
+        (errorMessage) => {console.error(errorMessage); alertService.error(errorMessage.caption)},
       ),
     );
   };
@@ -42,20 +47,13 @@ export default function PostNew({ buttonId, onCreate }) {
             classNameExtra="feeds__new-message"
           >
             <div className="feeds__new-message-message">
-              <FieldText
-                name="title"
-                placeholder={t('post.placeholderWrite')}
-                validationError={errors.title}
-                watch={watch}
-                setValue={setValue}
-                setFocus={setFocus}
-                {...register('message', { required: true })}
-              />
+            <TextEditor editor={editor} placeholder={t('post.placeholderWrite')} setMessage={(messageMarkDown) => {setValue('message', messageMarkDown)}}/>
             </div>
             <button type="submit" className="btn-circle btn-circle__icon btn-circle__content">
               <IoPaperPlaneOutline />
             </button>
           </Form>
+          
         </div>
       </div>
     </>
