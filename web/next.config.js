@@ -10,7 +10,8 @@ module.exports = {
     //     secret: process.env.JWT_SECRET
     // },
     publicRuntimeConfig: {
-        apiUrl: '/api/', // TODO: remove ME!
+        apiUrl: '/api/',
+        buttonTypes: process.env.BUTTON_TYPES,
     },
     typescript:{
         ignoreBuildErrors: true,

@@ -118,23 +118,21 @@ export default function HomeInfo({
                       {t('homeinfo.buttons', [
                         config.buttonCount.toString(),
                       ])}
-
-                      {selectedNetwork.buttonTypes.map(
-                        (totalButtonsByType, idx) => {
-                          const buttonType = buttonTypes.find((buttonType) => totalButtonsByType.type == buttonType.name) 
-                          return (
-                          <div
-                            key={idx}
-                            style={buttonColorStyle(
-                              buttonType.cssColor,
-                            )}
-                          >
-                            <div className="btn-filter__icon"></div>
-                            <div className="btn-with-icon__text">
-                              {buttonType.caption} # {totalButtonsByType.count}
-                            </div>
-                          </div>
-                        )},
+                      {buttonTypes.map((buttonType, idx) => {
+                              const buttonTypeFound = selectedNetwork.buttonTypesCount.find((buttonTypeCount) => buttonTypeCount.type == buttonType.name) 
+                              return (
+                              <div
+                                key={idx}
+                                style={buttonColorStyle(
+                                  buttonType.cssColor,
+                                )}
+                              >
+                                <div className="btn-filter__icon"></div>
+                                <div className="btn-with-icon__text">
+                                  {buttonType.caption} # {buttonTypeFound?.count ? buttonTypeFound?.count : 0}
+                                </div>
+                              </div>
+                              )},
                       )}
                     </div>
                     <div>

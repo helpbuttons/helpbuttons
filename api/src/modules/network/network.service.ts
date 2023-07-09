@@ -109,7 +109,7 @@ export class NetworkService {
       }).then((defaultNetwork) => {
         return this.entityManager.query(`select * from network_button_types`).then((networkByButtonTypes) => {
           console.log(networkByButtonTypes)
-          return {...defaultNetwork, buttonTypes: networkByButtonTypes}
+          return {...defaultNetwork, buttonTypesCount: networkByButtonTypes}
         });
       })
       .catch((error) => {
