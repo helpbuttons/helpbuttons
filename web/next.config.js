@@ -11,7 +11,7 @@ module.exports = {
     // },
     publicRuntimeConfig: {
         apiUrl: '/api/',
-        buttonTypes: process.env.BUTTON_TYPES,
+        buttonTypes: process.env.BUTTON_TYPES ? process.env.BUTTON_TYPES : '[{"name":"offer","caption":"Offer","color":"custom","cssColor":"#FFDD02"},{"name":"need","caption":"Need","color":"custom","cssColor":"#19AF96"},{"name":"service","caption":"Service","color":"custom","cssColor":"#EA5648"}]',
     },
     typescript:{
         ignoreBuildErrors: true,
