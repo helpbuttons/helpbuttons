@@ -84,6 +84,7 @@ function MyApp({ Component, pageProps }) {
               return;
             }
             if (error == 'not-found' || error == 'nosysadminconfig') {
+              console.error(error)
               router.push(SetupSteps.SYSADMIN_CONFIG);
             }
 

@@ -28,6 +28,7 @@ export default function HomeInfo({
 }) {
   useEffect(() => {
     if (!config) {
+      console.error("config not found")
       router.push(SetupSteps.SYSADMIN_CONFIG);
     }
   }, []);
@@ -219,6 +220,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     const serverProps = await ServerPropsService.general('Home', ctx);
     return { props: serverProps };
   } catch (err) {
+    console.log(err)
     return {
       props: {
         metadata: null,
