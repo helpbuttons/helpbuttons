@@ -1,6 +1,5 @@
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
 import { readableTimeLeftToDate } from "shared/date.utils";
-import ReactMarkdown from 'react-markdown'
 
 export default function PostMessage({ post }) {
   return (
@@ -24,7 +23,7 @@ export default function PostMessage({ post }) {
               </div>
               <h2 className="card-notification__title"></h2>
               <div className="card-notification__paragraph">
-                <ReactMarkdown>{post.message}</ReactMarkdown>
+                {post.message}
               </div>    
             </div>    
           </div>            
