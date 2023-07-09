@@ -67,8 +67,7 @@ export default function Signup() {
   const onSuccess = () => {
     const returnUrl: string = router.query.returnUrl
       ? router.query.returnUrl.toString()
-      : '/';
-
+      : '/ProfileEdit';
     store.emit(new NavigateTo(returnUrl));
   };
   
