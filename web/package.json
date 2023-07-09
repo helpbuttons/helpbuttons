@@ -55,6 +55,7 @@
     "react-icons": "^4.3.1",
     "react-images-uploading": "^3.1.6",
     "react-input-emoji": "^5.0.0",
+    "react-markdown": "^8.0.7",
     "react-redux": "^7.2.4",
     "react-select": "^5.7.2",
     "react-time-picker": "^5.2.0",

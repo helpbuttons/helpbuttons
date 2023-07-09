@@ -13,7 +13,7 @@ export enum ErrorName{
     UnspecifiedInternalServerError = 'unspecified-nternal-server-error',
     EmailAlreadyRegistered = 'email-already-registered',
     UsernameAlreadyRegistered = 'username-already-registered',
-    nothingToDelete = 'nothing-to-delete'
+    nothingToDelete = 'nothing-to-delete',
 }
 
 export const errorsList: ErrorText[] = 

@@ -13,7 +13,9 @@ export function handleError(onError, error) {
     });
     if (errorText && errorText.length > 0) {
       onError({caption: errorText[0].caption, errorName: err.message});
-    } else {
+    } else if (err.statusCode == HttpStatus.BAD_REQUEST && err.message == 'validation-error' && err.validationErrors) {
+      onError({caption: err.validationErrors.message[0], errorName: err.message});
+    }else{
       console.error(`could not find error "${err.message}" [${err.statusCode}] `)
       onError(error.message);
     }

@@ -1,8 +1,13 @@
-import { Editable, useEditor } from '@wysimark/react';
+import { Editable } from '@wysimark/react';
 
-export default function TextEditor() {
-  const editor = useEditor({
-    initialMarkdown: 'Type your post text here...',
-  });
-  return <Editable editor={editor} />;
+export default function TextEditor({setMessage, placeholder, editor}) {
+
+return (<>
+  <Editable editor={editor} 
+    onChange={() => {
+        setMessage(editor.getMarkdown())
+      }}
+      placeholder={placeholder}/>
+  </>
+  );
 }
