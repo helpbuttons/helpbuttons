@@ -25,12 +25,11 @@ export const networksInitial = {
 };
 
 export class setNetwork implements UpdateEvent {
-  public constructor(private selectedNetwork) {}
+  public constructor(private network) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      const selectedNetwork = {...this.selectedNetwork, exploreSettings: JSON.parse(this.selectedNetwork.exploreSettings)}
-      newState.networks.selectedNetwork = selectedNetwork;
+      newState.networks.selectedNetwork = this.network
     });
   }
 }
@@ -78,8 +77,7 @@ export class SelectedNetworkFetched implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.networks.selectedNetwork = this.network;
-      newState.networks.selectedNetwork.exploreSettings = JSON.parse(this.network.exploreSettings);
+      newState.networks.selectedNetwork = this.network
       newState.networks.selectedNetworkLoading = false;
     });
   }

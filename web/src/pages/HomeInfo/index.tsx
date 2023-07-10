@@ -46,7 +46,7 @@ export default function HomeInfo({
 
   const filters = {
     ...defaultFilters,
-    count: config.buttonCount,
+    count: selectedNetwork.buttonCount
   };
 
   const handleSelectedPlace = (place) => {
@@ -117,7 +117,7 @@ export default function HomeInfo({
                   <hr></hr>
                   <div className="info-overlay__description">
                      {t('homeinfo.buttons', [
-                        config.buttonCount.toString(),
+                        selectedNetwork.buttonCount,
                       ])}
                     <div className='info-overlay__hashtags'>
 

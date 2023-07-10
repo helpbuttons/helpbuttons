@@ -19,7 +19,6 @@ export const checkDatabase = async (
 ): Promise<{
   migrationsNumber: number;
   userCount: number;
-  buttonCount: number;
 }> => {
   try {
     const pool = new Pool({
@@ -37,14 +36,10 @@ export const checkDatabase = async (
     const userCount = await poolconnection.query(
       `SELECT count(id) from public.user`,
     );
-    const buttonCount = await poolconnection.query(
-      `SELECT count(id) from button where deleted = false`,
-    );
 
     return {
       migrationsNumber: migrationsNumber.rows[0].count,
       userCount: userCount.rows[0].count,
-      buttonCount: buttonCount.rows[0].count,
     };
   } catch (error) {
     let msg = `Database connection error: ${error.message}`;
@@ -55,7 +50,6 @@ export const checkDatabase = async (
       return {
         migrationsNumber: 0,
         userCount: 0,
-        buttonCount: 0,
       };
     }
     if (error?.errno === -3008) {
@@ -86,7 +80,7 @@ export const getConfig = async () => {
   const config = require(`../../..${configFileName}`);
 
   return checkDatabase(config).then(
-    ({ migrationsNumber, userCount, buttonCount }) => {
+    ({ migrationsNumber, userCount }) => {
       const dataJSON = fs.readFileSync(configFullPath, 'utf8');
       const data: SetupDto = new SetupDto(JSON.parse(dataJSON));
 
@@ -97,7 +91,6 @@ export const getConfig = async () => {
         allowedDomains: data.allowedDomains,
         databaseNumberMigrations: migrationsNumber,
         userCount: userCount,
-        buttonCount: buttonCount,
         commit: version.git
       };
 
