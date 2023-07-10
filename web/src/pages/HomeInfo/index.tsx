@@ -3,6 +3,7 @@ import { GlobalState, store } from 'pages';
 
 import router from 'next/router';
 import t from 'i18n';
+import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import NetworkLogo from 'components/network/Components';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import NavLink from 'elements/Navlink';
@@ -115,24 +116,25 @@ export default function HomeInfo({
                   </div>
                   <hr></hr>
                   <div className="info-overlay__description">
-                    <div>
-                      {t('homeinfo.buttons', [
+                     {t('homeinfo.buttons', [
                         config.buttonCount.toString(),
                       ])}
+                    <div className='info-overlay__hashtags'>
+
                       {buttonTypes.map((buttonType, idx) => {
                               const buttonTypeFound = selectedNetwork.buttonTypesCount.find((buttonTypeCount) => buttonTypeCount.type == buttonType.name) 
+                              const buttoTypeCountText = (buttonTypeFound?.count ? buttonTypeFound?.count : 0).toString() + " " + buttonType.caption 
                               return (
-                              <div
-                                key={idx}
-                                style={buttonColorStyle(
-                                  buttonType.cssColor,
-                                )}
-                              >
-                                <div className="btn-filter__icon"></div>
-                                <div className="btn-with-icon__text">
-                                  {buttonType.caption} # {buttonTypeFound?.count ? buttonTypeFound?.count : 0}
+
+                                <div
+                                  key={idx}
+                                  style={buttonColorStyle(
+                                    buttonType.cssColor,
+                                  )}
+                                >
+                                  <Btn btnType={BtnType.filter} iconLeft={IconType.green} caption={buttoTypeCountText} />
                                 </div>
-                              </div>
+
                               )},
                       )}
                     </div>

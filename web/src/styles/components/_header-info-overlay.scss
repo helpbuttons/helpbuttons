@@ -132,6 +132,14 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 
   }
 
+  .info-overlay__hashtags {
+
+    display: flex;
+    padding-bottom: $padding-medium;
+    padding-top: $padding-medium;
+
+  }
+
 }
 
 .card__section {
