@@ -9,10 +9,9 @@ export default function PostComments({ comments }) {
           <>
             {comments.map((comment) => {
               return (
-                <div style={{"padding" : '2em', backgroundColor: 'lightgrey'}}>
-                  <hr />
-                  <PostMessage post={comment} />
-                </div>
+                  <div className='card-notification--comment'>
+                    <PostMessage post={comment} />
+                  </div>
               );
             })}
           </>
