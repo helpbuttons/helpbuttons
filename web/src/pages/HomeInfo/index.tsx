@@ -3,7 +3,11 @@ import { GlobalState, store } from 'pages';
 
 import router from 'next/router';
 import t from 'i18n';
-import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
+import Btn, {
+  ContentAlignment,
+  BtnType,
+  IconType,
+} from 'elements/Btn';
 import NetworkLogo from 'components/network/Components';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import NavLink from 'elements/Navlink';
@@ -21,15 +25,25 @@ import { NextPageContext } from 'next';
 import { SetupSteps } from 'shared/setupSteps';
 import { useEffect, useState } from 'react';
 import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import List from 'components/list/List';
+import AdvancedFilters from 'components/search/AdvancedFilters';
+import { updateFilters } from 'state/Explore';
+import { useToggle } from 'shared/custom.hooks';
 
 export default function HomeInfo({
   metadata,
   selectedNetwork,
   config,
 }) {
+  const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
+  const results = useRef(
+    store,
+    (state: GlobalState) => state.explore.results,
+  );
+
   useEffect(() => {
     if (!config) {
-      console.error("config not found")
+      console.error('config not found');
       router.push(SetupSteps.SYSADMIN_CONFIG);
     }
   }, []);
@@ -44,9 +58,16 @@ export default function HomeInfo({
   const [navigatorCoordinates, setNavigatorCoordinates] =
     useState(null);
 
-  const filters = {
-    ...defaultFilters,
-    count: selectedNetwork.buttonCount
+  const filters = useRef(
+    store,
+    (state: GlobalState) => state.explore.filters,
+  );
+  const setFilters = (newFilters) => {
+    store.emit(new updateFilters(newFilters));
+    if(!newFilters.cleared)
+    {
+      router.push('/Explore')
+    }
   };
 
   const handleSelectedPlace = (place) => {
@@ -65,13 +86,22 @@ export default function HomeInfo({
           } as React.CSSProperties
         }
       >
-        <div className="info-overlay__search-section">
-          <NavHeader
-            toggleShowFiltersForm={() => {}}
-            filters={filters}
-            isHome={true}
-          />
-        </div>
+        {filters && (
+          <div className="info-overlay__search-section">
+            <NavHeader
+              toggleShowFiltersForm={toggleShowFiltersForm}
+              filters={filters}
+              results={{count: results ? results.length : selectedNetwork.buttonCount}}
+            />
+            <AdvancedFilters
+              showFiltersForm={showFiltersForm}
+              toggleShowFiltersForm={toggleShowFiltersForm}
+              setFilters={setFilters}
+              filters={filters}
+              isHome={true}
+            />
+          </div>
+        )}
         <div className="info-overlay__container">
           <div className="info-overlay__content">
             <>
@@ -116,27 +146,38 @@ export default function HomeInfo({
                   </div>
                   <hr></hr>
                   <div className="info-overlay__description">
-                     {t('homeinfo.buttons', [
-                        selectedNetwork.buttonCount,
-                      ])}
-                    <div className='info-overlay__hashtags'>
-
+                    {t('homeinfo.buttons', [
+                      selectedNetwork.buttonCount,
+                    ])}
+                    <div className="info-overlay__hashtags">
                       {buttonTypes.map((buttonType, idx) => {
-                              const buttonTypeFound = selectedNetwork.buttonTypesCount.find((buttonTypeCount) => buttonTypeCount.type == buttonType.name) 
-                              const buttoTypeCountText = (buttonTypeFound?.count ? buttonTypeFound?.count : 0).toString() + " " + buttonType.caption 
-                              return (
-
-                                <div
-                                  key={idx}
-                                  style={buttonColorStyle(
-                                    buttonType.cssColor,
-                                  )}
-                                >
-                                  <Btn btnType={BtnType.filter} iconLeft={IconType.green} caption={buttoTypeCountText} />
-                                </div>
-
-                              )},
-                      )}
+                        const buttonTypeFound =
+                          selectedNetwork.buttonTypesCount.find(
+                            (buttonTypeCount) =>
+                              buttonTypeCount.type == buttonType.name,
+                          );
+                        const buttoTypeCountText =
+                          (buttonTypeFound?.count
+                            ? buttonTypeFound?.count
+                            : 0
+                          ).toString() +
+                          ' ' +
+                          buttonType.caption;
+                        return (
+                          <div
+                            key={idx}
+                            style={buttonColorStyle(
+                              buttonType.cssColor,
+                            )}
+                          >
+                            <Btn
+                              btnType={BtnType.filter}
+                              iconLeft={IconType.green}
+                              caption={buttoTypeCountText}
+                            />
+                          </div>
+                        );
+                      })}
                     </div>
                     <div>
                       {t('homeinfo.users', [
@@ -222,7 +263,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     const serverProps = await ServerPropsService.general('Home', ctx);
     return { props: serverProps };
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return {
       props: {
         metadata: null,

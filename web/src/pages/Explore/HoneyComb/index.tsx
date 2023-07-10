@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 //components
-import { FindButtons, updateFilters } from 'state/Explore';
+import { FindButtons, updateButtonsFiltered, updateFilters } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -103,7 +103,8 @@ function HoneyComb({ router }) {
               >
                 <NavHeader
                   toggleShowFiltersForm={toggleShowFiltersForm}
-                  filters={{ ...filters, count: listButtons.length }}
+                  filters={filters}
+                  results={{count: listButtons.length}}
                 />
                 <List  
                   showFiltersForm={showFiltersForm}
@@ -114,8 +115,6 @@ function HoneyComb({ router }) {
                   <AdvancedFilters
                     showFiltersForm={showFiltersForm}
                     toggleShowFiltersForm={toggleShowFiltersForm}
-                    mapZoom={exploreSettings.zoom}
-                    mapBounds={exploreSettings.bounds}
                     setFilters={setFilters}
                     filters={filters}
                   />
@@ -276,6 +275,9 @@ function useHexagonMap({
   const [densityMapNeedsUpdate, setDensityMapNeedsUpdate] =
     useToggle(true);
 
+  useEffect(() => {
+    store.emit(new updateButtonsFiltered(listButtons))
+  }, [listButtons])
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
   let cachedH3Hexes = React.useRef([]);
   const calculateNonCachedHexagons = (

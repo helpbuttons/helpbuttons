@@ -5,7 +5,7 @@ import { GlobalState, store } from "pages";
 import { buttonTypes } from "shared/buttonTypes";
 
 ///search button in explore and home
-function HeaderSearch({filters, toggleShowFiltersForm}) {
+function HeaderSearch({filters, results}) {
 
   return (
 
@@ -13,8 +13,8 @@ function HeaderSearch({filters, toggleShowFiltersForm}) {
 
             <div className="header-search__form">
 
-              <div className="header-search__column" onClick={(e) => {toggleShowFiltersForm(true)}}>
-                <SearchText count={filters.count} where={filters.where}/>
+              <div className="header-search__column">
+                <SearchText count={results.count} where={filters.where}/>
                 <SearchInfo helpButtonTypes={filters.helpButtonTypes} when={filters.when} what={filters.query}/>
                 <div className="header-search__icon"><IoSearch/></div>
               </div>
