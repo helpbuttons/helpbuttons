@@ -113,7 +113,6 @@ export default function Feed({ button }: { button: Button }) {
 export function FeedElement({ post, loggedInUser, onNewComment }) {
   const [showNewCommentDialog, setShowNewCommentDialog] =
     useState(false);
-  const [showComments, setShowComments] = useState(false);
 
   return (
     <div className="feed-element">
@@ -128,20 +127,7 @@ export function FeedElement({ post, loggedInUser, onNewComment }) {
 
         <>
           <div className="card-notification__answer-btn">
-            <a
-              className="card-notification__comment-count"
-              onClick={() => {
-                setShowComments(!showComments);
-              }}
-            >
-              {post.comments.length > 0
-                ? `${showComments ? 'Ocultar' : 'Ver'} ${
-                    post.comments.length
-                  } ${t('post.comment')}${
-                    post.comments.length > 1 ? 's' : ''
-                  }`
-                : ''}
-            </a>
+            
             {loggedInUser && (
               <Btn
                 submit={true}
@@ -160,15 +146,12 @@ export function FeedElement({ post, loggedInUser, onNewComment }) {
               postId={post.id}
               onSubmit={() => {
                 onNewComment();
-                setShowComments(true);
                 setShowNewCommentDialog(false);
               }}
             />
           )}
         </>
-        {showComments && (
-            <PostComments comments={post.comments} />
-        )}
+        <PostComments comments={post.comments} />
       </div>
     </div>
   );
