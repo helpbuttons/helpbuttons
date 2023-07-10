@@ -153,6 +153,13 @@ $card-notification-delete-size: 100px;
 
 }
 
+.card-notification--comment {
+
+  border-top: 1px dashed $color-ligth-gray ;
+  padding-top: $padding-big;
+
+}
+
 .card-notification__comment-count {
 
   margin-right: 20px;

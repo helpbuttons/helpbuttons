@@ -9,9 +9,9 @@ function NavHeader({ toggleShowFiltersForm, filters, isHome = false}) {
     e.preventDefault()
     if (isHome)
     {
-      router.push(`/Explore#`)
+      // router.push(`/Explore#`)
       // TODO: when loading the filters, the bounds are not loaded corretly.. 
-      // router.push(`/Explore#?showFilters=true`)
+      router.push(`/Explore#?showFilters=true`)
     }
   }
   return (
