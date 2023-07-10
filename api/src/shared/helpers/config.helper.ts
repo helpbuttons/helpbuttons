@@ -38,7 +38,7 @@ export const checkDatabase = async (
       `SELECT count(id) from public.user`,
     );
     const buttonCount = await poolconnection.query(
-      `SELECT count(id) from button`,
+      `SELECT count(id) from button where deleted = false`,
     );
 
     return {

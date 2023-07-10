@@ -2,6 +2,7 @@ import { IoSearch } from "react-icons/io5";
 import React, {useState} from "react";
 import { useRef } from "store/Store";
 import { GlobalState, store } from "pages";
+import { buttonTypes } from "shared/buttonTypes";
 
 ///search button in explore and home
 function HeaderSearch({filters, toggleShowFiltersForm}) {
@@ -55,8 +56,8 @@ function SearchInfo({helpButtonTypes, when, what})
     {
       return ''
     }
-  
-    return helpButtonTypes.toString();
+    const buttonTypesCaptions = helpButtonTypes.map((type) => (buttonTypes.find((buttonType) => type == buttonType.name)).caption)
+    return buttonTypesCaptions.toString();
   }
   const whenText = (when) => {
     if (when == 'any')

@@ -46,7 +46,7 @@ export default function HomeInfo({
 
   const filters = {
     ...defaultFilters,
-    results: { count: config.buttonCount },
+    count: config.buttonCount,
   };
 
   const handleSelectedPlace = (place) => {
