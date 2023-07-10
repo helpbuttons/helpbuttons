@@ -38,6 +38,11 @@ import { withRouter } from 'next/router';
 
 
 export function ExplorePins({ router }) {
+  // const buttonsBounds = useRef(
+  //   store,
+  //   (state: GlobalState) => state.explore.mapBondsButtons,
+  // );
+
   // const currentButton = useRef(
   //   store,
   //   (state: GlobalState) => state.explore.currentButton,

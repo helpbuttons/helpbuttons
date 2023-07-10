@@ -1,4 +1,3 @@
-import { NetworkService } from 'services/Networks';
 import { makeImageUrl } from 'shared/sys.helper';
 
 export class ServerPropsService {
@@ -24,17 +23,17 @@ export class ServerPropsService {
         next: { revalidate: 30 },
       });
       networkConfigData = await networkConfigRes.json();
-      networkConfigData = NetworkService.hydrateNetwork(networkConfigData)
     } catch (error) {
       console.log(error);
-      throw new Error('getting network configuration ')
+      throw new Error('getting network configuration ' + networkConfigURL)
     }
     if (networkConfigData?.statusCode && networkConfigData?.statusCode == 404)
     {
-      throw new Error('getting network configuration ')
+      throw new Error('getting network configuration ' + networkConfigURL)
     }
     
     let hostname;
+
     try {
       ({ hostname } = new URL(configData.hostName));
     } catch (error) {
