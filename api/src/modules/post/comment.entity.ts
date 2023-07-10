@@ -17,4 +17,7 @@ export class Comment extends BaseEntity {
 
   @ManyToOne((author) => User)
   author: User;
+
+  @Column('boolean', {default: false})
+  deleted: boolean;
 }

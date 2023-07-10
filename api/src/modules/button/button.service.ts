@@ -102,7 +102,7 @@ export class ButtonService {
 
   async findById(id: string) {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id },
+      where: { id, deleted: false },
       relations: [
         'owner',
       ],
@@ -151,51 +151,6 @@ export class ButtonService {
     return this.buttonRepository.save([button]);
   }
 
-  async findAll(bounds: any) {
-    try {
-      const buttonsOnBounds = await this.buttonRepository
-        .createQueryBuilder('button')
-        .select('id')
-        .where(
-          `
-      ST_Contains(ST_GEOMFROMTEXT('POLYGON((
-      ${bounds.southWest.lat}
-      ${bounds.northEast.lng},
-    
-      ${bounds.northEast.lat}
-      ${bounds.northEast.lng},
-    
-      ${bounds.northEast.lat}
-      ${bounds.southWest.lng},
-    
-      ${bounds.southWest.lat}
-      ${bounds.southWest.lng},
-    
-      ${bounds.southWest.lat}
-      ${bounds.northEast.lng}
-    
-    ))'), button.location)`,
-        ).limit(1000)
-        .execute();
-
-      const buttonsIds = buttonsOnBounds.map((button) => button.id);
-
-      return this.buttonRepository.find({
-        relations: ['network', 'feed', 'owner'],
-        where: {
-          id: In(buttonsIds),
-        },
-        order: {
-          created_at: 'DESC',
-        },
-      });
-    } catch (err) {
-      console.log(err);
-      return [];
-    }
-  }
-
-  // NOT USED.. for the record stays here
   async findh3(resolution, hexagons) {
     try {
       if(hexagons && hexagons.length > 500)
@@ -214,6 +169,7 @@ export class ButtonService {
           relations: ['feed', 'owner'],
           where: {
             id: In(buttonsIds),
+            deleted: false,
           },
           order: {
             created_at: 'DESC',
@@ -226,15 +182,11 @@ export class ButtonService {
   }
 
   async delete(buttonId: string) {
-    return this.postService.deleteAllFromButton(buttonId).then(() => {
-      return this.buttonRepository.delete({ id: buttonId }).then((res) => {
-        if (res.affected < 1)
-        {
-          throw new CustomHttpException(ErrorName.nothingToDelete)
-        }
-        return 'ok'; 
+    return this.findById(buttonId).then((button) => {
+      return this.buttonRepository.update(button.id,{ deleted: true }).then((res) => {
+        return button
       })
-    })
+    }) 
   }
 
   public isOwner(currentUser: User, buttonId: string) {
