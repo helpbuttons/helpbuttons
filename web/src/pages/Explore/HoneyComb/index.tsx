@@ -26,12 +26,7 @@ import {
   HbMapTiles,
 } from 'components/map/Map/Map.consts';
 import { useDebounce, useToggle } from 'shared/custom.hooks';
-import { h3SetToFeature } from 'geojson2h3';
 import AdvancedFilters from 'components/search/AdvancedFilters';
-import {
-  ButtonFilters,
-  defaultFilters,
-} from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { isPointWithinRadius } from 'geolib';
 
@@ -46,6 +41,11 @@ function HoneyComb({ router }) {
   const selectedNetwork = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
+  const results = useRef(
+    store,
+    (state: GlobalState) => state.explore.results,
   );
 
   const filters = useRef(
@@ -69,7 +69,6 @@ function HoneyComb({ router }) {
   } = useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm });
 
   const {
-    listButtons,
     h3TypeDensityHexes,
     handleBoundsChange,
     setHexagonsToFetch,
@@ -92,7 +91,8 @@ function HoneyComb({ router }) {
 
   return (
       <>
-      <LoadabledComponent loading={!filters}>
+      {results && 
+      <LoadabledComponent loading={!results}>
         <div className="index__container">
             <>
               <div
@@ -104,11 +104,11 @@ function HoneyComb({ router }) {
                 <NavHeader
                   toggleShowFiltersForm={toggleShowFiltersForm}
                   filters={filters}
-                  results={{count: listButtons.length}}
+                  results={{count: results.length}}
                 />
                 <List  
                   showFiltersForm={showFiltersForm}
-                  buttons={listButtons}
+                  buttons={results}
                   showLeftColumn={showLeftColumn}
                   onLeftColumnToggle={toggleShowLeftColumn}
                 />
@@ -137,6 +137,7 @@ function HoneyComb({ router }) {
           
         </div>
         </LoadabledComponent>
+      }
       </>
   );
 }
