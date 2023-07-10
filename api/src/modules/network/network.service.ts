@@ -108,7 +108,7 @@ export class NetworkService {
         })
       }).then((defaultNetwork) => {
         return this.entityManager.query(`select * from network_button_types`).then((networkByButtonTypes) => {
-          return {...defaultNetwork, buttonTypesCount: networkByButtonTypes}
+          return {...defaultNetwork, buttonTypesCount: networkByButtonTypes, exploreSettings: JSON.parse(defaultNetwork.exploreSettings), buttonCount: networkByButtonTypes.reduce((totalCount, buttonType) => totalCount + parseInt(buttonType.count), 0)}
         });
       })
       .catch((error) => {
