@@ -19,7 +19,7 @@
     "loginSubtitle": "Enter or create your account!",
     "locationDetected": "Do you want to navigate to check buttons in your region?",
     "stats": "Instance stats",
-    "buttons": "{0} buttons in this instance",
+    "buttons": "There are {0} helpbuttons in this network",
     "users": "{0} users in this instance",
     "administeredby": "Administered by ",
     "actions": "Actions"

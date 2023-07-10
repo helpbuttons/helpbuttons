@@ -36,7 +36,7 @@ function SearchText({count, where}) {
   const address = (where) => {
     if(where.address && where.radius)
     {
-      return `· ${where.address} · ${where.radius}km`
+      return `in ${where.address} · ${where.radius}km`
     }
     if(selectedNetwork){
       return `in ${selectedNetwork.name}`
@@ -45,7 +45,7 @@ function SearchText({count, where}) {
     }
   }
 
-  return <div className="header-search__label">{count} helpbuttons found {address(where)}</div>
+  return <div className="header-search__label">{count} found {address(where)}</div>
 }
 
 function SearchInfo({helpButtonTypes, when, what})
@@ -75,7 +75,7 @@ function SearchInfo({helpButtonTypes, when, what})
     return what + " · ";
   }
 
-  return <div className="header-search__info">{whatText(what)} {types(helpButtonTypes)} · {whenText(when)}</div>
+  return <div className="header-search__info">{whatText(what)} {types(helpButtonTypes)} {whenText(when)}</div>
 }
 
 
