@@ -1,25 +1,18 @@
-import { Router } from 'next/router';
-import { map, tap, catchError } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { produce } from 'immer';
 
 import { WatchEvent } from 'store/Event';
 import { UpdateEvent } from '../store/Event';
 
-import { alertService } from 'services/Alert';
 import { ButtonService } from 'services/Buttons';
-import { Bounds, Point } from 'pigeon-maps';
+import { Point } from 'pigeon-maps';
 import { of } from 'rxjs';
-import { isHttpError } from 'services/HttpService';
 import { GlobalState, store } from 'pages';
 import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
-import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
 import { handleError } from './helper';
 
-import { debounceTime } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { convertBoundsToGeoJsonHexagons } from 'shared/honeycomb.utils';
 import { ButtonFilters, defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 interface ExploreMapProps {
   defaultCenter: Point;
@@ -32,8 +25,8 @@ export interface ExploreState {
   mapCenter;
   mapZoom;
   currentButton: Button;
-  mapBondsButtons: Button[];
   filters: ButtonFilters;
+  results: Button[];
 }
 
 export const exploreInitial = {
@@ -41,8 +34,8 @@ export const exploreInitial = {
   mapCenter: null,
   mapZoom: -1,
   currentButton: null,
-  mapBondsButtons: [],
-  filters: defaultFilters
+  filters: defaultFilters,
+  results: []
 };
 
 export class FindButtons implements WatchEvent {
@@ -138,24 +131,6 @@ export class ClearCurrentButton implements UpdateEvent {
     });
   }
 }
-export class SetAsCurrentButton implements WatchEvent {
-  public constructor(private buttonId: string) {}
-
-  public watch(state: GlobalState) {
-    if (this.buttonId == state.explore.currentButton?.id) {
-      return of(undefined);
-    }
-    state.explore.mapBondsButtons.filter((button) => {
-      if (button.id == this.buttonId) {
-        return new ButtonFound(button);
-      }
-    });
-    return ButtonService.findById(this.buttonId).pipe(
-      map((button) => new ButtonFound(button)),
-    );
-  }
-}
-
 export class ButtonDelete implements WatchEvent {
   public constructor(
     private buttonId: string,
@@ -205,6 +180,17 @@ export class updateFilters implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.filters = this.filters;
+    });
+  }
+}
+
+
+export class updateButtonsFiltered implements UpdateEvent {
+  public constructor(private buttons: Button[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.results = this.buttons;
     });
   }
 }
