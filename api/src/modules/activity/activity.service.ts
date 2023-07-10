@@ -16,6 +16,7 @@ export class ActivityService {
   @OnEvent(ActivityEventName.NewPost)
   @OnEvent(ActivityEventName.NewPostComment)
   @OnEvent(ActivityEventName.NewButton)
+  @OnEvent(ActivityEventName.DeleteButton)
   async notifyOwner(payload: any) {
     const activity = {
       id: dbIdGenerator(),
