@@ -25,6 +25,7 @@ export interface ExploreMapState {
   filters: ButtonFilters;
   listButtons: Button[];  // if hexagon clicked, can be different from boundsButtons
   boundsFilteredButtons: Button[];
+  densityMap: any[];
   loaded: boolean;
 }
 
@@ -38,6 +39,7 @@ export const exploreInitial = {
     filters: defaultFilters,
     listButtons: [], // if hexagon clicked, can be different from boundsButtons
     boundsFilteredButtons: [],
+    densityMap: [],
     loaded: false,
   }
 };
@@ -184,6 +186,7 @@ export class UpdateFilters implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.filters = this.filters;
+      console.log('updating buttons... filters changed')
       newState.explore.map.loaded = false;
     });
   }
@@ -195,6 +198,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.boundsFilteredButtons = this.boundsFilteredButtons;
+      console.log('loaded filtered buttons')
       newState.explore.map.loaded = true
     });
   }
@@ -205,6 +209,7 @@ export class UpdateExploreUpdating implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      console.log('updating explore ?')
       newState.explore.map.loaded = false
     });
   }
@@ -214,8 +219,19 @@ export class UpdateListButtons implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      console.log('loaded list of buttons')
       newState.explore.map.listButtons = this.listButtons;
       newState.explore.map.loaded = true
+    });
+  }
+}
+
+export class UpdateDensityMap implements UpdateEvent {
+  public constructor(private densityMap: any[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.densityMap = this.densityMap;
     });
   }
 }
