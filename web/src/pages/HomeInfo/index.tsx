@@ -26,6 +26,7 @@ import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { UpdateFilters } from 'state/Explore';
+import Alert from 'components/overlay/Alert';
 
 export default function HomeInfo({
   metadata,
@@ -42,6 +43,11 @@ export default function HomeInfo({
   const [navigatorCoordinates, setNavigatorCoordinates] =
     useState(null);
 
+  if(!config)
+  {
+    return (<Alert>Error getting backend</Alert>)
+  }
+  
   return (
     <>
       <SEO {...metadata} />
@@ -94,7 +100,7 @@ export default function HomeInfo({
                     {selectedNetwork.description}
                   </div>
                   <div className="info-overlay__hashtags">
-                    {selectedNetwork.tags.map((tag) => {
+                  Explore{selectedNetwork.tags.map((tag) => {
                       return <div className="hashtag">{tag}</div>;
                     })}
                   </div>
