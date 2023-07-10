@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 //components
-import { FindButtons, updateButtonsFiltered, updateFilters } from 'state/Explore';
+import { FindButtons, updateFilters } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -26,7 +26,12 @@ import {
   HbMapTiles,
 } from 'components/map/Map/Map.consts';
 import { useDebounce, useToggle } from 'shared/custom.hooks';
+import { h3SetToFeature } from 'geojson2h3';
 import AdvancedFilters from 'components/search/AdvancedFilters';
+import {
+  ButtonFilters,
+  defaultFilters,
+} from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { isPointWithinRadius } from 'geolib';
 
@@ -41,11 +46,6 @@ function HoneyComb({ router }) {
   const selectedNetwork = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
-  );
-
-  const results = useRef(
-    store,
-    (state: GlobalState) => state.explore.results,
   );
 
   const filters = useRef(
@@ -69,6 +69,7 @@ function HoneyComb({ router }) {
   } = useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm });
 
   const {
+    listButtons,
     h3TypeDensityHexes,
     handleBoundsChange,
     setHexagonsToFetch,
@@ -91,8 +92,7 @@ function HoneyComb({ router }) {
 
   return (
       <>
-      {results && 
-      <LoadabledComponent loading={!results}>
+      <LoadabledComponent loading={!filters}>
         <div className="index__container">
             <>
               <div
@@ -103,18 +103,19 @@ function HoneyComb({ router }) {
               >
                 <NavHeader
                   toggleShowFiltersForm={toggleShowFiltersForm}
-                  filters={filters}
-                  results={{count: results.length}}
+                  filters={{ ...filters, count: listButtons.length }}
                 />
                 <List  
                   showFiltersForm={showFiltersForm}
-                  buttons={results}
+                  buttons={listButtons}
                   showLeftColumn={showLeftColumn}
                   onLeftColumnToggle={toggleShowLeftColumn}
                 />
                   <AdvancedFilters
                     showFiltersForm={showFiltersForm}
                     toggleShowFiltersForm={toggleShowFiltersForm}
+                    mapZoom={exploreSettings.zoom}
+                    mapBounds={exploreSettings.bounds}
                     setFilters={setFilters}
                     filters={filters}
                   />
@@ -137,7 +138,6 @@ function HoneyComb({ router }) {
           
         </div>
         </LoadabledComponent>
-      }
       </>
   );
 }
@@ -276,9 +276,6 @@ function useHexagonMap({
   const [densityMapNeedsUpdate, setDensityMapNeedsUpdate] =
     useToggle(true);
 
-  useEffect(() => {
-    store.emit(new updateButtonsFiltered(listButtons))
-  }, [listButtons])
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
   let cachedH3Hexes = React.useRef([]);
   const calculateNonCachedHexagons = (

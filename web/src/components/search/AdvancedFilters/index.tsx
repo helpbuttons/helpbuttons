@@ -18,10 +18,11 @@ import CheckBox, { CheckBoxIcon } from 'elements/Checkbox';
 //Mobile filters section that includes not only the filters but some search input fields, maybe needed to make a separate component from the rest of esktop elements
 export default function AdvancedFilters({
   toggleShowFiltersForm,
+  mapZoom,
+  mapBounds,
   filters,
   setFilters,
-  showFiltersForm,
-  isHome = false,
+  showFiltersForm
 }) {
   const {
     handleSubmit,
@@ -49,7 +50,7 @@ export default function AdvancedFilters({
     setValue('place.center', null)
     setValue('place.radius', defaultFilters.where.radius)
     
-    setFilters(() => {return {...defaultFilters, cleared: true}});
+    setFilters(() => defaultFilters);
 
     toggleShowFiltersForm(false);
   };
@@ -162,7 +163,6 @@ export default function AdvancedFilters({
             />
           </div>
 
-          {center && 
           <div className="form__field">
             <label className="form__label">
             {t('buttonFilters.distance')} ({radius} km)
@@ -178,7 +178,6 @@ export default function AdvancedFilters({
               />
             </div>
           </div>
-          }
           <div className="filters__actions">
             <Btn
               btnType={BtnType.link}

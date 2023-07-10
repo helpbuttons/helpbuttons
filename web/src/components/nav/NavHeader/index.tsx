@@ -4,17 +4,25 @@ import React from 'react';
 import { HeaderSearch } from 'elements/HeaderSearch';
 import router from 'next/router';
 
-function NavHeader({ toggleShowFiltersForm, filters, results}) {
-  
+function NavHeader({ toggleShowFiltersForm, filters, isHome = false}) {
+  const onSearchBarClick = (e) => {
+    e.preventDefault()
+    if (isHome)
+    {
+      router.push(`/Explore#`)
+      // TODO: when loading the filters, the bounds are not loaded corretly.. 
+      // router.push(`/Explore#?showFilters=true`)
+    }
+  }
   return (
     <>
       <div className="nav-header__container">
           <form className="nav-header__content">
             
-            <div className="nav-header__content-message" onClick={toggleShowFiltersForm}>
+            <div className="nav-header__content-message" onClick={onSearchBarClick}>
               <HeaderSearch
                 filters={filters}
-                results={results}
+                toggleShowFiltersForm={toggleShowFiltersForm}
               />
             </div>
           </form>

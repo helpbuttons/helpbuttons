@@ -113,6 +113,11 @@ export class SetupDtoOut {
   userCount: number;
 
   @ApiProperty({
+    required: true,
+  })
+  buttonCount: number;
+
+  @ApiProperty({
   })
   commit: string;
 }
