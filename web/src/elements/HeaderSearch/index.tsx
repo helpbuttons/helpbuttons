@@ -1,22 +1,36 @@
 import { IoSearch } from "react-icons/io5";
 import React, {useState} from "react";
-import { useRef } from "store/Store";
+import { useStore } from "store/Store";
 import { GlobalState, store } from "pages";
 import { buttonTypes } from "shared/buttonTypes";
+import { LoadabledComponent } from "components/loading";
 
 ///search button in explore and home
-function HeaderSearch({filters, results}) {
+export function HeaderSearch({results}) {
+  const filters = useStore(
+    store,
+    (state: GlobalState) => state.explore.map.filters,
+    false
+  );
+  
+  const loaded = useStore(
+    store,
+    (state: GlobalState) => state.explore.map.loaded,
+    false
+  );
 
   return (
 
          <div className="header-search__tool">
-
             <div className="header-search__form">
 
               <div className="header-search__column">
+                
+                <LoadabledComponent loading={!loaded}>
                 <SearchText count={results.count} where={filters.where}/>
                 <SearchInfo helpButtonTypes={filters.helpButtonTypes} when={filters.when} what={filters.query}/>
                 <div className="header-search__icon"><IoSearch/></div>
+                </LoadabledComponent>
               </div>
 
             </div>
@@ -26,10 +40,8 @@ function HeaderSearch({filters, results}) {
   );
 }
 
-export { HeaderSearch };
-
 function SearchText({count, where}) {
-  const selectedNetwork = useRef(
+  const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
