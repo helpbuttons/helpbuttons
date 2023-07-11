@@ -1,4 +1,5 @@
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
+import { formatMessage } from "elements/Message";
 import { readableTimeLeftToDate } from "shared/date.utils";
 
 export default function PostMessage({ post }) {
@@ -23,7 +24,7 @@ export default function PostMessage({ post }) {
               </div>
               <h2 className="card-notification__title"></h2>
               <div className="card-notification__paragraph">
-                {post.message}
+                {formatMessage(post.message)}
               </div>    
             </div>    
           </div>            
