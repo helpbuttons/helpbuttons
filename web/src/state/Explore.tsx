@@ -15,8 +15,6 @@ import { ButtonFilters, defaultFilters } from 'components/search/AdvancedFilters
 
 export interface ExploreState {
   draftButton: any;
-  mapCenter;
-  mapZoom;
   currentButton: Button;
   map: ExploreMapState;
 }
@@ -26,13 +24,11 @@ export interface ExploreMapState {
   listButtons: Button[];  // if hexagon clicked, can be different from boundsButtons
   boundsFilteredButtons: Button[];
   densityMap: any[];
-  loaded: boolean;
+  loading: boolean;
+  initialized: boolean;
 }
-
 export const exploreInitial = {
   draftButton: null,
-  mapCenter: null,
-  mapZoom: -1,
   currentButton: null,
   map:
   {
@@ -40,7 +36,8 @@ export const exploreInitial = {
     listButtons: [], // if hexagon clicked, can be different from boundsButtons
     boundsFilteredButtons: [],
     densityMap: [],
-    loaded: false,
+    loading: true,
+    initialized: false,
   }
 };
 
@@ -187,7 +184,7 @@ export class UpdateFilters implements UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.map.filters = this.filters;
       console.log('updating buttons... filters changed')
-      newState.explore.map.loaded = false;
+      newState.explore.map.loading = true;
     });
   }
 }
@@ -199,7 +196,8 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.map.boundsFilteredButtons = this.boundsFilteredButtons;
       console.log('loaded filtered buttons')
-      newState.explore.map.loaded = true
+      newState.explore.map.loading = false
+      newState.explore.map.initialized = true
     });
   }
 }
@@ -210,7 +208,7 @@ export class UpdateExploreUpdating implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       console.log('updating explore ?')
-      newState.explore.map.loaded = false
+      newState.explore.map.loading = true
     });
   }
 }
@@ -221,7 +219,8 @@ export class UpdateListButtons implements UpdateEvent {
     return produce(state, (newState) => {
       console.log('loaded list of buttons')
       newState.explore.map.listButtons = this.listButtons;
-      newState.explore.map.loaded = true
+      newState.explore.map.loading = false
+      newState.explore.map.initialized = true
     });
   }
 }

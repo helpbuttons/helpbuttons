@@ -1,94 +1,95 @@
-import { IoSearch } from "react-icons/io5";
-import React, {useState} from "react";
-import { useStore } from "store/Store";
-import { GlobalState, store } from "pages";
-import { buttonTypes } from "shared/buttonTypes";
-import { LoadabledComponent } from "components/loading";
+import { IoSearch } from 'react-icons/io5';
+import React, { useState } from 'react';
+import { useStore } from 'store/Store';
+import { GlobalState, store } from 'pages';
+import { buttonTypes } from 'shared/buttonTypes';
+import { LoadabledComponent } from 'components/loading';
 
 ///search button in explore and home
-export function HeaderSearch({results}) {
-  const filters = useStore(
+export function HeaderSearch({ results, isHome }) {
+  const exploreMapState = useStore(
     store,
-    (state: GlobalState) => state.explore.map.filters,
-    false
-  );
-  
-  const loaded = useStore(
-    store,
-    (state: GlobalState) => state.explore.map.loaded,
-    false
+    (state: GlobalState) => state.explore.map,
+    false,
   );
 
   return (
+    <div className="header-search__tool">
+      <div className="header-search__form">
+      <LoadabledComponent loading={exploreMapState.loading && !isHome}>
+        <div className="header-search__column">
+          <SearchText count={results.count} where={exploreMapState.filters.where} />
+          <SearchInfo
+            helpButtonTypes={exploreMapState.filters.helpButtonTypes}
+            when={exploreMapState.filters.when}
+            what={exploreMapState.filters.query}
+          />
 
-         <div className="header-search__tool">
-            <div className="header-search__form">
-
-              <div className="header-search__column">
-                
-                <LoadabledComponent loading={!loaded}>
-                <SearchText count={results.count} where={filters.where}/>
-                <SearchInfo helpButtonTypes={filters.helpButtonTypes} when={filters.when} what={filters.query}/>
-                <div className="header-search__icon"><IoSearch/></div>
-                </LoadabledComponent>
-              </div>
-
-            </div>
-
+          <div className="header-search__icon">
+              <IoSearch />
           </div>
-
+        </div>
+        </LoadabledComponent>
+      </div>
+    </div>
   );
 }
 
-function SearchText({count, where}) {
+function SearchText({ count, where }) {
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
+    false
   );
-  
+
   const address = (where) => {
-    if(where.address && where.radius)
-    {
-      return `in ${where.address} · ${where.radius}km`
+    if (where.address && where.radius) {
+      return `in ${where.address} · ${where.radius}km`;
     }
-    if(selectedNetwork){
-      return `in ${selectedNetwork.name}`
-    }else{
-      return ``
+    if (selectedNetwork) {
+      return `in ${selectedNetwork.name}`;
+    } else {
+      return ``;
     }
-  }
+  };
 
-  return <div className="header-search__label">{count} found {address(where)}</div>
+  return (
+    <div className="header-search__label">
+      {count} found {address(where)}
+    </div>
+  );
 }
 
-function SearchInfo({helpButtonTypes, when, what})
-{
+function SearchInfo({ helpButtonTypes, when, what }) {
   const types = (helpButtonTypes) => {
-    if (helpButtonTypes.length < 1)
-    {
-      return ''
+    if (helpButtonTypes.length < 1) {
+      return '';
     }
-    const buttonTypesCaptions = helpButtonTypes.map((type) => (buttonTypes.find((buttonType) => type == buttonType.name)).caption)
+    const buttonTypesCaptions = helpButtonTypes.map(
+      (type) =>
+        buttonTypes.find((buttonType) => type == buttonType.name)
+          .caption,
+    );
     return buttonTypesCaptions.toString();
-  }
+  };
   const whenText = (when) => {
-    if (when == 'any')
-    {
-      return '· Always'
+    if (when == 'any') {
+      return '· Always';
     }
-  
+
     return '';
-  }
+  };
   const whatText = (what) => {
-    if (what == '')
-    {
-      return ''
+    if (what == '') {
+      return '';
     }
-  
-    return what + " · ";
-  }
 
-  return <div className="header-search__info">{whatText(what)} {types(helpButtonTypes)} {whenText(when)}</div>
+    return what + ' · ';
+  };
+
+  return (
+    <div className="header-search__info">
+      {whatText(what)} {types(helpButtonTypes)} {whenText(when)}
+    </div>
+  );
 }
-
-

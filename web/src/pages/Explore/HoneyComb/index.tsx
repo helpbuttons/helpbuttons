@@ -159,7 +159,6 @@ function useExploreSettings({
       center: [0, 0],
       zoom: 4,
       tileType: HbMapTiles.OSM,
-      // radius: 10000,
       bounds: null,
       browseType: BrowseType.PINS,
       honeyCombFeatures: null,
@@ -231,7 +230,7 @@ function useExploreSettings({
         return {
           ...prevSettings,
           ...selectedNetwork.exploreSettings,
-          // ...locaStorageVars,
+          ...locaStorageVars,
           ...queryExploreSettings,
           loading: false,
         };
@@ -379,7 +378,7 @@ function useHexagonMap({
       if (buttonTypes.length > 0) {
         return buttonTypes.indexOf(button.type) > -1;
       }
-      return true;
+      return false;
     };
 
     const applyQueryFilter = (button, query) => {

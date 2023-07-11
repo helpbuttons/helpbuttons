@@ -5,7 +5,7 @@ import { HeaderSearch } from 'elements/HeaderSearch';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 
-function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount}) {
+function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount, isHome = false}) {
   const exploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,
@@ -18,7 +18,8 @@ function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount}) {
             
             <div className="nav-header__content-message" onClick={toggleShowFiltersForm}>
               <HeaderSearch
-                results={{count: exploreMapState.loaded ? exploreMapState.listButtons.length : totalNetworkButtonsCount}}
+                results={{count: !exploreMapState.initialized ? totalNetworkButtonsCount : exploreMapState.listButtons.length}}
+                isHome={isHome}
               />
             </div>
           </form>

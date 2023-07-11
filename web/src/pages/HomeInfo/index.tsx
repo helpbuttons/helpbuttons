@@ -62,6 +62,7 @@ export default function HomeInfo({
             <NavHeader
               toggleShowFiltersForm={toggleShowFiltersForm}
               totalNetworkButtonsCount={selectedNetwork.buttonCount}
+              isHome={true}
             />
             <AdvancedFilters
               showFiltersForm={showFiltersForm}
