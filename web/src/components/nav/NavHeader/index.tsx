@@ -2,10 +2,15 @@
 import React from 'react';
 
 import { HeaderSearch } from 'elements/HeaderSearch';
-import router from 'next/router';
+import { useStore } from 'store/Store';
+import { GlobalState, store } from 'pages';
 
-function NavHeader({ toggleShowFiltersForm, filters, results}) {
-  
+function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount, isHome = false}) {
+  const exploreMapState = useStore(
+    store,
+    (state: GlobalState) => state.explore.map,
+    false
+  );
   return (
     <>
       <div className="nav-header__container">
@@ -13,8 +18,8 @@ function NavHeader({ toggleShowFiltersForm, filters, results}) {
             
             <div className="nav-header__content-message" onClick={toggleShowFiltersForm}>
               <HeaderSearch
-                filters={filters}
-                results={results}
+                results={{count: !exploreMapState.initialized ? totalNetworkButtonsCount : exploreMapState.listButtons.length}}
+                isHome={isHome}
               />
             </div>
           </form>

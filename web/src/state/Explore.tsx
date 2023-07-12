@@ -5,37 +5,40 @@ import { WatchEvent } from 'store/Event';
 import { UpdateEvent } from '../store/Event';
 
 import { ButtonService } from 'services/Buttons';
-import { Point } from 'pigeon-maps';
-import { of } from 'rxjs';
-import { GlobalState, store } from 'pages';
+import { GlobalState } from 'pages';
 import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
 import { handleError } from './helper';
 
 import { ButtonFilters, defaultFilters } from 'components/search/AdvancedFilters/filters.type';
-interface ExploreMapProps {
-  defaultCenter: Point;
-  defaultZoom: number;
-  markers: Button[];
-  handleBoundsChange: Function;
-}
+
 export interface ExploreState {
   draftButton: any;
-  mapCenter;
-  mapZoom;
   currentButton: Button;
-  filters: ButtonFilters;
-  results: Button[];
+  map: ExploreMapState;
 }
 
+export interface ExploreMapState {
+  filters: ButtonFilters;
+  listButtons: Button[];  // if hexagon clicked, can be different from boundsButtons
+  boundsFilteredButtons: Button[];
+  densityMap: any[];
+  loading: boolean;
+  initialized: boolean;
+}
 export const exploreInitial = {
   draftButton: null,
-  mapCenter: null,
-  mapZoom: -1,
   currentButton: null,
-  filters: defaultFilters,
-  results: []
+  map:
+  {
+    filters: defaultFilters,
+    listButtons: [], // if hexagon clicked, can be different from boundsButtons
+    boundsFilteredButtons: [],
+    densityMap: [],
+    loading: true,
+    initialized: false,
+  }
 };
 
 export class FindButtons implements WatchEvent {
@@ -174,23 +177,60 @@ export class updateCurrentButton implements UpdateEvent {
   }
 }
 
-export class updateFilters implements UpdateEvent {
+export class UpdateFilters implements UpdateEvent {
   public constructor(private filters: ButtonFilters) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.filters = this.filters;
+      newState.explore.map.filters = this.filters;
+      console.log('updating buttons... filters changed')
+      newState.explore.map.loading = true;
     });
   }
 }
 
-
-export class updateButtonsFiltered implements UpdateEvent {
-  public constructor(private buttons: Button[]) {}
+export class UpdateBoundsFilteredButtons implements UpdateEvent {
+  public constructor(private boundsFilteredButtons: Button[]) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.results = this.buttons;
+      newState.explore.map.boundsFilteredButtons = this.boundsFilteredButtons;
+      console.log('loaded filtered buttons')
+      newState.explore.map.loading = false
+      newState.explore.map.initialized = true
+    });
+  }
+}
+
+export class UpdateExploreUpdating implements UpdateEvent {
+  public constructor() {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      console.log('updating explore ?')
+      newState.explore.map.loading = true
+    });
+  }
+}
+export class UpdateListButtons implements UpdateEvent {
+  public constructor(private listButtons: Button[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      console.log('loaded list of buttons')
+      newState.explore.map.listButtons = this.listButtons;
+      newState.explore.map.loading = false
+      newState.explore.map.initialized = true
+    });
+  }
+}
+
+export class UpdateDensityMap implements UpdateEvent {
+  public constructor(private densityMap: any[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.densityMap = this.densityMap;
     });
   }
 }

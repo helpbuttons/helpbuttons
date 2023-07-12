@@ -62,9 +62,13 @@ export class Store<T> {
 
 // === Hook para suscribirse al store ===
 
-export function useRef(store: Store, selector: func) {
-  const [value, setValue] = useState(null);
-
+export function useRef(store: Store, selector: func, defaultNull = true) {
+  let defaultValue = null;
+  if(!defaultNull)
+  {
+    defaultValue = selector(store.state$.getValue())
+  }
+  const [value, setValue] = useState(defaultValue);
   useEffect(() => {
     store.state$.subscribe((state) => {
       const newValue = selector(state);
@@ -77,6 +81,9 @@ export function useRef(store: Store, selector: func) {
   return value;
 }
 
+export function useStore(store: Store, selector: func, defaultNull = true) {
+  return useRef(store, selector, defaultNull)
+}
 // Mejoras:
 // - gestión de errores
 // - que WatchEvent.watch pueda devolver una promesa además de un observable
