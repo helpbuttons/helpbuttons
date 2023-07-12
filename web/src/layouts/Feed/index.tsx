@@ -156,7 +156,6 @@ export function FeedElement({ post, loggedInUser, onNewComment, isButtonOwner = 
               postId={post.id}
               onSubmit={() => {
                 onNewComment();
-                setShowComments(true);
                 setShowNewCommentDialog(false);
               }}
             />

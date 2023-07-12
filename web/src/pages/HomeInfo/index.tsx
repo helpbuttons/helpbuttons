@@ -1,10 +1,9 @@
-import { useRef } from 'store/Store';
+import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 
 import router from 'next/router';
 import t from 'i18n';
 import Btn, {
-  ContentAlignment,
   BtnType,
   IconType,
 } from 'elements/Btn';
@@ -17,18 +16,17 @@ import {
   IoHelpOutline,
   IoLogInOutline,
 } from 'react-icons/io5';
-import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 import NavBottom from 'components/nav/NavBottom';
 import SEO from 'components/seo';
 import { ServerPropsService } from 'services/ServerProps';
 import { NextPageContext } from 'next';
 import { SetupSteps } from 'shared/setupSteps';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
-import List from 'components/list/List';
 import AdvancedFilters from 'components/search/AdvancedFilters';
-import { updateFilters } from 'state/Explore';
 import { useToggle } from 'shared/custom.hooks';
+import { UpdateFilters } from 'state/Explore';
+import Alert from 'components/overlay/Alert';
 
 export default function HomeInfo({
   metadata,
@@ -36,21 +34,8 @@ export default function HomeInfo({
   config,
 }) {
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
-  const results = useRef(
-    store,
-    (state: GlobalState) => state.explore.results,
-  );
 
-  useEffect(() => {
-    if (!config) {
-      console.error('config not found');
-      router.push(SetupSteps.SYSADMIN_CONFIG);
-    }
-  }, []);
-  if (!config) {
-    return <></>;
-  }
-  const currentUser = useRef(
+  const currentUser = useStore(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
@@ -58,24 +43,11 @@ export default function HomeInfo({
   const [navigatorCoordinates, setNavigatorCoordinates] =
     useState(null);
 
-  const filters = useRef(
-    store,
-    (state: GlobalState) => state.explore.filters,
-  );
-  const setFilters = (newFilters) => {
-    store.emit(new updateFilters(newFilters));
-    if(!newFilters.cleared)
-    {
-      router.push('/Explore')
-    }
-  };
-
-  const handleSelectedPlace = (place) => {
-    router.push({
-      pathname: '/Explore',
-      query: place.geometry,
-    });
-  };
+  if(!config)
+  {
+    return (<Alert>Error getting backend</Alert>)
+  }
+  
   return (
     <>
       <SEO {...metadata} />
@@ -86,22 +58,18 @@ export default function HomeInfo({
           } as React.CSSProperties
         }
       >
-        {filters && (
           <div className="info-overlay__search-section">
             <NavHeader
               toggleShowFiltersForm={toggleShowFiltersForm}
-              filters={filters}
-              results={{count: results ? results.length : selectedNetwork.buttonCount}}
+              totalNetworkButtonsCount={selectedNetwork.buttonCount}
+              isHome={true}
             />
             <AdvancedFilters
               showFiltersForm={showFiltersForm}
               toggleShowFiltersForm={toggleShowFiltersForm}
-              setFilters={setFilters}
-              filters={filters}
               isHome={true}
             />
           </div>
-        )}
         <div className="info-overlay__container">
           <div className="info-overlay__content">
             <>
@@ -133,7 +101,7 @@ export default function HomeInfo({
                     {selectedNetwork.description}
                   </div>
                   <div className="info-overlay__hashtags">
-                    {selectedNetwork.tags.map((tag) => {
+                  Explore{selectedNetwork.tags.map((tag) => {
                       return <div className="hashtag">{tag}</div>;
                     })}
                   </div>
