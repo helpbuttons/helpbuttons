@@ -205,3 +205,13 @@ export class LoginToken implements WatchEvent {
     );
   }
 }
+
+
+export function isAdmin(loggedInUser)
+{
+  if(loggedInUser?.role == 'administrator')
+  {
+    return true;
+  }
+  return false;
+}

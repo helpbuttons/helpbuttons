@@ -51,3 +51,31 @@ export class CreateNewPostComment implements WatchEvent {
     );
   }
 }
+
+export class DeletePost implements WatchEvent {
+  public constructor(
+    private postId: string,
+    private onSuccess,
+    private onError,
+  ) {}
+  public watch(state: GlobalState) {
+    return PostService.delete(this.postId).pipe(
+      map((data) => this.onSuccess()),
+      catchError((error) => handleError(this.onError, error)),
+    );
+  }
+}
+
+export class DeleteComment implements WatchEvent {
+  public constructor(
+    private commentId: string,    
+    private onSuccess,
+    private onError,
+  ) {}
+  public watch(state: GlobalState) {
+    return PostService.deleteComment(this.commentId).pipe(
+      map((data) => this.onSuccess()),
+      catchError((error) => handleError(this.onError, error)),
+    );
+  }
+}
