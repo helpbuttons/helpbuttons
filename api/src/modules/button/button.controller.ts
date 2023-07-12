@@ -121,7 +121,6 @@ export class ButtonController {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
         }
         return this.buttonService.delete(buttonId).then((button) => {
-          notifyUser(this.eventEmitter,ActivityEventName.DeleteButton,button, user)
           return true;
         });
       });

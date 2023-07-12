@@ -23,5 +23,17 @@ export class PostService {
   ): Observable<any> {
     return httpService.post("/post/new/comment/" + postId, data);
   }
+
+  public static delete(
+    postId: string,
+  ): Observable<any> {
+    return httpService.delete("/post/delete/" + postId);
+  }
+
+  public static deleteComment(
+    commentId: string,
+  ): Observable<any> {
+    return httpService.delete("/post/comment/delete/" + commentId);
+  }
   
 }

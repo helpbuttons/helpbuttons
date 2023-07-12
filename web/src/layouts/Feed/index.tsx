@@ -11,17 +11,20 @@ import { useEffect, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
 import { Post } from 'shared/entities/post.entity';
-import { LoadPosts } from 'state/Posts';
+import { DeletePost, LoadPosts } from 'state/Posts';
+import { isAdmin } from 'state/Users';
 import { useRef } from 'store/Store';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
-
+  
   const loggedInUser = useRef(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
+  const isButtonOwner = loggedInUser?.id == button.owner.id;
 
+ 
   const reloadPosts = () => {
     if (button && button.id) {
       store.emit(
@@ -95,6 +98,8 @@ export default function Feed({ button }: { button: Button }) {
               onNewComment={() => {
                 reloadPosts();
               }}
+              isButtonOwner={isButtonOwner}
+              reloadPosts={reloadPosts}
             />
           ))}
         {!posts ||
@@ -110,24 +115,20 @@ export default function Feed({ button }: { button: Button }) {
     </div>
   );
 }
-export function FeedElement({ post, loggedInUser, onNewComment }) {
+export function FeedElement({ post, loggedInUser, onNewComment, isButtonOwner = false, reloadPosts }) {
   const [showNewCommentDialog, setShowNewCommentDialog] =
     useState(false);
 
+    const deletePost = (postId) => {
+      store.emit(new DeletePost(postId,reloadPosts, (error) => {alertService.error(error)}));
+    };
   return (
     <div className="feed-element">
       <div className="card-notification">
-        <div className="card-notification__comment-count">
-          <div className="card-notification__label">
-            <div className="hashtag hashtag--blue">New update</div>
-          </div>
-        </div>
-
         <PostMessage post={post} />
 
         <>
           <div className="card-notification__answer-btn">
-            
             {loggedInUser && (
               <Btn
                 submit={true}
@@ -139,9 +140,18 @@ export function FeedElement({ post, loggedInUser, onNewComment }) {
                 }}
               />
             )}
+            {(loggedInUser && (loggedInUser.id == post.author.id || isButtonOwner || isAdmin(loggedInUser)) )&& (
+              <Btn
+                submit={true}
+                btnType={BtnType.corporative}
+                caption={t('post.delete')}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => deletePost(post.id)}
+              />
+            )}
           </div>
 
-          {(showNewCommentDialog && loggedInUser )&& (
+          {showNewCommentDialog && loggedInUser && (
             <PostCommentNew
               postId={post.id}
               onSubmit={() => {
@@ -151,7 +161,8 @@ export function FeedElement({ post, loggedInUser, onNewComment }) {
             />
           )}
         </>
-        <PostComments comments={post.comments} />
+        <PostComments comments={post.comments} reloadPosts={reloadPosts} loggedInUser={loggedInUser}
+              isButtonOwner={isButtonOwner}/>
       </div>
     </div>
   );

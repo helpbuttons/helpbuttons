@@ -28,4 +28,19 @@ export class CommentService {
       });
     });
   }
+
+  findById(id: string) {
+    return this.commentRepository.findOne({
+      where: { id },
+      relations: ['author', 'post', 'post.button'],
+    });
+  }
+
+  async delete(messageId: string) {
+    return this.findById(messageId).then((comment) => {
+      return this.commentRepository.update(comment.id,{ deleted: true }).then((res) => {
+        return comment
+      })
+    }) 
+  }
 }
