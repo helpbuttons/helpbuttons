@@ -6,7 +6,7 @@ import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';
 
-export default function PostComments({ comments, reloadPosts, loggedInUser, isButtonOwner }) {
+export default function PostComments({ comments, reloadPosts, loggedInUser, isButtonOwner, buttonOwnerId }) {
   const deleteComment = (commentId) => {
     store.emit(
       new DeleteComment(commentId, reloadPosts, (error) => {
@@ -21,21 +21,27 @@ export default function PostComments({ comments, reloadPosts, loggedInUser, isBu
           <>
             {comments.map((comment) => {
               return (
-                  <div className='card-notification--comment'>
-                    <PostMessage post={comment} />
+                <div className='card-notification--comment'>
+
+                  <PostMessage isButtonOwnerComment={buttonOwnerId == comment.author.id} post={comment} />
+                  
+                  <div className='card-notification--comment-actions'>
+
                     {loggedInUser &&
-                    (loggedInUser.id == comment.author.id ||
-                      isButtonOwner ||
-                      isAdmin(loggedInUser)) && (
-                      <Btn
-                        submit={true}
-                        btnType={BtnType.corporative}
-                        caption={t('comment.delete')}
-                        contentAlignment={ContentAlignment.center}
-                        onClick={() => deleteComment(comment.id)}
-                      />
-                    )}
+                      (loggedInUser.id == comment.author.id ||
+                        isButtonOwner ||
+                        isAdmin(loggedInUser)) && (
+                        <Btn
+                          submit={true}
+                          btnType={BtnType.link}
+                          caption={t('comment.delete')}
+                          contentAlignment={ContentAlignment.right}
+                          onClick={() => deleteComment(comment.id)}
+                        />
+                      )}
                   </div>
+
+                </div>
               );
             })}
           </>

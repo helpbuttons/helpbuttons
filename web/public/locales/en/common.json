@@ -151,6 +151,9 @@
     "placeholderWrite": "Write a new update for your helpbutton",
     "NoComments": "No comments yet"
   },
+  "comment": {
+    "delete": "Borrar"
+  },
   "configuration": {
     "title": "Administrator settings",
     "description": "Here you can modify different settings of your network",
