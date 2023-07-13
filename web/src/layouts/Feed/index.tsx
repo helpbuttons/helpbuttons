@@ -125,6 +125,11 @@ export function FeedElement({ post, loggedInUser, onNewComment, isButtonOwner = 
   return (
     <div className="feed-element">
       <div className="card-notification">
+      <div className="card-notification__comment-count">
+          <div className="card-notification__label">
+            <div className="hashtag hashtag--blue">New update</div>
+          </div>
+        </div>
         <PostMessage post={post} />
 
         <>

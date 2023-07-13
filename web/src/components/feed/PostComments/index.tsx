@@ -21,16 +21,9 @@ export default function PostComments({ comments, reloadPosts, loggedInUser, isBu
           <>
             {comments.map((comment) => {
               return (
-
-                <div
-                  style={{
-                    padding: '2em',
-                    backgroundColor: 'lightgrey',
-                  }}
-                >
-                  <hr />
-                  <PostMessage post={comment} />
-                  {loggedInUser &&
+                  <div className='card-notification--comment'>
+                    <PostMessage post={comment} />
+                    {loggedInUser &&
                     (loggedInUser.id == comment.author.id ||
                       isButtonOwner ||
                       isAdmin(loggedInUser)) && (
@@ -42,7 +35,7 @@ export default function PostComments({ comments, reloadPosts, loggedInUser, isBu
                         onClick={() => deleteComment(comment.id)}
                       />
                     )}
-                </div>
+                  </div>
               );
             })}
           </>
