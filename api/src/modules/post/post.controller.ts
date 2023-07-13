@@ -118,7 +118,6 @@ export class PostController {
       ) {
         return this.commentService.findById(commentId).then((comment) => {
           if((user.role == Role.admin) || comment.author.id == user.id){
-            console.log(`(${user.role} == ${Role.admin}) || ${comment.author.id} == ${user.id} `)
             return this.commentService.delete(commentId)
           }else {
             return this.buttonService.isOwner(user, comment.post.button.id).then((isButtonOwner) => {
