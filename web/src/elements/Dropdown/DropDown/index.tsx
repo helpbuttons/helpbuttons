@@ -1,14 +1,39 @@
 ///dropddown selector component
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 
-export default function Dropdown() {
 
+interface DropdownProps {
+  caption: string;
+  iconLink?: string;
+  contentAlignment?: ContentAlignment;
+  btnType?: BtnType;
+  disabled?: boolean;
+  onClick?: Function;
+}
+
+export default function Dropdown ({
+  label,
+  children,
+  caption,
+  contentAlignment = null,
+  onClick = () => {},
+}: DropdownProps) {
   return (
     <>
-      <div className="dropdown-select">
-        <select className="dropdown-select__trigger">
-          <option value="status" className="dropdown-select__option" disabled>All buttons, messages and updates</option>
-        </select>
-      </div>
+
+        
+      <div class="label">{label} </div>
+      <Btn
+          btnType={BtnType.dropdown}
+          caption={caption}
+          contentAlignment={contentAlignment}
+          onClick={onClick}
+        /> 
+      <select className="dropdown-select__trigger">
+        {children}
+      </select>
+
+
     </>
 
   );

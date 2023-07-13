@@ -55,13 +55,13 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed__empty-message {
 
-  width: 100%;
-  margin: auto;
-  font-size: $font-size-general;
-  font-weight: $font-weight-bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @extend .list__empty-message;
+
+}
+
+.feed__empty-message--prev{
+
+  @extend .list__empty-message--prev;
 
 }
 
@@ -138,7 +138,7 @@ $feed-new-message-radius: $border-radius-circle;
 }
 
 .feed-container{
-  background: lightgrey;
+  background: $color-ligth-gray;
   height: auto;
 }
 

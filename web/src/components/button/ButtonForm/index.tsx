@@ -4,11 +4,11 @@ import Form from 'elements/Form';
 
 import Popup from 'components/popup/Popup';
 import ButtonType from 'components/button/ButtonType';
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 
 import FieldLocation from 'elements/Fields/FieldLocation';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import FieldText from 'elements/Fields/FieldText';
-import FormSubmit from 'elements/Form/FormSubmit';
 import ButtonShare from 'components/button/ButtonShare';
 // import ButtonNewDate from 'components/button/ButtonNewDate';
 import FieldTags from 'elements/Fields/FieldTags';
@@ -93,7 +93,7 @@ export default function ButtonForm({
           onSubmit={handleSubmit(onSubmit)}
           classNameExtra="publish_btn"
         >
-          <div className="publish_btn-first">
+          <div className="form__inputs-wrapper">
             <ButtonType
               name="type"
               label={t('button.typeLabel')}
@@ -137,8 +137,7 @@ export default function ButtonForm({
               }}
               tags={watch('tags')}
             />
-          </div>
-          <div className="publish_btn-scd">
+
             <FieldImageUpload
               name="image"
               label={t('button.imagesLabel')}
@@ -178,10 +177,12 @@ export default function ButtonForm({
             <ButtonShare />
           </div>
           <div className="publish__submit">
-            <FormSubmit
-              classNameExtra="create_btn"
-              title={t('common.publish')}
+            <Btn
+              btnType={BtnType.submit}
+              contentAlignment={ContentAlignment.center}
+              caption={t('common.publish')}
               isSubmitting={isSubmitting}
+              submit={true}
             />
           </div>
         </Form>

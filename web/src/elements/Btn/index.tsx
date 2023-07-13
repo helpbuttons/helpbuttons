@@ -8,6 +8,7 @@ export enum BtnType {
     filter,
     submit,
     link,
+    dropdown,
 }
 
 export enum IconType {
@@ -105,6 +106,9 @@ export default function Btn({
             } else {
                 classNames.push("btn-filter");
             }
+            break;
+        case BtnType.dropdown:
+            classNames.push("dropdown__dropdown");
             break;
         default:
             if (hasIcon) {

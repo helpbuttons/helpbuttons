@@ -4,7 +4,7 @@ import PostComments from 'components/feed/PostComments';
 import PostMessage from 'components/feed/PostMessage';
 import PostNew from 'components/feed/PostNew';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import Dropdown from 'elements/Dropdown/DropDown';
+import Dropdown from 'elements/Dropdown/Dropdown';
 import t from 'i18n';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
