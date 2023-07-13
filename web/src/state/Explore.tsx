@@ -23,7 +23,7 @@ export interface ExploreMapState {
   filters: ButtonFilters;
   listButtons: Button[];  // if hexagon clicked, can be different from boundsButtons
   boundsFilteredButtons: Button[];
-  densityMap: any[];
+  cachedHexagons: any[];
   loading: boolean;
   initialized: boolean;
 }
@@ -35,7 +35,7 @@ export const exploreInitial = {
     filters: defaultFilters,
     listButtons: [], // if hexagon clicked, can be different from boundsButtons
     boundsFilteredButtons: [],
-    densityMap: [],
+    cachedHexagons: [],
     loading: true,
     initialized: false,
   }
@@ -247,12 +247,12 @@ export class UpdateListButtons implements UpdateEvent {
   }
 }
 
-export class UpdateDensityMap implements UpdateEvent {
-  public constructor(private densityMap: any[]) {}
+export class UpdateCachedHexagons implements UpdateEvent {
+  public constructor(private cachedHexagons: any[]) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.densityMap = this.densityMap;
+      newState.explore.map.cachedHexagons = this.cachedHexagons;
     });
   }
 }

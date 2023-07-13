@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 
 //components
 import {
+  ExploreMapState,
   FindButtons,
   UpdateBoundsFilteredButtons,
-  UpdateDensityMap,
+  UpdateCachedHexagons,
   UpdateExploreUpdating,
-  UpdateFilters,
   UpdateListButtons,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
@@ -51,7 +51,7 @@ function HoneyComb({ router }) {
     false,
   );
 
-  const exploreMapState = useStore(
+  const exploreMapState :ExploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,
     false,
@@ -85,7 +85,7 @@ function HoneyComb({ router }) {
     exploreSettings,
     filters: exploreMapState.filters,
     boundsFilteredButtons: exploreMapState.boundsFilteredButtons,
-    storeDensityMap: exploreMapState.densityMap
+    cachedHexagons: exploreMapState.cachedHexagons
   });
 
   useEffect(() => {
@@ -266,7 +266,7 @@ function useHexagonMap({
   exploreSettings,
   filters,
   boundsFilteredButtons,
-  storeDensityMap
+  cachedHexagons
 }) {
   const [hexagonClicked, setHexagonClicked] = useState(null);
   const debouncedHexagonClicked = useDebounce(hexagonClicked, 70);
@@ -279,7 +279,7 @@ function useHexagonMap({
   const [isRedrawingMap, setIsRedrawingMap] = useState(false);
 
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
-  let cachedH3Hexes = React.useRef(storeDensityMap);
+  let cachedH3Hexes = React.useRef(cachedHexagons);
   const calculateNonCachedHexagons = (
     debounceHexagonsToFetch,
     cachedH3Hexes,
@@ -307,6 +307,7 @@ function useHexagonMap({
       ...cachedH3Hexes.current,
       ...newDensityMapHexagons,
     ]);
+    store.emit(new UpdateCachedHexagons(cachedH3Hexes.current))
   };
 
   useEffect(() => {
@@ -353,7 +354,6 @@ function useHexagonMap({
         );
       },
     );
-
     const { filteredButtons, filteredHexagons } = applyFilters(
       filters,
       boundsButtons,
@@ -364,7 +364,6 @@ function useHexagonMap({
 
     store.emit(new UpdateBoundsFilteredButtons(filteredButtons));
     store.emit(new UpdateListButtons(filteredButtons));
-    store.emit(new UpdateDensityMap(filteredHexagons))
     setIsRedrawingMap(() => false);
   }
 
