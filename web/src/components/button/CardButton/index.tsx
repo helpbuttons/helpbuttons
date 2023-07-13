@@ -17,6 +17,7 @@ import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import Link from 'next/link';
 import {
+  UpdateFiltersToFilterButtonType,
   UpdateFiltersToFilterTag,
 } from 'state/Explore';
 
@@ -49,8 +50,9 @@ export default function CardButtonFile({ button }) {
   );
 }
 
+// card button list on explore
 export function CardButtonHeadMedium({ button }) {
-  const { cssColor } = buttonTypes.find((buttonType) => {
+  const { cssColor, caption } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
   return (
@@ -58,11 +60,11 @@ export function CardButtonHeadMedium({ button }) {
       <div className="card-button__header">
         <div className="card-button__avatar">
           <div className="avatar-small">
-          <Link href={`/Profile/${button.owner.username}`}><ImageWrapper
+          <ImageWrapper
               imageType={ImageType.avatar}
               src={button.owner.avatar}
               alt={button.title}
-            /></Link>
+            />
           </div>
         </div>
 
@@ -72,19 +74,17 @@ export function CardButtonHeadMedium({ button }) {
               className="card-button"
               style={buttonColorStyle(cssColor)}
             >
-              {button.type}
+               {caption}
             </span>
           </div>
           <div className="card-button__name">
-            <Link href={`/Profile/${button.owner.username}`}>
               {button.owner.name} @{button.owner.username}
-            </Link>
           </div>
         </div>
       </div>
 
       <div className="card-button__title">
-        <Link href={`/ButtonFile/${button.id}`}>{button.title}</Link>
+        {button.title}
       </div>
       <div className="card-button__hashtags">
         {button.tags.map((tag, idx) => {
@@ -92,7 +92,6 @@ export function CardButtonHeadMedium({ button }) {
             <div
               className="hashtag"
               key={idx}
-              onClick={() => filterTag(tag)}
             >
               {tag}
             </div>
@@ -107,6 +106,7 @@ export function CardButtonHeadMedium({ button }) {
   );
 }
 
+// Pin of the map
 export function CardButtonHeadSmall({ button }) {
   const { cssColor } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
@@ -208,10 +208,16 @@ function CardButtonSubmenu({ button }) {
   );
 }
 export function CardButtonHeadBig({ button }) {
-  const { cssColor } = buttonTypes.find((buttonType) => {
+  const { cssColor,caption } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
+  const loggedInUser = useRef(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false
+  );
 
+  const profileHref = loggedInUser.username == button.owner.username ? `/Profile/` : `/Profile/${button.owner.username}`
   return (
     <>
       <CardButtonSubmenu button={button} />
@@ -220,7 +226,7 @@ export function CardButtonHeadBig({ button }) {
         <div className="card-button__header">
           <div className="card-button__avatar">
             <div className="avatar-big">
-            <Link href={`/Profile/${button.owner.username}`}>
+            <Link href={profileHref}>
               <ImageWrapper
                 imageType={ImageType.avatar}
                 src={button.owner.avatar}
@@ -237,7 +243,7 @@ export function CardButtonHeadBig({ button }) {
                 className="card-button__status"
                 style={buttonColorStyle(cssColor)}
               >
-                {button.type}
+                {caption}
               </span>
             </div>
             <div className="card-button__name">

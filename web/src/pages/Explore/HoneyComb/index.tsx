@@ -418,6 +418,7 @@ function useHexagonMap({
         const moreButtons = hexagonCached.buttons.filter(
           (button: Button) => {
             if (
+              filters.helpButtonTypes.length > 0 &&
               !applyButtonTypesFilter(button, filters.helpButtonTypes)
             ) {
               return false;

@@ -9,7 +9,7 @@ export interface ButtonFilters {
   }
   
   export const defaultFilters: ButtonFilters = {
-    helpButtonTypes: buttonTypes.map(btnType => btnType.name),
+    helpButtonTypes: [],
     query: '',
     where: { address: null, center: null, radius: 10 },
     tags: []

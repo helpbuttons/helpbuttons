@@ -15,8 +15,8 @@ export default function CardButtonList({ button }) {
     <>
       <div className="list__element">
         <div style={buttonColorStyle(cssColor)}>
-          <div className="card-button-list">
-            <Link href={`/ButtonFile/${button.id}`}>
+          <Link href={`/ButtonFile/${button.id}`}>
+            <div className="card-button-list">
               <div className="card-button-list__picture-container">
                 <div className="card-button-list__nav">
                   <div className="arrow btn-circle__icon">
@@ -33,11 +33,11 @@ export default function CardButtonList({ button }) {
                   alt={button.description}
                 />
               </div>
-            </Link>
-            <div className="card-button-list__content">
-              <CardButtonHeadMedium button={button} />
+              <div className="card-button-list__content">
+                <CardButtonHeadMedium button={button} />
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </>
