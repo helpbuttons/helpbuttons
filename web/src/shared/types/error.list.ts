@@ -14,6 +14,7 @@ export enum ErrorName{
     EmailAlreadyRegistered = 'email-already-registered',
     UsernameAlreadyRegistered = 'username-already-registered',
     nothingToDelete = 'nothing-to-delete',
+    validationError= 'validation-error'
 }
 
 export const errorsList: ErrorText[] = 
@@ -57,5 +58,10 @@ export const errorsList: ErrorText[] =
         name: ErrorName.nothingToDelete,
         caption: `Nothing to delete`,
         status: HttpStatus.GONE
+    },
+    {
+        name: ErrorName.validationError,
+        caption: `Error validating the form`,
+        status: HttpStatus.BAD_REQUEST
     },
 ]
