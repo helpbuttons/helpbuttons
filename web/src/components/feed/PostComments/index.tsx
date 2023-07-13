@@ -6,7 +6,7 @@ import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';
 
-export default function PostComments({ comments, reloadPosts, loggedInUser, isButtonOwner }) {
+export default function PostComments({ comments, reloadPosts, loggedInUser, isButtonOwner, buttonOwnerId }) {
   const deleteComment = (commentId) => {
     store.emit(
       new DeleteComment(commentId, reloadPosts, (error) => {
@@ -23,8 +23,7 @@ export default function PostComments({ comments, reloadPosts, loggedInUser, isBu
               return (
                   <div className='card-notification--comment'>
 
-                    <PostMessage post={comment} isCommentOwner={isButtonOwner}/>
-                    {isButtonOwner ?'im owner' : 'not'}
+                    <PostMessage isButtonOwnerComment = {buttonOwnerId == comment.author.id}  post={comment}/>
 
                     {loggedInUser &&
                     (loggedInUser.id == comment.author.id ||

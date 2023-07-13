@@ -1,23 +1,14 @@
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
 import { readableTimeLeftToDate } from "shared/date.utils";
 
-export default function PostMessage({ post, isCommentOwner }) {
+export default function PostMessage({ post, isButtonOwnerComment }) {
   return (
     <>
+        {!isButtonOwnerComment &&
 
-        {!isCommentOwner &&
-
-          <div className="message message--you">
+          <div className="message message--others">
 
             <div className="message__header">
-
-              <div className="message__avatar">
-                <ImageWrapper
-                  imageType={ImageType.avatar}
-                  src={post.author.avatar}
-                  alt="Avatar"
-                />
-              </div>
 
               <div className="message__user-name-container">
                 <p className="message__user-name">{post.author.name}{' '}@{post.author.username}</p>
@@ -33,9 +24,17 @@ export default function PostMessage({ post, isCommentOwner }) {
               {readableTimeLeftToDate(post.created_at)}
             </div>
 
+            <div className="message__avatar">
+                <ImageWrapper
+                  imageType={ImageType.avatar}
+                  src={post.author.avatar}
+                  alt="Avatar"
+                />
             </div>
 
-        }{isCommentOwner &&
+          </div>
+
+        }{isButtonOwnerComment &&
 
           <div className="card-notification__content"> 
           <div className="card-notification__avatar"> 
