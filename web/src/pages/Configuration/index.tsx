@@ -83,21 +83,22 @@ function Configuration() {
       {selectedNetwork && (
         <Popup title={t('configuration.title')} LinkFwd="/Profile">
           
-        <NetworkForm
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          register={register}
-          setValue={setValue}
-          setFocus={setFocus}
-          watch={watch}
-          isSubmitting={isSubmitting}
-          control={control}
-          errors={errors}
-          captionAction={t('common.save')}
-          linkFwd="/Profile"
-          description={t('configuration.description')}
-          defaultExploreSettings={selectedNetwork.exploreSettings}
-        />
+            <NetworkForm
+              handleSubmit={handleSubmit}
+              onSubmit={onSubmit}
+              register={register}
+              setValue={setValue}
+              setFocus={setFocus}
+              watch={watch}
+              isSubmitting={isSubmitting}
+              control={control}
+              errors={errors}
+              captionAction={t('common.save')}
+              linkFwd="/Profile"
+              description={t('configuration.description')}
+              defaultExploreSettings={selectedNetwork.exploreSettings}
+            />
+
         </Popup>
       )}
     </>

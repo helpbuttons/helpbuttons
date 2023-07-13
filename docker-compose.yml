@@ -44,7 +44,7 @@ services:
       # - web
     #uncomment if using docker-compose up db and yarn dev for backend and not docker-compose.dev
     # ports: 
-    #   - 5432:5432
+      # - 5432:5432
 
 networks:
   web:

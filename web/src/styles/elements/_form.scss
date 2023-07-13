@@ -27,7 +27,7 @@ $form-input-border-radius: $border-general-height;
   left: 24px;
   font-size: $font-size-general;
   font-weight: $font-weight-light;
-
+  height: auto;
 }
 
 
@@ -220,7 +220,49 @@ $form-input-border-radius: $border-general-height;
 
 }
 
+.form__tags-list {
+        
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 5px 0;
+  margin-bottom: $margin-big;
+  // min-height: 38px;
 
+  .tags__list {
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 100%;
+
+    .tags__list-tag {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid $color-gray-border;
+        // margin: 5px;
+        padding: 0 0 0 10px ;
+        border-radius: $border-radius-circle;
+
+        .tag__btn {
+
+            display: flex;
+            justify-content: end;
+            align-items:end;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+
+        }
+
+    }
+
+  }
+
+}
 .form__options-v {
 
   flex-flow: column nowrap;

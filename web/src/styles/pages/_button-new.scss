@@ -4,13 +4,13 @@
 
     .publish_btn-first {
 
-        padding: 1rem;
+        // padding: 1rem;
 
     }
 
     .publish_btn-scd{
 
-        padding: 1rem;
+        // padding: 1rem;
         border-top: 1px solid $color-gray-border;
         border-bottom: 1px solid $color-gray-border;
 
@@ -22,7 +22,7 @@
         justify-content: flex-start;
         align-items: center;
         margin: 5px 0;
-        min-height: 38px;
+        // min-height: 38px;
 
 
         .tags__list {
@@ -56,16 +56,6 @@
             }
 
         }
-
-    }
-
-    .tag__input {
-    
-        width: 150px;
-        height: 14px;
-        text-align: center;
-        padding: 12px;
-        margin: 0;
 
     }
 

@@ -12,15 +12,15 @@
     "start": "Where do you start?",
     "searchlocation": "Search location",
     "loading": "...",
-    "exploreSubtitle": "See & Search the buttons on this map",
-    "createSubtitle": "Create your buttons and collaborate",
+    "exploreSubtitle": "See & Search the helpbuttons on this map",
+    "createSubtitle": "Create your helpbuttons and collaborate",
     "faqsSubtitle": "Read more about this app",
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
-    "locationDetected": "Do you want to navigate to check buttons in your region?",
+    "locationDetected": "Do you want to navigate to check helpbuttons in your region?",
     "stats": "Instance stats",
     "buttons": "There are {0} helpbuttons in this network",
-    "users": "{0} users in this instance",
+    "users": "{0} users in this network",
     "administeredby": "Administered by ",
     "actions": "Actions"
   },
@@ -29,8 +29,8 @@
   },
   "explore": {
     "noResults": "Sorry, there are no results here",
-    "emptyList": "Please browse the map and touch to find more buttons",
-    "createEmpty": "Create mine"
+    "emptyList": "Please browse the map and touch to find more helpbuttons",
+    "createEmpty": "Create"
   },
   "buttonFilters": {
     "queryLabel": "What do you search",
@@ -54,12 +54,12 @@
     "welcomeMessageLong": "<p>Here you´ll see your collaborative network description.</p><p>Create your first network with the options bellow.</p>",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
-    "configureInstanceTitle": "Setup the last details of your instance"
+    "configureInstanceTitle": "Setup the last details of your network"
   },
   "activities": {
     "newbutton": "You created <a href='/ButtonFile/{0}'>{1}</a> in <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
-    "newpost": "There is a new post '{0}' posted to the button <a href='/ButtonFile/{1}'>{2}</a>",
-    "newcomment": "There is a new comment '{0}' posted to the post '{1}' you can view the button <a href='/ButtonFile/{2}'>{3}</a>",
+    "newpost": "There is a new post '{0}' posted to the helpbutton <a href='/ButtonFile/{1}'>{2}</a>",
+    "newcomment": "There is a new comment '{0}' posted to the post '{1}' you can view the helpbutton named <a href='/ButtonFile/{2}'>{3}</a>",
     "noactivity": "You have no activity yet! Start publishing or interact with others!"
   },
   "common": {
@@ -79,21 +79,21 @@
     "click": "Click here"
   },
   "button": {
-    "typeLabel":"Button type",
-    "typeExplain":"Please choose which kind of button would you like to create",
+    "typeLabel":"Helpbutton type",
+    "typeExplain":"Please choose which kind of helpbutton would you like to create",
     "titleLabel": "Title",
-    "titleExplain":"Please choose which kind of button would you like to create",
+    "titleExplain":"Short title to know what's your helpbutton about",
     "descriptionLabel": "Description",
     "descriptionExplain": "Description",
-    "tagsLabel": "Related interests",
-    "imagesLabel": "Upload Images",
+    "tagsLabel": "Keywords",
+    "imagesLabel": "Upload Image",
     "whereLabel": "Where ?",
-    "changePlaceLabel": "Change place",
+    "changePlaceLabel": "Choose place",
     "whenLabel": "When ?",
-    "changeDateLabel": "Change date",
-    "placeHolderTitle": "Write a title for your button",
-    "placeHolderDescription": "Write a description for your button",
-    "firstPost": "User created this button at {0}, leave a comment if you want"
+    "changeDateLabel": "Choose date",
+    "placeHolderTitle": "Write a title for your helpbutton",
+    "placeHolderDescription": "Write a description for your helpbutton",
+    "firstPost": "User created this helpbutton at {0}, leave a comment if you want"
   },
   "user": {
     "email": "Email",
@@ -110,8 +110,7 @@
     "loginButton": "ENTER",
     "noAccount": "I don&apos;t have an account",
     "tags": "Related interests",
-    "description": "Description",
-    "editProfile": "Edit profile",
+    "editProfile": "Edit profile", 
     "name": "Profile name",
     "namePlaceHolder": "Name",
     "avatar": "Choose avatar",
@@ -119,10 +118,12 @@
     "dontChangePassword": "Don't change password",
     "logout": "Logout",
     "deactivate": "Deactivate Account",
+    "description": "Description",
     "loginLink": "I have an account",
     "register": "REGISTER",
     "sendLoginToken": "Send login token",
-    "loginClick": "One click login"
+    "loginClick": "One click login",
+    "created_date": "User since"
   },
   "calendarOnce": {
     "pickday": "Pick a day",
@@ -146,18 +147,27 @@
     "comment": "comment",
     "newComment": "Comment",
     "write": "Post a new update",
-    "placeholderWrite": "Write a new update for your button"
+    "delete": "Delete",
+    "placeholderWrite": "Write a new update for your helpbutton",
+    "NoComments": "No comments yet"
   },
   "configuration": {
     "title": "Administrator settings",
-    "description": "You can modify different settings of your instance",
+    "description": "Here you can modify different settings of your network",
     "namePlaceHolder": "Network of permaculture farmers from Vilanova",
     "descriptionPlaceHolder": "Welcome to the network of sharing ...",
     "privacySetPrivate": "Click here to set it up as a private network",
     "privacySetPublic": "Click here to set it back to a public network",
-    "logo": "Logo",
-    "jumbo": "Jumbo",
-    "tags": "Related interests",
-    "tagsPlaceHolder": "Food, tools, toys..."
+    "images": "Network images",
+    "logo": "Select Logo",
+    "jumbo": "Select background",
+    "tags": "Network keywords",
+    "tagsPlaceHolder": "Food, tools, toys...",
+    "locationLabel": "Network Location",
+    "centerOfMap": "Select the central place of your network",
+    "selectMapStyle": "Choose map style",
+    "locationExplain": "Your network place and radius would be centered everytime someone loads the app",
+    "tagsExplain": "Your network keywords will make easier to search for topics and to know what's your network about"
+
   }
 }

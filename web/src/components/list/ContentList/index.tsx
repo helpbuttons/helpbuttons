@@ -16,7 +16,9 @@ export default function ContentList ({buttons, ...props}) {
         <div className='list__empty-message--prev'>
         {t('explore.noResults')}
         </div>
+        <div className='list__empty-message--comment'>
         {t('explore.emptyList')}
+        </div>
         <Btn caption={t('explore.createEmpty')} onClick={() => router.push('/ButtonNew')} contentAlignment={ContentAlignment.center}/>
       </div>
       </>

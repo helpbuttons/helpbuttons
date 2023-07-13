@@ -71,6 +71,12 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
 
 }
 
+.list__empty-message--comment {
+
+  text-align: center;
+
+}
+
 .list__empty-message--create{
 
   width: 50%;

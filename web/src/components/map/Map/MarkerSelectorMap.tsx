@@ -44,7 +44,7 @@ export default function MarkerSelectorMap({
   
   return (
     <>
-    {JSON.stringify(hexagonCenter)}
+    {/* {JSON.stringify(hexagonCenter)} */}
      <div className='picker__map'>
         <HbMap
           mapCenter={markerPosition}
@@ -52,7 +52,7 @@ export default function MarkerSelectorMap({
           onBoundsChanged={onBoundsChanged}
           handleMapClick={handleMapClicked}
           width={'100%'}
-          height={'60vh'}
+          height={'16rem'}
         >
                   <MarkerButtonIcon anchor={hexagonCenter} offset={[35, 65]} cssColor={markerColor} image={makeImageUrl(markerImage, '/api/')} title={markerCaption}/>
               <GeoJson

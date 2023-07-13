@@ -16,6 +16,7 @@ $textarea-textarea-color-gray: $color-gray;
   min-width: $textarea-textarea-width;
   max-height: $textarea-textarea-height;
   box-sizing: border-box;
+  margin: $margin-extra-small 0;
 
   &::placeholder {
     color: $textarea-textarea-color-gray;
