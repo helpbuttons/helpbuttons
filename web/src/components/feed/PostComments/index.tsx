@@ -22,7 +22,10 @@ export default function PostComments({ comments, reloadPosts, loggedInUser, isBu
             {comments.map((comment) => {
               return (
                   <div className='card-notification--comment'>
-                    <PostMessage post={comment} />
+
+                    <PostMessage post={comment} isCommentOwner={isButtonOwner}/>
+                    {isButtonOwner ?'im owner' : 'not'}
+
                     {loggedInUser &&
                     (loggedInUser.id == comment.author.id ||
                       isButtonOwner ||

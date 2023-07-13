@@ -28,6 +28,12 @@ $card-notification-delete-size: 100px;
     font-weight: $font-weight-bold;
     color: $color-black;
   }
+
+  &:hover {
+
+    border: 1px solid $color-blue;
+
+  }
 }
 
 .card-notification:hover {
