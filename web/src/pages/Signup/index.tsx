@@ -23,6 +23,7 @@ import NewUserFields, {
 } from 'components/user/NewUserFields';
 import { alertService } from 'services/Alert';
 import t from 'i18n';
+import { setValidationErrors } from 'state/helper';
 
 export default function Signup() {
   const {
@@ -41,13 +42,10 @@ export default function Signup() {
       email: '',
     },
   });
-  const [errorMsg, setErrorMsg] = useState(undefined);
-
   const router = useRouter();
 
   const onSubmit = (data) => {
     if (passwordsMatch(data, setError)) {
-      // store.emit(new SignupUser(data.email, data.password, data.name, onSuccess, onError));
       store.emit(
         new SignupUser(
           {
@@ -70,9 +68,13 @@ export default function Signup() {
       : '/ProfileEdit';
     store.emit(new NavigateTo(returnUrl));
   };
-  
-  const onError = (errorMessage) => alertService.error(errorMessage.caption)
 
+  const onError = (error) => {
+    setValidationErrors(error?.validationErrors, setError);
+    console.log(error);
+    alertService.error(error.caption);
+  };
+  
   const params: URLSearchParams = new URLSearchParams(router.query);
 
   return (
@@ -88,11 +90,6 @@ export default function Signup() {
               watch={watch}
             />
           </div>
-          {errorMsg && (
-            <div className="form__input-subtitle--error">
-              {errorMsg}
-            </div>
-          )}
           <div className="form__btn-wrapper">
             <Btn
               submit={true}
@@ -103,7 +100,7 @@ export default function Signup() {
             />
             <div className="popup__link">
               <Link href={`/Login?${params.toString()}`}>
-              {t('user.loginLink')}
+                {t('user.loginLink')}
               </Link>
             </div>
           </div>
