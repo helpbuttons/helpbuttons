@@ -189,6 +189,17 @@ export class UpdateFilters implements UpdateEvent {
   }
 }
 
+export class UpdateFiltersToFilterTag implements UpdateEvent {
+  public constructor(private tag: string) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.filters = {...defaultFilters, tags: [this.tag]};
+      newState.explore.map.loading = true;
+    });
+  }
+}
+
 export class UpdateBoundsFilteredButtons implements UpdateEvent {
   public constructor(private boundsFilteredButtons: Button[]) {}
 

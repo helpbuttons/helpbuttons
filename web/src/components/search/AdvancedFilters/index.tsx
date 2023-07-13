@@ -18,6 +18,7 @@ import { GlobalState, store } from 'pages';
 import { UpdateFilters } from 'state/Explore';
 import router, { Router } from 'next/router';
 import { useRef } from 'store/Store';
+import FieldTags from 'elements/Fields/FieldTags';
 
 //Mobile filters section that includes not only the filters but some search input fields, maybe needed to make a separate component from the rest of esktop elements
 export default function AdvancedFilters({
@@ -37,26 +38,14 @@ export default function AdvancedFilters({
     register,
     setValue,
     watch,
+    reset,
   } = useForm({
-    defaultValues: {
-      query: filters.query,
-      helpButtonTypes: filters.helpButtonTypes,
-      place: {
-        address: filters.where.address,
-        center: filters.where.center,
-        radius: filters.where.radius,
-      },
-    },
+    defaultValues: filters
   });
 
   const clearFilters = (e) => {
     e.preventDefault();
-    setValue('query', defaultFilters.query);
-    setValue('helpButtonTypes', defaultFilters.helpButtonTypes);
-    setValue('place.address', null);
-    setValue('place.center', null);
-    setValue('place.radius', defaultFilters.where.radius);
-
+    reset(defaultFilters)
     store.emit(new UpdateFilters(defaultFilters));
 
     toggleShowFiltersForm(false);
@@ -78,6 +67,7 @@ export default function AdvancedFilters({
         radius: data.place.radius,
       };
     }
+    newFilters.tags = data.tags
     store.emit(new UpdateFilters(newFilters));
 
     if (isHome) {
@@ -91,6 +81,7 @@ export default function AdvancedFilters({
   const center = watch('place.center');
   const radius = watch('place.radius');
   const helpButtonTypes = watch('helpButtonTypes');
+  const tags = watch('tags');
 
   const handleSelectedPlace = (place) => {
     setValue('place.address', place.formatted);
@@ -121,6 +112,10 @@ export default function AdvancedFilters({
     );
   };
 
+
+  useEffect(() => {
+    reset(filters)
+  }, [filters])
   return (
     <>
       {showFiltersForm && (
@@ -136,7 +131,16 @@ export default function AdvancedFilters({
               explain={t('buttonFilters.queryExplain')}
               {...register('query')}
             />
-
+            <FieldTags
+              label={t('buttonFilters.tagsLabel')}
+              explain={t('buttonFilters.tagsExplain')}
+              placeholder={t('common.add')}
+              validationError={errors.tags}
+              setTags={(tags) => {
+                setValue('tags', tags)
+              }}
+              tags={tags}
+            />
             <FieldCheckbox
               label={'Button types'}
               validationError={null}

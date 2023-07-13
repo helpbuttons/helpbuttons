@@ -401,6 +401,18 @@ function useHexagonMap({
       }
       return true;
     };
+
+    const applyTagFilters = (button: Button, tags) => {
+      if(tags.length > 0)
+      {
+        const tagsFound = _.intersection(tags, button.tags);
+        if(tagsFound.length > 0)
+        {
+          return true;
+        }
+      }
+      return false;
+    }
     const res = cachedHexagons.reduce(
       ({ filteredButtons, filteredHexagons }, hexagonCached) => {
         const moreButtons = hexagonCached.buttons.filter(
@@ -414,6 +426,9 @@ function useHexagonMap({
               return false;
             }
             if (!applyWhereFilter(button, filters.where)) {
+              return false;
+            }
+            if (filters.tags.length > 0 && !applyTagFilters(button, filters.tags)) {
               return false;
             }
             return true;

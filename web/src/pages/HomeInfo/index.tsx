@@ -25,8 +25,9 @@ import {  useState } from 'react';
 import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
-import { UpdateFilters } from 'state/Explore';
+import { UpdateFiltersToFilterTag } from 'state/Explore';
 import Alert from 'components/overlay/Alert';
+
 
 export default function HomeInfo({
   metadata,
@@ -34,6 +35,11 @@ export default function HomeInfo({
   config,
 }) {
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
+
+  const filterTag = (tag) => {
+    store.emit(new UpdateFiltersToFilterTag(tag));
+    router.push('/Explore')
+  };
 
   const currentUser = useStore(
     store,
@@ -101,8 +107,8 @@ export default function HomeInfo({
                     {selectedNetwork.description}
                   </div>
                   <div className="info-overlay__hashtags">
-                  Explore{selectedNetwork.tags.map((tag) => {
-                      return <div className="hashtag">{tag}</div>;
+                  {selectedNetwork.tags.map((tag) => {
+                      return <div className="hashtag" onClick={() => filterTag(tag)}>{tag}</div>;
                     })}
                   </div>
                 </div>

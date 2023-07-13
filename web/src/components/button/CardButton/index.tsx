@@ -15,6 +15,14 @@ import { ShowWhen } from 'elements/Fields/FieldDate';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
+import Link from 'next/link';
+import {
+  UpdateFiltersToFilterTag,
+} from 'state/Explore';
+
+const filterTag = (tag) => {
+  store.emit(new UpdateFiltersToFilterTag(tag));
+};
 
 export default function CardButtonFile({ button }) {
   const { cssColor } = buttonTypes.find((buttonType) => {
@@ -46,42 +54,56 @@ export function CardButtonHeadMedium({ button }) {
     return buttonType.name === button.type;
   });
   return (
-      <div className="card-button__content">
-        <div className="card-button__header">
-          <div className="card-button__avatar">
-            <div className="avatar-small">
-              <ImageWrapper
-                imageType={ImageType.avatar}
-                src={button.owner.avatar}
-                alt={button.title}
-              />
-            </div>
+    <div className="card-button__content">
+      <div className="card-button__header">
+        <div className="card-button__avatar">
+          <div className="avatar-small">
+          <Link href={`/Profile/${button.owner.username}`}><ImageWrapper
+              imageType={ImageType.avatar}
+              src={button.owner.avatar}
+              alt={button.title}
+            /></Link>
           </div>
+        </div>
 
-          <div className="card-button__info">
-            <div className="card-button__status card-button__status">
-              <span
-                className="card-button"
-                style={buttonColorStyle(cssColor)}
-              >
-                {button.type}
-              </span>
-            </div>
-            <div className="card-button__name">
+        <div className="card-button__info">
+          <div className="card-button__status card-button__status">
+            <span
+              className="card-button"
+              style={buttonColorStyle(cssColor)}
+            >
+              {button.type}
+            </span>
+          </div>
+          <div className="card-button__name">
+            <Link href={`/Profile/${button.owner.username}`}>
               {button.owner.name} @{button.owner.username}
-            </div>
+            </Link>
           </div>
         </div>
-
-        <div className="card-button__title">{button.title}</div>
-
-        <div className="card-button__city card-button__everywhere ">
-          {button.address}
-        </div>
-
-        <ShowWhen when={button.when} />
-
       </div>
+
+      <div className="card-button__title">
+        <Link href={`/ButtonFile/${button.id}`}>{button.title}</Link>
+      </div>
+      <div className="card-button__hashtags">
+        {button.tags.map((tag, idx) => {
+          return (
+            <div
+              className="hashtag"
+              key={idx}
+              onClick={() => filterTag(tag)}
+            >
+              {tag}
+            </div>
+          );
+        })}
+      </div>
+      <div className="card-button__city card-button__everywhere ">
+        {button.address}
+      </div>
+      <ShowWhen when={button.when} />
+    </div>
   );
 }
 
@@ -116,7 +138,6 @@ export function CardButtonHeadSmall({ button }) {
             {button.address}
           </div>
           <ShowWhen when={button.when} />
-
         </div>
       </a>
     </>
@@ -129,17 +150,16 @@ function CardButtonSubmenu({ button }) {
     store,
     (state: GlobalState) => state.config,
   );
-  
-  const [linkButton, setLinkButton] = useState(null)
+
+  const [linkButton, setLinkButton] = useState(null);
   useEffect(() => {
-    if(config)
-    {
+    if (config) {
       setLinkButton(() => {
-        const shareLink =  getShareLink(`/ButtonFile/${button.id}`);
+        const shareLink = getShareLink(`/ButtonFile/${button.id}`);
         return shareLink;
-      })
+      });
     }
-  }, [config])
+  }, [config]);
   return (
     <section>
       <div
@@ -200,12 +220,15 @@ export function CardButtonHeadBig({ button }) {
         <div className="card-button__header">
           <div className="card-button__avatar">
             <div className="avatar-big">
+            <Link href={`/Profile/${button.owner.username}`}>
               <ImageWrapper
                 imageType={ImageType.avatar}
                 src={button.owner.avatar}
                 alt="Avatar"
               />
+              </Link>
             </div>
+            
           </div>
 
           <div className="card-button__info">
@@ -218,7 +241,9 @@ export function CardButtonHeadBig({ button }) {
               </span>
             </div>
             <div className="card-button__name">
-              {button.owner.name} @{button.owner.username} 
+              <Link href={`/Profile/${button.owner.username}`}>
+                {button.owner.name} @{button.owner.username}
+              </Link>
             </div>
             <CardButtonHeadActions button={button} />
           </div>
@@ -233,7 +258,7 @@ export function CardButtonHeadBig({ button }) {
         <div className="card-button__hashtags">
           {button.tags.map((tag, idx) => {
             return (
-              <div className="hashtag" key={idx}>
+              <div className="hashtag" key={idx} onClick={() => {filterTag(tag); router.push('/Explore')}}>
                 {tag}
               </div>
             );
@@ -261,18 +286,18 @@ export function CardButtonHeadActions({ button }) {
       </span> */}
 
       {button.hearts && (
-            <span className="btn-circle__icon">
-               <IoHeartOutline />
-              {button.hearts}
-            </span>
-          )}
+        <span className="btn-circle__icon">
+          <IoHeartOutline />
+          {button.hearts}
+        </span>
+      )}
 
       {button.createdButtonsCount && (
-            <span className="btn-circle__icon">
-              <IoAddCircleOutline />
-              {button.createdButtonsCount}
-            </span>
-          )}
+        <span className="btn-circle__icon">
+          <IoAddCircleOutline />
+          {button.createdButtonsCount}
+        </span>
+      )}
     </div>
   );
 }
