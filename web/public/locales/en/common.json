@@ -20,7 +20,7 @@
     "locationDetected": "Do you want to navigate to check helpbuttons in your region?",
     "stats": "Instance stats",
     "buttons": "There are {0} helpbuttons in this network",
-    "users": "{0} users in this instance",
+    "users": "{0} users in this network",
     "administeredby": "Administered by ",
     "actions": "Actions"
   },
@@ -54,7 +54,7 @@
     "welcomeMessageLong": "<p>Here you´ll see your collaborative network description.</p><p>Create your first network with the options bellow.</p>",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
-    "configureInstanceTitle": "Setup the last details of your instance"
+    "configureInstanceTitle": "Setup the last details of your network"
   },
   "activities": {
     "newbutton": "You created <a href='/ButtonFile/{0}'>{1}</a> in <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
@@ -79,10 +79,10 @@
     "click": "Click here"
   },
   "button": {
-    "typeLabel":"Button type",
+    "typeLabel":"Helpbutton type",
     "typeExplain":"Please choose which kind of helpbutton would you like to create",
     "titleLabel": "Title",
-    "titleExplain":"Please choose which kind of helpbutton would you like to create",
+    "titleExplain":"Short title to know what's your helpbutton about",
     "descriptionLabel": "Description",
     "descriptionExplain": "Description",
     "tagsLabel": "Keywords",
@@ -147,7 +147,9 @@
     "comment": "comment",
     "newComment": "Comment",
     "write": "Post a new update",
-    "placeholderWrite": "Write a new update for your helpbutton"
+    "delete": "Delete",
+    "placeholderWrite": "Write a new update for your helpbutton",
+    "NoComments": "No comments yet"
   },
   "configuration": {
     "title": "Administrator settings",

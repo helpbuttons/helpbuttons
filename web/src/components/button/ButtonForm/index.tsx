@@ -108,7 +108,7 @@ export default function ButtonForm({
               validationError={errors.title}
               watch={watch}
               setValue={setValue}
-              explain={"Short title to know what's your button about"}
+              explain={t('button.titleExplain')}
               setFocus={setFocus}
               {...register('title', { required: true })}
             />
