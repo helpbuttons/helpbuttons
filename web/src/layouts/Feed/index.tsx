@@ -23,6 +23,7 @@ export default function Feed({ button }: { button: Button }) {
     (state: GlobalState) => state.loggedInUser,
   );
   const isButtonOwner = loggedInUser?.id == button.owner.id;
+  const buttonOwnerId = button.owner.id;
 
  
   const reloadPosts = () => {
@@ -98,6 +99,7 @@ export default function Feed({ button }: { button: Button }) {
               onNewComment={() => {
                 reloadPosts();
               }}
+              buttonOwnerId={buttonOwnerId}
               isButtonOwner={isButtonOwner}
               reloadPosts={reloadPosts}
             />
@@ -115,7 +117,7 @@ export default function Feed({ button }: { button: Button }) {
     </div>
   );
 }
-export function FeedElement({ post, loggedInUser, onNewComment, isButtonOwner = false, reloadPosts }) {
+export function FeedElement({ post, loggedInUser, onNewComment, buttonOwnerId, isButtonOwner = false, reloadPosts }) {
   const [showNewCommentDialog, setShowNewCommentDialog] =
     useState(false);
 
@@ -130,7 +132,7 @@ export function FeedElement({ post, loggedInUser, onNewComment, isButtonOwner = 
             <div className="hashtag hashtag--blue">New update</div>
           </div>
         </div>
-        <PostMessage post={post} />
+        <PostMessage post={post} isButtonOwnerComment={buttonOwnerId == post.author.id}/>
 
         <>
           <div className="card-notification__answer-btn">
@@ -166,8 +168,7 @@ export function FeedElement({ post, loggedInUser, onNewComment, isButtonOwner = 
             />
           )}
         </>
-        <PostComments comments={post.comments} reloadPosts={reloadPosts} loggedInUser={loggedInUser}
-              isButtonOwner={isButtonOwner}/>
+        <PostComments  buttonOwnerId = {buttonOwnerId} comments={post.comments} reloadPosts={reloadPosts} loggedInUser={loggedInUser} isButtonOwner={isButtonOwner}/>
       </div>
     </div>
   );

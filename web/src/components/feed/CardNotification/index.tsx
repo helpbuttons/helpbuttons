@@ -14,6 +14,7 @@ export default function CardNotification({ activity = {} }) {
           title={'New Button'}
           image={button.image}
           date={button.created_at}
+          id={button.id}
           message={t('activities.newbutton', [
             button.id,
             button.title,
@@ -30,6 +31,7 @@ export default function CardNotification({ activity = {} }) {
           title={'Deleted Button'}
           image={button.image}
           date={button.created_at}
+          id={button.id}
           message={t('activities.deletebutton', [
             button.id,
             button.title,
@@ -43,6 +45,7 @@ export default function CardNotification({ activity = {} }) {
           title={'New post'}
           image={post.button.image}
           date={post.created_at}
+          id={post.button.id}
           message={t('activities.newpost', [
             post.message,
             post.button.id,
@@ -59,6 +62,7 @@ export default function CardNotification({ activity = {} }) {
           title={'New notification'}
           image={comment.button.image}
           date={comment.created_at}
+          id={comment.button.id}
           message={t('activities.newcomment', [
             comment.message,
             comment.post.message,
@@ -74,6 +78,7 @@ export default function CardNotification({ activity = {} }) {
           image={'no'}
           date={activity.created_at}
           message={activity.eventName}
+          id={0}
         />
       );
     }
@@ -82,9 +87,9 @@ export default function CardNotification({ activity = {} }) {
   return <>{notification(activity)}</>;
 }
 
-export function NotificationCard({ title, image, date, message }) {
+export function NotificationCard({ title, image, date, message, id }) {
   return (
-    <div className="card-notification card-notification">
+    <a href={'/ButtonFile/'+ id.toString()} className="card-notification card-notification">
       <div className="card-notification__comment-count">
         <div className="card-notification__label">
           <div className="hashtag hashtag--blue">{title}</div>
@@ -117,6 +122,6 @@ export function NotificationCard({ title, image, date, message }) {
           <div className="card-notification__paragraph"></div>
         </div>
       </div>
-    </div>
+    </a>
   );
 }

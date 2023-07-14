@@ -1,6 +1,6 @@
 import ButtonForm from 'components/button/ButtonForm';
 import { GlobalState, store } from 'pages';
-import { CreateButton, SaveButtonDraft } from 'state/Explore';
+import { CreateButton, SaveButtonDraft, UpdateDensityMap } from 'state/Explore';
 import { useRef } from 'store/Store';
 import Router from 'next/router';
 import { alertService } from 'services/Alert';
@@ -72,6 +72,7 @@ export default function ButtonNew() {
           message: t('button.firstPost', [readableDate(buttonData.created_at)], true)
         },
         () => {
+          store.emit(new UpdateDensityMap([]))
           jumpToExploreButton(buttonData)
         },
         (errorMessage) => {

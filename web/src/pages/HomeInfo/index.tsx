@@ -25,8 +25,9 @@ import {  useState } from 'react';
 import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
-import { UpdateFilters } from 'state/Explore';
+import { UpdateFiltersToFilterButtonType, UpdateFiltersToFilterTag } from 'state/Explore';
 import Alert from 'components/overlay/Alert';
+
 
 export default function HomeInfo({
   metadata,
@@ -35,6 +36,16 @@ export default function HomeInfo({
 }) {
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
 
+  const filterTag = (tag) => {
+    store.emit(new UpdateFiltersToFilterTag(tag));
+    router.push('/Explore')
+  };
+
+  const filterButtonType = (buttonType) => {
+    store.emit(new UpdateFiltersToFilterButtonType(buttonType));
+    router.push('/Explore')
+  };
+  
   const currentUser = useStore(
     store,
     (state: GlobalState) => state.loggedInUser,
@@ -101,8 +112,8 @@ export default function HomeInfo({
                     {selectedNetwork.description}
                   </div>
                   <div className="info-overlay__hashtags">
-                  Explore{selectedNetwork.tags.map((tag) => {
-                      return <div className="hashtag">{tag}</div>;
+                  {selectedNetwork.tags.map((tag, idx) => {
+                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
                     })}
                   </div>
                 </div>
@@ -142,6 +153,7 @@ export default function HomeInfo({
                               btnType={BtnType.filter}
                               iconLeft={IconType.green}
                               caption={buttoTypeCountText}
+                              onClick={() => filterButtonType(buttonType.name)}
                             />
                           </div>
                         );

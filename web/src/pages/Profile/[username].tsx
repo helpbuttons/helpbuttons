@@ -51,6 +51,15 @@ export default function Profile() {
       }
     }
   }, [userProfile]);
+
+  useEffect(() => {
+    if(loggedInUser){
+      if(loggedInUser.username == username)
+      {
+        router.push('/Profile')
+      }
+    }
+  },[loggedInUser])
   return (
     <>
       <div className="body__content">

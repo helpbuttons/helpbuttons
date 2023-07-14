@@ -66,12 +66,22 @@ export default function FieldTags({
         placeholder={placeholder}
         autoComplete="off"
       />
-      <div className="form__tags-list">
+      <TagList tags={tags} remove={remove}/>
+      
+      <FieldError validationError={validationError} />
+    </div>
+  );
+}
+
+export function TagList({tags, remove = null})
+{
+  return (<div className="form__tags-list">
         <ul className="tags__list">
-          {tags &&
+          {tags.length > 0 &&
             tags.map((item, index) => (
               <li key={`${index}`} className="tags__list-tag">
                 {item}
+                {remove &&
                 <button
                   className="tag__btn"
                   type="button"
@@ -79,12 +89,10 @@ export default function FieldTags({
                 >
                   <IoClose/>
                 </button>
+                }
               </li>
             ))}
         </ul>
       </div>
-
-      <FieldError validationError={validationError} />
-    </div>
   );
 }

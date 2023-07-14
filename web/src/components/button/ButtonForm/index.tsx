@@ -165,13 +165,13 @@ export default function ButtonForm({
                 selectedNetwork={selectedNetwork}
                 validationError={errors.location}
               />
-              <FieldDate
+              {/* <FieldDate
                 dateType={watch('when.type')}
                 dates={watch('when.dates')}
                 setDateType={(value) => setValue('when.type', value)}
                 setDate={(value) => setValue('when.dates', value)}
                 title={t('button.whenLabel')}
-              />
+              /> */}
             </>
             {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} /> */}
             <ButtonShare />
