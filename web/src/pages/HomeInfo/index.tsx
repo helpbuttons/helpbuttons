@@ -112,8 +112,8 @@ export default function HomeInfo({
                     {selectedNetwork.description}
                   </div>
                   <div className="info-overlay__hashtags">
-                  {selectedNetwork.tags.map((tag) => {
-                      return <div className="hashtag" onClick={() => filterTag(tag)}>{tag}</div>;
+                  {selectedNetwork.tags.map((tag, idx) => {
+                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
                     })}
                   </div>
                 </div>

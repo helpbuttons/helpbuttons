@@ -8,6 +8,7 @@ import {
   UpdateBoundsFilteredButtons,
   UpdateCachedHexagons,
   UpdateExploreUpdating,
+  UpdateQueryFoundTags,
   UpdateListButtons,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
@@ -51,12 +52,11 @@ function HoneyComb({ router }) {
     false,
   );
 
-  const exploreMapState :ExploreMapState = useStore(
+  const exploreMapState: ExploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,
     false,
   );
-
 
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
@@ -85,7 +85,7 @@ function HoneyComb({ router }) {
     exploreSettings,
     filters: exploreMapState.filters,
     boundsFilteredButtons: exploreMapState.boundsFilteredButtons,
-    cachedHexagons: exploreMapState.cachedHexagons
+    cachedHexagons: exploreMapState.cachedHexagons,
   });
 
   useEffect(() => {
@@ -266,7 +266,7 @@ function useHexagonMap({
   exploreSettings,
   filters,
   boundsFilteredButtons,
-  cachedHexagons
+  cachedHexagons,
 }) {
   const [hexagonClicked, setHexagonClicked] = useState(null);
   const debouncedHexagonClicked = useDebounce(hexagonClicked, 70);
@@ -277,7 +277,7 @@ function useHexagonMap({
   });
   const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, 100);
   const [isRedrawingMap, setIsRedrawingMap] = useState(false);
-
+  const foundTags = React.useRef([]);
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
   let cachedH3Hexes = React.useRef(cachedHexagons);
   const calculateNonCachedHexagons = (
@@ -307,18 +307,17 @@ function useHexagonMap({
       ...cachedH3Hexes.current,
       ...newDensityMapHexagons,
     ]);
-    store.emit(new UpdateCachedHexagons(cachedH3Hexes.current))
+    store.emit(new UpdateCachedHexagons(cachedH3Hexes.current));
   };
 
   useEffect(() => {
     if (debounceHexagonsToFetch.hexagons.length > 0) {
-      
       const hexesToFetch = calculateNonCachedHexagons(
         debounceHexagonsToFetch,
         cachedH3Hexes,
       );
       if (hexesToFetch.length > 0) {
-        store.emit(new UpdateExploreUpdating())
+        store.emit(new UpdateExploreUpdating());
         store.emit(
           new FindButtons(
             debounceHexagonsToFetch.resolution,
@@ -344,7 +343,7 @@ function useHexagonMap({
   }, [debounceHexagonsToFetch]);
 
   function updateDensityMap() {
-    store.emit(new UpdateExploreUpdating())
+    store.emit(new UpdateExploreUpdating());
     setIsRedrawingMap(() => true);
     seth3TypeDensityHexes(() => []);
     const boundsButtons = cachedH3Hexes.current.filter(
@@ -374,6 +373,9 @@ function useHexagonMap({
 
   const applyFilters = (filters, cachedHexagons) => {
     const applyButtonTypesFilter = (button, buttonTypes) => {
+      if (buttonTypes.length == 0) {
+        return true;
+      }
       if (buttonTypes.length > 0) {
         return buttonTypes.indexOf(button.type) > -1;
       }
@@ -401,36 +403,63 @@ function useHexagonMap({
       return true;
     };
 
-    const applyTagFilters = (button: Button, tags) => {
-      if(tags.length > 0)
-      {
+    const applyTagFilters = (button: Button, tags: string[]) => {
+      if (tags.length == 0) {
+        return true;
+      }
+      if (tags.length > 0) {
         const tagsFound = _.intersection(tags, button.tags);
-        if(tagsFound.length > 0)
-        {
+        if (tagsFound.length > 0) {
           return true;
         }
       }
       return false;
-    }
+    };
+
+    const applyQueryTagFilters = (button: Button, tags: string[]) => {
+      if (tags.length == 0) {
+        return true;
+      }
+      if (tags.length > 0) {
+        const tagsFound = _.intersection(tags, button.tags);
+        if (tagsFound.length > 0) {
+          foundTags.current = _.union(foundTags.current, tagsFound);
+          return true;
+        }
+      }
+      return false;
+    };
+
+    let queryTags = filters.query
+      .split(' ')
+      .filter((value) => value.length > 0);
+    foundTags.current = [];
     const res = cachedHexagons.reduce(
       ({ filteredButtons, filteredHexagons }, hexagonCached) => {
         const moreButtons = hexagonCached.buttons.filter(
           (button: Button) => {
             if (
-              filters.helpButtonTypes.length > 0 &&
               !applyButtonTypesFilter(button, filters.helpButtonTypes)
             ) {
               return false;
             }
-            if (!applyQueryFilter(button, filters.query)) {
+            if (!applyQueryTagFilters(button, queryTags)) {
+              return false;
+            }
+
+            // remove tags from query string, so it won't fail to search string
+            let query = filters.query;
+            foundTags.current.forEach(
+              (tag) => (query = query.replace(tag, '')),
+            );
+            // ...
+            if (!applyQueryFilter(button, query)) {
               return false;
             }
             if (!applyWhereFilter(button, filters.where)) {
               return false;
             }
-            if (filters.tags.length > 0 && !applyTagFilters(button, filters.tags)) {
-              return false;
-            }
+
             return true;
           },
         );
@@ -446,6 +475,8 @@ function useHexagonMap({
       },
       { filteredButtons: [], filteredHexagons: [] },
     );
+
+    store.emit(new UpdateQueryFoundTags(foundTags.current));
     return {
       filteredButtons: res.filteredButtons,
       filteredHexagons: recalculateDensityMap(res.filteredHexagons),

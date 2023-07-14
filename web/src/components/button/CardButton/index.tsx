@@ -17,7 +17,6 @@ import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import Link from 'next/link';
 import {
-  UpdateFiltersToFilterButtonType,
   UpdateFiltersToFilterTag,
 } from 'state/Explore';
 
