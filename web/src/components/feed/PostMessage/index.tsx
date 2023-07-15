@@ -5,35 +5,39 @@ import { readableTimeLeftToDate } from 'shared/date.utils';
 export default function PostMessage({ post, isButtonOwnerComment }) {
   return (
     <>
-        {!isButtonOwnerComment &&
+        {!isButtonOwnerComment && (
+           <>
 
-          <div className="message message--others">
+            <div className="message message--others">
 
-            <div className="message__header">
+              <div className="message__header">
 
-              <div className="message__user-name-container">
-                <p className="message__author"><span className="message__name">{post.author.name}</span>{' '}@{post.author.username}</p>
+                <div className="message__user-name-container">
+                  <p className="message__author"><span className="message__name">{post.author.name}</span>{' '}@{post.author.username}</p>
+                </div>
+
               </div>
 
             </div>
-          </div>
 
-          <div className="message__content">{post.message}</div>
+            <div className="message__content">{post.message}</div>
 
-          <div className="message__hour">
-            {readableTimeLeftToDate(post.created_at)}
-          </div>
+            <div className="message__hour">
+              {readableTimeLeftToDate(post.created_at)}
+            </div>
+            
+
+            <div className="message__avatar">
+              <ImageWrapper
+                imageType={ImageType.avatar}
+                src={post.author.avatar}
+                alt="Avatar"
+              />
+            </div>
+          </>
           
+        )}
 
-          <div className="message__avatar">
-            <ImageWrapper
-              imageType={ImageType.avatar}
-              src={post.author.avatar}
-              alt="Avatar"
-            />
-          </div>
-        </div>
-      )}
       {isButtonOwnerComment && (
         <div className="card-notification__content">
           <div className="card-notification__avatar">
