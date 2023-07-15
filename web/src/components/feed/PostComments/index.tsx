@@ -49,7 +49,6 @@ export default function PostComments({ comments, reloadPosts, loggedInUser, isBu
           </>
         )}
 
-        {comments.length < 1 && <>{t('post.NoComments')}</>}
       </>
     </>
   );

@@ -3,9 +3,11 @@ import PostCommentNew from 'components/feed/PostCommentNew';
 import PostComments from 'components/feed/PostComments';
 import PostMessage from 'components/feed/PostMessage';
 import PostNew from 'components/feed/PostNew';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import Dropdown from 'elements/Dropdown/Dropdown';
 import t from 'i18n';
+import { IoTrashBinOutline } from 'react-icons/io5';
+
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { alertService } from 'services/Alert';
@@ -139,11 +141,13 @@ export function FeedElement({ post, loggedInUser, onNewComment, buttonOwnerId, i
           <div className="card-notification__answer-btn">
             
             {(loggedInUser && (loggedInUser.id == post.author.id || isButtonOwner || isAdmin(loggedInUser)) )&& (
+
               <Btn
                 submit={true}
-                btnType={BtnType.corporative}
-                caption={t('post.delete')}
-                contentAlignment={ContentAlignment.center}
+                btnType={BtnType.iconActions}
+                iconLink={<IoTrashBinOutline/>}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.right}
                 onClick={() => deletePost(post.id)}
               />
             )}

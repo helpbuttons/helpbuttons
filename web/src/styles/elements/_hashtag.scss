@@ -29,7 +29,7 @@ $hashtag-color-l-gray: $color-med-gray;
   margin: 0 $hashtag-margin-x $hashtag-margin-x 0;
   text-transform: capitalize;
   font-size: 0.9rem;
-  color: $hashtag-color-l-gray;
+  color: $hashtag-color-gray;
   background-color: transparent;
 
   &--yellow {
@@ -58,7 +58,7 @@ $hashtag-color-l-gray: $color-med-gray;
     background-color: $hashtag-color-white;
     color: $hashtag-color-black;
     &:hover {
-      background-color: $hashtag-color-black;
+      background-color: $hashtag-color-gray;
       color: $hashtag-color-white;
     }
   }
@@ -83,5 +83,5 @@ $hashtag-color-l-gray: $color-med-gray;
   color: $hashtag-hover-color;
   cursor: pointer;
   text-decoration: none;
-  background: $hashtag-color-black;
+  background: $hashtag-color-l-gray;
 }

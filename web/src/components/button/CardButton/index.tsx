@@ -5,6 +5,8 @@ import {
   IoHeartOutline,
   IoAddCircleOutline,
 } from 'react-icons/io5';
+import t from 'i18n';
+
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 import router from 'next/router';
@@ -177,25 +179,25 @@ function CardButtonSubmenu({ button }) {
           >
               <a
                 className="card-button__trigger-options"
-              >Share Button</a>
+              >{t('button.share')}</a>
               <a
                 className="card-button__trigger-options card-button__trigger-button"
                 onClick={() => {
                   navigator.clipboard.writeText(linkButton);
                 }}
-              >Copy Link</a>
+              >{t('button.copy')}</a>
               <a
                 className="card-button__trigger-options"
                 onClick={() => {
                   router.push(`/ButtonEdit/${button.id}`);
                 }}
-              >Edit Button</a>
+              >{t('button.edit')}</a>
               <a
                 className="card-button__trigger-options"
                 onClick={() => {
                   router.push(`/ButtonRemove/${button.id}`);
                 }}
-              >Delete Button</a>
+              >{t('button.delete')}</a>
           </div>
         </div>
       )}
