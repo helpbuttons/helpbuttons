@@ -25,7 +25,8 @@
     "actions": "Actions"
   },
   "feed": {
-    "write": "Write message"
+    "write": "Write message",
+    "update": "User Update"
   },
   "explore": {
     "noResults": "Sorry, there are no results here",
@@ -38,8 +39,8 @@
     "queryPlaceHolder": "Friends, food, toys, clothes,...",
     "where": "Where",
     "whereExplain": "Search the place where you want to go",
-    "distance": "Search Distance"
-
+    "distance": "Search Distance",
+    "allButtonTypes": "All types"
   },
   "setup": {
     "hostname": "Hostname",
@@ -68,6 +69,7 @@
     "remove": "Remove",
     "publish": "Publish",
     "save": "Save",
+    "search": "Search",
     "reset": "Reset",
     "done": "Done",
     "saveSuccess": "{0} saved",

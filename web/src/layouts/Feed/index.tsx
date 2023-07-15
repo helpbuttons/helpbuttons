@@ -131,7 +131,7 @@ export function FeedElement({ post, loggedInUser, onNewComment, buttonOwnerId, i
       <div className="card-notification">
       <div className="card-notification__comment-count">
           <div className="card-notification__label">
-            <div className="hashtag hashtag--blue">New update</div>
+            <div className="hashtag hashtag--blue">{t('feed.update')}</div>
           </div>
         </div>
         <PostMessage post={post} isButtonOwnerComment={buttonOwnerId == post.author.id}/>

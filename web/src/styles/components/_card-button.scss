@@ -159,17 +159,32 @@ $card-button-border-height: $border-general-height;
   //overflow-x: hidden;
   font-weight: bold;
   padding-top: 0;
-  color: $color-gray;
+  color: $color-black;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
+
+  a {
+
+    color: $color-black;
+
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
 }
 
 .card-button__name:first-letter {
   text-transform: uppercase;
+}
+
+.card-button__username {
+  color: $color-gray;
+  font-weight: $font-weight-light;
+
 }
 
 .card-button__title {

@@ -79,7 +79,7 @@ export function CardButtonHeadMedium({ button }) {
             </span>
           </div>
           <div className="card-button__name">
-              {button.owner.name} @{button.owner.username}
+              {button.owner.name}<span className="card-button__username"> @{button.owner.username}</span>
           </div>
         </div>
       </div>
@@ -245,7 +245,7 @@ export function CardButtonHeadBig({ button }) {
             </div>
             <div className="card-button__name">
               <Link href={`/Profile/${button.owner.username}`}>
-                {button.owner.name} @{button.owner.username}
+                {button.owner.name} <span className="card-button__username"> @{button.owner.username}</span>
               </Link>
             </div>
             <CardButtonHeadActions button={button} />
