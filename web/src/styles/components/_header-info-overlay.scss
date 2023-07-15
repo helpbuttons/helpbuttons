@@ -135,6 +135,8 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   .info-overlay__hashtags {
 
     display: flex;
+    flex-wrap:wrap;
+    overflow: scroll;
     padding-bottom: $padding-medium;
     padding-top: $padding-medium;
 

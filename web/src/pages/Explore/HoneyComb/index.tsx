@@ -62,7 +62,6 @@ function HoneyComb({ router }) {
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
 
   const height = showLeftColumn ? 0 : 400;
-debugger
   const {
     setMapCenter,
     setMapZoom,
