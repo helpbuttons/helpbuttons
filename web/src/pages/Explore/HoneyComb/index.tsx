@@ -61,6 +61,8 @@ function HoneyComb({ router }) {
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
 
+  const height = showLeftColumn ? 0 : 400;
+debugger
   const {
     setMapCenter,
     setMapZoom,
@@ -139,6 +141,7 @@ function HoneyComb({ router }) {
               hexagonClicked={hexagonClicked}
               isRedrawingMap={isRedrawingMap}
               filters={exploreMapState.filters}
+              height={height}
             />
           </LoadabledComponent>
         </>
