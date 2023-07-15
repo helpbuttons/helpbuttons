@@ -11,7 +11,7 @@ export default function PostMessage({ post, isButtonOwnerComment }) {
             <div className="message__header">
 
               <div className="message__user-name-container">
-                <p className="message__user-name">{post.author.name}{' '}@{post.author.username}</p>
+                <p className="message__author"><span className="message__name">{post.author.name}</span>{' '}@{post.author.username}</p>
               </div>
 
             </div>
@@ -33,6 +33,7 @@ export default function PostMessage({ post, isButtonOwnerComment }) {
             </div>
 
           </div>
+          
 
         }{isButtonOwnerComment &&
 

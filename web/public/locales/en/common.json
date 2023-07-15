@@ -93,7 +93,7 @@
     "changeDateLabel": "Choose date",
     "placeHolderTitle": "Write a title for your helpbutton",
     "placeHolderDescription": "Write a description for your helpbutton",
-    "firstPost": "User created this helpbutton at {0}, leave a comment if you want"
+    "firstPost": "Hi! I created this helpbutton at {0}, leave a comment if you want"
   },
   "user": {
     "email": "Email",
@@ -152,7 +152,8 @@
     "NoComments": "No comments yet"
   },
   "comment": {
-    "delete": "Borrar"
+    "delete": "Borrar",
+    "placeholderWrite": "Write a message in this post"
   },
   "configuration": {
     "title": "Administrator settings",

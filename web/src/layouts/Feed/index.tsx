@@ -135,18 +135,9 @@ export function FeedElement({ post, loggedInUser, onNewComment, buttonOwnerId, i
         <PostMessage post={post} isButtonOwnerComment={buttonOwnerId == post.author.id}/>
 
         <>
+
           <div className="card-notification__answer-btn">
-            {loggedInUser && (
-              <Btn
-                submit={true}
-                btnType={BtnType.corporative}
-                caption={t('post.newComment')}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => {
-                  setShowNewCommentDialog(!showNewCommentDialog);
-                }}
-              />
-            )}
+            
             {(loggedInUser && (loggedInUser.id == post.author.id || isButtonOwner || isAdmin(loggedInUser)) )&& (
               <Btn
                 submit={true}
@@ -158,7 +149,7 @@ export function FeedElement({ post, loggedInUser, onNewComment, buttonOwnerId, i
             )}
           </div>
 
-          {showNewCommentDialog && loggedInUser && (
+          {loggedInUser && (
             <PostCommentNew
               postId={post.id}
               onSubmit={() => {

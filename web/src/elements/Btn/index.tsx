@@ -9,6 +9,8 @@ export enum BtnType {
     submit,
     link,
     dropdown,
+    circle,
+    iconActions,
 }
 
 export enum IconType {
@@ -16,6 +18,7 @@ export enum IconType {
     green,
     svg,
     splitRedGreen,
+    circle,
 }
 export enum ContentAlignment {
     left,
@@ -33,6 +36,7 @@ interface BtnProps {
     isSubmitting?: boolean;
     onClick?: Function;
     submit?: boolean;
+    extraClass?:string;
 }
 
 function BtnIcon({ icon, iconLink }: { icon: IconType }) {
@@ -43,6 +47,8 @@ function BtnIcon({ icon, iconLink }: { icon: IconType }) {
             return <div className="btn-filter__icon green"></div>;
         case IconType.svg:
             return <div className="btn-with-icon__icon">{iconLink}</div>;
+        case IconType.circle:
+            return <div className="btn-circle__icon">{iconLink}</div>;
         case IconType.splitRedGreen:
             return (
                 <div className="btn-filter__split-icon">
@@ -71,6 +77,7 @@ function CaptionNode({
 
 export default function Btn({
     caption,
+    extraClass = "",
     iconRight = null,
     iconLeft = null,
     iconLink = null,
@@ -110,6 +117,12 @@ export default function Btn({
         case BtnType.dropdown:
             classNames.push("dropdown__dropdown");
             break;
+        case BtnType.circle:
+            classNames.push("btn btn--corporative btn-circle");
+            break;
+        case BtnType.iconActions:
+            classNames.push("btn btn-circle--big-icon");
+            break;
         default:
             if (hasIcon) {
                 classNames.push("btn-with-icon");
@@ -129,7 +142,7 @@ export default function Btn({
     }
         
     return (
-        <button {...attr} onClick={onClick} disabled={disabled} className={className}>
+        <button {...attr} onClick={onClick} disabled={disabled} className={className + ' ' + extraClass}>
             {isSubmitting && <Spinner />}
             <BtnIcon icon={iconLeft} iconLink={iconLink}/>
             <CaptionNode caption={caption} hasIcon={hasIcon} />

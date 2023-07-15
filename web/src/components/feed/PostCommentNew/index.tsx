@@ -1,5 +1,5 @@
 import Btn, { BtnType } from 'elements/Btn';
-import { FieldTextArea } from 'elements/Fields/FieldTextArea';
+import FieldText from 'elements/Fields/FieldText';
 import Form from 'elements/Form';
 import { ContentAlignment } from 'elements/ImageWrapper';
 import t from 'i18n';
@@ -7,6 +7,7 @@ import { store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { CreateNewPostComment } from 'state/Posts';
+import { IoPaperPlaneOutline } from 'react-icons/io5';
 
 export default function PostCommentNew({ postId, onSubmit }) {
   const {
@@ -37,31 +38,27 @@ export default function PostCommentNew({ postId, onSubmit }) {
   };
 
   return (
-    <Form
-      onSubmit={onSubmitLocal}
-      classNameExtra="feeds__new-message-message"
-    >
-      <FieldTextArea
-        name="message"
-        placeholder="Write your comment"
-        validationError={errors.description}
-        classNameExtra="squared"
-        watch={watch}
-        setFocus={setFocus}
-        setValue={setValue}
-        {...register('message', {
-          required: true,
-          minLength: 10,
-        })}
-      />
-      <div className="publish__submit">
-        <Btn
-                submit={true}
-                btnType={BtnType.corporative}
-                caption={t('post.newCommentSave')}
-                contentAlignment={ContentAlignment.center}
-              />
-      </div>
-    </Form>
+              <Form
+              onSubmit={onSubmitLocal}
+              classNameExtra="feeds__new-message"
+            >
+              <div className="feeds__new-message-message">
+                <FieldText
+                  name="message"
+                  placeholder={t('comment.placeholderWrite')}
+                  validationError={errors.description}
+                  watch={watch}
+                  setValue={setValue}
+                  setFocus={setFocus}
+                  {...register('message', { 
+                    required: true, 
+                    minLength: 10,
+                  })}
+                />
+              </div>
+              <button type="submit" className="btn-circle btn-circle__icon btn-circle__content">
+                <IoPaperPlaneOutline />
+              </button>
+            </Form>
   );
 }

@@ -152,36 +152,32 @@ function CardButtonSubmenu({ button }) {
         <div className="card-button__dropdown-container">
           <div className="card-button__dropdown-arrow"></div>
 
-          <datalist
+          <div
             className="card-button__dropdown-content"
             id="listid"
           >
-            <option
-              className="card-button__trigger-options"
-              label="Share Button"
-            ></option>
-            <option
-              className="card-button__trigger-options card-button__trigger-button"
-              label="Copy Link"
-              onClick={() => {
-                navigator.clipboard.writeText(linkButton);
-              }}
-            ></option>
-            <option
-              className="card-button__trigger-options"
-              label="Edit Button"
-              onClick={() => {
-                router.push(`/ButtonEdit/${button.id}`);
-              }}
-            ></option>
-            <option
-              className="card-button__trigger-options"
-              label="Delete Button"
-              onClick={() => {
-                router.push(`/ButtonRemove/${button.id}`);
-              }}
-            ></option>
-          </datalist>
+              <a
+                className="card-button__trigger-options"
+              >Share Button</a>
+              <a
+                className="card-button__trigger-options card-button__trigger-button"
+                onClick={() => {
+                  navigator.clipboard.writeText(linkButton);
+                }}
+              >Copy Link</a>
+              <a
+                className="card-button__trigger-options"
+                onClick={() => {
+                  router.push(`/ButtonEdit/${button.id}`);
+                }}
+              >Edit Button</a>
+              <a
+                className="card-button__trigger-options"
+                onClick={() => {
+                  router.push(`/ButtonRemove/${button.id}`);
+                }}
+              >Delete Button</a>
+          </div>
         </div>
       )}
     </section>

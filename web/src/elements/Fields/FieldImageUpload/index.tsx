@@ -3,6 +3,8 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import ImageUploading from 'react-images-uploading';
+
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { IoChevronBackOutline } from "react-icons/io5";
 import { IoClose } from 'react-icons/io5';
 
@@ -67,15 +69,17 @@ export const FieldImageUpload = React.forwardRef(({ name, label, subtitle, width
                             height={height}
                           />
                         </div>
-                        <button
-                          className='form__image-upload--remove-icon'
+
+                        <Btn
+                          btnType={BtnType.circle}
+                          iconLink={<IoClose/>}
+                          iconLeft={IconType.svg}
+                          extraClass={"form__image-upload--remove-icon"}
                           onClick={(e) => {
                             e.preventDefault();
                             onImageRemove(0);
                           }}
-                        >
-                          <div className="btn-circle__icon"><IoClose/></div>
-                        </button>
+                        />
 
                     </div>
                 )}
