@@ -52,20 +52,37 @@ $message-you-margin-left:40px;
     width: 35px;
     right: -40px;
     bottom: 0;
-    height: fit-content;
+    height: 35px;
     position: absolute;
+    display: flex;
+    border-radius: $border-radius-circle;
+    overflow: hidden;
     border-radius: 100%;
+
+    img {
+
+      width: 100%;
+      height: 100%;
+    }
 
 }
 
-.message__user-name {
+.message__author {
+
+  font-size: $font-size-small;
+
+}
+
+
+
+.message__name {
 
     width: 100%;
     white-space: nowrap;
     text-overflow: ellipsis;
     color: $color-dark-gray;
     margin-bottom: $margin-extra-small;
-    font-weight: bold;
+    font-weight: $font-weight-bold;
     font-size: $font-size-small;
 
 }
@@ -132,5 +149,18 @@ $message-you-margin-left:40px;
     text-align: right;
 
   }
+
+}
+
+.message__actions {
+
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  justify-content: end;
+  align-items: center;
+  overflow: hidden;
+  margin-right: $margin-exxtra-small;
+
 
 }

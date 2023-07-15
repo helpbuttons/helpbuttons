@@ -342,13 +342,19 @@ $card-button-border-height: $border-general-height;
 
 .card-button__dropdown-content {
   background: $color-dark-gray;
-  display: block;
+  display: flex;
+  flex-direction: column;
   border-radius: 2px;
+  z-index: $z-index-01;
   height: 100%;
   overflow-y: auto;
   color: white;
   padding-top: 10px;
   padding-bottom: 10px;
+
+  & > a {
+    color: white;
+  }
 
   & > a:hover {
     text-decoration: underline;

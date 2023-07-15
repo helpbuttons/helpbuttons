@@ -223,9 +223,10 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification__name {
-  color: $color-black;
+  color: $color-dark-gray;
   font-weight: $font-weight-bold;
   display: inline;
+  font-size: $font-size-small;
 }
 
 .card-notification__paragraph {

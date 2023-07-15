@@ -1,10 +1,11 @@
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import PostMessage from '../PostMessage';
 import t from 'i18n';
 import { store } from 'pages';
 import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';
+import { IoTrashBinOutline } from 'react-icons/io5';
 
 export default function PostComments({ comments, reloadPosts, loggedInUser, isButtonOwner, buttonOwnerId }) {
   const deleteComment = (commentId) => {
@@ -25,7 +26,7 @@ export default function PostComments({ comments, reloadPosts, loggedInUser, isBu
 
                   <PostMessage isButtonOwnerComment={buttonOwnerId == comment.author.id} post={comment} />
                   
-                  <div className='card-notification--comment-actions'>
+                  <div className='message__actions'>
 
                     {loggedInUser &&
                       (loggedInUser.id == comment.author.id ||
@@ -33,8 +34,9 @@ export default function PostComments({ comments, reloadPosts, loggedInUser, isBu
                         isAdmin(loggedInUser)) && (
                         <Btn
                           submit={true}
-                          btnType={BtnType.link}
-                          caption={t('comment.delete')}
+                          btnType={BtnType.iconActions}
+                          iconLink={<IoTrashBinOutline/>}
+                          iconLeft={IconType.circle}
                           contentAlignment={ContentAlignment.right}
                           onClick={() => deleteComment(comment.id)}
                         />
