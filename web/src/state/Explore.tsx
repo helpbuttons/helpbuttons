@@ -21,9 +21,10 @@ export interface ExploreState {
 
 export interface ExploreMapState {
   filters: ButtonFilters;
+  queryFoundTags: string[];
   listButtons: Button[];  // if hexagon clicked, can be different from boundsButtons
   boundsFilteredButtons: Button[];
-  densityMap: any[];
+  cachedHexagons: any[];
   loading: boolean;
   initialized: boolean;
 }
@@ -33,9 +34,10 @@ export const exploreInitial = {
   map:
   {
     filters: defaultFilters,
+    queryFoundTags: [],
     listButtons: [], // if hexagon clicked, can be different from boundsButtons
     boundsFilteredButtons: [],
-    densityMap: [],
+    cachedHexagons: [],
     loading: true,
     initialized: false,
   }
@@ -183,11 +185,42 @@ export class UpdateFilters implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.filters = this.filters;
-      console.log('updating buttons... filters changed')
       newState.explore.map.loading = true;
     });
   }
 }
+
+export class UpdateFiltersToFilterTag implements UpdateEvent {
+  public constructor(private tag: string) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      // use query to filter tag...
+      newState.explore.map.filters = {...defaultFilters, query: this.tag};
+    });
+  }
+}
+
+export class UpdateQueryFoundTags implements UpdateEvent {
+  public constructor(private tags: string[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.queryFoundTags = this.tags
+    });
+  }
+}
+export class UpdateFiltersToFilterButtonType implements UpdateEvent {
+  public constructor(private buttonType: string) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.filters = {...defaultFilters, helpButtonTypes: [this.buttonType]};
+      newState.explore.map.loading = true;
+    });
+  }
+}
+
 
 export class UpdateBoundsFilteredButtons implements UpdateEvent {
   public constructor(private boundsFilteredButtons: Button[]) {}
@@ -195,7 +228,6 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.boundsFilteredButtons = this.boundsFilteredButtons;
-      console.log('loaded filtered buttons')
       newState.explore.map.loading = false
       newState.explore.map.initialized = true
     });
@@ -207,7 +239,6 @@ export class UpdateExploreUpdating implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      console.log('updating explore ?')
       newState.explore.map.loading = true
     });
   }
@@ -217,7 +248,6 @@ export class UpdateListButtons implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      console.log('loaded list of buttons')
       newState.explore.map.listButtons = this.listButtons;
       newState.explore.map.loading = false
       newState.explore.map.initialized = true
@@ -225,12 +255,12 @@ export class UpdateListButtons implements UpdateEvent {
   }
 }
 
-export class UpdateDensityMap implements UpdateEvent {
-  public constructor(private densityMap: any[]) {}
+export class UpdateCachedHexagons implements UpdateEvent {
+  public constructor(private cachedHexagons: any[]) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.densityMap = this.densityMap;
+      newState.explore.map.cachedHexagons = this.cachedHexagons;
     });
   }
 }

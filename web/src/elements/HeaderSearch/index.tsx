@@ -4,6 +4,7 @@ import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { buttonTypes } from 'shared/buttonTypes';
 import { LoadabledComponent } from 'components/loading';
+import t from 'i18n';
 
 ///search button in explore and home
 export function HeaderSearch({ results, isHome }) {
@@ -63,7 +64,7 @@ function SearchText({ count, where }) {
 function SearchInfo({ helpButtonTypes, when, what }) {
   const types = (helpButtonTypes) => {
     if (helpButtonTypes.length < 1) {
-      return '';
+      return t('buttonFilters.allButtonTypes');
     }
     const buttonTypesCaptions = helpButtonTypes.map(
       (type) =>
