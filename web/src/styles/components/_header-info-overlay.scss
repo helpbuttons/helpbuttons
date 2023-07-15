@@ -64,6 +64,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   margin-top: $margin-small;
   color: $color-white;
   height: max-content;
+  max-width: $grid-max-width;
   min-height: 100px;
 
   .card {
