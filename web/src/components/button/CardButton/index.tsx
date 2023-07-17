@@ -4,6 +4,7 @@ import {
   IoChevronBackOutline,
   IoHeartOutline,
   IoAddCircleOutline,
+  IoEllipsisHorizontalSharp,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -168,7 +169,7 @@ function CardButtonSubmenu({ button }) {
           setShowSubmenu(!showSubmenu);
         }}
         className="card-button__edit-icon card-button__submenu"
-      ></div>
+      ><IoEllipsisHorizontalSharp /></div>
       {showSubmenu && (
         <div className="card-button__dropdown-container">
           <div className="card-button__dropdown-arrow"></div>
@@ -327,7 +328,7 @@ export function CardButtonOptions() {
   return (
     <div className="card-button__options-menu">
       <div className="card-button__trigger">
-        <div className="card-button__edit-icon card-button__submenu"></div>
+        <div className="card-button__edit-icon card-button__submenu"> <IoEllipsisHorizontalSharp /></div>
       </div>
 
       <div className="card-button__dropdown-container">

@@ -9,7 +9,7 @@ $card-button-avatar-height: 40px;
 $card-button-picture-max-height: 300px;
 $card-button-situation-background-size: 14px;
 $card-button__submenu-show-width: 120px;
-$card-button__submenu-top-arrow-right: 5px;
+$card-button__submenu-top-arrow-right: $padding-big;
 $card-button__submenu-show-left: calc( #{$card-button__submenu-show-width} / -2 );
 $card-button-size-icon-before: 18px;
 
@@ -99,12 +99,19 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__submenu {
-  background: transparent url('../../../public/assets/svg/icons/down.svg') center no-repeat;
+  // background: transparent url('../../../public/assets/svg/icons/down.svg') center no-repeat;
   background-size: 100%;
   height: 100%;
   position: relative;
   text-indent: -9999999px;
   width: 18px;
+
+  svg {
+
+    padding-top: $padding-big;
+    display: block;
+
+  }
 }
 
 .card-button__submenu-show {
