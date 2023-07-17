@@ -64,6 +64,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   margin-top: $margin-small;
   color: $color-white;
   height: max-content;
+  max-width: $grid-max-width;
   min-height: 100px;
 
   .card {
@@ -135,6 +136,8 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   .info-overlay__hashtags {
 
     display: flex;
+    flex-wrap:wrap;
+    overflow: scroll;
     padding-bottom: $padding-medium;
     padding-top: $padding-medium;
 

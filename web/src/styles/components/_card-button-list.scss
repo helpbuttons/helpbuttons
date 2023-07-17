@@ -295,9 +295,20 @@ $card-button-list-border-height: $border-general-height;
   overflow: hidden;
   position: relative;
   border-radius: $border-radius-basic;
+  display: flex;
+  align-content: center;
+  justify-content: center;
   margin: $card-button-list-margin 0 $card-button-list-margin $card-button-list-margin;
   // display: flex;
   // justify-content:  flex-start;
+
+  & img {
+
+    width: auto;
+    object-fit: cover;
+
+
+  }
 
 }
 

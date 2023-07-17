@@ -3,7 +3,6 @@ import type { Metadata, NextPage } from "next";
 import { Store } from "store/Store";
 
 //    Components
-import HomeInfo from "pages/HomeInfo";
 
 import { NetworksState, networksInitial } from "state/Networks";
 import { UsersState, usersInitial } from "state/Users";

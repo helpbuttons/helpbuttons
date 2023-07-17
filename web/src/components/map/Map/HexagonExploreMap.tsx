@@ -25,6 +25,7 @@ export default function HexagonExploreMap({
   hexagonClicked,
   isRedrawingMap,
   filters,
+  height,
 }) {
   const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
   const [centerBounds, setCenterBounds] = useState<Point>(null);
@@ -77,6 +78,7 @@ export default function HexagonExploreMap({
         mapZoom={exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
         tileType={exploreSettings.tileType}
+        height={height}
       >
         {selectedNetwork && (
           <Overlay anchor={[100, 100]}>

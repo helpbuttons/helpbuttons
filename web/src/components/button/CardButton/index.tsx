@@ -4,7 +4,10 @@ import {
   IoChevronBackOutline,
   IoHeartOutline,
   IoAddCircleOutline,
+  IoEllipsisHorizontalSharp,
 } from 'react-icons/io5';
+import t from 'i18n';
+
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 import router from 'next/router';
@@ -77,7 +80,7 @@ export function CardButtonHeadMedium({ button }) {
             </span>
           </div>
           <div className="card-button__name">
-              {button.owner.name} @{button.owner.username}
+              {button.owner.name}<span className="card-button__username"> @{button.owner.username}</span>
           </div>
         </div>
       </div>
@@ -166,7 +169,7 @@ function CardButtonSubmenu({ button }) {
           setShowSubmenu(!showSubmenu);
         }}
         className="card-button__edit-icon card-button__submenu"
-      ></div>
+      ><IoEllipsisHorizontalSharp /></div>
       {showSubmenu && (
         <div className="card-button__dropdown-container">
           <div className="card-button__dropdown-arrow"></div>
@@ -177,25 +180,25 @@ function CardButtonSubmenu({ button }) {
           >
               <a
                 className="card-button__trigger-options"
-              >Share Button</a>
+              >{t('button.share')}</a>
               <a
                 className="card-button__trigger-options card-button__trigger-button"
                 onClick={() => {
                   navigator.clipboard.writeText(linkButton);
                 }}
-              >Copy Link</a>
+              >{t('button.copy')}</a>
               <a
                 className="card-button__trigger-options"
                 onClick={() => {
                   router.push(`/ButtonEdit/${button.id}`);
                 }}
-              >Edit Button</a>
+              >{t('button.edit')}</a>
               <a
                 className="card-button__trigger-options"
                 onClick={() => {
                   router.push(`/ButtonRemove/${button.id}`);
                 }}
-              >Delete Button</a>
+              >{t('button.delete')}</a>
           </div>
         </div>
       )}
@@ -243,7 +246,7 @@ export function CardButtonHeadBig({ button }) {
             </div>
             <div className="card-button__name">
               <Link href={`/Profile/${button.owner.username}`}>
-                {button.owner.name} @{button.owner.username}
+                {button.owner.name} <span className="card-button__username"> @{button.owner.username}</span>
               </Link>
             </div>
             <CardButtonHeadActions button={button} />
@@ -325,7 +328,7 @@ export function CardButtonOptions() {
   return (
     <div className="card-button__options-menu">
       <div className="card-button__trigger">
-        <div className="card-button__edit-icon card-button__submenu"></div>
+        <div className="card-button__edit-icon card-button__submenu"> <IoEllipsisHorizontalSharp /></div>
       </div>
 
       <div className="card-button__dropdown-container">

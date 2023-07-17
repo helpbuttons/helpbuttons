@@ -106,7 +106,7 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feeds__new-message-message {
   flex-grow:1;
-  padding: 0 $padding-big;
+  padding: 0 $padding-big 0 0;
   margin: auto;
 
   .form__field {

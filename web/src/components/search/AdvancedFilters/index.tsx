@@ -144,10 +144,10 @@ export default function AdvancedFilters({
               explain={t('buttonFilters.queryExplain')}
               {...register('query')}
             />
-            <TagList tags={tags} remove={(tag) => {
+            {/* <TagList tags={tags} remove={(tag) => {
               setValue('query', query.replace(tag, ''))
               setTags((prevTags) => prevTags.filter((prevTag) => prevTag != tag))
-              }}/>
+              }}/> */}
 
             {/* <FieldTags
               label={t('buttonFilters.tagsLabel')}
@@ -223,7 +223,7 @@ export default function AdvancedFilters({
             <div className="filters__actions">
               <Btn
                 btnType={BtnType.link}
-                caption="CANCEL"
+                caption={t('common.reset')}
                 contentAlignment={ContentAlignment.center}
                 onClick={clearFilters}
               />
@@ -231,7 +231,7 @@ export default function AdvancedFilters({
               <Btn
                 submit={true}
                 btnType={BtnType.submit}
-                caption="SAVE"
+                caption={t('common.search')}
                 contentAlignment={ContentAlignment.center}
               />
             </div>
