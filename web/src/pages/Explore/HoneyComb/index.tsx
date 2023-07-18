@@ -430,24 +430,18 @@ function useHexagonMap({
       return false;
     };
 
-    const applyQueryTagFilters = (button: Button, tags: string[]) => {
-      if (tags.length == 0) {
-        return true;
+    const findMoreTags = (button: Button, queryTags) => {
+      const tagsFound = _.intersection(queryTags, button.tags);
+      if (tagsFound.length > 0) {
+        foundTags.current = _.union(foundTags.current, tagsFound);
       }
-      if (tags.length > 0) {
-        const tagsFound = _.intersection(tags, button.tags);
-        if (tagsFound.length > 0) {
-          foundTags.current = _.union(foundTags.current, tagsFound);
-          return true;
-        }
-      }
-      return false;
-    };
-
+    }
+    
     let queryTags = filters.query
       .split(' ')
       .filter((value) => value.length > 0);
     foundTags.current = [];
+    
     const res = cachedHexagons.reduce(
       ({ filteredButtons, filteredHexagons }, hexagonCached) => {
         const moreButtons = hexagonCached.buttons.filter(
@@ -457,16 +451,18 @@ function useHexagonMap({
             ) {
               return false;
             }
-            if (!applyQueryTagFilters(button, queryTags)) {
+
+            findMoreTags(button, queryTags);
+            if(!applyTagFilters(button, foundTags.current))
+            { 
               return false;
             }
 
             // remove tags from query string, so it won't fail to search string
             let query = filters.query;
             foundTags.current.forEach(
-              (tag) => (query = query.replace(tag, '')),
+              (tag) =>(query = query.replace(tag, '')),
             );
-            // ...
             if (!applyQueryFilter(button, query)) {
               return false;
             }
