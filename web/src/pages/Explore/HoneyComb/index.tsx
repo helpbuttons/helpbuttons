@@ -62,6 +62,7 @@ function HoneyComb({ router }) {
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
 
   const height = showLeftColumn ? 0 : 400;
+
   const {
     setMapCenter,
     setMapZoom,
@@ -118,16 +119,20 @@ function HoneyComb({ router }) {
               totalNetworkButtonsCount={selectedNetwork.buttonCount}
             />
             <List
-              showFiltersForm={showFiltersForm}
-              buttons={exploreMapState.listButtons}
-              showLeftColumn={showLeftColumn}
-              onLeftColumnToggle={toggleShowLeftColumn}
+            showFiltersForm={showFiltersForm}
+            buttons={exploreMapState.listButtons}
+            showLeftColumn={showLeftColumn}
+            onLeftColumnToggle={toggleShowLeftColumn}
+            extraCssClass={"list__hide-mobile"}
             />
+        
+
             <AdvancedFilters
               showFiltersForm={showFiltersForm}
               toggleShowFiltersForm={toggleShowFiltersForm}
             />
           </div>
+
           <LoadabledComponent loading={exploreSettings.loading}>
             <HexagonExploreMap
               exploreSettings={exploreSettings}
@@ -143,6 +148,13 @@ function HoneyComb({ router }) {
               height={height}
             />
           </LoadabledComponent>
+          <List
+              showFiltersForm={showFiltersForm}
+              buttons={exploreMapState.listButtons}
+              showLeftColumn={showLeftColumn}
+              onLeftColumnToggle={toggleShowLeftColumn}
+              extraCssClass={"list__hide-desktop"}
+            />
         </>
       </div>
     </>

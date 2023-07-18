@@ -1,4 +1,4 @@
-$list-container-hide-height: calc($footer-height-mobile - 215px);
+$list-container-hide-height: calc($footer-height-mobile - 265px);
 
 ///shouldd be the posts list
 .list__container {
@@ -6,12 +6,18 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow: hidden;
-  height: auto;
-  position: fixed;
-  bottom: $footer-height-mobile + $padding-small*2;
+  // overflow: hidden;
+  height: max-content;
+  position: relative;
+  // bottom: $footer-height-mobile + $padding-small*2;
   z-index: $z-index-01;
   transition: $transition-default-slow;
+  padding-bottom: $footer-height-mobile + $padding-small*2;
+}
+
+.list__hide-mobile {
+
+  display: none;
 
 }
 
@@ -40,7 +46,7 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
 
 .list__container--hide {
 
-  bottom: $list-container-hide-height;
+  transform:translateY(-$list-container-hide-height) ;
 
 }
 
@@ -89,10 +95,26 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
 
     height:100%;
     float: left;
+    display: block;
+    overflow: hidden;
     position: relative;
     overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
+
+  }
+
+  ///don't move the list down in desktop mode
+  .list__container--hide {
+
+    transform:translateY(0) ;
+
+  }
+
+  //hide the mobile list component in desktop
+  .list__hide-desktop {
+
+    display: none;
 
   }
 
