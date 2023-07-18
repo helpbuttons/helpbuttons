@@ -172,15 +172,6 @@ export default function HexagonExploreMap({
                   if (hexagonBtnType.count < 1) {
                     return;
                   }
-                  if (
-                    !(
-                      filters.helpButtonTypes.indexOf(
-                        hexagonBtnType.type,
-                      ) > -1
-                    )
-                  ) {
-                    return;
-                  }
                   const btnType = buttonTypes.find((type) => {
                     return type.name == hexagonBtnType.type;
                   });
