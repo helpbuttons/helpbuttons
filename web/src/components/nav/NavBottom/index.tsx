@@ -81,6 +81,7 @@ function NavBottom(){
 
               <NavLink href="/Activity" className="nav-bottom__link nav-bottom__link--active">
                   <div className="nav-bottom__icon">
+                    <span className='notif-circle'>1</span>
                       <IoHeartOutline />
                   </div>
                   <div className="nav-bottom__text">
