@@ -62,26 +62,26 @@ export default function HomeInfo({
   return (
     <>
       <SEO {...metadata} />
+      <div className="info-overlay__search-section">
+        <NavHeader
+          toggleShowFiltersForm={toggleShowFiltersForm}
+          totalNetworkButtonsCount={selectedNetwork.buttonCount}
+          isHome={true}
+        />
+        <AdvancedFilters
+          showFiltersForm={showFiltersForm}
+          toggleShowFiltersForm={toggleShowFiltersForm}
+          isHome={true}
+        />
+      </div>
       <div
+        className='info-overlay__container'
         style={
           {
             '--network-jumbo': `url('/api/${selectedNetwork.jumbo}'`,
           } as React.CSSProperties
         }
       >
-          <div className="info-overlay__search-section">
-            <NavHeader
-              toggleShowFiltersForm={toggleShowFiltersForm}
-              totalNetworkButtonsCount={selectedNetwork.buttonCount}
-              isHome={true}
-            />
-            <AdvancedFilters
-              showFiltersForm={showFiltersForm}
-              toggleShowFiltersForm={toggleShowFiltersForm}
-              isHome={true}
-            />
-          </div>
-        <div className="info-overlay__container">
           <div className="info-overlay__content">
             <>
               <div className="info-overlay__card">
@@ -230,7 +230,6 @@ export default function HomeInfo({
 
               <div className="info-overlay__card"></div>
             </>
-          </div>
         </div>
       </div>
       <NavBottom />

@@ -3,7 +3,7 @@
 $z-index-base: 10; /// under everything
 $z-index-01: 100;
 $z-index-02: 200;
-$z-index-03: 300; // navigation menus
-$z-index-04: 400; /// popups, navigation menus
+$z-index-03: 300; // main navigation menus
+$z-index-04: 400; /// popups, search filters, extra navigation menus 
 $z-index-05: 500; //data pickers menuselects
 $z-index-06: 600; ///over everything, just loaders, alerts messages

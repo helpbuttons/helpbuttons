@@ -91,7 +91,7 @@ $feed-new-message-radius: $border-radius-circle;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: flex-end;
   flex-direction: row;
   background-color: $color-white;
   padding: $feed-padding;

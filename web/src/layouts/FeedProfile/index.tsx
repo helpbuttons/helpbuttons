@@ -4,6 +4,7 @@ import Dropdown from 'elements/Dropdown/Dropdown';
 import Btn, { ContentAlignment } from 'elements/Btn';
 
 import t from 'i18n';
+import router from 'next/router';
 
 export default function FeedProfile({activities}) {
   return (

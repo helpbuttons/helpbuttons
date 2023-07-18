@@ -250,8 +250,8 @@ $form-input-border-radius: $border-general-height;
         .tag__btn {
 
             display: flex;
-            justify-content: end;
-            align-items:end;
+            justify-content: flex-end;
+            align-items: flex-end;
             background-color: transparent;
             border: none;
             cursor: pointer;
