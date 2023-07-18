@@ -15,6 +15,18 @@ $index-mobile-fixed-z-index: $z-index-05;
   width: 100%;
 }
 
+.index__content-left {
+
+  transition: $transition-default-slow;
+}
+
+.index__content-bottom--hide {
+  transition: $transition-default-slow;
+  transform: translateY(-$list-container-hide-height);
+  position: relative;
+  
+}
+
 @media #{$breakpoints-xlarge} {
   .index__container {
     position: fixed;
@@ -30,8 +42,10 @@ $index-mobile-fixed-z-index: $z-index-05;
     min-width: 35vw;
   }
   .index__content-left--hide {
+    transition: $transition-default-slow;
     flex-direction: column;
     margin-left: -35vw;
-    right: -200px;
+    bottom: 0;
   }
+  
 }
