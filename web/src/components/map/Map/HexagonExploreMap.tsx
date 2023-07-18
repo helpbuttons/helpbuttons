@@ -91,13 +91,13 @@ export default function HexagonExploreMap({
         )}
 
         <GeoJson>
-          {geoJsonFeatures.map((buttonFeature) => (
+          {geoJsonFeatures.map((hexagonFeature) => (
             <GeoJsonFeature
               onClick={(feature) => {
                 setHexagonClicked(() => feature.payload);
               }}
-              feature={buttonFeature}
-              key={buttonFeature.properties.hex}
+              feature={hexagonFeature}
+              key={hexagonFeature.properties.hex}
               styleCallback={(feature, hover) => {
                 if (hover) {
                   return {
@@ -108,7 +108,7 @@ export default function HexagonExploreMap({
                     opacity: 0.7,
                   };
                 }
-                if (buttonFeature.properties.count < 0) {
+                if (hexagonFeature.properties.count < 0) {
                   return {
                     fill: 'red',
                     strokeWidth: '1',
@@ -117,7 +117,7 @@ export default function HexagonExploreMap({
                     opacity: 0.2,
                   };
                 }
-                if (buttonFeature.properties.count < 1) {
+                if (hexagonFeature.properties.count < 1) {
                   return {
                     fill: 'transparent',
                     strokeWidth: '1',
@@ -125,7 +125,7 @@ export default function HexagonExploreMap({
                     r: '20',
                     opacity:
                       0.2 +
-                      (buttonFeature.properties.count * 50) /
+                      (hexagonFeature.properties.count * 50) /
                         (maxButtonsHexagon - maxButtonsHexagon / 4) /
                         100,
                   };
@@ -137,7 +137,7 @@ export default function HexagonExploreMap({
                   r: '20',
                   opacity:
                     0.2 +
-                    (buttonFeature.properties.count * 50) /
+                    (hexagonFeature.properties.count * 50) /
                       (maxButtonsHexagon - maxButtonsHexagon / 4) /
                       100,
                 };
@@ -157,6 +157,33 @@ export default function HexagonExploreMap({
             />
           )}
         </GeoJson>
+        {/*
+        show count of buttons per hexagon
+        */}
+        {!isRedrawingMap &&
+          geoJsonFeatures.map((hexagonFeature) => {
+            if (hexagonFeature.properties.hex !== hexagonClicked?.properties.hex && hexagonFeature.properties.count > 0) {
+              return (
+                <Overlay
+                  anchor={hexagonFeature.properties.center}
+                  offset={[30, 0]}
+                  className="pigeon-map__custom-block"
+                  key={hexagonFeature.properties.hex}
+                >
+                  <div className="pigeon-map__hex-wrap">
+                    <span className="pigeon-map__hex-element">
+                      <div className="pigeon-map__hex-info">
+                        <div className="btn-filter__icon pigeon-map__hex-info--icon"></div>
+                        <div className="pigeon-map__hex-info--text">
+                          {hexagonFeature.properties.count}
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                </Overlay>
+              );
+            }
+          })}
         {!isRedrawingMap && hexagonClicked && (
           <Overlay
             anchor={hexagonClicked.properties.center}
