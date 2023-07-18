@@ -21,9 +21,8 @@ $index-mobile-fixed-z-index: $z-index-05;
 }
 
 .index__content-bottom--hide {
-  transition: $transition-default-slow;
-  transform: translateY(-$list-container-hide-height);
-  position: relative;
+
+  margin-bottom: $list-container-hide-height;
   
 }
 
@@ -42,8 +41,6 @@ $index-mobile-fixed-z-index: $z-index-05;
     min-width: 35vw;
   }
   .index__content-left--hide {
-    transition: $transition-default-slow;
-    flex-direction: column;
     margin-left: -35vw;
     bottom: 0;
   }

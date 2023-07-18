@@ -35,15 +35,10 @@ $list-container-hide-height: calc($footer-height-mobile - 265px);
   z-index: $z-index-02;
   height: auto;
   min-height: $card-button-list-height;
-
-}
-
-.list__container--hide {
-
-
   transition: $transition-default-slow;
 
 }
+
 
 .list__element {
 
@@ -96,11 +91,6 @@ $list-container-hide-height: calc($footer-height-mobile - 265px);
     overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
-
-  }
-
-  ///don't move the list down in desktop mode
-  .list__container--hide {
 
   }
 

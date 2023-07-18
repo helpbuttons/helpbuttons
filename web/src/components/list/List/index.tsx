@@ -35,16 +35,12 @@ function List({
     <>
       {!showFiltersForm && (
         <>
-          
-
           <div
             className={
-              'list__container ' + ' ' +
-              (showLeftColumn ? '' : 'list__container--hide')
+              'list__container '
             }
           >
-            <ShowDesktopOnly>              
-              <div
+            <div
                 onClick={handleChange}
                 className={
                   'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open')
@@ -58,27 +54,8 @@ function List({
                     <IoChevronForwardOutline />
                   )}
                 </div>
-                <span className="drag-tab__counter"></span>
-              </div>
-            </ShowDesktopOnly>
-            <ShowMobileOnly> 
-              <div
-                  onClick={handleChange}
-                  className={
-                    'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open')
-                  }
-                >
-                  <span className="drag-tab__line"></span>
-                  <div className="drag-tab__icon">
-                    {showLeftColumn ? (
-                      <IoChevronBackOutline />
-                    ) : (
-                      <IoChevronForwardOutline />
-                    )}
-                  </div>
-                  <span className="drag-tab__counter"></span>
-              </div>
-            </ShowMobileOnly>              
+            </div>
+
             <div className="list__content" onScroll={handleScroll}>
               <ContentList buttons={buttons.slice(0, numberButtons)} />
             </div>

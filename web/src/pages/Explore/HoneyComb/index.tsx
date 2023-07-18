@@ -110,7 +110,6 @@ function HoneyComb({ router }) {
   return (
     <>
       <div className="index__container">
-        <>
           <div
             className={
               'index__content-left ' +
@@ -121,19 +120,19 @@ function HoneyComb({ router }) {
               toggleShowFiltersForm={toggleShowFiltersForm}
               totalNetworkButtonsCount={selectedNetwork.buttonCount}
             />
-            <ShowDesktopOnly>
-                <List
-                showFiltersForm={showFiltersForm}
-                buttons={exploreMapState.listButtons}
-                showLeftColumn={showLeftColumn}
-                onLeftColumnToggle={toggleShowLeftColumn}
-                />
-            </ShowDesktopOnly>
-
             <AdvancedFilters
               showFiltersForm={showFiltersForm}
               toggleShowFiltersForm={toggleShowFiltersForm}
             />
+            <ShowDesktopOnly>
+              <List
+              showFiltersForm={showFiltersForm}
+              buttons={exploreMapState.listButtons}
+              showLeftColumn={showLeftColumn}
+              onLeftColumnToggle={toggleShowLeftColumn}
+              />
+            </ShowDesktopOnly>
+
           </div>
 
           <LoadabledComponent loading={exploreSettings.loading}>
@@ -148,27 +147,25 @@ function HoneyComb({ router }) {
               hexagonClicked={hexagonClicked}
               isRedrawingMap={isRedrawingMap}
               filters={exploreMapState.filters}
-              
             />
           </LoadabledComponent>
 
-            <ShowMobileOnly>
-              <div
-                className={
-                  'index__content-left ' +
-                  (showLeftColumn ? '' : 'index__content-bottom--hide')
-                }
-              > 
-                <List
-                    showFiltersForm={showFiltersForm}
-                    buttons={exploreMapState.listButtons}
-                    showLeftColumn={showLeftColumn}
-                    onLeftColumnToggle={toggleShowLeftColumn}
-                />
-              </div>
+          <ShowMobileOnly>
+            <div
+              className={
+                'index__content-left ' +
+                (showLeftColumn ? '' : 'index__content-bottom--hide')
+              }
+            > 
+              <List
+                  showFiltersForm={showFiltersForm}
+                  buttons={exploreMapState.listButtons}
+                  showLeftColumn={showLeftColumn}
+                  onLeftColumnToggle={toggleShowLeftColumn}
+              />
+            </div>
 
-            </ShowMobileOnly>
-        </>
+          </ShowMobileOnly>
       </div>
     </>
   );
