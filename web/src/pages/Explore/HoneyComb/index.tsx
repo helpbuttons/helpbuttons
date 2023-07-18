@@ -37,6 +37,9 @@ import { useDebounce, useToggle } from 'shared/custom.hooks';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { Button } from 'shared/entities/button.entity';
 import { isPointWithinRadius } from 'geolib';
+import { ShowMobileOnly } from 'elements/SizeOnly';
+import { ShowDesktopOnly } from 'elements/SizeOnly';
+
 
 const defaultZoomPlace = 13;
 
@@ -118,14 +121,14 @@ function HoneyComb({ router }) {
               toggleShowFiltersForm={toggleShowFiltersForm}
               totalNetworkButtonsCount={selectedNetwork.buttonCount}
             />
-            <List
-            showFiltersForm={showFiltersForm}
-            buttons={exploreMapState.listButtons}
-            showLeftColumn={showLeftColumn}
-            onLeftColumnToggle={toggleShowLeftColumn}
-            extraCssClass={"list__hide-mobile"}
-            />
-        
+            <ShowDesktopOnly>
+                <List
+                showFiltersForm={showFiltersForm}
+                buttons={exploreMapState.listButtons}
+                showLeftColumn={showLeftColumn}
+                onLeftColumnToggle={toggleShowLeftColumn}
+                />
+            </ShowDesktopOnly>
 
             <AdvancedFilters
               showFiltersForm={showFiltersForm}
@@ -145,16 +148,26 @@ function HoneyComb({ router }) {
               hexagonClicked={hexagonClicked}
               isRedrawingMap={isRedrawingMap}
               filters={exploreMapState.filters}
-              height={height}
+              
             />
           </LoadabledComponent>
-          <List
-              showFiltersForm={showFiltersForm}
-              buttons={exploreMapState.listButtons}
-              showLeftColumn={showLeftColumn}
-              onLeftColumnToggle={toggleShowLeftColumn}
-              extraCssClass={"list__hide-desktop"}
-            />
+
+            <ShowMobileOnly>
+              <div
+                className={
+                  'index__content-left ' +
+                  (showLeftColumn ? '' : 'index__content-bottom--hide')
+                }
+              > 
+                <List
+                    showFiltersForm={showFiltersForm}
+                    buttons={exploreMapState.listButtons}
+                    showLeftColumn={showLeftColumn}
+                    onLeftColumnToggle={toggleShowLeftColumn}
+                />
+              </div>
+
+            </ShowMobileOnly>
         </>
       </div>
     </>

@@ -4,13 +4,14 @@ import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import ContentList from 'components/list/ContentList';
+import { ShowDesktopOnly } from 'elements/SizeOnly';
+import { ShowMobileOnly } from 'elements/SizeOnly';
 
 function List({
   onLeftColumnToggle,
   buttons,
   showLeftColumn,
   showFiltersForm,
-  extraCssClass,
 }) {
   const handleChange = (event) => {
     onLeftColumnToggle(event.target.value);
@@ -38,29 +39,46 @@ function List({
 
           <div
             className={
-              'list__container ' + extraCssClass + ' ' +
+              'list__container ' + ' ' +
               (showLeftColumn ? '' : 'list__container--hide')
             }
           >
-
-            <div
-              onClick={handleChange}
-              className={
-                'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open')
-              }
-            >
-              <span className="drag-tab__line"></span>
-              <div className="drag-tab__icon">
-                {showLeftColumn ? (
-                  <IoChevronBackOutline />
-                ) : (
-                  <IoChevronForwardOutline />
-                )}
+            <ShowDesktopOnly>              
+              <div
+                onClick={handleChange}
+                className={
+                  'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open')
+                }
+              >
+                <span className="drag-tab__line"></span>
+                <div className="drag-tab__icon">
+                  {showLeftColumn ? (
+                    <IoChevronBackOutline />
+                  ) : (
+                    <IoChevronForwardOutline />
+                  )}
+                </div>
+                <span className="drag-tab__counter"></span>
               </div>
-              <span className="drag-tab__counter"></span>
-
-            </div>
-
+            </ShowDesktopOnly>
+            <ShowMobileOnly> 
+              <div
+                  onClick={handleChange}
+                  className={
+                    'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open')
+                  }
+                >
+                  <span className="drag-tab__line"></span>
+                  <div className="drag-tab__icon">
+                    {showLeftColumn ? (
+                      <IoChevronBackOutline />
+                    ) : (
+                      <IoChevronForwardOutline />
+                    )}
+                  </div>
+                  <span className="drag-tab__counter"></span>
+              </div>
+            </ShowMobileOnly>              
             <div className="list__content" onScroll={handleScroll}>
               <ContentList buttons={buttons.slice(0, numberButtons)} />
             </div>

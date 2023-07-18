@@ -15,12 +15,6 @@ $list-container-hide-height: calc($footer-height-mobile - 265px);
   padding-bottom: $footer-height-mobile + $padding-small*2;
 }
 
-.list__hide-mobile {
-
-  display: none;
-
-}
-
 // .list__container::before {
 
 //   content: "";
@@ -46,7 +40,8 @@ $list-container-hide-height: calc($footer-height-mobile - 265px);
 
 .list__container--hide {
 
-  transform:translateY(-$list-container-hide-height) ;
+
+  transition: $transition-default-slow;
 
 }
 
@@ -107,16 +102,8 @@ $list-container-hide-height: calc($footer-height-mobile - 265px);
   ///don't move the list down in desktop mode
   .list__container--hide {
 
-    transform:translateY(0) ;
-
   }
 
-  //hide the mobile list component in desktop
-  .list__hide-desktop {
-
-    display: none;
-
-  }
 
   .list__content {
 

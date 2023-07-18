@@ -13,7 +13,7 @@ export const ShowMobileOnly = ({children}) => {
         }
     }, []);
 
-    if((width <= 768))
+    if((width <=  1280))
     {
         return <>{children}</>
     }
@@ -34,7 +34,7 @@ export const ShowDesktopOnly = ({children}) => {
         }
     }, []);
 
-    if((width > 768))
+    if((width >  1280))
     {
         return <>{children}</>
     }
