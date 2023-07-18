@@ -10,6 +10,7 @@ function List({
   buttons,
   showLeftColumn,
   showFiltersForm,
+  extraCssClass,
 }) {
   const handleChange = (event) => {
     onLeftColumnToggle(event.target.value);
@@ -33,34 +34,37 @@ function List({
     <>
       {!showFiltersForm && (
         <>
-          <div
-            onClick={handleChange}
-            className={
-              'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open')
-            }
-          >
-            <span className="drag-tab__line"></span>
-
-            <div className="drag-tab__icon">
-              {showLeftColumn ? (
-                <IoChevronBackOutline />
-              ) : (
-                <IoChevronForwardOutline />
-              )}
-            </div>
-
-            <span className="drag-tab__counter"></span>
-          </div>
+          
 
           <div
             className={
-              'list__container ' +
+              'list__container ' + extraCssClass + ' ' +
               (showLeftColumn ? '' : 'list__container--hide')
             }
           >
+
+            <div
+              onClick={handleChange}
+              className={
+                'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open')
+              }
+            >
+              <span className="drag-tab__line"></span>
+              <div className="drag-tab__icon">
+                {showLeftColumn ? (
+                  <IoChevronBackOutline />
+                ) : (
+                  <IoChevronForwardOutline />
+                )}
+              </div>
+              <span className="drag-tab__counter"></span>
+
+            </div>
+
             <div className="list__content" onScroll={handleScroll}>
               <ContentList buttons={buttons.slice(0, numberButtons)} />
             </div>
+
           </div>
         </>
       )}

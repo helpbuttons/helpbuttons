@@ -16,15 +16,13 @@ $drag-tab-icon-size: 25px;
   position: absolute;
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: $drag-tab-height;
   background-color: $color-white;
   margin: 0;
-  margin-left: $margin-extra-small;
-  z-index: $z-index-01;
+  z-index: $z-index-03;
   padding: $padding-small;
-  padding-bottom: 70px;
-  bottom: $drag-tab-bottom;
-  border-radius: $border-radius-circle $border-radius-circle 0 0;
+  border-radius: 0;
+  transform: translateY(-60px);
   transition: $transition-default-slow;
 
   :hover {
@@ -51,7 +49,6 @@ $drag-tab-icon-size: 25px;
 .drag-tab--open {
   
   transition: $transition-default-slow;
-  bottom: 0;
   
   .drag-tab__counter {
 
@@ -84,23 +81,23 @@ $drag-tab-icon-size: 25px;
 @media #{$breakpoints-xlarge} {
   .drag-tab {
 
-    position: absolute;
+    position: fixed;
     width: auto;
     flex-direction: row-reverse;
-    bottom:0px;
-    left: 35%;
     margin: 0 0 $margin-big 0;
     height: auto;
+    left: 35%;
     border-radius: 0 $border-radius-circle $border-radius-circle 0;
     cursor: pointer; /* fallback if grab cursor is unsupported */
     padding: $padding-small;
     transition: $transition-default-slow;
+    z-index: $z-index-03;
 
   }
 
   .drag-tab--open {
 
-    left:0;
+    transform: translateX(100px);
 
   }
 
