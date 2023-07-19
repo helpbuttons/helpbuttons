@@ -30,7 +30,7 @@ export interface GlobalState {
 
 export const store = new Store<GlobalState>({
   networks: networksInitial,
-  loggedInUser: {username: '', name: '', role: 'registered', email: '', description: ''},
+  loggedInUser: null,
   knownUsers: [],
   explore: exploreInitial,
   alerts: [],
