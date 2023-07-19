@@ -193,12 +193,8 @@ function MyApp({ Component, pageProps }) {
   }, [path, config, loggedInUser]);
 
   useEffect(() => {
-    console.log('oisada')
-    console.log(loggedInUser)
-    console.log(activities)
     if(loggedInUser && !activities)
     {
-      console.log('getting activities')
       store.emit(
               new FindActivities(
                 (error) => {

@@ -45,7 +45,7 @@ function NavBottom() {
       </NavLink>
 
       <NavLink
-        href="/Explore"
+        href="/Explore#click"
         className="nav-bottom__link nav-bottom__link--active"
       >
         <div className="nav-bottom__icon">

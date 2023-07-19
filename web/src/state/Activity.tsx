@@ -23,8 +23,6 @@ export class FindActivities implements WatchEvent {
           }
           return activity;
         });
-        console.log('oia')
-        console.log(activities)
         store.emit(new ActivitiesFound(activities));
       }),
       catchError((error) => handleError(this.onError, error)),
@@ -36,8 +34,6 @@ export class ActivitiesFound implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      console.log('updaaate')
-      console.log(this.activities)
       newState.activities = this.activities;
       newState.unreadActivities = unreadActivities(this.activities)
     });
@@ -56,33 +52,6 @@ export class ActivityMarkAllAsRead implements WatchEvent,UpdateEvent {
     return ActivityService.markAllAsRead()
   }
 }
-// export class ActivitiyMarkAsRead implements WatchEvent {
-//   public constructor(public activityId: string) {}
-
-//   public watch(state: GlobalState) {
-//     // this.
-//     return ActivityService.markAsRead(this.activityId).subscribe(() => {
-//       return new ActivitiesRead(this.activityId);
-//     });
-    
-//   }
-// }
-
-// export class ActivitiesRead implements UpdateEvent {
-//   public constructor(private activityId: string) {}
-
-//   public update(state: GlobalState) {
-//     return produce(state, (newState) => {
-//       newState.activities = state.activities.map((activity) => {
-//         if(activity.id == this.activityId)
-//       {
-//         return {...activity, read: true}
-//       }
-//       return activity
-//     })
-//     });
-//   }
-// }
 
 export const unreadActivities = (activities) => {
   return activities.reduce((accumulator, activity) => {
