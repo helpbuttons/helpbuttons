@@ -12,7 +12,7 @@ import { GlobalState, store } from 'pages';
 import { FetchDefaultNetwork } from 'state/Networks';
 import { FetchUserData } from 'state/Users';
 
-import { useRef } from 'store/Store';
+import { useRef, useStore } from 'store/Store';
 import { GetConfig } from 'state/Setup';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
@@ -26,6 +26,7 @@ import { version } from 'shared/commit';
 import Loading from 'components/loading';
 import { getMetadata } from 'services/ServerProps';
 import SEO from 'components/seo';
+import { FindActivities } from 'state/Activity';
 
 export default appWithTranslation(MyApp);
 
@@ -38,19 +39,24 @@ function MyApp({ Component, pageProps }) {
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
   const [noBackend, setNobackend] = useState(false);
 
-  const config = useRef(store, (state: GlobalState) => state.config);
+  const config = useStore(store, (state: GlobalState) => state.config);
   const path = router.asPath.split('?')[0];
 
   const [metadata, setMetadata] = useState(null)
 
-  const loggedInUser = useRef(
+  const loggedInUser = useStore(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
 
-  const selectedNetwork = useRef(
+  const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
+  const activities = useStore(
+    store,
+    (state: GlobalState) => state.activities,
   );
 
   const setupPaths: string[] = [
@@ -186,6 +192,22 @@ function MyApp({ Component, pageProps }) {
     }
   }, [path, config, loggedInUser]);
 
+  useEffect(() => {
+    console.log('oisada')
+    console.log(loggedInUser)
+    console.log(activities)
+    if(loggedInUser && !activities)
+    {
+      console.log('getting activities')
+      store.emit(
+              new FindActivities(
+                (error) => {
+                  alertService.error('Error getting activities');
+                },
+              ),
+            );
+    }
+  }, [loggedInUser, activities])
   useEffect(() => {
     if(config && selectedNetwork)
     {
