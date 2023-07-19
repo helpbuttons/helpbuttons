@@ -94,7 +94,10 @@ export default function HexagonExploreMap({
           {geoJsonFeatures.map((hexagonFeature) => (
             <GeoJsonFeature
               onClick={(feature) => {
-                setHexagonClicked(() => feature.payload);
+                if(hexagonFeature.properties.count > 0)
+                {
+                  setHexagonClicked(() => feature.payload);
+                }
               }}
               feature={hexagonFeature}
               key={hexagonFeature.properties.hex}
