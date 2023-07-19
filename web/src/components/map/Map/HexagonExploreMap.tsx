@@ -94,8 +94,8 @@ export default function HexagonExploreMap({
           {geoJsonFeatures.map((hexagonFeature) => (
             <GeoJsonFeature
               onClick={(feature) => {
-                if(hexagonFeature.properties.count > 0)
-                {
+                if (hexagonFeature.properties.count > 0) {
+                  console.log(feature.payload);
                   setHexagonClicked(() => feature.payload);
                 }
               }}
@@ -165,7 +165,11 @@ export default function HexagonExploreMap({
         */}
         {!isRedrawingMap &&
           geoJsonFeatures.map((hexagonFeature) => {
-            if (hexagonFeature.properties.hex !== hexagonClicked?.properties.hex && hexagonFeature.properties.count > 0) {
+            if (
+              hexagonFeature.properties.hex !==
+                hexagonClicked?.properties.hex &&
+              hexagonFeature.properties.count > 0
+            ) {
               return (
                 <Overlay
                   anchor={hexagonFeature.properties.center}
@@ -173,10 +177,16 @@ export default function HexagonExploreMap({
                   className="pigeon-map__custom-block"
                   key={hexagonFeature.properties.hex}
                 >
-                  <div className="pigeon-map__hex-wrap">
+                  <div
+                    onClick={() =>
+                      setHexagonClicked(() => hexagonFeature)
+                    }
+                    className="pigeon-map__hex-wrap"
+                  >
                     <span className="pigeon-map__hex-element">
-                      <div className="pigeon-map__hex-info--unselect">
-                        <div className="pigeon-map__hex-info--text-unselect">
+                      <div className="pigeon-map__hex-info">
+                        <div className="btn-filter__icon pigeon-map__hex-info--icon"></div>
+                        <div className="pigeon-map__hex-info--text">
                           {hexagonFeature.properties.count}
                         </div>
                       </div>
