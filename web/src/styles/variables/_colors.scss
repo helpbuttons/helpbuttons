@@ -24,7 +24,7 @@ $color-gray-border: #D4D4D4;
 
 // corporative
 
-$color-corporative: #FFDD02; // yellow
+$color-corporative: var(--network-color); // yellow
 $color-red: #EA5648;
 $color-green: #19AF96;
 $color-blue: #18AAD2;

@@ -196,6 +196,7 @@ function MyApp({ Component, pageProps }) {
   },[config, selectedNetwork])
   
   const pageName = path.split('/')[1]
+  const networkColor = "#FFDD02"
 
   return (
     <>
@@ -205,7 +206,10 @@ function MyApp({ Component, pageProps }) {
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
       {metadata && <SEO {...metadata}/>}
-      <div className={`${user ? '' : ''}`}>
+      <div className={`${user ? '' : ''}`} style={
+          {
+            '--network-color': networkColor,
+          } as React.CSSProperties}>
         <Alert />
         {(() => {
           if (config && authorized && selectedNetwork) {
