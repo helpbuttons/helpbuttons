@@ -26,6 +26,7 @@ export interface GlobalState {
   config: SetupDtoOut;
   activities: Activity[];
   showFilters: boolean;
+  unreadActivities: number;
 }
 
 export const store = new Store<GlobalState>({
@@ -35,8 +36,9 @@ export const store = new Store<GlobalState>({
   explore: exploreInitial,
   alerts: [],
   config: null,
-  activities: [],
-  showFilters: false
+  activities: null,
+  showFilters: false,
+  unreadActivities: 0
 });
 
 

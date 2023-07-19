@@ -9,6 +9,16 @@ export class ActivityService {
 
 
   public static find(): Observable<Activity[]> {
-    return httpService.get<any>("/activity/find/");
+    return httpService.get<any>("activity/find/");
   }
+
+  public static markAllAsRead(): Observable<Activity[]> {
+    return httpService.post<any>("activity/markAllAsRead");
+  }
+
+  public static markAsRead(activityId): Observable<Activity[]> {
+    return httpService.post<any>("activity/markAsRead/" + activityId);
+  }
+  
+  // markAsRead
 }
