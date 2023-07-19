@@ -16,4 +16,9 @@ export class Activity extends BaseEntity {
 
   @ManyToOne((type) => User)
   owner: User;
+
+  @Column({
+    default: false,
+  })
+  read: boolean
 }
