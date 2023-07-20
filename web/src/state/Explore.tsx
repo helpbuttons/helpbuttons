@@ -43,7 +43,7 @@ export const exploreInitial = {
   }
 };
 
-export class FindButtons implements WatchEvent {
+export class FindButtons implements WatchEvent, UpdateEvent {
   public constructor(
     private resolution: number,
     private hexagons: string[],
@@ -56,6 +56,11 @@ export class FindButtons implements WatchEvent {
       map((buttons) => this.onSuccess(buttons)),
       catchError((error) => handleError(this.onError, error)),
     );
+  }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.loading = true;
+    });
   }
 }
 
@@ -185,7 +190,6 @@ export class UpdateFilters implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.filters = this.filters;
-      newState.explore.map.loading = true;
     });
   }
 }
@@ -216,7 +220,6 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.filters = {...defaultFilters, helpButtonTypes: [this.buttonType]};
-      newState.explore.map.loading = true;
     });
   }
 }

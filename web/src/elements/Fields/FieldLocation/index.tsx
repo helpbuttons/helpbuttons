@@ -17,7 +17,7 @@ export default function FieldLocation({
   markerCaption = '?',
   markerColor,
   markerAddress,
-  selectedNetwork = null,
+  selectedNetwork,
   updateAddress,
   updateMarkerPosition,
   label,
@@ -27,16 +27,21 @@ export default function FieldLocation({
     (state: GlobalState) => state.config,
   );
 
-  const [markerPosition, setMarkerPosition] = useState<Point>([0, 0]);
+  const [markerPosition, setMarkerPosition] = useState<Point>(
+    selectedNetwork.exploreSettings.center,
+  );
+  const [zoom, setZoom] = useState<Point>(
+    selectedNetwork.exploreSettings.zoom,
+  );
   let closeMenu = () => {
     setHideMenu(false);
   };
 
   const [showHideMenu, setHideMenu] = useState(false);
   const handleSelectedPlace = (place) => {
-    setMarkerPosition([place.geometry.lat, place.geometry.lng])
+    setMarkerPosition([place.geometry.lat, place.geometry.lng]);
   };
-  
+
   const requestAddressForPosition = (markerPosition) => {
     store.emit(
       new FindAddress(
@@ -55,27 +60,22 @@ export default function FieldLocation({
         },
       ),
     );
-  }
+  };
   useEffect(() => {
     updateMarkerPosition(markerPosition);
     updateAddress('...');
-    if(!config)
+    if(config?.mapifyApiKey)
     {
-      console.error('config not defined.. could not get address for location')
-      return;
-    } else {
-      requestAddressForPosition(markerPosition)
+      requestAddressForPosition(markerPosition);
     }
-    
   }, [markerPosition]);
 
   useEffect(() => {
-    if(selectedNetwork)
-    {
-      console.log(selectedNetwork.exploreSettings.center)
-      setMarkerPosition(selectedNetwork.exploreSettings.center)
+    if (selectedNetwork) {
+      setMarkerPosition(selectedNetwork.exploreSettings.center);
     }
-  }, [selectedNetwork])
+  }, [selectedNetwork]);
+
   return (
     <>
       <div className="form__field">
@@ -94,19 +94,22 @@ export default function FieldLocation({
       </div>
 
       {showHideMenu && markerPosition && (
-        <Picker closeAction={closeMenu} headerText={t('picker.headerText')}>
+        <Picker
+          closeAction={closeMenu}
+          headerText={t('picker.headerText')}
+        >
           <DropDownSearchLocation
             placeholder={t('homeinfo.searchlocation')}
             handleSelectedPlace={handleSelectedPlace}
           />
-           <LocationCoordinates
+          <LocationCoordinates
             latitude={markerPosition[0]}
             longitude={markerPosition[1]}
             address={markerAddress}
           />
           <MarkerSelectorMap
             setMarkerPosition={setMarkerPosition}
-            defaultZoom={selectedNetwork.zoom}
+            zoom={zoom}
             markerColor={markerColor ? markerColor : 'yellow'}
             markerPosition={markerPosition}
             markerCaption={markerCaption}

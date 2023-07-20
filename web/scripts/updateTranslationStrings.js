@@ -17,7 +17,7 @@ const saveTranslatioFile = (locale, data) => {
   return fs.writeFileSync(`../public/locales/${locale}/common.json`, JSON.stringify(data, null, 2));
 };
 
-const allLocales = ['en'];
+const allLocales = ['en', 'es'];
 
 const syncTranslations = (foundTranslations) => {
   let allTranslations = [];
@@ -30,7 +30,7 @@ const syncTranslations = (foundTranslations) => {
       if(!_.get(translations, foundTranslation))
       {
         console.log(`Adding new ${foundTranslation} to ${locale}`)
-        _.set(translations, foundTranslation, foundTranslation);
+        _.set(translations, foundTranslation, '');
       }
       return {locale, translations}
     })
@@ -46,17 +46,19 @@ const syncTranslations = (foundTranslations) => {
 
 const getTranslations = () => {
   exec(
-    `grep -ro {t\\(\\'[a-zA-Z]*\\.[a-zA-Z]*\\' ../src/ | cut -f 2 -d:`,
+    `grep -ro -E "t\\('[a-zA-Z]*\.[a-zA-Z]*" ../src/ | cut -f 2 -d:`,
     (error, stdout, stderr) => {
-      const strings = stdout.split('\n');
-      let searchingTranslations = strings.map((value) => {
-        value = value.replaceAll("{t('", '');
-        value = value.replaceAll("'", '');
-        return value;
-      });
-      searchingTranslations = searchingTranslations.filter(
-        (value) => value.length,
-      );
+      let strings = stdout.split('\n');
+      const regex = /[a-zA-Z]+\.[a-zA-Z]+/gm;
+      strings = strings.map((string) =>  string.substring(3))
+      const searchingTranslations = strings.filter((string) => {
+        const res = regex.exec(string)
+        if(res !== null)
+        {
+          return true;
+        }
+        return false;
+      })
 
       syncTranslations(searchingTranslations);
       if (error !== null) {

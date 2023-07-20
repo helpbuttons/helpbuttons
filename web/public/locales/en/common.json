@@ -40,7 +40,8 @@
     "where": "Where",
     "whereExplain": "Search the place where you want to go",
     "distance": "Search Distance",
-    "allButtonTypes": "All types"
+    "allButtonTypes": "All types",
+    "tagsExplain": "buttonFilters.tagsExplain"
   },
   "setup": {
     "hostname": "Hostname",
@@ -55,12 +56,13 @@
     "welcomeMessageLong": "<p>Here you´ll see your collaborative network description.</p><p>Create your first network with the options bellow.</p>",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
-    "configureInstanceTitle": "Setup the last details of your network"
+    "configureInstanceTitle": "Setup the last details of your network",
+    "test": ""
   },
   "activities": {
-    "newbutton": "You created <a href='/ButtonFile/{0}'>{1}</a> in <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
-    "newpost": "There is a new post '{0}' posted to the helpbutton <a href='/ButtonFile/{1}'>{2}</a>",
-    "newcomment": "There is a new comment '{0}' posted to the post '{1}' you can view the helpbutton named <a href='/ButtonFile/{2}'>{3}</a>",
+    "newbutton": "You created {0} in {1}",
+    "newpost": "There is a new post '{0}' posted to the helpbutton {1}",
+    "newcomment": "There is a new comment '{0}' posted to the post '{1}'",
     "noactivity": "You have no activity yet! Start publishing or interact with others!"
   },
   "common": {
@@ -78,13 +80,14 @@
     "editTitle": "Edit {0}",
     "next": "Next",
     "choose": "Choose {0}",
-    "click": "Click here"
+    "click": "Click here",
+    "reloadConfig": ""
   },
   "button": {
-    "typeLabel":"Helpbutton type",
-    "typeExplain":"Please choose which kind of helpbutton would you like to create",
+    "typeLabel": "Helpbutton type",
+    "typeExplain": "Please choose which kind of helpbutton would you like to create",
     "titleLabel": "Title",
-    "titleExplain":"Short title to know what's your helpbutton about",
+    "titleExplain": "Short title to know what's your helpbutton about",
     "descriptionLabel": "Description",
     "descriptionExplain": "Description",
     "tagsLabel": "Keywords",
@@ -99,8 +102,8 @@
     "share": "Share",
     "copy": "Copy Link",
     "delete": "Delete",
-    "edit": "Edit"
-
+    "edit": "Edit",
+    "errorCreated": ""
   },
   "user": {
     "email": "Email",
@@ -117,7 +120,7 @@
     "loginButton": "ENTER",
     "noAccount": "I don&apos;t have an account",
     "tags": "Related interests",
-    "editProfile": "Edit profile", 
+    "editProfile": "Edit profile",
     "name": "Profile name",
     "namePlaceHolder": "Name",
     "avatar": "Choose avatar",
@@ -130,7 +133,9 @@
     "register": "REGISTER",
     "sendLoginToken": "Send login token",
     "loginClick": "One click login",
-    "created_date": "User since"
+    "created_date": "User since",
+    "created": "",
+    "newLoginTokenSent": ""
   },
   "calendarOnce": {
     "pickday": "Pick a day",
@@ -179,6 +184,9 @@
     "selectMapStyle": "Choose map style",
     "locationExplain": "Your network place and radius would be centered everytime someone loads the app",
     "tagsExplain": "Your network keywords will make easier to search for topics and to know what's your network about"
-
+  },
+  "configure": {
+    "browsePins": "",
+    "browseList": ""
   }
 }

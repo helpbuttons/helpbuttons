@@ -4,6 +4,7 @@ import { ActivityEventName } from 'shared/types/activity.list';
 import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/sys.helper';
 import t from 'i18n';
+import Link from 'next/link';
 
 export default function CardNotification({ activity = {} }) {
   const notification = (activity) => {
@@ -16,12 +17,10 @@ export default function CardNotification({ activity = {} }) {
           date={button.created_at}
           id={button.id}
           message={t('activities.newbutton', [
-            button.id,
             button.title,
-            button.latitude.toString(),
-            button.longitude.toString(),
             button.address,
           ])}
+          read={activity.read}
         />
       );
     } else if (activity.eventName == ActivityEventName.DeleteButton) {
@@ -36,6 +35,7 @@ export default function CardNotification({ activity = {} }) {
             button.id,
             button.title,
           ])}
+          read={activity.read}
         />
       );
     } else if (activity.eventName == ActivityEventName.NewPost) {
@@ -48,9 +48,9 @@ export default function CardNotification({ activity = {} }) {
           id={post.button.id}
           message={t('activities.newpost', [
             post.message,
-            post.button.id,
             post.button.title,
           ])}
+          read={activity.read}
         />
       );
     } else if (
@@ -66,9 +66,8 @@ export default function CardNotification({ activity = {} }) {
           message={t('activities.newcomment', [
             comment.message,
             comment.post.message,
-            comment.button.id,
-            comment.button.title,
           ])}
+          read={activity.read}
         />
       );
     } else {
@@ -79,6 +78,7 @@ export default function CardNotification({ activity = {} }) {
           date={activity.created_at}
           message={activity.eventName}
           id={0}
+          read={activity.read}
         />
       );
     }
@@ -87,9 +87,9 @@ export default function CardNotification({ activity = {} }) {
   return <>{notification(activity)}</>;
 }
 
-export function NotificationCard({ title, image, date, message, id }) {
+export function NotificationCard({ title, image, date, message, id, read }) {
   return (
-    <a href={'/ButtonFile/'+ id.toString()} className="card-notification card-notification">
+    <Link href={'/ButtonFile/'+ id.toString()} className="card-notification card-notification">
       <div className="card-notification__comment-count">
         <div className="card-notification__label">
           <div className="hashtag hashtag--blue">{title}</div>
@@ -104,24 +104,24 @@ export function NotificationCard({ title, image, date, message, id }) {
               alt="image"
             />
           </div>
-          {/* 
-            <div className="card-notification__icon">
-              <IoClose />
-            </div> */}
         </div>
         <div className="card-notification__text">
           <div className="card-notification__header">
             <div className="card-notification__info">
-              {/*action*/}
             </div>
+            {read ? 
+              readableTimeLeftToDate(date)
+            : 
             <div className="card-notification__date">
               {readableTimeLeftToDate(date)}
             </div>
+            }
+            
           </div>
           <h2 className="card-notification__title">{message}</h2>
           <div className="card-notification__paragraph"></div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }

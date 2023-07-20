@@ -149,6 +149,7 @@ export default function ButtonForm({
               validationError={errors.image}
             />
             <>
+            {selectedNetwork && 
               <FieldLocation
                 label={t('button.whereLabel')}
                 updateMarkerPosition={([lat, lng]) => {
@@ -165,6 +166,7 @@ export default function ButtonForm({
                 selectedNetwork={selectedNetwork}
                 validationError={errors.location}
               />
+              }
               {/* <FieldDate
                 dateType={watch('when.type')}
                 dates={watch('when.dates')}

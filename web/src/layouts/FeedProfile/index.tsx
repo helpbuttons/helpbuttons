@@ -6,9 +6,9 @@ import Btn, { ContentAlignment } from 'elements/Btn';
 import t from 'i18n';
 import router from 'next/router';
 
-export default function FeedProfile({activities}) {
+export default function FeedProfile({ activities }) {
+  
   return (
-
     <div className="feed-container">
       {/* <div className="feed-selector feed-selector--activity">
         <Dropdown />
@@ -16,24 +16,27 @@ export default function FeedProfile({activities}) {
       <div className="feed-line"></div>
 
       <div className="feed-section">
-
-        {activities && activities.map((activity, key) => {
-          return (
-          <div className="feed-element" key={key}>
-            <CardNotification activity={activity}/>
-          </div>)
-        })}
-        {(!activities || activities.length < 1) && 
-          (
-            <div className='feed__empty-message'>
-              <div className="feed__empty-message--prev">{t('activities.noactivity', ['activities'])}</div>
-              <Btn caption={t('explore.createEmpty')} onClick={() => router.push('/ButtonNew')} contentAlignment={ContentAlignment.center}/>
+        {activities &&
+          activities.map((activity, key) => {
+            return (
+              <div className="feed-element" key={key}>
+                <CardNotification activity={activity} />
+              </div>
+            );
+          })}
+        {(!activities || activities.length < 1) && (
+          <div className="feed__empty-message">
+            <div className="feed__empty-message--prev">
+              {t('activities.noactivity', ['activities'])}
             </div>
-          )
-        }
+            <Btn
+              caption={t('explore.createEmpty')}
+              onClick={() => router.push('/ButtonNew')}
+              contentAlignment={ContentAlignment.center}
+            />
+          </div>
+        )}
       </div>
-
     </div>
-
   );
 }
