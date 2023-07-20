@@ -46,7 +46,7 @@ export function HbMap({
           bounds,
         })
       },
-      zoomSnap: true,
+      zoomSnap: false,
       onClick: ({ event, latLng, pixel }) => {handleMapClick({latLng})},
       provider: tileProvider,
       maxZoom: 14,
