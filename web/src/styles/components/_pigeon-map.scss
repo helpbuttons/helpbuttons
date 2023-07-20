@@ -28,6 +28,21 @@
 
 }
 
+.pigeon-map__hex-info--unselect {
+
+    display: flex;
+    justify-content: center; /* Horizontally aligns children at the center */
+    align-items: center; /* Vertically aligns children at the center */
+    height: 100%; /* Or any specific height */
+    flex-wrap:nowrap;
+    margin-left: auto;
+    width: 4rem;
+    left: -0.8rem;
+    position: relative;
+
+
+}
+
 .pigeon-map__custom-block {
 
     display: flex;
@@ -62,7 +77,24 @@
 
 .pigeon-map__hex-info--text {
 
-    line-height: 18px;
+    font-size: $font-size-huge;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+}
+
+.pigeon-map__hex-info--text-unselect {
+
+    font-size: $font-size-huge;
+    font-weight: $font-weight-bold;
+    opacity: 0.3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-white;
+    width: 100%;
+    margin: auto;
+    z-index: $z-index-01;
+    cursor: pointer;
 
 }
 
