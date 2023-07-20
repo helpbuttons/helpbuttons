@@ -37,7 +37,6 @@ export default function AdvancedFilters({
     (state: GlobalState) => state.explore.map.queryFoundTags,
     false
   );
-
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -57,23 +56,7 @@ export default function AdvancedFilters({
     toggleShowFiltersForm(false);
   };
   const onSubmit = (data) => {
-    let newFilters = { ...filters };
-    if (data.query) {
-      newFilters.query = data.query;
-    } else {
-      newFilters.query = '';
-    }
-
-    newFilters.helpButtonTypes = data.helpButtonTypes;
-    newFilters.cleared = false;
-    if (data.place) {
-      newFilters.where = {
-        address: data.place.address,
-        center: data.place.center,
-        radius: data.place.radius,
-      };
-    }
-    newFilters.tags = data.tags
+    const newFilters = { ...filters, ...data }
     store.emit(new UpdateFilters(newFilters));
 
     if (isHome) {
@@ -83,16 +66,16 @@ export default function AdvancedFilters({
     }
   };
 
-  const address = watch('place.address');
-  const center = watch('place.center');
-  const radius = watch('place.radius');
+  const address = watch('where.address');
+  const center = watch('where.center');
+  const radius = watch('where.radius');
   const helpButtonTypes = watch('helpButtonTypes');
   const [tags, setTags] = useState([])
   const query = watch('query');
 
   const handleSelectedPlace = (place) => {
-    setValue('place.address', place.formatted);
-    setValue('place.center', [
+    setValue('where.address', place.formatted);
+    setValue('where.center', [
       place.geometry.lat,
       place.geometry.lng,
     ]);
@@ -213,7 +196,7 @@ export default function AdvancedFilters({
                     min={1}
                     max={300}
                     onChange={(radiusValue) =>
-                      setValue('place.radius', radiusValue)
+                      setValue('where.radius', radiusValue)
                     }
                     defaultValue={radius}
                   />
