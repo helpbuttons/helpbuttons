@@ -143,7 +143,8 @@ export default function HomeInfo({
                           ' ' +
                           buttonType.caption;
                         return (
-                          <div
+                          <div 
+                            className='hashtags__list-item'
                             key={idx}
                             style={buttonColorStyle(
                               buttonType.cssColor,
