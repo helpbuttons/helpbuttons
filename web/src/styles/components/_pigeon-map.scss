@@ -79,22 +79,22 @@
 
     font-size: $font-size-huge;
     font-weight: $font-weight-bold;
-
-
+    cursor: pointer;
 }
 
 .pigeon-map__hex-info--text-unselect {
 
     font-size: $font-size-huge;
     font-weight: $font-weight-bold;
-    opacity: 0.2;
+    opacity: 0.3;
     display: flex;
     justify-content: center;
+    align-items: center;
     color: $color-white;
     width: 100%;
     margin: auto;
     z-index: $z-index-01;
-    pointer-events: none
+    cursor: pointer;
 
 }
 
