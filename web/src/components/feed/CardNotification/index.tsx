@@ -22,6 +22,7 @@ export default function CardNotification({ activity = {} }) {
             button.longitude.toString(),
             button.address,
           ])}
+          read={activity.read}
         />
       );
     } else if (activity.eventName == ActivityEventName.DeleteButton) {
@@ -36,6 +37,7 @@ export default function CardNotification({ activity = {} }) {
             button.id,
             button.title,
           ])}
+          read={activity.read}
         />
       );
     } else if (activity.eventName == ActivityEventName.NewPost) {
@@ -51,6 +53,7 @@ export default function CardNotification({ activity = {} }) {
             post.button.id,
             post.button.title,
           ])}
+          read={activity.read}
         />
       );
     } else if (
@@ -69,6 +72,7 @@ export default function CardNotification({ activity = {} }) {
             comment.button.id,
             comment.button.title,
           ])}
+          read={activity.read}
         />
       );
     } else {
@@ -79,6 +83,7 @@ export default function CardNotification({ activity = {} }) {
           date={activity.created_at}
           message={activity.eventName}
           id={0}
+          read={activity.read}
         />
       );
     }
@@ -87,7 +92,7 @@ export default function CardNotification({ activity = {} }) {
   return <>{notification(activity)}</>;
 }
 
-export function NotificationCard({ title, image, date, message, id }) {
+export function NotificationCard({ title, image, date, message, id, read }) {
   return (
     <a href={'/ButtonFile/'+ id.toString()} className="card-notification card-notification">
       <div className="card-notification__comment-count">
@@ -112,11 +117,15 @@ export function NotificationCard({ title, image, date, message, id }) {
         <div className="card-notification__text">
           <div className="card-notification__header">
             <div className="card-notification__info">
-              {/*action*/}
             </div>
+            {read ? 
+              readableTimeLeftToDate(date)
+            : 
             <div className="card-notification__date">
               {readableTimeLeftToDate(date)}
             </div>
+            }
+            
           </div>
           <h2 className="card-notification__title">{message}</h2>
           <div className="card-notification__paragraph"></div>

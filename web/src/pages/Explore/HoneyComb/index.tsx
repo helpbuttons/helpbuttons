@@ -223,6 +223,15 @@ function useExploreSettings({
       const lng = parseFloat(params.get('lng'));
       const zoom = parseInt(params.get('zoom'));
       const showFilters = params.get('showFilters');
+      const click = params.get('click');
+
+      if (click !== null && selectedNetwork)
+      {
+        queryExploreSettings = {
+          ...queryExploreSettings,
+          center: selectedNetwork.exploreSettings.center,
+        };
+      }
 
       if (lat && lng) {
         queryExploreSettings = {

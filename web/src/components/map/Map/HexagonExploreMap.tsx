@@ -184,9 +184,8 @@ export default function HexagonExploreMap({
                     className="pigeon-map__hex-wrap"
                   >
                     <span className="pigeon-map__hex-element">
-                      <div className="pigeon-map__hex-info">
-                        <div className="btn-filter__icon pigeon-map__hex-info--icon"></div>
-                        <div className="pigeon-map__hex-info--text">
+                      <div className="pigeon-map__hex-info--unselect">
+                        <div className="pigeon-map__hex-info--text-unselect">
                           {hexagonFeature.properties.count}
                         </div>
                       </div>

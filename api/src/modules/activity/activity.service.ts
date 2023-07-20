@@ -36,6 +36,11 @@ export class ActivityService {
     });
   }
 
-  markAllAsRead(userId: string) {}
-  markAsRead(userId: string, notificationId: string) {}
+  markAllAsRead(userId: string) {
+    return this.activityRepository.update({read: false, owner: { id: userId } }, {read: true} )
+  }
+
+  markAsRead(userId: string, notificationId: string) {
+    return this.activityRepository.update({id: notificationId, owner: { id: userId } }, {read: true} )
+  }
 }
