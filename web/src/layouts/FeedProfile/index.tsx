@@ -5,8 +5,6 @@ import Btn, { ContentAlignment } from 'elements/Btn';
 
 import t from 'i18n';
 import router from 'next/router';
-import { store } from 'pages';
-import { ActivitiyMarkAsRead } from 'state/Activity';
 
 export default function FeedProfile({ activities }) {
   
@@ -21,10 +19,7 @@ export default function FeedProfile({ activities }) {
         {activities &&
           activities.map((activity, key) => {
             return (
-              <div className="feed-element" key={key} onClick={() => {
-                  // store.emit(new ActivitiyMarkAsRead(activity.id))
-                  console.log('oi')
-              }}>
+              <div className="feed-element" key={key}>
                 <CardNotification activity={activity} />
               </div>
             );
