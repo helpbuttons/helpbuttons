@@ -88,10 +88,8 @@ $list-container-hide-height: calc($footer-height-mobile - 265px);
     display: block;
     overflow: hidden;
     position: relative;
-    overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
-
   }
 
 
@@ -99,9 +97,9 @@ $list-container-hide-height: calc($footer-height-mobile - 265px);
 
     flex-direction: column;
     width: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
     padding-bottom: 4em;
-
+    height:100%;
   }
 
   .list__element {
