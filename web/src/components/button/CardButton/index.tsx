@@ -215,7 +215,7 @@ export function CardButtonHeadBig({ button }) {
     false
   );
 
-  const profileHref = loggedInUser.username == button.owner.username ? `/Profile/` : `/Profile/${button.owner.username}`
+  const profileHref = (loggedInUser && loggedInUser.username == button.owner.username) ? `/Profile/` : `/Profile/${button.owner.username}`
   return (
     <>
       <CardButtonSubmenu button={button} />
