@@ -15,8 +15,6 @@ import { Button } from 'shared/entities/button.entity';
 import { Post } from 'shared/entities/post.entity';
 import { DeletePost, LoadPosts } from 'state/Posts';
 import { isAdmin } from 'state/Users';
-import { DeletePost, LoadPosts } from 'state/Posts';
-import { isAdmin } from 'state/Users';
 import { useRef } from 'store/Store';
 
 export default function Feed({ button }: { button: Button }) {

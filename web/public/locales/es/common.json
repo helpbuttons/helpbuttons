@@ -5,15 +5,117 @@
     "profile": "Perfil",
     "activity": "Atividad",
     "faqs": "Faqs",
-    "login": "Login"
+    "login": "Login",
+    "home": "menu.home"
   },
   "homeinfo": {
     "start": "Donde quieres empezar?",
     "searchlocation": "Buscar ubicacion",
-    "loading": "not set"
+    "loading": "not set",
+    "locationDetected": "homeinfo.locationDetected",
+    "stats": "homeinfo.stats",
+    "users": "homeinfo.users",
+    "actions": "homeinfo.actions"
   },
   "feed": {
     "write": "Escribir mensaje"
   },
-  "hostname": "nombre de host"
+  "hostname": "nombre de host",
+  "common": {
+    "save": "common.save",
+    "publish": "common.publish",
+    "saveSuccess": "common.saveSuccess",
+    "choose": "common.choose",
+    "search": "common.search",
+    "reset": "common.reset",
+    "invalidMimeType": "common.invalidMimeType",
+    "editTitle": "common.editTitle",
+    "next": "common.next",
+    "reloadConfig": "common.reloadConfig",
+    "notfound": "common.notfound"
+  },
+  "configuration": {
+    "namePlaceHolder": "configuration.namePlaceHolder",
+    "privacySetPrivate": "configuration.privacySetPrivate",
+    "images": "configuration.images",
+    "jumbo": "configuration.jumbo",
+    "locationExplain": "configuration.locationExplain",
+    "tagsExplain": "configuration.tagsExplain",
+    "centerOfMap": "configuration.centerOfMap",
+    "description": "configuration.description",
+    "title": "configuration.title"
+  },
+  "activities": {
+    "newbutton": "activities.newbutton",
+    "newpost": "activities.newpost",
+    "noactivity": "activities.noactivity"
+  },
+  "user": {
+    "email": "user.email",
+    "username": "user.username",
+    "password": "user.password",
+    "passwordConfirmation": "user.passwordConfirmation",
+    "created": "user.created",
+    "loginButton": "user.loginButton",
+    "loginClick": "user.loginClick",
+    "passwordMismatch": "user.passwordMismatch",
+    "name": "user.name",
+    "description": "user.description",
+    "setNewPassword": "user.setNewPassword",
+    "newPassword": "user.newPassword",
+    "passwordPlaceHolder": "user.passwordPlaceHolder",
+    "logout": "user.logout",
+    "register": "user.register",
+    "newLoginTokenSent": "user.newLoginTokenSent",
+    "sendLoginToken": "user.sendLoginToken",
+    "loginLink": "user.loginLink"
+  },
+  "configure": {
+    "browsePins": "configure.browsePins",
+    "browseList": "configure.browseList"
+  },
+  "explore": {
+    "emptyList": "explore.emptyList"
+  },
+  "buttonFilters": {
+    "queryLabel": "buttonFilters.queryLabel",
+    "queryExplain": "buttonFilters.queryExplain",
+    "tagsExplain": "buttonFilters.tagsExplain",
+    "where": "buttonFilters.where",
+    "distance": "buttonFilters.distance",
+    "allButtonTypes": "buttonFilters.allButtonTypes"
+  },
+  "button": {
+    "copy": "button.copy",
+    "delete": "button.delete",
+    "typeExplain": "button.typeExplain",
+    "placeHolderTitle": "button.placeHolderTitle",
+    "descriptionLabel": "button.descriptionLabel",
+    "tagsLabel": "button.tagsLabel",
+    "imagesLabel": "button.imagesLabel",
+    "whenLabel": "button.whenLabel",
+    "changeDateLabel": "button.changeDateLabel",
+    "changePlaceLabel": "button.changePlaceLabel",
+    "firstPost": "button.firstPost",
+    "errorCreated": "button.errorCreated"
+  },
+  "calendarOnce": {
+    "label": "calendarOnce.label"
+  },
+  "calendarAlways": {
+    "label": "calendarAlways.label"
+  },
+  "validation": {
+    "fieldRequired": "validation.fieldRequired"
+  },
+  "setup": {
+    "finish": "setup.finish",
+    "welcomeMessage": "setup.welcomeMessage",
+    "hostname": "setup.hostname",
+    "postgresPassword": "setup.postgresPassword",
+    "postgresHostName": "setup.postgresHostName",
+    "smtpUrl": "setup.smtpUrl",
+    "test": "setup.test",
+    "createAdminTitle": "setup.createAdminTitle"
+  }
 }
