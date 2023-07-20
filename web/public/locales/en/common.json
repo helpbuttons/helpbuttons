@@ -60,9 +60,9 @@
     "test": ""
   },
   "activities": {
-    "newbutton": "You created <a href='/ButtonFile/{0}'>{1}</a> in <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
-    "newpost": "There is a new post '{0}' posted to the helpbutton <a href='/ButtonFile/{1}'>{2}</a>",
-    "newcomment": "There is a new comment '{0}' posted to the post '{1}' you can view the helpbutton named <a href='/ButtonFile/{2}'>{3}</a>",
+    "newbutton": "You created {0} in {1}",
+    "newpost": "There is a new post '{0}' posted to the helpbutton {1}",
+    "newcomment": "There is a new comment '{0}' posted to the post '{1}'",
     "noactivity": "You have no activity yet! Start publishing or interact with others!"
   },
   "common": {
