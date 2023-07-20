@@ -1,3 +1,5 @@
+$font-size-hex-unselected: calc($font-size-huge - 5px);
+
 .pigeon-click-block {
     g {
         color: aqua;
@@ -77,14 +79,14 @@
 
 .pigeon-map__hex-info--text {
 
-    font-size: $font-size-huge;
+    font-size: $font-size-title;
     font-weight: $font-weight-bold;
     cursor: pointer;
 }
 
 .pigeon-map__hex-info--text-unselect {
 
-    font-size: $font-size-huge;
+    font-size: $font-size-hex-unselected;
     font-weight: $font-weight-bold;
     opacity: 0.3;
     display: flex;
