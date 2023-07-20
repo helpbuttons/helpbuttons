@@ -7,12 +7,13 @@ $list-container-hide-height: calc($footer-height-mobile - 265px);
   flex-direction: column;
   width: 100%;
   // overflow: hidden;
-  height: max-content;
+  height: auto;
   position: relative;
   // bottom: $footer-height-mobile + $padding-small*2;
   z-index: $z-index-01;
   transition: $transition-default-slow;
   padding-bottom: $footer-height-mobile + $padding-small*2;
+  
 }
 
 // .list__container::before {
@@ -37,13 +38,40 @@ $list-container-hide-height: calc($footer-height-mobile - 265px);
   min-height: $card-button-list-height;
   transition: $transition-default-slow;
 
+  .list__element {
+
+    height: 100%;
+    padding-right: $padding-small;
+  
+  }
+
 }
 
+.list__container--vertical {
 
-.list__element {
-
+  position: relative;
+  display: block;
   height: 100%;
-  padding-right: $padding-small;
+
+
+  .list__content--vertical {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+    padding-bottom: 4em;
+    height:100%;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    .list__element {
+
+      height: auto;
+      width: 100%;
+    
+    }
+
+  }
 
 }
 

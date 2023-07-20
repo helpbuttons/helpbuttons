@@ -63,6 +63,8 @@ function HoneyComb({ router }) {
 
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
+  const [showListFullHeight, toggleshowListFullHeight] = useToggle(false);
+
 
   const height = showLeftColumn ? 0 : 400;
 
@@ -135,33 +137,60 @@ function HoneyComb({ router }) {
 
           </div>
 
+          <ShowDesktopOnly>
           <LoadabledComponent loading={exploreSettings.loading}>
-            <HexagonExploreMap
-              exploreSettings={exploreSettings}
-              h3TypeDensityHexes={h3TypeDensityHexes}
-              currentButton={currentButton}
-              handleBoundsChange={handleBoundsChange}
-              setMapCenter={setMapCenter}
-              setHexagonsToFetch={setHexagonsToFetch}
-              setHexagonClicked={setHexagonClicked}
-              hexagonClicked={hexagonClicked}
-              isRedrawingMap={isRedrawingMap}
-              filters={exploreMapState.filters}
-            />
-          </LoadabledComponent>
+              <HexagonExploreMap
+                exploreSettings={exploreSettings}
+                h3TypeDensityHexes={h3TypeDensityHexes}
+                currentButton={currentButton}
+                handleBoundsChange={handleBoundsChange}
+                setMapCenter={setMapCenter}
+                setHexagonsToFetch={setHexagonsToFetch}
+                setHexagonClicked={setHexagonClicked}
+                hexagonClicked={hexagonClicked}
+                isRedrawingMap={isRedrawingMap}
+                filters={exploreMapState.filters}
+              />
+            </LoadabledComponent>
+          </ShowDesktopOnly>
+
+
+          <ShowMobileOnly>
+
+              <LoadabledComponent loading={exploreSettings.loading}>
+
+                  <HexagonExploreMap
+                    exploreSettings={exploreSettings}
+                    h3TypeDensityHexes={h3TypeDensityHexes}
+                    currentButton={currentButton}
+                    handleBoundsChange={handleBoundsChange}
+                    setMapCenter={setMapCenter}
+                    setHexagonsToFetch={setHexagonsToFetch}
+                    setHexagonClicked={setHexagonClicked}
+                    hexagonClicked={hexagonClicked}
+                    isRedrawingMap={isRedrawingMap}
+                    filters={exploreMapState.filters}
+                    showListFullHeight={showListFullHeight}
+                  />
+                
+              </LoadabledComponent>
+
+          </ShowMobileOnly>
 
           <ShowMobileOnly>
             <div
               className={
                 'index__content-left ' +
-                (showLeftColumn ? '' : 'index__content-bottom--hide')
+                (showLeftColumn ? '' : 'index__content-bottom--hide') + (showListFullHeight ? ' index__content-bottom--fullheight' : '')
               }
             > 
               <List
                   showFiltersForm={showFiltersForm}
                   buttons={exploreMapState.listButtons}
                   showLeftColumn={showLeftColumn}
+                  showListFullHeight={showListFullHeight}
                   onLeftColumnToggle={toggleShowLeftColumn}
+                  onFullHeightToggle={toggleshowListFullHeight}
               />
             </div>
 

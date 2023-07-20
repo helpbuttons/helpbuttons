@@ -26,6 +26,12 @@ $index-mobile-fixed-z-index: $z-index-05;
   
 }
 
+.index__content-bottom--fullheight {
+
+  margin-bottom: calc(100vh - 372px);
+
+}
+
 @media #{$breakpoints-xlarge} {
   .index__container {
     position: fixed;

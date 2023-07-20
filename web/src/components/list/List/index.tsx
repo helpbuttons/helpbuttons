@@ -12,10 +12,29 @@ function List({
   buttons,
   showLeftColumn,
   showFiltersForm,
+  showListFullHeight,
+  onFullHeightToggle,
 }) {
+
   const handleChange = (event) => {
-    onLeftColumnToggle(event.target.value);
-  };
+
+    console.log(showLeftColumn + " " + showListFullHeight)
+    if(showLeftColumn && !showListFullHeight){
+
+       return onFullHeightToggle(true);
+    }
+
+    if(showLeftColumn && showListFullHeight ){
+       onFullHeightToggle(false);
+      return onLeftColumnToggle(false);
+   }
+
+    if(!showLeftColumn && !showListFullHeight)
+    return onLeftColumnToggle(true);
+
+
+  }
+
 
   let [numberButtons, setNumberButtons] = React.useState(5);
   const handleScroll = (e) => {
@@ -37,13 +56,13 @@ function List({
         <>
           <div
             className={
-              'list__container '
+              (showListFullHeight ? ' list__container--vertical' : ' list__container')
             }
           >
             <div
                 onClick={handleChange}
                 className={
-                  'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open')
+                  'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') 
                 }
               >
                 <span className="drag-tab__line"></span>
@@ -56,7 +75,7 @@ function List({
                 </div>
             </div>
 
-            <div className="list__content" onScroll={handleScroll}>
+            <div className={  (showListFullHeight ? 'list__content--vertical' : ' list__content')  } onScroll={handleScroll}>
               <ContentList buttons={buttons.slice(0, numberButtons)} />
             </div>
 

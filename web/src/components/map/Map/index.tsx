@@ -18,6 +18,7 @@ interface HbMapProps {
   height?: number,
   maxZoom: number,
   minZoom: number,
+  showListFullHeight,
 }
 
 export function HbMap({
@@ -29,6 +30,7 @@ export function HbMap({
   width = null,
   height = null,
   tileType = HbMapTiles.OSM,
+  showListFullHeight,
 }) { 
 
   const tileProvider = (x, y, z, dpr) => {
@@ -73,7 +75,11 @@ export function HbMap({
       {...mapProps}
     >
       {children}
-      <ZoomControl />
+      {!showListFullHeight &&
+      
+        <ZoomControl />
+
+      }
 
     </Map>
   );
