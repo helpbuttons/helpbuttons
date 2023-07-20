@@ -57,7 +57,7 @@
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
     "configureInstanceTitle": "Setup the last details of your network",
-    "test": "setup.test"
+    "test": ""
   },
   "activities": {
     "newbutton": "You created <a href='/ButtonFile/{0}'>{1}</a> in <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
@@ -81,7 +81,7 @@
     "next": "Next",
     "choose": "Choose {0}",
     "click": "Click here",
-    "reloadConfig": "common.reloadConfig"
+    "reloadConfig": ""
   },
   "button": {
     "typeLabel": "Helpbutton type",
@@ -103,7 +103,7 @@
     "copy": "Copy Link",
     "delete": "Delete",
     "edit": "Edit",
-    "errorCreated": "button.errorCreated"
+    "errorCreated": ""
   },
   "user": {
     "email": "Email",
@@ -134,8 +134,8 @@
     "sendLoginToken": "Send login token",
     "loginClick": "One click login",
     "created_date": "User since",
-    "created": "user.created",
-    "newLoginTokenSent": "user.newLoginTokenSent"
+    "created": "",
+    "newLoginTokenSent": ""
   },
   "calendarOnce": {
     "pickday": "Pick a day",
@@ -186,7 +186,7 @@
     "tagsExplain": "Your network keywords will make easier to search for topics and to know what's your network about"
   },
   "configure": {
-    "browsePins": "configure.browsePins",
-    "browseList": "configure.browseList"
+    "browsePins": "",
+    "browseList": ""
   }
 }

@@ -6,116 +6,116 @@
     "activity": "Atividad",
     "faqs": "Faqs",
     "login": "Login",
-    "home": "menu.home"
+    "home": ""
   },
   "homeinfo": {
     "start": "Donde quieres empezar?",
     "searchlocation": "Buscar ubicacion",
     "loading": "not set",
-    "locationDetected": "homeinfo.locationDetected",
-    "stats": "homeinfo.stats",
-    "users": "homeinfo.users",
-    "actions": "homeinfo.actions"
+    "locationDetected": "",
+    "stats": "",
+    "users": "",
+    "actions": ""
   },
   "feed": {
     "write": "Escribir mensaje"
   },
   "hostname": "nombre de host",
   "common": {
-    "save": "common.save",
-    "publish": "common.publish",
-    "saveSuccess": "common.saveSuccess",
-    "choose": "common.choose",
-    "search": "common.search",
-    "reset": "common.reset",
-    "invalidMimeType": "common.invalidMimeType",
-    "editTitle": "common.editTitle",
-    "next": "common.next",
-    "reloadConfig": "common.reloadConfig",
-    "notfound": "common.notfound"
+    "save": "",
+    "publish": "",
+    "saveSuccess": "",
+    "choose": "",
+    "search": "",
+    "reset": "",
+    "invalidMimeType": "",
+    "editTitle": "",
+    "next": "",
+    "reloadConfig": "",
+    "notfound": ""
   },
   "configuration": {
-    "namePlaceHolder": "configuration.namePlaceHolder",
-    "privacySetPrivate": "configuration.privacySetPrivate",
-    "images": "configuration.images",
-    "jumbo": "configuration.jumbo",
-    "locationExplain": "configuration.locationExplain",
-    "tagsExplain": "configuration.tagsExplain",
-    "centerOfMap": "configuration.centerOfMap",
-    "description": "configuration.description",
-    "title": "configuration.title"
+    "namePlaceHolder": "",
+    "privacySetPrivate": "",
+    "images": "",
+    "jumbo": "",
+    "locationExplain": "",
+    "tagsExplain": "",
+    "centerOfMap": "",
+    "description": "",
+    "title": ""
   },
   "activities": {
-    "newbutton": "activities.newbutton",
-    "newpost": "activities.newpost",
-    "noactivity": "activities.noactivity"
+    "newbutton": "",
+    "newpost": "",
+    "noactivity": ""
   },
   "user": {
-    "email": "user.email",
-    "username": "user.username",
-    "password": "user.password",
-    "passwordConfirmation": "user.passwordConfirmation",
-    "created": "user.created",
-    "loginButton": "user.loginButton",
-    "loginClick": "user.loginClick",
-    "passwordMismatch": "user.passwordMismatch",
-    "name": "user.name",
-    "description": "user.description",
-    "setNewPassword": "user.setNewPassword",
-    "newPassword": "user.newPassword",
-    "passwordPlaceHolder": "user.passwordPlaceHolder",
-    "logout": "user.logout",
-    "register": "user.register",
-    "newLoginTokenSent": "user.newLoginTokenSent",
-    "sendLoginToken": "user.sendLoginToken",
-    "loginLink": "user.loginLink"
+    "email": "",
+    "username": "",
+    "password": "",
+    "passwordConfirmation": "",
+    "created": "",
+    "loginButton": "",
+    "loginClick": "",
+    "passwordMismatch": "",
+    "name": "",
+    "description": "",
+    "setNewPassword": "",
+    "newPassword": "",
+    "passwordPlaceHolder": "",
+    "logout": "",
+    "register": "",
+    "newLoginTokenSent": "",
+    "sendLoginToken": "",
+    "loginLink": ""
   },
   "configure": {
-    "browsePins": "configure.browsePins",
-    "browseList": "configure.browseList"
+    "browsePins": "",
+    "browseList": ""
   },
   "explore": {
-    "emptyList": "explore.emptyList"
+    "emptyList": ""
   },
   "buttonFilters": {
-    "queryLabel": "buttonFilters.queryLabel",
-    "queryExplain": "buttonFilters.queryExplain",
-    "tagsExplain": "buttonFilters.tagsExplain",
-    "where": "buttonFilters.where",
-    "distance": "buttonFilters.distance",
-    "allButtonTypes": "buttonFilters.allButtonTypes"
+    "queryLabel": "",
+    "queryExplain": "",
+    "tagsExplain": "",
+    "where": "Donde?",
+    "distance": "",
+    "allButtonTypes": ""
   },
   "button": {
-    "copy": "button.copy",
-    "delete": "button.delete",
-    "typeExplain": "button.typeExplain",
-    "placeHolderTitle": "button.placeHolderTitle",
-    "descriptionLabel": "button.descriptionLabel",
-    "tagsLabel": "button.tagsLabel",
-    "imagesLabel": "button.imagesLabel",
-    "whenLabel": "button.whenLabel",
-    "changeDateLabel": "button.changeDateLabel",
-    "changePlaceLabel": "button.changePlaceLabel",
-    "firstPost": "button.firstPost",
-    "errorCreated": "button.errorCreated"
+    "copy": "",
+    "delete": "",
+    "typeExplain": "",
+    "placeHolderTitle": "",
+    "descriptionLabel": "",
+    "tagsLabel": "",
+    "imagesLabel": "",
+    "whenLabel": "",
+    "changeDateLabel": "",
+    "changePlaceLabel": "",
+    "firstPost": "",
+    "errorCreated": ""
   },
   "calendarOnce": {
-    "label": "calendarOnce.label"
+    "label": ""
   },
   "calendarAlways": {
-    "label": "calendarAlways.label"
+    "label": ""
   },
   "validation": {
-    "fieldRequired": "validation.fieldRequired"
+    "fieldRequired": ""
   },
   "setup": {
-    "finish": "setup.finish",
-    "welcomeMessage": "setup.welcomeMessage",
-    "hostname": "setup.hostname",
-    "postgresPassword": "setup.postgresPassword",
-    "postgresHostName": "setup.postgresHostName",
-    "smtpUrl": "setup.smtpUrl",
-    "test": "setup.test",
-    "createAdminTitle": "setup.createAdminTitle"
+    "finish": "",
+    "welcomeMessage": "",
+    "hostname": "",
+    "postgresPassword": "",
+    "postgresHostName": "",
+    "smtpUrl": "",
+    "test": "",
+    "createAdminTitle": ""
   }
 }

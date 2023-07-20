@@ -30,7 +30,7 @@ const syncTranslations = (foundTranslations) => {
       if(!_.get(translations, foundTranslation))
       {
         console.log(`Adding new ${foundTranslation} to ${locale}`)
-        _.set(translations, foundTranslation, foundTranslation);
+        _.set(translations, foundTranslation, '');
       }
       return {locale, translations}
     })
