@@ -1,6 +1,6 @@
 import ButtonForm from 'components/button/ButtonForm';
 import { GlobalState, store } from 'pages';
-import { CreateButton, SaveButtonDraft, UpdateDensityMap } from 'state/Explore';
+import { CreateButton, SaveButtonDraft, UpdateCachedHexagons } from 'state/Explore';
 import { useRef } from 'store/Store';
 import Router from 'next/router';
 import { alertService } from 'services/Alert';
@@ -64,20 +64,21 @@ export default function ButtonNew() {
     router.push(`/Explore#?lat=${buttonData.latitude}&lng=${buttonData.longitude}`);
   }
   const onSuccess = (buttonData : Button) => {
-    console.log(buttonData)
     store.emit(
       new CreateNewPost(
         buttonData.id,
         {
           message: t('button.firstPost', [readableDate(buttonData.created_at)], true)
         },
-        () => {
-          store.emit(new UpdateDensityMap([]))
+        (data) => {
+          alertService.success(t('button.created'))
+          store.emit(new UpdateCachedHexagons([]))
           jumpToExploreButton(buttonData)
         },
         (errorMessage) => {
+          alertService.error(t('button.errorCreated'))
           console.error(errorMessage)
-          jumpToExploreButton(buttonData)
+          // jumpToExploreButton(buttonData)
         },
       ),
     );    

@@ -13,7 +13,6 @@ import { useEffect, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
 import { Post } from 'shared/entities/post.entity';
-import { isAdmin } from 'state/Users';
 import { DeletePost, LoadPosts } from 'state/Posts';
 import { useRef } from 'store/Store';
 

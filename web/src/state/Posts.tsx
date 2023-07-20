@@ -17,7 +17,7 @@ export class CreateNewPost implements WatchEvent {
   ) {}
   public watch(state: GlobalState) {
     return PostService.new(this.buttonId, this.message).pipe(
-      map((data) => this.onSuccess()),
+      map((data) => this.onSuccess(data)),
       catchError((error) => handleError(this.onError, error)),
     );
   }
