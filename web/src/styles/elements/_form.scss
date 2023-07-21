@@ -263,6 +263,29 @@ $form-input-border-radius: $border-general-height;
   }
 
 }
+
+
+.form__input--button-type-field {
+
+  display: flex;
+  width: fill-available;
+  align-items: baseline;
+  gap: $margin-small;
+}
+
+
+.form__input--button-type-field {
+  display: flex;
+}
+
+.form__input--button-type-field .form__field {
+  flex-basis: 60%; /* Take 60% of the width */
+}
+
+.form__input--button-type-field button {
+  flex-basis: 20%; /* Take 20% of the width */
+}
+
 .form__options-v {
 
   flex-flow: column nowrap;

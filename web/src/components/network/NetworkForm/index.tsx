@@ -14,6 +14,9 @@ import Form from 'elements/Form';
 import t from 'i18n';
 import { useRouter } from 'next/router';
 import { getUrlOrigin } from 'shared/sys.helper';
+import ButtonTypesSelector from 'components/feed/ButtonTypesCreator';
+import FieldCheckbox from 'elements/Fields/FieldCheckbox';
+import CheckBox from 'elements/Checkbox';
 // name, description, logo, background image, button template, color pallete, colors
 export default NetworkForm;
 
@@ -58,6 +61,7 @@ function NetworkForm({
                 validationError={errors.name}
                 {...register('name', { required: true })}
               />
+
               <FieldTextArea
                 name="description"
                 label="Network description:"
@@ -77,6 +81,20 @@ function NetworkForm({
                 {...register('privacy', { required: true })}
               />
               <hr></hr>
+
+              <Btn caption={'Choose main color'} />
+
+              <Btn caption={'Choose second color'} />
+
+              <FieldText
+                name="alias"
+                label="Helpbutton alias"
+                placeholder={t('configuration.namePlaceHolder')}
+                classNameInput="squared"
+                validationError={errors.name}
+                {...register('name', { required: true })}
+              />
+            
               <div className='form__field'>
                 <div className='form__label'>{t('configuration.images')}</div>
               </div>
@@ -126,6 +144,34 @@ function NetworkForm({
                 }}
                 tags={watch('tags')}
               />
+
+                {/* Blocked users */}
+              <FieldTags
+                label={t('configuration.blocked')}
+                explain={t('configuration.blockedExplain')}
+                placeholder={t('common.add')}
+                validationError={errors.tags}
+                setTags={(tags) => {
+                  setValue('tags', tags);
+                }}
+                tags={watch('tags')}
+              />
+
+                {/* Admin Users */}
+              <FieldTags
+                label={t('configuration.adminUsers')}
+                explain={t('configuration.adminUsersExplain')}
+                placeholder={t('common.add')}
+                validationError={errors.tags}
+                setTags={(tags) => {
+                  setValue('tags', tags);
+                }}
+                tags={watch('tags')}
+              />      
+
+                {/* Admin Users */}
+
+              <ButtonTypesSelector postId={undefined} onSubmit={undefined} label={t('configuration.createButtonType')} explain={t('configuration.explainCreateButtonType')} />
 
               <div className="publish__submit">
                   <Btn
