@@ -1,40 +1,52 @@
 ///dropddown selector component
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import React from 'react';
 
 
-interface DropdownProps {
-  caption: string;
-  iconLink?: string;
-  contentAlignment?: ContentAlignment;
-  btnType?: BtnType;
-  disabled?: boolean;
-  onClick?: Function;
+type DropdownProps = {
+  label?:string,
+  listOption: {
+    name: string;
+    obj: any;
+    onClick?: () => void;
+  }[];
+};
+
+
+class Dropdown extends React.Component<DropdownProps> {
+  constructor(props: DropdownProps) {
+    super(props);
+    this.state = { obj: null };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const selectedIndex = e.target.value;
+    const selectedOption = this.props.listOption[selectedIndex];
+    this.setState({ obj: selectedOption.obj });
+
+    if (selectedOption.onClick) {
+      selectedOption.onClick();
+    }
+  }
+
+  render() {
+    const { label } = this.props;
+
+    return (
+      <>
+        {label && <div className="form__label">{label}</div>}
+        <select className='dropdown-select__trigger' onChange={this.handleChange}>
+          {this.props.listOption.map((option, index) => (
+            <option className='dropdown-select__option' key={index} value={index}>
+              {option.name}
+            </option>
+          ))}
+        </select>
+      </>
+      
+    );
+  }
 }
 
-export default function Dropdown ({
-  label,
-  children,
-  caption,
-  contentAlignment = null,
-  onClick = () => {},
-}: DropdownProps) {
-  return (
-    <>
-
-        
-      <div class="label">{label} </div>
-      <Btn
-          btnType={BtnType.dropdown}
-          caption={caption}
-          contentAlignment={contentAlignment}
-          onClick={onClick}
-        /> 
-      <select className="dropdown-select__trigger">
-        {children}
-      </select>
-
-
-    </>
-
-  );
-}
+export default Dropdown;
