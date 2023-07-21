@@ -51,9 +51,9 @@ export default function PostMessage({ post, isButtonOwnerComment }) {
           </div>
           <div className="card-notification__text">
             <div className="card-notification__header">
-              <div class="card-notification__info">
+              <div className="card-notification__info">
                 {' '}
-                <div class="card-notification__name">
+                <div className="card-notification__name">
                   {post.author.name}
                 </div>{' '}
                 @{post.author.username}
