@@ -50,7 +50,7 @@ const dropdownOptions = [
 
       <div className="feed-line"></div>
 
-      <div className="feed-section">
+      <div className="feed-section--activity">
         {activities &&
           activities.map((activity, key) => {
             return (
