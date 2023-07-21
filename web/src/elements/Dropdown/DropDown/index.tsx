@@ -22,7 +22,7 @@ export default function Dropdown ({
     <>
 
         
-      <div class="label">{label} </div>
+      <div className="label">{label} </div>
       <Btn
           btnType={BtnType.dropdown}
           caption={caption}

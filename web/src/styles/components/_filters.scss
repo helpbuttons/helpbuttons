@@ -15,6 +15,13 @@ $filters-padding: 10px;
 
 }
 
+.filters__container {
+
+  background: $color-corporative;
+
+
+}
+
 .filters--vertical {
 
   width: 100vw;
@@ -24,20 +31,23 @@ $filters-padding: 10px;
   top: 0;
   display: flex;
   flex-direction: column;
-  background: $color-corporative;
+  max-width: $grid-max-width;
+  margin: auto;
   overflow-y: scroll;
   padding: $padding-big $padding-big 200px $padding-big;
   z-index: $z-index-06;
 
 }
 
+
 .filters__actions {
 
   margin-top: auto;
   position: fixed;
-  width: 100%;
+  width: 100vw;
   bottom: 0;
   display: flex;
+  left: 0;
   border-top: 1px dashed $color-gray-border ;
   justify-content: space-between;
   flex-direction: row !important;
