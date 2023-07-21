@@ -42,7 +42,7 @@ export default function CardNotification({ activity = {} }) {
       const post = JSON.parse(activity.data);
       return (
         <NotificationCard
-          title={'New post'}
+          title={'New user update'}
           image={post.button.image}
           date={post.created_at}
           id={post.button.id}
