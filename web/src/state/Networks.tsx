@@ -33,6 +33,26 @@ export class setNetwork implements UpdateEvent {
     });
   }
 }
+export class UpdateNetworkBackgroundColor implements UpdateEvent {
+  public constructor(public color: string) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.networks.selectedNetwork.backgroundColor = this.color;
+    });
+  }
+}
+export class UpdateNetworkTextColor implements UpdateEvent {
+  public constructor(public color: string) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.networks.selectedNetwork.textColor = this.color;
+    });
+  }
+}
+
+
 export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
   public constructor(private onSuccess, private onError) {}
 

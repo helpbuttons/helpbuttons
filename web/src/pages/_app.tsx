@@ -214,8 +214,17 @@ function MyApp({ Component, pageProps }) {
   },[config, selectedNetwork])
   
   const pageName = path.split('/')[1]
-  const networkColor = "#FFDD02"
+  let [networkBackgroundColor, setNetworkBackgroundColor] = useState("#FFDD02")
+  let [networkTextColor, setNetworkTextColor] = useState("black")
 
+  useEffect(() => {
+    if(selectedNetwork?.backgroundColor){
+      setNetworkBackgroundColor(() => selectedNetwork.backgroundColor);
+    }
+    if(selectedNetwork?.textColor){
+      setNetworkTextColor(() => selectedNetwork.textColor);
+    }
+  },[selectedNetwork])
   return (
     <>
       <Head>
@@ -226,7 +235,8 @@ function MyApp({ Component, pageProps }) {
       {metadata && <SEO {...metadata}/>}
       <div className={`${user ? '' : ''}`} style={
           {
-            '--network-color': networkColor,
+            '--network-background-color': networkBackgroundColor,
+            '--network-text-color': networkTextColor,
           } as React.CSSProperties}>
         <Alert />
         {(() => {

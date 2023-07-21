@@ -1,14 +1,18 @@
-import {
-  HttpException,
-  Injectable,
-} from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
+import {
+  InjectEntityManager,
+  InjectRepository,
+} from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { EntityManager, ILike, Repository } from 'typeorm';
 import { TagService } from '../tag/tag.service';
-import { CreateNetworkDto, NetworkDto, UpdateNetworkDto } from './network.dto';
+import {
+  CreateNetworkDto,
+  NetworkDto,
+  UpdateNetworkDto,
+} from './network.dto';
 import { Network } from './network.entity';
 import { getManager } from 'typeorm';
 import { StorageService } from '../storage/storage.service';
@@ -42,7 +46,9 @@ export class NetworkService {
       logo: null,
       jumbo: null,
       name: createDto.name,
-      exploreSettings: createDto.exploreSettings
+      exploreSettings: createDto.exploreSettings,
+      backgroundColor: createDto.backgroundColor,
+      textColor: createDto.textColor,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -102,14 +108,31 @@ export class NetworkService {
           );
         }
         return networks[0];
-      }).then((defaultNetwork) => {
-        return this.userService.findAdministrator().then((administrator :User) => {
-          return {...defaultNetwork,  administrator }
-        })
-      }).then((defaultNetwork) => {
-        return this.entityManager.query(`select * from network_button_types`).then((networkByButtonTypes) => {
-          return {...defaultNetwork, buttonTypesCount: networkByButtonTypes, exploreSettings: JSON.parse(defaultNetwork.exploreSettings), buttonCount: networkByButtonTypes.reduce((totalCount, buttonType) => totalCount + parseInt(buttonType.count), 0)}
-        });
+      })
+      .then((defaultNetwork) => {
+        return this.userService
+          .findAdministrator()
+          .then((administrator: User) => {
+            return { ...defaultNetwork, administrator };
+          });
+      })
+      .then((defaultNetwork) => {
+        return this.entityManager
+          .query(`select * from network_button_types`)
+          .then((networkByButtonTypes) => {
+            return {
+              ...defaultNetwork,
+              buttonTypesCount: networkByButtonTypes,
+              exploreSettings: JSON.parse(
+                defaultNetwork.exploreSettings,
+              ),
+              buttonCount: networkByButtonTypes.reduce(
+                (totalCount, buttonType) =>
+                  totalCount + parseInt(buttonType.count),
+                0,
+              ),
+            };
+          });
       })
       .catch((error) => {
         if (typeof error === typeof HttpException) {
@@ -120,11 +143,10 @@ export class NetworkService {
   }
 
   async findOne(id: string): Promise<Network> {
-    return this.findDefaultNetwork()
+    return this.findDefaultNetwork();
   }
 
-
-  async update(updateDto: UpdateNetworkDto){
+  async update(updateDto: UpdateNetworkDto) {
     const defaultNetwork = await this.findDefaultNetwork();
 
     const network = {
@@ -136,8 +158,10 @@ export class NetworkService {
       logo: null,
       jumbo: null,
       name: updateDto.name,
-      exploreSettings: updateDto.exploreSettings
-    } ;
+      exploreSettings: updateDto.exploreSettings,
+      backgroundColor: updateDto.backgroundColor,
+      textColor: updateDto.textColor,
+    };
     await getManager().transaction(
       async (transactionalEntityManager) => {
         if (Array.isArray(updateDto.tags)) {
@@ -151,8 +175,7 @@ export class NetworkService {
             });
         }
 
-        if (isImageData(updateDto.logo))
-        {
+        if (isImageData(updateDto.logo)) {
           try {
             network.logo = await this.storageService.newImage64(
               updateDto.logo,
@@ -161,9 +184,8 @@ export class NetworkService {
             throw new ValidationException({ logo: err.message });
           }
         }
-        
-        if (isImageData(updateDto.jumbo))
-        {
+
+        if (isImageData(updateDto.jumbo)) {
           try {
             network.jumbo = await this.storageService.newImage64(
               updateDto.jumbo,
@@ -173,7 +195,10 @@ export class NetworkService {
           }
         }
 
-        await this.networkRepository.update(defaultNetwork.id, removeUndefined(network));
+        await this.networkRepository.update(
+          defaultNetwork.id,
+          removeUndefined(network),
+        );
       },
     );
 

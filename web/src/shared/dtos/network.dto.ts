@@ -64,6 +64,12 @@ export class CreateNetworkDto implements Partial<Network> {
 
   @IsNotEmpty()
   exploreSettings: string;
+
+  @IsNotEmpty()
+  backgroundColor: string;
+
+  @IsNotEmpty()
+  textColor: string;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

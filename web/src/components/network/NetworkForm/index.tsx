@@ -14,6 +14,11 @@ import Form from 'elements/Form';
 import t from 'i18n';
 import { useRouter } from 'next/router';
 import { getUrlOrigin } from 'shared/sys.helper';
+import { FieldColorPick } from 'elements/Fields/FieldColorPick';
+import { useEffect } from 'react';
+import { store } from 'pages';
+import { UpdateNetworkBackgroundColor, UpdateNetworkTextColor } from 'state/Networks';
+
 // name, description, logo, background image, button template, color pallete, colors
 export default NetworkForm;
 
@@ -35,109 +40,158 @@ function NetworkForm({
 }) {
   const router = useRouter();
 
+  const backgroundColor = watch('backgroundColor')
+  useUpdateBackgroundColor(backgroundColor)
+
+  const textColor = watch('textColor')
+  useTextColor(textColor)
+
   return (
     <>
-        <Form
-          classNameExtra="createAdmin"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-            <div className="form__inputs-wrapper">
+      <Form
+        classNameExtra="createAdmin"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="form__inputs-wrapper">
+          <div className="form__field">
+            <p className="form__explain">{description}</p>
+            <p>
+              <b>{getUrlOrigin()}</b>
+            </p>
+          </div>
 
-              <div className="form__field">
-                <p className="form__explain">{description}</p>
-                <p>
-                  <b>{getUrlOrigin()}</b>
-                </p>
-              </div>
-
-              <FieldText
-                name="name"
-                label="Network name:"
-                placeholder={t('configuration.namePlaceHolder')}
-                classNameInput="squared"
-                validationError={errors.name}
-                {...register('name', { required: true })}
-              />
-              <FieldTextArea
-                name="description"
-                label="Network description:"
-                placeholder={t('configuration.descriptionPlaceHolder')}
-                classNameInput="squared"
-                validationError={errors.description}
-                watch={watch}
-                setValue={setValue}
-                setFocus={setFocus}
-                {...register('description', { required: true })}
-              />
-              <FieldPrivacy
-                name="privacy"
-                setValue={setValue}
-                textPrivate={t('configuration.privacySetPrivate')}
-                textPublic={t('configuration.privacySetPublic')}
-                {...register('privacy', { required: true })}
-              />
-              <hr></hr>
-              <div className='form__field'>
-                <div className='form__label'>{t('configuration.images')}</div>
-              </div>
-
-                <FieldImageUpload
-                  name="logo"
-                  label={t('configuration.logo')}
-                  width={200}
-                  height={200}
-                  subtitle="400x400px"
-                  setValue={setValue}
-                  validationError={errors.logo}
-                  control={control}
-                  {...register('logo', { required: true })}
-                />
-                <FieldImageUpload
-                  name="jumbo"
-                  label={t('configuration.jumbo')}
-                  subtitle="1500x1500px"
-                  setValue={setValue}
-                  width={750}
-                  height={250}
-                  validationError={errors.jumbo}
-                  control={control}
-                  {...register('jumbo', { required: true })}
-                />
-              <FieldAreaMap
-                defaultExploreSettings={defaultExploreSettings}
-                label={t('configuration.locationLabel')}
-                explain={t('configuration.locationExplain')}
-                marker={{
-                  caption: watch('name'),
-                  image: watch('logo')}
-                }
-                validationError={errors.location}
-                onChange={(exploreSettings) => {
-                  setValue('exploreSettings', exploreSettings);
-                }}
-              />
-              <FieldTags
-                label={t('configuration.tags')}
-                explain={t('configuration.tagsExplain')}
-                placeholder={t('common.add')}
-                validationError={errors.tags}
-                setTags={(tags) => {
-                  setValue('tags', tags);
-                }}
-                tags={watch('tags')}
-              />
-
-              <div className="publish__submit">
-                  <Btn
-                  btnType={BtnType.submit}
-                  contentAlignment={ContentAlignment.center}
-                  caption={t('common.publish')}
-                  isSubmitting={isSubmitting}
-                  submit={true}
-                />
-              </div>
+          <FieldText
+            name="name"
+            label="Network name:"
+            placeholder={t('configuration.namePlaceHolder')}
+            classNameInput="squared"
+            validationError={errors.name}
+            {...register('name', { required: true })}
+          />
+          <FieldTextArea
+            name="description"
+            label="Network description:"
+            placeholder={t('configuration.descriptionPlaceHolder')}
+            classNameInput="squared"
+            validationError={errors.description}
+            watch={watch}
+            setValue={setValue}
+            setFocus={setFocus}
+            {...register('description', { required: true })}
+          />
+          <FieldPrivacy
+            name="privacy"
+            setValue={setValue}
+            textPrivate={t('configuration.privacySetPrivate')}
+            textPublic={t('configuration.privacySetPublic')}
+            {...register('privacy', { required: true })}
+          />
+          <hr></hr>
+          <div className="form__field">
+            <div className="form__label">
+              {t('configuration.images')}
             </div>
-        </Form>
+          </div>
+
+          <FieldImageUpload
+            name="logo"
+            label={t('configuration.logo')}
+            width={200}
+            height={200}
+            subtitle="400x400px"
+            setValue={setValue}
+            validationError={errors.logo}
+            control={control}
+            {...register('logo', { required: true })}
+          />
+          <FieldImageUpload
+            name="jumbo"
+            label={t('configuration.jumbo')}
+            subtitle="1500x1500px"
+            setValue={setValue}
+            width={750}
+            height={250}
+            validationError={errors.jumbo}
+            control={control}
+            {...register('jumbo', { required: true })}
+          />
+          <FieldColorPick
+            name="backgroundColor"
+            label="Network color:"
+            placeholder={t(
+              'configuration.backgroundColorPlaceHolder',
+            )}
+            classNameInput="squared"
+            validationError={errors.backgroundColor}
+            setValue={setValue}
+            value={watch('backgroundColor')}
+            {...register('backgroundColor', { required: true })}
+          />
+          <FieldColorPick
+            name="texColor"
+            label="Text color:"
+            placeholder={t('configuration.textColorPlaceHolder')}
+            classNameInput="squared"
+            validationError={errors.texColor}
+            setValue={setValue}
+            value={watch('textColor')}
+            {...register('textColor', { required: true })}
+          />
+          <FieldAreaMap
+            defaultExploreSettings={defaultExploreSettings}
+            label={t('configuration.locationLabel')}
+            explain={t('configuration.locationExplain')}
+            marker={{
+              caption: watch('name'),
+              image: watch('logo'),
+            }}
+            validationError={errors.location}
+            onChange={(exploreSettings) => {
+              setValue('exploreSettings', exploreSettings);
+            }}
+          />
+          <FieldTags
+            label={t('configuration.tags')}
+            explain={t('configuration.tagsExplain')}
+            placeholder={t('common.add')}
+            validationError={errors.tags}
+            setTags={(tags) => {
+              setValue('tags', tags);
+            }}
+            tags={watch('tags')}
+          />
+
+          <div className="publish__submit">
+            <Btn
+              btnType={BtnType.submit}
+              contentAlignment={ContentAlignment.center}
+              caption={t('common.publish')}
+              isSubmitting={isSubmitting}
+              submit={true}
+            />
+          </div>
+        </div>
+      </Form>
     </>
   );
 }
+
+
+
+const useUpdateBackgroundColor = (backgroundColor) => {
+  useEffect(() => {
+    if (backgroundColor) {
+        store.emit(new UpdateNetworkBackgroundColor(backgroundColor));
+    }
+  }, [backgroundColor]);
+}
+
+
+const useTextColor = (textColor) => {
+  useEffect(() => {
+    if (textColor) {
+        store.emit(new UpdateNetworkTextColor(textColor));
+    }
+  }, [textColor]);
+}
+

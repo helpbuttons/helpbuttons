@@ -46,4 +46,13 @@ export class Network extends BaseEntity {
 
   @Column()
   exploreSettings: string;
+
+  @Column({default: '#0E0E0E'})
+  textColor: string;
+
+  @Column({default: '#FFDD02'})
+  backgroundColor: string;
+
+  @Column({default: 'helpButton'})
+  nomeclature: string;
 }
