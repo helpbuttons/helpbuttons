@@ -1,5 +1,5 @@
 // here we have the basic configuration of an network
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import Popup from 'components/popup/Popup';
 
 import FieldAreaMap from 'elements/Fields/FieldAreaMap';
@@ -82,18 +82,31 @@ function NetworkForm({
               />
               <hr></hr>
 
-              <Btn caption={'Choose main color'} />
+              <div className="form__section-title">{t('configuration.customizeNetwork')}</div>
 
-              <Btn caption={'Choose second color'} />
+              <div className="form__field">
+                <label className="form__label">{t('configuration.chooseColors')}</label>
+                <p className="form__explain">{t('configuration.chooseColorsExplain')}</p>
+                <Btn caption={'Choose main color'} btnType={BtnType.splitIcon} iconLeft={IconType.green}/>
+
+                <Btn caption={'Choose second color'} btnType={BtnType.splitIcon} iconLeft={IconType.green}/>
+              </div>
+
 
               <FieldText
                 name="alias"
-                label="Helpbutton alias"
+                label={t('configuration.aliasLabel')}
+                explain={t('configuration.aliasExplain')}
                 placeholder={t('configuration.namePlaceHolder')}
                 classNameInput="squared"
                 validationError={errors.name}
                 {...register('name', { required: true })}
               />
+
+              {/* BUTTON TYPES */}
+
+              <ButtonTypesSelector postId={undefined} onSubmit={undefined} label={t('configuration.createButtonType')} explain={t('configuration.explainCreateButtonType')} />
+
             
               <div className='form__field'>
                 <div className='form__label'>{t('configuration.images')}</div>
@@ -145,6 +158,11 @@ function NetworkForm({
                 tags={watch('tags')}
               />
 
+              <hr></hr>
+
+              <div className="form__section-title">{t('configuration.moderateNetwork')}</div>
+
+
                 {/* Blocked users */}
               <FieldTags
                 label={t('configuration.blocked')}
@@ -168,10 +186,6 @@ function NetworkForm({
                 }}
                 tags={watch('tags')}
               />      
-
-                {/* Admin Users */}
-
-              <ButtonTypesSelector postId={undefined} onSubmit={undefined} label={t('configuration.createButtonType')} explain={t('configuration.explainCreateButtonType')} />
 
               <div className="publish__submit">
                   <Btn

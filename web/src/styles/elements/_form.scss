@@ -12,6 +12,15 @@ $form-input-border-radius: $border-general-height;
 }
 
 
+.form__section-title {
+
+
+font-weight: $font-weight-bold;
+font-size: $font-size-title;
+margin: $margin-medium 0;
+
+}
+
 .form__label {
   z-index: $z-index-base;
   top: 7px;
@@ -283,7 +292,7 @@ $form-input-border-radius: $border-general-height;
 }
 
 .form__input--button-type-field button {
-  flex-basis: 20%; /* Take 20% of the width */
+  // flex-basis: 20%; /* Take 20% of the width */
 }
 
 .form__options-v {

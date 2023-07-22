@@ -66,9 +66,9 @@ export default function ButtonTypesSelector({ postId, onSubmit, label, explain }
 
                   <Btn
                     submit={true}
-                    btnType={BtnType.corporative}
+                    btnType={BtnType.circle}
                     iconLeft={IconType.red}
-                    contentAlignment={ContentAlignment.center}
+                    contentAlignment={ContentAlignment.left}
                     onClick={console.log('select color clicked')}
                   />
 
