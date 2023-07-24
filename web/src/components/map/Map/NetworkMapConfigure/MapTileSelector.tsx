@@ -2,7 +2,7 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { useToggle } from 'shared/custom.hooks';
 import { HbMapTiles } from '../Map.consts';
 import t from 'i18n';
-import Dropdown from 'elements/Dropdown/Dropdown';
+import Dropdown from 'elements/Dropdown/DropDown';
 
 
 
