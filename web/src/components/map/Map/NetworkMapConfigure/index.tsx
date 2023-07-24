@@ -35,7 +35,7 @@ export function NetworkMapConfigure({
 
       {(mapSettings.browseType != BrowseType.LIST) && 
 
-      <div class="picker__map">
+      <div className="picker__map">
         <HbMap
           onBoundsChanged={onBoundsChanged}
           mapCenter={mapSettings.center}

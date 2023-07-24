@@ -5,17 +5,52 @@ import Btn, { ContentAlignment } from 'elements/Btn';
 
 import t from 'i18n';
 import router from 'next/router';
+import { useToggle } from 'shared/custom.hooks';
 
-export default function FeedProfile({ activities }) {
+export default function FeedProfile({ activities, setNotifFilter }) {
   
+
+  const [showSelectFilteredFeed, setShowSelectFilteredFeed] =
+    useToggle(false);
+  
+const dropdownOptions = [
+  {
+    name: 'Show All Notificactions',
+    obj: null,
+    onClick: () => {
+      setNotifFilter();
+      setShowSelectFilteredFeed(true);
+    },
+  },
+  {
+    name: 'Show Messages',
+    obj: null,
+    onClick: () => {
+      setNotifFilter();
+      setShowSelectFilteredFeed(true);
+    },
+  },
+  {
+    name: 'Show Posts',
+    obj: null,
+    onClick: () => {
+      setNotifFilter();
+      setShowSelectFilteredFeed(true);
+    },
+  },
+];
+
+
   return (
     <div className="feed-container">
-      {/* <div className="feed-selector feed-selector--activity">
-        <Dropdown />
-      </div> */}
+
+      <div className="feed-selector feed-selector--activity">
+        <Dropdown  listOption={dropdownOptions}/>
+      </div>
+
       <div className="feed-line"></div>
 
-      <div className="feed-section">
+      <div className="feed-section--activity">
         {activities &&
           activities.map((activity, key) => {
             return (

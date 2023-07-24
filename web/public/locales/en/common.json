@@ -63,7 +63,8 @@
     "newbutton": "You created {0} in {1}",
     "newpost": "There is a new post '{0}' posted to the helpbutton {1}",
     "newcomment": "There is a new comment '{0}' posted to the post '{1}'",
-    "noactivity": "You have no activity yet! Start publishing or interact with others!"
+    "noactivity": "You have no activity yet! Start publishing or interact with others!",
+    "markedAllAsRead": "Notificaciones marcadas como leídas"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -172,8 +173,8 @@
     "description": "Here you can modify different settings of your network",
     "namePlaceHolder": "Network of permaculture farmers from Vilanova",
     "descriptionPlaceHolder": "Welcome to the network of sharing ...",
-    "privacySetPrivate": "Click here to set it up as a private network",
-    "privacySetPublic": "Click here to set it back to a public network",
+    "privacySetPrivate": "Set as private network",
+    "privacySetPublic": "Set back to public network",
     "images": "Network images",
     "logo": "Select Logo",
     "jumbo": "Select background",
