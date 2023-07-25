@@ -81,13 +81,13 @@ export default function LoginForm() {
             isSubmitting={isSubmitting}
           />
           <div className="popup__link">
-            <Link href={`/Signup?${params.toString()}`}>
-              {t('user.noAccount')}
+            <Link href={`/LoginClick?${params.toString()}`}>
+              {t('user.loginClick')}
             </Link>
           </div>
           <div className="popup__link">
-            <Link href={`/LoginClick?${params.toString()}`}>
-              {t('user.loginClick')}
+            <Link href={`/Signup?${params.toString()}`}>
+              {t('user.noAccount')}
             </Link>
           </div>
         </div>
