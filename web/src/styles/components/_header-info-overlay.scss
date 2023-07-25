@@ -1,6 +1,6 @@
 $info-location-field-width: 330px;
 $info-nets-field-bottom: 90px;
-$info-nets-max-width: $grid-max-width;
+$info-nets-max-width: $grid-max-width--mobile;
 $info-image-height: 700px;
 $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 
@@ -10,10 +10,21 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 
 }
 
+.info-overlay__background {
+
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  overflow: auto;
+
+}
+
 .info-overlay__container {
 
   // background-color: $color-white;
-  height:100vh;
+  height: 100vh;
+  padding-top: $margin-extra-big;
   width:100%;
   z-index: $z-index-02;
   box-sizing: border-box;
@@ -47,7 +58,9 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   background-color: $color-corporative;
   padding: 0;
   border-radius: 25px 25px 25px 25px;
-  width: auto;
+  width: 100%;
+  position: fixed;
+  z-index: $z-index-04;
 
   .label {
 
@@ -60,10 +73,11 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 .info-overlay__card {
 
   flex-grow: 1;
-  margin: $padding-big;
+  margin: auto;
   margin-top: $margin-small;
   color: $color-white;
   height: max-content;
+  max-width: $grid-max-width--mobile;
   min-height: 100px;
 
   .card {
@@ -101,6 +115,9 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   
           font-size: $font-size-huge;
           line-height: $font-size-huge;
+          word-wrap: break-word;
+          display: inline-block;
+          max-width: 70%;
 
           ::first-letter {
 
@@ -129,6 +146,25 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
     overflow:auto;
     white-space: normal;
     padding: $padding-medium 0;
+    word-wrap: break-word;
+    display: inline-block;
+    max-width: 98%;
+
+  }
+
+  .info-overlay__hashtags {
+
+    display: flex;
+    flex-wrap:wrap;
+    overflow: scroll;
+    padding-bottom: $padding-medium;
+    padding-top: $padding-medium;
+
+    .hashtags__list-item {
+
+      margin-top: $padding-medium;
+
+    }
 
   }
 
@@ -199,6 +235,8 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   .info-overlay__card {
     
     max-height: calc(100vh - 300px);
+    max-width: $grid-max-width;
+
 
   }
 

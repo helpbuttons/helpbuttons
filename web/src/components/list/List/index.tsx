@@ -4,6 +4,8 @@ import React from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import ContentList from 'components/list/ContentList';
+import { ShowDesktopOnly } from 'elements/SizeOnly';
+import { ShowMobileOnly } from 'elements/SizeOnly';
 
 function List({
   onLeftColumnToggle,
@@ -34,33 +36,30 @@ function List({
       {!showFiltersForm && (
         <>
           <div
-            onClick={handleChange}
             className={
-              'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open')
+              'list__container '
             }
           >
-            <span className="drag-tab__line"></span>
-
-            <div className="drag-tab__icon">
-              {showLeftColumn ? (
-                <IoChevronBackOutline />
-              ) : (
-                <IoChevronForwardOutline />
-              )}
+            <div
+                onClick={handleChange}
+                className={
+                  'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open')
+                }
+              >
+                <span className="drag-tab__line"></span>
+                <div className="drag-tab__icon">
+                  {showLeftColumn ? (
+                    <IoChevronBackOutline />
+                  ) : (
+                    <IoChevronForwardOutline />
+                  )}
+                </div>
             </div>
 
-            <span className="drag-tab__counter"></span>
-          </div>
-
-          <div
-            className={
-              'list__container ' +
-              (showLeftColumn ? '' : 'list__container--hide')
-            }
-          >
             <div className="list__content" onScroll={handleScroll}>
               <ContentList buttons={buttons.slice(0, numberButtons)} />
             </div>
+
           </div>
         </>
       )}

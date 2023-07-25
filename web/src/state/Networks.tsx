@@ -24,6 +24,15 @@ export const networksInitial = {
   selectedNetworkLoading: false,
 };
 
+export class setNetwork implements UpdateEvent {
+  public constructor(private network) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.networks.selectedNetwork = this.network
+    });
+  }
+}
 export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
   public constructor(private onSuccess, private onError) {}
 
@@ -68,8 +77,7 @@ export class SelectedNetworkFetched implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.networks.selectedNetwork = this.network;
-      newState.networks.selectedNetwork.exploreSettings = JSON.parse(this.network.exploreSettings);
+      newState.networks.selectedNetwork = this.network
       newState.networks.selectedNetworkLoading = false;
     });
   }

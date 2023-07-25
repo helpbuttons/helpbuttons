@@ -28,6 +28,12 @@ $card-notification-delete-size: 100px;
     font-weight: $font-weight-bold;
     color: $color-black;
   }
+
+  &:hover {
+
+    border: 1px solid $color-blue;
+
+  }
 }
 
 .card-notification:hover {
@@ -142,7 +148,7 @@ $card-notification-delete-size: 100px;
   
   margin: 0px 10px 10px 10px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: baseline;
 
     button {
@@ -150,6 +156,24 @@ $card-notification-delete-size: 100px;
       width: 40%;
 
     }
+
+}
+
+.card-notification--comment {
+
+  border-top: 1px dashed $color-ligth-gray ;
+  padding-top: $padding-big;
+
+}
+
+.card-notification--comment-actions {
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-direction: row;
+  right: 0;
+  margin-right: $margin-extra-big;
 
 }
 
@@ -199,9 +223,10 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification__name {
-  color: $color-black;
+  color: $color-dark-gray;
   font-weight: $font-weight-bold;
   display: inline;
+  font-size: $font-size-small;
 }
 
 .card-notification__paragraph {

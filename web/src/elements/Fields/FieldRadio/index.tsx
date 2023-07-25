@@ -5,7 +5,7 @@ export default function FieldRadio({ children, label, explain, validationError }
   return (
     <>
       <div className="form__field">
-        <p className="form__label">{label}</p>
+        <label className="form__label">{label}</label>
         <p className="form__explain">{explain}</p>
         <div className="radio">{children}</div>
 

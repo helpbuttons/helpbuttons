@@ -1,51 +1,49 @@
-import { Router } from 'next/router';
-import { map, tap, catchError } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { produce } from 'immer';
 
 import { WatchEvent } from 'store/Event';
 import { UpdateEvent } from '../store/Event';
 
-import { alertService } from 'services/Alert';
 import { ButtonService } from 'services/Buttons';
-import { Bounds, Point } from 'pigeon-maps';
-import { of } from 'rxjs';
-import { isHttpError } from 'services/HttpService';
-import { GlobalState, store } from 'pages';
+import { GlobalState } from 'pages';
 import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
-import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
 import { handleError } from './helper';
 
-import { debounceTime } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { convertBoundsToGeoJsonHexagons } from 'shared/honeycomb.utils';
 import { ButtonFilters, defaultFilters } from 'components/search/AdvancedFilters/filters.type';
-interface ExploreMapProps {
-  defaultCenter: Point;
-  defaultZoom: number;
-  markers: Button[];
-  handleBoundsChange: Function;
-}
+
 export interface ExploreState {
   draftButton: any;
-  mapCenter;
-  mapZoom;
   currentButton: Button;
-  mapBondsButtons: Button[];
-  filters: ButtonFilters;
+  map: ExploreMapState;
 }
 
+export interface ExploreMapState {
+  filters: ButtonFilters;
+  queryFoundTags: string[];
+  listButtons: Button[];  // if hexagon clicked, can be different from boundsButtons
+  boundsFilteredButtons: Button[];
+  cachedHexagons: any[];
+  loading: boolean;
+  initialized: boolean;
+}
 export const exploreInitial = {
   draftButton: null,
-  mapCenter: null,
-  mapZoom: -1,
   currentButton: null,
-  mapBondsButtons: [],
-  filters: defaultFilters
+  map:
+  {
+    filters: defaultFilters,
+    queryFoundTags: [],
+    listButtons: [], // if hexagon clicked, can be different from boundsButtons
+    boundsFilteredButtons: [],
+    cachedHexagons: [],
+    loading: true,
+    initialized: false,
+  }
 };
 
-export class FindButtons implements WatchEvent {
+export class FindButtons implements WatchEvent, UpdateEvent {
   public constructor(
     private resolution: number,
     private hexagons: string[],
@@ -58,6 +56,11 @@ export class FindButtons implements WatchEvent {
       map((buttons) => this.onSuccess(buttons)),
       catchError((error) => handleError(this.onError, error)),
     );
+  }
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.loading = true;
+    });
   }
 }
 
@@ -87,7 +90,7 @@ export class CreateButton implements WatchEvent {
   public watch(state: GlobalState) {
     return ButtonService.new(this.button, this.networkId).pipe(
       map((buttonData) => {
-        new ButtonFound(buttonData), this.onSuccess();
+        new ButtonFound(buttonData), this.onSuccess(buttonData);
       }),
       catchError((error) => handleError(this.onError, error)),
     );
@@ -138,24 +141,6 @@ export class ClearCurrentButton implements UpdateEvent {
     });
   }
 }
-export class SetAsCurrentButton implements WatchEvent {
-  public constructor(private buttonId: string) {}
-
-  public watch(state: GlobalState) {
-    if (this.buttonId == state.explore.currentButton?.id) {
-      return of(undefined);
-    }
-    state.explore.mapBondsButtons.filter((button) => {
-      if (button.id == this.buttonId) {
-        return new ButtonFound(button);
-      }
-    });
-    return ButtonService.findById(this.buttonId).pipe(
-      map((button) => new ButtonFound(button)),
-    );
-  }
-}
-
 export class ButtonDelete implements WatchEvent {
   public constructor(
     private buttonId: string,
@@ -165,13 +150,8 @@ export class ButtonDelete implements WatchEvent {
 
   public watch(state: GlobalState) {
     return ButtonService.delete(this.buttonId).pipe(
-      map((rowsAffected) => {
-        console.log(rowsAffected);
-        if (rowsAffected > 0) {
-          this.onSuccess();
-        } else {
-          this.onError('error-deleting');
-        }
+      map((res) => {
+        this.onSuccess();
       }),
       catchError((error) => handleError(this.onError, error)),
     );
@@ -204,12 +184,86 @@ export class updateCurrentButton implements UpdateEvent {
   }
 }
 
-export class updateFilters implements UpdateEvent {
+export class UpdateFilters implements UpdateEvent {
   public constructor(private filters: ButtonFilters) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.filters = this.filters;
+      newState.explore.map.filters = this.filters;
+    });
+  }
+}
+
+export class UpdateFiltersToFilterTag implements UpdateEvent {
+  public constructor(private tag: string) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      // use query to filter tag...
+      newState.explore.map.filters = {...defaultFilters, query: this.tag};
+    });
+  }
+}
+
+export class UpdateQueryFoundTags implements UpdateEvent {
+  public constructor(private tags: string[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.queryFoundTags = this.tags
+    });
+  }
+}
+export class UpdateFiltersToFilterButtonType implements UpdateEvent {
+  public constructor(private buttonType: string) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.filters = {...defaultFilters, helpButtonTypes: [this.buttonType]};
+    });
+  }
+}
+
+
+export class UpdateBoundsFilteredButtons implements UpdateEvent {
+  public constructor(private boundsFilteredButtons: Button[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.boundsFilteredButtons = this.boundsFilteredButtons;
+      newState.explore.map.loading = false
+      newState.explore.map.initialized = true
+    });
+  }
+}
+
+export class UpdateExploreUpdating implements UpdateEvent {
+  public constructor() {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.loading = true
+    });
+  }
+}
+export class UpdateListButtons implements UpdateEvent {
+  public constructor(private listButtons: Button[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.listButtons = this.listButtons;
+      newState.explore.map.loading = false
+      newState.explore.map.initialized = true
+    });
+  }
+}
+
+export class UpdateCachedHexagons implements UpdateEvent {
+  public constructor(private cachedHexagons: any[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.cachedHexagons = this.cachedHexagons;
     });
   }
 }

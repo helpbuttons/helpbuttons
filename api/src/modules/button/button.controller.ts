@@ -74,27 +74,6 @@ export class ButtonController {
 
   @AllowGuest()
   @AllowIfNetworkIsPublic()
-  @Get('/find/')
-  async findAll(
-    @Query('northEast_lat') northEast_lat: string,
-    @Query('northEast_lng') northEast_lng: string,
-    @Query('southWest_lat') southWest_lat: string,
-    @Query('southWest_lng') southWest_lng: string,
-  ) {
-    return await this.buttonService.findAll({
-      northEast: {
-        lat: northEast_lat,
-        lng: northEast_lng,
-      },
-      southWest: {
-        lat: southWest_lat,
-        lng: southWest_lng,
-      },
-    });
-  }
-
-  @AllowGuest()
-  @AllowIfNetworkIsPublic()
   @Post('/findh3/:resolution')
   async findh3(
     @Param('resolution') resolution: number,
@@ -141,7 +120,9 @@ export class ButtonController {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
         }
-        return this.buttonService.delete(buttonId);
+        return this.buttonService.delete(buttonId).then((button) => {
+          return true;
+        });
       });
   }
 }

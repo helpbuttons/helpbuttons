@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import FieldError from '../FieldError';
+
 import t from 'i18n';
+import { IoClose } from 'react-icons/io5';
+
 
 export default function FieldTags({
   label,
   validationError,
   tags = [],
   setTags,
-  placeholder
+  placeholder,
+  explain
 }) {
   const onInputChange = (e) => {
     let inputText = e.target.value;
@@ -49,37 +53,46 @@ export default function FieldTags({
   };
   return (
     <div className="tag__field">
-      <label className="form__label">{label}</label>
-      <div className="card-button-list__tags">
-        <ul className="tags__list">
-          {tags &&
-            tags.map((item, index) => (
-              <li key={`${index}`} className="tags__list-tag">
-                {item}
-                <button
-                  className="tag__btn"
-                  type="button"
-                  onClick={() => remove(item)}
-                >
-                  x
-                </button>
-              </li>
-            ))}
-        </ul>
-      </div>
+      <div className="form__label">{label}</div>
+      <div className="form__explain">{explain}</div>
       <input
         name={name}
         type="text"
         onChange={onInputChange}
-        className={`tag__input form__input ${
-          validationError ? 'validation-error' : ''
-        }`}
+        className={`form__input ${validationError ? 'validation-error' : ''
+          }`}
         onKeyDown={inputKeyDown}
         value={input}
         placeholder={placeholder}
         autoComplete="off"
       />
+      <TagList tags={tags} remove={remove}/>
+      
       <FieldError validationError={validationError} />
     </div>
+  );
+}
+
+export function TagList({tags, remove = null})
+{
+  return (<div className="form__tags-list">
+        <ul className="tags__list">
+          {tags.length > 0 &&
+            tags.map((item, index) => (
+              <li key={`${index}`} className="tags__list-tag">
+                {item}
+                {remove &&
+                <button
+                  className="tag__btn"
+                  type="button"
+                  onClick={() => remove(item)}
+                >
+                  <IoClose/>
+                </button>
+                }
+              </li>
+            ))}
+        </ul>
+      </div>
   );
 }

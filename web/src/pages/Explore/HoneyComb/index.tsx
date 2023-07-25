@@ -2,9 +2,17 @@
 import React, { useState, useEffect } from 'react';
 
 //components
-import { FindButtons, updateFilters } from 'state/Explore';
+import {
+  ExploreMapState,
+  FindButtons,
+  UpdateBoundsFilteredButtons,
+  UpdateCachedHexagons,
+  UpdateExploreUpdating,
+  UpdateQueryFoundTags,
+  UpdateListButtons,
+} from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
-import { useRef } from 'store/Store';
+import { useRef, useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { withRouter } from 'next/router';
 import List from 'components/list/List';
@@ -26,14 +34,12 @@ import {
   HbMapTiles,
 } from 'components/map/Map/Map.consts';
 import { useDebounce, useToggle } from 'shared/custom.hooks';
-import { h3SetToFeature } from 'geojson2h3';
 import AdvancedFilters from 'components/search/AdvancedFilters';
-import {
-  ButtonFilters,
-  defaultFilters,
-} from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { isPointWithinRadius } from 'geolib';
+import { ShowMobileOnly } from 'elements/SizeOnly';
+import { ShowDesktopOnly } from 'elements/SizeOnly';
+
 
 const defaultZoomPlace = 13;
 
@@ -46,111 +52,137 @@ function HoneyComb({ router }) {
   const selectedNetwork = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
+    false,
   );
 
-  const filters = useRef(
+  const exploreMapState: ExploreMapState = useStore(
     store,
-    (state: GlobalState) => state.explore.filters,
+    (state: GlobalState) => state.explore.map,
+    false,
   );
-  const setFilters = (newFilters) => {
-    store.emit(new updateFilters(newFilters));
-  }
 
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
-  // const [filters, setFilters] =
-  // useState<ButtonFilters>(defaultFilters);
+
+  const height = showLeftColumn ? 0 : 400;
 
   const {
     setMapCenter,
     setMapZoom,
     exploreSettings,
     setExploreSettings,
-  } = useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm });
+  } = useExploreSettings({
+    router,
+    selectedNetwork,
+    toggleShowFiltersForm,
+  });
 
   const {
-    listButtons,
-    h3TypeDensityHexes,
     handleBoundsChange,
     setHexagonsToFetch,
     setHexagonClicked,
     hexagonClicked,
     isRedrawingMap,
+    h3TypeDensityHexes,
   } = useHexagonMap({
     setExploreSettings,
     toggleShowLeftColumn,
     exploreSettings,
-    filters,
+    filters: exploreMapState.filters,
+    boundsFilteredButtons: exploreMapState.boundsFilteredButtons,
+    cachedHexagons: exploreMapState.cachedHexagons,
   });
 
   useEffect(() => {
-    
-    if (filters && filters.where.center){
-      setExploreSettings((prevExploreSettings) => {return {...prevExploreSettings, center: filters.where.center}});
+    if (
+      exploreMapState.filters &&
+      exploreMapState.filters.where.center
+    ) {
+      setExploreSettings((prevExploreSettings) => {
+        return {
+          ...prevExploreSettings,
+          center: exploreMapState.filters.where.center,
+        };
+      });
     }
-  }, [filters])
+  }, [exploreMapState.filters]);
 
   return (
-      <>
-      <LoadabledComponent loading={!filters}>
-        <div className="index__container">
-            <>
-              <div
-                className={
-                  'index__content-left ' +
-                  (showLeftColumn ? '' : 'index__content-left--hide')
-                }
-              >
-                <NavHeader
-                  toggleShowFiltersForm={toggleShowFiltersForm}
-                  filters={{ ...filters, count: listButtons.length }}
-                />
-                <List  
+    <>
+      <div className="index__container">
+          <div
+            className={
+              'index__content-left ' +
+              (showLeftColumn ? '' : 'index__content-left--hide')
+            }
+          >
+            <NavHeader
+              toggleShowFiltersForm={toggleShowFiltersForm}
+              totalNetworkButtonsCount={selectedNetwork.buttonCount}
+            />
+            <AdvancedFilters
+              showFiltersForm={showFiltersForm}
+              toggleShowFiltersForm={toggleShowFiltersForm}
+            />
+            <ShowDesktopOnly>
+              <List
+              showFiltersForm={showFiltersForm}
+              buttons={exploreMapState.listButtons}
+              showLeftColumn={showLeftColumn}
+              onLeftColumnToggle={toggleShowLeftColumn}
+              />
+            </ShowDesktopOnly>
+
+          </div>
+
+          <LoadabledComponent loading={exploreSettings.loading}>
+            <HexagonExploreMap
+              exploreSettings={exploreSettings}
+              h3TypeDensityHexes={h3TypeDensityHexes}
+              currentButton={currentButton}
+              handleBoundsChange={handleBoundsChange}
+              setMapCenter={setMapCenter}
+              setHexagonsToFetch={setHexagonsToFetch}
+              setHexagonClicked={setHexagonClicked}
+              hexagonClicked={hexagonClicked}
+              isRedrawingMap={isRedrawingMap}
+              filters={exploreMapState.filters}
+            />
+          </LoadabledComponent>
+
+          <ShowMobileOnly>
+            <div
+              className={
+                'index__content-left ' +
+                (showLeftColumn ? '' : 'index__content-bottom--hide')
+              }
+            > 
+              <List
                   showFiltersForm={showFiltersForm}
-                  buttons={listButtons}
+                  buttons={exploreMapState.listButtons}
                   showLeftColumn={showLeftColumn}
                   onLeftColumnToggle={toggleShowLeftColumn}
-                />
-                  <AdvancedFilters
-                    showFiltersForm={showFiltersForm}
-                    toggleShowFiltersForm={toggleShowFiltersForm}
-                    mapZoom={exploreSettings.zoom}
-                    mapBounds={exploreSettings.bounds}
-                    setFilters={setFilters}
-                    filters={filters}
-                  />
-              </div>
-              <LoadabledComponent loading={exploreSettings.loading}>
-                <HexagonExploreMap
-                  exploreSettings={exploreSettings}
-                  h3TypeDensityHexes={h3TypeDensityHexes}
-                  currentButton={currentButton}
-                  handleBoundsChange={handleBoundsChange}
-                  setMapCenter={setMapCenter}
-                  setHexagonsToFetch={setHexagonsToFetch}
-                  setHexagonClicked={setHexagonClicked}
-                  hexagonClicked={hexagonClicked}
-                  isRedrawingMap={isRedrawingMap}
-                  filters={filters}
-                />
-              </LoadabledComponent>
-            </>
-          
-        </div>
-        </LoadabledComponent>
-      </>
+              />
+            </div>
+
+          </ShowMobileOnly>
+      </div>
+    </>
   );
 }
 
 export default withRouter(HoneyComb);
 
-function useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm }) {
+function useExploreSettings({
+  router,
+  selectedNetwork,
+  toggleShowFiltersForm,
+}) {
   const [exploreSettings, setExploreSettings] = useState(() => {
     return {
       center: [0, 0],
       zoom: 4,
       tileType: HbMapTiles.OSM,
-      // radius: 10000,
       bounds: null,
       browseType: BrowseType.PINS,
       honeyCombFeatures: null,
@@ -158,7 +190,7 @@ function useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm }) 
       loading: true,
     };
   });
-  let urlParams = new URLSearchParams()
+  let urlParams = new URLSearchParams();
   const setMapCenter = (latLng) => {
     setExploreSettings((prevSettings) => {
       return { ...prevSettings, center: latLng };
@@ -191,6 +223,15 @@ function useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm }) 
       const lng = parseFloat(params.get('lng'));
       const zoom = parseInt(params.get('zoom'));
       const showFilters = params.get('showFilters');
+      const click = params.get('click');
+
+      if (click !== null && selectedNetwork)
+      {
+        queryExploreSettings = {
+          ...queryExploreSettings,
+          center: selectedNetwork.exploreSettings.center,
+        };
+      }
 
       if (lat && lng) {
         queryExploreSettings = {
@@ -204,12 +245,11 @@ function useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm }) 
           zoom: zoom,
         };
       }
-      if(showFilters == 'true')
-      {
-        toggleShowFiltersForm(true)
-        params.delete('showFilters')
+      if (showFilters == 'true') {
+        toggleShowFiltersForm(true);
+        params.delete('showFilters');
       }
-      urlParams = params
+      urlParams = params;
     }
     if (selectedNetwork) {
       setExploreSettings((prevSettings) => {
@@ -233,13 +273,11 @@ function useExploreSettings({ router, selectedNetwork, toggleShowFiltersForm }) 
 
   useEffect(() => {
     if (!exploreSettings.loading) {
-      urlParams.append('zoom', exploreSettings.zoom)
-      urlParams.append('lat', exploreSettings.center[0])
-      urlParams.append('lng', exploreSettings.center[1])
+      urlParams.append('zoom', exploreSettings.zoom);
+      urlParams.append('lat', exploreSettings.center[0]);
+      urlParams.append('lng', exploreSettings.center[1]);
 
-      window.location.replace(
-        `#?${urlParams.toString()}`,
-      );
+      window.location.replace(`#?${urlParams.toString()}`);
       localStorageService.save(
         LocalStorageVars.EXPLORE_SETTINGS,
         JSON.stringify(exploreSettings),
@@ -260,6 +298,8 @@ function useHexagonMap({
   toggleShowLeftColumn,
   exploreSettings,
   filters,
+  boundsFilteredButtons,
+  cachedHexagons,
 }) {
   const [hexagonClicked, setHexagonClicked] = useState(null);
   const debouncedHexagonClicked = useDebounce(hexagonClicked, 70);
@@ -270,14 +310,9 @@ function useHexagonMap({
   });
   const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, 100);
   const [isRedrawingMap, setIsRedrawingMap] = useState(false);
-  const [fullMapfilteredButtons, setFullMapFilteredButtons] =
-    useState([]);
-  const [listButtons, setListButtons] = useState([]);
-  const [densityMapNeedsUpdate, setDensityMapNeedsUpdate] =
-    useToggle(true);
-
+  const foundTags = React.useRef([]);
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
-  let cachedH3Hexes = React.useRef([]);
+  let cachedH3Hexes = React.useRef(cachedHexagons);
   const calculateNonCachedHexagons = (
     debounceHexagonsToFetch,
     cachedH3Hexes,
@@ -305,17 +340,17 @@ function useHexagonMap({
       ...cachedH3Hexes.current,
       ...newDensityMapHexagons,
     ]);
+    store.emit(new UpdateCachedHexagons(cachedH3Hexes.current));
   };
 
   useEffect(() => {
-    setIsRedrawingMap(() => true);
-
     if (debounceHexagonsToFetch.hexagons.length > 0) {
       const hexesToFetch = calculateNonCachedHexagons(
         debounceHexagonsToFetch,
         cachedH3Hexes,
       );
       if (hexesToFetch.length > 0) {
+        store.emit(new UpdateExploreUpdating());
         store.emit(
           new FindButtons(
             debounceHexagonsToFetch.resolution,
@@ -327,51 +362,57 @@ function useHexagonMap({
                 hexesToFetch,
               );
               recalculateCacheH3Hexes(newDensityMapHexagons);
-              setDensityMapNeedsUpdate(() => true);
+              updateDensityMap();
             },
             (error) => {
-              // setFetchedButtons([]);
-              console.log('THERE WAS A HARD CORE ERROR');
               console.error(error);
-              setIsRedrawingMap(() => false);
             },
           ),
         );
       } else {
-        setDensityMapNeedsUpdate(() => true);
+        updateDensityMap();
       }
     }
   }, [debounceHexagonsToFetch]);
 
-  useEffect(() => {
-    const mapHexagons = cachedH3Hexes.current.filter((cachedHex) => {
-      return debounceHexagonsToFetch.hexagons.find(
-        (hexagon) => hexagon == cachedHex.hexagon,
-      );
-    });
+  function updateDensityMap() {
+    store.emit(new UpdateExploreUpdating());
+    setIsRedrawingMap(() => true);
+    seth3TypeDensityHexes(() => []);
+    const boundsButtons = cachedH3Hexes.current.filter(
+      (cachedHex) => {
+        return debounceHexagonsToFetch.hexagons.find(
+          (hexagon) => hexagon == cachedHex.hexagon,
+        );
+      },
+    );
     const { filteredButtons, filteredHexagons } = applyFilters(
       filters,
-      mapHexagons,
+      boundsButtons,
     );
     seth3TypeDensityHexes(() => {
       return filteredHexagons;
     });
-    setFullMapFilteredButtons(() => filteredButtons); //used for when user unclicks map
-    setListButtons(() => filteredButtons);
+
+    store.emit(new UpdateBoundsFilteredButtons(filteredButtons));
+    store.emit(new UpdateListButtons(filteredButtons));
     setIsRedrawingMap(() => false);
-  }, [densityMapNeedsUpdate]);
+  }
 
   useEffect(() => {
-    setHexagonClicked(() => null)
-    setDensityMapNeedsUpdate(() => true)
-  }, [filters])
+    setHexagonClicked(() => null);
+    updateDensityMap();
+  }, [filters]);
 
   const applyFilters = (filters, cachedHexagons) => {
     const applyButtonTypesFilter = (button, buttonTypes) => {
+      if (buttonTypes.length == 0) {
+        return true;
+      }
       if (buttonTypes.length > 0) {
         return buttonTypes.indexOf(button.type) > -1;
       }
-      return true;
+      return false;
     };
 
     const applyQueryFilter = (button, query) => {
@@ -384,13 +425,42 @@ function useHexagonMap({
       return true;
     };
 
-    const applyWhereFilter = (button : Button, where) => {
-      if(where.center && where.radius)
-      {
-        return isPointWithinRadius({latitude: button.latitude, longitude: button.longitude}, {latitude: where.center[0], longitude: where.center[1]}, where.radius*1000)
+    const applyWhereFilter = (button: Button, where) => {
+      if (where.center && where.radius) {
+        return isPointWithinRadius(
+          { latitude: button.latitude, longitude: button.longitude },
+          { latitude: where.center[0], longitude: where.center[1] },
+          where.radius * 1000,
+        );
       }
       return true;
+    };
+
+    const applyTagFilters = (button: Button, tags: string[]) => {
+      if (tags.length == 0) {
+        return true;
+      }
+      if (tags.length > 0) {
+        const tagsFound = _.intersection(tags, button.tags);
+        if (tagsFound.length > 0) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    const findMoreTags = (button: Button, queryTags) => {
+      const tagsFound = _.intersection(queryTags, button.tags);
+      if (tagsFound.length > 0) {
+        foundTags.current = _.union(foundTags.current, tagsFound);
+      }
     }
+    
+    let queryTags = filters.query
+      .split(' ')
+      .filter((value) => value.length > 0);
+    foundTags.current = [];
+    
     const res = cachedHexagons.reduce(
       ({ filteredButtons, filteredHexagons }, hexagonCached) => {
         const moreButtons = hexagonCached.buttons.filter(
@@ -400,12 +470,25 @@ function useHexagonMap({
             ) {
               return false;
             }
-            if (!applyQueryFilter(button, filters.query)) {
+
+            findMoreTags(button, queryTags);
+            if(!applyTagFilters(button, foundTags.current))
+            { 
+              return false;
+            }
+
+            // remove tags from query string, so it won't fail to search string
+            let query = filters.query;
+            foundTags.current.forEach(
+              (tag) =>(query = query.replace(tag, '')),
+            );
+            if (!applyQueryFilter(button, query)) {
               return false;
             }
             if (!applyWhereFilter(button, filters.where)) {
               return false;
             }
+
             return true;
           },
         );
@@ -421,6 +504,8 @@ function useHexagonMap({
       },
       { filteredButtons: [], filteredHexagons: [] },
     );
+
+    store.emit(new UpdateQueryFoundTags(foundTags.current));
     return {
       filteredButtons: res.filteredButtons,
       filteredHexagons: recalculateDensityMap(res.filteredHexagons),
@@ -442,27 +527,28 @@ function useHexagonMap({
   useEffect(() => {
     if (debouncedHexagonClicked) {
       toggleShowLeftColumn(true);
-      setListButtons(() => {
-        if (
-          debouncedHexagonClicked.properties.buttons &&
-          debouncedHexagonClicked.properties.buttons.length > 0
-        ) {
-          return debouncedHexagonClicked.properties.buttons;
-        }
-        return [];
-      });
+
+      if (
+        debouncedHexagonClicked.properties.buttons &&
+        debouncedHexagonClicked.properties.buttons.length > 0
+      ) {
+        store.emit(
+          new UpdateListButtons(
+            debouncedHexagonClicked.properties.buttons,
+          ),
+        );
+      }
     } else {
-      setListButtons(() => fullMapfilteredButtons);
+      store.emit(new UpdateListButtons(boundsFilteredButtons));
     }
   }, [debouncedHexagonClicked]);
 
   return {
-    listButtons,
-    h3TypeDensityHexes,
     handleBoundsChange,
     setHexagonsToFetch,
     setHexagonClicked,
     hexagonClicked,
     isRedrawingMap,
+    h3TypeDensityHexes,
   };
 }

@@ -11,7 +11,7 @@ export const translations = [
     translations: require('../../public/locales/es/common.json'),
   },
 ];
-export default function t(key: string, args: string[] = []) {
+export default function t(key: string, args: string[] = [], avoidHtmlParserUse = false) {
   const availableLocales = translations.map(({locale, translations}) => {
     return locale;
   })
@@ -26,6 +26,10 @@ export default function t(key: string, args: string[] = []) {
   }
   if(!translatedString){ // if string not found on translations, show key
     translatedString = key;
+  }
+  if (avoidHtmlParserUse)
+  {
+    return translatedString
   }
   return ReactHtmlParser(translatedString);
 }

@@ -23,8 +23,8 @@ export class Button extends BaseEntity {
   @Column({})
   description: string;
 
-  @Column({})
-  address: string;
+  @Column({nullable: true})
+  address?: string;
 
   @Column({ type: 'double precision' })
   public latitude: number;
@@ -61,5 +61,7 @@ export class Button extends BaseEntity {
 
   @Column('text')
   hexagon: string;
-  // missing, network relations, template, owner, tags
+
+  @Column('boolean', {default: false})
+  deleted: boolean;
 }

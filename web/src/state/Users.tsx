@@ -34,7 +34,6 @@ export class Login implements WatchEvent {
     return UserService.login(this.email, this.password).pipe(
       map((userData) => {
         if (userData) {
-          new HttpService().setAccessToken(userData.token);
           return new FetchUserData(this.onSuccess, this.onError);
         }
       }),
@@ -156,4 +155,63 @@ export class UpdateProfile implements WatchEvent {
       catchError((error) => handleError(this.onError, error))
     );
   }
+}
+
+export class RequestNewLoginToken implements WatchEvent {
+  public constructor(
+    private email :string, 
+    private onSuccess,
+    private onError
+  ) {}
+  public watch(state: GlobalState) {
+    return UserService.requestNewLoginToken(this.email).pipe(
+      map(() => {
+        this.onSuccess();
+      }),
+      catchError((error) => handleError(this.onError, error))
+    );
+  }
+}
+
+
+export class LoginToken implements WatchEvent {
+  public constructor(
+    private token: string,
+    private onSuccess,
+    private onError,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.loginToken(this.token).pipe(
+      map((userData) => {
+        if (userData) {
+          return new FetchUserData(this.onSuccess, this.onError);
+        }
+      }),
+      catchError((error) => {
+        let err = error.response;
+
+        if (
+          isHttpError(err) &&
+          err.statusCode === HttpStatus.UNAUTHORIZED
+        ) {
+          // Unauthorized
+          this.onError('login-incorrect');
+        } else {
+          throw err;
+        }
+        return of(undefined);
+      }),
+    );
+  }
+}
+
+
+export function isAdmin(loggedInUser)
+{
+  if(loggedInUser?.role == 'administrator')
+  {
+    return true;
+  }
+  return false;
 }

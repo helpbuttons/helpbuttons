@@ -17,7 +17,7 @@ export class CreateNewPost implements WatchEvent {
   ) {}
   public watch(state: GlobalState) {
     return PostService.new(this.buttonId, this.message).pipe(
-      map((data) => this.onSuccess()),
+      map((data) => this.onSuccess(data)),
       catchError((error) => handleError(this.onError, error)),
     );
   }
@@ -46,6 +46,34 @@ export class CreateNewPostComment implements WatchEvent {
   ) {}
   public watch(state: GlobalState) {
     return PostService.newComment(this.postId, this.message).pipe(
+      map((data) => this.onSuccess()),
+      catchError((error) => handleError(this.onError, error)),
+    );
+  }
+}
+
+export class DeletePost implements WatchEvent {
+  public constructor(
+    private postId: string,
+    private onSuccess,
+    private onError,
+  ) {}
+  public watch(state: GlobalState) {
+    return PostService.delete(this.postId).pipe(
+      map((data) => this.onSuccess()),
+      catchError((error) => handleError(this.onError, error)),
+    );
+  }
+}
+
+export class DeleteComment implements WatchEvent {
+  public constructor(
+    private commentId: string,    
+    private onSuccess,
+    private onError,
+  ) {}
+  public watch(state: GlobalState) {
+    return PostService.deleteComment(this.commentId).pipe(
       map((data) => this.onSuccess()),
       catchError((error) => handleError(this.onError, error)),
     );

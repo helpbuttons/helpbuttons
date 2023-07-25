@@ -1,7 +1,9 @@
 import {
   HttpException,
   HttpStatus,
+  Inject,
   Injectable,
+  forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
@@ -17,6 +19,9 @@ import { ValidationException } from '@src/shared/middlewares/errors/validation-f
 import { Role } from '@src/shared/types/roles';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { maxResolution } from '@src/shared/types/honeycomb.const';
+import { PostService } from '../post/post.service';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
+import { ErrorName } from '@src/shared/types/error.list';
 @Injectable()
 export class ButtonService {
   constructor(
@@ -25,6 +30,8 @@ export class ButtonService {
     private readonly tagService: TagService,
     private readonly networkService: NetworkService,
     private readonly storageService: StorageService,
+    @Inject(forwardRef(() => PostService))
+    private postService: PostService,
   ) {}
 
   async create(
@@ -95,7 +102,7 @@ export class ButtonService {
 
   async findById(id: string) {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id },
+      where: { id, deleted: false },
       relations: [
         'owner',
       ],
@@ -144,51 +151,6 @@ export class ButtonService {
     return this.buttonRepository.save([button]);
   }
 
-  async findAll(bounds: any) {
-    try {
-      const buttonsOnBounds = await this.buttonRepository
-        .createQueryBuilder('button')
-        .select('id')
-        .where(
-          `
-      ST_Contains(ST_GEOMFROMTEXT('POLYGON((
-      ${bounds.southWest.lat}
-      ${bounds.northEast.lng},
-    
-      ${bounds.northEast.lat}
-      ${bounds.northEast.lng},
-    
-      ${bounds.northEast.lat}
-      ${bounds.southWest.lng},
-    
-      ${bounds.southWest.lat}
-      ${bounds.southWest.lng},
-    
-      ${bounds.southWest.lat}
-      ${bounds.northEast.lng}
-    
-    ))'), button.location)`,
-        ).limit(1000)
-        .execute();
-
-      const buttonsIds = buttonsOnBounds.map((button) => button.id);
-
-      return this.buttonRepository.find({
-        relations: ['network', 'feed', 'owner'],
-        where: {
-          id: In(buttonsIds),
-        },
-        order: {
-          created_at: 'DESC',
-        },
-      });
-    } catch (err) {
-      console.log(err);
-      return [];
-    }
-  }
-
-  // NOT USED.. for the record stays here
   async findh3(resolution, hexagons) {
     try {
       if(hexagons && hexagons.length > 500)
@@ -207,6 +169,7 @@ export class ButtonService {
           relations: ['feed', 'owner'],
           where: {
             id: In(buttonsIds),
+            deleted: false,
           },
           order: {
             created_at: 'DESC',
@@ -218,9 +181,12 @@ export class ButtonService {
     }
   }
 
-  async delete(id: string) {
-    const res = await this.buttonRepository.delete({ id });
-    return res.affected;
+  async delete(buttonId: string) {
+    return this.findById(buttonId).then((button) => {
+      return this.buttonRepository.update(button.id,{ deleted: true }).then((res) => {
+        return button
+      })
+    }) 
   }
 
   public isOwner(currentUser: User, buttonId: string) {

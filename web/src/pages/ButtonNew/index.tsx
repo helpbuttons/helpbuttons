@@ -1,7 +1,6 @@
 import ButtonForm from 'components/button/ButtonForm';
 import { GlobalState, store } from 'pages';
-import { CreateButton, SaveButtonDraft } from 'state/Explore';
-import { NavigateTo } from 'state/Routes';
+import { CreateButton, SaveButtonDraft, UpdateCachedHexagons } from 'state/Explore';
 import { useRef } from 'store/Store';
 import Router from 'next/router';
 import { alertService } from 'services/Alert';
@@ -10,6 +9,9 @@ import router from 'next/router';
 import { defaultMarker } from 'shared/sys.helper';
 import { ErrorName } from 'shared/types/error.list';
 import t from 'i18n';
+import { Button } from 'shared/entities/button.entity';
+import { CreateNewPost } from 'state/Posts';
+import { readableDate } from 'shared/date.utils';
 
 export default function ButtonNew() {
   const {
@@ -52,14 +54,34 @@ export default function ButtonNew() {
       new CreateButton(
         data,
         selectedNetwork.id,
-        onSuccess({ lat: data.latitude, lng: data.longitude }),
+        onSuccess,
         onError,
       ),
     );
   };
 
-  const onSuccess = (location: { lat: number; lng: number }) => {
-    router.push(`/Explore#?lat=${location.lat}&lng=${location.lng}`);
+  const jumpToExploreButton = (buttonData) => {
+    router.push(`/Explore#?lat=${buttonData.latitude}&lng=${buttonData.longitude}`);
+  }
+  const onSuccess = (buttonData : Button) => {
+    store.emit(
+      new CreateNewPost(
+        buttonData.id,
+        {
+          message: t('button.firstPost', [readableDate(buttonData.created_at)], true)
+        },
+        (data) => {
+          alertService.success(t('button.created'))
+          store.emit(new UpdateCachedHexagons([]))
+          jumpToExploreButton(buttonData)
+        },
+        (errorMessage) => {
+          alertService.error(t('button.errorCreated'))
+          console.error(errorMessage)
+          // jumpToExploreButton(buttonData)
+        },
+      ),
+    );    
   };
   const onError = (err) => {
     if (err.errorName == ErrorName.NeedToBeRegistered) {

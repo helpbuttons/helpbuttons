@@ -11,6 +11,7 @@ import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { FetchUserData } from './Users';
+import { alertService } from 'services/Alert';
 
 export class GetConfig implements WatchEvent {
   public constructor(private onSuccess, private onError) {}
@@ -38,7 +39,7 @@ export class GetConfig implements WatchEvent {
             isHttpError(err) &&
             err.statusCode === HttpStatus.SERVICE_UNAVAILABLE
           ) {
-            this.onError('nomigrations');
+            alertService.error('backend error: ' + err.message)
         } else if (
           error.status === HttpStatus.INTERNAL_SERVER_ERROR
         ) {
@@ -193,3 +194,12 @@ export class CreateAdmin implements WatchEvent {
   }
 }
 
+export class setConfig implements UpdateEvent {
+  public constructor(private config) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.config = this.config;
+    });
+  }
+}

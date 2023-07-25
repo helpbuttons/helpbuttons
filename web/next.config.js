@@ -10,7 +10,8 @@ module.exports = {
     //     secret: process.env.JWT_SECRET
     // },
     publicRuntimeConfig: {
-        apiUrl: '/api/', // TODO: remove ME!
+        apiUrl: '/api/',
+        buttonTypes: process.env.BUTTON_TYPES ? process.env.BUTTON_TYPES : '[{"name":"offer","caption":"Offer","color":"custom","cssColor":"#FFDD02"},{"name":"need","caption":"Need","color":"custom","cssColor":"#19AF96"},{"name":"service","caption":"Service","color":"custom","cssColor":"pink"}]',
     },
     typescript:{
         ignoreBuildErrors: true,
@@ -23,7 +24,7 @@ module.exports = {
           },
           {
             source: '/api/:path*',
-            destination: `${process.env.API_URL ? process.env.API_URL : 'http://api:3001/' }:path*`
+            destination: `${process.env.API_URL}/:path*`
           },
           {
             source: '/opencage/:path*',
@@ -35,7 +36,12 @@ module.exports = {
       return [
         {
           source: '/documentation',
-          destination: (process.env.API_URL ? process.env.API_URL : 'http://api:3001/') + 'doc/',
+          destination: `${process.env.API_URL}/doc/`,
+          permanent: true,
+        },
+        {
+          source: '/',
+          destination: '/HomeInfo',
           permanent: true,
         },
       ]

@@ -5,15 +5,117 @@
     "profile": "Perfil",
     "activity": "Atividad",
     "faqs": "Faqs",
-    "login": "Login"
+    "login": "Login",
+    "home": ""
   },
   "homeinfo": {
     "start": "Donde quieres empezar?",
     "searchlocation": "Buscar ubicacion",
-    "loading": "not set"
+    "loading": "not set",
+    "locationDetected": "",
+    "stats": "",
+    "users": "",
+    "actions": ""
   },
   "feed": {
     "write": "Escribir mensaje"
   },
-  "hostname": "nombre de host"
+  "hostname": "nombre de host",
+  "common": {
+    "save": "",
+    "publish": "",
+    "saveSuccess": "",
+    "choose": "",
+    "search": "",
+    "reset": "",
+    "invalidMimeType": "",
+    "editTitle": "",
+    "next": "",
+    "reloadConfig": "",
+    "notfound": ""
+  },
+  "configuration": {
+    "namePlaceHolder": "",
+    "privacySetPrivate": "",
+    "images": "",
+    "jumbo": "",
+    "locationExplain": "",
+    "tagsExplain": "",
+    "centerOfMap": "",
+    "description": "",
+    "title": ""
+  },
+  "activities": {
+    "newbutton": "",
+    "newpost": "",
+    "noactivity": ""
+  },
+  "user": {
+    "email": "",
+    "username": "",
+    "password": "",
+    "passwordConfirmation": "",
+    "created": "",
+    "loginButton": "",
+    "loginClick": "",
+    "passwordMismatch": "",
+    "name": "",
+    "description": "",
+    "setNewPassword": "",
+    "newPassword": "",
+    "passwordPlaceHolder": "",
+    "logout": "",
+    "register": "",
+    "newLoginTokenSent": "",
+    "sendLoginToken": "",
+    "loginLink": ""
+  },
+  "configure": {
+    "browsePins": "",
+    "browseList": ""
+  },
+  "explore": {
+    "emptyList": ""
+  },
+  "buttonFilters": {
+    "queryLabel": "",
+    "queryExplain": "",
+    "tagsExplain": "",
+    "where": "Donde?",
+    "distance": "",
+    "allButtonTypes": ""
+  },
+  "button": {
+    "copy": "",
+    "delete": "",
+    "typeExplain": "",
+    "placeHolderTitle": "",
+    "descriptionLabel": "",
+    "tagsLabel": "",
+    "imagesLabel": "",
+    "whenLabel": "",
+    "changeDateLabel": "",
+    "changePlaceLabel": "",
+    "firstPost": "",
+    "errorCreated": ""
+  },
+  "calendarOnce": {
+    "label": ""
+  },
+  "calendarAlways": {
+    "label": ""
+  },
+  "validation": {
+    "fieldRequired": ""
+  },
+  "setup": {
+    "finish": "",
+    "welcomeMessage": "",
+    "hostname": "",
+    "postgresPassword": "",
+    "postgresHostName": "",
+    "smtpUrl": "",
+    "test": "",
+    "createAdminTitle": ""
+  }
 }

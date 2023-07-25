@@ -66,9 +66,14 @@ function CreateAdminForm() {
   const [disableSave, setDisableSave] = useState(true);
 
   useEffect(() => {
-    if(config && config.databaseNumberMigrations > 0 && config.administrator == null)
+    if(config && config.databaseNumberMigrations > 0)
     {
       setDisableSave(false)
+    }
+    if (config && config.userCount > 0)
+    {
+      alertService.error('admin already created')
+      setDisableSave(true)
     }
     if (config && config.databaseNumberMigrations < 1)
     {
@@ -116,7 +121,7 @@ function CreateAdminForm() {
       >
         <Form
           onSubmit={handleSubmit(onSubmit)}
-          classNameExtra="createAdmin"
+          classNameExtra="create-admin"
         >
           <div className="login__form">
             <div className="form__inputs-wrapper">

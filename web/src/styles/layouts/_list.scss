@@ -1,4 +1,4 @@
-$list-container-hide-height: calc($footer-height-mobile - 215px);
+$list-container-hide-height: calc($footer-height-mobile - 265px);
 
 ///shouldd be the posts list
 .list__container {
@@ -6,13 +6,13 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow: hidden;
-  height: auto;
-  position: fixed;
-  bottom: $footer-height-mobile + $padding-small*2;
+  // overflow: hidden;
+  height: max-content;
+  position: relative;
+  // bottom: $footer-height-mobile + $padding-small*2;
   z-index: $z-index-01;
   transition: $transition-default-slow;
-
+  padding-bottom: $footer-height-mobile + $padding-small*2;
 }
 
 // .list__container::before {
@@ -35,14 +35,10 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
   z-index: $z-index-02;
   height: auto;
   min-height: $card-button-list-height;
+  transition: $transition-default-slow;
 
 }
 
-.list__container--hide {
-
-  bottom: $list-container-hide-height;
-
-}
 
 .list__element {
 
@@ -71,6 +67,12 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
 
 }
 
+.list__empty-message--comment {
+
+  text-align: center;
+
+}
+
 .list__empty-message--create{
 
   width: 50%;
@@ -83,12 +85,15 @@ $list-container-hide-height: calc($footer-height-mobile - 215px);
 
     height:100%;
     float: left;
+    display: block;
+    overflow: hidden;
     position: relative;
     overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
 
   }
+
 
   .list__content {
 

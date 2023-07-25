@@ -1,29 +1,29 @@
 import t from 'i18n';
 import router from 'next/router';
 import { store } from 'pages';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { alertService } from 'services/Alert';
 import { ButtonDelete } from 'state/Explore';
 
-export default function ButtonFile() {
+export default function ButtonRemove() {
   const buttonId = router.query.id as string;
   useEffect(() => {
-    if (buttonId) {
-      store.emit(
-        new ButtonDelete(
-          buttonId,
-          () => {
-            alertService.success(t('common.saveSuccess', [buttonId]));
-            router.push('/Explore');
-          },
-          (errorMessage) => {
-            alertService.error(errorMessage.caption);
-            router.push('/Explore');
-          },
-        ),
-      );
-    }
-  }, [buttonId]);
+    store.emit(
+      new ButtonDelete(
+        buttonId,
+        () => {
+          alertService.success(t('common.deleteSuccess', [buttonId]));
+          router.push('/Explore');
+        },
+        (errorMessage) => {
+          console.error(errorMessage)
+          alertService.error(errorMessage.caption);
+          router.push('/Explore');
+        },
+      ),
+    );
+  }, [])
+  
 
   return <>removing {buttonId}</>;
 }

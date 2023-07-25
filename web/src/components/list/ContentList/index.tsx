@@ -1,10 +1,11 @@
 ///button marker over the map
 import React from 'react';
-import { map } from 'rxjs/operators';
-import { useState } from 'react'
+
+import router from 'next/router';
 
 import CardButtonList from 'components/list/CardButtonList'
 import t from 'i18n';
+import Btn, { ContentAlignment } from 'elements/Btn';
 
 export default function ContentList ({buttons, ...props}) {
 
@@ -15,10 +16,10 @@ export default function ContentList ({buttons, ...props}) {
         <div className='list__empty-message--prev'>
         {t('explore.noResults')}
         </div>
+        <div className='list__empty-message--comment'>
         {t('explore.emptyList')}
-        <button className='btn btn--center list__empty-message--create'>
-        {t('explore.createEmpty')}
-        </button>
+        </div>
+        <Btn caption={t('explore.createEmpty')} onClick={() => router.push('/ButtonNew')} contentAlignment={ContentAlignment.center}/>
       </div>
       </>
     );

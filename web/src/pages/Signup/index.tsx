@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
-import { store } from 'pages/index';
+import { store } from 'pages';
 import { SignupUser } from 'state/Users';
 
 //imported react components
@@ -22,6 +22,8 @@ import NewUserFields, {
   passwordsMatch,
 } from 'components/user/NewUserFields';
 import { alertService } from 'services/Alert';
+import t from 'i18n';
+import { setValidationErrors } from 'state/helper';
 
 export default function Signup() {
   const {
@@ -40,13 +42,10 @@ export default function Signup() {
       email: '',
     },
   });
-  const [errorMsg, setErrorMsg] = useState(undefined);
-
   const router = useRouter();
 
   const onSubmit = (data) => {
     if (passwordsMatch(data, setError)) {
-      // store.emit(new SignupUser(data.email, data.password, data.name, onSuccess, onError));
       store.emit(
         new SignupUser(
           {
@@ -66,13 +65,16 @@ export default function Signup() {
   const onSuccess = () => {
     const returnUrl: string = router.query.returnUrl
       ? router.query.returnUrl.toString()
-      : '/';
-
+      : '/ProfileEdit';
     store.emit(new NavigateTo(returnUrl));
   };
-  
-  const onError = (errorMessage) => alertService.error(errorMessage.caption)
 
+  const onError = (error) => {
+    setValidationErrors(error?.validationErrors, setError);
+    console.log(error);
+    alertService.error(error.caption);
+  };
+  
   const params: URLSearchParams = new URLSearchParams(router.query);
 
   return (
@@ -88,22 +90,17 @@ export default function Signup() {
               watch={watch}
             />
           </div>
-          {errorMsg && (
-            <div className="form__input-subtitle--error">
-              {errorMsg}
-            </div>
-          )}
           <div className="form__btn-wrapper">
             <Btn
               submit={true}
               btnType={BtnType.splitIcon}
-              caption="REGISTER"
+              caption={t('user.register')}
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}
             />
             <div className="popup__link">
               <Link href={`/Login?${params.toString()}`}>
-                I have an account
+                {t('user.loginLink')}
               </Link>
             </div>
           </div>

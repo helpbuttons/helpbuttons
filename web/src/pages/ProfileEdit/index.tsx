@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
-import { GlobalState, store } from 'pages/index';
+import { GlobalState, store } from 'pages';
 import { FetchUserData, UpdateProfile } from 'state/Users';
 
 //imported react components
@@ -16,7 +16,6 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import Form from 'elements/Form';
-import FormSubmit from 'elements/Form/FormSubmit';
 
 import { NavigateTo } from 'state/Routes';
 import { useRouter } from 'next/router';
@@ -198,10 +197,12 @@ export default function ProfileEdit() {
                       </>
                     )}
                     <div className="publish__submit">
-                      <FormSubmit
-                        classNameExtra="create_btn"
-                        title={t('common.save')}
+                      <Btn
+                        btnType={BtnType.submit}
+                        contentAlignment={ContentAlignment.center}
+                        caption={t('common.publish')}
                         isSubmitting={isSubmitting}
+                        submit={true}
                       />
                     </div>
             </Form>

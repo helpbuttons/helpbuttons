@@ -4,7 +4,7 @@ export class Init1684188948463 implements MigrationInterface {
     name = 'Init1684188948463'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`CREATE extension h3`);
+        await queryRunner.query(`CREATE extension IF NOT EXISTS h3`);
         await queryRunner.query(`CREATE TABLE "user_credential" ("created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "id" character varying NOT NULL, "password" character varying NOT NULL, "userId" character varying NOT NULL, CONSTRAINT "PK_12ba5f444da355e51efd7a1ff4f" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "user" ("created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "id" character(36) NOT NULL, "realm" character varying, "username" character varying(320) NOT NULL, "email" character varying(320) NOT NULL, "name" character varying(320), "email_verified" boolean, "verification_token" character varying, "role" text NOT NULL DEFAULT 'registered', "description" text NOT NULL, "avatar" text, CONSTRAINT "UQ_78a916df40e02a9deb1c4b75edb" UNIQUE ("username"), CONSTRAINT "UQ_e12875dfb3b1d92d7d7c5377e22" UNIQUE ("email"), CONSTRAINT "UQ_ec61bf398131704605f7963d837" UNIQUE ("verification_token"), CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "activity" ("created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "id" character varying NOT NULL, "data" character varying NOT NULL, "eventName" character varying NOT NULL, "ownerId" character(36), CONSTRAINT "PK_24625a1d6b1b089c8ae206fe467" PRIMARY KEY ("id"))`);

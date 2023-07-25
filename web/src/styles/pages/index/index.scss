@@ -15,6 +15,17 @@ $index-mobile-fixed-z-index: $z-index-05;
   width: 100%;
 }
 
+.index__content-left {
+
+  transition: $transition-default-slow;
+}
+
+.index__content-bottom--hide {
+
+  margin-bottom: $list-container-hide-height;
+  
+}
+
 @media #{$breakpoints-xlarge} {
   .index__container {
     position: fixed;
@@ -30,8 +41,8 @@ $index-mobile-fixed-z-index: $z-index-05;
     min-width: 35vw;
   }
   .index__content-left--hide {
-    flex-direction: column;
     margin-left: -35vw;
-    right: -200px;
+    bottom: 0;
   }
+  
 }

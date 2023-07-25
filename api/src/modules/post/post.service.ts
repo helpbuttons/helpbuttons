@@ -38,23 +38,25 @@ export class PostService {
     });
   }
 
-  public isOwner(currentUser, postId) {
-    return this.findById(postId).then((post) => {
-      if (
-        currentUser.role == Role.admin ||
-        currentUser.id == post.author.id
-      ) {
-        return true;
-      }
-      return false;
-    });
-  }
-
   public findByButtonId(buttonId) {
     return this.postRepository.find({
-      where: { button: { id: buttonId } },
+      where: { button: { id: buttonId }, deleted: false},
       relations: ['comments', 'author', 'comments.author'],
       order: { created_at: 'DESC', comments: { created_at: 'DESC' } },
+    }).then((posts) => {
+      return this.removeDeletedComments(posts)
     });
+  }
+  
+  removeDeletedComments(posts)
+  {
+    return posts.map((post) => {return {...post,comments:post.comments.filter((comment) => comment.deleted == false)}})
+  }
+  async delete(postId: string) {
+    return this.findById(postId).then((post) => {
+      return this.postRepository.update(post.id,{ deleted: true }).then((res) => {
+        return post
+      })
+    }) 
   }
 }

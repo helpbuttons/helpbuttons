@@ -78,3 +78,6 @@ db/*
 libs/*
 data/*
 web/android/*
+
+# COMMIT
+web/src/shared/commit.tsx

@@ -14,188 +14,213 @@ import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import { roundCoords } from 'shared/honeycomb.utils';
 import FieldCheckbox from 'elements/Fields/FieldCheckbox';
 import CheckBox, { CheckBoxIcon } from 'elements/Checkbox';
+import { GlobalState, store } from 'pages';
+import { UpdateFilters } from 'state/Explore';
+import router, { Router } from 'next/router';
+import { useRef } from 'store/Store';
+import { TagList } from 'elements/Fields/FieldTags';
 
 //Mobile filters section that includes not only the filters but some search input fields, maybe needed to make a separate component from the rest of esktop elements
 export default function AdvancedFilters({
   toggleShowFiltersForm,
-  mapZoom,
-  mapBounds,
-  filters,
-  setFilters,
-  showFiltersForm
+  showFiltersForm,
+  isHome = false,
 }) {
+  const filters = useRef(
+    store,
+    (state: GlobalState) => state.explore.map.filters,
+    false
+  );
+
+  const queryFoundTags = useRef(
+    store,
+    (state: GlobalState) => state.explore.map.queryFoundTags,
+    false
+  );
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
     setValue,
     watch,
+    reset,
   } = useForm({
-    defaultValues: {
-      query: filters.query,
-      helpButtonTypes: filters.helpButtonTypes,
-      place: {
-        address: filters.where.address,
-        center: filters.where.center,
-        radius: filters.where.radius,
-      },
-    },
+    defaultValues: filters
   });
 
   const clearFilters = (e) => {
     e.preventDefault();
-    setValue('query', defaultFilters.query)
-    setValue('helpButtonTypes', defaultFilters.helpButtonTypes)
-    setValue('place.address', null)
-    setValue('place.center', null)
-    setValue('place.radius', defaultFilters.where.radius)
-    
-    setFilters(() => defaultFilters);
+    reset(defaultFilters)
+    store.emit(new UpdateFilters(defaultFilters));
 
     toggleShowFiltersForm(false);
   };
   const onSubmit = (data) => {
-    let newFilters = {...filters};
-    if (data.query) {
-      newFilters.query = data.query;
-    } else {
-      newFilters.query = '';
-    }
+    const newFilters = { ...filters, ...data }
+    store.emit(new UpdateFilters(newFilters));
 
-    newFilters.helpButtonTypes = data.helpButtonTypes;
-
-    if (data.place) {
-      newFilters.where = {
-        address: data.place.address,
-        center: data.place.center,
-        radius: data.place.radius,
-      };
+    if (isHome) {
+      router.push('/Explore');
+    }else {
+      toggleShowFiltersForm(false);
     }
-    setFilters(() => newFilters);
-    toggleShowFiltersForm(false);
   };
 
-  const address = watch('place.address');
-  const center = watch('place.center');
-  const radius = watch('place.radius');
-  const helpButtonTypes = watch('helpButtonTypes')
+  const address = watch('where.address');
+  const center = watch('where.center');
+  const radius = watch('where.radius');
+  const helpButtonTypes = watch('helpButtonTypes');
+  const [tags, setTags] = useState([])
+  const query = watch('query');
 
   const handleSelectedPlace = (place) => {
-    setValue('place.address', place.formatted);
-    setValue('place.center', [
+    setValue('where.address', place.formatted);
+    setValue('where.center', [
       place.geometry.lat,
       place.geometry.lng,
     ]);
   };
 
   const uniqueArray = (a) =>
-      Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
-        JSON.parse(s),
-      );
+    Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
+      JSON.parse(s),
+    );
 
   const setButtonTypeValue = (name, value) => {
-    if (value)
-      {
-        setValue('helpButtonTypes', uniqueArray([...helpButtonTypes, name]))
-        return;
-      }
-      setValue('helpButtonTypes', uniqueArray(helpButtonTypes.filter((prevValue) => prevValue != name)))
+    if (value) {
+      setValue(
+        'helpButtonTypes',
+        uniqueArray([...helpButtonTypes, name]),
+      );
+      return;
+    }
+    setValue(
+      'helpButtonTypes',
+      uniqueArray(
+        helpButtonTypes.filter((prevValue) => prevValue != name),
+      ),
+    );
   };
 
+
+  useEffect(() => {
+    if(queryFoundTags)
+    {
+      setTags(() => queryFoundTags)
+    }
+  }, [queryFoundTags])
+  useEffect(() => {
+    reset(filters)
+  }, [filters])
   return (
     <>
-    {showFiltersForm &&
-
-    
-      <div className="filters__container">
-        <Form
-          classNameExtra="filters--vertical"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <FieldText
-            name="query"
-            label={t('buttonFilters.queryLabel')}
-            placeholder={t('buttonFilters.queryPlaceHolder')}
-            explain={t('buttonFilters.queryExplain')}
-            {...register('query')}
-          />
-
-          <FieldCheckbox
-            label={'Button types'}
-            validationError={null}
-            explain={'Filter results by type'}
+      {showFiltersForm && (
+        <div className="filters__container">
+          <Form
+            classNameExtra="filters--vertical"
+            onSubmit={handleSubmit(onSubmit)}
           >
-            {buttonTypes.map((buttonType) => {
-              return (
-                <div key={buttonType.name} style={buttonColorStyle(buttonType.cssColor)}>
-                  <CheckBox
-                    defaultValue={
-                      helpButtonTypes.indexOf(
-                        buttonType.name,
-                      ) > -1
-                    }
-                    name={buttonType.name}
-                    handleChange={(name, newValue) => {
-                      setButtonTypeValue(name, newValue);
-                    }}
-                  >
-                    <div className="btn-filter__icon"></div>
-                    <div className="btn-with-icon__text">
-                      {buttonType.caption}
-                    </div>
-                  </CheckBox>
-                </div>
-              );
-            })}
-          </FieldCheckbox>
-          <div className="form__field">
-            <label className="form__label">
-              {t('buttonFilters.where')}
-              {address && center && (
-                <>
-                  ({address} - {roundCoords(center).toString()})
-                </>
-              )}
-            </label>
-            <DropDownSearchLocation
-              placeholder={t('homeinfo.searchlocation')}
-              handleSelectedPlace={handleSelectedPlace}
+            <FieldText
+              name="query"
+              label={t('buttonFilters.queryLabel')}
+              placeholder={t('buttonFilters.queryPlaceHolder')}
+              explain={t('buttonFilters.queryExplain')}
+              {...register('query')}
             />
-          </div>
+            {/* <TagList tags={tags} remove={(tag) => {
+              setValue('query', query.replace(tag, ''))
+              setTags((prevTags) => prevTags.filter((prevTag) => prevTag != tag))
+              }}/> */}
 
-          <div className="form__field">
-            <label className="form__label">
-            {t('buttonFilters.distance')} ({radius} km)
-            </label>
-            <div style={{ padding: '1rem' }}>
-              <Slider
-                min={1}
-                max={300}
-                onChange={(radiusValue) =>
-                  setValue('place.radius', radiusValue)
-                }
-                defaultValue={radius}
+            {/* <FieldTags
+              label={t('buttonFilters.tagsLabel')}
+              explain={t('buttonFilters.tagsExplain')}
+              placeholder={t('common.add')}
+              validationError={errors.tags}
+              setTags={(tags) => {
+                setValue('tags', tags)
+              }}
+              tags={tags}
+            /> */}
+            <FieldCheckbox
+              label={'Button types'}
+              validationError={null}
+              explain={'Filter results by type'}
+            >
+              {buttonTypes.map((buttonType) => {
+                return (
+                  <div
+                    key={buttonType.name}
+                    style={buttonColorStyle(buttonType.cssColor)}
+                  >
+                    <CheckBox
+                      defaultValue={
+                        helpButtonTypes.indexOf(buttonType.name) > -1
+                      }
+                      name={buttonType.name}
+                      handleChange={(name, newValue) => {
+                        setButtonTypeValue(name, newValue);
+                      }}
+                    >
+                      <div className="btn-filter__icon"></div>
+                      <div className="btn-with-icon__text">
+                        {buttonType.caption}
+                      </div>
+                    </CheckBox>
+                  </div>
+                );
+              })}
+            </FieldCheckbox>
+            <div className="form__field">
+              <label className="form__label">
+                {t('buttonFilters.where')}
+                {address && center && (
+                  <>
+                    ({address} - {roundCoords(center).toString()})
+                  </>
+                )}
+              </label>
+              <DropDownSearchLocation
+                placeholder={t('homeinfo.searchlocation')}
+                handleSelectedPlace={handleSelectedPlace}
               />
             </div>
-          </div>
-          <div className="filters__actions">
-            <Btn
-              btnType={BtnType.link}
-              caption="CANCEL"
-              contentAlignment={ContentAlignment.center}
-              onClick={clearFilters}
-            />
 
-            <Btn
-              submit={true}
-              btnType={BtnType.submit}
-              caption="SAVE"
-              contentAlignment={ContentAlignment.center}
-            />
-          </div>
-        </Form>
-      </div>
-      }
+            {center && (
+              <div className="form__field">
+                <label className="form__label">
+                  {t('buttonFilters.distance')} ({radius} km)
+                </label>
+                <div style={{ padding: '1rem' }}>
+                  <Slider
+                    min={1}
+                    max={300}
+                    onChange={(radiusValue) =>
+                      setValue('where.radius', radiusValue)
+                    }
+                    defaultValue={radius}
+                  />
+                </div>
+              </div>
+            )}
+            <div className="filters__actions">
+              <Btn
+                btnType={BtnType.link}
+                caption={t('common.reset')}
+                contentAlignment={ContentAlignment.center}
+                onClick={clearFilters}
+              />
+
+              <Btn
+                submit={true}
+                btnType={BtnType.submit}
+                caption={t('common.search')}
+                contentAlignment={ContentAlignment.center}
+              />
+            </div>
+          </Form>
+        </div>
+      )}
     </>
   );
 }

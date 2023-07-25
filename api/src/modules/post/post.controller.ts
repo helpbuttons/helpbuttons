@@ -12,6 +12,7 @@ import { PostService } from "./post.service";
 import { ActivityEventName } from "@src/shared/types/activity.list";
 import { notifyUser } from "@src/app/app.event";
 import { EventEmitter2 } from "@nestjs/event-emitter";
+import { Role } from "@src/shared/types/roles";
 
 @ApiTags('post')
 @Controller('post')
@@ -77,44 +78,57 @@ export class PostController {
     
 
     @OnlyRegistered()
-    @Delete('delete/:buttonId')
+    @Delete('delete/:postId')
     async delete(
       @Param('postId') postId: string,
       @CurrentUser() user: User,
       ) {
-        // if(!this.buttonService.isOwner(user, buttonId)){
-        //   throw new CustomHttpException(ErrorName.NoOwnerShip)
-        // }
-        // const response = this.postService.delete(postId);
-        // return response;
+        return this.postService.findById(postId).then((post) => {
+          if((user.role == Role.admin) || post.author.id == user.id || this.buttonService.isOwner(user, post.button.id)){
+            return this.postService.delete(postId)
+          }
+          throw new CustomHttpException(ErrorName.NoOwnerShip)
+        }).catch((error) => {
+          console.log(error)
+          throw new CustomHttpException(ErrorName.nothingToDelete)
+        })
+        
     }
 
-    @OnlyRegistered()
-    @Patch('update/message/:messageId/:message')
-    async updateMessage(
-      @Param('messageId') messageId: string,
-      @Body() message: MessageDto,
-      @CurrentUser() user: User,
-      ) {
-        // if(!this.buttonService.isOwner(user, buttonId)){
-        //   throw new CustomHttpException(ErrorName.NoOwnerShip)
-        // }
-        console.log(`update message implement me... ${messageId} - ${message}`)
-        // const response = this.postService.delete(postId);
-        // return response;
-    }
+    // @OnlyRegistered()
+    // @Patch('update/message/:messageId/:message')
+    // async updateMessage(
+    //   @Param('messageId') messageId: string,
+    //   @Body() message: MessageDto,
+    //   @CurrentUser() user: User,
+    //   ) {
+    //     // if(!this.buttonService.isOwner(user, buttonId)){
+    //     //   throw new CustomHttpException(ErrorName.NoOwnerShip)
+    //     // }
+    //     console.log(`update message implement me... ${messageId} - ${message}`)
+    //     // const response = this.postService.delete(postId);
+    //     // return response;
+    // }
 
     @OnlyRegistered()
-    @Patch('delete/message/:messageId')
+    @Delete('comment/delete/:commentId')
     async deleteMessage(
-      @Param('messageId') messageId: string,
+      @Param('commentId') commentId: string,
       @CurrentUser() user: User,
       ) {
-        console.log(`delete message implement me... ${messageId} `)
-        // if(!this.buttonService.isOwner(user, buttonId)){
-        //   throw new CustomHttpException(ErrorName.NoOwnerShip)
-        // }        // const response = this.postService.delete(postId);
-        // return response;
+        return this.commentService.findById(commentId).then((comment) => {
+          if((user.role == Role.admin) || comment.author.id == user.id){
+            return this.commentService.delete(commentId)
+          }else {
+            return this.buttonService.isOwner(user, comment.post.button.id).then((isButtonOwner) => {
+              if(isButtonOwner)
+              {
+                return this.commentService.delete(commentId)
+              }
+              throw new CustomHttpException(ErrorName.NoOwnerShip)
+            })
+          }
+        })
     }
 
     @Get('findByButtonId/:buttonId')

@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import '../styles/app.scss';
 import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
@@ -12,7 +12,7 @@ import { GlobalState, store } from 'pages';
 import { FetchDefaultNetwork } from 'state/Networks';
 import { FetchUserData } from 'state/Users';
 
-import { useRef } from 'store/Store';
+import { useRef, useStore } from 'store/Store';
 import { GetConfig } from 'state/Setup';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
@@ -24,9 +24,18 @@ import { Role } from 'shared/types/roles';
 import { isRoleAllowed } from 'shared/sys.helper';
 import { version } from 'shared/commit';
 import Loading from 'components/loading';
+import { getMetadata } from 'services/ServerProps';
+import SEO from 'components/seo';
+import { refeshActivities } from 'state/Activity';
+import t from 'i18n';
+import { useInterval } from 'shared/custom.hooks';
 
 export default appWithTranslation(MyApp);
 
+const useActivitesPool = () => {
+  const increment = useCallback(() => refeshActivities(), [])
+  useInterval(increment, 10000)
+}
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
@@ -36,17 +45,24 @@ function MyApp({ Component, pageProps }) {
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
   const [noBackend, setNobackend] = useState(false);
 
-  const config = useRef(store, (state: GlobalState) => state.config);
+  const config = useStore(store, (state: GlobalState) => state.config);
   const path = router.asPath.split('?')[0];
 
-  const loggedInUser = useRef(
+  const [metadata, setMetadata] = useState(null)
+
+  const loggedInUser = useStore(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
 
-  const selectedNetwork = useRef(
+  const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
+  const activities = useStore(
+    store,
+    (state: GlobalState) => state.activities,
   );
 
   const setupPaths: string[] = [
@@ -62,8 +78,6 @@ function MyApp({ Component, pageProps }) {
     }
 
     if (!config) {
-      
-      
       store.emit(
         new GetConfig(
           (config) => {
@@ -80,11 +94,13 @@ function MyApp({ Component, pageProps }) {
               return;
             }
             if (error == 'not-found' || error == 'nosysadminconfig') {
+              console.error(error)
               router.push(SetupSteps.SYSADMIN_CONFIG);
             }
 
             if (error == 'nobackend') {
               alertService.error(`Backend not found, something went terribly wrong.`)
+              router.push('/Error')
             }
             console.log(error)
             return;
@@ -180,6 +196,20 @@ function MyApp({ Component, pageProps }) {
     }
   }, [path, config, loggedInUser]);
 
+  useActivitesPool()
+  
+
+  useEffect(() => {
+    if(config && selectedNetwork)
+    {
+      setMetadata(() => {
+        return getMetadata('lala', selectedNetwork, config, 'fail')
+      })
+    }
+  },[config, selectedNetwork])
+  
+  const pageName = path.split('/')[1]
+
   return (
     <>
       <Head>
@@ -187,6 +217,8 @@ function MyApp({ Component, pageProps }) {
         <meta name="commit" content={version.git} />
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
+      {metadata && <SEO {...metadata}/>}
+      
       <div className={`${user ? '' : ''}`}>
         <Alert />
         {(() => {
@@ -194,10 +226,10 @@ function MyApp({ Component, pageProps }) {
             return (
               <div>
                 <Component {...pageProps} />
-                <NavBottom logged={!!loggedInUser} />
+                <NavBottom/>
               </div>
             );
-          } else if (isSetup || path == '/Login') {
+          } else if (isSetup || ['Login','HomeInfo','ButtonFile'].indexOf(pageName) > -1) {
             return (
               <div>
                 <Component {...pageProps} />

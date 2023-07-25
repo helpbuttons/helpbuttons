@@ -8,6 +8,9 @@ export enum BtnType {
     filter,
     submit,
     link,
+    dropdown,
+    circle,
+    iconActions,
 }
 
 export enum IconType {
@@ -15,6 +18,7 @@ export enum IconType {
     green,
     svg,
     splitRedGreen,
+    circle,
 }
 export enum ContentAlignment {
     left,
@@ -23,7 +27,7 @@ export enum ContentAlignment {
 }
 interface BtnProps {
     caption: string;
-    iconLink: string;
+    iconLink?: string;
     iconLeft?: IconType;
     iconRight?: IconType;
     contentAlignment?: ContentAlignment;
@@ -31,7 +35,8 @@ interface BtnProps {
     disabled?: boolean;
     isSubmitting?: boolean;
     onClick?: Function;
-    submit: boolean;
+    submit?: boolean;
+    extraClass?:string;
 }
 
 function BtnIcon({ icon, iconLink }: { icon: IconType }) {
@@ -42,6 +47,8 @@ function BtnIcon({ icon, iconLink }: { icon: IconType }) {
             return <div className="btn-filter__icon green"></div>;
         case IconType.svg:
             return <div className="btn-with-icon__icon">{iconLink}</div>;
+        case IconType.circle:
+            return <div className="btn-circle__icon">{iconLink}</div>;
         case IconType.splitRedGreen:
             return (
                 <div className="btn-filter__split-icon">
@@ -70,6 +77,7 @@ function CaptionNode({
 
 export default function Btn({
     caption,
+    extraClass = "",
     iconRight = null,
     iconLeft = null,
     iconLink = null,
@@ -106,6 +114,15 @@ export default function Btn({
                 classNames.push("btn-filter");
             }
             break;
+        case BtnType.dropdown:
+            classNames.push("dropdown__dropdown");
+            break;
+        case BtnType.circle:
+            classNames.push("btn btn--corporative btn-circle");
+            break;
+        case BtnType.iconActions:
+            classNames.push("btn btn-circle--big-icon");
+            break;
         default:
             if (hasIcon) {
                 classNames.push("btn-with-icon");
@@ -125,7 +142,7 @@ export default function Btn({
     }
         
     return (
-        <button {...attr} onClick={onClick} disabled={disabled} className={className}>
+        <button {...attr} onClick={onClick} disabled={disabled} className={className + ' ' + extraClass}>
             {isSubmitting && <Spinner />}
             <BtnIcon icon={iconLeft} iconLink={iconLink}/>
             <CaptionNode caption={caption} hasIcon={hasIcon} />

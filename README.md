@@ -23,12 +23,13 @@ This is the repository for helpbuttons.org. check the hb-docs repo (https://gith
 
 Copy the docker-compose.yml to the folder where you want to work.
 
-create the file `env.db` with the contents:
+Edit the part of the docker-compose.yml to setup the credentials of the database, where it says:
 
 ```
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=CHANGE_ME
-POSTGRES_DB=hb-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=CHANGE_ME
+      - POSTGRES_DB=hb-db
 ```
 
 lets put it all up

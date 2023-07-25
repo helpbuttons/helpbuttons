@@ -1,9 +1,8 @@
 import React from "react";
-import type { NextPage } from "next";
+import type { Metadata, NextPage } from "next";
 import { Store } from "store/Store";
 
 //    Components
-import HomeInfo from "pages/HomeInfo";
 
 import { NetworksState, networksInitial } from "state/Networks";
 import { UsersState, usersInitial } from "state/Users";
@@ -12,6 +11,10 @@ import { Alert } from "state/Alerts";
 import { SetupDtoOut } from "services/Setup/config.type";
 import { User } from "shared/entities/user.entity";
 import { Activity } from "shared/entities/activity.entity";
+export const metadata: Metadata = {
+  title: 'Home',
+  description: 'Welcome to Next.js',
+}
 
 // -- estado global --
 export interface GlobalState {
@@ -23,6 +26,7 @@ export interface GlobalState {
   config: SetupDtoOut;
   activities: Activity[];
   showFilters: boolean;
+  unreadActivities: number;
 }
 
 export const store = new Store<GlobalState>({
@@ -32,13 +36,15 @@ export const store = new Store<GlobalState>({
   explore: exploreInitial,
   alerts: [],
   config: null,
-  activities: [],
-  showFilters: false
+  activities: null,
+  showFilters: false,
+  unreadActivities: 0
 });
+
 
 const Home: NextPage = () => {
   return (
-      <HomeInfo />
+      <></>
   );
 };
 

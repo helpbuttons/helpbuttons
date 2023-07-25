@@ -39,11 +39,13 @@ export default function CardProfile(props) {
             <div className="card-profile__content">
             
               <div className="card-profile__avatar-container-name">
+
                 <p>{user.name}</p>
                 <span>{ user.username }@{getHostname()}</span>
                 
               </div>
-              {t('profile.created_date')}: {readableTimeLeftToDate(user.created_at)}
+
+              {/* {t('user.created_date')}: {readableTimeLeftToDate(user.created_at)} */}
     
               {/* <figure className="card-profile__rating grid-three">
 
@@ -74,11 +76,12 @@ export default function CardProfile(props) {
         </div>
 
         <div className="card-profile__data">
-        <div className="card-profile__tags grid-one__column-mid-element">
+
+            <div className="card-profile__tags grid-one__column-mid-element">
               {/* <div className="hashtag">{t('user.tags')}</div> */}
             </div>
             <div className="card-profile__description grid-one__column-mid-element">
-              {t('user.description')}: {user.description}
+               {user.description}
             </div>
 
             {/* <div className="card-profile__phone grid-one__column-mid-element">
@@ -86,8 +89,6 @@ export default function CardProfile(props) {
               - place
 
             </div> */}
-
-           
 
         </div>
     </>

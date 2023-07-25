@@ -15,7 +15,7 @@ import { CreateConfig, SmtpTest } from 'state/Setup';
 import { SetupSteps } from '../../../shared/setupSteps';
 import router from 'next/router';
 import t from 'i18n';
-import { getHostname } from 'shared/sys.helper';
+import { getUrlOrigin } from 'shared/sys.helper';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { useRef } from 'store/Store';
 import { useEffect, useState } from 'react';
@@ -28,7 +28,7 @@ export default function SysadminConfig() {
     formState: { errors},
   } = useForm({
     defaultValues: {
-      hostName: getHostname(),
+      hostName: getUrlOrigin(),
       mapifyApiKey: '',
       postgresHostName: 'db',
       postgresDb: 'hb-db',
@@ -37,6 +37,7 @@ export default function SysadminConfig() {
       postgresPort: 5432,
       smtpUrl:
         'smtp://info@helpbuttons.org:some-string@smtp.some-provider.com:587',
+        from: "'helpbuttons' <help@helpbuttons.org>"
     },
   });
 
@@ -57,13 +58,13 @@ export default function SysadminConfig() {
         data,
         () => {
           setTimeout(() => {
-            setIsSubmitting(true)
             router.push({
               pathname: SetupSteps.CREATE_ADMIN_FORM,
             });
           }, 2000);
         },
         (err, data) => {
+          setIsSubmitting(false)
           if (err.statusCode === HttpStatus.SERVICE_UNAVAILABLE) {
             if (err.message === 'db-hostname-error') {
               alertService.error(
@@ -81,8 +82,7 @@ export default function SysadminConfig() {
             } else {
               alertService.error(
                 t(
-                  'other-problem',
-                  [JSON.stringify(err)],
+                  err.message
                 ),
               );
             }
@@ -107,7 +107,12 @@ export default function SysadminConfig() {
   };
 
   const onSmtpError = (err) => {
-    alertService.error(`${JSON.stringify(err)}`);
+    if(err?.response)
+    {
+      alertService.error(err?.response.message);
+    }else{
+      alertService.error(`${JSON.stringify(err)}`);
+    }
   };
 
   const onSmtpSuccess = () => {
@@ -125,7 +130,7 @@ export default function SysadminConfig() {
               <FieldText
                 name="hostname"
                 label={`${t('setup.hostname')}:`}
-                placeholder="localhost"
+                placeholder="http://localhost:port"
                 validationError={errors.description}
                 classNameExtra="squared"
                 {...register('hostName', { required: true })}
@@ -170,6 +175,14 @@ export default function SysadminConfig() {
                 label={`${t('setup.smtpUrl')}:`}
                 {...register('smtpUrl')}
               ></FieldText>
+              <FieldText
+                name="from"
+                label={`${t('setup.from')}:`}
+                placeholder="'helpbuttons.org' <help@helpbuttons.org>"
+                validationError={errors.from}
+                classNameExtra="squared"
+                {...register('from', { required: true })}
+              />
             </div>
             <div className="form__btn-wrapper">
               <Btn

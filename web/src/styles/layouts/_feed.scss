@@ -55,13 +55,13 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed__empty-message {
 
-  width: 100%;
-  margin: auto;
-  font-size: $font-size-general;
-  font-weight: $font-weight-bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @extend .list__empty-message;
+
+}
+
+.feed__empty-message--prev{
+
+  @extend .list__empty-message--prev;
 
 }
 
@@ -91,7 +91,7 @@ $feed-new-message-radius: $border-radius-circle;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: flex-end;
   flex-direction: row;
   background-color: $color-white;
   padding: $feed-padding;
@@ -106,7 +106,7 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feeds__new-message-message {
   flex-grow:1;
-  padding: 0 $padding-big;
+  padding: 0 $padding-big 0 0;
   margin: auto;
 
   .form__field {
@@ -138,9 +138,7 @@ $feed-new-message-radius: $border-radius-circle;
 }
 
 .feed-container{
-  background: lightgrey;
-  padding-top: $feed-padding-top;
-  min-height: 100%;
+  background: $color-ligth-gray;
   height: auto;
 }
 

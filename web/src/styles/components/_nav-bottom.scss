@@ -124,21 +124,22 @@ $nav-bottom-border: 32px;
 
 .notif-circle {
 
-   top:calc(50% - 18px);
-   right: calc(90% - 0%);
+  top: $nav-bottom-padding;
+  margin-left: $margin-small;
 
    border-radius: 50%;
    position: absolute;
    margin-top: 0;
-   display: block;
+   display: flex;
    width: 15px;
    height: 15px;
    border: 0;
    color: $color-white;
    font-weight: bold;
-   font-size: $font-size-general;
+   font-size: $font-size-xsmall;
    text-align:center;
-   vertical-align: center;
+   justify-content: center;
+   align-items: center;
    cursor: pointer;
    text-decoration: none;
    background: $color-blue;
@@ -168,6 +169,11 @@ $nav-bottom-border: 32px;
 
     height: auto;
 
+  }
+
+  .notif-circle {
+    top: auto;
+    margin-left: auto;
   }
 
   .nav-bottom__icon {

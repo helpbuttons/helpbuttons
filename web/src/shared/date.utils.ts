@@ -39,9 +39,9 @@ export function readableTimeLeftToDate(date: Date) {
         
   };
 
-  const timeZoneOffset = new Date().getTimezoneOffset();
+  // const timeZoneOffset = new Date().getTimezoneOffset();
   let utcDate = new Date(date);
-  utcDate.setMinutes(utcDate.getMinutes() - timeZoneOffset);
+  // utcDate.setMinutes(utcDate.getMinutes() - timeZoneOffset);
 
   return getRelativeTime(utcDate);
 }

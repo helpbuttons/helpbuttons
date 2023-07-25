@@ -22,4 +22,7 @@ export class Post extends BaseEntity {
 
   @ManyToOne(() => Button, (button) => button.feed)
   button: Button;
+
+  @Column('boolean', {default: false})
+  deleted: boolean;
 }

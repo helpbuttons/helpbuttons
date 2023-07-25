@@ -3,25 +3,31 @@ import PostCommentNew from 'components/feed/PostCommentNew';
 import PostComments from 'components/feed/PostComments';
 import PostMessage from 'components/feed/PostMessage';
 import PostNew from 'components/feed/PostNew';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import Dropdown from 'elements/Dropdown/DropDown';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import Dropdown from 'elements/Dropdown/Dropdown';
 import t from 'i18n';
+import { IoTrashBinOutline } from 'react-icons/io5';
+
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
 import { Post } from 'shared/entities/post.entity';
-import { LoadPosts } from 'state/Posts';
+import { DeletePost, LoadPosts } from 'state/Posts';
 import { useRef } from 'store/Store';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
-
+  
+  
   const loggedInUser = useRef(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
+  const isButtonOwner = loggedInUser?.id == button.owner.id;
+  const buttonOwnerId = button.owner.id;
 
+ 
   const reloadPosts = () => {
     if (button && button.id) {
       store.emit(
@@ -95,6 +101,9 @@ export default function Feed({ button }: { button: Button }) {
               onNewComment={() => {
                 reloadPosts();
               }}
+              buttonOwnerId={buttonOwnerId}
+              isButtonOwner={isButtonOwner}
+              reloadPosts={reloadPosts}
             />
           ))}
         {!posts ||
@@ -110,65 +119,51 @@ export default function Feed({ button }: { button: Button }) {
     </div>
   );
 }
-export function FeedElement({ post, loggedInUser, onNewComment }) {
+export function FeedElement({ post, loggedInUser, onNewComment, buttonOwnerId, isButtonOwner = false, reloadPosts }) {
   const [showNewCommentDialog, setShowNewCommentDialog] =
     useState(false);
-  const [showComments, setShowComments] = useState(false);
 
+    const deletePost = (postId) => {
+      store.emit(new DeletePost(postId,reloadPosts, (error) => {alertService.error(error)}));
+    };
   return (
     <div className="feed-element">
       <div className="card-notification">
-        <div className="card-notification__comment-count">
+      <div className="card-notification__comment-count">
           <div className="card-notification__label">
-            <div className="hashtag hashtag--blue">New update</div>
+            <div className="hashtag hashtag--blue">{t('feed.update')}</div>
           </div>
         </div>
-
-        <PostMessage post={post} />
+        <PostMessage post={post} isButtonOwnerComment={buttonOwnerId == post.author.id}/>
 
         <>
+
           <div className="card-notification__answer-btn">
-            <a
-              className="card-notification__comment-count"
-              onClick={() => {
-                setShowComments(!showComments);
-              }}
-            >
-              {post.comments.length > 0
-                ? `${showComments ? 'Ocultar' : 'Ver'} ${
-                    post.comments.length
-                  } ${t('post.comment')}${
-                    post.comments.length > 1 ? 's' : ''
-                  }`
-                : ''}
-            </a>
-            {loggedInUser && (
+            
+            {(loggedInUser && (loggedInUser.id == post.author.id || isButtonOwner || isAdmin(loggedInUser)) )&& (
+
               <Btn
                 submit={true}
-                btnType={BtnType.corporative}
-                caption={t('post.newComment')}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => {
-                  setShowNewCommentDialog(!showNewCommentDialog);
-                }}
+                btnType={BtnType.iconActions}
+                iconLink={<IoTrashBinOutline/>}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.right}
+                onClick={() => deletePost(post.id)}
               />
             )}
           </div>
 
-          {(showNewCommentDialog && loggedInUser )&& (
+          {loggedInUser && (
             <PostCommentNew
               postId={post.id}
               onSubmit={() => {
                 onNewComment();
-                setShowComments(true);
                 setShowNewCommentDialog(false);
               }}
             />
           )}
         </>
-        {showComments && (
-            <PostComments comments={post.comments} />
-        )}
+        <PostComments  buttonOwnerId = {buttonOwnerId} comments={post.comments} reloadPosts={reloadPosts} loggedInUser={loggedInUser} isButtonOwner={isButtonOwner}/>
       </div>
     </div>
   );

@@ -61,5 +61,7 @@ export class Button extends BaseEntity {
 
   @Column('text')
   hexagon: string;
-  // missing, network relations, template, owner, tags
+
+  @Column('boolean', {default: false})
+  deleted: boolean;
 }

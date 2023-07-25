@@ -731,7 +731,7 @@ function Repository() {
             <div className="">
 
                 <div className="card-button__trigger">
-                  <div className="card-button__edit-icon card-button__submenu"></div>
+                  <div className="card-button__edit-icon card-button__submenu"><IoEllipsisHorizontalSharp /></div>
                 </div>
 
                 <div className="card-button__dropdown-container">

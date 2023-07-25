@@ -1,4 +1,4 @@
-$drag-tab-height: 60px;
+$drag-tab-height: 35px;
 $drag-tab-width-desktop: 44px;
 $drag-tab-height-desktop: 200px;
 $drag-tab-card-height: $card-button-list-height;
@@ -12,19 +12,19 @@ $drag-tab-icon-size: 25px;
 
 .drag-tab {
 
-  width: auto;
+  width: 100%;
   position: absolute;
   display: flex;
   flex-direction: column;
-  height: auto;
+  justify-content: center;
+  align-items: center;
+  height: $drag-tab-height;
   background-color: $color-white;
   margin: 0;
-  margin-left: $margin-extra-small;
-  z-index: $z-index-01;
+  z-index: $z-index-03;
   padding: $padding-small;
-  padding-bottom: 70px;
-  bottom: $drag-tab-bottom;
-  border-radius: $border-radius-circle $border-radius-circle 0 0;
+  border-radius: $border-radius-circle $border-radius-circle 0 0 ;
+  transform: translateY(-35px);
   transition: $transition-default-slow;
 
   :hover {
@@ -50,12 +50,6 @@ $drag-tab-icon-size: 25px;
 
 .drag-tab--open {
   
-  transition: $transition-default-slow;
-  bottom: 0;
-  
-  .drag-tab__counter {
-
-  }
 
 }
 
@@ -84,23 +78,25 @@ $drag-tab-icon-size: 25px;
 @media #{$breakpoints-xlarge} {
   .drag-tab {
 
-    position: absolute;
+    position: fixed;
     width: auto;
     flex-direction: row-reverse;
-    bottom:0px;
-    left: 35%;
-    margin: 0 0 $margin-big 0;
+    
     height: auto;
+    left: 35%;
+    bottom: 60px;
     border-radius: 0 $border-radius-circle $border-radius-circle 0;
     cursor: pointer; /* fallback if grab cursor is unsupported */
     padding: $padding-small;
     transition: $transition-default-slow;
+    z-index: $z-index-02;
+    transform: translateY(0px);
 
   }
 
   .drag-tab--open {
 
-    left:0;
+    left: 0;
 
   }
 

@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { getDistance } from 'geolib';
 
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import { Picker } from 'components/picker/Picker';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
+
 import { NetworkMapConfigure } from 'components/map/Map/NetworkMapConfigure';
 import { BrowseType, HbMapTiles } from 'components/map/Map/Map.consts';
 import circleToPolygon from 'circle-to-polygon';
@@ -15,6 +17,8 @@ export default function FieldAreaMap({
   defaultExploreSettings,
   onChange,
   marker,
+  label,
+  explain,
 }) {
 
   const [mapSettings, setMapSettings] = useState(() => {
@@ -48,6 +52,9 @@ export default function FieldAreaMap({
   }
 
   const [showHideMenu, setHideMenu] = useState(false);
+  let closeMenu = () => {
+    setHideMenu(false);
+  };
 
   const setRadius = (newRadius) => {
     setMapSettings((prevSettings) => {return {...prevSettings, radius: newRadius, geometry: circleToPolygon([prevSettings.center[1],prevSettings.center[0]], newRadius)}})
@@ -89,41 +96,40 @@ export default function FieldAreaMap({
   return (
     <>
       <div className="form__field">
+        <div className="form__label">
+          {label}
+        </div>
+        <div className="form__explain">
+          {explain}
+        </div>
         <div
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}
         >
-          {t('button.changePlace')}
+          {t('button.changePlaceLabel')}
         </div>
       </div>
       {showHideMenu && (
-        <div className="picker__close-container">
-          <div className="picker--over picker-box-shadow picker__content picker__options-v">
-            <NetworkMapConfigure
-              mapSettings={mapSettings}
-              onBoundsChanged={onBoundsChanged}
-              handleMapClick={handleMapClick}
-              setMapTile={setMapTile}
-              marker={marker}
-              setBrowseType={setBrowseType}
-            />
-            {/* <DropDownSearchLocation
-              placeholder={t('homeinfo.searchlocation')}
-              handleSelectedPlace={handleSelectedPlace}
-            /> */}
-            <Btn
-              btnType={BtnType.splitIcon}
-              caption={t('common.save')}
-              contentAlignment={ContentAlignment.center}
-              onClick={() => setHideMenu(!showHideMenu)}
-            />
-          </div>
-
-          <div
-            className="picker__close-overlay"
-            onClick={() => setHideMenu(false)}
-          ></div>
-        </div>
+        <Picker closeAction={closeMenu} headerText={t('picker.headerText')}>
+              <NetworkMapConfigure
+                mapSettings={mapSettings}
+                onBoundsChanged={onBoundsChanged}
+                handleMapClick={handleMapClick}
+                setMapTile={setMapTile}
+                marker={marker}
+                setBrowseType={setBrowseType}
+              />
+              {/* <DropDownSearchLocation
+                placeholder={t('homeinfo.searchlocation')}
+                handleSelectedPlace={handleSelectedPlace}
+              /> */}
+              <Btn
+                btnType={BtnType.submit}
+                caption={t('common.save')}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => setHideMenu(!showHideMenu)}
+              />
+        </Picker>
       )}
       <span style={{ color: 'red' }}>{validationError}</span>
     </>
