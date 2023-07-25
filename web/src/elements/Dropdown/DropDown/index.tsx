@@ -1,7 +1,5 @@
 ///dropddown selector component
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import React from 'react';
-
 
 type DropdownProps = {
   label?:string,
@@ -11,8 +9,6 @@ type DropdownProps = {
     onClick?: () => void;
   }[];
 };
-
-
 class Dropdown extends React.Component<DropdownProps> {
   constructor(props: DropdownProps) {
     super(props);
@@ -38,7 +34,7 @@ class Dropdown extends React.Component<DropdownProps> {
         {label && <div className="form__label">{label}</div>}
         <select className='dropdown-select__trigger' onChange={this.handleChange}>
           {this.props.listOption.map((option, index) => (
-            <option className='dropdown-select__option' key={index} value={index}>
+            <option className='dropdown-select__option' key={index} value={index} selected={option.selected}>
               {option.name}
             </option>
           ))}
