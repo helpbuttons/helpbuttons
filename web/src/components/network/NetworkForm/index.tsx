@@ -58,7 +58,6 @@ function NetworkForm({
 
   return (
     <>
-    {JSON.stringify(watch())}
       <Form
         classNameExtra="createAdmin"
         onSubmit={handleSubmit(onSubmit)}
