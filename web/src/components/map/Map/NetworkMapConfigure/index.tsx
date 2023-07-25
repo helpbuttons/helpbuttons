@@ -14,6 +14,7 @@ export function NetworkMapConfigure({
   handleMapClick,
   marker,
   setBrowseType,
+  tileType
 }) {
 
   return (
@@ -101,6 +102,7 @@ export function NetworkMapConfigure({
 
       <MapTileSelector
       setMapTile={setMapTile}
+      tileType={tileType}
       />
     </>
   );
