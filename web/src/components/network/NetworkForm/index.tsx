@@ -19,7 +19,7 @@ import t from 'i18n';
 import { useRouter } from 'next/router';
 import { getUrlOrigin } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
-import ButtonTypesSelector from 'components/feed/ButtonTypesCreator';
+import FieldButtonTemplates from 'components/feed/FieldButtonTemplates';
 import FieldCheckbox from 'elements/Fields/FieldCheckbox';
 import CheckBox from 'elements/Checkbox';
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
@@ -58,6 +58,7 @@ function NetworkForm({
 
   return (
     <>
+    {JSON.stringify(watch())}
       <Form
         classNameExtra="createAdmin"
         onSubmit={handleSubmit(onSubmit)}
@@ -128,22 +129,27 @@ function NetworkForm({
           </div>
 
           <FieldText
-            name="alias"
-            label={t('configuration.aliasLabel')}
-            explain={t('configuration.aliasExplain')}
-            placeholder={t('configuration.namePlaceHolder')}
+            name="nomeclature"
+            label={t('configuration.nomeclatureLabel')}
+            explain={t('configuration.nomeclatureExplain')}
+            placeholder={t('configuration.nomeclaturePlaceHolder')}
             classNameInput="squared"
-            validationError={errors.name}
-            {...register('alias', { required: true })}
+            validationError={errors.nomeclature}
+            {...register('nomeclature', { required: true })}
           />
 
           {/* BUTTON TYPES */}
 
-          <ButtonTypesSelector
-            postId={undefined}
-            onSubmit={undefined}
-            label={t('configuration.createButtonType')}
-            explain={t('configuration.explainCreateButtonType')}
+          <FieldButtonTemplates
+            label={t('configuration.buttonTemplateLabel')}
+            explain={t('configuration.buttonTemplateExplain')}
+            name="buttonTemplates"
+            placeholder={t('configuration.buttonTemplatePlaceHolder')}
+            classNameInput="squared"
+            errors={errors}
+            watch={watch}
+            register={register}
+            control={control}
           />
 
           <div className="form__field">

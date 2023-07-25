@@ -4,6 +4,7 @@ import { HexColorPicker } from 'react-colorful';
 import t from 'i18n';
 import { useDebounce } from 'shared/custom.hooks';
 import { IoClose } from 'react-icons/io5';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 export const FieldColorPick = React.forwardRef(
   (
     {
@@ -70,6 +71,62 @@ export const FieldColorPick = React.forwardRef(
           />
         )}
         <FieldError validationError={validationError} />
+      </div>
+    );
+  },
+);
+
+export const CircleColorPick = React.forwardRef(
+  (
+    {
+      label,
+      actionName,
+      name,
+      classNameInput,
+      placeholder,
+      onChange,
+      onBlur,
+      validationError,
+      value,
+      explain,
+      setValue,
+      hideBoilerPlate = false,
+    },
+    ref,
+  ) => {
+    const [stateColor, setStateColor] = useState(null);
+    const [showHideMenu, setHideMenu] = useState(false);
+    const deboungBgColor = useDebounce(stateColor, 50);
+    const setColor = (color) => {
+      setStateColor(() => color);
+    };
+
+    useEffect(() => {
+      if (deboungBgColor) {
+        setValue(name, deboungBgColor);
+      }
+    }, [deboungBgColor]);
+
+    return (
+      // <div className="form__field">
+      <div style={
+        {
+          '--button-color': value,
+        } as React.CSSProperties}>
+        
+        <Btn
+                    onClick={() => setHideMenu(!showHideMenu)}
+                    btnType={BtnType.circle}
+                    iconLeft={IconType.red}
+                    contentAlignment={ContentAlignment.left}
+                    
+        />
+        {showHideMenu && (
+          <HexColorPicker
+            color={value}
+            onChange={(color) => setColor(color)}
+          />
+        )}      
       </div>
     );
   },

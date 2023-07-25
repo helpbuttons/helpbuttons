@@ -131,10 +131,14 @@ export class NetworkService {
                   totalCount + parseInt(buttonType.count),
                 0,
               ),
+              buttonTemplates: JSON.parse(
+                defaultNetwork.buttonTemplates
+              ),
             };
           });
       })
       .catch((error) => {
+        console.log(error)
         if (typeof error === typeof HttpException) {
           throw error;
         }
@@ -148,7 +152,7 @@ export class NetworkService {
 
   async update(updateDto: UpdateNetworkDto) {
     const defaultNetwork = await this.findDefaultNetwork();
-
+    
     const network = {
       id: defaultNetwork.id,
       description: updateDto.description,
@@ -161,6 +165,7 @@ export class NetworkService {
       exploreSettings: updateDto.exploreSettings,
       backgroundColor: updateDto.backgroundColor,
       textColor: updateDto.textColor,
+      buttonTemplates: JSON.stringify(updateDto.buttonTemplates)
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
