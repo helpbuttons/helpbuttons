@@ -3,7 +3,6 @@ import { useToggle } from 'shared/custom.hooks';
 import { HbMapTiles } from '../Map.consts';
 import t from 'i18n';
 import Dropdown from 'elements/Dropdown/DropDown';
-import Dropdown from 'elements/Dropdown/DropDown';
 
 export function MapTileSelector({ tileType, setMapTile }) {
   const [showSelectTileType, setShowSelectTileType] =
