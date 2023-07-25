@@ -69,7 +69,7 @@ export default function ButtonTypesSelector({ postId, onSubmit, label, explain }
                     btnType={BtnType.circle}
                     iconLeft={IconType.red}
                     contentAlignment={ContentAlignment.left}
-                    onClick={console.log('select color clicked')}
+                    onClick={() => console.log('select color clicked')}
                   />
 
                   <Btn
@@ -78,7 +78,7 @@ export default function ButtonTypesSelector({ postId, onSubmit, label, explain }
                     iconLink={<IoTrashBinOutline/>}
                     iconLeft={IconType.circle}
                     contentAlignment={ContentAlignment.center}
-                    onClick={console.log('Trash bin icon clicked!')}
+                    onClick={() => console.log('Trash bin icon clicked!')}
                   />
                 </div>
 
