@@ -8,7 +8,6 @@ export function MapTileSelector({ tileType, setMapTile }) {
   const [showSelectTileType, setShowSelectTileType] =
     useToggle(false);
 
-  console.log(tileType);
   const dropdownOptions = [
     {
       name: 'OSM',
