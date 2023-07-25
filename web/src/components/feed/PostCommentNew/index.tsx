@@ -22,8 +22,6 @@ export default function PostCommentNew({ postId, onSubmit }) {
   const onSubmitLocal = (e) => {
     e.preventDefault()
     const data = getValues();
-    console.log(data);
-    console.log('submitting');
     store.emit(
       new CreateNewPostComment(
         postId,

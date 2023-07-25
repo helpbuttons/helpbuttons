@@ -20,9 +20,9 @@ export default function PostComments({ comments, reloadPosts, loggedInUser, isBu
       <>
         {comments.length > 0 && (
           <>
-            {comments.map((comment) => {
+            {comments.map((comment, key) => {
               return (
-                <div className='card-notification--comment'>
+                <div key={key} className='card-notification--comment'>
 
                   <PostMessage isButtonOwnerComment={buttonOwnerId == comment.author.id} post={comment} />
                   
