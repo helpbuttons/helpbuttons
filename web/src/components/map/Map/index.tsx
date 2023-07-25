@@ -26,7 +26,7 @@ export function HbMap({
   mapZoom,
   onBoundsChanged = (objectRet) => {},
   handleMapClick = () => {},
-  width = "auto",
+  width = null,
   height = null,
   tileType = HbMapTiles.OSM,
 }) { 

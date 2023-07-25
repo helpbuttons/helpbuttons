@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import '../styles/app.scss';
 import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
@@ -26,10 +26,16 @@ import { version } from 'shared/commit';
 import Loading from 'components/loading';
 import { getMetadata } from 'services/ServerProps';
 import SEO from 'components/seo';
-import { FindActivities } from 'state/Activity';
+import { refeshActivities } from 'state/Activity';
+import t from 'i18n';
+import { useInterval } from 'shared/custom.hooks';
 
 export default appWithTranslation(MyApp);
 
+const useActivitesPool = () => {
+  const increment = useCallback(() => refeshActivities(), [])
+  useInterval(increment, 10000)
+}
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
@@ -72,8 +78,6 @@ function MyApp({ Component, pageProps }) {
     }
 
     if (!config) {
-      
-      
       store.emit(
         new GetConfig(
           (config) => {
@@ -192,18 +196,9 @@ function MyApp({ Component, pageProps }) {
     }
   }, [path, config, loggedInUser]);
 
-  useEffect(() => {
-    if(loggedInUser && !activities)
-    {
-      store.emit(
-              new FindActivities(
-                (error) => {
-                  alertService.error('Error getting activities');
-                },
-              ),
-            );
-    }
-  }, [loggedInUser, activities])
+  useActivitesPool()
+  
+
   useEffect(() => {
     if(config && selectedNetwork)
     {

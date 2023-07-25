@@ -35,6 +35,12 @@ $card-button-list-border-height: $border-general-height;
   // margin-bottom: $card-button-list-margin-bottom;
   border-radius: $border-radius-basic $border-radius-basic $border-radius-basic  $border-radius-basic;
 
+  .hashtag {
+
+    cursor:none;
+
+  }
+
 }
 
 .card-button-list:after{

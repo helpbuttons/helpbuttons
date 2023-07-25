@@ -64,7 +64,7 @@
     "newpost": "There is a new post '{0}' posted to the helpbutton {1}",
     "newcomment": "There is a new comment '{0}' posted to the post '{1}'",
     "noactivity": "You have no activity yet! Start publishing or interact with others!",
-    "markedAllAsRead": "Notificaciones marcadas como leídas"
+    "markedAllAsRead": "Notifications marked as read"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -104,6 +104,7 @@
     "copy": "Copy Link",
     "delete": "Delete",
     "edit": "Edit",
+    "created": "Your helpbutton has been created",
     "errorCreated": ""
   },
   "user": {
@@ -131,6 +132,7 @@
     "deactivate": "Deactivate Account",
     "description": "Description",
     "loginLink": "I have an account",
+    "loginWEmail": "Login with password",
     "register": "REGISTER",
     "sendLoginToken": "Send login token",
     "loginClick": "One click login",

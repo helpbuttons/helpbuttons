@@ -1,51 +1,57 @@
 //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
+import Dropdown from 'elements/Dropdown/DropDown';
 import CardNotification from '../../components/feed/CardNotification';
-import Dropdown from 'elements/Dropdown/Dropdown';
 import Btn, { ContentAlignment } from 'elements/Btn';
 
 import t from 'i18n';
 import router from 'next/router';
 import { useToggle } from 'shared/custom.hooks';
+import { useState } from 'react';
 
-export default function FeedProfile({ activities, setNotifFilter }) {
-  
-
+export default function FeedProfile({ allActivities }) {
   const [showSelectFilteredFeed, setShowSelectFilteredFeed] =
     useToggle(false);
-  
-const dropdownOptions = [
-  {
-    name: 'Show All Notificactions',
-    obj: null,
-    onClick: () => {
-      setNotifFilter();
-      setShowSelectFilteredFeed(true);
-    },
-  },
-  {
-    name: 'Show Messages',
-    obj: null,
-    onClick: () => {
-      setNotifFilter();
-      setShowSelectFilteredFeed(true);
-    },
-  },
-  {
-    name: 'Show Posts',
-    obj: null,
-    onClick: () => {
-      setNotifFilter();
-      setShowSelectFilteredFeed(true);
-    },
-  },
-];
+  const [activities, setActivities] = useState(allActivities);
 
+  const dropdownOptions = [
+    {
+      name: 'Show All Notificactions',
+      obj: null,
+      onClick: () => {
+        setActivities(() => allActivities);
+        setShowSelectFilteredFeed(true);
+      },
+    },
+    {
+      name: 'Show Messages',
+      obj: null,
+      onClick: () => {
+        setActivities(() =>
+          allActivities.find(
+            (activity) => activity.eventName.indexOf('message') > -1,
+          ),
+        );
+        setShowSelectFilteredFeed(true);
+      },
+    },
+    {
+      name: 'Show Posts',
+      obj: null,
+      onClick: () => {
+        setActivities(() => {
+          return allActivities.filter(
+            (activity) => activity.eventName.indexOf('post') > -1,
+          );
+        });
+        setShowSelectFilteredFeed(true);
+      },
+    },
+  ];
 
   return (
     <div className="feed-container">
-
       <div className="feed-selector feed-selector--activity">
-        <Dropdown  listOption={dropdownOptions}/>
+        <Dropdown listOption={dropdownOptions} />
       </div>
 
       <div className="feed-line"></div>
