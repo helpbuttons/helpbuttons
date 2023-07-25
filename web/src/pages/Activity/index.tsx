@@ -29,7 +29,7 @@ export default function Activity() {
       <div className="body__content">
         <div className="body__section">
           <LoadabledComponent loading={!activities}>
-            <FeedProfile activities={activities} />
+            <FeedProfile allActivities={activities} />
           </LoadabledComponent>
         </div>
       </div>

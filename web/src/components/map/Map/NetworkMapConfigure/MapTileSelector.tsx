@@ -2,7 +2,7 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { useToggle } from 'shared/custom.hooks';
 import { HbMapTiles } from '../Map.consts';
 import t from 'i18n';
-import Dropdown from 'elements/Dropdown/Dropdown';
+import Dropdown from 'elements/Dropdown/DropDown';
 
 
 
@@ -18,7 +18,7 @@ const dropdownOptions = [
     obj: HbMapTiles.OSM,
     onClick: () => {
       setMapTile(HbMapTiles.OSM);
-      setShowSelectTileType();
+      setShowSelectTileType(false);
     },
   },
   {
@@ -26,7 +26,7 @@ const dropdownOptions = [
     obj: HbMapTiles.TERRAIN,
     onClick: () => {
       setMapTile(HbMapTiles.TERRAIN);
-      setShowSelectTileType();
+      setShowSelectTileType(false);
     },
   },
   {
@@ -34,7 +34,7 @@ const dropdownOptions = [
     obj: HbMapTiles.TONER,
     onClick: () => {
       setMapTile(HbMapTiles.TONER);
-      setShowSelectTileType();
+      setShowSelectTileType(false);
     },
   },
   {
@@ -42,7 +42,7 @@ const dropdownOptions = [
     obj: HbMapTiles.WATERCOLOR,
     onClick: () => {
       setMapTile(HbMapTiles.WATERCOLOR);
-      setShowSelectTileType();
+      setShowSelectTileType(false);
     },
   },
 ];
