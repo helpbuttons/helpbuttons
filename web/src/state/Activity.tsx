@@ -6,9 +6,10 @@ import { Activity } from 'shared/entities/activity.entity';
 import { ActivityEventName } from 'shared/types/activity.list';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { handleError } from './helper';
+import { of } from 'rxjs';
 
 export class FindActivities implements WatchEvent {
-  public constructor(public onError) {}
+  public constructor() {}
 
   public watch(state: GlobalState) {
     return ActivityService.find().pipe(
@@ -25,7 +26,10 @@ export class FindActivities implements WatchEvent {
         });
         store.emit(new ActivitiesFound(activities));
       }),
-      catchError((error) => handleError(this.onError, error)),
+      catchError((error) => {
+        console.error(error)
+        return of(undefined)
+      }),
     );
   }
 }
@@ -61,3 +65,10 @@ export const unreadActivities = (activities) => {
     return accumulator;
   }, 0);
 };
+
+export const refeshActivities = () => {
+  store.emit(
+    new FindActivities(),
+  );
+}
+  
