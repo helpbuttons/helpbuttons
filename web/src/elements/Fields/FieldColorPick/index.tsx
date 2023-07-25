@@ -8,6 +8,7 @@ export const FieldColorPick = React.forwardRef(
   (
     {
       label,
+      actionName,
       name,
       classNameInput,
       placeholder,
@@ -17,34 +18,38 @@ export const FieldColorPick = React.forwardRef(
       value,
       explain,
       setValue,
+      hideBoilerPlate = false,
     },
     ref,
   ) => {
     const [stateColor, setStateColor] = useState(null);
     const [showHideMenu, setHideMenu] = useState(false);
-    const deboungBgColor = useDebounce(stateColor, 50)
+    const deboungBgColor = useDebounce(stateColor, 50);
     const setColor = (color) => {
-        setStateColor(() => color)
-    }
+      setStateColor(() => color);
+    };
 
     useEffect(() => {
-        if(deboungBgColor)
-        {
-            setValue(name, deboungBgColor)
-        }
-    }, [deboungBgColor])
-    
+      if (deboungBgColor) {
+        setValue(name, deboungBgColor);
+      }
+    }, [deboungBgColor]);
+
     return (
       <div className="form__field">
-        <p className="form__label">{label}</p>
-        <p className="form__explain">{explain}</p>
+        {hideBoilerPlate && (
+          <>
+            <p className="form__label">{label}</p>
+            <p className="form__explain">{explain}</p>
+          </>
+        )}
         <div
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}
         >
-          {t('button.pickAColor')}&nbsp;&nbsp;
+          {actionName}&nbsp;&nbsp;
           <span style={{ color: value }}>{value}</span>
-          {showHideMenu &&  <IoClose />}
+          {showHideMenu && <IoClose />}
         </div>
         <input
           name={name}
@@ -59,7 +64,10 @@ export const FieldColorPick = React.forwardRef(
           type="hidden"
         />
         {showHideMenu && (
-          <HexColorPicker color={value} onChange={(color) => setColor(color)} />
+          <HexColorPicker
+            color={value}
+            onChange={(color) => setColor(color)}
+          />
         )}
         <FieldError validationError={validationError} />
       </div>
