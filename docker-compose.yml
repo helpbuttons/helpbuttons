@@ -49,7 +49,6 @@ services:
 networks:
   web:
   api:
-    internal: true
   db:
     internal: true
 
