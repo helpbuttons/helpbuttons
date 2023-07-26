@@ -22,33 +22,17 @@ export function Dropdown({
       <select
         className="dropdown-select__trigger"
         onChange={handleChange}
+        defaultValue={defaultSelected}
       >
-        {options.map((option, index) => {
-          if (option.value === selected) {
-            return (
-              <option
-                className="dropdown-select__option"
-                key={index}
-                value={option.value}
-                selected
-              >
-                {' '}
-                {option.name}
-              </option>
-            );
-          } else {
-            return (
-              <option
-                className="dropdown-select__option"
-                key={index}
-                value={option.value}
-              >
-                {' '}
-                {option.name}
-              </option>
-            );
-          }
-        })}
+        {options.map((option, index) => (
+          <option
+            className="dropdown-select__option"
+            key={index}
+            value={option.value}
+          >
+            {option.name}
+          </option>
+        ))}
       </select>
     </>
   );

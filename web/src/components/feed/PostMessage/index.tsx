@@ -1,6 +1,7 @@
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { formatMessage } from 'elements/Message';
 import { readableTimeLeftToDate } from 'shared/date.utils';
+import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
 
 export default function PostMessage({ post, isButtonOwnerComment }) {
   return (
@@ -21,7 +22,8 @@ export default function PostMessage({ post, isButtonOwnerComment }) {
               <div className="message__content">{post.message}</div>
 
                 <div className="message__hour">
-                  {readableTimeLeftToDate(post.created_at)}
+                
+ {readableTimeLeftToDate(post.created_at)}, {post.privacy == CommentPrivacyOptions.PRIVATE && <span style={{color: 'red'}}>private</span>}
                 </div>
               
 
@@ -51,9 +53,9 @@ export default function PostMessage({ post, isButtonOwnerComment }) {
           </div>
           <div className="card-notification__text">
             <div className="card-notification__header">
-              <div class="card-notification__info">
+              <div className="card-notification__info">
                 {' '}
-                <div class="card-notification__name">
+                <div className="card-notification__name">
                   {post.author.name}
                 </div>{' '}
                 @{post.author.username}

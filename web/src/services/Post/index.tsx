@@ -1,6 +1,7 @@
 import { Observable } from "rxjs";
 import { httpService } from "services/HttpService";
 import { MessageDto } from "shared/dtos/post.dto";
+import { CommentPrivacyOptions } from "shared/types/privacy.enum";
 
 export class PostService {
 
@@ -19,9 +20,10 @@ export class PostService {
   
   public static newComment(
     postId: string,
+    privacy: CommentPrivacyOptions,
     data: MessageDto,
   ): Observable<any> {
-    return httpService.post("/post/new/comment/" + postId, data);
+    return httpService.post(`/post/new/comment/${privacy}/${postId}`, data);
   }
 
   public static delete(
