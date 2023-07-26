@@ -63,6 +63,8 @@ export default function ButtonForm({
     }
   }, [buttonDraft]);
 
+  const buttonType = watch('type')
+
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       const values = getValues();
@@ -75,15 +77,25 @@ export default function ButtonForm({
       } else {
         setIsReadyForLocationAndTime(false);
       }
+      
+    });
+    
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  useEffect(() => {
+    if(buttonTypes)
+    {
+      const values = getValues();
       const buttonType = buttonTypes.find((buttonType) => {
         return buttonType.name === values.type;
       });
       if (buttonType) {
-        setMarkerColor(buttonType.cssColor);
+        setMarkerColor(() => buttonType.cssColor);
       }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+    }
+  }, [buttonType, buttonTypes])
+  
   const closeClicked = () => {
     store.emit(new SaveButtonDraft(getValues()));
     Router.push('/Explore');
