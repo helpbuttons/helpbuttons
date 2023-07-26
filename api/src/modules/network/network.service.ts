@@ -37,7 +37,7 @@ export class NetworkService {
       id: dbIdGenerator(),
       description: createDto.description,
       // url: createDto.url,
-      tags: createDto.tags,
+      tags: this.tagService.formatTags(createDto.tags),
       privacy: createDto.privacy,
       logo: null,
       jumbo: null,
@@ -127,11 +127,11 @@ export class NetworkService {
   async update(updateDto: UpdateNetworkDto){
     const defaultNetwork = await this.findDefaultNetwork();
 
-    const network = {
+    let network = {
       id: defaultNetwork.id,
       description: updateDto.description,
       // url: createDto.url,
-      tags: updateDto.tags,
+      tags: this.tagService.formatTags(updateDto.tags),
       privacy: updateDto.privacy,
       logo: null,
       jumbo: null,
