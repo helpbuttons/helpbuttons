@@ -37,7 +37,7 @@ export class NetworkService {
       id: dbIdGenerator(),
       description: createDto.description,
       // url: createDto.url,
-      tags: createDto.tags,
+      tags: this.tagService.formatTags(createDto.tags),
       privacy: createDto.privacy,
       logo: null,
       jumbo: null,
@@ -131,7 +131,7 @@ export class NetworkService {
       id: defaultNetwork.id,
       description: updateDto.description,
       // url: createDto.url,
-      tags: updateDto.tags,
+      tags: this.tagService.formatTags(updateDto.tags),
       privacy: updateDto.privacy,
       logo: null,
       jumbo: null,
@@ -140,12 +140,9 @@ export class NetworkService {
     } ;
     await getManager().transaction(
       async (transactionalEntityManager) => {
-        network.tags = []
         if (Array.isArray(updateDto.tags)) {
-          network.tags = await this.tagService
-            .addTags('network', network.id, updateDto.tags).then((
-              value
-            ) => value)
+          await this.tagService
+            .addTags('network', network.id, updateDto.tags)
             .catch((err) => {
               throw new HttpException(
                 { message: err.message },

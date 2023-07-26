@@ -12,6 +12,11 @@ export class TagService {
   constructor(@InjectRepository(Tag)
   private readonly tagRepository: Repository<Tag>) {}
 
+  formatTags(tags: string[])
+  {
+    return tags.map((tag) => tagify(tag))
+  }
+
   async createTag(tag: Tag) {
     const createdTag = this.tagRepository.create({
       id: dbIdGenerator(),
