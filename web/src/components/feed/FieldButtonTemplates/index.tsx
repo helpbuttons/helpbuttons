@@ -4,11 +4,10 @@ import { ContentAlignment } from 'elements/ImageWrapper';
 import t from 'i18n';
 import { useFieldArray } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import {
-  IoTrashBinOutline,
-} from 'react-icons/io5';
+import { IoTrashBinOutline } from 'react-icons/io5';
 import { useState, forwardRef } from 'react';
 import { CircleColorPick } from 'elements/Fields/FieldColorPick';
+import { getSlug } from 'shared/sys.helper';
 
 const FieldButtonTemplates = forwardRef(
   (
@@ -35,16 +34,19 @@ const FieldButtonTemplates = forwardRef(
       name,
       control,
     });
+    
     const watchValue = watch(name);
     const onAddNewButtonTemplate = (data) => {
-      if(text && color)
-      {
+      if (text && color) {
         append({
-          text: text,
-          color: color,
+          caption: text,
+          name: getSlug(text),
+          cssColor: color,
         });
-      }else{
-        alertService.warn('You need to pick a color and add a name before adding a new template button')
+      } else {
+        alertService.warn(
+          'You need to pick a color and add a name before adding a new template button',
+        );
       }
     };
 
@@ -76,21 +78,22 @@ const FieldButtonTemplates = forwardRef(
             value={color}
             hideBoilerPlate={true}
           />
-
         </div>
         {watchValue?.length > 0 &&
-          watchValue.map((val, idx) => 
-          <div key={idx}>
-          <p>NAME: {val.text} - VALUE:{val.color}</p>
-          <Btn
-            btnType={BtnType.iconActions}
-            iconLink={<IoTrashBinOutline />}
-            iconLeft={IconType.circle}
-            contentAlignment={ContentAlignment.center}
-            onClick={() => remove(idx)}
-          />
-          </div>
-        )}
+          watchValue.map((val, idx) => (
+            <div key={idx}>
+              <p>
+                NAME: {val.caption} - VALUE:{val.cssColor}
+              </p>
+              <Btn
+                btnType={BtnType.iconActions}
+                iconLink={<IoTrashBinOutline />}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => remove(idx)}
+              />
+            </div>
+          ))}
       </div>
     );
   },

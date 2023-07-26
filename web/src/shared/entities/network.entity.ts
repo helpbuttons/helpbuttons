@@ -55,4 +55,7 @@ export class Network extends BaseEntity {
 
   @Column({default: 'helpButton'})
   nomeclature: string;
+
+  @Column()
+  buttonTemplates: string;
 }

@@ -71,7 +71,7 @@ export class CreateNetworkDto implements Partial<Network> {
   @IsNotEmpty()
   textColor: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   buttonTemplates: string;
 }
 

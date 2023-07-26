@@ -4,17 +4,16 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { Link } from 'elements/Link';
 import { CardButtonHeadMedium } from 'components/button/CardButton';
-import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle } from 'shared/buttonTypes';
 
-export default function CardButtonList({ button }) {
-  const { cssColor } = buttonTypes.find((buttonType) => {
-    return buttonType.name === button.type;
-  });
-
+export default function CardButtonList({buttonTypes, button }) {
+  const buttonTemplate = buttonTypes.find((buttonTemplate) => buttonTemplate.name == button.type)
+  
+    
   return (
     <>
       <div className="list__element">
-        <div style={buttonColorStyle(cssColor)}>
+        <div style={buttonColorStyle(buttonTemplate.cssColor)}>
           <Link href={`/ButtonFile/${button.id}`}>
             <div className="card-button-list">
               <div className="card-button-list__picture-container">
@@ -34,7 +33,7 @@ export default function CardButtonList({ button }) {
                 />
               </div>
               <div className="card-button-list__content">
-                <CardButtonHeadMedium button={button} />
+                <CardButtonHeadMedium button={button} buttonTemplate={buttonTemplate}/>
               </div>
             </div>
           </Link>

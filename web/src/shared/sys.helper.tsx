@@ -94,3 +94,13 @@ export function isRoleAllowed(role: Role, path): boolean {
     );
   }
 }
+
+export const getSlug = (str) => {
+  let strOut = str
+    .replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ')
+    .toLowerCase();
+
+  // trim spaces at start and end of string
+  strOut = strOut.replace(/^\s+|\s+$/gm, '');
+  return strOut;
+};

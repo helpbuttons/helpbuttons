@@ -13,7 +13,7 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
-import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle } from 'shared/buttonTypes';
 import { ShowWhen } from 'elements/Fields/FieldDate';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
@@ -27,10 +27,8 @@ const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
 };
 
-export default function CardButtonFile({ button }) {
-  const { cssColor } = buttonTypes.find((buttonType) => {
-    return buttonType.name === button.type;
-  });
+export default function CardButtonFile({ button, buttonTypes }) {
+  const buttonType = buttonTypes.find((buttonType) => buttonType.name == button.type)
 
   return (
     <>
@@ -39,9 +37,9 @@ export default function CardButtonFile({ button }) {
           <div>
             <div
               className="card-button card-button__file"
-              style={buttonColorStyle(cssColor)}
+              style={buttonColorStyle(buttonType.cssColor)}
             >
-              <CardButtonHeadBig button={button} />
+              <CardButtonHeadBig button={button} buttonTypes={buttonTypes}/>
             </div>
             <CardButtonImages button={button} />
             <CardButtonOptions />
@@ -53,10 +51,8 @@ export default function CardButtonFile({ button }) {
 }
 
 // card button list on explore
-export function CardButtonHeadMedium({ button }) {
-  const { cssColor, caption } = buttonTypes.find((buttonType) => {
-    return buttonType.name === button.type;
-  });
+export function CardButtonHeadMedium({ button, buttonType }) {
+  
   return (
     <div className="card-button__content">
       <div className="card-button__header">
@@ -74,9 +70,9 @@ export function CardButtonHeadMedium({ button }) {
           <div className="card-button__status card-button__status">
             <span
               className="card-button"
-              style={buttonColorStyle(cssColor)}
+              style={buttonColorStyle(buttonType.cssColor)}
             >
-               {caption}
+               {buttonType.caption}
             </span>
           </div>
           <div className="card-button__name">
@@ -205,7 +201,7 @@ function CardButtonSubmenu({ button }) {
     </section>
   );
 }
-export function CardButtonHeadBig({ button }) {
+export function CardButtonHeadBig({ button, buttonTypes }) {
   const { cssColor,caption } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
