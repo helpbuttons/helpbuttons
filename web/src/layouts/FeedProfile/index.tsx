@@ -1,5 +1,3 @@
-//FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
-import Dropdown from 'elements/Dropdown/DropDown';
 import CardNotification from '../../components/feed/CardNotification';
 import Btn, { ContentAlignment } from 'elements/Btn';
 
@@ -7,51 +5,46 @@ import t from 'i18n';
 import router from 'next/router';
 import { useToggle } from 'shared/custom.hooks';
 import { useState } from 'react';
+import { Dropdown } from 'elements/Dropdown/Dropdown';
 
 export default function FeedProfile({ allActivities }) {
   const [showSelectFilteredFeed, setShowSelectFilteredFeed] =
     useToggle(false);
   const [activities, setActivities] = useState(allActivities);
 
-  const dropdownOptions = [
+  const notificationTypeOptions = [
     {
       name: 'Show All Notificactions',
-      obj: null,
-      onClick: () => {
-        setActivities(() => allActivities);
-        setShowSelectFilteredFeed(true);
-      },
+      value: 'all',
     },
     {
       name: 'Show Messages',
-      obj: null,
-      onClick: () => {
-        setActivities(() =>
-          allActivities.find(
-            (activity) => activity.eventName.indexOf('message') > -1,
-          ),
-        );
-        setShowSelectFilteredFeed(true);
-      },
+      value: 'message',
     },
     {
       name: 'Show Posts',
-      obj: null,
-      onClick: () => {
-        setActivities(() => {
-          return allActivities.filter(
-            (activity) => activity.eventName.indexOf('post') > -1,
-          );
-        });
-        setShowSelectFilteredFeed(true);
-      },
+      value: 'post',
     },
   ];
-
+  const onChange = (value) => {
+    setActivities(() => {
+      if (value != 'all') {
+        return allActivities.filter(
+          (activity) => activity.eventName.indexOf(value) > -1,
+        );
+      }
+      return allActivities;
+    });
+    setShowSelectFilteredFeed(true);
+  };
   return (
     <div className="feed-container">
       <div className="feed-selector feed-selector--activity">
-        <Dropdown listOption={dropdownOptions} />
+        <Dropdown
+          options={notificationTypeOptions}
+          onChange={onChange}
+          defaultSelected={"all"}
+        />
       </div>
 
       <div className="feed-line"></div>
