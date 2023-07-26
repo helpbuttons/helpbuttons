@@ -13,17 +13,19 @@ export function HeaderSearch({ results, isHome }) {
     (state: GlobalState) => state.explore.map,
     false,
   );
-  
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
   return (
     <div className="header-search__tool">
       <div className="header-search__form">
-      <LoadabledComponent loading={exploreMapState.loading && !isHome}>
+      <LoadabledComponent loading={exploreMapState.loading && !isHome && buttonTypes}>
         <div className="header-search__column">
           <SearchText count={results.count} where={exploreMapState.filters.where} />
           <SearchInfo
             helpButtonTypes={exploreMapState.filters.helpButtonTypes}
             when={exploreMapState.filters.when}
             what={exploreMapState.filters.query}
+            buttonTypes={buttonTypes}
           />
 
           <div className="header-search__icon">
@@ -61,10 +63,9 @@ function SearchText({ count, where }) {
   );
 }
 
-function SearchInfo({ helpButtonTypes, when, what }) {
-  const [buttonTypes, setButtonTypes] = useState([]);
-  useButtonTypes(setButtonTypes);
-  
+function SearchInfo({ helpButtonTypes, when, what, buttonTypes }) {
+
+
   const types = (helpButtonTypes) => {
     if (helpButtonTypes.length < 1) {
       return t('buttonFilters.allButtonTypes');
