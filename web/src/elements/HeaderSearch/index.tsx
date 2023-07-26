@@ -2,9 +2,9 @@ import { IoSearch } from 'react-icons/io5';
 import React, { useState } from 'react';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import { buttonTypes } from 'shared/buttonTypes';
 import { LoadabledComponent } from 'components/loading';
 import t from 'i18n';
+import { useButtonTypes } from 'shared/buttonTypes';
 
 ///search button in explore and home
 export function HeaderSearch({ results, isHome }) {
@@ -13,7 +13,7 @@ export function HeaderSearch({ results, isHome }) {
     (state: GlobalState) => state.explore.map,
     false,
   );
-
+  
   return (
     <div className="header-search__tool">
       <div className="header-search__form">
@@ -62,6 +62,9 @@ function SearchText({ count, where }) {
 }
 
 function SearchInfo({ helpButtonTypes, when, what }) {
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
+  
   const types = (helpButtonTypes) => {
     if (helpButtonTypes.length < 1) {
       return t('buttonFilters.allButtonTypes');

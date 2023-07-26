@@ -13,7 +13,6 @@ import ButtonShare from 'components/button/ButtonShare';
 // import ButtonNewDate from 'components/button/ButtonNewDate';
 import FieldTags from 'elements/Fields/FieldTags';
 import { useRef } from 'store/Store';
-import { buttonTypes } from 'shared/buttonTypes';
 // import FieldImageUpload from "elements/Fields/FieldImageUpload";
 import { GlobalState, store } from 'pages';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
@@ -23,6 +22,7 @@ import t from 'i18n';
 import { LoadabledComponent } from 'components/loading';
 import Router from 'next/router';
 import { SaveButtonDraft } from 'state/Explore';
+import { useButtonTypes } from 'shared/buttonTypes';
 
 export default function ButtonForm({
   onSubmit,
@@ -38,14 +38,17 @@ export default function ButtonForm({
   isSubmitting,
   title,
 }) {
-    const selectedNetwork: Network = useRef(
-      store,
-      (state: GlobalState) => state.networks.selectedNetwork,
-    );
-    const buttonDraft = useRef(
-      store,
-      (state: GlobalState) => state.explore.draftButton,
-    );
+  const selectedNetwork: Network = useRef(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+  const buttonDraft = useRef(
+    store,
+    (state: GlobalState) => state.explore.draftButton,
+  );
+
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
 
   const [date, setDate] = useState('');
 
@@ -83,9 +86,9 @@ export default function ButtonForm({
   }, [watch]);
   const closeClicked = () => {
     store.emit(new SaveButtonDraft(getValues()));
-    Router.push('/Explore')
-  }
-  
+    Router.push('/Explore');
+  };
+
   return (
     <LoadabledComponent loading={!selectedNetwork}>
       <Popup title={title} onCloseClicked={closeClicked}>
@@ -100,6 +103,7 @@ export default function ButtonForm({
               {...register('type', { required: true })}
               validationError={errors.type}
               explain={t('button.typeExplain')}
+              buttonTypes={buttonTypes}
             />
             <FieldText
               name="title"
@@ -133,7 +137,7 @@ export default function ButtonForm({
               placeholder={t('common.add')}
               validationError={errors.tags}
               setTags={(tags) => {
-                setValue('tags', tags)
+                setValue('tags', tags);
               }}
               tags={watch('tags')}
             />
@@ -149,24 +153,24 @@ export default function ButtonForm({
               validationError={errors.image}
             />
             <>
-            {selectedNetwork && 
-              <FieldLocation
-                label={t('button.whereLabel')}
-                updateMarkerPosition={([lat, lng]) => {
-                  setValue('latitude', lat);
-                  setValue('longitude', lng);
-                }}
-                updateAddress={(address) => {
-                  setValue('address', address);
-                }}
-                markerAddress={watch('address')}
-                markerImage={watch('image')}
-                markerCaption={watch('title')}
-                markerColor={markerColor}
-                selectedNetwork={selectedNetwork}
-                validationError={errors.location}
-              />
-              }
+              {selectedNetwork && (
+                <FieldLocation
+                  label={t('button.whereLabel')}
+                  updateMarkerPosition={([lat, lng]) => {
+                    setValue('latitude', lat);
+                    setValue('longitude', lng);
+                  }}
+                  updateAddress={(address) => {
+                    setValue('address', address);
+                  }}
+                  markerAddress={watch('address')}
+                  markerImage={watch('image')}
+                  markerCaption={watch('title')}
+                  markerColor={markerColor}
+                  selectedNetwork={selectedNetwork}
+                  validationError={errors.location}
+                />
+              )}
               {/* <FieldDate
                 dateType={watch('when.type')}
                 dates={watch('when.dates')}
