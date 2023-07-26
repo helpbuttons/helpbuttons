@@ -95,15 +95,7 @@ export class AuthService {
       })
       .then((user) => {
         if (!newUserDto.emailVerified) {
-          this.sendLoginToken(newUserDto).then(
-            (mailActivation) => {
-              console.log(
-                `activation mail sent: ${newUserDto.email}`,
-              );
-            }
-          ).catch((error) => {
-            console.log(`error sending email: `, JSON.stringify(error))
-          });
+          this.sendLoginToken(newUserDto);
         }
         return user;
       })
@@ -131,12 +123,12 @@ export class AuthService {
     const activationUrl: string = `${config.hostName}/LoginClick/${user.verificationToken}`;
 
     if (user.emailVerified === true) {
-      return this.mailService.sendLoginTokenEmail({
+      this.mailService.sendLoginTokenEmail({
         to: user.email,
         activationUrl,
       });
     }
-    return this.mailService.sendActivationEmail({
+    this.mailService.sendActivationEmail({
       to: user.email,
       activationUrl,
     });
