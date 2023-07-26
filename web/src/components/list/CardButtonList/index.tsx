@@ -7,13 +7,13 @@ import { CardButtonHeadMedium } from 'components/button/CardButton';
 import { buttonColorStyle } from 'shared/buttonTypes';
 
 export default function CardButtonList({buttonTypes, button }) {
-  const buttonTemplate = buttonTypes.find((buttonTemplate) => buttonTemplate.name == button.type)
+  const buttonType = buttonTypes.find((buttonTemplate) => buttonTemplate.name == button.type)
   
     
   return (
     <>
       <div className="list__element">
-        <div style={buttonColorStyle(buttonTemplate.cssColor)}>
+        <div style={buttonColorStyle(buttonType.cssColor)}>
           <Link href={`/ButtonFile/${button.id}`}>
             <div className="card-button-list">
               <div className="card-button-list__picture-container">
@@ -33,7 +33,7 @@ export default function CardButtonList({buttonTypes, button }) {
                 />
               </div>
               <div className="card-button-list__content">
-                <CardButtonHeadMedium button={button} buttonTemplate={buttonTemplate}/>
+                <CardButtonHeadMedium button={button} buttonType={buttonType}/>
               </div>
             </div>
           </Link>
