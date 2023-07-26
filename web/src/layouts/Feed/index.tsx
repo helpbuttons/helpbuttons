@@ -4,7 +4,6 @@ import PostComments from 'components/feed/PostComments';
 import PostMessage from 'components/feed/PostMessage';
 import PostNew from 'components/feed/PostNew';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
-import Dropdown from 'elements/Dropdown/Dropdown';
 import t from 'i18n';
 import { IoTrashBinOutline } from 'react-icons/io5';
 
@@ -12,9 +11,9 @@ import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
-import { Post } from 'shared/entities/post.entity';
 import { DeletePost, LoadPosts } from 'state/Posts';
 import { useRef } from 'store/Store';
+import { isAdmin } from 'state/Users';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -147,7 +146,7 @@ export function FeedElement({ post, loggedInUser, onNewComment, buttonOwnerId, i
                 btnType={BtnType.iconActions}
                 iconLink={<IoTrashBinOutline/>}
                 iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.right}
+                contentAlignment={ContentAlignment.right}\
                 onClick={() => deletePost(post.id)}
               />
             )}
