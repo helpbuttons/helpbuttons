@@ -203,12 +203,13 @@ function NetworkForm({
             tags={watch('tags')}
           />
           <hr></hr>
-
+{/*
           <div className="form__section-title">
             {t('configuration.moderateNetwork')}
           </div>
 
-          {/* Blocked users */}
+
+          
           <FieldTags
             label={t('configuration.blocked')}
             explain={t('configuration.blockedExplain')}
@@ -220,7 +221,6 @@ function NetworkForm({
             tags={watch('tags')}
           />
 
-          {/* Admin Users */}
           <FieldTags
             label={t('configuration.adminUsers')}
             explain={t('configuration.adminUsersExplain')}
@@ -231,6 +231,7 @@ function NetworkForm({
             }}
             tags={watch('tags')}
           />
+          */}
           <div className="publish__submit">
             <Btn
               btnType={BtnType.submit}
