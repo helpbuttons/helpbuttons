@@ -4,12 +4,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { Repository } from 'typeorm';
 import { Tag } from './tag.entity';
+import { tagify } from '@src/shared/helpers/tagify.helper';
 
 @Injectable()
 export class TagService {
   
   constructor(@InjectRepository(Tag)
   private readonly tagRepository: Repository<Tag>) {}
+
+  formatTags(tags: string[])
+  {
+    return tags.map((tag) => tagify(tag))
+  }
 
   async createTag(tag: Tag) {
     const createdTag = this.tagRepository.create({
@@ -34,10 +40,10 @@ export class TagService {
         id: dbIdGenerator(),
         modelName: modelName,
         modelId: modelId,
-        tag: tag,
+        tag: tagify(tag),
       };
     });
-    return await this.tagRepository.insert(tagsToInsert);
+    return await this.tagRepository.insert(tagsToInsert).then((value) => tagsToInsert.map((tagInserted) => tagInserted.tag));
   }
 
   async updateTags(
@@ -50,10 +56,10 @@ export class TagService {
         id: dbIdGenerator(),
         modelName: modelName,
         modelId: modelId,
-        tag: tag,
+        tag: tagify(tag),
       };
     });
     // await this.tagRepository.delete({modelName, modelId})
-    return await this.tagRepository.insert(tagsToInsert);
+    return await this.tagRepository.insert(tagsToInsert).then((value) => tagsToInsert.map((tagInserted) => tagInserted.tag));
   }
 }

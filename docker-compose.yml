@@ -48,10 +48,11 @@ services:
 
 networks:
   web:
-  api:
-    internal: true
+    external:
+      name: web
   db:
-    internal: true
+  api:
+
 
 volumes:
   db:
