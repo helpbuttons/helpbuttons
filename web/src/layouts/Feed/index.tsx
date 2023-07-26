@@ -3,7 +3,11 @@ import PostCommentNew from 'components/feed/PostCommentNew';
 import PostComments from 'components/feed/PostComments';
 import PostMessage from 'components/feed/PostMessage';
 import PostNew from 'components/feed/PostNew';
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import Btn, {
+  BtnType,
+  ContentAlignment,
+  IconType,
+} from 'elements/Btn';
 import t from 'i18n';
 import { IoTrashBinOutline } from 'react-icons/io5';
 
@@ -17,8 +21,7 @@ import { isAdmin } from 'state/Users';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
-  
-  
+
   const loggedInUser = useRef(
     store,
     (state: GlobalState) => state.loggedInUser,
@@ -26,7 +29,6 @@ export default function Feed({ button }: { button: Button }) {
   const isButtonOwner = loggedInUser?.id == button.owner.id;
   const buttonOwnerId = button.owner.id;
 
- 
   const reloadPosts = () => {
     if (button && button.id) {
       store.emit(
@@ -118,38 +120,54 @@ export default function Feed({ button }: { button: Button }) {
     </div>
   );
 }
-export function FeedElement({ post, loggedInUser, onNewComment, buttonOwnerId, isButtonOwner = false, reloadPosts }) {
+export function FeedElement({
+  post,
+  loggedInUser,
+  onNewComment,
+  buttonOwnerId,
+  isButtonOwner = false,
+  reloadPosts,
+}) {
   const [showNewCommentDialog, setShowNewCommentDialog] =
     useState(false);
 
-    const deletePost = (postId) => {
-      store.emit(new DeletePost(postId,reloadPosts, (error) => {alertService.error(error)}));
-    };
+  const deletePost = (postId) => {
+    store.emit(
+      new DeletePost(postId, reloadPosts, (error) => {
+        alertService.error(error);
+      }),
+    );
+  };
   return (
     <div className="feed-element">
       <div className="card-notification">
-      <div className="card-notification__comment-count">
+        <div className="card-notification__comment-count">
           <div className="card-notification__label">
-            <div className="hashtag hashtag--blue">{t('feed.update')}</div>
+            <div className="hashtag hashtag--blue">
+              {t('feed.update')}
+            </div>
           </div>
         </div>
-        <PostMessage post={post} isButtonOwnerComment={buttonOwnerId == post.author.id}/>
+        <PostMessage
+          post={post}
+          isButtonOwnerComment={buttonOwnerId == post.author.id}
+        />
 
         <>
-
           <div className="card-notification__answer-btn">
-            
-            {(loggedInUser && (loggedInUser.id == post.author.id || isButtonOwner || isAdmin(loggedInUser)) )&& (
-
-              <Btn
-                submit={true}
-                btnType={BtnType.iconActions}
-                iconLink={<IoTrashBinOutline/>}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.right}\
-                onClick={() => deletePost(post.id)}
-              />
-            )}
+            {loggedInUser &&
+              (loggedInUser.id == post.author.id ||
+                isButtonOwner ||
+                isAdmin(loggedInUser)) && (
+                <Btn
+                  submit={true}
+                  btnType={BtnType.iconActions}
+                  iconLink={<IoTrashBinOutline />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.right}
+                  onClick={() => deletePost(post.id)}
+                />
+              )}
           </div>
 
           {loggedInUser && (
@@ -162,7 +180,13 @@ export function FeedElement({ post, loggedInUser, onNewComment, buttonOwnerId, i
             />
           )}
         </>
-        <PostComments  buttonOwnerId = {buttonOwnerId} comments={post.comments} reloadPosts={reloadPosts} loggedInUser={loggedInUser} isButtonOwner={isButtonOwner}/>
+        <PostComments
+          buttonOwnerId={buttonOwnerId}
+          comments={post.comments}
+          reloadPosts={reloadPosts}
+          loggedInUser={loggedInUser}
+          isButtonOwner={isButtonOwner}
+        />
       </div>
     </div>
   );
