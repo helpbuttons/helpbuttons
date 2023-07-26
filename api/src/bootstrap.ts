@@ -15,6 +15,7 @@ import {
   ValidationFilter,
 } from './shared/middlewares/errors/validation-filter.middleware';
 import { configFileName } from './shared/helpers/config-name.const';
+import { GlobalVarHelper } from './shared/helpers/global-var.helper';
 
 export const bootstrap = async () => {
     /**
@@ -49,6 +50,19 @@ export const bootstrap = async () => {
       }),
     );
   
+
+    const nodemailer = require('nodemailer');
+    const transporter = nodemailer.createTransport(configs.smtpUrl);
+    await transporter
+      .verify()
+      .then(() => {
+        console.log(`SMTP is OK!`);
+        GlobalVarHelper.smtpAvailable = true
+      })
+      .catch((error) => {
+        console.log(`Error connecting to smtp: ${JSON.stringify(error)}`);
+      });
+
     const config = new DocumentBuilder()
       .setTitle('Helpbuttons backend')
       .setDescription('.')
@@ -56,6 +70,7 @@ export const bootstrap = async () => {
       .addTag('hb')
       .addBearerAuth()
       .build();
+
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('doc', app, document);
     await app.listen('3001');
