@@ -127,7 +127,7 @@ export class NetworkService {
   async update(updateDto: UpdateNetworkDto){
     const defaultNetwork = await this.findDefaultNetwork();
 
-    const network = {
+    let network = {
       id: defaultNetwork.id,
       description: updateDto.description,
       // url: createDto.url,
@@ -140,9 +140,12 @@ export class NetworkService {
     } ;
     await getManager().transaction(
       async (transactionalEntityManager) => {
+        network.tags = []
         if (Array.isArray(updateDto.tags)) {
-          await this.tagService
-            .addTags('network', network.id, updateDto.tags)
+          network.tags = await this.tagService
+            .addTags('network', network.id, updateDto.tags).then((
+              value
+            ) => value)
             .catch((err) => {
               throw new HttpException(
                 { message: err.message },
