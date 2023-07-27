@@ -6,6 +6,7 @@ import { ActivityEventName } from '@src/shared/types/activity.list';
 import { Repository } from 'typeorm';
 import { Activity } from './activity.entity';
 import { MailService } from '../mail/mail.service';
+import translate from '../../shared/helpers/i18n.helper';
 
 @Injectable()
 export class ActivityService {
@@ -37,7 +38,17 @@ export class ActivityService {
       eventName: payload.activityEventName,
       data: JSON.stringify(payload.data)
     };
-    this.mailService.sendActivity(activity)
+    console.log(payload.data)
+    console.log(payload.destination)
+    const messageContent = translate('en','activities.newpost', [
+      payload.data.message,
+      payload.data.button.title,
+    ])
+    this.mailService.sendActivity(
+      {
+        content: messageContent,
+        to: payload.destination.email
+    })
     // this.activityRepository.insert([activity])
   }
 
