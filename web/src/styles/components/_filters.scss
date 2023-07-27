@@ -42,9 +42,9 @@ $filters-padding: 10px;
 
 .filters__actions {
 
-  margin-top: auto;
   position: fixed;
-  width: 100vw;
+  margin-top: auto;
+  width: 100%;
   bottom: 0;
   display: flex;
   left: 0;
@@ -104,6 +104,11 @@ $filters-padding: 10px;
     padding: $padding-big $padding-small;
   }
 
+  .filters__container{
+
+    width: 100%;
+  }
+
 
   .filters--vertical {
 
@@ -114,12 +119,8 @@ $filters-padding: 10px;
 
   .filters__actions {
 
-    position: fixed;
-    bottom: 0;
-    padding: 0;
     width: 33vw;
-    margin: 0;
-  
+    
   }
   
 
