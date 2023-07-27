@@ -6,9 +6,10 @@ import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { ClearDraftNewPostComment, CreateNewPostComment, SaveDraftNewPostComment } from 'state/Posts';
 import { IoPaperPlaneOutline } from 'react-icons/io5';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
+import { useStore } from 'store/Store';
 
 export default function PostCommentNew({ postId, onSubmit, isGuest = false }) {
   const {
