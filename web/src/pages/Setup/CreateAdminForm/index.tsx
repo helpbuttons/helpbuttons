@@ -94,6 +94,7 @@ function CreateAdminForm() {
             password: data.password,
             name: '',
             avatar: data.avatar,
+            locale: data.locale
           },
           () => {
             router.push({
