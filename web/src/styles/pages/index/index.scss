@@ -27,7 +27,7 @@ $index-mobile-fixed-z-index: $z-index-05;
 
 .index__explore-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content:baseline;
   height: 100%;
   max-height: 100%;
