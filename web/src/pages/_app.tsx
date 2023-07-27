@@ -32,10 +32,10 @@ import { useInterval } from 'shared/custom.hooks';
 
 export default appWithTranslation(MyApp);
 
-const useActivitesPool = () => {
-  const increment = useCallback(() => refeshActivities(), [])
-  useInterval(increment, 10000)
-}
+const useActivitesPool = (loggedInUser) => {
+  const increment = useCallback(() => refeshActivities(), []);
+  useInterval(increment, 10000, {paused: !loggedInUser });
+};
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
@@ -45,10 +45,13 @@ function MyApp({ Component, pageProps }) {
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
   const [noBackend, setNobackend] = useState(false);
 
-  const config = useStore(store, (state: GlobalState) => state.config);
+  const config = useStore(
+    store,
+    (state: GlobalState) => state.config,
+  );
   const path = router.asPath.split('?')[0];
 
-  const [metadata, setMetadata] = useState(null)
+  const [metadata, setMetadata] = useState(null);
 
   const loggedInUser = useStore(
     store,
@@ -82,27 +85,29 @@ function MyApp({ Component, pageProps }) {
         new GetConfig(
           (config) => {
             console.log(`got config`);
-            if (
-              !setupPaths.includes(path)
-            ) {
+            if (!setupPaths.includes(path)) {
               fetchDefaultNetwork(config);
             }
           },
           (error) => {
-            if(SetupSteps.SYSADMIN_CONFIG.toString() == path || SetupSteps.CREATE_ADMIN_FORM.toString() == path)
-            {
+            if (
+              SetupSteps.SYSADMIN_CONFIG.toString() == path ||
+              SetupSteps.CREATE_ADMIN_FORM.toString() == path
+            ) {
               return;
             }
             if (error == 'not-found' || error == 'nosysadminconfig') {
-              console.error(error)
+              console.error(error);
               router.push(SetupSteps.SYSADMIN_CONFIG);
             }
 
             if (error == 'nobackend') {
-              alertService.error(`Backend not found, something went terribly wrong.`)
-              router.push('/Error')
+              alertService.error(
+                `Backend not found, something went terribly wrong.`,
+              );
+              router.push('/Error');
             }
-            console.log(error)
+            console.log(error);
             return;
           },
         ),
@@ -168,21 +173,22 @@ function MyApp({ Component, pageProps }) {
             (error) => {
               if (error === 'network-not-found') {
                 if (
-                  (configuration.databaseNumberMigrations < 1 || configuration.userCount < 1) &&
+                  (configuration.databaseNumberMigrations < 1 ||
+                    configuration.userCount < 1) &&
                   SetupSteps.CREATE_ADMIN_FORM != path
                 ) {
                   router.push(SetupSteps.CREATE_ADMIN_FORM);
                 } else if (
                   loggedInUser &&
                   (SetupSteps.NETWORK_CREATION == path ||
-                  SetupSteps.FIRST_OPEN == path)
+                    SetupSteps.FIRST_OPEN == path)
                 ) {
                   router.push({
                     pathname: '/Login',
                     query: { returnUrl: path },
                   });
                 } else {
-                  console.error('network not found')
+                  console.error('network not found');
                   console.error(error);
                   router.push({
                     pathname: SetupSteps.FIRST_OPEN,
@@ -196,15 +202,13 @@ function MyApp({ Component, pageProps }) {
     }
   }, [path, config, loggedInUser]);
 
-  useActivitesPool()
-  
+  useActivitesPool(loggedInUser);
 
   useEffect(() => {
-    if(config && selectedNetwork)
-    {
+    if (config && selectedNetwork) {
       setMetadata(() => {
-        return getMetadata('lala', selectedNetwork, config, 'fail')
-      })
+        return getMetadata('lala', selectedNetwork, config, 'fail');
+      });
     }
 
     // Function to adjust the height of the index__container based on the actual viewport height
@@ -216,26 +220,28 @@ function MyApp({ Component, pageProps }) {
     // Call the function on initial load and whenever the window is resized
     adjustHeight();
     window.addEventListener('resize', adjustHeight);
-    
+
     // Clean up the event listener on unmount
     return () => {
       window.removeEventListener('resize', adjustHeight);
     };
+  }, [config, selectedNetwork]);
 
-  },[config, selectedNetwork])
-  
-  const pageName = path.split('/')[1]
-  let [networkBackgroundColor, setNetworkBackgroundColor] = useState("#FFDD02")
-  let [networkTextColor, setNetworkTextColor] = useState("black")
+  const pageName = path.split('/')[1];
+  let [networkBackgroundColor, setNetworkBackgroundColor] =
+    useState('#FFDD02');
+  let [networkTextColor, setNetworkTextColor] = useState('black');
 
   useEffect(() => {
-    if(selectedNetwork?.backgroundColor){
-      setNetworkBackgroundColor(() => selectedNetwork.backgroundColor);
+    if (selectedNetwork?.backgroundColor) {
+      setNetworkBackgroundColor(
+        () => selectedNetwork.backgroundColor,
+      );
     }
-    if(selectedNetwork?.textColor){
+    if (selectedNetwork?.textColor) {
       setNetworkTextColor(() => selectedNetwork.textColor);
     }
-  },[selectedNetwork])
+  }, [selectedNetwork]);
   return (
     <>
       <Head>
@@ -243,23 +249,29 @@ function MyApp({ Component, pageProps }) {
         <meta name="commit" content={version.git} />
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
-      {metadata && <SEO {...metadata}/>}
-      <div className={`${user ? '' : 'index__container'}`} style={
+      {metadata && <SEO {...metadata} />}
+      <div
+        className={`${user ? '' : 'index__container'}`}
+        style={
           {
             '--network-background-color': networkBackgroundColor,
             '--network-text-color': networkTextColor,
-          } as React.CSSProperties}>
-      
+          } as React.CSSProperties
+        }
+      >
         <Alert />
         {(() => {
           if (config && authorized && selectedNetwork) {
             return (
-              <div  className="index__content">
+              <div className="index__content">
                 <Component {...pageProps} />
-                <NavBottom/>
+                <NavBottom />
               </div>
             );
-          } else if (isSetup || ['Login','HomeInfo','ButtonFile'].indexOf(pageName) > -1) {
+          } else if (
+            isSetup ||
+            ['Login', 'HomeInfo', 'ButtonFile'].indexOf(pageName) > -1
+          ) {
             return (
               <div className="index__content">
                 <Component {...pageProps} />
@@ -269,8 +281,8 @@ function MyApp({ Component, pageProps }) {
             return <>NO BACKEND!!</>;
           }
 
-          return <Loading/>;
-        })()}        
+          return <Loading />;
+        })()}
       </div>
     </>
   );
