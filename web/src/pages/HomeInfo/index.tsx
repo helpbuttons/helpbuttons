@@ -228,8 +228,6 @@ export default function HomeInfo({
                   )}
                 </div>
               </div>
-
-              <div className="info-overlay__card"></div>
             </>
         </div>
       </div>

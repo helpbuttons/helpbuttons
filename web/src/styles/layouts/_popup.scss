@@ -22,7 +22,6 @@ body {
   // Scroll popup content
   overflow-y: hidden;
   overflow-x: hidden;
-  height: 100vh;
   width: 100vw;
   background: $color-white;
   box-shadow: unset;
@@ -119,13 +118,12 @@ body {
 .popup__content {
 
   width: 100%;
-  height: 100vh;
+  height: auto;
   overflow-y: auto;
   overflow-x: hidden;
   // border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;//REVISE
   display: flex;
   flex-direction: column;
-  padding-bottom: 4rem;
   justify-content: space-between;
 
 }

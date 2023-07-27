@@ -206,6 +206,22 @@ function MyApp({ Component, pageProps }) {
         return getMetadata('lala', selectedNetwork, config, 'fail')
       })
     }
+
+    // Function to adjust the height of the index__container based on the actual viewport height
+    const adjustHeight = () => {
+      const vh = window.innerHeight;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    // Call the function on initial load and whenever the window is resized
+    adjustHeight();
+    window.addEventListener('resize', adjustHeight);
+    
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener('resize', adjustHeight);
+    };
+
   },[config, selectedNetwork])
   
   const pageName = path.split('/')[1]
@@ -219,19 +235,19 @@ function MyApp({ Component, pageProps }) {
       </Head>
       {metadata && <SEO {...metadata}/>}
       
-      <div className={`${user ? '' : ''}`}>
+      <div className={`${user ? '' : 'index__container'}`}>
         <Alert />
         {(() => {
           if (config && authorized && selectedNetwork) {
             return (
-              <div>
+              <div  className="index__content">
                 <Component {...pageProps} />
                 <NavBottom/>
               </div>
             );
           } else if (isSetup || ['Login','HomeInfo','ButtonFile'].indexOf(pageName) > -1) {
             return (
-              <div>
+              <div className="index__content">
                 <Component {...pageProps} />
               </div>
             );

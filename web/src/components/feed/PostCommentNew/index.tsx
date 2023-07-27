@@ -1,29 +1,57 @@
 import FieldText from 'elements/Fields/FieldText';
 import Form from 'elements/Form';
 import t from 'i18n';
-import { store } from 'pages';
+import { GlobalState, store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { CreateNewPostComment } from 'state/Posts';
+import { ClearDraftNewPostComment, CreateNewPostComment, SaveDraftNewPostComment } from 'state/Posts';
 import { IoPaperPlaneOutline } from 'react-icons/io5';
 import { useState } from 'react';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
 
-export default function PostCommentNew({ postId, onSubmit }) {
+export default function PostCommentNew({ postId, onSubmit, isGuest = false }) {
   const {
     register,
     setValue,
     watch,
     setFocus,
     getValues,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
   const [privacy, setPrivacy] = useState<CommentPrivacyOptions>(CommentPrivacyOptions.PUBLIC)
+  const draftNewCommentPost = useStore(
+    store,
+    (state: GlobalState) => state.draftNewCommentPost,
+  );
 
+  useEffect(() => {
+    if(draftNewCommentPost && draftNewCommentPost.postId == postId)
+    {
+      reset(draftNewCommentPost.data)
+      store.emit(new ClearDraftNewPostComment());
+    }
+
+      
+  }, [draftNewCommentPost])
   const onSubmitLocal = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const data = getValues();
+
+    if(isGuest)
+    {
+      store.emit(
+        new SaveDraftNewPostComment(
+          postId,
+          data,
+        ),
+      );
+      alertService.info(t('post.needLogin'));
+      onSubmit()
+      return;  
+    }
+
     store.emit(
       new CreateNewPostComment(
         postId,
@@ -31,6 +59,7 @@ export default function PostCommentNew({ postId, onSubmit }) {
         data,
         () => {
           alertService.info('comment posted');
+          setValue('message', '')
           onSubmit();
         },
         (errorMessage) => alertService.error(errorMessage.caption),
