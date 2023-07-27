@@ -27,6 +27,7 @@ export interface GlobalState {
   activities: Activity[];
   showFilters: boolean;
   unreadActivities: number;
+  draftNewCommentPost: any;
 }
 
 export const store = new Store<GlobalState>({
@@ -38,7 +39,8 @@ export const store = new Store<GlobalState>({
   config: null,
   activities: null,
   showFilters: false,
-  unreadActivities: 0
+  unreadActivities: 0,
+  draftNewCommentPost: null,
 });
 
 
