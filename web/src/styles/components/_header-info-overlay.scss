@@ -2,7 +2,7 @@ $info-location-field-width: 330px;
 $info-nets-field-bottom: 90px;
 $info-nets-max-width: $grid-max-width--mobile;
 $info-image-height: 700px;
-$info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
+$info-content-mobile-bottom-padding: calc( $footer-height-mobile );
 
 .info-overlay__selected {
 
@@ -23,7 +23,6 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
 .info-overlay__container {
 
   // background-color: $color-white;
-  height: 100vh;
   padding-top: $margin-extra-big;
   width:100%;
   z-index: $z-index-02;
@@ -60,6 +59,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile + 50px );
   border-radius: 25px 25px 25px 25px;
   width: 100%;
   position: fixed;
+  top: 0;
   z-index: $z-index-04;
 
   .label {
