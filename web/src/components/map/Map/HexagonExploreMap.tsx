@@ -11,7 +11,7 @@ import {
   getResolution,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
-import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 
 export default function HexagonExploreMap({
@@ -70,6 +70,9 @@ export default function HexagonExploreMap({
     );
   }, [h3TypeDensityHexes]);
 
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
+  
   return (
     <>
       <HbMap
