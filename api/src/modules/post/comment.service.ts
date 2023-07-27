@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import { User } from "../user/user.entity";
 import { Comment } from "./comment.entity";
 import { PostService } from "./post.service";
+import { CommentPrivacyOptions } from "@src/shared/types/privacy.enum";
 
 @Injectable()
 export class CommentService {
@@ -14,14 +15,15 @@ export class CommentService {
     private readonly postSerice: PostService,
   ) {}
 
-  new(message: string, postId: string, author: User) {
-    
+  new(message: string, postId: string, author: User, privacy: CommentPrivacyOptions) {
+
     return this.postSerice.findById(postId).then((post) => {
       const comment = {
         id: dbIdGenerator(),
         message,
         post,
         author,
+        privacy
       };
       return this.commentRepository.insert([comment]).then((result) => {
         return {...comment, button: post.button}
