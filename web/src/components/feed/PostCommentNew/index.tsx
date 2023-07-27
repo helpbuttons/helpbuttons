@@ -1,27 +1,57 @@
-import Btn, { BtnType } from 'elements/Btn';
 import FieldText from 'elements/Fields/FieldText';
 import Form from 'elements/Form';
-import { ContentAlignment } from 'elements/ImageWrapper';
 import t from 'i18n';
-import { store } from 'pages';
+import { GlobalState, store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { CreateNewPostComment } from 'state/Posts';
+import { ClearDraftNewPostComment, CreateNewPostComment, SaveDraftNewPostComment } from 'state/Posts';
 import { IoPaperPlaneOutline } from 'react-icons/io5';
+import {useEffect} from 'react'
+import { useStore } from 'store/Store';
 
-export default function PostCommentNew({ postId, onSubmit }) {
+export default function PostCommentNew({ postId, onSubmit, isGuest = false }) {
   const {
     register,
     setValue,
     watch,
     setFocus,
     getValues,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const draftNewCommentPost = useStore(
+    store,
+    (state: GlobalState) => state.draftNewCommentPost,
+  );
+
+  useEffect(() => {
+    if(draftNewCommentPost && draftNewCommentPost.postId == postId)
+    {
+      reset(draftNewCommentPost.data)
+      store.emit(new ClearDraftNewPostComment());
+    }
+
+      
+  }, [draftNewCommentPost])
   const onSubmitLocal = (e) => {
+    
     e.preventDefault()
     const data = getValues();
+
+    if(isGuest)
+    {
+      store.emit(
+        new SaveDraftNewPostComment(
+          postId,
+          data,
+        ),
+      );
+      alertService.info(t('post.needLogin'));
+      onSubmit()
+      return;  
+    }
+
     store.emit(
       new CreateNewPostComment(
         postId,
