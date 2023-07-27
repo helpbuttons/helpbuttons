@@ -1,0 +1,195 @@
+{
+  "menu": {
+    "explore": "Explore",
+    "create": "Create",
+    "profile": "Profile",
+    "activity": "Activity",
+    "faqs": "Faqs",
+    "login": "Login",
+    "home": "Home"
+  },
+  "homeinfo": {
+    "start": "Where do you start?",
+    "searchlocation": "Search location",
+    "loading": "...",
+    "exploreSubtitle": "See & Search the helpbuttons on this map",
+    "createSubtitle": "Create your helpbuttons and collaborate",
+    "faqsSubtitle": "Read more about this app",
+    "profileSubtitle": "Check your profile",
+    "loginSubtitle": "Enter or create your account!",
+    "locationDetected": "Do you want to navigate to check helpbuttons in your region?",
+    "stats": "Instance stats",
+    "buttons": "There are {0} helpbuttons in this network",
+    "users": "{0} users in this network",
+    "administeredby": "Administered by ",
+    "actions": "Actions"
+  },
+  "feed": {
+    "write": "Write message",
+    "update": "User Update"
+  },
+  "explore": {
+    "noResults": "Sorry, there are no results here",
+    "emptyList": "Please browse the map and touch to find more helpbuttons",
+    "createEmpty": "Create"
+  },
+  "buttonFilters": {
+    "queryLabel": "What do you search",
+    "queryExplain": "Write whatever you want to find",
+    "queryPlaceHolder": "Friends, food, toys, clothes,...",
+    "where": "Where",
+    "whereExplain": "Search the place where you want to go",
+    "distance": "Search Distance",
+    "allButtonTypes": "All types",
+    "tagsExplain": "buttonFilters.tagsExplain"
+  },
+  "setup": {
+    "hostname": "Hostname",
+    "postgresUser": "Postgresql user",
+    "postgresPassword": "Postgresql password",
+    "postgresDb": "Postgresql database name",
+    "postgresHostName": "Postgresql HostName",
+    "postgresPort": "Postgresql Port",
+    "smtpUrl": "Smtp url",
+    "createAdminTitle": "Create administrator account",
+    "welcomeMessage": "WELCOME TO YOUR HELPBUTTONS INSTANCE",
+    "welcomeMessageLong": "<p>Here you´ll see your collaborative network description.</p><p>Create your first network with the options bellow.</p>",
+    "finish": "Finish setup",
+    "configureInstanceDescription": "Wizard to help on configuring your network",
+    "configureInstanceTitle": "Setup the last details of your network",
+    "test": ""
+  },
+  "activities": {
+    "newbutton": "You created {0} in {1}",
+    "newpost": "There is a new post '{0}' posted to the helpbutton {1}",
+    "newcomment": "There is a new comment '{0}' posted to the post '{1}'",
+    "noactivity": "You have no activity yet! Start publishing or interact with others!",
+    "markedAllAsRead": "Notifications marked as read"
+  },
+  "common": {
+    "notfound": "No {0} found. Sorry. 🤔",
+    "add": "Add",
+    "remove": "Remove",
+    "publish": "Publish",
+    "save": "Save",
+    "search": "Search",
+    "reset": "Reset",
+    "done": "Done",
+    "saveSuccess": "{0} saved",
+    "invalidMimeType": "{0} has invalid myme type ({1})",
+    "publishTitle": "Publish new {0}",
+    "editTitle": "Edit {0}",
+    "next": "Next",
+    "choose": "Choose {0}",
+    "click": "Click here",
+    "reloadConfig": ""
+  },
+  "button": {
+    "typeLabel": "Helpbutton type",
+    "typeExplain": "Please choose which kind of helpbutton would you like to create",
+    "titleLabel": "Title",
+    "titleExplain": "Short title to know what's your helpbutton about",
+    "descriptionLabel": "Description",
+    "descriptionExplain": "Description",
+    "tagsLabel": "Keywords",
+    "imagesLabel": "Upload Image",
+    "whereLabel": "Where ?",
+    "changePlaceLabel": "Choose place",
+    "whenLabel": "When ?",
+    "changeDateLabel": "Choose date",
+    "placeHolderTitle": "Write a title for your helpbutton",
+    "placeHolderDescription": "Write a description for your helpbutton",
+    "firstPost": "Hi! I created this helpbutton at {0}, leave a comment if you want",
+    "share": "Share",
+    "copy": "Copy Link",
+    "delete": "Delete",
+    "edit": "Edit",
+    "created": "Your helpbutton has been created",
+    "errorCreated": ""
+  },
+  "user": {
+    "email": "Email",
+    "emailPlaceHolder": "email@example.tld",
+    "username": "Username",
+    "usernamePlaceHolder": "username",
+    "password": "Password",
+    "passwordPlaceHolder": "Type your password",
+    "passwordConfirmation": "Password confirmation",
+    "passwordConfirmationPlaceHolder": "Type your password again please",
+    "newPassword": "Type your new password",
+    "newPasswordPlaceHolder": "Your new password",
+    "passwordMismatch": "passwords won't match",
+    "loginButton": "ENTER",
+    "noAccount": "I don&apos;t have an account",
+    "tags": "Related interests",
+    "editProfile": "Edit profile",
+    "name": "Profile name",
+    "namePlaceHolder": "Name",
+    "avatar": "Choose avatar",
+    "setNewPassword": "set a new password",
+    "dontChangePassword": "Don't change password",
+    "logout": "Logout",
+    "deactivate": "Deactivate Account",
+    "description": "Description",
+    "loginLink": "I have an account",
+    "loginWEmail": "Login with password",
+    "register": "REGISTER",
+    "sendLoginToken": "Send login token",
+    "loginClick": "One click login",
+    "created_date": "User since",
+    "created": "",
+    "newLoginTokenSent": ""
+  },
+  "calendarOnce": {
+    "pickday": "Pick a day",
+    "picktime": "Pick a time",
+    "label": "Once"
+  },
+  "calendarAlways": {
+    "label": "Always"
+  },
+  "picker": {
+    "headerText": "Choose a location"
+  },
+  "pickerDate": {
+    "headerText": "Choose date & hour"
+  },
+  "validation": {
+    "fieldRequired": "{0} is required.",
+    "tooShort": "{0} is too short."
+  },
+  "post": {
+    "comment": "comment",
+    "newComment": "Comment",
+    "write": "Post a new update",
+    "delete": "Delete",
+    "placeholderWrite": "Write a new update for your helpbutton",
+    "NoComments": "No comments yet"
+  },
+  "comment": {
+    "delete": "Borrar",
+    "placeholderWrite": "Write a message in this post"
+  },
+  "configuration": {
+    "title": "Administrator settings",
+    "description": "Here you can modify different settings of your network",
+    "namePlaceHolder": "Network of permaculture farmers from Vilanova",
+    "descriptionPlaceHolder": "Welcome to the network of sharing ...",
+    "privacySetPrivate": "Set as private network",
+    "privacySetPublic": "Set back to public network",
+    "images": "Network images",
+    "logo": "Select Logo",
+    "jumbo": "Select background",
+    "tags": "Network keywords",
+    "tagsPlaceHolder": "Food, tools, toys...",
+    "locationLabel": "Network Location",
+    "centerOfMap": "Select the central place of your network",
+    "selectMapStyle": "Choose map style",
+    "locationExplain": "Your network place and radius would be centered everytime someone loads the app",
+    "tagsExplain": "Your network keywords will make easier to search for topics and to know what's your network about"
+  },
+  "configure": {
+    "browsePins": "",
+    "browseList": ""
+  }
+}

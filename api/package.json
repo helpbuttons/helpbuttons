@@ -28,7 +28,8 @@
     "migration:create": "npm run typeorm migration:create src/data/migrations/",
     "migration:revert": "npm run typeorm migration:revert",
     "schema:drop": "yarn typeorm schema:drop",
-    "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.ts"
+    "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.ts",
+    "translations": "cp -r ../web/public/locales . && cp -r ../web/src/i18n/ ."
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",

@@ -5,12 +5,14 @@ import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { Repository } from 'typeorm';
 import { Activity } from './activity.entity';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class ActivityService {
   constructor(
     @InjectRepository(Activity)
     private readonly activityRepository: Repository<Activity>,
+    private mailService: MailService
   ) {}
 
   @OnEvent(ActivityEventName.NewPost)
@@ -27,6 +29,17 @@ export class ActivityService {
     this.activityRepository.insert([activity])
   }
 
+  @OnEvent(ActivityEventName.NewPostComment)
+  async mailOwner(payload: any) {
+    const activity = {
+      id: dbIdGenerator(),
+      owner: payload.destination,
+      eventName: payload.activityEventName,
+      data: JSON.stringify(payload.data)
+    };
+    this.mailService.sendActivity(activity)
+    // this.activityRepository.insert([activity])
+  }
 
   findByUserId(userId: string) {
     return this.activityRepository.find({
