@@ -13,17 +13,12 @@ import Popup from 'components/popup/Popup';
 import Btn, {
   ContentAlignment,
   BtnType,
-  IconType,
 } from 'elements/Btn';
 import Form from 'elements/Form';
 
-import { NavigateTo } from 'state/Routes';
 import { useRouter } from 'next/router';
-import NewUserFields, {
-  passwordsMatch,
-} from 'components/user/NewUserFields';
+
 import FieldText from 'elements/Fields/FieldText';
-import FieldTags from 'elements/Fields/FieldTags';
 import { alertService } from 'services/Alert';
 import { User } from 'shared/entities/user.entity';
 import { useRef } from 'store/Store';
@@ -33,6 +28,7 @@ import { getHostname } from 'shared/sys.helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import t from 'i18n';
+import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 
 export default function ProfileEdit() {
   const {
@@ -45,7 +41,9 @@ export default function ProfileEdit() {
     watch,
     setFocus,
     formState: { errors, isSubmitting },
-  } = useForm({});
+  } = useForm({defaultValues: {
+    locale: 'en'
+  }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
 
@@ -55,6 +53,7 @@ export default function ProfileEdit() {
     store,
     (state: GlobalState) => state.loggedInUser,
   );
+  const [locale, setLocale] = useState(null)
 
   const onSubmit = (data: UserUpdateDto) => {
     const dataToSubmit : UserUpdateDto =
@@ -66,7 +65,8 @@ export default function ProfileEdit() {
       password_new: data.password_new,
       password_new_confirm: data.password_new_confirm,
       set_new_password: setNewPassword,
-      description: data.description
+      description: data.description,
+      locale: locale
     }
 
     if (setNewPassword)  {
@@ -82,7 +82,10 @@ export default function ProfileEdit() {
   };
 
   const onSuccess = () => {
-    store.emit(new FetchUserData(() => {router.push('/Profile')}, onError));
+    
+    store.emit(new FetchUserData((userData) => {
+      router.push(`${userData.locale}/Profile`)
+    }, onError));
     ;
   };
 
@@ -92,6 +95,7 @@ export default function ProfileEdit() {
 
   useEffect(() => {
     if (loggedInUser) {
+      setLocale(loggedInUser.locale)
       reset(loggedInUser);
     }
   }, [loggedInUser]);
@@ -115,6 +119,9 @@ export default function ProfileEdit() {
                     validationError={errors.email}
                     {...register('name', { required: true })}
                   ></FieldText>
+                  {locale && 
+                    <FieldLanguagePick onChange={(value) => setLocale(value)}/>
+                  }
                   <FieldText
                     name="email"
                     label={t('user.email')}

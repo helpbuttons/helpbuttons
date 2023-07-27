@@ -1,11 +1,26 @@
 ///dropddown selector component
 import React, { useState } from 'react';
-
+export function DropdownField({
+  label = null,
+  options,
+  onChange = (value) => {},
+  defaultSelected = null,
+  explain = '',
+}) {
+  return (
+    <div className="form__field">
+      <label className="form__label"> {label}</label>
+      <p className="form__explain">{explain}</p>
+      <Dropdown options={options} onChange={onChange} defaultSelected={defaultSelected}/>
+    </div>
+  );
+}
 export function Dropdown({
   label = null,
   options,
   onChange = (value) => {},
   defaultSelected = null,
+  explain = '',
 }) {
   const [selected, setSelected] = useState(defaultSelected);
 
@@ -18,7 +33,7 @@ export function Dropdown({
 
   return (
     <>
-      {label && <div className="form__label">{label}</div>}
+      {label && <label className="form__label"> {label}</label>}
       <select
         className="dropdown-select__trigger"
         onChange={handleChange}

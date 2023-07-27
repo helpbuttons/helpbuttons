@@ -1,4 +1,5 @@
 import {FieldImageUpload} from 'elements/Fields/FieldImageUpload';
+import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
@@ -50,6 +51,8 @@ export default function NewUserFields({
           minLength: 8,
         })}
       ></FieldPassword>
+      
+      <FieldLanguagePick onChange={(value) => setValue('locale', value)}/>
       150x150px
       <FieldImageUpload
         name="avatar"

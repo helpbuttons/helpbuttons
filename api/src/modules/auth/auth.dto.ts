@@ -88,6 +88,10 @@ export class SignupRequestDto {
 
   @IsNotEmpty()
   avatar: string;
+
+  @IsNotEmpty()
+  @IsString()
+  locale: string;
 }
 
 export class LoginRequestDto {

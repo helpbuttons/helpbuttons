@@ -1,5 +1,6 @@
 import { Column } from 'typeorm';
 import { User } from './user.entity';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class UserIdentification extends User {}
 
@@ -39,4 +40,8 @@ export class UserUpdateDto {
     nullable: true,
   })
   description: string;
+
+  @IsNotEmpty()
+  @IsString()
+  locale: string;
 }
