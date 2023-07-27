@@ -3,11 +3,8 @@ import { PostService } from 'services/Post';
 import { MessageDto } from 'shared/dtos/post.dto';
 import { WatchEvent } from 'store/Event';
 import { catchError, map } from 'rxjs/operators';
-import { isHttpError } from 'services/HttpService';
-import { HttpStatus } from 'shared/types/http-status.enum';
-import { of } from 'rxjs';
 import { handleError } from './helper';
-
+import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
 export class CreateNewPost implements WatchEvent {
   public constructor(
     private buttonId: string,
@@ -40,12 +37,13 @@ export class LoadPosts implements WatchEvent {
 export class CreateNewPostComment implements WatchEvent {
   public constructor(
     private postId: string,
+    private privacy: CommentPrivacyOptions,
     private message,
     private onSuccess,
     private onError,
   ) {}
   public watch(state: GlobalState) {
-    return PostService.newComment(this.postId, this.message).pipe(
+    return PostService.newComment(this.postId, this.privacy, this.message).pipe(
       map((data) => this.onSuccess()),
       catchError((error) => handleError(this.onError, error)),
     );

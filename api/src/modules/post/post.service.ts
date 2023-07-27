@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { ButtonService } from '../button/button.service';
 import { User } from '../user/user.entity';
 import { Post } from './post.entity';
+import { CommentPrivacyOptions } from '@src/shared/types/privacy.enum';
 
 @Injectable()
 export class PostService {
@@ -24,13 +25,12 @@ export class PostService {
         button,
         author,
       };
-      return this.postRepository.insert([
-        post
-      ]).then(result => post);
+      return this.postRepository
+        .insert([post])
+        .then((result) => post);
     });
   }
 
-  
   findById(id: string) {
     return this.postRepository.findOne({
       where: { id },
@@ -38,25 +38,58 @@ export class PostService {
     });
   }
 
-  public findByButtonId(buttonId) {
-    return this.postRepository.find({
-      where: { button: { id: buttonId }, deleted: false},
-      relations: ['comments', 'author', 'comments.author'],
-      order: { created_at: 'DESC', comments: { created_at: 'DESC' } },
-    }).then((posts) => {
-      return this.removeDeletedComments(posts)
+  public findByButtonId(buttonId, currentUser) {
+    return this.postRepository
+      .find({
+        where: { button: { id: buttonId }, deleted: false },
+        relations: ['comments', 'author', 'comments.author'],
+        order: {
+          created_at: 'DESC',
+          comments: { created_at: 'DESC' },
+        },
+      })
+      .then((posts) => {
+        let deleteCommentsPosts = this.removeDeletedComments(posts);
+        console.log('remove private comments');
+        return this.removePrivateComments(
+          deleteCommentsPosts,
+          currentUser,
+        );
+      });
+  }
+
+  removeDeletedComments(posts) {
+    return posts.map((post) => {
+      return {
+        ...post,
+        comments: post.comments.filter(
+          (comment) => comment.deleted == false,
+        ),
+      };
     });
   }
-  
-  removeDeletedComments(posts)
-  {
-    return posts.map((post) => {return {...post,comments:post.comments.filter((comment) => comment.deleted == false)}})
+
+  removePrivateComments(posts, currentUser) {
+    return posts.map((post) => {
+      return {
+        ...post,
+        comments: post.comments.filter(
+          (comment) =>
+            comment.privacy == CommentPrivacyOptions.PUBLIC ||
+            post.author.id == currentUser?.id ||
+            comment.author.id == currentUser?.id,
+        ),
+      };
+    });
   }
+
   async delete(postId: string) {
     return this.findById(postId).then((post) => {
-      return this.postRepository.update(post.id,{ deleted: true }).then((res) => {
-        return post
-      })
-    }) 
+      return this.postRepository
+        .update(post.id, { deleted: true })
+        .then((res) => {
+          return post;
+        });
+    });
   }
 }
