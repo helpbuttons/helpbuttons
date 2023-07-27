@@ -16,13 +16,14 @@ import { useEffect, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
 import { DeletePost, LoadPosts } from 'state/Posts';
-import { useRef } from 'store/Store';
 import { isAdmin } from 'state/Users';
+import router from 'next/router';
+import { useStore } from 'store/Store';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
 
-  const loggedInUser = useRef(
+  const loggedInUser = useStore(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
@@ -42,6 +43,7 @@ export default function Feed({ button }: { button: Button }) {
       console.error('not button yet?');
     }
   };
+
   useEffect(() => {
     reloadPosts();
   }, [button]);
@@ -105,6 +107,7 @@ export default function Feed({ button }: { button: Button }) {
               buttonOwnerId={buttonOwnerId}
               isButtonOwner={isButtonOwner}
               reloadPosts={reloadPosts}
+              buttonId={button.id}
             />
           ))}
         {!posts ||
@@ -127,6 +130,7 @@ export function FeedElement({
   buttonOwnerId,
   isButtonOwner = false,
   reloadPosts,
+  buttonId
 }) {
   const [showNewCommentDialog, setShowNewCommentDialog] =
     useState(false);
@@ -176,6 +180,15 @@ export function FeedElement({
               onSubmit={() => {
                 onNewComment();
                 setShowNewCommentDialog(false);
+              }}
+            />
+          )}
+          {!loggedInUser && (
+            <PostCommentNew
+              postId={post.id}
+              isGuest={true}
+              onSubmit={() => {
+                router.push(`/Login?returnUrl=/ButtonFile/${buttonId}`)
               }}
             />
           )}
