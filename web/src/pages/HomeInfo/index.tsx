@@ -22,7 +22,7 @@ import { ServerPropsService } from 'services/ServerProps';
 import { NextPageContext } from 'next';
 import { SetupSteps } from 'shared/setupSteps';
 import {  useState } from 'react';
-import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { UpdateFiltersToFilterButtonType, UpdateFiltersToFilterTag } from 'state/Explore';
@@ -35,7 +35,9 @@ export default function HomeInfo({
   config,
 }) {
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
-
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
+  
   const filterTag = (tag) => {
     store.emit(new UpdateFiltersToFilterTag(tag));
     router.push('/Explore')
@@ -228,8 +230,6 @@ export default function HomeInfo({
                   )}
                 </div>
               </div>
-
-              <div className="info-overlay__card"></div>
             </>
         </div>
       </div>

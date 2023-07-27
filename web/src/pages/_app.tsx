@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import '../styles/app.scss';
 import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
@@ -26,10 +26,16 @@ import { version } from 'shared/commit';
 import Loading from 'components/loading';
 import { getMetadata } from 'services/ServerProps';
 import SEO from 'components/seo';
-import { FindActivities } from 'state/Activity';
+import { refeshActivities } from 'state/Activity';
+import t from 'i18n';
+import { useInterval } from 'shared/custom.hooks';
 
 export default appWithTranslation(MyApp);
 
+const useActivitesPool = () => {
+  const increment = useCallback(() => refeshActivities(), [])
+  useInterval(increment, 10000)
+}
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
@@ -72,8 +78,6 @@ function MyApp({ Component, pageProps }) {
     }
 
     if (!config) {
-      
-      
       store.emit(
         new GetConfig(
           (config) => {
@@ -192,18 +196,9 @@ function MyApp({ Component, pageProps }) {
     }
   }, [path, config, loggedInUser]);
 
-  useEffect(() => {
-    if(loggedInUser && !activities)
-    {
-      store.emit(
-              new FindActivities(
-                (error) => {
-                  alertService.error('Error getting activities');
-                },
-              ),
-            );
-    }
-  }, [loggedInUser, activities])
+  useActivitesPool()
+  
+
   useEffect(() => {
     if(config && selectedNetwork)
     {
@@ -211,10 +206,36 @@ function MyApp({ Component, pageProps }) {
         return getMetadata('lala', selectedNetwork, config, 'fail')
       })
     }
+
+    // Function to adjust the height of the index__container based on the actual viewport height
+    const adjustHeight = () => {
+      const vh = window.innerHeight;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    // Call the function on initial load and whenever the window is resized
+    adjustHeight();
+    window.addEventListener('resize', adjustHeight);
+    
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener('resize', adjustHeight);
+    };
+
   },[config, selectedNetwork])
   
   const pageName = path.split('/')[1]
+  let [networkBackgroundColor, setNetworkBackgroundColor] = useState("#FFDD02")
+  let [networkTextColor, setNetworkTextColor] = useState("black")
 
+  useEffect(() => {
+    if(selectedNetwork?.backgroundColor){
+      setNetworkBackgroundColor(() => selectedNetwork.backgroundColor);
+    }
+    if(selectedNetwork?.textColor){
+      setNetworkTextColor(() => selectedNetwork.textColor);
+    }
+  },[selectedNetwork])
   return (
     <>
       <Head>
@@ -223,19 +244,24 @@ function MyApp({ Component, pageProps }) {
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
       {metadata && <SEO {...metadata}/>}
-      <div className={`${user ? '' : ''}`}>
+      <div className={`${user ? '' : 'index__container'}`} style={
+          {
+            '--network-background-color': networkBackgroundColor,
+            '--network-text-color': networkTextColor,
+          } as React.CSSProperties}>
+      
         <Alert />
         {(() => {
           if (config && authorized && selectedNetwork) {
             return (
-              <div>
+              <div  className="index__content">
                 <Component {...pageProps} />
                 <NavBottom/>
               </div>
             );
           } else if (isSetup || ['Login','HomeInfo','ButtonFile'].indexOf(pageName) > -1) {
             return (
-              <div>
+              <div className="index__content">
                 <Component {...pageProps} />
               </div>
             );

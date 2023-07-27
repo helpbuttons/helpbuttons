@@ -110,7 +110,7 @@ export default function FieldLocation({
           <MarkerSelectorMap
             setMarkerPosition={setMarkerPosition}
             zoom={zoom}
-            markerColor={markerColor ? markerColor : 'yellow'}
+            markerColor={markerColor ? markerColor : 'pink'}
             markerPosition={markerPosition}
             markerCaption={markerCaption}
             markerImage={markerImage}

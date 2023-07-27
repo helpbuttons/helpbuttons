@@ -84,7 +84,7 @@ export class FetchUserData implements WatchEvent {
     return UserService.whoAmI().pipe(
       tap((userData) => {
         if (userData && this.onSuccess) {
-          this.onSuccess();
+          this.onSuccess(userData);
         }
       }),
       map((userData) => new SetCurrentUser(userData)),

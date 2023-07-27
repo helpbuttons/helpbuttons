@@ -7,17 +7,44 @@ $index-mobile-fixed-z-index: $z-index-05;
   width: 100%;
   z-index: $index-mobile-fixed-z-index;
 }
+
 .index__container {
+  width: 100vw;
+  overflow: hidden;
+}
+
+.index__content {
+
+  height: 100%;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+
+}
+
+
+.index__explore-container {
   display: flex;
   flex-direction: column;
-  position: absolute;
+  justify-content:baseline;
   height: 100%;
+  max-height: 100%;
+  overflow: hidden;
   width: 100%;
 }
 
 .index__content-left {
 
   transition: $transition-default-slow;
+
+}
+
+.index__content-bottom {
+
+  transition: $transition-default-slow;
+
 }
 
 .index__content-bottom--hide {

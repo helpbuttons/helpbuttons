@@ -118,6 +118,7 @@ export default function FieldAreaMap({
                 setMapTile={setMapTile}
                 marker={marker}
                 setBrowseType={setBrowseType}
+                tileType={mapSettings.tileType}
               />
               {/* <DropDownSearchLocation
                 placeholder={t('homeinfo.searchlocation')}

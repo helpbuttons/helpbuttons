@@ -72,17 +72,31 @@ td {
 :focus {
   outline: 0;
 }
+:root {
+  --vh: 1vh; /* Define a CSS variable for viewport height */
+}
 body {
   line-height: $text-line-height-small;
   color: $color-black;
   background: $color-ligth-gray;
-  height: 100vh;
+  // height: 100vh;
+
+}
+/* Apply the calculated viewport height to html, body, and #__next elements */
+html,
+body,
+#__next,
+.index__container,
+.info-overlay__container,
+.popup, {
+  height: var(--vh) !important;
+  /* Add other styles as needed */
 }
 html,
 body,
 #__next,
 #app {
-  min-height: 100vh;
+  // min-height: 100%;
 }
 ol,
 ul {

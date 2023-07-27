@@ -1,25 +1,24 @@
 import NetworkForm from 'components/network/NetworkForm';
 import Popup from 'components/popup/Popup';
-import DebugToJSON from 'elements/Debug';
 import t from 'i18n';
 import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
-import { NetworkDto } from 'shared/dtos/network.dto';
+import { useToggle } from 'shared/custom.hooks';
+import { Network } from 'shared/entities/network.entity';
 import { FetchDefaultNetwork, UpdateNetwork } from 'state/Networks';
 import { useRef } from 'store/Store';
 
 export default Configuration;
 
 function Configuration() {
-  const selectedNetwork: NetworkDto = useRef(
+  const selectedNetwork: Network = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
-
+  const [loadingNetwork, setLoadingNetwork] = useToggle(true)
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -33,7 +32,8 @@ function Configuration() {
   } = useForm({});
 
   useEffect(() => {
-    if(selectedNetwork){
+    if(selectedNetwork && loadingNetwork){
+      setLoadingNetwork(false)
       reset(selectedNetwork);
     }
   }, [selectedNetwork])
@@ -45,7 +45,10 @@ function Configuration() {
       privacy: data.privacy,
       logo: data.logo,
       jumbo: data.jumbo,
-      exploreSettings: data.exploreSettings
+      exploreSettings: data.exploreSettings,
+      backgroundColor: data.backgroundColor,
+      textColor: data.textColor,
+      buttonTemplates: data.buttonTemplates
     },
       () => {
         const onComplete = (network) => {
@@ -82,7 +85,6 @@ function Configuration() {
     <>
       {selectedNetwork && (
         <Popup title={t('configuration.title')} LinkFwd="/Profile">
-          
             <NetworkForm
               handleSubmit={handleSubmit}
               onSubmit={onSubmit}

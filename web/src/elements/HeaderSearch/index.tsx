@@ -2,9 +2,9 @@ import { IoSearch } from 'react-icons/io5';
 import React, { useState } from 'react';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import { buttonTypes } from 'shared/buttonTypes';
 import { LoadabledComponent } from 'components/loading';
 import t from 'i18n';
+import { useButtonTypes } from 'shared/buttonTypes';
 
 ///search button in explore and home
 export function HeaderSearch({ results, isHome }) {
@@ -13,17 +13,19 @@ export function HeaderSearch({ results, isHome }) {
     (state: GlobalState) => state.explore.map,
     false,
   );
-
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
   return (
     <div className="header-search__tool">
       <div className="header-search__form">
-      <LoadabledComponent loading={exploreMapState.loading && !isHome}>
+      <LoadabledComponent loading={exploreMapState.loading && !isHome && buttonTypes}>
         <div className="header-search__column">
           <SearchText count={results.count} where={exploreMapState.filters.where} />
           <SearchInfo
             helpButtonTypes={exploreMapState.filters.helpButtonTypes}
             when={exploreMapState.filters.when}
             what={exploreMapState.filters.query}
+            buttonTypes={buttonTypes}
           />
 
           <div className="header-search__icon">
@@ -61,7 +63,9 @@ function SearchText({ count, where }) {
   );
 }
 
-function SearchInfo({ helpButtonTypes, when, what }) {
+function SearchInfo({ helpButtonTypes, when, what, buttonTypes }) {
+
+
   const types = (helpButtonTypes) => {
     if (helpButtonTypes.length < 1) {
       return t('buttonFilters.allButtonTypes');

@@ -1,6 +1,6 @@
 //Form component with the main fields for signup in the platform
 //imported from libraries
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
@@ -24,6 +24,7 @@ import NewUserFields, {
 import { alertService } from 'services/Alert';
 import t from 'i18n';
 import { setValidationErrors } from 'state/helper';
+import { getLocale } from 'shared/sys.helper';
 
 export default function Signup() {
   const {
@@ -40,11 +41,21 @@ export default function Signup() {
       password: '',
       password_confirm: '',
       email: '',
+      locale: 'en'
     },
   });
   const router = useRouter();
+  const { pathname, asPath, query } = router
 
+  const locale = watch('locale')
+  useEffect(() => {
+    if(locale != getLocale())
+    {
+      alertService.info(`Click <a href="/${locale}/Signup">here</a> to change language`)
+   }
+  }, [locale, pathname])
   const onSubmit = (data) => {
+    
     if (passwordsMatch(data, setError)) {
       store.emit(
         new SignupUser(
@@ -54,6 +65,7 @@ export default function Signup() {
             password: data.password,
             name: '',
             avatar: data.avatar,
+            locale: getLocale(),
           },
           onSuccess,
           onError,

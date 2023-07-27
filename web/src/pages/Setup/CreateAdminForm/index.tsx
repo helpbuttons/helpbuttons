@@ -121,7 +121,7 @@ function CreateAdminForm() {
       >
         <Form
           onSubmit={handleSubmit(onSubmit)}
-          classNameExtra="createAdmin"
+          classNameExtra="create-admin"
         >
           <div className="login__form">
             <div className="form__inputs-wrapper">

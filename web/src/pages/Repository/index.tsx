@@ -1,5 +1,5 @@
 //List of elements component that can be used anywhere in the app
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoEllipsisHorizontalSharp } from "react-icons/io5";
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import CheckBox from 'elements/Checkbox'
 import { IoSearch } from "react-icons/io5";

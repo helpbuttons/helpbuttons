@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CurrentUser } from "@src/shared/decorator/current-user";
-import { OnlyRegistered } from "@src/shared/decorator/roles.decorator";
+import { AllowGuest, OnlyRegistered } from "@src/shared/decorator/roles.decorator";
 import { CustomHttpException } from "@src/shared/middlewares/errors/custom-http-exception.middleware";
 import { ErrorName } from "@src/shared/types/error.list";
 import { ButtonService } from "../button/button.service";
@@ -13,6 +13,7 @@ import { ActivityEventName } from "@src/shared/types/activity.list";
 import { notifyUser } from "@src/app/app.event";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { Role } from "@src/shared/types/roles";
+import { CommentPrivacyOptions } from "@src/shared/types/privacy.enum";
 
 @ApiTags('post')
 @Controller('post')
@@ -45,19 +46,18 @@ export class PostController {
     }
 
     @OnlyRegistered()
-    @Post('new/comment/:postId')
+    @Post('new/comment/:privacy/:postId')
     newComment(
       @Body() message: MessageDto,
+      @Param('privacy') privacy: CommentPrivacyOptions,
       @Param('postId') postId: string,
       @CurrentUser() user: User,
     ){
-      return this.commentService.new(message.message, postId, user).then((comment) => {
+      return this.commentService.new(message.message, postId, user, privacy).then((comment) => {
         notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, comment, comment.post.author)
       return comment;  
       })
-      
     }
-
     @OnlyRegistered()
     @Post('update')
     update(
@@ -131,11 +131,13 @@ export class PostController {
         })
     }
 
+    @AllowGuest()
     @Get('findByButtonId/:buttonId')
     async findByButtonId(
-      @Param('buttonId') buttonId: string
+      @Param('buttonId') buttonId: string,
+      @CurrentUser() currentUser: User,
     )
     {
-      return this.postService.findByButtonId(buttonId)
+      return this.postService.findByButtonId(buttonId, currentUser)
     }
   }

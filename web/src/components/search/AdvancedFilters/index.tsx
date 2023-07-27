@@ -10,7 +10,7 @@ import { Bounds } from 'pigeon-maps';
 import { ButtonFilters, defaultFilters } from './filters.type';
 import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
-import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle } from 'shared/buttonTypes';
 import { roundCoords } from 'shared/honeycomb.utils';
 import FieldCheckbox from 'elements/Fields/FieldCheckbox';
 import CheckBox, { CheckBoxIcon } from 'elements/Checkbox';
@@ -19,8 +19,9 @@ import { UpdateFilters } from 'state/Explore';
 import router, { Router } from 'next/router';
 import { useRef } from 'store/Store';
 import { TagList } from 'elements/Fields/FieldTags';
+import { useButtonTypes } from 'shared/buttonTypes';
 
-//Mobile filters section that includes not only the filters but some search input fields, maybe needed to make a separate component from the rest of esktop elements
+
 export default function AdvancedFilters({
   toggleShowFiltersForm,
   showFiltersForm,
@@ -37,6 +38,9 @@ export default function AdvancedFilters({
     (state: GlobalState) => state.explore.map.queryFoundTags,
     false
   );
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
+
   const {
     handleSubmit,
     formState: { errors, isSubmitting },

@@ -19,7 +19,7 @@ export default function Activity() {
   );
   useEffect(() => {
       if(unreadActivities> 0){
-        alertService.info(t('activity.markedAllAsRead'))
+        alertService.info(t('activities.markedAllAsRead'))
         store.emit(new ActivityMarkAllAsRead())
       }
   }, [unreadActivities]);
@@ -29,7 +29,7 @@ export default function Activity() {
       <div className="body__content">
         <div className="body__section">
           <LoadabledComponent loading={!activities}>
-            <FeedProfile activities={activities} />
+            <FeedProfile allActivities={activities} />
           </LoadabledComponent>
         </div>
       </div>

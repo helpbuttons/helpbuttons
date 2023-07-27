@@ -14,6 +14,7 @@ export function NetworkMapConfigure({
   handleMapClick,
   marker,
   setBrowseType,
+  tileType
 }) {
 
   return (
@@ -35,7 +36,7 @@ export function NetworkMapConfigure({
 
       {(mapSettings.browseType != BrowseType.LIST) && 
 
-      <div class="picker__map">
+      <div className="picker__map">
         <HbMap
           onBoundsChanged={onBoundsChanged}
           mapCenter={mapSettings.center}
@@ -101,6 +102,7 @@ export function NetworkMapConfigure({
 
       <MapTileSelector
       setMapTile={setMapTile}
+      tileType={tileType}
       />
     </>
   );

@@ -110,8 +110,7 @@ function HoneyComb({ router }) {
   }, [exploreMapState.filters]);
 
   return (
-    <>
-      <div className="index__container">
+      <div className="index__explore-container">
           <div
             className={
               'index__content-left ' +
@@ -196,7 +195,6 @@ function HoneyComb({ router }) {
 
           </ShowMobileOnly>
       </div>
-    </>
   );
 }
 

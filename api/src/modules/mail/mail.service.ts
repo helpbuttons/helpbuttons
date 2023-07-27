@@ -1,6 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { configFileName } from '@src/shared/helpers/config-name.const';
+import { GlobalVarHelper } from '@src/shared/helpers/global-var.helper';
 // import { template } from './mail.module';
 const config = require(`../../..${configFileName}`);
 
@@ -8,7 +9,7 @@ const config = require(`../../..${configFileName}`);
 export class MailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  async sendActivationEmail({
+  sendActivationEmail({
     to,
     cc,
     bcc,
@@ -19,21 +20,17 @@ export class MailService {
     bcc?: string;
     activationUrl: string;
   }) {
-    const subject = 'Please verify your account';
-    const template = 'activation-account';
-
-    return this.mailerService.sendMail({
+    return this.sendMail({
       to,
       cc,
       bcc,
-      from: config.from,
-      subject,
-      template,
+      subject: 'Please verify your account',
+      template: 'activation-account',
       context: { activationUrl },
     });
   }
 
-  async sendLoginTokenEmail({
+  sendLoginTokenEmail({
     to,
     cc,
     bcc,
@@ -44,18 +41,61 @@ export class MailService {
     bcc?: string;
     activationUrl: string;
   }) {
-    const subject = 'You requested a one-click login';
-    const template = 'login-token';
-
-    return await this.mailerService.sendMail({
+    return this.sendMail({
       to,
       cc,
       bcc,
-      from: config.from,
-      subject,
-      template,
+      subject: 'You requested a one-click login',
+      template: 'login-token',
       context: { activationUrl },
     });
   }
   
+  private sendMail({
+    to,
+    cc,
+    bcc,
+    subject,
+    template,
+    context
+  })
+  {
+    if(!GlobalVarHelper.smtpAvailable)
+    {
+      console.log('Error when smtp not working. mail could not be sent')
+      return;
+    }
+    this.mailerService.sendMail({
+      to,
+      cc,
+      bcc,
+      from: config.from,
+      subject,
+      template,
+      context,
+    }).then((mail) => {console.log(`>> mail sent to ${to} with template '${template}'`)})
+    .catch((error) => {console.log(error); console.trace()})
+    return 
+  }
+
+  sendActivity({
+    to,
+    cc,
+    bcc,
+    content,
+  }: {
+    to: string;
+    cc?: string;
+    bcc?: string;
+    content: string;
+  }) {
+    return this.sendMail({
+      to,
+      cc,
+      bcc,
+      subject: 'A new activity in ',
+      template: 'new-activity',
+      context: { content },
+    });
+  }
 }
