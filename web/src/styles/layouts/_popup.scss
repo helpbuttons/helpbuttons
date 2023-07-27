@@ -336,7 +336,7 @@ body {
 
     margin: 0px auto;
     max-width: $popup-max-width;
-    padding-bottom: 0;
+    padding-bottom: $padding-big;
 
     // Centering
     display: flex;
@@ -344,7 +344,8 @@ body {
     justify-content: center;
     background: transparent;
 
-    //width: auto;//Esto es para movil, pero derrepente podriamos agregar un max-width
+    z-index: $z-index-03;
+
   }
 
   .popup__header,
@@ -359,11 +360,6 @@ body {
   .popup__header {
 
     min-height: $popup-header-height;
-
-  }
-
-  .popup__content {
-
 
   }
 
@@ -387,6 +383,7 @@ body {
 }
 
 @media #{$breakpoints-xlarge} {
+
 
   .popup__content {
 
