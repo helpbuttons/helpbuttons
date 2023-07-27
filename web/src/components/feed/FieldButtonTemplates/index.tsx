@@ -7,7 +7,7 @@ import { alertService } from 'services/Alert';
 import { IoTrashBinOutline } from 'react-icons/io5';
 import { useState, forwardRef } from 'react';
 import { CircleColorPick } from 'elements/Fields/FieldColorPick';
-import { getSlug } from 'shared/sys.helper';
+import { tagify } from 'shared/sys.helper';
 
 const FieldButtonTemplates = forwardRef(
   (
@@ -40,7 +40,7 @@ const FieldButtonTemplates = forwardRef(
       if (text && color) {
         append({
           caption: text,
-          name: getSlug(text),
+          name: tagify(text),
           cssColor: color,
         });
       } else {
