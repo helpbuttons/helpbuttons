@@ -225,7 +225,17 @@ function MyApp({ Component, pageProps }) {
   },[config, selectedNetwork])
   
   const pageName = path.split('/')[1]
+  let [networkBackgroundColor, setNetworkBackgroundColor] = useState("#FFDD02")
+  let [networkTextColor, setNetworkTextColor] = useState("black")
 
+  useEffect(() => {
+    if(selectedNetwork?.backgroundColor){
+      setNetworkBackgroundColor(() => selectedNetwork.backgroundColor);
+    }
+    if(selectedNetwork?.textColor){
+      setNetworkTextColor(() => selectedNetwork.textColor);
+    }
+  },[selectedNetwork])
   return (
     <>
       <Head>
@@ -234,8 +244,12 @@ function MyApp({ Component, pageProps }) {
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
       {metadata && <SEO {...metadata}/>}
+      <div className={`${user ? '' : 'index__container'}`} style={
+          {
+            '--network-background-color': networkBackgroundColor,
+            '--network-text-color': networkTextColor,
+          } as React.CSSProperties}>
       
-      <div className={`${user ? '' : 'index__container'}`}>
         <Alert />
         {(() => {
           if (config && authorized && selectedNetwork) {

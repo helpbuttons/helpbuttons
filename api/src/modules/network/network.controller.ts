@@ -16,7 +16,8 @@ import { Role } from '@src/shared/types/roles';
   @Controller('networks')
   export class NetworkController {
     constructor(private readonly networkService: NetworkService) {}
-  
+    
+    @OnlyAdmin()
     @Post('new')
     create(@Body() createDto: CreateNetworkDto
     ){
