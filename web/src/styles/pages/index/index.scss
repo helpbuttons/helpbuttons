@@ -54,7 +54,7 @@ $index-mobile-fixed-z-index: $z-index-05;
 }
 
 @media #{$breakpoints-xlarge} {
-  .index__container {
+  .index__explore-container {
     position: fixed;
     display: flex;
     flex-direction: row;
