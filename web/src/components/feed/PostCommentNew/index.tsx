@@ -30,6 +30,7 @@ export default function PostCommentNew({ postId, onSubmit }) {
         data,
         () => {
           alertService.info('comment posted');
+          setValue('message', '')
           onSubmit();
         },
         (errorMessage) => alertService.error(errorMessage.caption),
