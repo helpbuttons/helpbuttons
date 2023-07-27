@@ -105,7 +105,6 @@ function Configuration() {
               linkFwd="/Profile"
               description={t('configuration.description')}
               defaultExploreSettings={selectedNetwork.exploreSettings}
-              isCreate={true}
             />
 
         </Popup>
