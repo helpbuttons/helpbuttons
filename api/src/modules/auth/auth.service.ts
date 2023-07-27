@@ -61,6 +61,7 @@ export class AuthService {
       id: dbIdGenerator(),
       avatar: null,
       description: '',
+      locale: signupUserDto.locale,
     };
 
     const emailExists = await this.userService.isEmailExists(
@@ -194,6 +195,7 @@ export class AuthService {
       email: data.email,
       name: data.name,
       description: data.description,
+      locale: data.locale,
     };
 
     if (isImageData(data.avatar)) {

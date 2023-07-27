@@ -4,6 +4,7 @@ import { Exclude, Expose } from 'class-transformer';
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 import { UserCredential } from '../user-credential/user-credential.entity';
+import { text } from 'stream/consumers';
 
 @Entity()
 @Exclude()
@@ -83,6 +84,10 @@ export class User extends BaseEntity {
 
   @OneToOne(() => UserCredential)
   userCredential?: UserCredential;
+
+  @Expose()
+  @Column({type: 'text', default: 'en'})
+  locale: string;
 }
 
 export interface UserRelations {
