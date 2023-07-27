@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { useToggle } from 'shared/custom.hooks';
 import { Network } from 'shared/entities/network.entity';
-import { FetchDefaultNetwork, UpdateNetwork } from 'state/Networks';
+import { FetchDefaultNetwork, UpdateNetwork, UpdateNetworkBackgroundColor, UpdateNetworkTextColor } from 'state/Networks';
 import { useRef } from 'store/Store';
 
 export default Configuration;
@@ -30,6 +30,12 @@ function Configuration() {
     reset,
     setFocus
   } = useForm({});
+
+  const backgroundColor = watch('backgroundColor');
+  useUpdateBackgroundColor(backgroundColor);
+
+  const textColor = watch('textColor');
+  useTextColor(textColor);
 
   useEffect(() => {
     if(selectedNetwork && loadingNetwork){
@@ -99,6 +105,7 @@ function Configuration() {
               linkFwd="/Profile"
               description={t('configuration.description')}
               defaultExploreSettings={selectedNetwork.exploreSettings}
+              isCreate={true}
             />
 
         </Popup>
@@ -106,3 +113,21 @@ function Configuration() {
     </>
   );
 }
+
+
+const useUpdateBackgroundColor = (backgroundColor) => {
+  useEffect(() => {
+    if (backgroundColor) {
+      store.emit(new UpdateNetworkBackgroundColor(backgroundColor));
+    }
+  }, [backgroundColor]);
+};
+
+const useTextColor = (textColor) => {
+  useEffect(() => {
+    if (textColor) {
+      store.emit(new UpdateNetworkTextColor(textColor));
+    }
+  }, [textColor]);
+};
+

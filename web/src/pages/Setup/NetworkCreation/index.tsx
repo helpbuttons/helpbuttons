@@ -35,7 +35,8 @@ function NetworkCreation() {
       tags: [],
       privacy: 'public',
       address: '',
-      exploreSettings: null
+      exploreSettings: null,
+      buttonTemplates: JSON.parse('[{"name":"offer","caption":"Offer","color":"custom","cssColor":"#FFDD02"},{"name":"need","caption":"Need","color":"custom","cssColor":"#19AF96"},{"name":"service","caption":"Service","color":"custom","cssColor":"pink"}]')
     },
   });
 
@@ -54,7 +55,10 @@ function NetworkCreation() {
           privacy: 'public',
           logo: data.logo,
           jumbo: data.jumbo,
-          exploreSettings: data.exploreSettings
+          exploreSettings: data.exploreSettings,
+          backgroundColor: data.backgroundColor,
+          textColor: data.textColor,
+          buttonTemplates: data.buttonTemplates
         },
         () => {
           const onComplete = () => {

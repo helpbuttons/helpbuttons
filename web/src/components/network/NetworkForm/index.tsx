@@ -50,12 +50,6 @@ function NetworkForm({
 }) {
   const router = useRouter();
 
-  const backgroundColor = watch('backgroundColor');
-  useUpdateBackgroundColor(backgroundColor);
-
-  const textColor = watch('textColor');
-  useTextColor(textColor);
-
   return (
     <>
       <Form
@@ -127,7 +121,7 @@ function NetworkForm({
             />
           </div>
 
-          <FieldText
+          {/* <FieldText
             name="nomeclature"
             label={t('configuration.nomeclatureLabel')}
             explain={t('configuration.nomeclatureExplain')}
@@ -135,22 +129,21 @@ function NetworkForm({
             classNameInput="squared"
             validationError={errors.nomeclature}
             {...register('nomeclature', { required: true })}
-          />
+          /> */}
 
           {/* BUTTON TYPES */}
 
-          <FieldButtonTemplates
-            label={t('configuration.buttonTemplateLabel')}
-            explain={t('configuration.buttonTemplateExplain')}
-            name="buttonTemplates"
-            placeholder={t('configuration.buttonTemplatePlaceHolder')}
-            classNameInput="squared"
-            errors={errors}
-            watch={watch}
-            register={register}
-            control={control}
-          />
-
+            <FieldButtonTemplates
+              label={t('configuration.buttonTemplateLabel')}
+              explain={t('configuration.buttonTemplateExplain')}
+              name="buttonTemplates"
+              placeholder={t('configuration.buttonTemplatePlaceHolder')}
+              classNameInput="squared"
+              errors={errors}
+              watch={watch}
+              register={register}
+              control={control}
+            />
           <div className="form__field">
             <div className="form__label">
               {t('configuration.images')}
@@ -246,19 +239,3 @@ function NetworkForm({
     </>
   );
 }
-
-const useUpdateBackgroundColor = (backgroundColor) => {
-  useEffect(() => {
-    if (backgroundColor) {
-      store.emit(new UpdateNetworkBackgroundColor(backgroundColor));
-    }
-  }, [backgroundColor]);
-};
-
-const useTextColor = (textColor) => {
-  useEffect(() => {
-    if (textColor) {
-      store.emit(new UpdateNetworkTextColor(textColor));
-    }
-  }, [textColor]);
-};
