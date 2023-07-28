@@ -12,6 +12,7 @@ import { IoWarningOutline } from "react-icons/io5";
 import { IoCloseOutline } from "react-icons/io5";
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
+import { RemoveAlert } from 'state/Alerts';
 
 
 export default Alert;
@@ -66,7 +67,11 @@ function Alert({ id, fade }) {
     }
 
     if (!alertas) return null;
-
+    alertas.forEach(element => {
+        setTimeout(() => {
+            store.emit(new RemoveAlert(element.id))
+        }, 2500)
+    });
     return (
         <div className="card-alert__container">
                 {alertas.map((alert, index) =>
