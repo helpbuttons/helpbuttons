@@ -34,6 +34,7 @@ function CreateAdminForm() {
       password_confirm: '',
       email: '',
       name: '',
+      locale: 'en',
     },
   });
 
