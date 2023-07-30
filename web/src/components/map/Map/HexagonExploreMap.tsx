@@ -114,26 +114,13 @@ export default function HexagonExploreMap({
                     opacity: 0.7,
                   };
                 }
-                if (hexagonFeature.properties.count < 0) {
-                  return {
-                    fill: 'red',
-                    strokeWidth: '1',
-                    stroke: '#18AAD2',
-                    r: '20',
-                    opacity: 0.2,
-                  };
-                }
                 if (hexagonFeature.properties.count < 1) {
                   return {
                     fill: 'transparent',
                     strokeWidth: '1',
                     stroke: '#18AAD2',
                     r: '20',
-                    opacity:
-                      0.2 +
-                      (hexagonFeature.properties.count * 50) /
-                        (maxButtonsHexagon - maxButtonsHexagon / 4) /
-                        100,
+                    opacity: 0.2,
                   };
                 }
                 return {
