@@ -10,6 +10,8 @@ import {
   UpdateExploreUpdating,
   UpdateQueryFoundTags,
   UpdateListButtons,
+  UpdateExploreSettings,
+  ExploreSettings,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef, useStore } from 'store/Store';
@@ -29,10 +31,6 @@ import {
   recalculateDensityMap,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
-import {
-  BrowseType,
-  HbMapTiles,
-} from 'components/map/Map/Map.consts';
 import { useDebounce, useToggle } from 'shared/custom.hooks';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { Button } from 'shared/entities/button.entity';
@@ -61,6 +59,12 @@ function HoneyComb({ router }) {
     false,
   );
 
+  const exploreSettings: ExploreSettings = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings,
+    false,
+  );
+
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
 
@@ -69,9 +73,8 @@ function HoneyComb({ router }) {
   const {
     setMapCenter,
     setMapZoom,
-    exploreSettings,
-    setExploreSettings,
   } = useExploreSettings({
+    exploreSettings,
     router,
     selectedNetwork,
     toggleShowFiltersForm,
@@ -85,7 +88,6 @@ function HoneyComb({ router }) {
     isRedrawingMap,
     h3TypeDensityHexes,
   } = useHexagonMap({
-    setExploreSettings,
     toggleShowLeftColumn,
     exploreSettings,
     filters: exploreMapState.filters,
@@ -98,12 +100,7 @@ function HoneyComb({ router }) {
       exploreMapState.filters &&
       exploreMapState.filters.where.center
     ) {
-      setExploreSettings((prevExploreSettings) => {
-        return {
-          ...prevExploreSettings,
-          center: exploreMapState.filters.where.center,
-        };
-      });
+      store.emit(new UpdateExploreSettings({center: exploreMapState.filters.where.center}))
     }
   }, [exploreMapState.filters]);
 
@@ -175,30 +172,15 @@ function useExploreSettings({
   router,
   selectedNetwork,
   toggleShowFiltersForm,
+  exploreSettings,
 }) {
-  const [exploreSettings, setExploreSettings] = useState(() => {
-    return {
-      center: [0, 0],
-      zoom: 4,
-      tileType: HbMapTiles.OSM,
-      bounds: null,
-      browseType: BrowseType.PINS,
-      honeyCombFeatures: null,
-      prevZoom: 0,
-      loading: true,
-    };
-  });
   let urlParams = new URLSearchParams();
   const setMapCenter = (latLng) => {
-    setExploreSettings((prevSettings) => {
-      return { ...prevSettings, center: latLng };
-    });
+    store.emit(new UpdateExploreSettings({center: latLng}))
   };
 
   const setMapZoom = (zoom: number) => {
-    setExploreSettings((prevSettings) => {
-      return { ...prevSettings, zoom };
-    });
+    store.emit(new UpdateExploreSettings({zoom}))
   };
   let queryExploreSettings = {};
 
@@ -250,49 +232,30 @@ function useExploreSettings({
       urlParams = params;
     }
     if (selectedNetwork) {
-      setExploreSettings((prevSettings) => {
-        const localStorageExploreSettings = localStorageService.read(
-          LocalStorageVars.EXPLORE_SETTINGS,
-        );
-        let locaStorageVars = {};
-        if (localStorageExploreSettings) {
-          locaStorageVars = JSON.parse(localStorageExploreSettings);
-        }
-        return {
-          ...prevSettings,
-          ...selectedNetwork.exploreSettings,
-          ...locaStorageVars,
-          ...queryExploreSettings,
-          loading: false,
-        };
-      });
+      store.emit(new UpdateExploreSettings({
+              ...selectedNetwork.exploreSettings,
+              ...queryExploreSettings,
+            }))
     }
   }, [router, selectedNetwork]);
 
   useEffect(() => {
-    if (!exploreSettings.loading) {
+    if (!exploreSettings?.loading) {
       urlParams.append('zoom', exploreSettings.zoom);
       urlParams.append('lat', exploreSettings.center[0]);
       urlParams.append('lng', exploreSettings.center[1]);
 
       window.location.replace(`#?${urlParams.toString()}`);
-      localStorageService.save(
-        LocalStorageVars.EXPLORE_SETTINGS,
-        JSON.stringify(exploreSettings),
-      );
     }
   }, [exploreSettings]);
 
   return {
     setMapCenter,
     setMapZoom,
-    exploreSettings,
-    setExploreSettings,
   };
 }
 
 function useHexagonMap({
-  setExploreSettings,
   toggleShowLeftColumn,
   exploreSettings,
   filters,
@@ -511,16 +474,12 @@ function useHexagonMap({
   };
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
-    setExploreSettings((previousExploreSettings) => {
-      return {
-        ...previousExploreSettings,
-        prevZoom: previousExploreSettings.zoom,
-        zoom: zoom,
-        bounds: bounds,
-        center: center,
-      };
-    });
-  };
+    store.emit(new UpdateExploreSettings({
+      zoom: zoom,
+      bounds: bounds,
+      center: center,
+    }))
+  }
 
   useEffect(() => {
     if (debouncedHexagonClicked) {
