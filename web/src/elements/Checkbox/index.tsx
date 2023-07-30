@@ -31,7 +31,7 @@ export default function CheckBox({
   const [checked, setChecked] = useState<boolean>(defaultValue);
 
   const onChange = () => {
-    setChecked(() => !checked);
+    setChecked((prevValue) => !prevValue);
     handleChange(name, !checked);
   };
 
