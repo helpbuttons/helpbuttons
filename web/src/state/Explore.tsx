@@ -12,13 +12,39 @@ import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
 import { handleError } from './helper';
 
 import { ButtonFilters, defaultFilters } from 'components/search/AdvancedFilters/filters.type';
+import { BrowseType, HbMapTiles } from 'components/map/Map/Map.consts';
+import { Bounds } from 'pigeon-maps';
+import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 
 export interface ExploreState {
   draftButton: any;
   currentButton: Button;
   map: ExploreMapState;
+  settings: ExploreSettings;
 }
 
+
+export interface ExploreSettings {
+  center: [number,number];
+  zoom: number;
+  tileType: HbMapTiles,
+  bounds: Bounds,
+  browseType: BrowseType,
+  honeyCombFeatures: any,
+  prevZoom: number,
+  loading: boolean,
+}
+
+export const exploreSettingsDefault: ExploreSettings = {
+  center: [0, 0],
+      zoom: 4,
+      tileType: HbMapTiles.OSM,
+      bounds: null,
+      browseType: BrowseType.PINS,
+      honeyCombFeatures: null,
+      prevZoom: 0,
+      loading: true
+}
 export interface ExploreMapState {
   filters: ButtonFilters;
   queryFoundTags: string[];
@@ -40,7 +66,8 @@ export const exploreInitial = {
     cachedHexagons: [],
     loading: true,
     initialized: false,
-  }
+  },
+  settings: exploreSettingsDefault
 };
 
 export class FindButtons implements WatchEvent, UpdateEvent {
@@ -267,3 +294,41 @@ export class UpdateCachedHexagons implements UpdateEvent {
     });
   }
 }
+
+export class ClearCachedHexagons implements UpdateEvent {
+  public constructor() {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.cachedHexagons = [];
+    });
+  }
+}
+
+export class UpdateExploreSettings implements UpdateEvent {
+
+    public constructor(private newExploreSettings: Partial<ExploreSettings>) {}
+  
+    public update(state: GlobalState) {
+      return produce(state, (newState) => {
+        const prevSettings = state.explore.settings
+
+        const localStorageExploreSettings = localStorageService.read(
+              LocalStorageVars.EXPLORE_SETTINGS,
+            );
+        let locaStorageVars = {};
+        if (localStorageExploreSettings) {
+          locaStorageVars = JSON.parse(localStorageExploreSettings);
+        }
+        const newExploreSettings = {
+          ...prevSettings,
+          prevZoom: prevSettings.zoom,
+          ...this.newExploreSettings,
+          loading: false,
+        };
+        newState.explore.settings = newExploreSettings;
+        localStorageService.save(LocalStorageVars.EXPLORE_SETTINGS, JSON.stringify(newExploreSettings))
+      });
+    }
+    
+  }

@@ -12,6 +12,7 @@ import {
   UpdateListButtons,
   UpdateExploreSettings,
   ExploreSettings,
+  ClearCachedHexagons,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef, useStore } from 'store/Store';
@@ -20,10 +21,6 @@ import { withRouter } from 'next/router';
 import List from 'components/list/List';
 import { Point } from 'pigeon-maps';
 import { LoadabledComponent } from 'components/loading';
-import {
-  LocalStorageVars,
-  localStorageService,
-} from 'services/LocalStorage';
 import HexagonExploreMap from 'components/map/Map/HexagonExploreMap';
 import {
   calculateDensityMap,
@@ -254,6 +251,9 @@ function useExploreSettings({
     setMapZoom,
   };
 }
+
+// const loaded = false
+store.emit(new ClearCachedHexagons())
 
 function useHexagonMap({
   toggleShowLeftColumn,
