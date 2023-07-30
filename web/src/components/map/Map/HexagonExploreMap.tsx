@@ -66,7 +66,7 @@ export default function HexagonExploreMap({
     setMaxButtonsHexagon(() =>
       h3TypeDensityHexes.reduce((accumulator, currentValue) => {
         return Math.max(accumulator, currentValue.count);
-      }, 0),
+      }, 1),
     );
   }, [h3TypeDensityHexes]);
 
