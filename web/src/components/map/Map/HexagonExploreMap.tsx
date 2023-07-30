@@ -19,7 +19,6 @@ export default function HexagonExploreMap({
   currentButton,
   handleBoundsChange,
   exploreSettings,
-  setMapCenter,
   setHexagonsToFetch,
   setHexagonClicked,
   hexagonClicked,

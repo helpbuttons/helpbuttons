@@ -35,7 +35,6 @@ import { isPointWithinRadius } from 'geolib';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
 
-
 const defaultZoomPlace = 13;
 
 function HoneyComb({ router }) {
@@ -67,10 +66,7 @@ function HoneyComb({ router }) {
 
   const height = showLeftColumn ? 0 : 400;
 
-  const {
-    setMapCenter,
-    setMapZoom,
-  } = useExploreSettings({
+  useExploreSettings({
     exploreSettings,
     router,
     selectedNetwork,
@@ -97,69 +93,71 @@ function HoneyComb({ router }) {
       exploreMapState.filters &&
       exploreMapState.filters.where.center
     ) {
-      store.emit(new UpdateExploreSettings({center: exploreMapState.filters.where.center}))
+      store.emit(
+        new UpdateExploreSettings({
+          center: exploreMapState.filters.where.center,
+          loading: true,
+        }),
+      );
     }
   }, [exploreMapState.filters]);
 
   return (
-      <div className="index__explore-container">
-          <div
-            className={
-              'index__content-left ' +
-              (showLeftColumn ? '' : 'index__content-left--hide')
-            }
-          >
-            <NavHeader
-              toggleShowFiltersForm={toggleShowFiltersForm}
-              totalNetworkButtonsCount={selectedNetwork.buttonCount}
-            />
-            <AdvancedFilters
-              showFiltersForm={showFiltersForm}
-              toggleShowFiltersForm={toggleShowFiltersForm}
-            />
-            <ShowDesktopOnly>
-              <List
-              showFiltersForm={showFiltersForm}
-              buttons={exploreMapState.listButtons}
-              showLeftColumn={showLeftColumn}
-              onLeftColumnToggle={toggleShowLeftColumn}
-              />
-            </ShowDesktopOnly>
-
-          </div>
-
-          <LoadabledComponent loading={exploreSettings.loading}>
-            <HexagonExploreMap
-              exploreSettings={exploreSettings}
-              h3TypeDensityHexes={h3TypeDensityHexes}
-              currentButton={currentButton}
-              handleBoundsChange={handleBoundsChange}
-              setMapCenter={setMapCenter}
-              setHexagonsToFetch={setHexagonsToFetch}
-              setHexagonClicked={setHexagonClicked}
-              hexagonClicked={hexagonClicked}
-              isRedrawingMap={isRedrawingMap}
-              filters={exploreMapState.filters}
-            />
-          </LoadabledComponent>
-
-          <ShowMobileOnly>
-            <div
-              className={
-                'index__content-bottom ' +
-                (showLeftColumn ? '' : 'index__content-bottom--hide')
-              }
-            > 
-              <List
-                  showFiltersForm={showFiltersForm}
-                  buttons={exploreMapState.listButtons}
-                  showLeftColumn={showLeftColumn}
-                  onLeftColumnToggle={toggleShowLeftColumn}
-              />
-            </div>
-
-          </ShowMobileOnly>
+    <div className="index__explore-container">
+      <div
+        className={
+          'index__content-left ' +
+          (showLeftColumn ? '' : 'index__content-left--hide')
+        }
+      >
+        <NavHeader
+          toggleShowFiltersForm={toggleShowFiltersForm}
+          totalNetworkButtonsCount={selectedNetwork.buttonCount}
+        />
+        <AdvancedFilters
+          showFiltersForm={showFiltersForm}
+          toggleShowFiltersForm={toggleShowFiltersForm}
+        />
+        <ShowDesktopOnly>
+          <List
+            showFiltersForm={showFiltersForm}
+            buttons={exploreMapState.listButtons}
+            showLeftColumn={showLeftColumn}
+            onLeftColumnToggle={toggleShowLeftColumn}
+          />
+        </ShowDesktopOnly>
       </div>
+
+      <LoadabledComponent loading={exploreSettings.loading}>
+        <HexagonExploreMap
+          exploreSettings={exploreSettings}
+          h3TypeDensityHexes={h3TypeDensityHexes}
+          currentButton={currentButton}
+          handleBoundsChange={handleBoundsChange}
+          setHexagonsToFetch={setHexagonsToFetch}
+          setHexagonClicked={setHexagonClicked}
+          hexagonClicked={hexagonClicked}
+          isRedrawingMap={isRedrawingMap}
+          filters={exploreMapState.filters}
+        />
+      </LoadabledComponent>
+
+      <ShowMobileOnly>
+        <div
+          className={
+            'index__content-bottom ' +
+            (showLeftColumn ? '' : 'index__content-bottom--hide')
+          }
+        >
+          <List
+            showFiltersForm={showFiltersForm}
+            buttons={exploreMapState.listButtons}
+            showLeftColumn={showLeftColumn}
+            onLeftColumnToggle={toggleShowLeftColumn}
+          />
+        </div>
+      </ShowMobileOnly>
+    </div>
   );
 }
 
@@ -172,13 +170,6 @@ function useExploreSettings({
   exploreSettings,
 }) {
   let urlParams = new URLSearchParams();
-  const setMapCenter = (latLng) => {
-    store.emit(new UpdateExploreSettings({center: latLng}))
-  };
-
-  const setMapZoom = (zoom: number) => {
-    store.emit(new UpdateExploreSettings({zoom}))
-  };
   let queryExploreSettings = {};
 
   const getUrlParams = (path) => {
@@ -202,8 +193,7 @@ function useExploreSettings({
       const showFilters = params.get('showFilters');
       const click = params.get('click');
 
-      if (click !== null && selectedNetwork)
-      {
+      if (click !== null && selectedNetwork) {
         queryExploreSettings = {
           ...queryExploreSettings,
           center: selectedNetwork.exploreSettings.center,
@@ -229,10 +219,13 @@ function useExploreSettings({
       urlParams = params;
     }
     if (selectedNetwork) {
-      store.emit(new UpdateExploreSettings({
-              ...selectedNetwork.exploreSettings,
-              ...queryExploreSettings,
-            }))
+      store.emit(
+        new UpdateExploreSettings({
+          ...selectedNetwork.exploreSettings,
+          ...queryExploreSettings,
+          loading: true,
+        }),
+      );
     }
   }, [router, selectedNetwork]);
 
@@ -245,15 +238,10 @@ function useExploreSettings({
       window.location.replace(`#?${urlParams.toString()}`);
     }
   }, [exploreSettings]);
-
-  return {
-    setMapCenter,
-    setMapZoom,
-  };
 }
 
 // const loaded = false
-store.emit(new ClearCachedHexagons())
+store.emit(new ClearCachedHexagons());
 
 function useHexagonMap({
   toggleShowLeftColumn,
@@ -415,13 +403,13 @@ function useHexagonMap({
       if (tagsFound.length > 0) {
         foundTags.current = _.union(foundTags.current, tagsFound);
       }
-    }
-    
+    };
+
     let queryTags = filters.query
       .split(' ')
       .filter((value) => value.length > 0);
     foundTags.current = [];
-    
+
     const res = cachedHexagons.reduce(
       ({ filteredButtons, filteredHexagons }, hexagonCached) => {
         const moreButtons = hexagonCached.buttons.filter(
@@ -433,15 +421,14 @@ function useHexagonMap({
             }
 
             findMoreTags(button, queryTags);
-            if(!applyTagFilters(button, foundTags.current))
-            { 
+            if (!applyTagFilters(button, foundTags.current)) {
               return false;
             }
 
             // remove tags from query string, so it won't fail to search string
             let query = filters.query;
             foundTags.current.forEach(
-              (tag) =>(query = query.replace(tag, '')),
+              (tag) => (query = query.replace(tag, '')),
             );
             if (!applyQueryFilter(button, query)) {
               return false;
@@ -474,12 +461,14 @@ function useHexagonMap({
   };
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
-    store.emit(new UpdateExploreSettings({
-      zoom: zoom,
-      bounds: bounds,
-      center: center,
-    }))
-  }
+    store.emit(
+      new UpdateExploreSettings({
+        zoom: zoom,
+        bounds: bounds,
+        center: center,
+      }),
+    );
+  };
 
   useEffect(() => {
     if (debouncedHexagonClicked) {
