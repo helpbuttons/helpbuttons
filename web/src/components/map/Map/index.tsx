@@ -41,7 +41,7 @@ export function HbMap({
       defaultZoom: mapZoom,
       onBoundsChanged: ({ center, zoom, bounds, initial }) => {
         onBoundsChanged({
-          center: roundCoords(center),
+          center: center,
           zoom: Math.floor(zoom),
           bounds,
         })

@@ -23,7 +23,7 @@ export default function HexagonExploreMap({
   setHexagonClicked,
   hexagonClicked,
   isRedrawingMap,
-  filters,
+  selectedNetwork,
 }) {
   const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
   const [centerBounds, setCenterBounds] = useState<Point>(null);
@@ -34,11 +34,6 @@ export default function HexagonExploreMap({
     setCenterBounds(center);
   };
 
-  const selectedNetwork = useRef(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
-
   useEffect(() => {
     if (exploreSettings.loading) {
       return;
@@ -47,6 +42,8 @@ export default function HexagonExploreMap({
     setHexagonClicked(() => null); // unselect all hexagons
 
     if (exploreSettings.bounds) {
+      // console.log(`bounds not null: ${JSON.stringify(exploreSettings.center)} ${exploreSettings.zoom}`)
+
       const boundsHexes = convertBoundsToGeoJsonHexagons(
         exploreSettings.bounds,
         getResolution(exploreSettings.zoom),
@@ -78,9 +75,8 @@ export default function HexagonExploreMap({
         mapCenter={exploreSettings.center}
         mapZoom={exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
-        tileType={exploreSettings.tileType}
+        tileType={selectedNetwork.exploreSettings.tileType}
       >
-        {selectedNetwork && (
           <Overlay anchor={[100, 100]}>
             <div className="search-map__network-title">
               {selectedNetwork.name}
@@ -90,7 +86,6 @@ export default function HexagonExploreMap({
               </div>
             </div>
           </Overlay>
-        )}
 
         <GeoJson>
           {geoJsonFeatures.map((hexagonFeature) => (

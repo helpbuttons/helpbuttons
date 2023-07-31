@@ -26,6 +26,7 @@ import {
   calculateDensityMap,
   getResolution,
   recalculateDensityMap,
+  roundCoord,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import { useDebounce, useToggle } from 'shared/custom.hooks';
@@ -96,7 +97,6 @@ function HoneyComb({ router }) {
       store.emit(
         new UpdateExploreSettings({
           center: exploreMapState.filters.where.center,
-          loading: true,
         }),
       );
     }
@@ -127,8 +127,7 @@ function HoneyComb({ router }) {
           />
         </ShowDesktopOnly>
       </div>
-
-      <LoadabledComponent loading={exploreSettings.loading}>
+      <LoadabledComponent loading={exploreSettings.loading && !selectedNetwork}>
         <HexagonExploreMap
           exploreSettings={exploreSettings}
           h3TypeDensityHexes={h3TypeDensityHexes}
@@ -138,7 +137,7 @@ function HoneyComb({ router }) {
           setHexagonClicked={setHexagonClicked}
           hexagonClicked={hexagonClicked}
           isRedrawingMap={isRedrawingMap}
-          filters={exploreMapState.filters}
+          selectedNetwork={selectedNetwork}
         />
       </LoadabledComponent>
 
@@ -193,47 +192,49 @@ function useExploreSettings({
       const showFilters = params.get('showFilters');
       const click = params.get('click');
 
-      if (click !== null && selectedNetwork) {
-        queryExploreSettings = {
-          ...queryExploreSettings,
-          center: selectedNetwork.exploreSettings.center,
-        };
+      if (click !== null) {
+        console.log('clicked')
+        store.emit(new UpdateExploreSettings({center: selectedNetwork.exploreSettings.center, loading: true, bounds: null}))
+        // missing zoom
+        return;
       }
 
+      let newExploreSettings = {}
       if (lat && lng) {
-        queryExploreSettings = {
-          ...queryExploreSettings,
-          center: [lat, lng],
-        };
+        store.emit(
+          new UpdateExploreSettings({
+            center: [lat, lng],
+            
+          }))
       }
-      if (zoom) {
-        queryExploreSettings = {
-          ...queryExploreSettings,
-          zoom: zoom,
-        };
-      }
+      // if (zoom) {
+      //   console.log('zooom?')
+      //   store.emit(
+      //     new UpdateExploreSettings({
+      //       zoom: zoom,
+      //     }))
+      // }
       if (showFilters == 'true') {
         toggleShowFiltersForm(true);
         params.delete('showFilters');
       }
       urlParams = params;
     }
+    
+  }, [router]);
+  useEffect(() => {
     if (selectedNetwork) {
-      store.emit(
-        new UpdateExploreSettings({
-          ...selectedNetwork.exploreSettings,
-          ...queryExploreSettings,
-          loading: true,
-        }),
-      );
+      console.log('selected network')
+      console.log(selectedNetwork.exploreSettings.center)
+    store.emit(new UpdateExploreSettings({...selectedNetwork.exploreSettings}));
     }
-  }, [router, selectedNetwork]);
+  },[selectedNetwork]);
 
   useEffect(() => {
     if (!exploreSettings?.loading) {
       urlParams.append('zoom', exploreSettings.zoom);
-      urlParams.append('lat', exploreSettings.center[0]);
-      urlParams.append('lng', exploreSettings.center[1]);
+      urlParams.append('lat', roundCoord(exploreSettings.center[0]));
+      urlParams.append('lng', roundCoord(exploreSettings.center[1]));
 
       window.location.replace(`#?${urlParams.toString()}`);
     }
@@ -461,13 +462,24 @@ function useHexagonMap({
   };
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
-    store.emit(
-      new UpdateExploreSettings({
+    let newSettings = {}
+    if(exploreSettings.prevZoom != zoom)
+    {
+      newSettings = {
         zoom: zoom,
-        bounds: bounds,
+          bounds: bounds,
+          loading: true,
+      }
+    }else{
+      newSettings = {
         center: center,
-      }),
-    );
+          bounds: bounds,
+          loading: true,
+      }
+    }
+      store.emit(
+        new UpdateExploreSettings(newSettings),
+      );    
   };
 
   useEffect(() => {

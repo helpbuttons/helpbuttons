@@ -35,25 +35,19 @@ export interface ExploreState {
 export interface ExploreSettings {
   center: number[];
   zoom: number;
-  tileType: HbMapTiles;
   bounds: Bounds;
-  browseType: BrowseType;
   honeyCombFeatures: any;
   prevZoom: number;
   loading: boolean;
-  updateTo: { zoom: number; center: number[] };
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
   center: [0, 0],
   zoom: 4,
-  tileType: HbMapTiles.OSM,
   bounds: null,
-  browseType: BrowseType.PINS,
   honeyCombFeatures: null,
   prevZoom: 0,
   loading: true,
-  updateTo: null,
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
