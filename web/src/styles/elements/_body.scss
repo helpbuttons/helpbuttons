@@ -14,6 +14,8 @@ $body-max-width: $grid-max-width;
 .body__section {
 
   height: 100vh;
+  display: flex;
+  flex-direction: column;
   // margin-bottom: $margin-big;
 
 }

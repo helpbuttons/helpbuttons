@@ -186,7 +186,11 @@
     "centerOfMap": "Select the central place of your network",
     "selectMapStyle": "Choose map style",
     "locationExplain": "Your network place and radius would be centered everytime someone loads the app",
-    "tagsExplain": "Your network keywords will make easier to search for topics and to know what's your network about"
+    "customizeNetwork": "Your network keywords will make easier to search for topics and to know what's your network about",
+    "chooseColors": "Your network keywords will make easier to search for topics and to know what's your network about",
+    "chooseColorsExplain": "Your network keywords will make easier to search for topics and to know what's your network about",
+    "pickMainColor": "Your network keywords will make easier to search for topics and to know what's your network about"
+
   },
   "configure": {
     "browsePins": "",

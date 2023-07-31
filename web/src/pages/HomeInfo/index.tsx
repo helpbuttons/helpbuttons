@@ -154,7 +154,7 @@ export default function HomeInfo({
                           >
                             <Btn
                               btnType={BtnType.filter}
-                              iconLeft={IconType.green}
+                              iconLeft={IconType.color}
                               caption={buttoTypeCountText}
                               onClick={() => filterButtonType(buttonType.name)}
                             />

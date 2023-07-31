@@ -14,11 +14,12 @@ export enum BtnType {
 }
 
 export enum IconType {
-    red,
+    color,
     green,
     svg,
     splitRedGreen,
     circle,
+    iconLink,
 }
 export enum ContentAlignment {
     left,
@@ -26,7 +27,7 @@ export enum ContentAlignment {
     right,
 }
 interface BtnProps {
-    caption: string;
+    caption?: string;
     iconLink?: string;
     iconLeft?: IconType;
     iconRight?: IconType;
@@ -37,14 +38,19 @@ interface BtnProps {
     onClick?: Function;
     submit?: boolean;
     extraClass?:string;
+    backgroundColor?:string;
 }
 
-function BtnIcon({ icon, iconLink }: { icon: IconType }) {
+function BtnIcon({ icon, color, iconLink}: { icon: IconType }) {
     switch (icon) {
-        case IconType.red:
-            return <div className="btn-filter__icon red"></div>;
-        case IconType.green:
-            return <div className="btn-filter__icon green"></div>;
+        case IconType.color:
+            return <div className="btn-filter__icon" 
+           style={ {
+                'background': color,
+                '--button-color': color,
+              } as React.CSSProperties
+            }
+            ></div>;
         case IconType.svg:
             return <div className="btn-with-icon__icon">{iconLink}</div>;
         case IconType.circle:
@@ -87,6 +93,7 @@ export default function Btn({
     isSubmitting = false,
     onClick = () => {},
     submit = false,
+    backgroundColor,
 }: BtnProps) {
     let classNames = [];
     const hasIcon = iconRight !== null || iconLeft !== null;
@@ -142,11 +149,20 @@ export default function Btn({
     }
         
     return (
-        <button {...attr} onClick={onClick} disabled={disabled} className={className + ' ' + extraClass}>
+        <button {...attr} onClick={onClick} disabled={disabled} className={className + ' ' + extraClass}   
+        >
             {isSubmitting && <Spinner />}
-            <BtnIcon icon={iconLeft} iconLink={iconLink}/>
-            <CaptionNode caption={caption} hasIcon={hasIcon} />
-            <BtnIcon icon={iconRight} iconLink={iconLink}/>
+            <BtnIcon icon={iconLeft} iconLink={iconLink} 
+            style={
+                {
+                  'background-color': backgroundColor,
+                  '--button-color': backgroundColor,
+                } as React.CSSProperties}
+            />
+            <CaptionNode caption={caption} hasIcon={hasIcon} 
+            />
+            <BtnIcon icon={iconRight} iconLink={iconLink}
+            />
         </button>
     );
 }

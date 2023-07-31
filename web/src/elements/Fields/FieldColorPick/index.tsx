@@ -38,6 +38,25 @@ export const FieldColorPick = React.forwardRef(
 
     return (
       <div className="form__field">
+          <input
+            name={name}
+            ref={ref}
+            placeholder={placeholder ? placeholder : label}
+            onChange={onChange}
+            onBlur={onBlur}
+            className={`form__input ${classNameInput} ${
+              validationError ? 'validation-error' : ''
+            }`}
+            value={value}
+            type="hidden"
+        />
+        {showHideMenu && (
+          <HexColorPicker
+            color={value}
+            onChange={(color) => setColor(color)}
+          />
+        )}
+        <FieldError validationError={validationError} />
         {hideBoilerPlate && (
           <>
             <p className="form__label">{label}</p>
@@ -52,25 +71,7 @@ export const FieldColorPick = React.forwardRef(
           <span style={{ color: value }}>{value}</span>
           {showHideMenu && <IoClose />}
         </div>
-        <input
-          name={name}
-          ref={ref}
-          placeholder={placeholder ? placeholder : label}
-          onChange={onChange}
-          onBlur={onBlur}
-          className={`form__input ${classNameInput} ${
-            validationError ? 'validation-error' : ''
-          }`}
-          value={value}
-          type="hidden"
-        />
-        {showHideMenu && (
-          <HexColorPicker
-            color={value}
-            onChange={(color) => setColor(color)}
-          />
-        )}
-        <FieldError validationError={validationError} />
+ 
       </div>
     );
   },
@@ -109,25 +110,11 @@ export const CircleColorPick = React.forwardRef(
 
     return (
       // <div className="form__field">
-      <div style={
-        {
-          '--button-color': value,
-        } as React.CSSProperties}>
-        
-        <Btn
-                    onClick={() => setHideMenu(!showHideMenu)}
-                    btnType={BtnType.circle}
-                    iconLeft={IconType.red}
-                    contentAlignment={ContentAlignment.left}
-                    
-        />
-        {showHideMenu && (
           <HexColorPicker
+            className='picker__content'
             color={value}
             onChange={(color) => setColor(color)}
           />
-        )}      
-      </div>
     );
   },
 );
