@@ -8,6 +8,7 @@ import { IoTrashBinOutline } from 'react-icons/io5';
 import { useState, forwardRef } from 'react';
 import { CircleColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
+import { buttonColorStyle } from 'shared/buttonTypes';
 
 const FieldButtonTemplates = forwardRef(
   (
@@ -87,13 +88,13 @@ const FieldButtonTemplates = forwardRef(
         
           {watchValue?.length > 0 &&
             watchValue.map((val, idx) => (
-              <div className='form__list-item--button-type-field' key={idx}>
+              <div className='form__list-item--button-type-field' key={idx} style={buttonColorStyle(val.cssColor)}>
                 <Btn
                   btnType={BtnType.filter}
                   iconLeft={IconType.color}
                   contentAlignment={ContentAlignment.left}
                   caption={val.caption}
-                  backgroundColor={val.cssColor}
+                  color={val.cssColor}
                     
                 />
                 <Btn
