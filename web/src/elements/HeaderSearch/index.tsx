@@ -13,25 +13,33 @@ export function HeaderSearch({ results, isHome }) {
     (state: GlobalState) => state.explore.map,
     false,
   );
-  const [buttonTypes, setButtonTypes] = useState([]);
+  const [buttonTypes, setButtonTypes] = useState(null);
   useButtonTypes(setButtonTypes);
   return (
     <div className="header-search__tool">
       <div className="header-search__form">
-      <LoadabledComponent loading={exploreMapState.loading && !isHome && buttonTypes}>
-        <div className="header-search__column">
-          <SearchText count={results.count} where={exploreMapState.filters.where} />
-          <SearchInfo
-            helpButtonTypes={exploreMapState.filters.helpButtonTypes}
-            when={exploreMapState.filters.when}
-            what={exploreMapState.filters.query}
-            buttonTypes={buttonTypes}
-          />
-
-          <div className="header-search__icon">
+        <LoadabledComponent
+          loading={exploreMapState.loading && !isHome && buttonTypes}
+        >
+          <div className="header-search__column">
+            <SearchText
+              count={results.count}
+              where={exploreMapState.filters.where}
+            />
+            {buttonTypes && (
+              <SearchInfo
+                helpButtonTypes={
+                  exploreMapState.filters.helpButtonTypes
+                }
+                when={exploreMapState.filters.when}
+                what={exploreMapState.filters.query}
+                buttonTypes={buttonTypes}
+              />
+            )}
+            <div className="header-search__icon">
               <IoSearch />
+            </div>
           </div>
-        </div>
         </LoadabledComponent>
       </div>
     </div>
@@ -42,7 +50,7 @@ function SearchText({ count, where }) {
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
-    false
+    false,
   );
 
   const address = (where) => {
@@ -64,8 +72,6 @@ function SearchText({ count, where }) {
 }
 
 function SearchInfo({ helpButtonTypes, when, what, buttonTypes }) {
-
-
   const types = (helpButtonTypes) => {
     if (helpButtonTypes.length < 1) {
       return t('buttonFilters.allButtonTypes');
