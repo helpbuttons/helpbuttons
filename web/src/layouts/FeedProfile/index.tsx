@@ -35,7 +35,7 @@ export default function FeedProfile({ allActivities }) {
     });
   };
   return (
-    <div className="feed-container">
+    <>
       <div className="feed-selector feed-selector--activity">
         <Dropdown
           options={notificationTypeOptions}
@@ -44,30 +44,30 @@ export default function FeedProfile({ allActivities }) {
         />
       </div>
 
-      <div className="feed-line"></div>
-
       <div className="feed-section--activity">
-        {activities &&
-          activities.map((activity, key) => {
-            return (
-              <div className="feed-element" key={key}>
-                <CardNotification activity={activity} />
+        <div className="feed-section--activity-content">
+          {activities &&
+            activities.map((activity, key) => {
+              return (
+                <div className="feed-element" key={key}>
+                  <CardNotification activity={activity} />
+                </div>
+              );
+            })}
+          {(!activities || activities.length < 1) && (
+            <div className="feed__empty-message">
+              <div className="feed__empty-message--prev">
+                {t('activities.noactivity', ['activities'])}
               </div>
-            );
-          })}
-        {(!activities || activities.length < 1) && (
-          <div className="feed__empty-message">
-            <div className="feed__empty-message--prev">
-              {t('activities.noactivity', ['activities'])}
+              <Btn
+                caption={t('explore.createEmpty')}
+                onClick={() => router.push('/ButtonNew')}
+                contentAlignment={ContentAlignment.center}
+              />
             </div>
-            <Btn
-              caption={t('explore.createEmpty')}
-              onClick={() => router.push('/ButtonNew')}
-              contentAlignment={ContentAlignment.center}
-            />
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

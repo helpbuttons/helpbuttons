@@ -16,7 +16,7 @@ function RadioIcon({ icon }: { icon: IconType }) {
         </div>
       );
     case 'red':
-      return <div className="btn-filter__icon red"></div>;
+      return <div className="btn-filter__icon"></div>;
     default:
       return null;
   }

@@ -34,14 +34,23 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-section--activity {
 
-  padding-top: $feed-selector-height;
-  padding-bottom: calc($footer-height-mobile + $padding-small*4);
+  // height: 100vh;
+  overflow: scroll  ;
+  // padding-top: $feed-selector-height;
+  // padding-bottom: calc($footer-height-mobile + $padding-small*4);
+
+}
+
+.feed-section--activity-content{
+
+  height: auto;
+
 
 }
 
 .feed-selector {
   height: $feed-selector-height;
-  width: 100%;
+  width: 100vw;
   max-width: $body-max-width;
   background-color: dimgray;
   padding: $padding-big;
@@ -49,7 +58,7 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-selector--activity {
   z-index: $z-index-03;
-  position: absolute;
+  position: relative;
   top: 0;
 }
 
@@ -140,6 +149,8 @@ $feed-new-message-radius: $border-radius-circle;
 .feed-container{
   background: $color-ligth-gray;
   height: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .feed-element{

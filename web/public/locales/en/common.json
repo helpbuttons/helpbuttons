@@ -186,7 +186,18 @@
     "centerOfMap": "Select the central place of your network",
     "selectMapStyle": "Choose map style",
     "locationExplain": "Your network place and radius would be centered everytime someone loads the app",
-    "tagsExplain": "Your network keywords will make easier to search for topics and to know what's your network about"
+    "tagsExplain": "Your network keywords will make easier to search for topics and to know what's your network about",
+    "customizeNetwork": "Customize your Network",
+    "chooseColors": "Choose your colors",
+    "chooseColorsExplain": "Main color would define backgrounds, secondary color would define details.",
+    "pickMainColor": "Pick main color",
+    "pickSecondaryColor": "Pick secondary color",
+    "buttonTemplateLabel": "Create your helpbutton types",
+    "buttonTemplateExplain": "These are the main types of helpbuttons that your users can create. Add a name and choose your color to differenciate them",
+    "buttonTemplatePlaceHolder": "Write your helpbutton type name here",
+    "createButtonTypePlaceholder": "Write your helpbutton type name here",
+    "createButtonTypeAction": "Create new type"
+
   },
   "configure": {
     "browsePins": "",

@@ -273,26 +273,48 @@ margin: $margin-medium 0;
 
 }
 
+.form__list--button-type-field {
+
+display: flex;
+flex-direction: column-reverse;
+width: 100%;
+
+}
+
+.form__list-item--button-type-field {
+
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: $margin-small;
+  
+  }
 
 .form__input--button-type-field {
 
   display: flex;
-  width: fill-available;
-  align-items: baseline;
+  flex-direction: column;
+  width: stretch;
   gap: $margin-small;
 }
 
 
-.form__input--button-type-field {
-  display: flex;
-}
-
 .form__input--button-type-field .form__field {
-  flex-basis: 60%; /* Take 60% of the width */
+  flex-basis: 100%; /* Take 60% of the width */
+  margin-bottom: 0;
 }
 
 .form__input--button-type-field button {
   // flex-basis: 20%; /* Take 20% of the width */
+  margin-bottom: $margin-medium;
+}
+
+.form__field .btn--corporative {
+
+  margin-bottom: $margin-medium;
+
 }
 
 .form__options-v {
@@ -460,6 +482,12 @@ margin: $margin-medium 0;
 }
 
 @media #{$breakpoints-medium} {
+
+  .form__input--button-type-field {
+
+    flex-direction: row;
+
+  }
 
   .form__field--feed button {
     width: 60px;

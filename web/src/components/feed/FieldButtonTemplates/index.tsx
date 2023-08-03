@@ -8,6 +8,7 @@ import { IoTrashBinOutline } from 'react-icons/io5';
 import { useState, forwardRef } from 'react';
 import { CircleColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
+import { buttonColorStyle } from 'shared/buttonTypes';
 
 const FieldButtonTemplates = forwardRef(
   (
@@ -54,10 +55,7 @@ const FieldButtonTemplates = forwardRef(
       <div className="form__field">
         <label className="form__label">{label}</label>
         <p className="form__explain">{explain}</p>
-        <Btn
-          caption={t('configuration.createButtonTypeAction')}
-          onClick={() => onAddNewButtonTemplate(watch())}
-        />
+
 
         <div className="form__input--button-type-field">
           <FieldText
@@ -78,22 +76,39 @@ const FieldButtonTemplates = forwardRef(
             value={color}
             hideBoilerPlate={true}
           />
+
         </div>
-        {watchValue?.length > 0 &&
-          watchValue.map((val, idx) => (
-            <div key={idx}>
-              <p>
-                NAME: {val.caption} - VALUE:{val.cssColor}
-              </p>
-              <Btn
-                btnType={BtnType.iconActions}
-                iconLink={<IoTrashBinOutline />}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => remove(idx)}
-              />
-            </div>
-          ))}
+        <Btn  
+            caption={'+ Add type'}
+            onClick={() => onAddNewButtonTemplate(watch())}
+            btnType={BtnType.corporative}
+          />
+
+        <div className='form__list--button-type-field'>
+        
+          {watchValue?.length > 0 &&
+            watchValue.map((val, idx) => (
+              <div className='form__list-item--button-type-field' key={idx} style={buttonColorStyle(val.cssColor)}>
+                <Btn
+                  btnType={BtnType.filter}
+                  iconLeft={IconType.color}
+                  contentAlignment={ContentAlignment.left}
+                  caption={val.caption}
+                  color={val.cssColor}
+                    
+                />
+                <Btn
+                  btnType={BtnType.iconActions}
+                  iconLink={<IoTrashBinOutline />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() => remove(idx)}
+                />
+              </div>
+            ))}
+
+        </div>
+       
       </div>
     );
   },

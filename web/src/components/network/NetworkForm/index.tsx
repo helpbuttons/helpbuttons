@@ -103,7 +103,7 @@ function NetworkForm({
               classNameInput="squared"
               validationError={errors.backgroundColor}
               setValue={setValue}
-              actionName={t('button.pickMainColor')}
+              actionName={t('configuration.pickMainColor')}
               value={watch('backgroundColor')}
               {...register('backgroundColor', { required: true })}
               hideBoilerPlate={true}
@@ -114,7 +114,7 @@ function NetworkForm({
               classNameInput="squared"
               validationError={errors.texColor}
               setValue={setValue}
-              actionName={t('button.pickSecondaryColor')}
+              actionName={t('configuration.pickSecondaryColor')}
               value={watch('textColor')}
               {...register('textColor', { required: true })}
               hideBoilerPlate={true}

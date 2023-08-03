@@ -4,6 +4,7 @@ import React from 'react';
 import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/sys.helper';
 import CardButtonMap from '../CardButtonMap';
+import { buttonColorStyle } from 'shared/buttonTypes';
 
 interface MarkerButtonProps extends PigeonProps {
   style?: React.CSSProperties;

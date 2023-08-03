@@ -23,26 +23,26 @@ function Repository() {
 
           <section className="repository__section">
 
-            <Btn iconLeft={IconType.red} caption="Necesito Btn" />
+            <Btn iconLeft={IconType.color} caption="Necesito Btn" />
 
             <button className="btn-with-icon btn-with-icon--need">
-              <div className="btn-filter__icon red"></div>
+              <div className="btn-filter__icon"></div>
               <div className="btn-with-icon__text">
                 Necesito
               </div>
             </button>
 
-            <Btn iconLeft={IconType.green} caption="Ofrezco Btn" />
+            <Btn iconLeft={IconType.color} caption="Ofrezco Btn" />
             <button className="btn-with-icon button-with-icon--offer">
-              <div className="btn-filter__icon green"></div>
+              <div className="btn-filter__icon"></div>
               <div className="btn-with-icon__text">
                 Ofrezco
               </div>
             </button>
 
-            <Btn iconLeft={IconType.green} caption="Ofrezco inactivo Btn" disabled={true} />
+            <Btn iconLeft={IconType.color} caption="Ofrezco inactivo Btn" disabled={true} />
             <button disabled className="btn-with-icon button-with-icon--offer">
-              <div className="btn-filter__icon green"></div>
+              <div className="btn-filter__icon"></div>
               <div className="btn-with-icon__text">
                 Ofrezco inactivo
               </div>
@@ -105,15 +105,15 @@ function Repository() {
 
             <hr></hr>
 
-            <Btn btnType={BtnType.filter} iconLeft={IconType.green} caption="Filter with icon green Btn" />
+            <Btn btnType={BtnType.filter} iconLeft={IconType.color} caption="Filter with icon green Btn" />
             <button className="btn-filter-with-icon">
-              <div className="btn-filter__icon green"></div>
+              <div className="btn-filter__icon"></div>
               Filter with icon green
             </button>
 
-            <Btn btnType={BtnType.filter} iconLeft={IconType.green} iconRight={IconType.remove} caption="Filter with double icon Btn" />
+            <Btn btnType={BtnType.filter} iconLeft={IconType.color} iconRight={IconType.remove} caption="Filter with double icon Btn" />
             <button className="btn-filter-with-icon">
-              <div className="btn-filter__icon green"></div>
+              <div className="btn-filter__icon"></div>
               Filter with double icon
               <div className="btn-filter__remove-icon"></div>
             </button>
@@ -124,7 +124,7 @@ function Repository() {
               <label className="checkbox__filter-label">
                 <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                 <div className="checkbox-filter__content btn-filter-with-icon">
-                  <div className="btn-filter__icon red"></div>
+                  <div className="btn-filter__icon"></div>
 
                   <div className="checkbox__text">
                     Filter checkbox
@@ -308,7 +308,7 @@ function Repository() {
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
                 <div className="checkbox__content">
-                  <div className="checkbox__icon red"></div>
+                  <div className="checkbox__icon"></div>
                   <div className="checkbox__text">
                     Necesito Ahora
                   </div>
@@ -1463,7 +1463,7 @@ function Repository() {
                 <label className="checkbox__filter-label">
                   <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                   <div className="checkbox-filter__content btn-filter-with-icon">
-                    <div className="btn-filter__icon red"></div>
+                    <div className="btn-filter__icon"></div>
 
                     <div className="checkbox__text">
                       Necesitan
@@ -1476,7 +1476,7 @@ function Repository() {
                 <label className="checkbox__filter-label">
                   <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                   <div className="checkbox-filter__content btn-filter-with-icon">
-                    <div className="btn-filter__icon red"></div>
+                    <div className="btn-filter__icon"></div>
 
                     <div className="checkbox__text">
                       Necesitan
