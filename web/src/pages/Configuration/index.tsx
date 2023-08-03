@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { useToggle } from 'shared/custom.hooks';
 import { Network } from 'shared/entities/network.entity';
+import { UpdateExploreSettings } from 'state/Explore';
 import { FetchDefaultNetwork, UpdateNetwork, UpdateNetworkBackgroundColor, UpdateNetworkTextColor } from 'state/Networks';
 import { useRef } from 'store/Store';
 
@@ -58,6 +59,7 @@ function Configuration() {
     },
       () => {
         const onComplete = (network) => {
+          store.emit(new UpdateExploreSettings(data.exploreSettings))
           alertService.info(t('common.saveSuccess', ['Configuration']))
           router.replace('/HomeInfo');
         }

@@ -8,8 +8,6 @@ import { useState } from 'react';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 
 export default function FeedProfile({ allActivities }) {
-  const [showSelectFilteredFeed, setShowSelectFilteredFeed] =
-    useToggle(false);
   const [activities, setActivities] = useState(allActivities);
 
   const notificationTypeOptions = [
@@ -35,7 +33,6 @@ export default function FeedProfile({ allActivities }) {
       }
       return allActivities;
     });
-    setShowSelectFilteredFeed(true);
   };
   return (
     <div className="feed-container">

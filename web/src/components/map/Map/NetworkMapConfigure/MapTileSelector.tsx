@@ -5,8 +5,6 @@ import t from 'i18n';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 
 export function MapTileSelector({ tileType, setMapTile }) {
-  const [showSelectTileType, setShowSelectTileType] =
-    useToggle(false);
 
   const dropdownOptions = [
     {
@@ -31,7 +29,7 @@ export function MapTileSelector({ tileType, setMapTile }) {
       <Dropdown
         label="Select Map Type"
         options={dropdownOptions}
-        onChange={(value) => {setMapTile(value); setShowSelectTileType(false)}}
+        onChange={(value) => {setMapTile(value)}}
         defaultSelected={tileType}
       />
     </div>

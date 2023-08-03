@@ -154,9 +154,14 @@ export function showHex(hexClicked, resolution, bottomSelectedHexes) {
 
 export function roundCoords(point) {
   return [
-    Math.floor(point[0] * 10000) / 10000,
-    Math.floor(point[1] * 10000) / 10000,
+    roundCoord(point[0]),
+    roundCoord(point[1]),
   ];
+}
+
+export function roundCoord(number :number):number
+{
+  return (Math.floor(number * 10000) / 10000)
 }
 
 export function convertH3DensityToFeatures(hexagones) {
