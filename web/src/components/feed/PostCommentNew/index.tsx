@@ -84,7 +84,7 @@ export default function PostCommentNew({ postId, onSubmit, isGuest = false }) {
       onSubmit={onSubmitLocal}
       classNameExtra="feeds__new-message"
     >
-      <Dropdown label="" options={privacyOptions} defaultSelected={CommentPrivacyOptions.PUBLIC} onChange={(value) => {setPrivacy(() => value)}}/>
+      <Dropdown label="" options={privacyOptions} className="feeds__new-message-privacy-dropdown" defaultSelected={CommentPrivacyOptions.PUBLIC} onChange={(value) => {setPrivacy(() => value)}}/>
       <div className="feeds__new-message-message">
         <FieldText
           name="message"

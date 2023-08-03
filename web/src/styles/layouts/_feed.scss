@@ -105,6 +105,13 @@ $feed-new-message-radius: $border-radius-circle;
   background-color: $color-white;
   padding: $feed-padding;
 
+  .dropdown-select__trigger {
+
+    max-width: 20%;
+    margin: $margin-extra-small;
+
+  }
+
   button {
 
     margin: $margin-extra-small 0;
@@ -132,6 +139,7 @@ $feed-new-message-radius: $border-radius-circle;
   padding: 0 $feed-padding;
 
 }
+
 
 .feeds__button {
   border-radius: 50%;

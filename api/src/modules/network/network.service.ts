@@ -49,6 +49,7 @@ export class NetworkService {
       exploreSettings: createDto.exploreSettings,
       backgroundColor: createDto.backgroundColor,
       textColor: createDto.textColor,
+      buttonTemplates: JSON.stringify(createDto.buttonTemplates),
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
