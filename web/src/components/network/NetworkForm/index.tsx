@@ -29,6 +29,7 @@ import {
   UpdateNetworkBackgroundColor,
   UpdateNetworkTextColor,
 } from 'state/Networks';
+import Accordion from 'elements/Accordion';
 
 export default NetworkForm;
 
@@ -64,74 +65,110 @@ function NetworkForm({
             </p>
           </div>
 
-          <FieldText
-            name="name"
-            label="Network name:"
-            placeholder={t('configuration.namePlaceHolder')}
-            classNameInput="squared"
-            validationError={errors.name}
-            {...register('name', { required: true })}
-          />
-          <FieldTextArea
-            name="description"
-            label="Network description:"
-            placeholder={t('configuration.descriptionPlaceHolder')}
-            classNameInput="squared"
-            validationError={errors.description}
-            watch={watch}
-            setValue={setValue}
-            setFocus={setFocus}
-            {...register('description', { required: true })}
-          />
-          <FieldPrivacy
-            name="privacy"
-            setValue={setValue}
-            textPrivate={t('configuration.privacySetPrivate')}
-            textPublic={t('configuration.privacySetPublic')}
-            {...register('privacy', { required: true })}
-          />
-          <hr></hr>
-          <div className="form__section-title">
-            {t('configuration.customizeNetwork')}
-          </div>
+          <Accordion title={t('configuration.defineNetwork')}>
 
-          <div className="form__field">
+            <FieldText
+              name="name"
+              label="Network name:"
+              placeholder={t('configuration.namePlaceHolder')}
+              classNameInput="squared"
+              validationError={errors.name}
+              {...register('name', { required: true })}
+            />
+            <FieldTextArea
+              name="description"
+              label="Network description:"
+              placeholder={t('configuration.descriptionPlaceHolder')}
+              classNameInput="squared"
+              validationError={errors.description}
+              watch={watch}
+              setValue={setValue}
+              setFocus={setFocus}
+              {...register('description', { required: true })}
+            />
+            <FieldPrivacy
+              name="privacy"
+              setValue={setValue}
+              textPrivate={t('configuration.privacySetPrivate')}
+              textPublic={t('configuration.privacySetPublic')}
+              {...register('privacy', { required: true })}
+            />
+
+           </Accordion>
+         
+           <Accordion title={t('configuration.customizeAppearience')}>
+
+            <div className="form__field">
                 <label className="form__label">{t('configuration.chooseColors')}</label>
                 <p className="form__explain">{t('configuration.chooseColorsExplain')}</p>
-            <FieldColorPick
-              name="backgroundColor"
-              classNameInput="squared"
-              validationError={errors.backgroundColor}
+
+              <FieldColorPick
+                name="backgroundColor"
+                classNameInput="squared"
+                validationError={errors.backgroundColor}
+                setValue={setValue}
+                actionName={t('configuration.pickMainColor')}
+                value={watch('backgroundColor')}
+                {...register('backgroundColor', { required: true })}
+                hideBoilerPlate={true}
+              />
+
+              <FieldColorPick
+                name="texColor"
+                classNameInput="squared"
+                validationError={errors.texColor}
+                setValue={setValue}
+                actionName={t('configuration.pickSecondaryColor')}
+                value={watch('textColor')}
+                {...register('textColor', { required: true })}
+                hideBoilerPlate={true}
+              />
+            </div>
+
+            <div className="form__field">
+              <div className="form__label">
+                {t('configuration.images')}
+              </div>
+            </div>
+
+            <FieldImageUpload
+              name="logo"
+              label={t('configuration.logo')}
+              width={200}
+              height={200}
+              subtitle="400x400px"
               setValue={setValue}
-              actionName={t('configuration.pickMainColor')}
-              value={watch('backgroundColor')}
-              {...register('backgroundColor', { required: true })}
-              hideBoilerPlate={true}
+              validationError={errors.logo}
+              control={control}
+              {...register('logo', { required: true })}
+            />
+            <FieldImageUpload
+              name="jumbo"
+              label={t('configuration.jumbo')}
+              subtitle="1500x1500px"
+              setValue={setValue}
+              width={750}
+              height={250}
+              validationError={errors.jumbo}
+              control={control}
+              {...register('jumbo', { required: true })}
             />
 
-            <FieldColorPick
-              name="texColor"
+          </Accordion>
+
+          <Accordion title={t('configuration.configureNetwork')}>
+
+            {/* <FieldText
+              name="nomeclature"
+              label={t('configuration.nomeclatureLabel')}
+              explain={t('configuration.nomeclatureExplain')}
+              placeholder={t('configuration.nomeclaturePlaceHolder')}
               classNameInput="squared"
-              validationError={errors.texColor}
-              setValue={setValue}
-              actionName={t('configuration.pickSecondaryColor')}
-              value={watch('textColor')}
-              {...register('textColor', { required: true })}
-              hideBoilerPlate={true}
-            />
-          </div>
+              validationError={errors.nomeclature}
+              {...register('nomeclature', { required: true })}
+            /> */}
 
-          {/* <FieldText
-            name="nomeclature"
-            label={t('configuration.nomeclatureLabel')}
-            explain={t('configuration.nomeclatureExplain')}
-            placeholder={t('configuration.nomeclaturePlaceHolder')}
-            classNameInput="squared"
-            validationError={errors.nomeclature}
-            {...register('nomeclature', { required: true })}
-          /> */}
-
-          {/* BUTTON TYPES */}
+            {/* BUTTON TYPES */}
 
             <FieldButtonTemplates
               label={t('configuration.buttonTemplateLabel')}
@@ -144,58 +181,34 @@ function NetworkForm({
               register={register}
               control={control}
             />
-          <div className="form__field">
-            <div className="form__label">
-              {t('configuration.images')}
-            </div>
-          </div>
+    
+            <FieldAreaMap
+              defaultExploreSettings={defaultExploreSettings}
+              label={t('configuration.locationLabel')}
+              explain={t('configuration.locationExplain')}
+              marker={{
+                caption: watch('name'),
+                image: watch('logo'),
+              }}
+              validationError={errors.location}
+              onChange={(exploreSettings) => {
+                setValue('exploreSettings', exploreSettings);
+              }}
+            />
 
-          <FieldImageUpload
-            name="logo"
-            label={t('configuration.logo')}
-            width={200}
-            height={200}
-            subtitle="400x400px"
-            setValue={setValue}
-            validationError={errors.logo}
-            control={control}
-            {...register('logo', { required: true })}
-          />
-          <FieldImageUpload
-            name="jumbo"
-            label={t('configuration.jumbo')}
-            subtitle="1500x1500px"
-            setValue={setValue}
-            width={750}
-            height={250}
-            validationError={errors.jumbo}
-            control={control}
-            {...register('jumbo', { required: true })}
-          />
-          <FieldAreaMap
-            defaultExploreSettings={defaultExploreSettings}
-            label={t('configuration.locationLabel')}
-            explain={t('configuration.locationExplain')}
-            marker={{
-              caption: watch('name'),
-              image: watch('logo'),
-            }}
-            validationError={errors.location}
-            onChange={(exploreSettings) => {
-              setValue('exploreSettings', exploreSettings);
-            }}
-          />
-          <FieldTags
-            label={t('configuration.tags')}
-            explain={t('configuration.tagsExplain')}
-            placeholder={t('common.add')}
-            validationError={errors.tags}
-            setTags={(tags) => {
-              setValue('tags', tags);
-            }}
-            tags={watch('tags')}
-          />
-          <hr></hr>
+            <FieldTags
+              label={t('configuration.tags')}
+              explain={t('configuration.tagsExplain')}
+              placeholder={t('common.add')}
+              validationError={errors.tags}
+              setTags={(tags) => {
+                setValue('tags', tags);
+              }}
+              tags={watch('tags')}
+            />
+
+          </Accordion>
+
 {/*
           <div className="form__section-title">
             {t('configuration.moderateNetwork')}

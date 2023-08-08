@@ -186,7 +186,7 @@ export default function SysadminConfig() {
             </div>
             <div className="form__btn-wrapper">
               <Btn
-                btnType={BtnType.splitIcon}
+                btnType={BtnType.submit}
                 caption={t('setup.test-smtp-button')}
                 contentAlignment={ContentAlignment.center}
                 isSubmitting={isSubmitting}

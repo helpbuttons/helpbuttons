@@ -63,7 +63,7 @@
     "newbutton": "You created {0} in {1}",
     "newpost": "There is a new post '{0}' posted to the helpbutton {1}",
     "newcomment": "There is a new comment '{0}' posted to the post '{1}'",
-    "noactivity": "You have no activity yet! Start publishing or interact with others!",
+    "noactivity": "You have no activity yet! Start creating your Helpbutton or interact with others!",
     "markedAllAsRead": "Notifications marked as read"
   },
   "common": {
@@ -187,7 +187,9 @@
     "selectMapStyle": "Choose map style",
     "locationExplain": "Your network place and radius would be centered everytime someone loads the app",
     "tagsExplain": "Your network keywords will make easier to search for topics and to know what's your network about",
-    "customizeNetwork": "Customize your Network",
+    "defineNetwork": "Define your Network's basic info",
+    "configureNetwork": "Configure your Network's needs",
+    "customizeAppearience": "Customize your Network's look",
     "chooseColors": "Choose your colors",
     "chooseColorsExplain": "Main color would define backgrounds, secondary color would define details.",
     "pickMainColor": "Pick main color",

@@ -62,7 +62,7 @@ export default function LoginClick() {
             <div className="form__btn-wrapper">
               <Btn
                 submit={true}
-                btnType={BtnType.splitIcon}
+                btnType={BtnType.submit}
                 caption={t('user.sendLoginToken')}
                 contentAlignment={ContentAlignment.center}
                 isSubmitting={isSubmitting}
