@@ -20,12 +20,12 @@ export class SetupController {
   constructor(private readonly setupService: SetupService) {}
   @Post('save')
   async save(@Body() setupDto: SetupDto) {
-    return this.setupService.save(setupDto);
+    return await this.setupService.save(setupDto);
   }
 
   @Get('')
   async get(): Promise<SetupDtoOut> {
-    return this.setupService.get()
+    return await this.setupService.get()
     .then((setupDtoOut: SetupDtoOut) => {
       return setupDtoOut
     });
@@ -33,6 +33,6 @@ export class SetupController {
 
   @Post('smtpTest')
   async smtpTest(@Body() smtpUrl: any) {
-    await this.setupService.smtpTest(smtpUrl.smtpUrl);
+    return await this.setupService.smtpTest(smtpUrl.smtpUrl);
   }
 }
