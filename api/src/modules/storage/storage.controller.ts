@@ -18,8 +18,8 @@ export class StorageController {
   constructor(private readonly storageService: StorageService) {}
 
   @Get('get/:imgpath')
-  get(@Param('imgpath') image, @Res() res) {
-    return res.sendFile(image, { root: uploadDir });
+  async get(@Param('imgpath') image, @Res() res) {
+    return await res.sendFile(image, { root: uploadDir });
   }
 
 }

@@ -27,7 +27,7 @@ export class ActivityService {
       eventName: payload.activityEventName,
       data: JSON.stringify(payload.data)
     };
-    this.activityRepository.insert([activity])
+    await this.activityRepository.insert([activity])
   }
 
   @OnEvent(ActivityEventName.NewPostComment)
@@ -38,8 +38,6 @@ export class ActivityService {
       eventName: payload.activityEventName,
       data: JSON.stringify(payload.data)
     };
-    console.log(payload.data)
-    console.log(payload.destination)
     const messageContent = translate('en','activities.newpost', [
       payload.data.message,
       payload.data.button.title,

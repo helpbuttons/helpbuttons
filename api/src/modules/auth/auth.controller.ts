@@ -54,6 +54,6 @@ export class AuthController {
   @OnlyRegistered()
   @Post('update')
   async update(@Body() data: UserUpdateDto, @CurrentUser() user: User) {
-    return this.authService.update(data, user);
+    return await this.authService.update(data, user);
   }
 }

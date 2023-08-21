@@ -55,13 +55,13 @@ export class ButtonController {
       fileFilter: imageFileFilter,
     }),
   )
-  create(
+  async create(
     @Query('networkId') networkId: string,
     @UploadedFiles() images,
     @Body() createDto: CreateButtonDto,
     @CurrentUser() user: User,
   ) {
-    return this.buttonService.create(
+    return await this.buttonService.create(
       createDto,
       networkId,
       images,
@@ -86,18 +86,18 @@ export class ButtonController {
   @AllowGuest()
   @AllowIfNetworkIsPublic()
   @Get('findById/:buttonId')
-  findOne(@Param('buttonId') buttonId: string) {
-    return this.buttonService.findById(buttonId);
+  async findOne(@Param('buttonId') buttonId: string) {
+    return await this.buttonService.findById(buttonId);
   }
 
   @OnlyRegistered()
   @Post('update/:buttonId')
-  update(
+  async update(
     @Param('buttonId') buttonId: string,
     @Body() updateDto: UpdateButtonDto,
     @CurrentUser() user: User,
   ) {
-    return this.buttonService
+    return await this.buttonService
       .isOwner(user, buttonId)
       .then((isOwner) => {
         if (!isOwner) {
@@ -114,7 +114,7 @@ export class ButtonController {
     @Param('buttonId') buttonId: string,
     @CurrentUser() user: User,
   ) {
-    return this.buttonService
+    return await this.buttonService
       .isOwner(user, buttonId)
       .then((isOwner) => {
         if (!isOwner) {

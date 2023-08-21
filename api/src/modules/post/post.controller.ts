@@ -27,12 +27,12 @@ export class PostController {
 
     @OnlyRegistered()
     @Post('new/:buttonId')
-    new(
+    async new(
       @Body() message: MessageDto,
       @Param('buttonId') buttonId: string,
       @CurrentUser() user: User,
     ){
-      return this.buttonService.isOwner(user, buttonId).then(
+      return await this.buttonService.isOwner(user, buttonId).then(
         (isOwner) => {
           if(!isOwner){
             throw new CustomHttpException(ErrorName.NoOwnerShip)
@@ -47,26 +47,26 @@ export class PostController {
 
     @OnlyRegistered()
     @Post('new/comment/:privacy/:postId')
-    newComment(
+    async newComment(
       @Body() message: MessageDto,
       @Param('privacy') privacy: CommentPrivacyOptions,
       @Param('postId') postId: string,
       @CurrentUser() user: User,
     ){
-      return this.commentService.new(message.message, postId, user, privacy).then((comment) => {
+      return await this.commentService.new(message.message, postId, user, privacy).then((comment) => {
         notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, comment, comment.post.author)
       return comment;  
       })
     }
     @OnlyRegistered()
     @Post('update')
-    update(
+    async update(
       @Param('postId') postId: string,
       @Body() message: MessageDto,
       @Param('buttonId') buttonId: string,
       @CurrentUser() user: User,
     ){
-      return this.buttonService.isOwner(user, buttonId).then(
+      return await this.buttonService.isOwner(user, buttonId).then(
         (isOwner) => {
           if(!isOwner){
             throw new CustomHttpException(ErrorName.NoOwnerShip)
@@ -83,7 +83,7 @@ export class PostController {
       @Param('postId') postId: string,
       @CurrentUser() user: User,
       ) {
-        return this.postService.findById(postId).then((post) => {
+        return await this.postService.findById(postId).then((post) => {
           if((user.role == Role.admin) || post.author.id == user.id || this.buttonService.isOwner(user, post.button.id)){
             return this.postService.delete(postId)
           }
@@ -116,7 +116,7 @@ export class PostController {
       @Param('commentId') commentId: string,
       @CurrentUser() user: User,
       ) {
-        return this.commentService.findById(commentId).then((comment) => {
+        return await this.commentService.findById(commentId).then((comment) => {
           if((user.role == Role.admin) || comment.author.id == user.id){
             return this.commentService.delete(commentId)
           }else {
@@ -138,6 +138,6 @@ export class PostController {
       @CurrentUser() currentUser: User,
     )
     {
-      return this.postService.findByButtonId(buttonId, currentUser)
+      return await this.postService.findByButtonId(buttonId, currentUser)
     }
   }
