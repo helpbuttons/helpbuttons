@@ -105,7 +105,7 @@ export default function Signup() {
           <div className="form__btn-wrapper">
             <Btn
               submit={true}
-              btnType={BtnType.splitIcon}
+              btnType={BtnType.submit}
               caption={t('user.register')}
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}

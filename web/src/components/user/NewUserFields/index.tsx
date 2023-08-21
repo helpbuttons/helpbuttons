@@ -53,7 +53,6 @@ export default function NewUserFields({
       ></FieldPassword>
       
       <FieldLanguagePick onChange={(value) => setValue('locale', value)}/>
-      150x150px
       <FieldImageUpload
         name="avatar"
         label={t('common.choose', ['avatar'])}
@@ -62,6 +61,7 @@ export default function NewUserFields({
         height={150}
         validationError={errors.avatar}
         setValue={setValue}
+        subtitle={'150x150px'}
         {...register('avatar', { required: true })}
       />
     </>

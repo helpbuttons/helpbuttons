@@ -159,6 +159,7 @@ export default function ProfileEdit() {
                     control={control}
                     width={150}
                     height={150}
+                    subtitle={'150x150px'}
                     validationError={errors.avatar}
                     setValue={setValue}
                     {...register('avatar', { required: true })}

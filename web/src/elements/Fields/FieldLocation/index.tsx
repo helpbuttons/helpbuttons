@@ -85,12 +85,12 @@ export default function FieldLocation({
           address={markerAddress}
           label={label}
         />
-        <div
+        <label
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}
         >
           {t('button.changePlaceLabel')}
-        </div>
+        </label>
       </div>
 
       {showHideMenu && markerPosition && (

@@ -63,7 +63,7 @@
     "newbutton": "You created {0} in {1}",
     "newpost": "There is a new post '{0}' posted to the helpbutton {1}",
     "newcomment": "There is a new comment '{0}' posted to the post '{1}'",
-    "noactivity": "You have no activity yet! Start publishing or interact with others!",
+    "noactivity": "You have no activity yet! Start creating your Helpbutton or interact with others!",
     "markedAllAsRead": "Notifications marked as read"
   },
   "common": {
@@ -113,6 +113,7 @@
     "username": "Username",
     "usernamePlaceHolder": "username",
     "password": "Password",
+    "pickLanguageLabel": "Pick your language",
     "passwordPlaceHolder": "Type your password",
     "passwordConfirmation": "Password confirmation",
     "passwordConfirmationPlaceHolder": "Type your password again please",
@@ -187,7 +188,9 @@
     "selectMapStyle": "Choose map style",
     "locationExplain": "Your network place and radius would be centered everytime someone loads the app",
     "tagsExplain": "Your network keywords will make easier to search for topics and to know what's your network about",
-    "customizeNetwork": "Customize your Network",
+    "defineNetwork": "Define your Network's basic info",
+    "configureNetwork": "Configure your Network's needs",
+    "customizeAppearance": "Customize your Network's look",
     "chooseColors": "Choose your colors",
     "chooseColorsExplain": "Main color would define backgrounds, secondary color would define details.",
     "pickMainColor": "Pick main color",
@@ -196,8 +199,9 @@
     "buttonTemplateExplain": "These are the main types of helpbuttons that your users can create. Add a name and choose your color to differenciate them",
     "buttonTemplatePlaceHolder": "Write your helpbutton type name here",
     "createButtonTypePlaceholder": "Write your helpbutton type name here",
-    "createButtonTypeAction": "Create new type"
-
+    "createButtonTypeAction": "Create new type",
+    "nameLabel": "Network name",
+    "descriptionLabel": "Network description"
   },
   "configure": {
     "browsePins": "",
