@@ -8,7 +8,19 @@
 
   cursor: pointer;
   transition: $transition-default;
+  text-overflow: ellipsis;
+  overflow: hidden;
   z-index: $z-index-01;
+  white-space: nowrap;
+  display: block;
+  left: 0;
+  text-align: left;
+  
+}
+
+.accordion--open {
+
+  border-radius:  $border-radius-circle $border-radius-circle 0 0;
 
 }
 
@@ -27,6 +39,7 @@
   display: block;
   overflow: hidden;
   z-index: $z-index-base;
+  border: dashed $color-ligth-gray 1px;
 
 }
 

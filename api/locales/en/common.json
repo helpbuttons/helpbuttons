@@ -41,7 +41,7 @@
     "whereExplain": "Search the place where you want to go",
     "distance": "Search Distance",
     "allButtonTypes": "All types",
-    "tagsExplain": "buttonFilters.tagsExplain"
+    "tagsExplain": "buttonFilters. tagsExplain"
   },
   "setup": {
     "hostname": "Hostname",
@@ -181,6 +181,7 @@
     "logo": "Select Logo",
     "jumbo": "Select background",
     "tags": "Network keywords",
+    "tagsExplain": "Network keywords",
     "tagsPlaceHolder": "Food, tools, toys...",
     "locationLabel": "Network Location",
     "centerOfMap": "Select the central place of your network",

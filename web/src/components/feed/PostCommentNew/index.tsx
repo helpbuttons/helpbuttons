@@ -70,7 +70,7 @@ export default function PostCommentNew({ postId, onSubmit, isGuest = false }) {
 
   const privacyOptions = [
     {
-      name: 'Direct message',
+      name: 'Private message',
       value: CommentPrivacyOptions.PRIVATE,
     },
     {

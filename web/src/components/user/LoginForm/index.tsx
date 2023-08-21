@@ -75,7 +75,7 @@ export default function LoginForm() {
         <div className="form__btn-wrapper">
           <Btn
             submit={true}
-            btnType={BtnType.splitIcon}
+            btnType={BtnType.submit}
             caption={t('user.loginButton')}
             contentAlignment={ContentAlignment.center}
             isSubmitting={isSubmitting}
