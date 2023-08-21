@@ -69,7 +69,7 @@ function NetworkForm({
 
             <FieldText
               name="name"
-              label="Network name:"
+              label={t('configuration.nameLabel')}
               placeholder={t('configuration.namePlaceHolder')}
               classNameInput="squared"
               validationError={errors.name}
@@ -77,7 +77,7 @@ function NetworkForm({
             />
             <FieldTextArea
               name="description"
-              label="Network description:"
+              label={t('configuration.descriptionLabel')}
               placeholder={t('configuration.descriptionPlaceHolder')}
               classNameInput="squared"
               validationError={errors.description}
@@ -96,7 +96,7 @@ function NetworkForm({
 
            </Accordion>
          
-           <Accordion title={t('configuration.customizeAppearience')}>
+           <Accordion title={t('configuration.customizeAppearance')}>
 
             <div className="form__field">
                 <label className="form__label">{t('configuration.chooseColors')}</label>
@@ -221,7 +221,7 @@ function NetworkForm({
             explain={t('configuration.blockedExplain')}
             placeholder={t('common.add')}
             validationError={errors.tags}
-            setTags={(tags) => {
+            setTagnetworkfors={(tags) => {
               setValue('tags', tags);
             }}
             tags={watch('tags')}
