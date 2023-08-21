@@ -1,3 +1,4 @@
+import FieldError from 'elements/Fields/FieldError';
 import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 type IconType = 'cross' | 'red';
@@ -53,4 +54,44 @@ export default function CheckBox({
       </label>
     </div>
   );
+}
+
+
+export function CheckBoxFieldValue({
+  defaultValue,
+  name,
+  handleChange = (value: any) => {},
+  label,
+  explain,
+  textOn,
+  textOff
+}) {
+  const [internalValue, setInternalValue] = useState(defaultValue);
+  const toggleValue = () => {
+    setInternalValue(() => {
+      handleChange(!internalValue)
+      return !internalValue;
+    });
+    
+  };
+  return (
+  <div className="form__field">
+  <p className="form__label">{label}:</p>
+  <p className="form__explain">{explain}</p>
+
+    <CheckBox
+                  defaultValue={
+                    defaultValue
+                  }
+                  name={name}
+                  handleChange={() => {
+                    toggleValue();
+                  }}
+                >
+                  <div className="btn-filter__icon"></div>
+                  <div className="btn-with-icon__text">
+                     {internalValue ? textOn : textOff}
+                  </div>
+    </CheckBox>
+</div>)
 }

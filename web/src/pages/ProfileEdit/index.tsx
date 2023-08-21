@@ -2,6 +2,7 @@
 //imported from libraries
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import CheckBox, { CheckBoxFieldValue } from 'elements/Checkbox';
 
 //imported internal classes, variables, files or functions
 import { GlobalState, store } from 'pages';
@@ -42,7 +43,8 @@ export default function ProfileEdit() {
     setFocus,
     formState: { errors, isSubmitting },
   } = useForm({defaultValues: {
-    locale: 'en'
+    locale: 'en',
+    dontReceiveNotifications: false,
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
@@ -66,9 +68,10 @@ export default function ProfileEdit() {
       password_new_confirm: data.password_new_confirm,
       set_new_password: setNewPassword,
       description: data.description,
-      locale: locale
+      locale: locale,
+      dontReceiveNotifications: data.dontReceiveNotifications
     }
-
+    console.log(dataToSubmit)
     if (setNewPassword)  {
       // check passwords match.. send to backend
       if (dataToSubmit.password_new != dataToSubmit.password_new_confirm)
@@ -140,7 +143,15 @@ export default function ProfileEdit() {
                     validationError={errors.description}
                     {...register('description', { required: true })}
                   />
-                  
+                  <CheckBoxFieldValue
+                    defaultValue={true}
+                    name='dontReceiveNotifications'
+                    label='receive mail notifications'
+                    explain=''
+                    textOn='No'
+                    textOff='Yes'
+                    handleChange={(value) =>{ setValue('dontReceiveNotifications', value); console.log('value changed...' + value)}}
+                  />
                   150x150px
                   <FieldImageUpload
                     name="avatar"
