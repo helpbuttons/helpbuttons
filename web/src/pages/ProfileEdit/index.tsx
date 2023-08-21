@@ -141,13 +141,13 @@ export default function ProfileEdit() {
                     {...register('description', { required: true })}
                   />
                   
-                  150x150px
                   <FieldImageUpload
                     name="avatar"
                     label={t('user.avatar')}
                     control={control}
                     width={150}
                     height={150}
+                    subtitle={'150x150px'}
                     validationError={errors.avatar}
                     setValue={setValue}
                     {...register('avatar', { required: true })}

@@ -113,6 +113,7 @@
     "username": "Username",
     "usernamePlaceHolder": "username",
     "password": "Password",
+    "pickLanguageLabel": "Pick your language",
     "passwordPlaceHolder": "Type your password",
     "passwordConfirmation": "Password confirmation",
     "passwordConfirmationPlaceHolder": "Type your password again please",
