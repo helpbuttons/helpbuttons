@@ -89,7 +89,7 @@ export class User extends BaseEntity {
   locale: string;
 
   @Column({default: false})
-  dontReceiveNotifications: boolean;
+  receiveNotifications: boolean;
 }
 
 export interface UserRelations {

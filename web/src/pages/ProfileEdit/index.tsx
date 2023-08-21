@@ -2,7 +2,6 @@
 //imported from libraries
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import CheckBox, { CheckBoxFieldValue } from 'elements/Checkbox';
 
 //imported internal classes, variables, files or functions
 import { GlobalState, store } from 'pages';
@@ -30,6 +29,7 @@ import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import t from 'i18n';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 
 export default function ProfileEdit() {
   const {
@@ -44,7 +44,7 @@ export default function ProfileEdit() {
     formState: { errors, isSubmitting },
   } = useForm({defaultValues: {
     locale: 'en',
-    dontReceiveNotifications: false,
+    receiveNotifications: false,
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
@@ -69,9 +69,8 @@ export default function ProfileEdit() {
       set_new_password: setNewPassword,
       description: data.description,
       locale: locale,
-      dontReceiveNotifications: data.dontReceiveNotifications
+      receiveNotifications: data.receiveNotifications
     }
-    console.log(dataToSubmit)
     if (setNewPassword)  {
       // check passwords match.. send to backend
       if (dataToSubmit.password_new != dataToSubmit.password_new_confirm)
@@ -142,16 +141,15 @@ export default function ProfileEdit() {
                     setFocus={setFocus}
                     validationError={errors.description}
                     {...register('description', { required: true })}
-                  />
-                  <CheckBoxFieldValue
-                    defaultValue={true}
-                    name='dontReceiveNotifications'
+                  />                
+                  <FieldCheckbox
+                    name='receiveNotifications'
                     label='receive mail notifications'
                     explain=''
-                    textOn='No'
-                    textOff='Yes'
-                    handleChange={(value) =>{ setValue('dontReceiveNotifications', value); console.log('value changed...' + value)}}
+                    text='receive notifications'
+                    {...register('receiveNotifications')}
                   />
+
                   150x150px
                   <FieldImageUpload
                     name="avatar"

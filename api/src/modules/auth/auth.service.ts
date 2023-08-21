@@ -62,7 +62,7 @@ export class AuthService {
       avatar: null,
       description: '',
       locale: signupUserDto.locale,
-      dontReceiveNotifications: false,
+      receiveNotifications: true,
     };
 
     const emailExists = await this.userService.isEmailExists(
@@ -197,7 +197,7 @@ export class AuthService {
       name: data.name,
       description: data.description,
       locale: data.locale,
-      dontReceiveNotifications: data.dontReceiveNotifications
+      receiveNotifications: data.receiveNotifications
     };
 
     if (isImageData(data.avatar)) {

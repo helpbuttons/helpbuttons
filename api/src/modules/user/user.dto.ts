@@ -45,6 +45,6 @@ export class UserUpdateDto {
   @IsString()
   locale: string;
 
-  @Column({default: false})
-  dontReceiveNotifications: boolean;
+  @Column({default: true})
+  receiveNotifications: boolean;
 }

@@ -12,7 +12,6 @@ import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { roundCoords } from 'shared/honeycomb.utils';
-import FieldCheckbox from 'elements/Fields/FieldCheckbox';
 import CheckBox, { CheckBoxIcon } from 'elements/Checkbox';
 import { GlobalState, store } from 'pages';
 import { UpdateFilters } from 'state/Explore';
@@ -20,6 +19,7 @@ import router, { Router } from 'next/router';
 import { useRef } from 'store/Store';
 import { TagList } from 'elements/Fields/FieldTags';
 import { useButtonTypes } from 'shared/buttonTypes';
+import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 
 
 export default function AdvancedFilters({
@@ -146,7 +146,7 @@ export default function AdvancedFilters({
               }}
               tags={tags}
             /> */}
-            <FieldCheckbox
+            <FieldMultiSelect
               label={'Button types'}
               validationError={null}
               explain={'Filter results by type'}
@@ -174,7 +174,7 @@ export default function AdvancedFilters({
                   </div>
                 );
               })}
-            </FieldCheckbox>
+            </FieldMultiSelect>
             <div className="form__field">
               <label className="form__label">
                 {t('buttonFilters.where')}
