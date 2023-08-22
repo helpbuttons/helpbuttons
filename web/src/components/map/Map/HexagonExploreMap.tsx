@@ -73,6 +73,9 @@ export default function HexagonExploreMap({
   const [buttonTypes, setButtonTypes] = useState([]);
   useButtonTypes(setButtonTypes);
   
+  useEffect(() => {
+    // workaround for map to mind the new center..
+  }, [exploreSettings.center])
   return (
     <>
       <HbMap
