@@ -144,9 +144,7 @@ export default function ProfileEdit() {
                   />                
                   <FieldCheckbox
                     name='receiveNotifications'
-                    label='receive mail notifications'
-                    explain=''
-                    text='receive notifications'
+                    text={t('user.textReceiveNotifications')}
                     {...register('receiveNotifications')}
                   />
 

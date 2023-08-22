@@ -12,7 +12,7 @@ export const FieldCheckbox = React.forwardRef(({
   }, ref) => {
     return (
     <div className="form__field">
-    <p className="form__label">{label}:</p>
+    <p className="form__label">{label}</p>
     <p className="form__explain">{explain}</p>
   
   

@@ -139,7 +139,8 @@
     "loginClick": "One click login",
     "created_date": "User since",
     "created": "",
-    "newLoginTokenSent": ""
+    "newLoginTokenSent": "",
+    "textReceiveNotifications": "receive mail notifications"
   },
   "calendarOnce": {
     "pickday": "Pick a day",
