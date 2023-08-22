@@ -107,9 +107,11 @@ export class ButtonService {
         'owner',
       ],
     });
-    try {
-      return { ...button };
-    } catch (err) {}
+    
+    if(!button)
+    {
+      throw new HttpException('button not found', HttpStatus.NOT_FOUND)
+    }
     return { ...button };
   }
 
