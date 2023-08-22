@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { GeoJson, GeoJsonFeature, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store } from 'pages';
 import { useRef } from 'store/Store';
-import { updateCurrentButton } from 'state/Explore';
+import { SetExploreSettingsBoundsLoaded } from 'state/Explore';
 import { HbMap } from '.';
 import {
   convertBoundsToGeoJsonHexagons,
@@ -42,12 +42,16 @@ export default function HexagonExploreMap({
     setHexagonClicked(() => null); // unselect all hexagons
 
     if (exploreSettings.bounds) {
-      // console.log(`bounds not null: ${JSON.stringify(exploreSettings.center)} ${exploreSettings.zoom}`)
-
       const boundsHexes = convertBoundsToGeoJsonHexagons(
         exploreSettings.bounds,
         getResolution(exploreSettings.zoom),
       );
+      store.emit(new SetExploreSettingsBoundsLoaded())
+      if(boundsHexes.length > 1000)
+      {
+        console.error('too many hexes.. canceling..')
+        return;
+      }
       setHexagonsToFetch({
         resolution: getResolution(exploreSettings.zoom),
         hexagons: boundsHexes,
