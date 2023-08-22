@@ -40,10 +40,10 @@ services:
       retries: 5
     networks:
       - internal_network
-      # - external_network
+      - external_network
     #uncomment if using docker-compose up db and yarn dev for backend and not docker-compose.dev
-    # ports: 
-      # - 5432:5432
+    ports: 
+      - 5432:5432
 
 
 networks:

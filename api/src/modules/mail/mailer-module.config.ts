@@ -23,6 +23,15 @@ export class MailerModuleConfig implements MailerOptionsFactory {
           strict: true,
         },
       },
-    };
+      options: {
+        partials: {
+          dir: __dirname + '/templates/partials',
+          options: {
+            strict: true,
+          },
+        },
+      },
+    }
   }
+
 }
