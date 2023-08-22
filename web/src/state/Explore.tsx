@@ -342,3 +342,14 @@ export class UpdateExploreSettings implements UpdateEvent {
     });
   }
 }
+
+export class SetExploreSettingsBoundsLoaded implements UpdateEvent{
+  public constructor(
+  ) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings.bounds = null;
+    });
+  }
+}
