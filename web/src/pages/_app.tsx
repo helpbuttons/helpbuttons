@@ -277,8 +277,13 @@ function MyApp({ Component, pageProps }) {
                 <Component {...pageProps} />
               </div>
             );
-          } else if (noBackend) {
-            return <>NO BACKEND!!</>;
+          } else if (pageName == 'Error') {
+            return (
+              <div className="index__content">
+                <Component {...pageProps} />
+                <NavBottom />
+              </div>
+            );
           }
 
           return <Loading />;

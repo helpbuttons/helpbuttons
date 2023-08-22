@@ -193,7 +193,6 @@ function useExploreSettings({
       const click = params.get('click');
 
       if (click !== null) {
-        console.log('clicked')
         store.emit(new UpdateExploreSettings({center: selectedNetwork.exploreSettings.center, loading: true, bounds: null}))
         // missing zoom
         return;
@@ -207,13 +206,7 @@ function useExploreSettings({
             
           }))
       }
-      // if (zoom) {
-      //   console.log('zooom?')
-      //   store.emit(
-      //     new UpdateExploreSettings({
-      //       zoom: zoom,
-      //     }))
-      // }
+      
       if (showFilters == 'true') {
         toggleShowFiltersForm(true);
         params.delete('showFilters');
@@ -224,9 +217,7 @@ function useExploreSettings({
   }, [router]);
   useEffect(() => {
     if (selectedNetwork) {
-      console.log('selected network')
-      console.log(selectedNetwork.exploreSettings.center)
-    store.emit(new UpdateExploreSettings({...selectedNetwork.exploreSettings}));
+      store.emit(new UpdateExploreSettings({...selectedNetwork.exploreSettings}));
     }
   },[selectedNetwork]);
 

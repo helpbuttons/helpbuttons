@@ -50,7 +50,6 @@ export class PostService {
       })
       .then((posts) => {
         let deleteCommentsPosts = this.removeDeletedComments(posts);
-        console.log('remove private comments');
         return this.removePrivateComments(
           deleteCommentsPosts,
           currentUser,

@@ -7,7 +7,9 @@ import NavBottom from 'components/nav/NavBottom';
 import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/sys.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { HttpStatus } from 'shared/types/http-status.enum';
+import Router from 'next/router';
 export default function ButtonFile({
   metadata,
   currentButton,
@@ -15,11 +17,20 @@ export default function ButtonFile({
   const [buttonTypes, setButtonTypes] = useState([]);
   useButtonTypes(setButtonTypes);
 
+  useEffect(() => {
+    if(!currentButton)
+  {
+    Router.push('/Error')
+  }
+  }, [currentButton])
+  
   return (
     <>
       <SEO {...metadata} />
+      {currentButton && 
       <div className="body__content">
         <div className="body__section">
+          
           {buttonTypes?.length > 0 && (
             <CardButton
               button={currentButton}
@@ -30,6 +41,7 @@ export default function ButtonFile({
           <Feed button={currentButton} />
         </div>
       </div>
+      }
       <NavBottom />
     </>
   );
@@ -46,6 +58,10 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     next: { revalidate: 10 },
   });
   const currentButtonData: Button = await currentButtonFetch.json();
+  if(currentButtonData?.statusCode == HttpStatus.NOT_FOUND)
+  {
+    return {props: serverProps};
+  }
   const serverPropsModified = {
     ...serverProps,
     metadata: {

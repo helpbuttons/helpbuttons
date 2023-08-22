@@ -20,8 +20,7 @@ import { useRouter } from 'next/router';
 import { getUrlOrigin } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
 import FieldButtonTemplates from 'components/feed/FieldButtonTemplates';
-import FieldCheckbox from 'elements/Fields/FieldCheckbox';
-import CheckBox from 'elements/Checkbox';
+
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { useEffect } from 'react';
 import { store } from 'pages';
@@ -65,8 +64,8 @@ function NetworkForm({
             </p>
           </div>
 
-          <Accordion title={t('configuration.defineNetwork')}>
 
+          <Accordion title={t('configuration.defineNetwork')}>
             <FieldText
               name="name"
               label={t('configuration.nameLabel')}
@@ -86,13 +85,14 @@ function NetworkForm({
               setFocus={setFocus}
               {...register('description', { required: true })}
             />
-            <FieldPrivacy
+            {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
+            {/* <FieldPrivacy
               name="privacy"
               setValue={setValue}
               textPrivate={t('configuration.privacySetPrivate')}
               textPublic={t('configuration.privacySetPublic')}
               {...register('privacy', { required: true })}
-            />
+            /> */}
 
            </Accordion>
          
