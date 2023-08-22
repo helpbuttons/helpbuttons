@@ -46,6 +46,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     next: { revalidate: 10 },
   });
   const currentButtonData: Button = await currentButtonFetch.json();
+  
   const serverPropsModified = {
     ...serverProps,
     metadata: {

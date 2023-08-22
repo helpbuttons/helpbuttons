@@ -44,4 +44,7 @@ export class UserUpdateDto {
   @IsNotEmpty()
   @IsString()
   locale: string;
+
+  @Column({default: true})
+  receiveNotifications: boolean;
 }

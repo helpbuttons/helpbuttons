@@ -29,6 +29,7 @@ import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import t from 'i18n';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 
 export default function ProfileEdit() {
   const {
@@ -42,7 +43,8 @@ export default function ProfileEdit() {
     setFocus,
     formState: { errors, isSubmitting },
   } = useForm({defaultValues: {
-    locale: 'en'
+    locale: 'en',
+    receiveNotifications: false,
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
@@ -66,9 +68,9 @@ export default function ProfileEdit() {
       password_new_confirm: data.password_new_confirm,
       set_new_password: setNewPassword,
       description: data.description,
-      locale: locale
+      locale: locale,
+      receiveNotifications: data.receiveNotifications
     }
-
     if (setNewPassword)  {
       // check passwords match.. send to backend
       if (dataToSubmit.password_new != dataToSubmit.password_new_confirm)
@@ -139,8 +141,14 @@ export default function ProfileEdit() {
                     setFocus={setFocus}
                     validationError={errors.description}
                     {...register('description', { required: true })}
+                  />                
+                  <FieldCheckbox
+                    name='receiveNotifications'
+                    text={t('user.textReceiveNotifications')}
+                    {...register('receiveNotifications')}
                   />
-                  
+
+                  150x150px
                   <FieldImageUpload
                     name="avatar"
                     label={t('user.avatar')}

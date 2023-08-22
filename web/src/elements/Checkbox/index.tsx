@@ -1,3 +1,4 @@
+import FieldError from 'elements/Fields/FieldError';
 import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 type IconType = 'cross' | 'red';
