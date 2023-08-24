@@ -15,6 +15,11 @@ function linkify(text) {
   var urlPattern =
     /(?:https?:)?\/\/(?:(?:[\w-]+\.)+[\w/#@~.-]*)(?:\?(?:[\w&=.!,;$#%-]+)?)?/gi;
 
+  var userPattern =
+    /@[\w]+/gi;
+  text = text.replace(userPattern, function(user) {
+    return '<a href="/Profile/' + user.substring(1) + '">'+user+'</a>';
+  });
   return (text || '').replace(urlPattern, function (url) {
     return '<a href="' + url + '">' + url + '</a>';
   });

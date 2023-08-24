@@ -1,14 +1,15 @@
 import FieldText from 'elements/Fields/FieldText';
-import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import t from 'i18n';
-import { store } from 'pages';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoPaperPlaneOutline } from 'react-icons/io5';
-import { alertService } from 'services/Alert';
-import { CreateNewPost } from 'state/Posts';
 
-export default function PostNew({ buttonId, onCreate }) {
+const uniqueArray = (a) =>
+Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
+  JSON.parse(s),
+);
+export default function MessageNew({ onCreate, mentions = [], privateMessage = false }) {
   const {
     register,
     handleSubmit,
@@ -19,20 +20,22 @@ export default function PostNew({ buttonId, onCreate }) {
   } = useForm();
 
   const onSubmitLocal = (data) => {
-    store.emit(
-      new CreateNewPost(
-        buttonId,
-        {message: data.message},
-        () => {
-          alertService.info(t('common.saveSuccess', ['post']));
-          setValue('message', '')
-          onCreate()
-        },
-        (errorMessage) => alertService.error(errorMessage.caption),
-      ),
-    );
+    setValue('message', '')
+    onCreate(data.message)
   };
 
+  useEffect(() => {
+    if(mentions.length > 0)
+    {
+      console.log(mentions)
+      mentions = uniqueArray(mentions)
+      setValue('message', mentions.reduce((strOut, mention) => strOut + `@${mention} `, ''))  
+    }else{
+      setValue('message', '')
+    }
+  }, [mentions])
+  
+  
   return (
     <>
       <div className="button-file__action-section">
@@ -52,6 +55,8 @@ export default function PostNew({ buttonId, onCreate }) {
                 {...register('message', { required: true })}
               />
             </div>
+            {privateMessage && 
+            <span style={{ color: 'red' }}>private</span>}
             <button type="submit" className="btn-circle btn-circle__icon btn-circle__content">
               <IoPaperPlaneOutline />
             </button>

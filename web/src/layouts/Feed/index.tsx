@@ -2,23 +2,35 @@
 import PostCommentNew from 'components/feed/PostCommentNew';
 import PostComments from 'components/feed/PostComments';
 import PostMessage from 'components/feed/PostMessage';
-import PostNew from 'components/feed/PostNew';
 import Btn, {
   BtnType,
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
 import t from 'i18n';
-import { IoTrashBinOutline } from 'react-icons/io5';
+import {
+  IoAddOutline,
+  IoArrowUndoOutline,
+  IoCloseOutline,
+  IoMailOutline,
+  IoTrashBinOutline,
+} from 'react-icons/io5';
 
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
-import { DeletePost, LoadPosts } from 'state/Posts';
+import {
+  CreateNewPost,
+  CreateNewPostComment,
+  DeletePost,
+  LoadPosts,
+} from 'state/Posts';
 import { isAdmin } from 'state/Users';
 import router from 'next/router';
 import { useStore } from 'store/Store';
+import MessageNew from 'components/feed/MessageNew';
+import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -27,6 +39,8 @@ export default function Feed({ button }: { button: Button }) {
     store,
     (state: GlobalState) => state.loggedInUser,
   );
+  const [refererCompose, setRefererCompose] = useState(null);
+
   const isButtonOwner = loggedInUser?.id == button.owner.id;
   const buttonOwnerId = button.owner.id;
 
@@ -48,67 +62,38 @@ export default function Feed({ button }: { button: Button }) {
     reloadPosts();
   }, [button]);
 
-  // if (!feed && currentButton) {
-  //   const singleFeedItem = {
-  //     author: currentButton.owner,
-  //     message: 'my message',
-  //     created: '2023-03-02T18:40:24.126Z',
-  //     modified: Date(),
-  //     comments: [
-  //       {
-  //         author: currentButton.owner,
-  //         message: 'comment from someone',
-  //         created: Date(),
-  //         modified: Date(),
-  //       },
-  //       {
-  //         author: currentButton.owner,
-  //         message: 'comment from someone',
-  //         created: Date(),
-  //         modified: Date(),
-  //       },
-  //     ],
-  //     reactions: [
-  //       {
-  //         ':like:': 10,
-  //         ':heart:': 5,
-  //       },
-  //     ],
-  //   };
-  //   const feed = [singleFeedItem, singleFeedItem, singleFeedItem];
-  //   setFeed(feed);
-  // }
-
   return (
     <div className="feed-container">
-      {/* <div className="feed-selector">
-        <Dropdown />
-      </div> */}
+      {/* {t('feed.newPost')} */}
       {loggedInUser &&
         button.id &&
-        button.owner.id == loggedInUser.id && (
-          <PostNew
-            buttonId={button.id}
-            onCreate={() => reloadPosts()}
-          />
-        )}
+        button.owner.id == loggedInUser.id && <></>}
+      <Compose
+        referer={{ button: button.id }}
+        onCancel={() => {}}
+        onCreate={() => {
+          reloadPosts();
+        }}
+      />
       &nbsp;
       <div className="feed-line"></div>
       <div className="feed-section">
         {posts &&
           posts.map((post, idx) => (
-            <FeedElement
-              key={idx}
-              post={post}
-              loggedInUser={loggedInUser}
-              onNewComment={() => {
-                reloadPosts();
-              }}
-              buttonOwnerId={buttonOwnerId}
-              isButtonOwner={isButtonOwner}
-              reloadPosts={reloadPosts}
-              buttonId={button.id}
-            />
+            <>
+              <FeedElement
+                key={idx}
+                post={post}
+                loggedInUser={loggedInUser}
+                onNewComment={() => {
+                  reloadPosts();
+                }}
+                buttonOwnerId={buttonOwnerId}
+                isButtonOwner={isButtonOwner}
+                reloadPosts={reloadPosts}
+                buttonId={button.id}
+              />
+            </>
           ))}
         {!posts ||
           (posts.length == 0 && (
@@ -130,11 +115,10 @@ export function FeedElement({
   buttonOwnerId,
   isButtonOwner = false,
   reloadPosts,
-  buttonId
+  buttonId,
 }) {
-  const [showNewCommentDialog, setShowNewCommentDialog] =
-    useState(false);
-
+  const [showComposePostReply, setShowComposePostReply] =
+    useState(null);
   const deletePost = (postId) => {
     store.emit(
       new DeletePost(postId, reloadPosts, (error) => {
@@ -152,19 +136,49 @@ export function FeedElement({
             </div>
           </div>
         </div>
-        <PostMessage
-          post={post}
-          isButtonOwnerComment={buttonOwnerId == post.author.id}
-        />
+        <PostMessage post={post} />
 
         <>
           <div className="card-notification__answer-btn">
+            <Btn
+              submit={false}
+              btnType={BtnType.iconActions}
+              iconLink={<IoMailOutline />}
+              iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.right}
+              onClick={() =>
+                setShowComposePostReply(() => {
+                  return {
+                    post: post.id,
+                    privateMessage: true,
+                    mentions: [post.author.username],
+                  };
+                })
+              }
+            />
+
+            <Btn
+              submit={false}
+              btnType={BtnType.iconActions}
+              iconLink={<IoArrowUndoOutline />}
+              iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.right}
+              onClick={() =>
+                setShowComposePostReply(() => {
+                  return {
+                    post: post.id,
+                    privateMessage: false,
+                    mentions: [post.author.username],
+                  };
+                })
+              }
+            />
             {loggedInUser &&
               (loggedInUser.id == post.author.id ||
                 isButtonOwner ||
                 isAdmin(loggedInUser)) && (
                 <Btn
-                  submit={true}
+                  submit={false}
                   btnType={BtnType.iconActions}
                   iconLink={<IoTrashBinOutline />}
                   iconLeft={IconType.circle}
@@ -173,23 +187,16 @@ export function FeedElement({
                 />
               )}
           </div>
-
-          {loggedInUser && (
-            <PostCommentNew
-              postId={post.id}
-              onSubmit={() => {
-                onNewComment();
-                setShowNewCommentDialog(false);
+          {showComposePostReply?.post == post.id && (
+            <Compose
+              referer={showComposePostReply}
+              onCancel={() => {
+                setShowComposePostReply(null);
               }}
-            />
-          )}
-          {!loggedInUser && (
-            <PostCommentNew
-              postId={post.id}
-              isGuest={true}
-              onSubmit={() => {
-                router.push(`/Login?returnUrl=/ButtonFile/${buttonId}`)
+              onCreate={() => {
+                reloadPosts();
               }}
+              isGuest={!!loggedInUser}
             />
           )}
         </>
@@ -199,8 +206,146 @@ export function FeedElement({
           reloadPosts={reloadPosts}
           loggedInUser={loggedInUser}
           isButtonOwner={isButtonOwner}
+          onComposeReplyToComment={(
+            commentId,
+            commentAuthorUsername,
+          ) => {
+            setShowComposePostReply(() => {
+              return {
+                post: post.id,
+                comment: commentId,
+                mentions: [
+                  post.author.username,
+                  commentAuthorUsername,
+                ],
+              };
+            });
+          }}
         />
       </div>
     </div>
   );
+}
+
+export function Compose({ referer, onCreate, onCancel, isGuest }) {
+  useEffect(() => {
+    console.log(referer);
+  }, [referer]);
+  if (!referer) {
+    return <></>;
+  }
+  if (referer.button) {
+    return (
+      <>
+        <MessageNew
+          onCreate={(message) => {
+            store.emit(
+              new CreateNewPost(
+                referer.button,
+                { message: message },
+                () => {
+                  alertService.info(
+                    t('common.saveSuccess', ['post']),
+                  );
+                  onCreate();
+                },
+                (errorMessage) =>
+                  alertService.error(errorMessage.caption),
+              ),
+            );
+          }}
+          mentions={[]}
+        />
+      </>
+    );
+  }
+  if (referer.comment) {
+    return (
+      <>
+        <MessageNew
+          onCreate={(message) => {
+            store.emit(
+              new CreateNewPostComment(
+                referer.post,
+                CommentPrivacyOptions.PUBLIC,
+                { message: message },
+                () => {
+                  alertService.info('comment posted');
+                  onCreate();
+                },
+                (errorMessage) =>
+                  alertService.error(errorMessage.caption),
+              ),
+            );
+          }}
+          mentions={referer.mentions}
+        />
+
+        <Btn
+          submit={false}
+          btnType={BtnType.iconActions}
+          iconLink={<IoCloseOutline />}
+          iconLeft={IconType.circle}
+          contentAlignment={ContentAlignment.right}
+          onClick={() => {
+            onCancel();
+          }}
+        />
+      </>
+    );
+  }
+
+  if (referer.post) {
+    return (
+      <>
+        <MessageNew
+          privateMessage={referer?.privateMessage}
+          onCreate={(message) => {
+            //   if(isGuest)
+            // {
+            //   store.emit(
+            //     new SaveDraftNewPostComment(
+            //       postId,
+            //       data,
+            //     ),
+            //   );
+            //   alertService.info(t('post.needLogin'));
+            //   onSubmit()
+            // router.push(`/Login?returnUrl=/ButtonFile/${buttonId}`)
+            //   return;
+            // }
+            let privacy = CommentPrivacyOptions.PUBLIC;
+            if (referer?.privateMessage) {
+              privacy = CommentPrivacyOptions.PRIVATE;
+            }
+            store.emit(
+              new CreateNewPostComment(
+                referer.post,
+                privacy,
+                { message: message },
+                () => {
+                  alertService.info('comment posted');
+                  onCreate();
+                },
+                (errorMessage) =>
+                  alertService.error(errorMessage.caption),
+              ),
+            );
+          }}
+          mentions={referer.mentions}
+        />
+
+        <Btn
+          submit={false}
+          btnType={BtnType.iconActions}
+          iconLink={<IoCloseOutline />}
+          iconLeft={IconType.circle}
+          contentAlignment={ContentAlignment.right}
+          onClick={() => {
+            onCancel();
+          }}
+        />
+      </>
+    );
+  }
 }
