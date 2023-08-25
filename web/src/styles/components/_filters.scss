@@ -53,6 +53,7 @@ $filters-padding: 10px;
   flex-direction: row !important;
   background-color: $color-corporative;
   padding: $padding-medium $padding-medium;
+  transition: $transition-default-slow;
 
   .btn {
 
@@ -118,7 +119,7 @@ $filters-padding: 10px;
 
   .filters__actions {
 
-    width: 33vw;
+    width: 35vw;
     
   }
   
