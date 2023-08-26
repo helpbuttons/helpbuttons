@@ -24,6 +24,8 @@ export default function MessageNew({ onCreate, mentions = [], privateMessage = f
     onCreate(data.message)
   };
 
+  let extraMessage = "";
+
   useEffect(() => {
     if(mentions.length > 0)
     {
@@ -35,10 +37,14 @@ export default function MessageNew({ onCreate, mentions = [], privateMessage = f
     }
   }, [mentions])
   
-  
+  if (privateMessage) {
+    extraMessage=t('post.private');
+  } else {
+    extraMessage="";
+  }
+
   return (
     <>
-      <div className="button-file__action-section">
         <div className="button-file__action-section--field">
           <Form
             onSubmit={handleSubmit(onSubmitLocal)}
@@ -52,17 +58,15 @@ export default function MessageNew({ onCreate, mentions = [], privateMessage = f
                 watch={watch}
                 setValue={setValue}
                 setFocus={setFocus}
+                extraMessage={extraMessage}
                 {...register('message', { required: true })}
               />
             </div>
-            {privateMessage && 
-            <span style={{ color: 'red' }}>private</span>}
             <button type="submit" className="btn-circle btn-circle__icon btn-circle__content">
               <IoPaperPlaneOutline />
             </button>
           </Form>
         </div>
-      </div>
     </>
   );
 }

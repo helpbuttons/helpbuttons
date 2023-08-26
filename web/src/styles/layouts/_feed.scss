@@ -100,9 +100,9 @@ $feed-new-message-radius: $border-radius-circle;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   flex-direction: row;
-  background-color: $color-white;
+  // background-color: $color-white;
   padding: $feed-padding;
 
   .dropdown-select__trigger {
@@ -123,7 +123,6 @@ $feed-new-message-radius: $border-radius-circle;
 .feeds__new-message-message {
   flex-grow:1;
   padding: 0 $padding-big 0 0;
-  margin: auto;
 
   .form__field {
 

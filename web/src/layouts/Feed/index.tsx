@@ -236,7 +236,7 @@ export function Compose({ referer, onCreate, onCancel, isGuest }) {
   }
   if (referer.button) {
     return (
-      <>
+      <div className="button-file__action-section">
         <MessageNew
           onCreate={(message) => {
             store.emit(
@@ -256,12 +256,24 @@ export function Compose({ referer, onCreate, onCancel, isGuest }) {
           }}
           mentions={[]}
         />
-      </>
+      </div>
     );
   }
   if (referer.comment) {
     return (
-      <>
+      <div className="button-file__action-section">
+        <div className="button-file__action-section-close">
+          <Btn
+            submit={false}
+            btnType={BtnType.iconActions}
+            iconLink={<IoCloseOutline />}
+            iconLeft={IconType.circle}
+            contentAlignment={ContentAlignment.right}
+            onClick={() => {
+              onCancel();
+            }}
+          />
+        </div>
         <MessageNew
           onCreate={(message) => {
             store.emit(
@@ -281,23 +293,25 @@ export function Compose({ referer, onCreate, onCancel, isGuest }) {
           mentions={referer.mentions}
         />
 
-        <Btn
-          submit={false}
-          btnType={BtnType.iconActions}
-          iconLink={<IoCloseOutline />}
-          iconLeft={IconType.circle}
-          contentAlignment={ContentAlignment.right}
-          onClick={() => {
-            onCancel();
-          }}
-        />
-      </>
+      </div>
     );
   }
 
   if (referer.post) {
     return (
-      <>
+      <div className="button-file__action-section">
+        <div className="button-file__action-section-close">
+          <Btn
+              submit={false}
+              btnType={BtnType.iconActions}
+              iconLink={<IoCloseOutline />}
+              iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.right}
+              onClick={() => {
+                onCancel();
+              }}
+            />
+        </div>
         <MessageNew
           privateMessage={referer?.privateMessage}
           onCreate={(message) => {
@@ -335,17 +349,7 @@ export function Compose({ referer, onCreate, onCancel, isGuest }) {
           mentions={referer.mentions}
         />
 
-        <Btn
-          submit={false}
-          btnType={BtnType.iconActions}
-          iconLink={<IoCloseOutline />}
-          iconLeft={IconType.circle}
-          contentAlignment={ContentAlignment.right}
-          onClick={() => {
-            onCancel();
-          }}
-        />
-      </>
+      </div>
     );
   }
 }
