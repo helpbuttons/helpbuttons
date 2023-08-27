@@ -1,5 +1,8 @@
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
-import t from 'i18n';
+import Btn, {
+  BtnType,
+  ContentAlignment,
+  IconType,
+} from 'elements/Btn';
 import { store } from 'pages';
 import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
@@ -10,7 +13,14 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
 import { formatMessage } from 'elements/Message';
 
-export default function PostComments({ comments, reloadPosts, loggedInUser, isButtonOwner, buttonOwnerId, onComposeReplyToComment }) {
+export default function PostComments({
+  comments,
+  reloadPosts,
+  loggedInUser,
+  isButtonOwner,
+  buttonOwnerId,
+  onComposeReplyToComment,
+}) {
   const deleteComment = (commentId) => {
     store.emit(
       new DeleteComment(commentId, reloadPosts, (error) => {
@@ -25,19 +35,30 @@ export default function PostComments({ comments, reloadPosts, loggedInUser, isBu
           <>
             {comments.map((comment, key) => {
               return (
-                <div key={key} className='card-notification--comment'>
-
-                  <CommentMessage isButtonOwnerComment={buttonOwnerId == comment.author.id} post={comment} />
-                  
-                  <div className='message__actions'>
-                  <Btn
-                    submit={false}
-                    btnType={BtnType.iconActions}
-                    iconLink={<IoArrowUndoSharp />}
-                    iconLeft={IconType.circle}
-                    contentAlignment={ContentAlignment.right}
-                    onClick={() => onComposeReplyToComment(comment.id, comment.author.username)}
+                <div key={key} className="card-notification--comment">
+                  <CommentMessage
+                    isButtonOwnerComment={
+                      buttonOwnerId == comment.author.id
+                    }
+                    post={comment}
                   />
+
+                  <div className="message__actions">
+                    {loggedInUser && (
+                      <Btn
+                        submit={false}
+                        btnType={BtnType.iconActions}
+                        iconLink={<IoArrowUndoSharp />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.right}
+                        onClick={() =>
+                          onComposeReplyToComment(
+                            comment.id,
+                            comment.author.username,
+                          )
+                        }
+                      />
+                    )}
                     {loggedInUser &&
                       (loggedInUser.id == comment.author.id ||
                         isButtonOwner ||
@@ -45,25 +66,22 @@ export default function PostComments({ comments, reloadPosts, loggedInUser, isBu
                         <Btn
                           submit={true}
                           btnType={BtnType.iconActions}
-                          iconLink={<IoTrashBinOutline/>}
+                          iconLink={<IoTrashBinOutline />}
                           iconLeft={IconType.circle}
                           contentAlignment={ContentAlignment.right}
                           onClick={() => deleteComment(comment.id)}
                         />
                       )}
                   </div>
-
                 </div>
               );
             })}
           </>
         )}
-
       </>
     </>
   );
 }
-
 
 export function CommentMessage({ post }) {
   return (
@@ -81,7 +99,9 @@ export function CommentMessage({ post }) {
           </div>
         </div>
 
-        <div className="message__content">{formatMessage(post.message)}</div>
+        <div className="message__content">
+          {formatMessage(post.message)}
+        </div>
 
         <div className="message__hour">
           {readableTimeLeftToDate(post.created_at)},{' '}

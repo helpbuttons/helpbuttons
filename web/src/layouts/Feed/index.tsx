@@ -41,9 +41,6 @@ export default function Feed({ button }: { button: Button }) {
   );
   const [refererCompose, setRefererCompose] = useState(null);
 
-  const isButtonOwner = loggedInUser?.id == button.owner.id;
-  const buttonOwnerId = button.owner.id;
-
   const reloadPosts = () => {
     if (button && button.id) {
       store.emit(
@@ -62,19 +59,20 @@ export default function Feed({ button }: { button: Button }) {
     reloadPosts();
   }, [button]);
 
+  const isButtonOwner = loggedInUser?.id == button.owner.id;
+  const buttonOwnerId = button.owner.id;
+
   return (
     <div className="feed-container">
-      {/* {t('feed.newPost')} */}
-      {loggedInUser &&
-        button.id &&
-        button.owner.id == loggedInUser.id && <></>}
-      <Compose
-        referer={{ button: button.id }}
-        onCancel={() => {}}
-        onCreate={() => {
-          reloadPosts();
-        }}
-      />
+      {loggedInUser && isButtonOwner && (
+        <Compose
+          referer={{ button: button.id }}
+          onCancel={() => {}}
+          onCreate={() => {
+            reloadPosts();
+          }}
+        />
+      )}
       &nbsp;
       <div className="feed-line"></div>
       <div className="feed-section">
@@ -140,39 +138,43 @@ export function FeedElement({
 
         <>
           <div className="card-notification__answer-btn">
-            <Btn
-              submit={false}
-              btnType={BtnType.iconActions}
-              iconLink={<IoMailOutline />}
-              iconLeft={IconType.circle}
-              contentAlignment={ContentAlignment.right}
-              onClick={() =>
-                setShowComposePostReply(() => {
-                  return {
-                    post: post.id,
-                    privateMessage: true,
-                    mentions: [post.author.username],
-                  };
-                })
-              }
-            />
+            {loggedInUser && (
+              <>
+                <Btn
+                  submit={false}
+                  btnType={BtnType.iconActions}
+                  iconLink={<IoMailOutline />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.right}
+                  onClick={() =>
+                    setShowComposePostReply(() => {
+                      return {
+                        post: post.id,
+                        privateMessage: true,
+                        mentions: [post.author.username],
+                      };
+                    })
+                  }
+                />
 
-            <Btn
-              submit={false}
-              btnType={BtnType.iconActions}
-              iconLink={<IoArrowUndoOutline />}
-              iconLeft={IconType.circle}
-              contentAlignment={ContentAlignment.right}
-              onClick={() =>
-                setShowComposePostReply(() => {
-                  return {
-                    post: post.id,
-                    privateMessage: false,
-                    mentions: [post.author.username],
-                  };
-                })
-              }
-            />
+                <Btn
+                  submit={false}
+                  btnType={BtnType.iconActions}
+                  iconLink={<IoArrowUndoOutline />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.right}
+                  onClick={() =>
+                    setShowComposePostReply(() => {
+                      return {
+                        post: post.id,
+                        privateMessage: false,
+                        mentions: [post.author.username],
+                      };
+                    })
+                  }
+                />
+              </>
+            )}
             {loggedInUser &&
               (loggedInUser.id == post.author.id ||
                 isButtonOwner ||
@@ -227,7 +229,12 @@ export function FeedElement({
   );
 }
 
-export function Compose({ referer, onCreate, onCancel, isGuest }) {
+export function Compose({
+  referer,
+  onCreate,
+  onCancel,
+  isGuest = false,
+}) {
   useEffect(() => {
     console.log(referer);
   }, [referer]);
