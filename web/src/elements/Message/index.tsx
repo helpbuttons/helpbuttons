@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-
+const userPattern = /@[\w]+/gi;
 export function formatMessage(text) {
   const aRef = useRef();
   const content = linkify(text);
@@ -15,7 +15,7 @@ function linkify(text) {
   var urlPattern =
     /(?:https?:)?\/\/(?:(?:[\w-]+\.)+[\w/#@~.-]*)(?:\?(?:[\w&=.!,;$#%-]+)?)?/gi;
 
-  var userPattern = /@[\w]+/gi;
+  
   text = text.replace(userPattern, function (user) {
     return (
       '<a href="/Profile/' + user.substring(1) + '">' + user + '</a>'
@@ -24,4 +24,8 @@ function linkify(text) {
   return (text || '').replace(urlPattern, function (url) {
     return '<a href="' + url + '">' + url + '</a>';
   });
+}
+
+export function mentionsOfMessage(message) {
+  return message.match(userPattern).map((user) => user.substring(1))
 }

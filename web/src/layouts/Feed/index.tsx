@@ -210,16 +210,13 @@ export function FeedElement({
           isButtonOwner={isButtonOwner}
           onComposeReplyToComment={(
             commentId,
-            commentAuthorUsername,
+            mentions,
           ) => {
             setShowComposePostReply(() => {
               return {
                 post: post.id,
                 comment: commentId,
-                mentions: [
-                  post.author.username,
-                  commentAuthorUsername,
-                ],
+                mentions: mentions.concat([post.author.username]),
               };
             });
           }}
@@ -305,19 +302,6 @@ export function Compose({
         <MessageNew
           privateMessage={referer?.privateMessage}
           onCreate={(message) => {
-            //   if(isGuest)
-            // {
-            //   store.emit(
-            //     new SaveDraftNewPostComment(
-            //       postId,
-            //       data,
-            //     ),
-            //   );
-            //   alertService.info(t('post.needLogin'));
-            //   onSubmit()
-            // router.push(`/Login?returnUrl=/ButtonFile/${buttonId}`)
-            //   return;
-            // }
             let privacy = CommentPrivacyOptions.PUBLIC;
             if (referer?.privateMessage) {
               privacy = CommentPrivacyOptions.PRIVATE;

@@ -11,7 +11,8 @@ import { IoArrowUndoSharp, IoTrashBinOutline } from 'react-icons/io5';
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
-import { formatMessage } from 'elements/Message';
+import { formatMessage, mentionsOfMessage } from 'elements/Message';
+import { uniqueArray } from 'shared/sys.helper';
 
 export default function PostComments({
   comments,
@@ -28,6 +29,16 @@ export default function PostComments({
       }),
     );
   };
+
+  const handleClick = (comment) => {
+    let mentions = mentionsOfMessage(comment.message)
+    mentions.push(comment.author.username)
+    onComposeReplyToComment(
+      comment.id,
+      mentions,
+    )
+  }
+  
   return (
     <>
       <>
@@ -48,10 +59,7 @@ export default function PostComments({
                         iconLeft={IconType.circle}
                         contentAlignment={ContentAlignment.right}
                         onClick={() =>
-                          onComposeReplyToComment(
-                            comment.id,
-                            comment.author.username,
-                          )
+                          handleClick(comment)
                         }
                       />
                     {loggedInUser &&

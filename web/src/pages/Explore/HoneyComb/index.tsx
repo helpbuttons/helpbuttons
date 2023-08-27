@@ -35,6 +35,7 @@ import { Button } from 'shared/entities/button.entity';
 import { isPointWithinRadius } from 'geolib';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
+import { uniqueArray } from 'shared/sys.helper';
 
 const defaultZoomPlace = 13;
 
@@ -273,10 +274,7 @@ function useHexagonMap({
   };
 
   const recalculateCacheH3Hexes = (newDensityMapHexagons) => {
-    const uniqueArray = (a) =>
-      Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
-        JSON.parse(s),
-      );
+
     cachedH3Hexes.current = uniqueArray([
       ...cachedH3Hexes.current,
       ...newDensityMapHexagons,
