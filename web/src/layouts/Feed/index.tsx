@@ -1,5 +1,4 @@
 //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
-import PostCommentNew from 'components/feed/PostCommentNew';
 import PostComments from 'components/feed/PostComments';
 import PostMessage from 'components/feed/PostMessage';
 import Btn, {

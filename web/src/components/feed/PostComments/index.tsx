@@ -37,9 +37,6 @@ export default function PostComments({
               return (
                 <div key={key} className="card-notification--comment">
                   <CommentMessage
-                    isButtonOwnerComment={
-                      buttonOwnerId == comment.author.id
-                    }
                     post={comment}
                   />
 
