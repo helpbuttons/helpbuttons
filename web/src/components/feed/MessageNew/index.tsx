@@ -27,7 +27,6 @@ export default function MessageNew({ onCreate, mentions = [], privateMessage = f
   useEffect(() => {
     if(mentions.length > 0)
     {
-      console.log(mentions)
       mentions = uniqueArray(mentions)
       setValue('message', mentions.reduce((strOut, mention) => strOut + `@${mention} `, ''))  
     }else{

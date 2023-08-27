@@ -44,7 +44,6 @@ export default function PostComments({
                   />
 
                   <div className="message__actions">
-                    {loggedInUser && (
                       <Btn
                         submit={false}
                         btnType={BtnType.iconActions}
@@ -58,7 +57,6 @@ export default function PostComments({
                           )
                         }
                       />
-                    )}
                     {loggedInUser &&
                       (loggedInUser.id == comment.author.id ||
                         isButtonOwner ||

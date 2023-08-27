@@ -31,6 +31,7 @@ import router from 'next/router';
 import { useStore } from 'store/Store';
 import MessageNew from 'components/feed/MessageNew';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
+import Link from 'next/link';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -78,7 +79,6 @@ export default function Feed({ button }: { button: Button }) {
       <div className="feed-section">
         {posts &&
           posts.map((post, idx) => (
-            <>
               <FeedElement
                 key={idx}
                 post={post}
@@ -91,7 +91,6 @@ export default function Feed({ button }: { button: Button }) {
                 reloadPosts={reloadPosts}
                 buttonId={button.id}
               />
-            </>
           ))}
         {!posts ||
           (posts.length == 0 && (
@@ -189,7 +188,7 @@ export function FeedElement({
                 />
               )}
           </div>
-          {showComposePostReply?.post == post.id && (
+          {loggedInUser && showComposePostReply?.post == post.id && (
             <Compose
               referer={showComposePostReply}
               onCancel={() => {
@@ -198,8 +197,10 @@ export function FeedElement({
               onCreate={() => {
                 reloadPosts();
               }}
-              isGuest={!!loggedInUser}
             />
+          )}
+          {!loggedInUser && showComposePostReply?.post == post.id && (
+            <>Please <Link href="/Login">login</Link> or <Link href="/Signup">signup</Link> before comment</>
           )}
         </>
         <PostComments
@@ -233,11 +234,8 @@ export function Compose({
   referer,
   onCreate,
   onCancel,
-  isGuest = false,
 }) {
-  useEffect(() => {
-    console.log(referer);
-  }, [referer]);
+
   if (!referer) {
     return <></>;
   }
