@@ -112,7 +112,7 @@ export default function Btn({
             classNames.push("btn btn--black");
             break;
         case BtnType.link:
-            classNames.push("btn--link");
+            classNames.push("btn btn--link");
             break;
         case BtnType.filter:
             if (hasIcon) {

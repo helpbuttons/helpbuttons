@@ -66,9 +66,7 @@ export default function Profile() {
         <div className="body__section">
           <div className="card-profile__container">
             {userProfile && (
-              <>
                 <CardProfile user={userProfile} />
-              </>
             )}
           </div>
         </div>

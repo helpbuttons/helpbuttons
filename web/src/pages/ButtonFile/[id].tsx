@@ -3,7 +3,6 @@ import Feed from 'layouts/Feed';
 import { NextPageContext } from 'next';
 import SEO from 'components/seo';
 import { ServerPropsService } from 'services/ServerProps';
-import NavBottom from 'components/nav/NavBottom';
 import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/sys.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
@@ -42,7 +41,6 @@ export default function ButtonFile({
         </div>
       </div>
       }
-      <NavBottom />
     </>
   );
 }

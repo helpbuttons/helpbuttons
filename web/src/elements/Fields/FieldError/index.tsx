@@ -4,7 +4,8 @@ const fieldName = (validationError) => {
     return validationError.ref?.name ? validationError.ref.name : 'field' ;
 }
 export default function FieldError({
-    validationError
+    validationError,
+    extraMessage
 }) {
     let message = "";
     if (validationError) {
@@ -21,18 +22,20 @@ export default function FieldError({
                 // We can add more cases as we need them
             }
         }
+   
+    }
+ if (extraMessage) {
+            message += extraMessage
     }
 
     return (
         <>
             {message && 
-                <div className="form__input-subtitle">
                     <div className="form__input-subtitle-side">
-                    <label className="form__input-subtitle--error">
-                        {message}
-                    </label>
+                        <label className="form__input-subtitle--error">
+                            {message}
+                        </label>
                     </div>
-                </div>
             }
         </>
     );

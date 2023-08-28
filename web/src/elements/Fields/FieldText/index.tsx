@@ -20,11 +20,14 @@ const FieldText = React.forwardRef(({
     validationError,
     value,
     explain,
+    extraMessage
 }, ref): IFieldText => {
     return (
         <div className="form__field">
             <label className="form__label">{label}</label>
-            <p className="form__explain">{explain}</p>
+            {explain && 
+                <p className="form__explain">{explain}</p>
+            }
             <input
                 name={name} 
                 ref={ref}
@@ -35,7 +38,9 @@ const FieldText = React.forwardRef(({
                 className={`form__input ${classNameInput} ${validationError ? 'validation-error' : ''}`} 
                 value={value}
             />
-            <FieldError validationError={validationError}/>
+            <div className="form__input-subtitle">
+                <FieldError validationError={validationError} extraMessage={extraMessage}/>
+            </div>
         </div>
     );
 });
