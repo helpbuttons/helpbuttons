@@ -1,6 +1,7 @@
 ///image included in ButtonCard
 ///Btn is the project convention for tradittional buttons, in order to avoidd confussion with app's buttons
 import React from 'react';
+import Image from 'next/image'
 import { makeImageUrl } from 'shared/sys.helper';
 
 export enum ImageType {
@@ -70,12 +71,11 @@ export default function ImageWrapper({
   const className = classNames.join(' ');
 
   return (
-    <img
+    <Image
       src={makeImageUrl(src, '/api/')}
       alt={alt}
       // layout={layout}
-      width="100%"
-      height="100%"
+      fill={true}
     />
   );
 }
