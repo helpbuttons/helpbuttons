@@ -164,7 +164,8 @@
     "write": "Post a new update",
     "delete": "Delete",
     "placeholderWrite": "Write a new update for your helpbutton",
-    "NoComments": "No comments yet"
+    "NoComments": "No comments yet",
+    "private": "private"
   },
   "comment": {
     "delete": "Borrar",
