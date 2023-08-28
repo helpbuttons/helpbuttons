@@ -23,12 +23,12 @@ export default function MessageNew({ onCreate, mentions = [], privateMessage = f
   };
 
   let extraMessage = "";
-
   useEffect(() => {
     if(mentions.length > 0)
     {
       mentions = uniqueArray(mentions)
-      setValue('message', mentions.reduce((strOut, mention) => strOut + `@${mention} `, ''))  
+      setValue('message', mentions.reduce((strOut, mention) => strOut + `@${mention} `, ''))
+      setFocus('message')
     }else{
       setValue('message', '')
     }
