@@ -84,7 +84,6 @@ export class UserService {
 
   @OnEvent(ActivityEventName.NewPostComment)
   async mailOwner(payload: any) {
-    // console.log(payload);
     const message = payload.data.message;
     const author = payload.data.author.username;
 
@@ -96,24 +95,28 @@ export class UserService {
 
     // get users...
     var userPattern = /@[\w]+/gi;
-    const users = message
-      .match(userPattern)
-      .filter((username) => username.substring(1) != author);
-    console.log(users);
-    // get user language
+    let userNames = message.match(userPattern);
 
-    const mailsToSend = await Promise.all(
-      users.map(async (_username) => {
+    userNames = userNames.filter(
+      (username) => username.substring(1) != author,
+    );
+    // get user language
+    let users = await Promise.all(
+      userNames.map(async (_username) => {
         const username = _username.substring(1);
-        const user = await this.findByUsername(username);
-        const messageContent = translate(
-          user.locale,
-          'activities.newpost',
-          [payload.data.message, payload.data.button.title],
-        );
-        return { message: messageContent, email: user.email };
+        return await this.findByUsername(username);
       }),
     );
+    users = users.filter((user) => user.receiveNotifications)
+    const mailsToSend = users.map((user) => {
+      const messageContent = translate(
+        user.locale,
+        'activities.newpost',
+        [payload.data.message, payload.data.button.title],
+      );
+      return { message: messageContent, email: user.email };
+    });
+    
     mailsToSend.map((mailToSend) => {
       this.mailService.sendActivity({
         content: mailToSend.message,
