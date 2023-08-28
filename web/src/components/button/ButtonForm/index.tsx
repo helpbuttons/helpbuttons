@@ -161,7 +161,7 @@ export default function ButtonForm({
               // height={125}
               setValue={setValue}
               control={control}
-              {...register('image', { required: true })}
+              {...register('image')}
               validationError={errors.image}
             />
             <>

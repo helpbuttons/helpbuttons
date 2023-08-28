@@ -85,13 +85,15 @@ export class ButtonService {
             });
         }
 
-        try {
-          button.image = await this.storageService.newImage64(
-            createDto.image,
-          );
-        } catch (err) {
-          console.log(`errorjumboooooror: ${err.message}`);
-          throw new ValidationException({ image: err.message });
+        if(createDto.image)
+        {
+          try {
+            button.image = await this.storageService.newImage64(
+              createDto.image,
+            );
+          } catch (err) {
+            throw new ValidationException({ image: err.message });
+          }
         }
         await this.buttonRepository.insert([button])
       },
