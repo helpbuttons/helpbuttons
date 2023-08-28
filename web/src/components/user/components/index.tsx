@@ -8,7 +8,7 @@ export default function UserAvatar({ user }) {
     <>
       {user && (
         <ImageWrapper
-          imageType={ImageType.avatar}
+          imageType={ImageType.avatarBig}
           src={user.avatar}
           alt="avatar"
         />

@@ -16,6 +16,7 @@ export default function CardButtonList({buttonTypes, button }) {
         <div style={buttonColorStyle(buttonType.cssColor)}>
           <Link href={`/ButtonFile/${button.id}`}>
             <div className="card-button-list">
+            {button.image && 
               <div className="card-button-list__picture-container">
                 <div className="card-button-list__nav">
                   <div className="arrow btn-circle__icon">
@@ -25,13 +26,15 @@ export default function CardButtonList({buttonTypes, button }) {
                     <IoChevronForwardOutline />
                   </div>
                 </div>
-
-                <ImageWrapper
-                  imageType={ImageType.cardList}
-                  src={button.image}
-                  alt={button.description}
-                />
+                
+                  <ImageWrapper
+                    imageType={ImageType.cardList}
+                    src={button.image}
+                    alt={button.description}
+                  />
+                
               </div>
+              }
               <div className="card-button-list__content">
                 <CardButtonHeadMedium button={button} buttonType={buttonType}/>
               </div>
