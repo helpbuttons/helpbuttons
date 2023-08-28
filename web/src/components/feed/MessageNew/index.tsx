@@ -4,11 +4,9 @@ import t from 'i18n';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoPaperPlaneOutline } from 'react-icons/io5';
+import { uniqueArray } from 'shared/sys.helper';
 
-const uniqueArray = (a) =>
-Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
-  JSON.parse(s),
-);
+
 export default function MessageNew({ onCreate, mentions = [], privateMessage = false }) {
   const {
     register,
@@ -27,7 +25,6 @@ export default function MessageNew({ onCreate, mentions = [], privateMessage = f
   useEffect(() => {
     if(mentions.length > 0)
     {
-      console.log(mentions)
       mentions = uniqueArray(mentions)
       setValue('message', mentions.reduce((strOut, mention) => strOut + `@${mention} `, ''))  
     }else{

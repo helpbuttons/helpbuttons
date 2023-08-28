@@ -20,6 +20,7 @@ import { useRef } from 'store/Store';
 import { TagList } from 'elements/Fields/FieldTags';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
+import { uniqueArray } from 'shared/sys.helper';
 
 
 export default function AdvancedFilters({
@@ -85,10 +86,6 @@ export default function AdvancedFilters({
     ]);
   };
 
-  const uniqueArray = (a) =>
-    Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
-      JSON.parse(s),
-    );
 
   const setButtonTypeValue = (name, value) => {
     if (value) {

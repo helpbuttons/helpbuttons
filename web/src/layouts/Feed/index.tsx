@@ -1,5 +1,4 @@
 //FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
-import PostCommentNew from 'components/feed/PostCommentNew';
 import PostComments from 'components/feed/PostComments';
 import PostMessage from 'components/feed/PostMessage';
 import Btn, {
@@ -31,6 +30,7 @@ import router from 'next/router';
 import { useStore } from 'store/Store';
 import MessageNew from 'components/feed/MessageNew';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
+import Link from 'next/link';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -40,9 +40,6 @@ export default function Feed({ button }: { button: Button }) {
     (state: GlobalState) => state.loggedInUser,
   );
   const [refererCompose, setRefererCompose] = useState(null);
-
-  const isButtonOwner = loggedInUser?.id == button.owner.id;
-  const buttonOwnerId = button.owner.id;
 
   const reloadPosts = () => {
     if (button && button.id) {
@@ -62,25 +59,25 @@ export default function Feed({ button }: { button: Button }) {
     reloadPosts();
   }, [button]);
 
+  const isButtonOwner = loggedInUser?.id == button.owner.id;
+  const buttonOwnerId = button.owner.id;
+
   return (
     <div className="feed-container">
-      {/* {t('feed.newPost')} */}
-      {loggedInUser &&
-        button.id &&
-        button.owner.id == loggedInUser.id && <></>}
-      <Compose
-        referer={{ button: button.id }}
-        onCancel={() => {}}
-        onCreate={() => {
-          reloadPosts();
-        }}
-      />
+      {loggedInUser && isButtonOwner && (
+        <Compose
+          referer={{ button: button.id }}
+          onCancel={() => {}}
+          onCreate={() => {
+            reloadPosts();
+          }}
+        />
+      )}
       &nbsp;
       <div className="feed-line"></div>
       <div className="feed-section">
         {posts &&
           posts.map((post, idx) => (
-            <>
               <FeedElement
                 key={idx}
                 post={post}
@@ -93,7 +90,6 @@ export default function Feed({ button }: { button: Button }) {
                 reloadPosts={reloadPosts}
                 buttonId={button.id}
               />
-            </>
           ))}
         {!posts ||
           (posts.length == 0 && (
@@ -140,39 +136,43 @@ export function FeedElement({
 
         <>
           <div className="card-notification__answer-btn">
-            <Btn
-              submit={false}
-              btnType={BtnType.iconActions}
-              iconLink={<IoMailOutline />}
-              iconLeft={IconType.circle}
-              contentAlignment={ContentAlignment.right}
-              onClick={() =>
-                setShowComposePostReply(() => {
-                  return {
-                    post: post.id,
-                    privateMessage: true,
-                    mentions: [post.author.username],
-                  };
-                })
-              }
-            />
+            {loggedInUser && (
+              <>
+                <Btn
+                  submit={false}
+                  btnType={BtnType.iconActions}
+                  iconLink={<IoMailOutline />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.right}
+                  onClick={() =>
+                    setShowComposePostReply(() => {
+                      return {
+                        post: post.id,
+                        privateMessage: true,
+                        mentions: [post.author.username],
+                      };
+                    })
+                  }
+                />
 
-            <Btn
-              submit={false}
-              btnType={BtnType.iconActions}
-              iconLink={<IoArrowUndoOutline />}
-              iconLeft={IconType.circle}
-              contentAlignment={ContentAlignment.right}
-              onClick={() =>
-                setShowComposePostReply(() => {
-                  return {
-                    post: post.id,
-                    privateMessage: false,
-                    mentions: [post.author.username],
-                  };
-                })
-              }
-            />
+                <Btn
+                  submit={false}
+                  btnType={BtnType.iconActions}
+                  iconLink={<IoArrowUndoOutline />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.right}
+                  onClick={() =>
+                    setShowComposePostReply(() => {
+                      return {
+                        post: post.id,
+                        privateMessage: false,
+                        mentions: [post.author.username],
+                      };
+                    })
+                  }
+                />
+              </>
+            )}
             {loggedInUser &&
               (loggedInUser.id == post.author.id ||
                 isButtonOwner ||
@@ -187,7 +187,7 @@ export function FeedElement({
                 />
               )}
           </div>
-          {showComposePostReply?.post == post.id && (
+          {loggedInUser && showComposePostReply?.post == post.id && (
             <Compose
               referer={showComposePostReply}
               onCancel={() => {
@@ -196,8 +196,10 @@ export function FeedElement({
               onCreate={() => {
                 reloadPosts();
               }}
-              isGuest={!!loggedInUser}
             />
+          )}
+          {!loggedInUser && showComposePostReply?.post == post.id && (
+            <>Please <Link href="/Login">login</Link> or <Link href="/Signup">signup</Link> before comment</>
           )}
         </>
         <PostComments
@@ -208,16 +210,13 @@ export function FeedElement({
           isButtonOwner={isButtonOwner}
           onComposeReplyToComment={(
             commentId,
-            commentAuthorUsername,
+            mentions,
           ) => {
             setShowComposePostReply(() => {
               return {
                 post: post.id,
                 comment: commentId,
-                mentions: [
-                  post.author.username,
-                  commentAuthorUsername,
-                ],
+                mentions: mentions.concat([post.author.username]),
               };
             });
           }}
@@ -227,10 +226,12 @@ export function FeedElement({
   );
 }
 
-export function Compose({ referer, onCreate, onCancel, isGuest }) {
-  useEffect(() => {
-    console.log(referer);
-  }, [referer]);
+export function Compose({
+  referer,
+  onCreate,
+  onCancel,
+}) {
+
   if (!referer) {
     return <></>;
   }
@@ -301,19 +302,6 @@ export function Compose({ referer, onCreate, onCancel, isGuest }) {
         <MessageNew
           privateMessage={referer?.privateMessage}
           onCreate={(message) => {
-            //   if(isGuest)
-            // {
-            //   store.emit(
-            //     new SaveDraftNewPostComment(
-            //       postId,
-            //       data,
-            //     ),
-            //   );
-            //   alertService.info(t('post.needLogin'));
-            //   onSubmit()
-            // router.push(`/Login?returnUrl=/ButtonFile/${buttonId}`)
-            //   return;
-            // }
             let privacy = CommentPrivacyOptions.PUBLIC;
             if (referer?.privateMessage) {
               privacy = CommentPrivacyOptions.PRIVATE;

@@ -5,6 +5,7 @@ import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/sys.helper';
 import t from 'i18n';
 import Link from 'next/link';
+import { formatMessage } from 'elements/Message';
 
 export default function CardNotification({ activity = {} }) {
   const notification = (activity) => {
@@ -118,7 +119,7 @@ export function NotificationCard({ title, image, date, message, id, read }) {
             }
             
           </div>
-          <h2 className="card-notification__title">{message}</h2>
+          <h2 className="card-notification__title">{formatMessage(message[0])}</h2>
           <div className="card-notification__paragraph"></div>
         </div>
       </div>

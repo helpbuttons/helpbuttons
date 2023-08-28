@@ -70,7 +70,7 @@ export default function Profile() {
                     </Link>
                   </div>
                 )}
-                <Link href="/HomeInfo">
+                {/* <Link href="/HomeInfo">
                   <div onClick={removeProfile} className="btn-with-icon">
                     <div className="btn-with-icon__icon">
                       <IoAlarm />
@@ -79,7 +79,7 @@ export default function Profile() {
                       {t('user.deactivate')}
                     </span>
                   </div>
-                </Link>
+                </Link> */}
               </div>
             )}
             </LoadabledComponent>

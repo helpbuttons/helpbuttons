@@ -30,26 +30,6 @@ export class ActivityService {
     await this.activityRepository.insert([activity])
   }
 
-  @OnEvent(ActivityEventName.NewPostComment)
-  async mailOwner(payload: any) {
-    const activity = {
-      id: dbIdGenerator(),
-      owner: payload.destination,
-      eventName: payload.activityEventName,
-      data: JSON.stringify(payload.data)
-    };
-    const messageContent = translate('en','activities.newpost', [
-      payload.data.message,
-      payload.data.button.title,
-    ])
-    this.mailService.sendActivity(
-      {
-        content: messageContent,
-        to: payload.destination.email
-    })
-    // this.activityRepository.insert([activity])
-  }
-
   findByUserId(userId: string) {
     return this.activityRepository.find({
       where: { owner: { id: userId } },
