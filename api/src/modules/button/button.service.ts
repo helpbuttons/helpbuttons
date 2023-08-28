@@ -156,7 +156,7 @@ export class ButtonService {
 
   async findh3(resolution, hexagons) {
     try {
-      if(hexagons && hexagons.length > 500)
+      if(hexagons && hexagons.length > 1000)
       {
         throw new HttpException('too many hexagons requested, aborting',HttpStatus.PAYLOAD_TOO_LARGE)
       }
