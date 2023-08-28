@@ -63,7 +63,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
             <ImageWrapper
               imageType={ImageType.avatar}
               src={button.owner.avatar}
-              alt={button.title}
+              alt={button.owner.username}
             />
           </div>
         </div>
@@ -239,7 +239,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             <div className="avatar-big">
               <Link href={profileHref}>
                 <ImageWrapper
-                  imageType={ImageType.avatar}
+                  imageType={ImageType.avatarBig}
                   src={button.owner.avatar}
                   alt="Avatar"
                 />

@@ -11,6 +11,7 @@ export enum ImageType {
   cardMap,
   cardList,
   buttonCard,
+  avatarBig
 }
 
 export enum ContentAlignment {
@@ -20,8 +21,8 @@ export enum ContentAlignment {
 }
 
 interface ImageProps {
-  height?: string;
-  width?: string;
+  height?: number;
+  width?: number;
   layout?: string;
   src: string;
   alt: string;
@@ -31,8 +32,8 @@ interface ImageProps {
 }
 
 export default function ImageWrapper({
-  height = '200',
-  width = '200',
+  height = 200,
+  width = 200,
   alt = null,
   layout = 'responsive',
   src = null,
@@ -42,39 +43,34 @@ export default function ImageWrapper({
 }: ImageProps) {
   let classNames = [];
 
-  switch (imageType) {
-    case ImageType.popup:
-      width = '200';
-      height = '80';
-      break;
-    case ImageType.marker:
-      break;
-    case ImageType.cardMap:
-      layout = 'responsive';
-      width = '200';
-      height = '130';
-      break;
-    case ImageType.cardList:
-      layout = 'responsive';
-      width = '1000';
-      height = '1000';
-      break;
-    case ImageType.buttonCard:
-      width = '1000';
-      height = '1000';
-      layout = 'responsive';
-      break;
-    default:
-      break;
-  }
-
   const className = classNames.join(' ');
 
+  if(imageType == ImageType.avatar) 
+  {
+    return (
+      <Image
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      width={30}
+      height={30}
+    />
+    )
+  }
+  if(imageType == ImageType.avatarBig) 
+  {
+    return (
+      <Image
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      width={68}
+      height={68}
+    />
+    )
+  }
   return (
     <Image
-      src={makeImageUrl(src, '/api/')}
+      src={makeImageUrl(src, '/api')}
       alt={alt}
-      // layout={layout}
       fill={true}
     />
   );
