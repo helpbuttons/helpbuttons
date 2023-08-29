@@ -88,6 +88,6 @@ export function ImageContainer({
   const className = classNames.join(' ');
   
   return (
-    <Image src={makeImageUrl(src, '/api/')} alt={alt} width={width} height={height} />
+    <Image src={makeImageUrl(src, '/api')} alt={alt} width={width} height={height} />
   );
 }
