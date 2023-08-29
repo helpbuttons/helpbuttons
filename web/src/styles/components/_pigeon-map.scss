@@ -79,6 +79,7 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
     display: flex;
     flex-direction: column;
     align-items: baseline;
+    line-height: 0;
 
 }
 

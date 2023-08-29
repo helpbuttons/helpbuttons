@@ -4,7 +4,7 @@ import { IoClose } from 'react-icons/io5';
 import { IoCheckmark } from 'react-icons/io5';
 type IconType = 'cross' | 'red' | 'check';
 
-export function CheckBoxIcon({checked, icon }: { icon: IconType, checked:boolean }) {
+export function MultiSelectOptionIcon({checked, icon }: { icon: IconType, checked:boolean }) {
   switch (icon) {
     case 'cross':
       return (
@@ -25,7 +25,7 @@ export function CheckBoxIcon({checked, icon }: { icon: IconType, checked:boolean
   }
 }
 
-export default function CheckBox({
+export default function MultiSelectOption({
   defaultValue,
   name,
   handleChange = (name: string, value: any) => {},
@@ -61,7 +61,7 @@ export default function CheckBox({
         <div
           className={`checkbox__content ${checked ? 'checked' : ''}`}
         >
-          <CheckBoxIcon checked={checked} icon={icon}/>
+          <MultiSelectOptionIcon checked={checked} icon={icon}/>
           {children}
         </div>
       </label>

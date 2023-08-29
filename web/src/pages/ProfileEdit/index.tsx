@@ -142,9 +142,10 @@ export default function ProfileEdit() {
                     setFocus={setFocus}
                     validationError={errors.description}
                     {...register('description', { required: true })}
-                  />                
+                  />     
                   <FieldCheckbox
                     name='receiveNotifications'
+                    checked={watch('receiveNotifications')}
                     text={t('user.textReceiveNotifications')}
                     {...register('receiveNotifications')}
                   />

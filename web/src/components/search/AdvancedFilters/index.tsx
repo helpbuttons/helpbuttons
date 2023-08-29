@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { roundCoords } from 'shared/honeycomb.utils';
-import CheckBox, { CheckBoxIcon } from 'elements/Checkbox';
+import CheckBox, { CheckBoxIcon } from 'elements/MultiSelectOption';
 import { GlobalState, store } from 'pages';
 import { UpdateFilters } from 'state/Explore';
 import router, { Router } from 'next/router';
@@ -154,7 +154,7 @@ export default function AdvancedFilters({
                     key={buttonType.name}
                     style={buttonColorStyle(buttonType.cssColor)}
                   >
-                    <CheckBox
+                    <MultiSelectOption
                       defaultValue={
                         helpButtonTypes.indexOf(buttonType.name) > -1
                       }
@@ -167,7 +167,7 @@ export default function AdvancedFilters({
                       <div className="btn-with-icon__text">
                         {buttonType.caption}
                       </div>
-                    </CheckBox>
+                    </MultiSelectOption>
                   </div>
                 );
               })}
