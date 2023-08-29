@@ -12,7 +12,6 @@ export default function FieldMultiSelect({
             <p className="form__label">{label}</p>
             <p className="form__explain">{explain}</p>
             <div>{children}</div>
-            {/* <CheckBox icon="cross" name={name} value={value} handleChange={handleChange}/> */}
             <FieldError validationError={validationError}/>
         </div>
         

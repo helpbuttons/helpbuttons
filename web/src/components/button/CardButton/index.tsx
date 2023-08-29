@@ -330,21 +330,29 @@ export function CardButtonHeadActions({ button }) {
 }
 export function CardButtonImages({ button }) {
   return (
-    <div className="card-button__picture">
-      <div className="card-button__picture-nav">
-        <div className="arrow btn-circle__icon">
-          <IoChevronBackOutline />
+    <>
+      {button.image &&
+
+        <div className="card-button__picture">
+          <div className="card-button__picture-nav">
+            <div className="arrow btn-circle__icon">
+              <IoChevronBackOutline />
+            </div>
+            <div className="arrow btn-circle__icon">
+              <IoChevronForwardOutline />
+            </div>
+          </div>
+
+          <ImageWrapper
+            imageType={ImageType.buttonCard}
+            src={makeImageUrl(button.image)}
+            alt={button.description}
+          />  
         </div>
-        <div className="arrow btn-circle__icon">
-          <IoChevronForwardOutline />
-        </div>
-      </div>
-      <ImageWrapper
-        imageType={ImageType.buttonCard}
-        src={makeImageUrl(button.image)}
-        alt={button.description}
-      />
-    </div>
+
+      }
+    </>
+    
   );
 }
 export function CardButtonOptions() {

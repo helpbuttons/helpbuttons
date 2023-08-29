@@ -12,7 +12,6 @@ import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { roundCoords } from 'shared/honeycomb.utils';
-import CheckBox, { CheckBoxIcon } from 'elements/MultiSelectOption';
 import { GlobalState, store } from 'pages';
 import { UpdateFilters } from 'state/Explore';
 import router, { Router } from 'next/router';
@@ -21,6 +20,7 @@ import { TagList } from 'elements/Fields/FieldTags';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 import { uniqueArray } from 'shared/sys.helper';
+import MultiSelectOption from 'elements/MultiSelectOption';
 
 
 export default function AdvancedFilters({

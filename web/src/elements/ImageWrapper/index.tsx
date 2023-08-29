@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image'
 import { makeImageUrl } from 'shared/sys.helper';
+import { audit } from 'rxjs';
 
 export enum ImageType {
   avatar,
@@ -12,6 +13,7 @@ export enum ImageType {
   cardList,
   buttonCard,
   avatarBig,
+  avatarMed,
   preview
 }
 
@@ -68,6 +70,17 @@ export default function ImageWrapper({
     />
     )
   }
+  if(imageType == ImageType.avatarMed) 
+  {
+    return (
+      <Image
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      width={50}
+      height={50}
+    />
+    )
+  }
   if(imageType == ImageType.preview) 
   {
     return (
@@ -79,6 +92,17 @@ export default function ImageWrapper({
     />
     )
   }
+  // if(imageType == ImageType.buttonCard) 
+  // {
+  //   return (
+  //     <Image
+  //     src={makeImageUrl(src, '/api')}
+  //     alt={alt}
+  //     height={auto}
+  //     width={1000}
+  //   />
+  //   )
+  // }
   return (
     <Image
       src={makeImageUrl(src, '/api')}

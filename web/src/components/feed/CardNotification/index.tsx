@@ -43,7 +43,7 @@ export default function CardNotification({ activity = {} }) {
       const post = JSON.parse(activity.data);
       return (
         <NotificationCard
-          title={'New user update'}
+          title={'New owner update'}
           image={post.button.image}
           date={post.created_at}
           id={post.button.id}
@@ -100,7 +100,7 @@ export function NotificationCard({ title, image, date, message, id, read }) {
         <div className="card-notification__avatar">
           <div className="avatar-medium">
             <ImageWrapper
-              imageType={ImageType.avatar}
+              imageType={ImageType.avatarMed}
               src={makeImageUrl(image)}
               alt="image"
             />
