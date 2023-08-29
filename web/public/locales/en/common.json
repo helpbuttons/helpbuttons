@@ -127,7 +127,7 @@
     "name": "Profile name",
     "namePlaceHolder": "Name",
     "avatar": "Choose avatar",
-    "setNewPassword": "set a new password",
+    "setNewPassword": "Set a new password",
     "dontChangePassword": "Don't change password",
     "logout": "Logout",
     "deactivate": "Deactivate Account",
@@ -140,7 +140,7 @@
     "created_date": "User since",
     "created": "",
     "newLoginTokenSent": "",
-    "textReceiveNotifications": "receive mail notifications"
+    "textReceiveNotifications": "Receive mail notifications"
   },
   "calendarOnce": {
     "pickday": "Pick a day",

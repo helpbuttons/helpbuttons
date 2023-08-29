@@ -11,7 +11,8 @@ export enum ImageType {
   cardMap,
   cardList,
   buttonCard,
-  avatarBig
+  avatarBig,
+  preview
 }
 
 export enum ContentAlignment {
@@ -64,6 +65,17 @@ export default function ImageWrapper({
       alt={alt}
       width={68}
       height={68}
+    />
+    )
+  }
+  if(imageType == ImageType.preview) 
+  {
+    return (
+      <Image
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      width={90}
+      height={90}
     />
     )
   }
