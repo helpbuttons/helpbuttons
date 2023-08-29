@@ -40,8 +40,8 @@ export default function CardProfile(props) {
             
               <div className="card-profile__avatar-container-name">
 
-                <p>{user.name}</p>
-                <span>{ user.username }@{getHostname()}</span>
+                <p className="card-profile__name">{user.name}</p>
+                <span className="card-profile__username">{ user.username }@{getHostname()}</span>
                 
               </div>
 

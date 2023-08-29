@@ -69,6 +69,13 @@ $filters-padding: 10px;
 
 }
 
+.filters__actions--home {
+
+
+  @extend .filters__actions;
+
+}
+
 .filters__actions > button:nth-child(1) {
   display: flex;
   justify-content: center;
@@ -121,6 +128,12 @@ $filters-padding: 10px;
 
     width: 35vw;
     
+  }
+
+  .filters__actions--home {
+
+    width: 100vw;
+
   }
   
 

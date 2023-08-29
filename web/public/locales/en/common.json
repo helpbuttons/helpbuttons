@@ -6,7 +6,8 @@
     "activity": "Activity",
     "faqs": "Faqs",
     "login": "Login",
-    "home": "Home"
+    "home": "Home",
+    "donate": "Donate"
   },
   "homeinfo": {
     "start": "Where do you start?",
@@ -22,7 +23,8 @@
     "buttons": "There are {0} helpbuttons in this network",
     "users": "{0} users in this network",
     "administeredby": "Administered by ",
-    "actions": "Actions"
+    "actions": "Actions",
+    "donateSubtitle" : "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:"
   },
   "feed": {
     "write": "Write message",
@@ -139,7 +141,7 @@
     "loginClick": "One click login",
     "created_date": "User since",
     "created": "",
-    "newLoginTokenSent": "",
+    "newLoginTokenSent": "Login token sent",
     "textReceiveNotifications": "Receive mail notifications"
   },
   "calendarOnce": {

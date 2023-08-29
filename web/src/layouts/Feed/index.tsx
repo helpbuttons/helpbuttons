@@ -199,7 +199,7 @@ export function FeedElement({
             />
           )}
           {!loggedInUser && showComposePostReply?.post == post.id && (
-            <>Please <Link href="/Login">login</Link> or <Link href="/Signup">signup</Link> before comment</>
+            <div className='message message--others'>Please <Link href="/Login">login</Link> or <Link href="/Signup">signup</Link> before comment</div>
           )}
         </>
         <PostComments

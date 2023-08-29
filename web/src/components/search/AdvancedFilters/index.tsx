@@ -204,7 +204,7 @@ export default function AdvancedFilters({
                 </div>
               </div>
             )}
-            <div className="filters__actions">
+            <div className={ isHome ? 'filters__actions--home' : 'filters__actions'  }>
               <Btn
                 btnType={BtnType.link}
                 caption={t('common.reset')}
