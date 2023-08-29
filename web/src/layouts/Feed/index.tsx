@@ -276,6 +276,7 @@ export function Compose({
           />
         </div>
         <MessageNew
+          isComment={true}
           onCreate={(message) => {
             store.emit(
               new CreateNewPostComment(
@@ -314,6 +315,7 @@ export function Compose({
             />
         </div>
         <MessageNew
+          isComment={true}
           privateMessage={referer?.privateMessage}
           onCreate={(message) => {
             let privacy = CommentPrivacyOptions.PUBLIC;

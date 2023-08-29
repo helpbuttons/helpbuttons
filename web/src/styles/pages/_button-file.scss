@@ -193,6 +193,13 @@ $button-file__container-max-width: $grid-max-width;
 
 }
 
+.button-file__action-section--field{
+
+  background-color: $color-white;
+  border-radius: 0 0 $border-radius-basic $border-radius-basic;
+
+}
+
 .button-file__action-section-close {
   
   padding: $padding-medium;

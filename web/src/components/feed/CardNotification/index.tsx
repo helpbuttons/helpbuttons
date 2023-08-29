@@ -50,6 +50,7 @@ export default function CardNotification({ activity = {} }) {
           message={t('activities.newpost', [
             post.message,
             post.button.title,
+            post.author.username,
           ])}
           read={activity.read}
         />
@@ -58,7 +59,9 @@ export default function CardNotification({ activity = {} }) {
       activity.eventName == ActivityEventName.NewPostComment
     ) {
       const comment = JSON.parse(activity.data);
+      console.log(comment)
       return (
+
         <NotificationCard
           title={'New notification'}
           image={comment.button.image}
@@ -67,6 +70,7 @@ export default function CardNotification({ activity = {} }) {
           message={t('activities.newcomment', [
             comment.message,
             comment.post.message,
+            comment.author.username,
           ])}
           read={activity.read}
         />

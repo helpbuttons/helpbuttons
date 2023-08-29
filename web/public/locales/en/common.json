@@ -26,7 +26,7 @@
   },
   "feed": {
     "write": "Write message",
-    "update": "User Update"
+    "update": "Owner Update"
   },
   "explore": {
     "noResults": "Sorry, there are no results here",
@@ -61,8 +61,8 @@
   },
   "activities": {
     "newbutton": "You created {0} in {1}",
-    "newpost": "There is a new post '{0}' posted to the helpbutton {1}",
-    "newcomment": "There is a new comment '{0}' posted to the post '{1}'",
+    "newpost": "{2} wrote '{0}' into the helpbutton {1}",
+    "newcomment": "{2} commented '{0}' answer to the post '{1}'",
     "noactivity": "You have no activity yet! Start creating your Helpbutton or interact with others!",
     "markedAllAsRead": "Notifications marked as read"
   },

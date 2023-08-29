@@ -193,7 +193,7 @@ export default function HexagonExploreMap({
             className="pigeon-map__custom-block"
             key={hexagonClicked.properties.hex}
           >
-            <div className="pigeon-map__hex-wrap">
+            <div className="pigeon-map__hex-wrap pigeon-map__hex-wrap--selected">
               {hexagonClicked.properties.groupByType.map(
                 (hexagonBtnType, idx) => {
                   if (hexagonBtnType.count < 1) {

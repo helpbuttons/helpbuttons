@@ -48,39 +48,39 @@ export default function ImageWrapper({
 
   const className = classNames.join(' ');
 
-  if(imageType == ImageType.avatar) 
-  {
-    return (
-      <Image
-      src={makeImageUrl(src, '/api')}
-      alt={alt}
-      width={30}
-      height={30}
-    />
-    )
-  }
-  if(imageType == ImageType.avatarBig) 
-  {
-    return (
-      <Image
-      src={makeImageUrl(src, '/api')}
-      alt={alt}
-      width={68}
-      height={68}
-    />
-    )
-  }
-  if(imageType == ImageType.avatarMed) 
-  {
-    return (
-      <Image
-      src={makeImageUrl(src, '/api')}
-      alt={alt}
-      width={50}
-      height={50}
-    />
-    )
-  }
+  // if(imageType == ImageType.avatar) 
+  // {
+  //   return (
+  //     <Image
+  //     src={makeImageUrl(src, '/api')}
+  //     alt={alt}
+  //     width={30}
+  //     height={30}
+  //   />
+  //   )
+  // }
+  // if(imageType == ImageType.avatarBig) 
+  // {
+  //   return (
+  //     <Image
+  //     src={makeImageUrl(src, '/api')}
+  //     alt={alt}
+  //     width={68}
+  //     height={68}
+  //   />
+  //   )
+  // }
+  // if(imageType == ImageType.avatarMed) 
+  // {
+  //   return (
+  //     <Image
+  //     src={makeImageUrl(src, '/api')}
+  //     alt={alt}
+  //     width={50}
+  //     height={50}
+  //   />
+  //   )
+  // }
   if(imageType == ImageType.preview) 
   {
     return (
@@ -105,6 +105,7 @@ export default function ImageWrapper({
   // }
   return (
     <Image
+      style={{objectFit: 'cover'}}
       src={makeImageUrl(src, '/api')}
       alt={alt}
       fill={true}
