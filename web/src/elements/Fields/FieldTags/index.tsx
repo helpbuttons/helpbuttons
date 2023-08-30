@@ -67,6 +67,7 @@ export default function FieldTags({
         value={input}
         placeholder={placeholder}
         autoComplete="off"
+        onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
       />
       <TagList tags={tags} remove={remove}/>
       
