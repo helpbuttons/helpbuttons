@@ -61,7 +61,7 @@ export default function Faqs({
 
         <Accordion title="Privacy Policies">
           At Helpbuttons, we respect your <span className="highlight">privacy</span> and are committed to protecting your <span className="highlight">personal data</span>. Our <span className="highlight">privacy policy</span> outlines how we collect, store, use, and disclose your personal information. We comply with all relevant privacy laws and regulations, ensuring your data is used solely for the purpose of providing and improving our service. We are transparent about our data collection processes, and you have the right to access, update, or delete your personal data at any time. Remember, sharing personal information in Helpbuttons posts is at your discretion—be mindful and only share what you are comfortable with others knowing. 
-          Please direct your questions to the following email: help@helpbuttons.org
+          Please direct your questions to the following email: helpbuttons@coletivos.org
           <h2>Privacy Policy</h2>
           <ol>
               <li>
@@ -99,11 +99,11 @@ export default function Faqs({
 
         <Accordion title="Security Policies">
           Your security is our top priority. At Helpbuttons, we implement stringent <span className="highlight">security measures</span> to protect the integrity of our software and the safety of our users. We continually update and review our systems to ensure they meet the highest standards of cybersecurity. However, we also believe that security is a shared responsibility. We encourage our users to practice safe online behaviors, like using strong passwords and protecting personal information.
-          Please direct your questions to the following email: help@helpbuttons.org
+          Please direct your questions to the following email: helpbuttons@coletivos.org
         </Accordion>
 
         <Accordion title="Contact">
-          Please direct your questions to the following email: help@helpbuttons.org
+          Please direct your questions to the following email: helpbuttons@coletivos.org
         </Accordion>
 
       </Popup>
