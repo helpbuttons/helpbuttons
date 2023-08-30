@@ -12,8 +12,21 @@ import t from 'i18n';
 import { Button } from 'shared/entities/button.entity';
 import { CreateNewPost } from 'state/Posts';
 import { readableDate } from 'shared/date.utils';
+import { useEffect, useState } from 'react';
 
 export default function ButtonNew() {
+  const defaultValues = {
+    image: null,
+    description: '',
+    latitude: defaultMarker.latitude,
+    longitude: defaultMarker.longitude,
+    type: '',
+    tags: [],
+    title: '',
+    radius: 1,
+    address: '',
+    when: { dates: [], type: null },
+  };
   const {
     register,
     handleSubmit,
@@ -31,18 +44,7 @@ export default function ButtonNew() {
     setValue,
     getValues,
   } = useForm({
-    defaultValues: {
-      image: null,
-      description: '',
-      latitude: defaultMarker.latitude,
-      longitude: defaultMarker.longitude,
-      type: '',
-      tags: [],
-      title: '',
-      radius: 1,
-      address: '',
-      when: { dates: [], type: null },
-    },
+    defaultValues
   });
 
   const selectedNetwork = useRef(
@@ -60,6 +62,7 @@ export default function ButtonNew() {
     );
   };
 
+  const [loaded, setLoaded] = useState(false);
   const jumpToExploreButton = (buttonData) => {
     router.push(`/Explore#?lat=${buttonData.latitude}&lng=${buttonData.longitude}`);
   }
@@ -94,6 +97,13 @@ export default function ButtonNew() {
     }
   };
 
+  useEffect(() => {
+    if(!loaded)
+    {
+      reset(defaultValues)
+      setLoaded(true)
+    }
+  }, [loaded])
   return (
     <>
       <ButtonForm

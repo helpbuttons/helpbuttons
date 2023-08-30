@@ -97,6 +97,10 @@ export class UserService {
     var userPattern = /@[\w]+/gi;
     let userNames = message.match(userPattern);
 
+    if(!userNames)
+    {
+      return;
+    }
     userNames = userNames.filter(
       (username) => username.substring(1) != author,
     );

@@ -142,7 +142,8 @@
     "created_date": "User since",
     "created": "",
     "newLoginTokenSent": "Login token sent",
-    "textReceiveNotifications": "Receive mail notifications"
+    "textReceiveNotifications": "Receive mail notifications",
+    "loginSucess": "Login successfuly"
   },
   "calendarOnce": {
     "pickday": "Pick a day",

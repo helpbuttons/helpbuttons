@@ -6,6 +6,7 @@ import router from 'next/router';
 import { useToggle } from 'shared/custom.hooks';
 import { useState } from 'react';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
+import { ActivityEventName } from 'shared/types/activity.list';
 
 export default function FeedProfile({ allActivities }) {
   const [activities, setActivities] = useState(allActivities);
@@ -26,9 +27,14 @@ export default function FeedProfile({ allActivities }) {
   ];
   const onChange = (value) => {
     setActivities(() => {
-      if (value != 'all') {
+      if (value == 'message') {
         return allActivities.filter(
-          (activity) => activity.eventName.indexOf(value) > -1,
+          (activity) => activity.eventName.indexOf(ActivityEventName.NewPostComment) > -1,
+        );
+      }
+      if (value == 'post') {
+        return allActivities.filter(
+          (activity) => !(activity.eventName.indexOf(ActivityEventName.NewPostComment) > -1),
         );
       }
       return allActivities;
