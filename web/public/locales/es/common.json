@@ -6,116 +6,203 @@
     "activity": "Atividad",
     "faqs": "Faqs",
     "login": "Login",
-    "home": ""
+    "home": "Inicio",
+    "donate": ""
   },
   "homeinfo": {
     "start": "Donde quieres empezar?",
     "searchlocation": "Buscar ubicacion",
     "loading": "not set",
-    "locationDetected": "",
-    "stats": "",
-    "users": "",
-    "actions": ""
+    "locationDetected": "¿Quieres consultar los botones de ayuda en tu zona?",
+    "stats": "Estadísticas de la Red",
+    "users": "{0} usuarios en esta Red",
+    "actions": "¿Qué puedes hacer?",
+    "profileSubtitle": "Comprueba tu perfil",
+    "createSubtitle": "Crea tu botón de ayuda y colabora",
+    "faqsSubtitle": "Lee más sobre esta app",
+    "exploreSubtitle": "Busca y encuentra los botones de ayuda en esta herramienta",
+    "administeredby": "Administrado por ",
+    "loginSubtitle": "¡Entra o crea tu cuenta!",
+    "buttons": "Hay {0} botones de ayuda en esta Red"
   },
   "feed": {
-    "write": "Escribir mensaje"
+    "write": "Escribir mensaje",
+    "update": "Actualización del Usuario"
   },
   "hostname": "nombre de host",
   "common": {
-    "save": "",
-    "publish": "",
-    "saveSuccess": "",
-    "choose": "",
-    "search": "",
-    "reset": "",
-    "invalidMimeType": "",
-    "editTitle": "",
-    "next": "",
+    "save": "Guardar",
+    "publish": "Publicar",
+    "saveSuccess": "{0} guardado",
+    "choose": "Elige {0}",
+    "search": "Buscar",
+    "reset": "Limpiar filtros",
+    "invalidMimeType": "{0} tiene un myme type inválido  ({1})",
+    "editTitle": "Editar {0}",
+    "next": "Siguiente",
     "reloadConfig": "",
-    "notfound": ""
+    "notfound": "No se encontraron {0}, lo siento. 🤔",
+    "add": "Añadir",
+    "done": "Hecho",
+    "remove": "Eliminar",
+    "click": "Haz click aquí",
+    "publishTitle": "Publicar {0}"
   },
   "configuration": {
-    "namePlaceHolder": "",
-    "privacySetPrivate": "",
-    "images": "",
-    "jumbo": "",
-    "locationExplain": "",
-    "tagsExplain": "",
-    "centerOfMap": "",
-    "description": "",
-    "title": ""
+    "namePlaceHolder": "Red de agricultores de Vilanova",
+    "privacySetPrivate": "Pulsa aquí para volver a red privada",
+    "images": "Imágenes de Red",
+    "jumbo": "Selecciona imagen de fondo de la Red",
+    "locationExplain": "El mapa se centrará siempre sobre el lugar y el radio de tu Red  cada vez que alguien entre en la herramienta",
+    "tagsExplain": "Las palabras clave de tu Red harán más fácil la búsqueda de temas y para saber de qué trata tu red.",
+    "centerOfMap": "Selecciona la ubicación base de tu Red",
+    "description": "Aquí puedes modificar la configuración de tu Red",
+    "title": "Configuración de administrador",
+    "privacySetPublic": "Pulsa aquí para volver a red pública",
+    "tagsPlaceHolder": "Comida, herramientas, juguetes, ropa...",
+    "tags": "Palabras clave de la Red",
+    "logo": "Seleccionar logo de la Red",
+    "descriptionPlaceHolder": "Bienvenido a la Red para compartir ...",
+    "selectMapStyle": "Elige el estilo del mapa",
+    "locationLabel": "Localización de Red",
+    "defineNetwork": "",
+    "chooseColors": "",
+    "pickMainColor": "",
+    "nomeclatureLabel": "",
+    "nomeclaturePlaceHolder": "",
+    "buttonTemplateExplain": "",
+    "moderateNetwork": "",
+    "blockedExplain": "",
+    "adminUsers": ""
   },
   "activities": {
-    "newbutton": "",
-    "newpost": "",
-    "noactivity": ""
+    "newbutton": "Creaste <a href='/ButtonFile/{0}'>{1}</a> en <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
+    "newpost": "Hay una nueva publicación del autor en el botón de ayuda  <a href='/ButtonFile/{1}'>{2}</a>",
+    "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
+    "newcomment": "Hay un nuevo comentario '{0}' publicado en el post '{1}' . Puedes verlo en el botón de ayuda llamado <a href='/ButtonFile/{2}'>{3}</a>"
   },
   "user": {
-    "email": "",
-    "username": "",
-    "password": "",
-    "passwordConfirmation": "",
+    "email": "Email",
+    "username": "Nombre de usuario",
+    "password": "Contraseña",
+    "passwordConfirmation": "Confirmar contraseña",
     "created": "",
-    "loginButton": "",
-    "loginClick": "",
-    "passwordMismatch": "",
-    "name": "",
-    "description": "",
-    "setNewPassword": "",
-    "newPassword": "",
-    "passwordPlaceHolder": "",
-    "logout": "",
-    "register": "",
+    "loginButton": "ENTRAR",
+    "loginClick": "Iniciar sesión con enlace al email",
+    "passwordMismatch": "Las contraseñas no coinciden",
+    "name": "Nombre de perfil",
+    "description": "Descripción",
+    "setNewPassword": "Crea una nueva contraseña",
+    "newPassword": "Escribe tu nueva contraseña",
+    "passwordPlaceHolder": "Escribe tu contraseña",
+    "logout": "Cerrar sesión",
+    "register": "REGISTRARSE",
     "newLoginTokenSent": "",
-    "sendLoginToken": "",
-    "loginLink": ""
+    "sendLoginToken": "Mandar enlace de Inicio de Sesión",
+    "loginLink": "Tengo cuenta",
+    "avatar": "Elige una imagen de perfil",
+    "newPasswordPlaceHolder": "Tu nueva contraseña",
+    "usernamePlaceHolder": "Nombre de usuario",
+    "editProfile": "Editar perfil",
+    "noAccount": "No tengo cuenta",
+    "namePlaceHolder": "Nombre",
+    "tags": "Intereses relacionados",
+    "passwordConfirmationPlaceHolder": "Escribe tu contraseña otra vez por favor",
+    "deactivate": "Desactivar cuenta",
+    "dontChangePassword": "No cambies la contraseña",
+    "created_date": "Usuario desde",
+    "loginSucess": "",
+    "emailPlaceHolder": "",
+    "pickLanguageLabel": "",
+    "textReceiveNotifications": ""
   },
   "configure": {
     "browsePins": "",
-    "browseList": ""
+    "browseList": "",
+    "chooseBrowseType": "",
+    "browseHoneyComb": ""
   },
   "explore": {
-    "emptyList": ""
+    "emptyList": "Por favor, cambia tu búsqueda, mueve el mapa o  toca para encontrar más botones",
+    "createEmpty": "Crear",
+    "noResults": "Lo siento, no hay resultados aquí"
   },
   "buttonFilters": {
-    "queryLabel": "",
-    "queryExplain": "",
-    "tagsExplain": "",
+    "queryLabel": "Qué buscas",
+    "queryExplain": "Escribe lo que quieras encontrar",
+    "tagsExplain": "Las palabras clave son los temas más importantes o más tratados en la Red",
     "where": "Donde?",
-    "distance": "",
-    "allButtonTypes": ""
+    "distance": "Distancia de búsqueda",
+    "allButtonTypes": "Todos los tipos",
+    "queryPlaceHolder": "Amigos, comida, ropa, herramientas...",
+    "whereExplain": "Busca el lugar al que quieres ir"
   },
   "button": {
-    "copy": "",
-    "delete": "",
-    "typeExplain": "",
-    "placeHolderTitle": "",
-    "descriptionLabel": "",
-    "tagsLabel": "",
-    "imagesLabel": "",
-    "whenLabel": "",
-    "changeDateLabel": "",
-    "changePlaceLabel": "",
-    "firstPost": "",
-    "errorCreated": ""
+    "copy": "Copiar enlace",
+    "delete": "Borrar",
+    "typeExplain": "Por favor elige qué tipo de botón de ayuda te gustaría crear",
+    "placeHolderTitle": "Escribe un nuevo título para tu botón de ayuda",
+    "descriptionLabel": "Descripción",
+    "tagsLabel": "Palabras clave de la Red",
+    "imagesLabel": "Subir imagen",
+    "whenLabel": "Cuándo",
+    "changeDateLabel": "Elige una fecha",
+    "changePlaceLabel": "Elige un lugar",
+    "firstPost": "¡Hola! Creé este botón de ayuda el {0}, deja un comentario si quieres",
+    "errorCreated": "",
+    "placeHolderDescription": "Escribe una descripción para tu botón de ayuda",
+    "typeLabel": "Tipo de botón de ayuda",
+    "descriptionExplain": "Descripción",
+    "edit": "Editar",
+    "share": "Compartir",
+    "titleExplain": "Pequeño título para saber sobre qué es tu botón de ayuda",
+    "titleLabel": "Título",
+    "whereLabel": "Dónde?",
+    "pickButtonTemplateColor": ""
   },
   "calendarOnce": {
-    "label": ""
+    "label": "Una vez",
+    "pickday": "Elige un día",
+    "picktime": "Elige una fecha"
   },
   "calendarAlways": {
-    "label": ""
+    "label": "Siempre"
   },
   "validation": {
-    "fieldRequired": ""
+    "fieldRequired": "se necesita {0}",
+    "tooShort": "{0} es muy corto"
   },
   "setup": {
-    "finish": "",
-    "welcomeMessage": "",
-    "hostname": "",
-    "postgresPassword": "",
-    "postgresHostName": "",
-    "smtpUrl": "",
+    "finish": "Finalizar configuración",
+    "welcomeMessage": "BIENVENIDO/A A TU INSTANCIA DE HELPBUTTONS",
+    "hostname": "Nombre del host",
+    "postgresPassword": "Contraseña de Postgresql",
+    "postgresHostName": "Servidor de Postgresql",
+    "smtpUrl": "URL de Smtp",
     "test": "",
-    "createAdminTitle": ""
+    "createAdminTitle": "Crear cuenta de administrador",
+    "postgresPort": "Puerto de Postgresql",
+    "postgresDb": "Nombre de la base de datos de Postgresql",
+    "postgresUser": "Usuario de Postgresql",
+    "configureInstanceDescription": "Asistente para configurar tu Red",
+    "configureInstanceTitle": "Configura los últimos detalles de tu Red"
+  },
+  "post": {
+    "placeholderWrite": "Escribe una nueva actualización en tu botón de ayuda",
+    "comment": "comentar",
+    "newComment": "Comentar",
+    "write": "Publica una Novedad",
+    "delete": "Borrar",
+    "NoComments": "No hay comentarios aún"
+  },
+  "comment": {
+    "placeholderWrite": "Escribe un mensaje en esta publicación",
+    "delete": "Borrar"
+  },
+  "picker": {
+    "headerText": "Elige una localización"
+  },
+  "pickerDate": {
+    "headerText": "Elige fecha y hora"
   }
 }
