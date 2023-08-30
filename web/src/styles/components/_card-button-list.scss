@@ -67,6 +67,7 @@ $card-button-list-border-height: $border-general-height;
 .card-button-list__content {
   width: 100%;
   .card-button__hashtags{
+    pointer-events: none;
     .hashtag{
       padding: 0.3rem 0.7rem;
     }

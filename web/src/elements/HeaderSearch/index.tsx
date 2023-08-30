@@ -66,7 +66,7 @@ function SearchText({ count, where }) {
 
   return (
     <div className="header-search__label">
-      {count} found {address(where)}
+      {count} helpbuttons found {address(where)}
     </div>
   );
 }

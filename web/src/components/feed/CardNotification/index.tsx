@@ -43,13 +43,14 @@ export default function CardNotification({ activity = {} }) {
       const post = JSON.parse(activity.data);
       return (
         <NotificationCard
-          title={'New user update'}
+          title={'New owner update'}
           image={post.button.image}
           date={post.created_at}
           id={post.button.id}
           message={t('activities.newpost', [
             post.message,
             post.button.title,
+            post.author.username,
           ])}
           read={activity.read}
         />
@@ -58,7 +59,9 @@ export default function CardNotification({ activity = {} }) {
       activity.eventName == ActivityEventName.NewPostComment
     ) {
       const comment = JSON.parse(activity.data);
+      console.log(comment)
       return (
+
         <NotificationCard
           title={'New notification'}
           image={comment.button.image}
@@ -67,6 +70,7 @@ export default function CardNotification({ activity = {} }) {
           message={t('activities.newcomment', [
             comment.message,
             comment.post.message,
+            comment.author.username,
           ])}
           read={activity.read}
         />
@@ -100,7 +104,7 @@ export function NotificationCard({ title, image, date, message, id, read }) {
         <div className="card-notification__avatar">
           <div className="avatar-medium">
             <ImageWrapper
-              imageType={ImageType.avatar}
+              imageType={ImageType.avatarMed}
               src={makeImageUrl(image)}
               alt="image"
             />

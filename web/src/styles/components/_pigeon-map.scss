@@ -79,8 +79,26 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
     display: flex;
     flex-direction: column;
     align-items: baseline;
+    line-height: $line-height-regular;
+
+
 
 }
+
+.pigeon-map__hex-wrap--selected::before {
+    content: "";
+    position: absolute;
+    top: 50%; /* Adjusted to start from the middle of the div */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the circle both horizontally and vertically */
+    // width: 100%;
+    // padding-top: 100%;
+    width: 300%;
+    padding-top: 300%; /* This creates a square that scales to cover the height */
+    background-color: $color-white;
+    border-radius: 50%; /* This makes the square a circle */
+    z-index: -1;
+  }
 
 .pigeon-map__hex-info--icon {
 

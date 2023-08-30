@@ -199,7 +199,7 @@ export function FeedElement({
             />
           )}
           {!loggedInUser && showComposePostReply?.post == post.id && (
-            <>Please <Link href="/Login">login</Link> or <Link href="/Signup">signup</Link> before comment</>
+            <div className='message message--others'>Please <Link href="/Login">login</Link> or <Link href="/Signup">signup</Link> before comment</div>
           )}
         </>
         <PostComments
@@ -276,6 +276,7 @@ export function Compose({
           />
         </div>
         <MessageNew
+          isComment={true}
           onCreate={(message) => {
             store.emit(
               new CreateNewPostComment(
@@ -314,6 +315,7 @@ export function Compose({
             />
         </div>
         <MessageNew
+          isComment={true}
           privateMessage={referer?.privateMessage}
           onCreate={(message) => {
             let privacy = CommentPrivacyOptions.PUBLIC;

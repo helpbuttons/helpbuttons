@@ -188,7 +188,9 @@ $card-notification-delete-size: 100px;
 
     display: inline-flex;
     flex: 0 0 50%;
-    padding: 10px 0px 0px 10px ;
+    padding: $padding-small 0 0 $padding-small ;
+    pointer-events: none;
+
 }
 
 .card-notification__date:before {

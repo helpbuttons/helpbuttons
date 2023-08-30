@@ -137,8 +137,14 @@ $avatar-margin: $padding-big;
 
 .card-profile__avatar-container-name {
   font-size: $font-size-title;
-  font-weight: bold;
+  font-weight: $font-weight-bold;
   color: $color-black;
+}
+
+.card-profile__username {
+  font-size: $font-size-medium;
+  font-weight: $font-weight-light;
+  color: $color-gray;
 }
 
 .grid-one__column-mid-element {

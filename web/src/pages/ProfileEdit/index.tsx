@@ -30,6 +30,7 @@ import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import t from 'i18n';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
+import Accordion from 'elements/Accordion';
 
 export default function ProfileEdit() {
   const {
@@ -110,8 +111,8 @@ export default function ProfileEdit() {
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="login"
             >
-              <div>{t('user.editProfile')} </div>
-              {loggedInUser.username}@{getHostname()}
+              <div className='form__label'> {loggedInUser.username}@{getHostname()} </div>
+              
                 <div className="form__inputs-wrapper">
                   <FieldText
                     name="name"
@@ -141,14 +142,13 @@ export default function ProfileEdit() {
                     setFocus={setFocus}
                     validationError={errors.description}
                     {...register('description', { required: true })}
-                  />                
+                  />     
                   <FieldCheckbox
                     name='receiveNotifications'
+                    checked={watch('receiveNotifications')}
                     text={t('user.textReceiveNotifications')}
                     {...register('receiveNotifications')}
                   />
-
-                  150x150px
                   <FieldImageUpload
                     name="avatar"
                     label={t('user.avatar')}
@@ -160,24 +160,15 @@ export default function ProfileEdit() {
                     setValue={setValue}
                     {...register('avatar', { required: true })}
                   />
-                </div>
                 {errorMsg && (
                   <div className="form__input-subtitle--error">
                     {errorMsg}
                   </div>
                 )}
 
-                <div
-                    className="btn accordion"
-                    onClick={() =>
-                      setSetNewPassword(!setNewPassword)
-                    }                    
-                  >
-                    {!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
-                    
-                </div>
-                  {setNewPassword && (
-                      <>
+                <Accordion 
+                  title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
+                >
                         <FieldPassword
                           name="password_current"
                           label={t('user.password')}
@@ -209,16 +200,17 @@ export default function ProfileEdit() {
                             minLength: 8,
                           })}
                         ></FieldPassword>
-                      </>
-                    )}
-                    <div className="publish__submit">
-                      <Btn
-                        btnType={BtnType.submit}
-                        contentAlignment={ContentAlignment.center}
-                        caption={t('common.publish')}
-                        isSubmitting={isSubmitting}
-                        submit={true}
-                      />
+
+                      </Accordion>
+                      <div className="publish__submit">
+                        <Btn
+                          btnType={BtnType.submit}
+                          contentAlignment={ContentAlignment.center}
+                          caption={t('common.publish')}
+                          isSubmitting={isSubmitting}
+                          submit={true}
+                        />
+                      </div>
                     </div>
             </Form>
           </Popup>

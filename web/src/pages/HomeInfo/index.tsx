@@ -12,6 +12,7 @@ import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import NavLink from 'elements/Navlink';
 import {
   IoAddOutline,
+  IoCashOutline,
   IoGlobeOutline,
   IoHelpOutline,
   IoLogInOutline,
@@ -228,6 +229,13 @@ export default function HomeInfo({
                       </NavLink>
                     </div>
                   )}
+                   <div className="card__section">
+                      <p>{t('homeinfo.donateSubtitle')}</p>
+                      <NavLink href="https://buy.stripe.com/dR68wx3CY17VdFKfZc">
+                        <IoCashOutline />
+                        <span>{t('menu.donate')}</span>
+                      </NavLink>
+                    </div>
                 </div>
               </div>
             </>

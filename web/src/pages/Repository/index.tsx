@@ -1,7 +1,7 @@
 //List of elements component that can be used anywhere in the app
 import { IoClose, IoEllipsisHorizontalSharp } from "react-icons/io5";
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
-import CheckBox from 'elements/Checkbox'
+import CheckBox from 'elements/MultiSelectOption'
 import { IoSearch } from "react-icons/io5";
 import BtnCircle from 'elements/BtnCircle'
 
@@ -286,7 +286,7 @@ function Repository() {
           <section className="repository__section">
 
           <div className="label">label checkbox</div>
-            <CheckBox icon="cross" text="Ahora CheckBox" inputId="ahora-checkbox" />
+            <MultiSelectOption icon="cross" text="Ahora CheckBox" inputId="ahora-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
@@ -303,7 +303,7 @@ function Repository() {
 
             <hr></hr>
 
-            <CheckBox icon="red" text="Necesito Ahora CheckBox" inputId="necesito-ahora-checkbox" />
+            <MultiSelectOption icon="red" text="Necesito Ahora CheckBox" inputId="necesito-ahora-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
@@ -318,7 +318,7 @@ function Repository() {
 
             <hr></hr>
 
-            <CheckBox icon="cross" text="Fecha/hora concreta CheckBox" inputId="fecha-hora-concreta-checkbox" />
+            <MultiSelectOption icon="cross" text="Fecha/hora concreta CheckBox" inputId="fecha-hora-concreta-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
@@ -335,7 +335,7 @@ function Repository() {
 
             <hr></hr>
 
-            <CheckBox icon="cross" text="Cerca de mí CheckBox" inputId="cerca-de-mi-checkbox" />
+            <MultiSelectOption icon="cross" text="Cerca de mí CheckBox" inputId="cerca-de-mi-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>

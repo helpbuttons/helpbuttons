@@ -7,7 +7,7 @@ import { IoPaperPlaneOutline } from 'react-icons/io5';
 import { uniqueArray } from 'shared/sys.helper';
 
 
-export default function MessageNew({ onCreate, mentions = [], privateMessage = false }) {
+export default function MessageNew({ onCreate, mentions = [], privateMessage = false , isComment = false}) {
   const {
     register,
     handleSubmit,
@@ -50,7 +50,7 @@ export default function MessageNew({ onCreate, mentions = [], privateMessage = f
             <div className="feeds__new-message-message">
               <FieldText
                 name="title"
-                placeholder={t('post.placeholderWrite')}
+                placeholder={isComment ? t('comment.placeholderWrite') : t('post.placeholderWrite')}
                 validationError={errors.title}
                 watch={watch}
                 setValue={setValue}

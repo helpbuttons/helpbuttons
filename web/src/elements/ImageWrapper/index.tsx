@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image'
 import { makeImageUrl } from 'shared/sys.helper';
+import { audit } from 'rxjs';
 
 export enum ImageType {
   avatar,
@@ -11,7 +12,9 @@ export enum ImageType {
   cardMap,
   cardList,
   buttonCard,
-  avatarBig
+  avatarBig,
+  avatarMed,
+  preview
 }
 
 export enum ContentAlignment {
@@ -45,30 +48,64 @@ export default function ImageWrapper({
 
   const className = classNames.join(' ');
 
-  if(imageType == ImageType.avatar) 
+  // if(imageType == ImageType.avatar) 
+  // {
+  //   return (
+  //     <Image
+  //     src={makeImageUrl(src, '/api')}
+  //     alt={alt}
+  //     width={30}
+  //     height={30}
+  //   />
+  //   )
+  // }
+  // if(imageType == ImageType.avatarBig) 
+  // {
+  //   return (
+  //     <Image
+  //     src={makeImageUrl(src, '/api')}
+  //     alt={alt}
+  //     width={68}
+  //     height={68}
+  //   />
+  //   )
+  // }
+  // if(imageType == ImageType.avatarMed) 
+  // {
+  //   return (
+  //     <Image
+  //     src={makeImageUrl(src, '/api')}
+  //     alt={alt}
+  //     width={50}
+  //     height={50}
+  //   />
+  //   )
+  // }
+  if(imageType == ImageType.preview) 
   {
     return (
       <Image
       src={makeImageUrl(src, '/api')}
       alt={alt}
-      width={30}
-      height={30}
+      width={90}
+      height={90}
     />
     )
   }
-  if(imageType == ImageType.avatarBig) 
-  {
-    return (
-      <Image
-      src={makeImageUrl(src, '/api')}
-      alt={alt}
-      width={68}
-      height={68}
-    />
-    )
-  }
+  // if(imageType == ImageType.buttonCard) 
+  // {
+  //   return (
+  //     <Image
+  //     src={makeImageUrl(src, '/api')}
+  //     alt={alt}
+  //     height={auto}
+  //     width={1000}
+  //   />
+  //   )
+  // }
   return (
     <Image
+      style={{objectFit: 'cover'}}
       src={makeImageUrl(src, '/api')}
       alt={alt}
       fill={true}
