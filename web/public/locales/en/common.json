@@ -24,7 +24,7 @@
     "users": "{0} users in this network",
     "administeredby": "Administered by ",
     "actions": "Actions",
-    "donateSubtitle" : "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:"
+    "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:"
   },
   "feed": {
     "write": "Write message",
@@ -107,7 +107,8 @@
     "delete": "Delete",
     "edit": "Edit",
     "created": "Your helpbutton has been created",
-    "errorCreated": ""
+    "errorCreated": "",
+    "pickButtonTemplateColor": ""
   },
   "user": {
     "email": "Email",
@@ -206,10 +207,17 @@
     "createButtonTypePlaceholder": "Write your helpbutton type name here",
     "createButtonTypeAction": "Create new type",
     "nameLabel": "Network name",
-    "descriptionLabel": "Network description"
+    "descriptionLabel": "Network description",
+    "nomeclatureLabel": "",
+    "nomeclaturePlaceHolder": "",
+    "moderateNetwork": "",
+    "blockedExplain": "",
+    "adminUsers": ""
   },
   "configure": {
     "browsePins": "",
-    "browseList": ""
+    "browseList": "",
+    "chooseBrowseType": "",
+    "browseHoneyComb": ""
   }
 }
