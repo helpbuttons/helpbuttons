@@ -27,11 +27,9 @@ export default function Activity() {
   return (
     <>
       <div className="body__content">
-        <div className="body__section">
           <LoadabledComponent loading={!activities}>
             <FeedProfile allActivities={activities} />
           </LoadabledComponent>
-        </div>
       </div>
     </>
   );

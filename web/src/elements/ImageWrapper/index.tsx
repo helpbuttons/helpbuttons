@@ -48,43 +48,47 @@ export default function ImageWrapper({
 
   const className = classNames.join(' ');
 
-  // if(imageType == ImageType.avatar) 
-  // {
-  //   return (
-  //     <Image
-  //     src={makeImageUrl(src, '/api')}
-  //     alt={alt}
-  //     width={30}
-  //     height={30}
-  //   />
-  //   )
-  // }
-  // if(imageType == ImageType.avatarBig) 
-  // {
-  //   return (
-  //     <Image
-  //     src={makeImageUrl(src, '/api')}
-  //     alt={alt}
-  //     width={68}
-  //     height={68}
-  //   />
-  //   )
-  // }
-  // if(imageType == ImageType.avatarMed) 
-  // {
-  //   return (
-  //     <Image
-  //     src={makeImageUrl(src, '/api')}
-  //     alt={alt}
-  //     width={50}
-  //     height={50}
-  //   />
-  //   )
-  // }
+  if(imageType == ImageType.avatar) 
+  {
+    return (
+      <Image
+      style={{objectFit: 'cover'}}
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      width={30}
+      height={30}
+    />
+    )
+  }
+  if(imageType == ImageType.avatarBig) 
+  {
+    return (
+      <Image
+      style={{objectFit: 'cover'}}
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      width={68}
+      height={68}
+    />
+    )
+  }
+  if(imageType == ImageType.avatarMed) 
+  {
+    return (
+      <Image
+      style={{objectFit: 'cover'}}
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      width={50}
+      height={50}
+    />
+    )
+  }
   if(imageType == ImageType.preview) 
   {
     return (
       <Image
+      style={{objectFit: 'cover'}}
       src={makeImageUrl(src, '/api')}
       alt={alt}
       width={90}
@@ -92,17 +96,18 @@ export default function ImageWrapper({
     />
     )
   }
-  // if(imageType == ImageType.buttonCard) 
-  // {
-  //   return (
-  //     <Image
-  //     src={makeImageUrl(src, '/api')}
-  //     alt={alt}
-  //     height={auto}
-  //     width={1000}
-  //   />
-  //   )
-  // }
+  if(imageType == ImageType.cardList) 
+  {
+    return (
+      <Image
+      style={{objectFit: 'cover', display:'flex'}}
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      height={200}
+      width={200}
+    />
+    )
+  }
   return (
     <Image
       style={{objectFit: 'cover'}}

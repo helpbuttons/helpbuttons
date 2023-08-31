@@ -102,9 +102,10 @@ export default function HomeInfo({
                     </div>
                   </div>
                 )}
+                {/* INFO CARD */}
                 <div className="card">
                   <div className="card__header">
-                    <div className="avatar-medium">
+                    <div className="avatar-big">
                       <NetworkLogo network={selectedNetwork} />
                     </div>
                     <h3 className="card__header-title network-title">
@@ -114,12 +115,21 @@ export default function HomeInfo({
                   <div className="info-overlay__description">
                     {selectedNetwork.description}
                   </div>
-                  <div className="info-overlay__hashtags">
-                  {selectedNetwork.tags.map((tag, idx) => {
-                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
-                    })}
-                  </div>
+                  <div className='info-overlay__description'>
+                      {t('homeinfo.administeredby')}
+                      <NavLink
+                        href={`/Profile/${selectedNetwork.administrator.username}`}
+                      >
+                        <span>
+                          {selectedNetwork.administrator.username}@
+                          {config.hostname}
+                        </span>
+                      </NavLink>
+                    </div>
+               
                 </div>
+
+                {/* STATS CARD */}
                 <div className="card">
                   <div className="card__header">
                     <h3 className="card__header-title">
@@ -130,6 +140,7 @@ export default function HomeInfo({
                   <div className="info-overlay__description">
                     {t('homeinfo.buttons', [
                       selectedNetwork.buttonCount,
+                      config.userCount.toString(),
                     ])}
                     <div className="info-overlay__hashtags">
                       {buttonTypes.map((buttonType, idx) => {
@@ -163,24 +174,27 @@ export default function HomeInfo({
                         );
                       })}
                     </div>
-                    <div>
-                      {t('homeinfo.users', [
-                        config.userCount.toString(),
-                      ])}
-                    </div>
-                    <div>
-                      {t('homeinfo.administeredby')}
-                      <NavLink
-                        href={`/Profile/${selectedNetwork.administrator.username}`}
-                      >
-                        <span>
-                          {selectedNetwork.administrator.username}@
-                          {config.hostname}
-                        </span>
-                      </NavLink>
-                    </div>
+                    
                   </div>
                 </div>
+
+                {/* HASHTAGS CARD */}
+                <div className="card">
+                  <div className="card__header">
+                    <h3 className="card__header-title">
+                      {t('homeinfo.popularHashtags')}
+                    </h3>
+                  </div>
+                  <hr></hr>
+                  <div className="info-overlay__hashtags">
+                  {selectedNetwork.tags.map((tag, idx) => {
+                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
+                    })}
+                  </div>
+                </div>
+
+
+                {/* ACTIONS CARD */}
                 <div className="card">
                   <div className="card__header">
                     <h3 className="card__header-title">

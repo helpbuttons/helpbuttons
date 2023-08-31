@@ -34,7 +34,6 @@ export default function Profile() {
   return (
     <>
       <div className="body__content">
-        <div className="body__section">
           <div className="card-profile__container">
             <LoadabledComponent loading={!loggedInUser}>
               <CardProfile user={loggedInUser} />
@@ -84,7 +83,6 @@ export default function Profile() {
             )}
             </LoadabledComponent>
           </div>
-        </div>
       </div>
     </>
   );
