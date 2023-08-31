@@ -42,6 +42,13 @@ $avatar-medium-max-width: 50px;
 
 }
 
+.avatar-medium--home {
+
+  @extend .avatar-medium;
+  outline: 10px solid $color-black;
+
+}
+
 .avatar-small {
 
   @extend .avatar;

@@ -117,6 +117,9 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
           line-height: $font-size-huge;
           word-wrap: break-word;
           display: inline-block;
+          border-radius: $border-radius-basic;
+          background-color: $color-black;
+          padding: $padding-big;
           max-width: 70%;
 
           ::first-letter {
