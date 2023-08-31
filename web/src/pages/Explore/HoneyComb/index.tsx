@@ -68,6 +68,9 @@ function HoneyComb({ router }) {
 
   const height = showLeftColumn ? 0 : 400;
 
+  useEffect(() => {
+console.log(exploreSettings)
+  }, [exploreSettings])
   useExploreSettings({
     exploreSettings,
     router,
@@ -283,6 +286,7 @@ function useHexagonMap({
   };
 
   useEffect(() => {
+    seth3TypeDensityHexes(() => []);
     if (debounceHexagonsToFetch.hexagons.length > 0) {
       const hexesToFetch = calculateNonCachedHexagons(
         debounceHexagonsToFetch,
@@ -317,7 +321,7 @@ function useHexagonMap({
   function updateDensityMap() {
     store.emit(new UpdateExploreUpdating());
     setIsRedrawingMap(() => true);
-    seth3TypeDensityHexes(() => []);
+    
     const boundsButtons = cachedH3Hexes.current.filter(
       (cachedHex) => {
         return debounceHexagonsToFetch.hexagons.find(
@@ -452,20 +456,12 @@ function useHexagonMap({
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     let newSettings = {}
-    if(exploreSettings.prevZoom != zoom)
-    {
       newSettings = {
         zoom: zoom,
-          bounds: bounds,
-          loading: true,
-      }
-    }else{
-      newSettings = {
         center: center,
           bounds: bounds,
           loading: true,
       }
-    }
       store.emit(
         new UpdateExploreSettings(newSettings),
       );    

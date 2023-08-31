@@ -24,6 +24,7 @@ import {
   LocalStorageVars,
   localStorageService,
 } from 'services/LocalStorage';
+import { roundCoords } from 'shared/honeycomb.utils';
 
 export interface ExploreState {
   draftButton: any;
@@ -334,6 +335,8 @@ export class UpdateExploreSettings implements UpdateEvent {
         ...this.newExploreSettings,
         loading: false,
       };
+      
+      newExploreSettings.center = roundCoords(newExploreSettings.center)
       newState.explore.settings = newExploreSettings;
       localStorageService.save(
         LocalStorageVars.EXPLORE_SETTINGS,

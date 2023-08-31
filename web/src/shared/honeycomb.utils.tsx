@@ -172,13 +172,14 @@ export function convertH3DensityToFeatures(hexagones) {
     const geojsonHex = h3SetToFeature([hex.hexagon]);
     return {
       ...geojsonHex,
-      properties: {
-        ...geojsonHex.properties,
+      properties: 
+      {
         hex: hex.hexagon,
         center: hex.center,
         count: hex.count,
         groupByType: hex.groupByType,
         buttons: hex.buttons,
+        resolution: getResolution(hex.hexagon)
       },
     };
   });
@@ -294,6 +295,7 @@ export function calculateDensityMap(
       count: hex.buttons.length,
       center: cellToLatLng(hex.hexagon),
       buttons: hex.buttons,
+      resolution: getResolution(hex.hexagon)
     };
   });
 

@@ -49,7 +49,7 @@ export default function HexagonExploreMap({
       store.emit(new SetExploreSettingsBoundsLoaded())
       if(boundsHexes.length > 1000)
       {
-        console.error('too many hexes.. canceling..')
+        console.error(`too many hexes.. canceling.. ${JSON.stringify(exploreSettings)}`)
         return;
       }
       setHexagonsToFetch({
