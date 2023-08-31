@@ -1,0 +1,234 @@
+{
+    "users": [
+        {
+            "name": "Mary",
+            "locale": "en",
+            "email": "mary@example.com",
+            "description": "I am a passionate individual who values cooperation...",
+            "receiveNotifications": "true",
+            "avatar": "profilepicf_7.jpg",
+            "password": "randomString",
+            "username": "mary0"
+        },
+        {
+            "name": "Robert",
+            "locale": "en",
+            "email": "robert@example.com",
+            "description": "I am a passionate individual who values jobs...",
+            "receiveNotifications": "true",
+            "avatar": "profilepic_4.jpg",
+            "password": "randomString",
+            "username": "robert1"
+        },
+        {
+            "name": "Susan",
+            "locale": "en",
+            "email": "susan@example.com",
+            "description": "I am a passionate individual who values cooperation...",
+            "receiveNotifications": "false",
+            "avatar": "profilepicf_11.jpg",
+            "password": "randomString",
+            "username": "susan2"
+        },
+        {
+            "name": "Michael",
+            "locale": "en",
+            "email": "michael@example.com",
+            "description": "I am a passionate individual who values food...",
+            "receiveNotifications": "true",
+            "avatar": "profilepic_9.jpg",
+            "password": "randomString",
+            "username": "michael3"
+        },
+        {
+            "name": "Elizabeth",
+            "locale": "en",
+            "email": "elizabeth@example.com",
+            "description": "I am a passionate individual who values nature...",
+            "receiveNotifications": "false",
+            "avatar": "profilepicf_6.jpg",
+            "password": "randomString",
+            "username": "elizabeth4"
+        },
+        {
+            "name": "David",
+            "locale": "en",
+            "email": "david@example.com",
+            "description": "I am a passionate individual who values helping others...",
+            "receiveNotifications": "true",
+            "avatar": "profilepic_1.jpg",
+            "password": "randomString",
+            "username": "david5"
+        },
+        {
+            "name": "Jennifer",
+            "locale": "en",
+            "email": "jennifer@example.com",
+            "description": "I am a passionate individual who values food...",
+            "receiveNotifications": "false",
+            "avatar": "profilepicf_3.jpg",
+            "password": "randomString",
+            "username": "jennifer6"
+        },
+        {
+            "name": "William",
+            "locale": "en",
+            "email": "william@example.com",
+            "description": "I am a passionate individual who values community involvement...",
+            "receiveNotifications": "true",
+            "avatar": "profilepic_12.jpg",
+            "password": "randomString",
+            "username": "william7"
+        },
+        {
+            "name": "Linda",
+            "locale": "en",
+            "email": "linda@example.com",
+            "description": "I am a passionate individual who values jobs...",
+            "receiveNotifications": "false",
+            "avatar": "profilepicf_9.jpg",
+            "password": "randomString",
+            "username": "linda8"
+        },
+        {
+            "name": "Patricia",
+            "locale": "en",
+            "email": "patricia@example.com",
+            "description": "I am a passionate individual who values cooperation...",
+            "receiveNotifications": "true",
+            "avatar": "profilepicf_5.jpg",
+            "password": "randomString",
+            "username": "patricia9"
+        },
+        {
+            "name": "James",
+            "locale": "en",
+            "email": "james@example.com",
+            "description": "I am a passionate individual who values community involvement...",
+            "receiveNotifications": "false",
+            "avatar": "profilepic_8.jpg",
+            "password": "randomString",
+            "username": "james10"
+        },
+        {
+            "name": "John",
+            "locale": "en",
+            "email": "john@example.com",
+            "description": "I am a passionate individual who values assisting elders...",
+            "receiveNotifications": "true",
+            "avatar": "profilepic_6.jpg",
+            "password": "randomString",
+            "username": "john11"
+        },
+        {
+            "name": "Mary",
+            "locale": "en",
+            "email": "mary13@example.com",
+            "description": "I am a passionate individual who values cooperation...",
+            "receiveNotifications": "true",
+            "avatar": "profilepicf_10.jpg",
+            "password": "randomString",
+            "username": "mary13"
+        },
+        {
+            "name": "David",
+            "locale": "en",
+            "email": "david14@example.com",
+            "description": "I am a passionate individual who values helping others...",
+            "receiveNotifications": "false",
+            "avatar": "profilepic_7.jpg",
+            "password": "randomString",
+            "username": "david14"
+        },
+        {
+            "name": "Susan",
+            "locale": "en",
+            "email": "susan15@example.com",
+            "description": "I am a passionate individual who values jobs...",
+            "receiveNotifications": "true",
+            "avatar": "profilepic_11.jpg",
+            "password": "randomString",
+            "username": "susan15"
+        },
+        {
+            "name": "James",
+            "locale": "en",
+            "email": "james16@example.com",
+            "description": "I am a passionate individual who values helping others...",
+            "receiveNotifications": "false",
+            "avatar": "profilepic_5.jpg",
+            "password": "randomString",
+            "username": "james16"
+        },
+        {
+            "name": "Patricia",
+            "locale": "en",
+            "email": "patricia17@example.com",
+            "description": "I am a passionate individual who values cooperation...",
+            "receiveNotifications": "true",
+            "avatar": "profilepicf_14.jpg",
+            "password": "randomString",
+            "username": "patricia17"
+        },
+        {
+            "name": "Elizabeth",
+            "locale": "en",
+            "email": "elizabeth18@example.com",
+            "description": "I am a passionate individual who values community involvement...",
+            "receiveNotifications": "false",
+            "avatar": "profilepicf_2.jpg",
+            "password": "randomString",
+            "username": "elizabeth18"
+        },
+        {
+            "name": "John",
+            "locale": "en",
+            "email": "john19@example.com",
+            "description": "I am a passionate individual who values cooperation...",
+            "receiveNotifications": "true",
+            "avatar": "profilepic_8.jpg",
+            "password": "randomString",
+            "username": "john19"
+        },
+        {
+            "name": "Jennifer",
+            "locale": "en",
+            "email": "jennifer20@example.com",
+            "description": "I am a passionate individual who values cooperation...",
+            "receiveNotifications": "false",
+            "avatar": "profilepicf_8.jpg",
+            "password": "randomString",
+            "username": "jennifer20"
+        },
+        {
+            "name": "William",
+            "locale": "en",
+            "email": "william21@example.com",
+            "description": "I am a passionate individual who values helping others...",
+            "receiveNotifications": "true",
+            "avatar": "profilepic_13.jpg",
+            "password": "randomString",
+            "username": "william21"
+        },
+        {
+            "name": "Linda",
+            "locale": "en",
+            "email": "linda22@example.com",
+            "description": "I am a passionate individual who values cooperation...",
+            "receiveNotifications": "false",
+            "avatar": "profilepicf_15.jpg",
+            "password": "randomString",
+            "username": "linda22"
+        },
+        {
+            "name": "Robert",
+            "locale": "en",
+            "email": "robert23@example.com",
+            "description": "I am a passionate individual who values community involvement...",
+            "receiveNotifications": "true",
+            "avatar": "profilepic_10.jpg",
+            "password": "randomString",
+            "username": "robert23"
+        }
+    ]
+}

@@ -1,0 +1,433 @@
+{
+    "buttons": [
+        {
+            "type": "event",
+            "title": "Nature Photography Workshop: Capture Beauty",
+            "tags": [
+                "photography",
+                "workshop",
+                "nature"
+            ],
+            "image": "buttonpic_1.jpg",
+            "email": "linda@example.com",
+            "place": {
+                "latitude": 37.351882,
+                "longitude": -5.923038,
+                "address": "Calle de la Fotografía, 6, 41004 Sevilla, Spain"
+            },
+            "description": "Embark on a photographic journey to capture the beauty of nature in our workshop. As a photography enthusiast who values cooperation and the wonders of the natural world, I'm excited to guide you in capturing breathtaking landscapes and intricate details."
+        },
+        {
+            "type": "offer",
+            "title": "Homemade Sourdough Bread: Taste the Tradition",
+            "tags": [
+                "food",
+                "bread",
+                "homemade"
+            ],
+            "image": "buttonpic_2.jpg",
+            "email": "patricia@example.com",
+            "place": {
+                "latitude": 37.633561,
+                "longitude": -6.139380,
+                "address": "Calle del Panadero, 5, 41008 Sevilla, Spain"
+            },
+            "description": "Savor the simple pleasure of homemade sourdough bread, baked with love and tradition. As a bread enthusiast who values cooperation and the art of baking, I invite you to experience the comfort and flavor of time-honored recipes."
+        },
+        {
+            "type": "need",
+            "title": "Support for Local Theater: Cultivating Arts",
+            "tags": [
+                "arts",
+                "theater",
+                "community"
+            ],
+            "image": "buttonpic_4.jpg",
+            "email": "james@example.com",
+            "place": {
+                "latitude": 38.875619,
+                "longitude": -7.876334,
+                "address": "Rua dos Teatros, 12, 7800-901 Beja, Portugal"
+            },
+            "description": "Be a patron of the arts by supporting our local theater productions. Your contributions nurture creativity, storytelling, and cultural enrichment. Join our community of supporters who value cooperation and believe in the transformative power of theater."
+        },
+        {
+            "type": "offer",
+            "title": "Handwoven Textiles: Crafted Comfort",
+            "tags": [
+                "crafts",
+                "textiles",
+                "artistry"
+            ],
+            "image": "buttonpic_6.jpg",
+            "email": "john@example.com",
+            "place": {
+                "latitude": 38.693227,
+                "longitude": -5.687107,
+                "address": "Calle de los Textiles, 8, 21006 Huelva, Spain"
+            },
+            "description": "Wrap yourself in the elegance of handwoven textiles that embody artisanal craftsmanship. As a textiles enthusiast who values cooperation and the tactile beauty of fabrics, I'm thrilled to offer you pieces that bring comfort and artistry to your space."
+        },
+        {
+            "type": "business",
+            "title": "Community Fitness Classes: Health in Harmony",
+            "tags": [
+                "fitness",
+                "health",
+                "community"
+            ],
+            "image": "buttonpic_7.jpg",
+            "email": "mary@example.com",
+            "place": {
+                "latitude": 36.836740,
+                "longitude": -6.133109,
+                "address": "Calle del Bienestar, 14, 11005 Cádiz, Spain"
+            },
+            "description": "Embark on a journey of well-being with our community fitness classes that promote health and unity. As a fitness advocate who values cooperation and holistic wellness, I invite you to join a supportive community that embraces movement and vitality."
+        },
+        {
+            "type": "need",
+            "title": "Organic Farming Workshop: Cultivating Green",
+            "tags": [
+                "agriculture",
+                "workshop",
+                "sustainability"
+            ],
+            "image": "buttonpic_5.jpg",
+            "email": "robert@example.com",
+            "place": {
+                "latitude": 37.235432,
+                "longitude": -8.473837,
+                "address": "Calle de la Agricultura, 18, 8100-278 Loulé, Portugal"
+            },
+            "description": "Dive into the world of organic farming in our workshop. As an agriculture enthusiast who values cooperation and sustainable practices, I invite you to learn the art of cultivating greens and fostering a connection with the land."
+        },
+        {
+            "type": "offer",
+            "title": "Artisan Pottery: Crafted Elegance",
+            "tags": [
+                "crafts",
+                "pottery",
+                "artistry"
+            ],
+            "image": "buttonpic_12.jpg",
+            "email": "susan@example.com",
+            "place": {
+                "latitude": 36.521768,
+                "longitude": -6.288696,
+                "address": "Calle de la Cerámica, 5, 11402 Jerez de la Frontera, Spain"
+            },
+            "description": "Adorn your living space with the elegance of artisan pottery. As a pottery enthusiast who values cooperation and creativity, I'm excited to offer you handcrafted pieces that bring timeless beauty and artistic expression into your home."
+        },
+        {
+            "type": "need",
+            "title": "Community Book Swap: Literary Exchange",
+            "tags": [
+                "books",
+                "community",
+                "exchange"
+            ],
+            "image": "buttonpic_5.jpg",
+            "email": "jennifer@example.com",
+            "place": {
+                "latitude": 39.199720,
+                "longitude": -9.151084,
+                "address": "Rua dos Livros, 10, 2500-001 Caldas da Rainha, Portugal"
+            },
+            "description": "Join our community book swap and embark on a literary exchange. As a book lover who values cooperation and knowledge sharing, I invite you to discover new stories, broaden your horizons, and connect through the magic of words."
+        },
+        {
+            "type": "selling",
+            "title": "Vintage Vinyl Records: Musical Nostalgia",
+            "tags": [
+                "music",
+                "records",
+                "nostalgia"
+            ],
+            "image": "buttonpic_11.jpg",
+            "email": "william@example.com",
+            "place": {
+                "latitude": 38.071104,
+                "longitude": -7.512392,
+                "address": "Avenida da Música, 15, 7800-601 Beja, Portugal"
+            },
+            "description": "Experience the nostalgia of vintage music with our collection of vinyl records. As a music enthusiast who values cooperation and timeless melodies, I offer you a treasure trove of musical moments that resonate across the ages."
+        },
+        {
+            "type": "event",
+            "title": "Community Art Fair: Creativity Unleashed",
+            "tags": [
+                "art",
+                "fair",
+                "community"
+            ],
+            "image": "buttonpic_10.jpg",
+            "email": "linda@example.com",
+            "place": {
+                "latitude": 37.087021,
+                "longitude": -8.153844,
+                "address": "Praça das Artes, 8, 8600-123 Lagos, Portugal"
+            },
+            "description": "Immerse yourself in a celebration of creativity at our community art fair. As an art enthusiast who values cooperation and diverse expression, I invite you to experience a vibrant showcase of artworks that reflect the essence of our community."
+        },
+        {
+            "type": "offer",
+            "title": "Gourmet Cooking Classes: Culinary Adventures",
+            "tags": [
+                "cooking",
+                "classes",
+                "gourmet"
+            ],
+            "image": "buttonpic_9.jpg",
+            "email": "mary@example.com",
+            "place": {
+                "latitude": 36.437623,
+                "longitude": -6.163464,
+                "address": "Calle de la Cocina, 25, 11500 El Puerto de Santa María, Spain"
+            },
+            "description": "Embark on culinary adventures with our gourmet cooking classes. As a cooking enthusiast who values cooperation and culinary excellence, I'm excited to guide you through creating delectable dishes that awaken your taste buds."
+        },
+        {
+            "type": "need",
+            "title": "Community Gardening: Blooming Together",
+            "tags": [
+                "gardening",
+                "community",
+                "cooperation"
+            ],
+            "image": "buttonpic_8.jpg",
+            "email": "james@example.com",
+            "place": {
+                "latitude": 38.598490,
+                "longitude": -9.047868,
+                "address": "Avenida das Flores, 12, 2735-107 Cacém, Portugal"
+            },
+            "description": "Join our community gardening project and contribute to a blooming landscape. As a gardening enthusiast who values cooperation and nurturing environments, I invite you to cultivate a sense of unity and beauty through tending to the earth."
+        },
+        {
+            "type": "selling",
+            "title": "Vintage Fashion Collection: Timeless Glamour",
+            "tags": [
+                "fashion",
+                "vintage",
+                "collection"
+            ],
+            "image": "buttonpic_7.jpg",
+            "email": "john@example.com",
+            "place": {
+                "latitude": 37.378902,
+                "longitude": -8.533142,
+                "address": "Rua da Moda, 18, 8700-002 Olhão, Portugal"
+            },
+            "description": "Elevate your style with our curated vintage fashion collection. As a fashion enthusiast who values cooperation and timeless elegance, I offer you a selection of garments that tell the stories of bygone eras and celebrate individuality."
+        },
+        {
+            "type": "business",
+            "title": "Local Artisan Market: Creative Treasures",
+            "tags": [
+                "crafts",
+                "market",
+                "artisan"
+            ],
+            "image": "buttonpic_6.jpg",
+            "email": "patricia@example.com",
+            "place": {
+                "latitude": 38.911681,
+                "longitude": -6.335918,
+                "address": "Praça dos Artesãos, 5, 7300-901 Portalegre, Portugal"
+            },
+            "description": "Explore a world of creative treasures at our local artisan market. As an advocate for artisan craftsmanship who values cooperation and supporting local talent, I invite you to discover one-of-a-kind creations that enrich your life."
+        },
+        {
+            "type": "event",
+            "title": "Outdoor Painting Workshop: Colors of Nature",
+            "tags": [
+                "art",
+                "workshop",
+                "outdoor"
+            ],
+            "image": "buttonpic_5.jpg",
+            "email": "robert@example.com",
+            "place": {
+                "latitude": 37.643267,
+                "longitude": -9.144373,
+                "address": "Travessa das Cores, 9, 7500-007 Santiago do Cacém, Portugal"
+            },
+            "description": "Unleash your inner artist in our outdoor painting workshop. As an art enthusiast who values cooperation and the beauty of nature, I'm excited to guide you in capturing the vibrant colors and serene landscapes that surround us."
+        },
+        {
+            "type": "offer",
+            "title": "Homemade Herbal Teas: Nature's Brews",
+            "tags": [
+                "tea",
+                "herbs",
+                "homemade",
+                "wellness"
+            ],
+            "image": "buttonpic_10.jpg",
+            "email": "susan@example.com",
+            "place": {
+                "latitude": 37.802418,
+                "longitude": -6.869042,
+                "address": "Calle de las Infusiones, 7, 41004 Sevilla, Spain"
+            },
+            "description": "Indulge in the soothing world of homemade herbal teas. As a wellness advocate who values cooperation and the healing power of nature, I offer you a collection of handcrafted blends that bring comfort and vitality to your daily routine."
+        },
+        {
+            "type": "need",
+            "title": "Volunteers for Beach Cleanup: Ocean Guardians",
+            "tags": [
+                "environment",
+                "volunteers",
+                "community"
+            ],
+            "image": "buttonpic_11.jpg",
+            "email": "william@example.com",
+            "place": {
+                "latitude": 36.594276,
+                "longitude": -6.241481,
+                "address": "Playa de la Limpieza, S/N, 11159 El Puerto de Santa María, Spain"
+            },
+            "description": "Join our community of ocean guardians in a beach cleanup initiative. As an advocate for environmental preservation who values cooperation and protecting our oceans, I invite you to contribute to the beauty and health of our coastal ecosystems."
+        },
+        {
+            "type": "offer",
+            "title": "Artistic Photography Prints: Captured Moments",
+            "tags": [
+                "photography",
+                "prints",
+                "artistry"
+            ],
+            "image": "buttonpic_9.jpg",
+            "email": "linda@example.com",
+            "place": {
+                "latitude": 38.993540,
+                "longitude": -5.151729,
+                "address": "Calle de la Fotografía, 22, 06002 Badajoz, Spain"
+            },
+            "description": "Elevate your space with the magic of artistic photography prints. As a photography enthusiast who values cooperation and visual storytelling, I offer you prints that capture moments of beauty, emotion, and contemplation."
+        },
+        {
+            "type": "need",
+            "title": "Support for Elderly Care Center: Compassionate Hearts",
+            "tags": [
+                "elderly",
+                "care",
+                "community",
+                "volunteers"
+            ],
+            "image": "buttonpic_8.jpg",
+            "email": "james@example.com",
+            "place": {
+                "latitude": 37.410934,
+                "longitude": -8.794105,
+                "address": "Rua dos Cuidados, 14, 8500-001 Portimão, Portugal"
+            },
+            "description": "Make a meaningful difference in the lives of our elderly community members. As a compassionate advocate who values cooperation and providing care, I invite you to join our team of volunteers and create moments of joy and companionship."
+        },
+        {
+            "type": "offer",
+            "title": "Sustainable Fashion Workshop: Conscious Style",
+            "tags": [
+                "fashion",
+                "workshop",
+                "sustainability"
+            ],
+            "image": "buttonpic_7.jpg",
+            "email": "john@example.com",
+            "place": {
+                "latitude": 37.220682,
+                "longitude": -8.347540,
+                "address": "Avenida da Moda Sustentável, 3, 8100-681 Loulé, Portugal"
+            },
+            "description": "Empower your style journey with our sustainable fashion workshop. As a fashion enthusiast who values cooperation and conscious choices, I'm excited to guide you in curating a wardrobe that aligns with your values and reflects your individuality."
+        },
+        {
+            "type": "need",
+            "title": "Community Garden Tools: Green Thumb Support",
+            "tags": [
+                "gardening",
+                "tools",
+                "community"
+            ],
+            "image": "buttonpic_6.jpg",
+            "email": "patricia@example.com",
+            "place": {
+                "latitude": 38.576342,
+                "longitude": -9.030024,
+                "address": "Rua das Ferramentas de Jardim, 8, 2780-294 Oeiras, Portugal"
+            },
+            "description": "Equip our community gardeners with the tools they need to thrive. As a gardening enthusiast who values cooperation and cultivating green spaces, I invite you to contribute to the success of our communal garden through the provision of essential tools."
+        },
+        {
+            "type": "offer",
+            "title": "Homemade Natural Soaps: Nurturing Cleanse",
+            "tags": [
+                "self-care",
+                "soaps",
+                "homemade",
+                "wellness"
+            ],
+            "image": "buttonpic_5.jpg",
+            "email": "robert@example.com",
+            "place": {
+                "latitude": 37.961632,
+                "longitude": -5.579000,
+                "address": "Calle del Cuidado Personal, 12, 14001 Córdoba, Spain"
+            },
+            "description": "Elevate your self-care routine with the purity of homemade natural soaps. As a wellness advocate who values cooperation and holistic cleansing, I offer you a range of nourishing soaps that embody the essence of nature's ingredients."
+        },
+        {
+            "type": "need",
+            "title": "Tutoring for Student Support: Educational Empowerment",
+            "tags": [
+                "education",
+                "tutoring",
+                "community"
+            ],
+            "image": "buttonpic_4.jpg",
+            "email": "susan@example.com",
+            "place": {
+                "latitude": 38.689930,
+                "longitude": -7.418355,
+                "address": "Avenida da Educação, 5, 7800-002 Beja, Portugal"
+            },
+            "description": "Empower students through educational support and tutoring. As an advocate for accessible learning who values cooperation and academic success, I invite you to make a positive impact by helping students reach their full potential."
+        },
+        {
+            "type": "offer",
+            "title": "Handmade Ceramic Tableware: Functional Artistry",
+            "tags": [
+                "ceramics",
+                "tableware",
+                "artistry"
+            ],
+            "image": "buttonpic_3.jpg",
+            "email": "mary@example.com",
+            "place": {
+                "latitude": 37.293181,
+                "longitude": -6.144620,
+                "address": "Calle de la Cerámica, 10, 21400 Ayamonte, Spain"
+            },
+            "description": "Elevate your dining experience with the elegance of handmade ceramic tableware. As a ceramics enthusiast who values cooperation and functional artistry, I offer you pieces that bring beauty, craftsmanship, and joy to your everyday moments."
+        },
+        {
+            "type": "need",
+            "title": "Environmental Documentary Screening: Awareness Night",
+            "tags": [
+                "environment",
+                "documentary",
+                "community",
+                "awareness"
+            ],
+            "image": "buttonpic_2.jpg",
+            "email": "david@example.com",
+            "place": {
+                "latitude": 36.771442,
+                "longitude": -7.983123,
+                "address": "Rua dos Documentários, 9, 8900-000 Vila Real de Santo António, Portugal"
+            },
+            "description": "Join us for an eye-opening evening of environmental documentaries. As an advocate for ecological awareness who values cooperation and knowledge sharing, I invite you to deepen your understanding of pressing environmental issues."
+        }
+    ]
+}
