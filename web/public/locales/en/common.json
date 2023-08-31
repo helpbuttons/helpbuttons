@@ -16,14 +16,15 @@
     "exploreSubtitle": "See & Search the helpbuttons on this map",
     "createSubtitle": "Create your helpbuttons and collaborate",
     "faqsSubtitle": "Read more about this app",
+    "popularHashtags":"What are they about?",
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
     "locationDetected": "Do you want to navigate to check helpbuttons in your region?",
-    "stats": "Instance stats",
-    "buttons": "There are {0} helpbuttons in this network",
+    "stats": "What's in this Network?",
+    "buttons": "There are {1} users and {0} helpbuttons in this network, divided by the following types:",
     "users": "{0} users in this network",
     "administeredby": "Administered by ",
-    "actions": "Actions",
+    "actions": "What can I do?",
     "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:"
   },
   "feed": {

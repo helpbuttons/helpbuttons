@@ -27,19 +27,18 @@ export default function ButtonFile({
     <>
       <SEO {...metadata} />
       {currentButton && 
-      <div className="body__content">
-        <div className="body__section">
-          
-          {buttonTypes?.length > 0 && (
-            <CardButton
-              button={currentButton}
-              buttonTypes={buttonTypes}
-            />
-          )}
+        <div className="body__content">
+            <>
+            {buttonTypes?.length > 0 && (
+              <CardButton
+                button={currentButton}
+                buttonTypes={buttonTypes}
+              />
+            )}
 
-          <Feed button={currentButton} />
+            <Feed button={currentButton} />
+            </>
         </div>
-      </div>
       }
     </>
   );

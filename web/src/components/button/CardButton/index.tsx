@@ -34,7 +34,6 @@ export default function CardButtonFile({ button, buttonTypes }) {
     <>
       {button && (
         <>
-          <div>
             <div
               className="card-button card-button__file"
               style={buttonColorStyle(buttonType.cssColor)}
@@ -46,7 +45,6 @@ export default function CardButtonFile({ button, buttonTypes }) {
             </div>
             <CardButtonImages button={button} />
             <CardButtonOptions />
-          </div>
         </>
       )}
     </>
