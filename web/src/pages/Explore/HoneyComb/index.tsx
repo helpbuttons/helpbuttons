@@ -112,6 +112,7 @@ function HoneyComb({ router }) {
         }
       >
         <NavHeader
+          hexagonClicked={hexagonClicked}
           toggleShowFiltersForm={toggleShowFiltersForm}
           totalNetworkButtonsCount={selectedNetwork.buttonCount}
         />

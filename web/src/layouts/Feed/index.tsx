@@ -186,6 +186,24 @@ export function FeedElement({
                   onClick={() => deletePost(post.id)}
                 />
               )}
+              {!loggedInUser && 
+                <Btn
+                submit={false}
+                btnType={BtnType.iconActions}
+                iconLink={<IoArrowUndoOutline />}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.right}
+                onClick={() =>
+                  setShowComposePostReply(() => {
+                    return {
+                      post: post.id,
+                      privateMessage: false,
+                      mentions: [post.author.username],
+                    };
+                  })
+                }
+              />
+              }
           </div>
           {loggedInUser && showComposePostReply?.post == post.id && (
             <Compose

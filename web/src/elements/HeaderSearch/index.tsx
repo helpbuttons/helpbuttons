@@ -7,7 +7,7 @@ import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';
 
 ///search button in explore and home
-export function HeaderSearch({ results, isHome }) {
+export function HeaderSearch({ results, isHome, hexagonClicked }) {
   const exploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,
@@ -25,6 +25,7 @@ export function HeaderSearch({ results, isHome }) {
             <SearchText
               count={results.count}
               where={exploreMapState.filters.where}
+              hexagonClicked={hexagonClicked}
             />
             {buttonTypes && (
               <SearchInfo
@@ -46,7 +47,7 @@ export function HeaderSearch({ results, isHome }) {
   );
 }
 
-function SearchText({ count, where }) {
+function SearchText({ count, where, hexagonClicked }) {
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -54,10 +55,12 @@ function SearchText({ count, where }) {
   );
 
   const address = (where) => {
-    if (where.address && where.radius) {
+    if(hexagonClicked)
+    {
+      return `in the selected area`;
+    }else if (where.address && where.radius) {
       return `in ${where.address} · ${where.radius}km`;
-    }
-    if (selectedNetwork) {
+    }else if (selectedNetwork) {
       return `in ${selectedNetwork.name}`;
     } else {
       return ``;
