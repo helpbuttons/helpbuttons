@@ -34,7 +34,10 @@
   "explore": {
     "noResults": "Sorry, there are no results here",
     "emptyList": "Please browse the map and touch to find more helpbuttons",
-    "createEmpty": "Create"
+    "createEmpty": "Create",
+    "selectedHexagon": "in the selected area",
+    "filteredRadius": "in {0} · {1}km",
+    "noFilter": "in {0}"
   },
   "buttonFilters": {
     "queryLabel": "What do you search",

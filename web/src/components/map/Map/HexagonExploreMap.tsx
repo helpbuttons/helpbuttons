@@ -99,8 +99,9 @@ export default function HexagonExploreMap({
             <GeoJsonFeature
               onClick={(feature) => {
                 if (hexagonFeature.properties.count > 0) {
-                  console.log(feature.payload);
                   setHexagonClicked(() => feature.payload);
+                }else{
+                  setHexagonClicked(() => null);
                 }
               }}
               feature={hexagonFeature}

@@ -125,7 +125,10 @@
   "explore": {
     "emptyList": "Por favor, cambia tu búsqueda, mueve el mapa o  toca para encontrar más botones",
     "createEmpty": "Crear",
-    "noResults": "Lo siento, no hay resultados aquí"
+    "noResults": "Lo siento, no hay resultados aquí",
+    "selectedHexagon": "en en área seleccionada",
+    "filteredRadius": "en {0} · {1}km",
+    "noFilter": "en {0}"
   },
   "buttonFilters": {
     "queryLabel": "Qué buscas",
