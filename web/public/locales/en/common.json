@@ -228,5 +228,30 @@
     "browseList": "",
     "chooseBrowseType": "",
     "browseHoneyComb": ""
+  },
+  
+  "faqs": {
+    "title": "Faqs",
+    "networkQuestion": "What's {0}",
+    "helpbuttonsQuestion": "What's Helpbuttons",
+    "forQuestion": "What's for",
+    "helpbuttonQuestion": "What's a Helpbutton",
+    "networkDescription": "A Network refers to your individual instance of Helpbuttons. You can create your own network, designate a purpose (such as sharing food, helping animals, caring for elders, etc.) and begin collaborating with any group you want (be it your neighborhood, sports club, village, course mates, etc.).",
+    "communityQuestion": "The community",
+    "ethicsQuestion": "Ethics Policies",
+    "privacyQuestion": "Privacy Policies",
+    "securityQuestion": "Security Policies",
+    "contactQuestion": "Contact",
+    "helpbuttonsHighlight": "Helpbuttons",
+    "helpbuttonsDescription": "Helpbuttons is the open-source software that powers this app. With Helpbuttons, you can create your own networks for sharing food, housing, transportation, or anything else you have in mind, and then federate with other networks to share users and resources. Helpbuttons specializes in connecting people who don't yet know each other, for various purposes, in the real world.",
+    "forDescription": "We aim to foster a cohesive society, promote cooperation, and optimize the design of collaborative tools in order to fully leverage the advantages of the internet. In brief, we've observed the substantial amounts of money, time, and user participation required each time a new collaborative app is launched. This seems unnecessary. Most of these tools share a significant portion of their core functionalities. We believe these commonalities could be managed using the same software, simply adapted for each unique purpose through various modules.",
+    "helpbuttonDescription": "A Helpbutton refers to a post. Every post published by a user in Helpbuttons is termed a helpbutton. Helpbuttons can represent offers, needs, exchanges, transport proposals, businesses, and so forth. They can also be renamed to suit the specific needs of your app.",
+    "communityDescription": "The Helpbuttons community is the backbone of this project, providing it with sustainability. This tool is designed for adaptability to a multitude of purposes, thereby benefitting a diverse range of users while also encouraging support for the project. By federating with other Helpbuttons apps, you can share users and resources. This method of collaboration enables us to unite more people and ultimately improve the tool we provide.",
+    "ethicsDescription": "At Helpbuttons, we are committed to maintaining the highest standards of ethical conduct. We believe in transparency, honesty, and respect for all individuals. Our software is designed to connect people and facilitate sharing, which is a responsibility we take seriously. We encourage our users to use our platform with the same values in mind, prioritizing respectful communication and mindful sharing. Any misuse of the software, including exploitation, harm to others, or manipulation of the platform's functionalities for personal gain, will not be tolerated. Users are required to adhere to these ethics policies at all times.",
+    "privacyDescription": "At Helpbuttons, we respect your privacy and are committed to protecting your personal data. Our privacy policy outlines how we collect, store, use, and disclose your personal information. We comply with all relevant privacy laws and regulations, ensuring your data is used solely for the purpose of providing and improving our service. We are transparent about our data collection processes, and you have the right to access, update, or delete your personal data at any time. Remember, sharing personal information in Helpbuttons posts is at your discretion—be mindful and only share what you are comfortable with others knowing.\nPlease direct your questions to the following email: helpbuttons@coletivos.org",
+    "securityDescription": "Your security is our top priority. At Helpbuttons, we implement stringent security measures to protect the integrity of our software and the safety of our users. We continually update and review our systems to ensure they meet the highest standards of cybersecurity. However, we also believe that security is a shared responsibility. We encourage our users to practice safe online behaviors, like using strong passwords and protecting personal information.\nPlease direct your questions to the following email: helpbuttons@coletivos.org",
+    "contactDescription": "Please direct your questions to the following email: helpbuttons@coletivos.org"
   }
+
+  
 }

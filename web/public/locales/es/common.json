@@ -215,5 +215,27 @@
   },
   "pickerDate": {
     "headerText": "Elige fecha y hora"
+  },
+  "faqs": {
+    "title": "Preguntas frecuentes",
+    "networkQuestion": "¿Qué es {0}?",
+    "helpbuttonsQuestion": "¿Qué son Helpbuttons?",
+    "forQuestion": "¿Para qué sirve?",
+    "helpbuttonQuestion": "¿Qué es un Helpbutton?",
+    "networkDescription": "Una Red se refiere a tu instancia individual de Helpbuttons. Puedes crear tu propia red, designar un propósito (como compartir comida, ayudar a los animales, cuidar a los ancianos, etc.) y comenzar a colaborar con cualquier grupo que desees (ya sea tu vecindario, club deportivo, pueblo, compañeros de curso, etc.).",
+    "communityQuestion": "La comunidad",
+    "ethicsQuestion": "Políticas de Ética",
+    "privacyQuestion": "Políticas de Privacidad",
+    "securityQuestion": "Políticas de Seguridad",
+    "contactQuestion": "Contacto",
+    "helpbuttonsHighlight": "Helpbuttons",
+    "helpbuttonsDescription": "Helpbuttons es el software de código abierto que impulsa esta aplicación. Con Helpbuttons, puedes crear tus propias redes para compartir comida, vivienda, transporte o cualquier otra cosa que tengas en mente, y luego federarte con otras redes para compartir usuarios y recursos. Helpbuttons se especializa en conectar a personas que aún no se conocen, para diversos propósitos, en el mundo real.",
+    "forDescription": "Nuestro objetivo es fomentar una sociedad cohesionada, promover la cooperación y optimizar el diseño de herramientas colaborativas para aprovechar al máximo las ventajas de internet. En resumen, hemos observado las cantidades sustanciales de dinero, tiempo y participación de los usuarios requeridos cada vez que se lanza una nueva aplicación colaborativa. Esto parece innecesario. La mayoría de estas herramientas comparten una parte significativa de sus funcionalidades básicas. Creemos que estas similitudes podrían ser gestionadas mediante el mismo software, simplemente adaptado para cada propósito único a través de diversos módulos.",
+    "helpbuttonDescription": "Un Helpbutton se refiere a una publicación. Cada publicación realizada por un usuario en Helpbuttons se llama Helpbutton. Los Helpbuttons pueden representar ofertas, necesidades, intercambios, propuestas de transporte, negocios, etc. También se pueden renombrar para adaptarse a las necesidades específicas de tu aplicación.",
+    "communityDescription": "La comunidad de Helpbuttons es el pilar de este proyecto, proporcionándole sostenibilidad. Esta herramienta está diseñada para ser adaptable a una multitud de propósitos, beneficiando así a una amplia gama de usuarios al mismo tiempo que fomenta el apoyo al proyecto. Al federarte con otras aplicaciones de Helpbuttons, puedes compartir usuarios y recursos. Este método de colaboración nos permite unir a más personas y mejorar en última instancia la herramienta que proporcionamos.",
+    "ethicsDescription": "En Helpbuttons, estamos comprometidos a mantener los más altos estándares de conducta ética. Creemos en la transparencia, la honestidad y el respeto por todas las personas. Nuestro software está diseñado para conectar a las personas y facilitar el intercambio, lo cual es una responsabilidad que tomamos en serio. Alentamos a nuestros usuarios a usar nuestra plataforma con los mismos valores en mente, priorizando la comunicación respetuosa y el intercambio consciente. Cualquier mal uso del software, incluida la explotación, el daño a otros o la manipulación de las funcionalidades de la plataforma con fines personales, no será tolerado. Los usuarios deben adherirse a estas políticas éticas en todo momento.",
+    "privacyDescription": "En Helpbuttons, respetamos tu privacidad y estamos comprometidos a proteger tus datos personales. Nuestra política de privacidad describe cómo recopilamos, almacenamos, usamos y divulgamos tu información personal. Cumplimos con todas las leyes y regulaciones de privacidad relevantes, asegurando que tus datos se utilicen únicamente con el propósito de proporcionar y mejorar nuestro servicio. Somos transparentes en cuanto a nuestros procesos de recopilación de datos, y tienes el derecho de acceder, actualizar o eliminar tus datos personales en cualquier momento. Recuerda que compartir información personal en las publicaciones de Helpbuttons está a tu discreción, sé consciente y comparte solo lo que te sientas cómodo compartiendo con los demás.\nPor favor, dirige tus preguntas al siguiente correo electrónico: helpbuttons@coletivos.org",
+    "securityDescription": "Tu seguridad es nuestra principal prioridad. En Helpbuttons, implementamos medidas de seguridad estrictas para proteger la integridad de nuestro software y la seguridad de nuestros usuarios. Actualizamos y revisamos continuamente nuestros sistemas para garantizar que cumplan con los más altos estándares de ciberseguridad. Sin embargo, también creemos que la seguridad es una responsabilidad compartida. Alentamos a nuestros usuarios a practicar comportamientos seguros en línea, como usar contraseñas fuertes y proteger la información personal.\nPor favor, dirige tus preguntas al siguiente correo electrónico: helpbuttons@coletivos.org",
+    "contactDescription": "Por favor, dirige tus preguntas al siguiente correo electrónico: helpbuttons@coletivos.org"
   }
 }
