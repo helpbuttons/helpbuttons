@@ -1,14 +1,19 @@
 //Users buttons an profile info URL
-import CardProfile from 'components/user/CardProfile';
+import CardProfile, { LinkAdminButton } from 'components/user/CardProfile';
 
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { User } from 'shared/entities/user.entity';
-import { FindUser, Logout } from 'state/Users';
+import { FindAdminButton, FindUser, Logout } from 'state/Users';
 import Link from 'next/link';
-import { IoAlarm, IoHammerOutline, IoLogOutOutline } from 'react-icons/io5';
+import {
+  IoAlarm,
+  IoHammerOutline,
+  IoHandLeftOutline,
+  IoLogOutOutline,
+} from 'react-icons/io5';
 import Btn, { IconType } from 'elements/Btn';
 import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
@@ -16,28 +21,42 @@ import t from 'i18n';
 import { LoadabledComponent } from 'components/loading';
 
 export default function Profile() {
-
   const loggedInUser = useRef(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
+  const [adminButtonId, setAdminButtonId] = useState(null);
+
+  useEffect(() => {
+    if (loggedInUser) {
+      if (loggedInUser.role == Role.admin) {
+        store.emit(
+          new FindAdminButton(loggedInUser.id, (buttonData) =>
+            {setAdminButtonId(() => buttonData.id); console.log(buttonData.id)},
+          ),
+        );
+      }
+    }
+  }, [loggedInUser]);
 
   function logout() {
     UserService.logout();
-    router.push("/HomeInfo")
+    router.push('/HomeInfo');
   }
 
   const removeProfile = () => {
-    console.log('remove myself!')
-  }
+    console.log('remove myself!');
+  };
 
   return (
     <>
       <div className="body__content">
-          <div className="card-profile__container">
-            <LoadabledComponent loading={!loggedInUser}>
-              <CardProfile user={loggedInUser} />
-
+        <div className="card-profile__container">
+          <LoadabledComponent loading={!loggedInUser}>
+            <CardProfile user={loggedInUser} />
+            {loggedInUser?.role == Role.admin && adminButtonId && (
+              <LinkAdminButton adminButtonId={adminButtonId}/>
+            )}
             {loggedInUser?.username == loggedInUser?.username && (
               <div className="card-profile__actions">
                 <Link href="/ProfileEdit">
@@ -59,15 +78,31 @@ export default function Profile() {
                 </Link>
 
                 {loggedInUser?.role == Role.admin && (
-                  <div>
-                    <Link href="/Configuration">
-                      <Btn
-                        iconLeft={IconType.svg}
-                        iconLink={<IoHammerOutline />}
-                        caption={t('configuration.title')}
-                      />
-                    </Link>
-                  </div>
+                  <>
+                    <div>
+                      <Link href="/Configuration">
+                        <Btn
+                          iconLeft={IconType.svg}
+                          iconLink={<IoHammerOutline />}
+                          caption={t('configuration.title')}
+                        />
+                      </Link>
+                    </div>
+                    {loggedInUser?.role == Role.admin &&
+                      !adminButtonId && (
+                        <div>
+                          <Link href="/ButtonNew">
+                            <Btn
+                              iconLeft={IconType.svg}
+                              iconLink={<IoHandLeftOutline />}
+                              caption={t(
+                                'configuration.createSupportButton',
+                              )}
+                            />
+                          </Link>
+                        </div>
+                      )}
+                  </>
                 )}
                 {/* <Link href="/HomeInfo">
                   <div onClick={removeProfile} className="btn-with-icon">
@@ -81,9 +116,10 @@ export default function Profile() {
                 </Link> */}
               </div>
             )}
-            </LoadabledComponent>
-          </div>
+          </LoadabledComponent>
+        </div>
       </div>
     </>
   );
 }
+

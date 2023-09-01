@@ -1,25 +1,16 @@
 //Profile Card with the the info displayed by the user in Profile page. It shows different options depending if it's other user profile or your profile when logged.
-import ImageWrapper, { ImageType } from 'elements/ImageWrapper'
-import { IoClose } from "react-icons/io5";
+import {  IoHandLeftOutline } from "react-icons/io5";
 import { Link } from 'elements/Link';
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 
-import { UserService } from 'services/Users';
-import { IoPersonOutline } from "react-icons/io5";
-import { IoHeartOutline } from "react-icons/io5";
-import { IoRibbonOutline } from "react-icons/io5";
-import { IoLogOutOutline } from "react-icons/io5";
-import { IoHammerOutline } from "react-icons/io5";
 import UserAvatar from '../components';
 import { getHostname } from 'shared/sys.helper';
 import t from 'i18n';
-import { readableTimeLeftToDate } from 'shared/date.utils';
 
 
 export default function CardProfile(props) {
 
   const user = props.user;
-
 
   return (
     <>
@@ -92,5 +83,20 @@ export default function CardProfile(props) {
 
         </div>
     </>
+  );
+}
+
+
+export function LinkAdminButton({adminButtonId}) {
+  return (
+    <div>
+      <Link href={`/ButtonFile/${adminButtonId}`}>
+        <Btn
+          iconLeft={IconType.svg}
+          iconLink={<IoHandLeftOutline />}
+          caption={t('configuration.contactAdmin')}
+        />
+      </Link>
+    </div>
   );
 }

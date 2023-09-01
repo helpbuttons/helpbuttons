@@ -91,6 +91,10 @@ $nav-bottom-border: 32px;
 
 }
 
+.nav-bottom__link--current{
+  color: $color-blue;
+}
+
 .nav-bottom__link--create {
 
   background: $color-black;

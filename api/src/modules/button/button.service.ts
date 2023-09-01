@@ -5,9 +5,9 @@ import {
   Injectable,
   forwardRef,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { Repository, In } from 'typeorm';
+import { Repository, In, EntityManager } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { Button } from './button.entity';
@@ -204,5 +204,20 @@ export class ButtonService {
       }
       return false;
     });
+  }
+
+  async findByUserId(userId: string) {
+    let button: Button = await this.buttonRepository.findOne({
+      where: { owner: {id: userId}, deleted: false },
+      relations: [
+        'owner',
+      ],
+    });
+    
+    if(!button)
+    {
+      throw new HttpException('button not found', HttpStatus.NOT_FOUND)
+    }
+    return { ...button };
   }
 }
