@@ -7,23 +7,27 @@
     "faqs": "Faqs",
     "login": "Login",
     "home": "Inicio",
-    "donate": ""
+    "donate": "Donar"
   },
   "homeinfo": {
+    "selectedArea":"en el area seleccionada",
     "start": "Donde quieres empezar?",
     "searchlocation": "Buscar ubicacion",
-    "loading": "not set",
+    "loading": "cargando",
     "locationDetected": "¿Quieres consultar los botones de ayuda en tu zona?",
     "stats": "Estadísticas de la Red",
     "users": "{0} usuarios en esta Red",
     "actions": "¿Qué puedes hacer?",
+    "popularHashtags":"¿De qué tratan?",
     "profileSubtitle": "Comprueba tu perfil",
     "createSubtitle": "Crea tu botón de ayuda y colabora",
     "faqsSubtitle": "Lee más sobre esta app",
     "exploreSubtitle": "Busca y encuentra los botones de ayuda en esta herramienta",
     "administeredby": "Administrado por ",
     "loginSubtitle": "¡Entra o crea tu cuenta!",
-    "buttons": "Hay {0} botones de ayuda en esta Red"
+    "buttons": "Hay {0} botones de ayuda en esta Red",
+    "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación: "
+
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -32,6 +36,7 @@
   "hostname": "nombre de host",
   "common": {
     "save": "Guardar",
+    "in":"en",
     "publish": "Publicar",
     "saveSuccess": "{0} guardado",
     "choose": "Elige {0}",
@@ -65,15 +70,15 @@
     "descriptionPlaceHolder": "Bienvenido a la Red para compartir ...",
     "selectMapStyle": "Elige el estilo del mapa",
     "locationLabel": "Localización de Red",
-    "defineNetwork": "",
-    "chooseColors": "",
-    "pickMainColor": "",
-    "nomeclatureLabel": "",
-    "nomeclaturePlaceHolder": "",
-    "buttonTemplateExplain": "",
-    "moderateNetwork": "",
-    "blockedExplain": "",
-    "adminUsers": ""
+    "defineNetwork": "Define la red",
+    "chooseColors": "Elige colores",
+    "pickMainColor": "Elige color princicipal",
+    "nomeclatureLabel": "Nombre",
+    "nomeclaturePlaceHolder": "Red del Valle de Adia",
+    "buttonTemplateExplain": "Aquí puedes elegir los tipòs de botón de ayuda que va a tener tu red. Intenta que sean pocos tipos y generales como 'Ofrecer' o 'Necesitar'. Si quieres ser más específico/a pùedes usar etiquetas para categorizar más adelante.",
+    "moderateNetwork": "Modera tu Red",
+    "blockedExplain": "Bloqueados",
+    "adminUsers": "Administradores"
   },
   "activities": {
     "newbutton": "Creaste <a href='/ButtonFile/{0}'>{1}</a> en <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
@@ -86,7 +91,7 @@
     "username": "Nombre de usuario",
     "password": "Contraseña",
     "passwordConfirmation": "Confirmar contraseña",
-    "created": "",
+    "created": "Creado",
     "loginButton": "ENTRAR",
     "loginClick": "Iniciar sesión con enlace al email",
     "passwordMismatch": "Las contraseñas no coinciden",
@@ -111,16 +116,16 @@
     "deactivate": "Desactivar cuenta",
     "dontChangePassword": "No cambies la contraseña",
     "created_date": "Usuario desde",
-    "loginSucess": "",
-    "emailPlaceHolder": "",
-    "pickLanguageLabel": "",
-    "textReceiveNotifications": ""
+    "loginSucess": "Entraste sin problemas!",
+    "emailPlaceHolder": "Por ejemplo luis@email.org",
+    "pickLanguageLabel": "Elige idioma",
+    "textReceiveNotifications": "Recibir notificaciones por email"
   },
   "configure": {
-    "browsePins": "",
-    "browseList": "",
-    "chooseBrowseType": "",
-    "browseHoneyComb": ""
+    "browsePins": "Mapa con pins de ubicación",
+    "browseList": "Lista de publicaciones",
+    "chooseBrowseType": "Elige tipos de visualización para tus botones de ayuda",
+    "browseHoneyComb": "Mapa con zonas poligonales"
   },
   "explore": {
     "emptyList": "Por favor, cambia tu búsqueda, mueve el mapa o  toca para encontrar más botones",
@@ -131,14 +136,17 @@
     "noFilter": "en {0}"
   },
   "buttonFilters": {
-    "queryLabel": "Qué buscas",
+    "queryLabel": "¿Qué buscas?",
+    "searchBarTop":"{1} botones de ayuda {0}",
     "queryExplain": "Escribe lo que quieras encontrar",
     "tagsExplain": "Las palabras clave son los temas más importantes o más tratados en la Red",
-    "where": "Donde?",
+    "where": "¿Dónde?",
     "distance": "Distancia de búsqueda",
     "allButtonTypes": "Todos los tipos",
     "queryPlaceHolder": "Amigos, comida, ropa, herramientas...",
-    "whereExplain": "Busca el lugar al que quieres ir"
+    "whereExplain": "Busca el lugar al que quieres ir",
+    "types": "Tipos de botones de ayuda",
+    "typesExplain": "Selecciona los tipos de botones de ayuda que quieras filtrar"
   },
   "button": {
     "copy": "Copiar enlace",
@@ -152,7 +160,7 @@
     "changeDateLabel": "Elige una fecha",
     "changePlaceLabel": "Elige un lugar",
     "firstPost": "¡Hola! Creé este botón de ayuda el {0}, deja un comentario si quieres",
-    "errorCreated": "",
+    "errorCreated": "Error al crear",
     "placeHolderDescription": "Escribe una descripción para tu botón de ayuda",
     "typeLabel": "Tipo de botón de ayuda",
     "descriptionExplain": "Descripción",
@@ -161,7 +169,7 @@
     "titleExplain": "Pequeño título para saber sobre qué es tu botón de ayuda",
     "titleLabel": "Título",
     "whereLabel": "Dónde?",
-    "pickButtonTemplateColor": ""
+    "pickButtonTemplateColor": "Elige color para tu tipo de botón de ayuda"
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -182,7 +190,7 @@
     "postgresPassword": "Contraseña de Postgresql",
     "postgresHostName": "Servidor de Postgresql",
     "smtpUrl": "URL de Smtp",
-    "test": "",
+    "test": "prueba",
     "createAdminTitle": "Crear cuenta de administrador",
     "postgresPort": "Puerto de Postgresql",
     "postgresDb": "Nombre de la base de datos de Postgresql",

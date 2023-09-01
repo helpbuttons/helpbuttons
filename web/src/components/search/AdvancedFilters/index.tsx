@@ -144,9 +144,9 @@ export default function AdvancedFilters({
               tags={tags}
             /> */}
             <FieldMultiSelect
-              label={'Button types'}
+              label={t('buttonFilters.types')}
               validationError={null}
-              explain={'Filter results by type'}
+              explain={t('buttonFilters.typesExplain')}
             >
               {buttonTypes.map((buttonType) => {
                 return (

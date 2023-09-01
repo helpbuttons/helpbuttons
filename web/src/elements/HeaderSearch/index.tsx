@@ -57,11 +57,11 @@ function SearchText({ count, where, hexagonClicked }) {
   const address = (where) => {
     if(hexagonClicked)
     {
-      return `in the selected area`;
+      return t('buttonFilters.selectedArea');
     }else if (where.address && where.radius) {
-      return `in ${where.address} · ${where.radius}km`;
+      return `${t('common.in')} ${where.address} · ${where.radius}km`;
     }else if (selectedNetwork) {
-      return `in ${selectedNetwork.name}`;
+      return `${t('common.in')} ${selectedNetwork.name}`;
     } else {
       return ``;
     }
@@ -69,7 +69,7 @@ function SearchText({ count, where, hexagonClicked }) {
 
   return (
     <div className="header-search__label">
-      {count} helpbuttons found {address(where)}
+      {t('buttonFilters.searchBarTop', [address(where),count])}
     </div>
   );
 }

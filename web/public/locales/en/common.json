@@ -40,6 +40,8 @@
     "noFilter": "in {0}"
   },
   "buttonFilters": {
+    "searchBarTop":"{1} helpbuttons found {0}",
+    "selectedArea":"in the selected area",
     "queryLabel": "What do you search",
     "queryExplain": "Write whatever you want to find",
     "queryPlaceHolder": "Friends, food, toys, clothes,...",
@@ -47,7 +49,9 @@
     "whereExplain": "Search the place where you want to go",
     "distance": "Search Distance",
     "allButtonTypes": "All types",
-    "tagsExplain": "buttonFilters.tagsExplain"
+    "types": "Helpbuttons types",
+    "typesExplain": "Filter helpbuttons by type",
+    "tagsExplain": "Network main tags"
   },
   "setup": {
     "hostname": "Hostname",
@@ -75,6 +79,7 @@
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
     "add": "Add",
+    "in":"in",
     "remove": "Remove",
     "publish": "Publish",
     "save": "Save",
