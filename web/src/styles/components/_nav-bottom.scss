@@ -44,7 +44,10 @@ $nav-bottom-border: 32px;
   color: $color-black;
   border-radius: $border-radius-circle;
 
-  &:hover {
+
+ 
+
+  &:hover, :active {
 
     cursor: pointer;
 
@@ -54,6 +57,22 @@ $nav-bottom-border: 32px;
       transform: translateY(-0.4rem);
 
     }
+
+    .nav-bottom__icon::after {
+      content: "";
+      position: absolute;
+      bottom: 1px;
+      left: 50%;
+      width: 20px;
+      height: 2px;
+      background-color: $color-blue;
+      transform: translateX(-50%);
+      border-radius: $nav-bottom-border;
+      opacity: 1;
+      animation: spread 1s ease-out forwards;
+    }
+  
+
   }
 }
 

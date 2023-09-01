@@ -7,6 +7,7 @@ $search-map-height: 0; // Altura del header
   color: $color-white;
   position: relative;
   text-overflow: ellipsis;
+  text-shadow: 0 0 10px $color-blue;
   max-width: 80vw;
   left: 10px;
   top: 10px;

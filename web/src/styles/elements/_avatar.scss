@@ -44,8 +44,14 @@ $avatar-medium-max-width: 50px;
 
 .avatar-medium--home {
 
-  @extend .avatar-medium;
-  outline: 10px solid $color-black;
+  @extend .avatar-big;
+  color: $color-black;
+  border-style: solid;
+  object-fit: cover;
+  overflow: hidden;
+  border-width: 7px;
+
+
 
 }
 
