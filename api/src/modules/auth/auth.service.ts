@@ -226,9 +226,9 @@ export class AuthService {
     return await this.userService
       .findOneByEmail(email)
       .then((user: User) => {
-        const newUser = {...user, verificationToken: publicNanoidGenerator()};
-        this.userService.update(user.id, newUser)
-        if (user && user.emailVerified === false) {
+        if (user) {
+          const newUser = {...user, verificationToken: publicNanoidGenerator()};
+          this.userService.update(user.id, newUser)
           this.sendLoginToken(newUser);
         }
         return Promise.resolve(true);
