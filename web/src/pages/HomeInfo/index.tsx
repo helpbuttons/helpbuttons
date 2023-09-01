@@ -105,7 +105,7 @@ export default function HomeInfo({
                 {/* INFO CARD */}
                 <div className="card">
                   <div className="card__header">
-                    <div className="avatar-big">
+                    <div className="avatar-medium--home">
                       <NetworkLogo network={selectedNetwork} />
                     </div>
                     <h3 className="card__header-title network-title">
