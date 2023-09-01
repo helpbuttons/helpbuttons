@@ -97,7 +97,7 @@ export class AuthService {
       })
       .then((user) => {
         if (!newUserDto.emailVerified) {
-          this.sendLoginToken(newUserDto);
+          this.sendLoginToken(newUserDto, true);
         }
         return user;
       })
@@ -121,19 +121,20 @@ export class AuthService {
     });
   }
 
-  private sendLoginToken(user: User) {
+  private sendLoginToken(user: User, sendActivation = false) {
     const activationUrl: string = `${config.hostName}/LoginClick/${user.verificationToken}`;
 
-    if (user.emailVerified === true) {
+    if (!sendActivation) {
       this.mailService.sendLoginTokenEmail({
         to: user.email,
         activationUrl,
       });
+    }else {
+      this.mailService.sendActivationEmail({
+        to: user.email,
+        activationUrl,
+      });
     }
-    this.mailService.sendActivationEmail({
-      to: user.email,
-      activationUrl,
-    });
   }
 
   async loginToken(verificationToken: string) {
@@ -229,7 +230,7 @@ export class AuthService {
         if (user) {
           const newUser = {...user, verificationToken: publicNanoidGenerator()};
           this.userService.update(user.id, newUser)
-          this.sendLoginToken(newUser);
+          this.sendLoginToken(newUser, false);
         }
         return Promise.resolve(true);
       });

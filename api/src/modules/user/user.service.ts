@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -70,6 +70,9 @@ export class UserService {
         where: { verificationToken: `${verificationToken}` },
       })
       .then((user: User) => {
+        if(!user) {
+          throw new HttpException('token not found', HttpStatus.UNAUTHORIZED)
+        }
         return this.userRepository
           .update(user.id, {
             ...removeUndefined(user),
