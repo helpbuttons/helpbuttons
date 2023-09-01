@@ -16,7 +16,6 @@ export default function LoginClick() {
   useEffect(() => {
     const onSuccess = () => {
       let returnUrl: string = '/HomeInfo';
-  
       if (router?.query?.returnUrl) {
         returnUrl = router.query.returnUrl.toString();
       }
@@ -24,9 +23,8 @@ export default function LoginClick() {
     };
   
     const onError = (err) => {
-      if (err === 'login-incorrect') {
-        alertService.error('failed to login, please try again');
-      }
+      alertService.error('failed to login, please try again');
+      router.push('/HomeInfo')
     };
     if (!loggingIn)
     {
