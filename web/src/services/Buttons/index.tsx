@@ -54,4 +54,8 @@ export class ButtonService {
   public static delete(id: any): Observable<any> {
     return httpService.delete<any>("buttons/delete/"+id);
   }
+
+  public static findByUserId(id: string): Observable<any> {
+    return httpService.get<Button>("/buttons/findByUserId/" + id)
+  }
 }

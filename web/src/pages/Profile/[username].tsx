@@ -1,15 +1,12 @@
 //Users buttons an profile info URL
-import CardProfile from 'components/user/CardProfile';
+import CardProfile, { LinkAdminButton } from 'components/user/CardProfile';
 
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { User } from 'shared/entities/user.entity';
-import { FindUser, Logout } from 'state/Users';
-import Link from 'next/link';
-import { IoAlarm, IoHammerOutline, IoLogOutOutline } from 'react-icons/io5';
-import Btn, { IconType } from 'elements/Btn';
+import { FindAdminButton, FindUser, Logout } from 'state/Users';
 import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
 
@@ -23,14 +20,15 @@ export default function Profile() {
     store,
     (state: GlobalState) => state.loggedInUser,
   );
+  const [adminButtonId, setAdminButtonId] = useState(null);
 
   function logout() {
     UserService.logout();
   }
 
   const removeProfile = () => {
-    console.log('remove myself!')
-  }
+    console.log('remove myself!');
+  };
   const username = router.query.username as string;
   useEffect(() => {
     let newUserProfile = '';
@@ -50,24 +48,37 @@ export default function Profile() {
         );
       }
     }
+    if (userProfile) {
+      if (userProfile.role == Role.admin) {
+        store.emit(
+          new FindAdminButton(userProfile.id, (buttonData) =>
+            setAdminButtonId(() => buttonData.id),
+          ),
+        );
+      }
+    }
   }, [userProfile]);
 
   useEffect(() => {
-    if(loggedInUser){
-      if(loggedInUser.username == username)
-      {
-        router.push('/Profile')
+    if (loggedInUser) {
+      if (loggedInUser.username == username) {
+        router.push('/Profile');
       }
     }
-  },[loggedInUser])
+  }, [loggedInUser]);
   return (
     <>
       <div className="body__content">
-          <div className="card-profile__container">
-            {userProfile && (
-                <CardProfile user={userProfile} />
-            )}
-          </div>
+        <div className="card-profile__container">
+          {userProfile && (
+            <CardProfile
+              user={userProfile}
+            />
+          )}
+          {userProfile?.role == Role.admin && adminButtonId && (
+            <LinkAdminButton adminButtonId={adminButtonId}/>
+          )}
+        </div>
       </div>
     </>
   );

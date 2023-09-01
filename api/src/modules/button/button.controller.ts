@@ -125,4 +125,11 @@ export class ButtonController {
         });
       });
   }
+
+  @AllowGuest()
+  @AllowIfNetworkIsPublic()
+  @Get('findByUserId/:userId')
+  async findByUserId(@Param('userId') userId: string) {
+    return await this.buttonService.findByUserId(userId);
+  }
 }
