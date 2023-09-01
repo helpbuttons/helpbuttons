@@ -20,6 +20,7 @@ import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import Link from 'next/link';
 import { UpdateFiltersToFilterTag } from 'state/Explore';
+import { isAdmin } from 'state/Users';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -34,17 +35,17 @@ export default function CardButtonFile({ button, buttonTypes }) {
     <>
       {button && (
         <>
-            <div
-              className="card-button card-button__file"
-              style={buttonColorStyle(buttonType.cssColor)}
-            >
-              <CardButtonHeadBig
-                button={button}
-                buttonTypes={buttonTypes}
-              />
-            </div>
-            <CardButtonImages button={button} />
-            <CardButtonOptions />
+          <div
+            className="card-button card-button__file"
+            style={buttonColorStyle(buttonType.cssColor)}
+          >
+            <CardButtonHeadBig
+              button={button}
+              buttonTypes={buttonTypes}
+            />
+          </div>
+          <CardButtonImages button={button} />
+          <CardButtonOptions />
         </>
       )}
     </>
@@ -177,9 +178,9 @@ function CardButtonSubmenu({ button }) {
           <div className="card-button__dropdown-arrow"></div>
 
           <div className="card-button__dropdown-content" id="listid">
-            <a className="card-button__trigger-options">
+            {/* <a className="card-button__trigger-options">
               {t('button.share')}
-            </a>
+            </a> */}
             <a
               className="card-button__trigger-options card-button__trigger-button"
               onClick={() => {
@@ -188,7 +189,7 @@ function CardButtonSubmenu({ button }) {
             >
               {t('button.copy')}
             </a>
-            {isButtonOwner(loggedInUser, button) && (
+            {isButtonOwner(loggedInUser, button) || isAdmin && (
               <>
                 <a
                   className="card-button__trigger-options"
@@ -345,12 +346,12 @@ export function CardButtonImages({ button }) {
             imageType={ImageType.buttonCard}
             src={makeImageUrl(button.image)}
             alt={button.description}
-          />  
+          />
         </div>
 
       }
     </>
-    
+
   );
 }
 export function CardButtonOptions() {

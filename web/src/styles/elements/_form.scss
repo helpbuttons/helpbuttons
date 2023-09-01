@@ -1,7 +1,7 @@
 $form-input-height: 54px;
 $form-input-width: 100%;
 $form-field-max-width: $grid-max-width;
-$form-input-padding: $padding-medium;
+$form-input-padding: $padding-big;
 $form-input-font-size: $font-size-medium;
 $form-input-border-radius: $border-general-height;
 
@@ -164,12 +164,21 @@ margin: $margin-medium 0;
   .css-13cymwt-control {
 
     height: $form-input-height;
+    padding-left: $form-input-padding;
 
   }
 
   .css-1fdsijx-ValueContainer {
 
     height: $form-input-height;
+    padding: 0;
+
+  }
+
+  .css-t3ipsp-control, .css-hlgwow {
+
+    height: $form-input-height;
+    padding-left: $form-input-padding;
 
   }
 
