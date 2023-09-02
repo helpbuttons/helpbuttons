@@ -905,6 +905,13 @@ a {
   display: none;
 }
 
+.body__content::-webkit-scrollbar,
+.info-overlay__container::-webkit-scrollbar {
+  display: none;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+}
+
 @media (hover: none) {
   ::-webkit-scrollbar {
     display: none;
@@ -6555,6 +6562,7 @@ body {
   width: 100%;
   padding: 0.5rem;
   position: relative;
+  border-radius: 24px 24px 0 0;
   height: 80px;
 }
 
@@ -6622,6 +6630,7 @@ body {
   overflow-y: auto;
   margin-bottom: 50px;
   overflow-x: hidden;
+  border-radius: 0 0 24px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -6769,7 +6778,6 @@ body {
   .popup {
     margin: 0px auto;
     max-width: 840px;
-    padding-bottom: 15px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;

@@ -37,6 +37,14 @@
     display: none;
   }
 
+  .body__content::-webkit-scrollbar,
+  .info-overlay__container::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  
+  }
+
+
 @media (hover: none) {
 
   ::-webkit-scrollbar {
@@ -54,5 +62,6 @@
     // -ms-overflow-style: none;  /* IE and Edge */
     // scrollbar-width: none;  
   }
+
 
 }
