@@ -44,9 +44,6 @@ $nav-bottom-border: 32px;
   color: $color-black;
   border-radius: $border-radius-circle;
 
-
- 
-
   &:hover, :active {
 
     cursor: pointer;
@@ -58,21 +55,6 @@ $nav-bottom-border: 32px;
 
     }
 
-    .nav-bottom__icon::after {
-      content: "";
-      position: absolute;
-      bottom: 1px;
-      left: 50%;
-      width: 20px;
-      height: 2px;
-      background-color: $color-blue;
-      transform: translateX(-50%);
-      border-radius: $nav-bottom-border;
-      opacity: 1;
-      animation: spread 1s ease-out forwards;
-    }
-  
-
   }
 }
 
@@ -82,7 +64,10 @@ $nav-bottom-border: 32px;
   text-decoration: none;
   line-height: $text-line-height-xxsmall;
   font-weight: 700;
+
+  
 }
+
 
 .nav-bottom__link--active {
 
@@ -93,6 +78,22 @@ $nav-bottom-border: 32px;
 
 .nav-bottom__link--current{
   color: $color-blue;
+
+  .nav-bottom__text::after {
+    content: "";
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 2px;
+    left: 50%;
+    background-color: $color-blue;
+    transform: translateX(-50%);
+    border-radius: $nav-bottom-border;
+    opacity: 1;
+    animation: spread 1s ease-out forwards;
+  }
+
+
 }
 
 .nav-bottom__link--create {

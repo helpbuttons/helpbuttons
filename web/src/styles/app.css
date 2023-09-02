@@ -3828,21 +3828,6 @@ li, ol, ul, h2 {
   transition: 0.2s;
   transform: translateY(-0.4rem);
 }
-.nav-bottom__button:hover .nav-bottom__icon::after, .nav-bottom__button :active .nav-bottom__icon::after,
-.nav-bottom__link:hover .nav-bottom__icon::after,
-.nav-bottom__link :active .nav-bottom__icon::after {
-  content: "";
-  position: absolute;
-  bottom: 1px;
-  left: 50%;
-  width: 20px;
-  height: 2px;
-  background-color: #18AAD2;
-  transform: translateX(-50%);
-  border-radius: 32px;
-  opacity: 1;
-  animation: spread 1s ease-out forwards;
-}
 
 .nav-bottom__text {
   font-size: 10px;
@@ -3857,6 +3842,19 @@ li, ol, ul, h2 {
 
 .nav-bottom__link--current {
   color: #18AAD2;
+}
+.nav-bottom__link--current .nav-bottom__text::after {
+  content: "";
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 2px;
+  left: 50%;
+  background-color: #18AAD2;
+  transform: translateX(-50%);
+  border-radius: 32px;
+  opacity: 1;
+  animation: spread 1s ease-out forwards;
 }
 
 .nav-bottom__link--create {
