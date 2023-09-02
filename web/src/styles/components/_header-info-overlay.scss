@@ -23,7 +23,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
 .info-overlay__container {
 
   // background-color: $color-white;
-  padding-top: $margin-extra-big;
+  padding-top: $margin-xbig;
   width:100%;
   z-index: $z-index-02;
   box-sizing: border-box;
@@ -159,7 +159,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
 
     display: flex;
     flex-wrap:wrap;
-    overflow: scroll;
+    overflow: auto;
     padding-bottom: $padding-medium;
     padding-top: $padding-medium;
 
@@ -179,7 +179,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
   background-color: transparent;
   padding: $padding-small;
   font-weight: $font-weight-regular;
-  margin-top: $margin-extra-small;
+  margin-top: $margin-xsmall;
   color: $color-ligth-gray;
   font-size: $font-size-small;
   border-color: $color-ligth-gray;

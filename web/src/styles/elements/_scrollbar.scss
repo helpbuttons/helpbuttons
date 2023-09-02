@@ -1,19 +1,58 @@
 //Revise: Esto puede ir en un breakpoint
 
+
+
+  ::-webkit-scrollbar {
+    display: block;
+    width: auto;
+    height: 12px;
+  
+  }
+  ::-webkit-scrollbar-thumb {
+    background: $color-ligth-gray;
+    scrollbar-width: thin;
+    border-radius: 16px;
+    width: 16px;
+  }
+  ::-webkit-scrollbar-thumb:hover{
+    background: $color-dark-gray;
+
+  }
+  ::-webkit-scrollbar-track{
+    background: white;
+    border-radius: 10px;
+    scrollbar-width: thin;
+    box-shadow: none;
+    width: 1px;
+    height: 1px;
+
+
+  }
+  *::-webkit-scrollbar-button {
+    // display: none;
+  }
+
+  *::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+    display: none;
+  }
+
+@media (hover: none) {
+
   ::-webkit-scrollbar {
     display: none;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  
   }
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(0deg, #c9c9c9 0%,#c9c9c9 0%);
-    border-radius: 10px;
+
+}
+
+@media #{$breakpoints-xlarge} {
+
+  ::-webkit-scrollbar {
+    // display: none;
+    // -ms-overflow-style: none;  /* IE and Edge */
+    // scrollbar-width: none;  
   }
-  ::-webkit-scrollbar-thumb:hover{
-    background: #C9C9C9;
-  }
-  ::-webkit-scrollbar-track{
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: none;
-  }
+
+}

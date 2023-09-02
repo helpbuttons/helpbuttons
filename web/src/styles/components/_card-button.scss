@@ -81,7 +81,7 @@ $card-button-border-height: $border-general-height;
 .card-button__info {
   flex: 100%;
   width: 0rem;
-  margin-left: $margin-extra-small;
+  margin-left: $margin-xsmall;
   text-align: left;
   align-items: start;
 }
@@ -542,7 +542,7 @@ $card-button-border-height: $border-general-height;
 .card-button__locDate {
   display: flex;
   justify-content: space-between;
-  gap: $margin-extra-small;
+  gap: $margin-xsmall;
 }
 
 
