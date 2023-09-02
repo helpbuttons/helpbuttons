@@ -3,12 +3,12 @@ $hashtag-back-color: $color-gray;
 $hashtag-border-radius: $border-radius-semicircle;
 $hashtag-hover-color: $color-white;
 $hashtag-padding-x: $padding-big;
-$hashtag-margin-x:$margin-extra-small;
+$hashtag-margin-x:$margin-xsmall;
 $hashtag-padding-y: $padding-small;
 $hashtag-busca-background: $color-red;
 $hashtag-ofrece-background: $color-green;
 $hashtag-padding-big: $padding-big;
-$hashtag-padding-extra-small: $padding-extra-small;
+$hashtag-padding-xsmall: $padding-xsmall;
 $hashtag-color-corporative: $color-corporative;
 $hashtag-color-white: $color-white;
 $hashtag-color-black: $color-black;
@@ -68,7 +68,7 @@ $hashtag-color-l-gray: $color-med-gray;
     width: 10px;
 
     background-color: $hashtag-color-gray;
-    padding: $hashtag-padding-extra-small;
+    padding: $hashtag-padding-xsmall;
     border-radius: $hashtag-border-radius;
   }
 }

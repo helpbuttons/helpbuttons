@@ -115,7 +115,7 @@ margin: $margin-medium 0;
 .form__explain,
 .form__label {
 
-  margin-bottom: $margin-extra-small;
+  margin-bottom: $margin-xsmall;
 
 }
 
@@ -131,7 +131,7 @@ margin: $margin-medium 0;
   padding: $padding-big $padding-big;
   font-size: $font-size-general;
   height: $form-input-height;
-  margin: $margin-extra-small 0;
+  margin: $margin-xsmall 0;
 
   & ul {
 
@@ -411,7 +411,7 @@ width: 100%;
 
 .form__input-subtitle--text {
 
-  margin: 0 0 $margin-exxtra-small $margin-small;
+  margin: 0 0 $margin-xxsmall $margin-small;
   font-size: $font-size-small;
 
 }
@@ -441,7 +441,7 @@ width: 100%;
   position: relative;
   height: auto;
   display: block;
-  margin: $margin-extra-small 0;
+  margin: $margin-xsmall 0;
 
 }
 
@@ -449,7 +449,7 @@ width: 100%;
 
   height: 90px;
   width: 90px;
-  margin: $margin-extra-small;
+  margin: $margin-xsmall;
   position: relative;
   display: flex;
   align-items: center;

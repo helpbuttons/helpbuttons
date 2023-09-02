@@ -1,0 +1,10 @@
+.signup__container {
+  height: 100vh;
+  min-height: 100vh;
+}
+.signup__header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+}/*# sourceMappingURL=signup.css.map */

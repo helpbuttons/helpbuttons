@@ -81,7 +81,7 @@ $message-you-margin-left:40px;
     white-space: nowrap;
     text-overflow: ellipsis;
     color: $color-dark-gray;
-    margin-bottom: $margin-extra-small;
+    margin-bottom: $margin-xsmall;
     font-weight: $font-weight-bold;
     font-size: $font-size-small;
 
@@ -110,7 +110,7 @@ $message-you-margin-left:40px;
   margin-left: $message-you-margin-left;
   min-width: $message-min-width;
   border-radius: $message-border-radius-semicircle $message-border-radius-semicircle $message-border-radius-semicircle 0;
-  margin-bottom: $margin-extra-small;
+  margin-bottom: $margin-xsmall;
 
 
 
@@ -133,10 +133,10 @@ $message-you-margin-left:40px;
   background-color: $color-ligth-gray;
   min-width: 50%;
   border-radius: $message-border-radius-semicircle $message-border-radius-semicircle 0 $message-border-radius-semicircle ;
-  margin-bottom: $margin-extra-small;
+  margin-bottom: $margin-xsmall;
   text-align: right;
   margin-left: auto;
-  margin-right: $margin-extra-big;
+  margin-right: $margin-xbig;
 
   .message__hour {
 
@@ -160,7 +160,7 @@ $message-you-margin-left:40px;
   justify-content: flex-end;
   align-items: center;
   overflow: hidden;
-  margin-right: $margin-exxtra-small;
+  margin-right: $margin-xxsmall;
 
 
 }
