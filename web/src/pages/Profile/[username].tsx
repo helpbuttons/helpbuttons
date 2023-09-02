@@ -1,5 +1,7 @@
 //Users buttons an profile info URL
-import CardProfile, { LinkAdminButton } from 'components/user/CardProfile';
+import CardProfile, {
+  LinkAdminButton,
+} from 'components/user/CardProfile';
 
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -51,9 +53,11 @@ export default function Profile() {
     if (userProfile) {
       if (userProfile.role == Role.admin) {
         store.emit(
-          new FindAdminButton(userProfile.id, (buttonData) =>
-            setAdminButtonId(() => buttonData.id),
-          ),
+          new FindAdminButton(userProfile.id, (buttonData) => {
+            if (buttonData?.id) {
+              setAdminButtonId(() => buttonData.id);
+            }
+          }),
         );
       }
     }
@@ -70,13 +74,9 @@ export default function Profile() {
     <>
       <div className="body__content">
         <div className="card-profile__container">
-          {userProfile && (
-            <CardProfile
-              user={userProfile}
-            />
-          )}
+          {userProfile && <CardProfile user={userProfile} />}
           {userProfile?.role == Role.admin && adminButtonId && (
-            <LinkAdminButton adminButtonId={adminButtonId}/>
+            <LinkAdminButton adminButtonId={adminButtonId} />
           )}
         </div>
       </div>
