@@ -25,7 +25,6 @@ $drag-tab-icon-size: 25px;
   padding: $padding-small;
   border-radius: $border-radius-circle $border-radius-circle 0 0 ;
   transform: translateY(-35px);
-  -webkit-transform:translate3d(0,0,0);
   transition: $transition-default-slow;
 
   :hover {

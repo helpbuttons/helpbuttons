@@ -6,10 +6,8 @@ $list-container-hide-height: calc($footer-height-mobile - 277px);
   display: flex;
   flex-direction: column;
   width: 100%;
-  // overflow: hidden;
   height: max-content;
   position: relative;
-  // bottom: $footer-height-mobile + $padding-small*2;
   z-index: $z-index-01;
   transition: $transition-default-slow;
   padding-bottom: $footer-height-mobile + $padding-small*2;
@@ -43,7 +41,7 @@ $list-container-hide-height: calc($footer-height-mobile - 277px);
 .list__element {
 
   height: 100%;
-  padding-right: $padding-small;
+  padding-right: $padding-xxsmall;
 
 }
 
