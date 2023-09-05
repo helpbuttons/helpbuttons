@@ -189,7 +189,7 @@ function CardButtonSubmenu({ button }) {
             >
               {t('button.copy')}
             </a>
-            {isButtonOwner(loggedInUser, button) || isAdmin && (
+            {(isButtonOwner(loggedInUser, button) || isAdmin(loggedInUser) )&& (
               <>
                 <a
                   className="card-button__trigger-options"

@@ -31,8 +31,10 @@ export default function Profile() {
     if (loggedInUser) {
       if (loggedInUser.role == Role.admin) {
         store.emit(
-          new FindAdminButton(loggedInUser.id, (buttonData) =>
-            {setAdminButtonId(() => buttonData.id); console.log(buttonData.id)},
+          new FindAdminButton(loggedInUser.id, (buttonData) =>{
+            if(buttonData) {
+              setAdminButtonId(() => buttonData.id);
+            }}
           ),
         );
       }
