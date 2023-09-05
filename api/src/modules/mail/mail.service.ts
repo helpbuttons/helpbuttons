@@ -57,7 +57,7 @@ export class MailService {
     bcc,
     subject,
     template,
-    context: { activationUrl },
+    context
   })
   {
     if(!GlobalVarHelper.smtpAvailable)
@@ -72,9 +72,30 @@ export class MailService {
       from: config.from,
       subject,
       template,
-      context: { activationUrl },
+      context,
     }).then((mail) => {console.log(`>> mail sent to ${to} with template '${template}'`)})
     .catch((error) => {console.log(error); console.trace()})
     return 
+  }
+
+  sendActivity({
+    to,
+    cc,
+    bcc,
+    content,
+  }: {
+    to: string;
+    cc?: string;
+    bcc?: string;
+    content: string;
+  }) {
+    return this.sendMail({
+      to,
+      cc,
+      bcc,
+      subject: 'A new activity in ',
+      template: 'new-activity',
+      context: { content },
+    });
   }
 }

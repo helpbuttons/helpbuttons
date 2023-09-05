@@ -36,7 +36,7 @@ export const checkDatabase = async (
     const userCount = await poolconnection.query(
       `SELECT count(id) from public.user`,
     );
-
+    poolconnection.release()
     return {
       migrationsNumber: migrationsNumber.rows[0].count,
       userCount: userCount.rows[0].count,

@@ -5,9 +5,9 @@ import {
   Injectable,
   forwardRef,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { Repository, In } from 'typeorm';
+import { Repository, In, EntityManager } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { Button } from './button.entity';
@@ -55,7 +55,7 @@ export class ButtonService {
       description: createDto.description,
       latitude: createDto.latitude,
       longitude: createDto.longitude,
-      tags: createDto.tags,
+      tags: this.tagService.formatTags(createDto.tags),
       location: () =>
         `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
       network: network,
@@ -85,13 +85,15 @@ export class ButtonService {
             });
         }
 
-        try {
-          button.image = await this.storageService.newImage64(
-            createDto.image,
-          );
-        } catch (err) {
-          console.log(`errorjumboooooror: ${err.message}`);
-          throw new ValidationException({ image: err.message });
+        if(createDto.image)
+        {
+          try {
+            button.image = await this.storageService.newImage64(
+              createDto.image,
+            );
+          } catch (err) {
+            throw new ValidationException({ image: err.message });
+          }
         }
         await this.buttonRepository.insert([button])
       },
@@ -107,9 +109,11 @@ export class ButtonService {
         'owner',
       ],
     });
-    try {
-      return { ...button };
-    } catch (err) {}
+    
+    if(!button)
+    {
+      throw new HttpException('button not found', HttpStatus.NOT_FOUND)
+    }
     return { ...button };
   }
 
@@ -129,6 +133,7 @@ export class ButtonService {
       ...updateDto,
       ...location,
       id,
+      tags: this.tagService.formatTags(updateDto.tags)
     };
 
     if (button.tags) {
@@ -153,7 +158,7 @@ export class ButtonService {
 
   async findh3(resolution, hexagons) {
     try {
-      if(hexagons && hexagons.length > 500)
+      if(hexagons && hexagons.length > 1000)
       {
         throw new HttpException('too many hexagons requested, aborting',HttpStatus.PAYLOAD_TOO_LARGE)
       }
@@ -199,5 +204,20 @@ export class ButtonService {
       }
       return false;
     });
+  }
+
+  async findByUserId(userId: string) {
+    let button: Button = await this.buttonRepository.findOne({
+      where: { owner: {id: userId}, deleted: false },
+      relations: [
+        'owner',
+      ],
+    });
+    
+    if(!button)
+    {
+      throw new HttpException('button not found', HttpStatus.NOT_FOUND)
+    }
+    return { ...button };
   }
 }

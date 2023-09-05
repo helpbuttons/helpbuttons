@@ -61,6 +61,8 @@ export class AuthService {
       id: dbIdGenerator(),
       avatar: null,
       description: '',
+      locale: signupUserDto.locale,
+      receiveNotifications: true,
     };
 
     const emailExists = await this.userService.isEmailExists(
@@ -95,7 +97,7 @@ export class AuthService {
       })
       .then((user) => {
         if (!newUserDto.emailVerified) {
-          this.sendLoginToken(newUserDto);
+          this.sendLoginToken(newUserDto, true);
         }
         return user;
       })
@@ -119,19 +121,20 @@ export class AuthService {
     });
   }
 
-  private sendLoginToken(user: User) {
+  private sendLoginToken(user: User, sendActivation = false) {
     const activationUrl: string = `${config.hostName}/LoginClick/${user.verificationToken}`;
 
-    if (user.emailVerified === true) {
+    if (!sendActivation) {
       this.mailService.sendLoginTokenEmail({
         to: user.email,
         activationUrl,
       });
+    }else {
+      this.mailService.sendActivationEmail({
+        to: user.email,
+        activationUrl,
+      });
     }
-    this.mailService.sendActivationEmail({
-      to: user.email,
-      activationUrl,
-    });
   }
 
   async loginToken(verificationToken: string) {
@@ -194,6 +197,8 @@ export class AuthService {
       email: data.email,
       name: data.name,
       description: data.description,
+      locale: data.locale,
+      receiveNotifications: data.receiveNotifications
     };
 
     if (isImageData(data.avatar)) {
@@ -222,10 +227,10 @@ export class AuthService {
     return await this.userService
       .findOneByEmail(email)
       .then((user: User) => {
-        const newUser = {...user, verificationToken: publicNanoidGenerator()};
-        this.userService.update(user.id, newUser)
-        if (user && user.emailVerified === false) {
-          this.sendLoginToken(newUser);
+        if (user) {
+          const newUser = {...user, verificationToken: publicNanoidGenerator()};
+          this.userService.update(user.id, newUser)
+          this.sendLoginToken(newUser, false);
         }
         return Promise.resolve(true);
       });

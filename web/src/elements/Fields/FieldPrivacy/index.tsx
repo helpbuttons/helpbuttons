@@ -1,6 +1,7 @@
-import CheckBox from 'elements/Checkbox';
+import CheckBox from 'elements/MultiSelectOption';
 import React from 'react';
 import { useState } from 'react';
+import { FieldCheckbox } from '../FieldCheckbox';
 
 export const FieldPrivacy = 
 React.forwardRef(
@@ -16,24 +17,8 @@ React.forwardRef(
     setValue(name, !isPrivate ? 'private' : 'public')
   };
   return (
-    <div className="form__field">
-      <p className="form__label">Privacy:</p>
-      <p className="form__explain">Private networks can't be seen without login</p>
+   
+    //revise to add new field type or change to use FieldCheckbox
 
-        <CheckBox
-                      defaultValue={
-                        false
-                      }
-                      name={isPrivate ? textPublic : textPrivate}
-                      handleChange={() => {
-                        changePrivacy();
-                      }}
-                    >
-                      <div className="btn-filter__icon"></div>
-                      <div className="btn-with-icon__text">
-                         {isPrivate ? textPublic : textPrivate}
-                      </div>
-        </CheckBox>
-    </div>
   );
 });

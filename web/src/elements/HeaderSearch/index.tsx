@@ -2,53 +2,66 @@ import { IoSearch } from 'react-icons/io5';
 import React, { useState } from 'react';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import { buttonTypes } from 'shared/buttonTypes';
 import { LoadabledComponent } from 'components/loading';
 import t from 'i18n';
+import { useButtonTypes } from 'shared/buttonTypes';
 
 ///search button in explore and home
-export function HeaderSearch({ results, isHome }) {
+export function HeaderSearch({ results, isHome, hexagonClicked }) {
   const exploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,
     false,
   );
-
+  const [buttonTypes, setButtonTypes] = useState(null);
+  useButtonTypes(setButtonTypes);
   return (
     <div className="header-search__tool">
       <div className="header-search__form">
-      <LoadabledComponent loading={exploreMapState.loading && !isHome}>
-        <div className="header-search__column">
-          <SearchText count={results.count} where={exploreMapState.filters.where} />
-          <SearchInfo
-            helpButtonTypes={exploreMapState.filters.helpButtonTypes}
-            when={exploreMapState.filters.when}
-            what={exploreMapState.filters.query}
-          />
-
-          <div className="header-search__icon">
+        <LoadabledComponent
+          loading={exploreMapState.loading && !isHome && buttonTypes}
+        >
+          <div className="header-search__column">
+            <SearchText
+              count={results.count}
+              where={exploreMapState.filters.where}
+              hexagonClicked={hexagonClicked}
+            />
+            {buttonTypes && (
+              <SearchInfo
+                helpButtonTypes={
+                  exploreMapState.filters.helpButtonTypes
+                }
+                when={exploreMapState.filters.when}
+                what={exploreMapState.filters.query}
+                buttonTypes={buttonTypes}
+              />
+            )}
+            <div className="header-search__icon">
               <IoSearch />
+            </div>
           </div>
-        </div>
         </LoadabledComponent>
       </div>
     </div>
   );
 }
 
-function SearchText({ count, where }) {
+function SearchText({ count, where, hexagonClicked }) {
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
-    false
+    false,
   );
 
   const address = (where) => {
-    if (where.address && where.radius) {
-      return `in ${where.address} · ${where.radius}km`;
-    }
-    if (selectedNetwork) {
-      return `in ${selectedNetwork.name}`;
+    if(hexagonClicked)
+    {
+      return t('buttonFilters.selectedArea');
+    }else if (where.address && where.radius) {
+      return `${t('common.in')} ${where.address} · ${where.radius}km`;
+    }else if (selectedNetwork) {
+      return `${t('common.in')} ${selectedNetwork.name}`;
     } else {
       return ``;
     }
@@ -56,12 +69,12 @@ function SearchText({ count, where }) {
 
   return (
     <div className="header-search__label">
-      {count} found {address(where)}
+      {t('buttonFilters.searchBarTop', [address(where),count])}
     </div>
   );
 }
 
-function SearchInfo({ helpButtonTypes, when, what }) {
+function SearchInfo({ helpButtonTypes, when, what, buttonTypes }) {
   const types = (helpButtonTypes) => {
     if (helpButtonTypes.length < 1) {
       return t('buttonFilters.allButtonTypes');

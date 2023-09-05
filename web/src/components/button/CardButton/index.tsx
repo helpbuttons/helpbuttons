@@ -13,39 +13,39 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
-import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle } from 'shared/buttonTypes';
 import { ShowWhen } from 'elements/Fields/FieldDate';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import Link from 'next/link';
-import {
-  UpdateFiltersToFilterTag,
-} from 'state/Explore';
+import { UpdateFiltersToFilterTag } from 'state/Explore';
+import { isAdmin } from 'state/Users';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
 };
 
-export default function CardButtonFile({ button }) {
-  const { cssColor } = buttonTypes.find((buttonType) => {
-    return buttonType.name === button.type;
-  });
+export default function CardButtonFile({ button, buttonTypes }) {
+  const buttonType = buttonTypes.find(
+    (buttonType) => buttonType.name == button.type,
+  );
 
   return (
     <>
       {button && (
         <>
-          <div>
-            <div
-              className="card-button card-button__file"
-              style={buttonColorStyle(cssColor)}
-            >
-              <CardButtonHeadBig button={button} />
-            </div>
-            <CardButtonImages button={button} />
-            <CardButtonOptions />
+          <div
+            className="card-button card-button__file"
+            style={buttonColorStyle(buttonType.cssColor)}
+          >
+            <CardButtonHeadBig
+              button={button}
+              buttonTypes={buttonTypes}
+            />
           </div>
+          <CardButtonImages button={button} />
+          <CardButtonOptions />
         </>
       )}
     </>
@@ -53,19 +53,16 @@ export default function CardButtonFile({ button }) {
 }
 
 // card button list on explore
-export function CardButtonHeadMedium({ button }) {
-  const { cssColor, caption } = buttonTypes.find((buttonType) => {
-    return buttonType.name === button.type;
-  });
+export function CardButtonHeadMedium({ button, buttonType }) {
   return (
     <div className="card-button__content">
       <div className="card-button__header">
         <div className="card-button__avatar">
           <div className="avatar-small">
-          <ImageWrapper
+            <ImageWrapper
               imageType={ImageType.avatar}
               src={button.owner.avatar}
-              alt={button.title}
+              alt={button.owner.username}
             />
           </div>
         </div>
@@ -74,27 +71,26 @@ export function CardButtonHeadMedium({ button }) {
           <div className="card-button__status card-button__status">
             <span
               className="card-button"
-              style={buttonColorStyle(cssColor)}
+              style={buttonColorStyle(buttonType.cssColor)}
             >
-               {caption}
+              {buttonType.caption}
             </span>
           </div>
           <div className="card-button__name">
-              {button.owner.name}<span className="card-button__username"> @{button.owner.username}</span>
+            {button.owner.name}
+            <span className="card-button__username">
+              {' '}
+              @{button.owner.username}
+            </span>
           </div>
         </div>
       </div>
 
-      <div className="card-button__title">
-        {button.title}
-      </div>
+      <div className="card-button__title">{button.title}</div>
       <div className="card-button__hashtags">
         {button.tags.map((tag, idx) => {
           return (
-            <div
-              className="hashtag"
-              key={idx}
-            >
+            <div className="hashtag" key={idx}>
               {tag}
             </div>
           );
@@ -152,6 +148,11 @@ function CardButtonSubmenu({ button }) {
     store,
     (state: GlobalState) => state.config,
   );
+  const loggedInUser = useRef(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
 
   const [linkButton, setLinkButton] = useState(null);
   useEffect(() => {
@@ -169,53 +170,64 @@ function CardButtonSubmenu({ button }) {
           setShowSubmenu(!showSubmenu);
         }}
         className="card-button__edit-icon card-button__submenu"
-      ><IoEllipsisHorizontalSharp /></div>
+      >
+        <IoEllipsisHorizontalSharp />
+      </div>
       {showSubmenu && (
         <div className="card-button__dropdown-container">
           <div className="card-button__dropdown-arrow"></div>
 
-          <div
-            className="card-button__dropdown-content"
-            id="listid"
-          >
-              <a
-                className="card-button__trigger-options"
-              >{t('button.share')}</a>
-              <a
-                className="card-button__trigger-options card-button__trigger-button"
-                onClick={() => {
-                  navigator.clipboard.writeText(linkButton);
-                }}
-              >{t('button.copy')}</a>
-              <a
-                className="card-button__trigger-options"
-                onClick={() => {
-                  router.push(`/ButtonEdit/${button.id}`);
-                }}
-              >{t('button.edit')}</a>
-              <a
-                className="card-button__trigger-options"
-                onClick={() => {
-                  router.push(`/ButtonRemove/${button.id}`);
-                }}
-              >{t('button.delete')}</a>
+          <div className="card-button__dropdown-content" id="listid">
+            {/* <a className="card-button__trigger-options">
+              {t('button.share')}
+            </a> */}
+            <a
+              className="card-button__trigger-options card-button__trigger-button"
+              onClick={() => {
+                navigator.clipboard.writeText(linkButton);
+              }}
+            >
+              {t('button.copy')}
+            </a>
+            {(isButtonOwner(loggedInUser, button) || isAdmin(loggedInUser) )&& (
+              <>
+                <a
+                  className="card-button__trigger-options"
+                  onClick={() => {
+                    router.push(`/ButtonEdit/${button.id}`);
+                  }}
+                >
+                  {t('button.edit')}
+                </a>
+                <a
+                  className="card-button__trigger-options"
+                  onClick={() => {
+                    router.push(`/ButtonRemove/${button.id}`);
+                  }}
+                >
+                  {t('button.delete')}
+                </a>
+              </>
+            )}
           </div>
         </div>
       )}
     </section>
   );
 }
-export function CardButtonHeadBig({ button }) {
-  const { cssColor,caption } = buttonTypes.find((buttonType) => {
+export function CardButtonHeadBig({ button, buttonTypes }) {
+  const { cssColor, caption } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
   const loggedInUser = useRef(
     store,
     (state: GlobalState) => state.loggedInUser,
-    false
+    false,
   );
 
-  const profileHref = (loggedInUser && loggedInUser.username == button.owner.username) ? `/Profile/` : `/Profile/${button.owner.username}`
+  const profileHref = isButtonOwner(loggedInUser, button)
+    ? `/Profile/`
+    : `/Profile/${button.owner.username}`;
   return (
     <>
       <CardButtonSubmenu button={button} />
@@ -224,15 +236,14 @@ export function CardButtonHeadBig({ button }) {
         <div className="card-button__header">
           <div className="card-button__avatar">
             <div className="avatar-big">
-            <Link href={profileHref}>
-              <ImageWrapper
-                imageType={ImageType.avatar}
-                src={button.owner.avatar}
-                alt="Avatar"
-              />
+              <Link href={profileHref}>
+                <ImageWrapper
+                  imageType={ImageType.avatarBig}
+                  src={button.owner.avatar}
+                  alt="Avatar"
+                />
               </Link>
             </div>
-            
           </div>
 
           <div className="card-button__info">
@@ -246,7 +257,11 @@ export function CardButtonHeadBig({ button }) {
             </div>
             <div className="card-button__name">
               <Link href={`/Profile/${button.owner.username}`}>
-                {button.owner.name} <span className="card-button__username"> @{button.owner.username}</span>
+                {button.owner.name}{' '}
+                <span className="card-button__username">
+                  {' '}
+                  @{button.owner.username}
+                </span>
               </Link>
             </div>
             <CardButtonHeadActions button={button} />
@@ -262,7 +277,14 @@ export function CardButtonHeadBig({ button }) {
         <div className="card-button__hashtags">
           {button.tags.map((tag, idx) => {
             return (
-              <div className="hashtag" key={idx} onClick={() => {filterTag(tag); router.push('/Explore')}}>
+              <div
+                className="hashtag"
+                key={idx}
+                onClick={() => {
+                  filterTag(tag);
+                  router.push('/Explore');
+                }}
+              >
                 {tag}
               </div>
             );
@@ -307,28 +329,39 @@ export function CardButtonHeadActions({ button }) {
 }
 export function CardButtonImages({ button }) {
   return (
-    <div className="card-button__picture">
-      <div className="card-button__picture-nav">
-        <div className="arrow btn-circle__icon">
-          <IoChevronBackOutline />
+    <>
+      {button.image &&
+
+        <div className="card-button__picture">
+          <div className="card-button__picture-nav">
+            <div className="arrow btn-circle__icon">
+              <IoChevronBackOutline />
+            </div>
+            <div className="arrow btn-circle__icon">
+              <IoChevronForwardOutline />
+            </div>
+          </div>
+
+          <ImageWrapper
+            imageType={ImageType.buttonCard}
+            src={makeImageUrl(button.image)}
+            alt={button.description}
+          />
         </div>
-        <div className="arrow btn-circle__icon">
-          <IoChevronForwardOutline />
-        </div>
-      </div>
-      <ImageWrapper
-        imageType={ImageType.buttonCard}
-        src={makeImageUrl(button.image)}
-        alt={button.description}
-      />
-    </div>
+
+      }
+    </>
+
   );
 }
 export function CardButtonOptions() {
   return (
     <div className="card-button__options-menu">
       <div className="card-button__trigger">
-        <div className="card-button__edit-icon card-button__submenu"> <IoEllipsisHorizontalSharp /></div>
+        <div className="card-button__edit-icon card-button__submenu">
+          {' '}
+          <IoEllipsisHorizontalSharp />
+        </div>
       </div>
 
       <div className="card-button__dropdown-container">
@@ -356,5 +389,11 @@ export function CardButtonOptions() {
         </div>
       </div>
     </div>
+  );
+}
+
+function isButtonOwner(loggedInUser, button) {
+  return (
+    loggedInUser && loggedInUser.username == button.owner.username
   );
 }

@@ -5,8 +5,8 @@ export default function NetworkLogo({network}) {
 return <>{network && (<ImageContainer
                   src={network.logo}
                   alt={network.name}
-                  width={50}
-                  height={50}
+                  width={68}
+                  height={68}
                   localUrl
                 />)
               }

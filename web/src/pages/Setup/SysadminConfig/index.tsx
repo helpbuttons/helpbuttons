@@ -37,7 +37,7 @@ export default function SysadminConfig() {
       postgresPort: 5432,
       smtpUrl:
         'smtp://info@helpbuttons.org:some-string@smtp.some-provider.com:587',
-        from: "'helpbuttons' <help@helpbuttons.org>"
+        from: "'helpbuttons' <helpbuttons@coletivos.org>"
     },
   });
 
@@ -178,7 +178,7 @@ export default function SysadminConfig() {
               <FieldText
                 name="from"
                 label={`${t('setup.from')}:`}
-                placeholder="'helpbuttons.org' <help@helpbuttons.org>"
+                placeholder="'helpbuttons.org' <helpbuttons@coletivos.org>"
                 validationError={errors.from}
                 classNameExtra="squared"
                 {...register('from', { required: true })}
@@ -186,7 +186,7 @@ export default function SysadminConfig() {
             </div>
             <div className="form__btn-wrapper">
               <Btn
-                btnType={BtnType.splitIcon}
+                btnType={BtnType.submit}
                 caption={t('setup.test-smtp-button')}
                 contentAlignment={ContentAlignment.center}
                 isSubmitting={isSubmitting}

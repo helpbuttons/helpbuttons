@@ -1,7 +1,9 @@
 ///image included in ButtonCard
 ///Btn is the project convention for tradittional buttons, in order to avoidd confussion with app's buttons
 import React from 'react';
+import Image from 'next/image'
 import { makeImageUrl } from 'shared/sys.helper';
+import { audit } from 'rxjs';
 
 export enum ImageType {
   avatar,
@@ -10,6 +12,9 @@ export enum ImageType {
   cardMap,
   cardList,
   buttonCard,
+  avatarBig,
+  avatarMed,
+  preview
 }
 
 export enum ContentAlignment {
@@ -19,8 +24,8 @@ export enum ContentAlignment {
 }
 
 interface ImageProps {
-  height?: string;
-  width?: string;
+  height?: number;
+  width?: number;
   layout?: string;
   src: string;
   alt: string;
@@ -30,8 +35,8 @@ interface ImageProps {
 }
 
 export default function ImageWrapper({
-  height = '200',
-  width = '200',
+  height = 200,
+  width = 200,
   alt = null,
   layout = 'responsive',
   src = null,
@@ -41,41 +46,74 @@ export default function ImageWrapper({
 }: ImageProps) {
   let classNames = [];
 
-  switch (imageType) {
-    case ImageType.popup:
-      width = '200';
-      height = '80';
-      break;
-    case ImageType.marker:
-      break;
-    case ImageType.cardMap:
-      layout = 'responsive';
-      width = '200';
-      height = '130';
-      break;
-    case ImageType.cardList:
-      layout = 'responsive';
-      width = '1000';
-      height = '1000';
-      break;
-    case ImageType.buttonCard:
-      width = '1000';
-      height = '1000';
-      layout = 'responsive';
-      break;
-    default:
-      break;
-  }
-
   const className = classNames.join(' ');
 
-  return (
-    <img
-      src={makeImageUrl(src, '/api/')}
+  if(imageType == ImageType.avatar) 
+  {
+    return (
+      <Image
+      style={{objectFit: 'cover'}}
+      src={makeImageUrl(src, '/api')}
       alt={alt}
-      // layout={layout}
-      width="100%"
-      height="100%"
+      width={30}
+      height={30}
+    />
+    )
+  }
+  if(imageType == ImageType.avatarBig) 
+  {
+    return (
+      <Image
+      style={{objectFit: 'cover'}}
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      width={68}
+      height={68}
+    />
+    )
+  }
+  if(imageType == ImageType.avatarMed) 
+  {
+    return (
+      <Image
+      style={{objectFit: 'cover'}}
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      width={50}
+      height={50}
+    />
+    )
+  }
+  if(imageType == ImageType.preview) 
+  {
+    return (
+      <Image
+      style={{objectFit: 'cover'}}
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      width={90}
+      height={90}
+    />
+    )
+  }
+  if(imageType == ImageType.cardList) 
+  {
+    return (
+      <Image
+      style={{objectFit: 'cover', display:'flex'}}
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      height={200}
+      width={200}
+    />
+    )
+  }
+  return (
+    <Image
+      style={{objectFit: 'cover'}}
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      fill={true}
     />
   );
 }
@@ -92,6 +130,6 @@ export function ImageContainer({
   const className = classNames.join(' ');
   
   return (
-    <img src={makeImageUrl(src, '/api/')} alt={alt} width={width} max-height={height} />
+    <Image src={makeImageUrl(src, '/api')} alt={alt} width={width} height={height} />
   );
 }

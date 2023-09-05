@@ -1,5 +1,3 @@
-//FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
-import Dropdown from 'elements/Dropdown/DropDown';
 import CardNotification from '../../components/feed/CardNotification';
 import Btn, { ContentAlignment } from 'elements/Btn';
 
@@ -7,77 +5,75 @@ import t from 'i18n';
 import router from 'next/router';
 import { useToggle } from 'shared/custom.hooks';
 import { useState } from 'react';
+import { Dropdown } from 'elements/Dropdown/Dropdown';
+import { ActivityEventName } from 'shared/types/activity.list';
 
 export default function FeedProfile({ allActivities }) {
-  const [showSelectFilteredFeed, setShowSelectFilteredFeed] =
-    useToggle(false);
   const [activities, setActivities] = useState(allActivities);
 
-  const dropdownOptions = [
+  const notificationTypeOptions = [
     {
       name: 'Show All Notificactions',
-      obj: null,
-      onClick: () => {
-        setActivities(() => allActivities);
-        setShowSelectFilteredFeed(true);
-      },
+      value: 'all',
     },
     {
       name: 'Show Messages',
-      obj: null,
-      onClick: () => {
-        setActivities(() =>
-          allActivities.find(
-            (activity) => activity.eventName.indexOf('message') > -1,
-          ),
-        );
-        setShowSelectFilteredFeed(true);
-      },
+      value: 'message',
     },
     {
       name: 'Show Posts',
-      obj: null,
-      onClick: () => {
-        setActivities(() => {
-          return allActivities.filter(
-            (activity) => activity.eventName.indexOf('post') > -1,
-          );
-        });
-        setShowSelectFilteredFeed(true);
-      },
+      value: 'post',
     },
   ];
-
+  const onChange = (value) => {
+    setActivities(() => {
+      if (value == 'message') {
+        return allActivities.filter(
+          (activity) => activity.eventName.indexOf(ActivityEventName.NewPostComment) > -1,
+        );
+      }
+      if (value == 'post') {
+        return allActivities.filter(
+          (activity) => !(activity.eventName.indexOf(ActivityEventName.NewPostComment) > -1),
+        );
+      }
+      return allActivities;
+    });
+  };
   return (
-    <div className="feed-container">
+    <>
       <div className="feed-selector feed-selector--activity">
-        <Dropdown listOption={dropdownOptions} />
+        <Dropdown
+          options={notificationTypeOptions}
+          onChange={onChange}
+          defaultSelected={"all"}
+        />
       </div>
-
-      <div className="feed-line"></div>
 
       <div className="feed-section--activity">
-        {activities &&
-          activities.map((activity, key) => {
-            return (
-              <div className="feed-element" key={key}>
-                <CardNotification activity={activity} />
+        <div className="feed-section--activity-content">
+          {activities &&
+            activities.map((activity, key) => {
+              return (
+                <div className="feed-element" key={key}>
+                  <CardNotification activity={activity} />
+                </div>
+              );
+            })}
+          {(!activities || activities.length < 1) && (
+            <div className="feed__empty-message">
+              <div className="feed__empty-message--prev">
+                {t('activities.noactivity', ['activities'])}
               </div>
-            );
-          })}
-        {(!activities || activities.length < 1) && (
-          <div className="feed__empty-message">
-            <div className="feed__empty-message--prev">
-              {t('activities.noactivity', ['activities'])}
+              <Btn
+                caption={t('explore.createEmpty')}
+                onClick={() => router.push('/ButtonNew')}
+                contentAlignment={ContentAlignment.center}
+              />
             </div>
-            <Btn
-              caption={t('explore.createEmpty')}
-              onClick={() => router.push('/ButtonNew')}
-              contentAlignment={ContentAlignment.center}
-            />
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

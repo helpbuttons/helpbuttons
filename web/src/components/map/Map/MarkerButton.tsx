@@ -1,9 +1,10 @@
 import { PigeonProps } from 'pigeon-maps';
 import React from 'react';
-import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+// import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/sys.helper';
 import CardButtonMap from '../CardButtonMap';
+import { buttonColorStyle } from 'shared/buttonTypes';
 
 interface MarkerButtonProps extends PigeonProps {
   style?: React.CSSProperties;
@@ -34,9 +35,11 @@ export function MarkerButton(props: MarkerButtonProps) {
   const width = 100;
   const height = 100;
 
-  const { cssColor } = buttonTypes.find((buttonType) => {
-    return buttonType.name === props.button.type;
-  });
+  // const { cssColor } = buttonTypes.find((buttonType) => {
+  //   return buttonType.name === props.button.type;
+  // });
+  const cssColor = 'red' // TODO
+   
   const handleMarkerClicked = (button: Button) => {
     props.handleMarkerClicked(button);
   };

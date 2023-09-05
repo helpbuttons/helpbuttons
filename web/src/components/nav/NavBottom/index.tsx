@@ -15,6 +15,7 @@ import { GlobalState, store } from 'pages';
 import { useStore } from 'store/Store';
 import { FindActivities, unreadActivities } from 'state/Activity';
 import { alertService } from 'services/Alert';
+import { useRouter } from 'next/router';
 
 export default NavBottom;
 
@@ -31,12 +32,23 @@ function NavBottom() {
     store,
     (state: GlobalState) => state.unreadActivities,
   );
-
+  
+  const router = useRouter();
+  const path = router.asPath.split('?')[0];
+  const pageName = path.split('/')[1];
+  const isCurrent = (menuName) => {
+    if(pageName.startsWith(menuName))
+    {
+      return 'nav-bottom__link--current'
+    }
+    return '';
+  }
+  
   return (
     <nav id="bottom-nav" className="nav-bottom">
       <NavLink
         href="/HomeInfo"
-        className="nav-bottom__link nav-bottom__link--active"
+        className={`nav-bottom__link nav-bottom__link--active ${isCurrent('HomeInfo')}`}
       >
         <div className="nav-bottom__icon">
           <IoHomeOutline />
@@ -46,7 +58,7 @@ function NavBottom() {
 
       <NavLink
         href="/Explore#click"
-        className="nav-bottom__link nav-bottom__link--active"
+        className={`nav-bottom__link nav-bottom__link--active ${isCurrent('Explore')}`}
       >
         <div className="nav-bottom__icon">
           <IoGlobeOutline />
@@ -56,7 +68,7 @@ function NavBottom() {
 
       <NavLink
         href="/ButtonNew"
-        className="nav-bottom__link nav-bottom__link--active"
+        className={`nav-bottom__link nav-bottom__link--active ${isCurrent('ButtonNew')}`}
       >
         <div className="nav-bottom__icon">
           <IoAddOutline />
@@ -67,7 +79,7 @@ function NavBottom() {
       {!loggedInUser && (
         <NavLink
           href="/Faqs"
-          className="nav-bottom__link nav-bottom__link--active"
+          className={`nav-bottom__link nav-bottom__link--active ${isCurrent('Faqs')}`}
         >
           <div className="nav-bottom__icon">
             <IoHelpOutline />
@@ -80,7 +92,7 @@ function NavBottom() {
         <>
           <NavLink
             href="/Profile"
-            className="nav-bottom__link nav-bottom__link--active"
+            className={`nav-bottom__link nav-bottom__link--active ${isCurrent('Profile')}`}
           >
             <div className="nav-bottom__icon">
               <IoPersonOutline />
@@ -92,7 +104,7 @@ function NavBottom() {
 
           <NavLink
             href="/Activity"
-            className="nav-bottom__link nav-bottom__link--active"
+            className={`nav-bottom__link nav-bottom__link--active ${isCurrent('Activity')}`}
           >
             <div className="nav-bottom__icon">
               {unreadActivities > 0 && (
@@ -113,7 +125,7 @@ function NavBottom() {
       {!loggedInUser && (
         <NavLink
           href="/Login"
-          className="nav-bottom__link nav-bottom__link--active"
+          className={`nav-bottom__link nav-bottom__link--active ${isCurrent('Login')}`}
         >
           <div className="nav-bottom__icon">
             <IoLogInOutline />

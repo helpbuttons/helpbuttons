@@ -1,19 +1,12 @@
+<!DOCTYPE html>
 <html lang='en'>
-  <head>
-    <meta charset='UTF-8' />
-    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-    <meta
-      name='viewport'
-      content='width=device-width, initial-scale=1.0'
-    />
-    <title>Document</title>
-    <style>
-      .container { text-align: center; }
-    </style>
-  </head>
-  <body>
-    <div class='container'>
-      Click <a href='{{activationUrl}}'>here</a> to activate your account
-    </div>
-  </body>
+{{> head pageTitle="Activate account"}} <!-- Include the head partial here -->
+<body>
+  <div class='container'>
+    <p class='title'>Welcome to Network Name</p>
+    <p class='thanks'>Thank you for choosing our network!</p>
+    <p>Click <a href='{{activationUrl}}'>here</a> to activate your account</p>
+  </div>
+  {{> footer}} <!-- Include the footer partial here -->
+</body>
 </html>

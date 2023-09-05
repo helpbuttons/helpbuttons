@@ -83,6 +83,13 @@ export class User extends BaseEntity {
 
   @OneToOne(() => UserCredential)
   userCredential?: UserCredential;
+
+  @Expose()
+  @Column({type: 'text', default: 'en'})
+  locale: string;
+
+  @Column({default: false})
+  receiveNotifications: boolean;
 }
 
 export interface UserRelations {

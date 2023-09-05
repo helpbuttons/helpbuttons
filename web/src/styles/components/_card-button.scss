@@ -33,7 +33,7 @@ $card-button-border-height: $border-general-height;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  word-break: break-word;
+  word-break: break-all;
 
 }
 
@@ -81,7 +81,7 @@ $card-button-border-height: $border-general-height;
 .card-button__info {
   flex: 100%;
   width: 0rem;
-  margin-left: $margin-extra-small;
+  margin-left: $margin-xsmall;
   text-align: left;
   align-items: start;
 }
@@ -259,9 +259,10 @@ $card-button-border-height: $border-general-height;
   font-size: $font-size-general;
   white-space: pre-line;
   text-align: left;
-  height: 3rem;
-  overflow: hidden;
+  // height: 3rem;
+  // overflow: hidden;
   display: block;
+  margin: $card-button-margin-bottom 0;
 
   & p {
     margin-top: 0;//Revise
@@ -301,9 +302,18 @@ $card-button-border-height: $border-general-height;
 
 .card-button__picture {
   width: 100%;
+  height: 300px;
   position: relative;
   max-height: $card-button-picture-max-height;
   overflow: hidden;
+
+  & img {
+
+    width: auto;
+    object-fit: cover;
+
+
+  }
 
 }
 
@@ -366,12 +376,14 @@ $card-button-border-height: $border-general-height;
   background: $color-dark-gray;
   display: flex;
   flex-direction: column;
-  border-radius: 2px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-radius: $border-radius-basic;
   z-index: $z-index-01;
   height: 100%;
   overflow-y: auto;
   color: white;
-  padding-top: 10px;
+  padding: 10px;
   padding-bottom: 10px;
   padding-right: 10px;
 
@@ -413,7 +425,10 @@ $card-button-border-height: $border-general-height;
   border-radius: 1px;
   width: 100%;
   line-height: 35px;
-  padding-left: 25px;
+  align-items: center;
+  padding: 25px;
+  display: flex;
+  justify-content: flex-start;
   font-size: $font-size-general;
 
   &:hover {
@@ -527,7 +542,7 @@ $card-button-border-height: $border-general-height;
 .card-button__locDate {
   display: flex;
   justify-content: space-between;
-  gap: $margin-extra-small;
+  gap: $margin-xsmall;
 }
 
 

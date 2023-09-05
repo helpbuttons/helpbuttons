@@ -34,14 +34,23 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-section--activity {
 
-  padding-top: $feed-selector-height;
-  padding-bottom: calc($footer-height-mobile + $padding-small*4);
+  // height: 100vh;
+  overflow: scroll  ;
+  // padding-top: $feed-selector-height;
+  // padding-bottom: calc($footer-height-mobile + $padding-small*4);
+
+}
+
+.feed-section--activity-content{
+
+  height: auto;
+
 
 }
 
 .feed-selector {
   height: $feed-selector-height;
-  width: 100%;
+  width: 100vw;
   max-width: $body-max-width;
   background-color: dimgray;
   padding: $padding-big;
@@ -49,7 +58,7 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-selector--activity {
   z-index: $z-index-03;
-  position: absolute;
+  position: relative;
   top: 0;
 }
 
@@ -91,14 +100,21 @@ $feed-new-message-radius: $border-radius-circle;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   flex-direction: row;
-  background-color: $color-white;
+  // background-color: $color-white;
   padding: $feed-padding;
+
+  .dropdown-select__trigger {
+
+    max-width: 20%;
+    margin: $margin-xsmall;
+
+  }
 
   button {
 
-    margin: $margin-extra-small 0;
+    margin: $margin-xsmall 0;
 
   }
 
@@ -107,7 +123,6 @@ $feed-new-message-radius: $border-radius-circle;
 .feeds__new-message-message {
   flex-grow:1;
   padding: 0 $padding-big 0 0;
-  margin: auto;
 
   .form__field {
 
@@ -123,6 +138,7 @@ $feed-new-message-radius: $border-radius-circle;
   padding: 0 $feed-padding;
 
 }
+
 
 .feeds__button {
   border-radius: 50%;
@@ -140,6 +156,8 @@ $feed-new-message-radius: $border-radius-circle;
 .feed-container{
   background: $color-ligth-gray;
   height: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .feed-element{

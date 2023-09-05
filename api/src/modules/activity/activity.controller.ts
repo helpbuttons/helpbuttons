@@ -23,22 +23,22 @@ export class ActivityController {
 
   @OnlyRegistered()
   @Get('find')
-  find(@CurrentUser() user: User) {
-    return this.activityService.findByUserId(user.id);
+  async find(@CurrentUser() user: User) {
+    return await this.activityService.findByUserId(user.id);
   }
 
   @OnlyRegistered()
   @Post('markAsRead/:notificationId')
-  markAsRead(
+  async markAsRead(
     @Param('notificationId') notificationId: string,
     @CurrentUser() user: User,
   ) {
-    return this.activityService.markAsRead(user.id, notificationId);
+    return await this.activityService.markAsRead(user.id, notificationId);
   }
 
   @OnlyRegistered()
   @Post('markAllAsRead')
-  markAllAsRead(@CurrentUser() user: User) {
-    return this.activityService.markAllAsRead(user.id);
+  async markAllAsRead(@CurrentUser() user: User) {
+    return await this.activityService.markAllAsRead(user.id);
   }
 }

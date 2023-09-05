@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CurrentUser } from "@src/shared/decorator/current-user";
-import { OnlyRegistered } from "@src/shared/decorator/roles.decorator";
+import { AllowGuest, OnlyRegistered } from "@src/shared/decorator/roles.decorator";
 import { CustomHttpException } from "@src/shared/middlewares/errors/custom-http-exception.middleware";
 import { ErrorName } from "@src/shared/types/error.list";
 import { ButtonService } from "../button/button.service";
@@ -13,6 +13,7 @@ import { ActivityEventName } from "@src/shared/types/activity.list";
 import { notifyUser } from "@src/app/app.event";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { Role } from "@src/shared/types/roles";
+import { CommentPrivacyOptions } from "@src/shared/types/privacy.enum";
 
 @ApiTags('post')
 @Controller('post')
@@ -26,12 +27,12 @@ export class PostController {
 
     @OnlyRegistered()
     @Post('new/:buttonId')
-    new(
+    async new(
       @Body() message: MessageDto,
       @Param('buttonId') buttonId: string,
       @CurrentUser() user: User,
     ){
-      return this.buttonService.isOwner(user, buttonId).then(
+      return await this.buttonService.isOwner(user, buttonId).then(
         (isOwner) => {
           if(!isOwner){
             throw new CustomHttpException(ErrorName.NoOwnerShip)
@@ -45,28 +46,27 @@ export class PostController {
     }
 
     @OnlyRegistered()
-    @Post('new/comment/:postId')
-    newComment(
+    @Post('new/comment/:privacy/:postId')
+    async newComment(
       @Body() message: MessageDto,
+      @Param('privacy') privacy: CommentPrivacyOptions,
       @Param('postId') postId: string,
       @CurrentUser() user: User,
     ){
-      return this.commentService.new(message.message, postId, user).then((comment) => {
+      return await this.commentService.new(message.message, postId, user, privacy).then((comment) => {
         notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, comment, comment.post.author)
       return comment;  
       })
-      
     }
-
     @OnlyRegistered()
     @Post('update')
-    update(
+    async update(
       @Param('postId') postId: string,
       @Body() message: MessageDto,
       @Param('buttonId') buttonId: string,
       @CurrentUser() user: User,
     ){
-      return this.buttonService.isOwner(user, buttonId).then(
+      return await this.buttonService.isOwner(user, buttonId).then(
         (isOwner) => {
           if(!isOwner){
             throw new CustomHttpException(ErrorName.NoOwnerShip)
@@ -83,7 +83,7 @@ export class PostController {
       @Param('postId') postId: string,
       @CurrentUser() user: User,
       ) {
-        return this.postService.findById(postId).then((post) => {
+        return await this.postService.findById(postId).then((post) => {
           if((user.role == Role.admin) || post.author.id == user.id || this.buttonService.isOwner(user, post.button.id)){
             return this.postService.delete(postId)
           }
@@ -116,7 +116,7 @@ export class PostController {
       @Param('commentId') commentId: string,
       @CurrentUser() user: User,
       ) {
-        return this.commentService.findById(commentId).then((comment) => {
+        return await this.commentService.findById(commentId).then((comment) => {
           if((user.role == Role.admin) || comment.author.id == user.id){
             return this.commentService.delete(commentId)
           }else {
@@ -131,11 +131,13 @@ export class PostController {
         })
     }
 
+    @AllowGuest()
     @Get('findByButtonId/:buttonId')
     async findByButtonId(
-      @Param('buttonId') buttonId: string
+      @Param('buttonId') buttonId: string,
+      @CurrentUser() currentUser: User,
     )
     {
-      return this.postService.findByButtonId(buttonId)
+      return await this.postService.findByButtonId(buttonId, currentUser)
     }
   }

@@ -1,14 +1,13 @@
 import FieldText from 'elements/Fields/FieldText';
-import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import t from 'i18n';
-import { store } from 'pages';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoPaperPlaneOutline } from 'react-icons/io5';
-import { alertService } from 'services/Alert';
-import { CreateNewPost } from 'state/Posts';
+import { uniqueArray } from 'shared/sys.helper';
 
-export default function PostNew({ buttonId, onCreate }) {
+
+export default function MessageNew({ onCreate, mentions = [], privateMessage = false , isComment = false}) {
   const {
     register,
     handleSubmit,
@@ -19,23 +18,30 @@ export default function PostNew({ buttonId, onCreate }) {
   } = useForm();
 
   const onSubmitLocal = (data) => {
-    store.emit(
-      new CreateNewPost(
-        buttonId,
-        {message: data.message},
-        () => {
-          alertService.info(t('common.saveSuccess', ['post']));
-          setValue('message', '')
-          onCreate()
-        },
-        (errorMessage) => alertService.error(errorMessage.caption),
-      ),
-    );
+    setValue('message', '')
+    onCreate(data.message)
   };
+
+  let extraMessage = "";
+  useEffect(() => {
+    if(mentions.length > 0)
+    {
+      mentions = uniqueArray(mentions)
+      setValue('message', mentions.reduce((strOut, mention) => strOut + `@${mention} `, ''))
+      setFocus('message')
+    }else{
+      setValue('message', '')
+    }
+  }, [mentions])
+  
+  if (privateMessage) {
+    extraMessage=t('post.private');
+  } else {
+    extraMessage="";
+  }
 
   return (
     <>
-      <div className="button-file__action-section">
         <div className="button-file__action-section--field">
           <Form
             onSubmit={handleSubmit(onSubmitLocal)}
@@ -44,11 +50,12 @@ export default function PostNew({ buttonId, onCreate }) {
             <div className="feeds__new-message-message">
               <FieldText
                 name="title"
-                placeholder={t('post.placeholderWrite')}
+                placeholder={isComment ? t('comment.placeholderWrite') : t('post.placeholderWrite')}
                 validationError={errors.title}
                 watch={watch}
                 setValue={setValue}
                 setFocus={setFocus}
+                extraMessage={extraMessage}
                 {...register('message', { required: true })}
               />
             </div>
@@ -57,7 +64,6 @@ export default function PostNew({ buttonId, onCreate }) {
             </button>
           </Form>
         </div>
-      </div>
     </>
   );
 }

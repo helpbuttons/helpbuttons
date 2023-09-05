@@ -10,17 +10,19 @@ import { Bounds } from 'pigeon-maps';
 import { ButtonFilters, defaultFilters } from './filters.type';
 import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
-import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle } from 'shared/buttonTypes';
 import { roundCoords } from 'shared/honeycomb.utils';
-import FieldCheckbox from 'elements/Fields/FieldCheckbox';
-import CheckBox, { CheckBoxIcon } from 'elements/Checkbox';
 import { GlobalState, store } from 'pages';
 import { UpdateFilters } from 'state/Explore';
 import router, { Router } from 'next/router';
 import { useRef } from 'store/Store';
 import { TagList } from 'elements/Fields/FieldTags';
+import { useButtonTypes } from 'shared/buttonTypes';
+import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
+import { uniqueArray } from 'shared/sys.helper';
+import MultiSelectOption from 'elements/MultiSelectOption';
 
-//Mobile filters section that includes not only the filters but some search input fields, maybe needed to make a separate component from the rest of esktop elements
+
 export default function AdvancedFilters({
   toggleShowFiltersForm,
   showFiltersForm,
@@ -37,6 +39,9 @@ export default function AdvancedFilters({
     (state: GlobalState) => state.explore.map.queryFoundTags,
     false
   );
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
+
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -81,10 +86,6 @@ export default function AdvancedFilters({
     ]);
   };
 
-  const uniqueArray = (a) =>
-    Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
-      JSON.parse(s),
-    );
 
   const setButtonTypeValue = (name, value) => {
     if (value) {
@@ -142,10 +143,10 @@ export default function AdvancedFilters({
               }}
               tags={tags}
             /> */}
-            <FieldCheckbox
-              label={'Button types'}
+            <FieldMultiSelect
+              label={t('buttonFilters.types')}
               validationError={null}
-              explain={'Filter results by type'}
+              explain={t('buttonFilters.typesExplain')}
             >
               {buttonTypes.map((buttonType) => {
                 return (
@@ -153,7 +154,7 @@ export default function AdvancedFilters({
                     key={buttonType.name}
                     style={buttonColorStyle(buttonType.cssColor)}
                   >
-                    <CheckBox
+                    <MultiSelectOption
                       defaultValue={
                         helpButtonTypes.indexOf(buttonType.name) > -1
                       }
@@ -166,11 +167,11 @@ export default function AdvancedFilters({
                       <div className="btn-with-icon__text">
                         {buttonType.caption}
                       </div>
-                    </CheckBox>
+                    </MultiSelectOption>
                   </div>
                 );
               })}
-            </FieldCheckbox>
+            </FieldMultiSelect>
             <div className="form__field">
               <label className="form__label">
                 {t('buttonFilters.where')}
@@ -203,7 +204,7 @@ export default function AdvancedFilters({
                 </div>
               </div>
             )}
-            <div className="filters__actions">
+            <div className={ isHome ? 'filters__actions--home' : 'filters__actions'  }>
               <Btn
                 btnType={BtnType.link}
                 caption={t('common.reset')}

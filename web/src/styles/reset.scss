@@ -88,7 +88,11 @@ body,
 #__next,
 .index__container,
 .info-overlay__container,
-.popup, {
+.popup,
+.index__content,
+.index__explore-container,
+.filters__container,
+.body__content, {
   height: var(--vh) !important;
   /* Add other styles as needed */
 }

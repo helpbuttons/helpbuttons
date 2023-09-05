@@ -1,25 +1,25 @@
 import NetworkForm from 'components/network/NetworkForm';
 import Popup from 'components/popup/Popup';
-import DebugToJSON from 'elements/Debug';
 import t from 'i18n';
 import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
-import { NetworkDto } from 'shared/dtos/network.dto';
-import { FetchDefaultNetwork, UpdateNetwork } from 'state/Networks';
+import { useToggle } from 'shared/custom.hooks';
+import { Network } from 'shared/entities/network.entity';
+import { UpdateExploreSettings } from 'state/Explore';
+import { FetchDefaultNetwork, UpdateNetwork, UpdateNetworkBackgroundColor, UpdateNetworkTextColor } from 'state/Networks';
 import { useRef } from 'store/Store';
 
 export default Configuration;
 
 function Configuration() {
-  const selectedNetwork: NetworkDto = useRef(
+  const selectedNetwork: Network = useRef(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
-
+  const [loadingNetwork, setLoadingNetwork] = useToggle(true)
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -32,8 +32,15 @@ function Configuration() {
     setFocus
   } = useForm({});
 
+  const backgroundColor = watch('backgroundColor');
+  useUpdateBackgroundColor(backgroundColor);
+
+  const textColor = watch('textColor');
+  useTextColor(textColor);
+
   useEffect(() => {
-    if(selectedNetwork){
+    if(selectedNetwork && loadingNetwork){
+      setLoadingNetwork(false)
       reset(selectedNetwork);
     }
   }, [selectedNetwork])
@@ -45,10 +52,14 @@ function Configuration() {
       privacy: data.privacy,
       logo: data.logo,
       jumbo: data.jumbo,
-      exploreSettings: data.exploreSettings
+      exploreSettings: data.exploreSettings,
+      backgroundColor: data.backgroundColor,
+      textColor: data.textColor,
+      buttonTemplates: data.buttonTemplates
     },
       () => {
         const onComplete = (network) => {
+          store.emit(new UpdateExploreSettings(data.exploreSettings))
           alertService.info(t('common.saveSuccess', ['Configuration']))
           router.replace('/HomeInfo');
         }
@@ -82,7 +93,6 @@ function Configuration() {
     <>
       {selectedNetwork && (
         <Popup title={t('configuration.title')} LinkFwd="/Profile">
-          
             <NetworkForm
               handleSubmit={handleSubmit}
               onSubmit={onSubmit}
@@ -104,3 +114,21 @@ function Configuration() {
     </>
   );
 }
+
+
+const useUpdateBackgroundColor = (backgroundColor) => {
+  useEffect(() => {
+    if (backgroundColor) {
+      store.emit(new UpdateNetworkBackgroundColor(backgroundColor));
+    }
+  }, [backgroundColor]);
+};
+
+const useTextColor = (textColor) => {
+  useEffect(() => {
+    if (textColor) {
+      store.emit(new UpdateNetworkTextColor(textColor));
+    }
+  }, [textColor]);
+};
+

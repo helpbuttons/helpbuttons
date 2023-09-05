@@ -13,17 +13,12 @@ import Popup from 'components/popup/Popup';
 import Btn, {
   ContentAlignment,
   BtnType,
-  IconType,
 } from 'elements/Btn';
 import Form from 'elements/Form';
 
-import { NavigateTo } from 'state/Routes';
 import { useRouter } from 'next/router';
-import NewUserFields, {
-  passwordsMatch,
-} from 'components/user/NewUserFields';
+
 import FieldText from 'elements/Fields/FieldText';
-import FieldTags from 'elements/Fields/FieldTags';
 import { alertService } from 'services/Alert';
 import { User } from 'shared/entities/user.entity';
 import { useRef } from 'store/Store';
@@ -33,6 +28,9 @@ import { getHostname } from 'shared/sys.helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import t from 'i18n';
+import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
+import Accordion from 'elements/Accordion';
 
 export default function ProfileEdit() {
   const {
@@ -45,7 +43,10 @@ export default function ProfileEdit() {
     watch,
     setFocus,
     formState: { errors, isSubmitting },
-  } = useForm({});
+  } = useForm({defaultValues: {
+    locale: 'en',
+    receiveNotifications: false,
+  }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
 
@@ -55,6 +56,7 @@ export default function ProfileEdit() {
     store,
     (state: GlobalState) => state.loggedInUser,
   );
+  const [locale, setLocale] = useState(null)
 
   const onSubmit = (data: UserUpdateDto) => {
     const dataToSubmit : UserUpdateDto =
@@ -66,9 +68,10 @@ export default function ProfileEdit() {
       password_new: data.password_new,
       password_new_confirm: data.password_new_confirm,
       set_new_password: setNewPassword,
-      description: data.description
+      description: data.description,
+      locale: locale,
+      receiveNotifications: data.receiveNotifications
     }
-
     if (setNewPassword)  {
       // check passwords match.. send to backend
       if (dataToSubmit.password_new != dataToSubmit.password_new_confirm)
@@ -82,7 +85,10 @@ export default function ProfileEdit() {
   };
 
   const onSuccess = () => {
-    store.emit(new FetchUserData(() => {router.push('/Profile')}, onError));
+    
+    store.emit(new FetchUserData((userData) => {
+      router.push(`${userData.locale}/Profile`)
+    }, onError));
     ;
   };
 
@@ -92,6 +98,7 @@ export default function ProfileEdit() {
 
   useEffect(() => {
     if (loggedInUser) {
+      setLocale(loggedInUser.locale)
       reset(loggedInUser);
     }
   }, [loggedInUser]);
@@ -104,8 +111,8 @@ export default function ProfileEdit() {
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="login"
             >
-              <div>{t('user.editProfile')} </div>
-              {loggedInUser.username}@{getHostname()}
+              <div className='form__label'> {loggedInUser.username}@{getHostname()} </div>
+              
                 <div className="form__inputs-wrapper">
                   <FieldText
                     name="name"
@@ -115,6 +122,9 @@ export default function ProfileEdit() {
                     validationError={errors.email}
                     {...register('name', { required: true })}
                   ></FieldText>
+                  {locale && 
+                    <FieldLanguagePick onChange={(value) => setLocale(value)}/>
+                  }
                   <FieldText
                     name="email"
                     label={t('user.email')}
@@ -132,37 +142,33 @@ export default function ProfileEdit() {
                     setFocus={setFocus}
                     validationError={errors.description}
                     {...register('description', { required: true })}
+                  />     
+                  <FieldCheckbox
+                    name='receiveNotifications'
+                    checked={watch('receiveNotifications')}
+                    text={t('user.textReceiveNotifications')}
+                    {...register('receiveNotifications')}
                   />
-                  
-                  150x150px
                   <FieldImageUpload
                     name="avatar"
                     label={t('user.avatar')}
                     control={control}
                     width={150}
                     height={150}
+                    subtitle={'150x150px'}
                     validationError={errors.avatar}
                     setValue={setValue}
                     {...register('avatar', { required: true })}
                   />
-                </div>
                 {errorMsg && (
                   <div className="form__input-subtitle--error">
                     {errorMsg}
                   </div>
                 )}
 
-                <div
-                    className="btn accordion"
-                    onClick={() =>
-                      setSetNewPassword(!setNewPassword)
-                    }                    
-                  >
-                    {!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
-                    
-                </div>
-                  {setNewPassword && (
-                      <>
+                <Accordion 
+                  title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
+                >
                         <FieldPassword
                           name="password_current"
                           label={t('user.password')}
@@ -194,16 +200,17 @@ export default function ProfileEdit() {
                             minLength: 8,
                           })}
                         ></FieldPassword>
-                      </>
-                    )}
-                    <div className="publish__submit">
-                      <Btn
-                        btnType={BtnType.submit}
-                        contentAlignment={ContentAlignment.center}
-                        caption={t('common.publish')}
-                        isSubmitting={isSubmitting}
-                        submit={true}
-                      />
+
+                      </Accordion>
+                      <div className="publish__submit">
+                        <Btn
+                          btnType={BtnType.submit}
+                          contentAlignment={ContentAlignment.center}
+                          caption={t('common.publish')}
+                          isSubmitting={isSubmitting}
+                          submit={true}
+                        />
+                      </div>
                     </div>
             </Form>
           </Popup>

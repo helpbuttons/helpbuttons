@@ -44,7 +44,7 @@ $nav-bottom-border: 32px;
   color: $color-black;
   border-radius: $border-radius-circle;
 
-  &:hover {
+  &:hover, :active {
 
     cursor: pointer;
 
@@ -54,6 +54,7 @@ $nav-bottom-border: 32px;
       transform: translateY(-0.4rem);
 
     }
+
   }
 }
 
@@ -63,11 +64,34 @@ $nav-bottom-border: 32px;
   text-decoration: none;
   line-height: $text-line-height-xxsmall;
   font-weight: 700;
+
+  
 }
+
 
 .nav-bottom__link--active {
 
   font-weight: bolder;
+
+
+}
+
+.nav-bottom__link--current{
+  color: $color-blue;
+
+  .nav-bottom__text::after {
+    content: "";
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 2px;
+    left: 50%;
+    background-color: $color-blue;
+    transform: translateX(-50%);
+    border-radius: $nav-bottom-border;
+    opacity: 1;
+    animation: spread 1s ease-out forwards;
+  }
 
 
 }

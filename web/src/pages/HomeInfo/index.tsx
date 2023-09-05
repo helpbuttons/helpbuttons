@@ -12,6 +12,7 @@ import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import NavLink from 'elements/Navlink';
 import {
   IoAddOutline,
+  IoCashOutline,
   IoGlobeOutline,
   IoHelpOutline,
   IoLogInOutline,
@@ -22,7 +23,7 @@ import { ServerPropsService } from 'services/ServerProps';
 import { NextPageContext } from 'next';
 import { SetupSteps } from 'shared/setupSteps';
 import {  useState } from 'react';
-import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { UpdateFiltersToFilterButtonType, UpdateFiltersToFilterTag } from 'state/Explore';
@@ -35,7 +36,9 @@ export default function HomeInfo({
   config,
 }) {
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
-
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
+  
   const filterTag = (tag) => {
     store.emit(new UpdateFiltersToFilterTag(tag));
     router.push('/Explore')
@@ -99,9 +102,10 @@ export default function HomeInfo({
                     </div>
                   </div>
                 )}
+                {/* INFO CARD */}
                 <div className="card">
                   <div className="card__header">
-                    <div className="avatar-medium">
+                    <div className="avatar-medium--home">
                       <NetworkLogo network={selectedNetwork} />
                     </div>
                     <h3 className="card__header-title network-title">
@@ -111,12 +115,21 @@ export default function HomeInfo({
                   <div className="info-overlay__description">
                     {selectedNetwork.description}
                   </div>
-                  <div className="info-overlay__hashtags">
-                  {selectedNetwork.tags.map((tag, idx) => {
-                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
-                    })}
-                  </div>
+                  <div className='info-overlay__description'>
+                      {t('homeinfo.administeredby')}
+                      <NavLink
+                        href={`/Profile/${selectedNetwork.administrator.username}`}
+                      >
+                        <span>
+                          {selectedNetwork.administrator.username}@
+                          {config.hostname}
+                        </span>
+                      </NavLink>
+                    </div>
+               
                 </div>
+
+                {/* STATS CARD */}
                 <div className="card">
                   <div className="card__header">
                     <h3 className="card__header-title">
@@ -127,6 +140,7 @@ export default function HomeInfo({
                   <div className="info-overlay__description">
                     {t('homeinfo.buttons', [
                       selectedNetwork.buttonCount,
+                      config.userCount.toString(),
                     ])}
                     <div className="info-overlay__hashtags">
                       {buttonTypes.map((buttonType, idx) => {
@@ -152,7 +166,7 @@ export default function HomeInfo({
                           >
                             <Btn
                               btnType={BtnType.filter}
-                              iconLeft={IconType.green}
+                              iconLeft={IconType.color}
                               caption={buttoTypeCountText}
                               onClick={() => filterButtonType(buttonType.name)}
                             />
@@ -160,24 +174,27 @@ export default function HomeInfo({
                         );
                       })}
                     </div>
-                    <div>
-                      {t('homeinfo.users', [
-                        config.userCount.toString(),
-                      ])}
-                    </div>
-                    <div>
-                      {t('homeinfo.administeredby')}
-                      <NavLink
-                        href={`/Profile/${selectedNetwork.administrator.username}`}
-                      >
-                        <span>
-                          {selectedNetwork.administrator.username}@
-                          {config.hostname}
-                        </span>
-                      </NavLink>
-                    </div>
+                    
                   </div>
                 </div>
+
+                {/* HASHTAGS CARD */}
+                <div className="card">
+                  <div className="card__header">
+                    <h3 className="card__header-title">
+                      {t('homeinfo.popularHashtags')}
+                    </h3>
+                  </div>
+                  <hr></hr>
+                  <div className="info-overlay__hashtags">
+                  {selectedNetwork.tags.map((tag, idx) => {
+                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
+                    })}
+                  </div>
+                </div>
+
+
+                {/* ACTIONS CARD */}
                 <div className="card">
                   <div className="card__header">
                     <h3 className="card__header-title">
@@ -226,6 +243,13 @@ export default function HomeInfo({
                       </NavLink>
                     </div>
                   )}
+                   <div className="card__section">
+                      <p>{t('homeinfo.donateSubtitle')}</p>
+                      <NavLink href="https://buy.stripe.com/dR68wx3CY17VdFKfZc">
+                        <IoCashOutline />
+                        <span>{t('menu.donate')}</span>
+                      </NavLink>
+                    </div>
                 </div>
               </div>
             </>

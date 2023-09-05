@@ -11,18 +11,48 @@ import { GeoService } from 'services/Geo';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
 import { handleError } from './helper';
 
-import { ButtonFilters, defaultFilters } from 'components/search/AdvancedFilters/filters.type';
+import {
+  ButtonFilters,
+  defaultFilters,
+} from 'components/search/AdvancedFilters/filters.type';
+import {
+  BrowseType,
+  HbMapTiles,
+} from 'components/map/Map/Map.consts';
+import { Bounds } from 'pigeon-maps';
+import {
+  LocalStorageVars,
+  localStorageService,
+} from 'services/LocalStorage';
 
 export interface ExploreState {
   draftButton: any;
   currentButton: Button;
   map: ExploreMapState;
+  settings: ExploreSettings;
 }
 
+export interface ExploreSettings {
+  center: number[];
+  zoom: number;
+  bounds: Bounds;
+  honeyCombFeatures: any;
+  prevZoom: number;
+  loading: boolean;
+}
+
+export const exploreSettingsDefault: ExploreSettings = {
+  center: [0, 0],
+  zoom: 4,
+  bounds: null,
+  honeyCombFeatures: null,
+  prevZoom: 0,
+  loading: true,
+};
 export interface ExploreMapState {
   filters: ButtonFilters;
   queryFoundTags: string[];
-  listButtons: Button[];  // if hexagon clicked, can be different from boundsButtons
+  listButtons: Button[]; // if hexagon clicked, can be different from boundsButtons
   boundsFilteredButtons: Button[];
   cachedHexagons: any[];
   loading: boolean;
@@ -31,8 +61,7 @@ export interface ExploreMapState {
 export const exploreInitial = {
   draftButton: null,
   currentButton: null,
-  map:
-  {
+  map: {
     filters: defaultFilters,
     queryFoundTags: [],
     listButtons: [], // if hexagon clicked, can be different from boundsButtons
@@ -40,7 +69,8 @@ export const exploreInitial = {
     cachedHexagons: [],
     loading: true,
     initialized: false,
-  }
+  },
+  settings: exploreSettingsDefault,
 };
 
 export class FindButtons implements WatchEvent, UpdateEvent {
@@ -200,7 +230,10 @@ export class UpdateFiltersToFilterTag implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       // use query to filter tag...
-      newState.explore.map.filters = {...defaultFilters, query: this.tag};
+      newState.explore.map.filters = {
+        ...defaultFilters,
+        query: this.tag,
+      };
     });
   }
 }
@@ -210,7 +243,7 @@ export class UpdateQueryFoundTags implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.queryFoundTags = this.tags
+      newState.explore.map.queryFoundTags = this.tags;
     });
   }
 }
@@ -219,20 +252,23 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.filters = {...defaultFilters, helpButtonTypes: [this.buttonType]};
+      newState.explore.map.filters = {
+        ...defaultFilters,
+        helpButtonTypes: [this.buttonType],
+      };
     });
   }
 }
-
 
 export class UpdateBoundsFilteredButtons implements UpdateEvent {
   public constructor(private boundsFilteredButtons: Button[]) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.boundsFilteredButtons = this.boundsFilteredButtons;
-      newState.explore.map.loading = false
-      newState.explore.map.initialized = true
+      newState.explore.map.boundsFilteredButtons =
+        this.boundsFilteredButtons;
+      newState.explore.map.loading = false;
+      newState.explore.map.initialized = true;
     });
   }
 }
@@ -242,7 +278,7 @@ export class UpdateExploreUpdating implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.loading = true
+      newState.explore.map.loading = true;
     });
   }
 }
@@ -252,8 +288,8 @@ export class UpdateListButtons implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.listButtons = this.listButtons;
-      newState.explore.map.loading = false
-      newState.explore.map.initialized = true
+      newState.explore.map.loading = false;
+      newState.explore.map.initialized = true;
     });
   }
 }
@@ -264,6 +300,56 @@ export class UpdateCachedHexagons implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.cachedHexagons = this.cachedHexagons;
+    });
+  }
+}
+export class ClearCachedHexagons implements UpdateEvent {
+  public constructor() {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.cachedHexagons = [];
+    });
+  }
+}
+export class UpdateExploreSettings implements UpdateEvent {
+  public constructor(
+    private newExploreSettings: Partial<ExploreSettings>,
+  ) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      const prevSettings = state.explore.settings;
+
+      const localStorageExploreSettings = localStorageService.read(
+        LocalStorageVars.EXPLORE_SETTINGS,
+      );
+      let locaStorageVars = {};
+      if (localStorageExploreSettings) {
+        locaStorageVars = JSON.parse(localStorageExploreSettings);
+      }
+      const newExploreSettings = {
+        ...prevSettings,
+        prevZoom: prevSettings.zoom,
+        ...this.newExploreSettings,
+        loading: false,
+      };
+      newState.explore.settings = newExploreSettings;
+      localStorageService.save(
+        LocalStorageVars.EXPLORE_SETTINGS,
+        JSON.stringify(newExploreSettings),
+      );
+    });
+  }
+}
+
+export class SetExploreSettingsBoundsLoaded implements UpdateEvent{
+  public constructor(
+  ) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings.bounds = null;
     });
   }
 }

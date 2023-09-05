@@ -8,8 +8,8 @@ services:
     depends_on:
       - api
     networks:
-      - web
-      - api
+      - external_network
+      - internal_network
 
   api:
     # build: api/
@@ -20,11 +20,10 @@ services:
     depends_on:
       - db
     networks:
-      - api
-      - db
+      - internal_network
 
   db:
-    # build: postgres/
+    build: postgres/
     image: helpbuttons/helpbuttons-psql:main
     restart: always
     command: ["postgres", "-c", "log_statement=all"]
@@ -40,19 +39,17 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - db
-      # - web
+      - internal_network
+      - external_network
     #uncomment if using docker-compose up db and yarn dev for backend and not docker-compose.dev
-    # ports: 
-      # - 5432:5432
+    ports: 
+      - 5432:5432
+
 
 networks:
-  web:
-    external:
-      name: web
-  db:
-  api:
-
+  external_network:
+  internal_network:
+    internal: true
 
 volumes:
   db:

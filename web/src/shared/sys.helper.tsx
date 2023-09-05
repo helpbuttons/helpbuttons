@@ -94,3 +94,15 @@ export function isRoleAllowed(role: Role, path): boolean {
     );
   }
 }
+
+export const tagify = (str) => {
+  let strOut = str
+    .replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ');
+  strOut = strOut.replace(/\s+|\s+/gm, '');
+  return strOut;
+}
+
+export const uniqueArray = (a) =>
+Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
+  JSON.parse(s),
+);

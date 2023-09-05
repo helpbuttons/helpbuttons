@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { GeoJson, GeoJsonFeature, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store } from 'pages';
 import { useRef } from 'store/Store';
-import { updateCurrentButton } from 'state/Explore';
+import { SetExploreSettingsBoundsLoaded } from 'state/Explore';
 import { HbMap } from '.';
 import {
   convertBoundsToGeoJsonHexagons,
@@ -11,7 +11,7 @@ import {
   getResolution,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
-import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 
 export default function HexagonExploreMap({
@@ -19,12 +19,11 @@ export default function HexagonExploreMap({
   currentButton,
   handleBoundsChange,
   exploreSettings,
-  setMapCenter,
   setHexagonsToFetch,
   setHexagonClicked,
   hexagonClicked,
   isRedrawingMap,
-  filters,
+  selectedNetwork,
 }) {
   const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
   const [centerBounds, setCenterBounds] = useState<Point>(null);
@@ -34,11 +33,6 @@ export default function HexagonExploreMap({
     handleBoundsChange(bounds, center, zoom);
     setCenterBounds(center);
   };
-
-  const selectedNetwork = useRef(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
 
   useEffect(() => {
     if (exploreSettings.loading) {
@@ -52,6 +46,12 @@ export default function HexagonExploreMap({
         exploreSettings.bounds,
         getResolution(exploreSettings.zoom),
       );
+      store.emit(new SetExploreSettingsBoundsLoaded())
+      if(boundsHexes.length > 1000)
+      {
+        console.error('too many hexes.. canceling..')
+        return;
+      }
       setHexagonsToFetch({
         resolution: getResolution(exploreSettings.zoom),
         hexagons: boundsHexes,
@@ -66,19 +66,24 @@ export default function HexagonExploreMap({
     setMaxButtonsHexagon(() =>
       h3TypeDensityHexes.reduce((accumulator, currentValue) => {
         return Math.max(accumulator, currentValue.count);
-      }, maxButtonsHexagon),
+      }, 1),
     );
   }, [h3TypeDensityHexes]);
 
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
+  
+  useEffect(() => {
+    // workaround for map to mind the new center..
+  }, [exploreSettings.center])
   return (
     <>
       <HbMap
         mapCenter={exploreSettings.center}
         mapZoom={exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
-        tileType={exploreSettings.tileType}
+        tileType={selectedNetwork.exploreSettings.tileType}
       >
-        {selectedNetwork && (
           <Overlay anchor={[100, 100]}>
             <div className="search-map__network-title">
               {selectedNetwork.name}
@@ -88,15 +93,15 @@ export default function HexagonExploreMap({
               </div>
             </div>
           </Overlay>
-        )}
 
         <GeoJson>
           {geoJsonFeatures.map((hexagonFeature) => (
             <GeoJsonFeature
               onClick={(feature) => {
                 if (hexagonFeature.properties.count > 0) {
-                  console.log(feature.payload);
                   setHexagonClicked(() => feature.payload);
+                }else{
+                  setHexagonClicked(() => null);
                 }
               }}
               feature={hexagonFeature}
@@ -111,26 +116,13 @@ export default function HexagonExploreMap({
                     opacity: 0.7,
                   };
                 }
-                if (hexagonFeature.properties.count < 0) {
-                  return {
-                    fill: 'red',
-                    strokeWidth: '1',
-                    stroke: '#18AAD2',
-                    r: '20',
-                    opacity: 0.2,
-                  };
-                }
                 if (hexagonFeature.properties.count < 1) {
                   return {
                     fill: 'transparent',
                     strokeWidth: '1',
                     stroke: '#18AAD2',
                     r: '20',
-                    opacity:
-                      0.2 +
-                      (hexagonFeature.properties.count * 50) /
-                        (maxButtonsHexagon - maxButtonsHexagon / 4) /
-                        100,
+                    opacity: 0.2,
                   };
                 }
                 return {
@@ -202,7 +194,7 @@ export default function HexagonExploreMap({
             className="pigeon-map__custom-block"
             key={hexagonClicked.properties.hex}
           >
-            <div className="pigeon-map__hex-wrap">
+            <div className="pigeon-map__hex-wrap pigeon-map__hex-wrap--selected">
               {hexagonClicked.properties.groupByType.map(
                 (hexagonBtnType, idx) => {
                   if (hexagonBtnType.count < 1) {

@@ -26,7 +26,7 @@ body {
   background: $color-white;
   box-shadow: unset;
   padding: 0;
-  z-index: $z-index-04;
+  z-index: $z-index-03;
 
   // Header Top Content Bottom
   display: flex;
@@ -41,6 +41,7 @@ body {
   width: 100%;
   padding: .5rem;
   position:  relative;
+  border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
   height: $popup-header-height;
 
 }
@@ -120,8 +121,9 @@ body {
   width: 100%;
   height: auto;
   overflow-y: auto;
+  margin-bottom: $footer-height-mobile;
   overflow-x: hidden;
-  // border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;//REVISE
+  border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;//REVISE
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -336,7 +338,6 @@ body {
 
     margin: 0px auto;
     max-width: $popup-max-width;
-    padding-bottom: $padding-big;
 
     // Centering
     display: flex;
@@ -355,6 +356,7 @@ body {
     display: flex;
     flex-direction: column;
     //justify-content: flex-end;
+    margin-bottom: 0;
   }
 
   .popup__header {

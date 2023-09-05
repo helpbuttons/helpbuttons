@@ -13,6 +13,7 @@ import { GlobalState } from 'pages';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { handleError } from './helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
+import { ButtonService } from 'services/Buttons';
 
 export interface UsersState {
   currentUser: IUser;
@@ -84,7 +85,7 @@ export class FetchUserData implements WatchEvent {
     return UserService.whoAmI().pipe(
       tap((userData) => {
         if (userData && this.onSuccess) {
-          this.onSuccess();
+          this.onSuccess(userData);
         }
       }),
       map((userData) => new SetCurrentUser(userData)),
@@ -127,6 +128,22 @@ export class FindUser implements WatchEvent {
         this.onSuccess(userData);
       }),
     );
+  }
+}
+
+export class FindAdminButton implements WatchEvent {
+  public constructor(
+    private userId,
+    private onSuccess = undefined,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return ButtonService.findByUserId(this.userId).pipe(
+      map((buttonData) => { 
+        this.onSuccess(buttonData);
+      }),
+      catchError((error) => {this.onSuccess(null); return  of(undefined)})
+    )
   }
 }
 

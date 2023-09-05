@@ -11,8 +11,8 @@
     -webkit-animation: spin 1s ease-in-out infinite;
     z-index: $z-index-06;
     margin: auto;
-    // position: absolute;
-    left: 0;
+    position: relative;
+
   }
   
   @keyframes spin {

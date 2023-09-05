@@ -16,31 +16,32 @@ import { Role } from '@src/shared/types/roles';
   @Controller('networks')
   export class NetworkController {
     constructor(private readonly networkService: NetworkService) {}
-  
+    
+    @OnlyAdmin()
     @Post('new')
-    create(@Body() createDto: CreateNetworkDto
+    async create(@Body() createDto: CreateNetworkDto
     ){
-      return this.networkService.create(createDto);
+      return await this.networkService.create(createDto);
     }
 
     @AllowGuest()
     @Get('findById')
-    findDefaultNetwork() {
-      return this.networkService.findDefaultNetwork();
+    async findDefaultNetwork() {
+      return await this.networkService.findDefaultNetwork();
     }
     
     @OnlyAdmin()
     @Post('update')
-    update(
+    async update(
       @Body() updateNetworkDto: UpdateNetworkDto,
     ) {
-      return this.networkService.update(updateNetworkDto);
+      return await this.networkService.update(updateNetworkDto);
     }
 
     @AllowGuest()
     @Get('config')
     async config() {
-      return this.networkService.getConfig()
+      return await this.networkService.getConfig()
     }
   
   }

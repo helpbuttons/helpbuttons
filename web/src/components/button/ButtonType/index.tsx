@@ -3,10 +3,8 @@ import FieldError from 'elements/Fields/FieldError';
 import FieldRadio from 'elements/Fields/FieldRadio';
 import FieldRadioOption from 'elements/Fields/FieldRadio/option';
 import React from 'react';
-import { useState } from 'react';
-
 import { IoClose } from 'react-icons/io5';
-import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle } from 'shared/buttonTypes';
 type IconType = 'cross' | 'red';
 
 function RadioIcon({ icon }: { icon: IconType }) {
@@ -18,14 +16,14 @@ function RadioIcon({ icon }: { icon: IconType }) {
         </div>
       );
     case 'red':
-      return <div className="btn-filter__icon red"></div>;
+      return <div className="btn-filter__icon"></div>;
     default:
       return null;
   }
 }
 
 const ButtonType = React.forwardRef(
-  ({ name, onChange, onBlur, validationError, label, explain }, ref) => {
+  ({ name, onChange, onBlur, validationError, label, explain, buttonTypes }, ref) => {
     return (
       <>
         <FieldRadio label={label} explain={explain}>

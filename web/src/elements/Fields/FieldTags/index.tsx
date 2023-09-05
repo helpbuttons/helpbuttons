@@ -3,6 +3,7 @@ import FieldError from '../FieldError';
 
 import t from 'i18n';
 import { IoClose } from 'react-icons/io5';
+import { tagify } from 'shared/sys.helper';
 
 
 export default function FieldTags({
@@ -30,7 +31,8 @@ export default function FieldTags({
     ) {
       return;
     }
-    tags.push(newTag);
+    
+    tags.push(tagify(newTag));
     setTags(tags);
   };
 
@@ -65,6 +67,7 @@ export default function FieldTags({
         value={input}
         placeholder={placeholder}
         autoComplete="off"
+        onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
       />
       <TagList tags={tags} remove={remove}/>
       

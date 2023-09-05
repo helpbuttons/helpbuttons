@@ -20,8 +20,8 @@ export class UserController {
   @AllowGuest()
   // @AllowIfNetworkIsPublic()
   @Get('/find/:username')
-  find(@Param('username') username: string) {
-    return this.userService.findByUsername(username)
+  async find(@Param('username') username: string) {
+    return await this.userService.findByUsername(username)
     .then((user) => {
       return user
     })

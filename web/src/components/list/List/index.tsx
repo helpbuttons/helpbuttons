@@ -1,11 +1,12 @@
 //List of elements component that can be used in home, profile and other pages/layouts where we need to ddisplay buttons/networks/other elements
 //a foreach => buttons
-import React from 'react';
+import React,{useState} from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import ContentList from 'components/list/ContentList';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
 import { ShowMobileOnly } from 'elements/SizeOnly';
+import { useButtonTypes } from 'shared/buttonTypes';
 
 function List({
   onLeftColumnToggle,
@@ -16,12 +17,26 @@ function List({
   const handleChange = (event) => {
     onLeftColumnToggle(event.target.value);
   };
-
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
   let [numberButtons, setNumberButtons] = React.useState(5);
-  const handleScroll = (e) => {
+  const handleScrollWidth = (e) => {
     
     const edge = e.target.scrollWidth - e.target.scrollLeft === e.target.clientWidth;
-    if (edge) { 
+    const edgeHeight = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    if (edge || edgeHeight) { 
+      setNumberButtons((prevValue) => { 
+        const newValue = prevValue + 2 
+        if (newValue < buttons.length)
+          return newValue
+        return prevValue
+      })
+    }
+  }
+
+  const handleScrollHeight = (e) => {
+    const edgeHeight = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    if (edgeHeight) { 
       setNumberButtons((prevValue) => { 
         const newValue = prevValue + 2 
         if (newValue < buttons.length)
@@ -39,6 +54,7 @@ function List({
             className={
               'list__container '
             }
+            onScroll={handleScrollHeight}
           >
             <div
                 onClick={handleChange}
@@ -56,8 +72,10 @@ function List({
                 </div>
             </div>
 
-            <div className="list__content" onScroll={handleScroll}>
-              <ContentList buttons={buttons.slice(0, numberButtons)} />
+            <div className="list__content" onScroll={handleScrollWidth}>
+              {buttonTypes?.length > 0 && 
+              <ContentList buttons={buttons.slice(0, numberButtons)} buttonTypes={buttonTypes}/>
+              }
             </div>
 
           </div>

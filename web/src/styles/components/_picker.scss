@@ -23,7 +23,7 @@ $picker-comments-item-padding: 25px;
 
 .picker__content {
 
-  position: relative;
+  position: absolute;
   overflow: auto;
   width: 100vw; //Revise antes era 100%
   min-width: $picker-min-width;
@@ -38,6 +38,14 @@ $picker-comments-item-padding: 25px;
 
 }
 
+//react color select plugin modifier
+.react-colorful {
+
+  width: 100% !important;
+  height: 100px !important;
+
+}
+
 
 // LISTA DE ICONOS EN COLUMNAS DE 3
 .picker__list-elem {
@@ -45,7 +53,7 @@ $picker-comments-item-padding: 25px;
   width: 70px;
   height: 70px;
   padding: $picker-padding;
-  margin: $margin-extra-small;
+  margin: $margin-xsmall;
   float: left;
   background: transparent;
   border: none;

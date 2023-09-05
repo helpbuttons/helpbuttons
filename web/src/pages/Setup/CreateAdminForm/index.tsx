@@ -34,6 +34,7 @@ function CreateAdminForm() {
       password_confirm: '',
       email: '',
       name: '',
+      locale: 'en',
     },
   });
 
@@ -94,6 +95,7 @@ function CreateAdminForm() {
             password: data.password,
             name: '',
             avatar: data.avatar,
+            locale: data.locale
           },
           () => {
             router.push({
@@ -137,7 +139,7 @@ function CreateAdminForm() {
           <div className="form__btn-wrapper">
             <Btn
               submit={true}
-              btnType={BtnType.splitIcon}
+              btnType={BtnType.submit}
               caption={t('common.next')}
               contentAlignment={ContentAlignment.center}
               isSubmitting={isSubmitting}

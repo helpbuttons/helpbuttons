@@ -1,7 +1,7 @@
 //List of elements component that can be used anywhere in the app
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoEllipsisHorizontalSharp } from "react-icons/io5";
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
-import CheckBox from 'elements/Checkbox'
+import CheckBox from 'elements/MultiSelectOption'
 import { IoSearch } from "react-icons/io5";
 import BtnCircle from 'elements/BtnCircle'
 
@@ -23,26 +23,26 @@ function Repository() {
 
           <section className="repository__section">
 
-            <Btn iconLeft={IconType.red} caption="Necesito Btn" />
+            <Btn iconLeft={IconType.color} caption="Necesito Btn" />
 
             <button className="btn-with-icon btn-with-icon--need">
-              <div className="btn-filter__icon red"></div>
+              <div className="btn-filter__icon"></div>
               <div className="btn-with-icon__text">
                 Necesito
               </div>
             </button>
 
-            <Btn iconLeft={IconType.green} caption="Ofrezco Btn" />
+            <Btn iconLeft={IconType.color} caption="Ofrezco Btn" />
             <button className="btn-with-icon button-with-icon--offer">
-              <div className="btn-filter__icon green"></div>
+              <div className="btn-filter__icon"></div>
               <div className="btn-with-icon__text">
                 Ofrezco
               </div>
             </button>
 
-            <Btn iconLeft={IconType.green} caption="Ofrezco inactivo Btn" disabled={true} />
+            <Btn iconLeft={IconType.color} caption="Ofrezco inactivo Btn" disabled={true} />
             <button disabled className="btn-with-icon button-with-icon--offer">
-              <div className="btn-filter__icon green"></div>
+              <div className="btn-filter__icon"></div>
               <div className="btn-with-icon__text">
                 Ofrezco inactivo
               </div>
@@ -105,15 +105,15 @@ function Repository() {
 
             <hr></hr>
 
-            <Btn btnType={BtnType.filter} iconLeft={IconType.green} caption="Filter with icon green Btn" />
+            <Btn btnType={BtnType.filter} iconLeft={IconType.color} caption="Filter with icon green Btn" />
             <button className="btn-filter-with-icon">
-              <div className="btn-filter__icon green"></div>
+              <div className="btn-filter__icon"></div>
               Filter with icon green
             </button>
 
-            <Btn btnType={BtnType.filter} iconLeft={IconType.green} iconRight={IconType.remove} caption="Filter with double icon Btn" />
+            <Btn btnType={BtnType.filter} iconLeft={IconType.color} iconRight={IconType.remove} caption="Filter with double icon Btn" />
             <button className="btn-filter-with-icon">
-              <div className="btn-filter__icon green"></div>
+              <div className="btn-filter__icon"></div>
               Filter with double icon
               <div className="btn-filter__remove-icon"></div>
             </button>
@@ -124,7 +124,7 @@ function Repository() {
               <label className="checkbox__filter-label">
                 <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                 <div className="checkbox-filter__content btn-filter-with-icon">
-                  <div className="btn-filter__icon red"></div>
+                  <div className="btn-filter__icon"></div>
 
                   <div className="checkbox__text">
                     Filter checkbox
@@ -286,7 +286,7 @@ function Repository() {
           <section className="repository__section">
 
           <div className="label">label checkbox</div>
-            <CheckBox icon="cross" text="Ahora CheckBox" inputId="ahora-checkbox" />
+            <MultiSelectOption icon="cross" text="Ahora CheckBox" inputId="ahora-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
@@ -303,12 +303,12 @@ function Repository() {
 
             <hr></hr>
 
-            <CheckBox icon="red" text="Necesito Ahora CheckBox" inputId="necesito-ahora-checkbox" />
+            <MultiSelectOption icon="red" text="Necesito Ahora CheckBox" inputId="necesito-ahora-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
                 <div className="checkbox__content">
-                  <div className="checkbox__icon red"></div>
+                  <div className="checkbox__icon"></div>
                   <div className="checkbox__text">
                     Necesito Ahora
                   </div>
@@ -318,7 +318,7 @@ function Repository() {
 
             <hr></hr>
 
-            <CheckBox icon="cross" text="Fecha/hora concreta CheckBox" inputId="fecha-hora-concreta-checkbox" />
+            <MultiSelectOption icon="cross" text="Fecha/hora concreta CheckBox" inputId="fecha-hora-concreta-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
@@ -335,7 +335,7 @@ function Repository() {
 
             <hr></hr>
 
-            <CheckBox icon="cross" text="Cerca de mí CheckBox" inputId="cerca-de-mi-checkbox" />
+            <MultiSelectOption icon="cross" text="Cerca de mí CheckBox" inputId="cerca-de-mi-checkbox" />
             <div className="checkbox">
               <label className="checkbox__label">
                 <input type="checkbox" className="checkbox__checkbox" id="input-tos"></input>
@@ -1463,7 +1463,7 @@ function Repository() {
                 <label className="checkbox__filter-label">
                   <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                   <div className="checkbox-filter__content btn-filter-with-icon">
-                    <div className="btn-filter__icon red"></div>
+                    <div className="btn-filter__icon"></div>
 
                     <div className="checkbox__text">
                       Necesitan
@@ -1476,7 +1476,7 @@ function Repository() {
                 <label className="checkbox__filter-label">
                   <input type="checkbox" className="checkbox-filter__checkbox" id="input-tos"></input>
                   <div className="checkbox-filter__content btn-filter-with-icon">
-                    <div className="btn-filter__icon red"></div>
+                    <div className="btn-filter__icon"></div>
 
                     <div className="checkbox__text">
                       Necesitan

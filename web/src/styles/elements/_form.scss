@@ -1,7 +1,7 @@
 $form-input-height: 54px;
 $form-input-width: 100%;
 $form-field-max-width: $grid-max-width;
-$form-input-padding: $padding-medium;
+$form-input-padding: $padding-big;
 $form-input-font-size: $font-size-medium;
 $form-input-border-radius: $border-general-height;
 
@@ -11,6 +11,15 @@ $form-input-border-radius: $border-general-height;
   }
 }
 
+
+.form__section-title {
+
+
+font-weight: $font-weight-bold;
+font-size: $font-size-title;
+margin: $margin-medium 0;
+
+}
 
 .form__label {
   z-index: $z-index-base;
@@ -66,7 +75,7 @@ $form-input-border-radius: $border-general-height;
 
 
 .form__field {
-  max-width:$form-field-max-width;
+  // max-width:$form-field-max-width;
   font-size: $font-size-medium;
   margin-bottom: $margin-big;
 }
@@ -106,7 +115,7 @@ $form-input-border-radius: $border-general-height;
 .form__explain,
 .form__label {
 
-  margin-bottom: .6rem;
+  margin-bottom: $margin-xsmall;
 
 }
 
@@ -122,7 +131,7 @@ $form-input-border-radius: $border-general-height;
   padding: $padding-big $padding-big;
   font-size: $font-size-general;
   height: $form-input-height;
-  margin: $margin-extra-small 0;
+  margin: $margin-xsmall 0;
 
   & ul {
 
@@ -155,12 +164,21 @@ $form-input-border-radius: $border-general-height;
   .css-13cymwt-control {
 
     height: $form-input-height;
+    padding-left: $form-input-padding;
 
   }
 
   .css-1fdsijx-ValueContainer {
 
     height: $form-input-height;
+    padding: 0;
+
+  }
+
+  .css-t3ipsp-control, .css-hlgwow {
+
+    height: $form-input-height;
+    padding-left: $form-input-padding;
 
   }
 
@@ -263,6 +281,51 @@ $form-input-border-radius: $border-general-height;
   }
 
 }
+
+.form__list--button-type-field {
+
+display: flex;
+flex-direction: column-reverse;
+width: 100%;
+
+}
+
+.form__list-item--button-type-field {
+
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: $margin-small;
+  
+  }
+
+.form__input--button-type-field {
+
+  display: flex;
+  flex-direction: column;
+  width: stretch;
+  gap: $margin-small;
+}
+
+
+.form__input--button-type-field .form__field {
+  flex-basis: 100%; /* Take 60% of the width */
+  margin-bottom: 0;
+}
+
+.form__input--button-type-field button {
+  // flex-basis: 20%; /* Take 20% of the width */
+  margin-bottom: $margin-medium;
+}
+
+.form__field .btn--corporative {
+
+  margin-bottom: $margin-medium;
+
+}
+
 .form__options-v {
 
   flex-flow: column nowrap;
@@ -348,7 +411,7 @@ $form-input-border-radius: $border-general-height;
 
 .form__input-subtitle--text {
 
-  margin: 0 0 $margin-exxtra-small $margin-small;
+  margin: 0 0 $margin-xxsmall $margin-small;
   font-size: $font-size-small;
 
 }
@@ -378,7 +441,7 @@ $form-input-border-radius: $border-general-height;
   position: relative;
   height: auto;
   display: block;
-  margin: $margin-extra-small 0;
+  margin: $margin-xsmall 0;
 
 }
 
@@ -386,7 +449,7 @@ $form-input-border-radius: $border-general-height;
 
   height: 90px;
   width: 90px;
-  margin: $margin-extra-small;
+  margin: $margin-xsmall;
   position: relative;
   display: flex;
   align-items: center;
@@ -428,6 +491,12 @@ $form-input-border-radius: $border-general-height;
 }
 
 @media #{$breakpoints-medium} {
+
+  .form__input--button-type-field {
+
+    flex-direction: row;
+
+  }
 
   .form__field--feed button {
     width: 60px;

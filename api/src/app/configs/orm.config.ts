@@ -18,6 +18,9 @@ export const dataSourceOptions:DataSourceOptions = {
     // https://github.com/typeorm/typeorm/issues/3388#issuecomment-673242516
     extra: {
         max: 10,
-        connectionTimeoutMillis: 2000,
+        poolSize: 10,
+        idle_timeout: 30,
+        connect_timeout: 30,
+        connectionTimeoutMillis: 1000,
     },
 }

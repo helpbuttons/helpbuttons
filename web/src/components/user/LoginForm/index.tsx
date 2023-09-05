@@ -14,6 +14,7 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { Link } from 'elements/Link';
 import { useRouter } from 'next/router';
 import t from 'i18n';
+import { alertService } from 'services/Alert';
 
 export default function LoginForm() {
   const {
@@ -33,6 +34,7 @@ export default function LoginForm() {
   const onSuccess = () => {
     let returnUrl: string = '/HomeInfo';
 
+    alertService.success(t('user.loginSucess'))
     if (router?.query?.returnUrl) {
       returnUrl = router.query.returnUrl.toString();
     }
@@ -75,7 +77,7 @@ export default function LoginForm() {
         <div className="form__btn-wrapper">
           <Btn
             submit={true}
-            btnType={BtnType.splitIcon}
+            btnType={BtnType.submit}
             caption={t('user.loginButton')}
             contentAlignment={ContentAlignment.center}
             isSubmitting={isSubmitting}

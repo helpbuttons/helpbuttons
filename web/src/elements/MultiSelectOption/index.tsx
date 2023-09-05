@@ -1,8 +1,10 @@
+import FieldError from 'elements/Fields/FieldError';
 import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
-type IconType = 'cross' | 'red';
+import { IoCheckmark } from 'react-icons/io5';
+type IconType = 'cross' | 'red' | 'check';
 
-export function CheckBoxIcon({ icon }: { icon: IconType }) {
+export function MultiSelectOptionIcon({checked, icon }: { icon: IconType, checked:boolean }) {
   switch (icon) {
     case 'cross':
       return (
@@ -10,28 +12,38 @@ export function CheckBoxIcon({ icon }: { icon: IconType }) {
           <IoClose />
         </div>
       );
+    case 'check':
+    return (
+      <div className="checkbox__icon">
+        { checked && <IoCheckmark />}
+      </div>
+    );
     case 'red':
-      return <div className="btn-filter__icon red"></div>;
+      return <div className="btn-filter__icon"></div>;
     default:
       return null;
   }
 }
 
-export default function CheckBox({
+export default function MultiSelectOption({
   defaultValue,
   name,
   handleChange = (name: string, value: any) => {},
   children,
+  icon,
+  ref,
 }: {
   defaultValue: boolean;
   name: string;
   handleChange?: (name: string, value: any) => void;
   children: any;
+  icon: IconType;
+  ref: any;
 }) {
   const [checked, setChecked] = useState<boolean>(defaultValue);
 
   const onChange = () => {
-    setChecked(() => !checked);
+    setChecked((prevValue) => !prevValue);
     handleChange(name, !checked);
   };
 
@@ -44,10 +56,12 @@ export default function CheckBox({
           name={name}
           checked={checked}
           onChange={onChange}
+          ref={ref}
         ></input>
         <div
           className={`checkbox__content ${checked ? 'checked' : ''}`}
         >
+          <MultiSelectOptionIcon checked={checked} icon={icon}/>
           {children}
         </div>
       </label>

@@ -14,7 +14,7 @@ $btn-filter-padding-y: 0;
 $btn-filter-height: 20px;
 $btn-hashtag-close-height: 13px;
 $btn-hashtag-close-margin: 7px;
-$btn-filter-icon-margin: $margin-extra-small;
+$btn-filter-icon-margin: $margin-xsmall;
 $btn-hashtag-bottom: 8px;
 $btn-hashtag-right-padding: 8px;
 $btn-hashtag-erase-height: 14px;
@@ -49,11 +49,6 @@ $btn-font-size-medium: $font-size-medium;
   border-top: 1px solid $color-gray-border;
   border-right: 1px solid $color-gray-border;
 
-  &:last-child {
-
-    border-right: none;
-
-  }
 
 }
 
@@ -91,7 +86,7 @@ $btn-font-size-medium: $font-size-medium;
   border-radius: $btn-border-radius ;
   text-decoration: none;
   text-align: center ;
-  margin: 0 $margin-exxtra-small ;
+  margin: 0 $margin-xxsmall ;
 
   a {
 
@@ -104,7 +99,7 @@ $btn-font-size-medium: $font-size-medium;
 
     height: $btn-with-icon-small-icon-width;
     width: $btn-with-icon-small-icon-width;
-    padding-left: $padding-extra-small;
+    padding-left: $padding-xsmall;
 
   }
 
@@ -206,7 +201,7 @@ $btn-font-size-medium: $font-size-medium;
   border-radius: $border-radius-circle;
   height: $btn-height;
   font-weight: $font-weight-bold;
-  margin-top: $margin-extra-small;
+  margin-top: $margin-xsmall;
   width: 100%;
   color: $color-black;
 

@@ -1,4 +1,4 @@
-import { ImageContainer } from 'elements/ImageWrapper';
+import { ImageContainer, ImageType } from 'elements/ImageWrapper';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
@@ -64,6 +64,7 @@ export const FieldImageUpload = React.forwardRef(({ name, label, subtitle, width
                         <div className='form__image-upload-preview--image'>
                           <ImageContainer
                             src={image}
+                            imageType={ImageType.preview}
                             alt={alt}
                             width={width}
                             height={height}

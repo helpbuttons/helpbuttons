@@ -75,8 +75,8 @@ $avatar-margin: $padding-big;
 .card-profile__container {
 
   display: flex;
-  height: 100vh;
-  width: 100vw;
+  height: auto;
+  width: 100%;
   flex-direction: column;
   flex: 1;
   background-color: $color-white;
@@ -98,7 +98,6 @@ $avatar-margin: $padding-big;
   justify-content: flex-end;
   display: flex;
   flex-direction: column;
-  bottom: $nav-bottom-height;
   position: relative;
   flex: auto;
 }
@@ -138,8 +137,14 @@ $avatar-margin: $padding-big;
 
 .card-profile__avatar-container-name {
   font-size: $font-size-title;
-  font-weight: bold;
+  font-weight: $font-weight-bold;
   color: $color-black;
+}
+
+.card-profile__username {
+  font-size: $font-size-medium;
+  font-weight: $font-weight-light;
+  color: $color-gray;
 }
 
 .grid-one__column-mid-element {
@@ -158,12 +163,14 @@ $avatar-margin: $padding-big;
     // background-color: $color-white;
     // border-radius: $border-radius-circle;
     // padding: $padding-big;
-    padding: 10px;
+    padding: $padding-medium;
     display: flex;
     flex-flow: column nowrap;
     height: 100%;
-    width: 100vw;
+    width: 100%;
     min-width: $grid-max-width;
+    margin-bottom: 0;
+    padding-bottom: $padding-medium;
   }
 
   .card-profile__rating {
