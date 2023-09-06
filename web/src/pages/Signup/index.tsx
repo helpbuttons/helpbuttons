@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
-import { store } from 'pages';
+import { GlobalState, store } from 'pages';
 import { SignupUser } from 'state/Users';
 
 //imported react components
@@ -25,6 +25,9 @@ import { alertService } from 'services/Alert';
 import t from 'i18n';
 import { setValidationErrors } from 'state/helper';
 import { getLocale } from 'shared/sys.helper';
+import { useStore } from 'store/Store';
+import FieldText from 'elements/Fields/FieldText';
+import { Network } from 'shared/entities/network.entity';
 
 export default function Signup() {
   const {
@@ -41,12 +44,31 @@ export default function Signup() {
       password: '',
       password_confirm: '',
       email: '',
-      locale: 'en'
+      locale: 'en',
+      inviteCode: ''
     },
   });
   const router = useRouter();
   const { pathname, asPath, query } = router
 
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+
+  const selectedNetwork: Network = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+  
+  useEffect(() => {
+    if(loggedInUser)
+    {
+      alertService.warn('You already have an account!')
+      router.push('/HomeInfo')
+    }
+  }, [loggedInUser])
   const locale = watch('locale')
   useEffect(() => {
     if(locale != getLocale())
@@ -66,6 +88,7 @@ export default function Signup() {
             name: '',
             avatar: data.avatar,
             locale: getLocale(),
+            inviteCode: data.inviteCode
           },
           onSuccess,
           onError,
@@ -86,14 +109,39 @@ export default function Signup() {
     console.log(error);
     alertService.error(error.caption);
   };
+
   
   const params: URLSearchParams = new URLSearchParams(router.query);
+  useEffect(() => {
+    if(router?.query)
+    {
+      setValue('inviteCode', params.get('inviteCode'))
+    }
+  }, [router])
+
+  useEffect(() => {
+    if(selectedNetwork?.inviteOnly)
+    {
+      alertService.info(t('invite.inviteOnlySignupMessage'))
+    }
+  }, [selectedNetwork])
 
   return (
     <Popup title="Signup" linkFwd="/HomeInfo">
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
         <div className="login__form">
           <div className="form__inputs-wrapper">
+            {(params.get('inviteCode') || selectedNetwork?.inviteOnly) && 
+              <>{params.get('inviteCode')}
+              <FieldText
+                name="inviteCode"
+                label={t('invite.inviteCodeLabel')}
+                classNameInput="squared"
+                validationError={errors.inviteCode}
+                {...register('inviteCode')}
+              ></FieldText>
+              </>
+            }
             <NewUserFields
               control={control}
               register={register}

@@ -137,4 +137,5 @@ export class LoginRequestDto {
   })
   password: string;
 
+  inviteCode: string;
 }

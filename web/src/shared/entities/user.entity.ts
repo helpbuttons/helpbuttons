@@ -88,7 +88,7 @@ export class User extends BaseEntity {
   @Column({type: 'text', default: 'en'})
   locale: string;
 
-  @Column({default: false})
+  @Column({default: true})
   receiveNotifications: boolean;
 }
 
