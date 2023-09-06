@@ -10,7 +10,7 @@
     "donate": "Donar"
   },
   "homeinfo": {
-    "selectedArea":"en el area seleccionada",
+    "selectedArea": "en el area seleccionada",
     "start": "Donde quieres empezar?",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
@@ -18,7 +18,7 @@
     "stats": "Estadísticas de la Red",
     "users": "{0} usuarios en esta Red",
     "actions": "¿Qué puedes hacer?",
-    "popularHashtags":"¿De qué tratan?",
+    "popularHashtags": "¿De qué tratan?",
     "profileSubtitle": "Comprueba tu perfil",
     "createSubtitle": "Crea tu botón de ayuda y colabora",
     "faqsSubtitle": "Lee más sobre esta app",
@@ -27,7 +27,6 @@
     "loginSubtitle": "¡Entra o crea tu cuenta!",
     "buttons": "Hay {0} botones de ayuda en esta Red",
     "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación: "
-
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -36,7 +35,7 @@
   "hostname": "nombre de host",
   "common": {
     "save": "Guardar",
-    "in":"en",
+    "in": "en",
     "publish": "Publicar",
     "saveSuccess": "{0} guardado",
     "choose": "Elige {0}",
@@ -51,7 +50,8 @@
     "done": "Hecho",
     "remove": "Eliminar",
     "click": "Haz click aquí",
-    "publishTitle": "Publicar {0}"
+    "publishTitle": "Publicar {0}",
+    "deleteSuccess": ""
   },
   "configuration": {
     "namePlaceHolder": "Red de agricultores de Vilanova",
@@ -78,7 +78,15 @@
     "buttonTemplateExplain": "Aquí puedes elegir los tipòs de botón de ayuda que va a tener tu red. Intenta que sean pocos tipos y generales como 'Ofrecer' o 'Necesitar'. Si quieres ser más específico/a pùedes usar etiquetas para categorizar más adelante.",
     "moderateNetwork": "Modera tu Red",
     "blockedExplain": "Bloqueados",
-    "adminUsers": "Administradores"
+    "adminUsers": "Administradores",
+    "customizeAppearance": "",
+    "chooseColorsExplain": "",
+    "pickSecondaryColor": "",
+    "configureNetwork": "",
+    "nomeclatureExplain": "",
+    "buttonTemplateLabel": "",
+    "buttonTemplatePlaceHolder": "",
+    "contactAdmin": ""
   },
   "activities": {
     "newbutton": "Creaste <a href='/ButtonFile/{0}'>{1}</a> en <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
@@ -137,7 +145,7 @@
   },
   "buttonFilters": {
     "queryLabel": "¿Qué buscas?",
-    "searchBarTop":"{1} botones de ayuda {0}",
+    "searchBarTop": "{1} botones de ayuda {0}",
     "queryExplain": "Escribe lo que quieras encontrar",
     "tagsExplain": "Las palabras clave son los temas más importantes o más tratados en la Red",
     "where": "¿Dónde?",
@@ -237,5 +245,12 @@
     "privacyDescription": "En Helpbuttons, respetamos tu privacidad y estamos comprometidos a proteger tus datos personales. Nuestra política de privacidad describe cómo recopilamos, almacenamos, usamos y divulgamos tu información personal. Cumplimos con todas las leyes y regulaciones de privacidad relevantes, asegurando que tus datos se utilicen únicamente con el propósito de proporcionar y mejorar nuestro servicio. Somos transparentes en cuanto a nuestros procesos de recopilación de datos, y tienes el derecho de acceder, actualizar o eliminar tus datos personales en cualquier momento. Recuerda que compartir información personal en las publicaciones de Helpbuttons está a tu discreción, sé consciente y comparte solo lo que te sientas cómodo compartiendo con los demás.\nPor favor, dirige tus preguntas al siguiente correo electrónico: helpbuttons@coletivos.org",
     "securityDescription": "Tu seguridad es nuestra principal prioridad. En Helpbuttons, implementamos medidas de seguridad estrictas para proteger la integridad de nuestro software y la seguridad de nuestros usuarios. Actualizamos y revisamos continuamente nuestros sistemas para garantizar que cumplan con los más altos estándares de ciberseguridad. Sin embargo, también creemos que la seguridad es una responsabilidad compartida. Alentamos a nuestros usuarios a practicar comportamientos seguros en línea, como usar contraseñas fuertes y proteger la información personal.\nPor favor, dirige tus preguntas al siguiente correo electrónico: helpbuttons@coletivos.org",
     "contactDescription": "Por favor, dirige tus preguntas al siguiente correo electrónico: helpbuttons@coletivos.org"
+  },
+  "invite": {
+    "never": "",
+    "expiresIn": "",
+    "copy": "",
+    "inviteOnlySignupMessage": "",
+    "inviteCodeLabel": ""
   }
 }

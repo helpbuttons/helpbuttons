@@ -16,7 +16,7 @@
     "exploreSubtitle": "See & Search the helpbuttons on this map",
     "createSubtitle": "Create your helpbuttons and collaborate",
     "faqsSubtitle": "Read more about this app",
-    "popularHashtags":"What are they about?",
+    "popularHashtags": "What are they about?",
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
     "locationDetected": "Do you want to navigate to check helpbuttons in your region?",
@@ -25,7 +25,8 @@
     "users": "{0} users in this network",
     "administeredby": "Administered by ",
     "actions": "What can I do?",
-    "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:"
+    "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:",
+    "networkIsPrivate": "Private network"
   },
   "feed": {
     "write": "Write message",
@@ -40,8 +41,8 @@
     "noFilter": "in {0}"
   },
   "buttonFilters": {
-    "searchBarTop":"{1} helpbuttons found {0}",
-    "selectedArea":"in the selected area",
+    "searchBarTop": "{1} helpbuttons found {0}",
+    "selectedArea": "in the selected area",
     "queryLabel": "What do you search",
     "queryExplain": "Write whatever you want to find",
     "queryPlaceHolder": "Friends, food, toys, clothes,...",
@@ -79,7 +80,7 @@
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
     "add": "Add",
-    "in":"in",
+    "in": "in",
     "remove": "Remove",
     "publish": "Publish",
     "save": "Save",
@@ -93,7 +94,8 @@
     "next": "Next",
     "choose": "Choose {0}",
     "click": "Click here",
-    "reloadConfig": ""
+    "reloadConfig": "",
+    "deleteSuccess": ""
   },
   "button": {
     "typeLabel": "Helpbutton type",
@@ -221,7 +223,9 @@
     "nomeclaturePlaceHolder": "",
     "moderateNetwork": "",
     "blockedExplain": "",
-    "adminUsers": ""
+    "adminUsers": "",
+    "nomeclatureExplain": "",
+    "contactAdmin": ""
   },
   "configure": {
     "browsePins": "",
@@ -229,7 +233,6 @@
     "chooseBrowseType": "",
     "browseHoneyComb": ""
   },
-  
   "faqs": {
     "title": "Faqs",
     "networkQuestion": "What's {0}",
@@ -251,7 +254,12 @@
     "privacyDescription": "At Helpbuttons, we respect your privacy and are committed to protecting your personal data. Our privacy policy outlines how we collect, store, use, and disclose your personal information. We comply with all relevant privacy laws and regulations, ensuring your data is used solely for the purpose of providing and improving our service. We are transparent about our data collection processes, and you have the right to access, update, or delete your personal data at any time. Remember, sharing personal information in Helpbuttons posts is at your discretion—be mindful and only share what you are comfortable with others knowing.\nPlease direct your questions to the following email: helpbuttons@coletivos.org",
     "securityDescription": "Your security is our top priority. At Helpbuttons, we implement stringent security measures to protect the integrity of our software and the safety of our users. We continually update and review our systems to ensure they meet the highest standards of cybersecurity. However, we also believe that security is a shared responsibility. We encourage our users to practice safe online behaviors, like using strong passwords and protecting personal information.\nPlease direct your questions to the following email: helpbuttons@coletivos.org",
     "contactDescription": "Please direct your questions to the following email: helpbuttons@coletivos.org"
+  },
+  "invite": {
+    "never": "",
+    "expiresIn": "",
+    "copy": "",
+    "inviteOnlySignupMessage": "",
+    "inviteCodeLabel": ""
   }
-
-  
 }
