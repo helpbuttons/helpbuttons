@@ -1,44 +1,32 @@
 import { Column } from 'typeorm';
 import { User } from './user.entity';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class UserIdentification extends User {}
 
 export class UserUpdateDto {
-  @Column({
-    type: 'varchar',
-    unique: true,
-    length: 320,
-  })
+  @IsEmail()
   email: string;
 
-  @Column({
-    type: 'varchar',
-    length: 320,
-    nullable: true,
-  })
+  @IsString()
   name: string;
 
-  @Column({ type: 'text', nullable: true })
+  @IsString()
   avatar?: string;
 
-  @Column({ type: 'text', nullable: true })
+  @IsString()
   password_current?: string;
 
-  @Column({ type: 'text', nullable: true })
+  @IsString()
   password_new?: string;
 
-  @Column({ type: 'text', nullable: true })
+  @IsString()
   password_new_confirm?: string;
 
-  @Column({ default: false })
+  @IsBoolean()
   set_new_password?: boolean;
 
-  @Column({
-    type: 'varchar',
-    length: 320,
-    nullable: true,
-  })
+  @IsString()
   description: string;
 
   @IsNotEmpty()
@@ -47,4 +35,6 @@ export class UserUpdateDto {
 
   @Column({default: true})
   receiveNotifications: boolean;
+
+  inviteCode?: string;  
 }

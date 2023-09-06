@@ -166,7 +166,8 @@ export class NetworkService {
       exploreSettings: updateDto.exploreSettings,
       backgroundColor: updateDto.backgroundColor,
       textColor: updateDto.textColor,
-      buttonTemplates: JSON.stringify(updateDto.buttonTemplates)
+      buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
+      inviteOnly: updateDto.inviteOnly
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
