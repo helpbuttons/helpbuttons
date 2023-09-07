@@ -62,13 +62,6 @@ export default function Signup() {
     (state: GlobalState) => state.networks.selectedNetwork,
   );
   
-  useEffect(() => {
-    if(loggedInUser)
-    {
-      alertService.warn('You already have an account!')
-      router.push('/HomeInfo')
-    }
-  }, [loggedInUser])
   const locale = watch('locale')
   useEffect(() => {
     if(locale != getLocale())
@@ -110,7 +103,8 @@ export default function Signup() {
     alertService.error(error.caption);
   };
 
-  
+  const inviteCode = watch('inviteCode')
+
   const params: URLSearchParams = new URLSearchParams(router.query);
   useEffect(() => {
     if(router?.query)
@@ -120,7 +114,7 @@ export default function Signup() {
   }, [router])
 
   useEffect(() => {
-    if(selectedNetwork?.inviteOnly)
+    if(selectedNetwork?.inviteOnly && !inviteCode)
     {
       alertService.info(t('invite.inviteOnlySignupMessage'))
     }
@@ -132,7 +126,7 @@ export default function Signup() {
         <div className="login__form">
           <div className="form__inputs-wrapper">
             {(params.get('inviteCode') || selectedNetwork?.inviteOnly) && 
-              <>{params.get('inviteCode')}
+              <>
               <FieldText
                 name="inviteCode"
                 label={t('invite.inviteCodeLabel')}

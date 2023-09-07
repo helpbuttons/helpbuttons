@@ -13,6 +13,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { StorageModule } from '../storage/storage.module';
 import { configFileName } from '@src/shared/helpers/config-name.const';
 import { NetworkModule } from '../network/network.module';
+import { InviteModule } from '../invite/invite.module';
 
 var configFile = require(`../../../${configFileName}`);
 
@@ -28,7 +29,8 @@ var configFile = require(`../../../${configFileName}`);
     MailModule,
     StorageModule,
     TagModule,
-    NetworkModule
+    NetworkModule,
+    InviteModule
   ],
   controllers: [AuthController],
   providers: [AuthService,LocalStrategy,JwtStrategy],
