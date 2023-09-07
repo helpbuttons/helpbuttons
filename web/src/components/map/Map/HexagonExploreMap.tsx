@@ -58,8 +58,8 @@ export default function HexagonExploreMap({
   return (
     <>
       <HbMap
-        mapCenter={exploreSettings.center}
-        mapZoom={exploreSettings.zoom}
+        mapCenter={selectedNetwork.exploreSettings.center}
+        mapZoom={selectedNetwork.exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
         tileType={selectedNetwork.exploreSettings.tileType}
       >
