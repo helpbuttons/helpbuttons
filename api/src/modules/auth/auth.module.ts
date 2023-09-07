@@ -12,6 +12,7 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { StorageModule } from '../storage/storage.module';
 import { configFileName } from '@src/shared/helpers/config-name.const';
+import { NetworkModule } from '../network/network.module';
 
 var configFile = require(`../../../${configFileName}`);
 
@@ -26,7 +27,8 @@ var configFile = require(`../../../${configFileName}`);
     UserModule,
     MailModule,
     StorageModule,
-    TagModule
+    TagModule,
+    NetworkModule
   ],
   controllers: [AuthController],
   providers: [AuthService,LocalStrategy,JwtStrategy],
