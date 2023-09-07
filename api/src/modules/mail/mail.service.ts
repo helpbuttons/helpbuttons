@@ -1,13 +1,16 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { configFileName } from '@src/shared/helpers/config-name.const';
 import { GlobalVarHelper } from '@src/shared/helpers/global-var.helper';
-// import { template } from './mail.module';
+import { NetworkService } from '../network/network.service';
+import { configFileName } from '@src/shared/helpers/config-name.const';
 const config = require(`../../..${configFileName}`);
 
 @Injectable()
 export class MailService {
-  constructor(private readonly mailerService: MailerService) {}
+  constructor(
+    private readonly mailerService: MailerService,
+    private readonly networkService: NetworkService,
+    ) {}
 
   sendActivationEmail({
     to,
@@ -65,16 +68,20 @@ export class MailService {
       console.log('Error when smtp not working. mail could not be sent')
       return;
     }
-    this.mailerService.sendMail({
-      to,
-      cc,
-      bcc,
-      from: config.from,
-      subject,
-      template,
-      context,
-    }).then((mail) => {console.log(`>> mail sent to ${to} with template '${template}'`)})
-    .catch((error) => {console.log(error); console.trace()})
+    this.networkService.findDefaultNetwork().then((network) => {
+      const vars = {...context, network: network, policyUrl: `${config.hostName}/Policy`, unsubscribeUrl: `${config.hostName}/Unsubscribe/${to}`}
+      this.mailerService.sendMail({
+        to,
+        cc,
+        bcc,
+        from: config.from,
+        subject,
+        template,
+        context: vars,
+      }).then((mail) => {console.log(`>> mail sent to ${to} with template '${template}'`)})
+      .catch((error) => {console.log(error); console.trace()})
+    })
+    
     return 
   }
 
