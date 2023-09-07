@@ -171,7 +171,7 @@ export class ClearCurrentButton implements UpdateEvent {
     });
   }
 }
-export class ButtonDelete implements WatchEvent {
+export class ButtonDelete implements WatchEvent, UpdateEvent {
   public constructor(
     private buttonId: string,
     private onSuccess,
@@ -186,9 +186,17 @@ export class ButtonDelete implements WatchEvent {
       catchError((error) => handleError(this.onError, error)),
     );
   }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.boundsFilteredButtons = []
+      newState.explore.map.cachedHexagons = []
+      newState.explore.map.listButtons = []
+    });
+  }
 }
 
-export class UpdateButton implements WatchEvent {
+export class UpdateButton implements WatchEvent, UpdateEvent {
   public constructor(
     private buttonId: string,
     private button: UpdateButtonDto,
@@ -202,6 +210,14 @@ export class UpdateButton implements WatchEvent {
       }),
       catchError((error) => handleError(this.onError, error)),
     );
+  }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.boundsFilteredButtons = []
+      newState.explore.map.cachedHexagons = []
+      newState.explore.map.listButtons = []
+    });
   }
 }
 export class updateCurrentButton implements UpdateEvent {
