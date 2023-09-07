@@ -13,6 +13,7 @@ import {
   UpdateExploreSettings,
   ExploreSettings,
   ClearCachedHexagons,
+  SetExploreSettingsBoundsLoaded,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef, useStore } from 'store/Store';
@@ -24,6 +25,7 @@ import { LoadabledComponent } from 'components/loading';
 import HexagonExploreMap from 'components/map/Map/HexagonExploreMap';
 import {
   calculateDensityMap,
+  convertBoundsToGeoJsonHexagons,
   getResolution,
   recalculateDensityMap,
   roundCoord,
@@ -129,7 +131,9 @@ function HoneyComb({ router }) {
           />
         </ShowDesktopOnly>
       </div>
-      <LoadabledComponent loading={exploreSettings.loading && !selectedNetwork}>
+      <LoadabledComponent
+        loading={exploreSettings.loading && !selectedNetwork}
+      >
         <HexagonExploreMap
           exploreSettings={exploreSettings}
           h3TypeDensityHexes={h3TypeDensityHexes}
@@ -195,33 +199,42 @@ function useExploreSettings({
       const click = params.get('click');
 
       if (click !== null) {
-        store.emit(new UpdateExploreSettings({center: selectedNetwork.exploreSettings.center, loading: true, bounds: null}))
+        store.emit(
+          new UpdateExploreSettings({
+            center: selectedNetwork.exploreSettings.center,
+            loading: true,
+            bounds: null,
+          }),
+        );
         // missing zoom
         return;
       }
 
-      let newExploreSettings = {}
+      let newExploreSettings = {};
       if (lat && lng) {
         store.emit(
           new UpdateExploreSettings({
             center: [lat, lng],
-            
-          }))
+          }),
+        );
       }
-      
+
       if (showFilters == 'true') {
         toggleShowFiltersForm(true);
         params.delete('showFilters');
       }
       urlParams = params;
     }
-    
   }, [router]);
   useEffect(() => {
     if (selectedNetwork) {
-      store.emit(new UpdateExploreSettings({...selectedNetwork.exploreSettings}));
+      store.emit(
+        new UpdateExploreSettings({
+          ...selectedNetwork.exploreSettings,
+        }),
+      );
     }
-  },[selectedNetwork]);
+  }, [selectedNetwork]);
 
   useEffect(() => {
     if (!exploreSettings?.loading) {
@@ -275,7 +288,6 @@ function useHexagonMap({
   };
 
   const recalculateCacheH3Hexes = (newDensityMapHexagons) => {
-
     cachedH3Hexes.current = uniqueArray([
       ...cachedH3Hexes.current,
       ...newDensityMapHexagons,
@@ -298,7 +310,7 @@ function useHexagonMap({
             (buttons) => {
               const newDensityMapHexagons = calculateDensityMap(
                 buttons,
-                getResolution(exploreSettings.zoom),
+                debounceHexagonsToFetch.resolution,
                 hexesToFetch,
               );
               recalculateCacheH3Hexes(newDensityMapHexagons);
@@ -452,24 +464,32 @@ function useHexagonMap({
   };
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
-    let newSettings = {}
-    if(exploreSettings.prevZoom != zoom)
-    {
-      newSettings = {
-        zoom: zoom,
-          bounds: bounds,
-          loading: true,
-      }
-    }else{
-      newSettings = {
-        center: center,
-          bounds: bounds,
-          loading: true,
-      }
-    }
+    setHexagonClicked(() => null); // unselect all hexagons
+
+    if (bounds) {
       store.emit(
-        new UpdateExploreSettings(newSettings),
-      );    
+        new UpdateExploreSettings({
+          zoom: zoom,
+          bounds: bounds,
+          loading: true,
+          center: center,
+        }),
+      );
+
+      const boundsHexes = convertBoundsToGeoJsonHexagons(
+        bounds,
+        getResolution(zoom),
+      );
+      store.emit(new SetExploreSettingsBoundsLoaded());
+      if (boundsHexes.length > 1000) {
+        console.error('too many hexes.. canceling..');
+        return;
+      }
+      setHexagonsToFetch({
+        resolution: getResolution(zoom),
+        hexagons: boundsHexes,
+      });
+    }
   };
 
   useEffect(() => {
