@@ -11,6 +11,7 @@ import { SetupDtoOut } from 'shared/entities/setup.entity';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
 import { Point } from 'pigeon-maps';
+import { roundCoord } from 'shared/honeycomb.utils';
 export default function FieldLocation({
   validationError,
   markerImage,
@@ -141,7 +142,7 @@ function LocationCoordinates({
           <span>{address}</span>
           <span>
             {' '}
-            ({latitude},{longitude})
+            ({roundCoord(latitude)},{roundCoord(longitude)})
           </span>
           {/* (radius: ${radius} km) */}
         </>
