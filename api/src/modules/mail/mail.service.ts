@@ -69,7 +69,8 @@ export class MailService {
       return;
     }
     this.networkService.findDefaultNetwork().then((network) => {
-      const vars = {...context, network: network, policyUrl: `${config.hostName}/Policy`, unsubscribeUrl: `${config.hostName}/Unsubscribe/${to}`}
+ 
+      const vars = {...context, network: network, hostName: config.hostName, to: to}
       this.mailerService.sendMail({
         to,
         cc,
