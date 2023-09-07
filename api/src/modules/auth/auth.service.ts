@@ -29,6 +29,7 @@ import { ErrorName } from '@src/shared/types/error.list';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { ValidationError } from 'class-validator';
 import { configFileName } from '@src/shared/helpers/config-name.const';
+import { NetworkService } from '../network/network.service';
 const config = require(`../../..${configFileName}`);
 @Injectable()
 export class AuthService {
@@ -38,6 +39,7 @@ export class AuthService {
     private readonly mailService: MailService,
     private jwtTokenService: JwtService,
     private readonly storageService: StorageService,
+    private readonly networkService: NetworkService,
   ) {}
 
   async signup(signupUserDto: SignupRequestDto) {
