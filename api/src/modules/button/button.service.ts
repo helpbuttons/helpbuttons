@@ -212,6 +212,9 @@ export class ButtonService {
       relations: [
         'owner',
       ],
+      order: {
+        created_at: 'ASC' 
+      }
     });
     
     if(!button)
