@@ -50,6 +50,7 @@ export class NetworkService {
       backgroundColor: createDto.backgroundColor,
       textColor: createDto.textColor,
       buttonTemplates: JSON.stringify(createDto.buttonTemplates),
+      locale: 'en',
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -166,7 +167,8 @@ export class NetworkService {
       exploreSettings: updateDto.exploreSettings,
       backgroundColor: updateDto.backgroundColor,
       textColor: updateDto.textColor,
-      buttonTemplates: JSON.stringify(updateDto.buttonTemplates)
+      buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
+      locale: updateDto.locale
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {

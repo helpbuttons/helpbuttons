@@ -29,6 +29,7 @@ import {
   UpdateNetworkTextColor,
 } from 'state/Networks';
 import Accordion from 'elements/Accordion';
+import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 
 export default NetworkForm;
 
@@ -49,7 +50,7 @@ function NetworkForm({
   defaultExploreSettings = null,
 }) {
   const router = useRouter();
-
+  
   return (
     <>
       <Form
@@ -98,6 +99,7 @@ function NetworkForm({
          
            <Accordion title={t('configuration.customizeAppearance')}>
 
+             <FieldLanguagePick onChange={(value) => setValue('locale',value)}/>
             <div className="form__field">
                 <label className="form__label">{t('configuration.chooseColors')}</label>
                 <p className="form__explain">{t('configuration.chooseColorsExplain')}</p>

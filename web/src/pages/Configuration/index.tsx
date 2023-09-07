@@ -55,7 +55,8 @@ function Configuration() {
       exploreSettings: data.exploreSettings,
       backgroundColor: data.backgroundColor,
       textColor: data.textColor,
-      buttonTemplates: data.buttonTemplates
+      buttonTemplates: data.buttonTemplates,
+      locale: data.locale,
     },
       () => {
         const onComplete = (network) => {

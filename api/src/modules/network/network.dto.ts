@@ -73,6 +73,8 @@ export class CreateNetworkDto implements Partial<Network> {
 
   @IsNotEmpty()
   buttonTemplates: string;
+
+  locale: string;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}
