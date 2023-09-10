@@ -23,7 +23,7 @@ services:
       - internal_network
 
   db:
-    build: postgres/
+    # build: postgres/
     image: helpbuttons/helpbuttons-psql:main
     restart: always
     command: ["postgres", "-c", "log_statement=all"]
