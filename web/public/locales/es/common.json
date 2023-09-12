@@ -169,7 +169,8 @@
     "titleExplain": "Pequeño título para saber sobre qué es tu botón de ayuda",
     "titleLabel": "Título",
     "whereLabel": "Dónde?",
-    "pickButtonTemplateColor": "Elige color para tu tipo de botón de ayuda"
+    "pickButtonTemplateColor": "Elige color para tu tipo de botón de ayuda",
+    "unknownPlace": "Sitio desconocido"
   },
   "calendarOnce": {
     "label": "Una vez",

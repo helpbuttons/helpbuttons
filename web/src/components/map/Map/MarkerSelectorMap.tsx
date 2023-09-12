@@ -19,13 +19,12 @@ export default function MarkerSelectorMap({
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] = useState(null)
   const [hexagonCenter, setHexagonCenter] = useState(markerPosition)
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
-    setMarkerPosition(center);
-
+    // setMarkerPosition(center);
+    // dont do it.. or else coordinates get updated twice.
   };
 
   const handleMapClicked = ({ event, latLng, pixel }) => {
     setMapCenter(latLng);
-
     setMarkerPosition(latLng);
   };
 

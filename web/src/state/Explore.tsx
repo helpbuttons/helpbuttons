@@ -94,19 +94,19 @@ export class FindButtons implements WatchEvent, UpdateEvent {
   }
 }
 
-export class FindAddress implements WatchEvent {
+export class ReverseGeo implements WatchEvent {
   public constructor(
-    private q: string,
+    private lat: number,
+    private lng: number,
     private onSuccess,
     private onError,
   ) {}
 
   public watch(state: GlobalState) {
-    const t = GeoService.findPromise(this.q)
-      .then((place) => this.onSuccess(place))
-      .catch((error) => {
-        this.onError(error);
-      });
+    return GeoService.reverse(this.lat, this.lng).pipe(
+      map((place) => this.onSuccess(place)),
+      catchError((error) => handleError(this.onError, error))
+    );
   }
 }
 

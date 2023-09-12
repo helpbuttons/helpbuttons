@@ -6,12 +6,13 @@ import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
-import { FindAddress } from 'state/Explore';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
 import { Point } from 'pigeon-maps';
 import { roundCoord } from 'shared/honeycomb.utils';
+import { ReverseGeo } from 'state/Explore';
+import Loading from 'components/loading';
 export default function FieldLocation({
   validationError,
   markerImage,
@@ -28,6 +29,7 @@ export default function FieldLocation({
     (state: GlobalState) => state.config,
   );
 
+  const [loadingNewAddress, setLoadingNewAddress] = useState(false)
   const [markerPosition, setMarkerPosition] = useState<Point>(
     selectedNetwork.exploreSettings.center,
   );
@@ -44,15 +46,20 @@ export default function FieldLocation({
   };
 
   const requestAddressForPosition = (markerPosition) => {
+    setLoadingNewAddress(true)
     store.emit(
-      new FindAddress(
-        JSON.stringify({
-          apikey: config.mapifyApiKey,
-          address: markerPosition.join('+'),
-        }),
+      new ReverseGeo(
+        markerPosition[0],
+        markerPosition[1],
         (place) => {
-          const address = place.results[0].formatted;
-          updateAddress(address);
+          if(!place)
+          {
+            console.log(t('button.unknownPlace')[0])
+            updateAddress(t('button.unknownPlace')[0])
+          }else{
+            updateAddress(place.formatted);
+          }
+          setLoadingNewAddress(false)
         },
         () => {
           console.log(
@@ -63,9 +70,7 @@ export default function FieldLocation({
     );
   };
   useEffect(() => {
-    updateMarkerPosition(markerPosition);
-    updateAddress('...');
-    if(config?.mapifyApiKey)
+    if(markerPosition)
     {
       requestAddressForPosition(markerPosition);
     }
@@ -103,11 +108,15 @@ export default function FieldLocation({
             placeholder={t('homeinfo.searchlocation')}
             handleSelectedPlace={handleSelectedPlace}
           />
-          <LocationCoordinates
+          {loadingNewAddress ?
+            <Loading/>
+            :
+            <LocationCoordinates
             latitude={markerPosition[0]}
             longitude={markerPosition[1]}
             address={markerAddress}
           />
+          }
           <MarkerSelectorMap
             setMarkerPosition={setMarkerPosition}
             zoom={zoom}

@@ -117,7 +117,8 @@
     "edit": "Edit",
     "created": "Your helpbutton has been created",
     "errorCreated": "",
-    "pickButtonTemplateColor": ""
+    "pickButtonTemplateColor": "",
+    "unknownPlace": "Unknown Place"
   },
   "user": {
     "email": "Email",
