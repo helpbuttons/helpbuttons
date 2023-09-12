@@ -13,4 +13,10 @@ export class GeoController {
   async new(@Param('address') address: string) {
     return await this.geoService.search(address)
   }
+
+  @AllowGuest()
+  @Get('reverse/:lat/:lng')
+  async reverse(@Param('lat') lat: string, @Param('lng') lng: string) {
+    return await this.geoService.reverse(lat,lng)
+  }
 }
