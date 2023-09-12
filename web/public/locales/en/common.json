@@ -222,7 +222,8 @@
     "nomeclaturePlaceHolder": "",
     "moderateNetwork": "",
     "blockedExplain": "",
-    "adminUsers": ""
+    "adminUsers": "",
+    "contactAdmin": "Contact the administrator"
   },
   "configure": {
     "browsePins": "",
