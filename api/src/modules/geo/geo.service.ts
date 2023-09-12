@@ -91,7 +91,6 @@ export class GeoService {
     const url = encodeURI(
       `https://photon.komoot.io/reverse?lat=${lat}&lon=${lng}`,
     );
-    console.log(url);
     return await firstValueFrom(this.httpService.get(url))
       .then((result) => {
 
@@ -99,11 +98,12 @@ export class GeoService {
         {
           return this.komootResponseToPlace(result.data.features[0])
         }
-        throw new CustomHttpException(ErrorName.geoCodingError);
-
+        return false
       })
       .catch((err) => {
-        throw new CustomHttpException(ErrorName.geoCodingError);
+        console.log(url)
+        console.log(err)
+        return false
       });
   }
 

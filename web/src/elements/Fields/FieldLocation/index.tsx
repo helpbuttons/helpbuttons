@@ -12,6 +12,7 @@ import t from 'i18n';
 import { Point } from 'pigeon-maps';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { ReverseGeo } from 'state/Explore';
+import Loading from 'components/loading';
 export default function FieldLocation({
   validationError,
   markerImage,
@@ -28,6 +29,7 @@ export default function FieldLocation({
     (state: GlobalState) => state.config,
   );
 
+  const [loadingNewAddress, setLoadingNewAddress] = useState(false)
   const [markerPosition, setMarkerPosition] = useState<Point>(
     selectedNetwork.exploreSettings.center,
   );
@@ -44,12 +46,20 @@ export default function FieldLocation({
   };
 
   const requestAddressForPosition = (markerPosition) => {
+    setLoadingNewAddress(true)
     store.emit(
       new ReverseGeo(
         markerPosition[0],
         markerPosition[1],
         (place) => {
-          updateAddress(place.formatted);
+          if(!place)
+          {
+            console.log(t('button.unknownPlace')[0])
+            updateAddress(t('button.unknownPlace')[0])
+          }else{
+            updateAddress(place.formatted);
+          }
+          setLoadingNewAddress(false)
         },
         () => {
           console.log(
@@ -98,11 +108,15 @@ export default function FieldLocation({
             placeholder={t('homeinfo.searchlocation')}
             handleSelectedPlace={handleSelectedPlace}
           />
-          <LocationCoordinates
+          {loadingNewAddress ?
+            <Loading/>
+            :
+            <LocationCoordinates
             latitude={markerPosition[0]}
             longitude={markerPosition[1]}
             address={markerAddress}
           />
+          }
           <MarkerSelectorMap
             setMarkerPosition={setMarkerPosition}
             zoom={zoom}
