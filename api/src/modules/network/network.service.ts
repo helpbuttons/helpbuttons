@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Inject, Injectable, forwardRef } from '@nestjs/common';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
 import {
@@ -31,6 +31,7 @@ export class NetworkService {
     private readonly networkRepository: Repository<Network>,
     private readonly tagService: TagService,
     private readonly storageService: StorageService,
+    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
