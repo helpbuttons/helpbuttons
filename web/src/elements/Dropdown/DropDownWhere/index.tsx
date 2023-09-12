@@ -35,12 +35,7 @@ export function DropDownWhere({
     setShowSuggestions(false)
     if (inputText.length > 2)
     {
-      sub.next(
-        JSON.stringify({
-          apikey: config.mapifyApiKey,
-          address: inputText,
-        }),
-      );
+      sub.next(inputText)
     }
   };
 
