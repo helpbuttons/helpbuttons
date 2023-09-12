@@ -1,8 +1,11 @@
+import Loading from 'components/loading';
+import t from 'i18n';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { Subject } from 'rxjs';
 import { alertService } from 'services/Alert';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
+import { roundCoords } from 'shared/honeycomb.utils';
 import { setValueAndDebounce } from 'state/HomeInfo';
 import { useRef } from 'store/Store';
 
@@ -11,6 +14,8 @@ export function DropDownWhere({
   placeholder,
   onFocus = (event) => {},
   onBlur = (event) => {},
+  address = '',
+  center = [0, 0],
 }) {
   const timeInMsBetweenStrokes = 150; //ms
 
@@ -27,20 +32,22 @@ export function DropDownWhere({
   ); //para no sobrecargar el componente ,lo delegamos a una lib externa(solid);
 
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(address);
 
   const onChangeInput = (e) => {
     let inputText = e.target.value;
-    setInput(inputText)
-    setShowSuggestions(false)
-    if (inputText.length > 2)
-    {
-      sub.next(inputText)
+    setInput(inputText);
+    setShowSuggestions(false);
+    if (inputText.length > 2) {
+      setLoadingNewAddress(true);
+      sub.next(inputText);
     }
   };
 
   const onClick = (e) => {
     const place = JSON.parse(e.target.value);
+    setInput(place.formatted);
+    setShowSuggestions(false);
     handleSelectedPlace(place);
   };
 
@@ -53,13 +60,16 @@ export function DropDownWhere({
     e.target.select();
   };
 
+  const [loadingNewAddress, setLoadingNewAddress] = useState(false);
+
   useEffect(() => {
     let keyCount = 1;
     let s = sub$.subscribe(
       (rs: any) => {
-        if (rs && rs.results) {
+        if (rs) {
+          setLoadingNewAddress(false);
           setOptions(
-            rs.results.map((place) => {
+            rs.map((place) => {
               return (
                 <DropDownAutoCompleteOption
                   key={keyCount++}
@@ -69,7 +79,7 @@ export function DropDownWhere({
               );
             }),
           );
-          setShowSuggestions(true)
+          setShowSuggestions(true);
         } else {
           console.error(
             'API opencage not working, do you have an adblocker? Or contact the administrator',
@@ -86,30 +96,41 @@ export function DropDownWhere({
   }, [sub$]); //first time
   return (
     <>
-      <input
-        className="form__input"
-        autoComplete="on"
-        onChange={onChangeInput}
-        list=""
-        id="input"
-        name="browsers"
-        placeholder={placeholder}
-        type="text"
-        value={input}
-        onClick={onInputClick}
-        onFocus={handleOnFocus}
-        onBlur={onBlur}
-      ></input>
+      <div className="form__field">
+        <label className="form__label">
+          {t('buttonFilters.where')}
+          {address && center && (
+            <>
+              ({address} - {roundCoords(center).toString()})
+            </>
+          )}
+        </label>
+        <input
+          className="form__input"
+          autoComplete="on"
+          onChange={onChangeInput}
+          list=""
+          id="input"
+          name="browsers"
+          placeholder={placeholder}
+          type="text"
+          value={input}
+          onClick={onInputClick}
+          onFocus={handleOnFocus}
+          onBlur={onBlur}
+        ></input>
+        {loadingNewAddress && <Loading />}
 
-      {showSuggestions && (
-        <datalist
-          onClick={onClick}
-          className="dropdown-nets__dropdown-content"
-          id="listid"
-        >
-          {options}
-        </datalist>
-      )}
+        {showSuggestions && (
+          <datalist
+            onClick={onClick}
+            className="dropdown-nets__dropdown-content"
+            id="listid"
+          >
+            {options}
+          </datalist>
+        )}
+      </div>
     </>
   );
 }
