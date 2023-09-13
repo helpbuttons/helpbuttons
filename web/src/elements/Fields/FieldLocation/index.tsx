@@ -51,11 +51,11 @@ export default function FieldLocation({
         markerPosition[1],
         (place) => {
           if (!place) {
-            console.log(t('button.unknownPlace')[0]);
             updateAddress(t('button.unknownPlace')[0]);
           } else {
             updateAddress(place.formatted);
           }
+          updateMarkerPosition(markerPosition)
         },
         () => {
           console.log(
