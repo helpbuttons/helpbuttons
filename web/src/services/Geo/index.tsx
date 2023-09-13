@@ -7,9 +7,6 @@ export class GeoService {
   }
 
   public static reverse(lat: number, lng: number): Observable<any> {
-    console.log('oiii')
-    console.log(lat)
-    console.log(lng)
     return httpService.get<any>(`geo/reverse/${lat}/${lng}`)
   }
   
