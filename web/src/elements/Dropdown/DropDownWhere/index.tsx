@@ -2,11 +2,10 @@ import Loading from 'components/loading';
 import t from 'i18n';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
-import { Subject } from 'rxjs';
-import { alertService } from 'services/Alert';
+import { useDebounce } from 'shared/custom.hooks';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { roundCoords } from 'shared/honeycomb.utils';
-import { setValueAndDebounce } from 'state/HomeInfo';
+import { GeoFindAddress } from 'state/Geo';
 import { useRef } from 'store/Store';
 
 export function DropDownWhere({
@@ -17,37 +16,49 @@ export function DropDownWhere({
   address = '',
   center = [0, 0],
 }) {
-  const timeInMsBetweenStrokes = 150; //ms
-
-  const config: SetupDtoOut = useRef(
-    store,
-    (state: GlobalState) => state.config,
-  );
 
   const [options, setOptions] = useState([]);
 
-  const [sub, setSub] = useState(new Subject()); //evita la inicializaacion en cada renderizado
-  const [sub$, setSub$] = useState(
-    setValueAndDebounce(sub, timeInMsBetweenStrokes),
-  ); //para no sobrecargar el componente ,lo delegamos a una lib externa(solid);
+  const [input, setInput] = useState(address);
+  const debounceInput = useDebounce(input, 300);
 
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [input, setInput] = useState(address);
+  const [loadingNewAddress, setLoadingNewAddress] = useState(false);
+
+  useEffect(() => {
+    if (debounceInput?.length > 2) {
+      setLoadingNewAddress(true);
+      setShowSuggestions(false);
+      store.emit(
+        new GeoFindAddress(debounceInput, (places) => {
+          setOptions(
+            places.map((place, key) => {
+              return (
+                <DropDownAutoCompleteOption
+                  key={key}
+                  label={place.formatted}
+                  value={JSON.stringify(place)}
+                />
+              );
+            }),
+          );
+          setLoadingNewAddress(false);
+          setShowSuggestions(true);
+        }),
+      );
+    }
+  }, [debounceInput]);
 
   const onChangeInput = (e) => {
     let inputText = e.target.value;
     setInput(inputText);
-    setShowSuggestions(false);
-    if (inputText.length > 2) {
-      setLoadingNewAddress(true);
-      sub.next(inputText);
-    }
   };
 
   const onClick = (e) => {
     const place = JSON.parse(e.target.value);
-    setInput(place.formatted);
+    setInput('');
     setShowSuggestions(false);
+    setLoadingNewAddress(false);
     handleSelectedPlace(place);
   };
 
@@ -60,40 +71,7 @@ export function DropDownWhere({
     e.target.select();
   };
 
-  const [loadingNewAddress, setLoadingNewAddress] = useState(false);
 
-  useEffect(() => {
-    let keyCount = 1;
-    let s = sub$.subscribe(
-      (rs: any) => {
-        if (rs) {
-          setLoadingNewAddress(false);
-          setOptions(
-            rs.map((place) => {
-              return (
-                <DropDownAutoCompleteOption
-                  key={keyCount++}
-                  label={place.formatted}
-                  value={JSON.stringify(place)}
-                />
-              );
-            }),
-          );
-          setShowSuggestions(true);
-        } else {
-          console.error(
-            'API opencage not working, do you have an adblocker? Or contact the administrator',
-          );
-        }
-      },
-      (e) => {
-        console.log('error subscribe', e);
-      },
-    );
-    return () => {
-      s.unsubscribe(); //limpiamos
-    };
-  }, [sub$]); //first time
   return (
     <>
       <div className="form__field">

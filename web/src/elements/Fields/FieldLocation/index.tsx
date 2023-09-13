@@ -29,7 +29,6 @@ export default function FieldLocation({
     (state: GlobalState) => state.config,
   );
 
-  const [loadingNewAddress, setLoadingNewAddress] = useState(false)
   const [markerPosition, setMarkerPosition] = useState<Point>(
     selectedNetwork.exploreSettings.center,
   );
@@ -46,20 +45,17 @@ export default function FieldLocation({
   };
 
   const requestAddressForPosition = (markerPosition) => {
-    setLoadingNewAddress(true)
     store.emit(
       new ReverseGeo(
         markerPosition[0],
         markerPosition[1],
         (place) => {
-          if(!place)
-          {
-            console.log(t('button.unknownPlace')[0])
-            updateAddress(t('button.unknownPlace')[0])
-          }else{
+          if (!place) {
+            console.log(t('button.unknownPlace')[0]);
+            updateAddress(t('button.unknownPlace')[0]);
+          } else {
             updateAddress(place.formatted);
           }
-          setLoadingNewAddress(false)
         },
         () => {
           console.log(
@@ -70,8 +66,7 @@ export default function FieldLocation({
     );
   };
   useEffect(() => {
-    if(markerPosition)
-    {
+    if (markerPosition) {
       requestAddressForPosition(markerPosition);
     }
   }, [markerPosition]);
@@ -104,19 +99,16 @@ export default function FieldLocation({
           closeAction={closeMenu}
           headerText={t('picker.headerText')}
         >
-          <DropDownSearchLocation
+          <DropDownWhere
             placeholder={t('homeinfo.searchlocation')}
             handleSelectedPlace={handleSelectedPlace}
           />
-          {loadingNewAddress ?
-            <Loading/>
-            :
-            <LocationCoordinates
+          <LocationCoordinates
             latitude={markerPosition[0]}
             longitude={markerPosition[1]}
             address={markerAddress}
+            label={''}
           />
-          }
           <MarkerSelectorMap
             setMarkerPosition={setMarkerPosition}
             zoom={zoom}
