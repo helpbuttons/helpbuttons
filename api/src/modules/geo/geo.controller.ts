@@ -1,10 +1,12 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AllowGuest } from '@src/shared/decorator/roles.decorator';
 import { GeoService } from './geo.service';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @ApiTags('geo')
 @Controller('geo')
+@UseInterceptors(CacheInterceptor)
 export class GeoController {
   constructor(private readonly geoService: GeoService) {}
 
