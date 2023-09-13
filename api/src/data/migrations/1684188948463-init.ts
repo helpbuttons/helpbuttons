@@ -17,7 +17,6 @@ export class Init1684188948463 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "tags" ("created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "id" character varying NOT NULL, "tag" character varying NOT NULL, "modelName" character varying, "modelId" character varying, CONSTRAINT "PK_e7dc17249a1148a1970748eda99" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TYPE "public"."template_button_type_enum" AS ENUM('need', 'exchange', 'offer')`);
         await queryRunner.query(`CREATE TABLE "template_button" ("created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "id" character varying NOT NULL, "name" character varying NOT NULL, "description" character varying NOT NULL, "type" "public"."template_button_type_enum" NOT NULL, "formFields" character varying NOT NULL, CONSTRAINT "PK_08b0afe6564754216b6c4847295" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "profile" ("created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(320) NOT NULL, "description" character varying NOT NULL, "languages" text array DEFAULT '{}', "defaultLanguage" character varying NOT NULL, "location" geometry NOT NULL, "receiveNotifications" boolean NOT NULL DEFAULT false, "phone" character varying NOT NULL, "telegram" character varying NOT NULL, "whatsapp" character varying NOT NULL, "interests" text array DEFAULT '{}', CONSTRAINT "PK_3dd8bfc97e4a77c70971591bdcb" PRIMARY KEY ("id"))`);
         await queryRunner.query(`ALTER TABLE "activity" ADD CONSTRAINT "FK_2e32cff695a62ac42865ea087e2" FOREIGN KEY ("ownerId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "comment" ADD CONSTRAINT "FK_94a85bb16d24033a2afdd5df060" FOREIGN KEY ("postId") REFERENCES "post"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "comment" ADD CONSTRAINT "FK_276779da446413a0d79598d4fbd" FOREIGN KEY ("authorId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
@@ -35,7 +34,6 @@ export class Init1684188948463 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "comment" DROP CONSTRAINT "FK_276779da446413a0d79598d4fbd"`);
         await queryRunner.query(`ALTER TABLE "comment" DROP CONSTRAINT "FK_94a85bb16d24033a2afdd5df060"`);
         await queryRunner.query(`ALTER TABLE "activity" DROP CONSTRAINT "FK_2e32cff695a62ac42865ea087e2"`);
-        await queryRunner.query(`DROP TABLE "profile"`);
         await queryRunner.query(`DROP TABLE "template_button"`);
         await queryRunner.query(`DROP TYPE "public"."template_button_type_enum"`);
         await queryRunner.query(`DROP TABLE "tags"`);
