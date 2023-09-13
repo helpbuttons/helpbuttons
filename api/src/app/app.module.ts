@@ -1,4 +1,8 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -19,10 +23,12 @@ import { AppService } from './app.service';
 import { dataSourceOptions } from './configs/orm.config';
 import webAppConfig from './configs/web-app.config';
 import { validate } from './validators/env.validator';
-import {EventEmitterModule } from '@nestjs/event-emitter' 
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { PostModule } from '@src/modules/post/post.module';
 import { ActivityModule } from '@src/modules/activity/activity.module';
 import { GeoModule } from '@src/modules/geo/geo.module';
+import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,6 +39,7 @@ import { GeoModule } from '@src/modules/geo/geo.module';
       load: [webAppConfig],
       validate: validate,
     }),
+    CacheModule.register(),
     MailModule,
     // FIXME: READ this confs using ConfigService
     TypeOrmModule.forRoot(dataSourceOptions),
@@ -50,12 +57,17 @@ import { GeoModule } from '@src/modules/geo/geo.module';
     EventEmitterModule.forRoot(),
     PostModule,
     ActivityModule,
-    GeoModule
+    GeoModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
+  ],
 })
-
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer.apply(AppLogger).forRoutes('*');
