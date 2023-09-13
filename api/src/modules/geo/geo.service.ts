@@ -109,16 +109,22 @@ export class GeoService {
 
   komootResponseToPlace(place: any) {
     const name = place.properties.name
-      ? `${place.properties.name}`
+      ? `${place.properties.name}, `
+      : '';
+    const street = place.properties.street
+      ? `${place.properties.street}, `
+      : '';
+    const housenumber = place.properties.housenumber
+      ? `${place.properties.housenumber}, `
       : '';
     const city = place.properties.city
-      ? `, ${place.properties.city}`
+      ? `${place.properties.city}, `
       : '';
     const country = place.properties.country
-      ? `, ${place.properties.country}`
+      ? `${place.properties.country}`
       : '';
     return {
-      formatted: `${name}${city}${country}`,
+      formatted: `${name}${street}${housenumber}${city}${country}`,
       geometry: {
         lat: place.geometry.coordinates[1],
         lng: place.geometry.coordinates[0],
