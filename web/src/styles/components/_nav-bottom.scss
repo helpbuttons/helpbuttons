@@ -77,7 +77,7 @@ $nav-bottom-border: 32px;
 }
 
 .nav-bottom__link--current{
-  color: $color-blue;
+  color: var(--network-text-color);
 
   .nav-bottom__text::after {
     content: "";
@@ -86,7 +86,7 @@ $nav-bottom-border: 32px;
     width: 20px;
     height: 2px;
     left: 50%;
-    background-color: $color-blue;
+    background-color: var(--network-text-color);
     transform: translateX(-50%);
     border-radius: $nav-bottom-border;
     opacity: 1;
@@ -166,7 +166,7 @@ $nav-bottom-border: 32px;
    align-items: center;
    cursor: pointer;
    text-decoration: none;
-   background: $color-blue;
+   background: var(--network-text-color);
    pointer-events:none;
 
 }
