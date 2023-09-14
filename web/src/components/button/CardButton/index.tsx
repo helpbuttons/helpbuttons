@@ -21,6 +21,8 @@ import { GlobalState, store } from 'pages';
 import Link from 'next/link';
 import { UpdateFiltersToFilterTag } from 'state/Explore';
 import { isAdmin } from 'state/Users';
+import { formatMessage } from 'elements/Message';
+import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -87,6 +89,9 @@ export function CardButtonHeadMedium({ button, buttonType }) {
       </div>
 
       <div className="card-button__title">{button.title}</div>
+      {!button.image && 
+        <div className="card-button__paragraph">{button.description}</div>
+      }
       <div className="card-button__hashtags">
         {button.tags.map((tag, idx) => {
           return (
@@ -96,9 +101,11 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           );
         })}
       </div>
-      <div className="card-button__city card-button__everywhere ">
-        {button.address}
-      </div>
+      {!button.hideAddress && 
+        <div className="card-button__city card-button__everywhere ">
+          {button.address}
+        </div>
+      }
       <ShowWhen when={button.when} />
     </div>
   );
@@ -189,7 +196,8 @@ function CardButtonSubmenu({ button }) {
             >
               {t('button.copy')}
             </a>
-            {(isButtonOwner(loggedInUser, button) || isAdmin(loggedInUser) )&& (
+            {(isButtonOwner(loggedInUser, button) ||
+              isAdmin(loggedInUser)) && (
               <>
                 <a
                   className="card-button__trigger-options"
@@ -267,11 +275,12 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             <CardButtonHeadActions button={button} />
           </div>
         </div>
-
+        <MarkerSelectorMap markerPosition={[button.latitude, button.longitude]} setMarkerPosition={() => {}} zoom={10} markerColor={cssColor} markerImage={button.image} markerCaption={button.title}/>
+        
         <div className="card-button__title">{button.title}</div>
 
         <div className="card-button__paragraph">
-          <p>{button.description}</p>
+          <p>{formatMessage(button.description)}</p>
         </div>
 
         <div className="card-button__hashtags">
@@ -292,10 +301,11 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
 
         <div className="card-button__locDate">
-          <div className="card-button__city card-button__everywhere ">
-            {button.address}
-          </div>
-
+          {!button.hideAddress && (
+            <div className="card-button__city card-button__everywhere ">
+              {button.address}
+            </div>
+          )}
           <ShowWhen when={button.when} />
         </div>
       </div>
@@ -330,8 +340,7 @@ export function CardButtonHeadActions({ button }) {
 export function CardButtonImages({ button }) {
   return (
     <>
-      {button.image &&
-
+      {button.image && (
         <div className="card-button__picture">
           <div className="card-button__picture-nav">
             <div className="arrow btn-circle__icon">
@@ -348,10 +357,8 @@ export function CardButtonImages({ button }) {
             alt={button.description}
           />
         </div>
-
-      }
+      )}
     </>
-
   );
 }
 export function CardButtonOptions() {

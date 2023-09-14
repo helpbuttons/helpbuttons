@@ -95,12 +95,15 @@ export class AuthService {
         ErrorName.UsernameAlreadyRegistered,
       );
     }
-    try {
-      newUserDto.avatar = await this.storageService.newImage64(
-        signupUserDto.avatar,
-      );
-    } catch (err) {
-      throw new CustomHttpException(ErrorName.InvalidMimetype);
+    if(signupUserDto.avatar)
+    {
+      try {
+        newUserDto.avatar = await this.storageService.newImage64(
+          signupUserDto.avatar,
+        );
+      } catch (err) {
+        throw new CustomHttpException(ErrorName.InvalidMimetype);
+      }
     }
     return this.userService
       .createUser(newUserDto)

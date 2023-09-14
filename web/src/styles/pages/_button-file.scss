@@ -150,7 +150,7 @@ $button-file__container-max-width: $grid-max-width;
         height: 15px;
         border: 0;
         cursor: pointer;
-        background: $color-blue;
+        background: var(--network-text-color);
         z-index: 5000;
       }
 }

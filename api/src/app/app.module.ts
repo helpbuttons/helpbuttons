@@ -1,4 +1,8 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -19,10 +23,12 @@ import { AppService } from './app.service';
 import { dataSourceOptions } from './configs/orm.config';
 import webAppConfig from './configs/web-app.config';
 import { validate } from './validators/env.validator';
-import {EventEmitterModule } from '@nestjs/event-emitter' 
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { PostModule } from '@src/modules/post/post.module';
 import { ActivityModule } from '@src/modules/activity/activity.module';
 import { InviteModule } from '@src/modules/invite/invite.module';
+import { GeoModule } from '@src/modules/geo/geo.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -50,12 +56,14 @@ import { InviteModule } from '@src/modules/invite/invite.module';
     EventEmitterModule.forRoot(),
     PostModule,
     ActivityModule,
-    InviteModule
+    InviteModule,
+    GeoModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+  ],
 })
-
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer.apply(AppLogger).forRoutes('*');

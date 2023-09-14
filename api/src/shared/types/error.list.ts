@@ -16,6 +16,7 @@ export enum ErrorName{
     nothingToDelete = 'nothing-to-delete',
     validationError= 'validation-error',
     inviteOnly = 'invite-only-network',
+    geoCodingError = 'geo-coding-error'
 }
 
 export const errorsList: ErrorText[] = 
@@ -69,5 +70,10 @@ export const errorsList: ErrorText[] =
         name: ErrorName.inviteOnly,
         caption: `Invite only network`,
         status: HttpStatus.FORBIDDEN
+    },
+    {
+        name: ErrorName.geoCodingError,
+        caption: `Error getting address`,
+        status: HttpStatus.BAD_GATEWAY
     },
 ]

@@ -16,7 +16,8 @@ export const allowedPathsPerRole =
             '/LoginClick',
             '/LoginClick/:loginToken',
             '/Profile/:username',
-            '/Signup/Invite/:code'
+            '/Signup/Invite/:code',
+            '/Unsubscribe'
         ]
     },
     {

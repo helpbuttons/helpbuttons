@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NetworkService } from './network.service';
 import { NetworkController } from './network.controller';
@@ -15,17 +15,14 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     TagModule,
     StorageModule,
     UserModule,
-    CacheModule.register()
+    CacheModule.register(),
+    forwardRef(() => UserModule)
   ],
   controllers: [
     NetworkController
   ],
   providers: [
     NetworkService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: CacheInterceptor,
-    }
   ],
   exports: [NetworkService]
 })

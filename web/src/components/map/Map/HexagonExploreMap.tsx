@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { GeoJson, GeoJsonFeature, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store } from 'pages';
 import { useRef } from 'store/Store';
-import { SetExploreSettingsBoundsLoaded } from 'state/Explore';
+import {
+  SetExploreSettingsBoundsLoaded,
+  UpdateExploreSettings,
+} from 'state/Explore';
 import { HbMap } from '.';
 import {
   convertBoundsToGeoJsonHexagons,
@@ -30,34 +33,10 @@ export default function HexagonExploreMap({
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([]);
 
   const onBoundsChanged = ({ center, zoom, bounds }) => {
-    handleBoundsChange(bounds, center, zoom);
+    handleBoundsChange(bounds, center, zoom)
+
     setCenterBounds(center);
   };
-
-  useEffect(() => {
-    if (exploreSettings.loading) {
-      return;
-    }
-
-    setHexagonClicked(() => null); // unselect all hexagons
-
-    if (exploreSettings.bounds) {
-      const boundsHexes = convertBoundsToGeoJsonHexagons(
-        exploreSettings.bounds,
-        getResolution(exploreSettings.zoom),
-      );
-      store.emit(new SetExploreSettingsBoundsLoaded())
-      if(boundsHexes.length > 1000)
-      {
-        console.error('too many hexes.. canceling..')
-        return;
-      }
-      setHexagonsToFetch({
-        resolution: getResolution(exploreSettings.zoom),
-        hexagons: boundsHexes,
-      });
-    }
-  }, [exploreSettings]);
 
   useEffect(() => {
     setGeoJsonFeatures(() => {
@@ -72,27 +51,27 @@ export default function HexagonExploreMap({
 
   const [buttonTypes, setButtonTypes] = useState([]);
   useButtonTypes(setButtonTypes);
-  
+
   useEffect(() => {
     // workaround for map to mind the new center..
-  }, [exploreSettings.center])
+  }, [exploreSettings.center]);
   return (
     <>
       <HbMap
-        mapCenter={exploreSettings.center}
-        mapZoom={exploreSettings.zoom}
+        mapCenter={selectedNetwork.exploreSettings.center}
+        mapZoom={selectedNetwork.exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
         tileType={selectedNetwork.exploreSettings.tileType}
       >
-          <Overlay anchor={[100, 100]}>
-            <div className="search-map__network-title">
-              {selectedNetwork.name}
-              <div className="search-map__sign">
-                made with{' '}
-                <a href="https://helpbuttons.org">Helpbuttons</a>
-              </div>
+        <Overlay anchor={[100, 100]}>
+          <div className="search-map__network-title">
+            {selectedNetwork.name}
+            <div className="search-map__sign">
+              made with{' '}
+              <a href="https://helpbuttons.org">Helpbuttons</a>
             </div>
-          </Overlay>
+          </div>
+        </Overlay>
 
         <GeoJson>
           {geoJsonFeatures.map((hexagonFeature) => (
@@ -100,7 +79,7 @@ export default function HexagonExploreMap({
               onClick={(feature) => {
                 if (hexagonFeature.properties.count > 0) {
                   setHexagonClicked(() => feature.payload);
-                }else{
+                } else {
                   setHexagonClicked(() => null);
                 }
               }}

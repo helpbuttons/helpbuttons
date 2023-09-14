@@ -5,7 +5,7 @@ import {
   Injectable,
   forwardRef,
 } from '@nestjs/common';
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { Repository, In, EntityManager } from 'typeorm';
 import { TagService } from '../tag/tag.service';
@@ -20,8 +20,7 @@ import { Role } from '@src/shared/types/roles';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { maxResolution } from '@src/shared/types/honeycomb.const';
 import { PostService } from '../post/post.service';
-import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
-import { ErrorName } from '@src/shared/types/error.list';
+
 @Injectable()
 export class ButtonService {
   constructor(
@@ -65,7 +64,8 @@ export class ButtonService {
       title: createDto.title,
       address: createDto.address,
       when: createDto.when,
-      hexagon: () => `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`
+      hexagon: () => `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
+      hideAddress: createDto.hideAddress
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -165,8 +165,8 @@ export class ButtonService {
       const buttonsOnHexagons = await this.buttonRepository
         .createQueryBuilder('button')
         .select('id')
-        .where(`h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons)`,{ hexagons:hexagons })
-        .limit(10000)
+        .where(`h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false`,{ hexagons:hexagons })
+        .limit(1000)
         .execute();
         const buttonsIds = buttonsOnHexagons.map((button) => button.id);
 
@@ -212,6 +212,9 @@ export class ButtonService {
       relations: [
         'owner',
       ],
+      order: {
+        created_at: 'ASC' 
+      }
     });
     
     if(!button)
