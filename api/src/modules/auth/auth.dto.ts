@@ -86,7 +86,6 @@ export class SignupRequestDto {
   // @IsString({ each: true })
   // interests: [string];
 
-  @IsNotEmpty()
   avatar: string;
 
   @IsNotEmpty()
