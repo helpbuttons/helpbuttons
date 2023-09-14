@@ -22,6 +22,7 @@ import Link from 'next/link';
 import { UpdateFiltersToFilterTag } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { formatMessage } from 'elements/Message';
+import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -271,7 +272,8 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             <CardButtonHeadActions button={button} />
           </div>
         </div>
-
+        <MarkerSelectorMap markerPosition={[button.latitude, button.longitude]} setMarkerPosition={() => {}} zoom={10} markerColor={cssColor} markerImage={button.image} markerCaption={button.title}/>
+        
         <div className="card-button__title">{button.title}</div>
 
         <div className="card-button__paragraph">
