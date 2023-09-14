@@ -23,6 +23,7 @@ import { LoadabledComponent } from 'components/loading';
 import Router from 'next/router';
 import { SaveButtonDraft } from 'state/Explore';
 import { useButtonTypes } from 'shared/buttonTypes';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 
 export default function ButtonForm({
   onSubmit,
@@ -63,7 +64,7 @@ export default function ButtonForm({
     }
   }, [buttonDraft]);
 
-  const buttonType = watch('type')
+  const buttonType = watch('type');
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
@@ -77,15 +78,13 @@ export default function ButtonForm({
       } else {
         setIsReadyForLocationAndTime(false);
       }
-      
     });
-    
+
     return () => subscription.unsubscribe();
   }, [watch]);
 
   useEffect(() => {
-    if(buttonTypes)
-    {
+    if (buttonTypes) {
       const values = getValues();
       const buttonType = buttonTypes.find((buttonType) => {
         return buttonType.name === values.type;
@@ -94,8 +93,8 @@ export default function ButtonForm({
         setMarkerColor(() => buttonType.cssColor);
       }
     }
-  }, [buttonType, buttonTypes])
-  
+  }, [buttonType, buttonTypes]);
+
   const closeClicked = () => {
     store.emit(new SaveButtonDraft(getValues()));
     Router.push('/Explore');
@@ -166,22 +165,30 @@ export default function ButtonForm({
             />
             <>
               {selectedNetwork && (
-                <FieldLocation
-                  label={t('button.whereLabel')}
-                  updateMarkerPosition={([lat, lng]) => {
-                    setValue('latitude', lat);
-                    setValue('longitude', lng);
-                  }}
-                  updateAddress={(address) => {
-                    setValue('address', address);
-                  }}
-                  markerAddress={watch('address')}
-                  markerImage={watch('image')}
-                  markerCaption={watch('title')}
-                  markerColor={markerColor}
-                  selectedNetwork={selectedNetwork}
-                  validationError={errors.location}
-                />
+                <>
+                  <FieldLocation
+                    label={t('button.whereLabel')}
+                    updateMarkerPosition={([lat, lng]) => {
+                      setValue('latitude', lat);
+                      setValue('longitude', lng);
+                    }}
+                    updateAddress={(address) => {
+                      setValue('address', address);
+                    }}
+                    markerAddress={watch('address')}
+                    markerImage={watch('image')}
+                    markerCaption={watch('title')}
+                    markerColor={markerColor}
+                    selectedNetwork={selectedNetwork}
+                    validationError={errors.location}
+                  />
+                  <FieldCheckbox
+                    name="hideAddress"
+                    checked={watch('hideAddress')}
+                    text={t('user.hideAddress')}
+                    {...register('hideAddress')}
+                  />
+                </>
               )}
               {/* <FieldDate
                 dateType={watch('when.type')}

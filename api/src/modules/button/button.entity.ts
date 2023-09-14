@@ -64,4 +64,7 @@ export class Button extends BaseEntity {
 
   @Column('boolean', {default: false})
   deleted: boolean;
+
+  @Column('boolean', {default: false})
+  hideAddress: boolean;
 }

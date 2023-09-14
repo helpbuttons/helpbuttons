@@ -64,7 +64,8 @@ export class ButtonService {
       title: createDto.title,
       address: createDto.address,
       when: createDto.when,
-      hexagon: () => `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`
+      hexagon: () => `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
+      hideAddress: createDto.hideAddress
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {

@@ -26,6 +26,7 @@ export default function ButtonNew() {
     radius: 1,
     address: '',
     when: { dates: [], type: null },
+    hideAddress: false,
   };
   const {
     register,

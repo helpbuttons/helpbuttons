@@ -97,9 +97,11 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           );
         })}
       </div>
-      <div className="card-button__city card-button__everywhere ">
-        {button.address}
-      </div>
+      {!button.hideAddress && 
+        <div className="card-button__city card-button__everywhere ">
+          {button.address}
+        </div>
+      }
       <ShowWhen when={button.when} />
     </div>
   );
@@ -190,7 +192,8 @@ function CardButtonSubmenu({ button }) {
             >
               {t('button.copy')}
             </a>
-            {(isButtonOwner(loggedInUser, button) || isAdmin(loggedInUser) )&& (
+            {(isButtonOwner(loggedInUser, button) ||
+              isAdmin(loggedInUser)) && (
               <>
                 <a
                   className="card-button__trigger-options"
@@ -293,10 +296,11 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
 
         <div className="card-button__locDate">
-          <div className="card-button__city card-button__everywhere ">
-            {button.address}
-          </div>
-
+          {!button.hideAddress && (
+            <div className="card-button__city card-button__everywhere ">
+              {button.address}
+            </div>
+          )}
           <ShowWhen when={button.when} />
         </div>
       </div>
@@ -331,8 +335,7 @@ export function CardButtonHeadActions({ button }) {
 export function CardButtonImages({ button }) {
   return (
     <>
-      {button.image &&
-
+      {button.image && (
         <div className="card-button__picture">
           <div className="card-button__picture-nav">
             <div className="arrow btn-circle__icon">
@@ -349,10 +352,8 @@ export function CardButtonImages({ button }) {
             alt={button.description}
           />
         </div>
-
-      }
+      )}
     </>
-
   );
 }
 export function CardButtonOptions() {
