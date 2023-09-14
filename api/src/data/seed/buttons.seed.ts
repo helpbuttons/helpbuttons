@@ -5,6 +5,7 @@ import {
 } from '@nestjs/typeorm';
 import { Button } from '@src/modules/button/button.entity';
 import { ButtonService } from '@src/modules/button/button.service';
+import { Network } from '@src/modules/network/network.entity';
 import { NetworkService } from '@src/modules/network/network.service';
 import { Post } from '@src/modules/post/post.entity';
 import { User } from '@src/modules/user/user.entity';
@@ -32,13 +33,14 @@ function readableDate(date: Date, locale) {
 @Injectable()
 export class ButtonsSeeder implements Seeder {
   constructor(
-    private readonly networkService: NetworkService,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @InjectRepository(Button)
     private readonly buttonRepository: Repository<Button>,
     @InjectRepository(Post)
-    private readonly postRepository: Repository<Post>
+    private readonly postRepository: Repository<Post>,
+    @InjectRepository(Network)
+    private readonly networkRepository: Repository<Network>
   ) {}
 
   async seed(): Promise<any> {
@@ -66,7 +68,7 @@ export class ButtonsSeeder implements Seeder {
       
     });
     
-    await this.userRepository.insert(usersToAdd);
+    // await this.userRepository.insert(usersToAdd);
     console.log(`Added ${usersToAdd.length} users`)
 
     let btnIds =[]
@@ -74,10 +76,12 @@ export class ButtonsSeeder implements Seeder {
     {
         return word.charAt(0).toUpperCase() + word.slice(1);
     }
-    const network = await this.networkService.findDefaultNetwork();
-    
-    // @ts-ignore
-    const buttonTypes = network.buttonTemplates.map((btnTemplate) => btnTemplate.name)
+    // const network = await this.networkService.findDefaultNetwork();
+    const network = await this.networkRepository.find({ order: { created_at: 'ASC' } });
+
+    const buttonTemplates = JSON.parse(network[0].buttonTemplates)
+    console.log('success')
+    const buttonTypes = buttonTemplates.map((btnTemplate) => btnTemplate.name)
     
 
     const btns = buttons.buttons.filter((button) => {
