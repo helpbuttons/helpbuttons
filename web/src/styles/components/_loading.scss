@@ -6,7 +6,7 @@
     height: 2em;
     border: 3px solid rgba(255, 255, 255, .3);
     border-radius: 70%;
-    border-top-color: $color-blue;
+    border-top-color: var(--network-text-color);
     animation: spin 1s ease-in-out infinite;
     -webkit-animation: spin 1s ease-in-out infinite;
     z-index: $z-index-06;

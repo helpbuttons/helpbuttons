@@ -39,7 +39,7 @@ $hashtag-color-l-gray: $color-med-gray;
   }
 
   &--blue {
-    background-color: $color-blue;
+    background-color: var(--network-text-color);
     color: $color-white;
     border: none;
   }

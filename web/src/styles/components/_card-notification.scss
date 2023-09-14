@@ -31,7 +31,7 @@ $card-notification-delete-size: 100px;
 
   &:hover {
 
-    border: 1px solid $color-blue;
+    border: 1px solid var(--network-text-color);
 
   }
 }

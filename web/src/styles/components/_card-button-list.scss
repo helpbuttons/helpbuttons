@@ -265,7 +265,7 @@ $card-button-list-border-height: $border-general-height;
   }
 
   & a {
-    color: $color-blue;
+    color: var(--network-text-color);
     cursor: pointer;
   }
 }
