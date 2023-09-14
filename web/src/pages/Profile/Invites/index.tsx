@@ -1,9 +1,13 @@
 import Popup from 'components/popup/Popup';
-import Btn from 'elements/Btn';
+import Btn, {
+  BtnType,
+  ContentAlignment,
+  IconType,
+} from 'elements/Btn';
 import { DropdownField } from 'elements/Dropdown/Dropdown';
 import t from 'i18n';
 import { GlobalState, store } from 'pages';
-import { useEffect} from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
 
@@ -16,6 +20,7 @@ import {
   readableTimeLeftToDate,
 } from 'shared/date.utils';
 import { getShareLink } from 'shared/sys.helper';
+import { alertService } from 'services/Alert';
 
 export default function Invites() {
   const invites: Invite[] = useStore(
@@ -42,9 +47,7 @@ export default function Invites() {
 
   const expirationOptions = [
     { value: 0, name: t('invite.never') },
-    { value: 60 * 30, name: t('invite.30min') },
-    { value: 60 * 60, name: t('invite.1hr') },
-    { value: 60 * 60 * 6, name: t('invite.6hr') },
+    { value: 60 * 30, name: t('invite.1hr') },
     { value: 60 * 60 * 24, name: t('invite.1day') },
     { value: 60 * 60 * 24 * 7, name: t('invite.1week') },
   ];
@@ -73,13 +76,40 @@ export default function Invites() {
       maximumUsage: parseInt(data.maximumUsage),
       expirationTimeInSeconds: parseInt(data.expirationTimeInSeconds),
       followMe: data.followMe,
-    }
+    };
     store.emit(new CreateInvite(invitation));
   };
 
-  const isExpired = (date: Date) => 
-  {
+  const isExpired = (date: Date) => {
     return new Date(date) < new Date();
+  };
+
+  const captionInvite = ({ usage, maximumUsage, expiration, id }) => {
+    return (
+      <>
+        {t('invite.clickToCopy')} - 
+        {maximumUsage > 0 ? (
+          <>
+            {usage} / {maximumUsage}{' '}
+          </>
+        ) : (
+          <> {t('invite.nolimit')}</>
+        )}
+        , {t('invite.expiresIn')} {expirationTime(expiration)}
+      </>
+    );
+  };
+
+  const getInvitationLink = (code) => {
+    return '/Signup/Invite/' + code;
+
+  }
+  const copyInvitation = (invitation) => {
+    const link = getInvitationLink(invitation.id);
+    navigator.clipboard.writeText(
+      getShareLink(link),
+    );
+    alertService.info(t('invite.copied', [link]))
   }
   return (
     <>
@@ -110,7 +140,6 @@ export default function Invites() {
                   }
                   label={t('invite.expiresIn')}
                 />
-                
                 {/* <FieldCheckbox
                   name="followMe"
                   checked={watch('followMe')}
@@ -118,45 +147,30 @@ export default function Invites() {
                   {...register('followMe')}
                 /> */}
                 <Btn
-                  caption="Generate new invitation link"
+                  caption={t('invite.generate')}
                   submit={true}
                 ></Btn>
               </div>
             </Form>
-            <hr />
-            List Link | Usages | expires | deactivate Link (copy){' '}
-            <br />
-            {invites.map(
-              ({ usage, maximumUsage, expiration, id }) => {
-                if( isExpired(expiration)){
-                  return (<></>)
-                }
-                return (
-                  <div key={id}>
-                    <a
-                      className=""
-                      onClick={() => {
-                        navigator.clipboard.writeText(
-                          getShareLink('/Signup/Invite/' + id),
-                        );
-                      }}
-                    >
-                      {t('invite.copy')}
-                    </a>
-                    |
-                    {maximumUsage > 0 ? (
-                      <>
-                        {usage} / {maximumUsage}{' '}
-                      </>
-                    ) : (
-                      <> {t('invite.nolimit')}</>
+            <div className="form__list--button-type-field">
+              {invites?.length > 0 &&
+                invites.map((invitation, idx) => (
+                  <div
+                    className="form__list-item--button-type-field"
+                    key={idx}
+                  >
+                    {!isExpired(invitation.expiration) && (
+                      <Btn
+                        btnType={BtnType.filter}
+                        iconLeft={IconType.color}
+                        contentAlignment={ContentAlignment.left}
+                        caption={captionInvite(invitation)}
+                        onClick={() => copyInvitation(invitation)}
+                      />
                     )}
-                    | {expirationTime(expiration)}
-                    <br />
                   </div>
-                );
-              },
-            )}
+                ))}
+            </div>
           </Popup>
         </>
       )}

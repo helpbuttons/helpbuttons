@@ -92,7 +92,8 @@
     "newbutton": "Creaste <a href='/ButtonFile/{0}'>{1}</a> en <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
     "newpost": "Hay una nueva publicación del autor en el botón de ayuda  <a href='/ButtonFile/{1}'>{2}</a>",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
-    "newcomment": "Hay un nuevo comentario '{0}' publicado en el post '{1}' . Puedes verlo en el botón de ayuda llamado <a href='/ButtonFile/{2}'>{3}</a>"
+    "newcomment": "Hay un nuevo comentario '{0}' publicado en el post '{1}' . Puedes verlo en el botón de ayuda llamado <a href='/ButtonFile/{2}'>{3}</a>",
+    "markedAllAsRead": ""
   },
   "user": {
     "email": "Email",
@@ -204,7 +205,8 @@
     "postgresDb": "Nombre de la base de datos de Postgresql",
     "postgresUser": "Usuario de Postgresql",
     "configureInstanceDescription": "Asistente para configurar tu Red",
-    "configureInstanceTitle": "Configura los últimos detalles de tu Red"
+    "configureInstanceTitle": "Configura los últimos detalles de tu Red",
+    "welcomeMessageLong": ""
   },
   "post": {
     "placeholderWrite": "Escribe una nueva actualización en tu botón de ayuda",
@@ -247,10 +249,16 @@
     "contactDescription": "Por favor, dirige tus preguntas al siguiente correo electrónico: helpbuttons@coletivos.org"
   },
   "invite": {
-    "never": "",
-    "expiresIn": "",
-    "copy": "",
-    "inviteOnlySignupMessage": "",
-    "inviteCodeLabel": ""
+    "never": "Nunca",
+    "1hr": "1 hora",
+    "1day": "1 dia",
+    "1week": "1 semana",
+    "expiresIn": "Expira",
+    "clickToCopy": "Copiar link de invitacion",
+    "maximumUsageTimes": "Numero de utilizaciones",
+    "nolimit": "Sin limite",
+    "inviteOnlyNetwork": "Sólo puedes registrarte en esta red con una invitación.",
+    "generate": "Crear nuevo link de invitacion",
+    "copied": "Link de invitacion copiado {0}"
   }
 }

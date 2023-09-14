@@ -256,10 +256,16 @@
     "contactDescription": "Please direct your questions to the following email: helpbuttons@coletivos.org"
   },
   "invite": {
-    "never": "",
-    "expiresIn": "",
-    "copy": "",
-    "inviteOnlySignupMessage": "",
-    "inviteCodeLabel": ""
+    "never": "Never",
+    "1hr": "1 hour",
+    "1day": "1 day",
+    "1week": "1 week",
+    "expiresIn": "Expires",
+    "clickToCopy": "Click button to copy link",
+    "maximumUsageTimes": "Number of usages",
+    "nolimit": "Without limit",
+    "inviteOnlyNetwork": "You can only signup in this network with an invitation",
+    "generate": "Generate new invitation link",
+    "copied": "Invitation link copied to clipboard {0}"
   }
 }

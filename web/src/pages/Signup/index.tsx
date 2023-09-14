@@ -113,29 +113,18 @@ export default function Signup() {
     }
   }, [router])
 
-  useEffect(() => {
-    if(selectedNetwork?.inviteOnly && !inviteCode)
-    {
-      alertService.info(t('invite.inviteOnlySignupMessage'))
-    }
-  }, [selectedNetwork])
-
+  if(selectedNetwork?.inviteOnly && !inviteCode) {
+    return (
+      <Popup title="Signup" linkFwd="/HomeInfo">
+        {t('invite.inviteOnlyNetwork')}
+      </Popup>
+    )
+  }
   return (
     <Popup title="Signup" linkFwd="/HomeInfo">
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
         <div className="login__form">
           <div className="form__inputs-wrapper">
-            {(params.get('inviteCode') || selectedNetwork?.inviteOnly) && 
-              <>
-              <FieldText
-                name="inviteCode"
-                label={t('invite.inviteCodeLabel')}
-                classNameInput="squared"
-                validationError={errors.inviteCode}
-                {...register('inviteCode')}
-              ></FieldText>
-              </>
-            }
             <NewUserFields
               control={control}
               register={register}
