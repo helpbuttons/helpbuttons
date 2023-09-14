@@ -21,6 +21,7 @@ import { GlobalState, store } from 'pages';
 import Link from 'next/link';
 import { UpdateFiltersToFilterTag } from 'state/Explore';
 import { isAdmin } from 'state/Users';
+import { formatMessage } from 'elements/Message';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -271,7 +272,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         <div className="card-button__title">{button.title}</div>
 
         <div className="card-button__paragraph">
-          <p>{button.description}</p>
+          <p>{formatMessage(button.description)}</p>
         </div>
 
         <div className="card-button__hashtags">
