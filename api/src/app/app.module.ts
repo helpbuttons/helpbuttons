@@ -27,8 +27,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { PostModule } from '@src/modules/post/post.module';
 import { ActivityModule } from '@src/modules/activity/activity.module';
 import { GeoModule } from '@src/modules/geo/geo.module';
-import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -39,7 +38,6 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
       load: [webAppConfig],
       validate: validate,
     }),
-    CacheModule.register(),
     MailModule,
     // FIXME: READ this confs using ConfigService
     TypeOrmModule.forRoot(dataSourceOptions),
@@ -62,10 +60,6 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
   controllers: [AppController],
   providers: [
     AppService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: CacheInterceptor,
-    },
   ],
 })
 export class AppModule implements NestModule {

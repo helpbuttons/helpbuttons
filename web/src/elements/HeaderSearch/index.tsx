@@ -67,9 +67,10 @@ function SearchText({ count, where, hexagonClicked }) {
     }
   };
 
+  const countString = count > 999 ? '> 1000 ': count 
   return (
     <div className="header-search__label">
-      {t('buttonFilters.searchBarTop', [address(where),count])}
+      {t('buttonFilters.searchBarTop', [address(where),countString])}
     </div>
   );
 }

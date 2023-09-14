@@ -6,9 +6,9 @@ import { ConfigModule } from '@nestjs/config';
 import { dataSourceOptions } from '@src/app/configs/orm.config';
 import webAppConfig from '@src/app/configs/web-app.config';
 import { validate } from '@src/app/validators/env.validator';
-import { NetworkModule } from '@src/modules/network/network.module';
 import { User } from '@src/modules/user/user.entity';
 import { Post } from '@src/modules/post/post.entity';
+import { Network } from '@src/modules/network/network.entity';
 
 
 seeder({
@@ -23,7 +23,6 @@ seeder({
     }),
 
     TypeOrmModule.forRoot(dataSourceOptions),
-    TypeOrmModule.forFeature([Button, User, Post]),
-    NetworkModule,
+    TypeOrmModule.forFeature([Button, User, Post, Network]),
   ],
 }).run([ButtonsSeeder]);

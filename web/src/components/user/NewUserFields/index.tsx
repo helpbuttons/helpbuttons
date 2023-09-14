@@ -62,7 +62,7 @@ export default function NewUserFields({
         validationError={errors.avatar}
         setValue={setValue}
         subtitle={'150x150px'}
-        {...register('avatar', { required: true })}
+        {...register('avatar')}
       />
     </>
   );
