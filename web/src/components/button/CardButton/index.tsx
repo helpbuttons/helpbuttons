@@ -90,7 +90,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
 
       <div className="card-button__title">{button.title}</div>
       {!button.image && 
-        <div className="card-button__paragraph">{button.description}</div>
+        <div className="card-button__paragraph"><p>{button.description}</p></div>
       }
       <div className="card-button__hashtags">
         {button.tags.map((tag, idx) => {
@@ -275,7 +275,6 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             <CardButtonHeadActions button={button} />
           </div>
         </div>
-        <MarkerSelectorMap markerPosition={[button.latitude, button.longitude]} setMarkerPosition={() => {}} zoom={10} markerColor={cssColor} markerImage={button.image} markerCaption={button.title}/>
         
         <div className="card-button__title">{button.title}</div>
 
@@ -301,13 +300,14 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
 
         <div className="card-button__locDate">
-          {!button.hideAddress && (
             <div className="card-button__city card-button__everywhere ">
               {button.address}
             </div>
-          )}
           <ShowWhen when={button.when} />
         </div>
+        {!button.hideAddress && (
+        <MarkerSelectorMap markerPosition={[button.latitude, button.longitude]} setMarkerPosition={() => {}} zoom={10} markerColor={cssColor} markerImage={button.image} markerCaption={button.title}/>
+        )}
       </div>
     </>
   );

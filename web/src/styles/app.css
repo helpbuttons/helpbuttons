@@ -457,7 +457,7 @@ a {
   border: none;
 }
 .hashtag--blue {
-  background-color: #18AAD2;
+  background-color: var(--network-text-color);
   color: #fff;
   border: none;
 }
@@ -913,6 +913,13 @@ a {
 }
 
 @media (hover: none) {
+  ::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+  }
+}
+@media only screen and (min-width: 1280px) {
   ::-webkit-scrollbar {
     display: none;
     -ms-overflow-style: none; /* IE and Edge */
@@ -1903,13 +1910,13 @@ a {
   height: 54px;
 }
 .dropdown__create-new-button button {
-  color: #18AAD2;
+  color: var(--network-text-color);
   border: none;
   background: transparent;
   height: 100%;
 }
 .dropdown__create-new-button button:hover {
-  color: #18AAD2;
+  color: var(--network-text-color);
   text-decoration: underline;
 }
 .dropdown__create-new-button span:hover {
@@ -2111,7 +2118,7 @@ li, ol, ul, h2 {
 }
 
 .card-alert--info {
-  background-color: #18AAD2;
+  background-color: var(--network-text-color);
 }
 
 .card-alert__content {
@@ -2779,13 +2786,13 @@ li, ol, ul, h2 {
   height: 54px;
 }
 .dropdown-nets__create-new-button button {
-  color: #18AAD2;
+  color: var(--network-text-color);
   border: none;
   background: transparent;
   height: 100%;
 }
 .dropdown-nets__create-new-button button:hover {
-  color: #18AAD2;
+  color: var(--network-text-color);
   text-decoration: underline;
 }
 .dropdown-nets__create-new-button span:hover {
@@ -3286,7 +3293,7 @@ li, ol, ul, h2 {
   margin-top: 0;
 }
 .card-button-map__paragraph a {
-  color: #18AAD2;
+  color: var(--network-text-color);
   cursor: pointer;
 }
 
@@ -3485,8 +3492,8 @@ li, ol, ul, h2 {
   margin: 2px;
 }
 .card-button-list__content .card-button__paragraph {
-  font-size: 0.8rem;
-  color: black;
+  font-size: 16px;
+  color: #828282;
 }
 
 .card-button-list__header {
@@ -3648,7 +3655,7 @@ li, ol, ul, h2 {
   margin-top: 0;
 }
 .card-button-list__paragraph a {
-  color: #18AAD2;
+  color: var(--network-text-color);
   cursor: pointer;
 }
 
@@ -3848,7 +3855,7 @@ li, ol, ul, h2 {
 }
 
 .nav-bottom__link--current {
-  color: #18AAD2;
+  color: var(--network-text-color);
 }
 .nav-bottom__link--current .nav-bottom__text::after {
   content: "";
@@ -3857,7 +3864,7 @@ li, ol, ul, h2 {
   width: 20px;
   height: 2px;
   left: 50%;
-  background-color: #18AAD2;
+  background-color: var(--network-text-color);
   transform: translateX(-50%);
   border-radius: 32px;
   opacity: 1;
@@ -3922,7 +3929,7 @@ li, ol, ul, h2 {
   align-items: center;
   cursor: pointer;
   text-decoration: none;
-  background: #18AAD2;
+  background: var(--network-text-color);
   pointer-events: none;
 }
 
@@ -4655,7 +4662,7 @@ li, ol, ul, h2 {
   margin-top: 0;
 }
 .card-button__paragraph a {
-  color: #18AAD2;
+  color: var(--network-text-color);
   cursor: pointer;
 }
 
@@ -4912,7 +4919,7 @@ li, ol, ul, h2 {
   color: #0E0E0E;
 }
 .card-notification:hover {
-  border: 1px solid #18AAD2;
+  border: 1px solid var(--network-text-color);
 }
 
 .card-notification:hover {
@@ -5438,7 +5445,7 @@ li, ol, ul, h2 {
   height: 2em;
   border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 70%;
-  border-top-color: #18AAD2;
+  border-top-color: var(--network-text-color);
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
   z-index: 600;
@@ -6945,7 +6952,7 @@ body {
   color: #fff;
   position: relative;
   text-overflow: ellipsis;
-  text-shadow: 0 0 10px #18AAD2;
+  text-shadow: 0 0 10px var(--network-text-color);
   max-width: 80vw;
   left: 10px;
   top: 10px;
@@ -7255,7 +7262,7 @@ body {
   height: 15px;
   border: 0;
   cursor: pointer;
-  background: #18AAD2;
+  background: var(--network-text-color);
   z-index: 5000;
 }
 
