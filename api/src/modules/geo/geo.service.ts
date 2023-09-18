@@ -125,6 +125,7 @@ export class GeoService {
       : '';
     return {
       formatted: `${name}${street}${housenumber}${city}${country}`,
+      formatted_city: `${city}${country}`,
       geometry: {
         lat: place.geometry.coordinates[1],
         lng: place.geometry.coordinates[0],

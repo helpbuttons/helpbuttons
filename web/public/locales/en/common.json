@@ -119,7 +119,7 @@
     "errorCreated": "",
     "pickButtonTemplateColor": "",
     "unknownPlace": "Unknown Place",
-    "hideAddress": "Esconder ubicación exacta"
+    "hideAddress": "Hide exact location"
   },
   "user": {
     "email": "Email",
