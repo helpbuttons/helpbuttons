@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NetworkService } from './network.service';
 import { NetworkController } from './network.controller';
@@ -12,7 +12,7 @@ import { UserModule } from '../user/user.module';
     TypeOrmModule.forFeature([Network]),
     TagModule,
     StorageModule,
-    UserModule
+    forwardRef(() => UserModule)
   ],
   controllers: [
     NetworkController

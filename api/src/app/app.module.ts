@@ -1,4 +1,8 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -19,9 +23,11 @@ import { AppService } from './app.service';
 import { dataSourceOptions } from './configs/orm.config';
 import webAppConfig from './configs/web-app.config';
 import { validate } from './validators/env.validator';
-import {EventEmitterModule } from '@nestjs/event-emitter' 
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { PostModule } from '@src/modules/post/post.module';
 import { ActivityModule } from '@src/modules/activity/activity.module';
+import { GeoModule } from '@src/modules/geo/geo.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -48,12 +54,14 @@ import { ActivityModule } from '@src/modules/activity/activity.module';
     StorageModule,
     EventEmitterModule.forRoot(),
     PostModule,
-    ActivityModule
+    ActivityModule,
+    GeoModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+  ],
 })
-
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer.apply(AppLogger).forRoutes('*');

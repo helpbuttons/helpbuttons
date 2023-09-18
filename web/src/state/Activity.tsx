@@ -12,6 +12,10 @@ export class FindActivities implements WatchEvent {
   public constructor() {}
 
   public watch(state: GlobalState) {
+    if(!state.loggedInUser)
+    {
+      return of(undefined)
+    }
     return ActivityService.find().pipe(
       map((activities: Activity[]) => {
         activities.map((activity) => {

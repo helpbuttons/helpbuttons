@@ -21,6 +21,7 @@ import { useButtonTypes } from 'shared/buttonTypes';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 import { uniqueArray } from 'shared/sys.helper';
 import MultiSelectOption from 'elements/MultiSelectOption';
+import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 
 
 export default function AdvancedFilters({
@@ -172,20 +173,14 @@ export default function AdvancedFilters({
                 );
               })}
             </FieldMultiSelect>
-            <div className="form__field">
-              <label className="form__label">
-                {t('buttonFilters.where')}
-                {address && center && (
-                  <>
-                    ({address} - {roundCoords(center).toString()})
-                  </>
-                )}
-              </label>
-              <DropDownSearchLocation
+            
+              <DropDownWhere
                 placeholder={t('homeinfo.searchlocation')}
                 handleSelectedPlace={handleSelectedPlace}
+                address={address}
+                center={center}
               />
-            </div>
+            
 
             {center && (
               <div className="form__field">

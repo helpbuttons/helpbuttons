@@ -56,17 +56,22 @@ export default function ButtonEdit() {
           latitudfe: data.latitude,
           longitude: data.longitude,
           image: data.image,
-          address: data.address
+          address: data.address,
+          hideAddress: data.hideAddress
         },
-        onSuccess({lat: data.latitude, lng: data.longitude}),
+        onSuccess(id),
+        // onSuccess({lat: data.latitude, lng: data.longitude}),
         onError,
       ),
     );
   };
 
-  const onSuccess = (location: {lat: number, lng: number}) => {
-    router.push(`/Explore#?lat=${location.lat}&lng=${location.lng}`);
+  const onSuccess = (buttonId) => {
+    router.push(`/ButtonFile/${buttonId}`);
   };
+  // const onSuccess = (location: {lat: number, lng: number}) => {
+  //   router.push(`/Explore#?lat=${location.lat}&lng=${location.lng}`);
+  // };
 
   const onError = (errorMessage) => alertService.error(errorMessage.caption)
 

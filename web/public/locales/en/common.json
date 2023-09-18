@@ -117,7 +117,9 @@
     "edit": "Edit",
     "created": "Your helpbutton has been created",
     "errorCreated": "",
-    "pickButtonTemplateColor": ""
+    "pickButtonTemplateColor": "",
+    "unknownPlace": "Unknown Place",
+    "hideAddress": "Hide exact location"
   },
   "user": {
     "email": "Email",
@@ -221,7 +223,8 @@
     "nomeclaturePlaceHolder": "",
     "moderateNetwork": "",
     "blockedExplain": "",
-    "adminUsers": ""
+    "adminUsers": "",
+    "contactAdmin": "Contact the administrator"
   },
   "configure": {
     "browsePins": "",

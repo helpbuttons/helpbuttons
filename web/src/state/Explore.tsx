@@ -94,19 +94,19 @@ export class FindButtons implements WatchEvent, UpdateEvent {
   }
 }
 
-export class FindAddress implements WatchEvent {
+export class ReverseGeo implements WatchEvent {
   public constructor(
-    private q: string,
+    private lat: number,
+    private lng: number,
     private onSuccess,
     private onError,
   ) {}
 
   public watch(state: GlobalState) {
-    const t = GeoService.findPromise(this.q)
-      .then((place) => this.onSuccess(place))
-      .catch((error) => {
-        this.onError(error);
-      });
+    return GeoService.reverse(this.lat, this.lng).pipe(
+      map((place) => this.onSuccess(place)),
+      catchError((error) => handleError(this.onError, error))
+    );
   }
 }
 
@@ -171,7 +171,7 @@ export class ClearCurrentButton implements UpdateEvent {
     });
   }
 }
-export class ButtonDelete implements WatchEvent {
+export class ButtonDelete implements WatchEvent, UpdateEvent {
   public constructor(
     private buttonId: string,
     private onSuccess,
@@ -186,9 +186,17 @@ export class ButtonDelete implements WatchEvent {
       catchError((error) => handleError(this.onError, error)),
     );
   }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.boundsFilteredButtons = []
+      newState.explore.map.cachedHexagons = []
+      newState.explore.map.listButtons = []
+    });
+  }
 }
 
-export class UpdateButton implements WatchEvent {
+export class UpdateButton implements WatchEvent, UpdateEvent {
   public constructor(
     private buttonId: string,
     private button: UpdateButtonDto,
@@ -202,6 +210,14 @@ export class UpdateButton implements WatchEvent {
       }),
       catchError((error) => handleError(this.onError, error)),
     );
+  }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.boundsFilteredButtons = []
+      newState.explore.map.cachedHexagons = []
+      newState.explore.map.listButtons = []
+    });
   }
 }
 export class updateCurrentButton implements UpdateEvent {
