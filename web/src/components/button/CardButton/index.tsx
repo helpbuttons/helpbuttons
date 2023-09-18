@@ -101,11 +101,9 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           );
         })}
       </div>
-      {!button.hideAddress && 
         <div className="card-button__city card-button__everywhere ">
           {button.address}
         </div>
-      }
       <ShowWhen when={button.when} />
     </div>
   );

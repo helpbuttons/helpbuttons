@@ -171,7 +171,8 @@
     "titleLabel": "Título",
     "whereLabel": "Dónde?",
     "pickButtonTemplateColor": "Elige color para tu tipo de botón de ayuda",
-    "unknownPlace": "Sitio desconocido"
+    "unknownPlace": "Sitio desconocido",
+    "hideAddress": "Esconder ubicación exacta"
   },
   "calendarOnce": {
     "label": "Una vez",

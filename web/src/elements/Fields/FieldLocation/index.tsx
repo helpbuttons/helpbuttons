@@ -12,7 +12,7 @@ import t from 'i18n';
 import { Point } from 'pigeon-maps';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { ReverseGeo } from 'state/Explore';
-import Loading from 'components/loading';
+import { FieldCheckbox } from '../FieldCheckbox';
 export default function FieldLocation({
   validationError,
   markerImage,
@@ -23,12 +23,15 @@ export default function FieldLocation({
   updateAddress,
   updateMarkerPosition,
   label,
+  watch,
+  register,
 }) {
   const config: SetupDtoOut = useRef(
     store,
     (state: GlobalState) => state.config,
   );
 
+  const [place, setPlace] = useState(null);
   const [markerPosition, setMarkerPosition] = useState<Point>(
     selectedNetwork.exploreSettings.center,
   );
@@ -43,6 +46,7 @@ export default function FieldLocation({
   const handleSelectedPlace = (place) => {
     setMarkerPosition([place.geometry.lat, place.geometry.lng]);
   };
+  const hideAddress = watch('hideAddress');
 
   const requestAddressForPosition = (markerPosition) => {
     store.emit(
@@ -53,9 +57,14 @@ export default function FieldLocation({
           if (!place) {
             updateAddress(t('button.unknownPlace')[0]);
           } else {
-            updateAddress(place.formatted);
+            if (hideAddress) {
+              updateAddress(place.formatted_city);
+            } else {
+              updateAddress(place.formatted);
+            }
+            setPlace(place);
           }
-          updateMarkerPosition(markerPosition)
+          updateMarkerPosition(markerPosition);
         },
         () => {
           console.log(
@@ -76,6 +85,17 @@ export default function FieldLocation({
       setMarkerPosition(selectedNetwork.exploreSettings.center);
     }
   }, [selectedNetwork]);
+
+  useEffect(() => {
+    if(place)
+    {
+      if (hideAddress) {
+        updateAddress(place.formatted_city);
+      } else {
+        updateAddress(place.formatted);
+      }
+    }
+  }, [hideAddress]);
 
   return (
     <>
@@ -116,6 +136,13 @@ export default function FieldLocation({
             markerPosition={markerPosition}
             markerCaption={markerCaption}
             markerImage={markerImage}
+            showHexagon={watch('hideAddress')}
+          />
+          <FieldCheckbox
+            name="hideAddress"
+            checked={watch('hideAddress')}
+            text={t('button.hideAddress')}
+            {...register('hideAddress')}
           />
           <Btn
             btnType={BtnType.submit}
