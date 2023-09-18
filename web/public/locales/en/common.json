@@ -118,7 +118,8 @@
     "created": "Your helpbutton has been created",
     "errorCreated": "",
     "pickButtonTemplateColor": "",
-    "unknownPlace": "Unknown Place"
+    "unknownPlace": "Unknown Place",
+    "hideAddress": "Esconder ubicación exacta"
   },
   "user": {
     "email": "Email",

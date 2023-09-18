@@ -185,7 +185,7 @@ export default function ButtonForm({
                   <FieldCheckbox
                     name="hideAddress"
                     checked={watch('hideAddress')}
-                    text={t('user.hideAddress')}
+                    text={t('button.hideAddress')}
                     {...register('hideAddress')}
                   />
                 </>
