@@ -32,10 +32,7 @@ export class UserController {
   @Get('/find/:username')
   async find(@Param('username') username: string) {
     return await this.userService
-      .findByUsername(username)
-      .then((user) => {
-        return user;
-      });
+      .findByUsername(username, true);
   }
 
   @OnlyRegistered()
