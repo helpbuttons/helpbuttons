@@ -87,13 +87,12 @@ export default function Invites() {
   const captionInvite = ({ usage, maximumUsage, expiration, id }) => {
     return (
       <>
-        {t('invite.clickToCopy')} - 
         {maximumUsage > 0 ? (
           <>
             {usage} / {maximumUsage}{' '}
           </>
         ) : (
-          <> {t('invite.nolimit')}</>
+          <> {t('invite.nolimit')} </> 
         )}
         , {t('invite.expiresIn')} {expirationTime(expiration)}
       </>
@@ -115,15 +114,30 @@ export default function Invites() {
     <>
       {loggedInUser && (
         <>
-          <Popup title="Invites profile" linkFwd="/HomeInfo">
+        {/* <Popup title={t('configuration.title')} LinkFwd="/Profile">
+        <Form
+        classNameExtra="configuration"
+        onSubmit={handleSubmit(onSubmit)}
+      > */}
+        {/* <div className="form__inputs-wrapper">
+          <div className="form__field">
+            <p className="form__explain">{description}</p>
+            <p>
+              <b>{getUrlOrigin()}</b>
+            </p>
+          </div>
+          </div>
+          </Form>
+        </Popup> */}
+          <Popup title={t('invite.title')} linkFwd="/HomeInfo">
             <Form
               onSubmit={handleSubmit(onSubmit)}
-              classNameExtra="login"
+              classNameExtra="invite"
             >
-              <div className="login__form">
-                Invite people, manage and share links with other
-                people to allow them to access your network
-                <div className="form__inputs-wrapper"></div>
+              <div className="invite__form">
+               
+                <p className="form__explain">{t('invite.description')}</p>
+                <div className="form__inputs-wrapper">
                 <DropdownField
                   options={maximumUsageTimesOptions}
                   defaultSelected={'nolimit'}
@@ -140,33 +154,32 @@ export default function Invites() {
                   }
                   label={t('invite.expiresIn')}
                 />
-                {/* <FieldCheckbox
-                  name="followMe"
-                  checked={watch('followMe')}
-                  text={t('invite.followMe')}
-                  {...register('followMe')}
-                /> */}
                 <Btn
                   caption={t('invite.generate')}
                   submit={true}
                 ></Btn>
+                </div>
               </div>
             </Form>
-            <div className="form__list--button-type-field">
+            <p>&nbsp;</p>
+            <div>
               {invites?.length > 0 &&
                 invites.map((invitation, idx) => (
                   <div
-                    className="form__list-item--button-type-field"
                     key={idx}
                   >
-                    {!isExpired(invitation.expiration) && (
+                    {(!isExpired(invitation.expiration) || !invitation.expiration) && (
+                      <div className='form__list-item--button-type-field' key={idx}>
+                      {captionInvite(invitation)}
+                      
                       <Btn
                         btnType={BtnType.filter}
                         iconLeft={IconType.color}
                         contentAlignment={ContentAlignment.left}
-                        caption={captionInvite(invitation)}
+                        caption={t('invite.clickToCopy')}
                         onClick={() => copyInvitation(invitation)}
                       />
+                      </div>
                     )}
                   </div>
                 ))}

@@ -47,7 +47,7 @@ export class InviteService {
     return this.inviteRepository.find({where: {owner: {id: currentUser.id}}})
   }
 
-  async validateInvite(inviteCode: string)
+  async isInviteCodeValid(inviteCode: string)
   {
     const invite = await this.inviteRepository.findOne({where: {id: inviteCode}})
     if(!invite)

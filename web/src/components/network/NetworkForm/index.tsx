@@ -54,7 +54,7 @@ function NetworkForm({
   return (
     <>
       <Form
-        classNameExtra="createAdmin"
+        classNameExtra="configuration"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="form__inputs-wrapper">

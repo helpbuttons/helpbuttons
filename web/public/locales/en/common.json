@@ -263,11 +263,13 @@
     "1day": "1 day",
     "1week": "1 week",
     "expiresIn": "Expires",
-    "clickToCopy": "Click button to copy link",
+    "clickToCopy": "Copy invitation link",
     "maximumUsageTimes": "Number of usages",
     "nolimit": "Without limit",
     "inviteOnlyNetwork": "You can only signup in this network with an invitation",
     "generate": "Generate new invitation link",
-    "copied": "Invitation link copied to clipboard {0}"
+    "copied": "Invitation link copied to clipboard {0}",
+    "title": "Invites",
+    "description": "Invite people, manage and share links with other people to allow them to access your network"
   }
 }

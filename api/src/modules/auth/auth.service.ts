@@ -50,7 +50,7 @@ export class AuthService {
 
     if(selectedNetwork.inviteOnly)
     {
-      const validInviteCode = this.inviteService.validateInvite(signupUserDto.inviteCode)
+      const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
       if(!validInviteCode)
       {
         throw new CustomHttpException(ErrorName.inviteOnly)
