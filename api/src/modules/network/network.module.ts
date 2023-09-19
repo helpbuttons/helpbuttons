@@ -14,7 +14,6 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     TypeOrmModule.forFeature([Network]),
     TagModule,
     StorageModule,
-    UserModule,
     CacheModule.register(),
     forwardRef(() => UserModule)
   ],
