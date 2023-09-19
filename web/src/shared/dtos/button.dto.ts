@@ -69,7 +69,6 @@ export class CreateButtonDto implements Partial<Button> {
   @IsLongitude({message: 'invalid-longitude'})
   longitude: number;
 
-  @IsNotEmpty()
   image: string;
 
   @ApiProperty({

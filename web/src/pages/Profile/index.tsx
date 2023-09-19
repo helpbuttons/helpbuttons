@@ -13,6 +13,7 @@ import {
   IoHammerOutline,
   IoHandLeftOutline,
   IoLogOutOutline,
+  IoPersonAddOutline,
 } from 'react-icons/io5';
 import Btn, { IconType } from 'elements/Btn';
 import { UserService } from 'services/Users';
@@ -66,6 +67,13 @@ export default function Profile() {
                     iconLeft={IconType.svg}
                     iconLink={<IoHammerOutline />}
                     caption={t('user.editProfile')}
+                  />
+                </Link>
+                <Link href="/Profile/Invites">
+                  <Btn
+                    iconLeft={IconType.svg}
+                    iconLink={<IoPersonAddOutline />}
+                    caption={t('user.invites')}
                   />
                 </Link>
                 <Link href="/Explore">

@@ -26,6 +26,7 @@ import { validate } from './validators/env.validator';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { PostModule } from '@src/modules/post/post.module';
 import { ActivityModule } from '@src/modules/activity/activity.module';
+import { InviteModule } from '@src/modules/invite/invite.module';
 import { GeoModule } from '@src/modules/geo/geo.module';
 
 @Module({
@@ -55,6 +56,7 @@ import { GeoModule } from '@src/modules/geo/geo.module';
     EventEmitterModule.forRoot(),
     PostModule,
     ActivityModule,
+    InviteModule,
     GeoModule,
   ],
   controllers: [AppController],
