@@ -101,11 +101,9 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           );
         })}
       </div>
-      {!button.hideAddress && 
         <div className="card-button__city card-button__everywhere ">
           {button.address}
         </div>
-      }
       <ShowWhen when={button.when} />
     </div>
   );
@@ -275,12 +273,11 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             <CardButtonHeadActions button={button} />
           </div>
         </div>
-        <MarkerSelectorMap markerPosition={[button.latitude, button.longitude]} setMarkerPosition={() => {}} zoom={10} markerColor={cssColor} markerImage={button.image} markerCaption={button.title}/>
         
         <div className="card-button__title">{button.title}</div>
 
         <div className="card-button__paragraph">
-          <p>{formatMessage(button.description)}</p>
+          {formatMessage(button.description)}
         </div>
 
         <div className="card-button__hashtags">
@@ -301,13 +298,14 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
 
         <div className="card-button__locDate">
-          {!button.hideAddress && (
             <div className="card-button__city card-button__everywhere ">
               {button.address}
             </div>
-          )}
           <ShowWhen when={button.when} />
         </div>
+        {!button.hideAddress && (
+        <MarkerSelectorMap markerPosition={[button.latitude, button.longitude]} setMarkerPosition={() => {}} zoom={10} markerColor={cssColor} markerImage={button.image} markerCaption={button.title}/>
+        )}
       </div>
     </>
   );

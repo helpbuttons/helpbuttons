@@ -105,7 +105,8 @@
     "delete": "Delete",
     "edit": "Edit",
     "created": "Your helpbutton has been created",
-    "errorCreated": ""
+    "errorCreated": "",
+    "hideAddress": "hola"
   },
   "user": {
     "email": "Email",

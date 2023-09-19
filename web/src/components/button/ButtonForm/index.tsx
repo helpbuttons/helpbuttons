@@ -181,12 +181,8 @@ export default function ButtonForm({
                     markerColor={markerColor}
                     selectedNetwork={selectedNetwork}
                     validationError={errors.location}
-                  />
-                  <FieldCheckbox
-                    name="hideAddress"
-                    checked={watch('hideAddress')}
-                    text={t('user.hideAddress')}
-                    {...register('hideAddress')}
+                    watch={watch}
+                    register={register}
                   />
                 </>
               )}

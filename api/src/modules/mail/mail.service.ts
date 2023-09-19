@@ -81,7 +81,7 @@ export class MailService {
         context: vars,
       }).then((mail) => {console.log(`>> mail sent to ${to} with template '${template}'`)})
       .catch((error) => {console.log(error); console.trace()})
-    })
+    }).catch((error) => console.log('getting network error?'))
     
     return 
   }

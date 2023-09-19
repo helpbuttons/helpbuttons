@@ -5,6 +5,7 @@ import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/sys.helper';
 import CardButtonMap from '../CardButtonMap';
 import { buttonColorStyle } from 'shared/buttonTypes';
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 interface MarkerButtonProps extends PigeonProps {
   style?: React.CSSProperties;
@@ -49,7 +50,7 @@ export function MarkerButton(props: MarkerButtonProps) {
       <MarkerButtonIcon
         {...props}
         cssColor={cssColor}
-        image={makeImageUrl(props.button.image, '/api/')}
+        image={props.button.image}
         title={props.button.title}
         onClick={() => handleMarkerClicked(props.button)}
       />
@@ -98,10 +99,10 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
           className="marker-button marker-button-selector"
         >
           <div className="avatar-medium marker-button__image">
-            <img
+            <ImageWrapper
+              imageType={ImageType.avatarMed}
               src={props.image}
               alt={props.title}
-              className="picture__img"
             />
           </div>
 
