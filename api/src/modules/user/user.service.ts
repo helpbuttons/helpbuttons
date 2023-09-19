@@ -131,4 +131,9 @@ export class UserService {
       });
     });
   }
+
+  updateRole(userId, newRole)
+  {
+    return this.userRepository.update(userId, {role: newRole})
+  }
 }

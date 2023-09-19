@@ -11,6 +11,7 @@ import { User } from 'shared/entities/user.entity';
 import { Logout } from 'state/Users';
 import { store } from 'pages';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
+import { Role } from 'shared/types/roles';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -62,5 +63,9 @@ export class UserService {
   public static loginToken(token :string): Observable<ICurrentUser | undefined> {
     return httpService.get<ICurrentUser>(`/users/loginToken/${token}`).pipe(
       tap((user) => httpService.setAccessToken(user?.token)));
+  }
+
+  public static updateRole(userId : string,newRole :Role): Observable<any> {
+    return httpService.post<any>(`/users/updateRole/${userId}/${newRole}`);
   }
 }

@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { Repository, In, EntityManager } from 'typeorm';
+import { Repository, In, EntityManager, Not } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { Button } from './button.entity';
@@ -104,7 +104,7 @@ export class ButtonService {
 
   async findById(id: string) {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id, deleted: false },
+      where: { id, ...this.deletedBlockedConditions() },
       relations: [
         'owner',
       ],
@@ -174,7 +174,7 @@ export class ButtonService {
           relations: ['feed', 'owner'],
           where: {
             id: In(buttonsIds),
-            deleted: false,
+            ...this.deletedBlockedConditions()
           },
           order: {
             created_at: 'DESC',
@@ -208,7 +208,7 @@ export class ButtonService {
 
   async findByUserId(userId: string) {
     let button: Button = await this.buttonRepository.findOne({
-      where: { owner: {id: userId}, deleted: false },
+      where: { owner: {id: userId}, ...this.deletedBlockedConditions() },
       relations: [
         'owner',
       ],
@@ -222,5 +222,10 @@ export class ButtonService {
       throw new HttpException('button not found', HttpStatus.NOT_FOUND)
     }
     return { ...button };
+  }
+
+  deletedBlockedConditions()
+  {
+    return  {deleted: false, owner: {role: Not(Role.blocked)}}
   }
 }
