@@ -3,7 +3,6 @@ import { HbMap } from '.';
 import { GeoJson, Point } from 'pigeon-maps';
 import { latLngToGeoJson } from 'shared/honeycomb.utils';
 import { MarkerButtonIcon } from './MarkerButton';
-import { makeImageUrl } from 'shared/sys.helper';
 import { cellToLatLng, latLngToCell } from 'h3-js';
 import { maxResolution } from 'shared/types/honeycomb.const';
 
@@ -67,7 +66,7 @@ export default function MarkerSelectorMap({
             anchor={hexagonCenter}
             offset={[35, 65]}
             cssColor={markerColor}
-            image={makeImageUrl(markerImage, '/api/')}
+            image={markerImage}
             title={markerCaption}
           />
           {showHexagon && (
