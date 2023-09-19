@@ -14,6 +14,7 @@ import { HttpStatus } from 'shared/types/http-status.enum';
 import { handleError } from './helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { ButtonService } from 'services/Buttons';
+import { Role } from 'shared/types/roles';
 
 export interface UsersState {
   currentUser: IUser;
@@ -221,6 +222,28 @@ export class LoginToken implements WatchEvent {
       }),
     );
   }
+}
+
+
+export class UpdateRole implements WatchEvent {
+  public constructor(
+    private userId: string,
+    private newRole: Role,
+    private onSuccess,
+    private onError,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.updateRole(this.userId,this.newRole).pipe(
+      map((data) => {
+        this.onSuccess(true)
+      }),
+      catchError((error) => {  
+        return of(undefined);
+      }),
+    );
+  }
+
 }
 
 
