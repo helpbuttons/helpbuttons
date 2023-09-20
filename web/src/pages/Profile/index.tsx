@@ -73,7 +73,7 @@ export default function Profile() {
                   <Btn
                     iconLeft={IconType.svg}
                     iconLink={<IoPersonAddOutline />}
-                    caption={t('user.invites')}
+                    caption={t('invite.title')}
                   />
                 </Link>
                 <Link href="/Explore">
