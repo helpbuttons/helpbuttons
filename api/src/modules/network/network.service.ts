@@ -102,8 +102,7 @@ export class NetworkService {
   @UseInterceptors(CacheInterceptor)
   @CacheKey('defaultNetwork')
   @CacheTTL(30) // override TTL to 30 seconds
-  findDefaultNetwork(): Promise<NetworkDto> {      buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
-    locale: updateDto.locale
+  findDefaultNetwork(): Promise<NetworkDto> {
 
     return this.networkRepository
       .find({ order: { created_at: 'ASC' } })
