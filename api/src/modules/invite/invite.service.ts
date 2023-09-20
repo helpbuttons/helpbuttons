@@ -56,18 +56,15 @@ export class InviteService {
     }
     if( invite.maximumUsage > 0 && invite.maximumUsage < invite.usage)
     {
-      console.log('all invitations usages done')
       return false;
     }
 
     if(new Date(invite.expiration) < new Date())
     {
-      console.log('invitation expired')
       return false;
     }
 
     await this.inviteRepository.update(invite.id, {...invite, usage: invite.usage + 1 })
-    console.log('invite code: ' + inviteCode)
     return true;
   }
 }
