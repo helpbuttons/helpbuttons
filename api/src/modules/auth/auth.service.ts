@@ -1,4 +1,4 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { JwtService } from '@nestjs/jwt';
@@ -29,6 +29,9 @@ import { ErrorName } from '@src/shared/types/error.list';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { ValidationError } from 'class-validator';
 import { configFileName } from '@src/shared/helpers/config-name.const';
+import { NetworkService } from '../network/network.service';
+import { InviteService } from '../invite/invite.service';
+import { Exception } from 'handlebars';
 const config = require(`../../..${configFileName}`);
 @Injectable()
 export class AuthService {
@@ -38,9 +41,21 @@ export class AuthService {
     private readonly mailService: MailService,
     private jwtTokenService: JwtService,
     private readonly storageService: StorageService,
+    private readonly networkService: NetworkService,
+    private readonly inviteService: InviteService,
   ) {}
 
   async signup(signupUserDto: SignupRequestDto) {
+    const selectedNetwork = await this.networkService.findDefaultNetwork();
+
+    if(selectedNetwork.inviteOnly)
+    {
+      const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
+      if(!validInviteCode)
+      {
+        throw new CustomHttpException(ErrorName.inviteOnly)
+      }
+    }
     const verificationToken = publicNanoidGenerator();
     let emailVerified = false;
     let accessToken = {};

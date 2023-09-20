@@ -79,3 +79,20 @@ https://react-icons.github.io/react-icons/icons?name=bs
 Please load and read complete documentation
 [hb-docs](https://github.com/helpbuttons/hb-docs)
 
+
+## guide to build a new attribute in a network
+
+go to api/src/modules/network
+
+add the new attr to 
+ - network.entity.ts (this is to define in the db)
+ - network.dto.ts (this is for the post request to validate)
+
+run `yarn migration:generate src/data/migrations/name`
+
+run `yarn migration:run`
+
+in the frontend:
+web/src/pages/Configuration/index.tsx
+
+add the attr to the submit field

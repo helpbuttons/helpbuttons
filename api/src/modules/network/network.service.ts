@@ -1,4 +1,4 @@
-import { HttpException, Inject, Injectable, forwardRef } from '@nestjs/common';
+import { HttpException,Inject,forwardRef, Injectable, UseInterceptors } from '@nestjs/common';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
 import {
@@ -23,6 +23,7 @@ import { SetupDtoOut } from '../setup/setup.entity';
 import { getConfig } from '@src/shared/helpers/config.helper';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
 @Injectable()
 export class NetworkService {
@@ -97,9 +98,10 @@ export class NetworkService {
     });
   }
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheKey('defaultNetwork')
+  @CacheTTL(30) // override TTL to 30 seconds
   findDefaultNetwork(): Promise<NetworkDto> {
-    // const
-
     return this.networkRepository
       .find({ order: { created_at: 'ASC' } })
       .then((networks) => {
@@ -167,7 +169,8 @@ export class NetworkService {
       exploreSettings: updateDto.exploreSettings,
       backgroundColor: updateDto.backgroundColor,
       textColor: updateDto.textColor,
-      buttonTemplates: JSON.stringify(updateDto.buttonTemplates)
+      buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
+      inviteOnly: updateDto.inviteOnly
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
