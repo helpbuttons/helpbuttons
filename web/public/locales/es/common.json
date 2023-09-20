@@ -10,7 +10,7 @@
     "donate": "Donar"
   },
   "homeinfo": {
-    "selectedArea":"en el area seleccionada",
+    "selectedArea": "en el area seleccionada",
     "start": "Donde quieres empezar?",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
@@ -18,7 +18,7 @@
     "stats": "Estadísticas de la Red",
     "users": "{0} usuarios en esta Red",
     "actions": "¿Qué puedes hacer?",
-    "popularHashtags":"¿De qué tratan?",
+    "popularHashtags": "¿De qué tratan?",
     "profileSubtitle": "Comprueba tu perfil",
     "createSubtitle": "Crea tu botón de ayuda y colabora",
     "faqsSubtitle": "Lee más sobre esta app",
@@ -27,7 +27,6 @@
     "loginSubtitle": "¡Entra o crea tu cuenta!",
     "buttons": "Hay {0} botones de ayuda en esta Red",
     "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación: "
-
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -36,7 +35,7 @@
   "hostname": "nombre de host",
   "common": {
     "save": "Guardar",
-    "in":"en",
+    "in": "en",
     "publish": "Publicar",
     "saveSuccess": "{0} guardado",
     "choose": "Elige {0}",
@@ -51,7 +50,8 @@
     "done": "Hecho",
     "remove": "Eliminar",
     "click": "Haz click aquí",
-    "publishTitle": "Publicar {0}"
+    "publishTitle": "Publicar {0}",
+    "deleteSuccess": ""
   },
   "configuration": {
     "namePlaceHolder": "Red de agricultores de Vilanova",
@@ -78,13 +78,22 @@
     "buttonTemplateExplain": "Aquí puedes elegir los tipòs de botón de ayuda que va a tener tu red. Intenta que sean pocos tipos y generales como 'Ofrecer' o 'Necesitar'. Si quieres ser más específico/a pùedes usar etiquetas para categorizar más adelante.",
     "moderateNetwork": "Modera tu Red",
     "blockedExplain": "Bloqueados",
-    "adminUsers": "Administradores"
+    "adminUsers": "Administradores",
+    "customizeAppearance": "",
+    "chooseColorsExplain": "",
+    "pickSecondaryColor": "",
+    "configureNetwork": "",
+    "nomeclatureExplain": "",
+    "buttonTemplateLabel": "",
+    "buttonTemplatePlaceHolder": "",
+    "contactAdmin": "Contatar el administrador"
   },
   "activities": {
     "newbutton": "Creaste <a href='/ButtonFile/{0}'>{1}</a> en <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
     "newpost": "Hay una nueva publicación del autor en el botón de ayuda  <a href='/ButtonFile/{1}'>{2}</a>",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
-    "newcomment": "Hay un nuevo comentario '{0}' publicado en el post '{1}' . Puedes verlo en el botón de ayuda llamado <a href='/ButtonFile/{2}'>{3}</a>"
+    "newcomment": "Hay un nuevo comentario '{0}' publicado en el post '{1}' . Puedes verlo en el botón de ayuda llamado <a href='/ButtonFile/{2}'>{3}</a>",
+    "markedAllAsRead": ""
   },
   "user": {
     "email": "Email",
@@ -137,7 +146,7 @@
   },
   "buttonFilters": {
     "queryLabel": "¿Qué buscas?",
-    "searchBarTop":"{1} botones de ayuda {0}",
+    "searchBarTop": "{1} botones de ayuda {0}",
     "queryExplain": "Escribe lo que quieras encontrar",
     "tagsExplain": "Las palabras clave son los temas más importantes o más tratados en la Red",
     "where": "¿Dónde?",
@@ -169,7 +178,9 @@
     "titleExplain": "Pequeño título para saber sobre qué es tu botón de ayuda",
     "titleLabel": "Título",
     "whereLabel": "Dónde?",
-    "pickButtonTemplateColor": "Elige color para tu tipo de botón de ayuda"
+    "pickButtonTemplateColor": "Elige color para tu tipo de botón de ayuda",
+    "unknownPlace": "Sitio desconocido",
+    "hideAddress": "Esconder ubicación exacta"
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -196,7 +207,8 @@
     "postgresDb": "Nombre de la base de datos de Postgresql",
     "postgresUser": "Usuario de Postgresql",
     "configureInstanceDescription": "Asistente para configurar tu Red",
-    "configureInstanceTitle": "Configura los últimos detalles de tu Red"
+    "configureInstanceTitle": "Configura los últimos detalles de tu Red",
+    "welcomeMessageLong": ""
   },
   "post": {
     "placeholderWrite": "Escribe una nueva actualización en tu botón de ayuda",
@@ -237,5 +249,18 @@
     "privacyDescription": "En Helpbuttons, respetamos tu privacidad y estamos comprometidos a proteger tus datos personales. Nuestra política de privacidad describe cómo recopilamos, almacenamos, usamos y divulgamos tu información personal. Cumplimos con todas las leyes y regulaciones de privacidad relevantes, asegurando que tus datos se utilicen únicamente con el propósito de proporcionar y mejorar nuestro servicio. Somos transparentes en cuanto a nuestros procesos de recopilación de datos, y tienes el derecho de acceder, actualizar o eliminar tus datos personales en cualquier momento. Recuerda que compartir información personal en las publicaciones de Helpbuttons está a tu discreción, sé consciente y comparte solo lo que te sientas cómodo compartiendo con los demás.\nPor favor, dirige tus preguntas al siguiente correo electrónico: helpbuttons@coletivos.org",
     "securityDescription": "Tu seguridad es nuestra principal prioridad. En Helpbuttons, implementamos medidas de seguridad estrictas para proteger la integridad de nuestro software y la seguridad de nuestros usuarios. Actualizamos y revisamos continuamente nuestros sistemas para garantizar que cumplan con los más altos estándares de ciberseguridad. Sin embargo, también creemos que la seguridad es una responsabilidad compartida. Alentamos a nuestros usuarios a practicar comportamientos seguros en línea, como usar contraseñas fuertes y proteger la información personal.\nPor favor, dirige tus preguntas al siguiente correo electrónico: helpbuttons@coletivos.org",
     "contactDescription": "Por favor, dirige tus preguntas al siguiente correo electrónico: helpbuttons@coletivos.org"
+  },
+  "invite": {
+    "never": "Nunca",
+    "1hr": "1 hora",
+    "1day": "1 dia",
+    "1week": "1 semana",
+    "expiresIn": "Expira",
+    "clickToCopy": "Copiar link de invitacion",
+    "maximumUsageTimes": "Numero de utilizaciones",
+    "nolimit": "Sin limite",
+    "inviteOnlyNetwork": "Sólo puedes registrarte en esta red con una invitación.",
+    "generate": "Crear nuevo link de invitacion",
+    "copied": "Link de invitacion copiado {0}"
   }
 }

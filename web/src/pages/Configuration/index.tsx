@@ -56,7 +56,8 @@ function Configuration() {
       backgroundColor: data.backgroundColor,
       textColor: data.textColor,
       buttonTemplates: data.buttonTemplates,
-      locale: data.locale,
+      inviteOnly: data.inviteOnly,
+      locale: data.locale
     },
       () => {
         const onComplete = (network) => {

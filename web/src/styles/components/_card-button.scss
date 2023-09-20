@@ -269,7 +269,7 @@ $card-button-border-height: $border-general-height;
   }
 
   & a {
-    color: $color-blue;
+    color: var(--network-text-color);
     cursor: pointer;
   }
 }
@@ -306,7 +306,7 @@ $card-button-border-height: $border-general-height;
   position: relative;
   max-height: $card-button-picture-max-height;
   overflow: hidden;
-
+  text-align: center;
   & img {
 
     width: auto;

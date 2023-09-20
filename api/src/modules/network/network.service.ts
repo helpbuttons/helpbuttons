@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException,Inject,forwardRef, Injectable, UseInterceptors } from '@nestjs/common';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
 import {
@@ -23,6 +23,7 @@ import { SetupDtoOut } from '../setup/setup.entity';
 import { getConfig } from '@src/shared/helpers/config.helper';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
 @Injectable()
 export class NetworkService {
@@ -31,6 +32,7 @@ export class NetworkService {
     private readonly networkRepository: Repository<Network>,
     private readonly tagService: TagService,
     private readonly storageService: StorageService,
+    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
@@ -97,8 +99,11 @@ export class NetworkService {
     });
   }
 
-  findDefaultNetwork(): Promise<NetworkDto> {
-    // const
+  @UseInterceptors(CacheInterceptor)
+  @CacheKey('defaultNetwork')
+  @CacheTTL(30) // override TTL to 30 seconds
+  findDefaultNetwork(): Promise<NetworkDto> {      buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
+    locale: updateDto.locale
 
     return this.networkRepository
       .find({ order: { created_at: 'ASC' } })
@@ -168,6 +173,7 @@ export class NetworkService {
       backgroundColor: updateDto.backgroundColor,
       textColor: updateDto.textColor,
       buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
+      inviteOnly: updateDto.inviteOnly,
       locale: updateDto.locale
     };
     await getManager().transaction(

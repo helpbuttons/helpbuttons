@@ -14,7 +14,9 @@ export enum ErrorName{
     EmailAlreadyRegistered = 'email-already-registered',
     UsernameAlreadyRegistered = 'username-already-registered',
     nothingToDelete = 'nothing-to-delete',
-    validationError= 'validation-error'
+    validationError= 'validation-error',
+    inviteOnly = 'invite-only-network',
+    geoCodingError = 'geo-coding-error'
 }
 
 export const errorsList: ErrorText[] = 
@@ -63,5 +65,15 @@ export const errorsList: ErrorText[] =
         name: ErrorName.validationError,
         caption: `Error validating the form`,
         status: HttpStatus.BAD_REQUEST
+    },
+    {
+        name: ErrorName.inviteOnly,
+        caption: `Invite only network`,
+        status: HttpStatus.FORBIDDEN
+    },
+    {
+        name: ErrorName.geoCodingError,
+        caption: `Error getting address`,
+        status: HttpStatus.BAD_GATEWAY
     },
 ]

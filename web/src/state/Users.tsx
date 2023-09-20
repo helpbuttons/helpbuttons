@@ -9,11 +9,13 @@ import { UserService } from 'services/Users';
 
 import { HttpService, isHttpError } from 'services/HttpService';
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
-import { GlobalState } from 'pages';
+import { GlobalState, store } from 'pages';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { handleError } from './helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { ButtonService } from 'services/Buttons';
+import { Invite } from 'shared/entities/invite.entity';
+import { InviteCreateDto } from 'shared/dtos/invite.dto';
 
 export interface UsersState {
   currentUser: IUser;
@@ -139,7 +141,7 @@ export class FindAdminButton implements WatchEvent {
 
   public watch(state: GlobalState) {
     return ButtonService.findByUserId(this.userId).pipe(
-      map((buttonData) => { 
+      map((buttonData) => {
         this.onSuccess(buttonData);
       }),
       catchError((error) => {this.onSuccess(null); return  of(undefined)})
@@ -220,6 +222,44 @@ export class LoginToken implements WatchEvent {
         return of(undefined);
       }),
     );
+  }
+}
+
+export class FindInvites implements WatchEvent {
+  public constructor(
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.invites().pipe(
+      map((invites: Invite[]) => {
+        store.emit(new SetInvites(invites))
+      }),
+      catchError((error) => {return  of(undefined)})
+    )
+  }
+  
+}
+
+export class SetInvites implements UpdateEvent {
+  public constructor(public invites: Invite[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.invites = this.invites;
+    });
+  }
+}
+
+export class CreateInvite implements WatchEvent {
+  public constructor(public data: InviteCreateDto) {}
+
+  public watch(state: GlobalState) {
+    return UserService.createInvite(this.data).pipe(
+      map((data) => {
+        store.emit(new FindInvites());
+      }),
+      catchError((error) => { return  of(undefined)})
+    )
   }
 }
 

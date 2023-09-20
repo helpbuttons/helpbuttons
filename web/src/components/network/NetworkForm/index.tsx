@@ -29,6 +29,7 @@ import {
   UpdateNetworkTextColor,
 } from 'state/Networks';
 import Accordion from 'elements/Accordion';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 
 export default NetworkForm;
@@ -54,7 +55,7 @@ function NetworkForm({
   return (
     <>
       <Form
-        classNameExtra="createAdmin"
+        classNameExtra="configuration"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="form__inputs-wrapper">
@@ -85,6 +86,12 @@ function NetworkForm({
               setValue={setValue}
               setFocus={setFocus}
               {...register('description', { required: true })}
+            />
+            <FieldCheckbox
+                    name='inviteOnly'
+                    checked={watch('inviteOnly')}
+                    text={t('invite.inviteOnly')}
+                    {...register('inviteOnly')}
             />
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
             {/* <FieldPrivacy

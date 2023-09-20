@@ -86,12 +86,13 @@ export class SignupRequestDto {
   // @IsString({ each: true })
   // interests: [string];
 
-  @IsNotEmpty()
   avatar: string;
 
   @IsNotEmpty()
   @IsString()
   locale: string;
+
+  inviteCode: string;
 }
 
 export class LoginRequestDto {
@@ -136,5 +137,4 @@ export class LoginRequestDto {
     message: `Password should contains at least two number.`,
   })
   password: string;
-
 }

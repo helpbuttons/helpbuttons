@@ -108,6 +108,18 @@ export default function ImageWrapper({
     />
     )
   }
+  if(imageType == ImageType.buttonCard) 
+  {
+    return (
+      <Image
+      style={{objectFit: 'cover', objectPosition: 'center'}}
+      src={makeImageUrl(src, '/api')}
+      alt={alt}
+      height={300}
+      width={300}
+    />
+    )
+  }
   return (
     <Image
       style={{objectFit: 'cover'}}

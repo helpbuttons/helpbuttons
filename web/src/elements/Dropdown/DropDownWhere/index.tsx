@@ -1,9 +1,11 @@
+import Loading from 'components/loading';
+import t from 'i18n';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
-import { Subject } from 'rxjs';
-import { alertService } from 'services/Alert';
+import { useDebounce } from 'shared/custom.hooks';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
-import { setValueAndDebounce } from 'state/HomeInfo';
+import { roundCoords } from 'shared/honeycomb.utils';
+import { GeoFindAddress } from 'state/Geo';
 import { useRef } from 'store/Store';
 
 export function DropDownWhere({
@@ -11,41 +13,52 @@ export function DropDownWhere({
   placeholder,
   onFocus = (event) => {},
   onBlur = (event) => {},
+  address = '',
+  center = [0, 0],
 }) {
-  const timeInMsBetweenStrokes = 150; //ms
-
-  const config: SetupDtoOut = useRef(
-    store,
-    (state: GlobalState) => state.config,
-  );
 
   const [options, setOptions] = useState([]);
 
-  const [sub, setSub] = useState(new Subject()); //evita la inicializaacion en cada renderizado
-  const [sub$, setSub$] = useState(
-    setValueAndDebounce(sub, timeInMsBetweenStrokes),
-  ); //para no sobrecargar el componente ,lo delegamos a una lib externa(solid);
+  const [input, setInput] = useState(address);
+  const debounceInput = useDebounce(input, 300);
 
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [input, setInput] = useState('');
+  const [loadingNewAddress, setLoadingNewAddress] = useState(false);
 
-  const onChangeInput = (e) => {
-    let inputText = e.target.value;
-    setInput(inputText)
-    setShowSuggestions(false)
-    if (inputText.length > 2)
-    {
-      sub.next(
-        JSON.stringify({
-          apikey: config.mapifyApiKey,
-          address: inputText,
+  useEffect(() => {
+    if (debounceInput?.length > 2) {
+      setLoadingNewAddress(true);
+      setShowSuggestions(false);
+      store.emit(
+        new GeoFindAddress(debounceInput, (places) => {
+          setOptions(
+            places.map((place, key) => {
+              return (
+                <DropDownAutoCompleteOption
+                  key={key}
+                  label={place.formatted}
+                  value={JSON.stringify(place)}
+                />
+              );
+            }),
+          );
+          setLoadingNewAddress(false);
+          setShowSuggestions(true);
         }),
       );
     }
+  }, [debounceInput]);
+
+  const onChangeInput = (e) => {
+    let inputText = e.target.value;
+    setInput(inputText);
   };
 
   const onClick = (e) => {
     const place = JSON.parse(e.target.value);
+    setInput('');
+    setShowSuggestions(false);
+    setLoadingNewAddress(false);
     handleSelectedPlace(place);
   };
 
@@ -58,63 +71,44 @@ export function DropDownWhere({
     e.target.select();
   };
 
-  useEffect(() => {
-    let keyCount = 1;
-    let s = sub$.subscribe(
-      (rs: any) => {
-        if (rs && rs.results) {
-          setOptions(
-            rs.results.map((place) => {
-              return (
-                <DropDownAutoCompleteOption
-                  key={keyCount++}
-                  label={place.formatted}
-                  value={JSON.stringify(place)}
-                />
-              );
-            }),
-          );
-          setShowSuggestions(true)
-        } else {
-          console.error(
-            'API opencage not working, do you have an adblocker? Or contact the administrator',
-          );
-        }
-      },
-      (e) => {
-        console.log('error subscribe', e);
-      },
-    );
-    return () => {
-      s.unsubscribe(); //limpiamos
-    };
-  }, [sub$]); //first time
+
   return (
     <>
-      <input
-        className="form__input"
-        autoComplete="on"
-        onChange={onChangeInput}
-        list=""
-        id="input"
-        name="browsers"
-        placeholder={placeholder}
-        type="text"
-        value={input}
-        onClick={onInputClick}
-        onFocus={handleOnFocus}
-        onBlur={onBlur}
-      ></input>
+      <div className="form__field">
+        <label className="form__label">
+          {t('buttonFilters.where')}
+          {address && center && (
+            <>
+              ({address} - {roundCoords(center).toString()})
+            </>
+          )}
+        </label>
+        <input
+          className="form__input"
+          autoComplete="on"
+          onChange={onChangeInput}
+          list=""
+          id="input"
+          name="browsers"
+          placeholder={placeholder}
+          type="text"
+          value={input}
+          onClick={onInputClick}
+          onFocus={handleOnFocus}
+          onBlur={onBlur}
+        ></input>
+        {loadingNewAddress && <Loading />}
 
-      {showSuggestions && (
-        <datalist
-          onClick={onClick}
-          className="dropdown-nets__dropdown-content"
-          id="listid"
-        >
-          {options}
-        </datalist>
-      )}
+        {showSuggestions && (
+          <datalist
+            onClick={onClick}
+            className="dropdown-nets__dropdown-content"
+            id="listid"
+          >
+            {options}
+          </datalist>
+        )}
+      </div>
     </>
   );
 }

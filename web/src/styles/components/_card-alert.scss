@@ -41,7 +41,7 @@ $card-alert-icon-size: 30px;
 }
 
 .card-alert--info {
-  background-color: $color-blue;
+  background-color: var(--network-text-color);
 }
 
 .card-alert__content {

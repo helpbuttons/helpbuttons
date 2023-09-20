@@ -59,6 +59,9 @@ export class Network extends BaseEntity {
   @Column()
   buttonTemplates: string;
 
+  @Column({default: false})
+  inviteOnly: boolean;
+
   @Column({default: 'en'})
   locale: string;
 }

@@ -8,9 +8,8 @@ import { useRef } from 'store/Store';
 
 
 export default function DropDownSearchLocation({handleSelectedPlace = (place) => {console.log(place)}, placeholder}) {
-//   const [selectedOption, setSelectedOption] = useState(null);
   const [options, setOptions] = useState([]);
-  
+
   const timeInMsBetweenStrokes = 80; //ms
   const config: SetupDtoOut = useRef(
     store,
@@ -29,19 +28,21 @@ export default function DropDownSearchLocation({handleSelectedPlace = (place) =>
   
   useEffect(() => {
     let s = sub$.subscribe(
-      (rs: any) => {
-        if (rs && rs.results) {
+      (results: any) => {
+        if (results) {
           setOptions(
-            rs.results.map((place) => {
+            results.map((place) => {
               return ({
                   label: place.formatted,
-                  value: JSON.stringify(place)}
+                  value: JSON.stringify(place),
+                  id: place.id
+              }
               );
             }),
           );
         } else {
           console.error(
-            'API opencage not working, do you have an adblocker? Or contact the administrator',
+            'Error with geocoding api',
           );
         }
       },
@@ -54,25 +55,24 @@ export default function DropDownSearchLocation({handleSelectedPlace = (place) =>
     };
   }, [sub$]); //first time
 
+  const requestAddresses = (inputText) => 
+  {
+    if (inputText.length > 2)
+    {
+      sub.next(inputText);
+    }
+  }
   return (
+    <>
       <Select
         isSearchable
         onChange={setSelectedOption}
         options={options}
-        onInputChange={(inputText) => {
-            if (inputText.length > 2)
-            {
-            sub.next(
-                JSON.stringify({
-                apikey: config.mapifyApiKey,
-                address: inputText,
-                }),
-            );
-            }
-        }}
+        onInputChange={(inputText) => requestAddresses(inputText)}
         className='form__input--plugin'
         placeholder={placeholder}
-        noOptionsMessage= { () => 'Type to search location' }
+        noOptionsMessage= { () => placeholder}
       />
+      </>
   );
 }

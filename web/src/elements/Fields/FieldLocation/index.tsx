@@ -6,11 +6,13 @@ import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
-import { FindAddress } from 'state/Explore';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
 import { Point } from 'pigeon-maps';
+import { roundCoord } from 'shared/honeycomb.utils';
+import { ReverseGeo } from 'state/Explore';
+import { FieldCheckbox } from '../FieldCheckbox';
 export default function FieldLocation({
   validationError,
   markerImage,
@@ -21,12 +23,15 @@ export default function FieldLocation({
   updateAddress,
   updateMarkerPosition,
   label,
+  watch,
+  register,
 }) {
   const config: SetupDtoOut = useRef(
     store,
     (state: GlobalState) => state.config,
   );
 
+  const [place, setPlace] = useState(null);
   const [markerPosition, setMarkerPosition] = useState<Point>(
     selectedNetwork.exploreSettings.center,
   );
@@ -41,17 +46,25 @@ export default function FieldLocation({
   const handleSelectedPlace = (place) => {
     setMarkerPosition([place.geometry.lat, place.geometry.lng]);
   };
+  const hideAddress = watch('hideAddress');
 
   const requestAddressForPosition = (markerPosition) => {
     store.emit(
-      new FindAddress(
-        JSON.stringify({
-          apikey: config.mapifyApiKey,
-          address: markerPosition.join('+'),
-        }),
+      new ReverseGeo(
+        markerPosition[0],
+        markerPosition[1],
         (place) => {
-          const address = place.results[0].formatted;
-          updateAddress(address);
+          if (!place) {
+            updateAddress(t('button.unknownPlace')[0]);
+          } else {
+            if (hideAddress) {
+              updateAddress(place.formatted_city);
+            } else {
+              updateAddress(place.formatted);
+            }
+            setPlace(place);
+          }
+          updateMarkerPosition(markerPosition);
         },
         () => {
           console.log(
@@ -62,10 +75,7 @@ export default function FieldLocation({
     );
   };
   useEffect(() => {
-    updateMarkerPosition(markerPosition);
-    updateAddress('...');
-    if(config?.mapifyApiKey)
-    {
+    if (markerPosition) {
       requestAddressForPosition(markerPosition);
     }
   }, [markerPosition]);
@@ -75,6 +85,17 @@ export default function FieldLocation({
       setMarkerPosition(selectedNetwork.exploreSettings.center);
     }
   }, [selectedNetwork]);
+
+  useEffect(() => {
+    if(place)
+    {
+      if (hideAddress) {
+        updateAddress(place.formatted_city);
+      } else {
+        updateAddress(place.formatted);
+      }
+    }
+  }, [hideAddress]);
 
   return (
     <>
@@ -98,7 +119,7 @@ export default function FieldLocation({
           closeAction={closeMenu}
           headerText={t('picker.headerText')}
         >
-          <DropDownSearchLocation
+          <DropDownWhere
             placeholder={t('homeinfo.searchlocation')}
             handleSelectedPlace={handleSelectedPlace}
           />
@@ -106,6 +127,7 @@ export default function FieldLocation({
             latitude={markerPosition[0]}
             longitude={markerPosition[1]}
             address={markerAddress}
+            label={''}
           />
           <MarkerSelectorMap
             setMarkerPosition={setMarkerPosition}
@@ -114,6 +136,13 @@ export default function FieldLocation({
             markerPosition={markerPosition}
             markerCaption={markerCaption}
             markerImage={markerImage}
+            showHexagon={watch('hideAddress')}
+          />
+          <FieldCheckbox
+            name="hideAddress"
+            checked={watch('hideAddress')}
+            text={t('button.hideAddress')}
+            {...register('hideAddress')}
           />
           <Btn
             btnType={BtnType.submit}
@@ -141,7 +170,7 @@ function LocationCoordinates({
           <span>{address}</span>
           <span>
             {' '}
-            ({latitude},{longitude})
+            ({roundCoord(latitude)},{roundCoord(longitude)})
           </span>
           {/* (radius: ${radius} km) */}
         </>

@@ -74,8 +74,8 @@ $card-button-list-border-height: $border-general-height;
     }
   }
   .card-button__paragraph{
-    font-size: 0.8rem;
-    color: black;
+    font-size: $font-size-general;
+    color: $color-gray;
   }
 }
 
@@ -265,7 +265,7 @@ $card-button-list-border-height: $border-general-height;
   }
 
   & a {
-    color: $color-blue;
+    color: var(--network-text-color);
     cursor: pointer;
   }
 }
