@@ -272,5 +272,8 @@
     "title": "Invites",
     "description": "Invite people, manage and share links with other people to allow them to access your network",
     "inviteOnly": "Only allow signup with an invitation"
+  },
+  "customFields": {
+    "priceLabel": "Price ({0})"
   }
 }
