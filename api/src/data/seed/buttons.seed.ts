@@ -1,21 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import {
-  InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
 import { Button } from '@src/modules/button/button.entity';
-import { ButtonService } from '@src/modules/button/button.service';
 import { Network } from '@src/modules/network/network.entity';
-import { NetworkService } from '@src/modules/network/network.service';
 import { Post } from '@src/modules/post/post.entity';
 import { User } from '@src/modules/user/user.entity';
-import { generateHash } from '@src/shared/helpers/generate-hash.helper';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { maxResolution } from '@src/shared/types/honeycomb.const';
 import { Role } from '@src/shared/types/roles';
-import { latLngToCell } from 'h3-js';
-import { Seeder, DataFactory } from 'nestjs-seeder';
-import { EntityManager, Repository } from 'typeorm';
+import { Seeder } from 'nestjs-seeder';
+import { Repository } from 'typeorm';
 
 function readableDate(date: Date, locale) {
   if(typeof date !== typeof Date) {
@@ -68,11 +63,11 @@ export class ButtonsSeeder implements Seeder {
       
     });
     
-    // await this.userRepository.insert(usersToAdd);
+    await this.userRepository.insert(usersToAdd);
     console.log(`Added ${usersToAdd.length} users`)
 
     let btnIds =[]
-    function capitlizeText(word) 
+    function capitalizeText(word) 
     {
         return word.charAt(0).toUpperCase() + word.slice(1);
     }
@@ -82,13 +77,11 @@ export class ButtonsSeeder implements Seeder {
     const buttonTemplates = JSON.parse(network[0].buttonTemplates)
     console.log('success')
     const buttonTypes = buttonTemplates.map((btnTemplate) => btnTemplate.name)
-    
-
     const btns = buttons.buttons.filter((button) => {
-      if (buttonTypes.indexOf(capitlizeText(button.type)) > -1){
+      if (buttonTypes.indexOf(capitalizeText(button.type)) > -1){
         return true;
       }
-      console.log(`'${button.type}' type not found.`)
+      console.log(`'${capitalizeText(button.type)}' type not found.`)
       return false;
     })
     
@@ -100,7 +93,7 @@ export class ButtonsSeeder implements Seeder {
       btnIds.push(btnId)
       return {
         id: btnId,
-        type: capitlizeText(buttonJson.type),
+        type: capitalizeText(buttonJson.type),
         description: buttonJson.description,
         latitude: lat,
         longitude: lng,
