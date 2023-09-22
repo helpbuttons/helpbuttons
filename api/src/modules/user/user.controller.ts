@@ -32,4 +32,11 @@ export class UserController {
   async updateRole(@Param('userId') userId: string, @Param('role') role: Role) {
     return await this.userService.updateRole(userId, role);
   }
+
+  @OnlyAdmin()
+  @Get('moderationList')
+  async moderationList()
+  {
+    return await this.userService.moderationList()
+  }
 }

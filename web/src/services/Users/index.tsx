@@ -68,4 +68,8 @@ export class UserService {
   public static updateRole(userId : string,newRole :Role): Observable<any> {
     return httpService.post<any>(`/users/updateRole/${userId}/${newRole}`);
   }
+
+  public static moderationList(): Observable<any> {
+    return httpService.get<any>(`/users/moderationList`);
+  }
 }

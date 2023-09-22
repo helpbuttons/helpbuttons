@@ -247,6 +247,22 @@ export class UpdateRole implements WatchEvent {
 }
 
 
+export class ModerationList implements WatchEvent {
+  public constructor(
+    private onSuccess = undefined,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.moderationList().pipe(
+      map((moderationList) => { 
+        this.onSuccess(moderationList);
+      }),
+      catchError((error) => {this.onSuccess([]); return  of(undefined)})
+    )
+  }
+}
+
+
 export function isAdmin(loggedInUser)
 {
   if(loggedInUser?.role == 'administrator')
