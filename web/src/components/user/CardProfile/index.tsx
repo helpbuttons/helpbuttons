@@ -1,5 +1,5 @@
 //Profile Card with the the info displayed by the user in Profile page. It shows different options depending if it's other user profile or your profile when logged.
-import {  IoHandLeftOutline } from "react-icons/io5";
+import {  IoHandLeftOutline, IoHeartOutline, IoPersonOutline, IoRibbonOutline } from "react-icons/io5";
 import { Link } from 'elements/Link';
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 
@@ -38,29 +38,29 @@ export default function CardProfile(props) {
 
               {/* {t('user.created_date')}: {readableTimeLeftToDate(user.created_at)} */}
     
-              {/* <figure className="card-profile__rating grid-three">
+              <figure className="card-profile__rating grid-three">
 
                 <div className="paragraph grid-three__column">
-                  90
+                  
                   <div className="btn-circle__icon">
                     <IoHeartOutline />
                   </div>
+                  {user.buttonCount}
                 </div>
                 <div className="paragraph grid-three__column">
-                  77
                   <div className="btn-circle__icon">
                     <IoPersonOutline />
                   </div>
+                  {user.postCount}
                 </div>
                 <div className="paragraph grid-three__column">
-                  23
                   <div className="btn-circle__icon">
                     <IoRibbonOutline />
                   </div>
-
+                  {user.commentCount}
                 </div>
 
-              </figure> */}
+              </figure>
 
             </div>
 

@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from './user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import { MailService } from '../mail/mail.service';
@@ -15,6 +15,8 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly mailService: MailService,
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
   ) {}
 
   async createUser(user: User) {
@@ -51,9 +53,18 @@ export class UserService {
     });
   }
 
-  async findByUsername(username: string) {
+  async findByUsername(username: string, includeCounts = false) {
     return await this.userRepository.findOne({
       where: { username: `${username}` },
+    }).then(async (user) => {
+      if(includeCounts)
+      {
+        const buttonCount = await this.entityManager.query(`select count(button.id) as "buttonsCount" from button where "ownerId" = '${user.id}'`);
+        const postCount = await this.entityManager.query(`select count(post.id) as "postsCount" from post where "authorId" = '${user.id}'`);
+        const commentCount = await this.entityManager.query(`select count(comment.id) as "commentsCount" from comment where "authorId" = '${user.id}'`);
+        return {...user, postCount: postCount[0].postsCount, commentCount: commentCount[0].commentsCount, buttonCount: buttonCount[0].buttonsCount}
+      }
+      return user;
     });
   }
 
