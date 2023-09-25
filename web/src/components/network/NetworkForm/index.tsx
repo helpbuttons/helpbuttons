@@ -19,7 +19,6 @@ import t from 'i18n';
 import { useRouter } from 'next/router';
 import { getUrlOrigin } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
-import FieldButtonTemplates from 'components/feed/FieldButtonTemplates';
 
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { useEffect } from 'react';
@@ -30,6 +29,9 @@ import {
 } from 'state/Networks';
 import Accordion from 'elements/Accordion';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
+import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
+import { DropdownField } from 'elements/Dropdown/Dropdown';
+import { availableCurrencies } from 'shared/currency.utils';
 
 export default NetworkForm;
 
@@ -50,7 +52,6 @@ function NetworkForm({
   defaultExploreSettings = null,
 }) {
   const router = useRouter();
-
   return (
     <>
       <Form
@@ -189,6 +190,15 @@ function NetworkForm({
               control={control}
             />
     
+            <DropdownField
+              options={availableCurrencies}
+              defaultSelected={'EUR'}
+              onChange={(value) => {
+                setValue('currency', value)
+              }}
+              label={t('configuration.currencyLabel')}
+            />
+            
             <FieldAreaMap
               defaultExploreSettings={defaultExploreSettings}
               label={t('configuration.locationLabel')}

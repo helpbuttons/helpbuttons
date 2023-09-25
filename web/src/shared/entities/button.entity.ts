@@ -64,4 +64,10 @@ export class Button extends BaseEntity {
 
   @Column('boolean', {default: false})
   deleted: boolean;
+
+  @Column('boolean', {default: false})
+  hideAddress: boolean;
+
+  @Column({default: 0, type: 'double precision' })
+  price: number;
 }

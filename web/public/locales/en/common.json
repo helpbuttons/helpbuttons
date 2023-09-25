@@ -227,7 +227,10 @@
     "blockedExplain": "",
     "adminUsers": "",
     "nomeclatureExplain": "",
-    "contactAdmin": "Contact the administrator"
+    "contactAdmin": "Contact the administrator",
+    "customFields": "Add custom fields to helpbutton type",
+    "priceFieldAdd": "Add price",
+    "currencyLabel": "Currency"
   },
   "configure": {
     "browsePins": "",
