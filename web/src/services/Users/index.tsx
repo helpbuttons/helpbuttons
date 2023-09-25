@@ -12,6 +12,8 @@ import { Logout } from 'state/Users';
 import { store } from 'pages';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { Role } from 'shared/types/roles';
+import { InviteCreateDto } from 'shared/dtos/invite.dto';
+import { Invite } from 'shared/entities/invite.entity';
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
@@ -63,6 +65,18 @@ export class UserService {
   public static loginToken(token :string): Observable<ICurrentUser | undefined> {
     return httpService.get<ICurrentUser>(`/users/loginToken/${token}`).pipe(
       tap((user) => httpService.setAccessToken(user?.token)));
+  }
+
+  public static invites(): Observable<[Invite]> {
+    return httpService.get<[Invite]>(`/users/invites`);
+  }
+
+  public static createInvite(newInvitation: InviteCreateDto): Observable<Invite> {
+    return httpService.post<Invite>(`/users/createInvite`, newInvitation);
+  }
+
+  public static invite(code: string): Observable<any> {
+    return httpService.get<any>(`/users/invite/${code}`);
   }
 
   public static updateRole(userId : string,newRole :Role): Observable<any> {
