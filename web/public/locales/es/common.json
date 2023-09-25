@@ -267,6 +267,6 @@
     "inviteOnly": "Sólo permitir el registro con una invitación"
   },
   "customFields": {
-    "priceLabel": "Precio"
+    "priceLabel": "Precio ({0})"
   }
 }
