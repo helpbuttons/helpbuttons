@@ -76,6 +76,10 @@ export class UserService {
   }
 
   loginToken(verificationToken: string) {
+    if(verificationToken.length < 2)
+    {
+      throw new HttpException('token not found', HttpStatus.UNAUTHORIZED)
+    }
     return this.userRepository
       .findOne({
         where: { verificationToken: `${verificationToken}` },
