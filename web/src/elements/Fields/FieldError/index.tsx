@@ -5,7 +5,7 @@ const fieldName = (validationError) => {
 }
 export default function FieldError({
     validationError,
-    extraMessage
+    extraMessage = ''
 }) {
     let message = "";
     if (validationError) {

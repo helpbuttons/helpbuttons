@@ -1,5 +1,5 @@
 import CheckBox from "elements/MultiSelectOption";
-import React from "react";
+import React, { useEffect } from "react";
 import { IoCheckmark } from "react-icons/io5";
 
 
@@ -10,7 +10,12 @@ export const FieldCheckbox = React.forwardRef(({
     checked,
     explain,
     text,
+    onChanged = () => {}
   }, ref) => {
+    useEffect(() => {
+      console.log('changing...')
+      onChanged(checked)
+    }, [checked])
     return (
     <div className="form__field">
     <p className="form__label">{label}</p>
@@ -25,7 +30,6 @@ export const FieldCheckbox = React.forwardRef(({
             // checked={checked}
             ref={ref} 
             onChange={onChange}
-            
           ></input>
           <div
             className={`checkbox__content ${checked ? 'checked' : ''}`}

@@ -12,6 +12,7 @@ export default function CardButtonList({buttonTypes, button }) {
     
   return (
     <>
+    {buttonType && 
       <div className="list__element">
         <div style={buttonColorStyle(buttonType.cssColor)}>
           <Link href={`/ButtonFile/${button.id}`}>
@@ -42,6 +43,7 @@ export default function CardButtonList({buttonTypes, button }) {
           </Link>
         </div>
       </div>
+      }
     </>
   );
 }
