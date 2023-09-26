@@ -230,7 +230,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
     (state: GlobalState) => state.loggedInUser,
     false,
   );
-
+  const [showMap, setShowMap] = useState(false)
   const profileHref = isButtonOwner(loggedInUser, button)
     ? `/Profile/`
     : `/Profile/${button.owner.username}`;
@@ -298,12 +298,12 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
 
         <div className="card-button__locDate">
-            <div className="card-button__city card-button__everywhere ">
+            <div className="card-button__city card-button__everywhere" onClick={() => setShowMap(() => !showMap)}>
               {button.address}
             </div>
           <ShowWhen when={button.when} />
         </div>
-        {!button.hideAddress && (
+        {(!button.hideAddress && showMap) && (
         <MarkerSelectorMap markerPosition={[button.latitude, button.longitude]} setMarkerPosition={() => {}} zoom={10} markerColor={cssColor} markerImage={button.image} markerCaption={button.title}/>
         )}
       </div>
