@@ -205,11 +205,6 @@ function MyApp({ Component, pageProps }) {
   useActivitesPool(loggedInUser);
 
   useEffect(() => {
-    if (config && selectedNetwork) {
-      setMetadata(() => {
-        return getMetadata('lala', selectedNetwork, config, 'fail');
-      });
-    }
 
     // Function to adjust the height of the index__container based on the actual viewport height
     const adjustHeight = () => {
@@ -242,6 +237,9 @@ function MyApp({ Component, pageProps }) {
       setNetworkTextColor(() => selectedNetwork.textColor);
     }
   }, [selectedNetwork]);
+
+  const SEOpages = ['Login', 'HomeInfo', 'ButtonFile'];
+
   return (
     <>
       <Head>
@@ -249,7 +247,6 @@ function MyApp({ Component, pageProps }) {
         <meta name="commit" content={version.git} />
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
-      {metadata && <SEO {...metadata} />}
       <div
         className={`${user ? '' : 'index__container'}`}
         style={
@@ -270,7 +267,7 @@ function MyApp({ Component, pageProps }) {
             );
           } else if (
             isSetup ||
-            ['Login', 'HomeInfo', 'ButtonFile'].indexOf(pageName) > -1
+            SEOpages.indexOf(pageName) > -1
           ) {
             return (
               <div className="index__content">
