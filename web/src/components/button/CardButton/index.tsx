@@ -95,8 +95,8 @@ export function CardButtonHeadMedium({ button, buttonType }) {
 
       <div className="card-button__title">{button.title}</div>
       {!button.image && (
-        <div className="card-button__paragraph">
-          {button.description}
+        <div className="card-button-list__paragraph">
+          <p>{button.description}</p>
         </div>
       )}
       <div className="card-button__hashtags">
