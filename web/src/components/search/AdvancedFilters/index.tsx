@@ -22,6 +22,7 @@ import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 import { uniqueArray } from 'shared/sys.helper';
 import MultiSelectOption from 'elements/MultiSelectOption';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
+import { AdvancedFiltersCustomFields } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 
 
 export default function AdvancedFilters({
@@ -199,6 +200,9 @@ export default function AdvancedFilters({
                 </div>
               </div>
             )}
+            
+            <AdvancedFiltersCustomFields buttonTypes={buttonTypes} register={register}/>
+            
             <div className={ isHome ? 'filters__actions--home' : 'filters__actions'  }>
               <Btn
                 btnType={BtnType.link}

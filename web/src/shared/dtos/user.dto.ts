@@ -11,16 +11,12 @@ export class UserUpdateDto {
   @IsString()
   name: string;
 
-  @IsString()
   avatar?: string;
 
-  @IsString()
   password_current?: string;
 
-  @IsString()
   password_new?: string;
 
-  @IsString()
   password_new_confirm?: string;
 
   @IsBoolean()

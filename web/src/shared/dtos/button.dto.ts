@@ -85,6 +85,8 @@ export class CreateButtonDto implements Partial<Button> {
 
   @IsNotEmpty()
   hideAddress: boolean;
+
+  price?: number;
 }
 
 export class UpdateButtonDto extends PartialType(CreateButtonDto) {}

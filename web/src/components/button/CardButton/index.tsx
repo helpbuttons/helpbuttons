@@ -23,6 +23,7 @@ import { UpdateFiltersToFilterTag } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { formatMessage } from 'elements/Message';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
+import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
 import {
   CardSubmenu,
   CardSubmenuOption,
@@ -107,6 +108,11 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           );
         })}
       </div>
+      {buttonType.customFields && buttonType.customFields.length > 0 && (
+        <>
+          <CardButtonCustomFields customFields={buttonType.customFields} button={button}/>
+        </>
+      )}
       <div className="card-button__city card-button__everywhere ">
         {button.address}
       </div>
@@ -202,7 +208,7 @@ function CardButtonSubmenu({ button }) {
   );
 }
 export function CardButtonHeadBig({ button, buttonTypes }) {
-  const { cssColor, caption } = buttonTypes.find((buttonType) => {
+  const { cssColor, caption, customFields} = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
   const loggedInUser = useRef(
@@ -276,7 +282,11 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             );
           })}
         </div>
-
+        {customFields && customFields.length > 0 && (
+        <>
+          <CardButtonCustomFields customFields={customFields} button={button}/>
+        </>
+      )}
         <div className="card-button__locDate">
             <div className="card-button__city card-button__everywhere" onClick={() => setShowMap(() => !showMap)}>
               {button.address}

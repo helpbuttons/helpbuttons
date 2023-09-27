@@ -27,7 +27,6 @@ export function Dropdown({
   const handleChange = (e) => {
     const selectedIndex = e.target.value;
     setSelected(selectedIndex);
-    console.log(selectedIndex);
     onChange(selectedIndex);
   };
 
