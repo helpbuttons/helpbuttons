@@ -1,8 +1,8 @@
 import { HttpStatus } from './http-status.enum';
 export interface ErrorText {
-    name: ErrorName,
-    caption: string;
-    status: number;
+  name: ErrorName;
+  caption: string;
+  status: number;
 }
 
 export enum ErrorName{

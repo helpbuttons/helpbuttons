@@ -14,6 +14,7 @@ import { HttpStatus } from 'shared/types/http-status.enum';
 import { handleError } from './helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { ButtonService } from 'services/Buttons';
+import { Role } from 'shared/types/roles';
 import { Invite } from 'shared/entities/invite.entity';
 import { InviteCreateDto } from 'shared/dtos/invite.dto';
 
@@ -259,6 +260,44 @@ export class CreateInvite implements WatchEvent {
         store.emit(new FindInvites());
       }),
       catchError((error) => { return  of(undefined)})
+    )
+  }
+}
+
+
+export class UpdateRole implements WatchEvent {
+  public constructor(
+    private userId: string,
+    private newRole: Role,
+    private onSuccess,
+    private onError,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.updateRole(this.userId,this.newRole).pipe(
+      map((data) => {
+        this.onSuccess(true)
+      }),
+      catchError((error) => {  
+        return of(undefined);
+      }),
+    );
+  }
+
+}
+
+
+export class ModerationList implements WatchEvent {
+  public constructor(
+    private onSuccess = undefined,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.moderationList().pipe(
+      map((moderationList) => { 
+        this.onSuccess(moderationList);
+      }),
+      catchError((error) => {this.onSuccess([]); return  of(undefined)})
     )
   }
 }

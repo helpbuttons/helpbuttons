@@ -74,7 +74,7 @@ export default function Profile() {
     <>
       <div className="body__content">
         <div className="card-profile__container">
-          {userProfile && <CardProfile user={userProfile} />}
+          {userProfile && <CardProfile user={userProfile} showAdminOptions={loggedInUser.role == Role.admin}/>}
           {userProfile?.role == Role.admin && adminButtonId && (
             <LinkAdminButton adminButtonId={adminButtonId} />
           )}

@@ -147,5 +147,16 @@ export class UserService {
     });
   }
 
-  
+  updateRole(userId, newRole)
+  {
+    return this.userRepository.update(userId, {role: newRole})
+  }
+
+  async moderationList()
+  {
+    return {
+      administrators: await this.userRepository.find({where: {role: Role.admin}}),
+      blocked: await this.userRepository.find({where: {role: Role.blocked}}),
+    } 
+  }
 }

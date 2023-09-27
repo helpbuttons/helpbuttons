@@ -6,14 +6,21 @@ import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import UserAvatar from '../components';
 import { getHostname } from 'shared/sys.helper';
 import t from 'i18n';
+import { store } from "pages";
+import { UpdateRole } from "state/Users";
+import { alertService } from "services/Alert";
+import router from "next/router";
+import { CardSubmenu, CardSubmenuOption } from "components/card/CardSubmenu";
+import { Role } from "shared/types/roles";
 
 
-export default function CardProfile(props) {
-
-  const user = props.user;
+export default function CardProfile({ user, showAdminOptions }) {
 
   return (
     <>
+    {showAdminOptions && 
+        <ProfileAdminOptions user={user} />
+      }
         <div className="card-profile__container-avatar-content">
 
             <figure className="card-profile__avatar-container avatar">
@@ -99,4 +106,70 @@ export function LinkAdminButton({adminButtonId}) {
       </Link>
     </div>
   );
+}
+
+function ProfileAdminOptions({ user }) {
+  const updateRole = (userId, newRole) => {
+    store.emit(
+      new UpdateRole(
+        userId,
+        newRole,
+        () => {
+          alertService.info('Done.');
+          router.reload()
+        },
+        () => {
+          alertService.error('Error');
+        },
+      ),
+    );
+  };
+
+  const getOptions = (user) => {
+    const blockUser = (
+      <CardSubmenuOption
+        onClick={() => {
+          updateRole(user.id, Role.blocked);
+        }}
+        label={t('user.block')}
+      />
+    );
+    switch (user.role) {
+      case Role.admin:
+        return (
+          <>
+            <CardSubmenuOption
+              onClick={() => {
+                updateRole(user.id, Role.registered);
+              }}
+              label={t('user.revoke')}
+            />
+            {blockUser}
+          </>
+        );
+      case Role.registered:
+        return (
+          <>
+            <CardSubmenuOption
+              onClick={() => {
+                updateRole(user.id, Role.admin);
+              }}
+              label={t('user.promote')}
+            />
+            {blockUser}
+          </>
+        );
+      case Role.blocked:
+        return (
+          <CardSubmenuOption
+            onClick={() => {
+              updateRole(user.id, Role.registered);
+            }}
+            label={t('user.unblock')}
+          />
+        );
+    }
+  };
+
+  return <CardSubmenu>{user && getOptions(user)}</CardSubmenu>;
 }
