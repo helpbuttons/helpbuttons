@@ -6,42 +6,47 @@ import { Link } from 'elements/Link';
 import { CardButtonHeadMedium } from 'components/button/CardButton';
 import { buttonColorStyle } from 'shared/buttonTypes';
 
-export default function CardButtonList({buttonTypes, button }) {
-  const buttonType = buttonTypes.find((buttonTemplate) => buttonTemplate.name == button.type)
-  
-    
+export default function CardButtonList({ buttonTypes, button }) {
+  const buttonType = buttonTypes.find(
+    (buttonTemplate) => buttonTemplate.name == button.type,
+  );
+
   return (
     <>
-      <div className="list__element">
-        <div style={buttonColorStyle(buttonType.cssColor)}>
-          <Link href={`/ButtonFile/${button.id}`}>
-            <div className="card-button-list">
-            {button.image && 
-              <div className="card-button-list__picture-container">
-                <div className="card-button-list__nav">
-                  <div className="arrow btn-circle__icon">
-                    <IoChevronBackOutline />
+      {buttonType && (
+        <div className="list__element">
+          <div style={buttonColorStyle(buttonType.cssColor)}>
+            <Link href={`/ButtonFile/${button.id}`}>
+              <div className="card-button-list">
+                {button.image && (
+                  <div className="card-button-list__picture-container">
+                    <div className="card-button-list__nav">
+                      <div className="arrow btn-circle__icon">
+                        <IoChevronBackOutline />
+                      </div>
+                      <div className="arrow btn-circle__icon">
+                        <IoChevronForwardOutline />
+                      </div>
+                    </div>
+
+                    <ImageWrapper
+                      imageType={ImageType.cardList}
+                      src={button.image}
+                      alt={button.description}
+                    />
                   </div>
-                  <div className="arrow btn-circle__icon">
-                    <IoChevronForwardOutline />
-                  </div>
-                </div>
-                
-                  <ImageWrapper
-                    imageType={ImageType.cardList}
-                    src={button.image}
-                    alt={button.description}
+                )}
+                <div className="card-button-list__content">
+                  <CardButtonHeadMedium
+                    button={button}
+                    buttonType={buttonType}
                   />
-                
+                </div>
               </div>
-              }
-              <div className="card-button-list__content">
-                <CardButtonHeadMedium button={button} buttonType={buttonType}/>
-              </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
