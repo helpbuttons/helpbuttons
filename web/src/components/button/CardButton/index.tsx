@@ -23,6 +23,7 @@ import { UpdateFiltersToFilterTag } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { formatMessage } from 'elements/Message';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
+import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -89,9 +90,11 @@ export function CardButtonHeadMedium({ button, buttonType }) {
       </div>
 
       <div className="card-button__title">{button.title}</div>
-      {!button.image && 
-        <div className="card-button-list__paragraph"><p>{button.description}</p></div>
-      }
+      {!button.image && (
+        <div className="card-button-list__paragraph">
+          <p>{button.description}</p>
+        </div>
+      )}
       <div className="card-button__hashtags">
         {button.tags.map((tag, idx) => {
           return (
@@ -101,9 +104,14 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           );
         })}
       </div>
-        <div className="card-button__city card-button__everywhere ">
-          {button.address}
-        </div>
+      {buttonType.customFields && buttonType.customFields.length > 0 && (
+        <>
+          <CardButtonCustomFields customFields={buttonType.customFields} button={button}/>
+        </>
+      )}
+      <div className="card-button__city card-button__everywhere ">
+        {button.address}
+      </div>
       <ShowWhen when={button.when} />
     </div>
   );
@@ -222,7 +230,7 @@ function CardButtonSubmenu({ button }) {
   );
 }
 export function CardButtonHeadBig({ button, buttonTypes }) {
-  const { cssColor, caption } = buttonTypes.find((buttonType) => {
+  const { cssColor, caption, customFields} = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
   const loggedInUser = useRef(
@@ -273,7 +281,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             <CardButtonHeadActions button={button} />
           </div>
         </div>
-        
+
         <div className="card-button__title">{button.title}</div>
 
         <div className="card-button__paragraph">
@@ -296,7 +304,11 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             );
           })}
         </div>
-
+        {customFields && customFields.length > 0 && (
+        <>
+          <CardButtonCustomFields customFields={customFields} button={button}/>
+        </>
+      )}
         <div className="card-button__locDate">
             <div className="card-button__city card-button__everywhere" onClick={() => setShowMap(() => !showMap)}>
               {button.address}

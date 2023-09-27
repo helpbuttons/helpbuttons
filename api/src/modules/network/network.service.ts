@@ -52,6 +52,7 @@ export class NetworkService {
       backgroundColor: createDto.backgroundColor,
       textColor: createDto.textColor,
       buttonTemplates: JSON.stringify(createDto.buttonTemplates),
+      currency: createDto.currency
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -170,7 +171,8 @@ export class NetworkService {
       backgroundColor: updateDto.backgroundColor,
       textColor: updateDto.textColor,
       buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
-      inviteOnly: updateDto.inviteOnly
+      inviteOnly: updateDto.inviteOnly,
+      currency: updateDto.currency
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {

@@ -265,5 +265,8 @@
     "title": "Invitaciones",
     "description": "Invita a personas, administra y comparte enlaces con otras personas para permitirles acceder a tu red",
     "inviteOnly": "Sólo permitir el registro con una invitación"
+  },
+  "customFields": {
+    "priceLabel": "Precio ({0})"
   }
 }

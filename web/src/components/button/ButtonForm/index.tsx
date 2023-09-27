@@ -17,13 +17,12 @@ import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import { Network } from 'shared/entities/network.entity';
-import FieldDate from 'elements/Fields/FieldDate';
 import t from 'i18n';
 import { LoadabledComponent } from 'components/loading';
 import Router from 'next/router';
 import { SaveButtonDraft } from 'state/Explore';
 import { useButtonTypes } from 'shared/buttonTypes';
-import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
+import FieldCustomFields from '../ButtonType/CustomFields/FieldCustomFields';
 
 export default function ButtonForm({
   onSubmit,
@@ -83,6 +82,8 @@ export default function ButtonForm({
     return () => subscription.unsubscribe();
   }, [watch]);
 
+  const [customFields,setCustomFields] = useState([])
+
   useEffect(() => {
     if (buttonTypes) {
       const values = getValues();
@@ -92,6 +93,12 @@ export default function ButtonForm({
       if (buttonType) {
         setMarkerColor(() => buttonType.cssColor);
       }
+      setCustomFields(() => {
+        if(buttonType?.customFields){
+          return buttonType.customFields
+        }
+        return []
+      })
     }
   }, [buttonType, buttonTypes]);
 
@@ -102,6 +109,7 @@ export default function ButtonForm({
 
   return (
     <LoadabledComponent loading={!selectedNetwork}>
+      {selectedNetwork && 
       <Popup title={title} onCloseClicked={closeClicked}>
         <Form
           onSubmit={handleSubmit(onSubmit)}
@@ -195,6 +203,7 @@ export default function ButtonForm({
               /> */}
             </>
             {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} /> */}
+            <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency}/>
             <ButtonShare />
           </div>
           <div className="publish__submit">
@@ -208,6 +217,7 @@ export default function ButtonForm({
           </div>
         </Form>
       </Popup>
+      }
     </LoadabledComponent>
   );
 }
