@@ -52,7 +52,10 @@
     "allButtonTypes": "All types",
     "types": "Helpbuttons types",
     "typesExplain": "Filter helpbuttons by type",
-    "tagsExplain": "Network main tags"
+    "tagsExplain": "Network main tags",
+    "price": "Price",
+    "minPricePlaceholder": "From",
+    "maxPriceLabel": "Until"
   },
   "setup": {
     "hostname": "Hostname",
@@ -157,7 +160,11 @@
     "created": "",
     "newLoginTokenSent": "Login token sent",
     "textReceiveNotifications": "Receive mail notifications",
-    "loginSucess": "Login successfuly"
+    "loginSucess": "Login successfuly",
+    "revoke": "Revoke administrator rights",
+    "unblock": "Unblock",
+    "block": "Block user",
+    "promote": "Promote to administrator"
   },
   "calendarOnce": {
     "pickday": "Pick a day",
@@ -230,7 +237,10 @@
     "contactAdmin": "Contact the administrator",
     "customFields": "Add custom fields to helpbutton type",
     "priceFieldAdd": "Add price",
-    "currencyLabel": "Currency"
+    "currencyLabel": "Currency",
+    "moderationList": "Moderacion",
+    "createSupportButton": "",
+    "moderation": "Moderation"
   },
   "configure": {
     "browsePins": "",

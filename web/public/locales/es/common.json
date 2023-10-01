@@ -86,7 +86,11 @@
     "nomeclatureExplain": "",
     "buttonTemplateLabel": "",
     "buttonTemplatePlaceHolder": "",
-    "contactAdmin": "Contatar el administrador"
+    "contactAdmin": "Contatar el administrador",
+    "priceFieldAdd": "",
+    "moderationList": "Moderacion",
+    "createSupportButton": "",
+    "moderation": "Moderacion"
   },
   "activities": {
     "newbutton": "Creaste <a href='/ButtonFile/{0}'>{1}</a> en <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
@@ -128,7 +132,11 @@
     "loginSucess": "Entraste sin problemas!",
     "emailPlaceHolder": "Por ejemplo luis@email.org",
     "pickLanguageLabel": "Elige idioma",
-    "textReceiveNotifications": "Recibir notificaciones por email"
+    "textReceiveNotifications": "Recibir notificaciones por email",
+    "revoke": "Revocar derechos de administrador",
+    "unblock": "Desbloquear",
+    "block": "Bloquear",
+    "promote": "Promocionar a administrador"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -155,7 +163,10 @@
     "queryPlaceHolder": "Amigos, comida, ropa, herramientas...",
     "whereExplain": "Busca el lugar al que quieres ir",
     "types": "Tipos de botones de ayuda",
-    "typesExplain": "Selecciona los tipos de botones de ayuda que quieras filtrar"
+    "typesExplain": "Selecciona los tipos de botones de ayuda que quieras filtrar",
+    "price": "Precio",
+    "minPricePlaceholder": "Desde",
+    "maxPriceLabel": "Hasta"
   },
   "button": {
     "copy": "Copiar enlace",
@@ -216,7 +227,8 @@
     "newComment": "Comentar",
     "write": "Publica una Novedad",
     "delete": "Borrar",
-    "NoComments": "No hay comentarios aún"
+    "NoComments": "No hay comentarios aún",
+    "private": ""
   },
   "comment": {
     "placeholderWrite": "Escribe un mensaje en esta publicación",
