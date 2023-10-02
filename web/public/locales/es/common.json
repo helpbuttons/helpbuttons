@@ -115,7 +115,7 @@
     "passwordPlaceHolder": "Escribe tu contraseña",
     "logout": "Cerrar sesión",
     "register": "REGISTRARSE",
-    "newLoginTokenSent": "",
+    "newLoginTokenSent": "Si tienes una cuenta, recibirás un email con un link para hacer login.",
     "sendLoginToken": "Mandar enlace de Inicio de Sesión",
     "loginLink": "Tengo cuenta",
     "avatar": "Elige una imagen de perfil",

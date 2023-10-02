@@ -158,7 +158,7 @@
     "loginClick": "One click login",
     "created_date": "User since",
     "created": "",
-    "newLoginTokenSent": "Login token sent",
+    "newLoginTokenSent": "I've you have an account you will receive an email with a link to login.",
     "textReceiveNotifications": "Receive mail notifications",
     "loginSucess": "Login successfuly",
     "revoke": "Revoke administrator rights",
