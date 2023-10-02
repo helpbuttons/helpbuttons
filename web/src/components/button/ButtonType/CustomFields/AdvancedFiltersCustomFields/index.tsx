@@ -18,12 +18,13 @@ export function AdvancedFiltersCustomFields({ buttonTypes, register }) {
           <>
             <FieldText
               name="minPrice"
-              label={t('buttonFilters.minPriceLabel')}
+              label={t('buttonFilters.price')}
+              placeholder={t('buttonFilters.minPricePlaceholder')}
               {...register('minPrice')}
             />
             <FieldText
               name="maxPrice"
-              label={t('buttonFilters.maxPriceLabel')}
+              placeholder={t('buttonFilters.maxPriceLabel')}
               {...register('maxPrice')}
             />
           </>
