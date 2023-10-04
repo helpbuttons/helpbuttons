@@ -163,6 +163,10 @@ export class UserService {
   async unsubscribe(email)
   {
     const user = await this.findOneByEmail(email)
-    return this.userRepository.update(user.id, {receiveNotifications: false})
+    if(user)
+    {
+      await this.userRepository.update(user.id, {receiveNotifications: false})
+    }
+    return true;
   }
 }
