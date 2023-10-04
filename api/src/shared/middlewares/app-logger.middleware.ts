@@ -14,11 +14,15 @@ export class AppLogger implements NestMiddleware {
       const { statusCode } = response;
       let contentLength = response.get('content-length');
       contentLength = contentLength ? contentLength : '0'; 
-      this.logger.log(
-        `${method} ${request.url} ${statusCode} ${contentLength}B - ${userAgent} ${ip}`
-      );
+      const message = `${method} ${request.url} ${statusCode} ${contentLength}B - ${userAgent} ${ip}`;
+      if(statusCode < 200 || statusCode > 299)
+      {
+        this.logger.log(`\x1b[31m${message}\x1b[0m`);
+      }else{
+        this.logger.log(message);
+      }
+      
     });
-
     next();
   }
 }
