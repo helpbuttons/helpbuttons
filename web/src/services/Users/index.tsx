@@ -86,4 +86,8 @@ export class UserService {
   public static moderationList(): Observable<any> {
     return httpService.get<any>(`/users/moderationList`);
   }
+
+  public static unsubscribe(email : string): Observable<any> {
+    return httpService.post<any>(`/users/unsubscribe/${email}`);
+  }
 }

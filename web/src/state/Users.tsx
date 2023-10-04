@@ -302,6 +302,25 @@ export class ModerationList implements WatchEvent {
   }
 }
 
+export class UnsubscribeMails implements WatchEvent {
+  public constructor(
+    private email: string,
+    private onSuccess,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.unsubscribe(this.email).pipe(
+      map((data) => {
+        this.onSuccess(true)
+      }),
+      catchError((error) => {
+        return of(undefined);
+      }),
+    );
+  }
+
+}
+
 
 export function isAdmin(loggedInUser)
 {

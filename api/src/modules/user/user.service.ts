@@ -159,4 +159,14 @@ export class UserService {
       blocked: await this.userRepository.find({where: {role: Role.blocked}}),
     } 
   }
+
+  async unsubscribe(email)
+  {
+    const user = await this.findOneByEmail(email)
+    if(user)
+    {
+      await this.userRepository.update(user.id, {receiveNotifications: false})
+    }
+    return true;
+  }
 }
