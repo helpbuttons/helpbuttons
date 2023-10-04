@@ -136,7 +136,8 @@
     "revoke": "Revocar derechos de administrador",
     "unblock": "Desbloquear",
     "block": "Bloquear",
-    "promote": "Promocionar a administrador"
+    "promote": "Promocionar a administrador",
+    "unsubscribed": "No vas a recibir mas este tipo de emails"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",

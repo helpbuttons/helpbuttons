@@ -56,4 +56,11 @@ export class UserController {
   {
     return await this.userService.moderationList()
   }
+
+  @AllowGuest()
+  @Post('/unsubscribe/:email')
+  async unsubscribe(@Param('email') email: string)
+  {
+    return await this.userService.unsubscribe(email);
+  }
 }

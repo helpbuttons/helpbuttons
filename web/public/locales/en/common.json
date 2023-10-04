@@ -164,7 +164,8 @@
     "revoke": "Revoke administrator rights",
     "unblock": "Unblock",
     "block": "Block user",
-    "promote": "Promote to administrator"
+    "promote": "Promote to administrator",
+    "unsubscribed": "You will no longer receive this kind of emails"
   },
   "calendarOnce": {
     "pickday": "Pick a day",
