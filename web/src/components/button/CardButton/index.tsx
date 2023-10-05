@@ -12,7 +12,7 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 import router from 'next/router';
 import { useEffect, useState } from 'react';
-import { getShareLink, makeImageUrl } from 'shared/sys.helper';
+import { getShareLink, makeImageUrl, readableDistance } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { ShowWhen } from 'elements/Fields/FieldDate';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
@@ -114,7 +114,8 @@ export function CardButtonHeadMedium({ button, buttonType }) {
         </>
       )}
       <div className="card-button__city card-button__everywhere ">
-        {button.address}
+        {button.address} {button?.distance && <> - {readableDistance(button?.distance)}</>}
+
       </div>
       <ShowWhen when={button.when} />
     </div>

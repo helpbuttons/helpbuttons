@@ -1,22 +1,17 @@
 import t from 'i18n';
 import React, { useEffect, useState } from 'react';
-
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import FieldText from 'elements/Fields/FieldText';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { Bounds } from 'pigeon-maps';
-import { ButtonFilters, defaultFilters } from './filters.type';
+import { defaultFilters } from './filters.type';
 import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import { roundCoords } from 'shared/honeycomb.utils';
 import { GlobalState, store } from 'pages';
 import { UpdateFilters } from 'state/Explore';
-import router, { Router } from 'next/router';
-import { useRef } from 'store/Store';
-import { TagList } from 'elements/Fields/FieldTags';
+import router from 'next/router';
+import { useStore } from 'store/Store';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 import { uniqueArray } from 'shared/sys.helper';
@@ -30,13 +25,13 @@ export default function AdvancedFilters({
   showFiltersForm,
   isHome = false,
 }) {
-  const filters = useRef(
+  const filters = useStore(
     store,
     (state: GlobalState) => state.explore.map.filters,
     false
   );
 
-  const queryFoundTags = useRef(
+  const queryFoundTags = useStore(
     store,
     (state: GlobalState) => state.explore.map.queryFoundTags,
     false
@@ -104,7 +99,6 @@ export default function AdvancedFilters({
       ),
     );
   };
-
 
   useEffect(() => {
     if(queryFoundTags)
@@ -200,7 +194,6 @@ export default function AdvancedFilters({
                 </div>
               </div>
             )}
-            
             <AdvancedFiltersCustomFields buttonTypes={buttonTypes} register={register}/>
             
             <div className={ isHome ? 'filters__actions--home' : 'filters__actions'  }>
