@@ -89,9 +89,9 @@ function NetworkForm({
             />
             <FieldCheckbox
                     name='inviteOnly'
-                    checked={watch('inviteOnly')}
+                    defaultValue={watch('inviteOnly')}
                     text={t('invite.inviteOnly')}
-                    {...register('inviteOnly')}
+                    onChanged={(value) => setValue('inviteOnly', value)}
             />
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
             {/* <FieldPrivacy

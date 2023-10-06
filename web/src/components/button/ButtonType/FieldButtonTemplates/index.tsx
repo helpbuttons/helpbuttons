@@ -34,11 +34,6 @@ const FieldButtonTemplates = forwardRef(
     const [color, setColor] = useState();
     const [text, setText] = useState();
 
-    const {
-      watch: watchCustomFields,
-      register: registerCustomFields,
-    } = useForm({});
-
     const { remove, append } = useFieldArray({
       name,
       control,
@@ -89,8 +84,6 @@ const FieldButtonTemplates = forwardRef(
         </div>
         <Accordion title={t('configuration.customFields')}>
           <AddCustomFields
-            watch={watchCustomFields}
-            register={registerCustomFields}
             setCustomFields={setCustomFields}
           />
         </Accordion>

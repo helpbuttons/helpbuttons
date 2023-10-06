@@ -142,12 +142,12 @@ export default function ProfileEdit() {
                     setFocus={setFocus}
                     validationError={errors.description}
                     {...register('description', { required: true })}
-                  />     
+                  />
                   <FieldCheckbox
                     name='receiveNotifications'
-                    checked={watch('receiveNotifications')}
+                    defaultValue={loggedInUser.receiveNotifications}
                     text={t('user.textReceiveNotifications')}
-                    {...register('receiveNotifications')}
+                    onChanged={(value) => {setValue('receiveNotifications', value)}}
                   />
                   <FieldImageUpload
                     name="avatar"

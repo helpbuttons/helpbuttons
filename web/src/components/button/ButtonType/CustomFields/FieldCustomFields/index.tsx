@@ -1,3 +1,4 @@
+import FieldDate from 'elements/Fields/FieldDate';
 import FieldNumber from 'elements/Fields/FieldNumber';
 import t from 'i18n';
 import React, { useEffect } from 'react';
@@ -24,6 +25,21 @@ export default function FieldCustomFields({ customFields, watch, setValue, setFo
                     valueAsNumber: true
                   })}
             /></>)
+      }
+      if (type == 'event') {
+        field = (
+          <>
+          <FieldDate
+                eventType={watch('when.type')}
+                setEventType={(value) => setValue('when.type', value)}
+                eventStart={watch('eventStart')}
+                eventEnd={watch('eventEnd')}
+                setEventStart={(value) => setValue('eventStart', value)}
+                setEventEnd={(value) =>{console.log('event end..');console.log(value); setValue('eventEnd', value)}}
+                title={t('button.whenLabel')}
+              />
+          </>
+        )
       }
       return <div key={key}>{field}</div>;
     });

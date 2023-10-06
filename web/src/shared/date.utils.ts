@@ -46,7 +46,7 @@ export function readableTimeLeftToDate(date: Date) {
   return getRelativeTime(utcDate);
 }
 
-export function readableDate(date: Date) {
+export function readableDateTime(date: Date) {
   if(typeof date !== typeof Date) {
     date = new Date(date)
   }
@@ -58,4 +58,23 @@ export function readableDate(date: Date) {
     hour: 'numeric',
     minute: 'numeric',
   });
+}
+
+export function readableDate(date: Date) {
+  if(typeof date !== typeof Date) {
+    date = new Date(date)
+  }
+  return date.toLocaleDateString(getLocale(), {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+
+export function readableTime(date: Date) {
+  if(typeof date !== typeof Date) {
+    date = new Date(date)
+  }
+  return date.getHours() + ':' + date.getMinutes()
 }

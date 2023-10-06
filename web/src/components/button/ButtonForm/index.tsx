@@ -190,19 +190,11 @@ export default function ButtonForm({
                     selectedNetwork={selectedNetwork}
                     validationError={errors.location}
                     watch={watch}
-                    register={register}
+                    setValue={setValue}
                   />
                 </>
               )}
-              {/* <FieldDate
-                dateType={watch('when.type')}
-                dates={watch('when.dates')}
-                setDateType={(value) => setValue('when.type', value)}
-                setDate={(value) => setValue('when.dates', value)}
-                title={t('button.whenLabel')}
-              /> */}
             </>
-            {/* <ButtonNewDate title="When ?" setDate={setDate} date={date} /> */}
             <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency}/>
             <ButtonShare />
           </div>

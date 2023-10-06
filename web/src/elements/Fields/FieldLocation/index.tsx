@@ -24,7 +24,7 @@ export default function FieldLocation({
   updateMarkerPosition,
   label,
   watch,
-  register,
+  setValue,
 }) {
   const config: SetupDtoOut = useRef(
     store,
@@ -140,9 +140,9 @@ export default function FieldLocation({
           />
           <FieldCheckbox
             name="hideAddress"
-            checked={watch('hideAddress')}
+            defaultValue={watch('hideAddress')}
             text={t('button.hideAddress')}
-            {...register('hideAddress')}
+            onChanged={(value) => setValue('hideAddress', value)}
           />
           <Btn
             btnType={BtnType.submit}

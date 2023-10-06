@@ -23,7 +23,7 @@ $picker-comments-item-padding: 25px;
 
 .picker__content {
 
-  position: absolute;
+  // position: absolute;
   overflow: auto;
   width: 100vw; //Revise antes era 100%
   min-width: $picker-min-width;
