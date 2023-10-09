@@ -95,6 +95,8 @@ export default function ButtonNew() {
         pathname: '/Login',
         query: { returnUrl: 'ButtonNew' },
       });
+    }else{
+      alertService.error(JSON.stringify(err))
     }
   };
 

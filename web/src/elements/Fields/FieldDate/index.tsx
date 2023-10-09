@@ -1,20 +1,17 @@
 //is the component or element integrated in buttonNewPublish. Right before activate button. It displays the current selected date and a button to chang it, that ddisplays a picker with the date options for the net that's selecte
 import { Picker } from 'components/picker/Picker';
 import React, { useRef, useState } from 'react';
-import PickerSpecificDate from 'components/picker/PickerSpecificDate';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import {
   DateTypes,
-  readableDate,
   readableDateTime,
-  readableTime,
-  readableTimeLeftToDate,
 } from 'shared/date.utils';
-import DebugToJSON from 'elements/Debug';
 import t from 'i18n';
-import { FieldCheckbox } from '../FieldCheckbox';
 import FieldRadio from '../FieldRadio';
 import FieldRadioOption from '../FieldRadio/option';
+import PickerEventTypeOnceForm from 'components/picker/PickerEventType/once';
+import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multiple';
+import FieldError from '../FieldError';
 
 export default function FieldDate({
   title,
@@ -23,15 +20,13 @@ export default function FieldDate({
   eventStart,
   eventEnd,
   setEventEnd,
-  setEventStart
+  setEventStart,
+  isUTC = true,
+  register,
 }) {
   const [showHideMenu, setHideMenu] = useState(false);
-
-
-  // eventStart
-  // eventEnd
-  // when
-   /*
+  const [invalidDates, setInvalidDates] = useState(false)
+  /*
   recurrent:
    when = {
     type: 'recurrent'
@@ -48,18 +43,35 @@ export default function FieldDate({
     type: 'once' // only start date
    }
   */
+ const datesAreValid = () => {
+  if(eventEnd.getTime() < eventStart.getTime())
+  {
+    setInvalidDates(() => true)
+    return false;
+  }
+  setInvalidDates(() => false)
+  return true;
+ }
   let closeMenu = () => {
-    setHideMenu(false);
+    if(datesAreValid()){
+      setHideMenu(false);
+    }
   };
 
   // https://www.npmjs.com/package/react-time-picker
   return (
     <>
       <div className="form__field">
-        <ShowDate eventStart={eventStart} eventEnd={eventEnd} eventType={eventType} title={title} />
+        <ShowDate
+          eventStart={eventStart}
+          eventEnd={eventEnd}
+          eventType={eventType}
+          title={title}
+          isUTC={isUTC}
+        />
         <div
           className="btn"
-          onClick={() => setHideMenu(!showHideMenu)}
+          onClick={() => setHideMenu(true)}
         >
           {t('button.changeDateLabel')}
         </div>
@@ -67,27 +79,48 @@ export default function FieldDate({
       {showHideMenu && (
         <Picker
           closeAction={closeMenu}
-          headerText={t('pickerDate.headerText')}
+          headerText={t('eventType.headerText')}
         >
           <EventType
-            name="type"
+            name="eventType"
             label={t('calendar.typePicker')}
-            onChange={(value) => setEventType(value)}
+            value={eventType}
+            {...register('eventType')}
           />
           {eventType == DateTypes.ONCE && (
-            // <>
-            <PickerSpecificDate
+            <PickerEventTypeOnceForm
               eventStart={eventStart}
               eventEnd={eventEnd}
               setEventEnd={setEventEnd}
               setEventStart={setEventStart}
               onChange={(datetime) => {}}
               closeMenu={closeMenu}
-            ></PickerSpecificDate>
-            // </>
+            ></PickerEventTypeOnceForm>
           )}
-          {eventType == DateTypes.MULTIPLE && <></>}
-          {eventType == DateTypes.RECURRENT && <></>}
+          {eventType == DateTypes.MULTIPLE && (
+            <>
+              <PickerEventTypeMultipleForm
+                eventStart={eventStart}
+                eventEnd={eventEnd}
+                setEventEnd={setEventEnd}
+                setEventStart={setEventStart}
+                onChange={(datetime) => {}}
+                closeMenu={closeMenu}
+              ></PickerEventTypeMultipleForm>
+            </>
+          )}
+          {eventType == DateTypes.RECURRENT && (
+            <>Every week/Every month</>
+          )}
+          {invalidDates && 
+            <FieldError validationError={{message: 'invalid dates'}} />
+          }
+          <Btn
+            btnType={BtnType.submit}
+            caption={t('common.save')}
+            contentAlignment={ContentAlignment.center}
+            onClick={closeMenu}
+          />
         </Picker>
       )}
     </>
@@ -95,12 +128,19 @@ export default function FieldDate({
 }
 
 const EventType = React.forwardRef(
-  ({ name, onChange, onBlur, label, explain }) => {
-    const ref = useRef();
+  ({ name, onChange, onBlur, label, explain, value }, ref) => {
     const eventTypes = [
-      { label: 'Once', type: DateTypes.ONCE },
-      { label: 'Multiple', type: DateTypes.MULTIPLE },
-      { label: 'recurrent', type: DateTypes.RECURRENT },
+      {
+        label: 'Once',
+        explain: 'Choose the day.',
+        type: DateTypes.ONCE,
+      },
+      {
+        label: 'More days',
+        explain: 'Choose when it starts and ends.',
+        type: DateTypes.MULTIPLE,
+      },
+      // { label: 'Recurring', explain: 'Choose frequency and select days', type: DateTypes.RECURRENT },
     ];
     return (
       <>
@@ -108,7 +148,7 @@ const EventType = React.forwardRef(
           {eventTypes.map((eventType, idx) => (
             <div key={idx}>
               <FieldRadioOption
-                onChange={(value) => onChange(eventType.type)}
+                onChange={(value) => onChange(value)}
                 onBlur={onBlur}
                 name={name}
                 ref={ref}
@@ -123,38 +163,38 @@ const EventType = React.forwardRef(
             </div>
           ))}
         </FieldRadio>
+        {value &&
+          eventTypes.find((eventType) => eventType.type == value)
+            .explain}
       </>
     );
   },
 );
 
-export function ShowWhen({ when }) {
-  const options = JSON.parse(when);
-  return (
-    <></>
-    //   {(
-    //     <ShowDate
-    //       dates={options?.dates}
-    //       dateType={options?.type}
-    //       title={t('calendarAlways.label')}
-    //     />
-    //   )}
-    // </>
-  );
-}
-export function ShowDate({ eventStart, eventEnd, eventType, title }) {
+export function ShowDate({
+  eventStart,
+  eventEnd,
+  eventType,
+  title,
+  isUTC,
+}) {
   return (
     <div className="card-button__date">
-      {(!eventType) && <>{title}</>}
-      {/* {dateType == DateTypes.ALWAYS_ON && (
-        <>{t('calendarAlways.label')}</>
-      )} */}
-      {(eventType == DateTypes.ONCE && eventStart) && (
-        <>
-          {`${readableDate(eventStart)} From: ${readableTime(eventStart)} Until: ${readableTime(eventEnd)}`}
-        </>
-      )}
-      {eventType == DateTypes.MULTIPLE && <>multiple</>}
+      {!eventType && <>{title}</>}
+      {(eventType == DateTypes.ONCE ||
+        eventType == DateTypes.MULTIPLE) &&
+        eventStart && (
+          <>
+            <div>
+              {t('eventType.from')}
+              {readableDateTime(eventStart, isUTC)}
+            </div>
+            <div>
+              {t('eventType.until')}
+              {readableDateTime(eventEnd, isUTC)}
+            </div>
+          </>
+        )}
       {eventType == DateTypes.RECURRENT && <>recurrent</>}
     </div>
   );

@@ -238,8 +238,10 @@
   "picker": {
     "headerText": "Elige una localización"
   },
-  "pickerDate": {
-    "headerText": "Elige fecha y hora"
+  "eventType": {
+    "calendarHeaderText": "Elige fecha y hora",
+    "from": "De... ",
+    "until": "Hasta... "
   },
   "faqs": {
     "title": "Preguntas frecuentes",

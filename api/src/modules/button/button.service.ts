@@ -63,10 +63,12 @@ export class ButtonService {
       image: null,
       title: createDto.title,
       address: createDto.address,
-      when: createDto.when,
       hexagon: () => `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
       hideAddress: createDto.hideAddress,
       price: createDto.price,
+      eventStart: createDto.eventStart,
+      eventEnd: createDto.eventEnd,
+      eventType: createDto.eventType,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -229,4 +231,5 @@ export class ButtonService {
   {
     return  {deleted: false, owner: {role: Not(Role.blocked)}}
   }
+
 }

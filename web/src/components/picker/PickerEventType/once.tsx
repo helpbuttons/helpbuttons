@@ -1,6 +1,3 @@
-//a variation of picker specific for time
-
-import t from 'i18n';
 import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import TimeKeeper from 'react-timekeeper';
@@ -12,14 +9,13 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
+import t from 'i18n';
 
-export default function PickerSpecificDate({
+export default function PickerEventTypeOnceForm({
   eventStart,
   eventEnd,
   setEventEnd,
   setEventStart,
-  closeMenu,
-  onChange,
 }) {
   const [startDate, setStartDate] = useState(
     eventStart ? eventStart : new Date(),
@@ -27,15 +23,19 @@ export default function PickerSpecificDate({
 
   const [startTime, setStartTime] = useState(
     eventStart
-      ? eventStart.getHours() + ':' + eventStart.getMinutes()
+      ? eventStart.getHours() +
+          ':' +
+          String(eventStart.getMinutes()).padStart(2, '0')
       : '0:00',
   );
 
   const [endTime, setEndTime] = useState(
     eventEnd
-    ? eventEnd.getHours() + ':' + eventEnd.getMinutes()
-    : '0:00'
-    );
+      ? eventEnd.getHours() +
+          ':' +
+          String(eventEnd.getMinutes()).padStart(2, '0')
+      : '0:00',
+  );
 
   useEffect(() => {
     let datetimeStart = new Date();
@@ -84,6 +84,7 @@ export default function PickerSpecificDate({
 
     setEventEnd(datetimeStart);
   }, [startDate, endTime]);
+
   return (
     <>
       <div className="picker__content">
@@ -95,11 +96,19 @@ export default function PickerSpecificDate({
                   setStartDate((prevDate) => newDate);
                 }}
                 value={startDate}
+                minDate={new Date()}
               />
             </div>
-            <TimePick time={startTime} setTime={setStartTime} label={'From...' + startTime}/>
-            <TimePick time={endTime} setTime={setEndTime} label={'Until... ' + endTime}/>
-
+            <TimePick
+              time={startTime}
+              setTime={setStartTime}
+              label={t('eventType.from') + startTime}
+            />
+            <TimePick
+              time={endTime}
+              setTime={setEndTime}
+              label={t('eventType.until') + endTime}
+            />
           </div>
         </div>
       </div>
@@ -107,10 +116,8 @@ export default function PickerSpecificDate({
   );
 }
 
-
-function TimePick({time, setTime, label}) {
+function TimePick({ time, setTime, label }) {
   const [showFromTime, setShowFromTime] = useState(false);
-
   return (
     <>
       <Btn
@@ -119,7 +126,11 @@ function TimePick({time, setTime, label}) {
         iconLink={<IoTimeOutline />}
         iconLeft={IconType.circle}
         contentAlignment={ContentAlignment.center}
-        onClick={() => setShowFromTime((show) => !show)}
+        onClick={() =>
+          setShowFromTime((show) => {
+            return !show;
+          })
+        }
       />
       {showFromTime && (
         <div className="picker__row">
@@ -130,7 +141,9 @@ function TimePick({time, setTime, label}) {
                 return newTime.formatted24;
               });
             }}
-            onDoneClick={() => setShowFromTime(() => false)}
+            onDoneClick={() => {
+                setShowFromTime(() => false);
+            }}
             switchToMinuteOnHourSelect
           />
         </div>
