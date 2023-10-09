@@ -194,7 +194,7 @@ export default function AdvancedFilters({
                 </div>
               </div>
             )}
-            <AdvancedFiltersCustomFields buttonTypes={buttonTypes} register={register}/>
+            <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
             
             <div className={ isHome ? 'filters__actions--home' : 'filters__actions'  }>
               <Btn
