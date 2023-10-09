@@ -8,7 +8,7 @@ export enum DateTypes {
   RECURRENT = 'recurrent',
 }
 
-export function readableTimeLeftToDate(date: Date) {
+export function readableTimeLeftToDate(date: Date, isUTC = true) {
   if(typeof date !== typeof Date) {
     date = new Date(date)
   }
@@ -39,18 +39,15 @@ export function readableTimeLeftToDate(date: Date) {
         
   };
 
-  // const timeZoneOffset = new Date().getTimezoneOffset();
-  let utcDate = new Date(date);
-  // utcDate.setMinutes(utcDate.getMinutes() - timeZoneOffset);
-
-  return getRelativeTime(utcDate);
+  return getRelativeTime(toUTC(date, isUTC))
 }
 
-export function readableDate(date: Date) {
+export function readableDateTime(date: Date, isUTC = true) {
   if(typeof date !== typeof Date) {
     date = new Date(date)
   }
-  return date.toLocaleDateString(getLocale(), {
+
+  return toUTC(date, isUTC).toLocaleDateString(getLocale(), {
     weekday: 'short',
     year: 'numeric',
     month: 'short',
@@ -58,4 +55,31 @@ export function readableDate(date: Date) {
     hour: 'numeric',
     minute: 'numeric',
   });
+}
+
+export function readableDate(date: Date, isUTC = true) {
+  if(typeof date !== typeof Date) {
+    date = new Date(date)
+  }
+  return toUTC(date, isUTC).toLocaleDateString(getLocale(), {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+
+export function readableTime(date: Date, isUTC = true) {
+  if(typeof date !== typeof Date) {
+    date = new Date(date)
+  }
+  return new Intl.DateTimeFormat(getLocale(), {hour: 'numeric', minute: 'numeric'}).format( toUTC(date, isUTC));
+}
+
+export function toUTC(date: Date, isUTC){
+  if(!isUTC)
+  {
+    return date;
+  }
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), 0));
 }

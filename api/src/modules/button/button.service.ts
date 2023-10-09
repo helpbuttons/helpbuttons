@@ -20,6 +20,8 @@ import { Role } from '@src/shared/types/roles';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { maxResolution } from '@src/shared/types/honeycomb.const';
 import { PostService } from '../post/post.service';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
+import { ErrorName } from '@src/shared/types/error.list';
 
 @Injectable()
 export class ButtonService {
@@ -48,6 +50,24 @@ export class ButtonService {
       );
     }
 
+    const buttonTemplates = network.buttonTemplates 
+    const buttonTemplate = buttonTemplates.find((buttonTemplate) => buttonTemplate.name == createDto.type)
+    
+    if(buttonTemplate?.customFields)
+    {
+      const isEvent = buttonTemplate?.customFields.find((customField) => customField.type == 'event') 
+      if (isEvent)
+      {
+        if(!createDto.eventEnd || !createDto.eventStart || !createDto.eventType)
+        {
+          throw new CustomHttpException(ErrorName.invalidDates);
+        }
+        if(new Date(createDto.eventEnd).getTime() < new Date(createDto.eventStart).getTime())
+        {
+          throw new CustomHttpException(ErrorName.invalidDates);
+        }
+      }
+    }
     const button = {
       id: dbIdGenerator(),
       type: createDto.type,
@@ -63,10 +83,12 @@ export class ButtonService {
       image: null,
       title: createDto.title,
       address: createDto.address,
-      when: createDto.when,
       hexagon: () => `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
       hideAddress: createDto.hideAddress,
       price: createDto.price,
+      eventStart: createDto.eventStart,
+      eventEnd: createDto.eventEnd,
+      eventType: createDto.eventType,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -229,4 +251,5 @@ export class ButtonService {
   {
     return  {deleted: false, owner: {role: Not(Role.blocked)}}
   }
+
 }

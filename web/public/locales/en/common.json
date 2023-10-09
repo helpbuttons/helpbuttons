@@ -178,8 +178,10 @@
   "picker": {
     "headerText": "Choose a location"
   },
-  "pickerDate": {
-    "headerText": "Choose date & hour"
+  "eventType": {
+    "calendarHeaderText": "Choose date & hour",
+    "from": "From... ",
+    "until": "Until... "
   },
   "validation": {
     "fieldRequired": "{0} is required.",

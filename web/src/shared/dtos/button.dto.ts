@@ -77,16 +77,16 @@ export class CreateButtonDto implements Partial<Button> {
   })
   address: string;
 
-  @ApiProperty({
-    type: String,
-    required: true,
-  })
-  when: string;
-
   @IsNotEmpty()
   hideAddress: boolean;
 
   price?: number;
+
+  eventStart?: Date;
+
+  eventEnd?: Date;
+  
+  eventType?: string;
 }
 
 export class UpdateButtonDto extends PartialType(CreateButtonDto) {}

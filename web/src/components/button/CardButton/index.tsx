@@ -14,7 +14,6 @@ import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { getShareLink, makeImageUrl, readableDistance } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import { ShowWhen } from 'elements/Fields/FieldDate';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -117,7 +116,6 @@ export function CardButtonHeadMedium({ button, buttonType }) {
         {button.address} {button?.distance && <> - {readableDistance(button?.distance)}</>}
 
       </div>
-      <ShowWhen when={button.when} />
     </div>
   );
 }
@@ -153,7 +151,6 @@ export function CardButtonHeadSmall({ button }) {
           <div className="card-button__city card-button__everywhere ">
             {button.address}
           </div>
-          <ShowWhen when={button.when} />
         </div>
       </a>
     </>
@@ -292,7 +289,6 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             <div className="card-button__city card-button__everywhere" onClick={() => setShowMap(() => !showMap)}>
               {button.address}
             </div>
-          <ShowWhen when={button.when} />
         </div>
         {(!button.hideAddress && showMap) && (
         <MarkerSelectorMap markerPosition={[button.latitude, button.longitude]} setMarkerPosition={() => {}} zoom={10} markerColor={cssColor} markerImage={button.image} markerCaption={button.title}/>
