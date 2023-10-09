@@ -160,7 +160,7 @@ export class NetworkService {
       });
   }
 
-  async findOne(id: string): Promise<Network> {
+  async findOne(id: string): Promise<any> {
     return this.findDefaultNetwork();
   }
 

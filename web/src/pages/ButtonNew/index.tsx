@@ -95,8 +95,10 @@ export default function ButtonNew() {
         pathname: '/Login',
         query: { returnUrl: 'ButtonNew' },
       });
+    }else if(err.errorName == ErrorName.invalidDates){
+      alertService.error('invalid dates')
     }else{
-      alertService.error(JSON.stringify(err))
+      console.error(JSON.stringify(err))
     }
   };
 
