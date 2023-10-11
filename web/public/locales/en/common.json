@@ -181,7 +181,8 @@
   "eventType": {
     "calendarHeaderText": "Choose date & hour",
     "from": "From... ",
-    "until": "Until... "
+    "until": "Until... ",
+    "eventFieldAdd": "Add date"
   },
   "validation": {
     "fieldRequired": "{0} is required.",

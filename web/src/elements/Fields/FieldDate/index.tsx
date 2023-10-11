@@ -5,6 +5,7 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import {
   DateTypes,
   readableDateTime,
+  readableTime,
 } from 'shared/date.utils';
 import t from 'i18n';
 import FieldRadio from '../FieldRadio';
@@ -176,23 +177,24 @@ export function ShowDate({
   eventEnd,
   eventType,
   title,
-  isUTC,
+  isUTC = true,
 }) {
   return (
     <div className="card-button__date">
       {!eventType && <>{title}</>}
-      {(eventType == DateTypes.ONCE ||
-        eventType == DateTypes.MULTIPLE) &&
+      {eventType == DateTypes.ONCE &&
         eventStart && (
           <>
-            <div>
-              {t('eventType.from')}
+              {readableDateTime(eventStart, isUTC)}{' - '}
+              {readableTime(eventEnd, isUTC)}
+          </>
+      )}
+      {eventType == DateTypes.MULTIPLE &&
+        eventStart && (
+          <>
               {readableDateTime(eventStart, isUTC)}
-            </div>
-            <div>
-              {t('eventType.until')}
+              {' - '}
               {readableDateTime(eventEnd, isUTC)}
-            </div>
           </>
         )}
       {eventType == DateTypes.RECURRENT && <>recurrent</>}
