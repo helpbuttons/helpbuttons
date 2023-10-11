@@ -35,7 +35,7 @@ export function AddCustomFields({ setCustomFields }) {
       <FieldCheckbox
         name="eventField"
         defaultValue={watch('eventField')}
-        text={t('configuration.eventFieldAdd')}
+        text={t('eventType.eventFieldAdd')}
         onChanged={(value) => updateCustomField('event', value)}
         {...register('eventField')}
       />

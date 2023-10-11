@@ -116,7 +116,6 @@ const FieldButtonTemplates = forwardRef(
                   contentAlignment={ContentAlignment.center}
                   onClick={() => remove(idx)}
                 />
-                {JSON.stringify(val.customFields)}
               </div>
             ))}
         </div>

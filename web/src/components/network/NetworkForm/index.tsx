@@ -192,7 +192,7 @@ function NetworkForm({
     
             <DropdownField
               options={availableCurrencies}
-              defaultSelected={'EUR'}
+              defaultSelected={watch('currency')}
               onChange={(value) => {
                 setValue('currency', value)
               }}

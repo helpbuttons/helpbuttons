@@ -241,7 +241,8 @@
   "eventType": {
     "calendarHeaderText": "Elige fecha y hora",
     "from": "De... ",
-    "until": "Hasta... "
+    "until": "Hasta... ",
+    "eventFieldAdd": "Add date"
   },
   "faqs": {
     "title": "Preguntas frecuentes",
