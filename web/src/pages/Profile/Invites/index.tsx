@@ -129,7 +129,7 @@ export default function Invites() {
           </div>
           </Form>
         </Popup> */}
-          <Popup title={t('invite.title')} linkFwd="/HomeInfo">
+          <Popup title={t('invite.title')} linkFwd="/Profile">
             <Form
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="invite"

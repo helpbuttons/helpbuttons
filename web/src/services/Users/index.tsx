@@ -11,6 +11,7 @@ import { User } from 'shared/entities/user.entity';
 import { Logout } from 'state/Users';
 import { store } from 'pages';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
+import { Role } from 'shared/types/roles';
 import { InviteCreateDto } from 'shared/dtos/invite.dto';
 import { Invite } from 'shared/entities/invite.entity';
 const { publicRuntimeConfig } = getConfig();
@@ -76,5 +77,17 @@ export class UserService {
 
   public static invite(code: string): Observable<any> {
     return httpService.get<any>(`/users/invite/${code}`);
+  }
+
+  public static updateRole(userId : string,newRole :Role): Observable<any> {
+    return httpService.post<any>(`/users/updateRole/${userId}/${newRole}`);
+  }
+
+  public static moderationList(): Observable<any> {
+    return httpService.get<any>(`/users/moderationList`);
+  }
+
+  public static unsubscribe(email : string): Observable<any> {
+    return httpService.post<any>(`/users/unsubscribe/${email}`);
   }
 }

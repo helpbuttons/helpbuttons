@@ -21,7 +21,9 @@ export function Picker({ closeAction, headerText, children }) {
               </div>
             </div>
           </div>
-          {children}
+          <div className="picker__content">
+           {children}
+          </div>
         </div>
       </div>
       <div

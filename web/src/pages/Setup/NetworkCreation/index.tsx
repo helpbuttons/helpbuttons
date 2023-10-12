@@ -38,7 +38,9 @@ function NetworkCreation() {
       exploreSettings: null,
       buttonTemplates: JSON.parse('[{"name":"offer","caption":"Offer","color":"custom","cssColor":"#FFDD02"},{"name":"need","caption":"Need","color":"custom","cssColor":"#19AF96"}]'),
       backgroundColor: '#FFDD02',
-      textColor: '#0E0E0E'
+      textColor: '#0E0E0E',
+      inviteOnly: false,
+      currency: 'EUR'
     },
   });
 

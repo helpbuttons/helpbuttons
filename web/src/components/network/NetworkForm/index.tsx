@@ -19,10 +19,9 @@ import t from 'i18n';
 import { useRouter } from 'next/router';
 import { getUrlOrigin } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
-import FieldButtonTemplates from 'components/feed/FieldButtonTemplates';
 
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { store } from 'pages';
 import {
   UpdateNetworkBackgroundColor,
@@ -30,6 +29,9 @@ import {
 } from 'state/Networks';
 import Accordion from 'elements/Accordion';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
+import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
+import { DropdownField } from 'elements/Dropdown/Dropdown';
+import { availableCurrencies } from 'shared/currency.utils';
 
 export default NetworkForm;
 
@@ -50,7 +52,26 @@ function NetworkForm({
   defaultExploreSettings = null,
 }) {
   const router = useRouter();
+  const buttonTemplates = watch('buttonTemplates');
 
+  const [showCurrencyDropDown, setShowCurrencyDropDown] = useState(false)
+  useEffect(() => {
+    if(buttonTemplates)
+    {
+      const needsCurrency = buttonTemplates.find((btnTemplate) =>{
+        if(!btnTemplate.customFields){
+          return false;
+        }
+        return btnTemplate.customFields.find((customField) => customField.type == 'price')
+        })
+      if(needsCurrency)
+      {
+        setShowCurrencyDropDown(() => true)
+      }else{
+        setShowCurrencyDropDown(() => false)
+      }
+  }
+  }, [buttonTemplates])
   return (
     <>
       <Form
@@ -88,9 +109,9 @@ function NetworkForm({
             />
             <FieldCheckbox
                     name='inviteOnly'
-                    checked={watch('inviteOnly')}
+                    defaultValue={watch('inviteOnly')}
                     text={t('invite.inviteOnly')}
-                    {...register('inviteOnly')}
+                    onChanged={(value) => setValue('inviteOnly', value)}
             />
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
             {/* <FieldPrivacy
@@ -189,6 +210,16 @@ function NetworkForm({
               control={control}
             />
     
+            {showCurrencyDropDown && 
+              <DropdownField
+                options={availableCurrencies}
+                defaultSelected={watch('currency')}
+                onChange={(value) => {
+                  setValue('currency', value)
+                }}
+                label={t('configuration.currencyLabel')}
+              />
+            }
             <FieldAreaMap
               defaultExploreSettings={defaultExploreSettings}
               label={t('configuration.locationLabel')}

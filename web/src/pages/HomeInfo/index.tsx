@@ -28,6 +28,7 @@ import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { UpdateFiltersToFilterButtonType, UpdateFiltersToFilterTag } from 'state/Explore';
 import Alert from 'components/overlay/Alert';
+import { formatMessage } from 'elements/Message';
 
 
 export default function HomeInfo({
@@ -113,7 +114,7 @@ export default function HomeInfo({
                     </h3>
                   </div>
                   <div className="info-overlay__description">
-                    {selectedNetwork.description}
+                    {formatMessage(selectedNetwork.description)}
                   </div>
                   <div className='info-overlay__description'>
                       {t('homeinfo.administeredby')}

@@ -57,6 +57,7 @@ function Configuration() {
       textColor: data.textColor,
       buttonTemplates: data.buttonTemplates,
       inviteOnly: data.inviteOnly,
+      currency: data.currency,
     },
       () => {
         const onComplete = (network) => {
@@ -81,7 +82,9 @@ function Configuration() {
           const mimetypeErrorMessage = t('common.invalidMimeType', ['logo',mimetype]);
             setError('logo',{ type: 'custom', message: mimetypeErrorMessage
           })
-        }else {
+        }else if(err?.validationErrors?.buttonTemplates){
+          alertService.warn(err.validationErrors.buttonTemplates)
+        }else{
           alertService.warn(`Validation errors ${JSON.stringify(err)}`)
         }
       }else{

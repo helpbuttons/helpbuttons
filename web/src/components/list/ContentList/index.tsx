@@ -32,6 +32,7 @@ export default function ContentList({
     );
   }
   return buttons.map((btn, i) => (
+    // <>{JSON.stringify(buttonTypes)}</>
     <CardButtonList key={i} button={btn} buttonTypes={buttonTypes} />
   ));
 }
