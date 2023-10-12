@@ -10,6 +10,7 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import t from 'i18n';
+import { Picker } from '../Picker';
 
 export default function PickerEventTypeOnceForm({
   eventStart,
@@ -87,9 +88,7 @@ export default function PickerEventTypeOnceForm({
 
   return (
     <>
-      <div className="picker__content">
-        <div className="picker__section">
-          <div className="picker__section__pick">
+      
             <div className="picker__row">
               <Calendar
                 onChange={(newDate) => {
@@ -99,19 +98,19 @@ export default function PickerEventTypeOnceForm({
                 minDate={new Date()}
               />
             </div>
-            <TimePick
-              time={startTime}
-              setTime={setStartTime}
-              label={t('eventType.from') + startTime}
-            />
-            <TimePick
-              time={endTime}
-              setTime={setEndTime}
-              label={t('eventType.until') + endTime}
-            />
-          </div>
-        </div>
-      </div>
+            <div className="picker__row">
+              <TimePick
+                time={startTime}
+                setTime={setStartTime}
+                label={t('eventType.from') + startTime}
+              />
+              <TimePick
+                time={endTime}
+                setTime={setEndTime}
+                label={t('eventType.until') + endTime}
+              />
+            </div>
+
     </>
   );
 }
@@ -122,7 +121,7 @@ function TimePick({ time, setTime, label }) {
     <>
       <Btn
         caption={label}
-        btnType={BtnType.iconActions}
+        btnType={BtnType.splitIcon}
         iconLink={<IoTimeOutline />}
         iconLeft={IconType.circle}
         contentAlignment={ContentAlignment.center}
@@ -133,20 +132,26 @@ function TimePick({ time, setTime, label }) {
         }
       />
       {showFromTime && (
-        <div className="picker__row">
-          <TimeKeeper
-            time={time}
-            onChange={(newTime) => {
-              setTime(() => {
-                return newTime.formatted24;
-              });
-            }}
-            onDoneClick={() => {
-                setShowFromTime(() => false);
-            }}
-            switchToMinuteOnHourSelect
-          />
-        </div>
+
+        <Picker
+        closeAction={() => {console.log('cerra-me')}}
+        headerText={t('eventType.headerText')}
+        >
+         <div className="picker__row">
+            <TimeKeeper
+              time={time}
+              onChange={(newTime) => {
+                setTime(() => {
+                  return newTime.formatted24;
+                });
+              }}
+              onDoneClick={() => {
+                  setShowFromTime(() => false);
+              }}
+              switchToMinuteOnHourSelect
+            />
+          </div>
+        </Picker>
       )}
     </>
   );

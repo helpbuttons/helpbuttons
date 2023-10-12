@@ -57,7 +57,7 @@ export default function PickerDate() {
   };
 
   return (
-    <div className="calendar picker__content">
+    <>
 
       <div className="header">
         <div
@@ -139,6 +139,6 @@ export default function PickerDate() {
           <option value="50">50</option>
         </select>
       </div>
-    </div>
+    </>
   );
 }

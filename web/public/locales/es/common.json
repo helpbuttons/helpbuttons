@@ -89,7 +89,7 @@
     "contactAdmin": "Contatar el administrador",
     "priceFieldAdd": "",
     "moderationList": "Moderacion",
-    "createSupportButton": "",
+    "createSupportButton": "Crea tu boton de soporte para tu red",
     "moderation": "Moderacion"
   },
   "activities": {
@@ -200,6 +200,9 @@
     "picktime": "Elige una fecha"
   },
   "calendarAlways": {
+    "label": "Siempre"
+  },
+  "calendar": {
     "label": "Siempre"
   },
   "validation": {

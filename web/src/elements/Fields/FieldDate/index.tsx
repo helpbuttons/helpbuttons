@@ -78,50 +78,51 @@ export default function FieldDate({
         </div>
       </div>
       {showHideMenu && (
+        
         <Picker
           closeAction={closeMenu}
           headerText={t('eventType.headerText')}
         >
-          <EventType
-            name="eventType"
-            label={t('calendar.typePicker')}
-            value={eventType}
-            {...register('eventType')}
-          />
-          {eventType == DateTypes.ONCE && (
-            <PickerEventTypeOnceForm
-              eventStart={eventStart}
-              eventEnd={eventEnd}
-              setEventEnd={setEventEnd}
-              setEventStart={setEventStart}
-              onChange={(datetime) => {}}
-              closeMenu={closeMenu}
-            ></PickerEventTypeOnceForm>
-          )}
-          {eventType == DateTypes.MULTIPLE && (
-            <>
-              <PickerEventTypeMultipleForm
-                eventStart={eventStart}
-                eventEnd={eventEnd}
-                setEventEnd={setEventEnd}
-                setEventStart={setEventStart}
-                onChange={(datetime) => {}}
-                closeMenu={closeMenu}
-              ></PickerEventTypeMultipleForm>
-            </>
-          )}
-          {eventType == DateTypes.RECURRENT && (
-            <>Every week/Every month</>
-          )}
-          {invalidDates && 
-            <FieldError validationError={{message: 'invalid dates'}} />
-          }
-          <Btn
-            btnType={BtnType.submit}
-            caption={t('common.save')}
-            contentAlignment={ContentAlignment.center}
-            onClick={closeMenu}
-          />
+            <div className="picker__section">
+              <EventType
+                name="eventType"
+                label={t('eventType.typePicker')}
+                value={eventType}
+                {...register('eventType')}
+              />
+              {eventType == DateTypes.ONCE && (
+                <PickerEventTypeOnceForm
+                  eventStart={eventStart}
+                  eventEnd={eventEnd}
+                  setEventEnd={setEventEnd}
+                  setEventStart={setEventStart}
+                  onChange={(datetime) => {}}
+                  closeMenu={closeMenu}
+                ></PickerEventTypeOnceForm>
+              )}
+              {eventType == DateTypes.MULTIPLE && (
+                  <PickerEventTypeMultipleForm
+                    eventStart={eventStart}
+                    eventEnd={eventEnd}
+                    setEventEnd={setEventEnd}
+                    setEventStart={setEventStart}
+                    onChange={(datetime) => {}}
+                    closeMenu={closeMenu}
+                  ></PickerEventTypeMultipleForm>
+              )}
+              {eventType == DateTypes.RECURRENT && (
+                <>Every week/Every month</>
+              )}
+              {invalidDates && 
+                <FieldError validationError={{message: 'invalid dates'}} />
+              }
+              <Btn
+                btnType={BtnType.submit}
+                caption={t('common.save')}
+                contentAlignment={ContentAlignment.center}
+                onClick={closeMenu}
+              />
+            </div>
         </Picker>
       )}
     </>

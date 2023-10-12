@@ -167,18 +167,12 @@
     "promote": "Promote to administrator",
     "unsubscribed": "You will no longer receive this kind of emails"
   },
-  "calendarOnce": {
-    "pickday": "Pick a day",
-    "picktime": "Pick a time",
-    "label": "Once"
-  },
-  "calendarAlways": {
-    "label": "Always"
-  },
   "picker": {
     "headerText": "Choose a location"
   },
   "eventType": {
+    "typePicker": "Pick a date",
+    "headerText": "When is your event",
     "calendarHeaderText": "Choose date & hour",
     "from": "From... ",
     "until": "Until... ",
@@ -242,8 +236,8 @@
     "customFields": "Add custom fields to helpbutton type",
     "priceFieldAdd": "Add price",
     "currencyLabel": "Currency",
-    "moderationList": "Moderacion",
-    "createSupportButton": "",
+    "moderationList": "Moderation",
+    "createSupportButton": "Create your network's support button",
     "moderation": "Moderation"
   },
   "configure": {
