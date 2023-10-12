@@ -21,6 +21,7 @@ export function AdvancedFiltersCustomFields({ buttonTypes, register, setValue, w
             <FieldText
               name="minPrice"
               label={t('buttonFilters.price')}
+              explain={t('buttonFilters.priceExplain')}
               placeholder={t('buttonFilters.minPricePlaceholder')}
               {...register('minPrice')}
             />
@@ -34,15 +35,18 @@ export function AdvancedFiltersCustomFields({ buttonTypes, register, setValue, w
       }
       if (customField == 'event') {
         field = (
-          <>
-           <Calendar
+            <div className="form__field">
+              <label className="form__label">{t('buttonFilters.whenLabel')}</label>
+              <p className="form__explain">{t('buttonFilters.whenExplain')}</p>
+
+              <Calendar
                 onChange={(newDates) => {
                   setValue('dateRange',newDates)
                 }}
                 value={watch('dateRange')}
                 selectRange
               />
-          </>
+          </div>
         );
       }
       return <div key={key}>{field}</div>;

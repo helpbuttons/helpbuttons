@@ -106,21 +106,32 @@ export function DropDownWhere({
             </>
           )}
         </label>
-        <input
-          className="form__input"
-          autoComplete="on"
-          onChange={onChangeInput}
-          list=""
-          id="input"
-          name="browsers"
-          placeholder={placeholder}
-          type="text"
-          value={input}
-          onClick={onInputClick}
-          onFocus={handleOnFocus}
-          onBlur={onBlur}
-        ></input>
-        {loadingNewAddress && <Loading />}
+        <div className='form__field--location'>
+          <input
+            className="form__input"
+            autoComplete="on"
+            onChange={onChangeInput}
+            list=""
+            id="input"
+            name="browsers"
+            placeholder={placeholder}
+            type="text"
+            value={input}
+            onClick={onInputClick}
+            onFocus={handleOnFocus}
+            onBlur={onBlur}
+          ></input>
+          {!loadingNewAddress && 
+            <Btn
+              btnType={BtnType.circle}
+              iconLink={<IoLocationOutline />}
+              iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.center}
+              onClick={setCenterFromBrowser}
+            />
+          }
+          {loadingNewAddress && <Loading />}
+        </div>
 
         {showSuggestions && (
           <datalist
@@ -131,15 +142,7 @@ export function DropDownWhere({
             {options}
           </datalist>
         )}
-        {!loadingNewAddress && 
-          <Btn
-            btnType={BtnType.iconActions}
-            iconLink={<IoLocationOutline />}
-            iconLeft={IconType.circle}
-            contentAlignment={ContentAlignment.center}
-            onClick={setCenterFromBrowser}
-          />
-        }
+        
       </div>
     </>
   );

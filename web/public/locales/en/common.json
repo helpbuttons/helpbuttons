@@ -25,6 +25,8 @@
     "users": "{0} users in this network",
     "administeredby": "Administered by ",
     "actions": "What can I do?",
+    "createNetworkButton": "Create your own network",
+    "createNetwork": "You can contact with the team if you need help making your own network",
     "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:",
     "networkIsPrivate": "Private network"
   },
@@ -55,7 +57,12 @@
     "tagsExplain": "Network main tags",
     "price": "Price",
     "minPricePlaceholder": "From",
-    "maxPriceLabel": "Until"
+    "maxPriceLabel": "Until",
+    "whenLabel": "When?",
+    "whenExplain": "Filter events by date",
+    "price": "Price",
+    "priceExplain": "Filter by price"
+
   },
   "setup": {
     "hostname": "Hostname",

@@ -26,6 +26,8 @@
     "administeredby": "Administrado por ",
     "loginSubtitle": "¡Entra o crea tu cuenta!",
     "buttons": "Hay {0} botones de ayuda en esta Red",
+    "createNetworkButton": "Crea tu propia red",
+    "createNetwork": "También puedes contactar al equipo si necesitas ayuda creando tu propia red",
     "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación: "
   },
   "feed": {
@@ -167,7 +169,9 @@
     "typesExplain": "Selecciona los tipos de botones de ayuda que quieras filtrar",
     "price": "Precio",
     "minPricePlaceholder": "Desde",
-    "maxPriceLabel": "Hasta"
+    "maxPriceLabel": "Hasta",
+    "whenLabel": "Cuándo?",
+    "whenExplain": "Filtra los eventos por fecha"
   },
   "button": {
     "copy": "Copiar enlace",
