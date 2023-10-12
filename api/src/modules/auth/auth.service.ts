@@ -48,8 +48,6 @@ export class AuthService {
   async signup(signupUserDto: SignupRequestDto) {
     try{
       const selectedNetwork = await this.networkService.findDefaultNetwork();
-    try{
-      const selectedNetwork = await this.networkService.findDefaultNetwork();
 
       if(selectedNetwork.inviteOnly)
       {
