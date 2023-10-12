@@ -64,7 +64,7 @@ function NetworkCreation() {
           textColor: data.textColor,
           buttonTemplates: data.buttonTemplates,
           inviteOnly: data.inviteOnly,
-          curreny: data.currency
+          currency: data.currency
         },
         () => {
           const onComplete = () => {
