@@ -167,7 +167,8 @@
     "typesExplain": "Selecciona los tipos de botones de ayuda que quieras filtrar",
     "price": "Precio",
     "minPricePlaceholder": "Desde",
-    "maxPriceLabel": "Hasta"
+    "maxPriceLabel": "Hasta",
+    "whereLabel" : "Where"
   },
   "button": {
     "copy": "Copiar enlace",

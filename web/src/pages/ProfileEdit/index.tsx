@@ -119,7 +119,7 @@ export default function ProfileEdit() {
                     label={t('user.name')}
                     classNameInput="squared"
                     placeholder={t('user.namePlaceHolder')}
-                    validationError={errors.email}
+                    validationError={errors.name}
                     {...register('name', { required: true })}
                   ></FieldText>
                   {locale && 

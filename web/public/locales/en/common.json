@@ -55,7 +55,8 @@
     "tagsExplain": "Network main tags",
     "price": "Price",
     "minPricePlaceholder": "From",
-    "maxPriceLabel": "Until"
+    "maxPriceLabel": "Until",
+    "whereLabel" : "Where"
   },
   "setup": {
     "hostname": "Hostname",

@@ -69,6 +69,17 @@ export function readableDate(date: Date, isUTC = true) {
   });
 }
 
+export function readableShortDate(date: Date, isUTC = true) {
+  if(typeof date !== typeof Date) {
+    date = new Date(date)
+  }
+  return toUTC(date, isUTC).toLocaleDateString(getLocale(), {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+
 export function readableTime(date: Date, isUTC = true) {
   if(typeof date !== typeof Date) {
     date = new Date(date)
