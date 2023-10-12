@@ -26,11 +26,9 @@ export function AdvancedFiltersCustomFields({
         }
         return false;
       });
-      console.log(filteredButtonTypes)
       let _customFields = filteredButtonTypes.map(
         (btnType) => btnType.customFields,
       );
-      console.log(_customFields)
       _customFields = _.flatten(
         _customFields.filter((value) => value),
       );
@@ -39,8 +37,6 @@ export function AdvancedFiltersCustomFields({
     }
   }, [selectedButtonTypes]);
 
-  // return (<>    {JSON.stringify(customFields)}  </>)
-  // const renderCustomFilters = (customFields) => {
     const dateRange = watch('dateRange');
     
     return <>
@@ -87,9 +83,6 @@ export function AdvancedFiltersCustomFields({
     })
   }
       </>;
-    // });
-  // };
-  // return <>{renderCustomFilters(customFields)}</>;
 }
 
 export const applyCustomFieldsFilters = (
