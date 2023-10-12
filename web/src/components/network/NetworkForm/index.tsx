@@ -56,18 +56,21 @@ function NetworkForm({
 
   const [showCurrencyDropDown, setShowCurrencyDropDown] = useState(false)
   useEffect(() => {
-    const needsCurrency = buttonTemplates.find((btnTemplate) =>{
-       if(!btnTemplate.customFields){
-        return false;
-       }
-      return btnTemplate.customFields.find((customField) => customField.type == 'price')
-      })
-    if(needsCurrency)
+    if(buttonTemplates)
     {
-      setShowCurrencyDropDown(() => true)
-    }else{
-      setShowCurrencyDropDown(() => false)
-    }
+      const needsCurrency = buttonTemplates.find((btnTemplate) =>{
+        if(!btnTemplate.customFields){
+          return false;
+        }
+        return btnTemplate.customFields.find((customField) => customField.type == 'price')
+        })
+      if(needsCurrency)
+      {
+        setShowCurrencyDropDown(() => true)
+      }else{
+        setShowCurrencyDropDown(() => false)
+      }
+  }
   }, [buttonTemplates])
   return (
     <>
