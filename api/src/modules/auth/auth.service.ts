@@ -46,15 +46,20 @@ export class AuthService {
   ) {}
 
   async signup(signupUserDto: SignupRequestDto) {
-    const selectedNetwork = await this.networkService.findDefaultNetwork();
+    try{
+      const selectedNetwork = await this.networkService.findDefaultNetwork();
 
-    if(selectedNetwork.inviteOnly)
-    {
-      const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
-      if(!validInviteCode)
+      if(selectedNetwork.inviteOnly)
       {
-        throw new CustomHttpException(ErrorName.inviteOnly)
+        const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
+        if(!validInviteCode)
+        {
+          throw new CustomHttpException(ErrorName.inviteOnly)
+        }
       }
+    }catch(err)
+    {
+      console.error(err)
     }
     const verificationToken = publicNanoidGenerator();
     let emailVerified = false;
