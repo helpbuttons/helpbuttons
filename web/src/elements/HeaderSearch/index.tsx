@@ -5,6 +5,7 @@ import { GlobalState, store } from 'pages';
 import { LoadabledComponent } from 'components/loading';
 import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';
+import { customFieldsFiltersText } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 
 ///search button in explore and home
 export function HeaderSearch({ results, isHome, hexagonClicked }) {
@@ -32,9 +33,9 @@ export function HeaderSearch({ results, isHome, hexagonClicked }) {
                 helpButtonTypes={
                   exploreMapState.filters.helpButtonTypes
                 }
-                when={exploreMapState.filters.when}
                 what={exploreMapState.filters.query}
                 buttonTypes={buttonTypes}
+                filters={exploreMapState.filters}
               />
             )}
             <div className="header-search__icon">
@@ -75,7 +76,13 @@ function SearchText({ count, where, hexagonClicked }) {
   );
 }
 
-function SearchInfo({ helpButtonTypes, when, what, buttonTypes }) {
+function SearchInfo({ helpButtonTypes, filters, what, buttonTypes }) {
+  const selectedNetwork = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+    false,
+  );
+
   const types = (helpButtonTypes) => {
     if (helpButtonTypes.length < 1) {
       return t('buttonFilters.allButtonTypes');
@@ -87,13 +94,7 @@ function SearchInfo({ helpButtonTypes, when, what, buttonTypes }) {
     );
     return buttonTypesCaptions.toString();
   };
-  const whenText = (when) => {
-    if (when == 'any') {
-      return '· Always';
-    }
-
-    return '';
-  };
+  
   const whatText = (what) => {
     if (what == '') {
       return '';
@@ -101,10 +102,10 @@ function SearchInfo({ helpButtonTypes, when, what, buttonTypes }) {
 
     return what + ' · ';
   };
-
+  
   return (
     <div className="header-search__info">
-      {whatText(what)} {types(helpButtonTypes)} {whenText(when)}
+      {whatText(what)} {types(helpButtonTypes)} {customFieldsFiltersText(filters, selectedNetwork.currency)}
     </div>
   );
 }

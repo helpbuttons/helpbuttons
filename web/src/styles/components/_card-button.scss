@@ -262,7 +262,7 @@ $card-button-border-height: $border-general-height;
   // height: 3rem;
   // overflow: hidden;
   display: block;
-  margin: $card-button-margin-bottom 0;
+  margin: $margin-xxsmall 0  $margin-small 0;
 
   & p {
     margin-top: 0;//Revise
@@ -289,6 +289,13 @@ $card-button-border-height: $border-general-height;
   padding: $card-button-whitespace 0;
   display: flex;
 
+}
+
+.card-button__price {
+  word-break: break-word;
+  font-weight: $font-weight-bold;
+  color: var(--network-text-color);
+  white-space: nowrap;
 }
 
 .resume {
@@ -464,6 +471,9 @@ $card-button-border-height: $border-general-height;
   font-size: $font-size-small;
   font-weight: bold;
   text-align: left;
+  white-space:pre-wrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-button__city {

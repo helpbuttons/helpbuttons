@@ -48,6 +48,8 @@ export class AuthService {
   async signup(signupUserDto: SignupRequestDto) {
     try{
       const selectedNetwork = await this.networkService.findDefaultNetwork();
+    try{
+      const selectedNetwork = await this.networkService.findDefaultNetwork();
 
       if(selectedNetwork.inviteOnly)
       {
@@ -57,9 +59,8 @@ export class AuthService {
           throw new CustomHttpException(ErrorName.inviteOnly)
         }
       }
-    }catch(err)
-    {
-      console.error(err)
+    }catch(error){
+        console.error('network not found?')
     }
     const verificationToken = publicNanoidGenerator();
     let emailVerified = false;
