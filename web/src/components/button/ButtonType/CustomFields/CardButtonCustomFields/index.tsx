@@ -18,9 +18,9 @@ export function CardButtonCustomFields({ customFields, button }) {
       let field = <>{JSON.stringify(fieldProps)}</>;
       if (type == 'price') {
         field = (
-          <>
+          <div className='card-button__price'>
             {formatCurrency(button.price, selectedNetwork.currency)}
-          </>
+          </div>
         );
       }
       if (type == 'event') {

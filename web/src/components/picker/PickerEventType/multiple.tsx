@@ -137,7 +137,7 @@ function TimePick({ time, setTime, label }) {
     <>
       <Btn
         caption={label}
-        btnType={BtnType.iconActions}
+        btnType={BtnType.splitIcon}
         iconLink={<IoTimeOutline />}
         iconLeft={IconType.circle}
         contentAlignment={ContentAlignment.center}
@@ -148,19 +148,25 @@ function TimePick({ time, setTime, label }) {
         }
       />
       {showFromTime && (
-        <div className="picker__row">
-          <TimeKeeper
-            time={time}
-            onChange={(newTime) => {
-              setTime(() => {
-                return newTime.formatted24;
-              });
-            }}
-            onDoneClick={() => {
-                setShowFromTime(() => false);
-            }}
-            switchToMinuteOnHourSelect
-          />
+        <div className="picker__content">
+          <div className="picker__section">
+            <div className="picker__section__pick">
+              <div className="picker__row">
+                <TimeKeeper
+                time={time}
+                onChange={(newTime) => {
+                  setTime(() => {
+                    return newTime.formatted24;
+                  });
+                }}
+                onDoneClick={() => {
+                    setShowFromTime(() => false);
+                }}
+                switchToMinuteOnHourSelect
+              />
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>

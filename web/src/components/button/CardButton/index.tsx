@@ -98,7 +98,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           <p>{button.description}</p>
         </div>
       )}
-      <div className="card-button__hashtags">
+      {/* <div className="card-button__hashtags">
         {button.tags.map((tag, idx) => {
           return (
             <div className="hashtag" key={idx}>
@@ -106,7 +106,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
             </div>
           );
         })}
-      </div>
+      </div> */}
       {buttonType.customFields && buttonType.customFields.length > 0 && (
         <>
           <CardButtonCustomFields customFields={buttonType.customFields} button={button}/>
@@ -114,7 +114,6 @@ export function CardButtonHeadMedium({ button, buttonType }) {
       )}
       <div className="card-button__city card-button__everywhere ">
         {button.address} {button?.distance && <> - {readableDistance(button?.distance)}</>}
-
       </div>
     </div>
   );
