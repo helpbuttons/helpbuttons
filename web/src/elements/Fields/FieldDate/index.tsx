@@ -109,6 +109,7 @@ export default function FieldDate({
           )}
           {eventType == DateTypes.RECURRENT && (
             // <PickerEventTypeRecurrentForm />
+            <>recurrent</>
           )}
           {invalidDates && (
             <FieldError

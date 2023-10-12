@@ -18,7 +18,8 @@ export const availableCurrencies = [
   export function getSymbol(currency: string) {
     return availableCurrencies.filter((value) => value.value == currency)[0].caption
   }
-export function formatCurrency(value, currency) {
+export function formatCurrency(value = 0, currency) {
+    
     if (currency == 'EUR') {
       return new Intl.NumberFormat('de-DE', {
         style: 'currency',
@@ -37,6 +38,6 @@ export function formatCurrency(value, currency) {
     return value;
     
     function formatBTC(amount) {
-      return 'BTC ' + amount.toFixed(2);
+      return 'BTC ' + amount;
     }
   }
