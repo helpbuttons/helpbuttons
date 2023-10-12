@@ -15,6 +15,7 @@ export function AdvancedFiltersCustomFields({ buttonTypes, register, setValue, w
   customFields = _.uniq(customFields.map((value) => value.type))
 
   const renderCustomFilters = () => {
+    const dateRange = watch('dateRange')
     return customFields.map((customField, key) => {
       let field = <></>
       if (customField == 'price') {
@@ -37,13 +38,17 @@ export function AdvancedFiltersCustomFields({ buttonTypes, register, setValue, w
       if (customField == 'event') {
         field = (
           <>
+          <div className="form__field">
+          <label className="form__label">{t('buttonFilters.whenLabel')}</label>
+          <p>{dateRange && readableDateRange(dateRange)}</p>
            <Calendar
                 onChange={(newDates) => {
                   setValue('dateRange',newDates)
                 }}
-                value={watch('dateRange')}
+                value={dateRange}
                 selectRange
               />
+            </div>
           </>
         );
       }
