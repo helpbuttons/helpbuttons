@@ -4,6 +4,8 @@ import _ from 'lodash';
 import Calendar from 'react-calendar';
 import { Button } from 'shared/entities/button.entity';
 import 'react-calendar/dist/Calendar.css';
+import { readableShortDate } from 'shared/date.utils';
+import { formatCurrency } from 'shared/currency.utils';
 
 export function AdvancedFiltersCustomFields({ buttonTypes, register, setValue, watch }) {
   let customFields = buttonTypes.map(
@@ -132,4 +134,24 @@ export const applyCustomFieldsFilters = (button: Button, filters, buttonTypes) =
     }
 
     return true;
+}
+export function customFieldsFiltersText(filters, currency) {
+  return (
+    <>
+      {filters.dateRange && ' - ' + readableDateRange(filters.dateRange)}
+      {(filters.minPrice || filters.maxPrice )&& 
+        ' - ' +readableFiltersPrice(filters.minPrice, filters.maxPrice, currency)
+      }
+    </>
+  );
+}
+
+function readableFiltersPrice(minPrice, maxPrice, currency)
+{
+  return formatCurrency(minPrice, currency) + ' - ' +formatCurrency( maxPrice, currency)
+}
+function readableDateRange(dateRange) {
+  return (
+    readableShortDate(dateRange[0]) + ' - ' + readableShortDate(dateRange[1])
+  );
 }

@@ -5,7 +5,7 @@ import { HeaderSearch } from 'elements/HeaderSearch';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 
-function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount, hexagonClicked, isHome = false}) {
+function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount, hexagonClicked = false, isHome = false}) {
   const exploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,

@@ -22,7 +22,7 @@ export default function Moderation() {
     <>
       <Popup
         title={t('configuration.moderationList')}
-        LinkFwd="/Profile"
+        linkFwd="/Profile"
       >
         <h2>Administrators</h2>
         {moderationList !== null &&

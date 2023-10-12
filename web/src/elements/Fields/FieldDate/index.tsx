@@ -13,6 +13,7 @@ import FieldRadioOption from '../FieldRadio/option';
 import PickerEventTypeOnceForm from 'components/picker/PickerEventType/once';
 import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multiple';
 import FieldError from '../FieldError';
+import PickerEventTypeRecurrentForm from 'components/picker/PickerEventType/recurrent';
 
 export default function FieldDate({
   title,
@@ -26,7 +27,7 @@ export default function FieldDate({
   register,
 }) {
   const [showHideMenu, setHideMenu] = useState(false);
-  const [invalidDates, setInvalidDates] = useState(false)
+  const [invalidDates, setInvalidDates] = useState(false);
   /*
   recurrent:
    when = {
@@ -44,17 +45,16 @@ export default function FieldDate({
     type: 'once' // only start date
    }
   */
- const datesAreValid = () => {
-  if(eventEnd.getTime() < eventStart.getTime())
-  {
-    setInvalidDates(() => true)
-    return false;
-  }
-  setInvalidDates(() => false)
-  return true;
- }
+  const datesAreValid = () => {
+    if (eventEnd.getTime() < eventStart.getTime()) {
+      setInvalidDates(() => true);
+      return false;
+    }
+    setInvalidDates(() => false);
+    return true;
+  };
   let closeMenu = () => {
-    if(datesAreValid()){
+    if (datesAreValid()) {
       setHideMenu(false);
     }
   };
@@ -70,10 +70,7 @@ export default function FieldDate({
           title={title}
           isUTC={isUTC}
         />
-        <div
-          className="btn"
-          onClick={() => setHideMenu(true)}
-        >
+        <div className="btn" onClick={() => setHideMenu(true)}>
           {t('button.changeDateLabel')}
         </div>
       </div>
@@ -111,11 +108,14 @@ export default function FieldDate({
             </>
           )}
           {eventType == DateTypes.RECURRENT && (
-            <>Every week/Every month</>
+            // <PickerEventTypeRecurrentForm />
+            <>recurrent</>
           )}
-          {invalidDates && 
-            <FieldError validationError={{message: 'invalid dates'}} />
-          }
+          {invalidDates && (
+            <FieldError
+              validationError={{ message: 'invalid dates' }}
+            />
+          )}
           <Btn
             btnType={BtnType.submit}
             caption={t('common.save')}
@@ -137,11 +137,15 @@ const EventType = React.forwardRef(
         type: DateTypes.ONCE,
       },
       {
-        label: 'More days',
+        label: 'Multiple days',
         explain: 'Choose when it starts and ends.',
         type: DateTypes.MULTIPLE,
       },
-      // { label: 'Recurring', explain: 'Choose frequency and select days', type: DateTypes.RECURRENT },
+      {
+        label: 'Recurring',
+        explain: 'Choose frequency and select days',
+        type: DateTypes.RECURRENT,
+      },
     ];
     return (
       <>
@@ -182,22 +186,33 @@ export function ShowDate({
   return (
     <div className="card-button__date">
       {!eventType && <>{title}</>}
-      {eventType == DateTypes.ONCE &&
-        eventStart && (
-          <>
-              {readableDateTime(eventStart, isUTC)}{' - '}
-              {readableTime(eventEnd, isUTC)}
-          </>
-      )}
-      {eventType == DateTypes.MULTIPLE &&
-        eventStart && (
-          <>
-              {readableDateTime(eventStart, isUTC)}
-              {' - '}
-              {readableDateTime(eventEnd, isUTC)}
-          </>
-        )}
-      {eventType == DateTypes.RECURRENT && <>recurrent</>}
+      {readableEventDateTime(eventType, eventStart, eventEnd, isUTC)}
     </div>
   );
+}
+
+export function readableEventDateTime(
+  eventType,
+  eventStart,
+  eventEnd,
+  isUTC,
+) {
+  if (eventType == DateTypes.ONCE && eventStart) {
+    return (
+      readableDateTime(eventStart, isUTC) +
+      ' - ' +
+      readableTime(eventEnd, isUTC)
+    );
+  }
+  if (eventType == DateTypes.MULTIPLE && eventStart) {
+    return (
+      readableDateTime(eventStart, isUTC) +
+      ' - ' +
+      readableDateTime(eventEnd, isUTC)
+    );
+  }
+
+  if (eventType == DateTypes.RECURRENT) {
+    return 'recurrent';
+  }
 }
