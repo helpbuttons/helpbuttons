@@ -110,11 +110,24 @@ export const applyCustomFieldsFilters = (button: Button, filters, buttonTypes) =
         return false;
       }
 
-      if(getDateOnlyDays(button.eventStart) > getDateOnlyDays(filters.dateRange[0],1) && getDateOnlyDays(button.eventEnd) < getDateOnlyDays(filters.dateRange[1], 2))
+      const start = getDateOnlyDays(button.eventStart);
+      const end = getDateOnlyDays(button.eventEnd);
+      const filterStart = getDateOnlyDays(filters.dateRange[0],1);
+      const filterEnd = getDateOnlyDays(filters.dateRange[1], 2);
+
+      if(start > filterStart && end < filterEnd)
       {
         return true;
       }
 
+      if(start < filterStart && end > filterStart)
+      {
+        return true;
+      }
+      if(start > filterStart && start < filterEnd)
+      {
+        return true;
+      }
       return false;
     }
 
