@@ -77,8 +77,7 @@ export class CreateNetworkDto implements Partial<Network> {
   @IsNotEmpty()
   inviteOnly?: boolean;
 
-  @IsNotEmpty()
-  currency: string;
+  currency?: string;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

@@ -21,7 +21,7 @@ import { getUrlOrigin } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
 
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { store } from 'pages';
 import {
   UpdateNetworkBackgroundColor,
@@ -52,6 +52,23 @@ function NetworkForm({
   defaultExploreSettings = null,
 }) {
   const router = useRouter();
+  const buttonTemplates = watch('buttonTemplates');
+
+  const [showCurrencyDropDown, setShowCurrencyDropDown] = useState(false)
+  useEffect(() => {
+    const needsCurrency = buttonTemplates.find((btnTemplate) =>{
+       if(!btnTemplate.customFields){
+        return false;
+       }
+      return btnTemplate.customFields.find((customField) => customField.type == 'price')
+      })
+    if(needsCurrency)
+    {
+      setShowCurrencyDropDown(() => true)
+    }else{
+      setShowCurrencyDropDown(() => false)
+    }
+  }, [buttonTemplates])
   return (
     <>
       <Form
@@ -190,15 +207,16 @@ function NetworkForm({
               control={control}
             />
     
-            <DropdownField
-              options={availableCurrencies}
-              defaultSelected={watch('currency')}
-              onChange={(value) => {
-                setValue('currency', value)
-              }}
-              label={t('configuration.currencyLabel')}
-            />
-            
+            {showCurrencyDropDown && 
+              <DropdownField
+                options={availableCurrencies}
+                defaultSelected={watch('currency')}
+                onChange={(value) => {
+                  setValue('currency', value)
+                }}
+                label={t('configuration.currencyLabel')}
+              />
+            }
             <FieldAreaMap
               defaultExploreSettings={defaultExploreSettings}
               label={t('configuration.locationLabel')}
