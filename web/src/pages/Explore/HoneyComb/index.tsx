@@ -176,9 +176,8 @@ function useExploreSettings({
   toggleShowFiltersForm,
   exploreSettings,
 }) {
-  let urlParams = new URLSearchParams();
   let queryExploreSettings = {};
-
+  let URLParamsCoords = false;
   const getUrlParams = (path) => {
     const findHash = path.indexOf('#');
     if (findHash) {
@@ -198,25 +197,12 @@ function useExploreSettings({
       const lng = parseFloat(params.get('lng'));
       const zoom = parseInt(params.get('zoom'));
       const showFilters = params.get('showFilters');
-      const click = params.get('click');
-
-      if (click !== null) {
-        store.emit(
-          new UpdateExploreSettings({
-            center: selectedNetwork.exploreSettings.center,
-            loading: true,
-            bounds: null,
-          }),
-        );
-        // missing zoom
-        return;
-      }
-
-      let newExploreSettings = {};
       if (lat && lng) {
+        URLParamsCoords = true;
         store.emit(
           new UpdateExploreSettings({
             center: [lat, lng],
+            zoom: zoom,
           }),
         );
       }
@@ -225,21 +211,29 @@ function useExploreSettings({
         toggleShowFiltersForm(true);
         params.delete('showFilters');
       }
-      urlParams = params;
     }
   }, [router]);
   useEffect(() => {
-    if (selectedNetwork) {
-      store.emit(
-        new UpdateExploreSettings({
-          ...selectedNetwork.exploreSettings,
-        }),
-      );
+    if (selectedNetwork && exploreSettings) {
+      if(exploreSettings?.center == null && !URLParamsCoords)
+      {
+        store.emit(
+          new UpdateExploreSettings({
+            center: selectedNetwork.exploreSettings.center,
+            zoom: selectedNetwork.exploreSettings.zoom,
+            loading: true,
+          }),
+        );
+      }
+      
     }
   }, [selectedNetwork]);
 
   useEffect(() => {
-    if (!exploreSettings?.loading) {
+
+    if (exploreSettings?.center && !URLParamsCoords) {
+      let urlParams = new URLSearchParams();
+
       urlParams.append('zoom', exploreSettings.zoom);
       urlParams.append('lat', roundCoord(exploreSettings.center[0]));
       urlParams.append('lng', roundCoord(exploreSettings.center[1]));
