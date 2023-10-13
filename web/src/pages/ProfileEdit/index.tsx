@@ -119,7 +119,7 @@ export default function ProfileEdit() {
                     label={t('user.name')}
                     classNameInput="squared"
                     placeholder={t('user.namePlaceHolder')}
-                    validationError={errors.email}
+                    validationError={errors.name}
                     {...register('name', { required: true })}
                   ></FieldText>
                   {locale && 
@@ -142,12 +142,12 @@ export default function ProfileEdit() {
                     setFocus={setFocus}
                     validationError={errors.description}
                     {...register('description', { required: true })}
-                  />     
+                  />
                   <FieldCheckbox
                     name='receiveNotifications'
-                    checked={watch('receiveNotifications')}
+                    defaultValue={loggedInUser.receiveNotifications}
                     text={t('user.textReceiveNotifications')}
-                    {...register('receiveNotifications')}
+                    onChanged={(value) => {setValue('receiveNotifications', value)}}
                   />
                   <FieldImageUpload
                     name="avatar"

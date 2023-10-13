@@ -1,6 +1,6 @@
 import { HttpStatus } from './http-status.enum';
 export interface ErrorText {
-    name: ErrorName,
+    name: ErrorName;
     caption: string;
     status: number;
 }
@@ -16,7 +16,8 @@ export enum ErrorName{
     nothingToDelete = 'nothing-to-delete',
     validationError= 'validation-error',
     inviteOnly = 'invite-only-network',
-    geoCodingError = 'geo-coding-error'
+    geoCodingError = 'geo-coding-error',
+    invalidDates = 'invalid-dates'
 }
 
 export const errorsList: ErrorText[] = 
@@ -75,5 +76,10 @@ export const errorsList: ErrorText[] =
         name: ErrorName.geoCodingError,
         caption: `Error getting address`,
         status: HttpStatus.BAD_GATEWAY
+    },
+    {
+        name: ErrorName.invalidDates,
+        caption: `Invalid dates`,
+        status: HttpStatus.NOT_ACCEPTABLE
     },
 ]

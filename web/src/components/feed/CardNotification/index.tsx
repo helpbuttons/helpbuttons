@@ -105,7 +105,7 @@ export function NotificationCard({ title, image, date, message, id, read }) {
           <div className="avatar-medium">
             <ImageWrapper
               imageType={ImageType.avatarMed}
-              src={makeImageUrl(image)}
+              src={image}
               alt="image"
             />
           </div>

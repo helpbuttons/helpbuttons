@@ -18,3 +18,19 @@ export class GeoFindAddress implements WatchEvent {
       );
     }
   }
+
+  export class GeoReverseFindAddress implements WatchEvent {
+    public constructor(private lat: number, private lng: number, private onReady) {}
+  
+    public watch(state: GlobalState) {
+      return GeoService.reverse(this.lat, this.lng).pipe(
+        map((places) => {
+            this.onReady(places)
+        }),
+        catchError((error) => {
+          console.error(error)
+          return of(undefined)
+        }),
+      );
+    }
+  }

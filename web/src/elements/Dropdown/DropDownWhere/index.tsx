@@ -1,11 +1,17 @@
 import Loading from 'components/loading';
+import Btn, {
+  BtnType,
+  ContentAlignment,
+  IconType,
+} from 'elements/Btn';
 import t from 'i18n';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
+import { IoLocationOutline } from 'react-icons/io5';
 import { useDebounce } from 'shared/custom.hooks';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { roundCoords } from 'shared/honeycomb.utils';
-import { GeoFindAddress } from 'state/Geo';
+import { GeoFindAddress, GeoReverseFindAddress } from 'state/Geo';
 import { useRef } from 'store/Store';
 
 export function DropDownWhere({
@@ -16,14 +22,32 @@ export function DropDownWhere({
   address = '',
   center = [0, 0],
 }) {
-
   const [options, setOptions] = useState([]);
 
-  const [input, setInput] = useState(address);
+  const [input, setInput] = useState('');
   const debounceInput = useDebounce(input, 300);
 
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [loadingNewAddress, setLoadingNewAddress] = useState(false);
+
+  const setCenterFromBrowser = () => {
+    setLoadingNewAddress(true);
+    setShowSuggestions(false);
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        store.emit(
+          new GeoReverseFindAddress(
+            position.coords.latitude,
+            position.coords.longitude,
+            (place) => {
+              handleSelectedPlace(place);
+              setLoadingNewAddress(false);
+            },
+          ),
+        );
+      });
+    }
+  };
 
   useEffect(() => {
     if (debounceInput?.length > 2) {
@@ -71,7 +95,6 @@ export function DropDownWhere({
     e.target.select();
   };
 
-
   return (
     <>
       <div className="form__field">
@@ -83,21 +106,32 @@ export function DropDownWhere({
             </>
           )}
         </label>
-        <input
-          className="form__input"
-          autoComplete="on"
-          onChange={onChangeInput}
-          list=""
-          id="input"
-          name="browsers"
-          placeholder={placeholder}
-          type="text"
-          value={input}
-          onClick={onInputClick}
-          onFocus={handleOnFocus}
-          onBlur={onBlur}
-        ></input>
-        {loadingNewAddress && <Loading />}
+        <div className='form__field--location'>
+          <input
+            className="form__input"
+            autoComplete="on"
+            onChange={onChangeInput}
+            list=""
+            id="input"
+            name="browsers"
+            placeholder={placeholder}
+            type="text"
+            value={input}
+            onClick={onInputClick}
+            onFocus={handleOnFocus}
+            onBlur={onBlur}
+          ></input>
+          {!loadingNewAddress && 
+            <Btn
+              btnType={BtnType.circle}
+              iconLink={<IoLocationOutline />}
+              iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.center}
+              onClick={setCenterFromBrowser}
+            />
+          }
+          {loadingNewAddress && <Loading />}
+        </div>
 
         {showSuggestions && (
           <datalist
@@ -108,6 +142,7 @@ export function DropDownWhere({
             {options}
           </datalist>
         )}
+        
       </div>
     </>
   );

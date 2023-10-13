@@ -57,9 +57,8 @@ export class AuthService {
           throw new CustomHttpException(ErrorName.inviteOnly)
         }
       }
-    }catch(err)
-    {
-      console.error(err)
+    }catch(error){
+        console.error('network not found?')
     }
     const verificationToken = publicNanoidGenerator();
     let emailVerified = false;

@@ -147,5 +147,26 @@ export class UserService {
     });
   }
 
-  
+  updateRole(userId, newRole)
+  {
+    return this.userRepository.update(userId, {role: newRole})
+  }
+
+  async moderationList()
+  {
+    return {
+      administrators: await this.userRepository.find({where: {role: Role.admin}}),
+      blocked: await this.userRepository.find({where: {role: Role.blocked}}),
+    } 
+  }
+
+  async unsubscribe(email)
+  {
+    const user = await this.findOneByEmail(email)
+    if(user)
+    {
+      await this.userRepository.update(user.id, {receiveNotifications: false})
+    }
+    return true;
+  }
 }

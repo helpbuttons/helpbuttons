@@ -109,7 +109,6 @@ export const CircleColorPick = React.forwardRef(
     }, [deboungBgColor]);
 
     return (
-      // <div className="form__field">
           <HexColorPicker
             className='picker__content'
             color={value}

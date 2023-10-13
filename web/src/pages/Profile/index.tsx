@@ -1,5 +1,7 @@
 //Users buttons an profile info URL
-import CardProfile, { LinkAdminButton } from 'components/user/CardProfile';
+import CardProfile, {
+  LinkAdminButton,
+} from 'components/user/CardProfile';
 
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -10,6 +12,8 @@ import { FindAdminButton, FindUser, Logout } from 'state/Users';
 import Link from 'next/link';
 import {
   IoAlarm,
+  IoBuildOutline,
+  IoCreateOutline,
   IoHammerOutline,
   IoHandLeftOutline,
   IoLogOutOutline,
@@ -51,6 +55,8 @@ export default function Profile() {
     console.log('remove myself!');
   };
 
+  const isAdmin = loggedInUser?.role == Role.admin;
+
   return (
     <>
       <div className="body__content">
@@ -58,7 +64,7 @@ export default function Profile() {
           <LoadabledComponent loading={!loggedInUser}>
             <CardProfile user={loggedInUser} />
             {loggedInUser?.role == Role.admin && adminButtonId && (
-              <LinkAdminButton adminButtonId={adminButtonId}/>
+              <LinkAdminButton adminButtonId={adminButtonId} />
             )}
             {loggedInUser?.username == loggedInUser?.username && (
               <div className="card-profile__actions">
@@ -86,44 +92,9 @@ export default function Profile() {
                     </span>
                   </div>
                 </Link>
-
-                {loggedInUser?.role == Role.admin && (
-                  <>
-                    <div>
-                      <Link href="/Configuration">
-                        <Btn
-                          iconLeft={IconType.svg}
-                          iconLink={<IoHammerOutline />}
-                          caption={t('configuration.title')}
-                        />
-                      </Link>
-                    </div>
-                    {loggedInUser?.role == Role.admin &&
-                      !adminButtonId && (
-                        <div>
-                          <Link href="/ButtonNew">
-                            <Btn
-                              iconLeft={IconType.svg}
-                              iconLink={<IoHandLeftOutline />}
-                              caption={t(
-                                'configuration.createSupportButton',
-                              )}
-                            />
-                          </Link>
-                        </div>
-                      )}
-                  </>
+                {isAdmin && (
+                  <AdminOptions adminButtonId={adminButtonId} />
                 )}
-                {/* <Link href="/HomeInfo">
-                  <div onClick={removeProfile} className="btn-with-icon">
-                    <div className="btn-with-icon__icon">
-                      <IoAlarm />
-                    </div>
-                    <span className="btn-with-icon__text">
-                      {t('user.deactivate')}
-                    </span>
-                  </div>
-                </Link> */}
               </div>
             )}
           </LoadabledComponent>
@@ -133,3 +104,38 @@ export default function Profile() {
   );
 }
 
+function AdminOptions({ adminButtonId }) {
+  return (
+    <>
+      <div>
+        <Link href="/Configuration">
+          <Btn
+            iconLeft={IconType.svg}
+            iconLink={<IoBuildOutline />}
+            caption={t('configuration.title')}
+          />
+        </Link>
+      </div>
+      <div>
+        <Link href="/Configuration/Moderation">
+          <Btn
+            iconLeft={IconType.svg}
+            iconLink={<IoCreateOutline />}
+            caption={t('configuration.moderation')}
+          />
+        </Link>
+      </div>
+      {!adminButtonId && (
+        <div>
+          <Link href="/ButtonNew">
+            <Btn
+              iconLeft={IconType.svg}
+              iconLink={<IoHandLeftOutline />}
+              caption={t('configuration.createSupportButton')}
+            />
+          </Link>
+        </div>
+      )}
+    </>
+  );
+}
