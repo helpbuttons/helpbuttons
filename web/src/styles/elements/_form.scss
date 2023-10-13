@@ -80,6 +80,26 @@ margin: $margin-medium 0;
   margin-bottom: $margin-big;
 }
 
+.form__field--location {
+
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row;
+  // background-color: $color-white;
+  padding: $padding-small;
+  gap: $padding-small;
+
+  button {
+
+    margin: $margin-xsmall 0;
+
+  }
+
+}
 
 .form__field--feed {
   display: flex;
