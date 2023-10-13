@@ -1,28 +1,39 @@
+import React from "react";
 import FieldError from "../FieldError";
 
-export default function FieldNumber({
+const FieldNumber = React.forwardRef(({
     label,
-    handleChange = (e,v) => {},
     name,
+    classNameInput,
+    placeholder,
+    onChange,
+    onBlur,
     validationError,
     value,
-}) {
-    const onChange = (e) => {
-        handleChange(name, e.target.valueAsNumber);
-      };
-
+    explain,
+    extraMessage
+}, ref): IFieldText => {
     return (
         <div className="form__field">
-        <label className="label">{label}</label>
-            <input 
-                      name={name} 
-                      type="number"
-                      step="any"
-                      onChange={onChange}
-                      className={`form__input ${validationError ? 'validation-error' : ''}`} 
-                      value={value}
-                    />
-         <FieldError validationError={validationError}/>
+            <label className="form__label">{label}</label>
+            {explain && 
+                <p className="form__explain">{explain}</p>
+            }
+            <input
+                name={name} 
+                ref={ref}
+                type="number"
+                placeholder={ placeholder ? placeholder : label}
+                onChange={onChange}
+                onBlur={onBlur}
+                className={`form__input ${classNameInput} ${validationError ? 'validation-error' : ''}`} 
+                value={value}
+            />
+            <div className="form__input-subtitle">
+                <FieldError validationError={validationError} extraMessage={extraMessage}/>
+            </div>
         </div>
     );
-}
+});
+
+export default FieldNumber;

@@ -26,6 +26,8 @@
     "administeredby": "Administrado por ",
     "loginSubtitle": "¡Entra o crea tu cuenta!",
     "buttons": "Hay {0} botones de ayuda en esta Red",
+    "createNetworkButton": "Crea tu propia red",
+    "createNetwork": "También puedes contactar al equipo si necesitas ayuda creando tu propia red",
     "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación: "
   },
   "feed": {
@@ -86,7 +88,11 @@
     "nomeclatureExplain": "",
     "buttonTemplateLabel": "",
     "buttonTemplatePlaceHolder": "",
-    "contactAdmin": "Contatar el administrador"
+    "contactAdmin": "Contatar el administrador",
+    "priceFieldAdd": "",
+    "moderationList": "Moderacion",
+    "createSupportButton": "Crea tu boton de soporte para tu red",
+    "moderation": "Moderacion"
   },
   "activities": {
     "newbutton": "Creaste <a href='/ButtonFile/{0}'>{1}</a> en <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
@@ -111,7 +117,7 @@
     "passwordPlaceHolder": "Escribe tu contraseña",
     "logout": "Cerrar sesión",
     "register": "REGISTRARSE",
-    "newLoginTokenSent": "",
+    "newLoginTokenSent": "Si tienes una cuenta, recibirás un email con un link para hacer login.",
     "sendLoginToken": "Mandar enlace de Inicio de Sesión",
     "loginLink": "Tengo cuenta",
     "avatar": "Elige una imagen de perfil",
@@ -128,7 +134,12 @@
     "loginSucess": "Entraste sin problemas!",
     "emailPlaceHolder": "Por ejemplo luis@email.org",
     "pickLanguageLabel": "Elige idioma",
-    "textReceiveNotifications": "Recibir notificaciones por email"
+    "textReceiveNotifications": "Recibir notificaciones por email",
+    "revoke": "Revocar derechos de administrador",
+    "unblock": "Desbloquear",
+    "block": "Bloquear",
+    "promote": "Promocionar a administrador",
+    "unsubscribed": "No vas a recibir mas este tipo de emails"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -155,7 +166,13 @@
     "queryPlaceHolder": "Amigos, comida, ropa, herramientas...",
     "whereExplain": "Busca el lugar al que quieres ir",
     "types": "Tipos de botones de ayuda",
-    "typesExplain": "Selecciona los tipos de botones de ayuda que quieras filtrar"
+    "typesExplain": "Selecciona los tipos de botones de ayuda que quieras filtrar",
+    "price": "Precio",
+    "minPricePlaceholder": "Desde",
+    "maxPriceLabel": "Hasta",
+    "whereLabel" : "Where",
+    "whenLabel": "Cuándo?",
+    "whenExplain": "Filtra los eventos por fecha"
   },
   "button": {
     "copy": "Copiar enlace",
@@ -190,6 +207,9 @@
   "calendarAlways": {
     "label": "Siempre"
   },
+  "calendar": {
+    "label": "Siempre"
+  },
   "validation": {
     "fieldRequired": "se necesita {0}",
     "tooShort": "{0} es muy corto"
@@ -216,7 +236,8 @@
     "newComment": "Comentar",
     "write": "Publica una Novedad",
     "delete": "Borrar",
-    "NoComments": "No hay comentarios aún"
+    "NoComments": "No hay comentarios aún",
+    "private": ""
   },
   "comment": {
     "placeholderWrite": "Escribe un mensaje en esta publicación",
@@ -225,8 +246,11 @@
   "picker": {
     "headerText": "Elige una localización"
   },
-  "pickerDate": {
-    "headerText": "Elige fecha y hora"
+  "eventType": {
+    "calendarHeaderText": "Elige fecha y hora",
+    "from": "De... ",
+    "until": "Hasta... ",
+    "eventFieldAdd": "Add date"
   },
   "faqs": {
     "title": "Preguntas frecuentes",
@@ -265,5 +289,8 @@
     "title": "Invitaciones",
     "description": "Invita a personas, administra y comparte enlaces con otras personas para permitirles acceder a tu red",
     "inviteOnly": "Sólo permitir el registro con una invitación"
+  },
+  "customFields": {
+    "priceLabel": "Precio ({0})"
   }
 }

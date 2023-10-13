@@ -2,13 +2,15 @@ import Btn, { BtnType, IconType } from 'elements/Btn';
 import FieldText from 'elements/Fields/FieldText';
 import { ContentAlignment } from 'elements/ImageWrapper';
 import t from 'i18n';
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { IoTrashBinOutline } from 'react-icons/io5';
-import { useState, forwardRef } from 'react';
+import { useState, forwardRef, useEffect } from 'react';
 import { CircleColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
+import Accordion from 'elements/Accordion';
+import { AddCustomFields } from '../CustomFields/AddCustomFields';
 
 const FieldButtonTemplates = forwardRef(
   (
@@ -25,6 +27,7 @@ const FieldButtonTemplates = forwardRef(
       errors,
       watch,
       control,
+      register,
     },
     ref,
   ) => {
@@ -35,14 +38,17 @@ const FieldButtonTemplates = forwardRef(
       name,
       control,
     });
-    
+
+    const [customFields, setCustomFields] = useState([]);
+
     const watchValue = watch(name);
-    const onAddNewButtonTemplate = (data) => {
+    const onAddNewButtonTemplate = () => {
       if (text && color) {
         append({
           caption: text,
           name: tagify(text),
           cssColor: color,
+          customFields: customFields
         });
       } else {
         alertService.warn(
@@ -55,7 +61,6 @@ const FieldButtonTemplates = forwardRef(
       <div className="form__field">
         <label className="form__label">{label}</label>
         <p className="form__explain">{explain}</p>
-
 
         <div className="form__input--button-type-field">
           <FieldText
@@ -76,26 +81,33 @@ const FieldButtonTemplates = forwardRef(
             value={color}
             hideBoilerPlate={true}
           />
-
         </div>
-        <Btn  
-            caption={'+ Add type'}
-            onClick={() => onAddNewButtonTemplate(watch())}
-            btnType={BtnType.corporative}
+        <Accordion title={t('configuration.customFields')}>
+          <AddCustomFields
+            setCustomFields={setCustomFields}
           />
+        </Accordion>
 
-        <div className='form__list--button-type-field'>
-        
+        <Btn
+          caption={'+ Add type'}
+          onClick={() => onAddNewButtonTemplate()}
+          btnType={BtnType.corporative}
+        />
+
+        <div className="form__list--button-type-field">
           {watchValue?.length > 0 &&
             watchValue.map((val, idx) => (
-              <div className='form__list-item--button-type-field' key={idx} style={buttonColorStyle(val.cssColor)}>
+              <div
+                className="form__list-item--button-type-field"
+                key={idx}
+                style={buttonColorStyle(val.cssColor)}
+              >
                 <Btn
                   btnType={BtnType.filter}
                   iconLeft={IconType.color}
                   contentAlignment={ContentAlignment.left}
                   caption={val.caption}
                   color={val.cssColor}
-                    
                 />
                 <Btn
                   btnType={BtnType.iconActions}
@@ -106,9 +118,7 @@ const FieldButtonTemplates = forwardRef(
                 />
               </div>
             ))}
-
         </div>
-       
       </div>
     );
   },

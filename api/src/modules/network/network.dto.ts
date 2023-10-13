@@ -75,6 +75,8 @@ export class CreateNetworkDto implements Partial<Network> {
   buttonTemplates: string;
 
   inviteOnly: boolean;
+
+  currency?: string;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

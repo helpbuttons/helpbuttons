@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { Repository, In, EntityManager } from 'typeorm';
+import { Repository, In, EntityManager, Not } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { Button } from './button.entity';
@@ -20,6 +20,8 @@ import { Role } from '@src/shared/types/roles';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { maxResolution } from '@src/shared/types/honeycomb.const';
 import { PostService } from '../post/post.service';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
+import { ErrorName } from '@src/shared/types/error.list';
 
 @Injectable()
 export class ButtonService {
@@ -48,6 +50,24 @@ export class ButtonService {
       );
     }
 
+    const buttonTemplates = network.buttonTemplates 
+    const buttonTemplate = buttonTemplates.find((buttonTemplate) => buttonTemplate.name == createDto.type)
+    
+    if(buttonTemplate?.customFields)
+    {
+      const isEvent = buttonTemplate?.customFields.find((customField) => customField.type == 'event') 
+      if (isEvent)
+      {
+        if(!createDto.eventEnd || !createDto.eventStart || !createDto.eventType)
+        {
+          throw new CustomHttpException(ErrorName.invalidDates);
+        }
+        if(new Date(createDto.eventEnd).getTime() < new Date(createDto.eventStart).getTime())
+        {
+          throw new CustomHttpException(ErrorName.invalidDates);
+        }
+      }
+    }
     const button = {
       id: dbIdGenerator(),
       type: createDto.type,
@@ -63,9 +83,12 @@ export class ButtonService {
       image: null,
       title: createDto.title,
       address: createDto.address,
-      when: createDto.when,
       hexagon: () => `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
-      hideAddress: createDto.hideAddress
+      hideAddress: createDto.hideAddress,
+      price: createDto.price,
+      eventStart: createDto.eventStart,
+      eventEnd: createDto.eventEnd,
+      eventType: createDto.eventType,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -104,7 +127,7 @@ export class ButtonService {
 
   async findById(id: string) {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id, deleted: false },
+      where: { id, ...this.deletedBlockedConditions() },
       relations: [
         'owner',
       ],
@@ -174,7 +197,7 @@ export class ButtonService {
           relations: ['feed', 'owner'],
           where: {
             id: In(buttonsIds),
-            deleted: false,
+            ...this.deletedBlockedConditions()
           },
           order: {
             created_at: 'DESC',
@@ -208,7 +231,7 @@ export class ButtonService {
 
   async findByUserId(userId: string) {
     let button: Button = await this.buttonRepository.findOne({
-      where: { owner: {id: userId}, deleted: false },
+      where: { owner: {id: userId}, ...this.deletedBlockedConditions() },
       relations: [
         'owner',
       ],
@@ -223,4 +246,10 @@ export class ButtonService {
     }
     return { ...button };
   }
+
+  deletedBlockedConditions()
+  {
+    return  {deleted: false, owner: {role: Not(Role.blocked)}}
+  }
+
 }

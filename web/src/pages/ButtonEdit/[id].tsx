@@ -48,17 +48,7 @@ export default function ButtonEdit() {
   const onSubmit = (data) => {
     store.emit(
       new UpdateButton(id,
-        {
-          title: data.title,
-          type: data.type,
-          tags: data.tags,
-          description: data.description,
-          latitudfe: data.latitude,
-          longitude: data.longitude,
-          image: data.image,
-          address: data.address,
-          hideAddress: data.hideAddress
-        },
+        data,
         onSuccess(id),
         // onSuccess({lat: data.latitude, lng: data.longitude}),
         onError,

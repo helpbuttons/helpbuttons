@@ -182,6 +182,10 @@ export default function HexagonExploreMap({
                   const btnType = buttonTypes.find((type) => {
                     return type.name == hexagonBtnType.type;
                   });
+                  if(!btnType)
+                  {
+                    return <></>
+                  }
                   return (
                     <span
                       className="pigeon-map__hex-element"

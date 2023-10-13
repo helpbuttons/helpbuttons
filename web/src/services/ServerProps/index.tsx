@@ -54,13 +54,14 @@ export function getMetadata(subtitle, selectedNetwork, baseUrl, uri)
   const title = subtitle
       ? `${selectedNetwork.name} - ${subtitle}`
       : selectedNetwork.name;
+  const imageUrl = makeImageUrl(
+    selectedNetwork.logo,
+    baseUrl + '/api',
+  );
   return {
   title: title,
-    description: selectedNetwork.description,
-    image: `${makeImageUrl(
-      selectedNetwork.logo,
-      baseUrl + '/api',
-    )}`,
+    description: selectedNetwork.description + " made with Helpbuttons.org",
+    image: imageUrl,
     siteTitle: selectedNetwork.name,
     pageurl: `${baseUrl}${uri}`,
   };
