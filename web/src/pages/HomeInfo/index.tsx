@@ -244,9 +244,16 @@ export default function HomeInfo({
                       </NavLink>
                     </div>
                   )}
+                  <div className="card__section">
+                    <p>{t('homeinfo.createNetwork')}</p>
+                    <NavLink href="mailto:mail@watchoutfreedom.com">
+                      <IoAddOutline />
+                      <span>{t('homeinfo.createNetworkButton')}</span>
+                    </NavLink>
+                  </div>
                    <div className="card__section">
                       <p>{t('homeinfo.donateSubtitle')}</p>
-                      <NavLink href="https://buy.stripe.com/dR68wx3CY17VdFKfZc">
+                        <NavLink href="https://buy.stripe.com/dR68wx3CY17VdFKfZc">
                         <IoCashOutline />
                         <span>{t('menu.donate')}</span>
                       </NavLink>

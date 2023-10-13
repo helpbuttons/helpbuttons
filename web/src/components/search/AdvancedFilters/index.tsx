@@ -176,7 +176,6 @@ export default function AdvancedFilters({
                 center={center}
               />
             
-
             {center && (
               <div className="form__field">
                 <label className="form__label">
@@ -194,6 +193,7 @@ export default function AdvancedFilters({
                 </div>
               </div>
             )}
+
             <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
             
             <div className={ isHome ? 'filters__actions--home' : 'filters__actions'  }>
