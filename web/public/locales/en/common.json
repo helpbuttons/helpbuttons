@@ -60,9 +60,8 @@
     "maxPriceLabel": "Until",
     "whenLabel": "When?",
     "whenExplain": "Filter events by date",
-    "price": "Price",
-    "priceExplain": "Filter by price"
-
+    "priceExplain": "Filter by price",
+    "whereLabel" : "Where"
   },
   "setup": {
     "hostname": "Hostname",

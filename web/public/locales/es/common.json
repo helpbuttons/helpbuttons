@@ -171,7 +171,8 @@
     "minPricePlaceholder": "Desde",
     "maxPriceLabel": "Hasta",
     "whenLabel": "Cuándo?",
-    "whenExplain": "Filtra los eventos por fecha"
+    "whenExplain": "Filtra los eventos por fecha",
+    "whereLabel" : "Where"
   },
   "button": {
     "copy": "Copiar enlace",
