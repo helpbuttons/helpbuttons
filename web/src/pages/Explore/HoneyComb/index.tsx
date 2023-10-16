@@ -14,6 +14,7 @@ import {
   ExploreSettings,
   ClearCachedHexagons,
   SetExploreSettingsBoundsLoaded,
+  UpdateHexagonClicked,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef, useStore } from 'store/Store';
@@ -65,7 +66,6 @@ function HoneyComb({ router }) {
     (state: GlobalState) => state.explore.settings,
     false,
   );
-  
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
 
@@ -88,24 +88,16 @@ function HoneyComb({ router }) {
   } = useHexagonMap({
     toggleShowLeftColumn,
     exploreSettings,
-    filters: exploreMapState.filters,
-    boundsFilteredButtons: exploreMapState.boundsFilteredButtons,
+    filters: exploreMapState.filters,    boundsFilteredButtons: exploreMapState.boundsFilteredButtons,
     cachedHexagons: exploreMapState.cachedHexagons,
-    buttonTypes: selectedNetwork.buttonTemplates
+    buttonTypes: selectedNetwork.buttonTemplates,
   });
 
-  useEffect(() => {
-    if (
-      exploreMapState.filters &&
-      exploreMapState.filters.where.center
-    ) {
-      store.emit(
-        new UpdateExploreSettings({
-          center: exploreMapState.filters.where.center,
-        }),
-      );
-    }
-  }, [exploreMapState.filters]);
+  const hexagonClickedStored = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.hexagonClicked,
+    false,
+  );
 
   return (
     <div className="index__explore-container">
@@ -143,7 +135,7 @@ function HoneyComb({ router }) {
           handleBoundsChange={handleBoundsChange}
           setHexagonsToFetch={setHexagonsToFetch}
           setHexagonClicked={setHexagonClicked}
-          hexagonClicked={hexagonClicked}
+          hexagonClicked={hexagonClickedStored}
           isRedrawingMap={isRedrawingMap}
           selectedNetwork={selectedNetwork}
         />
@@ -215,8 +207,7 @@ function useExploreSettings({
   }, [router]);
   useEffect(() => {
     if (selectedNetwork && exploreSettings) {
-      if(exploreSettings?.center == null && !URLParamsCoords)
-      {
+      if (exploreSettings?.center == null && !URLParamsCoords) {
         store.emit(
           new UpdateExploreSettings({
             center: selectedNetwork.exploreSettings.center,
@@ -225,12 +216,10 @@ function useExploreSettings({
           }),
         );
       }
-      
     }
   }, [selectedNetwork]);
 
   useEffect(() => {
-
     if (exploreSettings?.center && !URLParamsCoords) {
       let urlParams = new URLSearchParams();
 
@@ -262,6 +251,7 @@ function useHexagonMap({
     hexagons: [],
   });
   const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, 100);
+ 
   const [isRedrawingMap, setIsRedrawingMap] = useState(false);
   const foundTags = React.useRef([]);
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
@@ -325,6 +315,10 @@ function useHexagonMap({
   }, [debounceHexagonsToFetch]);
 
   function updateDensityMap() {
+    if(exploreSettings.loading)
+    {
+      return;
+    }
     store.emit(new UpdateExploreUpdating());
     setIsRedrawingMap(() => true);
     seth3TypeDensityHexes(() => []);
@@ -339,19 +333,28 @@ function useHexagonMap({
       filters,
       boundsButtons,
     );
-    let filteredButtonsOrdered = orderByClosestToCenter(filters.where?.center, filteredButtons)
+    let filteredButtonsOrdered = orderByClosestToCenter(
+      filters.where?.center,
+      filteredButtons,
+    );
     seth3TypeDensityHexes(() => {
       return filteredHexagons;
     });
 
-    store.emit(new UpdateBoundsFilteredButtons(filteredButtonsOrdered));
+    store.emit(
+      new UpdateBoundsFilteredButtons(filteredButtonsOrdered),
+    );
     store.emit(new UpdateListButtons(filteredButtonsOrdered));
     setIsRedrawingMap(() => false);
   }
 
+  const [prevFilters, setPrevFilters] = useState(filters)
   useEffect(() => {
-    setHexagonClicked(() => null);
-    updateDensityMap();
+    if(prevFilters != filters)
+    {
+        setHexagonClicked(() => 'unset')
+        updateDensityMap();
+    }
   }, [filters]);
 
   const applyFilters = (filters, cachedHexagons) => {
@@ -437,7 +440,9 @@ function useHexagonMap({
             if (!applyWhereFilter(button, filters.where)) {
               return false;
             }
-            if(!applyCustomFieldsFilters(button, filters, buttonTypes)) {
+            if (
+              !applyCustomFieldsFilters(button, filters, buttonTypes)
+            ) {
               return false;
             }
             return true;
@@ -464,8 +469,9 @@ function useHexagonMap({
   };
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
-    setHexagonClicked(() => null); // unselect all hexagons
-
+    if (zoom != exploreSettings.zoom) {
+      setHexagonClicked(() => 'zooming');
+    }
     if (bounds) {
       store.emit(
         new UpdateExploreSettings({
@@ -494,21 +500,32 @@ function useHexagonMap({
 
   useEffect(() => {
     if (debouncedHexagonClicked) {
-      toggleShowLeftColumn(true);
-
       if (
-        debouncedHexagonClicked.properties.buttons &&
-        debouncedHexagonClicked.properties.buttons.length > 0
+        debouncedHexagonClicked == 'unset' ||
+        debouncedHexagonClicked == 'zooming'
       ) {
-        let hexagonButtonsOrdered = orderByClosestToCenter(filters.where?.center, debouncedHexagonClicked.properties.buttons)
         store.emit(
-          new UpdateListButtons(
-            hexagonButtonsOrdered
-          ),
+          new UpdateHexagonClicked(boundsFilteredButtons, null),
         );
+      } else {
+        toggleShowLeftColumn(true);
+
+        if (
+          debouncedHexagonClicked.properties.buttons &&
+          debouncedHexagonClicked.properties.buttons.length > 0
+        ) {
+          let hexagonButtonsOrdered = orderByClosestToCenter(
+            filters.where?.center,
+            debouncedHexagonClicked.properties.buttons,
+          );
+          store.emit(
+            new UpdateHexagonClicked(
+              hexagonButtonsOrdered,
+              debouncedHexagonClicked,
+            ),
+          );
+        }
       }
-    } else {
-      store.emit(new UpdateListButtons(boundsFilteredButtons));
     }
   }, [debouncedHexagonClicked]);
 
@@ -527,16 +544,19 @@ const orderByClosestToCenter = (center, buttons) => {
     return buttonA.distance - buttonB.distance;
   }
 
-  if(!center)
-  {
+  if (!center) {
     return buttons;
   }
   const buttonsDistance = buttons.map((button) => {
-    const distance = getDistance({latitude: button.latitude, longitude: button.longitude}, {
-      latitude: center[0], longitude: center[1]
-    })
-    return {...button, distance}
-  })
+    const distance = getDistance(
+      { latitude: button.latitude, longitude: button.longitude },
+      {
+        latitude: center[0],
+        longitude: center[1],
+      },
+    );
+    return { ...button, distance };
+  });
 
-  return buttonsDistance.sort(buttonDistance)
-}
+  return buttonsDistance.sort(buttonDistance);
+};

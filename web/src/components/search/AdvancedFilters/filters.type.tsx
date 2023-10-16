@@ -1,5 +1,4 @@
 import { Point } from "pigeon-maps";
-import { buttonTypes } from "shared/buttonTypes";
 
 export interface ButtonFilters {
     helpButtonTypes: string[];
