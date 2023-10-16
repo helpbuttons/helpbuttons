@@ -52,7 +52,7 @@ export default function CardNotification({ activity = {} }) {
 
       return (
         <NotificationCard
-          title={'New creator update'}
+          title={'Creator update'}
           notifIcon={notifIcon}
           image={post.button.image}
           date={post.created_at}
@@ -75,7 +75,7 @@ export default function CardNotification({ activity = {} }) {
       return (
 
         <NotificationCard
-          title={'New comment'}
+          title={'Comment'}
           image={comment.button.image}
           notifIcon={notifIcon}
           date={comment.created_at}
@@ -93,7 +93,7 @@ export default function CardNotification({ activity = {} }) {
 
       return (
         <NotificationCard
-          title={'New notification'}
+          title={'Notification'}
           notifIcon={notifIcon}
           image={'no'}
           date={activity.created_at}
