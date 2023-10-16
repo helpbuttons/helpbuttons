@@ -4,6 +4,7 @@ import { ActivityEventName } from 'shared/types/activity.list';
 import { Button } from 'shared/entities/button.entity';
 import { makeImageUrl } from 'shared/sys.helper';
 import t from 'i18n';
+import {  IoChatbubbleOutline, IoHandLeftOutline, IoHeartOutline, IoPersonOutline, IoRibbonOutline } from "react-icons/io5";
 import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
 
@@ -15,6 +16,7 @@ export default function CardNotification({ activity = {} }) {
         <NotificationCard
           title={'New Button'}
           image={button.image}
+          notifIcon={IoChatbubbleOutline}
           date={button.created_at}
           id={button.id}
           message={t('activities.newbutton', [
@@ -29,6 +31,7 @@ export default function CardNotification({ activity = {} }) {
       return (
         <NotificationCard
           title={'Deleted Button'}
+          notifIcon={IoChatbubbleOutline}
           image={button.image}
           date={button.created_at}
           id={button.id}
@@ -43,7 +46,8 @@ export default function CardNotification({ activity = {} }) {
       const post = JSON.parse(activity.data);
       return (
         <NotificationCard
-          title={'New owner update'}
+          title={'New creator update'}
+          notifIcon={IoChatbubbleOutline}
           image={post.button.image}
           date={post.created_at}
           id={post.button.id}
@@ -59,12 +63,15 @@ export default function CardNotification({ activity = {} }) {
       activity.eventName == ActivityEventName.NewPostComment
     ) {
       const comment = JSON.parse(activity.data);
+      const notifIcon =<IoChatbubbleOutline/>
+
       console.log(comment)
       return (
 
         <NotificationCard
-          title={'New notification'}
+          title={'New comment'}
           image={comment.button.image}
+          notifIcon={notifIcon}
           date={comment.created_at}
           id={comment.button.id}
           message={t('activities.newcomment', [
@@ -79,6 +86,7 @@ export default function CardNotification({ activity = {} }) {
       return (
         <NotificationCard
           title={'New notification'}
+          notifIcon={IoChatbubbleOutline}
           image={'no'}
           date={activity.created_at}
           message={activity.eventName}
@@ -92,12 +100,12 @@ export default function CardNotification({ activity = {} }) {
   return <>{notification(activity)}</>;
 }
 
-export function NotificationCard({ title, image, date, message, id, read }) {
+export function NotificationCard({ title, image, notifIcon, date, message, id, read }) {
   return (
     <Link href={'/ButtonFile/'+ id.toString()} className="card-notification card-notification">
       <div className="card-notification__comment-count">
         <div className="card-notification__label">
-          <div className="hashtag hashtag--blue">{title}</div>
+          <div className="hashtag hashtag--blue">{notifIcon}{title}</div>
         </div>
       </div>
       <div className="card-notification__content">
