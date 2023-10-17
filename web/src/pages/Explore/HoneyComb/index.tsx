@@ -1,5 +1,6 @@
 //EXPLORE MAP
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'
 
 //components
 import {
@@ -237,14 +238,17 @@ function useExploreSettings({
       );
     }
   }, [selectedNetwork]);
-
+  
+  const router = useRouter()
+  
   useEffect(() => {
     if (!exploreSettings?.loading) {
       urlParams.append('zoom', exploreSettings.zoom);
       urlParams.append('lat', roundCoord(exploreSettings.center[0]));
       urlParams.append('lng', roundCoord(exploreSettings.center[1]));
 
-      window.location.replace(`#?${urlParams.toString()}`);
+      //window.location.replace(`#?${urlParams.toString()}`);
+      router.replace(`#?${urlParams.toString()}`)
     }
   }, [exploreSettings]);
 }
