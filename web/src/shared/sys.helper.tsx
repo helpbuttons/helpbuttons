@@ -114,3 +114,14 @@ export const readableDistance = (distance: number) => {
   }
   return Math.round(distance / 1000) + 'km'
 }
+
+export const getUrlParams = (path, router) => {
+  const findHash = path.indexOf('#');
+  if (findHash) {
+    let params = new URLSearchParams(
+      router.asPath.substr(findHash + 1),
+    );
+    return params;
+  }
+  return [];
+};

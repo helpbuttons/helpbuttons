@@ -5,6 +5,8 @@ import { IoChevronBackOutline } from 'react-icons/io5';
 import { Link } from 'elements/Link';
 import { CardButtonHeadMedium } from 'components/button/CardButton';
 import { buttonColorStyle } from 'shared/buttonTypes';
+import { store } from 'pages';
+import { updateCurrentButton } from 'state/Explore';
 
 export default function CardButtonList({ buttonTypes, button }) {
   const buttonType = buttonTypes.find(
@@ -14,9 +16,8 @@ export default function CardButtonList({ buttonTypes, button }) {
   return (
     <>
       {buttonType && (
-        <div className="list__element">
+        <div className="list__element" onClick={() => store.emit(new updateCurrentButton(button))}>
           <div style={buttonColorStyle(buttonType.cssColor)}>
-            <Link href={`/ButtonFile/${button.id}`}>
               <div className="card-button-list">
                 {button.image && (
                   <div className="card-button-list__picture-container">
@@ -43,7 +44,6 @@ export default function CardButtonList({ buttonTypes, button }) {
                   />
                 </div>
               </div>
-            </Link>
           </div>
         </div>
       )}
