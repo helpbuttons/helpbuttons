@@ -233,12 +233,15 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__hashtags {
-  .hashtag {
+  -webkit-line-clamp: 3;
+  -webkit-box-orient:horizontal;
+  overflow: scroll;
+  color: black;
     &:hover {
       color: $hashtag-hover-color;
       background: $color-black;
     }
-  }
+  
 }
 
 .card-button__ofrece {
