@@ -12,9 +12,8 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 import router from 'next/router';
 import { useEffect, useState } from 'react';
-import { getShareLink, makeImageUrl } from 'shared/sys.helper';
+import { getShareLink, makeImageUrl, readableDistance } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import { ShowWhen } from 'elements/Fields/FieldDate';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -23,6 +22,11 @@ import { UpdateFiltersToFilterTag } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { formatMessage } from 'elements/Message';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
+import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
+import {
+  CardSubmenu,
+  CardSubmenuOption,
+} from 'components/card/CardSubmenu';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -89,10 +93,10 @@ export function CardButtonHeadMedium({ button, buttonType }) {
       </div>
 
       <div className="card-button__title">{button.title}</div>
-      {!button.image && 
-        <div className="card-button__paragraph">{button.description}</div>
-      }
-      <div className="card-button__hashtags">
+        <div className="card-button-list__paragraph--small-card card-button-list__paragraph">
+          <p>{button.description}</p>
+        </div>
+      {/* <div className="card-button__hashtags">
         {button.tags.map((tag, idx) => {
           return (
             <div className="hashtag" key={idx}>
@@ -100,11 +104,15 @@ export function CardButtonHeadMedium({ button, buttonType }) {
             </div>
           );
         })}
+      </div> */}
+      {buttonType.customFields && buttonType.customFields.length > 0 && (
+        <>
+          <CardButtonCustomFields customFields={buttonType.customFields} button={button}/>
+        </>
+      )}
+      <div className="card-button__city card-button__everywhere ">
+        {button.address} {button?.distance && <> - {readableDistance(button?.distance)}</>}
       </div>
-        <div className="card-button__city card-button__everywhere ">
-          {button.address}
-        </div>
-      <ShowWhen when={button.when} />
     </div>
   );
 }
@@ -140,7 +148,6 @@ export function CardButtonHeadSmall({ button }) {
           <div className="card-button__city card-button__everywhere ">
             {button.address}
           </div>
-          <ShowWhen when={button.when} />
         </div>
       </a>
     </>
@@ -148,7 +155,6 @@ export function CardButtonHeadSmall({ button }) {
 }
 
 function CardButtonSubmenu({ button }) {
-  const [showSubmenu, setShowSubmenu] = useState(false);
   const config: SetupDtoOut = useRef(
     store,
     (state: GlobalState) => state.config,
@@ -169,60 +175,35 @@ function CardButtonSubmenu({ button }) {
     }
   }, [config]);
   return (
-    <section>
-      <div
+    <CardSubmenu>
+      <CardSubmenuOption
         onClick={() => {
-          setShowSubmenu(!showSubmenu);
+          navigator.clipboard.writeText(linkButton);
         }}
-        className="card-button__edit-icon card-button__submenu"
-      >
-        <IoEllipsisHorizontalSharp />
-      </div>
-      {showSubmenu && (
-        <div className="card-button__dropdown-container">
-          <div className="card-button__dropdown-arrow"></div>
-
-          <div className="card-button__dropdown-content" id="listid">
-            {/* <a className="card-button__trigger-options">
-              {t('button.share')}
-            </a> */}
-            <a
-              className="card-button__trigger-options card-button__trigger-button"
-              onClick={() => {
-                navigator.clipboard.writeText(linkButton);
-              }}
-            >
-              {t('button.copy')}
-            </a>
-            {(isButtonOwner(loggedInUser, button) ||
-              isAdmin(loggedInUser)) && (
-              <>
-                <a
-                  className="card-button__trigger-options"
-                  onClick={() => {
-                    router.push(`/ButtonEdit/${button.id}`);
-                  }}
-                >
-                  {t('button.edit')}
-                </a>
-                <a
-                  className="card-button__trigger-options"
-                  onClick={() => {
-                    router.push(`/ButtonRemove/${button.id}`);
-                  }}
-                >
-                  {t('button.delete')}
-                </a>
-              </>
-            )}
-          </div>
-        </div>
+        label={t('button.copy')}
+      />
+      {(isButtonOwner(loggedInUser, button) ||
+        isAdmin(loggedInUser)) && (
+        <>
+          <CardSubmenuOption
+            onClick={() => {
+              router.push(`/ButtonEdit/${button.id}`);
+            }}
+            label={t('button.edit')}
+          />
+          <CardSubmenuOption
+            onClick={() => {
+              router.push(`/ButtonRemove/${button.id}`);
+            }}
+            label={t('button.delete')}
+          />
+        </>
       )}
-    </section>
+    </CardSubmenu>
   );
 }
 export function CardButtonHeadBig({ button, buttonTypes }) {
-  const { cssColor, caption } = buttonTypes.find((buttonType) => {
+  const { cssColor, caption, customFields} = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
   });
   const loggedInUser = useRef(
@@ -230,7 +211,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
     (state: GlobalState) => state.loggedInUser,
     false,
   );
-
+  const [showMap, setShowMap] = useState(false)
   const profileHref = isButtonOwner(loggedInUser, button)
     ? `/Profile/`
     : `/Profile/${button.owner.username}`;
@@ -273,7 +254,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             <CardButtonHeadActions button={button} />
           </div>
         </div>
-        
+
         <div className="card-button__title">{button.title}</div>
 
         <div className="card-button__paragraph">
@@ -296,14 +277,17 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             );
           })}
         </div>
-
+        {customFields && customFields.length > 0 && (
+        <>
+          <CardButtonCustomFields customFields={customFields} button={button}/>
+        </>
+      )}
         <div className="card-button__locDate">
-            <div className="card-button__city card-button__everywhere ">
+            <div className="card-button__city card-button__everywhere" onClick={() => setShowMap(() => !showMap)}>
               {button.address}
             </div>
-          <ShowWhen when={button.when} />
         </div>
-        {!button.hideAddress && (
+        {(!button.hideAddress && showMap) && (
         <MarkerSelectorMap markerPosition={[button.latitude, button.longitude]} setMarkerPosition={() => {}} zoom={10} markerColor={cssColor} markerImage={button.image} markerCaption={button.title}/>
         )}
       </div>

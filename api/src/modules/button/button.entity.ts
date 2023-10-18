@@ -46,9 +46,6 @@ export class Button extends BaseEntity {
 
   @Column('text', { array: true, nullable: true })
   images: string[];
-  
-  @Column('text', {nullable: true })
-  when: string;
 
   @ManyToOne(() => Network, (network) => network.buttons)
   network: Network;
@@ -67,4 +64,40 @@ export class Button extends BaseEntity {
 
   @Column('boolean', {default: false})
   hideAddress: boolean;
+
+  /** Custom Fields **/
+  /** price: **/
+  @Column({default: 0, type: 'double precision' })
+  price: number;
+
+  /** event: **/
+  @Column('text') // recurrent, multidate, once, always
+  eventType: string;
+  
+  /*
+  recurrent:
+   when = {
+    type: 'recurrent'
+    data: {
+      frequency: '1m', // '1w'
+    }
+   }
+  
+   multidate = {
+    type: 'multidate' // start and endDate define the dates..
+   }
+
+   once = {
+    type: 'once' // only start date
+   }
+  */
+  @Column({
+    type: 'timestamp',
+  })
+  eventStart: Date;
+
+  @Column({
+    type: 'timestamp',
+  })
+  eventEnd: Date;
 }

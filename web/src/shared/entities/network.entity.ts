@@ -64,4 +64,7 @@ export class Network extends BaseEntity {
 
   @Column({default: false})
   inviteOnly: boolean;
+
+  @Column({default: 'EUR'})
+  currency: string;
 }

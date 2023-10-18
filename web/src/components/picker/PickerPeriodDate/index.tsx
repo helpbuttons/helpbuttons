@@ -23,7 +23,6 @@ export default function PickerPeriodDate() {
 
   return (
     <>
-      <section className="repository__section">
         <div className="picker__content">
           <div className="picker__section">
             <header className="picker__header ">
@@ -247,7 +246,6 @@ export default function PickerPeriodDate() {
             </button>
           </div>
         </div>
-      </section>
     </>
   );
 }

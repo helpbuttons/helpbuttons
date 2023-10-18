@@ -25,6 +25,8 @@
     "users": "{0} users in this network",
     "administeredby": "Administered by ",
     "actions": "What can I do?",
+    "createNetworkButton": "Create your own network",
+    "createNetwork": "You can contact with the team if you need help making your own network",
     "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:",
     "networkIsPrivate": "Private network"
   },
@@ -52,7 +54,14 @@
     "allButtonTypes": "All types",
     "types": "Helpbuttons types",
     "typesExplain": "Filter helpbuttons by type",
-    "tagsExplain": "Network main tags"
+    "tagsExplain": "Network main tags",
+    "price": "Price",
+    "minPricePlaceholder": "From",
+    "maxPriceLabel": "Until",
+    "whenLabel": "When?",
+    "whenExplain": "Filter events by date",
+    "priceExplain": "Filter by price",
+    "whereLabel" : "Where"
   },
   "setup": {
     "hostname": "Hostname",
@@ -155,23 +164,25 @@
     "loginClick": "One click login",
     "created_date": "User since",
     "created": "",
-    "newLoginTokenSent": "Login token sent",
+    "newLoginTokenSent": "I've you have an account you will receive an email with a link to login.",
     "textReceiveNotifications": "Receive mail notifications",
-    "loginSucess": "Login successfuly"
-  },
-  "calendarOnce": {
-    "pickday": "Pick a day",
-    "picktime": "Pick a time",
-    "label": "Once"
-  },
-  "calendarAlways": {
-    "label": "Always"
+    "loginSucess": "Login successfuly",
+    "revoke": "Revoke administrator rights",
+    "unblock": "Unblock",
+    "block": "Block user",
+    "promote": "Promote to administrator",
+    "unsubscribed": "You will no longer receive this kind of emails"
   },
   "picker": {
     "headerText": "Choose a location"
   },
-  "pickerDate": {
-    "headerText": "Choose date & hour"
+  "eventType": {
+    "typePicker": "Pick a date",
+    "headerText": "When is your event",
+    "calendarHeaderText": "Choose date & hour",
+    "from": "From... ",
+    "until": "Until... ",
+    "eventFieldAdd": "Add date"
   },
   "validation": {
     "fieldRequired": "{0} is required.",
@@ -227,7 +238,13 @@
     "blockedExplain": "",
     "adminUsers": "",
     "nomeclatureExplain": "",
-    "contactAdmin": "Contact the administrator"
+    "contactAdmin": "Contact the administrator",
+    "customFields": "Add custom fields to helpbutton type",
+    "priceFieldAdd": "Add price",
+    "currencyLabel": "Currency",
+    "moderationList": "Moderation",
+    "createSupportButton": "Create your network's support button",
+    "moderation": "Moderation"
   },
   "configure": {
     "browsePins": "",
@@ -272,5 +289,8 @@
     "title": "Invites",
     "description": "Invite people, manage and share links with other people to allow them to access your network",
     "inviteOnly": "Only allow signup with an invitation"
+  },
+  "customFields": {
+    "priceLabel": "Price ({0})"
   }
 }

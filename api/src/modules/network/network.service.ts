@@ -1,4 +1,10 @@
-import { HttpException,Inject,forwardRef, Injectable, UseInterceptors } from '@nestjs/common';
+import {
+  HttpException,
+  Inject,
+  forwardRef,
+  Injectable,
+  UseInterceptors,
+} from '@nestjs/common';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
 import {
@@ -23,7 +29,11 @@ import { SetupDtoOut } from '../setup/setup.entity';
 import { getConfig } from '@src/shared/helpers/config.helper';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
-import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import {
+  CacheInterceptor,
+  CacheKey,
+  CacheTTL,
+} from '@nestjs/cache-manager';
 
 @Injectable()
 export class NetworkService {
@@ -53,6 +63,7 @@ export class NetworkService {
       textColor: createDto.textColor,
       buttonTemplates: JSON.stringify(createDto.buttonTemplates),
       locale: 'en',
+      currency: createDto.currency
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -144,7 +155,6 @@ export class NetworkService {
           });
       })
       .catch((error) => {
-        console.log(error)
         if (typeof error === typeof HttpException) {
           throw error;
         }
@@ -152,12 +162,21 @@ export class NetworkService {
       });
   }
 
-  async findOne(id: string): Promise<Network> {
+  async findOne(id: string): Promise<any> {
     return this.findDefaultNetwork();
   }
 
   async update(updateDto: UpdateNetworkDto) {
     const defaultNetwork = await this.findDefaultNetwork();
+    
+    const buttonsToDelete = await this.buttonsToDeleteFromButtonTemplates(
+      defaultNetwork.buttonTemplates,
+      updateDto.buttonTemplates,
+    );
+    if(buttonsToDelete.length > 0){
+      const message = buttonsToDelete.map((btnType) => `can't delete '${btnType.type}', there are already ${btnType.count} buttons with this template`)
+      throw new ValidationException({ buttonTemplates: message });
+    }
     
     const network = {
       id: defaultNetwork.id,
@@ -173,7 +192,8 @@ export class NetworkService {
       textColor: updateDto.textColor,
       buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
       inviteOnly: updateDto.inviteOnly,
-      locale: updateDto.locale
+      locale: updateDto.locale,
+      currency: updateDto.currency
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -220,5 +240,31 @@ export class NetworkService {
 
   getConfig(): Promise<SetupDtoOut> {
     return getConfig();
+  }
+
+  async buttonsToDeleteFromButtonTemplates(currentBtnTypes, _newBtnTypes) {
+    const networkBtnTypes = currentBtnTypes.map(
+      (btnType) => btnType.name,
+    );
+    const newNetworkBtnTypes = _newBtnTypes.map(
+      (btnType) => btnType.name,
+    );
+
+    const deletedFromNetwork = networkBtnTypes.filter((btnType) => {
+      return !(newNetworkBtnTypes.indexOf(btnType) > -1);
+    });
+    if (deletedFromNetwork.length > 0) {
+      const types = deletedFromNetwork.reduce((result, btnType) => {
+        if (result.length > 0) {
+          return `${result},'${btnType}'`;
+        } else {
+          return `'${btnType}'`;
+        }
+      }, '');
+      const query = `select count(id), type from button where type IN (${types}) group by type`;
+
+      return await this.entityManager.query(query);
+    }
+    return []
   }
 }

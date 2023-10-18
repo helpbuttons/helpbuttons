@@ -31,7 +31,6 @@ export default function HexagonExploreMap({
   const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([]);
-
   const onBoundsChanged = ({ center, zoom, bounds }) => {
     handleBoundsChange(bounds, center, zoom)
 
@@ -52,14 +51,12 @@ export default function HexagonExploreMap({
   const [buttonTypes, setButtonTypes] = useState([]);
   useButtonTypes(setButtonTypes);
 
-  useEffect(() => {
-    // workaround for map to mind the new center..
-  }, [exploreSettings.center]);
   return (
     <>
+    {exploreSettings.center && 
       <HbMap
-        mapCenter={selectedNetwork.exploreSettings.center}
-        mapZoom={selectedNetwork.exploreSettings.zoom}
+        mapCenter={exploreSettings.center}
+        mapZoom={exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
         tileType={selectedNetwork.exploreSettings.tileType}
       >
@@ -182,6 +179,10 @@ export default function HexagonExploreMap({
                   const btnType = buttonTypes.find((type) => {
                     return type.name == hexagonBtnType.type;
                   });
+                  if(!btnType)
+                  {
+                    return <></>
+                  }
                   return (
                     <span
                       className="pigeon-map__hex-element"
@@ -214,6 +215,7 @@ export default function HexagonExploreMap({
           </Overlay>
         )}
       </HbMap>
+      }
     </>
   );
 }

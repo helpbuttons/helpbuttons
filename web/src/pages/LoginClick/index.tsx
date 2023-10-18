@@ -25,10 +25,12 @@ export default function LoginClick() {
       new RequestNewLoginToken(
         data.email,
         () => {
-          alertService.success(t('user.newLoginTokenSent'));
+          alertService.info(t('user.newLoginTokenSent'));
+          router.push('/HomeInfo');
         },
         () => {
           alertService.error(t('user.errorRequestNewLoginToken'));
+          router.push('/HomeInfo');
         },
       ),
     );

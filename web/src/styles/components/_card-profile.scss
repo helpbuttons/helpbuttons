@@ -18,15 +18,19 @@ $avatar-margin: $padding-big;
 }
 
 .card-profile__rating {
-  height: auto;
   display: flex;
-  justify-content: flex-start;
+  width: fit-content;
+  height: auto;
+  margin: 0 auto;
   margin-left: 0;
-  width: 100%;
+  background-size: contain;
+  margin-bottom: 10px;
+  font-weight: $font-weight-bold;
 
   & svg {
     width: 1rem;
-    margin-left: 0.5rem;
+    margin-right: $margin-small;
+    margin-left: $margin-xxsmall;
   }
 }
 
@@ -174,14 +178,11 @@ $avatar-margin: $padding-big;
   }
 
   .card-profile__rating {
-    display: flex;
-    width: fit-content;
-    height: auto;
-    margin: 0 auto;
-    background-size: contain;
+    
     margin-bottom: 10px;
     & svg {
       width: 20px;
+
     }
   }
 

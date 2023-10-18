@@ -106,3 +106,11 @@ export const uniqueArray = (a) =>
 Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
   JSON.parse(s),
 );
+
+export const readableDistance = (distance: number) => {
+  if (distance < 5000)
+  {
+    return distance + 'm';
+  }
+  return Math.round(distance / 1000) + 'km'
+}

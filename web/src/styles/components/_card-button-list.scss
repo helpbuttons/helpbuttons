@@ -6,7 +6,7 @@ $card-button-list-ofrece-background: $color-green;
 $card-button-list-paragraph-color: $color-gray;
 $card-button-list-margin-bottom: $margin-xsmall;
 $card-button-list-width: 450px;
-$card-button-list-height: 215px;
+$card-button-list-height: 225px;
 $card-button-list-image-height: 200px;
 $card-button-list-image-width: 200px;
 $card-button-list-margin: 0.5rem;
@@ -259,6 +259,8 @@ $card-button-list-border-height: $border-general-height;
   font-size: $font-size-general;
   white-space: pre-line;
   text-align: left;
+  flex-grow: 1;
+
 
   & p {
     margin-top: 0;//Revise
@@ -268,6 +270,12 @@ $card-button-list-border-height: $border-general-height;
     color: var(--network-text-color);
     cursor: pointer;
   }
+}
+
+.card-button-list__paragraph--small-card {
+  
+  -webkit-line-clamp: 1;
+
 }
 
 .card-button-list__phone {
