@@ -29,7 +29,7 @@ $card-button-border-height: $border-general-height;
 .card-button__content > * {
 
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -199,7 +199,6 @@ $card-button-border-height: $border-general-height;
   color: $color-black;
   font-size: $font-size-title;
   padding: $padding-small 0;
-  flex-grow: 1; 
   display: block;
 
 }
@@ -261,6 +260,7 @@ $card-button-border-height: $border-general-height;
   text-align: left;
   // height: 3rem;
   // overflow: hidden;
+  flex-grow: 1;
   display: block;
   margin: $margin-xxsmall 0  $margin-small 0;
 
@@ -273,6 +273,8 @@ $card-button-border-height: $border-general-height;
     cursor: pointer;
   }
 }
+
+
 
 
 .card-button__paragraph:first-letter {
