@@ -1,7 +1,7 @@
 import NetworkForm from 'components/network/NetworkForm';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
-import router from 'next/router';
+import router, { useRouter } from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -37,6 +37,7 @@ function Configuration() {
 
   const textColor = watch('textColor');
   useTextColor(textColor);
+  const { pathname, asPath, query } = useRouter()
 
   useEffect(() => {
     if(selectedNetwork && loadingNetwork){
@@ -64,7 +65,14 @@ function Configuration() {
         const onComplete = (network) => {
           store.emit(new UpdateExploreSettings(data.exploreSettings))
           alertService.info(t('common.saveSuccess', ['Configuration']))
-          router.replace('/HomeInfo');
+          if(data.locale != 'en')
+          {
+            console.log('pushing...')
+            router.push(`/${data.locale}/HomeInfo`)
+          }else{
+            router.push({ pathname: '/HomeInfo' }, asPath, { locale: 'en' });
+          }
+
         }
         store.emit(new FetchDefaultNetwork(onComplete, (error) => {console.log(error)}));
     }, 
