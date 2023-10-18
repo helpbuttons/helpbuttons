@@ -62,6 +62,7 @@ export class NetworkService {
       backgroundColor: createDto.backgroundColor,
       textColor: createDto.textColor,
       buttonTemplates: JSON.stringify(createDto.buttonTemplates),
+      locale: 'en',
       currency: createDto.currency
     };
     await getManager().transaction(
@@ -113,6 +114,7 @@ export class NetworkService {
   @CacheKey('defaultNetwork')
   @CacheTTL(30) // override TTL to 30 seconds
   findDefaultNetwork(): Promise<NetworkDto> {
+
     return this.networkRepository
       .find({ order: { created_at: 'ASC' } })
       .then((networks) => {
@@ -190,6 +192,7 @@ export class NetworkService {
       textColor: updateDto.textColor,
       buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
       inviteOnly: updateDto.inviteOnly,
+      locale: updateDto.locale,
       currency: updateDto.currency
     };
     await getManager().transaction(
