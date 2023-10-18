@@ -87,7 +87,6 @@ export default function ProfileEdit() {
   const onSuccess = () => {
     
     store.emit(new FetchUserData((userData) => {
-      console.log(userData)
       if(userData.locale != 'en')
       {
         router.push(`/${userData.locale}/Profile`)
