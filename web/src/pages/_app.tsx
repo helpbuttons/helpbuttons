@@ -241,8 +241,7 @@ function MyApp({ Component, pageProps }) {
       {
         if(selectedNetwork.locale != 'en')
         {
-          // console.log(pageName)
-          router.push({ pathname, query }, asPath, { locale: selectedNetwork.locale })          // router.push(`/${selectedNetwork.locale}/HomeInfo`)
+          router.push({ pathname, query }, asPath, { locale: selectedNetwork.locale })
         }
       }
   }, [selectedNetwork]);
