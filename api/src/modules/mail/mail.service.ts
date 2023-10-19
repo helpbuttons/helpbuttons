@@ -76,7 +76,7 @@ export class MailService {
         cc,
         bcc,
         from: config.from,
-        subject,
+        subject: `${subject} - ${network.name}`,
         template,
         context: vars,
       }).then((mail) => {console.log(`>> mail sent to ${to} with template '${template}'`)})
@@ -88,22 +88,17 @@ export class MailService {
 
   sendActivity({
     to,
-    cc,
-    bcc,
     content,
-  }: {
-    to: string;
-    cc?: string;
-    bcc?: string;
-    content: string;
+    subject,
+    link
   }) {
     return this.sendMail({
       to,
-      cc,
-      bcc,
-      subject: 'A new activity in ',
+      cc: null,
+      bcc: null,
+      subject: subject,
       template: 'new-activity',
-      context: { content },
+      context: { content, link },
     });
   }
 }

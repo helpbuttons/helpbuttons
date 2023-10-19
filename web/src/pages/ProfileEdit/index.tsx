@@ -51,7 +51,7 @@ export default function ProfileEdit() {
   const [setNewPassword, setSetNewPassword] = useState(false);
 
   const router = useRouter();
-
+  const { pathname, asPath, query } = useRouter()
   const loggedInUser: User = useRef(
     store,
     (state: GlobalState) => state.loggedInUser,
@@ -87,7 +87,12 @@ export default function ProfileEdit() {
   const onSuccess = () => {
     
     store.emit(new FetchUserData((userData) => {
-      router.push(`${userData.locale}/Profile`)
+      if(userData.locale != 'en')
+      {
+        router.push(`/${userData.locale}/Profile`)
+      }else{
+        router.push({ pathname: '/Profile' }, asPath, { locale: 'en' });
+      }
     }, onError));
     ;
   };
@@ -122,9 +127,7 @@ export default function ProfileEdit() {
                     validationError={errors.name}
                     {...register('name', { required: true })}
                   ></FieldText>
-                  {locale && 
-                    <FieldLanguagePick onChange={(value) => setLocale(value)}/>
-                  }
+                  <FieldLanguagePick onChange={(value) => setLocale(value)}/>
                   <FieldText
                     name="email"
                     label={t('user.email')}

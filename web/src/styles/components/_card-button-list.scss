@@ -259,6 +259,8 @@ $card-button-list-border-height: $border-general-height;
   font-size: $font-size-general;
   white-space: pre-line;
   text-align: left;
+  flex-grow: 1;
+
 
   & p {
     margin-top: 0;//Revise
@@ -268,6 +270,12 @@ $card-button-list-border-height: $border-general-height;
     color: var(--network-text-color);
     cursor: pointer;
   }
+}
+
+.card-button-list__paragraph--small-card {
+  
+  -webkit-line-clamp: 1;
+
 }
 
 .card-button-list__phone {

@@ -5221,11 +5221,13 @@ li, ol, ul, h2 {
 }
 
 .card-profile__rating {
-  height: auto;
   display: flex;
-  justify-content: flex-start;
-  margin-left: 0;
-  width: 100%;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: auto;
+  margin: 0 auto;
+  background-size: contain;
+  margin-bottom: 10px;
 }
 .card-profile__rating svg {
   width: 1rem;

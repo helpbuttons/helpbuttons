@@ -29,6 +29,7 @@ import {
 } from 'state/Networks';
 import Accordion from 'elements/Accordion';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
+import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
 import { DropdownField } from 'elements/Dropdown/Dropdown';
 import { availableCurrencies } from 'shared/currency.utils';
@@ -52,6 +53,7 @@ function NetworkForm({
   defaultExploreSettings = null,
 }) {
   const router = useRouter();
+
   const buttonTemplates = watch('buttonTemplates');
 
   const [showCurrencyDropDown, setShowCurrencyDropDown] = useState(false)
@@ -72,6 +74,7 @@ function NetworkForm({
       }
   }
   }, [buttonTemplates])
+
   return (
     <>
       <Form
@@ -126,6 +129,7 @@ function NetworkForm({
          
            <Accordion title={t('configuration.customizeAppearance')}>
 
+             <FieldLanguagePick onChange={(value) => setValue('locale',value)}/>
             <div className="form__field">
                 <label className="form__label">{t('configuration.chooseColors')}</label>
                 <p className="form__explain">{t('configuration.chooseColorsExplain')}</p>

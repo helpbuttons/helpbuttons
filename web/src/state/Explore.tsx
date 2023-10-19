@@ -42,7 +42,7 @@ export interface ExploreSettings {
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
-  center: [0, 0],
+  center: null,
   zoom: 4,
   bounds: null,
   honeyCombFeatures: null,
@@ -336,14 +336,6 @@ export class UpdateExploreSettings implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       const prevSettings = state.explore.settings;
-
-      const localStorageExploreSettings = localStorageService.read(
-        LocalStorageVars.EXPLORE_SETTINGS,
-      );
-      let locaStorageVars = {};
-      if (localStorageExploreSettings) {
-        locaStorageVars = JSON.parse(localStorageExploreSettings);
-      }
       const newExploreSettings = {
         ...prevSettings,
         prevZoom: prevSettings.zoom,
@@ -351,10 +343,6 @@ export class UpdateExploreSettings implements UpdateEvent {
         loading: false,
       };
       newState.explore.settings = newExploreSettings;
-      localStorageService.save(
-        LocalStorageVars.EXPLORE_SETTINGS,
-        JSON.stringify(newExploreSettings),
-      );
     });
   }
 }

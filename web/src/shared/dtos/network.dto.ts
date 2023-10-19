@@ -77,7 +77,8 @@ export class CreateNetworkDto implements Partial<Network> {
   @IsNotEmpty()
   inviteOnly?: boolean;
 
-  @IsNotEmpty()
+  locale: string;
+
   currency: string;
 }
 

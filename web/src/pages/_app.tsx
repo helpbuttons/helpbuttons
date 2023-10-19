@@ -21,7 +21,7 @@ import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { pathToRegexp } from 'path-to-regexp';
 import { allowedPathsPerRole } from '../shared/pagesRoles';
 import { Role } from 'shared/types/roles';
-import { isRoleAllowed } from 'shared/sys.helper';
+import { getLocale, isRoleAllowed } from 'shared/sys.helper';
 import { version } from 'shared/commit';
 import Loading from 'components/loading';
 import { getMetadata } from 'services/ServerProps';
@@ -226,7 +226,8 @@ function MyApp({ Component, pageProps }) {
   let [networkBackgroundColor, setNetworkBackgroundColor] =
     useState('#FFDD02');
   let [networkTextColor, setNetworkTextColor] = useState('black');
-
+  const { pathname, asPath, query, locale } = useRouter()
+  
   useEffect(() => {
     if (selectedNetwork?.backgroundColor) {
       setNetworkBackgroundColor(
@@ -236,6 +237,14 @@ function MyApp({ Component, pageProps }) {
     if (selectedNetwork?.textColor) {
       setNetworkTextColor(() => selectedNetwork.textColor);
     }
+      if(selectedNetwork && getLocale() != selectedNetwork.locale)
+      {
+        if(selectedNetwork.locale != 'en')
+        {
+          // console.log(pageName)
+          router.push({ pathname, query }, asPath, { locale: selectedNetwork.locale })          // router.push(`/${selectedNetwork.locale}/HomeInfo`)
+        }
+      }
   }, [selectedNetwork]);
 
   const SEOpages = ['Login', 'HomeInfo', 'ButtonFile'];

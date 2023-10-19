@@ -8,6 +8,8 @@ import { MailService } from '../mail/mail.service';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { OnEvent } from '@nestjs/event-emitter';
 import translate from '@src/shared/helpers/i18n.helper';
+import { configFileName } from '@src/shared/helpers/config-name.const';
+const config = require(`../../..${configFileName}`);
 
 @Injectable()
 export class UserService {
@@ -134,15 +136,19 @@ export class UserService {
       const messageContent = translate(
         user.locale,
         'activities.newpost',
-        [payload.data.message, payload.data.button.title],
+        [payload.data.message, payload.data.button.title, payload.data.author.username],
       );
       return { message: messageContent, email: user.email };
     });
     
+    const buttonUrl: string = `${config.hostName}/ButtonFile/${payload.data.button.id}`;
+
     mailsToSend.map((mailToSend) => {
       this.mailService.sendActivity({
         content: mailToSend.message,
+        link: buttonUrl,
         to: mailToSend.email,
+        subject: 'New activity'
       });
     });
   }
