@@ -71,7 +71,6 @@ export default function CardNotification({ activity = {} }) {
       const comment = JSON.parse(activity.data);
       const notifIcon =<IoChatbubbleOutline/>
 
-      console.log(comment)
       return (
 
         <NotificationCard
