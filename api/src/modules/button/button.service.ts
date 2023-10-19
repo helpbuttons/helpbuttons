@@ -229,9 +229,10 @@ export class ButtonService {
     });
   }
 
-  async findByUserId(userId: string) {
+  async findAdminButton()
+  {
     let button: Button = await this.buttonRepository.findOne({
-      where: { owner: {id: userId}, ...this.deletedBlockedConditions() },
+      where: { owner: {role: Role.admin}, deleted: false },
       relations: [
         'owner',
       ],
@@ -239,7 +240,6 @@ export class ButtonService {
         created_at: 'ASC' 
       }
     });
-    
     if(!button)
     {
       throw new HttpException('button not found', HttpStatus.NOT_FOUND)

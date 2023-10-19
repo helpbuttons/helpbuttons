@@ -128,8 +128,9 @@ export class ButtonController {
 
   @AllowGuest()
   @AllowIfNetworkIsPublic()
-  @Get('findByUserId/:userId')
-  async findByUserId(@Param('userId') userId: string) {
-    return await this.buttonService.findByUserId(userId);
+  @Get('findAdminButton')
+  async findAdminButton() {
+    return await this.buttonService.findAdminButton();
   }
+
 }
