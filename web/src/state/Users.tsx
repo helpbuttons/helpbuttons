@@ -136,12 +136,11 @@ export class FindUser implements WatchEvent {
 
 export class FindAdminButton implements WatchEvent {
   public constructor(
-    private userId,
     private onSuccess = undefined,
   ) {}
 
   public watch(state: GlobalState) {
-    return ButtonService.findByUserId(this.userId).pipe(
+    return ButtonService.findAdminButton().pipe(
       map((buttonData) => {
         this.onSuccess(buttonData);
       }),
