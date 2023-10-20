@@ -1,8 +1,11 @@
 import { NextPageContext } from 'next';
 import HoneyComb from './HoneyComb';
 import { ServerPropsService } from 'services/ServerProps';
-import { ClienteSideRendering } from 'pages/_client';
 import SEO from 'components/seo';
+import { ClienteSideRendering } from 'pages/_client';
+import { Button } from 'shared/entities/button.entity';
+import { HttpStatus } from 'shared/types/http-status.enum';
+import { makeImageUrl } from 'shared/sys.helper';
 
 export default function Explore({
   metadata,
@@ -19,39 +22,13 @@ export default function Explore({
   );
 }
 
-// CAN'T GET BUTTON ID...
-/*
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  try {
-    // const router = useRouter();
-    // const hash = router.asPath.split('#')[1] || '';
-    // console.log(hash)
-    console.log(ctx)
-    // const session = await getServerSession(
-    const serverProps = await ServerPropsService.general('Home', ctx);
-    return { props: serverProps };
-  } catch (err) {
-    console.log(err);
-    return {
-      props: {
-        metadata: null,
-        selectedNetwork: null,
-        config: null,
-        noconfig: true,
-      },
-    };
-  }
-};
-/*
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const serverProps = await ServerPropsService.general(
     'Explore',
     ctx,
-  );
-  console.log(ctx.req.url)
-  console.log(ctx.resolvedUrl)
-  const btnId = ctx.params.btn;
-  if (btnId) {
+  );  
+  if (ctx.query?.btn) {
+    const btnId = ctx.query.btn;
     const buttonUrl = `${process.env.API_URL}/buttons/findById/${btnId}`;
     const currentButtonFetch = await fetch(buttonUrl, {
       next: { revalidate: 10 },
@@ -81,4 +58,3 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
   }
   return { props: serverProps };
 };
-*/

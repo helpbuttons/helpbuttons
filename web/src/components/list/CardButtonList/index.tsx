@@ -2,21 +2,23 @@
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
-import { Link } from 'elements/Link';
 import { CardButtonHeadMedium } from 'components/button/CardButton';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import { store } from 'pages';
 import { updateCurrentButton } from 'state/Explore';
+import { store } from 'pages';
 
 export default function CardButtonList({ buttonTypes, button }) {
   const buttonType = buttonTypes.find(
     (buttonTemplate) => buttonTemplate.name == button.type,
   );
-
   return (
     <>
       {buttonType && (
-        <div className="list__element" onClick={() => store.emit(new updateCurrentButton(button))}>
+        <div className="list__element" 
+          onClick={() => {
+          store.emit(new updateCurrentButton(button))
+          }}
+          >
           <div style={buttonColorStyle(buttonType.cssColor)}>
               <div className="card-button-list">
                 {button.image && (

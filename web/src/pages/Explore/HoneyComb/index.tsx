@@ -207,11 +207,13 @@ function useExploreSettings({
       const showFilters = params.get('showFilters');
       if (lat && lng) {
         URLParamsCoords = true;
+        let newUpdateSettings = {center: [lat,lng]}
+        if(Number.isInteger(zoom))
+        {
+          newUpdateSettings = {...newUpdateSettings, zoom: zoom}
+        }
         store.emit(
-          new UpdateExploreSettings({
-            center: [lat, lng],
-            zoom: zoom,
-          }),
+          new UpdateExploreSettings(newUpdateSettings),
         );
       }
       if(btnId)
@@ -250,16 +252,25 @@ function useExploreSettings({
 
   useEffect(() => {
     if (exploreSettings?.center && !URLParamsCoords) {
+      let obj = {};
       let urlParams = new URLSearchParams();
 
       urlParams.append('zoom', exploreSettings.zoom);
       urlParams.append('lat', roundCoord(exploreSettings.center[0]));
       urlParams.append('lng', roundCoord(exploreSettings.center[1]));
+      obj = {
+        zoom: exploreSettings.zoom,
+        lat: exploreSettings.center[0],
+        lng: exploreSettings.center[1]
+      }
+
       if(currentButton)
       {
+        obj = {...obj, btn: currentButton.id}
         urlParams.append('btn', currentButton.id);
       }
-      window.location.replace(`#?${urlParams.toString()}`);
+      window.history.pushState(obj, "Title", `/Explore?${urlParams.toString()}`);
+      // window.location.replace(`#?${urlParams.toString()}`);
     }
   }, [exploreSettings, currentButton]);
 }
