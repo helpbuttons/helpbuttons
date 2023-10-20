@@ -15,15 +15,7 @@ import {
   ButtonFilters,
   defaultFilters,
 } from 'components/search/AdvancedFilters/filters.type';
-import {
-  BrowseType,
-  HbMapTiles,
-} from 'components/map/Map/Map.consts';
 import { Bounds } from 'pigeon-maps';
-import {
-  LocalStorageVars,
-  localStorageService,
-} from 'services/LocalStorage';
 
 export interface ExploreState {
   draftButton: any;
@@ -39,6 +31,7 @@ export interface ExploreSettings {
   honeyCombFeatures: any;
   prevZoom: number;
   loading: boolean;
+  hexagonClicked: string;
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -48,6 +41,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   honeyCombFeatures: null,
   prevZoom: 0,
   loading: true,
+  hexagonClicked: null
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
@@ -298,6 +292,20 @@ export class UpdateExploreUpdating implements UpdateEvent {
     });
   }
 }
+
+export class UpdateHexagonClicked implements UpdateEvent {
+  public constructor(private listButtons: Button[], private hexagonClicked: string) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.listButtons = this.listButtons;
+      newState.explore.map.loading = false;
+      newState.explore.map.initialized = true;
+      newState.explore.settings.hexagonClicked = this.hexagonClicked;
+    });
+  }
+}
+
 export class UpdateListButtons implements UpdateEvent {
   public constructor(private listButtons: Button[]) {}
 

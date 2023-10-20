@@ -263,7 +263,6 @@ export default function HomeInfo({
             </>
         </div>
       </div>
-      <NavBottom />
     </>
   );
 }

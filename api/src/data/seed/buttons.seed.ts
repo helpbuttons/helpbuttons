@@ -63,7 +63,7 @@ export class ButtonsSeeder implements Seeder {
       
     });
     
-    await this.userRepository.insert(usersToAdd);
+    // await this.userRepository.insert(usersToAdd);
     console.log(`Added ${usersToAdd.length} users`)
 
     let btnIds =[]
@@ -76,7 +76,10 @@ export class ButtonsSeeder implements Seeder {
 
     const buttonTemplates = JSON.parse(network[0].buttonTemplates)
     console.log('success')
+    
     const buttonTypes = buttonTemplates.map((btnTemplate) => btnTemplate.name)
+    console.log('button types found:')
+    console.log(JSON.stringify(buttonTemplates))
     const btns = buttons.buttons.filter((button) => {
       if (buttonTypes.indexOf(capitalizeText(button.type)) > -1){
         return true;
