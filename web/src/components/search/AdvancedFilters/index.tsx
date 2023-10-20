@@ -18,6 +18,7 @@ import { uniqueArray } from 'shared/sys.helper';
 import MultiSelectOption from 'elements/MultiSelectOption';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import { AdvancedFiltersCustomFields } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
+import { Dropdown } from 'elements/Dropdown/Dropdown';
 
 
 export default function AdvancedFilters({
@@ -117,6 +118,10 @@ export default function AdvancedFilters({
             classNameExtra="filters--vertical"
             onSubmit={handleSubmit(onSubmit)}
           >
+            <AdvancedFiltersSortDropDown
+              orderBy={watch('orderBy')}
+              setOrderBy={(value) => setValue('orderBy',value)}
+            />
             <FieldText
               name="query"
               label={t('buttonFilters.queryLabel')}
@@ -216,4 +221,48 @@ export default function AdvancedFilters({
       )}
     </>
   );
+}
+
+export function AdvancedFiltersSortDropDown({orderBy, setOrderBy }) {
+
+//   -Order by creation date (default)
+// -Order by proximity (When a place is selected)
+// -Order by price
+// -Order by event date (Closer dates appear before)
+  const dropdownOptions = [
+    {
+      value: ButtonsOrderBy.DATE,
+      name: t('buttonFilters.byDate'),
+    },
+    {
+      value: ButtonsOrderBy.PROXIMITY,
+      name: t('buttonFilters.byProximity'),
+    },
+    {
+      value: ButtonsOrderBy.PRICE,
+      name: t('buttonFilters.byPrice'),
+    },
+    {
+      value: ButtonsOrderBy.EVENT_DATE,
+      name: t('buttonFilters.byEventDate'),
+    },
+  ];
+
+  return (
+    <div className="form__field">
+      <Dropdown
+        label={t('buttonFilters.orderBy')}
+        options={dropdownOptions}
+        onChange={(value) => {setOrderBy(value)}}
+        defaultSelected={orderBy}
+      />
+    </div>
+  );
+}
+
+export enum ButtonsOrderBy {
+  DATE = 'date',
+  PROXIMITY = 'proximity',
+  PRICE = 'price',
+  EVENT_DATE = 'eventDate',
 }
