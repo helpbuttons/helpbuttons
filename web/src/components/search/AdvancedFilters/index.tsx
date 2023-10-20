@@ -17,7 +17,7 @@ import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 import { uniqueArray } from 'shared/sys.helper';
 import MultiSelectOption from 'elements/MultiSelectOption';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
-import { AdvancedFiltersCustomFields } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
+import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 
 
@@ -121,6 +121,8 @@ export default function AdvancedFilters({
             <AdvancedFiltersSortDropDown
               orderBy={watch('orderBy')}
               setOrderBy={(value) => setValue('orderBy',value)}
+              buttonTypes={buttonTypes}
+              selectedButtonTypes={watch('helpButtonTypes')}
             />
             <FieldText
               name="query"
@@ -223,13 +225,13 @@ export default function AdvancedFilters({
   );
 }
 
-export function AdvancedFiltersSortDropDown({orderBy, setOrderBy }) {
+export function AdvancedFiltersSortDropDown({orderBy, setOrderBy, buttonTypes, selectedButtonTypes }) {
 
 //   -Order by creation date (default)
 // -Order by proximity (When a place is selected)
 // -Order by price
 // -Order by event date (Closer dates appear before)
-  const dropdownOptions = [
+  let dropdownOptions = [
     {
       value: ButtonsOrderBy.DATE,
       name: t('buttonFilters.byDate'),
@@ -238,16 +240,9 @@ export function AdvancedFiltersSortDropDown({orderBy, setOrderBy }) {
       value: ButtonsOrderBy.PROXIMITY,
       name: t('buttonFilters.byProximity'),
     },
-    {
-      value: ButtonsOrderBy.PRICE,
-      name: t('buttonFilters.byPrice'),
-    },
-    {
-      value: ButtonsOrderBy.EVENT_DATE,
-      name: t('buttonFilters.byEventDate'),
-    },
   ];
 
+  dropdownOptions = getCustomDropDownOrderBy(dropdownOptions,buttonTypes, selectedButtonTypes )
   return (
     <div className="form__field">
       <Dropdown
