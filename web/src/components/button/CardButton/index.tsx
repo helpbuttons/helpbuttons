@@ -93,11 +93,9 @@ export function CardButtonHeadMedium({ button, buttonType }) {
       </div>
 
       <div className="card-button__title">{button.title}</div>
-      {!button.image && (
-        <div className="card-button-list__paragraph">
+        <div className="card-button-list__paragraph--small-card card-button-list__paragraph">
           <p>{button.description}</p>
         </div>
-      )}
       {/* <div className="card-button__hashtags">
         {button.tags.map((tag, idx) => {
           return (
@@ -322,28 +320,50 @@ export function CardButtonHeadActions({ button }) {
   );
 }
 export function CardButtonImages({ button }) {
+
+  const images = button.images;
+  
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const next = () => {
+    setCurrentIndex((currentIndex + 1) % images.length);
+  };
+
+  const prev = () => {
+    setCurrentIndex((currentIndex - 1 + images.length) % images.length);
+  };
+
   return (
     <>
-      {button.image && (
+      {button.images && (
         <div className="card-button__picture">
-          <div className="card-button__picture-nav">
-            <div className="arrow btn-circle__icon">
-              <IoChevronBackOutline />
+          {button.images.length > 1 && 
+            <div className="card-button__picture-nav">
+              <div className="arrow btn-circle__icon" onClick={prev}>
+                <IoChevronBackOutline />
+              </div>
+              <div className="arrow btn-circle__icon" onClick={next}>
+                <IoChevronForwardOutline />
+              </div>
             </div>
-            <div className="arrow btn-circle__icon">
-              <IoChevronForwardOutline />
-            </div>
-          </div>
-
+          }
+          {images.map((image) => (
+          <div
+            key={image.id}
+            className={
+              images[currentIndex] === image ? 'show' : 'hide'
+            }
+          >
           <ImageWrapper
             imageType={ImageType.buttonCard}
-            src={makeImageUrl(button.image)}
+            src={makeImageUrl(image)}
             alt={button.description}
           />
-        </div>
-      )}
-    </>
-  );
+          </div>
+      ))}
+      </div>
+  )}
+  </>)
 }
 export function CardButtonOptions() {
   return (

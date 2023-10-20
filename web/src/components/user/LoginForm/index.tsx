@@ -31,10 +31,12 @@ export default function LoginForm() {
     );
   };
 
-  const onSuccess = () => {
-    let returnUrl: string = '/HomeInfo';
+  const onSuccess = (userData) => {
 
     alertService.success(t('user.loginSucess'))
+    const locale = userData.locale != 'en' ? userData.locale : ''; 
+    let returnUrl: string = `${locale}/HomeInfo`;
+
     if (router?.query?.returnUrl) {
       returnUrl = router.query.returnUrl.toString();
     }

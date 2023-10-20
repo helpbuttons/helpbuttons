@@ -95,10 +95,10 @@
     "moderation": "Moderacion"
   },
   "activities": {
-    "newbutton": "Creaste <a href='/ButtonFile/{0}'>{1}</a> en <a href={`/Explore/?latitude={2}&longitude={3}`}>{4}</a>",
-    "newpost": "Hay una nueva publicación del autor en el botón de ayuda  <a href='/ButtonFile/{1}'>{2}</a>",
+    "newbutton": "Creaste un nuevo botón '{0}' en '{1}'",
+    "newpost": "Hay una nueva publicacion '{0}' en el botón '{1}' por '{2}'",
+    "newcomment": "'{2}' ha comentado '{0}' en respuesta al post '{1}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
-    "newcomment": "Hay un nuevo comentario '{0}' publicado en el post '{1}' . Puedes verlo en el botón de ayuda llamado <a href='/ButtonFile/{2}'>{3}</a>",
     "markedAllAsRead": ""
   },
   "user": {

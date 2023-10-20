@@ -16,6 +16,7 @@ import {
 import _ from 'lodash';
 import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import Loading from 'components/loading';
+import { IoStorefrontSharp } from 'react-icons/io5';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -62,10 +63,18 @@ export default function HexagonExploreMap({
       >
         <Overlay anchor={[100, 100]}>
           <div className="search-map__network-title">
-            {selectedNetwork.name}
+            <div>{selectedNetwork.name}</div>
             <div className="search-map__sign">
               made with{' '}
               <a href="https://helpbuttons.org">Helpbuttons</a>
+            </div>
+            <div onClick={() => {      
+              store.emit(
+               new UpdateExploreSettings({
+                center: selectedNetwork.exploreSettings.center
+              }));
+            }}>
+              <IoStorefrontSharp/>
             </div>
           </div>
         </Overlay>

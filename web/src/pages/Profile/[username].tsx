@@ -53,7 +53,7 @@ export default function Profile() {
     if (userProfile) {
       if (userProfile.role == Role.admin) {
         store.emit(
-          new FindAdminButton(userProfile.id, (buttonData) => {
+          new FindAdminButton((buttonData) => {
             if (buttonData?.id) {
               setAdminButtonId(() => buttonData.id);
             }

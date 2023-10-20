@@ -17,13 +17,15 @@ $hashtag-color-l-gray: $color-med-gray;
 
 .hashtag {
 
-  display: inline-block;
+  display: flex;
   vertical-align: middle;
-  width: auto;
+  align-items: baseline;
+  width: fit-content;
   border-radius: $border-radius-semicircle;
-  padding: 0.3rem 1.2rem;
+  padding: $hashtag-padding-xsmall $padding-medium 0.1rem $padding-medium;
+
   font-size: $font-size-general;
-  line-height: 0.6rem;
+  line-height: 1rem;
   border: 2px solid $hashtag-color-l-gray;
   text-decoration: none;
   margin: 0 $hashtag-margin-x $hashtag-margin-x 0;
@@ -69,8 +71,30 @@ $hashtag-color-l-gray: $color-med-gray;
 
     background-color: $hashtag-color-gray;
     padding: $hashtag-padding-xsmall;
-    border-radius: $hashtag-border-radius;
+    // border-radius: $hashtag-border-radius;
   }
+}
+
+.hashtag--with-icon {
+
+  display: flex;
+  vertical-align: middle;
+  justify-content: flex-start;
+  gap: $hashtag-padding-xsmall;
+  padding-left: $hashtag-padding-xsmall;
+  align-items: center;
+  width: auto;
+  border-radius: 24px;
+  padding: 0.3rem 1rem 0.3rem 0.4rem;
+
+  & svg {
+    height: 15px;
+    width: 15px;
+
+    background-color: transparent;
+    padding: 0;
+  }
+  
 }
 
 

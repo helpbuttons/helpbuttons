@@ -12,6 +12,7 @@ import {
   IoArrowUndoOutline,
   IoCloseOutline,
   IoMailOutline,
+  IoPersonOutline,
   IoTrashBinOutline,
 } from 'react-icons/io5';
 
@@ -127,8 +128,8 @@ export function FeedElement({
       <div className="card-notification">
         <div className="card-notification__comment-count">
           <div className="card-notification__label">
-            <div className="hashtag hashtag--blue">
-              {t('feed.update')}
+            <div className="hashtag hashtag--blue hashtag--with-icon">
+              <IoPersonOutline/>{t('feed.update')}
             </div>
           </div>
         </div>
