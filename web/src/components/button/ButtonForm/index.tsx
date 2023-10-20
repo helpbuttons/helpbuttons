@@ -23,6 +23,7 @@ import Router from 'next/router';
 import { SaveButtonDraft } from 'state/Explore';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldCustomFields from '../ButtonType/CustomFields/FieldCustomFields';
+import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 
 export default function ButtonForm({
   onSubmit,
@@ -160,17 +161,13 @@ export default function ButtonForm({
               }}
               tags={watch('tags')}
             />
-
-            <FieldImageUpload
-              name="image"
-              label={t('button.imagesLabel')}
-              // width={55}
-              // height={125}
-              setValue={setValue}
-              control={control}
-              {...register('image')}
-              validationError={errors.image}
-            />
+            <FieldImageUploads 
+            defaultImages={watch('images')}
+            name='images'
+            label={t('button.imagesLabel')} 
+            maxNumber={5}
+            setValue={(images) => setValue('images', images)}
+            validationError={errors.images}/>
             <>
               {selectedNetwork && (
                 <>
