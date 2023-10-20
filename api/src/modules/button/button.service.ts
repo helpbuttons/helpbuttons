@@ -108,7 +108,7 @@ export class ButtonService {
             });
         }
 
-        if(createDto.images.length > 0)
+        if(createDto.images?.length > 0)
         {
           await Promise.all(createDto.images.map(async (image) => {
             if (isImageData(image)) {
@@ -181,7 +181,7 @@ export class ButtonService {
       await this.tagService.updateTags('button', id, button.tags);
     }
 
-    if(updateDto.images.length > 0)
+    if(updateDto.images?.length > 0)
     {
       await Promise.all(updateDto.images.map(async (image) => {
         if (isImageData(image)) {

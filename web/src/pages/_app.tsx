@@ -34,7 +34,7 @@ export default appWithTranslation(MyApp);
 
 const useActivitesPool = (loggedInUser) => {
   const increment = useCallback(() => refeshActivities(), []);
-  useInterval(increment, 10000, {paused: !loggedInUser });
+  useInterval(increment, 10000, { paused: !loggedInUser });
 };
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -205,7 +205,6 @@ function MyApp({ Component, pageProps }) {
   useActivitesPool(loggedInUser);
 
   useEffect(() => {
-
     // Function to adjust the height of the index__container based on the actual viewport height
     const adjustHeight = () => {
       const vh = window.innerHeight;
@@ -246,7 +245,32 @@ function MyApp({ Component, pageProps }) {
       }
   }, [selectedNetwork]);
 
-  const SEOpages = ['Login', 'HomeInfo', 'ButtonFile'];
+  const [pageBody, setPageBody] = useState(
+    <div className="index__content">
+      <Component {...pageProps} />
+      <NavBottom />
+    </div>,
+  );
+
+  useEffect(() => {
+    if (authorized) {
+      setPageBody(() => (
+        <div className="index__content">
+          <Component {...pageProps} />
+          <NavBottom />
+        </div>
+      ));
+    }
+  }, [authorized, pageProps]);
+
+  useEffect(() => {
+    if (pageName == 'Error') {
+      <div className="index__content">
+        <Component {...pageProps} />
+        <NavBottom />
+      </div>;
+    }
+  }, [pageName]);
 
   return (
     <>
@@ -265,34 +289,7 @@ function MyApp({ Component, pageProps }) {
         }
       >
         <Alert />
-        {(() => {
-          if (config && authorized && selectedNetwork) {
-            return (
-              <div className="index__content">
-                <Component {...pageProps} />
-                <NavBottom />
-              </div>
-            );
-          } else if (
-            isSetup ||
-            SEOpages.indexOf(pageName) > -1
-          ) {
-            return (
-              <div className="index__content">
-                <Component {...pageProps} />
-              </div>
-            );
-          } else if (pageName == 'Error') {
-            return (
-              <div className="index__content">
-                <Component {...pageProps} />
-                <NavBottom />
-              </div>
-            );
-          }
-
-          return <Loading />;
-        })()}
+        {pageBody}
       </div>
     </>
   );

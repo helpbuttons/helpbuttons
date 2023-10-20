@@ -86,7 +86,7 @@ export default function HexagonExploreMap({
                 if (hexagonFeature.properties.count > 0) {
                   setHexagonClicked(() => feature.payload);
                 } else {
-                  setHexagonClicked(() => null);
+                  setHexagonClicked(() => 'unset');
                 }
               }}
               feature={hexagonFeature}
@@ -132,7 +132,7 @@ export default function HexagonExploreMap({
                 return { fill: 'white' };
               }}
               onClick={() => {
-                setHexagonClicked(() => null);
+                setHexagonClicked(() => 'unset');
               }}
             />
           )}
