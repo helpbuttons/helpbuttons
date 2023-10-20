@@ -61,7 +61,12 @@
     "whenLabel": "When?",
     "whenExplain": "Filter events by date",
     "priceExplain": "Filter by price",
-    "whereLabel" : "Where"
+    "whereLabel": "Where",
+    "byPrice": "By price",
+    "byDate": "By date",
+    "byProximity": "By proximity",
+    "byEventDate": "By start of event",
+    "orderBy": "Order by"
   },
   "setup": {
     "hostname": "Hostname",

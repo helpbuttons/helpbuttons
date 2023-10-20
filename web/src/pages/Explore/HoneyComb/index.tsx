@@ -35,13 +35,13 @@ import {
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import { useDebounce, useToggle } from 'shared/custom.hooks';
-import AdvancedFilters from 'components/search/AdvancedFilters';
+import AdvancedFilters, { ButtonsOrderBy } from 'components/search/AdvancedFilters';
 import { Button } from 'shared/entities/button.entity';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
 import { getUrlParams, uniqueArray } from 'shared/sys.helper';
-import { applyCustomFieldsFilters } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
+import { applyCustomFieldsFilters, orderByEventDate, orderByPrice } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
 import { IoClose } from 'react-icons/io5';
@@ -375,18 +375,16 @@ function useHexagonMap({
       filters,
       boundsButtons,
     );
-    let filteredButtonsOrdered = orderByClosestToCenter(
-      filters.where?.center,
-      filteredButtons,
-    );
+
+    const orderedFilteredButtons = orderBy(filteredButtons, filters.orderBy, exploreSettings.center)
+
     seth3TypeDensityHexes(() => {
       return filteredHexagons;
     });
 
-    store.emit(
-      new UpdateBoundsFilteredButtons(filteredButtonsOrdered),
-    );
-    store.emit(new UpdateListButtons(filteredButtonsOrdered));
+    store.emit(new UpdateBoundsFilteredButtons(orderedFilteredButtons));
+    store.emit(new UpdateListButtons(orderedFilteredButtons));
+
     setIsRedrawingMap(() => false);
   }
 
@@ -555,10 +553,7 @@ function useHexagonMap({
           debouncedHexagonClicked.properties.buttons &&
           debouncedHexagonClicked.properties.buttons.length > 0
         ) {
-          let hexagonButtonsOrdered = orderByClosestToCenter(
-            filters.where?.center,
-            debouncedHexagonClicked.properties.buttons,
-          );
+          const hexagonButtonsOrdered = orderBy(debouncedHexagonClicked.properties.buttons, filters.orderBy, filters.where?.center)
           store.emit(
             new UpdateHexagonClicked(
               hexagonButtonsOrdered,
@@ -601,3 +596,25 @@ const orderByClosestToCenter = (center, buttons) => {
 
   return buttonsDistance.sort(buttonDistance);
 };
+
+
+const orderBy = (buttons, orderBy, center) => {
+  if(orderBy == ButtonsOrderBy.PROXIMITY)
+  {
+    return orderByClosestToCenter(center,buttons)
+  }
+  if(orderBy == ButtonsOrderBy.DATE)
+  {
+    return buttons
+  }
+  if(orderBy == ButtonsOrderBy.PRICE)
+  {
+    return orderByPrice(buttons)
+
+  }
+  if(orderBy == ButtonsOrderBy.EVENT_DATE)
+  {
+    return orderByEventDate(buttons)
+  }
+  return buttons;
+}

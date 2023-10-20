@@ -3,7 +3,7 @@
     "explore": "Explora",
     "create": "Crear",
     "profile": "Perfil",
-    "activity": "Atividad",
+    "activity": "Actividad",
     "faqs": "Faqs",
     "login": "Login",
     "home": "Inicio",
@@ -92,7 +92,8 @@
     "priceFieldAdd": "",
     "moderationList": "Moderacion",
     "createSupportButton": "Crea tu boton de soporte para tu red",
-    "moderation": "Moderacion"
+    "moderation": "Moderacion",
+    "customFields": ""
   },
   "activities": {
     "newbutton": "Creaste un nuevo botón '{0}' en '{1}'",
@@ -170,9 +171,15 @@
     "price": "Precio",
     "minPricePlaceholder": "Desde",
     "maxPriceLabel": "Hasta",
-    "whereLabel" : "Where",
+    "whereLabel": "Where",
     "whenLabel": "Cuándo?",
-    "whenExplain": "Filtra los eventos por fecha"
+    "whenExplain": "Filtra los eventos por fecha",
+    "byDate": "Por fecha de creacion",
+    "byPrice": "Por precio",
+    "orderBy": "Ordenar por",
+    "priceExplain": "",
+    "byProximity": "Por proximidade",
+    "byEventDate": "By ínicio del evento"
   },
   "button": {
     "copy": "Copiar enlace",
@@ -197,7 +204,8 @@
     "whereLabel": "Dónde?",
     "pickButtonTemplateColor": "Elige color para tu tipo de botón de ayuda",
     "unknownPlace": "Sitio desconocido",
-    "hideAddress": "Esconder ubicación exacta"
+    "hideAddress": "Esconder ubicación exacta",
+    "created": ""
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -250,7 +258,8 @@
     "calendarHeaderText": "Elige fecha y hora",
     "from": "De... ",
     "until": "Hasta... ",
-    "eventFieldAdd": "Add date"
+    "eventFieldAdd": "Add date",
+    "headerText": ""
   },
   "faqs": {
     "title": "Preguntas frecuentes",

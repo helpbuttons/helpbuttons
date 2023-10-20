@@ -7,6 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 import { readableShortDate } from 'shared/date.utils';
 import { formatCurrency } from 'shared/currency.utils';
 import { useEffect, useState } from 'react';
+import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
 
 export function AdvancedFiltersCustomFields({
   buttonTypes,
@@ -19,20 +20,7 @@ export function AdvancedFiltersCustomFields({
 
   useEffect(() => {
     if (selectedButtonTypes) {
-      const filteredButtonTypes = buttonTypes.filter((buttonType) => {
-        
-        if (selectedButtonTypes.indexOf(buttonType.name) > -1) {
-          return true;
-        }
-        return false;
-      });
-      let _customFields = filteredButtonTypes.map(
-        (btnType) => btnType.customFields,
-      );
-      _customFields = _.flatten(
-        _customFields.filter((value) => value),
-      );
-      _customFields = _.uniq(_customFields.map((value) => value.type));
+      const _customFields = getCustomFields(buttonTypes, selectedButtonTypes)
       setCustomFields(() => _customFields);
     }
   }, [selectedButtonTypes]);
@@ -206,4 +194,51 @@ function readableDateRange(dateRange) {
     ' - ' +
     readableShortDate(dateRange[1])
   );
+}
+
+export const getCustomDropDownOrderBy = (dropdownOptions, buttonTypes, selectedButtonTypes) => 
+{
+  const _customFields = getCustomFields(buttonTypes, selectedButtonTypes)
+  _customFields.map((customField) => {
+    if(customField == 'price') {
+      dropdownOptions.push({
+        value: ButtonsOrderBy.PRICE,
+        name: t('buttonFilters.byPrice'),
+      })
+    }
+
+    if(customField == 'event') {
+      dropdownOptions.push({
+      value: ButtonsOrderBy.EVENT_DATE,
+      name: t('buttonFilters.byEventDate'),
+    });
+    }
+  })
+  return dropdownOptions
+}
+
+export const orderByPrice = (buttons) => {
+  return buttons.filter((button) => button.price > 0).sort((buttonA, buttonB) => buttonA.price > buttonB.price)
+}
+
+export const orderByEventDate = (buttons) => {
+  return buttons.filter((button) => button.eventStart).sort((buttonA, buttonB) => new Date(buttonA.eventStart) - new Date(buttonB.eventStart))
+}
+
+const getCustomFields = (buttonTypes, selectedButtonTypes) => {
+  const filteredButtonTypes = buttonTypes.filter((buttonType) => {
+      
+    if (selectedButtonTypes.indexOf(buttonType.name) > -1) {
+      return true;
+    }
+    return false;
+  });
+  let _customFields = filteredButtonTypes.map(
+    (btnType) => btnType.customFields,
+  );
+  _customFields = _.flatten(
+    _customFields.filter((value) => value),
+  );
+  _customFields = _.uniq(_customFields.map((value) => value.type));
+  return _customFields;
 }
