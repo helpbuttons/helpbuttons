@@ -320,28 +320,50 @@ export function CardButtonHeadActions({ button }) {
   );
 }
 export function CardButtonImages({ button }) {
+
+  const images = button.images;
+  
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const next = () => {
+    setCurrentIndex((currentIndex + 1) % images.length);
+  };
+
+  const prev = () => {
+    setCurrentIndex((currentIndex - 1 + images.length) % images.length);
+  };
+
   return (
     <>
-      {button.image && (
+      {button.images && (
         <div className="card-button__picture">
-          <div className="card-button__picture-nav">
-            <div className="arrow btn-circle__icon">
-              <IoChevronBackOutline />
+          {button.images.length > 1 && 
+            <div className="card-button__picture-nav">
+              <div className="arrow btn-circle__icon" onClick={prev}>
+                <IoChevronBackOutline />
+              </div>
+              <div className="arrow btn-circle__icon" onClick={next}>
+                <IoChevronForwardOutline />
+              </div>
             </div>
-            <div className="arrow btn-circle__icon">
-              <IoChevronForwardOutline />
-            </div>
-          </div>
-
+          }
+          {images.map((image) => (
+          <div
+            key={image.id}
+            className={
+              images[currentIndex] === image ? 'show' : 'hide'
+            }
+          >
           <ImageWrapper
             imageType={ImageType.buttonCard}
-            src={makeImageUrl(button.image)}
+            src={makeImageUrl(image)}
             alt={button.description}
           />
-        </div>
-      )}
-    </>
-  );
+          </div>
+      ))}
+      </div>
+  )}
+  </>)
 }
 export function CardButtonOptions() {
   return (

@@ -323,10 +323,14 @@ $card-button-border-height: $border-general-height;
 
     width: auto;
     object-fit: cover;
-
-
   }
 
+  .hide{
+    display:none;
+  }
+  .show{
+    display:block;
+  }
 }
 
 //image arrows
@@ -341,7 +345,7 @@ $card-button-border-height: $border-general-height;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  display: none; //revise if image navigation
+  // display: none; //revise if image navigation
 
 }
 

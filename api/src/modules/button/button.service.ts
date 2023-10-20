@@ -17,7 +17,7 @@ import { StorageService } from '../storage/storage.service';
 import { User } from '../user/user.entity';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { Role } from '@src/shared/types/roles';
-import { isImageData } from '@src/shared/helpers/imageIsFile';
+import { isImageData, isImageUrl} from '@src/shared/helpers/imageIsFile';
 import { maxResolution } from '@src/shared/types/honeycomb.const';
 import { PostService } from '../post/post.service';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
@@ -108,15 +108,32 @@ export class ButtonService {
             });
         }
 
-        if(createDto.image)
+        if(createDto.images.length > 0)
         {
-          try {
-            button.image = await this.storageService.newImage64(
-              createDto.image,
-            );
-          } catch (err) {
-            throw new ValidationException({ image: err.message });
-          }
+          await Promise.all(createDto.images.map(async (image) => {
+            if (isImageData(image)) {
+                try {
+                  const newImage = await this.storageService.newImage64(
+                    image,
+                  );
+                  if(newImage){
+                    button.images.push(newImage)
+                  }
+                } catch (err) {
+                  throw new ValidationException({ images: err.message });
+                }
+              }
+              else if(isImageUrl(image)){
+                button.images.push(image)
+              }else{
+                console.error('no image data, or image url?')
+                console.log(image)
+              }
+          }))
+        }
+        if(button.images.length > 0)
+        {
+          button.image = button.images[0]
         }
         await this.buttonRepository.insert([button])
       },
@@ -155,6 +172,7 @@ export class ButtonService {
     const button = {
       ...updateDto,
       ...location,
+      images: [],
       id,
       tags: this.tagService.formatTags(updateDto.tags)
     };
@@ -163,17 +181,32 @@ export class ButtonService {
       await this.tagService.updateTags('button', id, button.tags);
     }
 
-    if (isImageData(updateDto.image)) {
-      try {
-        const newImage = await this.storageService.newImage64(
-          updateDto.image,
-        );
-        if (newImage) {
-          button.image = newImage;
-        }
-      } catch (err) {
-        throw new ValidationException({ logo: err.message });
-      }
+    if(updateDto.images.length > 0)
+    {
+      await Promise.all(updateDto.images.map(async (image) => {
+        if (isImageData(image)) {
+            try {
+              const newImage = await this.storageService.newImage64(
+                image,
+              );
+              if(newImage){
+                button.images.push(newImage)
+              }
+            } catch (err) {
+              throw new ValidationException({ images: err.message });
+            }
+          }
+          else if(isImageUrl(image)){
+            button.images.push(image)
+          }else{
+            console.error('no image data, or image url?')
+            console.log(image)
+          }
+      }))
+    }
+    if(button.images.length > 0)
+    {
+      button.image = button.images[0]
     }
 
     return this.buttonRepository.save([button]);
