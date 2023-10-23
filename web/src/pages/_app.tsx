@@ -245,33 +245,6 @@ function MyApp({ Component, pageProps }) {
       }
   }, [selectedNetwork]);
 
-  const [pageBody, setPageBody] = useState(
-    <div className="index__content">
-      <Component {...pageProps} />
-      <NavBottom />
-    </div>,
-  );
-
-  useEffect(() => {
-    if (authorized) {
-      setPageBody(() => (
-        <div className="index__content">
-          <Component {...pageProps} />
-          <NavBottom />
-        </div>
-      ));
-    }
-  }, [authorized, pageProps]);
-
-  useEffect(() => {
-    if (pageName == 'Error') {
-      <div className="index__content">
-        <Component {...pageProps} />
-        <NavBottom />
-      </div>;
-    }
-  }, [pageName]);
-
   return (
     <>
       <Head>
@@ -289,7 +262,10 @@ function MyApp({ Component, pageProps }) {
         }
       >
         <Alert />
-        {pageBody}
+        <div className="index__content">
+          <Component {...pageProps} />
+          <NavBottom />
+        </div>
       </div>
     </>
   );
