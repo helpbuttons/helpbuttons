@@ -5,12 +5,12 @@ import CardProfile, {
 
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { User } from 'shared/entities/user.entity';
 import { FindAdminButton, FindUser, Logout } from 'state/Users';
 import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
+import { useRouter } from 'next/router';
 
 export default function Profile() {
   const [userProfile, setUserProfile] = useState(null);
@@ -31,8 +31,11 @@ export default function Profile() {
   const removeProfile = () => {
     console.log('remove myself!');
   };
-  const username = router.query.username as string;
+  const router = useRouter();
+
   useEffect(() => {
+    if(!router.isReady) return;
+    const username = router.query.username as string;
     let newUserProfile = '';
     if (!userProfile) {
       if (knownUsers) {
@@ -61,15 +64,13 @@ export default function Profile() {
         );
       }
     }
-  }, [userProfile]);
-
-  useEffect(() => {
     if (loggedInUser) {
       if (loggedInUser.username == username) {
         router.push('/Profile');
       }
     }
-  }, [loggedInUser]);
+  }, [userProfile, loggedInUser, router.isReady]);
+
   return (
     <>
       <div className="body__content">

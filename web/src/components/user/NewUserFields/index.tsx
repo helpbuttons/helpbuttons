@@ -3,6 +3,7 @@ import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
+import { useEffect, useState } from 'react';
 import { getHostname } from 'shared/sys.helper';
 
 export default function NewUserFields({
@@ -12,6 +13,12 @@ export default function NewUserFields({
   setValue,
   watch,
 }) {
+  const [hostname, setHostname] = useState('')
+  useEffect(() => {
+    if(window){
+      setHostname(() => getHostname())
+    }
+  }, [])
   return (
     <>
       <FieldText
@@ -25,7 +32,7 @@ export default function NewUserFields({
       <FieldText
         name="username"
         label={`${t('user.username')} ${watch('username')}@${
-          getHostname()
+          hostname
         }`}
         classNameInput="squared"
         placeholder={t('user.usernamePlaceHolder')}

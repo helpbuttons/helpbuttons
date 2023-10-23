@@ -347,9 +347,9 @@ export function CardButtonImages({ button }) {
               </div>
             </div>
           }
-          {images.map((image) => (
+          {images.map((image, idx) => (
           <div
-            key={image.id}
+            key={idx}
             className={
               images[currentIndex] === image ? 'show' : 'hide'
             }

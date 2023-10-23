@@ -1,15 +1,15 @@
 import Popup from 'components/popup/Popup';
 import Form from 'elements/Form';
 import t from 'i18n';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'elements/Link';
 import FieldText from 'elements/Fields/FieldText';
 import { useForm } from 'react-hook-form';
-import router from 'next/router';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { store } from 'pages';
 import { RequestNewLoginToken } from 'state/Users';
 import { alertService } from 'services/Alert';
+import { useRouter } from 'next/router';
 
 export default function LoginClick() {
   const {
@@ -19,8 +19,8 @@ export default function LoginClick() {
   } = useForm();
   const [errorMsg, setErrorMsg] = useState(undefined);
 
+  const router = useRouter()
   const onSubmit = (data) => {
-    console.log(data);
     store.emit(
       new RequestNewLoginToken(
         data.email,
@@ -35,8 +35,16 @@ export default function LoginClick() {
       ),
     );
   };
+
+  const [params, setParams] = useState([])
+  useEffect(() => {
+    if(!router.isReady)
+    {
+      return;
+    }
+    setParams(() => new URLSearchParams(router.query))
+  },[router.isReady])
   //   RequestNewLoginToken
-  const params: URLSearchParams = new URLSearchParams(router.query);
 
   return (
     <>

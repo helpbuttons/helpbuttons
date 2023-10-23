@@ -1,13 +1,19 @@
 import t from 'i18n';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 import { store } from 'pages';
 import { useEffect } from 'react';
 import { alertService } from 'services/Alert';
 import { ButtonDelete } from 'state/Explore';
 
 export default function ButtonRemove() {
-  const buttonId = router.query.id as string;
+  const router = useRouter()
   useEffect(() => {
+    if(!router.isReady){
+      return;
+    }
+
+    const buttonId = router.query.id as string;
+
     store.emit(
       new ButtonDelete(
         buttonId,
@@ -22,8 +28,8 @@ export default function ButtonRemove() {
         },
       ),
     );
-  }, [])
+  }, [router.isReady])
   
 
-  return <>removing {buttonId}</>;
+  return <>removing</>;
 }
