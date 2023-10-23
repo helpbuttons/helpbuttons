@@ -32,15 +32,13 @@ export default function LoginForm() {
   };
 
   const onSuccess = (userData) => {
-
     alertService.success(t('user.loginSucess'))
-    const locale = userData.locale != 'en' ? userData.locale : ''; 
-    let returnUrl: string = `${locale}/HomeInfo`;
+    let returnUrl: string = `/HomeInfo`;
 
     if (router?.query?.returnUrl) {
       returnUrl = router.query.returnUrl.toString();
     }
-    store.emit(new NavigateTo(returnUrl));
+    router.push(returnUrl, null, { locale: userData.locale })
   };
 
   const onError = (err) => {

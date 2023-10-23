@@ -236,14 +236,17 @@ function MyApp({ Component, pageProps }) {
     if (selectedNetwork?.textColor) {
       setNetworkTextColor(() => selectedNetwork.textColor);
     }
-      if(selectedNetwork && getLocale() != selectedNetwork.locale)
+    if (selectedNetwork)
+    {
+      if(!loggedInUser && getLocale() != selectedNetwork.locale)
       {
         if(selectedNetwork.locale != 'en')
         {
           router.push({ pathname, query }, asPath, { locale: selectedNetwork.locale })
         }
       }
-  }, [selectedNetwork]);
+    }
+  }, [selectedNetwork, loggedInUser]);
 
   return (
     <>
