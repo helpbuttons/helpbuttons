@@ -2,7 +2,7 @@ import { NextPageContext } from 'next';
 import HoneyComb from './HoneyComb';
 import { ServerPropsService } from 'services/ServerProps';
 import SEO from 'components/seo';
-import { ClienteSideRendering } from 'pages/_client';
+import { ClienteSideRendering } from 'pages/_app';
 import { Button } from 'shared/entities/button.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { makeImageUrl } from 'shared/sys.helper';
