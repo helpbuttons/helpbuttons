@@ -242,7 +242,6 @@ function MyApp({ Component, pageProps }) {
       {
         if(selectedNetwork.locale != 'en')
         {
-          console.log('changing to network locale...' + selectedNetwork.locale)
           router.push({ pathname, query }, asPath, { locale: selectedNetwork.locale })
         }
       }
