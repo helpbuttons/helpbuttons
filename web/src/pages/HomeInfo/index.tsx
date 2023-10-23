@@ -17,7 +17,6 @@ import {
   IoHelpOutline,
   IoLogInOutline,
 } from 'react-icons/io5';
-import NavBottom from 'components/nav/NavBottom';
 import SEO from 'components/seo';
 import { ServerPropsService } from 'services/ServerProps';
 import { NextPageContext } from 'next';
