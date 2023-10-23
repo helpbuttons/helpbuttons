@@ -294,3 +294,11 @@ function MyApp({ Component, pageProps }) {
     </>
   );
 }
+
+export const ClienteSideRendering = ({ children }) => {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => setIsClient(true), []);
+  return (<>
+    {isClient && children}</>
+  );
+};
