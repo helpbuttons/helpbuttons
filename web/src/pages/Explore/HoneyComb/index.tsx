@@ -94,7 +94,7 @@ function HoneyComb({ router, selectedNetwork }) {
     filters: exploreMapState.filters,
     boundsFilteredButtons: exploreMapState.boundsFilteredButtons,
     cachedHexagons: exploreMapState.cachedHexagons,
-    buttonTypes: selectedNetwork.buttonTemplates,
+    buttonTypes: selectedNetwork?.buttonTemplates,
   });
 
   const hexagonClickedStored = useStore(
@@ -131,7 +131,7 @@ function HoneyComb({ router, selectedNetwork }) {
           <NavHeader
             hexagonClicked={hexagonClicked}
             toggleShowFiltersForm={toggleShowFiltersForm}
-            totalNetworkButtonsCount={selectedNetwork.buttonCount}
+            totalNetworkButtonsCount={selectedNetwork?.buttonCount}
           />
           <AdvancedFilters
             showFiltersForm={showFiltersForm}

@@ -279,7 +279,7 @@ function Repository() {
               </datalist>
 
           </section>
-
+{/* 
           <h3 className="repository__title">
             elements/checkbox
           </h3>
@@ -349,7 +349,7 @@ function Repository() {
                 </div>
               </label>
             </div>
-          </section>
+          </section> */}
 
 
           <h3 className="repository__title">

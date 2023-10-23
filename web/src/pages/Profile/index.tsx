@@ -7,7 +7,6 @@ import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
-import { User } from 'shared/entities/user.entity';
 import { FindAdminButton, FindUser, Logout } from 'state/Users';
 import Link from 'next/link';
 import {
