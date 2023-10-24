@@ -229,6 +229,8 @@ function useExploreSettings({
             },
           ),
         );
+      }else{
+        store.emit(new updateCurrentButton(null))
       }
       if (showFilters == 'true') {
         toggleShowFiltersForm(true);
