@@ -40,7 +40,10 @@ function NetworkCreation() {
       backgroundColor: '#FFDD02',
       textColor: '#0E0E0E',
       inviteOnly: false,
-      currency: 'EUR'
+      currency: 'EUR',
+      locale: 'en',
+      nomeclature: 'Helpbutton',
+      nomeclaturePlural: 'Helpbuttons'
     },
   });
 
@@ -64,7 +67,9 @@ function NetworkCreation() {
           textColor: data.textColor,
           buttonTemplates: data.buttonTemplates,
           inviteOnly: data.inviteOnly,
-          currency: data.currency
+          currency: data.currency,
+          nomeclature: data.nomeclature,
+          nomeclaturePlural: data.nomeclaturePlural
         },
         () => {
           const onComplete = () => {
@@ -122,6 +127,22 @@ function NetworkCreation() {
       ),
     );
   };
+  const selectedLocale = watch('locale')
+  useEffect(() => {
+    if(selectedLocale){
+      if(selectedLocale == 'es')
+      {
+        setValue('nomeclature', 'boton de ayuda')
+        setValue('nomeclaturePlural', 'botones de ayuda')
+      }
+      if(selectedLocale == 'en')
+      {
+        setValue('nomeclature', 'helpbutton')
+        setValue('nomeclaturePlural', 'helpbuttons')
+      }
+    }
+  }, [selectedLocale])
+
   return (
     <>
       {loggedInUser?.role == Role.admin && (

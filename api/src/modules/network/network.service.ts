@@ -63,7 +63,9 @@ export class NetworkService {
       textColor: createDto.textColor,
       buttonTemplates: JSON.stringify(createDto.buttonTemplates),
       locale: 'en',
-      currency: createDto.currency
+      currency: createDto.currency,
+      nomeclature: createDto.nomeclature,
+      nomeclaturePlural: createDto.nomeclaturePlural,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -193,7 +195,9 @@ export class NetworkService {
       buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
       inviteOnly: updateDto.inviteOnly,
       locale: updateDto.locale,
-      currency: updateDto.currency
+      currency: updateDto.currency,
+      nomeclature: updateDto.nomeclature,
+      nomeclaturePlural: updateDto.nomeclaturePlural,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {

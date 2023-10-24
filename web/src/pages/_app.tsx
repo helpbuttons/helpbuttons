@@ -245,7 +245,7 @@ function MyApp({ Component, pageProps }) {
           router.push({ pathname, query }, asPath, { locale: selectedNetwork.locale })
         }
       }
-      updateNomeclature(selectedNetwork.nomeclature)
+      updateNomeclature(selectedNetwork.nomeclature, selectedNetwork.nomeclaturePlural)
     }
   }, [selectedNetwork, loggedInUser]);
 
