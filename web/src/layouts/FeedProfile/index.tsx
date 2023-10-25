@@ -7,6 +7,7 @@ import { useToggle } from 'shared/custom.hooks';
 import { useState } from 'react';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 import { ActivityEventName } from 'shared/types/activity.list';
+import Popup from 'components/popup/Popup';
 
 export default function FeedProfile({ allActivities }) {
   const [activities, setActivities] = useState(allActivities);
@@ -41,39 +42,39 @@ export default function FeedProfile({ allActivities }) {
     });
   };
   return (
-    <div className='popup'>
-      <div className="feed-selector feed-selector--activity">
-        <Dropdown
-          options={notificationTypeOptions}
-          onChange={onChange}
-          defaultSelected={"all"}
-        />
-      </div>
-
-      <div className="feed-section--activity">
-        <div className="feed-section--activity-content">
-          {activities &&
-            activities.map((activity, key) => {
-              return (
-                <div className="feed-element" key={key}>
-                  <CardNotification activity={activity} />
-                </div>
-              );
-            })}
-          {(!activities || activities.length < 1) && (
-            <div className="feed__empty-message">
-              <div className="feed__empty-message--prev">
-                {t('activities.noactivity', ['activities'])}
-              </div>
-              <Btn
-                caption={t('explore.createEmpty')}
-                onClick={() => router.push('/ButtonNew')}
-                contentAlignment={ContentAlignment.center}
-              />
-            </div>
-          )}
+      <div className='feed__container'>
+        <div className="feed-selector feed-selector--activity">
+          <Dropdown
+            options={notificationTypeOptions}
+            onChange={onChange}
+            defaultSelected={"all"}
+          />
         </div>
-      </div>
+
+        <div className="feed-section--activity">
+          <div className="feed-section--activity-content">
+            {activities &&
+              activities.map((activity, key) => {
+                return (
+                  <div className="feed-element" key={key}>
+                    <CardNotification activity={activity} />
+                  </div>
+                );
+              })}
+            {(!activities || activities.length < 1) && (
+              <div className="feed__empty-message">
+                <div className="feed__empty-message--prev">
+                  {t('activities.noactivity', ['activities'])}
+                </div>
+                <Btn
+                  caption={t('explore.createEmpty')}
+                  onClick={() => router.push('/ButtonNew')}
+                  contentAlignment={ContentAlignment.center}
+                />
+              </div>
+            )}
+          </div>
+        </div>
     </div>
   );
 }
