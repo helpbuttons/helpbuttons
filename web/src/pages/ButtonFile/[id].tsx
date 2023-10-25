@@ -9,6 +9,8 @@ import { useButtonTypes } from 'shared/buttonTypes';
 import { useEffect, useState } from 'react';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import Router from 'next/router';
+import PopupButtonFile from 'components/popup/PopupButtonFile';
+import Popup from 'components/popup/Popup';
 export default function ButtonFile({
   metadata,
   currentButton,
@@ -27,18 +29,21 @@ export default function ButtonFile({
     <>
       <SEO {...metadata} />
       {currentButton && 
-        <div className="body__content">
-            <>
-            {buttonTypes?.length > 0 && (
-              <CardButton
-                button={currentButton}
-                buttonTypes={buttonTypes}
-              />
-            )}
+            <Popup
+            sectionClass=''
+            linkFwd="/Activity"
+            >
 
-            <Feed button={currentButton} />
-            </>
-        </div>
+                {buttonTypes?.length > 0 && (
+                  <CardButton
+                    button={currentButton}
+                    buttonTypes={buttonTypes}
+                  />
+                )}
+
+                <Feed button={currentButton} />
+                
+            </Popup> 
       }
     </>
   );

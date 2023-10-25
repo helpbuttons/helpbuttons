@@ -11,6 +11,7 @@ import { FindAdminButton, FindUser, Logout } from 'state/Users';
 import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
 import { useRouter } from 'next/router';
+import Popup from 'components/popup/Popup';
 
 export default function Profile() {
   const [userProfile, setUserProfile] = useState(null);
@@ -73,14 +74,12 @@ export default function Profile() {
 
   return (
     <>
-      <div className="body__content">
-        <div className="card-profile__container">
-          {userProfile && <CardProfile user={userProfile} showAdminOptions={userProfile.role == Role.admin}/>}
-          {userProfile?.role == Role.admin && adminButtonId && (
-            <LinkAdminButton adminButtonId={adminButtonId} />
-          )}
-        </div>
-      </div>
+          <Popup linkFwd="/Explore">
+            {userProfile && <CardProfile user={userProfile} showAdminOptions={userProfile.role == Role.admin}/>}
+            {userProfile?.role == Role.admin && adminButtonId && (
+              <LinkAdminButton adminButtonId={adminButtonId} />
+            )}
+          </Popup>
     </>
   );
 }

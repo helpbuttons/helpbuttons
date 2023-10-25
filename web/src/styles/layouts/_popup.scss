@@ -33,6 +33,35 @@ body {
   flex-flow: column;
 }
 
+.popup--button-file {
+  @extend .index__content-left;
+
+  // Scroll popup content
+  overflow-x: hidden;
+  width: 100vw;
+  background: $color-white;
+  box-shadow: unset;
+  padding: 0;
+  z-index: $z-index-05;
+  height: 100%;
+
+  // Header Top Content Bottom
+  display: flex;
+  flex-flow: column;
+  top: 0;
+  // Scroll popup content
+  max-width: 100%;
+  position: absolute;
+  justify-content: flex-start;
+
+  .popup__content {
+
+    margin-bottom: 0;
+
+  }
+
+}
+
 
 //POPUP HEADERS
 .popup__header--trans,
@@ -348,6 +377,10 @@ body {
     z-index: $z-index-03;
 
   }
+  .popup--button-file {
+
+    width: 100%;
+  }  
 
   .popup__header,
   .popup__content {

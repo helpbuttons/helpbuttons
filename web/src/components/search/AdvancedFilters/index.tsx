@@ -118,12 +118,6 @@ export default function AdvancedFilters({
             classNameExtra="filters--vertical"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <AdvancedFiltersSortDropDown
-              orderBy={watch('orderBy')}
-              setOrderBy={(value) => setValue('orderBy',value)}
-              buttonTypes={buttonTypes}
-              selectedButtonTypes={watch('helpButtonTypes')}
-            />
             <FieldText
               name="query"
               label={t('buttonFilters.queryLabel')}
@@ -200,6 +194,13 @@ export default function AdvancedFilters({
                 </div>
               </div>
             )}
+
+            <AdvancedFiltersSortDropDown
+              orderBy={watch('orderBy')}
+              setOrderBy={(value) => setValue('orderBy',value)}
+              buttonTypes={buttonTypes}
+              selectedButtonTypes={watch('helpButtonTypes')}
+            />
 
             <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
             

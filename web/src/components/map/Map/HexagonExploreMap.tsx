@@ -68,15 +68,9 @@ export default function HexagonExploreMap({
               made with{' '}
               <a href="https://helpbuttons.org">Helpbuttons</a>
             </div>
-            <div onClick={() => {      
-              store.emit(
-               new UpdateExploreSettings({
-                center: selectedNetwork.exploreSettings.center
-              }));
-            }}>
-              <IoStorefrontSharp/>
-            </div>
+            
           </div>
+
         </Overlay>
 
         <GeoJson>
@@ -217,7 +211,18 @@ export default function HexagonExploreMap({
               )}
             </div>
           </Overlay>
+      
         )}
+        <Overlay anchor={[100, 100]} className='pigeon-center-buttons'>
+          <button className='pigeon-center-view' onClick={() => {      
+            store.emit(
+            new UpdateExploreSettings({
+              center: selectedNetwork.exploreSettings.center
+            }));
+          }}>
+            <IoStorefrontSharp/>
+          </button>
+        </Overlay>
         {isRedrawingMap && (
           <Overlay anchor={centerBounds}>
             <Loading />

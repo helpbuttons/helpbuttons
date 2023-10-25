@@ -41,7 +41,7 @@ export default function FeedProfile({ allActivities }) {
     });
   };
   return (
-    <>
+    <div className='popup'>
       <div className="feed-selector feed-selector--activity">
         <Dropdown
           options={notificationTypeOptions}
@@ -74,6 +74,6 @@ export default function FeedProfile({ allActivities }) {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

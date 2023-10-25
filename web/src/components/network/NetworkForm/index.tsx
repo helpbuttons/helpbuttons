@@ -4,7 +4,6 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import Popup from 'components/popup/Popup';
 
 import FieldAreaMap from 'elements/Fields/FieldAreaMap';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';

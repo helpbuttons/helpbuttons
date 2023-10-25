@@ -42,7 +42,7 @@ import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
 import { getUrlParams, uniqueArray } from 'shared/sys.helper';
 import { applyCustomFieldsFilters, orderByEventDate, orderByPrice } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
-import Popup from 'components/popup/Popup';
+import PopupButtonFile from 'components/popup/PopupButtonFile';
 import t from 'i18n';
 import { IoClose } from 'react-icons/io5';
 import CardButton from 'components/button/CardButton';
@@ -106,10 +106,12 @@ function HoneyComb({ router, selectedNetwork }) {
   return (
     <>
       {currentButton && (
-        <Popup
+        <PopupButtonFile
           title={null}
           onCloseClicked={() => {
             store.emit(new updateCurrentButton(null));
+            toggleShowLeftColumn(true);
+
           }}
         >
           {selectedNetwork.buttonTemplates?.length > 0 && (
@@ -119,7 +121,7 @@ function HoneyComb({ router, selectedNetwork }) {
             />
           )}
           <Feed button={currentButton} />
-        </Popup>
+        </PopupButtonFile>
       )}
       <div className="index__explore-container">
         <div
