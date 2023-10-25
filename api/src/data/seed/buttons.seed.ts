@@ -77,14 +77,14 @@ export class ButtonsSeeder implements Seeder {
     const buttonTemplates = JSON.parse(network[0].buttonTemplates)
     console.log('success')
     
-    const buttonTypes = buttonTemplates.map((btnTemplate) => btnTemplate.name)
+    const buttonTypes = buttonTemplates.map((btnTemplate) => btnTemplate.name.toLowerCase())
     console.log('button types found:')
     console.log(JSON.stringify(buttonTemplates))
     const btns = buttons.buttons.filter((button) => {
-      if (buttonTypes.indexOf(capitalizeText(button.type)) > -1){
+      if (buttonTypes.indexOf(button.type) > -1){
         return true;
       }
-      console.log(`'${capitalizeText(button.type)}' type not found.`)
+      console.log(`'${button.type}' type not found.`)
       return false;
     })
     
