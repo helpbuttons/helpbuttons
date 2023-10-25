@@ -59,7 +59,7 @@ export default function Profile() {
 
   return (
     <>
-          <Popup linkFwd="/Explore">
+          <Popup linkFwd="/Explore" title={t('user.profileView')}>
             <LoadabledComponent loading={!loggedInUser}>
               <CardProfile user={loggedInUser} />
               {loggedInUser?.role == Role.admin && adminButtonId && (

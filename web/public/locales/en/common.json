@@ -138,6 +138,7 @@
     "hideAddress": "Hide exact location"
   },
   "user": {
+    "profileView": "Profile",
     "email": "Email",
     "emailPlaceHolder": "email@example.tld",
     "username": "Username",

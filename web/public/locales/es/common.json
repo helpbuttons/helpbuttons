@@ -103,6 +103,7 @@
     "markedAllAsRead": ""
   },
   "user": {
+    "profileView": "Perfil",
     "email": "Email",
     "username": "Nombre de usuario",
     "password": "Contraseña",
