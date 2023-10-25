@@ -248,6 +248,7 @@ $card-button-border-height: $border-general-height;
   .hashtag {
     background: $card-button-ofrece-background;
     font-weight: bold;
+    background: $color-black;
     &:hover {
       color: $hashtag-hover-color;
       background: $color-black;

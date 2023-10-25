@@ -26,12 +26,12 @@ $hashtag-color-l-gray: $color-med-gray;
 
   font-size: $font-size-general;
   line-height: 1rem;
-  border: 2px solid $hashtag-color-l-gray;
+  border: 2px solid $hashtag-color-gray;
   text-decoration: none;
   margin: 0 $hashtag-margin-x $hashtag-margin-x 0;
   text-transform: capitalize;
   font-size: 0.9rem;
-  color: $hashtag-color-l-gray;
+  color: $hashtag-color-gray;
   background-color: transparent;
 
   &--yellow {
@@ -107,5 +107,5 @@ $hashtag-color-l-gray: $color-med-gray;
   color: $hashtag-hover-color;
   cursor: pointer;
   text-decoration: none;
-  background: $hashtag-color-l-gray;
+  background: $hashtag-color-gray;
 }
