@@ -61,17 +61,17 @@ $dropdown-nets-max-width: $grid-max-width;
 
 .dropdown-nets__dropdown-content {
 
-    width: 100%;
-    position: absolute;
+    width: 90%;
+    position: relative;
     max-height: 150px;
     font-size: $font-size-small;
     overflow-y: auto;
     display: block;
     background-color: white;
-    border-radius: 0 0 $border-radius-circle $border-radius-circle;
+    // border-radius: 0 0 $border-radius-circle $border-radius-circle;
     border-top: none;
     padding: $padding-medium;
-    z-index: $z-index-02;
+    z-index: $z-index-05;
 
     ::-webkit-scrollbar {
       display: none !important;

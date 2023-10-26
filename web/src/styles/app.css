@@ -1159,10 +1159,6 @@ a {
   margin-bottom: 25px;
 }
 
-.form__field .btn--corporative, .info-overlay__nets .btn--corporative, .info-overlay__content .btn--corporative, .form__image-upload-wrapper .btn--corporative {
-  margin-bottom: 25px;
-}
-
 .form__options-v {
   flex-flow: column nowrap;
   justify-content: center;
@@ -2768,17 +2764,16 @@ li, ol, ul, h2 {
 }
 
 .dropdown-nets__dropdown-content {
-  width: 100%;
-  position: absolute;
+  width: 90%;
+  position: relative;
   max-height: 150px;
   font-size: 14px;
   overflow-y: auto;
   display: block;
   background-color: white;
-  border-radius: 0 0 34px 34px;
   border-top: none;
   padding: 10px;
-  z-index: 200;
+  z-index: 500;
 }
 .dropdown-nets__dropdown-content ::-webkit-scrollbar {
   display: none !important;
