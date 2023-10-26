@@ -140,8 +140,6 @@ function NetworkForm({
               />
               <FieldText
                 name="nomeclaturePlural"
-                label={t('configuration.nomeclaturePluralLabel')}
-                explain={t('configuration.nomeclaturePluralExplain')}
                 placeholder={t('configuration.nomeclaturePluralPlaceHolder')}
                 classNameInput="squared"
                 validationError={errors.nomeclaturePlural}
