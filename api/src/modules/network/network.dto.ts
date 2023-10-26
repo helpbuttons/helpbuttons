@@ -79,6 +79,10 @@ export class CreateNetworkDto implements Partial<Network> {
   currency?: string;
 
   locale: string;
+
+  nomeclature?: string;
+
+  nomeclaturePlural?: string;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

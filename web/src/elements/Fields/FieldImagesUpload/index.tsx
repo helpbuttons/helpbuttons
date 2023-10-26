@@ -65,7 +65,7 @@ export default function FieldImageUploads({
               {imageList.length > 0 && (
                 <ul>
                   {imageList.map((item, index) => (
-                    <div className="form__image-upload-preview--wrap">
+                    <div key={index} className="form__image-upload-preview--wrap">
                       <div className="form__image-upload-preview--file">
                         <div className="form__image-upload-preview--image">
                           <ImageContainer

@@ -65,9 +65,10 @@ export default function ButtonNew() {
 
   const [loaded, setLoaded] = useState(false);
   const jumpToExploreButton = (buttonData) => {
-    router.push(`/Explore#?lat=${buttonData.latitude}&lng=${buttonData.longitude}`);
+    router.push(`/Explore?lat=${buttonData.latitude}&lng=${buttonData.longitude}`);
   }
   const onSuccess = (buttonData : Button) => {
+    store.emit(new SaveButtonDraft(null));
     store.emit(
       new CreateNewPost(
         buttonData.id,

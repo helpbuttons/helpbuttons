@@ -67,24 +67,20 @@ export class ButtonsSeeder implements Seeder {
     console.log(`Added ${usersToAdd.length} users`)
 
     let btnIds =[]
-    function capitalizeText(word) 
-    {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-    }
     // const network = await this.networkService.findDefaultNetwork();
     const network = await this.networkRepository.find({ order: { created_at: 'ASC' } });
 
     const buttonTemplates = JSON.parse(network[0].buttonTemplates)
     console.log('success')
     
-    const buttonTypes = buttonTemplates.map((btnTemplate) => btnTemplate.name)
+    const buttonTypes = buttonTemplates.map((btnTemplate) => btnTemplate.name.toLowerCase())
     console.log('button types found:')
     console.log(JSON.stringify(buttonTemplates))
     const btns = buttons.buttons.filter((button) => {
-      if (buttonTypes.indexOf(capitalizeText(button.type)) > -1){
+      if (buttonTypes.indexOf(button.type) > -1){
         return true;
       }
-      console.log(`'${capitalizeText(button.type)}' type not found.`)
+      console.log(`'${button.type}' type not found.`)
       return false;
     })
     
@@ -96,7 +92,7 @@ export class ButtonsSeeder implements Seeder {
       btnIds.push(btnId)
       return {
         id: btnId,
-        type: capitalizeText(buttonJson.type),
+        type: buttonJson.type,
         description: buttonJson.description,
         latitude: lat,
         longitude: lng,

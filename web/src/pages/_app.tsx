@@ -27,7 +27,7 @@ import Loading from 'components/loading';
 import { getMetadata } from 'services/ServerProps';
 import SEO from 'components/seo';
 import { refeshActivities } from 'state/Activity';
-import t from 'i18n';
+import t, { updateNomeclature } from 'i18n';
 import { useInterval } from 'shared/custom.hooks';
 
 export default appWithTranslation(MyApp);
@@ -245,6 +245,7 @@ function MyApp({ Component, pageProps }) {
           router.push({ pathname, query }, asPath, { locale: selectedNetwork.locale })
         }
       }
+      updateNomeclature(selectedNetwork.nomeclature, selectedNetwork.nomeclaturePlural)
     }
   }, [selectedNetwork, loggedInUser]);
 
