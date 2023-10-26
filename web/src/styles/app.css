@@ -2275,11 +2275,8 @@ li, ol, ul, h2 {
 
 .marker-button__arrow {
   z-index: 300;
-  position: relative;
-  bottom: 0;
-  right: 0;
-  left: calc(50% - 8px);
-  margin: auto;
+  position: absolute;
+  width: 100%;
 }
 .marker-button__arrow:after, .marker-button__arrow:before {
   content: "";
