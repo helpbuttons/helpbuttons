@@ -48,19 +48,16 @@ export default function ButtonEdit() {
     store.emit(
       new UpdateButton(id,
         data,
-        onSuccess(id),
+        onSuccess(data),
         // onSuccess({lat: data.latitude, lng: data.longitude}),
         onError,
       ),
     );
   };
 
-  const onSuccess = (buttonId) => {
-    router.push(`/ButtonFile/${buttonId}`);
+  const onSuccess = (data) => {
+    router.push(`/Explore?lat=${data.lat}&lng=${data.lng}&btn=${data.id}`);
   };
-  // const onSuccess = (location: {lat: number, lng: number}) => {
-  //   router.push(`/Explore#?lat=${location.lat}&lng=${location.lng}`);
-  // };
 
   const onError = (errorMessage) => alertService.error(errorMessage.caption)
   useEffect(() => {
