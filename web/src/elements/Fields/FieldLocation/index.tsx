@@ -47,6 +47,8 @@ export default function FieldLocation({
     setMarkerPosition([place.geometry.lat, place.geometry.lng]);
   };
   const hideAddress = watch('hideAddress');
+  const latitude = watch('latitude')
+  const longitude = watch('longitude')
 
   const requestAddressForPosition = (markerPosition) => {
     store.emit(
@@ -86,6 +88,12 @@ export default function FieldLocation({
     }
   }, [selectedNetwork]);
 
+  useEffect(() => {
+    if(longitude && latitude)
+    {
+      setMarkerPosition(() => [latitude, longitude])
+    }
+  }, [latitude, longitude])
   useEffect(() => {
     if(place)
     {
