@@ -60,6 +60,8 @@ function Configuration() {
       inviteOnly: data.inviteOnly,
       locale: data.locale,
       currency: data.currency,
+      nomeclature: data.nomeclature,
+      nomeclaturePlural: data.nomeclaturePlural
     },
       () => {
         const onComplete = (network) => {
@@ -67,7 +69,6 @@ function Configuration() {
           alertService.info(t('common.saveSuccess', ['Configuration']))
           if(data.locale != 'en')
           {
-            console.log('pushing...')
             router.push(`/${data.locale}/HomeInfo`)
           }else{
             router.push({ pathname: '/HomeInfo' }, asPath, { locale: 'en' });

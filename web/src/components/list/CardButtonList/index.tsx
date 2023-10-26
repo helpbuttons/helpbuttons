@@ -11,6 +11,10 @@ export default function CardButtonList({ buttonTypes, button }) {
   const buttonType = buttonTypes.find(
     (buttonTemplate) => buttonTemplate.name == button.type,
   );
+  if(!buttonType)
+  {
+    console.error(`type of button not found '${button.type}'`)
+  }
   return (
     <>
       {buttonType && (
