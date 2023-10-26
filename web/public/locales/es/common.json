@@ -183,6 +183,7 @@
     "byEventDate": "By ínicio del evento"
   },
   "button": {
+    "title":"Vista de Helpbutton",
     "copy": "Copiar enlace",
     "delete": "Borrar",
     "typeExplain": "Por favor elige qué tipo de botón de ayuda te gustaría crear",

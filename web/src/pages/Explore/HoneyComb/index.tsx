@@ -107,7 +107,7 @@ function HoneyComb({ router, selectedNetwork }) {
     <>
       {currentButton && (
         <PopupButtonFile
-          title={null}
+          title={t('button.title')}
           onCloseClicked={() => {
             store.emit(new updateCurrentButton(null));
             toggleShowLeftColumn(true);

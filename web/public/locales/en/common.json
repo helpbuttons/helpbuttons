@@ -112,6 +112,7 @@
     "deleteSuccess": ""
   },
   "button": {
+    "title":"Helpbutton view",
     "typeLabel": "Helpbutton type",
     "typeExplain": "Please choose which kind of helpbutton would you like to create",
     "titleLabel": "Title",

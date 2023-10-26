@@ -1,5 +1,6 @@
 $popup-background: rgba(0,0,0,.2);
 $popup-header-height: 80px;
+$popup-header-height-mobile: 50px;
 $popup-options-height: 80px;
 $popup-options-border-top: 3px $color-black;
 $popup-max-width: $grid-max-width;
@@ -71,7 +72,7 @@ body {
   padding: .5rem;
   position:  relative;
   border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
-  height: $popup-header-height;
+  height: $popup-header-height-mobile;
 
 }
 
@@ -390,10 +391,12 @@ body {
     flex-direction: column;
     //justify-content: flex-end;
     margin-bottom: 0;
+
   }
 
   .popup__header {
 
+    height: $popup-header-height;
     min-height: $popup-header-height;
 
   }
