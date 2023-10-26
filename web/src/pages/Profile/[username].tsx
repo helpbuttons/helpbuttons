@@ -12,6 +12,7 @@ import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
 import { useRouter } from 'next/router';
 import Popup from 'components/popup/Popup';
+import t from 'i18n';
 
 export default function Profile() {
   const [userProfile, setUserProfile] = useState(null);
@@ -74,7 +75,7 @@ export default function Profile() {
 
   return (
     <>
-          <Popup linkFwd="/Explore">
+          <Popup linkFwd="/Explore" title={t('user.otherProfileView')}>
             {userProfile && <CardProfile user={userProfile} showAdminOptions={userProfile.role == Role.admin}/>}
             {userProfile?.role == Role.admin && adminButtonId && (
               <LinkAdminButton adminButtonId={adminButtonId} />

@@ -6,7 +6,7 @@ $card-button-paragraph-color: $color-gray;
 $card-button-margin-bottom: 1rem;
 $card-button-margin-bottom: 1rem;
 $card-button-avatar-height: 40px;
-$card-button-picture-max-height: 300px;
+$card-button-picture-max-height: 500px;
 $card-button-situation-background-size: 14px;
 $card-button__submenu-show-width: 120px;
 $card-button__submenu-top-arrow-right: $padding-big;
@@ -316,8 +316,9 @@ $card-button-border-height: $border-general-height;
 .card-button__picture {
   width: 100%;
   position: relative;
-  max-height: $card-button-picture-max-height;
-  overflow: hidden;
+  // max-height: $card-button-picture-max-height;
+  // height: auto;
+  // overflow-x: hidden;
   text-align: center;
   & img {
 

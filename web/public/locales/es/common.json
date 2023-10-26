@@ -64,7 +64,7 @@
     "tagsExplain": "Las palabras clave de tu Red harán más fácil la búsqueda de temas y para saber de qué trata tu red.",
     "centerOfMap": "Selecciona la ubicación base de tu Red",
     "description": "Aquí puedes modificar la configuración de tu Red",
-    "title": "Configuración de administrador",
+    "title": "Configuración de tu Red y administrador",
     "privacySetPublic": "Pulsa aquí para volver a red pública",
     "tagsPlaceHolder": "Comida, herramientas, juguetes, ropa...",
     "tags": "Palabras clave de la Red",
@@ -103,7 +103,8 @@
     "markedAllAsRead": ""
   },
   "user": {
-    "profileView": "Perfil",
+    "profileView": "Tu Perfil",
+    "otherProfileView": "Usuario",
     "email": "Email",
     "username": "Nombre de usuario",
     "password": "Contraseña",
@@ -178,12 +179,12 @@
     "byDate": "Por fecha de creacion",
     "byPrice": "Por precio",
     "orderBy": "Ordenar por",
-    "priceExplain": "",
+    "priceExplain": "Filtrar por precio",
     "byProximity": "Por proximidade",
     "byEventDate": "By ínicio del evento"
   },
   "button": {
-    "title":"Vista de Helpbutton",
+    "title":"Vista de Botón de ayuda",
     "copy": "Copiar enlace",
     "delete": "Borrar",
     "typeExplain": "Por favor elige qué tipo de botón de ayuda te gustaría crear",
@@ -208,7 +209,7 @@
     "pickButtonTemplateColor": "Elige color para tu tipo de botón de ayuda",
     "unknownPlace": "Sitio desconocido",
     "hideAddress": "Esconder ubicación exacta",
-    "created": ""
+    "created": "creado"
   },
   "calendarOnce": {
     "label": "Una vez",

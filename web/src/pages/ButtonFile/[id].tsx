@@ -11,6 +11,7 @@ import { HttpStatus } from 'shared/types/http-status.enum';
 import Router from 'next/router';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import Popup from 'components/popup/Popup';
+import t from 'i18n';
 export default function ButtonFile({
   metadata,
   currentButton,
@@ -31,6 +32,7 @@ export default function ButtonFile({
       {currentButton && 
             <Popup
             sectionClass=''
+            title={t('button.title')}
             linkFwd="/Activity"
             >
 

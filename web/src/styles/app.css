@@ -4740,8 +4740,6 @@ li, ol, ul, h2 {
 .card-button__picture {
   width: 100%;
   position: relative;
-  max-height: 300px;
-  overflow: hidden;
   text-align: center;
 }
 .card-button__picture img {
@@ -5516,6 +5514,7 @@ li, ol, ul, h2 {
 .pigeon-click-block g {
   color: aqua;
 }
+
 .pigeon-center-buttons {
   position: absolute;
   right: 10px !important;
@@ -5523,6 +5522,9 @@ li, ol, ul, h2 {
   display: block;
   left: auto !important;
   z-index: 400;
+}
+.pigeon-center-buttons:hover {
+  cursor: pointer;
 }
 
 .pigeon-center-view {

@@ -63,7 +63,7 @@
     "priceExplain": "Filter by price",
     "whereLabel": "Where",
     "byPrice": "By price",
-    "byDate": "By date",
+    "byDate": "By creation date",
     "byProximity": "By proximity",
     "byEventDate": "By start of event",
     "orderBy": "Order by"
@@ -140,7 +140,8 @@
     "hideAddress": "Hide exact location"
   },
   "user": {
-    "profileView": "Profile",
+    "profileView": "Your profile",
+    "otherProfileView": "User",
     "email": "Email",
     "emailPlaceHolder": "email@example.tld",
     "username": "Username",
@@ -210,7 +211,7 @@
     "placeholderWrite": "Write a message in this post"
   },
   "configuration": {
-    "title": "Administrator settings",
+    "title": "Network and Administrator settings",
     "description": "Here you can modify different settings of your network",
     "namePlaceHolder": "Network of permaculture farmers from Vilanova",
     "descriptionPlaceHolder": "Welcome to the network of sharing ...",
