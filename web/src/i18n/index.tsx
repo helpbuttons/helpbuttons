@@ -71,11 +71,6 @@ function getTranslation(locale, key) {
 
 function setNomeclature(locale, translatedString)
 {
-    if (locale == 'es')
-    {
-      const translating = translatedString.replace('boton de ayuda', nomeclaturePlural)
-      return translating.replace('botones de ayuda ', nomeclature + ' ')
-    }
-    const translating = translatedString.replace('helpbuttons', nomeclaturePlural)
-    return translating.replace('helpbutton ', nomeclature + ' ')
+    const translating = translatedString.replace('_helpbuttons_', nomeclaturePlural)
+    return translating.replace('_helpbutton_', nomeclature)
   }
