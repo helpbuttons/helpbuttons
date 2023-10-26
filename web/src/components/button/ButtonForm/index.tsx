@@ -154,6 +154,7 @@ export default function ButtonForm({
             {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
             <FieldTags
               label={t('button.tagsLabel')}
+              explain={t('button.tagsExplain')}
               placeholder={t('common.add')}
               validationError={errors.tags}
               setTags={(tags) => {

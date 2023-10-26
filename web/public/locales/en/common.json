@@ -120,6 +120,7 @@
     "descriptionLabel": "Description",
     "descriptionExplain": "Description",
     "tagsLabel": "Keywords",
+    "tagsExplain": "Optionallly, write and press enter for each keyword that you want to add",
     "imagesLabel": "Upload Image",
     "whereLabel": "Where ?",
     "changePlaceLabel": "Choose place",
