@@ -63,14 +63,10 @@ export class ButtonsSeeder implements Seeder {
       
     });
     
-    await this.userRepository.insert(usersToAdd);
+    // await this.userRepository.insert(usersToAdd);
     console.log(`Added ${usersToAdd.length} users`)
 
     let btnIds =[]
-    function capitalizeText(word) 
-    {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-    }
     // const network = await this.networkService.findDefaultNetwork();
     const network = await this.networkRepository.find({ order: { created_at: 'ASC' } });
 
@@ -96,7 +92,7 @@ export class ButtonsSeeder implements Seeder {
       btnIds.push(btnId)
       return {
         id: btnId,
-        type: capitalizeText(buttonJson.type),
+        type: buttonJson.type,
         description: buttonJson.description,
         latitude: lat,
         longitude: lng,
