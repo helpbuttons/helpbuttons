@@ -39,6 +39,9 @@ export default function MessageNew({
     }
   }, [mentions]);
 
+  useEffect(() => {
+    setFocus('message')
+  }, [])
   return (
     <>
       <div className="button-file__action-section--field">
@@ -49,6 +52,7 @@ export default function MessageNew({
           <div className="feeds__new-message-message">
             <FieldTextArea
               name="message"
+              setValue={setValue}
               placeholder={
                 isComment
                   ? t('comment.placeholderWrite')

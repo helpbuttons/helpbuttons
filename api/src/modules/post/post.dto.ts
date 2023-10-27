@@ -1,6 +1,10 @@
-import { Column } from "typeorm";
+import { MaxLength } from 'class-validator';
+import { Column } from 'typeorm';
 
 export class MessageDto {
-    @Column({})
-    message: string;
+  @Column({})
+  @MaxLength(255, {
+    message: 'message is too long',
+  })
+  message: string;
 }

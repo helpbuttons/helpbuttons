@@ -65,6 +65,9 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
   const handleShowEmojiPicker = () => {
     setShowEmojiPicker(!showEmojiPicker)
   }*/
+  const handleChange = (event) => {
+    setValue(name, `${event.target.value}`)
+  }
     const [textLength, setTextLength] = useState(0);
      const onInput = (obj) => {
         if (maxLength > 0){
@@ -81,7 +84,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
         <p className="form__explain">{explain}</p>
         
         <textarea
-          // onChange={(event) => {handleChange(event)}}
+          onChange={(event) => {handleChange(event)}}
           name={name}
           className={`${classNameExtra} textarea__textarea`}
           placeholder={placeholder}
