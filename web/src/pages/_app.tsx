@@ -268,7 +268,7 @@ function MyApp({ Component, pageProps }) {
         <Alert />
         <div className="index__content">
           <Component {...pageProps} />
-          <NavBottom />
+          <NavBottom loggedInUser={loggedInUser}/>
         </div>
       </div>
     </>

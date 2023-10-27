@@ -4,7 +4,7 @@ import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
 import { useEffect, useState } from 'react';
-import { getHostname } from 'shared/sys.helper';
+import { getHostname, getLocale } from 'shared/sys.helper';
 
 export default function NewUserFields({
   register,
@@ -59,7 +59,7 @@ export default function NewUserFields({
         })}
       ></FieldPassword>
       
-      <FieldLanguagePick onChange={(value) => setValue('locale', value)}/>
+      <FieldLanguagePick onChange={(value) => setValue('locale', value)} defaultValue={getLocale()}/>
       <FieldImageUpload
         name="avatar"
         label={t('common.choose', ['avatar'])}

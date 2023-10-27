@@ -128,7 +128,7 @@ function NetworkForm({
          
            <Accordion title={t('configuration.customizeAppearance')}>
 
-             <FieldLanguagePick onChange={(value) => setValue('locale',value)}/>
+             <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
              <FieldText
                 name="nomeclature"
                 label={t('configuration.nomeclatureLabel')}

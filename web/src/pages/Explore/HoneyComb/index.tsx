@@ -40,7 +40,7 @@ import { Button } from 'shared/entities/button.entity';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
-import { getUrlParams, uniqueArray } from 'shared/sys.helper';
+import { getLocale, getUrlParams, uniqueArray } from 'shared/sys.helper';
 import { applyCustomFieldsFilters, orderByEventDate, orderByPrice } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import t from 'i18n';
@@ -273,7 +273,8 @@ function useExploreSettings({
         obj = {...obj, btn: currentButton.id}
         urlParams.append('btn', currentButton.id);
       }
-      window.history.pushState(obj, "Title", `/Explore?${urlParams.toString()}`);
+      const locale = getLocale() == 'en' ? '' : getLocale();
+      window.history.pushState(obj, "Title", `/${locale}/Explore?${urlParams.toString()}`);
       // window.location.replace(`#?${urlParams.toString()}`);
     }
   }, [exploreSettings, currentButton]);
