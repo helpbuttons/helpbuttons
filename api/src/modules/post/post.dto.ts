@@ -3,7 +3,7 @@ import { Column } from 'typeorm';
 
 export class MessageDto {
   @Column({})
-  @MaxLength(255, {
+  @MaxLength(500, {
     message: 'message is too long',
   })
   message: string;

@@ -60,7 +60,7 @@ export default function MessageNew({
               }
               validationError={errors.message}
               {...register('message', { required: true })}
-              maxLength={255}
+              maxLength={500}
             />
             {privateMessage && (
               <div className="form__input-subtitle-side">
