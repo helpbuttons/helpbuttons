@@ -273,8 +273,8 @@ function useExploreSettings({
         obj = {...obj, btn: currentButton.id}
         urlParams.append('btn', currentButton.id);
       }
-      const locale = getLocale() == 'en' ? '' : getLocale();
-      window.history.pushState(obj, "Title", `/${locale}/Explore?${urlParams.toString()}`);
+      const locale = getLocale() == 'en' ? '' :`/${getLocale()}`;
+      window.history.pushState(obj, "Title", `${locale}/Explore?${urlParams.toString()}`);
       // window.location.replace(`#?${urlParams.toString()}`);
     }
   }, [exploreSettings, currentButton]);
