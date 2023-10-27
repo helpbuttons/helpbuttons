@@ -3,7 +3,8 @@ import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
-import { getHostname } from 'shared/sys.helper';
+import { useEffect, useState } from 'react';
+import { getHostname, getLocale } from 'shared/sys.helper';
 
 export default function NewUserFields({
   register,
@@ -12,6 +13,12 @@ export default function NewUserFields({
   setValue,
   watch,
 }) {
+  const [hostname, setHostname] = useState('')
+  useEffect(() => {
+    if(window){
+      setHostname(() => getHostname())
+    }
+  }, [])
   return (
     <>
       <FieldText
@@ -25,7 +32,7 @@ export default function NewUserFields({
       <FieldText
         name="username"
         label={`${t('user.username')} ${watch('username')}@${
-          getHostname()
+          hostname
         }`}
         classNameInput="squared"
         placeholder={t('user.usernamePlaceHolder')}
@@ -52,7 +59,7 @@ export default function NewUserFields({
         })}
       ></FieldPassword>
       
-      <FieldLanguagePick onChange={(value) => setValue('locale', value)}/>
+      <FieldLanguagePick onChange={(value) => setValue('locale', value)} defaultValue={getLocale()}/>
       <FieldImageUpload
         name="avatar"
         label={t('common.choose', ['avatar'])}

@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 
 export const ShowMobileOnly = ({children}) => {
-    const [width, setWidth] = useState(window.innerWidth);
+    const [width, setWidth] = useState(100);
     const handleWindowSizeChange = () => {
             setWidth(window.innerWidth);
     }
 
     useEffect(() => {
+        setWidth(window.innerWidth)
         window.addEventListener('resize', handleWindowSizeChange);
         return () => {
             window.removeEventListener('resize', handleWindowSizeChange);
@@ -22,12 +23,13 @@ export const ShowMobileOnly = ({children}) => {
 
 
 export const ShowDesktopOnly = ({children}) => {
-    const [width, setWidth] = useState(window.innerWidth);
+    const [width, setWidth] = useState(1000);
     const handleWindowSizeChange = () => {
             setWidth(window.innerWidth);
     }
 
     useEffect(() => {
+        setWidth(window.innerWidth)
         window.addEventListener('resize', handleWindowSizeChange);
         return () => {
             window.removeEventListener('resize', handleWindowSizeChange);

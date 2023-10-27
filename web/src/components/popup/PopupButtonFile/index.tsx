@@ -4,15 +4,13 @@
 import PopupHeader from 'components/popup/PopupHeader';
 
 
-export default function Popup({children, sectionClass = "popup__section", title, linkFwd = null,onCloseClicked = () => {}, ...props}) {
+export default function PopupButtonFile({children, title, linkFwd = null,onCloseClicked = () => {}, ...props}) {
 
   return (
-          <div className="popup">
+          <div className="popup--button-file">
               <PopupHeader linkFwd={linkFwd} onCloseClicked={onCloseClicked}>{title}</PopupHeader>
               <div className="popup__content">
-                <div className={sectionClass}>
                     {children}
-                </div>
               </div>
           </div>
   );

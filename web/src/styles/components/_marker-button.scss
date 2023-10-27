@@ -144,11 +144,12 @@ $marker-arrow-height: 25px;
 
 .marker-button__arrow {
     z-index: $z-index-03;
-    position: relative;
-    bottom: 0;
-    right: 0;
-    left: calc(50% - 8px);
-    margin: auto;
+    position: absolute;
+    width: 100%;
+    // bottom: 0;
+    // right: 0;
+    // left: calc(50% - 8px);
+    // margin: auto;
     &:after,
     &:before {
       content: "";

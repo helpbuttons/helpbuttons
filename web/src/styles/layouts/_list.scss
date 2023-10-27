@@ -99,6 +99,7 @@ $list-container-hide-height: calc($footer-height-mobile - 277px);
     width: 100%;
     overflow-y: auto;
     padding-bottom: 4em;
+    overflow-x: hidden;
 
   }
 

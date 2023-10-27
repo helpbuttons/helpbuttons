@@ -4,7 +4,6 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import Popup from 'components/popup/Popup';
 
 import FieldAreaMap from 'elements/Fields/FieldAreaMap';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
@@ -17,7 +16,7 @@ import Form from 'elements/Form';
 
 import t from 'i18n';
 import { useRouter } from 'next/router';
-import { getUrlOrigin } from 'shared/sys.helper';
+import { getLocale, getUrlOrigin } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
 
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
@@ -129,7 +128,23 @@ function NetworkForm({
          
            <Accordion title={t('configuration.customizeAppearance')}>
 
-             <FieldLanguagePick onChange={(value) => setValue('locale',value)}/>
+             <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
+             <FieldText
+                name="nomeclature"
+                label={t('configuration.nomeclatureLabel')}
+                explain={t('configuration.nomeclatureExplain')}
+                placeholder={t('configuration.nomeclaturePlaceHolder')}
+                classNameInput="squared"
+                validationError={errors.nomeclature}
+                {...register('nomeclature', { required: true })}
+              />
+              <FieldText
+                name="nomeclaturePlural"
+                placeholder={t('configuration.nomeclaturePluralPlaceHolder')}
+                classNameInput="squared"
+                validationError={errors.nomeclaturePlural}
+                {...register('nomeclaturePlural', { required: true })}
+              />
             <div className="form__field">
                 <label className="form__label">{t('configuration.chooseColors')}</label>
                 <p className="form__explain">{t('configuration.chooseColorsExplain')}</p>
@@ -189,16 +204,6 @@ function NetworkForm({
           </Accordion>
 
           <Accordion title={t('configuration.configureNetwork')}>
-
-            {/* <FieldText
-              name="nomeclature"
-              label={t('configuration.nomeclatureLabel')}
-              explain={t('configuration.nomeclatureExplain')}
-              placeholder={t('configuration.nomeclaturePlaceHolder')}
-              classNameInput="squared"
-              validationError={errors.nomeclature}
-              {...register('nomeclature', { required: true })}
-            /> */}
 
             {/* BUTTON TYPES */}
 

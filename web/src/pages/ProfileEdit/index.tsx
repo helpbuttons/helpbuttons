@@ -127,7 +127,7 @@ export default function ProfileEdit() {
                     validationError={errors.name}
                     {...register('name', { required: true })}
                   ></FieldText>
-                  <FieldLanguagePick onChange={(value) => setLocale(value)}/>
+                  <FieldLanguagePick onChange={(value) => setLocale(value)} defaultValue={loggedInUser.locale}/>
                   <FieldText
                     name="email"
                     label={t('user.email')}

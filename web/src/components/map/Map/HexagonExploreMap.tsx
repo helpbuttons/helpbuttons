@@ -16,6 +16,7 @@ import {
 import _ from 'lodash';
 import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import Loading from 'components/loading';
+import { IoStorefrontSharp } from 'react-icons/io5';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -62,12 +63,14 @@ export default function HexagonExploreMap({
       >
         <Overlay anchor={[100, 100]}>
           <div className="search-map__network-title">
-            {selectedNetwork.name}
+            <div>{selectedNetwork.name}</div>
             <div className="search-map__sign">
               made with{' '}
               <a href="https://helpbuttons.org">Helpbuttons</a>
             </div>
+            
           </div>
+
         </Overlay>
 
         <GeoJson>
@@ -77,7 +80,7 @@ export default function HexagonExploreMap({
                 if (hexagonFeature.properties.count > 0) {
                   setHexagonClicked(() => feature.payload);
                 } else {
-                  setHexagonClicked(() => null);
+                  setHexagonClicked(() => 'unset');
                 }
               }}
               feature={hexagonFeature}
@@ -123,7 +126,7 @@ export default function HexagonExploreMap({
                 return { fill: 'white' };
               }}
               onClick={() => {
-                setHexagonClicked(() => null);
+                setHexagonClicked(() => 'unset');
               }}
             />
           )}
@@ -208,7 +211,18 @@ export default function HexagonExploreMap({
               )}
             </div>
           </Overlay>
+      
         )}
+        <Overlay anchor={[100, 100]} className='pigeon-center-buttons'>
+          <button className='pigeon-center-view' onClick={() => {      
+            store.emit(
+            new UpdateExploreSettings({
+              center: selectedNetwork.exploreSettings.center
+            }));
+          }}>
+            <IoStorefrontSharp/>
+          </button>
+        </Overlay>
         {isRedrawingMap && (
           <Overlay anchor={centerBounds}>
             <Loading />

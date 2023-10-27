@@ -13,7 +13,10 @@ $feed-button-width: 47px;
 $feed-padding: $padding-medium;
 $feed-new-message-radius: $border-radius-circle;
 
+.feed__container {
 
+
+}
 
 .feed-line {
 
@@ -34,8 +37,9 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-section--activity {
 
-  // height: 100vh;
-  overflow: scroll  ;
+  height: 100%;
+  // overflow-y: scroll  ;
+  // @extend .popup__content;
   // padding-top: $feed-selector-height;
   // padding-bottom: calc($footer-height-mobile + $padding-small*4);
 
@@ -43,15 +47,14 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-section--activity-content{
 
-  height: auto;
-
+  height: 100vh;
+  overflow-y: auto;
+  padding-bottom: calc($footer-height-mobile*2 + $padding-small*4);
 
 }
 
 .feed-selector {
   height: $feed-selector-height;
-  width: 100vw;
-  max-width: $body-max-width;
   background-color: dimgray;
   padding: $padding-big;
 }
@@ -172,9 +175,11 @@ $feed-new-message-radius: $border-radius-circle;
   
 }
 
-@media #{$breakpoints-xlarge} {
+@media #{$breakpoints-medium} {
 
-  .feed-selector--activity {
+  .feed__container {
+    max-width: $body-max-width;
+    margin: auto;
     
   }
 

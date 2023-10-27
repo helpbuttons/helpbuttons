@@ -48,10 +48,16 @@ export function HeaderSearch({ results, isHome, hexagonClicked }) {
   );
 }
 
-function SearchText({ count, where, hexagonClicked }) {
+function SearchText({ count, where }) {
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
+    false,
+  );
+
+  const hexagonClicked = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.hexagonClicked,
     false,
   );
 

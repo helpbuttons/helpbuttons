@@ -89,7 +89,6 @@ $drag-tab-icon-size: 25px;
     cursor: pointer; /* fallback if grab cursor is unsupported */
     padding: $padding-small;
     transition: $transition-default-slow;
-    z-index: $z-index-02;
     transform: translateY(0px);
 
   }

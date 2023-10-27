@@ -34,7 +34,7 @@ export interface GlobalState {
 
 export const store = new Store<GlobalState>({
   networks: networksInitial,
-  loggedInUser: null,
+  loggedInUser: false,
   knownUsers: [],
   explore: exploreInitial,
   alerts: [],

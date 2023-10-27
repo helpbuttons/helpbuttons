@@ -3,7 +3,7 @@
 
 
   ::-webkit-scrollbar {
-    display: none;
+    display: block;
     width: auto;
     height: 12px;
   
@@ -37,7 +37,6 @@
     display: none;
   }
 
-  .body__content::-webkit-scrollbar,
   .info-overlay__container::-webkit-scrollbar {
     display: none;
     -ms-overflow-style: none;  /* IE and Edge */
@@ -58,7 +57,7 @@
 @media #{$breakpoints-xlarge} {
 
   ::-webkit-scrollbar {
-    display: none;
+    display: block;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  
   }

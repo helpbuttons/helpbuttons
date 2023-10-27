@@ -26,9 +26,11 @@ export default function SysadminConfig() {
     register,
     handleSubmit,
     formState: { errors},
+    watch,
+    setValue
   } = useForm({
     defaultValues: {
-      hostName: getUrlOrigin(),
+      hostName: '',
       mapifyApiKey: '',
       postgresHostName: 'db',
       postgresDb: 'hb-db',
@@ -120,6 +122,13 @@ export default function SysadminConfig() {
       t('smtp-success'),
     );
   };
+
+  useEffect(() => {
+    const hostname = watch('hostName')
+    if(window && hostname == ''){
+      setValue('hostName', getUrlOrigin())
+    }
+  }, [])
 
   return (
     <>

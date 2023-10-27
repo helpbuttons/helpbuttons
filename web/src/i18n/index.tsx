@@ -1,6 +1,9 @@
 import { getLocale } from 'shared/sys.helper';
 import ReactHtmlParser from 'react-html-parser';
 
+let nomeclature = 'helpbutton'
+let nomeclaturePlural = 'helpbuttons'
+
 export const translations = [
   {
     locale: 'en',
@@ -27,6 +30,7 @@ export default function t(key: string, args: string[] = [], avoidHtmlParserUse =
   if(!translatedString){ // if string not found on translations, show key
     translatedString = key;
   }
+  translatedString = setNomeclature(locale, translatedString)
   if (avoidHtmlParserUse)
   {
     return translatedString
@@ -34,6 +38,10 @@ export default function t(key: string, args: string[] = [], avoidHtmlParserUse =
   return ReactHtmlParser(translatedString);
 }
 
+export function updateNomeclature(singular, plural) {
+  nomeclature = singular;
+  nomeclaturePlural= plural;
+}
 function format(string, args) {
     return string.replace(/{(\d+)}/g, function(match, number) {
       return typeof args[number] != 'undefined'
@@ -60,3 +68,9 @@ function getTranslation(locale, key) {
     }
   return null;
 }
+
+function setNomeclature(locale, translatedString)
+{
+    const translating = translatedString.replace('_helpbuttons_', nomeclaturePlural)
+    return translating.replace('_helpbutton_', nomeclature)
+  }

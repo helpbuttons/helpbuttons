@@ -76,7 +76,7 @@ export class MailService {
         cc,
         bcc,
         from: config.from,
-        subject: `${subject} - ${network.name}`,
+        subject: `${subject} in ${network.name}`,
         template,
         context: vars,
       }).then((mail) => {console.log(`>> mail sent to ${to} with template '${template}'`)})

@@ -19,11 +19,7 @@ import { useRouter } from 'next/router';
 
 export default NavBottom;
 
-function NavBottom() {
-  const loggedInUser = useStore(
-    store,
-    (state: GlobalState) => state.loggedInUser,
-  );
+function NavBottom({loggedInUser}) {
   const activities = useStore(
     store,
     (state: GlobalState) => state.activities,
@@ -32,107 +28,127 @@ function NavBottom() {
     store,
     (state: GlobalState) => state.unreadActivities,
   );
-  
+
   const router = useRouter();
   const path = router.asPath.split('?')[0];
   const pageName = path.split('/')[1];
   const isCurrent = (menuName) => {
-    if(pageName.startsWith(menuName))
-    {
-      return 'nav-bottom__link--current'
+    if (pageName.startsWith(menuName)) {
+      return 'nav-bottom__link--current';
     }
     return '';
-  }
-  
+  };
   return (
-    <nav id="bottom-nav" className="nav-bottom">
-      <NavLink
-        href="/HomeInfo"
-        className={`nav-bottom__link nav-bottom__link--active ${isCurrent('HomeInfo')}`}
-      >
-        <div className="nav-bottom__icon">
-          <IoHomeOutline />
-        </div>
-        <div className="nav-bottom__text">{t('menu.home')}</div>
-      </NavLink>
-
-      <NavLink
-        href="/Explore"
-        className={`nav-bottom__link nav-bottom__link--active ${isCurrent('Explore')}`}
-      >
-        <div className="nav-bottom__icon">
-          <IoGlobeOutline />
-        </div>
-        <div className="nav-bottom__text">{t('menu.explore')}</div>
-      </NavLink>
-
-      <NavLink
-        href="/ButtonNew"
-        className={`nav-bottom__link nav-bottom__link--active ${isCurrent('ButtonNew')}`}
-      >
-        <div className="nav-bottom__icon">
-          <IoAddOutline />
-        </div>
-        <div className="nav-bottom__text">{t('menu.create')}</div>
-      </NavLink>
-
-      {!loggedInUser && (
-        <NavLink
-          href="/Faqs"
-          className={`nav-bottom__link nav-bottom__link--active ${isCurrent('Faqs')}`}
-        >
-          <div className="nav-bottom__icon">
-            <IoHelpOutline />
-          </div>
-          <div className="nav-bottom__text">{t('menu.faqs')}</div>
-        </NavLink>
-      )}
-
-      {loggedInUser && (
-        <>
+    <>
+      {loggedInUser !== null && (
+        <nav id="bottom-nav" className="nav-bottom">
           <NavLink
-            href="/Profile"
-            className={`nav-bottom__link nav-bottom__link--active ${isCurrent('Profile')}`}
+            href="/HomeInfo"
+            className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+              'HomeInfo',
+            )}`}
           >
             <div className="nav-bottom__icon">
-              <IoPersonOutline />
+              <IoHomeOutline />
+            </div>
+            <div className="nav-bottom__text">{t('menu.home')}</div>
+          </NavLink>
+
+          <NavLink
+            href="/Explore"
+            className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+              'Explore',
+            )}`}
+          >
+            <div className="nav-bottom__icon">
+              <IoGlobeOutline />
             </div>
             <div className="nav-bottom__text">
-              {t('menu.profile')}
+              {t('menu.explore')}
             </div>
           </NavLink>
 
           <NavLink
-            href="/Activity"
-            className={`nav-bottom__link nav-bottom__link--active ${isCurrent('Activity')}`}
+            href="/ButtonNew"
+            className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+              'ButtonNew',
+            )}`}
           >
             <div className="nav-bottom__icon">
-              {unreadActivities > 0 && (
-                <span className="notif-circle">
-                  {unreadActivities}
-                </span>
-              )}
-              <IoHeartOutline />
+              <IoAddOutline />
             </div>
-
-            <div className="nav-bottom__text">
-              {t('menu.activity')}
-            </div>
+            <div className="nav-bottom__text">{t('menu.create')}</div>
           </NavLink>
-        </>
-      )}
 
-      {!loggedInUser && (
-        <NavLink
-          href="/Login"
-          className={`nav-bottom__link nav-bottom__link--active ${isCurrent('Login')}`}
-        >
-          <div className="nav-bottom__icon">
-            <IoLogInOutline />
-          </div>
-          <div className="nav-bottom__text">{t('menu.login')}</div>
-        </NavLink>
+          {!loggedInUser && (
+            <NavLink
+              href="/Faqs"
+              className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+                'Faqs',
+              )}`}
+            >
+              <div className="nav-bottom__icon">
+                <IoHelpOutline />
+              </div>
+              <div className="nav-bottom__text">{t('menu.faqs')}</div>
+            </NavLink>
+          )}
+
+          {loggedInUser && (
+            <>
+              <NavLink
+                href="/Profile"
+                className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+                  'Profile',
+                )}`}
+              >
+                <div className="nav-bottom__icon">
+                  <IoPersonOutline />
+                </div>
+                <div className="nav-bottom__text">
+                  {t('menu.profile')}
+                </div>
+              </NavLink>
+
+              <NavLink
+                href="/Activity"
+                className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+                  'Activity',
+                )}`}
+              >
+                <div className="nav-bottom__icon">
+                  {unreadActivities > 0 && (
+                    <span className="notif-circle">
+                      {unreadActivities}
+                    </span>
+                  )}
+                  <IoHeartOutline />
+                </div>
+
+                <div className="nav-bottom__text">
+                  {t('menu.activity')}
+                </div>
+              </NavLink>
+            </>
+          )}
+
+          {!loggedInUser && (
+            <NavLink
+              href="/Login"
+              className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+                'Login',
+              )}`}
+            >
+              <div className="nav-bottom__icon">
+                <IoLogInOutline />
+              </div>
+              <div className="nav-bottom__text">
+                {t('menu.login')}
+              </div>
+            </NavLink>
+          )}
+        </nav>
       )}
-    </nav>
+    </>
   );
 }

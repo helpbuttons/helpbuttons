@@ -16,8 +16,9 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
     setValue,
     setFocus,
     explain,
+    maxLength = -1
   } = props;
-
+/*
   const [foundEmojies, setFoundEmojies] = useState([])
   const [showEmojiDropDown, setShowEmojiDropDown] = useState(false)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
@@ -63,7 +64,19 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
   }
   const handleShowEmojiPicker = () => {
     setShowEmojiPicker(!showEmojiPicker)
+  }*/
+  const handleChange = (event) => {
+    setValue(name, `${event.target.value}`)
   }
+    const [textLength, setTextLength] = useState(0);
+     const onInput = (obj) => {
+        if (maxLength > 0){
+            if ( obj.target.value.length > maxLength) {
+                obj.target.value = obj.target.value.slice(0, maxLength)
+            }
+            setTextLength(obj.target.value.length)
+        } 
+    }
     return (
       <>
       <div className="form__field">
@@ -76,8 +89,12 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
           className={`${classNameExtra} textarea__textarea`}
           placeholder={placeholder}
           ref={ref}
+          onInput={onInput}
         ></textarea>
-        <>
+        {maxLength > 0 && 
+          <>{textLength} / {maxLength}</>
+        }
+        {/*<>
         {showEmojiDropDown && 
         foundEmojies.map((emoji, idx) => {
           
@@ -88,7 +105,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
         <div onClick={handleShowEmojiPicker}>😀</div>
         {showEmojiPicker && 
           <Picker data={data} onEmojiSelect={addEmojiToTextArea} />
-        }
+        */}
         <FieldError validationError={validationError} />
       </div>
     </>

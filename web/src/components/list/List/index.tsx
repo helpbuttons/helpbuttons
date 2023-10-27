@@ -1,11 +1,9 @@
 //List of elements component that can be used in home, profile and other pages/layouts where we need to ddisplay buttons/networks/other elements
 //a foreach => buttons
-import React,{useState} from 'react';
+import React,{ useState } from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import ContentList from 'components/list/ContentList';
-import { ShowDesktopOnly } from 'elements/SizeOnly';
-import { ShowMobileOnly } from 'elements/SizeOnly';
 import { useButtonTypes } from 'shared/buttonTypes';
 
 function List({

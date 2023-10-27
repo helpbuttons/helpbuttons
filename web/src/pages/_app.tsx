@@ -27,14 +27,14 @@ import Loading from 'components/loading';
 import { getMetadata } from 'services/ServerProps';
 import SEO from 'components/seo';
 import { refeshActivities } from 'state/Activity';
-import t from 'i18n';
+import t, { updateNomeclature } from 'i18n';
 import { useInterval } from 'shared/custom.hooks';
 
 export default appWithTranslation(MyApp);
 
 const useActivitesPool = (loggedInUser) => {
   const increment = useCallback(() => refeshActivities(), []);
-  useInterval(increment, 10000, {paused: !loggedInUser });
+  useInterval(increment, 10000, { paused: !loggedInUser });
 };
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -205,7 +205,6 @@ function MyApp({ Component, pageProps }) {
   useActivitesPool(loggedInUser);
 
   useEffect(() => {
-
     // Function to adjust the height of the index__container based on the actual viewport height
     const adjustHeight = () => {
       const vh = window.innerHeight;
@@ -237,17 +236,18 @@ function MyApp({ Component, pageProps }) {
     if (selectedNetwork?.textColor) {
       setNetworkTextColor(() => selectedNetwork.textColor);
     }
-      if(selectedNetwork && getLocale() != selectedNetwork.locale)
+    if (selectedNetwork)
+    {
+      if(!loggedInUser && getLocale() != selectedNetwork.locale)
       {
         if(selectedNetwork.locale != 'en')
         {
-          // console.log(pageName)
-          router.push({ pathname, query }, asPath, { locale: selectedNetwork.locale })          // router.push(`/${selectedNetwork.locale}/HomeInfo`)
+          router.push({ pathname, query }, asPath, { locale: selectedNetwork.locale })
         }
       }
-  }, [selectedNetwork]);
-
-  const SEOpages = ['Login', 'HomeInfo', 'ButtonFile'];
+      updateNomeclature(selectedNetwork.nomeclature, selectedNetwork.nomeclaturePlural)
+    }
+  }, [selectedNetwork, loggedInUser]);
 
   return (
     <>
@@ -266,35 +266,19 @@ function MyApp({ Component, pageProps }) {
         }
       >
         <Alert />
-        {(() => {
-          if (config && authorized && selectedNetwork) {
-            return (
-              <div className="index__content">
-                <Component {...pageProps} />
-                <NavBottom />
-              </div>
-            );
-          } else if (
-            isSetup ||
-            SEOpages.indexOf(pageName) > -1
-          ) {
-            return (
-              <div className="index__content">
-                <Component {...pageProps} />
-              </div>
-            );
-          } else if (pageName == 'Error') {
-            return (
-              <div className="index__content">
-                <Component {...pageProps} />
-                <NavBottom />
-              </div>
-            );
-          }
-
-          return <Loading />;
-        })()}
+        <div className="index__content">
+          <Component {...pageProps} />
+          <NavBottom loggedInUser={loggedInUser}/>
+        </div>
       </div>
     </>
   );
 }
+
+export const ClienteSideRendering = ({ children }) => {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => setIsClient(true), []);
+  return (<>
+    {isClient && children}</>
+  );
+};
