@@ -48,7 +48,6 @@ export default function Profile() {
 
   function logout() {
     UserService.logout();
-    router.push('/HomeInfo');
   }
 
   const removeProfile = () => {
@@ -81,7 +80,7 @@ export default function Profile() {
                       caption={t('invite.title')}
                     />
                   </Link>
-                  <Link href="/Explore">
+                  <Link href="/HomeInfo">
                     <div onClick={logout} className="btn-with-icon">
                       <div className="btn-with-icon__icon">
                         <IoLogOutOutline />
