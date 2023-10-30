@@ -62,13 +62,6 @@ export default function Signup() {
     (state: GlobalState) => state.networks.selectedNetwork,
   );
   
-  const locale = watch('locale')
-  useEffect(() => {
-    if(locale != getLocale())
-    {
-      alertService.info(`Click <a href="/${locale}/Signup">here</a> to change language`)
-   }
-  }, [locale, pathname])
   const onSubmit = (data) => {
     
     if (passwordsMatch(data, setError)) {
