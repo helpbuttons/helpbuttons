@@ -1,48 +1,42 @@
 //Form component with the main fields for signup in the platform
 //imported from libraries
-import React, { useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { store } from 'pages';
-import { useToggle } from 'shared/custom.hooks';
+import { GlobalState, store } from 'pages';
 import { LoginToken } from 'state/Users';
 import { alertService } from 'services/Alert';
 import t from 'i18n';
+import { useStore } from 'store/Store';
 
 export default function LoginClick() {
-  
   const router = useRouter();
-  const [loggingIn, setLoggingIn] = useToggle(false)
+  const initialized = useRef(false);
+
   useEffect(() => {
+    if (!router.isReady) return;
     const onSuccess = () => {
       let returnUrl: string = '/HomeInfo';
       if (router?.query?.returnUrl) {
         returnUrl = router.query.returnUrl.toString();
       }
-      alertService.success(t('user.loginSucess'))
-      store.emit(router.push(returnUrl));
+      alertService.success(t('user.loginSucess'));
+      router.push(returnUrl);
     };
-  
+
     const onError = (err) => {
       alertService.error('failed to login, please try again');
-      router.push('/HomeInfo')
+      router.push('/HomeInfo');
     };
-    if (!loggingIn)
-    {
-      if(!router.isReady)
-      {
-        return;
-      }
-      setLoggingIn(true)
+    if (!initialized.current) {
+      initialized.current = true;
       const loginToken = router.query.loginToken as string;
-      store.emit(new LoginToken(loginToken, onSuccess,onError))
+      store.emit(new LoginToken(loginToken, onSuccess, onError));
     }
-  }, [router.isReady])
-
+  }, [router.isReady]);
 
   return (
     <>
       <div>Logging in...</div>
     </>
-    
   );
 }

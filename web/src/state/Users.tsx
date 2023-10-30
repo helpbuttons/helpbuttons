@@ -204,23 +204,10 @@ export class LoginToken implements WatchEvent {
     return UserService.loginToken(this.token).pipe(
       map((userData) => {
         if (userData) {
-          this.onSuccess()
-          return new SetCurrentUser(userData)
+          return new FetchUserData(this.onSuccess, this.onError);
         }
       }),
-      catchError((error) => {
-        let err = error.response;
-        if (
-          isHttpError(err) &&
-          err.statusCode === HttpStatus.UNAUTHORIZED
-        ) {
-          // Unauthorized
-          this.onError('login-incorrect');
-        } else {
-          throw err;
-        }
-        return of(undefined);
-      }),
+      catchError((error) => {this.onError(); return of(undefined)})
     );
   }
 }
