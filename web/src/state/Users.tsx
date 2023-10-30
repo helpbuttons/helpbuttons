@@ -204,12 +204,12 @@ export class LoginToken implements WatchEvent {
     return UserService.loginToken(this.token).pipe(
       map((userData) => {
         if (userData) {
-          return new FetchUserData(this.onSuccess, this.onError);
+          this.onSuccess()
+          return new SetCurrentUser(userData)
         }
       }),
       catchError((error) => {
         let err = error.response;
-
         if (
           isHttpError(err) &&
           err.statusCode === HttpStatus.UNAUTHORIZED

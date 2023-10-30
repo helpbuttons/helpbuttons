@@ -1,12 +1,12 @@
 //Form component with the main fields for signup in the platform
 //imported from libraries
 import React, { useEffect } from 'react';
-import router, { useRouter } from 'next/router';
-import { useRef } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useRouter } from 'next/router';
+import { store } from 'pages';
 import { useToggle } from 'shared/custom.hooks';
 import { LoginToken } from 'state/Users';
 import { alertService } from 'services/Alert';
+import t from 'i18n';
 
 export default function LoginClick() {
   
@@ -18,6 +18,7 @@ export default function LoginClick() {
       if (router?.query?.returnUrl) {
         returnUrl = router.query.returnUrl.toString();
       }
+      alertService.success(t('user.loginSucess'))
       store.emit(router.push(returnUrl));
     };
   
@@ -40,9 +41,7 @@ export default function LoginClick() {
 
   return (
     <>
-    
       <div>Logging in...</div>
-
     </>
     
   );

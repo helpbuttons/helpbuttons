@@ -76,7 +76,7 @@ export default function Profile() {
   return (
     <>
           <Popup linkFwd="/Explore" title={t('user.otherProfileView')}>
-            {userProfile && <CardProfile user={userProfile} showAdminOptions={userProfile.role == Role.admin}/>}
+            {userProfile && <CardProfile user={userProfile} showAdminOptions={loggedInUser?.role == Role.admin}/>}
             {userProfile?.role == Role.admin && adminButtonId && (
               <LinkAdminButton adminButtonId={adminButtonId} />
             )}
