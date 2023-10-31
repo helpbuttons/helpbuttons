@@ -1,4 +1,4 @@
-import { HbMap } from '../';
+import { HbMapUncontrolled } from '../';
 
 import { MapTileSelector } from './MapTileSelector';
 import t from 'i18n';
@@ -37,7 +37,7 @@ export function NetworkMapConfigure({
       {(mapSettings.browseType != BrowseType.LIST) && 
 
       <div className="picker__map">
-        <HbMap
+        <HbMapUncontrolled
           onBoundsChanged={onBoundsChanged}
           mapCenter={mapSettings.center}
           mapZoom={mapSettings.zoom}
@@ -96,7 +96,7 @@ export function NetworkMapConfigure({
           TO ACTIVE RADIUS SELECTION:
           <MapRadius geometry={mapSettings.geometry}/>
           */}
-        </HbMap>
+        </HbMapUncontrolled>
       </div>
     }
 
