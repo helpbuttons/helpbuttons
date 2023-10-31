@@ -32,7 +32,7 @@ const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
 };
 
-export default function CardButtonFile({ button, buttonTypes }) {
+export default function CardButton({ button, buttonTypes }) {
   const buttonType = buttonTypes.find(
     (buttonType) => buttonType.name == button.type,
   );
@@ -193,7 +193,7 @@ function CardButtonSubmenu({ button }) {
           />
           <CardSubmenuOption
             onClick={() => {
-              router.push(`/ButtonRemove/${button.id}`);
+              router.push(`/ButtonRemove/${button.id}`)
             }}
             label={t('button.delete')}
           />
