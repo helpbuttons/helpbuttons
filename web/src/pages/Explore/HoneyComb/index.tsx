@@ -86,7 +86,6 @@ function HoneyComb({ router, selectedNetwork }) {
     setHexagonsToFetch,
     setHexagonClicked,
     hexagonClicked,
-    isRedrawingMap,
     h3TypeDensityHexes,
   } = useHexagonMap({
     toggleShowLeftColumn,
@@ -161,7 +160,6 @@ function HoneyComb({ router, selectedNetwork }) {
             setHexagonsToFetch={setHexagonsToFetch}
             setHexagonClicked={setHexagonClicked}
             hexagonClicked={hexagonClickedStored}
-            isRedrawingMap={isRedrawingMap}
             selectedNetwork={selectedNetwork}
           />
         </LoadabledComponent>
@@ -239,7 +237,7 @@ function useExploreSettings({
         params.delete('showFilters');
       }
     }
-  }, [router]);
+  }, []);
   useEffect(() => {
     if (selectedNetwork && exploreSettings) {
       if (exploreSettings?.center == null && !URLParamsCoords) {
@@ -300,7 +298,6 @@ function useHexagonMap({
   });
   const debounceHexagonsToFetch = useDebounce(hexagonsToFetch, 100);
 
-  const [isRedrawingMap, setIsRedrawingMap] = useState(false);
   const foundTags = React.useRef([]);
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
   let cachedH3Hexes = React.useRef(cachedHexagons);
@@ -367,7 +364,6 @@ function useHexagonMap({
       return;
     }
     store.emit(new UpdateExploreUpdating());
-    setIsRedrawingMap(() => true);
     seth3TypeDensityHexes(() => []);
     const boundsButtons = cachedH3Hexes.current.filter(
       (cachedHex) => {
@@ -390,7 +386,6 @@ function useHexagonMap({
     store.emit(new UpdateBoundsFilteredButtons(orderedFilteredButtons));
     store.emit(new UpdateListButtons(orderedFilteredButtons));
 
-    setIsRedrawingMap(() => false);
   }
 
   const [prevFilters, setPrevFilters] = useState(filters);
@@ -575,7 +570,6 @@ function useHexagonMap({
     setHexagonsToFetch,
     setHexagonClicked,
     hexagonClicked,
-    isRedrawingMap,
     h3TypeDensityHexes,
   };
 }
