@@ -34,7 +34,7 @@ export default appWithTranslation(MyApp);
 
 const useActivitesPool = (loggedInUser) => {
   const increment = useCallback(() => refeshActivities(), []);
-  useInterval(increment, 10000, { paused: !loggedInUser });
+  useInterval(increment, 20000, { paused: !loggedInUser });
 };
 function MyApp({ Component, pageProps }) {
   const router = useRouter();

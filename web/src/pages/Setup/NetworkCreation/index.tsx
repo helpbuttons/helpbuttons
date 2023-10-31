@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from 'shared/setupSteps';
-import { defaultMarker } from 'shared/sys.helper';
 import { Role } from 'shared/types/roles';
 import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
 import { useRef } from 'store/Store';
@@ -36,7 +35,7 @@ function NetworkCreation() {
       privacy: 'public',
       address: '',
       exploreSettings: null,
-      buttonTemplates: JSON.parse('[{"name":"offer","caption":"Offer","color":"custom","cssColor":"#FFDD02"},{"name":"need","caption":"Need","color":"custom","cssColor":"#19AF96"}]'),
+      buttonTemplates: JSON.parse('[{"name":"offer","caption":"Offer","color":"custom","cssColor":"#FFDD02"},{"name":"need","caption":"Need","color":"custom","cssColor":"#19AF96"},{"caption":"Business","name":"business","cssColor":"#071315","customFields":[]},{"caption":"Event","name":"event","cssColor":"#c5d51b","customFields":[{"type":"event"}]},{"caption":"Selling","name":"selling","cssColor":"#d51bd1","customFields":[{"type":"price"}]}]'),
       backgroundColor: '#FFDD02',
       textColor: '#0E0E0E',
       inviteOnly: false,

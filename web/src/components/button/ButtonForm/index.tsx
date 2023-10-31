@@ -104,7 +104,6 @@ export default function ButtonForm({
   }, [buttonType, buttonTypes]);
 
   const closeClicked = () => {
-    store.emit(new SaveButtonDraft(getValues()));
     Router.push('/Explore');
   };
 
