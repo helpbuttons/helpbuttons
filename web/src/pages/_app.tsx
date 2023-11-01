@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import '../styles/app.scss';
 import Head from 'next/head';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
@@ -12,7 +12,7 @@ import { GlobalState, store } from 'pages';
 import { FetchDefaultNetwork } from 'state/Networks';
 import { FetchUserData } from 'state/Users';
 
-import { useRef, useStore } from 'store/Store';
+import { useStore } from 'store/Store';
 import { GetConfig } from 'state/Setup';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
@@ -44,6 +44,7 @@ function MyApp({ Component, pageProps }) {
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
   const [noBackend, setNobackend] = useState(false);
+  const loadingConfig = useRef(false)
 
   const config = useStore(
     store,
@@ -80,7 +81,8 @@ function MyApp({ Component, pageProps }) {
       setIsSetup(true);
     }
 
-    if (!config) {
+    if (!config && !loadingConfig.current) {
+      loadingConfig.current = true;
       store.emit(
         new GetConfig(
           (config) => {
