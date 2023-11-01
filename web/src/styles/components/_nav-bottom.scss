@@ -59,7 +59,7 @@ $nav-bottom-border: 32px;
 
       position: absolute;
       transition: 0.2s;
-      transform: translateY(-0.4rem);
+      transform: translateY(-1rem);
 
     }
 
@@ -201,7 +201,30 @@ $nav-bottom-border: 32px;
     right: 0;
     left: auto;
     top: calc( 50% - #{$nav-bottom-height-desktop} / 2 );
-    padding-top: $padding-huge;
+    // padding-top: $padding-huge;
+
+    align-items: center;
+
+  }
+
+  .nav-bottom__link {
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .nav-bottom__icon {
+
+    position: relative;
+
+  }
+
+  .nav-bottom__text {
+
+    margin-top: 25px;
+    position: relative;
 
   }
 

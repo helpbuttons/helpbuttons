@@ -3901,7 +3901,7 @@ li, ol, ul, h2 {
 .nav-bottom__link :active .nav-bottom__icon {
   position: absolute;
   transition: 0.2s;
-  transform: translateY(-0.4rem);
+  transform: translateY(-1rem);
 }
 
 .nav-bottom__text {
@@ -4015,7 +4015,19 @@ li, ol, ul, h2 {
     right: 0;
     left: auto;
     top: calc( 50% - 22rem / 2 );
-    padding-top: 30px;
+    align-items: center;
+  }
+  .nav-bottom__link {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .nav-bottom__icon {
+    position: relative;
+  }
+  .nav-bottom__text {
+    margin-top: 25px;
+    position: relative;
   }
   .nav-bottom-profile {
     border-radius: 32px;
@@ -7105,8 +7117,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: baseline;
-  height: 100%;
-  max-height: 100%;
+  align-items: stretch;
   overflow: hidden;
   width: 100%;
 }
