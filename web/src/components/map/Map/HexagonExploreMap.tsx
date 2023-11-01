@@ -35,7 +35,7 @@ export default function HexagonExploreMap({
   };
 
   useEffect(() => {
-    geoJsonFeatures.current = convertH3DensityToFeatures(h3TypeDensityHexes);
+    geoJsonFeatures.current = convertH3DensityToFeatures(h3TypeDensityHexes).filter((hex) => hex.properties.count > 0);
 
     maxButtonsHexagon.current = h3TypeDensityHexes.reduce((accumulator, currentValue) => {
         return Math.max(accumulator, currentValue.count);
