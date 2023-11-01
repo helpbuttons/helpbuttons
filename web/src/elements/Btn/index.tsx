@@ -11,6 +11,7 @@ export enum BtnType {
     dropdown,
     circle,
     iconActions,
+    filterCorp,
 }
 
 export enum IconType {
@@ -120,6 +121,9 @@ export default function Btn({
             } else {
                 classNames.push("btn-filter");
             }
+            break;
+        case BtnType.filterCorp:
+                classNames.push("btn-filter btn--corporative");
             break;
         case BtnType.dropdown:
             classNames.push("dropdown__dropdown");

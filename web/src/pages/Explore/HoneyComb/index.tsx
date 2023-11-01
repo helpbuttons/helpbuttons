@@ -44,10 +44,11 @@ import { getLocale, getUrlParams, uniqueArray } from 'shared/sys.helper';
 import { applyCustomFieldsFilters, orderByEventDate, orderByPrice } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import t from 'i18n';
-import { IoClose } from 'react-icons/io5';
+import { IoClose, IoMapOutline } from 'react-icons/io5';
 import CardButton from 'components/button/CardButton';
 import Feed from 'layouts/Feed';
 import { alertService } from 'services/Alert';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 
 const defaultZoomPlace = 13;
 
@@ -70,8 +71,14 @@ function HoneyComb({ router, selectedNetwork }) {
   );
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
+  const [showMap, toggleShowMap] = useToggle(true);
 
   const height = showLeftColumn ? 0 : 400;
+  const showMapCaption = showMap ? 'Hide Map' : 'Show Map';
+
+  const handleChangeShowMap = (event) => {
+    toggleShowMap(event.target.value);
+  };
 
   useExploreSettings({
     exploreSettings,
@@ -145,31 +152,50 @@ function HoneyComb({ router, selectedNetwork }) {
               showFiltersForm={showFiltersForm}
               buttons={exploreMapState.listButtons}
               showLeftColumn={showLeftColumn}
-              onLeftColumnToggle={toggleShowLeftColumn}
-            />
+              onLeftColumnToggle={toggleShowLeftColumn} 
+              showMap={true}            />
           </ShowDesktopOnly>
         </div>
 
-        <LoadabledComponent
-          loading={exploreSettings.loading && !selectedNetwork}
-        >
-          <HexagonExploreMap
-            exploreSettings={exploreSettings}
-            h3TypeDensityHexes={h3TypeDensityHexes}
-            currentButton={currentButton}
-            handleBoundsChange={handleBoundsChange}
-            setHexagonsToFetch={setHexagonsToFetch}
-            setHexagonClicked={setHexagonClicked}
-            hexagonClicked={hexagonClickedStored}
-            isRedrawingMap={isRedrawingMap}
-            selectedNetwork={selectedNetwork}
-          />
-        </LoadabledComponent>
+          {!showFiltersForm && 
 
+            <ShowMobileOnly>
+            <div className="list__show-map-button" >
+                <Btn
+                    btnType={BtnType.filterCorp}
+                    iconLeft={IconType.svg}
+                    iconLink={<IoMapOutline />}
+                    contentAlignment={ContentAlignment.center}
+                    caption={showMapCaption}
+                    onClick={handleChangeShowMap}
+                  />
+            </div>
+          </ShowMobileOnly>
+          
+          }
+
+        <LoadabledComponent
+        loading={exploreSettings.loading && !selectedNetwork}
+        >
+        <HexagonExploreMap
+          exploreSettings={exploreSettings}
+          h3TypeDensityHexes={h3TypeDensityHexes}
+          currentButton={currentButton}
+          handleBoundsChange={handleBoundsChange}
+          setHexagonsToFetch={setHexagonsToFetch}
+          setHexagonClicked={setHexagonClicked}
+          hexagonClicked={hexagonClickedStored}
+          isRedrawingMap={isRedrawingMap}
+          selectedNetwork={selectedNetwork}
+          showMap={showMap}
+        />
+        </LoadabledComponent>
+        
         <ShowMobileOnly>
           <div
             className={
               'index__content-bottom ' +
+              (showMap ? '' : 'index__content-bottom') +
               (showLeftColumn ? '' : 'index__content-bottom--hide')
             }
           >
@@ -177,6 +203,7 @@ function HoneyComb({ router, selectedNetwork }) {
               showFiltersForm={showFiltersForm}
               buttons={exploreMapState.listButtons}
               showLeftColumn={showLeftColumn}
+              showMap={showMap}
               onLeftColumnToggle={toggleShowLeftColumn}
             />
           </div>
@@ -623,3 +650,4 @@ const orderBy = (buttons, orderBy, center) => {
   }
   return buttons;
 }
+

@@ -229,7 +229,9 @@ html,
 body,
 #__next,
 .index__container,
-.info-overlay__container,
+.info-overlay__content,
+.info-overlay__card,
+.list__container--full-list,
 .popup,
 .index__content,
 .index__explore-container,
@@ -890,30 +892,34 @@ a {
   scrollbar-width: thin;
   border-radius: 16px;
   width: 16px;
+  background: url("https://www.pngjoy.com/pngl/41/952512_hamburger-icon-menubuttom-hamburger-menu-icon-white-transparent.png") #828282;
+  background-size: 8px 16px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #2E2E2E;
+  cursor: pointer;
 }
 
 ::-webkit-scrollbar-track {
-  background: white;
+  background: transparent;
   border-radius: 10px;
   scrollbar-width: thin;
   box-shadow: none;
   width: 1px;
   height: 1px;
+  cursor: pointer;
+}
+
+*::-webkit-scrollbar-track:hover {
+  cursor: pointer;
 }
 
 *::-webkit-scrollbar-track-piece {
   background-color: transparent;
   display: none;
-}
-
-.info-overlay__container::-webkit-scrollbar {
-  display: none;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none;
 }
 
 @media (hover: none) {
@@ -1299,7 +1305,7 @@ a {
   border: 1px solid #D4D4D4;
 }
 
-.btn-filter, .dropdown__filter, .btn-filter-with-icon, .checkbox-filter__content, .radio-filter__content {
+.btn-filter, .dropdown-select__trigger--filter, .dropdown__filter, .btn-filter-with-icon, .checkbox-filter__content, .radio-filter__content {
   padding: 0 15px;
   width: auto;
   background-color: #fff;
@@ -1316,16 +1322,16 @@ a {
   text-align: center;
   margin: 0 4px;
 }
-.btn-filter a, .dropdown__filter a, .btn-filter-with-icon a, .checkbox-filter__content a, .radio-filter__content a {
+.btn-filter a, .dropdown-select__trigger--filter a, .dropdown__filter a, .btn-filter-with-icon a, .checkbox-filter__content a, .radio-filter__content a {
   height: 18px;
   width: 18px;
 }
-.btn-filter svg, .dropdown__filter svg, .btn-filter-with-icon svg, .checkbox-filter__content svg, .radio-filter__content svg {
+.btn-filter svg, .dropdown-select__trigger--filter svg, .dropdown__filter svg, .btn-filter-with-icon svg, .checkbox-filter__content svg, .radio-filter__content svg {
   height: 18px;
   width: 18px;
   padding-left: 4px;
 }
-.btn-filter:empty, .dropdown__filter:empty, .btn-filter-with-icon:empty, .checkbox-filter__content:empty, .radio-filter__content:empty {
+.btn-filter:empty, .dropdown-select__trigger--filter:empty, .dropdown__filter:empty, .btn-filter-with-icon:empty, .checkbox-filter__content:empty, .radio-filter__content:empty {
   height: 1.25rem;
   line-height: 2.25rem;
 }
@@ -1488,6 +1494,7 @@ a {
 [disabled].checkbox__content,
 [disabled].radio__content,
 .btn-filter[disabled],
+[disabled].dropdown-select__trigger--filter,
 [disabled].dropdown__filter,
 [disabled].checkbox-filter__content,
 [disabled].radio-filter__content,
@@ -1508,6 +1515,7 @@ a {
 [disabled].checkbox__content div,
 [disabled].radio__content div,
 .btn-filter[disabled] div,
+[disabled].dropdown-select__trigger--filter div,
 [disabled].dropdown__filter div,
 [disabled].checkbox-filter__content div,
 [disabled].radio-filter__content div,
@@ -1526,6 +1534,7 @@ a {
 [disabled].checkbox__content svg,
 [disabled].radio__content svg,
 .btn-filter[disabled] svg,
+[disabled].dropdown-select__trigger--filter svg,
 [disabled].dropdown__filter svg,
 [disabled].checkbox-filter__content svg,
 [disabled].radio-filter__content svg,
@@ -1544,6 +1553,7 @@ a {
 [disabled].checkbox__content:hover,
 [disabled].radio__content:hover,
 .btn-filter[disabled]:hover,
+[disabled].dropdown-select__trigger--filter:hover,
 [disabled].dropdown__filter:hover,
 [disabled].checkbox-filter__content:hover,
 [disabled].radio-filter__content:hover,
@@ -1565,6 +1575,7 @@ a {
 [disabled].checkbox__content:hover svg,
 [disabled].radio__content:hover svg,
 .btn-filter[disabled]:hover svg,
+[disabled].dropdown-select__trigger--filter:hover svg,
 [disabled].dropdown__filter:hover svg,
 [disabled].checkbox-filter__content:hover svg,
 [disabled].radio-filter__content:hover svg,
@@ -1583,6 +1594,7 @@ a {
 [disabled].checkbox__content:active,
 [disabled].radio__content:active,
 .btn-filter[disabled]:active,
+[disabled].dropdown-select__trigger--filter:active,
 [disabled].dropdown__filter:active,
 [disabled].checkbox-filter__content:active,
 [disabled].radio-filter__content:active,
@@ -1603,6 +1615,7 @@ a {
 [disabled].checkbox__content:active svg,
 [disabled].radio__content:active svg,
 .btn-filter[disabled]:active svg,
+[disabled].dropdown-select__trigger--filter:active svg,
 [disabled].dropdown__filter:active svg,
 [disabled].checkbox-filter__content:active svg,
 [disabled].radio-filter__content:active svg,
@@ -1621,6 +1634,7 @@ a {
 [disabled].checkbox__content:focus,
 [disabled].radio__content:focus,
 .btn-filter[disabled]:focus,
+[disabled].dropdown-select__trigger--filter:focus,
 [disabled].dropdown__filter:focus,
 [disabled].checkbox-filter__content:focus,
 [disabled].radio-filter__content:focus,
@@ -1641,6 +1655,7 @@ a {
 [disabled].checkbox__content:focus svg,
 [disabled].radio__content:focus svg,
 .btn-filter[disabled]:focus svg,
+[disabled].dropdown-select__trigger--filter:focus svg,
 [disabled].dropdown__filter:focus svg,
 [disabled].checkbox-filter__content:focus svg,
 [disabled].radio-filter__content:focus svg,
@@ -1660,6 +1675,7 @@ a {
 .checkbox__content:hover,
 .radio__content:hover,
 .btn-filter:hover,
+.dropdown-select__trigger--filter:hover,
 .dropdown__filter:hover,
 .checkbox-filter__content:hover,
 .radio-filter__content:hover,
@@ -1681,6 +1697,7 @@ a {
 .checkbox__content:hover svg,
 .radio__content:hover svg,
 .btn-filter:hover svg,
+.dropdown-select__trigger--filter:hover svg,
 .dropdown__filter:hover svg,
 .checkbox-filter__content:hover svg,
 .radio-filter__content:hover svg,
@@ -1700,6 +1717,7 @@ a {
 .checkbox__content:focus,
 .radio__content:focus,
 .btn-filter:focus,
+.dropdown-select__trigger--filter:focus,
 .dropdown__filter:focus,
 .checkbox-filter__content:focus,
 .radio-filter__content:focus,
@@ -1720,6 +1738,7 @@ a {
 .checkbox__content:focus svg,
 .radio__content:focus svg,
 .btn-filter:focus svg,
+.dropdown-select__trigger--filter:focus svg,
 .dropdown__filter:focus svg,
 .checkbox-filter__content:focus svg,
 .radio-filter__content:focus svg,
@@ -1738,6 +1757,7 @@ a {
 .checkbox__content:active,
 .radio__content:active,
 .btn-filter:active,
+.dropdown-select__trigger--filter:active,
 .dropdown__filter:active,
 .checkbox-filter__content:active,
 .radio-filter__content:active,
@@ -1758,6 +1778,7 @@ a {
 .checkbox__content:active svg,
 .radio__content:active svg,
 .btn-filter:active svg,
+.dropdown-select__trigger--filter:active svg,
 .dropdown__filter:active svg,
 .checkbox-filter__content:active svg,
 .radio-filter__content:active svg,
@@ -1789,7 +1810,7 @@ a {
 }
 
 @media only screen and (min-width: 1024px) {
-  .btn-filter, .dropdown__filter, .checkbox-filter__content, .radio-filter__content, .btn-filter-with-icon {
+  .btn-filter, .dropdown-select__trigger--filter, .dropdown__filter, .checkbox-filter__content, .radio-filter__content, .btn-filter-with-icon {
     margin: 0 5px;
   }
 }
@@ -3472,7 +3493,6 @@ li, ol, ul, h2 {
 .card-button-list {
   background: #fff;
   border: 1px solid #f0f0f0;
-  width: 450px;
   box-shadow: 0 0 12px #f0f0f0;
   position: relative;
   max-height: 225px;
@@ -3848,9 +3868,11 @@ li, ol, ul, h2 {
   position: fixed;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
+  flex: 1 1 0px;
   width: 100%;
   z-index: 300;
+  align-items: flex-start;
+  justify-content: space-around;
 }
 
 .nav-bottom--repo {
@@ -3861,9 +3883,13 @@ li, ol, ul, h2 {
 .nav-bottom__link {
   padding: 5px;
   text-align: center;
+  justify-content: center;
   text-decoration: none;
   color: #0E0E0E;
   border-radius: 34px;
+  flex-wrap: wrap;
+  align-content: end;
+  display: flex;
 }
 .nav-bottom__button:hover, .nav-bottom__button :active,
 .nav-bottom__link:hover,
@@ -3873,6 +3899,7 @@ li, ol, ul, h2 {
 .nav-bottom__button:hover .nav-bottom__icon, .nav-bottom__button :active .nav-bottom__icon,
 .nav-bottom__link:hover .nav-bottom__icon,
 .nav-bottom__link :active .nav-bottom__icon {
+  position: absolute;
   transition: 0.2s;
   transform: translateY(-0.4rem);
 }
@@ -3882,6 +3909,8 @@ li, ol, ul, h2 {
   text-decoration: none;
   line-height: 0.7rem;
   font-weight: 700;
+  position: absolute;
+  bottom: 8px;
 }
 
 .nav-bottom__link--active {
@@ -3939,10 +3968,20 @@ li, ol, ul, h2 {
   border-radius: 34px;
 }
 
+.nav-bottom__icon {
+  position: absolute;
+}
 .nav-bottom__icon svg {
   fill: #0E0E0E;
   height: 24px;
   width: 24px;
+  padding: 6px;
+  padding-bottom: 0;
+  left: -18px;
+  position: absolute;
+  bottom: -15px;
+  background: var(--network-background-color);
+  border-radius: 10px;
 }
 
 .notif-circle {
@@ -3971,12 +4010,12 @@ li, ol, ul, h2 {
   .nav-bottom, .nav-bottom--repo {
     border-radius: 32px 0 0 32px;
     flex-direction: column;
-    width: auto;
+    width: 4rem;
     height: 22rem;
     right: 0;
     left: auto;
-    max-width: 640px;
     top: calc( 50% - 22rem / 2 );
+    padding-top: 30px;
   }
   .nav-bottom-profile {
     border-radius: 32px;
@@ -3992,6 +4031,9 @@ li, ol, ul, h2 {
   .nav-bottom__icon .icon {
     height: 100px;
     width: 100px;
+  }
+  .nav-bottom__icon svg {
+    background-color: transparent;
   }
   .nav-bottom__link--create {
     max-width: 72px;
@@ -4068,15 +4110,15 @@ li, ol, ul, h2 {
 }
 
 .info-overlay__container {
-  padding-top: 50px;
+  margin-top: 50px;
+  margin-bottom: 200px;
   width: 100%;
   z-index: 200;
   box-sizing: border-box;
   background-repeat: no-repeat, repeat;
   background-position: center;
   background-size: cover;
-  overflow: auto;
-  background-image: var(--network-jumbo);
+  overflow: hidden;
 }
 
 .info-overlay__content {
@@ -4088,10 +4130,10 @@ li, ol, ul, h2 {
   min-width: fit-content;
   background-color: transparent;
   width: 100%;
-  height: auto;
+  height: 100vh;
+  overflow: hidden;
   box-sizing: border-box;
-  margin-top: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
 }
 
 .info-overlay__search-section {
@@ -4107,24 +4149,34 @@ li, ol, ul, h2 {
   color: #2E2E2E;
 }
 
+.info-overlay__card--header {
+  background-image: var(--network-jumbo);
+  background-repeat: no-repeat, repeat;
+  background-position: center;
+  background-size: cover;
+  height: auto;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 .info-overlay__card {
   flex-grow: 1;
   margin: auto;
-  margin-top: 20px;
-  color: #fff;
-  height: -moz-max-content;
-  height: max-content;
+  color: #2E2E2E;
   max-width: 93vw;
+  overflow: auto;
   min-height: 100px;
+  padding-bottom: 100px;
 }
 .info-overlay__card .card {
   border-radius: 10px;
-  background-color: rgba(63, 59, 51, 0.6784313725);
+  background-color: #fff;
   padding: 15px;
   margin: 20px 0;
-  max-height: 100%;
-  height: -moz-fit-content;
-  height: fit-content;
   overflow: auto;
 }
 .info-overlay__card .card .card__header {
@@ -4151,13 +4203,16 @@ li, ol, ul, h2 {
   border-radius: 8px;
   background-color: #0E0E0E;
   padding: 15px;
+  color: #fff;
   max-width: 70%;
+  align-self: start;
+  display: inline-block;
 }
 .info-overlay__card .card .card__header .card__header-title.network-title ::first-letter {
   text-transform: uppercase;
 }
 .info-overlay__card .card hr {
-  background-color: #fff;
+  border-top: 0.5px solid #f0f0f0;
 }
 .info-overlay__card .info-overlay__description {
   overflow: auto;
@@ -4165,6 +4220,7 @@ li, ol, ul, h2 {
   padding: 10px 0;
   word-wrap: break-word;
   display: inline-block;
+  width: 98%;
   max-width: 98%;
 }
 .info-overlay__card .info-overlay__hashtags {
@@ -4184,7 +4240,7 @@ li, ol, ul, h2 {
   padding: 5px;
   font-weight: 400;
   margin-top: 7px;
-  color: #f0f0f0;
+  color: #828282;
   font-size: 14px;
   border-color: #f0f0f0;
   border: 0px solid #f0f0f0;
@@ -4209,12 +4265,17 @@ li, ol, ul, h2 {
   .info-overlay__bottom {
     bottom: 2%;
   }
+  .info-overlay__container {
+    margin-bottom: 0;
+  }
   .info-overlay__content {
     padding-bottom: 0px;
     height: 100vh;
   }
+  .info-overlay__card--header {
+    height: 20rem;
+  }
   .info-overlay__card {
-    max-height: calc(100vh - 300px);
     max-width: 840px;
   }
 }
@@ -5652,11 +5713,11 @@ li, ol, ul, h2 {
   }
 }
 .drag-tab {
+  display: none;
   width: 100%;
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   height: 35px;
   background-color: #fff;
@@ -5671,12 +5732,21 @@ li, ol, ul, h2 {
   cursor: pointer;
 }
 
+.drag-tab--hide {
+  display: none;
+}
+
 .drag-tab__line {
   display: none;
 }
 
+.drag-tab__order {
+  margin: 20px;
+}
+
 .drag-tab__icon {
   display: flex;
+  flex: 1;
 }
 .drag-tab__icon svg {
   transition: all 0s;
@@ -5693,6 +5763,7 @@ li, ol, ul, h2 {
 
 @media only screen and (min-width: 1280px) {
   .drag-tab {
+    display: flex;
     position: fixed;
     width: auto;
     flex-direction: row-reverse;
@@ -6576,20 +6647,66 @@ hr {
   position: relative;
   z-index: 100;
   transition: all 1s;
-  padding-bottom: 60px;
+  padding-bottom: 50px;
+}
+
+.list__container--full-list {
+  height: 100vh;
+}
+
+@media (hover: none) {
+  .list__container {
+    padding-bottom: 50px;
+  }
+}
+.list__show-map-button {
+  position: fixed;
+  display: flex;
+  bottom: calc(50px + 0.7rem);
+  width: 100%;
+  left: calc(50% - 55px);
+  z-index: 400;
+}
+.list__show-map-button .btn--center {
+  padding: 5px;
 }
 
 .list__content {
   display: flex;
-  padding-top: 5px;
+  padding: 5px 5px;
   background-color: #f0f0f0;
+  z-index: 200;
+  transition: all 1s;
+  align-content: flex-start; /* Add this*/
+}
+
+.list__content--row {
+  display: flex;
   flex-direction: row;
   overflow-x: scroll;
   overflow-y: hidden;
-  z-index: 200;
   height: auto;
   min-height: 225px;
-  transition: all 1s;
+  width: 100%;
+}
+.list__content--row .list__element {
+  height: auto;
+  min-width: 450px;
+}
+
+.list__content--full-screen {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100vh;
+  margin-bottom: 50px;
+  min-height: none;
+}
+.list__content--full-screen .list__element {
+  flex: 50%;
+  height: auto;
 }
 
 .list__element {
@@ -6621,6 +6738,16 @@ hr {
   width: 50%;
 }
 
+.list__order {
+  height: 40px;
+  background-color: var(--network-background-color);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+
 @media only screen and (min-width: 1280px) {
   .list__container {
     height: 100%;
@@ -6642,6 +6769,7 @@ hr {
   .list__element {
     height: auto;
     width: 100%;
+    min-width: 450px;
   }
 }
 body {

@@ -28,6 +28,7 @@ export default function HexagonExploreMap({
   hexagonClicked,
   isRedrawingMap,
   selectedNetwork,
+  showMap,
 }) {
   const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
   const [centerBounds, setCenterBounds] = useState<Point>(null);
@@ -37,6 +38,8 @@ export default function HexagonExploreMap({
 
     setCenterBounds(center);
   };
+  const height = showMap ? '100%' : 0;
+  const showMapCaption = showMap ? 'Show List' : 'Show Map';
 
   useEffect(() => {
     setGeoJsonFeatures(() => {

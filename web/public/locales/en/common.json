@@ -5,6 +5,7 @@
     "profile": "Profile",
     "activity": "Activity",
     "faqs": "Faqs",
+    "signup": "SignUp",
     "login": "Login",
     "home": "Home",
     "donate": "Donate"
@@ -12,7 +13,9 @@
   "homeinfo": {
     "start": "Where do you start?",
     "searchlocation": "Search location",
+    "info": "What's this Network about?",
     "loading": "...",
+    "goToExplore": "Explore the _helpbuttons_",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
     "createSubtitle": "Create your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",

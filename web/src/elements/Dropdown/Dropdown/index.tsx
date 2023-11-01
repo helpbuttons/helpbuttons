@@ -35,7 +35,7 @@ export function Dropdown({
       {label && <label className="form__label"> {label}</label>}
       <p className="form__explain">{explain}</p>
       <select
-        className="dropdown-select__trigger"
+        className="dropdown-select__trigger--filter"
         onChange={handleChange}
         defaultValue={defaultSelected}
       >
