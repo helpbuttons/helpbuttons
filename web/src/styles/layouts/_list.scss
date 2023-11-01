@@ -96,6 +96,8 @@ $list-drag-tab-height: 40px;
 
   display: flex;
   // flex-direction: column;
+  justify-content: flex-start;
+
   flex-flow: row wrap;
   width: 100%;
   overflow-x: hidden;
@@ -107,10 +109,11 @@ $list-drag-tab-height: 40px;
 
   .list__element {
 
-    flex: 50%;
-    height: auto;
     // max-width: $card-button-list-width;
-
+    flex: 1;
+    height: auto;
+    flex-basis: 50%;
+    min-width: $card-button-list-width;
 
   }
 
@@ -168,6 +171,27 @@ $list-drag-tab-height: 40px;
 
 }
 
+@media #{$breakpoints-medium} {
+
+
+  .list__content--full-screen {
+
+  
+    .list__element {
+
+      flex: 0;
+      flex-basis: 50%;
+
+      min-width: $card-button-list-width;
+      // max-width: $card-button-list-width;
+  
+    }
+  
+  }
+
+
+
+}
 
 @media #{$breakpoints-xlarge} {
 
@@ -201,7 +225,17 @@ $list-drag-tab-height: 40px;
     width: 100%;
     min-width: $card-button-list-width;
 
+  }
 
+  .list__content--full-screen {
+  
+  
+    .list__element {
+
+      // max-width: $card-button-list-width;
+  
+    }
+  
   }
 
 }

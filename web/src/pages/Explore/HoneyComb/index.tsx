@@ -74,7 +74,7 @@ function HoneyComb({ router, selectedNetwork }) {
   const [showMap, toggleShowMap] = useToggle(true);
 
   const height = showLeftColumn ? 0 : 400;
-  const showMapCaption = showMap ? 'Hide Map' : 'Show Map';
+  const showMapCaption = showMap ? 'explore.hideMap' : 'explore.showMap';
 
   const handleChangeShowMap = (event) => {
     toggleShowMap(event.target.value);
@@ -166,7 +166,7 @@ function HoneyComb({ router, selectedNetwork }) {
                     iconLeft={IconType.svg}
                     iconLink={<IoMapOutline />}
                     contentAlignment={ContentAlignment.center}
-                    caption={showMapCaption}
+                    caption={t(showMapCaption)}
                     onClick={handleChangeShowMap}
                   />
             </div>

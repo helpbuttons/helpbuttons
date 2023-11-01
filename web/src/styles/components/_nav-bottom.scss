@@ -59,7 +59,7 @@ $nav-bottom-border: 32px;
 
       position: absolute;
       transition: 0.2s;
-      transform: translateY(-1rem);
+      transform: translateY(-0.4rem);
 
     }
 
@@ -213,6 +213,18 @@ $nav-bottom-border: 32px;
     justify-content: center;
     align-items: center;
 
+    &:hover, :active {
+
+      cursor: pointer;
+  
+      .nav-bottom__icon {
+  
+        transform: translateY(-1rem);
+  
+      }
+  
+    }
+
   }
 
   .nav-bottom__icon {
@@ -268,4 +280,6 @@ $nav-bottom-border: 32px;
       }
     }
   }
+
+
 }

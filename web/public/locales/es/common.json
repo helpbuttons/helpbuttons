@@ -159,7 +159,9 @@
     "noResults": "Lo siento, no hay resultados aquí",
     "selectedHexagon": "en el área seleccionada",
     "filteredRadius": "en {0} · {1}km",
-    "noFilter": "en {0}"
+    "noFilter": "en la zona",
+    "hideMap":"Ocultar Mapa",
+    "showMap":"Mostrar Mapa"
   },
   "buttonFilters": {
     "queryLabel": "¿Qué buscas?",

@@ -34,7 +34,6 @@ function List({
   const showOrderBy = !showMap || showLeftColumn ?  true : false;
 
 
-  const showMapCaption = showMap ? 'Hide Map' : 'Show Map';
   const handleChangeShowMap = (event) => {
     toggleShowMap(event.target.value);
   };
