@@ -266,14 +266,12 @@ function MyApp({ Component, pageProps }) {
         }
       >
         <Alert />
-        
+        <div className="index__content">
           {(isRoleAllowed(Role.guest, pathname) || authorized) && 
-            <div className="index__content">
               <Component {...pageProps} />
-              <NavBottom loggedInUser={loggedInUser}/>
-            </div>
           }
-        
+          <NavBottom loggedInUser={loggedInUser}/>
+            </div>
       </div>
     </>
   );
