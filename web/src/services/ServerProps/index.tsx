@@ -1,7 +1,8 @@
-import { makeImageUrl } from 'shared/sys.helper';
+import { makeImageUrl, setSSRLocale } from 'shared/sys.helper';
 
 export class ServerPropsService {
   public static async general(subtitle, ctx) {
+    setSSRLocale(ctx.locale)
     const baseURL = process.env.API_URL;
     const configURL = `${baseURL}/networks/config`;
     const networkConfigURL = `${baseURL}/networks/findById`;
