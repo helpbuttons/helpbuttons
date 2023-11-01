@@ -49,6 +49,8 @@ export function HbMap({
       }}
       zoomSnap={true}
       provider={tileProvider}
+      maxZoom={16}
+      minZoom={4}
     >
       {children}
       <ZoomControl />
