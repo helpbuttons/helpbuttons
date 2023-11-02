@@ -32,5 +32,7 @@ export class UserUpdateDto {
   @Column({default: true})
   receiveNotifications: boolean;
 
-  inviteCode?: string;  
+  inviteCode?: string;
+
+  showButtons?: boolean;
 }

@@ -7,15 +7,18 @@ import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { User } from 'shared/entities/user.entity';
-import { FindAdminButton, FindUser, Logout } from 'state/Users';
+import { FindAdminButton, FindUser, FindUserButtons, Logout } from 'state/Users';
 import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
 import { useRouter } from 'next/router';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
+import ContentList from 'components/list/ContentList';
+import { useButtonTypes } from 'shared/buttonTypes';
 
 export default function Profile() {
   const [userProfile, setUserProfile] = useState(null);
+  const [userButtons,setUserButtons] = useState([])
   const knownUsers = useRef(
     store,
     (state: GlobalState) => state.knownUsers,
@@ -26,13 +29,6 @@ export default function Profile() {
   );
   const [adminButtonId, setAdminButtonId] = useState(null);
 
-  function logout() {
-    UserService.logout();
-  }
-
-  const removeProfile = () => {
-    console.log('remove myself!');
-  };
   const router = useRouter();
 
   useEffect(() => {
@@ -51,6 +47,7 @@ export default function Profile() {
         store.emit(
           new FindUser(username, (user) => {
             setUserProfile(user);
+            store.emit(new FindUserButtons(user.id, (userButtons) => setUserButtons(userButtons)))
           }),
         );
       }
@@ -73,6 +70,9 @@ export default function Profile() {
     }
   }, [userProfile, loggedInUser, router.isReady]);
 
+  const [buttonTypes, setButtonTypes] = useState([]);
+  useButtonTypes(setButtonTypes);
+  
   return (
     <>
           <Popup linkFwd="/Explore" title={t('user.otherProfileView')}>
@@ -80,6 +80,10 @@ export default function Profile() {
             {userProfile?.role == Role.admin && adminButtonId && (
               <LinkAdminButton adminButtonId={adminButtonId} />
             )}
+            {userButtons && 
+            <>
+              <ContentList buttons={userButtons} buttonTypes={buttonTypes}/>
+            </>}
           </Popup>
     </>
   );

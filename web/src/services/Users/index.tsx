@@ -90,4 +90,8 @@ export class UserService {
   public static unsubscribe(email : string): Observable<any> {
     return httpService.post<any>(`/users/unsubscribe/${email}`);
   }
+
+  public static findByOwner(userId : string): Observable<any> {
+    return httpService.get<any>(`/buttons/findByOwner/${userId}`);
+  }
 }
