@@ -307,6 +307,21 @@ export class UnsubscribeMails implements WatchEvent {
 
 }
 
+export class FindUserButtons implements WatchEvent {
+  public constructor(
+    private userId: string,
+    private onResult,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.findByOwner(this.userId).pipe(
+      map((buttonList) => {
+        this.onResult(buttonList);
+      }),
+      catchError((error) => {this.onResult([]); console.log(error); return  of(undefined)})
+    )
+  }
+}
 
 export function isAdmin(loggedInUser)
 {

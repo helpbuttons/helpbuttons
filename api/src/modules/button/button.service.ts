@@ -280,6 +280,16 @@ export class ButtonService {
     return { ...button };
   }
 
+  async findByOwner(ownerId: string) {
+    let buttons: Button[] = await this.buttonRepository.find({
+      where: { owner: {id: ownerId, role: Not(Role.blocked)}, deleted: false},
+      relations: [
+        'owner',
+      ],
+    });
+    return buttons;
+  }
+
   deletedBlockedConditions()
   {
     return  {deleted: false, owner: {role: Not(Role.blocked)}}

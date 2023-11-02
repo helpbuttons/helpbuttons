@@ -56,14 +56,17 @@ export class Network extends BaseEntity {
   @Column({default: 'helpButton'})
   nomeclature: string;
 
+  @Column({default: 'helpButtons'})
+  nomeclaturePlural: string;
+
   @Column()
   buttonTemplates: string;
 
-  @Column({default: 'en'})
-  locale: string;
-
   @Column({default: false})
   inviteOnly: boolean;
+
+  @Column({default: 'en'})
+  locale: string;
 
   @Column({default: 'EUR'})
   currency: string;
