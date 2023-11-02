@@ -114,7 +114,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
     .card__header {
 
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       margin-bottom: 0;
       padding-bottom: $padding-small;
@@ -142,15 +142,14 @@ $info-content-head-margin: calc( $footer-height-mobile );
           font-size: $font-size-huge;
           line-height: $font-size-huge;
           word-wrap: break-word;
-          display: inline-block;
+          display: flex;
           border-radius: $border-radius-basic;
           background-color: $color-black;
           padding: $padding-big;
           color: $color-white;
           max-width: 70%;
-          align-self: start;
-          display: inline-block;
-
+          align-self: center;
+          justify-content: center;
 
           ::first-letter {
 

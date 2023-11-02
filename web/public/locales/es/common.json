@@ -18,7 +18,7 @@
     "loading": "cargando",
     "goToExplore": "Explorar _helpbuttons_",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
-    "stats": "Qué hay en esta red",
+    "stats": "¿Qué hay en esta red?",
     "users": "{0} usuarios en esta Red",
     "actions": "¿Qué puedes hacer?",
     "popularHashtags": "¿Qué temas se tratan?",
@@ -183,9 +183,9 @@
     "whenExplain": "Filtra los eventos por fecha",
     "byDate": "Por fecha de creacion",
     "byPrice": "Por precio",
-    "orderBy": "Ordenar por",
+    "orderBy": "Ordenar",
     "priceExplain": "Filtrar por precio",
-    "byProximity": "Por proximidade",
+    "byProximity": "Por proximidad",
     "byEventDate": "By ínicio del evento"
   },
   "button": {

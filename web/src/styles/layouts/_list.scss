@@ -11,7 +11,7 @@ $list-drag-tab-height: 40px;
   position: relative;
   z-index: $z-index-01;
   transition: $transition-default-slow;
-  padding-bottom: $footer-height-mobile;
+  padding-bottom: calc($footer-height-mobile + $padding-small);
 
 }
 
@@ -166,9 +166,9 @@ $list-drag-tab-height: 40px;
   background-color: $color-corporative;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   padding: $padding-small;
+  gap: $padding-small;
 
 }
 

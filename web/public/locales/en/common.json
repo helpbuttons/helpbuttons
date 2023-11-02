@@ -71,7 +71,7 @@
     "byDate": "By creation date",
     "byProximity": "By proximity",
     "byEventDate": "By start of event",
-    "orderBy": "Order by"
+    "orderBy": "Order"
   },
   "setup": {
     "hostname": "Hostname",

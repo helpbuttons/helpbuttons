@@ -1917,6 +1917,34 @@ a {
   background: #f0f0f0;
 }
 
+.dropdown__dropdown-trigger--list {
+  text-align: left;
+  overflow-x: hidden;
+  height: auto;
+  padding: 0;
+  width: inherit;
+  text-decoration: underline;
+  border: none;
+  border-radius: 2rem;
+  background: var(--network-background-color);
+  color: #0E0E0E;
+  transition: all 0.2s ease-in-out;
+  font-size: 16px;
+}
+.dropdown__dropdown-trigger--list:hover {
+  cursor: pointer;
+}
+.dropdown__dropdown-trigger--list:focus {
+  cursor: pointer;
+  border-radius: 34px;
+  background: #fff;
+}
+.dropdown__dropdown-trigger--list:active {
+  cursor: pointer;
+  border-radius: 34px;
+  background: #f0f0f0;
+}
+
 .dropdown__dropdown-content {
   width: 100%;
   margin-top: 10px;
@@ -3964,11 +3992,11 @@ li, ol, ul, h2 {
   fill: #0E0E0E;
   height: 24px;
   width: 24px;
-  padding: 6px;
+  padding: 3px;
   padding-bottom: 0;
-  left: -18px;
+  left: -15px;
   position: absolute;
-  bottom: -15px;
+  bottom: -17px;
   background: var(--network-background-color);
   border-radius: 10px;
 }
@@ -4191,7 +4219,7 @@ li, ol, ul, h2 {
 }
 .info-overlay__card .card .card__header {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 0;
   padding-bottom: 5px;
@@ -4212,14 +4240,14 @@ li, ol, ul, h2 {
   font-size: 32px;
   line-height: 32px;
   word-wrap: break-word;
-  display: inline-block;
+  display: flex;
   border-radius: 8px;
   background-color: #0E0E0E;
   padding: 15px;
   color: #fff;
   max-width: 70%;
-  align-self: start;
-  display: inline-block;
+  align-self: center;
+  justify-content: center;
 }
 .info-overlay__card .card .card__header .card__header-title.network-title ::first-letter {
   text-transform: uppercase;
@@ -6660,7 +6688,7 @@ hr {
   position: relative;
   z-index: 100;
   transition: all 1s;
-  padding-bottom: 50px;
+  padding-bottom: 55px;
 }
 
 .list__container--full-list {
@@ -6759,9 +6787,9 @@ hr {
   background-color: var(--network-background-color);
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   padding: 5px;
+  gap: 5px;
 }
 
 @media only screen and (min-width: 991px) {

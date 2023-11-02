@@ -85,20 +85,21 @@ function List({
       {!showFiltersForm && (
         <>
 
-            {/* <div className='list__order'> */}
+            <div className='list__order'>
 
-                {/* { showOrderBy &&
+                { showOrderBy &&
                   <>
                     <div >{t('buttonFilters.orderBy')}</div>
 
                     <AdvancedFiltersSortDropDown
+                    className={'dropdown__dropdown-trigger--list'}
                     orderBy={filters.orderBy}
                     setOrderBy={(value) => updatesOrderByFilters(value)}
                     buttonTypes={buttonTypes}
                     selectedButtonTypes={filters.helpButtonTypes}
                     />
                   </>
-                } */}
+                }
 
 
                 {/* {showMap && 
@@ -119,7 +120,7 @@ function List({
                 
               {/* <span className="list__order--item">Show List</span> */}
 
-            {/* </div> */}
+            </div>
 
             <div
               className={
