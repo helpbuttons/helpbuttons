@@ -3,6 +3,11 @@ import { pathToRegexp } from 'path-to-regexp';
 import { allowedPathsPerRole } from './pagesRoles';
 import { Role } from './types/roles';
 
+let SSRLocale = '';
+
+export function setSSRLocale(_locale) {
+  SSRLocale = _locale;
+}
 export function getShareLink(link) {
   return `${getUrlOrigin()}${link}`;
 }
@@ -25,19 +30,18 @@ export function getLocale(availableLocales = null) {
     });
   }
 
-  try{
-  const splitHref = getHref().split('/');
+  try {
+    const splitHref = getHref().split('/');
 
-  if (
-    splitHref &&
-    splitHref.length > 2 &&
-    availableLocales.includes(splitHref[3])
-  ) {
-    return splitHref[3];
-  }
-  }catch(err)
-  {
-    
+    if (
+      splitHref &&
+      splitHref.length > 2 &&
+      availableLocales.includes(splitHref[3])
+    ) {
+      return splitHref[3];
+    }
+  } catch (err) {
+    return SSRLocale;
   }
   return 'en';
 }
@@ -50,16 +54,13 @@ export function makeImageUrl(image, baseUrl = '') {
   const matches = image.match(regex);
   if (!matches) {
     const regexHref = /^(http|https)/gm;
-    if(image.match(regexHref))
-    {
-      return image
+    if (image.match(regexHref)) {
+      return image;
     }
     return `${baseUrl}${image}`;
   }
   return image;
 }
-
-export const defaultMarker = { latitude: 41.687, longitude: -7.7406 };
 
 export function isRoleAllowed(role: Role, path): boolean {
   if (pagesRolesCheck(path, role)) {
@@ -74,9 +75,9 @@ export function isRoleAllowed(role: Role, path): boolean {
     return true;
   }
 
-  console.error(
-    `trying to access a path not allowed path: ${path} role: ${role}`
-  );
+  // console.error(
+  //   `trying to access a path not allowed path: ${path} role: ${role}`
+  // );
   return false;
 
   function pagesRolesCheck(path, role: Role) {
@@ -96,24 +97,25 @@ export function isRoleAllowed(role: Role, path): boolean {
 }
 
 export const tagify = (str) => {
-  let strOut = str
-    .replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ');
+  let strOut = str.replace(
+    /[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g,
+    ' ',
+  );
   strOut = strOut.replace(/\s+|\s+/gm, '');
   return strOut;
-}
+};
 
 export const uniqueArray = (a) =>
-Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
-  JSON.parse(s),
-);
+  Array.from(new Set(a.map((o) => JSON.stringify(o)))).map((s) =>
+    JSON.parse(s),
+  );
 
 export const readableDistance = (distance: number) => {
-  if (distance < 5000)
-  {
+  if (distance < 5000) {
     return distance + 'm';
   }
-  return Math.round(distance / 1000) + 'km'
-}
+  return Math.round(distance / 1000) + 'km';
+};
 
 export const getUrlParams = (path, router) => {
   const findHash = path.indexOf('#');

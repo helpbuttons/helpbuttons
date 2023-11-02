@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { HbMap } from '.';
+import { HbMapUncontrolled } from '.';
 import { GeoJson, Point } from 'pigeon-maps';
 import { latLngToGeoJson } from 'shared/honeycomb.utils';
 import { MarkerButtonIcon } from './MarkerButton';
@@ -54,7 +54,7 @@ export default function MarkerSelectorMap({
   return (
     <>
       <div className="picker__map">
-        <HbMap
+        <HbMapUncontrolled
           mapCenter={hexagonCenter}
           mapZoom={zoom}
           onBoundsChanged={onBoundsChanged}
@@ -77,7 +77,7 @@ export default function MarkerSelectorMap({
               }}
             />
           )}
-        </HbMap>
+        </HbMapUncontrolled>
       </div>
     </>
   );

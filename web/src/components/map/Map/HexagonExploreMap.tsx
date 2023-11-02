@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { GeoJson, GeoJsonFeature, Overlay, Point } from 'pigeon-maps';
-import { GlobalState, store } from 'pages';
-import { useRef } from 'store/Store';
+import { store } from 'pages';
 import {
-  SetExploreSettingsBoundsLoaded,
   UpdateExploreSettings,
 } from 'state/Explore';
 import { HbMap } from '.';
 import {
-  convertBoundsToGeoJsonHexagons,
   convertH3DensityToFeatures,
-  getBoundsHexFeatures,
-  getResolution,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
@@ -26,15 +21,16 @@ export default function HexagonExploreMap({
   setHexagonsToFetch,
   setHexagonClicked,
   hexagonClicked,
-  isRedrawingMap,
   selectedNetwork,
   showMap,
 }) {
-  const [maxButtonsHexagon, setMaxButtonsHexagon] = useState(1);
   const [centerBounds, setCenterBounds] = useState<Point>(null);
-  const [geoJsonFeatures, setGeoJsonFeatures] = useState([]);
+  const geoJsonFeatures = useRef([])
+  const maxButtonsHexagon = useRef(1)
+  const [isRedrawingMap, setIsRedrawingMap] = useState(true)
   const onBoundsChanged = ({ center, zoom, bounds }) => {
-    handleBoundsChange(bounds, center, zoom)
+    setIsRedrawingMap(() => true)
+    handleBoundsChange(bounds, center, Math.floor(zoom))
 
     setCenterBounds(center);
   };
@@ -42,19 +38,17 @@ export default function HexagonExploreMap({
   const showMapCaption = showMap ? 'Show List' : 'Show Map';
 
   useEffect(() => {
-    setGeoJsonFeatures(() => {
-      return convertH3DensityToFeatures(h3TypeDensityHexes);
-    });
-    setMaxButtonsHexagon(() =>
-      h3TypeDensityHexes.reduce((accumulator, currentValue) => {
+    geoJsonFeatures.current = convertH3DensityToFeatures(h3TypeDensityHexes).filter((hex) => hex.properties.count > 0);
+
+    maxButtonsHexagon.current = h3TypeDensityHexes.reduce((accumulator, currentValue) => {
         return Math.max(accumulator, currentValue.count);
-      }, 1),
-    );
+      }, 1);
+    setIsRedrawingMap(() => false)
+
   }, [h3TypeDensityHexes]);
 
   const [buttonTypes, setButtonTypes] = useState([]);
   useButtonTypes(setButtonTypes);
-
   return (
     <>
     {exploreSettings.center && 
@@ -76,8 +70,9 @@ export default function HexagonExploreMap({
 
         </Overlay>
 
+        {!isRedrawingMap && 
         <GeoJson>
-          {geoJsonFeatures.map((hexagonFeature) => (
+          {geoJsonFeatures.current.map((hexagonFeature) => (
             <GeoJsonFeature
               onClick={(feature) => {
                 if (hexagonFeature.properties.count > 0) {
@@ -115,13 +110,13 @@ export default function HexagonExploreMap({
                   opacity:
                     0.2 +
                     (hexagonFeature.properties.count * 50) /
-                      (maxButtonsHexagon - maxButtonsHexagon / 4) /
+                      (maxButtonsHexagon.current - maxButtonsHexagon.current / 4) /
                       100,
                 };
               }}
             />
           ))}
-          {!isRedrawingMap && hexagonClicked && (
+          {(!isRedrawingMap && hexagonClicked) && (
             <GeoJsonFeature
               feature={hexagonClicked}
               key={`clicked_${hexagonClicked.properties.hex}`}
@@ -133,12 +128,13 @@ export default function HexagonExploreMap({
               }}
             />
           )}
-        </GeoJson>
+            </GeoJson>
+        }
         {/*
         show count of buttons per hexagon
         */}
         {!isRedrawingMap &&
-          geoJsonFeatures.map((hexagonFeature) => {
+          geoJsonFeatures.current.map((hexagonFeature) => {
             if (
               hexagonFeature.properties.hex !==
                 hexagonClicked?.properties.hex &&
@@ -169,7 +165,7 @@ export default function HexagonExploreMap({
               );
             }
           })}
-        {!isRedrawingMap && hexagonClicked && (
+        {(!isRedrawingMap && hexagonClicked) && (
           <Overlay
             anchor={hexagonClicked.properties.center}
             offset={[20, 0]}
@@ -220,7 +216,8 @@ export default function HexagonExploreMap({
           <button className='pigeon-center-view' onClick={() => {      
             store.emit(
             new UpdateExploreSettings({
-              center: selectedNetwork.exploreSettings.center
+              center: selectedNetwork.exploreSettings.center,
+              zoom: selectedNetwork.exploreSettings.zoom
             }));
           }}>
             <IoStorefrontSharp/>

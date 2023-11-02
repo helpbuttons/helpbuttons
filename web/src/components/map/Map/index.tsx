@@ -1,26 +1,64 @@
 // import React, { useState } from 'react'
 import { Map, Point, ZoomControl } from 'pigeon-maps';
 import { useEffect, useState } from 'react';
-import { roundCoords } from 'shared/honeycomb.utils';
-import {
-  HbMapTiles,
-  HbTiles,
-} from './Map.consts';
+import { HbMapTiles, HbTiles } from './Map.consts';
 
 interface HbMapProps {
-  center: Point, 
-  defaultZoom: number,
-  onBoundsChanged: ({ center, zoom, bounds, initial }: { center: any; zoom: any; bounds: any; initial: any; }) => void,
-  zoomSnap: boolean,
-  onClick: ({ event, latLng, pixel }) => void,
-  provider: (x: any, y: any, z: any, dpr: any) => string,
-  width?: number,
-  height?: number,
-  maxZoom: number,
-  minZoom: number,
+  center: Point;
+  defaultZoom: number;
+  onBoundsChanged: ({
+    center,
+    zoom,
+    bounds,
+    initial,
+  }: {
+    center: any;
+    zoom: any;
+    bounds: any;
+    initial: any;
+  }) => void;
+  zoomSnap: boolean;
+  onClick: ({ event, latLng, pixel }) => void;
+  provider: (x: any, y: any, z: any, dpr: any) => string;
+  width?: number;
+  height?: number;
+  maxZoom: number;
+  minZoom: number;
 }
 
 export function HbMap({
+  children,
+  mapCenter,
+  mapZoom,
+  onBoundsChanged = (objectRet) => {},
+  tileType = HbMapTiles.OSM,
+}) {
+  const tileProvider = (x, y, z, dpr) => {
+    return HbTiles(tileType, x, y, z, dpr);
+  };
+  return (
+    <Map
+      center={mapCenter}
+      zoom={mapZoom}
+      onBoundsChanged={({ center, zoom, bounds }) => {
+        onBoundsChanged({
+          center: center,
+          zoom: zoom,
+          bounds,
+        });
+      }}
+      zoomSnap={true}
+      provider={tileProvider}
+      maxZoom={16}
+      minZoom={4}
+    >
+      {children}
+      <ZoomControl />
+    </Map>
+  );
+}
+
+export function HbMapUncontrolled({
   children,
   mapCenter,
   mapZoom,
@@ -29,52 +67,53 @@ export function HbMap({
   width = null,
   height = null,
   tileType = HbMapTiles.OSM,
-}) { 
-
+}) {
   const tileProvider = (x, y, z, dpr) => {
-    return HbTiles(tileType,x,y,z,dpr)
+    return HbTiles(tileType, x, y, z, dpr);
   };
 
   const [mapProps, setMapProps] = useState(() => {
     let mapProps: HbMapProps = {
-      center: mapCenter, 
+      center: mapCenter,
       defaultZoom: mapZoom,
       onBoundsChanged: ({ center, zoom, bounds, initial }) => {
         onBoundsChanged({
           center: center,
           zoom: Math.floor(zoom),
           bounds,
-        })
+        });
       },
       zoomSnap: false,
-      onClick: ({ event, latLng, pixel }) => {handleMapClick({latLng})},
+      onClick: ({ event, latLng, pixel }) => {
+        handleMapClick({ latLng });
+      },
       provider: tileProvider,
       maxZoom: 16,
       minZoom: 4,
+    };
+    if (width !== null) {
+      mapProps = { ...mapProps, width };
     }
-    if (width !== null)
-    {
-      mapProps = {...mapProps, width}
-    }
-    if (height !== null)
-    {
-      mapProps = {...mapProps, height}
+    if (height !== null) {
+      mapProps = { ...mapProps, height };
     }
     return mapProps;
-  })
+  });
 
   useEffect(() => {
-    setMapProps((prevMapProps) => {return {...prevMapProps, provider: tileProvider, center: mapCenter}})
-  },
-  [tileType, mapZoom, mapCenter])
+    setMapProps((prevMapProps) => {
+      return {
+        ...prevMapProps,
+        provider: tileProvider,
+        center: mapCenter,
+      };
+    });
+  }, [tileType, mapZoom, mapCenter]);
 
   return (
-    <Map
-      {...mapProps}
-    >
+    <Map {...mapProps}>
       {children}
       <ZoomControl />
-
     </Map>
   );
 }
