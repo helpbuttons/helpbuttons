@@ -942,7 +942,7 @@ a {
 
 .form__section-title {
   font-weight: 700;
-  font-size: 18px;
+  font-size: 22px;
   margin: 25px 0;
 }
 
@@ -1418,6 +1418,7 @@ a {
 .btn-with-icon__icon {
   max-height: 25px;
   max-width: 25px;
+  margin-right: 4px;
   display: flex;
 }
 .btn-with-icon__icon svg {
@@ -3888,7 +3889,7 @@ li, ol, ul, h2 {
   color: #0E0E0E;
   border-radius: 34px;
   flex-wrap: wrap;
-  align-content: end;
+  align-content: flex-end;
   display: flex;
 }
 .nav-bottom__button:hover, .nav-bottom__button :active,
@@ -3899,7 +3900,6 @@ li, ol, ul, h2 {
 .nav-bottom__button:hover .nav-bottom__icon, .nav-bottom__button :active .nav-bottom__icon,
 .nav-bottom__link:hover .nav-bottom__icon,
 .nav-bottom__link :active .nav-bottom__icon {
-  position: absolute;
   transition: 0.2s;
   transform: translateY(-0.4rem);
 }
@@ -3934,22 +3934,11 @@ li, ol, ul, h2 {
   animation: spread 1s ease-out forwards;
 }
 
-.nav-bottom__link--create {
-  background: #0E0E0E;
-  max-width: 58px;
-  width: 58px;
-  height: 58px;
-  padding: 15px;
-  margin-top: -28px;
-  border-radius: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.nav-bottom__link--create .nav-bottom__icon .icon {
-  fill: #fff;
-  height: 58px;
-  width: 58px;
+.nav-bottom__link--create .nav-bottom__icon svg {
+  background-color: #0E0E0E;
+  padding: 5px;
+  color: #fff;
+  left: -18px;
 }
 
 .nav-bottom__create-message {
@@ -4015,6 +4004,7 @@ li, ol, ul, h2 {
     right: 0;
     left: auto;
     top: calc( 50% - 22rem / 2 );
+    padding-top: 15px;
     align-items: center;
   }
   .nav-bottom__link {
@@ -4025,8 +4015,11 @@ li, ol, ul, h2 {
   .nav-bottom__link:hover, .nav-bottom__link :active {
     cursor: pointer;
   }
-  .nav-bottom__link:hover .nav-bottom__icon, .nav-bottom__link :active .nav-bottom__icon {
-    transform: translateY(-1rem);
+  .nav-bottom__link--create .nav-bottom__icon svg {
+    padding: 6px;
+    background-color: var(--network-background-color);
+    left: -18px;
+    color: #0E0E0E;
   }
   .nav-bottom__icon {
     position: relative;
@@ -4142,7 +4135,6 @@ li, ol, ul, h2 {
 .info-overlay__content {
   margin: auto;
   font-family: inherit;
-  font-weight: bold;
   padding: 0 0;
   min-width: -moz-fit-content;
   min-width: fit-content;
@@ -4199,10 +4191,12 @@ li, ol, ul, h2 {
 }
 .info-overlay__card .card .card__header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   margin-bottom: 0;
   padding-bottom: 5px;
+  width: 100%;
+  gap: 10px;
 }
 .info-overlay__card .card .card__header .card__header-image {
   height: 25px;
@@ -4211,7 +4205,8 @@ li, ol, ul, h2 {
   background-color: #828282;
 }
 .info-overlay__card .card .card__header .card__header-title {
-  margin-left: 20px;
+  font-size: 22px;
+  line-height: 22px;
 }
 .info-overlay__card .card .card__header .card__header-title.network-title {
   font-size: 32px;
@@ -4713,7 +4708,7 @@ li, ol, ul, h2 {
 .card-button__title {
   font-weight: 700;
   color: #0E0E0E;
-  font-size: 18px;
+  font-size: 22px;
   padding: 5px 0;
   display: block;
 }
@@ -5467,7 +5462,7 @@ li, ol, ul, h2 {
 }
 
 .card-profile__avatar-container-name {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   color: #0E0E0E;
 }
@@ -5697,7 +5692,7 @@ li, ol, ul, h2 {
 }
 
 .pigeon-map__hex-info--text {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -6680,13 +6675,13 @@ hr {
 .list__show-map-button {
   position: fixed;
   display: flex;
-  bottom: calc(50px + 0.7rem);
+  bottom: calc(50px + 0.9rem);
   width: 100%;
-  left: calc(50% - 55px);
   z-index: 400;
 }
 .list__show-map-button .btn--center {
   padding: 5px;
+  margin: auto;
 }
 
 .list__content {
@@ -6726,12 +6721,12 @@ hr {
 .list__content--full-screen .list__element {
   flex: 1;
   height: auto;
-  flex-basis: 50%;
-  min-width: 450px;
+  flex-basis: 100%;
 }
 
 .list__element {
   height: 100%;
+  flex-basis: 100%;
   padding-right: 1px;
 }
 
@@ -6770,6 +6765,13 @@ hr {
 }
 
 @media only screen and (min-width: 991px) {
+  .list__content--full-screen .list__element {
+    flex: 0;
+    flex-basis: 100%;
+    min-width: 450px;
+  }
+}
+@media only screen and (min-width: 1024px) {
   .list__content--full-screen .list__element {
     flex: 0;
     flex-basis: 50%;

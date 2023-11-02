@@ -42,7 +42,6 @@ $info-content-head-margin: calc( $footer-height-mobile );
   @extend .form__field;
   margin: auto;
   font-family: inherit;
-  font-weight: bold;
   padding: 0 0 ;
   min-width: fit-content;
   background-color: transparent;
@@ -115,10 +114,14 @@ $info-content-head-margin: calc( $footer-height-mobile );
     .card__header {
 
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       margin-bottom: 0;
       padding-bottom: $padding-small;
+      width: 100%;
+      gap: $padding-medium;
+
+
   
       .card__header-image {
   
@@ -131,7 +134,8 @@ $info-content-head-margin: calc( $footer-height-mobile );
   
       .card__header-title {
   
-        margin-left: $margin-small;
+        font-size: $font-size-title;
+        line-height: $font-size-title;
 
         &.network-title {
   

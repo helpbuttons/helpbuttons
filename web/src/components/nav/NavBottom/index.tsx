@@ -70,7 +70,7 @@ function NavBottom({loggedInUser}) {
 
           <NavLink
             href="/ButtonNew"
-            className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+            className={`nav-bottom__link nav-bottom__link--create nav-bottom__link--active ${isCurrent(
               'ButtonNew',
             )}`}
           >
