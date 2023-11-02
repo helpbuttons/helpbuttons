@@ -22,7 +22,6 @@ export default function HexagonExploreMap({
   setHexagonClicked,
   hexagonClicked,
   selectedNetwork,
-  showMap,
 }) {
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const geoJsonFeatures = useRef([])
@@ -34,8 +33,6 @@ export default function HexagonExploreMap({
 
     setCenterBounds(center);
   };
-  const height = showMap ? '100%' : 0;
-  const showMapCaption = showMap ? 'Show List' : 'Show Map';
 
   useEffect(() => {
     geoJsonFeatures.current = convertH3DensityToFeatures(h3TypeDensityHexes).filter((hex) => hex.properties.count > 0);

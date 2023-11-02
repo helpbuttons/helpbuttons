@@ -21,7 +21,7 @@ export function Dropdown({
   onChange = (value) => {},
   defaultSelected = null,
   explain = '',
-  className,
+  className = 'dropdown-select__trigger',
 }) {
   const [selected, setSelected] = useState(defaultSelected);
 

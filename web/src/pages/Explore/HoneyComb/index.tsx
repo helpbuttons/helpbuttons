@@ -35,20 +35,34 @@ import {
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import { useDebounce, useToggle } from 'shared/custom.hooks';
-import AdvancedFilters, { ButtonsOrderBy } from 'components/search/AdvancedFilters';
+import AdvancedFilters, {
+  ButtonsOrderBy,
+} from 'components/search/AdvancedFilters';
 import { Button } from 'shared/entities/button.entity';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
-import { getLocale, getUrlParams, uniqueArray } from 'shared/sys.helper';
-import { applyCustomFieldsFilters, orderByEventDate, orderByPrice } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
+import {
+  getLocale,
+  getUrlParams,
+  uniqueArray,
+} from 'shared/sys.helper';
+import {
+  applyCustomFieldsFilters,
+  orderByEventDate,
+  orderByPrice,
+} from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import t from 'i18n';
 import { IoClose, IoMapOutline } from 'react-icons/io5';
 import CardButton from 'components/button/CardButton';
 import Feed from 'layouts/Feed';
 import { alertService } from 'services/Alert';
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import Btn, {
+  BtnType,
+  ContentAlignment,
+  IconType,
+} from 'elements/Btn';
 
 const defaultZoomPlace = 13;
 
@@ -73,8 +87,9 @@ function HoneyComb({ router, selectedNetwork }) {
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
   const [showMap, toggleShowMap] = useToggle(true);
 
-  const height = showLeftColumn ? 0 : 400;
-  const showMapCaption = showMap ? 'explore.hideMap' : 'explore.showMap';
+  const showMapCaption = showMap
+    ? 'explore.hideMap'
+    : 'explore.showMap';
 
   const handleChangeShowMap = (event) => {
     toggleShowMap(event.target.value);
@@ -117,7 +132,6 @@ function HoneyComb({ router, selectedNetwork }) {
           onCloseClicked={() => {
             store.emit(new updateCurrentButton(null));
             toggleShowLeftColumn(true);
-
           }}
         >
           {selectedNetwork.buttonTemplates?.length > 0 && (
@@ -151,27 +165,26 @@ function HoneyComb({ router, selectedNetwork }) {
               showFiltersForm={showFiltersForm}
               buttons={exploreMapState.listButtons}
               showLeftColumn={showLeftColumn}
-              onLeftColumnToggle={toggleShowLeftColumn} 
-              showMap={true}            />
+              onLeftColumnToggle={toggleShowLeftColumn}
+              showMap={true} 
+            />
           </ShowDesktopOnly>
         </div>
 
-           {!showFiltersForm && 
-
-            <ShowMobileOnly>
-            <div className="list__show-map-button" >
-                <Btn
-                    btnType={BtnType.filterCorp}
-                    iconLeft={IconType.svg}
-                    iconLink={<IoMapOutline />}
-                    contentAlignment={ContentAlignment.center}
-                    caption={t(showMapCaption)}
-                    onClick={handleChangeShowMap}
-                  />
+        {!showFiltersForm && (
+          <ShowMobileOnly>
+            <div className="list__show-map-button">
+              <Btn
+                btnType={BtnType.filterCorp}
+                iconLeft={IconType.svg}
+                iconLink={<IoMapOutline />}
+                contentAlignment={ContentAlignment.center}
+                caption={t(showMapCaption)}
+                onClick={handleChangeShowMap}
+              />
             </div>
           </ShowMobileOnly>
-
-          }
+        )}
 
         <LoadabledComponent
           loading={exploreSettings.loading && !selectedNetwork}
@@ -185,7 +198,6 @@ function HoneyComb({ router, selectedNetwork }) {
             setHexagonClicked={setHexagonClicked}
             hexagonClicked={hexagonClickedStored}
             selectedNetwork={selectedNetwork}
-            showMap={showMap}
           />
         </LoadabledComponent>
         <ShowMobileOnly>
@@ -217,7 +229,7 @@ function useExploreSettings({
   selectedNetwork,
   toggleShowFiltersForm,
   exploreSettings,
-  currentButton
+  currentButton,
 }) {
   let queryExploreSettings = {};
   let URLParamsCoords = false;
@@ -233,30 +245,26 @@ function useExploreSettings({
       const showFilters = params.get('showFilters');
       if (lat && lng) {
         URLParamsCoords = true;
-        let newUpdateSettings = {center: [lat,lng]}
-        if(Number.isInteger(zoom))
-        {
-          newUpdateSettings = {...newUpdateSettings, zoom: zoom}
+        let newUpdateSettings = { center: [lat, lng] };
+        if (Number.isInteger(zoom)) {
+          newUpdateSettings = { ...newUpdateSettings, zoom: zoom };
         }
-        store.emit(
-          new UpdateExploreSettings(newUpdateSettings),
-        );
+        store.emit(new UpdateExploreSettings(newUpdateSettings));
       }
-      if(btnId)
-      {
+      if (btnId) {
         store.emit(
           new FindButton(
             btnId,
             (buttonFetched) => {
-              store.emit(new updateCurrentButton(buttonFetched))
+              store.emit(new updateCurrentButton(buttonFetched));
             },
             (errorMessage) => {
               alertService.error(errorMessage.caption);
             },
           ),
         );
-      }else{
-        store.emit(new updateCurrentButton(null))
+      } else {
+        store.emit(new updateCurrentButton(null));
       }
       if (showFilters == 'true') {
         toggleShowFiltersForm(true);
@@ -289,16 +297,19 @@ function useExploreSettings({
       obj = {
         zoom: exploreSettings.zoom,
         lat: exploreSettings.center[0],
-        lng: exploreSettings.center[1]
-      }
+        lng: exploreSettings.center[1],
+      };
 
-      if(currentButton)
-      {
-        obj = {...obj, btn: currentButton.id}
+      if (currentButton) {
+        obj = { ...obj, btn: currentButton.id };
         urlParams.append('btn', currentButton.id);
       }
-      const locale = getLocale() == 'en' ? '' :`/${getLocale()}`;
-      window.history.pushState(obj, "Title", `${locale}/Explore?${urlParams.toString()}`);
+      const locale = getLocale() == 'en' ? '' : `/${getLocale()}`;
+      window.history.pushState(
+        obj,
+        'Title',
+        `${locale}/Explore?${urlParams.toString()}`,
+      );
       // window.location.replace(`#?${urlParams.toString()}`);
     }
   }, [exploreSettings, currentButton]);
@@ -403,15 +414,20 @@ function useHexagonMap({
       boundsButtons,
     );
 
-    const orderedFilteredButtons = orderBy(filteredButtons, filters.orderBy, exploreSettings.center)
+    const orderedFilteredButtons = orderBy(
+      filteredButtons,
+      filters.orderBy,
+      exploreSettings.center,
+    );
 
     seth3TypeDensityHexes(() => {
       return filteredHexagons;
     });
 
-    store.emit(new UpdateBoundsFilteredButtons(orderedFilteredButtons));
+    store.emit(
+      new UpdateBoundsFilteredButtons(orderedFilteredButtons),
+    );
     store.emit(new UpdateListButtons(orderedFilteredButtons));
-
   }
 
   const [prevFilters, setPrevFilters] = useState(filters);
@@ -579,7 +595,11 @@ function useHexagonMap({
           debouncedHexagonClicked.properties.buttons &&
           debouncedHexagonClicked.properties.buttons.length > 0
         ) {
-          const hexagonButtonsOrdered = orderBy(debouncedHexagonClicked.properties.buttons, filters.orderBy, filters.where?.center)
+          const hexagonButtonsOrdered = orderBy(
+            debouncedHexagonClicked.properties.buttons,
+            filters.orderBy,
+            filters.where?.center,
+          );
           store.emit(
             new UpdateHexagonClicked(
               hexagonButtonsOrdered,
@@ -622,29 +642,24 @@ const orderByClosestToCenter = (center, buttons) => {
   return buttonsDistance.sort(buttonDistance);
 };
 
-
 export const orderByCreated = (buttons) => {
-  return buttons.sort((buttonA, buttonB) => buttonA.created_at < buttonB.created_at)
-}
+  return buttons.sort(
+    (buttonA, buttonB) => buttonA.created_at < buttonB.created_at,
+  );
+};
 
 const orderBy = (buttons, orderBy, center) => {
-  if(orderBy == ButtonsOrderBy.PROXIMITY)
-  {
-    return orderByClosestToCenter(center,buttons)
+  if (orderBy == ButtonsOrderBy.PROXIMITY) {
+    return orderByClosestToCenter(center, buttons);
   }
-  if(orderBy == ButtonsOrderBy.DATE)
-  {
-    return orderByCreated(buttons)
+  if (orderBy == ButtonsOrderBy.DATE) {
+    return orderByCreated(buttons);
   }
-  if(orderBy == ButtonsOrderBy.PRICE)
-  {
-    return orderByPrice(buttons)
-
+  if (orderBy == ButtonsOrderBy.PRICE) {
+    return orderByPrice(buttons);
   }
-  if(orderBy == ButtonsOrderBy.EVENT_DATE)
-  {
-    return orderByEventDate(buttons)
+  if (orderBy == ButtonsOrderBy.EVENT_DATE) {
+    return orderByEventDate(buttons);
   }
   return buttons;
-}
-
+};

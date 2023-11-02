@@ -87,13 +87,8 @@ export default function HomeInfo({
               <div className="info-overlay__card">
 
                 {navigatorCoordinates && (
-                  <div className="card"
-
-                  
-                  >
-                    <div className="card__header"
-                     
-                    >
+                  <div className="card">
+                    <div className="card__header">
                       <h3 className="card__header-title">
                         {t('homeinfo.locationDetected')}
                         <a
