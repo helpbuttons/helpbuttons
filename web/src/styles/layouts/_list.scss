@@ -1,4 +1,5 @@
 $list-container-hide-height: calc($footer-height-mobile - 277px);
+$list-drag-tab-height: 40px;
 
 ///shouldd be the posts list
 .list__container {
@@ -10,9 +11,28 @@ $list-container-hide-height: calc($footer-height-mobile - 277px);
   position: relative;
   z-index: $z-index-01;
   transition: $transition-default-slow;
-  padding-bottom: $footer-height-mobile + $padding-small*2;
+  padding-bottom: calc($footer-height-mobile + $padding-small);
+
 }
 
+
+.list__container--full-list {
+
+  // margin-top: $list-drag-tab-height;
+  height: 100vh;
+  // padding-bottom: 200px;
+
+}
+
+//change movement when there's no scrollbar
+@media (hover: none) {
+
+  $list-container-hide-height: calc($footer-height-mobile - 277px );
+  .list__container {
+    padding-bottom: calc($footer-height-mobile);
+  }
+  
+}
 // .list__container::before {
 
 //   content: "";
@@ -22,25 +42,88 @@ $list-container-hide-height: calc($footer-height-mobile - 277px);
 
 // }
 
-.list__content {
+.list__show-map-button {
 
-  display: flex;
-  padding-top: $padding-small;
-  background-color: $color-ligth-gray;
-  flex-direction: row;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  z-index: $z-index-02;
-  height: auto;
-  min-height: $card-button-list-height;
-  transition: $transition-default-slow;
+  position: fixed;
+ display: flex;
+ bottom: calc($footer-height-mobile + 0.9rem);
+ width: 100%;
+ z-index: $z-index-04;
+
+ .btn--center {
+  // width: 80px;
+  padding: $padding-small;
+  margin: auto;
+
+ }
 
 }
 
 
+.list__content {
+
+  display: flex;
+  padding: $padding-small $padding-small;
+  background-color: $color-ligth-gray;
+  z-index: $z-index-02;
+  transition: $transition-default-slow;
+  align-content: flex-start; /* Add this*/
+
+}
+
+.list__content--row {
+
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: auto;
+  min-height: $card-button-list-height;
+  width: 100%;
+
+  .list__element {
+  
+    height: auto;
+    min-width: $card-button-list-width;
+
+  }
+
+
+}
+
+
+.list__content--full-screen {
+
+  display: flex;
+  // flex-direction: column;
+  justify-content: flex-start;
+
+  flex-flow: row wrap;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100vh;
+  margin-bottom: $margin-xbig;
+  min-height: none;
+
+
+  .list__element {
+
+    // max-width: $card-button-list-width;
+    flex: 1;
+    height: auto;
+    flex-basis: 100%;
+    // min-width: $card-button-list-width;
+
+  }
+
+}
+
 .list__element {
 
   height: 100%;
+  // flex-grow: 1;
+  flex-basis: 100%;
   padding-right: $padding-xxsmall;
 
 }
@@ -77,6 +160,64 @@ $list-container-hide-height: calc($footer-height-mobile - 277px);
 
 }
 
+.list__order {
+
+  height: $list-drag-tab-height;
+  background-color: $color-corporative;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  padding: $padding-small;
+  gap: $padding-small;
+
+}
+
+@media #{$breakpoints-medium} {
+
+
+}
+
+@media #{$breakpoints-medium} {
+
+
+  .list__content--full-screen {
+
+  
+    .list__element {
+
+      flex: 0;
+      flex-basis: 100%;
+      min-width: $card-button-list-width;
+      // max-width: $card-button-list-width;
+  
+    }
+  
+  }
+
+}
+
+@media #{$breakpoints-large} {
+
+  .list__content--full-screen {
+
+  
+    .list__element {
+
+      flex: 0;
+      flex-basis: 50%;
+
+      min-width: $card-button-list-width;
+      // max-width: $card-button-list-width;
+  
+    }
+  
+  }
+
+
+}
+
+
+
 @media #{$breakpoints-xlarge} {
 
   .list__container {
@@ -107,6 +248,7 @@ $list-container-hide-height: calc($footer-height-mobile - 277px);
 
     height: auto;
     width: 100%;
+    min-width: $card-button-list-width;
 
   }
 

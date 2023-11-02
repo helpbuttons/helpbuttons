@@ -24,7 +24,7 @@ $card-button-list-border-height: $border-general-height;
 
   background: $color-white;
   border: $card-button-list-border;
-  width: $card-button-list-width;
+  // width: $card-button-list-width;
   box-shadow: $card-button-list-box-shadow;
   position: relative;
   max-height: $card-button-list-height;
@@ -347,10 +347,6 @@ $card-button-list-border-height: $border-general-height;
   font-size: $font-size-general;
   font-weight: bold;
   text-align: left;
-}
-
-.card-button-list__date {
-
 }
 
 .card-button-list__city {

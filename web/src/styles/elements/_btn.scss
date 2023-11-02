@@ -227,6 +227,7 @@ $btn-font-size-medium: $font-size-medium;
 
   max-height: $btn-with-icon-icon-width;
   max-width: $btn-with-icon-icon-width;
+  margin-right: $margin-xxsmall;
   display: flex;
 
   & svg {

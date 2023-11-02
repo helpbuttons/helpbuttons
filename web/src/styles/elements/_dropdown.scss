@@ -95,6 +95,38 @@ $dropdown-max-width: 10rem;
 }
 
 
+.dropdown__dropdown-trigger--list {
+
+  text-align: left;
+  overflow-x: hidden;
+  height: auto;
+  padding: 0 ;
+  width: inherit;
+  text-decoration: underline;
+  border: none;
+  border-radius: 2rem;
+  background: $color-corporative;
+  color: $color-black;
+  transition: all 0.2s ease-in-out;
+  font-size: $font-size-general;
+
+
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    cursor: pointer;
+    border-radius: $border-radius-circle;
+    background: $color-white;
+  }
+  &:active {
+    cursor: pointer;
+    border-radius: $border-radius-circle;
+    background: $color-ligth-gray;
+  }
+
+}
+
 .dropdown__dropdown-content {
 
     width: 100%;

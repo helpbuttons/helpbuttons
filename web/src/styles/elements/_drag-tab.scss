@@ -12,11 +12,12 @@ $drag-tab-icon-size: 25px;
 
 .drag-tab {
 
+  display: none;
   width: 100%;
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  // display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   height: $drag-tab-height;
   background-color: $color-white;
@@ -32,6 +33,12 @@ $drag-tab-icon-size: 25px;
     cursor: pointer;
 
   }
+
+}
+
+.drag-tab--hide{
+
+ display: none  ;
 
 }
 
@@ -53,9 +60,19 @@ $drag-tab-icon-size: 25px;
 
 }
 
+.drag-tab__order {
+
+  margin: $margin-small;
+
+}
+
+.drag-tab__list {
+}
+
 .drag-tab__icon {
 
   display: flex;
+  flex: 1;
 
   svg {
     transition: $transition-no;
@@ -77,6 +94,7 @@ $drag-tab-icon-size: 25px;
 
 @media #{$breakpoints-xlarge} {
   .drag-tab {
+    display: flex;
 
     position: fixed;
     width: auto;

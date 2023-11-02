@@ -1,10 +1,11 @@
 {
   "menu": {
     "explore": "Explore",
-    "create": "Create",
+    "create": "Publish",
     "profile": "Profile",
     "activity": "Activity",
     "faqs": "Faqs",
+    "signup": "SignUp",
     "login": "Login",
     "home": "Home",
     "donate": "Donate"
@@ -12,9 +13,11 @@
   "homeinfo": {
     "start": "Where do you start?",
     "searchlocation": "Search location",
+    "info": "What's this Network about?",
     "loading": "...",
+    "goToExplore": "Explore the _helpbuttons_",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
-    "createSubtitle": "Create your _helpbuttons_ and collaborate",
+    "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
     "popularHashtags": "What are they about?",
     "profileSubtitle": "Check your profile",
@@ -37,10 +40,12 @@
   "explore": {
     "noResults": "Sorry, there are no results here",
     "emptyList": "Please browse the map and touch to find more _helpbuttons_",
-    "createEmpty": "Create",
+    "createEmpty": "Publish",
     "selectedHexagon": "in the selected area",
     "filteredRadius": "in {0} · {1}km",
-    "noFilter": "in {0}"
+    "noFilter": "in the area",
+    "hideMap":"Hide Map",
+    "showMap":"Show Map"
   },
   "buttonFilters": {
     "searchBarTop": "{1} _helpbuttons_ found {0}",
@@ -66,7 +71,7 @@
     "byDate": "By creation date",
     "byProximity": "By proximity",
     "byEventDate": "By start of event",
-    "orderBy": "Order by"
+    "orderBy": "Order"
   },
   "setup": {
     "hostname": "Hostname",
@@ -85,7 +90,7 @@
     "test": ""
   },
   "activities": {
-    "newbutton": "You created '{0}' in '{1}'",
+    "newbutton": "You published '{0}' in '{1}'",
     "newpost": "There is a new post '{0}' in your button '{1}' by '{2}'",
     "newcomment": "'{2}' commented '{0}' answer to the post '{1}'",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
@@ -114,7 +119,7 @@
   "button": {
     "title":"_helpbutton_ view",
     "typeLabel": "_helpbutton_ type",
-    "typeExplain": "Please choose which kind of _helpbutton_ would you like to create",
+    "typeExplain": "Please choose which kind of _helpbutton_ would you like to publish",
     "titleLabel": "Title",
     "titleExplain": "Short title to know what's your _helpbutton_ about",
     "descriptionLabel": "Description",
@@ -133,7 +138,7 @@
     "copy": "Copy Link",
     "delete": "Delete",
     "edit": "Edit",
-    "created": "Your _helpbutton_ has been created",
+    "created": "Your _helpbutton_ has been published",
     "errorCreated": "",
     "pickButtonTemplateColor": "",
     "unknownPlace": "Unknown Place",
