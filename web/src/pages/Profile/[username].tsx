@@ -15,6 +15,7 @@ import Popup from 'components/popup/Popup';
 import t from 'i18n';
 import ContentList from 'components/list/ContentList';
 import { useButtonTypes } from 'shared/buttonTypes';
+import { useScrollHeight } from 'elements/scroll';
 
 export default function Profile() {
   const [userProfile, setUserProfile] = useState(null);
@@ -72,17 +73,19 @@ export default function Profile() {
 
   const [buttonTypes, setButtonTypes] = useState([]);
   useButtonTypes(setButtonTypes);
+
+  const {sliceSize, handleScrollHeight} = useScrollHeight(userButtons.length)
   
   return (
     <>
-          <Popup linkFwd="/Explore" title={t('user.otherProfileView')}>
+          <Popup linkFwd="/Explore" title={t('user.otherProfileView')} onScroll={handleScrollHeight}>
             {userProfile && <CardProfile user={userProfile} showAdminOptions={loggedInUser?.role == Role.admin}/>}
             {userProfile?.role == Role.admin && adminButtonId && (
               <LinkAdminButton adminButtonId={adminButtonId} />
             )}
             {userButtons && 
             <>
-              <ContentList buttons={userButtons} buttonTypes={buttonTypes}/>
+              <ContentList buttons={userButtons.slice(0, sliceSize)} buttonTypes={buttonTypes}/>
             </>}
           </Popup>
     </>
