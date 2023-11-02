@@ -27,6 +27,7 @@ export function MapTileSelector({ tileType, setMapTile }) {
   return (
     <div className="form__field">
       <Dropdown
+        className={"dropdown__dropdown-trigger"}
         label="Select Map Type"
         options={dropdownOptions}
         onChange={(value) => {setMapTile(value)}}

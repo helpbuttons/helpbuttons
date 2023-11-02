@@ -196,6 +196,8 @@ export default function AdvancedFilters({
             )}
 
             <AdvancedFiltersSortDropDown
+              className={'dropdown__dropdown-trigger'}
+              label={t('buttonFilters.orderBy')}
               orderBy={watch('orderBy')}
               setOrderBy={(value) => setValue('orderBy',value)}
               buttonTypes={buttonTypes}
@@ -226,7 +228,7 @@ export default function AdvancedFilters({
   );
 }
 
-export function AdvancedFiltersSortDropDown({orderBy, setOrderBy, buttonTypes, selectedButtonTypes }) {
+export function AdvancedFiltersSortDropDown({className, label, orderBy, setOrderBy, buttonTypes, selectedButtonTypes }) {
 
 //   -Order by creation date (default)
 // -Order by proximity (When a place is selected)
@@ -245,9 +247,10 @@ export function AdvancedFiltersSortDropDown({orderBy, setOrderBy, buttonTypes, s
 
   dropdownOptions = getCustomDropDownOrderBy(dropdownOptions,buttonTypes, selectedButtonTypes )
   return (
-    <div className="form__field">
+    <div className="form__field filters__orderBy">
       <Dropdown
-        label={t('buttonFilters.orderBy')}
+        className={className}
+        label={label}
         options={dropdownOptions}
         onChange={(value) => {setOrderBy(value)}}
         defaultSelected={orderBy}
