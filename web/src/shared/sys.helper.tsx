@@ -9,7 +9,8 @@ export function setSSRLocale(_locale) {
   SSRLocale = _locale;
 }
 export function getShareLink(link) {
-  return `${getUrlOrigin()}${link}`;
+  const locale = (getLocale() == 'en' )? '' : `/${getLocale()}`
+  return `${getUrlOrigin()}${locale}${link}`;
 }
 export function getHostname() {
   return window.location.hostname;
