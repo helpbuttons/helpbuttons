@@ -154,6 +154,6 @@ export function DropDownAutoCompleteOption({ value, label }) {
       className="dropdown-nets__dropdown-option"
       label={label}
       value={value}
-    >{value.formatted}</option>
+    >{label}</option>
   );
 }
