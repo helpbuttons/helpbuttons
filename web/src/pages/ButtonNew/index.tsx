@@ -6,20 +6,21 @@ import Router from 'next/router';
 import { alertService } from 'services/Alert';
 import { useForm } from 'react-hook-form';
 import router from 'next/router';
-import { defaultMarker } from 'shared/sys.helper';
 import { ErrorName } from 'shared/types/error.list';
 import t from 'i18n';
 import { Button } from 'shared/entities/button.entity';
 import { CreateNewPost } from 'state/Posts';
 import { readableDate } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
+import { NextPageContext } from 'next';
+import { ServerPropsService } from 'services/ServerProps';
 
-export default function ButtonNew() {
+export default function ButtonNew({metadata,selectedNetwork,config}) {
   const defaultValues = {
     image: null,
     description: '',
-    latitude: defaultMarker.latitude,
-    longitude: defaultMarker.longitude,
+    latitude: selectedNetwork.exploreSettings.center[0],
+    longitude: selectedNetwork.exploreSettings.center[1],
     type: '',
     tags: [],
     title: '',
@@ -48,10 +49,6 @@ export default function ButtonNew() {
     defaultValues
   });
 
-  const selectedNetwork = useRef(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
   const onSubmit = (data) => {
     store.emit(
       new CreateButton(
@@ -129,3 +126,20 @@ export default function ButtonNew() {
     </>
   );
 }
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  try {
+    const serverProps = await ServerPropsService.general('Home', ctx);
+    return { props: serverProps };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {
+        metadata: null,
+        selectedNetwork: null,
+        config: null,
+        noconfig: true,
+      },
+    };
+  }
+};
