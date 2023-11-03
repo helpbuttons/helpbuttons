@@ -1,4 +1,4 @@
-$list-container-height: 300px;
+$list-container-height: 287px;
 $list-container-hide-height: calc($footer-height-mobile - $list-container-height);
 $list-order-tabs-bottom: calc($footer-height-mobile + $list-container-height - 40px);
 $list-drag-tab-height: 40px;
@@ -10,9 +10,6 @@ $list-drag-tab-height: 40px;
   $list-container-hide-height: calc($footer-height-mobile - $list-container-height );
   $list-order-tabs-bottom: calc($footer-height-mobile + $list-container-height - 40px);
 
-  .list__container {
-    padding-bottom: calc($footer-height-mobile);
-  }
 
 }
 
@@ -27,7 +24,7 @@ $list-drag-tab-height: 40px;
   position: relative;
   z-index: $z-index-01;
   transition: $transition-default-slow;
-  padding-bottom: calc($footer-height-mobile + $padding-small);
+  padding-bottom: calc($footer-height-mobile + 5px);
 
 }
 
@@ -51,9 +48,9 @@ $list-drag-tab-height: 40px;
 
 .list__show-map-button {
 
-  position: fixed;
+  position: relative;
  display: flex;
- bottom: calc($footer-height-mobile + 0.9rem);
+//  bottom: calc($footer-height-mobile + 0.9rem);
  width: auto;
  z-index: $z-index-04;
  left: 0;
@@ -171,17 +168,13 @@ $list-drag-tab-height: 40px;
 
 .list__order {
 
-  height: $list-drag-tab-height ;
   background-color: $color-corporative;
-  border-radius: $border-radius-circle;
   display: flex;
   flex-direction: row;
-  align-items: baseline;
+  justify-content: space-between;
   padding: 0 $padding-medium;
   gap: $padding-small;
-  bottom: $list-order-tabs-bottom;
-    left: $margin-xsmall;
-    position: absolute;
+    position: relative;
 
 
 }
@@ -189,11 +182,10 @@ $list-drag-tab-height: 40px;
 //change movement when there's no scrollbar
 @media (hover: none) {
 
-  .list__order {
-
-    bottom: calc($footer-height-mobile + $list-container-height - 55px);
-
+  .list__container {
+    padding-bottom: calc($footer-height-mobile + 5px);
   }
+
 }
 
 //class for the select order tab when the map is hidden. Impose state

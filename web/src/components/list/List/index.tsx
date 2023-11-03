@@ -1,7 +1,7 @@
 //List of elements component that can be used in home, profile and other pages/layouts where we need to ddisplay buttons/networks/other elements
 //a foreach => buttons
 import React, { useState } from 'react';
-import { IoChevronForwardOutline } from 'react-icons/io5';
+import { IoChevronForwardOutline, IoMapOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import ContentList from 'components/list/ContentList';
 import { useButtonTypes } from 'shared/buttonTypes';
@@ -13,6 +13,8 @@ import { GlobalState, store } from 'pages';
 import { useStore } from 'store/Store';
 import { UpdateFilters } from 'state/Explore';
 import { useScrollHeightAndWidth } from 'elements/scroll';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import { ShowMobileOnly } from 'elements/SizeOnly';
 
 function List({
   onLeftColumnToggle,
@@ -20,12 +22,22 @@ function List({
   showLeftColumn,
   showFiltersForm,
   showMap,
+  toggleShowMap,
 }) {
   const filters = useStore(
     store,
     (state: GlobalState) => state.explore.map.filters,
     false,
   );
+
+  
+  const showMapCaption = showMap
+    ? 'explore.hideMap'
+    : 'explore.showMap';
+
+  const handleChangeShowMap = (event) => {
+    toggleShowMap(event.target.value);
+  };
 
   const updatesOrderByFilters = (value) => {
     const newFilters = { ...filters, orderBy: value };
@@ -73,26 +85,43 @@ function List({
                   selectedButtonTypes={filters.helpButtonTypes}
                 />
               </>
+              
+              <div
+                  onClick={handleChange}
+                  className={
+                    'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')
+                  }
+                >
+                  <span className="drag-tab__line"></span>
+
+                  <div className="drag-tab__icon">
+                    {showLeftColumn ? (
+                      <IoChevronBackOutline />
+                    ) : (
+                      <IoChevronForwardOutline />
+                    )}
+                  </div>
+                </div>
+
+              <ShowMobileOnly>
+                
+                <div className="list__show-map-button">
+                  <Btn
+                    btnType={BtnType.filterCorp}
+                    iconLeft={IconType.svg}
+                    iconLink={<IoMapOutline />}
+                    contentAlignment={ContentAlignment.center}
+                    caption={t(showMapCaption)}
+                    onClick={handleChangeShowMap}
+                  />
+                </div>
+              </ShowMobileOnly>
+
             </div>
 
 
 
-            <div
-              onClick={handleChange}
-              className={
-                'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')
-              }
-            >
-              <span className="drag-tab__line"></span>
-
-              <div className="drag-tab__icon">
-                {showLeftColumn ? (
-                  <IoChevronBackOutline />
-                ) : (
-                  <IoChevronForwardOutline />
-                )}
-              </div>
-            </div>
+            
 
             <div
               className={

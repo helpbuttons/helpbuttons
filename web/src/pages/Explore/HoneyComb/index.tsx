@@ -87,13 +87,6 @@ function HoneyComb({ router, selectedNetwork }) {
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
   const [showMap, toggleShowMap] = useToggle(true);
 
-  const showMapCaption = showMap
-    ? 'explore.hideMap'
-    : 'explore.showMap';
-
-  const handleChangeShowMap = (event) => {
-    toggleShowMap(event.target.value);
-  };
 
   useExploreSettings({
     exploreSettings,
@@ -171,7 +164,7 @@ function HoneyComb({ router, selectedNetwork }) {
           </ShowDesktopOnly>
         </div>
 
-        {!showFiltersForm && (
+        {/* {!showFiltersForm && (
           <ShowMobileOnly>
             <div className="list__show-map-button">
               <Btn
@@ -184,7 +177,7 @@ function HoneyComb({ router, selectedNetwork }) {
               />
             </div>
           </ShowMobileOnly>
-        )}
+        )} */}
 
         <LoadabledComponent
           loading={exploreSettings.loading && !selectedNetwork}
@@ -213,6 +206,7 @@ function HoneyComb({ router, selectedNetwork }) {
               buttons={exploreMapState.listButtons}
               showLeftColumn={showLeftColumn}
               showMap={showMap}
+              toggleShowMap={toggleShowMap}
               onLeftColumnToggle={toggleShowLeftColumn}
             />
           </div>
