@@ -153,6 +153,45 @@ export class UserService {
     });
   }
 
+
+  @OnEvent(ActivityEventName.NewPost)
+  async notifyFollowers(payload: any) {
+    const buttonFollowers = payload.data.button.followedBy;
+
+    const users = await this.userRepository
+    .createQueryBuilder('user')
+    .select('email,locale')
+    .where(
+      `id IN (:...buttonFollowers)AND "receiveNotifications" = true `,
+      { buttonFollowers: buttonFollowers },
+    )
+    .limit(1000)
+    .execute();
+
+    
+    const mailsToSend = users.map((user) => {
+      const messageContent = translate(
+        user.locale,
+        'activities.newpost',
+        [payload.data.message, payload.data.button.title, payload.data.author.username],
+      );
+      const locale = user.locale == 'en' ? '' : `/${user.locale}` 
+
+      return { message: messageContent, email: user.email, buttonUrl: `${config.hostName}${locale}/ButtonFile/${payload.data.button.id}` };
+    });
+    
+
+
+    mailsToSend.map((mailToSend) => {
+      this.mailService.sendActivity({
+        content: mailToSend.message,
+        link: mailToSend.buttonUrl,
+        to: mailToSend.email,
+        subject: 'New activity'
+      });
+    });
+  }
+
   updateRole(userId, newRole)
   {
     return this.userRepository.update(userId, {role: newRole})
