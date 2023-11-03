@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { GlobalVarHelper } from '@src/shared/helpers/global-var.helper';
 import { NetworkService } from '../network/network.service';
 import { configFileName } from '@src/shared/helpers/config-name.const';
+import { Queue } from 'bull';
+import { InjectQueue } from '@nestjs/bull';
 const config = require(`../../..${configFileName}`);
 
 @Injectable()
@@ -10,6 +12,7 @@ export class MailService {
   constructor(
     private readonly mailerService: MailerService,
     private readonly networkService: NetworkService,
+    @InjectQueue('mail') private mailQueue: Queue
     ) {}
 
   sendActivationEmail({
@@ -54,7 +57,7 @@ export class MailService {
     });
   }
   
-  private sendMail({
+  private async sendMail({
     to,
     cc,
     bcc,
@@ -63,27 +66,14 @@ export class MailService {
     context
   })
   {
-    if(!GlobalVarHelper.smtpAvailable)
-    {
-      console.log('Error when smtp not working. mail could not be sent')
-      return;
-    }
-    this.networkService.findDefaultNetwork().then((network) => {
- 
-      const vars = {...context, network: network, hostName: config.hostName, to: to}
-      this.mailerService.sendMail({
-        to,
-        cc,
-        bcc,
-        from: config.from,
-        subject: `${subject} in ${network.name}`,
-        template,
-        context: vars,
-      }).then((mail) => {console.log(`>> mail sent to ${to} with template '${template}'`)})
-      .catch((error) => {console.log(error); console.trace()})
-    }).catch((error) => console.log('getting network error?'))
-    
-    return 
+    this.mailQueue.add({
+      to,
+      cc,
+      bcc,
+      subject,
+      template,
+      context
+    })
   }
 
   sendActivity({
