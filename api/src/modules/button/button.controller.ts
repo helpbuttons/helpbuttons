@@ -133,4 +133,10 @@ export class ButtonController {
     return await this.buttonService.findAdminButton();
   }
 
+  @AllowGuest()
+  @Get('findByOwner/:userId')
+  async findByOwner(@Param('userId') userId: string) {
+    return await this.buttonService.findByOwner(userId);
+  }
+
 }

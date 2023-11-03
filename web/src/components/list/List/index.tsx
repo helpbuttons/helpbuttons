@@ -12,6 +12,7 @@ import {
 import { GlobalState, store } from 'pages';
 import { useStore } from 'store/Store';
 import { UpdateFilters } from 'state/Explore';
+import { useScrollHeightAndWidth } from 'elements/scroll';
 
 function List({
   onLeftColumnToggle,
@@ -37,37 +38,8 @@ function List({
 
   const [buttonTypes, setButtonTypes] = useState([]);
   useButtonTypes(setButtonTypes);
-  let [numberButtons, setNumberButtons] = React.useState(5);
-  const handleScrollWidth = (e) => {
-    const edge =
-      e.target.scrollWidth - e.target.scrollLeft ===
-      e.target.clientWidth;
-    const edgeHeight =
-      e.target.scrollHeight - e.target.scrollTop ===
-      e.target.clientHeight;
-    if (edge || edgeHeight) {
-      setNumberButtons((prevValue) => {
-        const newValue = prevValue + 2;
-        if (newValue <= buttons.length) return newValue;
-        return prevValue;
-      });
-    }
-  };
 
-  const handleScrollHeight = (e) => {
-
-    const edgeHeight =
-      e.target.scrollHeight - e.target.scrollTop ==
-      e.target.clientHeight;
-
-    if (edgeHeight) {
-      setNumberButtons((prevValue) => {
-        const newValue = prevValue + 2;
-        if (newValue <= buttons.length) return newValue;
-        return prevValue;
-      });
-    }
-  };
+  const {sliceSize, handleScrollHeight, handleScrollWidth} = useScrollHeightAndWidth(buttons.length)
 
   return (
     <>
@@ -133,7 +105,7 @@ function List({
             >
               {buttonTypes?.length > 0 && (
                 <ContentList
-                  buttons={buttons.slice(0, numberButtons)}
+                  buttons={buttons.slice(0, sliceSize)}
                   buttonTypes={buttonTypes}
                 />
               )}

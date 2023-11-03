@@ -145,7 +145,8 @@
     "unblock": "Desbloquear",
     "block": "Bloquear",
     "promote": "Promocionar a administrador",
-    "unsubscribed": "No vas a recibir mas este tipo de emails"
+    "unsubscribed": "No vas a recibir mas este tipo de emails",
+    "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",

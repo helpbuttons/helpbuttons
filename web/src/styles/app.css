@@ -5515,6 +5515,10 @@ li, ol, ul, h2 {
   margin-bottom: 0.5rem;
 }
 
+.card-profile__button-list {
+  margin-top: 20px;
+}
+
 @media only screen and (min-width: 1280px) {
   .card-profile__container {
     padding: 10px;
@@ -6776,9 +6780,9 @@ hr {
 }
 
 .list__element {
-  height: 100%;
+  height: auto;
   flex-basis: 100%;
-  padding-right: 1px;
+  padding-right: 4px;
 }
 
 .list__empty-message, .feed__empty-message {

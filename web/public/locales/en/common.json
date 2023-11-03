@@ -185,7 +185,8 @@
     "unblock": "Unblock",
     "block": "Block user",
     "promote": "Promote to administrator",
-    "unsubscribed": "You will no longer receive this kind of emails"
+    "unsubscribed": "You will no longer receive this kind of emails",
+    "showButtons": "Show my _helpbuttons_ on my profile page"
   },
   "picker": {
     "headerText": "Choose a location"
