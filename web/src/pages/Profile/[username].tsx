@@ -85,7 +85,7 @@ export default function Profile() {
             )}
             {userButtons && 
             <div className='card-profile__button-list'>
-              <ContentList buttons={userButtons.slice(0, sliceSize)} buttonTypes={buttonTypes}/>
+              <ContentList buttons={userButtons.slice(0, sliceSize)} buttonTypes={buttonTypes} linkToPopup={false}/>
             </div>}
           </Popup>
     </>
