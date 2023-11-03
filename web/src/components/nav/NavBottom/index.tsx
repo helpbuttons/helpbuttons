@@ -84,7 +84,7 @@ function NavBottom({loggedInUser}) {
             <NavLink
               href="/Signup"
               className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
-                'Faqs',
+                'Signup',
               )}`}
             >
               <div className="nav-bottom__icon">

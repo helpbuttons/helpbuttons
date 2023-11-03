@@ -96,6 +96,20 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
 
 }
 
+.pigeon-attribution {
+
+    background: transparent !important;
+    // display: flex !important;
+    // flex-direction: column !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 6px !important;
+    writing-mode: vertical-rl !important;
+    text-orientation: mixed !important;
+
+
+}
+
 .pigeon-map__custom-block {
 
     display: flex;
