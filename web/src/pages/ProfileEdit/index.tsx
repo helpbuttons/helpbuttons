@@ -45,7 +45,8 @@ export default function ProfileEdit() {
     formState: { errors, isSubmitting },
   } = useForm({defaultValues: {
     locale: 'en',
-    receiveNotifications: false,
+    receiveNotifications: true,
+    showButtons: false,
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
@@ -70,7 +71,8 @@ export default function ProfileEdit() {
       set_new_password: setNewPassword,
       description: data.description,
       locale: locale,
-      receiveNotifications: data.receiveNotifications
+      receiveNotifications: data.receiveNotifications,
+      showButtons: data.showButtons
     }
     if (setNewPassword)  {
       // check passwords match.. send to backend
@@ -151,6 +153,12 @@ export default function ProfileEdit() {
                     defaultValue={loggedInUser.receiveNotifications}
                     text={t('user.textReceiveNotifications')}
                     onChanged={(value) => {setValue('receiveNotifications', value)}}
+                  />
+                  <FieldCheckbox
+                    name='showButtons'
+                    defaultValue={loggedInUser.showButtons}
+                    text={t('user.showButtons')}
+                    onChanged={(value) => {setValue('showButtons', value)}}
                   />
                   <FieldImageUpload
                     name="avatar"

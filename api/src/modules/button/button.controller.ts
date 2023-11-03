@@ -152,4 +152,11 @@ export class ButtonController {
   {
     return this.buttonService.unfollow(buttonId, user.id);
   }
+
+  @AllowGuest()
+  @Get('findByOwner/:userId')
+  async findByOwner(@Param('userId') userId: string) {
+    return await this.buttonService.findByOwner(userId);
+  }
+
 }

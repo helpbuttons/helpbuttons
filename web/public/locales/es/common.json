@@ -1,24 +1,27 @@
 {
   "menu": {
     "explore": "Explora",
-    "create": "Crear",
+    "create": "Publicar",
     "profile": "Perfil",
     "activity": "Actividad",
-    "faqs": "Faqs",
-    "login": "Login",
+    "faqs": "Información",
+    "signup": "Unirme",
+    "login": "Entrar",
     "home": "Inicio",
     "donate": "Donar"
   },
   "homeinfo": {
     "selectedArea": "en el area seleccionada",
-    "start": "Donde quieres empezar?",
+    "start": "¿Dónde quieres empezar?",
+    "info": "¿De qué trata esta red?",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
+    "goToExplore": "Explorar _helpbuttons_",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
-    "stats": "Estadísticas de la Red",
+    "stats": "¿Qué hay en esta red?",
     "users": "{0} usuarios en esta Red",
     "actions": "¿Qué puedes hacer?",
-    "popularHashtags": "¿De qué tratan?",
+    "popularHashtags": "¿Qué temas se tratan?",
     "profileSubtitle": "Comprueba tu perfil",
     "createSubtitle": "Crea tu _helpbutton_ y colabora",
     "faqsSubtitle": "Lee más sobre esta app",
@@ -142,7 +145,8 @@
     "unblock": "Desbloquear",
     "block": "Bloquear",
     "promote": "Promocionar a administrador",
-    "unsubscribed": "No vas a recibir mas este tipo de emails"
+    "unsubscribed": "No vas a recibir mas este tipo de emails",
+    "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -154,9 +158,11 @@
     "emptyList": "Por favor, cambia tu búsqueda, mueve el mapa o  toca para encontrar más botones",
     "createEmpty": "Crear",
     "noResults": "Lo siento, no hay resultados aquí",
-    "selectedHexagon": "en en área seleccionada",
+    "selectedHexagon": "en el área seleccionada",
     "filteredRadius": "en {0} · {1}km",
-    "noFilter": "en {0}"
+    "noFilter": "en la zona",
+    "hideMap":"Ocultar Mapa",
+    "showMap":"Mostrar Mapa"
   },
   "buttonFilters": {
     "queryLabel": "¿Qué buscas?",
@@ -178,16 +184,16 @@
     "whenExplain": "Filtra los eventos por fecha",
     "byDate": "Por fecha de creacion",
     "byPrice": "Por precio",
-    "orderBy": "Ordenar por",
+    "orderBy": "Ordenar",
     "priceExplain": "Filtrar por precio",
-    "byProximity": "Por proximidade",
+    "byProximity": "Por proximidad",
     "byEventDate": "By ínicio del evento"
   },
   "button": {
     "title":"Vista de _helpbutton_",
     "copy": "Copiar enlace",
     "delete": "Borrar",
-    "typeExplain": "Por favor elige qué tipo de _helpbutton_ te gustaría crear",
+    "typeExplain": "Por favor elige qué tipo de _helpbutton_ te gustaría publicar",
     "placeHolderTitle": "Escribe un nuevo título para tu _helpbutton_",
     "descriptionLabel": "Descripción",
     "tagsLabel": "Palabras clave",
@@ -197,7 +203,7 @@
     "changeDateLabel": "Elige una fecha",
     "changePlaceLabel": "Elige un lugar",
     "firstPost": "¡Hola! Creé este _helpbutton_ el {0}, deja un comentario si quieres",
-    "errorCreated": "Error al crear",
+    "errorCreated": "Error al publicar",
     "placeHolderDescription": "Escribe una descripción para tu _helpbutton_",
     "typeLabel": "Tipo de _helpbutton_",
     "descriptionExplain": "Descripción",

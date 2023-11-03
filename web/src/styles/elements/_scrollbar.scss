@@ -13,23 +13,31 @@
     scrollbar-width: thin;
     border-radius: 16px;
     width: 16px;
+    background: url('https://www.pngjoy.com/pngl/41/952512_hamburger-icon-menubuttom-hamburger-menu-icon-white-transparent.png') $color-gray;
+    background-size:8px 16px;
+    background-repeat:no-repeat;
+    background-position:center;
+    
   }
   ::-webkit-scrollbar-thumb:hover{
     background: $color-dark-gray;
+    cursor: pointer;
 
   }
   ::-webkit-scrollbar-track{
-    background: white;
+    background: transparent;
     border-radius: 10px;
     scrollbar-width: thin;
     box-shadow: none;
     width: 1px;
     height: 1px;
-
+    cursor: pointer;
 
   }
-  *::-webkit-scrollbar-button {
-    // display: none;
+
+  *::-webkit-scrollbar-track:hover{
+    cursor: pointer;
+
   }
 
   *::-webkit-scrollbar-track-piece {
@@ -38,9 +46,9 @@
   }
 
   .info-overlay__container::-webkit-scrollbar {
-    display: none;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  
+    // display: none;
+    // -ms-overflow-style: none;  /* IE and Edge */
+    // scrollbar-width: none;  
   }
 
 

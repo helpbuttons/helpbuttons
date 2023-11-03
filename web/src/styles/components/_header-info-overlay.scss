@@ -2,7 +2,8 @@ $info-location-field-width: 330px;
 $info-nets-field-bottom: 90px;
 $info-nets-max-width: $grid-max-width--mobile;
 $info-image-height: 700px;
-$info-content-mobile-bottom-padding: calc( $footer-height-mobile );
+$info-content-mobile-bottom-padding: calc( $footer-height-mobile*2 );
+$info-content-head-margin: calc( $footer-height-mobile );
 
 .info-overlay__selected {
 
@@ -23,15 +24,16 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
 .info-overlay__container {
 
   // background-color: $color-white;
-  padding-top: $margin-xbig;
+  margin-top: $info-content-head-margin;
+  margin-bottom: calc( $footer-height-mobile*4 );
   width:100%;
   z-index: $z-index-02;
   box-sizing: border-box;
   background-repeat: no-repeat, repeat;
   background-position: center;
   background-size: cover;
-  overflow: auto;
-  background-image:var(--network-jumbo)
+  overflow: hidden;
+  // background-image:var(--network-jumbo)
 
 }
 
@@ -40,14 +42,14 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
   @extend .form__field;
   margin: auto;
   font-family: inherit;
-  font-weight: bold;
   padding: 0 0 ;
   min-width: fit-content;
   background-color: transparent;
   width: 100%;
-  height: auto;
+  height: 100vh;
+  overflow: hidden;
   box-sizing: border-box;
-  margin-top: $margin-small;
+  // margin-top: $margin-small;
   margin-bottom: $info-content-mobile-bottom-padding;
 
  }
@@ -70,25 +72,44 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
 
 }
 
+.info-overlay__card--header {
+
+  background-image:var(--network-jumbo);
+  background-repeat: no-repeat, repeat;
+  background-position: center;
+  background-size: cover;
+  height: auto;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+
+
+}
+
 .info-overlay__card {
 
   flex-grow: 1;
   margin: auto;
-  margin-top: $margin-small;
-  color: $color-white;
-  height: max-content;
+  // margin-top: $margin-small;
+  color: $color-dark-gray;
   max-width: $grid-max-width--mobile;
+  overflow: auto; 
   min-height: 100px;
+  padding-bottom: $info-content-mobile-bottom-padding;
 
   .card {
 
     border-radius: 10px;
-    background-color: $color-transparent;
+    background-color: $color-white;
     padding: $padding-big;
     margin: $margin-small 0;
-    max-height: 100%;
-    height: fit-content;
+    // max-height: 100%;
+    // height: fit-content;
     overflow: auto;
+
 
     .card__header {
 
@@ -97,6 +118,10 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
       align-items: center;
       margin-bottom: 0;
       padding-bottom: $padding-small;
+      width: 100%;
+      gap: $padding-medium;
+
+
   
       .card__header-image {
   
@@ -109,18 +134,22 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
   
       .card__header-title {
   
-        margin-left: $margin-small;
+        font-size: $font-size-title;
+        line-height: $font-size-title;
 
         &.network-title {
   
           font-size: $font-size-huge;
           line-height: $font-size-huge;
           word-wrap: break-word;
-          display: inline-block;
+          display: flex;
           border-radius: $border-radius-basic;
           background-color: $color-black;
           padding: $padding-big;
+          color: $color-white;
           max-width: 70%;
+          align-self: center;
+          justify-content: center;
 
           ::first-letter {
 
@@ -138,7 +167,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
 
     hr {
 
-      background-color: $color-white;
+      border-top: 0.5px solid $color-ligth-gray;
 
     }
 
@@ -151,6 +180,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
     padding: $padding-medium 0;
     word-wrap: break-word;
     display: inline-block;
+    width: 98%;
     max-width: 98%;
 
   }
@@ -180,7 +210,7 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
   padding: $padding-small;
   font-weight: $font-weight-regular;
   margin-top: $margin-xsmall;
-  color: $color-ligth-gray;
+  color: $color-gray;
   font-size: $font-size-small;
   border-color: $color-ligth-gray;
   border: 0px solid $color-ligth-gray;
@@ -228,6 +258,12 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
 
   }
 
+  .info-overlay__container {
+
+    margin-bottom: 0;
+
+  }
+
   .info-overlay__content {
 
     padding-bottom: 0px;
@@ -235,9 +271,16 @@ $info-content-mobile-bottom-padding: calc( $footer-height-mobile );
 
   }
 
+  .info-overlay__card--header {
+
+    height: 20rem;
+    
+  
+  }
+
   .info-overlay__card {
     
-    max-height: calc(100vh - 300px);
+    // max-height: calc(100vh - 300px);
     max-width: $grid-max-width;
 
 

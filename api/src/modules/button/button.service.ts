@@ -296,6 +296,16 @@ export class ButtonService {
     return { ...button };
   }
 
+  async findByOwner(ownerId: string) {
+    let buttons: Button[] = await this.buttonRepository.find({
+      where: { owner: {id: ownerId, role: Not(Role.blocked)}, deleted: false},
+      relations: [
+        'owner',
+      ],
+    });
+    return buttons;
+  }
+
   async follow(buttonId: string, userId: string) {
     const button = await this.findById(buttonId);
     const index = button.followedBy.indexOf(userId);
@@ -305,7 +315,7 @@ export class ButtonService {
     }
     return true;
   }
-
+  
   async unfollow(buttonId: string, userId: string) {
     const button = await this.findById(buttonId);
     const index = button.followedBy.indexOf(userId);
