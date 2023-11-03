@@ -121,10 +121,10 @@ $list-drag-tab-height: 40px;
 
 .list__element {
 
-  height: 100%;
+  height: auto;
   // flex-grow: 1;
   flex-basis: 100%;
-  padding-right: $padding-xxsmall;
+  padding-right: $padding-xsmall;
 
 }
 
