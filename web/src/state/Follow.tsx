@@ -21,6 +21,9 @@ export class FollowButton implements WatchEvent, UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.loggedInUser.id]
+      newState.explore.map.boundsFilteredButtons = []
+      newState.explore.map.cachedHexagons = []
+      newState.explore.map.listButtons = []
     });
   }
 }
@@ -45,6 +48,9 @@ export class UnfollowButton implements WatchEvent, UpdateEvent {
         let followedBy = [...state.explore.currentButton.followedBy];
         followedBy.splice(index,1)
         newState.explore.currentButton.followedBy = followedBy
+        newState.explore.map.boundsFilteredButtons = []
+        newState.explore.map.cachedHexagons = []
+        newState.explore.map.listButtons = []
       }
     });
   }
