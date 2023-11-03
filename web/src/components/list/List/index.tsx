@@ -73,19 +73,7 @@ function List({
     <>
       {!showFiltersForm && (
         <>
-          <div className="list__order">
-            <>
-              <div>{t('buttonFilters.orderBy')}</div>
-
-              <AdvancedFiltersSortDropDown
-                className={'dropdown__dropdown-trigger--list'}
-                orderBy={filters.orderBy}
-                setOrderBy={(value) => updatesOrderByFilters(value)}
-                buttonTypes={buttonTypes}
-                selectedButtonTypes={filters.helpButtonTypes}
-              />
-            </>
-          </div>
+          
 
           <div
             className={
@@ -94,10 +82,33 @@ function List({
             }
             onScroll={handleScrollHeight}
           >
+
+            <div 
+              className={
+                'list__order ' +
+                (showMap ? '' : ' list__order--full-screen')
+              }
+            
+            >
+              <>
+                {/* <div>{t('buttonFilters.orderBy')}</div> */}
+
+                <AdvancedFiltersSortDropDown
+                  className={'dropdown__dropdown-trigger--list'}
+                  orderBy={filters.orderBy}
+                  setOrderBy={(value) => updatesOrderByFilters(value)}
+                  buttonTypes={buttonTypes}
+                  selectedButtonTypes={filters.helpButtonTypes}
+                />
+              </>
+            </div>
+
+
+
             <div
               onClick={handleChange}
               className={
-                'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open')
+                'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')
               }
             >
               <span className="drag-tab__line"></span>
