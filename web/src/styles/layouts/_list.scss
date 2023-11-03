@@ -83,6 +83,7 @@ $list-drag-tab-height: 40px;
 
   .list__element {
   
+    max-width: $card-button-list-width;
     height: auto;
     min-width: $card-button-list-width;
 
@@ -109,7 +110,6 @@ $list-drag-tab-height: 40px;
 
   .list__element {
 
-    // max-width: $card-button-list-width;
     flex: 1;
     height: auto;
     flex-basis: 100%;
@@ -248,6 +248,7 @@ $list-drag-tab-height: 40px;
 
     height: auto;
     width: 100%;
+    flex-basis: 100%;
     min-width: $card-button-list-width;
 
   }

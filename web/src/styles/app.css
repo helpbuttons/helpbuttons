@@ -6731,6 +6731,7 @@ hr {
   width: 100%;
 }
 .list__content--row .list__element {
+  max-width: 450px;
   height: auto;
   min-width: 450px;
 }
@@ -6827,6 +6828,7 @@ hr {
   .list__element {
     height: auto;
     width: 100%;
+    flex-basis: 100%;
     min-width: 450px;
   }
 }
