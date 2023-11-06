@@ -46,7 +46,7 @@ export default function FieldDate({
    }
   */
   const datesAreValid = () => {
-    if (eventEnd.getTime() < eventStart.getTime()) {
+    if (eventEnd?.getTime() < eventStart?.getTime()) {
       setInvalidDates(() => true);
       return false;
     }

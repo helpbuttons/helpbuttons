@@ -424,12 +424,9 @@ function useHexagonMap({
     store.emit(new UpdateListButtons(orderedFilteredButtons));
   }
 
-  const [prevFilters, setPrevFilters] = useState(filters);
   useEffect(() => {
-    if (prevFilters != filters) {
-      setHexagonClicked(() => 'unset');
-      updateDensityMap();
-    }
+    setHexagonClicked(() => 'unset');
+    updateDensityMap();
   }, [filters]);
 
   const applyFilters = (filters, cachedHexagons) => {
@@ -616,7 +613,14 @@ function useHexagonMap({
 
 const orderByClosestToCenter = (center, buttons) => {
   function buttonDistance(buttonA, buttonB) {
-    return buttonA.distance - buttonB.distance;
+    if(buttonA.distance < buttonB.distance)
+    {
+      return -1;
+    }else if(buttonA.distance == buttonB.distance)
+    {
+      return 0;
+    }
+    return 1
   }
 
   if (!center) {
@@ -637,9 +641,16 @@ const orderByClosestToCenter = (center, buttons) => {
 };
 
 export const orderByCreated = (buttons) => {
-  return buttons.sort(
-    (buttonA, buttonB) => buttonA.created_at < buttonB.created_at,
-  );
+  return [...buttons].sort(
+    (buttonA, buttonB) => {
+      if(buttonA.created_at < buttonB.created_at)
+      {
+        return 1
+      }else if (buttonA.created_at == buttonB.created_at){
+        return 0
+      }
+      return -1
+    });
 };
 
 const orderBy = (buttons, orderBy, center) => {
