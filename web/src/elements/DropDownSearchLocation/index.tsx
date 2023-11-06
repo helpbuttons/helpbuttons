@@ -1,13 +1,18 @@
-import React, {  useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
-import { setValueAndDebounce } from 'state/HomeInfo';
 import { Subject } from 'rxjs';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { GlobalState, store } from 'pages';
 import { useRef } from 'store/Store';
+import { useDebounce } from 'shared/custom.hooks';
+import { GeoFindAddress } from 'state/Geo';
 
-
-export default function DropDownSearchLocation({handleSelectedPlace = (place) => {console.log(place)}, placeholder}) {
+export default function DropDownSearchLocation({
+  handleSelectedPlace = (place) => {
+    console.log(place);
+  },
+  placeholder,
+}) {
   const [options, setOptions] = useState([]);
 
   const timeInMsBetweenStrokes = 80; //ms
@@ -16,52 +21,38 @@ export default function DropDownSearchLocation({handleSelectedPlace = (place) =>
     (state: GlobalState) => state.config,
   );
 
-  const [sub, setSub] = useState(new Subject()); //evita la inicializaacion en cada renderizado
-  const [sub$, setSub$] = useState(
-    setValueAndDebounce(sub, timeInMsBetweenStrokes),
-  ); //para no sobrecargar el componente ,lo delegamos a una lib externa(solid);
+  const [input, setInput] = useState('');
+  const debounceInput = useDebounce(input, 300);
 
   const setSelectedOption = (selectedOption) => {
-    const selectedPlace = JSON.parse(selectedOption.value)
-    handleSelectedPlace(selectedPlace)
-  }
-  
+    const selectedPlace = JSON.parse(selectedOption.value);
+    handleSelectedPlace(selectedPlace);
+  };
+
+
+  const requestAddresses = (inputText) => {
+    setInput(() => inputText);
+  };
+
+
   useEffect(() => {
-    let s = sub$.subscribe(
-      (results: any) => {
-        if (results) {
+    if (debounceInput?.length > 2) {
+      store.emit(
+        new GeoFindAddress(debounceInput, (places) => {
           setOptions(
-            results.map((place) => {
-              return ({
-                  label: place.formatted,
-                  value: JSON.stringify(place),
-                  id: place.id
-              }
-              );
+            places.map((place, key) => {
+              return {
+                label: place.formatted,
+                value: JSON.stringify(place),
+                id: key,
+              };
             }),
           );
-        } else {
-          console.error(
-            'Error with geocoding api',
-          );
-        }
-      },
-      (e) => {
-        console.log('error subscribe', e);
-      },
-    );
-    return () => {
-      s.unsubscribe(); //limpiamos
-    };
-  }, [sub$]); //first time
-
-  const requestAddresses = (inputText) => 
-  {
-    if (inputText.length > 2)
-    {
-      sub.next(inputText);
+        }),
+      );
     }
-  }
+  }, [debounceInput]);
+
   return (
     <>
       <Select
@@ -69,10 +60,10 @@ export default function DropDownSearchLocation({handleSelectedPlace = (place) =>
         onChange={setSelectedOption}
         options={options}
         onInputChange={(inputText) => requestAddresses(inputText)}
-        className='form__input--plugin'
+        className="form__input--plugin"
         placeholder={placeholder}
-        noOptionsMessage= { () => placeholder}
+        noOptionsMessage={() => placeholder}
       />
-      </>
+    </>
   );
 }

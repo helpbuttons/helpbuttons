@@ -19,6 +19,7 @@ import MultiSelectOption from 'elements/MultiSelectOption';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
+import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 
 
 export default function AdvancedFilters({
@@ -170,11 +171,9 @@ export default function AdvancedFilters({
               })}
             </FieldMultiSelect>
             
-              <DropDownWhere
+              <DropDownSearchLocation
                 placeholder={t('homeinfo.searchlocation')}
                 handleSelectedPlace={handleSelectedPlace}
-                address={address}
-                center={center}
               />
             
             {center && (
