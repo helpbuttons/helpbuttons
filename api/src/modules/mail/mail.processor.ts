@@ -1,4 +1,4 @@
-import { Processor, Process } from '@nestjs/bull';
+import { Processor, Process, OnQueueFailed } from '@nestjs/bull';
 import { Job } from 'bull';
 import { NetworkService } from '../network/network.service';
 import { MailerService } from '@nestjs-modules/mailer';
@@ -65,5 +65,13 @@ export class MailConsumer {
           });
       })
       .catch((error) => console.log('getting network error?'));
+  }
+
+  @OnQueueFailed()
+  handler(job: Job<MailJob>, error: Error)
+  {
+    console.log('Error processing job:')
+    console.log(JSON.stringify(job.data))
+    console.log(error)
   }
 }

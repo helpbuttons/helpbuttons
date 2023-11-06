@@ -66,7 +66,13 @@ export class MailService {
     context
   })
   {
-    this.mailQueue.add({
+    console.log(`added mail to queue: ${to} - ${subject}`)
+    if(this.mailQueue.client.status != 'ready')
+    {
+      console.log('redis is not running. no mail queue.')
+      return;
+    }
+    return await this.mailQueue.add({
       to,
       cc,
       bcc,

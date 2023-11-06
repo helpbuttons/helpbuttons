@@ -61,9 +61,14 @@ import { BullModule } from '@nestjs/bull';
     GeoModule,
     BullModule.forRoot({
       redis: {
-        host: 'localhost',
-        port: 6379,
+        host: process.env.REDIS_HOST,
+        port: parseInt(process.env.REDIS_PORT),
       },
+      defaultJobOptions: {
+        attempts: 3,
+        timeout: 1500,
+        backoff: 1000*10,
+      }
     }),
   ],
   controllers: [AppController],
