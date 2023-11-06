@@ -12,8 +12,8 @@ $drag-tab-icon-size: 25px;
 
 .drag-tab {
 
-  position: absolute;
-  display: none;
+  position: relative;
+  display: block;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -21,13 +21,13 @@ $drag-tab-icon-size: 25px;
   background-color: $color-corporative;
   margin: 0;
   z-index: $z-index-03;
-  padding: $padding-small $padding-huge;
-  border-radius: $border-radius-circle $border-radius-circle ;
+  padding: $padding-small $padding-small;
+  border-radius: $border-radius-circle $border-radius-circle 0 0 ;
   transform: translateY(-35px);
   transition: $transition-default-slow;
   width: auto;
   right: 0;
-  margin-right: $margin-small;
+  // margin-right: $margin-small;
 
 
   :hover {

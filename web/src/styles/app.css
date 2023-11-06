@@ -5775,8 +5775,8 @@ li, ol, ul, h2 {
   }
 }
 .drag-tab {
-  position: absolute;
-  display: none;
+  position: relative;
+  display: block;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -5784,13 +5784,12 @@ li, ol, ul, h2 {
   background-color: var(--network-background-color);
   margin: 0;
   z-index: 300;
-  padding: 5px 30px;
-  border-radius: 34px 34px;
+  padding: 5px 5px;
+  border-radius: 34px 34px 0 0;
   transform: translateY(-35px);
   transition: all 1s;
   width: auto;
   right: 0;
-  margin-right: 20px;
 }
 .drag-tab :hover {
   cursor: pointer;
@@ -6703,11 +6702,6 @@ hr {
     margin: auto;
   }
 }
-@media (hover: none) {
-  .list__container {
-    padding-bottom: 50px;
-  }
-}
 .list__container {
   display: flex;
   flex-direction: column;
@@ -6725,9 +6719,8 @@ hr {
 }
 
 .list__show-map-button {
-  position: fixed;
+  position: relative;
   display: flex;
-  bottom: calc(50px + 0.9rem);
   width: auto;
   z-index: 400;
   left: 0;
@@ -6810,22 +6803,18 @@ hr {
 }
 
 .list__order {
-  height: 40px;
   background-color: var(--network-background-color);
-  border-radius: 34px;
   display: flex;
   flex-direction: row;
-  align-items: baseline;
+  justify-content: space-between;
   padding: 0 10px;
   gap: 5px;
-  bottom: 310px;
-  left: 7px;
-  position: absolute;
+  position: relative;
 }
 
 @media (hover: none) {
-  .list__order {
-    bottom: 295px;
+  .list__container {
+    padding-bottom: 55px;
   }
 }
 .list__order--full-screen {
@@ -7234,7 +7223,7 @@ body {
 }
 
 .index__content-bottom--hide {
-  margin-bottom: -250px;
+  margin-bottom: -237px;
 }
 
 @media only screen and (min-width: 1280px) {
