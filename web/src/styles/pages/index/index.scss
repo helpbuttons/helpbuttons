@@ -49,7 +49,7 @@ $index-mobile-fixed-z-index: $z-index-05;
 
 .index__content-bottom--hide {
 
-  margin-bottom: calc($list-container-hide-height - 12px);
+  margin-bottom: calc($list-container-hide-height);
   
 }
 
@@ -57,7 +57,7 @@ $index-mobile-fixed-z-index: $z-index-05;
 
   .index__content-bottom--hide {
 
-    margin-bottom: calc($list-container-hide-height);
+    margin-bottom: calc($list-container-hide-nohover-height);
     
   }
 

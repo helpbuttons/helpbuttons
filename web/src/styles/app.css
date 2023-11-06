@@ -1065,6 +1065,11 @@ a {
   border-radius: 34px;
 }
 
+.form__input--text-length {
+  font-size: 14px;
+  color: #828282;
+}
+
 .form__input--plugin {
   padding: 0;
   border: none;
@@ -6711,7 +6716,7 @@ hr {
   position: relative;
   z-index: 100;
   transition: all 1s;
-  padding-bottom: 55px;
+  padding-bottom: 58px;
 }
 
 .list__container--full-list {
@@ -6810,11 +6815,12 @@ hr {
   padding: 0 10px;
   gap: 5px;
   position: relative;
+  height: 30px;
 }
 
 @media (hover: none) {
   .list__container {
-    padding-bottom: 55px;
+    padding-bottom: 40px;
   }
 }
 .list__order--full-screen {
@@ -7223,9 +7229,14 @@ body {
 }
 
 .index__content-bottom--hide {
-  margin-bottom: -237px;
+  margin-bottom: -253px;
 }
 
+@media (hover: none) {
+  .index__content-bottom--hide {
+    margin-bottom: -223px;
+  }
+}
 @media only screen and (min-width: 1280px) {
   .index__explore-container {
     position: fixed;

@@ -92,7 +92,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
           onInput={onInput}
         ></textarea>
         {maxLength > 0 && 
-          <>{textLength} / {maxLength}</>
+          <div className="form__input--text-length">{textLength} / {maxLength}</div>
         }
         {/*<>
         {showEmojiDropDown && 
