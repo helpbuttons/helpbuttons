@@ -192,6 +192,10 @@ function CardButtonSubmenu({ button }) {
       return;
     }
 
+    if(loggedInUser.id == button.owner.id)
+    {
+      return;
+    }
     const index = button.followedBy.indexOf(loggedInUser.id);
     if (index < 0) {
       return (
