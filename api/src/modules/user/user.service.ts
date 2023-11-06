@@ -157,12 +157,16 @@ export class UserService {
   @OnEvent(ActivityEventName.NewPost)
   async notifyFollowers(payload: any) {
     const buttonFollowers = payload.data.button.followedBy;
+    if(buttonFollowers.length < 1)
+    {
+      return;
+    }
 
     const users = await this.userRepository
     .createQueryBuilder('user')
     .select('email,locale')
     .where(
-      `id IN (:...buttonFollowers)AND "receiveNotifications" = true `,
+      `id IN (:...buttonFollowers) AND "receiveNotifications" = true `,
       { buttonFollowers: buttonFollowers },
     )
     .limit(1000)
@@ -180,8 +184,6 @@ export class UserService {
       return { message: messageContent, email: user.email, buttonUrl: `${config.hostName}${locale}/ButtonFile/${payload.data.button.id}` };
     });
     
-
-
     mailsToSend.map((mailToSend) => {
       this.mailService.sendActivity({
         content: mailToSend.message,
