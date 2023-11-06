@@ -63,7 +63,7 @@ export class ButtonsSeeder implements Seeder {
       
     });
     
-    // await this.userRepository.insert(usersToAdd);
+    await this.userRepository.insert(usersToAdd);
     console.log(`Added ${usersToAdd.length} users`)
 
     let btnIds =[]
