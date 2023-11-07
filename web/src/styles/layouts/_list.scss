@@ -1,5 +1,5 @@
 $list-container-height: 303px;
-$list-drag-tab-height: 30px;
+$list-drag-tab-height: 35px;
 $list-container-hide-height: calc($footer-height-mobile - $list-container-height);
 $list-order-tabs-bottom: calc($footer-height-mobile + $list-container-height);
 $list-container-hide-nohover-height: calc($footer-height-mobile - $list-container-height + $list-drag-tab-height );
@@ -174,7 +174,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   justify-content: space-between;
   padding: 0 $padding-medium;
   gap: $padding-small;
-    position: relative;
+  position: relative;
   height: $list-drag-tab-height;
 
 

@@ -6815,7 +6815,7 @@ hr {
   padding: 0 10px;
   gap: 5px;
   position: relative;
-  height: 30px;
+  height: 35px;
 }
 
 @media (hover: none) {
@@ -7234,7 +7234,7 @@ body {
 
 @media (hover: none) {
   .index__content-bottom--hide {
-    margin-bottom: -223px;
+    margin-bottom: -218px;
   }
 }
 @media only screen and (min-width: 1280px) {
