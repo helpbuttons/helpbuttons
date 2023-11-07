@@ -1904,7 +1904,7 @@ a {
   width: 100%;
   border: 1px solid #D4D4D4;
   border-radius: 2rem;
-  background: var(--network-background-color);
+  background: #fff;
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
@@ -5650,11 +5650,16 @@ li, ol, ul, h2 {
   border-radius: 34px;
   display: flex;
   align-items: center;
+  padding: 0;
   justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
 }
+.pigeon-center-view:hover {
+  cursor: pointer;
+}
 .pigeon-center-view svg {
   fill: #828282;
+  height: 200px;
 }
 
 .pigeon-zoom-buttons {
