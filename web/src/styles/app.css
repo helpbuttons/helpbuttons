@@ -1900,7 +1900,8 @@ a {
   overflow-x: hidden;
   height: 54px;
   padding: 0 15px;
-  width: inherit;
+  margin: 7px 0;
+  width: 100%;
   border: 1px solid #D4D4D4;
   border-radius: 2rem;
   background: var(--network-background-color);
@@ -6811,6 +6812,7 @@ hr {
   background-color: var(--network-background-color);
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   padding: 0 10px;
   gap: 5px;

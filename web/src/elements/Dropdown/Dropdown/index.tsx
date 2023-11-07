@@ -34,7 +34,9 @@ export function Dropdown({
   return (
     <>
       {label && <label className="form__label"> {label}</label>}
-      <p className="form__explain">{explain}</p>
+      {explain && 
+            <p className="form__explain">{explain}</p>
+      }
       <select
         className={className}
         onChange={handleChange}

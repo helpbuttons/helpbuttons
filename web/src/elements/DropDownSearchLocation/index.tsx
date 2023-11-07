@@ -6,6 +6,7 @@ import { GlobalState, store } from 'pages';
 import { useRef } from 'store/Store';
 import { useDebounce } from 'shared/custom.hooks';
 import { GeoFindAddress } from 'state/Geo';
+import t from 'i18n';
 
 export default function DropDownSearchLocation({
   handleSelectedPlace = (place) => {
@@ -54,7 +55,10 @@ export default function DropDownSearchLocation({
   }, [debounceInput]);
 
   return (
-    <>
+    <div className='form__field'>
+      <label className="form__label">
+        {t('buttonFilters.where')}
+      </label>
       <Select
         isSearchable
         onChange={setSelectedOption}
@@ -64,6 +68,6 @@ export default function DropDownSearchLocation({
         placeholder={placeholder}
         noOptionsMessage={() => placeholder}
       />
-    </>
+    </div>
   );
 }

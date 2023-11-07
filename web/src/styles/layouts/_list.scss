@@ -171,6 +171,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   background-color: $color-corporative;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   padding: 0 $padding-medium;
   gap: $padding-small;
