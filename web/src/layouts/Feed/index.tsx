@@ -10,6 +10,8 @@ import t from 'i18n';
 import {
   IoAddOutline,
   IoArrowUndoOutline,
+  IoChatboxOutline,
+  IoChatbubbleEllipsesSharp,
   IoCloseOutline,
   IoMailOutline,
   IoPersonOutline,
@@ -32,6 +34,7 @@ import { useStore } from 'store/Store';
 import MessageNew from 'components/feed/MessageNew';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
 import Link from 'next/link';
+import FieldText from 'elements/Fields/FieldText';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -159,7 +162,7 @@ export function FeedElement({
                 <Btn
                   submit={false}
                   btnType={BtnType.iconActions}
-                  iconLink={<IoArrowUndoOutline />}
+                  iconLink={<IoChatbubbleEllipsesSharp />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.right}
                   onClick={() =>
@@ -191,12 +194,12 @@ export function FeedElement({
                 <Btn
                 submit={false}
                 btnType={BtnType.iconActions}
-                iconLink={<IoArrowUndoOutline />}
+                iconLink={<IoChatbubbleEllipsesSharp />}
                 iconLeft={IconType.circle}
                 contentAlignment={ContentAlignment.right}
                 onClick={() =>
                   setShowComposePostReply(() => {
-                    return {
+                    return {  
                       post: post.id,
                       privateMessage: false,
                       mentions: [post.author.username],
@@ -218,7 +221,36 @@ export function FeedElement({
             />
           )}
           {!loggedInUser && showComposePostReply?.post == post.id && (
-            <div className='message message--others'>Please <Link href="/Login">login</Link> or <Link href="/Signup">signup</Link> before comment</div>
+             <>
+                <FieldText
+                  name="email"
+                  placeholder={t('button.email')}
+                />
+                <FieldText
+                  name="name"
+                  placeholder={t('button.username')}
+                />    
+                <MessageNew
+                  isComment={true}
+                  onCreate={(message) => {
+                    store.emit(
+                      new CreateNewPostComment(
+                        referer.post,
+                        CommentPrivacyOptions.PUBLIC,
+                        { message: message },
+                        () => {
+                          alertService.info('comment posted');
+                          onCreate();
+                        },
+                        (errorMessage) =>
+                          alertService.error(errorMessage.caption),
+                      ),
+                    );
+                  }}
+                />
+        
+                <div className='message message--others'>Please <Link href="/Login">login</Link> or <Link href="/Signup">signup</Link> before comment</div>
+              </>
           )}
         </>
         <PostComments
