@@ -332,6 +332,14 @@ function useHexagonMap({
   const foundTags = React.useRef([]);
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
   let cachedH3Hexes = React.useRef(cachedHexagons);
+  useEffect(() => {
+    if(cachedHexagons.length < 1 && exploreSettings.bounds)
+    {
+      
+      cachedH3Hexes.current = []
+      fetchBounds(exploreSettings.bounds, exploreSettings.zoom)
+    }
+  }, [cachedHexagons])
   const calculateNonCachedHexagons = (
     debounceHexagonsToFetch,
     cachedH3Hexes,
@@ -424,12 +432,9 @@ function useHexagonMap({
     store.emit(new UpdateListButtons(orderedFilteredButtons));
   }
 
-  const [prevFilters, setPrevFilters] = useState(filters);
   useEffect(() => {
-    if (prevFilters != filters) {
-      setHexagonClicked(() => 'unset');
-      updateDensityMap();
-    }
+    setHexagonClicked(() => 'unset');
+    updateDensityMap();
   }, [filters]);
 
   const applyFilters = (filters, cachedHexagons) => {
@@ -557,21 +562,24 @@ function useHexagonMap({
         }),
       );
 
-      const boundsHexes = convertBoundsToGeoJsonHexagons(
-        bounds,
-        getResolution(zoom),
-      );
-      store.emit(new SetExploreSettingsBoundsLoaded());
-      if (boundsHexes.length > 1000) {
-        console.error('too many hexes.. canceling..');
-        return;
-      }
-      setHexagonsToFetch({
-        resolution: getResolution(zoom),
-        hexagons: boundsHexes,
-      });
+      fetchBounds(bounds, zoom)
     }
   };
+
+  const fetchBounds = (bounds, zoom) => {
+    const hexagonsForBounds = convertBoundsToGeoJsonHexagons(
+      bounds,
+      getResolution(zoom),
+    );
+    if (hexagonsForBounds.length > 1000) {
+      console.error('too many hexes.. canceling..');
+      return;
+    }
+    setHexagonsToFetch(() => {return {
+      resolution: getResolution(zoom),
+      hexagons: hexagonsForBounds,
+    }});
+  }
 
   useEffect(() => {
     if (debouncedHexagonClicked) {
@@ -616,7 +624,14 @@ function useHexagonMap({
 
 const orderByClosestToCenter = (center, buttons) => {
   function buttonDistance(buttonA, buttonB) {
-    return buttonA.distance - buttonB.distance;
+    if(buttonA.distance < buttonB.distance)
+    {
+      return -1;
+    }else if(buttonA.distance == buttonB.distance)
+    {
+      return 0;
+    }
+    return 1
   }
 
   if (!center) {
@@ -637,9 +652,16 @@ const orderByClosestToCenter = (center, buttons) => {
 };
 
 export const orderByCreated = (buttons) => {
-  return buttons.sort(
-    (buttonA, buttonB) => buttonA.created_at < buttonB.created_at,
-  );
+  return [...buttons].sort(
+    (buttonA, buttonB) => {
+      if(buttonA.created_at < buttonB.created_at)
+      {
+        return 1
+      }else if (buttonA.created_at == buttonB.created_at){
+        return 0
+      }
+      return -1
+    });
 };
 
 const orderBy = (buttons, orderBy, center) => {

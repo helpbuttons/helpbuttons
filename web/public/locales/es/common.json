@@ -88,7 +88,7 @@
     "customizeAppearance": "Personaliza la apariencia",
     "chooseColorsExplain": "Estos colores serán los de tu red",
     "pickSecondaryColor": "Escoge color secundario para tu red",
-    "configureNetwork": "Conifgura tu Red",
+    "configureNetwork": "Configura tu Red",
     "buttonTemplateLabel": "Elige tus tipos de botón",
     "buttonTemplatePlaceHolder": "Escribe el nombre de tu nuevo tipo",
     "contactAdmin": "Contactar al administrador",
@@ -228,7 +228,9 @@
     "pickButtonTemplateColor": "Elige color para tu tipo de _helpbutton_",
     "unknownPlace": "Sitio desconocido",
     "hideAddress": "Esconder ubicación exacta",
-    "created": "creado"
+    "created": "creado",
+    "follow": "Seguir",
+    "unfollow": "Dejar de seguir"
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -331,5 +333,15 @@
   },
   "customFields": {
     "priceLabel": "Precio ({0})"
+  },
+  "email": {
+    "loginTokenContent": "Bienvenido a {0}",
+    "loginTokenSubject": "Solicitaste un inicio de sesión con un solo clic",
+    "loginTokenLinkCaption": "Haga clic aquí para acceder a su cuenta",
+    "activateContent": "Bienvenido a {0}",
+    "activateSubject": "Por favor activa tu cuenta",
+    "activateLinkCaption": "Haga clic aquí para activar su cuenta",
+    "activitySubject": "Nueva atividad",
+    "buttonLinkCaption": "Presiona aqui para abrir-lo"
   }
 }

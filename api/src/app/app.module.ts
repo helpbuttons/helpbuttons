@@ -28,6 +28,7 @@ import { PostModule } from '@src/modules/post/post.module';
 import { ActivityModule } from '@src/modules/activity/activity.module';
 import { InviteModule } from '@src/modules/invite/invite.module';
 import { GeoModule } from '@src/modules/geo/geo.module';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -58,6 +59,17 @@ import { GeoModule } from '@src/modules/geo/geo.module';
     ActivityModule,
     InviteModule,
     GeoModule,
+    BullModule.forRoot({
+      redis: {
+        host: process.env.REDIS_HOST,
+        port: parseInt(process.env.REDIS_PORT),
+      },
+      defaultJobOptions: {
+        attempts: 3,
+        timeout: 1500,
+        backoff: 1000*10,
+      }
+    }),
   ],
   controllers: [AppController],
   providers: [
@@ -69,3 +81,4 @@ export class AppModule implements NestModule {
     consumer.apply(AppLogger).forRoutes('*');
   }
 }
+

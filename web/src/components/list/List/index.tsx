@@ -22,7 +22,7 @@ function List({
   showLeftColumn,
   showFiltersForm,
   showMap,
-  toggleShowMap,
+  toggleShowMap = (e) => {},
 }) {
   const filters = useStore(
     store,
