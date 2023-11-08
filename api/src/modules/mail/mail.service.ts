@@ -89,7 +89,8 @@ export class MailService {
     console.log(`added mail to queue: ${to} - ${subject}`)
     if(this.mailQueue.client.status != 'ready')
     {
-      console.log('redis is not running. no mail queue.')
+      console.log('redis is not running. no mail queue. sending directly.')
+      this.sendMailDirectly( {to, cc, bcc, subject, template, context})
       return;
     }
     return await this.mailQueue.add({
@@ -100,6 +101,42 @@ export class MailService {
       template,
       context
     })
+  }
+
+  sendMailDirectly( {to, cc, bcc, subject, template, context})
+  {
+    this.networkService
+      .findDefaultNetwork()
+      .then((network) => {
+        let from  = config.from
+        try {
+          from = network.name + config.from.slice(config.from.indexOf('<'))
+        }catch(err)
+        {
+          console.log('could not add network name to from')
+        }
+
+        return this.mailerService
+          .sendMail({
+            to,
+            cc,
+            bcc,
+            from: from,
+            subject: subject,
+            template,
+            context: {...context, hostName: config.hostName},
+          })
+          .then((mail) => {
+            console.log(
+              `>> mail sent to ${to} with template '${template}'`,
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+            console.trace();
+          });
+      })
+      .catch((error) => console.log('getting network error?'));
   }
 
   sendWithLink({
