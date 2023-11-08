@@ -1998,9 +1998,8 @@ a {
 @media only screen and (min-width: 1440px) {
   .dropdown__dropdown-trigger {
     display: flex;
-    max-width: 10rem;
+    max-width: auto;
     min-width: auto;
-    margin-left: 20px;
   }
 }
 .dropdown-select {
@@ -2912,7 +2911,7 @@ li, ol, ul, h2 {
 
 .picker__content {
   overflow: auto;
-  width: 100vw;
+  width: auto;
   min-width: 240px;
   overflow-y: visible !important;
   padding: 15px;
