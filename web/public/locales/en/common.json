@@ -91,10 +91,10 @@
   },
   "activities": {
     "newbutton": "You published '{0}' in '{1}'",
-    "newpost": "There is a new post '{0}' in your button '{1}' by '{2}'",
-    "newcomment": "'{2}' commented '{0}' answer to the post '{1}'",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
-    "markedAllAsRead": "Notifications marked as read"
+    "markedAllAsRead": "Notifications marked as read",
+    "newpost": "There is a new post '{0}' in your button '{1}' by '{2}'",
+    "newcomment": "'{2}' commented '{0}' answer to the post '{1}'"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -142,7 +142,9 @@
     "errorCreated": "",
     "pickButtonTemplateColor": "",
     "unknownPlace": "Unknown Place",
-    "hideAddress": "Hide exact location"
+    "hideAddress": "Hide exact location",
+    "follow": "Follow",
+    "unfollow": "Unfollow"
   },
   "user": {
     "profileView": "Your profile",
@@ -307,5 +309,15 @@
   },
   "customFields": {
     "priceLabel": "Price ({0})"
+  },
+  "email": {
+    "loginTokenContent": "Welcome to {0}",
+    "loginTokenSubject": "You requested a one-click login",
+    "loginTokenLinkCaption": "Click here to login to your account",
+    "activateContent": "Welcome to {0}",
+    "activateSubject": "Please activate your account",
+    "activateLinkCaption": "Click here to activate your account",
+    "activitySubject": "New activity",
+    "buttonLinkCaption": "Click here to open"
   }
 }
