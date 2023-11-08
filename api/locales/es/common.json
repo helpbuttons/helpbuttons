@@ -103,9 +103,7 @@
     "newpost": "Hay una nueva publicacion '{0}' en el botón '{1}' por '{2}'",
     "newcomment": "'{2}' ha comentado '{0}' en respuesta al post '{1}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
-    "markedAllAsRead": "",
-    "subject": "Nueva atividad",
-    "buttonLink": "Presiona aqui para abrir-lo"
+    "markedAllAsRead": ""
   },
   "user": {
     "profileView": "Tu Perfil",
@@ -322,6 +320,8 @@
     "loginTokenLinkCaption": "Haga clic aquí para acceder a su cuenta",
     "activateContent": "Bienvenido a {0}",
     "activateSubject": "Por favor activa tu cuenta",
-    "activateLinkCaption": "Haga clic aquí para activar su cuenta"
+    "activateLinkCaption": "Haga clic aquí para activar su cuenta",
+    "activitySubject": "Nueva atividad",
+    "buttonLinkCaption": "Presiona aqui para abrir-lo"
   }
 }

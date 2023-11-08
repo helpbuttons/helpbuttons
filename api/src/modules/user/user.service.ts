@@ -142,8 +142,8 @@ export class UserService {
         ),
         to: user.email,
         link: getUrl(user.locale,`/ButtonFile/${payload.data.button.id}`),
-        linkCaption: translate(user.locale, 'activities.buttonLink'), 
-        subject: translate(user.locale, 'activities.subject')
+        linkCaption: translate(user.locale, 'email.buttonLinkCaption'), 
+        subject: translate(user.locale, 'email.activitySubject')
       })
     });
   }
@@ -177,8 +177,8 @@ export class UserService {
         ),
         to: user.email,
         link: getUrl(user.locale,`/ButtonFile/${payload.data.button.id}`),
-        linkCaption: translate(user.locale, 'activities.buttonLink'), 
-        subject: translate(user.locale, 'activities.subject')
+        linkCaption: translate(user.locale, 'email.buttonLinkCaption'), 
+        subject: translate(user.locale, 'email.activitySubject')
       })
     });
   }
