@@ -128,7 +128,7 @@ export default function FieldLocation({
           headerText={t('picker.headerText')}
         >
           
-          <DropDownWhere
+          <DropDownSearchLocation
             placeholder={t('homeinfo.searchlocation')}
             handleSelectedPlace={handleSelectedPlace}
           />

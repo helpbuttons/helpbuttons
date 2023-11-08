@@ -25,7 +25,7 @@ $picker-comments-item-padding: 25px;
 
   // position: absolute;
   overflow: auto;
-  width: 100vw; //Revise antes era 100%
+  width: auto; //Revise antes era 100%
   min-width: $picker-min-width;
   overflow-y: visible !important;
   // max-height: 90vh;

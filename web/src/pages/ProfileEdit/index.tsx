@@ -113,7 +113,7 @@ export default function ProfileEdit() {
     <>
       {loggedInUser && (
         <>
-          <Popup title="Update profile" linkFwd="/HomeInfo">
+          <Popup title={t('user.updateProfile')} linkFwd="/HomeInfo">
             <Form
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="login"
@@ -124,23 +124,16 @@ export default function ProfileEdit() {
                   <FieldText
                     name="name"
                     label={t('user.name')}
+                    explain={t('user.nameExplain')}
                     classNameInput="squared"
                     placeholder={t('user.namePlaceHolder')}
                     validationError={errors.name}
                     {...register('name', { required: true })}
                   ></FieldText>
-                  <FieldLanguagePick onChange={(value) => setLocale(value)} defaultValue={loggedInUser.locale}/>
-                  <FieldText
-                    name="email"
-                    label={t('user.email')}
-                    classNameInput="squared"
-                    placeholder={t('user.emailPlaceHolder')}
-                    validationError={errors.email}
-                    {...register('email', { required: true })}
-                  ></FieldText>
-                  <FieldTextArea
+                   <FieldTextArea
                     name="description"
                     label={t('user.description')}
+                    explain={t('user.descriptExplain')}
                     classNameInput="squared"
                     watch={watch}
                     setValue={setValue}
@@ -148,7 +141,20 @@ export default function ProfileEdit() {
                     validationError={errors.description}
                     {...register('description', { required: true })}
                   />
+                                  
+                  <FieldLanguagePick onChange={(value) => setLocale(value)} explain={t('user.pickLanguageExplain')} defaultValue={loggedInUser.locale}/>
+                  <FieldText
+                    name="email"
+                    label={t('user.email')}
+                    explain={t('user.emailExplain')}
+                    classNameInput="squared"
+                    placeholder={t('user.emailPlaceHolder')}
+                    validationError={errors.email}
+                    {...register('email', { required: true })}
+                  ></FieldText>  
                   <FieldCheckbox
+                    label={t('user.receiveNotifications')}
+                    explain={t('user.receiveNotificationsExplain')}                                 
                     name='receiveNotifications'
                     defaultValue={loggedInUser.receiveNotifications}
                     text={t('user.textReceiveNotifications')}
@@ -156,13 +162,17 @@ export default function ProfileEdit() {
                   />
                   <FieldCheckbox
                     name='showButtons'
+                    label={t('user.showButtonsProfileLabel')}
+                    explain={t('user.showButtonsProfileExplain')}
                     defaultValue={loggedInUser.showButtons}
                     text={t('user.showButtons')}
                     onChanged={(value) => {setValue('showButtons', value)}}
                   />
                   <FieldImageUpload
                     name="avatar"
-                    label={t('user.avatar')}
+                    text={t('user.avatar')}
+                    label={t('user.avatarLabel')}
+                    explain={t('user.avatarExplain')}
                     control={control}
                     width={150}
                     height={150}
@@ -176,7 +186,7 @@ export default function ProfileEdit() {
                     {errorMsg}
                   </div>
                 )}
-
+                <hr></hr>
                 <Accordion 
                   title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
                 >

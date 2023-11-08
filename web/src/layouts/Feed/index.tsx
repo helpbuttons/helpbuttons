@@ -9,7 +9,7 @@ import Btn, {
 import t from 'i18n';
 import {
   IoAddOutline,
-  IoArrowUndoOutline,
+  IoChatbubbleEllipsesSharp,
   IoCloseOutline,
   IoMailOutline,
   IoPersonOutline,
@@ -159,7 +159,7 @@ export function FeedElement({
                 <Btn
                   submit={false}
                   btnType={BtnType.iconActions}
-                  iconLink={<IoArrowUndoOutline />}
+                  iconLink={<IoChatbubbleEllipsesSharp />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.right}
                   onClick={() =>
@@ -191,7 +191,7 @@ export function FeedElement({
                 <Btn
                 submit={false}
                 btnType={BtnType.iconActions}
-                iconLink={<IoArrowUndoOutline />}
+                iconLink={<IoChatbubbleEllipsesSharp />}
                 iconLeft={IconType.circle}
                 contentAlignment={ContentAlignment.right}
                 onClick={() =>

@@ -1065,6 +1065,11 @@ a {
   border-radius: 34px;
 }
 
+.form__input--text-length {
+  font-size: 14px;
+  color: #828282;
+}
+
 .form__input--plugin {
   padding: 0;
   border: none;
@@ -1895,10 +1900,11 @@ a {
   overflow-x: hidden;
   height: 54px;
   padding: 0 15px;
-  width: inherit;
+  margin: 7px 0;
+  width: 100%;
   border: 1px solid #D4D4D4;
   border-radius: 2rem;
-  background: var(--network-background-color);
+  background: #fff;
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
@@ -1992,9 +1998,8 @@ a {
 @media only screen and (min-width: 1440px) {
   .dropdown__dropdown-trigger {
     display: flex;
-    max-width: 10rem;
+    max-width: auto;
     min-width: auto;
-    margin-left: 20px;
   }
 }
 .dropdown-select {
@@ -2906,7 +2911,7 @@ li, ol, ul, h2 {
 
 .picker__content {
   overflow: auto;
-  width: 100vw;
+  width: auto;
   min-width: 240px;
   overflow-y: visible !important;
   padding: 15px;
@@ -5644,11 +5649,16 @@ li, ol, ul, h2 {
   border-radius: 34px;
   display: flex;
   align-items: center;
+  padding: 0;
   justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
 }
+.pigeon-center-view:hover {
+  cursor: pointer;
+}
 .pigeon-center-view svg {
   fill: #828282;
+  height: 200px;
 }
 
 .pigeon-zoom-buttons {
@@ -6711,7 +6721,7 @@ hr {
   position: relative;
   z-index: 100;
   transition: all 1s;
-  padding-bottom: 55px;
+  padding-bottom: 58px;
 }
 
 .list__container--full-list {
@@ -6806,15 +6816,17 @@ hr {
   background-color: var(--network-background-color);
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   padding: 0 10px;
   gap: 5px;
   position: relative;
+  height: 35px;
 }
 
 @media (hover: none) {
   .list__container {
-    padding-bottom: 55px;
+    padding-bottom: 40px;
   }
 }
 .list__order--full-screen {
@@ -7223,9 +7235,14 @@ body {
 }
 
 .index__content-bottom--hide {
-  margin-bottom: -237px;
+  margin-bottom: -253px;
 }
 
+@media (hover: none) {
+  .index__content-bottom--hide {
+    margin-bottom: -218px;
+  }
+}
 @media only screen and (min-width: 1280px) {
   .index__explore-container {
     position: fixed;

@@ -108,7 +108,6 @@ margin: $margin-medium 0;
   font-size: $font-size-medium;
 }
 
-
 .form__field--feed button {
   background: $color-corporative;
   border: none;
@@ -173,6 +172,15 @@ margin: $margin-medium 0;
 
 
 }
+
+.form__input--text-length {
+
+  font-size: $font-size-small;
+  color: $color-gray;
+  
+}
+
+
 //react select plugin styles modification //REVISE
 .form__input--plugin {
 

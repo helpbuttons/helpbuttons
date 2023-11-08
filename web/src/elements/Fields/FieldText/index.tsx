@@ -34,7 +34,7 @@ const FieldText = React.forwardRef(({
     }
     return (
         <div className="form__field">
-            <label className="form__label">{label}</label>
+            {label && <label className="form__label">{label}</label>}
             {explain && 
                 <p className="form__explain">{explain}</p>
             }
