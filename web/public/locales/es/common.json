@@ -103,7 +103,9 @@
     "newpost": "Hay una nueva publicacion '{0}' en el botón '{1}' por '{2}'",
     "newcomment": "'{2}' ha comentado '{0}' en respuesta al post '{1}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
-    "markedAllAsRead": ""
+    "markedAllAsRead": "",
+    "subject": "Nueva atividad",
+    "buttonLink": "Presiona aqui para abrir-lo"
   },
   "user": {
     "profileView": "Tu Perfil",

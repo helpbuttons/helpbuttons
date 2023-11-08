@@ -94,7 +94,9 @@
     "newpost": "There is a new post '{0}' in your button '{1}' by '{2}'",
     "newcomment": "'{2}' commented '{0}' answer to the post '{1}'",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
-    "markedAllAsRead": "Notifications marked as read"
+    "markedAllAsRead": "Notifications marked as read",
+    "subject": "New activity",
+    "buttonLink": "Click here to open"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",

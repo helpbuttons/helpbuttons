@@ -22,12 +22,6 @@ export class MailConsumer {
 
   @Process()
   async sendMail(job: Job<MailJob>) {
-    // const {to, cc, bcc, subject, template, context} = job.data;
-    // console.log('sending mail.. queue...')
-    console.log(job.data)
-    // console.log(job)
-    // console.log(to, cc, bcc, subject, template, context )
-    // return true;
     if (!GlobalVarHelper.smtpAvailable) {
       console.log(
         'Error when smtp not working. mail could not be sent',
@@ -38,21 +32,23 @@ export class MailConsumer {
     return this.networkService
       .findDefaultNetwork()
       .then((network) => {
-        const vars = {
-          ...context,
-          network: network,
-          hostName: config.hostName,
-          to: to,
-        };
+        let from  = config.from
+        try {
+          from = network.name + config.from.slice(config.from.indexOf('<'))
+        }catch(err)
+        {
+          console.log('could not add network name to from')
+        }
+
         return this.mailerService
           .sendMail({
             to,
             cc,
             bcc,
-            from: config.from,
-            subject: `${subject} in ${network.name}`,
+            from: from,
+            subject: subject,
             template,
-            context: vars,
+            context: {...context, hostName: config.hostName},
           })
           .then((mail) => {
             console.log(

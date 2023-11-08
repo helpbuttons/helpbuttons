@@ -82,19 +82,26 @@ export class MailService {
     })
   }
 
-  sendActivity({
+  sendWithLink({
     to,
     content,
     subject,
-    link
+    link,
+    linkCaption
   }) {
     return this.sendMail({
-      to,
+      to: to,
       cc: null,
       bcc: null,
       subject: subject,
-      template: 'new-activity',
-      context: { content, link },
+      template: 'mail',
+      context: {
+        subject: subject,
+        content: content,
+        link: link, 
+        linkCaption: linkCaption,
+        to: to,
+      },
     });
   }
 }

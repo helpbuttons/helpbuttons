@@ -9,6 +9,7 @@ import { ActivityEventName } from '@src/shared/types/activity.list';
 import { OnEvent } from '@nestjs/event-emitter';
 import translate from '@src/shared/helpers/i18n.helper';
 import { configFileName } from '@src/shared/helpers/config-name.const';
+import { getUrl } from '@src/shared/helpers/mail.helper';
 const config = require(`../../..${configFileName}`);
 
 @Injectable()
@@ -131,25 +132,19 @@ export class UserService {
         return await this.findByUsername(username);
       }),
     );
-    users = users.filter((user) => user.receiveNotifications)
-    const mailsToSend = users.map((user) => {
-      const messageContent = translate(
-        user.locale,
-        'activities.newpost',
-        [payload.data.message, payload.data.button.title, payload.data.author.username],
-      );
-      return { message: messageContent, email: user.email };
-    });
-    
-    const buttonUrl: string = `${config.hostName}/ButtonFile/${payload.data.button.id}`;
-
-    mailsToSend.map((mailToSend) => {
-      this.mailService.sendActivity({
-        content: mailToSend.message,
-        link: buttonUrl,
-        to: mailToSend.email,
-        subject: 'New activity'
-      });
+    users = users.filter((user) => user?.receiveNotifications)
+    users.map((user) => {
+      this.mailService.sendWithLink( { 
+        content: translate(
+          user.locale,
+          'activities.newcomment',
+          [payload.data.message, payload.data.button.title, payload.data.author.username],
+        ),
+        to: user.email,
+        link: getUrl(user.locale,`/ButtonFile/${payload.data.button.id}`),
+        linkCaption: translate(user.locale, 'activities.buttonLink'), 
+        subject: translate(user.locale, 'activities.subject')
+      })
     });
   }
 
@@ -173,24 +168,18 @@ export class UserService {
     .execute();
 
     
-    const mailsToSend = users.map((user) => {
-      const messageContent = translate(
-        user.locale,
-        'activities.newpost',
-        [payload.data.message, payload.data.button.title, payload.data.author.username],
-      );
-      const locale = user.locale == 'en' ? '' : `/${user.locale}` 
-
-      return { message: messageContent, email: user.email, buttonUrl: `${config.hostName}${locale}/ButtonFile/${payload.data.button.id}` };
-    });
-    
-    mailsToSend.map((mailToSend) => {
-      this.mailService.sendActivity({
-        content: mailToSend.message,
-        link: mailToSend.buttonUrl,
-        to: mailToSend.email,
-        subject: 'New activity'
-      });
+    users.map((user) => {
+      this.mailService.sendWithLink( { 
+        content: translate(
+          user.locale,
+          'activities.newpost',
+          [payload.data.message, payload.data.button.title, payload.data.author.username],
+        ),
+        to: user.email,
+        link: getUrl(user.locale,`/ButtonFile/${payload.data.button.id}`),
+        linkCaption: translate(user.locale, 'activities.buttonLink'), 
+        subject: translate(user.locale, 'activities.subject')
+      })
     });
   }
 
