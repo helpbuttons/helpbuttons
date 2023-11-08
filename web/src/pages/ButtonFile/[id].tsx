@@ -12,6 +12,7 @@ import Router from 'next/router';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
+import router from 'next/router';
 export default function ButtonFile({
   metadata,
   currentButton,
@@ -33,7 +34,7 @@ export default function ButtonFile({
             <Popup
             sectionClass=''
             title={t('button.title')}
-            linkFwd="/Activity"
+            onCloseClicked={() => router.back()}
             >
 
                 {buttonTypes?.length > 0 && (

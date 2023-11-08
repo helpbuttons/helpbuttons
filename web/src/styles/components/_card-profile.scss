@@ -157,6 +157,14 @@ $avatar-margin: $padding-big;
   margin-bottom: 0.5rem;
 }
 
+.card-profile__button-list {
+
+  margin-top: $margin-small;
+
+
+
+}
+
 @media #{$breakpoints-xlarge} {
 
   .card-profile__container {

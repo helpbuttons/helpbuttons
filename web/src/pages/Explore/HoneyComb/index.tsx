@@ -87,13 +87,6 @@ function HoneyComb({ router, selectedNetwork }) {
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
   const [showMap, toggleShowMap] = useToggle(true);
 
-  const showMapCaption = showMap
-    ? 'explore.hideMap'
-    : 'explore.showMap';
-
-  const handleChangeShowMap = (event) => {
-    toggleShowMap(event.target.value);
-  };
 
   useExploreSettings({
     exploreSettings,
@@ -171,7 +164,7 @@ function HoneyComb({ router, selectedNetwork }) {
           </ShowDesktopOnly>
         </div>
 
-        {!showFiltersForm && (
+        {/* {!showFiltersForm && (
           <ShowMobileOnly>
             <div className="list__show-map-button">
               <Btn
@@ -184,7 +177,7 @@ function HoneyComb({ router, selectedNetwork }) {
               />
             </div>
           </ShowMobileOnly>
-        )}
+        )} */}
 
         <LoadabledComponent
           loading={exploreSettings.loading && !selectedNetwork}
@@ -213,6 +206,7 @@ function HoneyComb({ router, selectedNetwork }) {
               buttons={exploreMapState.listButtons}
               showLeftColumn={showLeftColumn}
               showMap={showMap}
+              toggleShowMap={toggleShowMap}
               onLeftColumnToggle={toggleShowLeftColumn}
             />
           </div>
@@ -630,7 +624,14 @@ function useHexagonMap({
 
 const orderByClosestToCenter = (center, buttons) => {
   function buttonDistance(buttonA, buttonB) {
-    return buttonA.distance - buttonB.distance;
+    if(buttonA.distance < buttonB.distance)
+    {
+      return -1;
+    }else if(buttonA.distance == buttonB.distance)
+    {
+      return 0;
+    }
+    return 1
   }
 
   if (!center) {
@@ -651,9 +652,16 @@ const orderByClosestToCenter = (center, buttons) => {
 };
 
 export const orderByCreated = (buttons) => {
-  return buttons.sort(
-    (buttonA, buttonB) => buttonA.created_at < buttonB.created_at,
-  );
+  return [...buttons].sort(
+    (buttonA, buttonB) => {
+      if(buttonA.created_at < buttonB.created_at)
+      {
+        return 1
+      }else if (buttonA.created_at == buttonB.created_at){
+        return 0
+      }
+      return -1
+    });
 };
 
 const orderBy = (buttons, orderBy, center) => {

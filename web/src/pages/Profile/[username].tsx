@@ -84,9 +84,9 @@ export default function Profile() {
               <LinkAdminButton adminButtonId={adminButtonId} />
             )}
             {userButtons && 
-            <>
-              <ContentList buttons={userButtons.slice(0, sliceSize)} buttonTypes={buttonTypes}/>
-            </>}
+            <div className='card-profile__button-list'>
+              <ContentList buttons={userButtons.slice(0, sliceSize)} buttonTypes={buttonTypes} linkToPopup={false}/>
+            </div>}
           </Popup>
     </>
   );
