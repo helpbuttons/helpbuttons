@@ -6,12 +6,13 @@ export function DropdownField({
   onChange = (value) => {},
   defaultSelected = null,
   explain = '',
+  className = 'dropdown-select__trigger',
 }) {
   return (
-    <div className="form__field">
-      <label className="form__label"> {label}</label>
-      <p className="form__explain">{explain}</p>
-      <Dropdown options={options} onChange={onChange} defaultSelected={defaultSelected}/>
+    <div className='form__field'>
+      {label && <label className="form__label"> {label}</label>}
+      {explain && <p className="form__explain">{explain}</p>}
+      <Dropdown className={className} options={options} onChange={onChange} defaultSelected={defaultSelected}/>
     </div>
   );
 }

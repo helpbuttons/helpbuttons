@@ -11,7 +11,7 @@ import { IoClose } from 'react-icons/io5';
 import FieldError from '../FieldError';
 import t from 'i18n';
 
-export const FieldImageUpload = React.forwardRef(({ name, label, subtitle, width = 100, height = 100, alt = "", validationError, control, setValue }, ref) => {
+export const FieldImageUpload = React.forwardRef(({ name, text, label, explain, subtitle, width = 100, height = 100, alt = "", validationError, control, setValue }, ref) => {
 
   const [image, setImage] = useState(null)
   const onChange = (imageList, addUpdateIndex) => {
@@ -31,6 +31,8 @@ export const FieldImageUpload = React.forwardRef(({ name, label, subtitle, width
   return (
     <>
       <div className="form__field">
+        <div className='form__label'>{label}</div>
+        <div className='form__explain'>{explain}</div>
         <ImageUploading
           value={image}
           onChange={onChange}
@@ -49,7 +51,7 @@ export const FieldImageUpload = React.forwardRef(({ name, label, subtitle, width
                   onImageUpload();
                 }}
               >
-                {label}
+                {text}
               </label>
               <div className="form__input-subtitle">
                       <div className="form__input-subtitle-side">

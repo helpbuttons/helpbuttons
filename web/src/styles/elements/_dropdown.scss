@@ -2,7 +2,7 @@ $dropdown-dropdown-border-radius: $border-radius-basic;
 $padding-dropdown-options-top: 200px;
 $dropdown-height: $form-input-height;
 $dropdown-width: auto;
-$dropdown-max-width: 10rem;
+$dropdown-max-width: 30rem;
 
 .dropdown__dropdown {
 
@@ -77,7 +77,6 @@ $dropdown-max-width: 10rem;
   color: $color-black;
   transition: all 0.2s ease-in-out;
   font-size: $font-size-general;
-
 
   &:hover {
     cursor: pointer;
@@ -188,9 +187,9 @@ $dropdown-max-width: 10rem;
   .dropdown__dropdown-trigger {
 
     display: flex;
-    max-width: $dropdown-max-width;
+    max-width: auto;
     min-width: $dropdown-width;
-    margin-left: $margin-small;
+    // margin-left: $margin-small;
 
   }
 
