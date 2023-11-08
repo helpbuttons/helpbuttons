@@ -91,7 +91,7 @@
     "configureNetwork": "Configura tu Red",
     "buttonTemplateLabel": "Elige tus tipos de botón",
     "buttonTemplatePlaceHolder": "Escribe el nombre de tu nuevo tipo",
-    "contactAdmin": "Contatar el administrador",
+    "contactAdmin": "Contactar al administrador",
     "priceFieldAdd": "Añadir precio",
     "moderationList": "Moderacion",
     "createSupportButton": "Crea tu boton de soporte para tu red",
@@ -184,7 +184,7 @@
     "whereLabel": "Where",
     "whenLabel": "Cuándo?",
     "whenExplain": "Filtra los eventos por fecha",
-    "byDate": "Por fecha de creacion",
+    "byDate": "Últimos creados",
     "byPrice": "Por precio",
     "orderBy": "Ordenar",
     "priceExplain": "Filtrar por precio",
@@ -315,5 +315,13 @@
   },
   "customFields": {
     "priceLabel": "Precio ({0})"
+  },
+  "email": {
+    "loginTokenContent": "Bienvenido a {0}",
+    "loginTokenSubject": "Solicitaste un inicio de sesión con un solo clic",
+    "loginTokenLinkCaption": "Haga clic aquí para acceder a su cuenta",
+    "activateContent": "Bienvenido a {0}",
+    "activateSubject": "Por favor activa tu cuenta",
+    "activateLinkCaption": "Haga clic aquí para activar su cuenta"
   }
 }

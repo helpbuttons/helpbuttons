@@ -311,5 +311,13 @@
   },
   "customFields": {
     "priceLabel": "Price ({0})"
+  },
+  "email": {
+    "loginTokenContent": "Welcome to {0}",
+    "loginTokenSubject": "You requested a one-click login",
+    "loginTokenLinkCaption": "Click here to login to your account",
+    "activateContent": "Welcome to {0}",
+    "activateSubject": "Please activate your account",
+    "activateLinkCaption": "Click here to activate your account"
   }
 }
