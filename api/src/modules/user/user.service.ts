@@ -9,7 +9,6 @@ import { ActivityEventName } from '@src/shared/types/activity.list';
 import { OnEvent } from '@nestjs/event-emitter';
 import translate from '@src/shared/helpers/i18n.helper';
 import { configFileName } from '@src/shared/helpers/config-name.const';
-import { getUrl } from '@src/shared/helpers/mail.helper';
 const config = require(`../../..${configFileName}`);
 
 @Injectable()
@@ -132,54 +131,25 @@ export class UserService {
         return await this.findByUsername(username);
       }),
     );
-    users = users.filter((user) => user?.receiveNotifications)
-    users.map((user) => {
-      this.mailService.sendWithLink( { 
-        content: translate(
-          user.locale,
-          'activities.newcomment',
-          [payload.data.message, payload.data.button.title, payload.data.author.username],
-        ),
-        to: user.email,
-        link: getUrl(user.locale,`/ButtonFile/${payload.data.button.id}`),
-        linkCaption: translate(user.locale, 'email.buttonLinkCaption'), 
-        subject: translate(user.locale, 'email.activitySubject')
-      })
+    users = users.filter((user) => user.receiveNotifications)
+    const mailsToSend = users.map((user) => {
+      const messageContent = translate(
+        user.locale,
+        'activities.newpost',
+        [payload.data.message, payload.data.button.title, payload.data.author.username],
+      );
+      return { message: messageContent, email: user.email };
     });
-  }
-
-
-  @OnEvent(ActivityEventName.NewPost)
-  async notifyFollowers(payload: any) {
-    const buttonFollowers = payload.data.button.followedBy;
-    if(buttonFollowers.length < 1)
-    {
-      return;
-    }
-
-    const users = await this.userRepository
-    .createQueryBuilder('user')
-    .select('email,locale')
-    .where(
-      `id IN (:...buttonFollowers) AND "receiveNotifications" = true `,
-      { buttonFollowers: buttonFollowers },
-    )
-    .limit(1000)
-    .execute();
-
     
-    users.map((user) => {
-      this.mailService.sendWithLink( { 
-        content: translate(
-          user.locale,
-          'activities.newpost',
-          [payload.data.message, payload.data.button.title, payload.data.author.username],
-        ),
-        to: user.email,
-        link: getUrl(user.locale,`/ButtonFile/${payload.data.button.id}`),
-        linkCaption: translate(user.locale, 'email.buttonLinkCaption'), 
-        subject: translate(user.locale, 'email.activitySubject')
-      })
+    const buttonUrl: string = `${config.hostName}/ButtonFile/${payload.data.button.id}`;
+
+    mailsToSend.map((mailToSend) => {
+      this.mailService.sendActivity({
+        content: mailToSend.message,
+        link: buttonUrl,
+        to: mailToSend.email,
+        subject: 'New activity'
+      });
     });
   }
 

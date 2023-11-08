@@ -11,7 +11,7 @@
     "build": "nest build --path tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "dev": "yarn translations && nest start -p tsconfig.json --watch --preserveWatchOutput",
+    "dev": "nest start -p tsconfig.json --watch --preserveWatchOutput",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -29,13 +29,12 @@
     "migration:revert": "npm run typeorm migration:revert",
     "schema:drop": "yarn typeorm schema:drop",
     "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.ts",
-    "translations": "cp -r ../web/public/locales ."
+    "translations": "cp -r ../web/public/locales . && cp -r ../web/src/i18n/ ."
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
     "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/axios": "^3.0.0",
-    "@nestjs/bull": "^10.0.1",
     "@nestjs/cache-manager": "^2.1.0",
     "@nestjs/common": "^9.4.0",
     "@nestjs/config": "^2.0.0",
@@ -49,7 +48,6 @@
     "@nestjs/typeorm": "8.0.2",
     "axios": "^1.5.0",
     "bcrypt": "^5.1.0",
-    "bull": "^4.11.4",
     "cache-manager": "^5.2.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",

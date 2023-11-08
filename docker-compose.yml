@@ -17,9 +17,6 @@ services:
     volumes:
       - config:/app/config/:rw
       - uploads:/app/uploads
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
     depends_on:
       - db
     networks:
@@ -48,18 +45,6 @@ services:
     # ports: 
     #  - 5432:5432
 
-  redis:
-    restart: always
-    image: redis:7-alpine
-    networks:
-      - internal_network
-    #  - external_network
-    healthcheck:
-      test: ['CMD', 'redis-cli', 'ping']
-    volumes:
-      - redis:/data
-    #ports: 
-    # - 6379:6379
 
 networks:
   external_network:
@@ -70,4 +55,3 @@ volumes:
   db:
   uploads:
   config:
-  redis:

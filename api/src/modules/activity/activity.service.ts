@@ -5,12 +5,15 @@ import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { Repository } from 'typeorm';
 import { Activity } from './activity.entity';
+import { MailService } from '../mail/mail.service';
+import translate from '../../shared/helpers/i18n.helper';
 
 @Injectable()
 export class ActivityService {
   constructor(
     @InjectRepository(Activity)
     private readonly activityRepository: Repository<Activity>,
+    private mailService: MailService
   ) {}
 
   @OnEvent(ActivityEventName.NewPost)

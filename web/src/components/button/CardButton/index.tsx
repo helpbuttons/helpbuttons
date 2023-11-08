@@ -12,11 +12,7 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 import router from 'next/router';
 import { useEffect, useState } from 'react';
-import {
-  getShareLink,
-  makeImageUrl,
-  readableDistance,
-} from 'shared/sys.helper';
+import { getShareLink, makeImageUrl, readableDistance } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
@@ -31,8 +27,6 @@ import {
   CardSubmenu,
   CardSubmenuOption,
 } from 'components/card/CardSubmenu';
-import { FollowButton, UnfollowButton } from 'state/Follow';
-import { alertService } from 'services/Alert';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -99,9 +93,9 @@ export function CardButtonHeadMedium({ button, buttonType }) {
       </div>
 
       <div className="card-button__title">{button.title}</div>
-      <div className="card-button-list__paragraph--small-card card-button-list__paragraph">
-        <p>{button.description}</p>
-      </div>
+        <div className="card-button-list__paragraph--small-card card-button-list__paragraph">
+          <p>{button.description}</p>
+        </div>
       {/* <div className="card-button__hashtags">
         {button.tags.map((tag, idx) => {
           return (
@@ -113,17 +107,11 @@ export function CardButtonHeadMedium({ button, buttonType }) {
       </div> */}
       {buttonType.customFields && buttonType.customFields.length > 0 && (
         <>
-          <CardButtonCustomFields
-            customFields={buttonType.customFields}
-            button={button}
-          />
+          <CardButtonCustomFields customFields={buttonType.customFields} button={button}/>
         </>
       )}
       <div className="card-button__city card-button__everywhere ">
-        {button.address}{' '}
-        {button?.distance && (
-          <> - {readableDistance(button?.distance)}</>
-        )}
+        {button.address} {button?.distance && <> - {readableDistance(button?.distance)}</>}
       </div>
     </div>
   );
@@ -186,36 +174,6 @@ function CardButtonSubmenu({ button }) {
       });
     }
   }, [config]);
-
-  const followButton = (button) => {
-    if (!loggedInUser) {
-      return;
-    }
-
-    if(loggedInUser.id == button.owner.id)
-    {
-      return;
-    }
-    const index = button.followedBy.indexOf(loggedInUser.id);
-    if (index < 0) {
-      return (
-        <CardSubmenuOption
-          onClick={() => {
-            store.emit(new FollowButton(button.id, () => alertService.success('following'), () => {alertService.warn('error following')}))
-          }}
-          label={t('button.follow')}
-        />
-      );
-    }
-    return (
-      <CardSubmenuOption
-        onClick={() => {
-          store.emit(new UnfollowButton(button.id, () => alertService.success('unfollowing'), () => {alertService.warn('error unfollowing')}))
-        }}
-        label={t('button.unfollow')}
-      />
-    );
-  };
   return (
     <CardSubmenu>
       <CardSubmenuOption
@@ -224,7 +182,6 @@ function CardButtonSubmenu({ button }) {
         }}
         label={t('button.copy')}
       />
-      {followButton(button)}
       {(isButtonOwner(loggedInUser, button) ||
         isAdmin(loggedInUser)) && (
         <>
@@ -236,7 +193,7 @@ function CardButtonSubmenu({ button }) {
           />
           <CardSubmenuOption
             onClick={() => {
-              router.push(`/ButtonRemove/${button.id}`);
+              router.push(`/ButtonRemove/${button.id}`)
             }}
             label={t('button.delete')}
           />
@@ -246,17 +203,15 @@ function CardButtonSubmenu({ button }) {
   );
 }
 export function CardButtonHeadBig({ button, buttonTypes }) {
-  const { cssColor, caption, customFields } = buttonTypes.find(
-    (buttonType) => {
-      return buttonType.name === button.type;
-    },
-  );
+  const { cssColor, caption, customFields} = buttonTypes.find((buttonType) => {
+    return buttonType.name === button.type;
+  });
   const loggedInUser = useRef(
     store,
     (state: GlobalState) => state.loggedInUser,
     false,
   );
-  const [showMap, setShowMap] = useState(false);
+  const [showMap, setShowMap] = useState(false)
   const profileHref = isButtonOwner(loggedInUser, button)
     ? `/Profile/`
     : `/Profile/${button.owner.username}`;
@@ -323,30 +278,17 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
           })}
         </div>
         {customFields && customFields.length > 0 && (
-          <>
-            <CardButtonCustomFields
-              customFields={customFields}
-              button={button}
-            />
-          </>
-        )}
+        <>
+          <CardButtonCustomFields customFields={customFields} button={button}/>
+        </>
+      )}
         <div className="card-button__locDate">
-          <div
-            className="card-button__city card-button__everywhere"
-            onClick={() => setShowMap(() => !showMap)}
-          >
-            {button.address}
-          </div>
+            <div className="card-button__city card-button__everywhere" onClick={() => setShowMap(() => !showMap)}>
+              {button.address}
+            </div>
         </div>
-        {!button.hideAddress && showMap && (
-          <MarkerSelectorMap
-            markerPosition={[button.latitude, button.longitude]}
-            setMarkerPosition={() => {}}
-            zoom={10}
-            markerColor={cssColor}
-            markerImage={button.image}
-            markerCaption={button.title}
-          />
+        {(!button.hideAddress && showMap) && (
+        <MarkerSelectorMap markerPosition={[button.latitude, button.longitude]} setMarkerPosition={() => {}} zoom={10} markerColor={cssColor} markerImage={button.image} markerCaption={button.title}/>
         )}
       </div>
     </>
@@ -378,8 +320,9 @@ export function CardButtonHeadActions({ button }) {
   );
 }
 export function CardButtonImages({ button }) {
-  const images = button.images;
 
+  const images = button.images;
+  
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const next = () => {
@@ -387,16 +330,14 @@ export function CardButtonImages({ button }) {
   };
 
   const prev = () => {
-    setCurrentIndex(
-      (currentIndex - 1 + images.length) % images.length,
-    );
+    setCurrentIndex((currentIndex - 1 + images.length) % images.length);
   };
 
   return (
     <>
       {button.images && (
         <div className="card-button__picture">
-          {button.images.length > 1 && (
+          {button.images.length > 1 && 
             <div className="card-button__picture-nav">
               <div className="arrow btn-circle__icon" onClick={prev}>
                 <IoChevronBackOutline />
@@ -405,25 +346,24 @@ export function CardButtonImages({ button }) {
                 <IoChevronForwardOutline />
               </div>
             </div>
-          )}
+          }
           {images.map((image, idx) => (
-            <div
-              key={idx}
-              className={
-                images[currentIndex] === image ? 'show' : 'hide'
-              }
-            >
-              <ImageWrapper
-                imageType={ImageType.buttonCard}
-                src={makeImageUrl(image)}
-                alt={button.description}
-              />
-            </div>
-          ))}
-        </div>
-      )}
-    </>
-  );
+          <div
+            key={idx}
+            className={
+              images[currentIndex] === image ? 'show' : 'hide'
+            }
+          >
+          <ImageWrapper
+            imageType={ImageType.buttonCard}
+            src={makeImageUrl(image)}
+            alt={button.description}
+          />
+          </div>
+      ))}
+      </div>
+  )}
+  </>)
 }
 export function CardButtonOptions() {
   return (

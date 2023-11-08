@@ -58,12 +58,4 @@ export class ButtonService {
   public static findAdminButton(): Observable<any> {
     return httpService.get<Button>("/buttons/findAdminButton/")
   }
-
-  public static follow(id: any): Observable<any> {
-    return httpService.get<any>(`buttons/follow/${id}`);
-  }
-
-  public static unfollow(id: any): Observable<any> {
-    return httpService.get<any>(`buttons/unfollow/${id}`);
-  }
 }

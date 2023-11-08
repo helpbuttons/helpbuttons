@@ -145,19 +145,17 @@ export class AuthService {
   }
 
   private sendLoginToken(user: User, sendActivation = false) {
-    const activationUrl: string = `/LoginClick/${user.verificationToken}`;
+    const activationUrl: string = `${config.hostName}/LoginClick/${user.verificationToken}`;
 
     if (!sendActivation) {
       this.mailService.sendLoginTokenEmail({
         to: user.email,
         activationUrl,
-        locale: user.locale
       });
     }else {
       this.mailService.sendActivationEmail({
         to: user.email,
         activationUrl,
-        locale: user.locale
       });
     }
   }

@@ -133,26 +133,6 @@ export class ButtonController {
     return await this.buttonService.findAdminButton();
   }
 
-  @OnlyRegistered()
-  @Get('/follow/:buttonId')
-  async follow(
-    @Param('buttonId') buttonId: string,
-    @CurrentUser() user: User,
-  )
-  {
-    return this.buttonService.follow(buttonId, user.id);
-  }
-
-  @OnlyRegistered()
-  @Get('/unfollow/:buttonId')
-  async unfollow(
-    @Param('buttonId') buttonId: string,
-    @CurrentUser() user: User,
-  )
-  {
-    return this.buttonService.unfollow(buttonId, user.id);
-  }
-
   @AllowGuest()
   @Get('findByOwner/:userId')
   async findByOwner(@Param('userId') userId: string) {
