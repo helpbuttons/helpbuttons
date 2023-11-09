@@ -14,9 +14,9 @@ export function HbTiles(
   if (mapType == HbMapTiles.OSM) {
     return osm(x,y,z)
   }
-  return `https://stamen-tiles.a.ssl.fastly.net/${mapType}/${z}/${x}/${y}${
-    dpr >= 2 ? '@2x' : ''
-  }.png`;
+    return `//tiles.stadiamaps.com/tiles/stamen_${mapType}/${z}/${x}/${y}${
+      dpr >= 2 ? '@2x' : ''
+    }.jpg`;
 }
 
 export function osm(
