@@ -190,7 +190,7 @@
     "price": "Precio",
     "minPricePlaceholder": "Desde",
     "maxPriceLabel": "Hasta",
-    "whereLabel": "Dónde",
+    "whereLabel": "Dónde ",
     "whenLabel": "Cuándo?",
     "whenExplain": "Filtra los eventos por fecha",
     "byDate": "Últimos creados",

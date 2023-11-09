@@ -335,7 +335,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             className="card-button__city card-button__everywhere"
             onClick={() => setShowMap(() => !showMap)}
           >
-            {button.address}
+            {button.address}{!button.hideAddress && "(Show)"}
           </div>
         </div>
         {!button.hideAddress && showMap && (
