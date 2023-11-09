@@ -46,20 +46,6 @@ export class AuthService {
   ) {}
 
   async signup(signupUserDto: SignupRequestDto) {
-    try{
-      const selectedNetwork = await this.networkService.findDefaultNetwork();
-
-      if(selectedNetwork.inviteOnly)
-      {
-        const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
-        if(!validInviteCode)
-        {
-          throw new CustomHttpException(ErrorName.inviteOnly)
-        }
-      }
-    }catch(error){
-        console.error('network not found?')
-    }
     const verificationToken = publicNanoidGenerator();
     let emailVerified = false;
     let accessToken = {};
@@ -68,6 +54,21 @@ export class AuthService {
     const userCount = await this.userService.userCount();
     if (userCount < 1) {
       userRole = Role.admin;
+    }else{
+      try{
+        const selectedNetwork = await this.networkService.findDefaultNetwork();
+  
+        if(selectedNetwork.inviteOnly)
+        {
+          const validInviteCode = await this.inviteService.isInviteCodeValid(signupUserDto.inviteCode)
+          if(!validInviteCode)
+          {
+            throw new CustomHttpException(ErrorName.inviteOnly)
+          }
+        }
+      }catch(error){
+          console.error('network not found?')
+      }
     }
 
     const newUserDto = {
