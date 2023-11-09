@@ -262,7 +262,6 @@ export function AdvancedFiltersSortDropDown({className, label, orderBy, setOrder
         ) : (
           <Dropdown
           className={className}
-          label={label}
           options={dropdownOptions}
           onChange={(value) => {setOrderBy(value)}}
           defaultSelected={orderBy}

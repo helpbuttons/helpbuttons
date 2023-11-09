@@ -80,6 +80,10 @@ margin: $margin-medium 0;
   margin-bottom: $margin-big;
 }
 
+.form__field--noMargin {
+  margin-bottom: 0;
+}
+
 .form__field--location {
 
   display: flex;

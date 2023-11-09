@@ -17,7 +17,6 @@ export function DropdownField({
   );
 }
 export function Dropdown({
-  label = null,
   options,
   onChange = (value) => {},
   defaultSelected = null,
@@ -34,10 +33,6 @@ export function Dropdown({
 
   return (
     <>
-      {label && <label className="form__label"> {label}</label>}
-      {explain && 
-            <p className="form__explain">{explain}</p>
-      }
       <select
         className={className}
         onChange={handleChange}
@@ -45,7 +40,7 @@ export function Dropdown({
       >
         {options.map((option, index) => (
           <option
-            className="dropdown-select__option"
+            className="dropdown-seolect__option"
             key={index}
             value={option.value}
           >

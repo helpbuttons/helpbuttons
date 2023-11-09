@@ -7,7 +7,8 @@ interface IFieldText {
     name: string,
     validationError: any,
     classNameInput?: string,
-    placeholder?: string   
+    placeholder?: string,
+    multiInput: boolean,
 }
 
 const FieldText = React.forwardRef(({
@@ -18,6 +19,7 @@ const FieldText = React.forwardRef(({
     onChange,
     onBlur,
     validationError,
+    multiInput=false,
     value,
     explain,
     extraMessage,
@@ -33,7 +35,12 @@ const FieldText = React.forwardRef(({
         } 
     }
     return (
-        <div className="form__field">
+        <div 
+            className={
+                'form__field ' +
+                (multiInput ? 'form__field--noMargin' : '')
+                }
+        >
             {label && <label className="form__label">{label}</label>}
             {explain && 
                 <p className="form__explain">{explain}</p>

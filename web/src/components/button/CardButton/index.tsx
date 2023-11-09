@@ -335,10 +335,10 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             className="card-button__city card-button__everywhere"
             onClick={() => setShowMap(() => !showMap)}
           >
-            {button.address}{!button.hideAddress && "(Show)"}
+            {button.address}
           </div>
         </div>
-        {!button.hideAddress && showMap && (
+        {!button.hideAddress && (
           <MarkerSelectorMap
             markerPosition={[button.latitude, button.longitude]}
             setMarkerPosition={() => {}}
