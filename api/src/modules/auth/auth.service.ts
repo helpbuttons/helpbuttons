@@ -120,7 +120,8 @@ export class AuthService {
         );
       })
       .then((user) => {
-        if (!newUserDto.emailVerified) {
+        if (!newUserDto.emailVerified && userCount > 1) {
+          // only send login token if not creating admin
           this.sendLoginToken(newUserDto, true);
         }
         return user;
