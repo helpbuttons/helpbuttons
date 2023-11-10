@@ -33,15 +33,6 @@ export function MapTileSelector({ tileType, setMapTile }) {
         onChange={(value) => {setMapTile(value)}}
         defaultSelected={tileType}
       />
-      <DropdownField
-        options={[
-          { value: 'en', name: 'English' },
-          { value: 'es', name: 'Español' },
-        ]}
-        defaultSelected={defaultValue}
-        onChange={onChange}
-        label={t('user.pickLanguageLabel')}
-      />
     </div>
   );
 }

@@ -104,7 +104,7 @@ export class ReverseGeo implements WatchEvent {
   }
 }
 
-export class CreateButton implements WatchEvent {
+export class CreateButton implements WatchEvent, UpdateEvent {
   public constructor(
     private button: Button,
     private networkId: string,
@@ -118,6 +118,14 @@ export class CreateButton implements WatchEvent {
       }),
       catchError((error) => handleError(this.onError, error)),
     );
+  }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.boundsFilteredButtons = []
+      newState.explore.map.cachedHexagons = []
+      newState.explore.map.listButtons = []
+    });
   }
 }
 

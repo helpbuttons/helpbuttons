@@ -36,9 +36,7 @@ export default function HexagonExploreMap({
   };
 
   const onMapCLick =() => {
-    console.log('map clicked')
     setHexagonClicked( () => null ) 
-
   };
 
   useEffect(() => {

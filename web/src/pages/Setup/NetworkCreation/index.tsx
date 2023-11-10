@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from 'shared/setupSteps';
+import { getLocale } from 'shared/sys.helper';
 import { Role } from 'shared/types/roles';
 import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
 import { useRef } from 'store/Store';
@@ -68,12 +69,18 @@ function NetworkCreation() {
           inviteOnly: data.inviteOnly,
           currency: data.currency,
           nomeclature: data.nomeclature,
-          nomeclaturePlural: data.nomeclaturePlural
+          nomeclaturePlural: data.nomeclaturePlural,
+          locale: data.locale
         },
         () => {
           const onComplete = () => {
             alertService.info(t('common.saveSuccess', ['instance']));
-            router.replace('/HomeInfo');
+            let url = '/HomeInfo';
+            if(getLocale() !=  data.locale )
+            {
+              url = `/${data.locale}/${url}`
+            }
+            router.push(url)
           };
           store.emit(
             new FetchDefaultNetwork(onComplete, (error) => {
