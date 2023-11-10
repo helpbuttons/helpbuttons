@@ -224,20 +224,9 @@ function MyApp({ Component, pageProps }) {
   }, [config, selectedNetwork]);
 
   const pageName = path.split('/')[1];
-  let [networkBackgroundColor, setNetworkBackgroundColor] =
-    useState('#FFDD02');
-  let [networkTextColor, setNetworkTextColor] = useState('black');
   const { pathname, asPath, query, locale } = useRouter()
   
   useEffect(() => {
-    if (selectedNetwork?.backgroundColor) {
-      setNetworkBackgroundColor(
-        () => selectedNetwork.backgroundColor,
-      );
-    }
-    if (selectedNetwork?.textColor) {
-      setNetworkTextColor(() => selectedNetwork.textColor);
-    }
     if (selectedNetwork)
     {
       if(!loggedInUser && getLocale() != selectedNetwork.locale)
@@ -258,12 +247,13 @@ function MyApp({ Component, pageProps }) {
         <meta name="commit" content={version.git} />
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
+      {selectedNetwork && 
       <div
         className={`${user ? '' : 'index__container'}`}
         style={
           {
-            '--network-background-color': networkBackgroundColor,
-            '--network-text-color': networkTextColor,
+            '--network-background-color': selectedNetwork.backgroundColor,
+            '--network-text-color': selectedNetwork.textColor,
           } as React.CSSProperties
         }
       >
@@ -275,6 +265,17 @@ function MyApp({ Component, pageProps }) {
           <NavBottom loggedInUser={loggedInUser}/>
             </div>
       </div>
+      }
+      {(isSetup && !selectedNetwork) &&
+        <div
+          className={`${user ? '' : 'index__container'}`}
+        >
+        <Alert />
+        <div className="index__content">
+              <Component {...pageProps} />
+            </div>
+        </div>
+      }
     </>
   );
 }
