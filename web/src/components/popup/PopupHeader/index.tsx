@@ -4,7 +4,7 @@ import { Link } from 'elements/Link';
 import Router from 'next/router';
 
 
-export default function PopupHeader({children, linkBack = null,linkFwd = null, onCloseClicked = () => {}}) {
+export default function PopupHeader({children, linkBack = null,linkFwd = null, onCloseClicked = null}) {
   const onCloseClick = () =>
   {
     if(linkFwd){

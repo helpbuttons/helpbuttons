@@ -83,11 +83,11 @@ export default function Signup() {
     }
   };
 
-  const onSuccess = () => {
+  const onSuccess = (userData) => {
     const returnUrl: string = router.query.returnUrl
       ? router.query.returnUrl.toString()
       : '/ProfileEdit';
-    store.emit(new NavigateTo(returnUrl));
+    router.push(returnUrl, null, { locale: userData.locale })
   };
 
   const onError = (error) => {

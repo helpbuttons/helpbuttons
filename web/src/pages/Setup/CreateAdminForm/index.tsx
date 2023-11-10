@@ -8,13 +8,14 @@ import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { SetupDtoOut } from 'services/Setup/config.type';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { CreateAdmin, GetConfig } from 'state/Setup';
 import { useRef } from 'store/Store';
 import { SetupSteps } from '../../../shared/setupSteps';
 import t from 'i18n';
 import { useEffect, useState } from 'react';
+import { getLocale } from 'shared/sys.helper';
+import { SetupDtoOut } from 'shared/entities/setup.entity';
 
 export default CreateAdminForm;
 
@@ -95,12 +96,16 @@ function CreateAdminForm() {
             password: data.password,
             name: '',
             avatar: data.avatar,
-            locale: data.locale
+            locale: data.locale,
+            inviteCode: ''
           },
           () => {
-            router.push({
-              pathname: SetupSteps.FIRST_OPEN,
-            });
+            let url = `${SetupSteps.FIRST_OPEN}`;
+            if(getLocale() !=  data.locale )
+            {
+              url = `/${data.locale}/${SetupSteps.FIRST_OPEN}`
+            }
+            router.push(url)
           },
           (err) => {
             if (err?.statusCode === HttpStatus.CONFLICT) {
@@ -119,7 +124,6 @@ function CreateAdminForm() {
     <>
       <Popup
         title={t('setup.createAdminTitle')}
-        linkFwd="/Setup/NetworkCreation"
       >
         <Form
           onSubmit={handleSubmit(onSubmit)}

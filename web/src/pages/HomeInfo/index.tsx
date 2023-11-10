@@ -297,7 +297,6 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     const serverProps = await ServerPropsService.general('Home', ctx);
     return { props: serverProps };
   } catch (err) {
-    console.log(err);
     return {
       props: {
         metadata: null,

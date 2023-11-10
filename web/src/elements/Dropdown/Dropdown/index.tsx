@@ -40,7 +40,7 @@ export function Dropdown({
       >
         {options.map((option, index) => (
           <option
-            className="dropdown-seolect__option"
+            className="dropdown-select__option"
             key={index}
             value={option.value}
           >

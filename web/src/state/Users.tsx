@@ -68,8 +68,8 @@ export class SignupUser implements WatchEvent {
 
   public watch(state: GlobalState) {
     return UserService.signup(this.signupRequestDto).pipe(
-      map((userData) => {
-        if (userData) {
+      map((token) => {
+        if (token) {
           return new FetchUserData(this.onSuccess, this.onError);
         }
       }),

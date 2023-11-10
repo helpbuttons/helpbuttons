@@ -9,7 +9,7 @@ interface IFieldText {
     validationError: any,
     classNameInput?: string,
     placeholder?: string,
-    multiInput: boolean,
+    multiInput?: boolean,
     subInputLink: string
 }
 
