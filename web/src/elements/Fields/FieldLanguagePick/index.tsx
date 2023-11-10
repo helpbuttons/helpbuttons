@@ -2,7 +2,7 @@ import { DropdownField } from "elements/Dropdown/Dropdown"
 import t from "i18n"
 import { getLocale } from "shared/sys.helper"
 
-export const FieldLanguagePick = ({onChange, explain, label, defaultValue}) => {
+export const FieldLanguagePick = ({onChange, explain, defaultValue}) => {
 
     return (
         <DropdownField

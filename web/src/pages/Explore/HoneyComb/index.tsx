@@ -403,7 +403,6 @@ function useHexagonMap({
       return;
     }
     store.emit(new UpdateExploreUpdating());
-    seth3TypeDensityHexes(() => []);
     const boundsButtons = cachedH3Hexes.current.filter(
       (cachedHex) => {
         return debounceHexagonsToFetch.hexagons.find(
