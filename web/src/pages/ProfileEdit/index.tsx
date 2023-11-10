@@ -33,6 +33,7 @@ import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import Accordion from 'elements/Accordion';
 import FieldTags from 'elements/Fields/FieldTags';
 import Slider from 'rc-slider';
+import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 
 export default function ProfileEdit() {
   const {
@@ -52,6 +53,10 @@ export default function ProfileEdit() {
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
+
+
+  const address = watch('where.address');
+  const center = watch('where.center');
   const radius = watch('where.radius');
 
   const router = useRouter();
@@ -124,7 +129,8 @@ export default function ProfileEdit() {
               <div className='form__label'> {loggedInUser.username}@{getHostname()} </div>
               
                 <div className="form__inputs-wrapper">
- 
+                <Accordion title={t('user.personalData')}>
+
                   <FieldText
                     name="name"
                     label={t('user.name')}
@@ -160,6 +166,7 @@ export default function ProfileEdit() {
                   />
                                   
                   <FieldLanguagePick onChange={(value) => setLocale(value)} explain={t('user.pickLanguageExplain')} defaultValue={loggedInUser.locale}/>
+
                   <FieldText
                     name="email"
                     label={t('user.email')}
@@ -169,6 +176,19 @@ export default function ProfileEdit() {
                     validationError={errors.email}
                     {...register('email', { required: true })}
                   ></FieldText>  
+
+                  <FieldCheckbox
+                    name='showButtons'
+                    label={t('user.showButtonsProfileLabel')}
+                    explain={t('user.showButtonsProfileExplain')}
+                    defaultValue={loggedInUser.showButtons}
+                    text={t('user.showButtons')}
+                    onChanged={(value) => {setValue('showButtons', value)}}
+                  />
+
+                </Accordion>
+                <Accordion title={t('user.notificationConfig')}>
+
                   <FieldCheckbox
                     label={t('user.receiveNotifications')}
                     explain={t('user.receiveNotificationsExplain')}                                 
@@ -188,10 +208,19 @@ export default function ProfileEdit() {
                     }}
                     tags={watch('tags')}
                   />
+
+                  <DropDownSearchLocation
+                    label={t('user.location')}
+                    placeholder={t('user.location')}
+                    address={address}
+                    explain={t('user.locationExplain')}
+                    center={center}
+                  />
                   <div className="form__field">
                     <label className="form__label">
                       {t('user.distance')} ({radius} km)
                     </label>
+                    <div className='form__explain'>{t('user.distanceExplain')} </div>
                     <div style={{ padding: '1rem' }}>
                       <Slider
                         min={1}
@@ -203,23 +232,15 @@ export default function ProfileEdit() {
                       />
                     </div>
                   </div>
-                  <FieldCheckbox
-                    name='showButtons'
-                    label={t('user.showButtonsProfileLabel')}
-                    explain={t('user.showButtonsProfileExplain')}
-                    defaultValue={loggedInUser.showButtons}
-                    text={t('user.showButtons')}
-                    onChanged={(value) => {setValue('showButtons', value)}}
-                  />
+                </Accordion>
+
 
                 {errorMsg && (
                   <div className="form__input-subtitle--error">
                     {errorMsg}
                   </div>
                 )}
-
                 
-                <hr></hr>
                 <Accordion 
                   title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
                 >

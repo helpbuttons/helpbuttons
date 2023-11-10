@@ -17,6 +17,7 @@ export default function DropDownSearchLocation({
     console.log(place);
   },
   placeholder,
+  label,
   explain,
   address = '',
   center = [0, 0],
@@ -85,7 +86,7 @@ export default function DropDownSearchLocation({
   return (
     <div className='form__field'>
       <label className="form__label">
-        {t('buttonFilters.whereLabel')}
+        {label}
         {address && center && (
             <>
               ({address} - {roundCoords(center).toString()})
