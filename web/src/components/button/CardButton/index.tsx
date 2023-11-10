@@ -201,7 +201,7 @@ function CardButtonSubmenu({ button }) {
       return (
         <CardSubmenuOption
           onClick={() => {
-            store.emit(new FollowButton(button.id, () => alertService.success('following'), () => {alertService.warn('error following')}))
+            store.emit(new FollowButton(button.id, () => alertService.success(t('button.followAlert')), () => {alertService.warn(t('button.followErrorAlert'))}))
           }}
           label={t('button.follow')}
         />
@@ -210,7 +210,7 @@ function CardButtonSubmenu({ button }) {
     return (
       <CardSubmenuOption
         onClick={() => {
-          store.emit(new UnfollowButton(button.id, () => alertService.success('unfollowing'), () => {alertService.warn('error unfollowing')}))
+          store.emit(new UnfollowButton(button.id, () => alertService.success(t('button.unfollowAlert')), () => {alertService.warn(t('button.unfollowErrorAlert'))}))
         }}
         label={t('button.unfollow')}
       />

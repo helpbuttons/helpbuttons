@@ -157,7 +157,8 @@
     "unsubscribed": "No vas a recibir mas este tipo de emails",
     "showButtonsProfileLabel": "Contenido en tu página de perfil",
     "showButtonsProfileExplain": "Marca esta opción si quieres mostrar una lista pública de tus _helpbuttons_ en tu página de perfil",
-    "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil"
+    "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil",
+    "loginError":"Error al entrar, por favor inténtelo de nuevo o contacte al administrador/a"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -213,6 +214,7 @@
     "imagesExplain": "Imágenes que selecciones se mostraran en tu _helpbutton_",
     "imagesText": "Elegir imágenes",    
     "whenLabel": "Cuándo",
+    "invalidDates":"Fecha Inválida",
     "changeDateLabel": "Elige una fecha",
     "changePlaceLabel": "Elige un lugar",
     "firstPost": "¡Hola! Creé este _helpbutton_ el {0}, deja un comentario si quieres",
@@ -230,7 +232,11 @@
     "hideAddress": "Esconder ubicación exacta",
     "created": "creado",
     "follow": "Seguir",
-    "unfollow": "Dejar de seguir"
+    "unfollow": "Dejar de seguir",
+    "followAlert": "Siguiendo este botón. Recibirás nuevos posts en tu mail",
+    "unfollowAlert": "Dejaste de seguir este botón.",
+    "unfollowAlertError": "Error al dejar de seguir",
+    "followAlertError": "Error al seguir"
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -270,11 +276,12 @@
     "write": "Publica una Novedad",
     "delete": "Borrar",
     "NoComments": "No hay comentarios aún",
-    "private": ""
+    "private": "privado"
   },
   "comment": {
     "placeholderWrite": "Escribe un mensaje en esta publicación",
-    "delete": "Borrar"
+    "delete": "Borrar",
+    "posted": "Comentario enviado"
   },
   "picker": {
     "headerText": "Elige una localización"

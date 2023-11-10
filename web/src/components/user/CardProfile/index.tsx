@@ -114,11 +114,11 @@ function ProfileAdminOptions({ user }) {
         userId,
         newRole,
         () => {
-          alertService.info('Done.');
+          alertService.info(t('common.done'));
           router.reload()
         },
         () => {
-          alertService.error('Error');
+          alertService.error(t('common.error'));
         },
       ),
     );

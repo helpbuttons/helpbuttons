@@ -31,6 +31,8 @@ import t from 'i18n';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import Accordion from 'elements/Accordion';
+import FieldTags from 'elements/Fields/FieldTags';
+import Slider from 'rc-slider';
 
 export default function ProfileEdit() {
   const {
@@ -50,6 +52,7 @@ export default function ProfileEdit() {
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
+  const radius = watch('where.radius');
 
   const router = useRouter();
   const { pathname, asPath, query } = useRouter()
@@ -121,6 +124,7 @@ export default function ProfileEdit() {
               <div className='form__label'> {loggedInUser.username}@{getHostname()} </div>
               
                 <div className="form__inputs-wrapper">
+ 
                   <FieldText
                     name="name"
                     label={t('user.name')}
@@ -130,6 +134,19 @@ export default function ProfileEdit() {
                     validationError={errors.name}
                     {...register('name', { required: true })}
                   ></FieldText>
+                  <FieldImageUpload
+                    name="avatar"
+                    text={t('user.avatar')}
+                    label={t('user.avatarLabel')}
+                    explain={t('user.avatarExplain')}
+                    control={control}
+                    width={150}
+                    height={150}
+                    subtitle={'150x150px'}
+                    validationError={errors.avatar}
+                    setValue={setValue}
+                    {...register('avatar', { required: true })}
+                  />
                    <FieldTextArea
                     name="description"
                     label={t('user.description')}
@@ -160,6 +177,32 @@ export default function ProfileEdit() {
                     text={t('user.textReceiveNotifications')}
                     onChanged={(value) => {setValue('receiveNotifications', value)}}
                   />
+
+                  <FieldTags
+                    label={t('user.tags')}
+                    explain={t('user.tagsExplain')}
+                    placeholder={t('common.add')}
+                    validationError={errors.tags}
+                    setTags={(tags) => {
+                      setValue('tags', tags);
+                    }}
+                    tags={watch('tags')}
+                  />
+                  <div className="form__field">
+                    <label className="form__label">
+                      {t('user.distance')} ({radius} km)
+                    </label>
+                    <div style={{ padding: '1rem' }}>
+                      <Slider
+                        min={1}
+                        max={300}
+                        onChange={(radiusValue) =>
+                          setValue('where.radius', radiusValue)
+                        }
+                        defaultValue={radius}
+                      />
+                    </div>
+                  </div>
                   <FieldCheckbox
                     name='showButtons'
                     label={t('user.showButtonsProfileLabel')}
@@ -168,24 +211,14 @@ export default function ProfileEdit() {
                     text={t('user.showButtons')}
                     onChanged={(value) => {setValue('showButtons', value)}}
                   />
-                  <FieldImageUpload
-                    name="avatar"
-                    text={t('user.avatar')}
-                    label={t('user.avatarLabel')}
-                    explain={t('user.avatarExplain')}
-                    control={control}
-                    width={150}
-                    height={150}
-                    subtitle={'150x150px'}
-                    validationError={errors.avatar}
-                    setValue={setValue}
-                    {...register('avatar', { required: true })}
-                  />
+
                 {errorMsg && (
                   <div className="form__input-subtitle--error">
                     {errorMsg}
                   </div>
                 )}
+
+                
                 <hr></hr>
                 <Accordion 
                   title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }

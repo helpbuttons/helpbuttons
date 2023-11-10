@@ -302,7 +302,7 @@ export function Compose({
                 CommentPrivacyOptions.PUBLIC,
                 { message: message },
                 () => {
-                  alertService.info('comment posted');
+                  alertService.info(t('comment.posted'));
                   onCreate();
                 },
                 (errorMessage) =>
@@ -346,7 +346,7 @@ export function Compose({
                 privacy,
                 { message: message },
                 () => {
-                  alertService.info('comment posted');
+                  alertService.info(t('comment.posted'));
                   onCreate();
                 },
                 (errorMessage) =>

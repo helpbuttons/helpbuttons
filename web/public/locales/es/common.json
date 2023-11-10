@@ -143,7 +143,7 @@
     "usernamePlaceHolder": "Excribe un nombre de usuario",
     "editProfile": "Editar perfil",
     "noAccount": "No tengo cuenta",
-    "tags": "Intereses relacionados",
+    "tags": "Tus intereses",
     "passwordConfirmationPlaceHolder": "Escribe tu contraseña otra vez por favor",
     "deactivate": "Desactivar cuenta",
     "dontChangePassword": "No cambies la contraseña",
@@ -154,7 +154,7 @@
     "pickLanguageExplain": "Los menús de la herramienta serán traducidos a la lengua que elijas",
     "textReceiveNotifications": "Recibir notificaciones por email",
     "receiveNotifications": "Notificaciones por email",
-    "receiveNotificationsExplain": "Marca si quieres recibir notificaciones por email cuando algún usuario te escriba algún mensaje o se publique algo sobre los usuarios que sigues o apoyas",
+    "receiveNotificationsExplain": "Marca si quieres recibir notificaciones por email cuando algún usuario te escriba algún mensaje o se publique algo sobre _helpbuttons_ o temas que sigues",
     "revoke": "Revocar derechos de administrador",
     "unblock": "Desbloquear",
     "block": "Bloquear",
@@ -162,7 +162,9 @@
     "unsubscribed": "No vas a recibir mas este tipo de emails",
     "showButtonsProfileLabel": "Contenido en tu página de perfil",
     "showButtonsProfileExplain": "Marca esta opción si quieres mostrar una lista pública de tus _helpbuttons_ en tu página de perfil",
-    "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil"
+    "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil",
+    "tagsExplain":"Escribe en este campo las palabras que te interesen y recibirás avisos cuando haya _helpbuttons_ sobre dichos temas. Escribe y pulsa enter o separa por comas para añadir.",
+    "distance":"Distancia máxima de avisos"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -184,6 +186,7 @@
     "queryLabel": "¿Qué buscas?",
     "searchBarTop": "{1} _helpbuttons_ {0}",
     "queryExplain": "Escribe lo que quieras encontrar",
+    "followTag":"Quiero recibir alertas sobre {0}",
     "tagsExplain": "Las palabras clave son los temas más importantes o más tratados en la Red",
     "where": "¿Dónde?",
     "distance": "Distancia de búsqueda",

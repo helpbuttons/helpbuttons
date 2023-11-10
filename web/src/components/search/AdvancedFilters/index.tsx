@@ -1,6 +1,6 @@
 import t from 'i18n';
 import React, { useEffect, useState } from 'react';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import FieldText from 'elements/Fields/FieldText';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -20,6 +20,7 @@ import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import { IoMapOutline } from 'react-icons/io5';
 
 
 export default function AdvancedFilters({
@@ -125,6 +126,8 @@ export default function AdvancedFilters({
               placeholder={t('buttonFilters.queryPlaceHolder')}
               explain={t('buttonFilters.queryExplain')}
               {...register('query')}
+              subInputLink={'/'}
+              subInputLinkText={t('buttonFilters.followTag')}
             />
             {/* <TagList tags={tags} remove={(tag) => {
               setValue('query', query.replace(tag, ''))
