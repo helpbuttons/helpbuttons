@@ -32,6 +32,7 @@ export function HbMap({
   mapZoom,
   onBoundsChanged = (objectRet) => {},
   tileType = HbMapTiles.OSM,
+  handleClick,
 }) {
   const tileProvider = (x, y, z, dpr) => {
     return HbTiles(tileType, x, y, z, dpr);
@@ -46,6 +47,9 @@ export function HbMap({
           zoom: zoom,
           bounds,
         });
+      }}
+      onClick={({ event, latLng, pixel }) => {
+        handleClick({ latLng });
       }}
       zoomSnap={true}
       provider={tileProvider}

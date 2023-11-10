@@ -314,6 +314,22 @@ export class UpdateHexagonClicked implements UpdateEvent {
   }
 }
 
+
+export class clearHexagonClicked implements UpdateEvent {
+  public constructor() {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons;
+      newState.explore.map.loading = false;
+      newState.explore.map.initialized = true;
+      newState.explore.settings.hexagonClicked = null;
+    });
+  }
+}
+
+
+
 export class UpdateListButtons implements UpdateEvent {
   public constructor(private listButtons: Button[]) {}
 

@@ -163,7 +163,7 @@ $nav-bottom-border: 32px;
 .notif-circle {
 
   top: $nav-bottom-padding;
-  margin-left: $margin-small;
+  // margin-left: $margin-small;
 
    border-radius: 50%;
    position: absolute;
@@ -180,6 +180,7 @@ $nav-bottom-border: 32px;
    align-items: center;
    cursor: pointer;
    text-decoration: none;
+   z-index: $z-index-01;
    background: var(--network-text-color);
    pointer-events:none;
 

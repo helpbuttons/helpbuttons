@@ -54,7 +54,7 @@
     "queryExplain": "Write whatever you want to find",
     "queryPlaceHolder": "Friends, food, toys, clothes,...",
     "where": "Where",
-    "whereExplain": "Search the place where you want to go",
+    "whereExplain": "Search the place you want or click the icon to check your location.",
     "distance": "Search Distance",
     "allButtonTypes": "All types",
     "types": "_helpbuttons_ types",
@@ -71,7 +71,8 @@
     "byDate": "By creation date",
     "byProximity": "By proximity",
     "byEventDate": "By start of event",
-    "orderBy": "Order"
+    "orderBy": "Order",
+    "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list"
   },
   "setup": {
     "hostname": "Hostname",
@@ -90,6 +91,9 @@
     "test": ""
   },
   "activities": {
+    "allNotifications":"All Notifications",
+    "allMessages":"All messages",
+    "allPosts":"All Posts",
     "newbutton": "You published '{0}' in '{1}'",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
@@ -149,6 +153,8 @@
     "unfollow": "Unfollow"
   },
   "user": {
+    "login":"Write your credentials",
+    "signup":"SignUp in order to take part",
     "updateProfile": "Complete/Edit Profile",
     "profileView": "Your profile",
     "otherProfileView": "User",
@@ -158,11 +164,11 @@
     "username": "Username",
     "usernameExplain": "The username is what will identify you in this network and others",
     "usernamePlaceHolder": "Type a unique name",
-    "password": "Password",
+    "password": "Current Password",
     "pickLanguageLabel": "Pick your language",
     "pickLanguageExplain": "The app menus will be translated to the language you choose",
-    "passwordPlaceHolder": "Type your password",
-    "passwordConfirmation": "Password confirmation",
+    "passwordPlaceHolder": "Type your password here",
+    "passwordConfirmation": "Repeat the new password",
     "passwordConfirmationPlaceHolder": "Type your password again please",
     "newPassword": "Type your new password",
     "newPasswordPlaceHolder": "Your new password",
@@ -236,6 +242,8 @@
   },
   "comment": {
     "delete": "Borrar",
+    "private":"You're sending a private message. Only the destination user could see it.",
+    "public":"This comment is public, everyone could see it.",
     "placeholderWrite": "Write a message in this post"
   },
   "configuration": {

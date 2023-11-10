@@ -14,15 +14,15 @@ export default function FeedProfile({ allActivities }) {
 
   const notificationTypeOptions = [
     {
-      name: 'Show All Notificactions',
+      name: t('activities.allNotifications'),
       value: 'all',
     },
     {
-      name: 'Show Messages',
+      name: t('activities.allMessages'),
       value: 'message',
     },
     {
-      name: 'Show Posts',
+      name: t('activities.allPosts'),
       value: 'post',
     },
   ];

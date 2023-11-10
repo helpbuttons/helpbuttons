@@ -114,7 +114,7 @@ export default function Signup() {
     )
   }
   return (
-    <Popup title={t('menu.signup')} linkFwd="/HomeInfo">
+    <Popup title={t('user.signup')} linkFwd="/HomeInfo">
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
         <div className="login__form">
           <div className="form__inputs-wrapper">

@@ -125,7 +125,7 @@ export function FeedElement({
   };
   return (
     <div className="feed-element">
-      <div className="card-notification">
+      <div className="card-notification card-notification--feed">
         <div className="card-notification__comment-count">
           <div className="card-notification__label">
             <div className="hashtag hashtag--blue hashtag--with-icon">
@@ -142,23 +142,6 @@ export function FeedElement({
                 <Btn
                   submit={false}
                   btnType={BtnType.iconActions}
-                  iconLink={<IoMailOutline />}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.right}
-                  onClick={() =>
-                    setShowComposePostReply(() => {
-                      return {
-                        post: post.id,
-                        privateMessage: true,
-                        mentions: [post.author.username],
-                      };
-                    })
-                  }
-                />
-
-                <Btn
-                  submit={false}
-                  btnType={BtnType.iconActions}
                   iconLink={<IoChatbubbleEllipsesSharp />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.right}
@@ -167,6 +150,22 @@ export function FeedElement({
                       return {
                         post: post.id,
                         privateMessage: false,
+                        mentions: [post.author.username],
+                      };
+                    })
+                  }
+                />
+                <Btn
+                  submit={false}
+                  btnType={BtnType.iconActions}
+                  iconLink={<IoMailOutline />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.right}
+                  onClick={() =>
+                    setShowComposePostReply(() => {
+                      return {
+                        post: post.id,
+                        privateMessage: true,
                         mentions: [post.author.username],
                       };
                     })

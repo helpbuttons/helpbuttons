@@ -171,12 +171,13 @@ export default function AdvancedFilters({
               })}
             </FieldMultiSelect>
             
-              <DropDownSearchLocation
-                placeholder={t('homeinfo.searchlocation')}
-                handleSelectedPlace={handleSelectedPlace}
-                address={address}
-                center={center}
-              />
+            <DropDownSearchLocation
+              placeholder={t('homeinfo.searchlocation')}
+              handleSelectedPlace={handleSelectedPlace}
+              address={address}
+              explain={t('buttonFilters.whereExplain')}
+              center={center}
+            />
             
             {center && (
               <div className="form__field">
@@ -199,6 +200,7 @@ export default function AdvancedFilters({
             <AdvancedFiltersSortDropDown
               className={'dropdown__dropdown-trigger'}
               label={t('buttonFilters.orderBy')}
+              explain={t('buttonFilters.orderByExplain')}
               orderBy={watch('orderBy')}
               isForm={true}
               setOrderBy={(value) => setValue('orderBy',value)}
@@ -230,7 +232,7 @@ export default function AdvancedFilters({
   );
 }
 
-export function AdvancedFiltersSortDropDown({className, label, orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm }) {
+export function AdvancedFiltersSortDropDown({className, label, orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm, explain }) {
 
 //   -Order by creation date (default)
 // -Order by proximity (When a place is selected)
@@ -254,6 +256,7 @@ export function AdvancedFiltersSortDropDown({className, label, orderBy, setOrder
         (
           <DropdownField
             className={className}
+            explain={explain}
             label={label}
             options={dropdownOptions}
             onChange={(value) => {setOrderBy(value)}}
@@ -262,7 +265,6 @@ export function AdvancedFiltersSortDropDown({className, label, orderBy, setOrder
         ) : (
           <Dropdown
           className={className}
-          label={label}
           options={dropdownOptions}
           onChange={(value) => {setOrderBy(value)}}
           defaultSelected={orderBy}
