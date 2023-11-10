@@ -64,6 +64,7 @@ export default function NewUserFields({
         name="avatar"
         label={t('common.choose', ['avatar'])}
         explain={t('user.avatarExplain')}
+        text={t('user.avatar')}
         control={control}
         width={150}
         height={150}

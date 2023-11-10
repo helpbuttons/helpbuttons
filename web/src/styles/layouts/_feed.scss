@@ -172,6 +172,12 @@ $feed-new-message-radius: $border-radius-circle;
     padding-top: 0;
     
   }
+
+  &:hover {
+
+    cursor: pointer;
+
+  }
   
 }
 

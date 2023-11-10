@@ -6,11 +6,12 @@ import Popup from 'components/popup/Popup';
 //imported internal classes, variables, files or functions
 import PopupSection from 'components/popup/PopupSection';
 import LoginForm from 'components/user/LoginForm';
+import t from 'i18n';
 export default Login;
 
 function Login() {
     return (
-        <Popup title="Login" linkFwd="/HomeInfo">
+        <Popup title={t("user.login")} linkFwd="/HomeInfo">
            <LoginForm/>
         </Popup>
     );

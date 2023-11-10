@@ -17,6 +17,7 @@ import {
   UpdateHexagonClicked,
   updateCurrentButton,
   FindButton,
+  clearHexagonClicked,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useRef, useStore } from 'store/Store';
@@ -124,7 +125,6 @@ function HoneyComb({ router, selectedNetwork }) {
           title={t('button.title')}
           onCloseClicked={() => {
             store.emit(new updateCurrentButton(null));
-            toggleShowLeftColumn(true);
           }}
         >
           {selectedNetwork.buttonTemplates?.length > 0 && (
@@ -583,6 +583,7 @@ function useHexagonMap({
 
   useEffect(() => {
     if (debouncedHexagonClicked) {
+      store.emit(new updateCurrentButton(null));
       if (
         debouncedHexagonClicked == 'unset' ||
         debouncedHexagonClicked == 'zooming'
@@ -610,6 +611,12 @@ function useHexagonMap({
           );
         }
       }
+    } else {
+
+      store.emit(
+        new clearHexagonClicked(),
+      );
+
     }
   }, [debouncedHexagonClicked]);
 

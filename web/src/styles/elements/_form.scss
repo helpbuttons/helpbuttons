@@ -28,6 +28,10 @@ margin: $margin-medium 0;
   font-size: $font-size-general;
   font-weight: bold;
 
+  &:first-letter {
+    text-transform: uppercase;
+  }
+
 }
 
 .form__explain {
@@ -37,6 +41,10 @@ margin: $margin-medium 0;
   font-size: $font-size-general;
   font-weight: $font-weight-light;
   height: auto;
+  &:first-letter {
+    text-transform: uppercase;
+  }
+  
 }
 
 
@@ -78,6 +86,10 @@ margin: $margin-medium 0;
   // max-width:$form-field-max-width;
   font-size: $font-size-medium;
   margin-bottom: $margin-big;
+}
+
+.form__field--noMargin {
+  margin-bottom: 0;
 }
 
 .form__field--location {
