@@ -582,7 +582,6 @@ function useHexagonMap({
   }
 
   useEffect(() => {
-    console.log(debouncedHexagonClicked)
     if (debouncedHexagonClicked) {
       store.emit(new updateCurrentButton(null));
       if (

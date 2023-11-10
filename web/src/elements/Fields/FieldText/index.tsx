@@ -8,7 +8,7 @@ interface IFieldText {
     validationError: any,
     classNameInput?: string,
     placeholder?: string,
-    multiInput: boolean,
+    multiInput?: boolean,
 }
 
 const FieldText = React.forwardRef(({
