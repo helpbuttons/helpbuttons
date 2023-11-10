@@ -35,6 +35,12 @@ export default function HexagonExploreMap({
     setCenterBounds(center);
   };
 
+  const onMapCLick =() => {
+    console.log('map clicked')
+    setHexagonClicked( () => null ) 
+
+  };
+
   useEffect(() => {
     setGeoJsonFeatures(() => convertH3DensityToFeatures(h3TypeDensityHexes).filter((hex) => hex.properties.count > 0));
 
@@ -55,6 +61,7 @@ export default function HexagonExploreMap({
         mapZoom={exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
         tileType={selectedNetwork.exploreSettings.tileType}
+        handleClick={onMapCLick}
       >
         <Overlay anchor={[100, 100]}>
           <div className="search-map__network-title">

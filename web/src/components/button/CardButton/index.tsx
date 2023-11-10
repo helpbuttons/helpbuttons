@@ -22,7 +22,7 @@ import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import Link from 'next/link';
-import { UpdateFiltersToFilterTag } from 'state/Explore';
+import { UpdateFiltersToFilterTag, updateCurrentButton } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { formatMessage } from 'elements/Message';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
@@ -314,6 +314,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
                 key={idx}
                 onClick={() => {
                   filterTag(tag);
+                  store.emit(new updateCurrentButton(null));
                   router.push('/Explore');
                 }}
               >
