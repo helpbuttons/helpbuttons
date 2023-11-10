@@ -249,3 +249,14 @@ $card-notification-delete-size: 100px;
   margin: auto $margin-xsmall ;
 
 }
+
+.card-notification--feed {
+
+  &:hover {
+    
+    cursor: default;
+    border-color: $color-ligth-gray;
+
+  }
+
+}

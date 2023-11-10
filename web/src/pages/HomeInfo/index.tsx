@@ -276,13 +276,13 @@ export default function HomeInfo({
                       <span>{t('homeinfo.createNetworkButton')}</span>
                     </NavLink>
                   </div>
-                   <div className="card__section">
+                   {/* <div className="card__section">
                       <p>{t('homeinfo.donateSubtitle')}</p>
                         <NavLink href="https://buy.stripe.com/dR68wx3CY17VdFKfZc">
                         <IoCashOutline />
                         <span>{t('menu.donate')}</span>
                       </NavLink>
-                    </div>
+                    </div> */}
                 </div>
               </div>
             </>

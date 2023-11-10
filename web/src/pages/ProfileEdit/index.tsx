@@ -213,7 +213,7 @@ export default function ProfileEdit() {
                         ></FieldPassword>
                         <FieldPassword
                           name="password_new_confirm"
-                          label={t('user.passwordPlaceHolder')}
+                          label={t('user.passwordConfirmation')}
                           classNameInput="squared"
                           placeholder={t('user.passwordConfirmationPlaceHolder')}
                           validationError={errors.password}

@@ -491,6 +491,10 @@ $card-button-border-height: $border-general-height;
   text-align: left;
 }
 
+.card-button__city--displayMap {
+  text-decoration: underline;
+}
+
 .card-button__city-list {
   cursor: pointer;
   padding-right: 1rem;

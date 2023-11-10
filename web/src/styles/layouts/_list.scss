@@ -1,17 +1,9 @@
-$list-container-height: 303px;
+$list-container-height: 300px;
 $list-drag-tab-height: 35px;
 $list-container-hide-height: calc($footer-height-mobile - $list-container-height);
 $list-order-tabs-bottom: calc($footer-height-mobile + $list-container-height);
-$list-container-hide-nohover-height: calc($footer-height-mobile - $list-container-height + $list-drag-tab-height );
+$list-container-hide-nohover-height: calc($footer-height-mobile - $list-container-height + $list-drag-tab-height);
 $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-height - 40px);
-
-
-//change movement when there's no scrollbar
-@media (hover: none) {
-  
-
-
-}
 
 
 ///shouldd be the posts list
@@ -24,7 +16,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   position: relative;
   z-index: $z-index-01;
   transition: $transition-default-slow;
-  padding-bottom: calc($footer-height-mobile + 8px);
+  padding-bottom: calc($footer-height-mobile + 5px);
 
 }
 
@@ -185,7 +177,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 @media (hover: none) {
 
   .list__container {
-    padding-bottom: calc($footer-height-mobile - 10px);
+    padding-bottom: calc($footer-height-mobile - 18px);
   }
 
 }
