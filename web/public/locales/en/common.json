@@ -156,7 +156,8 @@
     "followAlert": "Followed",
     "unfollowAlert": "Unfollowed",
     "unfollowAlertError": "Unfollow Error",
-    "followAlertError": "Follow error"
+    "followAlertError": "Follow error",
+    "showPhone":"Show phone number"
   },
   "user": {
     "login":"Write your credentials",

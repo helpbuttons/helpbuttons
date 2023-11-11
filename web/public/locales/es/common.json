@@ -247,7 +247,8 @@
     "hideAddress": "Esconder ubicación exacta",
     "created": "creado",
     "follow": "Seguir",
-    "unfollow": "Dejar de seguir"
+    "unfollow": "Dejar de seguir",
+    "showPhone":"Mostrar teléfono"
   },
   "calendarOnce": {
     "label": "Una vez",

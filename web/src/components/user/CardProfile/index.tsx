@@ -38,7 +38,7 @@ export default function CardProfile({ user, showAdminOptions }) {
             
               <div className="card-profile__avatar-container-name">
 
-                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="hashtag">Admin</div>}</div>
+                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="hashtag hashtag--blue">Admin</div>}</div>
                 <span className="card-profile__username">{ user.username }@{getHostname()}</span>
                 
               </div>

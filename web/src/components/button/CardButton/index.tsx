@@ -374,7 +374,7 @@ export function CardButtonHeadActions({ button }) {
         {t('button.showPhone')}
       </span> */}
       <Btn
-              btnType={BtnType.filter}
+              btnType={BtnType.filterCorp}
               contentAlignment={ContentAlignment.center}
               caption={t('button.showPhone')}
               iconLeft={IconType.circle}
