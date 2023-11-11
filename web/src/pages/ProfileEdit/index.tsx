@@ -121,7 +121,7 @@ export default function ProfileEdit() {
     <>
       {loggedInUser && (
         <>
-          <Popup title={t('user.updateProfile')} linkFwd="/HomeInfo">
+          <Popup title={t('user.updateProfile')} linkFwd="/Profile">
             <Form
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="login"
@@ -175,6 +175,16 @@ export default function ProfileEdit() {
                     placeholder={t('user.emailPlaceHolder')}
                     validationError={errors.email}
                     {...register('email', { required: true })}
+                  ></FieldText>  
+
+                  <FieldText
+                    name="phone"
+                    label={t('user.phone')}
+                    explain={t('user.phoneExplain')}
+                    classNameInput="squared"
+                    placeholder={t('user.phonePlaceHolder')}
+                    validationError={errors.email}
+                    {...register('phone', { required: true })}
                   ></FieldText>  
 
                   <FieldCheckbox

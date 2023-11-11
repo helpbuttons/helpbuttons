@@ -222,8 +222,10 @@
     "location":"Your base location",
     "locationExplain":"Specify a base location for notifications",
     "personalData":"Your user data",
-    "notificationConfig":"Your notification configuration"
-
+    "notificationConfig":"Your notification configuration",
+    "phone":"Phone",
+    "phoneExplain":"Add your phone if you want people to contact you through it",
+    "phonePlaceHolder":"i.e. 34699000000"
   },
   "picker": {
     "headerText": "Choose a location"

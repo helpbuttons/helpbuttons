@@ -113,7 +113,7 @@
     "signup":"Únete para participar",
     "updateProfile": "Completar Perfil",
     "profileView": "Tu Perfil",
-    "otherProfileView": "Usuario",
+    "otherProfileView": "Perfil de usuario",
     "email": "Email",
     "username": "Nombre de usuario",
     "password": "Contraseña",
@@ -154,7 +154,7 @@
     "pickLanguageExplain": "Los menús de la herramienta serán traducidos a la lengua que elijas",
     "textReceiveNotifications": "Recibir notificaciones por email",
     "receiveNotifications": "Notificaciones por email",
-    "receiveNotificationsExplain": "Marca si quieres recibir notificaciones por email cuando algún usuario te escriba algún mensaje o se publique algo sobre _helpbuttons_ o temas que sigues",
+    "receiveNotificationsExplain": "Selecciona si quieres recibir notificaciones por email cuando algún usuario te escriba algún mensaje o se publique algo sobre _helpbuttons_ o temas que sigues",
     "revoke": "Revocar derechos de administrador",
     "unblock": "Desbloquear",
     "block": "Bloquear",
@@ -169,7 +169,10 @@
     "location":"Tu localización base",
     "locationExplain":"Especifica una localización base desde la que se medirá la distancia de notificaciones",
     "personalData":"Tus datos personales",
-    "notificationConfig":"Tu configuración de notificaciones"
+    "notificationConfig":"Tu configuración de notificaciones",
+    "phone":"Teléfono",
+    "phoneExplain":"Añade tu teléfono si quieres que te contacten a través de él",
+    "phonePlaceHolder":"i.e. 34699000000"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
