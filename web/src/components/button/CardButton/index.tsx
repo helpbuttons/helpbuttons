@@ -33,6 +33,7 @@ import {
 } from 'components/card/CardSubmenu';
 import { FollowButton, UnfollowButton } from 'state/Follow';
 import { alertService } from 'services/Alert';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -300,7 +301,16 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
           </div>
         </div>
 
-        <div className="card-button__title">{button.title}</div>
+        <div className="card-button__title">{button.title}
+        <Btn
+              btnType={BtnType.iconActions}
+              contentAlignment={ContentAlignment.center}
+              iconLink={<IoHeartOutline />}
+              iconLeft={IconType.circle}
+              submit={true}
+          />
+        
+        </div>
 
         <div className="card-button__paragraph">
           {formatMessage(button.description)}
@@ -359,10 +369,18 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
 export function CardButtonHeadActions({ button }) {
   return (
     <div className="card-button__rating">
-      {/* <span className="btn-circle__icon">
-        <IoHeartOutline />
-        {button.hearts}
+
+      {/* <span className="hashtag">
+        {t('button.showPhone')}
       </span> */}
+      <Btn
+              btnType={BtnType.filter}
+              contentAlignment={ContentAlignment.center}
+              caption={t('button.showPhone')}
+              iconLeft={IconType.circle}
+              submit={true}
+        />
+
 
       {button.hearts && (
         <span className="btn-circle__icon">
