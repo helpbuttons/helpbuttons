@@ -31,6 +31,8 @@ import t from 'i18n';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import Accordion from 'elements/Accordion';
+import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import FieldTags from 'elements/Fields/FieldTags';
 
 export default function ProfileEdit() {
   const {
@@ -47,6 +49,7 @@ export default function ProfileEdit() {
     locale: 'en',
     receiveNotifications: true,
     showButtons: false,
+    tags: []
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
@@ -72,7 +75,8 @@ export default function ProfileEdit() {
       description: data.description,
       locale: locale,
       receiveNotifications: data.receiveNotifications,
-      showButtons: data.showButtons
+      showButtons: data.showButtons,
+      tags: data.tags
     }
     if (setNewPassword)  {
       // check passwords match.. send to backend
@@ -186,6 +190,23 @@ export default function ProfileEdit() {
                     {errorMsg}
                   </div>
                 )}
+                {/* <DropDownSearchLocation
+                  // label={t('user.location')}
+                  placeholder={t('user.location')}
+                  address={address}
+                  explain={t('user.locationExplain')}
+                  center={center}
+                /> */}
+                <FieldTags
+                  label={t('user.tags')}
+                  explain={t('user.tagsExplain')}
+                  placeholder={t('common.add')}
+                  validationError={errors.tags}
+                  setTags={(tags) => {
+                    setValue('tags', tags);
+                  }}
+                  tags={watch('tags')}
+                />
                 <hr></hr>
                 <Accordion 
                   title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }

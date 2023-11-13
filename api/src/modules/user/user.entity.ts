@@ -95,6 +95,18 @@ export class User extends BaseEntity {
   @Expose()
   @Column({default: false})
   showButtons: boolean;
+
+  @Column('text', { array: true, nullable: true, default: [] })
+  tags: string[];
+
+  // @Column()
+  // address?: string;
+
+  // @Column({default: null, nullable: true})
+  // center?: string;
+
+  @Column({default: 0})
+  radius: number;
 }
 
 export interface UserRelations {

@@ -5,6 +5,7 @@ import { EntityManager, In, Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import { configFileName } from '@src/shared/helpers/config-name.const';
+import { TagService } from '../tag/tag.service';
 const config = require(`../../..${configFileName}`);
 
 @Injectable()
@@ -14,6 +15,7 @@ export class UserService {
     private readonly userRepository: Repository<User>,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
+    private readonly tagService: TagService,
   ) {}
 
   async createUser(user: User) {
@@ -68,7 +70,8 @@ export class UserService {
   async update(userId: string, newUser) {
     return this.userRepository.update(
       userId,
-      removeUndefined(newUser),
+      removeUndefined({...newUser, tags: this.tagService.formatTags(newUser.tags),
+      }),
     );
   }
 
@@ -120,7 +123,7 @@ export class UserService {
     return true;
   }
 
-  async findAllByIds(usersIds)
+  async findAllByIdsToBeNotified(usersIds)
   {
     return await this.userRepository.find({
       where: {

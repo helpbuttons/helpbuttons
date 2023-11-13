@@ -102,7 +102,7 @@
     "allNotifications":"Todas las notificationes",
     "allMessages":"Todos los mensajes",
     "allPosts":"Todos los posts",
-    "newbutton": "Creaste un nuevo botón '{0}' en '{1}'",
+    "newbutton": "Hay un nuevo _helpbutton_  '{0}' en '{1}'",
     "newpost": "Hay una nueva publicacion '{0}' en el botón '{1}' por '{2}'",
     "newcomment": "'{2}' ha comentado '{0}' en respuesta al post '{1}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",

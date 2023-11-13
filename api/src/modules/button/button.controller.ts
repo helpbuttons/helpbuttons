@@ -67,7 +67,7 @@ export class ButtonController {
       images,
       user,
     ).then((button) => {
-      notifyUser(this.eventEmitter,ActivityEventName.NewButton,button, button.owner)
+      notifyUser(this.eventEmitter,ActivityEventName.NewButton,button)
       return button;
     });
   }

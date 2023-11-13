@@ -10,8 +10,6 @@ import { EntityManager, Repository } from 'typeorm';
 import { Activity } from './activity.entity';
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
-import translate from '@src/shared/helpers/i18n.helper';
-import { getUrl } from '@src/shared/helpers/mail.helper';
 
 @Injectable()
 export class ActivityService {
@@ -20,6 +18,8 @@ export class ActivityService {
     private readonly activityRepository: Repository<Activity>,
     private readonly userService: UserService,
     private readonly mailService: MailService,
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
   ) {}
 
   @OnEvent(ActivityEventName.NewPost)
@@ -27,43 +27,93 @@ export class ActivityService {
   @OnEvent(ActivityEventName.NewButton)
   @OnEvent(ActivityEventName.DeleteButton)
   async notifyOwner(payload: any) {
-    const message = payload.data.message;
-    const author = payload.data.author;
-    const button = payload.data.button;
     switch (payload.activityEventName) {
       /*
       if activity is marked as "outbox" it means it will be used on the daily mail send with a resume of activities
       */
-      case ActivityEventName.NewPostComment:
+      case ActivityEventName.NewPostComment: {
+        // notify
+        // - dont send mail to author of comment
+        // - send mail to owner of button if owner is not author
+        // - notify users mentioned on comment
+        const message = payload.data.message;
+        const author = payload.data.author;
+
         // check users mentioned in comment, and notify them, not on outbox, but directly
-        const usersMentioned = await this.findUserMentionsInMessage(
+        await this.findUserMentionsInMessage(
           message,
           author.username,
-        );
-        await Promise.all(
-          usersMentioned.map((user) => {
-            return this.notifyNewComment(user, message, button, author);
-          }),
-        );
+        ).then((usersMentioned) => {
+          return Promise.all(
+            usersMentioned.map((user) => {
+              return this.newActivity(user, payload, true, false);
+            }),
+          );
+        })
+
+        // notify author:
+        await this.newActivity(author, payload, false, false)
+        
         break;
-      case ActivityEventName.NewPost:
-        // check users following the butotn of this post, and add a new actitivy to the daily outbox
-        const usersFollowing = await this.userService.findAllByIds(
-          button.followedBy,
-        );
+      }
+      case ActivityEventName.NewPost: {
+        const button = payload.data.button;
+        // check users following the button of this post, and add a new actitivy to the daily outbox
+        const usersFollowing =
+          await this.userService.findAllByIdsToBeNotified(
+            button.followedBy,
+          );
+        
+        // notify users following button...
         await Promise.all(
           usersFollowing.map((user) => {
-           return this.notifyNewPost(user, payload);
+            return this.newActivity(user, payload, false, true);
           }),
         );
+
+        // notify button owner
+        await this.newActivity(button.owner, payload, false, false);
         break;
-      case ActivityEventName.NewButton:
+      }
+      case ActivityEventName.NewButton: {
+        const button = payload.data;
+
+        if (button.tags.length < 1) {
+          break;
+        }
+        const tagQuery = button.tags
+          .map((tag) => `'${tag}' = any(tags)`)
+          .join(' OR ');
+        const query = `select id from public.user where ${tagQuery} AND (radius = 0)`;
+        console.log(query)
+        const usersIds = (await this.entityManager.query(query)).map(
+          (user) => user.id,
+        ).filter((userId) => userId != button.owner.id);
+
+        const usersToNotify =
+          await this.userService.findAllByIdsToBeNotified(usersIds);
+
+        // notify users following this tag
+        await Promise.all(
+          usersToNotify.map((user) => {
+            return this.newActivity(user, payload, false, true);
+          }),
+        );
+
+        await this.newActivity(button.owner, payload, false, false);
+        // center of selected network
+        // radius ?! se radius es 0.. notifica todo..
+        //   "select username from public.user where 'fitness' = any (tags)"
+        // )
+        // select username from public.user where any ['fitness','health'] = any (tags)
+        // $sql = "SELECT username,tags FROM public.user WHERE tags in ('fitness','health')"
+        // select username from public.user where 'fitness' = any (tags)
         // calculate users to be notified:
         // - check users with this interests/tags
         // - check users which are following this hexagons!
         break;
+      }
     }
-    await this.notifyOwnerOfActivity(payload);
   }
 
   findByUserId(userId: string) {
@@ -88,58 +138,34 @@ export class ActivityService {
     );
   }
 
-  async findUserMentionsInMessage(message, authorUsername) {
+  async findUserMentionsInMessage(message, authorOfMessage) {
     var userPattern = /@[\w]+/gi;
     let usernames = message.match(userPattern);
 
     if (!usernames) {
       return [];
     }
+
     const usernamesMentioned = usernames
       .map((username) => username.substring(1))
-      .filter((username) => username != authorUsername);
+      .filter((username) => username != authorOfMessage);
 
-    let users = await Promise.all(
+    return await Promise.all(
       usernamesMentioned.map(async (username) => {
         return await this.userService.findByUsername(username);
       }),
     );
-    return users.filter((user) => user?.receiveNotifications);
   }
 
-  notifyNewComment(user, message, button, author) {
-    return this.mailService.sendWithLink({
-      content: translate(user.locale, 'activities.newcomment', [
-        message,
-        button.title,
-        author.username,
-      ]),
-      to: user.email,
-      link: getUrl(user.locale, `/ButtonFile/${button.id}`),
-      linkCaption: translate(user.locale, 'email.buttonLinkCaption'),
-      subject: translate(user.locale, 'email.activitySubject'),
-    });
-  }
-
-  notifyOwnerOfActivity(payload) {
-    return this.activityRepository.insert([
-      {
-        id: dbIdGenerator(),
-        owner: payload.destination,
-        eventName: payload.activityEventName,
-        data: JSON.stringify(payload.data),
-      },
-    ]);
-  }
-
-  notifyNewPost(user, payload) {
+  newActivity(user, payload, sendMail = false, outbox = false) {
+    console.log(`new activity [${user.username}] ${payload.activityEventName} mail? ${sendMail} outbox? ${outbox}`)
     const activity = {
       id: dbIdGenerator(),
       owner: user,
       eventName: payload.activityEventName,
       data: JSON.stringify(payload.data),
-      outbox: true,
+      outbox: outbox,
     };
-    return this.activityRepository.insert([activity]);
+    return this.activityRepository.insert([activity])
   }
 }
