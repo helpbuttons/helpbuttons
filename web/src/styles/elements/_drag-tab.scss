@@ -12,26 +12,37 @@ $drag-tab-icon-size: 25px;
 
 .drag-tab {
 
-  width: 100%;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  position: relative;
+  display: block;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   height: $drag-tab-height;
-  background-color: $color-white;
+  background-color: $color-corporative;
   margin: 0;
   z-index: $z-index-03;
-  padding: $padding-small;
+  padding: $padding-small $padding-small;
   border-radius: $border-radius-circle $border-radius-circle 0 0 ;
   transform: translateY(-35px);
   transition: $transition-default-slow;
+  width: auto;
+  right: 0;
+  // margin-right: $margin-small;
+
 
   :hover {
 
     cursor: pointer;
 
   }
+
+}
+
+
+
+.drag-tab--hide{
+
+ display: none  ;
 
 }
 
@@ -53,9 +64,19 @@ $drag-tab-icon-size: 25px;
 
 }
 
+.drag-tab__order {
+
+  margin: $margin-small;
+
+}
+
+.drag-tab__list {
+}
+
 .drag-tab__icon {
 
   display: flex;
+  flex: 1;
 
   svg {
     transition: $transition-no;
@@ -77,7 +98,8 @@ $drag-tab-icon-size: 25px;
 
 @media #{$breakpoints-xlarge} {
   .drag-tab {
-
+    display: flex;
+    right: auto;
     position: fixed;
     width: auto;
     flex-direction: row-reverse;
@@ -90,6 +112,7 @@ $drag-tab-icon-size: 25px;
     padding: $padding-small;
     transition: $transition-default-slow;
     transform: translateY(0px);
+
 
   }
 

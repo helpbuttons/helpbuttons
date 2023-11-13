@@ -121,7 +121,7 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
         setFocus={setFocus}
         isSubmitting={isSubmitting}
         onSubmit={onSubmit}
-        title={t('common.publishTitle', ['helpbutton'])}
+        title={t('common.publishTitle', ['_helpbutton_'])}
       ></ButtonForm>
     </>
   );

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 import NavLink from 'elements/Navlink';
-import { IoAddOutline } from 'react-icons/io5';
+import { IoAddOutline, IoPersonAddOutline } from 'react-icons/io5';
 import { IoPersonOutline } from 'react-icons/io5';
 import { IoHeartOutline } from 'react-icons/io5';
 import { IoLogInOutline } from 'react-icons/io5';
@@ -70,7 +70,7 @@ function NavBottom({loggedInUser}) {
 
           <NavLink
             href="/ButtonNew"
-            className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
+            className={`nav-bottom__link nav-bottom__link--create nav-bottom__link--active ${isCurrent(
               'ButtonNew',
             )}`}
           >
@@ -82,15 +82,15 @@ function NavBottom({loggedInUser}) {
 
           {!loggedInUser && (
             <NavLink
-              href="/Faqs"
+              href="/Signup"
               className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
-                'Faqs',
+                'Signup',
               )}`}
             >
               <div className="nav-bottom__icon">
-                <IoHelpOutline />
+                <IoPersonAddOutline />
               </div>
-              <div className="nav-bottom__text">{t('menu.faqs')}</div>
+              <div className="nav-bottom__text">{t('menu.signup')}</div>
             </NavLink>
           )}
 

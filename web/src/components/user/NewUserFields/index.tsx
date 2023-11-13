@@ -59,10 +59,12 @@ export default function NewUserFields({
         })}
       ></FieldPassword>
       
-      <FieldLanguagePick onChange={(value) => setValue('locale', value)} defaultValue={getLocale()}/>
+      <FieldLanguagePick onChange={(value) => setValue('locale', value)} explain={t('user.pickLanguageExplain')} defaultValue={getLocale()}/>
       <FieldImageUpload
         name="avatar"
         label={t('common.choose', ['avatar'])}
+        explain={t('user.avatarExplain')}
+        text={t('user.avatar')}
         control={control}
         width={150}
         height={150}

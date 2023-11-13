@@ -7,6 +7,8 @@ import ImageUploading from 'react-images-uploading';
 export default function FieldImageUploads({
   name,
   label,
+  text,
+  explain,
   maxNumber,
   setValue,
   validationError,
@@ -41,6 +43,10 @@ export default function FieldImageUploads({
   return (
     <>
       <div className="form__field">
+      {label && <label className="form__label">{label}</label>}
+      {explain && 
+          <p className="form__explain">{explain}</p>
+      }
         <ImageUploading
           multiple
           value={images}
@@ -60,7 +66,7 @@ export default function FieldImageUploads({
                   onImageUpload();
                 }}
               >
-                {label}
+                {text}
               </label>
               {imageList.length > 0 && (
                 <ul>

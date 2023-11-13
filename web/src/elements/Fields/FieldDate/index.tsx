@@ -46,7 +46,7 @@ export default function FieldDate({
    }
   */
   const datesAreValid = () => {
-    if (eventEnd.getTime() < eventStart.getTime()) {
+    if (eventEnd?.getTime() < eventStart?.getTime()) {
       setInvalidDates(() => true);
       return false;
     }
@@ -130,20 +130,20 @@ const EventType = React.forwardRef(
   ({ name, onChange, onBlur, label, explain, value }, ref) => {
     const eventTypes = [
       {
-        label: 'Once',
-        explain: 'Choose the day.',
+        label: t('eventType.once'),
+        explain: t('eventType.onceExplain'),
         type: DateTypes.ONCE,
       },
       {
-        label: 'Multiple days',
-        explain: 'Choose when it starts and ends.',
+        label: t('eventType.multipleDates'),
+        explain: t('eventType.multipleExplain'),
         type: DateTypes.MULTIPLE,
       },
-      {
-        label: 'Recurring',
-        explain: 'Choose frequency and select days',
-        type: DateTypes.RECURRENT,
-      },
+     //{
+     //   label: t('eventType.recurring'),
+     //  explain: t('eventType.recurringExplain'),
+     //   type: DateTypes.RECURRENT,
+     //},
     ];
     return (
       <>
@@ -183,7 +183,6 @@ export function ShowDate({
 }) {
   return (
     <div className="card-button__date">
-      {!eventType && <>{title}</>}
       {readableEventDateTime(eventType, eventStart, eventEnd, isUTC)}
     </div>
   );

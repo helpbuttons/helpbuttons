@@ -3,6 +3,7 @@ import FieldError from "../FieldError";
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { SearchIndex } from 'emoji-mart'
+import t from "i18n";
 
 export const FieldTextArea = React.forwardRef((props, ref) => {
 
@@ -92,7 +93,9 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
           onInput={onInput}
         ></textarea>
         {maxLength > 0 && 
-          <>{textLength} / {maxLength}</>
+          <>
+          <div className="form__input--text-length">{textLength} / {maxLength}</div>
+          </>
         }
         {/*<>
         {showEmojiDropDown && 

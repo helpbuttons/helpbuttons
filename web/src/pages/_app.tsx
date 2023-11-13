@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import '../styles/app.scss';
 import Head from 'next/head';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
@@ -12,7 +12,7 @@ import { GlobalState, store } from 'pages';
 import { FetchDefaultNetwork } from 'state/Networks';
 import { FetchUserData } from 'state/Users';
 
-import { useRef, useStore } from 'store/Store';
+import { useStore } from 'store/Store';
 import { GetConfig } from 'state/Setup';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
@@ -44,6 +44,7 @@ function MyApp({ Component, pageProps }) {
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
   const [noBackend, setNobackend] = useState(false);
+  const loadingConfig = useRef(false)
 
   const config = useStore(
     store,
@@ -80,7 +81,8 @@ function MyApp({ Component, pageProps }) {
       setIsSetup(true);
     }
 
-    if (!config) {
+    if (!config && !loadingConfig.current) {
+      loadingConfig.current = true;
       store.emit(
         new GetConfig(
           (config) => {
@@ -222,20 +224,9 @@ function MyApp({ Component, pageProps }) {
   }, [config, selectedNetwork]);
 
   const pageName = path.split('/')[1];
-  let [networkBackgroundColor, setNetworkBackgroundColor] =
-    useState('#FFDD02');
-  let [networkTextColor, setNetworkTextColor] = useState('black');
   const { pathname, asPath, query, locale } = useRouter()
   
   useEffect(() => {
-    if (selectedNetwork?.backgroundColor) {
-      setNetworkBackgroundColor(
-        () => selectedNetwork.backgroundColor,
-      );
-    }
-    if (selectedNetwork?.textColor) {
-      setNetworkTextColor(() => selectedNetwork.textColor);
-    }
     if (selectedNetwork)
     {
       if(!loggedInUser && getLocale() != selectedNetwork.locale)
@@ -256,25 +247,35 @@ function MyApp({ Component, pageProps }) {
         <meta name="commit" content={version.git} />
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
+      {selectedNetwork && 
       <div
         className={`${user ? '' : 'index__container'}`}
         style={
           {
-            '--network-background-color': networkBackgroundColor,
-            '--network-text-color': networkTextColor,
+            '--network-background-color': selectedNetwork.backgroundColor,
+            '--network-text-color': selectedNetwork.textColor,
           } as React.CSSProperties
         }
       >
         <Alert />
-        
+        <div className="index__content">
           {(isRoleAllowed(Role.guest, pathname) || authorized) && 
-            <div className="index__content">
               <Component {...pageProps} />
-              <NavBottom loggedInUser={loggedInUser}/>
-            </div>
           }
-        
+          <NavBottom loggedInUser={loggedInUser}/>
+            </div>
       </div>
+      }
+      {(isSetup && !selectedNetwork) &&
+        <div
+          className={`${user ? '' : 'index__container'}`}
+        >
+        <Alert />
+        <div className="index__content">
+              <Component {...pageProps} />
+            </div>
+        </div>
+      }
     </>
   );
 }

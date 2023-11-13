@@ -10,6 +10,7 @@ import Btn, { ContentAlignment } from 'elements/Btn';
 export default function ContentList({
   buttons,
   buttonTypes,
+  linkToPopup = true,
   ...props
 }) {
   if (buttons.length < 1) {
@@ -33,6 +34,6 @@ export default function ContentList({
   }
   return buttons.map((btn, i) => (
     // <>{JSON.stringify(buttonTypes)}</>
-    <CardButtonList key={i} button={btn} buttonTypes={buttonTypes} />
+    <CardButtonList key={i} button={btn} buttonTypes={buttonTypes} linkToPopup={linkToPopup}/>
   ));
 }

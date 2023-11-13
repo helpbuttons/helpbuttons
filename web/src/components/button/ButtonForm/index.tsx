@@ -164,7 +164,9 @@ export default function ButtonForm({
             <FieldImageUploads 
             defaultImages={watch('images')}
             name='images'
+            text={t('button.imagesText')} 
             label={t('button.imagesLabel')} 
+            explain={t('button.imagesExplain')} 
             maxNumber={5}
             setValue={(images) => setValue('images', images)}
             validationError={errors.images}/>

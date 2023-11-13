@@ -17,7 +17,10 @@ import { StorageService } from '../storage/storage.service';
 import { User } from '../user/user.entity';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { Role } from '@src/shared/types/roles';
-import { isImageData, isImageUrl} from '@src/shared/helpers/imageIsFile';
+import {
+  isImageData,
+  isImageUrl,
+} from '@src/shared/helpers/imageIsFile';
 import { maxResolution } from '@src/shared/types/honeycomb.const';
 import { PostService } from '../post/post.service';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
@@ -50,20 +53,27 @@ export class ButtonService {
       );
     }
 
-    const buttonTemplates = network.buttonTemplates 
-    const buttonTemplate = buttonTemplates.find((buttonTemplate) => buttonTemplate.name == createDto.type)
-    
-    if(buttonTemplate?.customFields)
-    {
-      const isEvent = buttonTemplate?.customFields.find((customField) => customField.type == 'event') 
-      if (isEvent)
-      {
-        if(!createDto.eventEnd || !createDto.eventStart || !createDto.eventType)
-        {
+    const buttonTemplates = network.buttonTemplates;
+    const buttonTemplate = buttonTemplates.find(
+      (buttonTemplate) => buttonTemplate.name == createDto.type,
+    );
+
+    if (buttonTemplate?.customFields) {
+      const isEvent = buttonTemplate?.customFields.find(
+        (customField) => customField.type == 'event',
+      );
+      if (isEvent) {
+        if (
+          !createDto.eventEnd ||
+          !createDto.eventStart ||
+          !createDto.eventType
+        ) {
           throw new CustomHttpException(ErrorName.invalidDates);
         }
-        if(new Date(createDto.eventEnd).getTime() < new Date(createDto.eventStart).getTime())
-        {
+        if (
+          new Date(createDto.eventEnd).getTime() <
+          new Date(createDto.eventStart).getTime()
+        ) {
           throw new CustomHttpException(ErrorName.invalidDates);
         }
       }
@@ -83,7 +93,8 @@ export class ButtonService {
       image: null,
       title: createDto.title,
       address: createDto.address,
-      hexagon: () => `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
+      hexagon: () =>
+        `h3_lat_lng_to_cell(POINT(${createDto.longitude}, ${createDto.latitude}), ${maxResolution})`,
       hideAddress: createDto.hideAddress,
       price: createDto.price,
       eventStart: createDto.eventStart,
@@ -108,34 +119,34 @@ export class ButtonService {
             });
         }
 
-        if(createDto.images?.length > 0)
-        {
-          await Promise.all(createDto.images.map(async (image) => {
-            if (isImageData(image)) {
+        if (createDto.images?.length > 0) {
+          await Promise.all(
+            createDto.images.map(async (image) => {
+              if (isImageData(image)) {
                 try {
-                  const newImage = await this.storageService.newImage64(
-                    image,
-                  );
-                  if(newImage){
-                    button.images.push(newImage)
+                  const newImage =
+                    await this.storageService.newImage64(image);
+                  if (newImage) {
+                    button.images.push(newImage);
                   }
                 } catch (err) {
-                  throw new ValidationException({ images: err.message });
+                  throw new ValidationException({
+                    images: err.message,
+                  });
                 }
+              } else if (isImageUrl(image)) {
+                button.images.push(image);
+              } else {
+                console.error('no image data, or image url?');
+                console.log(image);
               }
-              else if(isImageUrl(image)){
-                button.images.push(image)
-              }else{
-                console.error('no image data, or image url?')
-                console.log(image)
-              }
-          }))
+            }),
+          );
         }
-        if(button.images.length > 0)
-        {
-          button.image = button.images[0]
+        if (button.images.length > 0) {
+          button.image = button.images[0];
         }
-        await this.buttonRepository.insert([button])
+        await this.buttonRepository.insert([button]);
       },
     );
 
@@ -145,14 +156,14 @@ export class ButtonService {
   async findById(id: string) {
     let button: Button = await this.buttonRepository.findOne({
       where: { id, ...this.deletedBlockedConditions() },
-      relations: [
-        'owner',
-      ],
+      relations: ['owner'],
     });
-    
-    if(!button)
-    {
-      throw new HttpException('button not found', HttpStatus.NOT_FOUND)
+
+    if (!button) {
+      throw new HttpException(
+        'button not found',
+        HttpStatus.NOT_FOUND,
+      );
     }
     return { ...button };
   }
@@ -174,39 +185,38 @@ export class ButtonService {
       ...location,
       images: [],
       id,
-      tags: this.tagService.formatTags(updateDto.tags)
+      tags: this.tagService.formatTags(updateDto.tags),
     };
 
     if (button.tags) {
       await this.tagService.updateTags('button', id, button.tags);
     }
 
-    if(updateDto.images?.length > 0)
-    {
-      await Promise.all(updateDto.images.map(async (image) => {
-        if (isImageData(image)) {
+    if (updateDto.images?.length > 0) {
+      await Promise.all(
+        updateDto.images.map(async (image) => {
+          if (isImageData(image)) {
             try {
               const newImage = await this.storageService.newImage64(
                 image,
               );
-              if(newImage){
-                button.images.push(newImage)
+              if (newImage) {
+                button.images.push(newImage);
               }
             } catch (err) {
               throw new ValidationException({ images: err.message });
             }
+          } else if (isImageUrl(image)) {
+            button.images.push(image);
+          } else {
+            console.error('no image data, or image url?');
+            console.log(image);
           }
-          else if(isImageUrl(image)){
-            button.images.push(image)
-          }else{
-            console.error('no image data, or image url?')
-            console.log(image)
-          }
-      }))
+        }),
+      );
     }
-    if(button.images.length > 0)
-    {
-      button.image = button.images[0]
+    if (button.images.length > 0) {
+      button.image = button.images[0];
     }
 
     return this.buttonRepository.save([button]);
@@ -214,28 +224,33 @@ export class ButtonService {
 
   async findh3(resolution, hexagons) {
     try {
-      if(hexagons && hexagons.length > 1000)
-      {
-        throw new HttpException('too many hexagons requested, aborting',HttpStatus.PAYLOAD_TOO_LARGE)
+      if (hexagons && hexagons.length > 1000) {
+        throw new HttpException(
+          'too many hexagons requested, aborting',
+          HttpStatus.PAYLOAD_TOO_LARGE,
+        );
       }
       const buttonsOnHexagons = await this.buttonRepository
         .createQueryBuilder('button')
         .select('id')
-        .where(`h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false`,{ hexagons:hexagons })
+        .where(
+          `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false`,
+          { hexagons: hexagons },
+        )
         .limit(1000)
         .execute();
-        const buttonsIds = buttonsOnHexagons.map((button) => button.id);
+      const buttonsIds = buttonsOnHexagons.map((button) => button.id);
 
-        return this.buttonRepository.find({
-          relations: ['feed', 'owner'],
-          where: {
-            id: In(buttonsIds),
-            ...this.deletedBlockedConditions()
-          },
-          order: {
-            created_at: 'DESC',
-          },
-        });
+      return this.buttonRepository.find({
+        relations: ['feed', 'owner'],
+        where: {
+          id: In(buttonsIds),
+          ...this.deletedBlockedConditions(),
+        },
+        order: {
+          created_at: 'DESC',
+        },
+      });
     } catch (err) {
       console.log(err);
       return [];
@@ -244,10 +259,12 @@ export class ButtonService {
 
   async delete(buttonId: string) {
     return this.findById(buttonId).then((button) => {
-      return this.buttonRepository.update(button.id,{ deleted: true }).then((res) => {
-        return button
-      })
-    }) 
+      return this.buttonRepository
+        .update(button.id, { deleted: true })
+        .then((res) => {
+          return button;
+        });
+    });
   }
 
   public isOwner(currentUser: User, buttonId: string) {
@@ -262,27 +279,54 @@ export class ButtonService {
     });
   }
 
-  async findAdminButton()
-  {
+  async findAdminButton() {
     let button: Button = await this.buttonRepository.findOne({
-      where: { owner: {role: Role.admin}, deleted: false },
-      relations: [
-        'owner',
-      ],
+      where: { owner: { role: Role.admin }, deleted: false },
+      relations: ['owner'],
       order: {
-        created_at: 'ASC' 
-      }
+        created_at: 'ASC',
+      },
     });
-    if(!button)
-    {
-      throw new HttpException('button not found', HttpStatus.NOT_FOUND)
+    if (!button) {
+      throw new HttpException(
+        'button not found',
+        HttpStatus.NOT_FOUND,
+      );
     }
     return { ...button };
   }
 
-  deletedBlockedConditions()
-  {
-    return  {deleted: false, owner: {role: Not(Role.blocked)}}
+  async findByOwner(ownerId: string) {
+    let buttons: Button[] = await this.buttonRepository.find({
+      where: { owner: {id: ownerId, role: Not(Role.blocked)}, deleted: false},
+      relations: [
+        'owner',
+      ],
+    });
+    return buttons;
   }
 
+  async follow(buttonId: string, userId: string) {
+    const button = await this.findById(buttonId);
+    const index = button.followedBy.indexOf(userId);
+    if (index < 0) {
+      button.followedBy.push(userId);
+      return await this.buttonRepository.save(button);
+    }
+    return true;
+  }
+  
+  async unfollow(buttonId: string, userId: string) {
+    const button = await this.findById(buttonId);
+    const index = button.followedBy.indexOf(userId);
+    if (index > -1) {
+      button.followedBy.splice(index, 1);
+      return await this.buttonRepository.save(button);
+    }
+    return true;
+  }
+
+  deletedBlockedConditions() {
+    return { deleted: false, owner: { role: Not(Role.blocked) } };
+  }
 }

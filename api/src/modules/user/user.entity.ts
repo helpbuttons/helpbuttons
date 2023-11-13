@@ -91,6 +91,10 @@ export class User extends BaseEntity {
   @Expose()
   @Column({default: true})
   receiveNotifications: boolean;
+
+  @Expose()
+  @Column({default: false})
+  showButtons: boolean;
 }
 
 export interface UserRelations {

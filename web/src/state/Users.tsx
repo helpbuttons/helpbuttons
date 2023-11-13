@@ -68,8 +68,8 @@ export class SignupUser implements WatchEvent {
 
   public watch(state: GlobalState) {
     return UserService.signup(this.signupRequestDto).pipe(
-      map((userData) => {
-        if (userData) {
+      map((token) => {
+        if (token) {
           return new FetchUserData(this.onSuccess, this.onError);
         }
       }),
@@ -307,6 +307,21 @@ export class UnsubscribeMails implements WatchEvent {
 
 }
 
+export class FindUserButtons implements WatchEvent {
+  public constructor(
+    private userId: string,
+    private onResult,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.findByOwner(this.userId).pipe(
+      map((buttonList) => {
+        this.onResult(buttonList);
+      }),
+      catchError((error) => {this.onResult([]); console.log(error); return  of(undefined)})
+    )
+  }
+}
 
 export function isAdmin(loggedInUser)
 {

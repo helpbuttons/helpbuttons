@@ -18,7 +18,8 @@ import { uniqueArray } from 'shared/sys.helper';
 import MultiSelectOption from 'elements/MultiSelectOption';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
-import { Dropdown } from 'elements/Dropdown/Dropdown';
+import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
+import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 
 
 export default function AdvancedFilters({
@@ -170,12 +171,13 @@ export default function AdvancedFilters({
               })}
             </FieldMultiSelect>
             
-              <DropDownWhere
-                placeholder={t('homeinfo.searchlocation')}
-                handleSelectedPlace={handleSelectedPlace}
-                address={address}
-                center={center}
-              />
+            <DropDownSearchLocation
+              placeholder={t('homeinfo.searchlocation')}
+              handleSelectedPlace={handleSelectedPlace}
+              address={address}
+              explain={t('buttonFilters.whereExplain')}
+              center={center}
+            />
             
             {center && (
               <div className="form__field">
@@ -196,7 +198,11 @@ export default function AdvancedFilters({
             )}
 
             <AdvancedFiltersSortDropDown
+              className={'dropdown__dropdown-trigger'}
+              label={t('buttonFilters.orderBy')}
+              explain={t('buttonFilters.orderByExplain')}
               orderBy={watch('orderBy')}
+              isForm={true}
               setOrderBy={(value) => setValue('orderBy',value)}
               buttonTypes={buttonTypes}
               selectedButtonTypes={watch('helpButtonTypes')}
@@ -226,7 +232,7 @@ export default function AdvancedFilters({
   );
 }
 
-export function AdvancedFiltersSortDropDown({orderBy, setOrderBy, buttonTypes, selectedButtonTypes }) {
+export function AdvancedFiltersSortDropDown({className, label, orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm, explain }) {
 
 //   -Order by creation date (default)
 // -Order by proximity (When a place is selected)
@@ -245,14 +251,28 @@ export function AdvancedFiltersSortDropDown({orderBy, setOrderBy, buttonTypes, s
 
   dropdownOptions = getCustomDropDownOrderBy(dropdownOptions,buttonTypes, selectedButtonTypes )
   return (
-    <div className="form__field">
-      <Dropdown
-        label={t('buttonFilters.orderBy')}
-        options={dropdownOptions}
-        onChange={(value) => {setOrderBy(value)}}
-        defaultSelected={orderBy}
-      />
-    </div>
+    <>
+      {isForm ? 
+        (
+          <DropdownField
+            className={className}
+            explain={explain}
+            label={label}
+            options={dropdownOptions}
+            onChange={(value) => {setOrderBy(value)}}
+            defaultSelected={orderBy}
+          />
+        ) : (
+          <Dropdown
+          className={className}
+          options={dropdownOptions}
+          onChange={(value) => {setOrderBy(value)}}
+          defaultSelected={orderBy}
+          />
+        )  
+      }
+      
+    </>
   );
 }
 

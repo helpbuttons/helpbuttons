@@ -47,6 +47,11 @@ $dropdown-max-width: 10rem;
 
 }
 
+.dropdown-select__trigger--filter {
+
+ @extend .btn-filter;
+
+}
 
 @media #{$breakpoints-xxlarge} {
 

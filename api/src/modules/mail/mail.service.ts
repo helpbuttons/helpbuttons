@@ -3,6 +3,10 @@ import { Injectable } from '@nestjs/common';
 import { GlobalVarHelper } from '@src/shared/helpers/global-var.helper';
 import { NetworkService } from '../network/network.service';
 import { configFileName } from '@src/shared/helpers/config-name.const';
+import { Queue } from 'bull';
+import { InjectQueue } from '@nestjs/bull';
+import translate from '@src/shared/helpers/i18n.helper';
+import { getUrl } from '@src/shared/helpers/mail.helper';
 const config = require(`../../..${configFileName}`);
 
 @Injectable()
@@ -10,51 +14,70 @@ export class MailService {
   constructor(
     private readonly mailerService: MailerService,
     private readonly networkService: NetworkService,
+    @InjectQueue('mail') private mailQueue: Queue
     ) {}
 
   sendActivationEmail({
     to,
-    cc,
-    bcc,
+    locale,
     activationUrl,
   }: {
     to: string;
-    cc?: string;
-    bcc?: string;
+    locale: string;
     activationUrl: string;
   }) {
-    return this.sendMail({
-      to,
-      cc,
-      bcc,
-      subject: 'Please verify your account',
-      template: 'activation-account',
-      context: { activationUrl },
+    return this.networkService.findDefaultNetwork().then((network) => {
+      return this.sendWithLink({
+        to,
+        content: translate(
+          locale,
+          'email.activateContent',
+          [network.name]
+        ),
+        subject: translate(
+          locale,
+          'email.activateSubject'
+        ),
+        link: getUrl(locale, activationUrl),
+        linkCaption: translate(
+          locale,
+          'email.activateLinkCaption'
+        ),
+      });
     });
   }
 
   sendLoginTokenEmail({
     to,
-    cc,
-    bcc,
     activationUrl,
+    locale,
   }: {
     to: string;
-    cc?: string;
-    bcc?: string;
     activationUrl: string;
+    locale: string
   }) {
-    return this.sendMail({
-      to,
-      cc,
-      bcc,
-      subject: 'You requested a one-click login',
-      template: 'login-token',
-      context: { activationUrl },
+    return this.networkService.findDefaultNetwork().then((network) => {
+      return this.sendWithLink({
+        to,
+        content: translate(
+          locale,
+          'email.loginTokenContent',
+          [network.name]
+        ),
+        subject: translate(
+          locale,
+          'email.loginTokenSubject'
+        ),
+        link: getUrl(locale, activationUrl),
+        linkCaption: translate(
+          locale,
+          'email.loginTokenLinkCaption'
+        ),
+      });
     });
   }
   
-  private sendMail({
+  private async sendMail({
     to,
     cc,
     bcc,
@@ -63,42 +86,79 @@ export class MailService {
     context
   })
   {
-    if(!GlobalVarHelper.smtpAvailable)
+    console.log(`added mail to queue: ${to} - ${subject}`)
+    if(this.mailQueue.client.status != 'ready')
     {
-      console.log('Error when smtp not working. mail could not be sent')
+      console.log('redis is not running. no mail queue. sending directly.')
+      this.sendMailDirectly( {to, cc, bcc, subject, template, context})
       return;
     }
-    this.networkService.findDefaultNetwork().then((network) => {
- 
-      const vars = {...context, network: network, hostName: config.hostName, to: to}
-      this.mailerService.sendMail({
-        to,
-        cc,
-        bcc,
-        from: config.from,
-        subject: `${subject} in ${network.name}`,
-        template,
-        context: vars,
-      }).then((mail) => {console.log(`>> mail sent to ${to} with template '${template}'`)})
-      .catch((error) => {console.log(error); console.trace()})
-    }).catch((error) => console.log('getting network error?'))
-    
-    return 
+    return await this.mailQueue.add({
+      to,
+      cc,
+      bcc,
+      subject,
+      template,
+      context
+    })
   }
 
-  sendActivity({
+  sendMailDirectly( {to, cc, bcc, subject, template, context})
+  {
+    this.networkService
+      .findDefaultNetwork()
+      .then((network) => {
+        let from  = config.from
+        try {
+          from = network.name + config.from.slice(config.from.indexOf('<'))
+        }catch(err)
+        {
+          console.log('could not add network name to from')
+        }
+
+        return this.mailerService
+          .sendMail({
+            to,
+            cc,
+            bcc,
+            from: from,
+            subject: subject,
+            template,
+            context: {...context, hostName: config.hostName},
+          })
+          .then((mail) => {
+            console.log(
+              `>> mail sent to ${to} with template '${template}'`,
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+            console.trace();
+          });
+      })
+      .catch((error) => console.log('getting network error?'));
+  }
+
+  sendWithLink({
     to,
     content,
     subject,
-    link
+    link,
+    linkCaption
   }) {
     return this.sendMail({
-      to,
+      to: to,
       cc: null,
       bcc: null,
       subject: subject,
-      template: 'new-activity',
-      context: { content, link },
+      template: 'mail',
+      context: {
+        subject: subject,
+        content: content,
+        link: link, 
+        linkCaption: linkCaption,
+        to: to,
+      },
     });
   }
 }

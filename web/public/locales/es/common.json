@@ -1,24 +1,27 @@
 {
   "menu": {
     "explore": "Explora",
-    "create": "Crear",
+    "create": "Publicar",
     "profile": "Perfil",
     "activity": "Actividad",
-    "faqs": "Faqs",
-    "login": "Login",
+    "faqs": "Información",
+    "signup": "Unirme",
+    "login": "Entrar",
     "home": "Inicio",
     "donate": "Donar"
   },
   "homeinfo": {
     "selectedArea": "en el area seleccionada",
-    "start": "Donde quieres empezar?",
+    "start": "¿Dónde quieres empezar?",
+    "info": "¿De qué trata esta red?",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
+    "goToExplore": "Explorar _helpbuttons_",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
-    "stats": "Estadísticas de la Red",
+    "stats": "¿Qué hay en esta red?",
     "users": "{0} usuarios en esta Red",
     "actions": "¿Qué puedes hacer?",
-    "popularHashtags": "¿De qué tratan?",
+    "popularHashtags": "¿Qué temas se tratan?",
     "profileSubtitle": "Comprueba tu perfil",
     "createSubtitle": "Crea tu _helpbutton_ y colabora",
     "faqsSubtitle": "Lee más sobre esta app",
@@ -32,7 +35,7 @@
   },
   "feed": {
     "write": "Escribir mensaje",
-    "update": "Actualización del Usuario"
+    "update": "Actualización del Autor"
   },
   "hostname": "nombre de host",
   "common": {
@@ -85,10 +88,10 @@
     "customizeAppearance": "Personaliza la apariencia",
     "chooseColorsExplain": "Estos colores serán los de tu red",
     "pickSecondaryColor": "Escoge color secundario para tu red",
-    "configureNetwork": "Conifgura tu Red",
+    "configureNetwork": "Configura tu Red",
     "buttonTemplateLabel": "Elige tus tipos de botón",
     "buttonTemplatePlaceHolder": "Escribe el nombre de tu nuevo tipo",
-    "contactAdmin": "Contatar el administrador",
+    "contactAdmin": "Contactar al administrador",
     "priceFieldAdd": "Añadir precio",
     "moderationList": "Moderacion",
     "createSupportButton": "Crea tu boton de soporte para tu red",
@@ -96,6 +99,9 @@
     "customFields": "Campos personalizados"
   },
   "activities": {
+    "allNotifications":"Todas las notificationes",
+    "allMessages":"Todos los mensajes",
+    "allPosts":"Todos los posts",
     "newbutton": "Creaste un nuevo botón '{0}' en '{1}'",
     "newpost": "Hay una nueva publicacion '{0}' en el botón '{1}' por '{2}'",
     "newcomment": "'{2}' ha comentado '{0}' en respuesta al post '{1}'",
@@ -103,6 +109,9 @@
     "markedAllAsRead": ""
   },
   "user": {
+    "login":"Escribe tus datos si tienes cuenta",
+    "signup":"Únete para participar",
+    "updateProfile": "Completar Perfil",
     "profileView": "Tu Perfil",
     "otherProfileView": "Usuario",
     "email": "Email",
@@ -113,8 +122,12 @@
     "loginButton": "ENTRAR",
     "loginClick": "Iniciar sesión con enlace al email",
     "passwordMismatch": "Las contraseñas no coinciden",
-    "name": "Nombre de perfil",
+    "name": "Nombre público",
+    "nameExplain": "Este es tu nombre público que otros usuarios podran ver",
+    "namePlaceHolder": "Escribe tu nombre con total libertad",
+    "usernameExplain": "The username is an unique identity what will identify you in this network and others",
     "description": "Descripción",
+    "descriptExplain": "Breve descripción sobre ti o lo que haces que se mostrará en tu perfil",
     "setNewPassword": "Crea una nueva contraseña",
     "newPassword": "Escribe tu nueva contraseña",
     "passwordPlaceHolder": "Escribe tu contraseña",
@@ -123,12 +136,13 @@
     "newLoginTokenSent": "Si tienes una cuenta, recibirás un email con un link para hacer login.",
     "sendLoginToken": "Mandar enlace de Inicio de Sesión",
     "loginLink": "Tengo cuenta",
-    "avatar": "Elige una imagen de perfil",
+    "avatar": "Elige avatar",
+    "avatarLabel": "Imagen de perfil",
+    "avatarExplain": "Esta es la imagen de perfil/avatar que te representará en esta Red",
     "newPasswordPlaceHolder": "Tu nueva contraseña",
-    "usernamePlaceHolder": "Nombre de usuario",
+    "usernamePlaceHolder": "Excribe un nombre de usuario",
     "editProfile": "Editar perfil",
     "noAccount": "No tengo cuenta",
-    "namePlaceHolder": "Nombre",
     "tags": "Intereses relacionados",
     "passwordConfirmationPlaceHolder": "Escribe tu contraseña otra vez por favor",
     "deactivate": "Desactivar cuenta",
@@ -137,12 +151,18 @@
     "loginSucess": "Entraste sin problemas!",
     "emailPlaceHolder": "Por ejemplo luis@email.org",
     "pickLanguageLabel": "Elige idioma",
+    "pickLanguageExplain": "Los menús de la herramienta serán traducidos a la lengua que elijas",
     "textReceiveNotifications": "Recibir notificaciones por email",
+    "receiveNotifications": "Notificaciones por email",
+    "receiveNotificationsExplain": "Marca si quieres recibir notificaciones por email cuando algún usuario te escriba algún mensaje o se publique algo sobre los usuarios que sigues o apoyas",
     "revoke": "Revocar derechos de administrador",
     "unblock": "Desbloquear",
     "block": "Bloquear",
     "promote": "Promocionar a administrador",
-    "unsubscribed": "No vas a recibir mas este tipo de emails"
+    "unsubscribed": "No vas a recibir mas este tipo de emails",
+    "showButtonsProfileLabel": "Contenido en tu página de perfil",
+    "showButtonsProfileExplain": "Marca esta opción si quieres mostrar una lista pública de tus _helpbuttons_ en tu página de perfil",
+    "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -152,11 +172,13 @@
   },
   "explore": {
     "emptyList": "Por favor, cambia tu búsqueda, mueve el mapa o  toca para encontrar más botones",
-    "createEmpty": "Crear",
+    "createEmpty": "Crear _helpbutton_",
     "noResults": "Lo siento, no hay resultados aquí",
-    "selectedHexagon": "en en área seleccionada",
+    "selectedHexagon": "en el área seleccionada",
     "filteredRadius": "en {0} · {1}km",
-    "noFilter": "en {0}"
+    "noFilter": "en la zona",
+    "hideMap":"Ocultar Mapa",
+    "showMap":"Mostrar Mapa"
   },
   "buttonFilters": {
     "queryLabel": "¿Qué buscas?",
@@ -167,37 +189,40 @@
     "distance": "Distancia de búsqueda",
     "allButtonTypes": "Todos los tipos",
     "queryPlaceHolder": "Amigos, comida, ropa, herramientas...",
-    "whereExplain": "Busca el lugar al que quieres ir",
+    "whereExplain": "Busca el lugar en que quieras buscar o pulsa en el icono para marcar tu ubicación",
     "types": "Tipos de _helpbuttons_",
     "typesExplain": "Selecciona los tipos de _helpbuttons_ que quieras filtrar",
     "price": "Precio",
     "minPricePlaceholder": "Desde",
     "maxPriceLabel": "Hasta",
-    "whereLabel": "Where",
+    "whereLabel": "Dónde ",
     "whenLabel": "Cuándo?",
     "whenExplain": "Filtra los eventos por fecha",
-    "byDate": "Por fecha de creacion",
+    "byDate": "Últimos creados",
     "byPrice": "Por precio",
     "orderBy": "Ordenar por",
+    "orderByExplain": "Elige el orden en el que aparecerán _helpbuttons_ en la lista",
     "priceExplain": "Filtrar por precio",
-    "byProximity": "Por proximidade",
-    "byEventDate": "By ínicio del evento"
+    "byProximity": "Por proximidad",
+    "byEventDate": "Por ínicio del evento"
   },
   "button": {
     "title":"Vista de _helpbutton_",
     "copy": "Copiar enlace",
     "delete": "Borrar",
-    "typeExplain": "Por favor elige qué tipo de _helpbutton_ te gustaría crear",
+    "typeExplain": "Por favor elige qué tipo de _helpbutton_ te gustaría publicar",
     "placeHolderTitle": "Escribe un nuevo título para tu _helpbutton_",
     "descriptionLabel": "Descripción",
     "tagsLabel": "Palabras clave",
-    "tagsExplain": "Opcionalmente, escribe si quieres y pulsa enter para cada palabra clave que quieras añadir",
-    "imagesLabel": "Subir imagen",
+    "tagsExplain": "Opcionalmente, escribe y pulsa enter para cada palabra clave que quieras añadir",
+    "imagesLabel": "Sube las imágenes que quieras",
+    "imagesExplain": "Imágenes que selecciones se mostraran en tu _helpbutton_",
+    "imagesText": "Elegir imágenes",    
     "whenLabel": "Cuándo",
     "changeDateLabel": "Elige una fecha",
     "changePlaceLabel": "Elige un lugar",
     "firstPost": "¡Hola! Creé este _helpbutton_ el {0}, deja un comentario si quieres",
-    "errorCreated": "Error al crear",
+    "errorCreated": "Error al publicar",
     "placeHolderDescription": "Escribe una descripción para tu _helpbutton_",
     "typeLabel": "Tipo de _helpbutton_",
     "descriptionExplain": "Descripción",
@@ -209,7 +234,9 @@
     "pickButtonTemplateColor": "Elige color para tu tipo de _helpbutton_",
     "unknownPlace": "Sitio desconocido",
     "hideAddress": "Esconder ubicación exacta",
-    "created": "creado"
+    "created": "creado",
+    "follow": "Seguir",
+    "unfollow": "Dejar de seguir"
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -253,17 +280,26 @@
   },
   "comment": {
     "placeholderWrite": "Escribe un mensaje en esta publicación",
+    "public":"Este comentario es público, todos podrán verlo.",
+    "private":"Estas mandando un mensaje privado. Sólo el destinatario podrá verlo.",
     "delete": "Borrar"
   },
   "picker": {
     "headerText": "Elige una localización"
   },
   "eventType": {
+    "typePicker": "Elige una fecha",
+    "headerText": "¿Cuándo es tu evento?",
     "calendarHeaderText": "Elige fecha y hora",
     "from": "De... ",
     "until": "Hasta... ",
-    "eventFieldAdd": "Add date",
-    "headerText": ""
+    "eventFieldAdd": "Añade una fecha",
+    "once":"Una fecha",
+    "multipleDates":"Multiples fechas",
+    "recurring":"Evento recurrente",
+    "multipleExplain":"Selecciona el día y la hora para tus eventos",
+    "onceExplain":"Selecciona el día y la hora para tus evento",
+    "recurringExplain":"Selecciona días y la hora para tus eventos"
   },
   "faqs": {
     "title": "Preguntas frecuentes",
@@ -293,17 +329,27 @@
     "1day": "1 dia",
     "1week": "1 semana",
     "expiresIn": "Expira",
-    "clickToCopy": "Copiar link de invitacion",
+    "clickToCopy": "Copiar link de invitación",
     "maximumUsageTimes": "Numero de utilizaciones",
     "nolimit": "Sin limite",
     "inviteOnlyNetwork": "Sólo puedes registrarte en esta red con una invitación.",
-    "generate": "Crear nuevo link de invitacion",
-    "copied": "Link de invitacion copiado {0}",
+    "generate": "Crear nuevo link de invitación",
+    "copied": "Link de invitación copiado {0}",
     "title": "Invitaciones",
     "description": "Invita a personas, administra y comparte enlaces con otras personas para permitirles acceder a tu red",
     "inviteOnly": "Sólo permitir el registro con una invitación"
   },
   "customFields": {
     "priceLabel": "Precio ({0})"
+  },
+  "email": {
+    "loginTokenContent": "Bienvenido a {0}",
+    "loginTokenSubject": "Solicitaste un inicio de sesión con un solo clic",
+    "loginTokenLinkCaption": "Haga clic aquí para acceder a su cuenta",
+    "activateContent": "Bienvenido a {0}",
+    "activateSubject": "Por favor activa tu cuenta",
+    "activateLinkCaption": "Haga clic aquí para activar su cuenta",
+    "activitySubject": "Nueva atividad",
+    "buttonLinkCaption": "Presiona aqui para abrir-lo"
   }
 }

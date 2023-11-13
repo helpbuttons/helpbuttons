@@ -90,6 +90,19 @@ $filters-padding: 10px;
 
 }
 
+.filters__orderBy {
+
+  margin-bottom: 0;
+  width: auto;
+
+  select:active {
+
+    background: transparent;
+
+  }
+
+}
+
 
 @media #{$breakpoints-xlarge} {
 

@@ -24,7 +24,8 @@ export default function HexagonExploreMap({
   selectedNetwork,
 }) {
   const [centerBounds, setCenterBounds] = useState<Point>(null);
-  const geoJsonFeatures = useRef([])
+  const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
+
   const maxButtonsHexagon = useRef(1)
   const [isRedrawingMap, setIsRedrawingMap] = useState(true)
   const onBoundsChanged = ({ center, zoom, bounds }) => {
@@ -34,8 +35,12 @@ export default function HexagonExploreMap({
     setCenterBounds(center);
   };
 
+  const onMapCLick =() => {
+    setHexagonClicked( () => null ) 
+  };
+
   useEffect(() => {
-    geoJsonFeatures.current = convertH3DensityToFeatures(h3TypeDensityHexes);
+    setGeoJsonFeatures(() => convertH3DensityToFeatures(h3TypeDensityHexes).filter((hex) => hex.properties.count > 0));
 
     maxButtonsHexagon.current = h3TypeDensityHexes.reduce((accumulator, currentValue) => {
         return Math.max(accumulator, currentValue.count);
@@ -54,6 +59,7 @@ export default function HexagonExploreMap({
         mapZoom={exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
         tileType={selectedNetwork.exploreSettings.tileType}
+        handleClick={onMapCLick}
       >
         <Overlay anchor={[100, 100]}>
           <div className="search-map__network-title">
@@ -69,7 +75,7 @@ export default function HexagonExploreMap({
 
         {!isRedrawingMap && 
         <GeoJson>
-          {geoJsonFeatures.current.map((hexagonFeature) => (
+          {geoJsonFeatures.map((hexagonFeature) => (
             <GeoJsonFeature
               onClick={(feature) => {
                 if (hexagonFeature.properties.count > 0) {
@@ -131,7 +137,7 @@ export default function HexagonExploreMap({
         show count of buttons per hexagon
         */}
         {!isRedrawingMap &&
-          geoJsonFeatures.current.map((hexagonFeature) => {
+          geoJsonFeatures.map((hexagonFeature) => {
             if (
               hexagonFeature.properties.hex !==
                 hexagonClicked?.properties.hex &&

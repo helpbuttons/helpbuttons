@@ -32,12 +32,21 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
     border-radius: $border-radius-circle;
     display: flex;
     align-items: center;
+    padding: 0;
     justify-content: center;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
 
 
+    &:hover {
+
+        cursor: pointer;
+
+    }
+
     svg {
+        
         fill: $color-gray;
+        height: 200px;
     }
 
 }
@@ -92,6 +101,20 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
     width: 4rem;
     left: -0.8rem;
     position: relative;
+
+
+}
+
+.pigeon-attribution {
+
+    background: transparent !important;
+    // display: flex !important;
+    // flex-direction: column !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 6px !important;
+    writing-mode: vertical-rl !important;
+    text-orientation: mixed !important;
 
 
 }

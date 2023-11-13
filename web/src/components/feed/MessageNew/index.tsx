@@ -62,10 +62,17 @@ export default function MessageNew({
               {...register('message', { required: true })}
               maxLength={500}
             />
-            {privateMessage && (
+            {isComment && !privateMessage && (
               <div className="form__input-subtitle-side">
                 <label className="form__input-subtitle--error">
-                  private
+                  {t('comment.public')}
+                </label>
+              </div>
+            )}
+            {isComment && privateMessage && (
+              <div className="form__input-subtitle-side">
+                <label className="form__input-subtitle--error">
+                  {t('comment.private')}
                 </label>
               </div>
             )}

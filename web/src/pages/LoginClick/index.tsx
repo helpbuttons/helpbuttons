@@ -48,7 +48,7 @@ export default function LoginClick() {
 
   return (
     <>
-      <Popup title="LoginClick" linkFwd="/HomeInfo">
+      <Popup title={t("user.loginClick")} linkFwd="/HomeInfo">
         <Form
           onSubmit={handleSubmit(onSubmit)}
           classNameExtra="login"

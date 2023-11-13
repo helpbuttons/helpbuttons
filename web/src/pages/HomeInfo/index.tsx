@@ -5,6 +5,7 @@ import router from 'next/router';
 import t from 'i18n';
 import Btn, {
   BtnType,
+  ContentAlignment,
   IconType,
 } from 'elements/Btn';
 import NetworkLogo from 'components/network/Components';
@@ -28,6 +29,7 @@ import { useToggle } from 'shared/custom.hooks';
 import { UpdateFiltersToFilterButtonType, UpdateFiltersToFilterTag } from 'state/Explore';
 import Alert from 'components/overlay/Alert';
 import { formatMessage } from 'elements/Message';
+import Link from 'next/link';
 
 
 export default function HomeInfo({
@@ -79,15 +81,11 @@ export default function HomeInfo({
       </div>
       <div
         className='info-overlay__container'
-        style={
-          {
-            '--network-jumbo': `url('/api/${selectedNetwork.jumbo}'`,
-          } as React.CSSProperties
-        }
       >
           <div className="info-overlay__content">
             <>
               <div className="info-overlay__card">
+
                 {navigatorCoordinates && (
                   <div className="card">
                     <div className="card__header">
@@ -103,7 +101,14 @@ export default function HomeInfo({
                   </div>
                 )}
                 {/* INFO CARD */}
-                <div className="card">
+                <div className="card info-overlay__card--header"
+                                  
+                  style={
+                    {
+                      '--network-jumbo': `url('/api/${selectedNetwork.jumbo}'`,
+                    } as React.CSSProperties
+                  }
+                >
                   <div className="card__header">
                     <div className="avatar-medium--home">
                       <NetworkLogo network={selectedNetwork} />
@@ -112,6 +117,28 @@ export default function HomeInfo({
                       {selectedNetwork.name}
                     </h3>
                   </div>
+
+                  <div className="card__section">
+
+                      <Btn
+                        btnType={BtnType.corporative}
+                        contentAlignment={ContentAlignment.center}
+                        iconLeft={IconType.svg}
+                        caption={t('homeinfo.goToExplore')}
+                        onClick={()=>router.push('Explore')}
+                      />
+
+                  </div>
+                </div>
+
+                {/*  INFO CARD */}
+                <div className="card">
+                  <div className="card__header">
+                    <h3 className="card__header-title">
+                        {t('homeinfo.info')}
+                    </h3>
+                  </div>
+                  <hr></hr>
                   <div className="info-overlay__description">
                     {formatMessage(selectedNetwork.description)}
                   </div>
@@ -125,8 +152,7 @@ export default function HomeInfo({
                           {config.hostname}
                         </span>
                       </NavLink>
-                    </div>
-               
+                  </div>
                 </div>
 
                 {/* STATS CARD */}
@@ -250,13 +276,13 @@ export default function HomeInfo({
                       <span>{t('homeinfo.createNetworkButton')}</span>
                     </NavLink>
                   </div>
-                   <div className="card__section">
+                   {/* <div className="card__section">
                       <p>{t('homeinfo.donateSubtitle')}</p>
                         <NavLink href="https://buy.stripe.com/dR68wx3CY17VdFKfZc">
                         <IoCashOutline />
                         <span>{t('menu.donate')}</span>
                       </NavLink>
-                    </div>
+                    </div> */}
                 </div>
               </div>
             </>
@@ -271,7 +297,6 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     const serverProps = await ServerPropsService.general('Home', ctx);
     return { props: serverProps };
   } catch (err) {
-    console.log(err);
     return {
       props: {
         metadata: null,

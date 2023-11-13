@@ -62,7 +62,7 @@ export class NetworkService {
       backgroundColor: createDto.backgroundColor,
       textColor: createDto.textColor,
       buttonTemplates: JSON.stringify(createDto.buttonTemplates),
-      locale: 'en',
+      locale: createDto.locale,
       currency: createDto.currency,
       nomeclature: createDto.nomeclature,
       nomeclaturePlural: createDto.nomeclaturePlural,

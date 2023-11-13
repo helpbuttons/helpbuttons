@@ -28,6 +28,10 @@ margin: $margin-medium 0;
   font-size: $font-size-general;
   font-weight: bold;
 
+  &:first-letter {
+    text-transform: uppercase;
+  }
+
 }
 
 .form__explain {
@@ -37,6 +41,10 @@ margin: $margin-medium 0;
   font-size: $font-size-general;
   font-weight: $font-weight-light;
   height: auto;
+  &:first-letter {
+    text-transform: uppercase;
+  }
+  
 }
 
 
@@ -80,6 +88,10 @@ margin: $margin-medium 0;
   margin-bottom: $margin-big;
 }
 
+.form__field--noMargin {
+  margin-bottom: 0;
+}
+
 .form__field--location {
 
   display: flex;
@@ -107,7 +119,6 @@ margin: $margin-medium 0;
   padding: .5rem .5rem;
   font-size: $font-size-medium;
 }
-
 
 .form__field--feed button {
   background: $color-corporative;
@@ -173,6 +184,15 @@ margin: $margin-medium 0;
 
 
 }
+
+.form__input--text-length {
+
+  font-size: $font-size-small;
+  color: $color-gray;
+  
+}
+
+
 //react select plugin styles modification //REVISE
 .form__input--plugin {
 

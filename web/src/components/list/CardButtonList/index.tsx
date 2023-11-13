@@ -6,8 +6,9 @@ import { CardButtonHeadMedium } from 'components/button/CardButton';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { updateCurrentButton } from 'state/Explore';
 import { store } from 'pages';
+import router from 'next/router';
 
-export default function CardButtonList({ buttonTypes, button }) {
+export default function CardButtonList({ buttonTypes, button, linkToPopup }) {
   const buttonType = buttonTypes.find(
     (buttonTemplate) => buttonTemplate.name == button.type,
   );
@@ -20,7 +21,12 @@ export default function CardButtonList({ buttonTypes, button }) {
       {buttonType && (
         <div className="list__element" 
           onClick={() => {
-          store.emit(new updateCurrentButton(button))
+            if(linkToPopup)
+            {
+              store.emit(new updateCurrentButton(button))
+            }else{
+              router.push(`/ButtonFile/${button.id}`)
+            }
           }}
           >
           <div style={buttonColorStyle(buttonType.cssColor)}>

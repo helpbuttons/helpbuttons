@@ -83,11 +83,11 @@ export default function Signup() {
     }
   };
 
-  const onSuccess = () => {
+  const onSuccess = (userData) => {
     const returnUrl: string = router.query.returnUrl
       ? router.query.returnUrl.toString()
       : '/ProfileEdit';
-    store.emit(new NavigateTo(returnUrl));
+    router.push(returnUrl, null, { locale: userData.locale })
   };
 
   const onError = (error) => {
@@ -114,7 +114,7 @@ export default function Signup() {
     )
   }
   return (
-    <Popup title="Signup" linkFwd="/HomeInfo">
+    <Popup title={t('user.signup')} linkFwd="/HomeInfo">
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
         <div className="login__form">
           <div className="form__inputs-wrapper">

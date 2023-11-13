@@ -24,21 +24,16 @@ export function CardButtonCustomFields({ customFields, button }) {
         );
       }
       if (type == 'event') {
-        if (
-          button.eventType == DateTypes.ONCE ||
-          button.eventType == DateTypes.MULTIPLE
-        ) {
-          field = (
-            <>
-              <ShowDate
-                eventStart={button.eventStart}
-                eventEnd={button.eventEnd}
-                eventType={button.eventType}
-                title={button.title}
-              />
-            </>
-          );
-        }
+        field = (
+          <>
+            <ShowDate
+              eventStart={button.eventStart}
+              eventEnd={button.eventEnd}
+              eventType={button.eventType}
+              title={button.title}
+            />
+          </>
+        );
       }
       return <div key={key}>{field}</div>;
     });

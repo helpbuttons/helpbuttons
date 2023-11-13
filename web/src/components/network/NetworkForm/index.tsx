@@ -181,6 +181,7 @@ function NetworkForm({
             <FieldImageUpload
               name="logo"
               label={t('configuration.logo')}
+              text={t('configuration.logo')}
               width={200}
               height={200}
               subtitle="400x400px"
@@ -192,6 +193,7 @@ function NetworkForm({
             <FieldImageUpload
               name="jumbo"
               label={t('configuration.jumbo')}
+              text={t('configuration.jumbo')}
               subtitle="1500x1500px"
               setValue={setValue}
               width={750}
