@@ -1,6 +1,5 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { GlobalVarHelper } from '@src/shared/helpers/global-var.helper';
 import { NetworkService } from '../network/network.service';
 import { configFileName } from '@src/shared/helpers/config-name.const';
 import { Queue } from 'bull';
@@ -124,7 +123,7 @@ export class MailService {
             from: from,
             subject: subject,
             template,
-            context: {...context, hostName: config.hostName},
+            context: {...context, hostName: config.hostName, to: to},
           })
           .then((mail) => {
             console.log(
@@ -158,6 +157,24 @@ export class MailService {
         link: link, 
         linkCaption: linkCaption,
         to: to,
+      },
+    });
+  }
+
+  sendDailyOutbox({
+    activities,
+    to,
+    subject
+  })
+  {
+    return this.sendMail({
+      to: to,
+      cc: null,
+      bcc: null,
+      subject: subject,
+      template: 'daily-outbox',
+      context: {
+          activities
       },
     });
   }

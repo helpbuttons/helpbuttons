@@ -347,6 +347,7 @@
     "activateSubject": "Please activate your account",
     "activateLinkCaption": "Click here to activate your account",
     "activitySubject": "New activity",
-    "buttonLinkCaption": "Click here to open"
+    "buttonLinkCaption": "Click here to open",
+    "dailyOutBox": "There were {0} activities"
   }
 }
