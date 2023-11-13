@@ -229,7 +229,8 @@
   },
   "validation": {
     "fieldRequired": "{0} is required.",
-    "tooShort": "{0} is too short."
+    "tooShort": "{0} is too short.",
+    "error": "Check the fields, there are errors in the form"
   },
   "post": {
     "comment": "comment",

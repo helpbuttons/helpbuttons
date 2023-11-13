@@ -251,7 +251,8 @@
   },
   "validation": {
     "fieldRequired": "se necesita {0}",
-    "tooShort": "{0} es muy corto"
+    "tooShort": "{0} es muy corto",
+    "error": "Revise los campos, hay errores en el formulario"
   },
   "setup": {
     "finish": "Finalizar configuración",
