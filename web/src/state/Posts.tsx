@@ -58,7 +58,7 @@ export class LoadPosts implements WatchEvent {
   }
 }
 
-export class CreateNewPostComment implements WatchEvent {
+export class CreateNewPostComment implements WatchEvent, UpdateEvent {
   public constructor(
     private postId: string,
     private privacy: CommentPrivacyOptions,
@@ -71,6 +71,15 @@ export class CreateNewPostComment implements WatchEvent {
       map((data) => this.onSuccess()),
       catchError((error) => handleError(this.onError, error)),
     );
+  }
+  
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.loggedInUser.id]
+      newState.explore.map.boundsFilteredButtons = []
+      newState.explore.map.cachedHexagons = []
+      newState.explore.map.listButtons = []
+    });
   }
 }
 
