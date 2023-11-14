@@ -68,13 +68,18 @@ export class UserService {
   }
 
   async update(userId: string, newUser) {
+    let center = null
+    if (newUser.center?.coordinates)
+    {
+      center =
+      `ST_Point(${newUser.center.coordinates[1]}, ${newUser.center.coordinates[0]}, 4326) ::geography`
+    }
     return this.userRepository.update(
       userId,
       removeUndefined({
         ...newUser,
          tags: this.tagService.formatTags(newUser.tags),
-         center: () =>
-         `ST_Point(${newUser.center.coordinates[1]}, ${newUser.center.coordinates[0]}, 4326) ::geography`,
+         center: center
       }),
     );
   }
