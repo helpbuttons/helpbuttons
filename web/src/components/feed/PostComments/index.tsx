@@ -7,7 +7,7 @@ import { store } from 'pages';
 import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';
-import { IoArrowUndoSharp, IoTrashBinOutline } from 'react-icons/io5';
+import { IoArrowUndoSharp, IoMailOutline, IoTrashBinOutline } from 'react-icons/io5';
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
@@ -30,12 +30,14 @@ export default function PostComments({
     );
   };
 
-  const handleClick = (comment) => {
+  const handleClick = (comment, privateMessage) => {
     let mentions = mentionsOfMessage(comment.message)
     mentions.push(comment.author.username)
+    
     onComposeReplyToComment(
       comment.id,
       mentions,
+      privateMessage
     )
   }
   
@@ -50,18 +52,34 @@ export default function PostComments({
                   <CommentMessage
                     post={comment}
                   />
-
                   <div className="message__actions">
-                      <Btn
-                        submit={false}
-                        btnType={BtnType.iconActions}
-                        iconLink={<IoArrowUndoSharp />}
-                        iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.right}
-                        onClick={() =>
-                          handleClick(comment)
-                        }
-                      />
+
+                  {(comment.privacy == CommentPrivacyOptions.PRIVATE) &&
+                     <Btn
+                       submit={false}
+                       btnType={BtnType.iconActions}
+                       iconLink={<IoMailOutline />}
+                       iconLeft={IconType.circle}
+                       contentAlignment={ContentAlignment.right}
+                       onClick={() =>
+                         handleClick(comment, true)
+                       }
+                     />
+                  }
+                   {(comment.privacy == CommentPrivacyOptions.PUBLIC) &&
+                     <Btn
+                       submit={false}
+                       btnType={BtnType.iconActions}
+                       iconLink={<IoArrowUndoSharp />}
+                       iconLeft={IconType.circle}
+                       contentAlignment={ContentAlignment.right}
+                       onClick={() =>
+                         handleClick(comment, false)
+                       }
+                     />
+                  }
+                 
+                 
                     {loggedInUser &&
                       (loggedInUser.id == comment.author.id ||
                         isButtonOwner ||

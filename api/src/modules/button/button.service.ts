@@ -5,6 +5,7 @@ import {
   Injectable,
   forwardRef,
 } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { Repository, In, EntityManager, Not } from 'typeorm';
@@ -25,6 +26,7 @@ import { maxResolution } from '@src/shared/types/honeycomb.const';
 import { PostService } from '../post/post.service';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
+import { ActivityEventName } from '@src/shared/types/activity.list';
 
 @Injectable()
 export class ButtonService {
@@ -328,5 +330,16 @@ export class ButtonService {
 
   deletedBlockedConditions() {
     return { deleted: false, owner: { role: Not(Role.blocked) } };
+  }
+
+  @OnEvent(ActivityEventName.NewPostComment)
+  async autoFollowButton(payload: any) {
+    switch (payload.activityEventName) {
+      case ActivityEventName.NewPostComment:
+        const buttonId = payload.data.button.id
+        const userId = payload.data.author.id
+        this.follow(buttonId, userId)
+        break;
+    }
   }
 }

@@ -68,12 +68,11 @@ export default function ProfileEdit() {
   const [locale, setLocale] = useState(null)
 
   const onSubmit = (data: UserUpdateDto) => {
-    const dataToSubmit : UserUpdateDto =
+    let dataToSubmit : UserUpdateDto =
     {
       name: data.name,
       email: data.email,
       avatar: data.avatar,
-      password_current: data.password_current,
       password_new: data.password_new,
       password_new_confirm: data.password_new_confirm,
       set_new_password: setNewPassword,
@@ -92,7 +91,9 @@ export default function ProfileEdit() {
       {
         setError('password_new',  { type: 'custom', message: t('user.passwordMismatch')})
         setError('password_new_confirm',  { type: 'custom', message: t('user.passwordMismatch')})
-      }
+      }else{
+        dataToSubmit = {...dataToSubmit, set_new_password: true}
+      } 
     }
     
     store.emit(new UpdateProfile(dataToSubmit, onSuccess, onError));
@@ -239,24 +240,15 @@ export default function ProfileEdit() {
                 <hr></hr>
                 <Accordion 
                   title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
+                  handleClick={() => setSetNewPassword(() => !setNewPassword)}
                 >
-                        <FieldPassword
-                          name="password_current"
-                          label={t('user.password')}
-                          classNameInput="squared"
-                          placeholder={t('user.passwordPlaceHolder')}
-                          validationError={errors.password}
-                          {...register('password_current', {
-                            minLength: 8,
-                          })}
-                        ></FieldPassword>
 
                         <FieldPassword
                           name="password_new"
                           label={t('user.newPassword')}
                           classNameInput="squared"
                           placeholder={t('user.newPasswordPlaceHolder')}
-                          validationError={errors.password}
+                          validationError={errors.password_new}
                           {...register('password_new', {
                             minLength: 8,
                           })}
@@ -266,7 +258,7 @@ export default function ProfileEdit() {
                           label={t('user.passwordConfirmation')}
                           classNameInput="squared"
                           placeholder={t('user.passwordConfirmationPlaceHolder')}
-                          validationError={errors.password}
+                          validationError={errors.password_new_confirm}
                           {...register('password_new_confirm', {
                             minLength: 8,
                           })}

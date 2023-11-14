@@ -20,8 +20,6 @@ export class UserUpdateDto {
 
   avatar?: string;
 
-  password_current?: string;
-
   password_new?: string;
 
   password_new_confirm?: string;

@@ -148,6 +148,17 @@ export class AuthService {
     });
   }
 
+  private async updateUserCredential(
+    userId,
+    plainPassword,
+  ) {
+    
+    return this.userCredentialService.updateUserCredential({
+      userId: userId,
+      password: generateHash(plainPassword),
+    });
+  }
+
   private sendLoginToken(user: User, sendActivation = false) {
     const activationUrl: string = `/LoginClick/${user.verificationToken}`;
 
@@ -210,17 +221,6 @@ export class AuthService {
   }
 
   async update(data: UserUpdateDto, currentUser) {
-    if (data.set_new_password) {
-      // save new credentials
-      if (
-        !(await checkHash(data.password_new, currentUser.password))
-      ) {
-        throw new CustomHttpException(
-          ErrorName.CurrentPasswordWontMatch,
-        );
-      }
-    }
-
     let newUser = {
       avatar: null,
       email: data.email,
@@ -248,7 +248,7 @@ export class AuthService {
       .update(currentUser.id, newUser)
       .then(() => {
         if (data.set_new_password) {
-          return this.createUserCredential(
+          return this.updateUserCredential(
             currentUser.id,
             data.password_new,
           ).then(() => true);
