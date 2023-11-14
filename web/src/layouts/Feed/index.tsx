@@ -134,7 +134,6 @@ export function FeedElement({
           </div>
         </div>
         <PostMessage post={post} />
-
         <>
           <div className="card-notification__answer-btn">
             {loggedInUser && (
@@ -229,12 +228,14 @@ export function FeedElement({
           onComposeReplyToComment={(
             commentId,
             mentions,
+            privateMessage
           ) => {
             setShowComposePostReply(() => {
               return {
                 post: post.id,
                 comment: commentId,
                 mentions: mentions.concat([post.author.username]),
+                privateMessage: privateMessage
               };
             });
           }}
@@ -295,11 +296,17 @@ export function Compose({
         </div>
         <MessageNew
           isComment={true}
+          privateMessage={referer?.privateMessage}
           onCreate={(message) => {
+            let privacy = CommentPrivacyOptions.PUBLIC;
+            if (referer?.privateMessage) {
+              privacy = CommentPrivacyOptions.PRIVATE;
+            }
+
             store.emit(
               new CreateNewPostComment(
                 referer.post,
-                CommentPrivacyOptions.PUBLIC,
+                privacy,
                 { message: message },
                 () => {
                   alertService.info('comment posted');
