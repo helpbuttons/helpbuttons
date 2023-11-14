@@ -28,6 +28,17 @@ export class UserCredentialService {
     return await this.userCredentialRepository.save(createdUserCredential);
   }
 
+  async updateUserCredential(
+    updateUserCredentialDto: Partial<UserCredential>,
+  )
+  {
+    const { password: hashedPassword, userId } =
+    updateUserCredentialDto;
+    const userCredential = await this.findOne(
+      userId,
+    );
+    return this.userCredentialRepository.update(userCredential.id, {password: hashedPassword});
+  }
   async findOne(id: string) {
     return await this.userCredentialRepository.findOne({where: {userId: id}});
   }

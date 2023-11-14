@@ -5,6 +5,7 @@ import React, {useState} from "react";
 export default function Accordion({
     title,
     children,
+    handleClick = () => {}
 }) {
 
   const [showChildren, setShowChildren] = useState(false);
@@ -13,7 +14,7 @@ export default function Accordion({
 
     return (
         <>
-          <button id={title} className={classNames} onClick={(e) => {e.preventDefault(); setShowChildren(!showChildren)}}>{title}</button>
+          <button id={title} className={classNames} onClick={(e) => {e.preventDefault(); setShowChildren(!showChildren);handleClick()}}>{title}</button>
           {showChildren &&
             <div className="panel">
               {children}
