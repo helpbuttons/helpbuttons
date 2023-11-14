@@ -17,6 +17,9 @@ export class Activity extends BaseEntity {
   @ManyToOne((type) => User)
   owner: User;
 
+  @Column({default: false})
+  outbox: boolean; // if is set to true will be sent on daily mail, and set back to false
+
   @Column({
     default: false,
   })

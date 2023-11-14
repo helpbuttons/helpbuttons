@@ -15,11 +15,14 @@ import { ErrorName } from '@src/shared/types/error.list';
 import { ButtonService } from '../button/button.service';
 import { User } from '../user/user.entity';
 import { ActivityService } from './activity.service';
+import { ActivityCron } from './activity.cron';
 
 @ApiTags('activity')
 @Controller('activity')
 export class ActivityController {
-  constructor(private readonly activityService: ActivityService) {}
+  constructor(private readonly activityService: ActivityService,
+    private readonly activityCron: ActivityCron
+    ) {}
 
   @OnlyRegistered()
   @Get('find')
@@ -40,5 +43,11 @@ export class ActivityController {
   @Post('markAllAsRead')
   async markAllAsRead(@CurrentUser() user: User) {
     return await this.activityService.markAllAsRead(user.id);
+  }
+
+  @Get('triggerNotifications')
+  async triggerNotifications()
+  {
+    return await this.activityCron.triggerNotifications()
   }
 }

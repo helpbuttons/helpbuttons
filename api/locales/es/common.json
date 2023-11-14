@@ -35,7 +35,7 @@
   },
   "feed": {
     "write": "Escribir mensaje",
-    "update": "Actualización del Usuario"
+    "update": "Actualización del Autor"
   },
   "hostname": "nombre de host",
   "common": {
@@ -99,14 +99,19 @@
     "customFields": "Campos personalizados"
   },
   "activities": {
-    "newbutton": "Creaste un nuevo botón '{0}' en '{1}'",
+    "allNotifications":"Todas las notificationes",
+    "allMessages":"Todos los mensajes",
+    "allPosts":"Todos los posts",
+    "newbutton": "Hay un nuevo _helpbutton_  '{0}' en '{1}'",
     "newpost": "Hay una nueva publicacion '{0}' en el botón '{1}' por '{2}'",
     "newcomment": "'{2}' ha comentado '{0}' en respuesta al post '{1}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
     "markedAllAsRead": ""
   },
   "user": {
-    "updateProfile": "Completar/Editar Perfil",
+    "login":"Escribe tus datos si tienes cuenta",
+    "signup":"Únete para participar",
+    "updateProfile": "Completar Perfil",
     "profileView": "Tu Perfil",
     "otherProfileView": "Usuario",
     "email": "Email",
@@ -133,7 +138,7 @@
     "loginLink": "Tengo cuenta",
     "avatar": "Elige avatar",
     "avatarLabel": "Imagen de perfil",
-    "avatarExplain": "Esta es la imagen de perfil/avatar que te representará en esta Read",
+    "avatarExplain": "Esta es la imagen de perfil/avatar que te representará en esta Red",
     "newPasswordPlaceHolder": "Tu nueva contraseña",
     "usernamePlaceHolder": "Excribe un nombre de usuario",
     "editProfile": "Editar perfil",
@@ -167,7 +172,7 @@
   },
   "explore": {
     "emptyList": "Por favor, cambia tu búsqueda, mueve el mapa o  toca para encontrar más botones",
-    "createEmpty": "Crear",
+    "createEmpty": "Crear _helpbutton_",
     "noResults": "Lo siento, no hay resultados aquí",
     "selectedHexagon": "en el área seleccionada",
     "filteredRadius": "en {0} · {1}km",
@@ -184,7 +189,7 @@
     "distance": "Distancia de búsqueda",
     "allButtonTypes": "Todos los tipos",
     "queryPlaceHolder": "Amigos, comida, ropa, herramientas...",
-    "whereExplain": "Busca el lugar al que quieres ir",
+    "whereExplain": "Busca el lugar en que quieras buscar o pulsa en el icono para marcar tu ubicación",
     "types": "Tipos de _helpbuttons_",
     "typesExplain": "Selecciona los tipos de _helpbuttons_ que quieras filtrar",
     "price": "Precio",
@@ -196,6 +201,7 @@
     "byDate": "Últimos creados",
     "byPrice": "Por precio",
     "orderBy": "Ordenar por",
+    "orderByExplain": "Elige el orden en el que aparecerán _helpbuttons_ en la lista",
     "priceExplain": "Filtrar por precio",
     "byProximity": "Por proximidad",
     "byEventDate": "Por ínicio del evento"
@@ -245,7 +251,8 @@
   },
   "validation": {
     "fieldRequired": "se necesita {0}",
-    "tooShort": "{0} es muy corto"
+    "tooShort": "{0} es muy corto",
+    "error": "Revise los campos, hay errores en el formulario"
   },
   "setup": {
     "finish": "Finalizar configuración",
@@ -274,6 +281,8 @@
   },
   "comment": {
     "placeholderWrite": "Escribe un mensaje en esta publicación",
+    "public":"Este comentario es público, todos podrán verlo.",
+    "private":"Estas mandando un mensaje privado. Sólo el destinatario podrá verlo.",
     "delete": "Borrar"
   },
   "picker": {
@@ -321,12 +330,12 @@
     "1day": "1 dia",
     "1week": "1 semana",
     "expiresIn": "Expira",
-    "clickToCopy": "Copiar link de invitacion",
+    "clickToCopy": "Copiar link de invitación",
     "maximumUsageTimes": "Numero de utilizaciones",
     "nolimit": "Sin limite",
     "inviteOnlyNetwork": "Sólo puedes registrarte en esta red con una invitación.",
-    "generate": "Crear nuevo link de invitacion",
-    "copied": "Link de invitacion copiado {0}",
+    "generate": "Crear nuevo link de invitación",
+    "copied": "Link de invitación copiado {0}",
     "title": "Invitaciones",
     "description": "Invita a personas, administra y comparte enlaces con otras personas para permitirles acceder a tu red",
     "inviteOnly": "Sólo permitir el registro con una invitación"
@@ -342,6 +351,7 @@
     "activateSubject": "Por favor activa tu cuenta",
     "activateLinkCaption": "Haga clic aquí para activar su cuenta",
     "activitySubject": "Nueva atividad",
-    "buttonLinkCaption": "Presiona aqui para abrir-lo"
+    "buttonLinkCaption": "Presiona aqui para abrir-lo",
+    "dailyOutBox": "Se han realizado {0} actividades"
   }
 }
