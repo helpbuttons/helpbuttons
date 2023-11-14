@@ -205,7 +205,7 @@ export default function ProfileEdit() {
                 )}
                   <DropDownSearchLocation
                     // label={t('user.location')}
-                    handleSelectedPlace={(newPlace) => {setValue('center.coordinates', [newPlace.geometry.lat, newPlace.geometry.lng]); setValue('address', newPlace.formatted)}}
+                    handleSelectedPlace={(newPlace) => {setValue('center', {coordinates: [newPlace.geometry.lat, newPlace.geometry.lng]}); setValue('address', newPlace.formatted)}}
                     placeholder={t('user.location')}
                     address={watch('address')}
                     explain={t('user.locationExplain')}

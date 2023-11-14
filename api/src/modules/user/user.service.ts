@@ -5,6 +5,7 @@ import { EntityManager, In, Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import { configFileName } from '@src/shared/helpers/config-name.const';
+import { getUrl } from '@src/shared/helpers/mail.helper';
 import { TagService } from '../tag/tag.service';
 const config = require(`../../..${configFileName}`);
 
@@ -71,15 +72,16 @@ export class UserService {
     let center = null
     if (newUser.center?.coordinates)
     {
-      center =
+      const center =
       `ST_Point(${newUser.center.coordinates[1]}, ${newUser.center.coordinates[0]}, 4326) ::geography`
+      this.entityManager.query(`update public.user set center = ${center} where id = '${userId}'`)
     }
+    delete(newUser.center)
     return this.userRepository.update(
       userId,
       removeUndefined({
         ...newUser,
          tags: this.tagService.formatTags(newUser.tags),
-         center: center
       }),
     );
   }
