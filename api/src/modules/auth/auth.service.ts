@@ -229,7 +229,10 @@ export class AuthService {
       locale: data.locale,
       receiveNotifications: data.receiveNotifications,
       showButtons: data.showButtons,
-      tags: data.tags
+      tags: data.tags,
+      center: data.center,
+      address: data.address,
+      radius: data.radius
     };
 
     if (isImageData(data.avatar)) {

@@ -33,6 +33,8 @@ import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import Accordion from 'elements/Accordion';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import FieldTags from 'elements/Fields/FieldTags';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 export default function ProfileEdit() {
   const {
@@ -49,7 +51,10 @@ export default function ProfileEdit() {
     locale: 'en',
     receiveNotifications: true,
     showButtons: false,
-    tags: []
+    tags: [],
+    address: '',
+    center: {coordinates: null},
+    radius: 0,
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
@@ -76,7 +81,10 @@ export default function ProfileEdit() {
       locale: locale,
       receiveNotifications: data.receiveNotifications,
       showButtons: data.showButtons,
-      tags: data.tags
+      tags: data.tags,
+      center: data.center,
+      address: data.address,
+      radius: data.radius,
     }
     if (setNewPassword)  {
       // check passwords match.. send to backend
@@ -113,6 +121,10 @@ export default function ProfileEdit() {
       reset(loggedInUser);
     }
   }, [loggedInUser]);
+
+  const radius = watch('radius')
+  const coordinates = watch('center.coordinates')
+  const center = coordinates ? [coordinates[1],coordinates[0]] : null;
   return (
     <>
       {loggedInUser && (
@@ -190,13 +202,30 @@ export default function ProfileEdit() {
                     {errorMsg}
                   </div>
                 )}
-                {/* <DropDownSearchLocation
-                  // label={t('user.location')}
-                  placeholder={t('user.location')}
-                  address={address}
-                  explain={t('user.locationExplain')}
-                  center={center}
-                /> */}
+                  <DropDownSearchLocation
+                    // label={t('user.location')}
+                    handleSelectedPlace={(newPlace) => {setValue('center.coordinates', [newPlace.geometry.lat, newPlace.geometry.lng]); setValue('address', newPlace.formatted)}}
+                    placeholder={t('user.location')}
+                    address={watch('address')}
+                    explain={t('user.locationExplain')}
+                    center={center}
+                  />
+                <div className="form__field">
+                    <label className="form__label">
+                      {t('user.distance')} ({radius} km)
+                    </label>
+                    <div className='form__explain'>{t('user.distanceExplain')} </div>
+                    <div style={{ padding: '1rem' }}>
+                      <Slider
+                        min={1}
+                        max={300}
+                        onChange={(radiusValue) =>
+                          setValue('radius', radiusValue)
+                        }
+                        value={radius}
+                      />
+                    </div>
+                  </div>
                 <FieldTags
                   label={t('user.tags')}
                   explain={t('user.tagsExplain')}

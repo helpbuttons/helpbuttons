@@ -49,11 +49,11 @@ export class ActivityService {
               return this.newActivity(user, payload, true, false);
             }),
           );
-        })
+        });
 
         // notify author:
-        await this.newActivity(author, payload, false, false)
-        
+        await this.newActivity(author, payload, false, false);
+
         break;
       }
       case ActivityEventName.NewPost: {
@@ -63,7 +63,7 @@ export class ActivityService {
           await this.userService.findAllByIdsToBeNotified(
             button.followedBy,
           );
-        
+
         // notify users following button...
         await Promise.all(
           usersFollowing.map((user) => {
@@ -81,18 +81,39 @@ export class ActivityService {
         if (button.tags.length < 1) {
           break;
         }
-        const tagQuery = button.tags
-          .map((tag) => `'${tag}' = any(tags)`)
-          .join(' OR ');
-        const query = `select id from public.user where ${tagQuery} AND (radius = 0)`;
-        console.log(query)
-        const usersIds = (await this.entityManager.query(query)).map(
-          (user) => user.id,
-        ).filter((userId) => userId != button.owner.id);
+
+
+        // calculate users to be notified:
+        // - check users with this interests/tags
+        // - if radius = 0, include user, else check if user is in radius.!
+        const getUsersToNotify = (button) => {
+          const tagQuery = button.tags
+            .map((tag) => `'${tag}' = any(tags)`)
+            .join(' OR ');
+          const query = `select id, radius,center,ST_Distance(center, ST_Point(${button.longitude}, ${button.latitude},4326)::geography ) / 1000 as distance from public.user where ${tagQuery}`;
+
+          return this.entityManager
+            .query(query)
+            .then((usersDistanceToNotify) => {
+              return usersDistanceToNotify.filter((user) => {
+                if (user.radius < 1) {
+                  return true;
+                } else {
+                  if (user.distance <= user.radius) {
+                    return true;
+                  }
+                }
+                return false;
+              });
+            });
+        };
+
+        const usersIds = (await getUsersToNotify(button))
+          .map((user) => user.id)
+          .filter((userId) => userId != button.owner.id);
 
         const usersToNotify =
           await this.userService.findAllByIdsToBeNotified(usersIds);
-
         // notify users following this tag
         await Promise.all(
           usersToNotify.map((user) => {
@@ -101,16 +122,6 @@ export class ActivityService {
         );
 
         await this.newActivity(button.owner, payload, false, false);
-        // center of selected network
-        // radius ?! se radius es 0.. notifica todo..
-        //   "select username from public.user where 'fitness' = any (tags)"
-        // )
-        // select username from public.user where any ['fitness','health'] = any (tags)
-        // $sql = "SELECT username,tags FROM public.user WHERE tags in ('fitness','health')"
-        // select username from public.user where 'fitness' = any (tags)
-        // calculate users to be notified:
-        // - check users with this interests/tags
-        // - check users which are following this hexagons!
         break;
       }
     }
@@ -158,7 +169,9 @@ export class ActivityService {
   }
 
   newActivity(user, payload, sendMail = false, outbox = false) {
-    console.log(`new activity [${user.username}] ${payload.activityEventName} mail? ${sendMail} outbox? ${outbox}`)
+    console.log(
+      `new activity [${user.username}] ${payload.activityEventName} mail? ${sendMail} outbox? ${outbox}`,
+    );
     const activity = {
       id: dbIdGenerator(),
       owner: user,
@@ -166,6 +179,6 @@ export class ActivityService {
       data: JSON.stringify(payload.data),
       outbox: outbox,
     };
-    return this.activityRepository.insert([activity])
+    return this.activityRepository.insert([activity]);
   }
 }

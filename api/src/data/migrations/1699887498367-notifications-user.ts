@@ -6,7 +6,7 @@ export class NotificationsUser1699887498367 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`ALTER TABLE "user" ADD "tags" text array DEFAULT '{}'`);
         await queryRunner.query(`ALTER TABLE "user" ADD "address" character varying NOT NULL default ''`);
-        await queryRunner.query(`ALTER TABLE "user" ADD "center" character varying`);
+        await queryRunner.query(`ALTER TABLE "user" ADD "center" geography`);
         await queryRunner.query(`ALTER TABLE "user" ADD "radius" integer NOT NULL DEFAULT '0'`);
     }
 

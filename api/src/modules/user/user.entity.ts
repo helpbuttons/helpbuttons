@@ -99,11 +99,11 @@ export class User extends BaseEntity {
   @Column('text', { array: true, nullable: true, default: [] })
   tags: string[];
 
-  // @Column()
-  // address?: string;
+  @Column()
+  address?: string;
 
-  // @Column({default: null, nullable: true})
-  // center?: string;
+  @Column({ type: 'geography', nullable: true })
+  center?: object;
 
   @Column({default: 0})
   radius: number;

@@ -46,4 +46,10 @@ export class UserUpdateDto {
   @IsOptional()
   @IsArray({})
   tags: string[];
+
+  center?: number[];
+
+  address?: string;
+
+  radius?: number;
 }
