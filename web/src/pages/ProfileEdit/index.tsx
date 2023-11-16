@@ -238,7 +238,7 @@ export default function ProfileEdit() {
                     <div className='form__explain'>{t('user.distanceExplain')} </div>
                     <div style={{ padding: '1rem' }}>
                       <Slider
-                        min={1}
+                        min={0}
                         max={300}
                         onChange={(radiusValue) =>
                           setValue('radius', radiusValue)

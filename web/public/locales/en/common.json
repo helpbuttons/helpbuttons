@@ -99,7 +99,9 @@
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
     "newpost": "There is a new post '{0}' in the _helpbutton_ '{1}' by '{2}'",
-    "newcomment": "'{2}' commented '{0}' answer to the post '{1}'"
+    "newcomment": "'{2}' commented '{0}' answer to the post '{1}'",
+    "newcommentSubject": "Someone commented on your _helpbutton_",
+    "newfollow": "{0} is now following your _helpbutton_ {1}"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
