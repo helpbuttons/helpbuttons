@@ -107,7 +107,8 @@
     "newcomment": "'{2}' ha comentado '{0}' en respuesta al post '{1}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
     "markedAllAsRead": "",
-    "newcommentSubject": "Alguien ha comentado en un _helpbutton_"
+    "newcommentSubject": "Alguien ha comentado en un _helpbutton_",
+    "newfollow": "'{0}' esta ahora seguindo tu _helpbutton_ '{1}'"
   },
   "user": {
     "login":"Escribe tus datos si tienes cuenta",

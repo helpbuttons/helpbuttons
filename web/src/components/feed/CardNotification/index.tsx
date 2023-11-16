@@ -7,6 +7,7 @@ import t from 'i18n';
 import {  IoAddCircleOutline, IoChatbubbleOutline, IoHandLeftOutline, IoHeartOutline, IoNotificationsOutline, IoPersonOutline, IoRibbonOutline } from "react-icons/io5";
 import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
+import { User } from 'shared/entities/user.entity';
 
 export default function CardNotification({ activity = {} }) {
   const notification = (activity) => {
@@ -87,6 +88,25 @@ export default function CardNotification({ activity = {} }) {
           read={activity.read}
         />
       );
+    } else if (
+        activity.eventName == ActivityEventName.NewFollowButton
+      ) {
+        const {button, user} = JSON.parse(activity.data);
+        const follower: User = user
+        const notifIcon =<IoChatbubbleOutline/>
+        return (
+          <NotificationCard
+            title={'Comment'}
+            image={follower.avatar}
+            notifIcon={notifIcon}
+            date={activity.created_at}
+            id={button.id}
+            message={t('activities.newfollow', [
+              follower.username, button.title
+            ])}
+            read={activity.read}
+          />
+        );
     } else {
       const notifIcon =<IoNotificationsOutline/>
 

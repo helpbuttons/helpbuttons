@@ -140,7 +140,9 @@ export class ButtonController {
     @CurrentUser() user: User,
   )
   {
-    return this.buttonService.follow(buttonId, user.id);
+    return this.buttonService.follow(buttonId, user.id).then((button) => {
+      notifyUser(this.eventEmitter,ActivityEventName.NewFollowButton,{button, user})
+    })
   }
 
   @OnlyRegistered()
