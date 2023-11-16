@@ -10,6 +10,8 @@ import { EntityManager, Repository } from 'typeorm';
 import { Activity } from './activity.entity';
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
+import translate from '@src/shared/helpers/i18n.helper';
+import { getUrl } from '@src/shared/helpers/mail.helper';
 
 @Injectable()
 export class ActivityService {
@@ -46,13 +48,26 @@ export class ActivityService {
         ).then((usersMentioned) => {
           return Promise.all(
             usersMentioned.map((user) => {
-              return this.newActivity(user, payload, true, false);
+              this.mailService.sendWithLink({
+                to: user.email,
+                content: translate(user.locale, 'activities.newcomment', [author.username, user.username, message]),
+                subject: translate(user.locale, 'activities.newcommentSubject'),
+                link: getUrl(
+                  user.locale,
+                  `/ButtonFile/${payload.id}`,
+                ),
+                linkCaption: translate(
+                  user.locale,
+                  'email.buttonLinkCaption',
+                ),
+              })
+              return this.newActivity(user, payload, false);
             }),
           );
         });
 
         // notify author:
-        await this.newActivity(author, payload, false, false);
+        await this.newActivity(author, payload, false);
 
         break;
       }
@@ -67,12 +82,12 @@ export class ActivityService {
         // notify users following button...
         await Promise.all(
           usersFollowing.map((user) => {
-            return this.newActivity(user, payload, false, true);
+            return this.newActivity(user, payload, true);
           }),
         );
 
         // notify button owner
-        await this.newActivity(button.owner, payload, false, false);
+        await this.newActivity(button.owner, payload, false);
         break;
       }
       case ActivityEventName.NewButton: {
@@ -117,14 +132,21 @@ export class ActivityService {
         // notify users following this tag
         await Promise.all(
           usersToNotify.map((user) => {
-            return this.newActivity(user, payload, false, true);
+            return this.newActivity(user, payload, true);
           }),
         );
 
-        await this.newActivity(button.owner, payload, false, false);
+        await this.newActivity(button.owner, payload, false);
         break;
       }
     }
+  }
+
+  @OnEvent(ActivityEventName.NewFollowButton)
+  async newFollowButton(payload: any)
+  {
+    const button = payload.data.button;
+    this.newActivity(button.owner, payload, false);    
   }
 
   findByUserId(userId: string) {
@@ -168,9 +190,9 @@ export class ActivityService {
     );
   }
 
-  newActivity(user, payload, sendMail = false, outbox = false) {
+  newActivity(user, payload, outbox = false) {
     console.log(
-      `new activity [${user.username}] ${payload.activityEventName} mail? ${sendMail} outbox? ${outbox}`,
+      `new activity [${user.username}] ${payload.activityEventName} outbox? ${outbox}`,
     );
     const activity = {
       id: dbIdGenerator(),

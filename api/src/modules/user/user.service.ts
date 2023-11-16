@@ -76,13 +76,14 @@ export class UserService {
       `ST_Point(${newUser.center.coordinates[1]}, ${newUser.center.coordinates[0]}, 4326) ::geography`
       this.entityManager.query(`update public.user set center = ${center} where id = '${userId}'`)
     }
+    
     delete(newUser.center)
     return this.userRepository.update(
       userId,
-      removeUndefined({
-        ...newUser,
-         tags: this.tagService.formatTags(newUser.tags),
-      }),
+      {
+          ...newUser,
+           tags: this.tagService.formatTags(newUser.tags),
+      }
     );
   }
 

@@ -315,7 +315,7 @@ export class ButtonService {
       button.followedBy.push(userId);
       return await this.buttonRepository.save(button);
     }
-    return true;
+    return button;
   }
   
   async unfollow(buttonId: string, userId: string) {
