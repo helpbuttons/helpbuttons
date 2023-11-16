@@ -95,10 +95,10 @@
     "allNotifications":"All Notifications",
     "allMessages":"All messages",
     "allPosts":"All Posts",
-    "newbutton": "You published '{0}' in '{1}'",
+    "newbutton": "A new _helpbutton_ was published '{0}' in '{1}'",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
-    "newpost": "There is a new post '{0}' in your button '{1}' by '{2}'",
+    "newpost": "There is a new post '{0}' in the _helpbutton_ '{1}' by '{2}'",
     "newcomment": "'{2}' commented '{0}' answer to the post '{1}'"
   },
   "common": {
@@ -247,7 +247,8 @@
   },
   "validation": {
     "fieldRequired": "{0} is required.",
-    "tooShort": "{0} is too short."
+    "tooShort": "{0} is too short.",
+    "error": "Check the fields, there are errors in the form"
   },
   "post": {
     "comment": "comment",
@@ -365,6 +366,7 @@
     "activateSubject": "Please activate your account",
     "activateLinkCaption": "Click here to activate your account",
     "activitySubject": "New activity",
-    "buttonLinkCaption": "Click here to open"
+    "buttonLinkCaption": "Click here to open",
+    "dailyOutBox": "There were {0} activities"
   }
 }

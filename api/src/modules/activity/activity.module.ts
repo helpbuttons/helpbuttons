@@ -5,6 +5,7 @@ import { ActivityController } from './activity.controller';
 import { Activity } from './activity.entity';
 import { ActivityService } from './activity.service';
 import { MailModule } from '../mail/mail.module';
+import { ActivityCron } from './activity.cron';
 
 
 @Module({
@@ -17,7 +18,8 @@ import { MailModule } from '../mail/mail.module';
     ActivityController
   ],
   providers: [
-    ActivityService
+    ActivityService,
+    ActivityCron
   ],
   exports: [
     ActivityService

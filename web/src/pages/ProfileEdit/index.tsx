@@ -31,9 +31,10 @@ import t from 'i18n';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import Accordion from 'elements/Accordion';
+import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import FieldTags from 'elements/Fields/FieldTags';
 import Slider from 'rc-slider';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import 'rc-slider/assets/index.css';
 
 export default function ProfileEdit() {
   const {
@@ -50,6 +51,10 @@ export default function ProfileEdit() {
     locale: 'en',
     receiveNotifications: true,
     showButtons: false,
+    tags: [],
+    address: '',
+    center: {coordinates: null},
+    radius: 0,
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
@@ -68,19 +73,22 @@ export default function ProfileEdit() {
   const [locale, setLocale] = useState(null)
 
   const onSubmit = (data: UserUpdateDto) => {
-    const dataToSubmit : UserUpdateDto =
+    let dataToSubmit : UserUpdateDto =
     {
       name: data.name,
       email: data.email,
       avatar: data.avatar,
-      password_current: data.password_current,
       password_new: data.password_new,
       password_new_confirm: data.password_new_confirm,
       set_new_password: setNewPassword,
       description: data.description,
       locale: locale,
       receiveNotifications: data.receiveNotifications,
-      showButtons: data.showButtons
+      showButtons: data.showButtons,
+      tags: data.tags,
+      center: data.center,
+      address: data.address,
+      radius: data.radius,
     }
     if (setNewPassword)  {
       // check passwords match.. send to backend
@@ -88,7 +96,9 @@ export default function ProfileEdit() {
       {
         setError('password_new',  { type: 'custom', message: t('user.passwordMismatch')})
         setError('password_new_confirm',  { type: 'custom', message: t('user.passwordMismatch')})
-      }
+      }else{
+        dataToSubmit = {...dataToSubmit, set_new_password: true}
+      } 
     }
     
     store.emit(new UpdateProfile(dataToSubmit, onSuccess, onError));
@@ -117,6 +127,10 @@ export default function ProfileEdit() {
       reset(loggedInUser);
     }
   }, [loggedInUser]);
+
+  const radius = watch('radius')
+  const coordinates = watch('center.coordinates')
+  const center = coordinates ? [coordinates[1],coordinates[0]] : null;
   return (
     <>
       {loggedInUser && (
@@ -250,27 +264,52 @@ export default function ProfileEdit() {
                     {errorMsg}
                   </div>
                 )}
-                
+                  <DropDownSearchLocation
+                    // label={t('user.location')}
+                    handleSelectedPlace={(newPlace) => {setValue('center', {coordinates: [newPlace.geometry.lat, newPlace.geometry.lng]}); setValue('address', newPlace.formatted)}}
+                    placeholder={t('user.location')}
+                    address={watch('address')}
+                    explain={t('user.locationExplain')}
+                    center={center}
+                  />
+                <div className="form__field">
+                    <label className="form__label">
+                      {t('user.distance')} ({radius} km)
+                    </label>
+                    <div className='form__explain'>{t('user.distanceExplain')} </div>
+                    <div style={{ padding: '1rem' }}>
+                      <Slider
+                        min={1}
+                        max={300}
+                        onChange={(radiusValue) =>
+                          setValue('radius', radiusValue)
+                        }
+                        value={radius}
+                      />
+                    </div>
+                  </div>
+                <FieldTags
+                  label={t('user.tags')}
+                  explain={t('user.tagsExplain')}
+                  placeholder={t('common.add')}
+                  validationError={errors.tags}
+                  setTags={(tags) => {
+                    setValue('tags', tags);
+                  }}
+                  tags={watch('tags')}
+                />
+                <hr></hr>
                 <Accordion 
                   title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
+                  handleClick={() => setSetNewPassword(() => !setNewPassword)}
                 >
-                        <FieldPassword
-                          name="password_current"
-                          label={t('user.password')}
-                          classNameInput="squared"
-                          placeholder={t('user.passwordPlaceHolder')}
-                          validationError={errors.password}
-                          {...register('password_current', {
-                            minLength: 8,
-                          })}
-                        ></FieldPassword>
 
                         <FieldPassword
                           name="password_new"
                           label={t('user.newPassword')}
                           classNameInput="squared"
                           placeholder={t('user.newPasswordPlaceHolder')}
-                          validationError={errors.password}
+                          validationError={errors.password_new}
                           {...register('password_new', {
                             minLength: 8,
                           })}
@@ -280,7 +319,7 @@ export default function ProfileEdit() {
                           label={t('user.passwordConfirmation')}
                           classNameInput="squared"
                           placeholder={t('user.passwordConfirmationPlaceHolder')}
-                          validationError={errors.password}
+                          validationError={errors.password_new_confirm}
                           {...register('password_new_confirm', {
                             minLength: 8,
                           })}

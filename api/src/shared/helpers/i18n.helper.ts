@@ -25,7 +25,8 @@ export const translations = [
     if(!translatedString){ // if string not found on translations, show key
       translatedString = key;
     }
-    
+    translatedString = setNomeclature(locale, translatedString)
+
     return translatedString;
   }
   
@@ -56,3 +57,17 @@ export const translations = [
     return null;
   }
   
+
+let nomeclature = 'helpbutton'
+let nomeclaturePlural = 'helpbuttons'
+
+export function updateNomeclature(singular, plural) {
+  nomeclature = singular;
+  nomeclaturePlural= plural;
+}
+
+function setNomeclature(locale, translatedString)
+{
+    const translating = translatedString.replace('_helpbuttons_', nomeclaturePlural)
+    return translating.replace('_helpbutton_', nomeclature)
+  }

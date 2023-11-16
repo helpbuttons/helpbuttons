@@ -39,7 +39,7 @@ export default function FieldTags({
   const inputKeyDown = (e) => {
     const val = e.target.value;
 
-    if (e.key === 'Enter' && val) {
+    if ((e.key === 'Enter' || e.key === ',') && val) {
       addTag(val);
       setInput('');
       e.preventDefault();

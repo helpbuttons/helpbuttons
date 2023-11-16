@@ -11,6 +11,18 @@ export class MailerModuleConfig implements MailerOptionsFactory {
   ) {}
 
   createMailerOptions(): MailerOptions | Promise<MailerOptions> {
+    const helpers = { 
+      list: function(context, options) {
+        var ret = "<div>";
+      
+        for (var i = 0, j = context.length; i < j; i++) {
+          ret = ret + "<div>" + options.fn(context[i]) + "</div>";
+        }
+      
+        return ret + "</div>";
+      },
+    }
+    
     return {
       transport: config.smtpUrl,
       defaults: {
@@ -18,7 +30,7 @@ export class MailerModuleConfig implements MailerOptionsFactory {
       },
       template: {
         dir: __dirname + '/templates',
-        adapter: new HandlebarsAdapter(),
+        adapter: new HandlebarsAdapter(helpers),
         options: {
           strict: true,
         },

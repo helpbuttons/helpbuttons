@@ -24,6 +24,7 @@ import { SaveButtonDraft } from 'state/Explore';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldCustomFields from '../ButtonType/CustomFields/FieldCustomFields';
 import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
+import { alertService } from 'services/Alert';
 
 export default function ButtonForm({
   onSubmit,
@@ -107,12 +108,14 @@ export default function ButtonForm({
     Router.push('/Explore');
   };
 
+  const onError = (errors, e) => alertService.error(t('validation.error'))
+
   return (
     <LoadabledComponent loading={!selectedNetwork}>
       {selectedNetwork && 
       <Popup title={title} onCloseClicked={closeClicked}>
         <Form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit, onError)}
           classNameExtra="publish_btn"
         >
           <div className="form__inputs-wrapper">
