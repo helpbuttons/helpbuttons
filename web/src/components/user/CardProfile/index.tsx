@@ -18,11 +18,11 @@ export default function CardProfile({ user, showAdminOptions }) {
 
   return (
     <>
-    {showAdminOptions && 
-        <ProfileAdminOptions user={user} />
-      }
-        <div className="card-profile__container-avatar-content">
 
+        <div className="card-profile__container-avatar-content">
+              {showAdminOptions && 
+              <ProfileAdminOptions user={user} />
+            }
             <figure className="card-profile__avatar-container avatar">
 
               <div className="avatar-big">

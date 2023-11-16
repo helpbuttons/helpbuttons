@@ -61,8 +61,8 @@ export default function ProfileEdit() {
 
 
   const address = watch('where.address');
-  const center = watch('where.center');
-  const radius = watch('where.radius');
+  // const center = watch('where.center');
+  // const radius = watch('where.radius');
 
   const router = useRouter();
   const { pathname, asPath, query } = useRouter()
@@ -222,48 +222,7 @@ export default function ProfileEdit() {
                     onChanged={(value) => {setValue('receiveNotifications', value)}}
                   />
 
-                  <FieldTags
-                    label={t('user.tags')}
-                    explain={t('user.tagsExplain')}
-                    placeholder={t('common.add')}
-                    validationError={errors.tags}
-                    setTags={(tags) => {
-                      setValue('tags', tags);
-                    }}
-                    tags={watch('tags')}
-                  />
 
-                  <DropDownSearchLocation
-                    label={t('user.location')}
-                    placeholder={t('user.location')}
-                    address={address}
-                    explain={t('user.locationExplain')}
-                    center={center}
-                  />
-                  <div className="form__field">
-                    <label className="form__label">
-                      {t('user.distance')} ({radius} km)
-                    </label>
-                    <div className='form__explain'>{t('user.distanceExplain')} </div>
-                    <div style={{ padding: '1rem' }}>
-                      <Slider
-                        min={1}
-                        max={300}
-                        onChange={(radiusValue) =>
-                          setValue('where.radius', radiusValue)
-                        }
-                        defaultValue={radius}
-                      />
-                    </div>
-                  </div>
-                </Accordion>
-
-
-                {errorMsg && (
-                  <div className="form__input-subtitle--error">
-                    {errorMsg}
-                  </div>
-                )}
                   <DropDownSearchLocation
                     // label={t('user.location')}
                     handleSelectedPlace={(newPlace) => {setValue('center', {coordinates: [newPlace.geometry.lat, newPlace.geometry.lng]}); setValue('address', newPlace.formatted)}}
@@ -298,7 +257,16 @@ export default function ProfileEdit() {
                   }}
                   tags={watch('tags')}
                 />
-                <hr></hr>
+                
+                </Accordion>
+
+
+                {errorMsg && (
+                  <div className="form__input-subtitle--error">
+                    {errorMsg}
+                  </div>
+                )}
+                 
                 <Accordion 
                   title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
                   handleClick={() => setSetNewPassword(() => !setNewPassword)}

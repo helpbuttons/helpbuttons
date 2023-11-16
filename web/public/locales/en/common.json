@@ -54,7 +54,7 @@
     "queryExplain": "Write whatever you want to find",
     "queryPlaceHolder": "Friends, food, toys, clothes,...",
     "followTag":"I want to receive notifications about {0}",
-    "where": "Where",
+    "where": "Where ?",
     "whereExplain": "Search the place you want or click the icon to check your location.",
     "distance": "Search Distance",
     "allButtonTypes": "All types",

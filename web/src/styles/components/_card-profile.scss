@@ -146,6 +146,7 @@ $avatar-margin: $padding-big;
 //revise
 .card-profile__container-avatar-content {
   display: flex;
+  position: relative;
   align-items: flex-start;
 }
 

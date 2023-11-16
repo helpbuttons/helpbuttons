@@ -5,7 +5,7 @@ export function CardSubmenu({ children }) {
   const [showSubmenu, setShowSubmenu] = useState(false);
 
   return (
-    <section>
+    <>
       <div
         onClick={() => {
           setShowSubmenu(!showSubmenu);
@@ -23,7 +23,7 @@ export function CardSubmenu({ children }) {
           </div>
         </div>
       )}
-    </section>
+    </>
   );
 }
 
