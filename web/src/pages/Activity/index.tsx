@@ -1,7 +1,7 @@
 //feed page for a determine button (id), you can see the private or group cfeed in this URL
 import { GlobalState, store } from 'pages';
-import { useEffect, useState } from 'react';
-import { ActivityMarkAllAsRead, FindActivities, unreadActivities } from 'state/Activity';
+import { useEffect } from 'react';
+import { ActivityMarkAllAsRead, FindActivities } from 'state/Activity';
 import { useRef } from 'store/Store';
 import FeedProfile from '../../layouts/FeedProfile';
 import { LoadabledComponent } from 'components/loading';
@@ -23,6 +23,12 @@ export default function Activity() {
         store.emit(new ActivityMarkAllAsRead())
       }
   }, [unreadActivities]);
+
+  useEffect(() => {
+    store.emit(
+      new FindActivities(),
+    );
+  }, [])
 
   return (
     <>
