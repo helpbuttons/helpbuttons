@@ -10,6 +10,8 @@ import { EntityManager, Repository } from 'typeorm';
 import { Activity } from './activity.entity';
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
+import translate from '@src/shared/helpers/i18n.helper';
+import { getUrl } from '@src/shared/helpers/mail.helper';
 
 @Injectable()
 export class ActivityService {
@@ -46,6 +48,19 @@ export class ActivityService {
         ).then((usersMentioned) => {
           return Promise.all(
             usersMentioned.map((user) => {
+              this.mailService.sendWithLink({
+                to: user.email,
+                content: translate(user.locale, 'activities.newcomment', [author.username, user.username, message]),
+                subject: translate(user.locale, 'activities.newcommentSubject'),
+                link: getUrl(
+                  user.locale,
+                  `/ButtonFile/${payload.id}`,
+                ),
+                linkCaption: translate(
+                  user.locale,
+                  'email.buttonLinkCaption',
+                ),
+              })
               return this.newActivity(user, payload, true, false);
             }),
           );
