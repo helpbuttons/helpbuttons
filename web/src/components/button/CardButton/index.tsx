@@ -5,6 +5,7 @@ import {
   IoHeartOutline,
   IoAddCircleOutline,
   IoEllipsisHorizontalSharp,
+  IoHeart,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -188,21 +189,18 @@ function CardButtonSubmenu({ button }) {
     }
   }, [config]);
 
-  const followButton = (button) => {
-    if (!loggedInUser) {
-      return;
-    }
+  const FollowButtonMenuOption = (button) => {
 
-    if(loggedInUser.id == button.owner.id)
+    if(!canFollowButton(button, loggedInUser))
     {
       return;
     }
-    const index = button.followedBy.indexOf(loggedInUser.id);
-    if (index < 0) {
+  
+    if (isFollowingButton(button,loggedInUser)) {
       return (
         <CardSubmenuOption
           onClick={() => {
-            store.emit(new FollowButton(button.id, () => alertService.success(t('button.followAlert')), () => {alertService.warn(t('button.followErrorAlert'))}))
+            followButton(button.id)
           }}
           label={t('button.follow')}
         />
@@ -211,7 +209,7 @@ function CardButtonSubmenu({ button }) {
     return (
       <CardSubmenuOption
         onClick={() => {
-          store.emit(new UnfollowButton(button.id, () => alertService.success(t('button.unfollowAlert')), () => {alertService.warn(t('button.unfollowErrorAlert'))}))
+          unFollowButton(button.id)
         }}
         label={t('button.unfollow')}
       />
@@ -225,7 +223,7 @@ function CardButtonSubmenu({ button }) {
         }}
         label={t('button.copy')}
       />
-      {followButton(button)}
+      {FollowButtonMenuOption(button)}
       {(isButtonOwner(loggedInUser, button) ||
         isAdmin(loggedInUser)) && (
         <>
@@ -302,13 +300,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
 
         <div className="card-button__title">{button.title}
-        <Btn
-              btnType={BtnType.iconActions}
-              contentAlignment={ContentAlignment.center}
-              iconLink={<IoHeartOutline />}
-              iconLeft={IconType.circle}
-              submit={true}
-          />
+        <FollowButtonHeart button={button} loggedInUser={loggedInUser}/>
         
         </div>
 
@@ -506,6 +498,62 @@ export function CardButtonOptions() {
   );
 }
 
+function FollowButtonHeart({button, loggedInUser})
+{
+      
+  if(!canFollowButton(button, loggedInUser))
+  {
+    return;
+  }
+
+  if (isFollowingButton(button,loggedInUser)) {
+    return (    
+      <Btn
+          btnType={BtnType.iconActions}
+          contentAlignment={ContentAlignment.center}
+          iconLink={<IoHeartOutline />}
+          iconLeft={IconType.circle}
+          onClick={() => followButton(button.id)}
+      />
+    )
+  }
+
+  return (
+    <Btn
+        btnType={BtnType.iconActions}
+        contentAlignment={ContentAlignment.center}
+        iconLink={<IoHeart />}
+        iconLeft={IconType.circle}
+        onClick={() => unFollowButton(button.id)}
+    />
+  )
+  
+}
+
+const canFollowButton = (button, user) =>
+{
+  if (!user) {
+    return false;
+  }
+
+  if(user.id == button.owner.id)
+  {
+    return false;
+  }
+  return true;
+}
+
+const isFollowingButton = (button, user) => {
+  return (button.followedBy.indexOf(user.id) < 0)
+}
+
+const followButton = (buttonId) => {
+  store.emit(new FollowButton(buttonId, () => alertService.success(t('button.followAlert')), () => {alertService.warn(t('button.followErrorAlert'))}))
+}
+
+const unFollowButton = (buttonId) => {
+  store.emit(new UnfollowButton(buttonId, () => alertService.success(t('button.unfollowAlert')), () => {alertService.warn(t('button.unfollowErrorAlert'))}))
+}
 function isButtonOwner(loggedInUser, button) {
   return (
     loggedInUser && loggedInUser.username == button.owner.username

@@ -10,7 +10,7 @@ interface IFieldText {
     classNameInput?: string,
     placeholder?: string,
     multiInput?: boolean,
-    subInputLink: string
+    // subInputLink: string
 }
 
 const FieldText = React.forwardRef(({
@@ -26,8 +26,8 @@ const FieldText = React.forwardRef(({
     explain,
     extraMessage,
     maxLength = -1,
-    subInputLink,
-    subInputLinkText
+    // subInputLink,
+    // subInputLinkText
 }, ref): IFieldText => {
     const [textLength, setTextLength] = useState(0);
     const onInput = (obj) => {
