@@ -94,4 +94,8 @@ export class UserService {
   public static findByOwner(userId : string): Observable<any> {
     return httpService.get<any>(`/buttons/findByOwner/${userId}`);
   }
+
+  public static followTag(tag : string): Observable<any> {
+    return httpService.post<any>(`/users/followTag/${tag}`);
+  }
 }

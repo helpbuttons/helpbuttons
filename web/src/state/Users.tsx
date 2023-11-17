@@ -323,6 +323,35 @@ export class FindUserButtons implements WatchEvent {
   }
 }
 
+export class FollowTag implements WatchEvent, UpdateEvent {
+  public constructor(
+    private tag,
+    private onSuccess = () => {},
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.followTag(this.tag).pipe(
+      map((userData) => {
+        this.onSuccess();
+      }),
+      catchError((error) => {this.onSuccess(); return  of(undefined)})
+    )
+  }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      
+      let tags = [...state.loggedInUser.tags]
+      if(tags.indexOf(this.tag) > -1)
+      {
+        return;
+      }
+      tags.push(this.tag)
+      newState.loggedInUser.tags = tags;
+    });
+  }
+}
+
 export function isAdmin(loggedInUser)
 {
   if(loggedInUser?.role == 'administrator')

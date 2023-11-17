@@ -144,4 +144,21 @@ export class UserService {
       }
     })
   }
+
+  async addTag(tag, user: User)
+  {
+    let tags = user.tags;
+    if(tags.indexOf(tag) > -1)
+    {
+      return;
+    }
+    tags.push(tag)
+    return this.userRepository.update(
+      user.id,
+      {
+        tags: this.tagService.formatTags(tags),
+      }
+    );
+  }
+  
 }
