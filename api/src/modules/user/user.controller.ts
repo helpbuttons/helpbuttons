@@ -63,4 +63,10 @@ export class UserController {
   {
     return await this.userService.unsubscribe(email);
   }
+
+  @OnlyRegistered()
+  @Post('followTag/:tag')
+  async follow(@Param('tag') tag: string, @CurrentUser() user: User) {
+    return await this.userService.addTag(tag, user);
+  }
 }

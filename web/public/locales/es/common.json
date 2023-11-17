@@ -196,7 +196,7 @@
     "queryLabel": "¿Qué buscas?",
     "searchBarTop": "{1} _helpbuttons_ {0}",
     "queryExplain": "Escribe lo que quieras encontrar",
-    "followTag":"Quiero recibir alertas sobre {0}",
+    "followTag":"Quiero recibir alertas sobre",
     "tagsExplain": "Las palabras clave son los temas más importantes o más tratados en la Red",
     "where": "¿Dónde?",
     "distance": "Distancia de búsqueda",
@@ -217,7 +217,8 @@
     "orderByExplain": "Elige el orden en el que aparecerán _helpbuttons_ en la lista",
     "priceExplain": "Filtrar por precio",
     "byProximity": "Por proximidad",
-    "byEventDate": "Por ínicio del evento"
+    "byEventDate": "Por ínicio del evento",
+    "followTagSucess": "{0} fue adicionado a tus intereses"
   },
   "button": {
     "title":"Vista de _helpbutton_",
