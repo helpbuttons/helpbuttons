@@ -96,6 +96,12 @@ $card-button-border-height: $border-general-height;
     align-items: center;
     padding-right: 1rem;
   }
+
+  button {
+
+    margin: 0;
+
+  }
 }
 
 .card-button__submenu {
@@ -380,8 +386,9 @@ $card-button-border-height: $border-general-height;
 // }
 
 .card-button__edit-icon {
-  width: 30px;
+  width: auto;
   height: 30px;
+  padding-right: $padding-big;
   position: absolute;
   right: 0;
 }

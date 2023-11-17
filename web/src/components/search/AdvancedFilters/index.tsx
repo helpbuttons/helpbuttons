@@ -178,7 +178,7 @@ export default function AdvancedFilters({
               placeholder={t('homeinfo.searchlocation')}
               handleSelectedPlace={handleSelectedPlace}
               address={address}
-              label={'buttonFilters.where'}
+              label={t('buttonFilters.where')}
               explain={t('buttonFilters.whereExplain')}
               center={center}
             />

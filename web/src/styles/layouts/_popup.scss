@@ -104,6 +104,7 @@ body {
 .popup__header-right {
   @extend .popup__header-nav;
   text-align: right;
+  margin-right: $margin-small;
 }
 
 .popup__header-content {
@@ -402,8 +403,8 @@ body {
   }
 
   .popup__section {
-    padding: 1rem 2rem;
-    padding-bottom: 50px;
+    padding: $padding-small $padding-xlarge $padding-xlarge $padding-xlarge;
+    // padding-bottom: 50px;
   }
 
 

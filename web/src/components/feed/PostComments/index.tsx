@@ -7,7 +7,7 @@ import { store } from 'pages';
 import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';
-import { IoArrowUndoSharp, IoMailOutline, IoTrashBinOutline } from 'react-icons/io5';
+import { IoChatbubbleEllipsesSharp, IoMailOutline, IoTrashBinOutline } from 'react-icons/io5';
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
@@ -70,7 +70,7 @@ export default function PostComments({
                      <Btn
                        submit={false}
                        btnType={BtnType.iconActions}
-                       iconLink={<IoArrowUndoSharp />}
+                       iconLink={<IoChatbubbleEllipsesSharp/>}
                        iconLeft={IconType.circle}
                        contentAlignment={ContentAlignment.right}
                        onClick={() =>

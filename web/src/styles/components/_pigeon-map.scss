@@ -134,13 +134,12 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
 
     top: 50%;
     transform: translateX(20%) translateY(-50%);
+    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     left: 50%;
     display: flex;
     flex-direction: column;
     align-items: baseline;
     line-height: $line-height-regular;
-
-
 
 }
 
@@ -150,6 +149,7 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
     top: 50%; /* Adjusted to start from the middle of the div */
     left: 50%;
     transform: translate(-50%, -50%); /* Center the circle both horizontally and vertically */
+    animation: createBox .25s;
     // width: 100%;
     // padding-top: 100%;
     width: 300%;
@@ -157,6 +157,18 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
     background-color: $color-white;
     border-radius: 50%; /* This makes the square a circle */
     z-index: -1;
+    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  }
+
+  @keyframes createBox {
+    from {
+        
+      transform: translate(-50%, -50%) scale(0) ;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(1) ;
+    }
   }
 
 .pigeon-map__hex-info--icon {
