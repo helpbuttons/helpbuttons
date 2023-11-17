@@ -17,7 +17,7 @@ export default function CardNotification({ activity = {} }) {
 
       return (
         <NotificationCard
-          title={'New Button'}
+          title={t('activities.newbuttonType')}
           image={button.image}
           notifIcon={notifIcon}
           date={button.created_at}
@@ -35,7 +35,7 @@ export default function CardNotification({ activity = {} }) {
 
       return (
         <NotificationCard
-          title={'Deleted Button'}
+          title={t('activities.deletedType')}
           notifIcon={notifIcon}
           image={button.image}
           date={button.created_at}
@@ -53,7 +53,7 @@ export default function CardNotification({ activity = {} }) {
 
       return (
         <NotificationCard
-          title={'Creator update'}
+          title={t('activities.creatorUpdate')}
           notifIcon={notifIcon}
           image={post.button.image}
           date={post.created_at}
@@ -75,7 +75,7 @@ export default function CardNotification({ activity = {} }) {
       return (
 
         <NotificationCard
-          title={'Comment'}
+          title={t('activities.newcommentType')}
           image={comment.button.image}
           notifIcon={notifIcon}
           date={comment.created_at}
@@ -96,7 +96,7 @@ export default function CardNotification({ activity = {} }) {
         const notifIcon =<IoChatbubbleOutline/>
         return (
           <NotificationCard
-            title={'Comment'}
+            title={t('activities.newfollowType')}
             image={follower.avatar}
             notifIcon={notifIcon}
             date={activity.created_at}
@@ -112,7 +112,7 @@ export default function CardNotification({ activity = {} }) {
 
       return (
         <NotificationCard
-          title={'Notification'}
+          title={'activities.notification'}
           notifIcon={notifIcon}
           image={'no'}
           date={activity.created_at}
