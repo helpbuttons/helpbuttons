@@ -366,6 +366,6 @@
     "activateLinkCaption": "Haga clic aquí para activar su cuenta",
     "activitySubject": "Novedad en Red Ejemplo",
     "buttonLinkCaption": "Presiona aqui para abrirlo",
-    "dailyOutBox": "Tienes {0} novedades en Red Ejemplo"
+    "dailyOutBox": "Tienes {0} novedades de '{1}', {2}"
   }
 }

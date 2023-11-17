@@ -8,9 +8,10 @@ import {
 import { Activity } from './activity.entity';
 import { EntityManager, Repository } from 'typeorm';
 import { ActivityEventName } from '@src/shared/types/activity.list';
-import translate from '@src/shared/helpers/i18n.helper';
+import translate, { readableDate } from '@src/shared/helpers/i18n.helper';
 import { UserService } from '../user/user.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
+import { NetworkService } from '../network/network.service';
 
 @Injectable()
 export class ActivityCron {
@@ -21,6 +22,7 @@ export class ActivityCron {
     private readonly activityRepository: Repository<Activity>,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
+    private readonly networkService: NetworkService,
   ) {}
 
   @Cron('12 13 * * *', {
@@ -32,7 +34,7 @@ export class ActivityCron {
     await Promise.all(
       usersWithPendingNotifications.map((user) => {
         return this.getUserOutBox(user.id).then((outboxUser) => {
-          this.sendDailyUserOutbox(user.id, outboxUser);
+          return this.sendDailyUserOutbox(user.id, outboxUser);
         });
       }),
     );
@@ -99,11 +101,14 @@ export class ActivityCron {
             return null;
         }
       });
-      this.mailService.sendDailyOutbox({
-        activities: activitiesToSend,
-        to: user.email,
-        subject: translate(user.locale, 'email.dailyOutBox', [activitiesToSend.length.toString()]),
-      });
+       return this.networkService.findDefaultNetwork().then((network) => {
+        return this.mailService.sendDailyOutbox({
+          activities: activitiesToSend,
+          to: user.email,
+          subject: translate(user.locale, 'email.dailyOutBox', [activitiesToSend.length.toString(), network.name, readableDate(user.locale)]),
+        });
+       })
+    
     });
   }
 }

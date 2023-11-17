@@ -6,13 +6,15 @@ import { Activity } from './activity.entity';
 import { ActivityService } from './activity.service';
 import { MailModule } from '../mail/mail.module';
 import { ActivityCron } from './activity.cron';
+import { NetworkModule } from '../network/network.module';
 
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Activity]),
     UserModule,
-    MailModule
+    MailModule,
+    NetworkModule
   ],
   controllers: [
     ActivityController
