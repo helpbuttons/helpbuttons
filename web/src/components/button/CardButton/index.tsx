@@ -22,7 +22,7 @@ import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import Link from 'next/link';
-import { UpdateFiltersToFilterTag, updateCurrentButton } from 'state/Explore';
+import { GetPhone, UpdateFiltersToFilterTag, updateCurrentButton } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { formatMessage } from 'elements/Message';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
@@ -366,22 +366,44 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
   );
 }
 
-export function CardButtonHeadActions({ button }) {
+function ShowPhone({button}) {
+  const [showPhone, toggleShowPhone] = useState(false)
+  const [phone, setPhone] = useState(null)
+  const onShowPhoneClick = () => {
+    if (phone == null)
+    {
+      store.emit(new GetPhone(button.id, (phone) => {
+        setPhone(phone)
+      }, () => {}))
+    }
+    toggleShowPhone(!showPhone)
+  }
   return (
-    <div className="card-button__rating">
-
-      {/* <span className="hashtag">
-        {t('button.showPhone')}
-      </span> */}
+    <>
+    {button.hasPhone && 
+      <>
       <Btn
               btnType={BtnType.filterCorp}
               contentAlignment={ContentAlignment.center}
               caption={t('button.showPhone')}
               iconLeft={IconType.circle}
-              submit={true}
+              onClick={() => onShowPhoneClick()}
         />
+      {showPhone && 
+        <div>{phone}</div>
+      }
+      </>
+    }
+    </>)
+}
+
+export function CardButtonHeadActions({ button }) {
 
 
+  return (
+    <div className="card-button__rating">
+
+      <ShowPhone button={button}/>
       {button.hearts && (
         <span className="btn-circle__icon">
           <IoHeartOutline />

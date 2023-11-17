@@ -232,7 +232,8 @@ export class AuthService {
       tags: data.tags,
       center: data.center,
       address: data.address,
-      radius: data.radius
+      radius: data.radius,
+      phone: data.phone,
     };
 
     if (isImageData(data.avatar)) {

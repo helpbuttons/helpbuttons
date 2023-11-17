@@ -50,4 +50,6 @@ export class UserUpdateDto {
   address?: string;
 
   radius?: number;
+
+  phone?: string;
 }

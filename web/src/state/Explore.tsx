@@ -389,3 +389,20 @@ export class SetExploreSettingsBoundsLoaded implements UpdateEvent{
     });
   }
 }
+
+
+export class GetPhone implements WatchEvent {
+  public constructor(
+    private buttonId: string,
+    private onSuccess,
+    private onError,
+  ) {}
+  public watch(state: GlobalState) {
+    return ButtonService.getPhone(this.buttonId).pipe(
+      map((data) => {
+        this.onSuccess(data);
+      }),
+      catchError((error) => handleError(this.onError, error)),
+    );
+  }
+}

@@ -60,10 +60,6 @@ export default function ProfileEdit() {
   const [setNewPassword, setSetNewPassword] = useState(false);
 
 
-  const address = watch('where.address');
-  // const center = watch('where.center');
-  // const radius = watch('where.radius');
-
   const router = useRouter();
   const { pathname, asPath, query } = useRouter()
   const loggedInUser: User = useRef(
@@ -89,6 +85,7 @@ export default function ProfileEdit() {
       center: data.center,
       address: data.address,
       radius: data.radius,
+      phone: data.phone,
     }
     if (setNewPassword)  {
       // check passwords match.. send to backend
@@ -165,7 +162,7 @@ export default function ProfileEdit() {
                     subtitle={'150x150px'}
                     validationError={errors.avatar}
                     setValue={setValue}
-                    {...register('avatar', { required: true })}
+                    {...register('avatar')}
                   />
                    <FieldTextArea
                     name="description"
@@ -197,8 +194,8 @@ export default function ProfileEdit() {
                     explain={t('user.phoneExplain')}
                     classNameInput="squared"
                     placeholder={t('user.phonePlaceHolder')}
-                    validationError={errors.email}
-                    {...register('phone', { required: true })}
+                    validationError={errors.phone}
+                    {...register('phone')}
                   ></FieldText>  
 
                   <FieldCheckbox
@@ -224,7 +221,7 @@ export default function ProfileEdit() {
 
 
                   <DropDownSearchLocation
-                    // label={t('user.location')}
+                    label={t('user.location')}
                     handleSelectedPlace={(newPlace) => {setValue('center', {coordinates: [newPlace.geometry.lat, newPlace.geometry.lng]}); setValue('address', newPlace.formatted)}}
                     placeholder={t('user.location')}
                     address={watch('address')}
