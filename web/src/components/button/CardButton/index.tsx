@@ -5,6 +5,10 @@ import {
   IoHeartOutline,
   IoAddCircleOutline,
   IoEllipsisHorizontalSharp,
+  IoHeartSharp,
+  IoMailOutline,
+  IoChatbubbleEllipsesSharp,
+  IoCallOutline,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -376,11 +380,25 @@ export function CardButtonHeadActions({ button }) {
       <Btn
               btnType={BtnType.filterCorp}
               contentAlignment={ContentAlignment.center}
-              caption={t('button.showPhone')}
               iconLeft={IconType.circle}
+              iconLink={<IoCallOutline />}
               submit={true}
-        />
+        />    
 
+        <Btn
+              btnType={BtnType.filterCorp}
+              contentAlignment={ContentAlignment.center}
+              iconLeft={IconType.circle}
+              iconLink={<IoChatbubbleEllipsesSharp />}
+              submit={true}
+        />   
+        <Btn
+              btnType={BtnType.filterCorp}
+              contentAlignment={ContentAlignment.center}
+              iconLeft={IconType.circle}
+              iconLink={<IoMailOutline />}
+              submit={true}
+        />                  
 
       {button.hearts && (
         <span className="btn-circle__icon">
