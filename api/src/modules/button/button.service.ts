@@ -6,7 +6,7 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { Repository, In, EntityManager, Not } from 'typeorm';
 import { TagService } from '../tag/tag.service';
@@ -38,6 +38,8 @@ export class ButtonService {
     private readonly storageService: StorageService,
     @Inject(forwardRef(() => PostService))
     private postService: PostService,
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
   ) {}
 
   async create(
@@ -47,6 +49,12 @@ export class ButtonService {
     user: User,
   ) {
     const network = await this.networkService.findOne(networkId);
+
+    let hasPhone = false
+    if(user.phone)
+    {
+      hasPhone = true
+    }
 
     if (!network) {
       throw new HttpException(
@@ -102,6 +110,7 @@ export class ButtonService {
       eventStart: createDto.eventStart,
       eventEnd: createDto.eventEnd,
       eventType: createDto.eventType,
+      hasPhone,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -170,7 +179,7 @@ export class ButtonService {
     return { ...button };
   }
 
-  async update(id: string, updateDto: UpdateButtonDto) {
+  async update(id: string, updateDto: UpdateButtonDto, currentUser: User) {
     let location = {};
     if (updateDto.latitude > 0 && updateDto.longitude > 0) {
       location = {
@@ -182,9 +191,15 @@ export class ButtonService {
       delete updateDto.longitude;
     }
 
+    let hasPhone = false
+    if(currentUser.phone)
+    {
+      hasPhone = true
+    }
     const button = {
       ...updateDto,
       ...location,
+      hasPhone,
       images: [],
       id,
       tags: this.tagService.formatTags(updateDto.tags),
@@ -326,6 +341,18 @@ export class ButtonService {
       return await this.buttonRepository.save(button);
     }
     return true;
+  }
+
+  async getPhone(buttonId: string)
+  {
+    const query = `SELECT public.user.phone from button, public.user WHERE button.id = '${buttonId}' AND "ownerId" = public.user.id`;
+    const result = await this.entityManager.query(query)
+    
+    if(result.length > 0)
+    {
+      return result[0].phone;
+    }
+    return '';
   }
 
   deletedBlockedConditions() {

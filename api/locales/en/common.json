@@ -53,7 +53,8 @@
     "queryLabel": "What do you search",
     "queryExplain": "Write whatever you want to find",
     "queryPlaceHolder": "Friends, food, toys, clothes,...",
-    "where": "Where",
+    "followTag":"I want to receive notifications about {0}",
+    "where": "Where ?",
     "whereExplain": "Search the place you want or click the icon to check your location.",
     "distance": "Search Distance",
     "allButtonTypes": "All types",
@@ -138,6 +139,7 @@
     "whereLabel": "Where ?",
     "changePlaceLabel": "Choose place",
     "whenLabel": "When ?",
+    "invalidDates":"Invalid Dates",
     "changeDateLabel": "Choose date",
     "placeHolderTitle": "Write a title for your _helpbutton_",
     "placeHolderDescription": "Write a description for your _helpbutton_",
@@ -152,7 +154,12 @@
     "unknownPlace": "Unknown Place",
     "hideAddress": "Hide exact location",
     "follow": "Follow",
-    "unfollow": "Unfollow"
+    "unfollow": "Unfollow",
+    "followAlert": "Followed",
+    "unfollowAlert": "Unfollowed",
+    "unfollowAlertError": "Unfollow Error",
+    "followAlertError": "Follow error",
+    "showPhone":"Show phone number"
   },
   "user": {
     "login":"Write your credentials",
@@ -177,7 +184,7 @@
     "passwordMismatch": "passwords won't match",
     "loginButton": "ENTER",
     "noAccount": "I don&apos;t have an account",
-    "tags": "Related interests",
+    "tags": "Your interests",
     "editProfile": "Edit profile",
     "name": "Profile name",
     "nameExplain": "This is your free name that other users will see",
@@ -210,7 +217,18 @@
     "unsubscribed": "You will no longer receive this kind of emails",
     "showButtonsProfileLabel": "_helpbuttons_ on my profile page",
     "showButtonsProfileExplain": "Mark if you want to show a list of what you publish in your public profile",
-    "showButtons": "Show my _helpbuttons_ on my profile page"
+    "showButtons": "Show my _helpbuttons_ on my profile page",
+    "loginError":"Failed to login, please try again or contact the admin",
+    "tagsExplain":"Write words that you are interested in and you will receive notifications of the _helpbuttons_ created. Write and press enter or separate by commas to add a word.",
+    "distance":"Maximum distance of notification",
+    "distanceExplain":"_helpbuttons_ created farer from this radius won't be notified",
+    "location":"Your base location",
+    "locationExplain":"Specify a base location for notifications",
+    "personalData":"Your user data",
+    "notificationConfig":"Your notification configuration",
+    "phone":"Phone",
+    "phoneExplain":"Add your phone if you want people to contact you through it",
+    "phonePlaceHolder":"i.e. 34699000000"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -247,7 +265,8 @@
     "delete": "Borrar",
     "private":"You're sending a private message. Only the destination user could see it.",
     "public":"This comment is public, everyone could see it.",
-    "placeholderWrite": "Write a message in this post"
+    "placeholderWrite": "Write a message in this post",
+    "posted":"Comment posted"
   },
   "configuration": {
     "title": "Network and Administrator settings",
@@ -350,6 +369,6 @@
     "activateLinkCaption": "Click here to activate your account",
     "activitySubject": "New activity",
     "buttonLinkCaption": "Click here to open",
-    "dailyOutBox": "There were {0} activities"
+    "dailyOutBox": "There are {0} activities in {1}, {2}"
   }
 }

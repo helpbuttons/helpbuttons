@@ -74,7 +74,7 @@ function CreateAdminForm() {
     }
     if (config && config.userCount > 0)
     {
-      alertService.error('admin already created')
+      alertService.error('Admin already created')
       setDisableSave(true)
     }
     if (config && config.databaseNumberMigrations < 1)

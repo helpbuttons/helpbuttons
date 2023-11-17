@@ -22,7 +22,7 @@ import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import Link from 'next/link';
-import { UpdateFiltersToFilterTag, updateCurrentButton } from 'state/Explore';
+import { GetPhone, UpdateFiltersToFilterTag, updateCurrentButton } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { formatMessage } from 'elements/Message';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
@@ -33,6 +33,7 @@ import {
 } from 'components/card/CardSubmenu';
 import { FollowButton, UnfollowButton } from 'state/Follow';
 import { alertService } from 'services/Alert';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -201,7 +202,7 @@ function CardButtonSubmenu({ button }) {
       return (
         <CardSubmenuOption
           onClick={() => {
-            store.emit(new FollowButton(button.id, () => alertService.success('following'), () => {alertService.warn('error following')}))
+            store.emit(new FollowButton(button.id, () => alertService.success(t('button.followAlert')), () => {alertService.warn(t('button.followErrorAlert'))}))
           }}
           label={t('button.follow')}
         />
@@ -210,7 +211,7 @@ function CardButtonSubmenu({ button }) {
     return (
       <CardSubmenuOption
         onClick={() => {
-          store.emit(new UnfollowButton(button.id, () => alertService.success('unfollowing'), () => {alertService.warn('error unfollowing')}))
+          store.emit(new UnfollowButton(button.id, () => alertService.success(t('button.unfollowAlert')), () => {alertService.warn(t('button.unfollowErrorAlert'))}))
         }}
         label={t('button.unfollow')}
       />
@@ -300,7 +301,16 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
           </div>
         </div>
 
-        <div className="card-button__title">{button.title}</div>
+        <div className="card-button__title">{button.title}
+        <Btn
+              btnType={BtnType.iconActions}
+              contentAlignment={ContentAlignment.center}
+              iconLink={<IoHeartOutline />}
+              iconLeft={IconType.circle}
+              submit={true}
+          />
+        
+        </div>
 
         <div className="card-button__paragraph">
           {formatMessage(button.description)}
@@ -356,14 +366,44 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
   );
 }
 
+function ShowPhone({button}) {
+  const [showPhone, toggleShowPhone] = useState(false)
+  const [phone, setPhone] = useState(null)
+  const onShowPhoneClick = () => {
+    if (phone == null)
+    {
+      store.emit(new GetPhone(button.id, (phone) => {
+        setPhone(phone)
+      }, () => {}))
+    }
+    toggleShowPhone(!showPhone)
+  }
+  return (
+    <>
+    {button.hasPhone && 
+      <>
+      <Btn
+              btnType={BtnType.filterCorp}
+              contentAlignment={ContentAlignment.center}
+              caption={t('button.showPhone')}
+              iconLeft={IconType.circle}
+              onClick={() => onShowPhoneClick()}
+        />
+      {showPhone && 
+        <div>{phone}</div>
+      }
+      </>
+    }
+    </>)
+}
+
 export function CardButtonHeadActions({ button }) {
+
+
   return (
     <div className="card-button__rating">
-      {/* <span className="btn-circle__icon">
-        <IoHeartOutline />
-        {button.hearts}
-      </span> */}
 
+      <ShowPhone button={button}/>
       {button.hearts && (
         <span className="btn-circle__icon">
           <IoHeartOutline />

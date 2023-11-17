@@ -59,6 +59,7 @@ export default function ProfileEdit() {
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
 
+
   const router = useRouter();
   const { pathname, asPath, query } = useRouter()
   const loggedInUser: User = useRef(
@@ -84,6 +85,7 @@ export default function ProfileEdit() {
       center: data.center,
       address: data.address,
       radius: data.radius,
+      phone: data.phone,
     }
     if (setNewPassword)  {
       // check passwords match.. send to backend
@@ -130,7 +132,7 @@ export default function ProfileEdit() {
     <>
       {loggedInUser && (
         <>
-          <Popup title={t('user.updateProfile')} linkFwd="/HomeInfo">
+          <Popup title={t('user.updateProfile')} linkFwd="/Profile">
             <Form
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="login"
@@ -138,6 +140,8 @@ export default function ProfileEdit() {
               <div className='form__label'> {loggedInUser.username}@{getHostname()} </div>
               
                 <div className="form__inputs-wrapper">
+                <Accordion title={t('user.personalData')}>
+
                   <FieldText
                     name="name"
                     label={t('user.name')}
@@ -147,6 +151,19 @@ export default function ProfileEdit() {
                     validationError={errors.name}
                     {...register('name', { required: true })}
                   ></FieldText>
+                  <FieldImageUpload
+                    name="avatar"
+                    text={t('user.avatar')}
+                    label={t('user.avatarLabel')}
+                    explain={t('user.avatarExplain')}
+                    control={control}
+                    width={150}
+                    height={150}
+                    subtitle={'150x150px'}
+                    validationError={errors.avatar}
+                    setValue={setValue}
+                    {...register('avatar')}
+                  />
                    <FieldTextArea
                     name="description"
                     label={t('user.description')}
@@ -160,6 +177,7 @@ export default function ProfileEdit() {
                   />
                                   
                   <FieldLanguagePick onChange={(value) => setLocale(value)} explain={t('user.pickLanguageExplain')} defaultValue={loggedInUser.locale}/>
+
                   <FieldText
                     name="email"
                     label={t('user.email')}
@@ -169,14 +187,17 @@ export default function ProfileEdit() {
                     validationError={errors.email}
                     {...register('email', { required: true })}
                   ></FieldText>  
-                  <FieldCheckbox
-                    label={t('user.receiveNotifications')}
-                    explain={t('user.receiveNotificationsExplain')}                                 
-                    name='receiveNotifications'
-                    defaultValue={loggedInUser.receiveNotifications}
-                    text={t('user.textReceiveNotifications')}
-                    onChanged={(value) => {setValue('receiveNotifications', value)}}
-                  />
+
+                  <FieldText
+                    name="phone"
+                    label={t('user.phone')}
+                    explain={t('user.phoneExplain')}
+                    classNameInput="squared"
+                    placeholder={t('user.phonePlaceHolder')}
+                    validationError={errors.phone}
+                    {...register('phone')}
+                  ></FieldText>  
+
                   <FieldCheckbox
                     name='showButtons'
                     label={t('user.showButtonsProfileLabel')}
@@ -185,26 +206,22 @@ export default function ProfileEdit() {
                     text={t('user.showButtons')}
                     onChanged={(value) => {setValue('showButtons', value)}}
                   />
-                  <FieldImageUpload
-                    name="avatar"
-                    text={t('user.avatar')}
-                    label={t('user.avatarLabel')}
-                    explain={t('user.avatarExplain')}
-                    control={control}
-                    width={150}
-                    height={150}
-                    subtitle={'150x150px'}
-                    validationError={errors.avatar}
-                    setValue={setValue}
-                    {...register('avatar', { required: true })}
+
+                </Accordion>
+                <Accordion title={t('user.notificationConfig')}>
+
+                  <FieldCheckbox
+                    label={t('user.receiveNotifications')}
+                    explain={t('user.receiveNotificationsExplain')}                                 
+                    name='receiveNotifications'
+                    defaultValue={loggedInUser.receiveNotifications}
+                    text={t('user.textReceiveNotifications')}
+                    onChanged={(value) => {setValue('receiveNotifications', value)}}
                   />
-                {errorMsg && (
-                  <div className="form__input-subtitle--error">
-                    {errorMsg}
-                  </div>
-                )}
+
+
                   <DropDownSearchLocation
-                    // label={t('user.location')}
+                    label={t('user.location')}
                     handleSelectedPlace={(newPlace) => {setValue('center', {coordinates: [newPlace.geometry.lat, newPlace.geometry.lng]}); setValue('address', newPlace.formatted)}}
                     placeholder={t('user.location')}
                     address={watch('address')}
@@ -237,7 +254,16 @@ export default function ProfileEdit() {
                   }}
                   tags={watch('tags')}
                 />
-                <hr></hr>
+                
+                </Accordion>
+
+
+                {errorMsg && (
+                  <div className="form__input-subtitle--error">
+                    {errorMsg}
+                  </div>
+                )}
+                 
                 <Accordion 
                   title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
                   handleClick={() => setSetNewPassword(() => !setNewPassword)}

@@ -105,7 +105,7 @@ function MyApp({ Component, pageProps }) {
 
             if (error == 'nobackend') {
               alertService.error(
-                `Backend not found, something went terribly wrong.`,
+                `Error: Backend not found, something went terribly wrong.`,
               );
               router.push('/Error');
             }

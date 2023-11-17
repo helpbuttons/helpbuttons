@@ -7,7 +7,7 @@ import UserAvatar from '../components';
 import { getHostname } from 'shared/sys.helper';
 import t from 'i18n';
 import { store } from "pages";
-import { UpdateRole } from "state/Users";
+import { UpdateRole, isAdmin } from "state/Users";
 import { alertService } from "services/Alert";
 import router from "next/router";
 import { CardSubmenu, CardSubmenuOption } from "components/card/CardSubmenu";
@@ -18,11 +18,11 @@ export default function CardProfile({ user, showAdminOptions }) {
 
   return (
     <>
-    {showAdminOptions && 
-        <ProfileAdminOptions user={user} />
-      }
-        <div className="card-profile__container-avatar-content">
 
+        <div className="card-profile__container-avatar-content">
+              {showAdminOptions && 
+              <ProfileAdminOptions user={user} />
+            }
             <figure className="card-profile__avatar-container avatar">
 
               <div className="avatar-big">
@@ -38,7 +38,7 @@ export default function CardProfile({ user, showAdminOptions }) {
             
               <div className="card-profile__avatar-container-name">
 
-                <p className="card-profile__name">{user.name}</p>
+                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="hashtag hashtag--blue">Admin</div>}</div>
                 <span className="card-profile__username">{ user.username }@{getHostname()}</span>
                 
               </div>
@@ -114,11 +114,11 @@ function ProfileAdminOptions({ user }) {
         userId,
         newRole,
         () => {
-          alertService.info('Done.');
+          alertService.info(t('common.done'));
           router.reload()
         },
         () => {
-          alertService.error('Error');
+          alertService.error(t('common.error'));
         },
       ),
     );
