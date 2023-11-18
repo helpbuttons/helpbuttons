@@ -104,6 +104,12 @@ $card-button-border-height: $border-general-height;
   }
 }
 
+.card-button__rating--phone {
+
+ text-wrap: nowrap;
+
+}
+
 .card-button__submenu {
   // background: transparent url('../../../public/assets/svg/icons/down.svg') center no-repeat;
   background-size: 100%;

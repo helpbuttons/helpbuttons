@@ -53,7 +53,7 @@
     "queryLabel": "What do you search",
     "queryExplain": "Write whatever you want to find",
     "queryPlaceHolder": "Friends, food, toys, clothes,...",
-    "followTag":"I want to receive notifications about {0}",
+    "followTag":"I want to receive notifications about",
     "where": "Where ?",
     "whereExplain": "Search the place you want or click the icon to check your location.",
     "distance": "Search Distance",
@@ -73,7 +73,8 @@
     "byProximity": "By proximity",
     "byEventDate": "By start of event",
     "orderBy": "Order",
-    "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list"
+    "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list",
+    "followTagSucess": "{0} has been added to your interests"
   },
   "setup": {
     "hostname": "Hostname",
@@ -96,6 +97,11 @@
     "allMessages":"All messages",
     "allPosts":"All Posts",
     "newbutton": "A new _helpbutton_ was published '{0}' in '{1}'",
+    "newbuttonType": "New _helpbutton_",
+    "newcommentType": "Comment",
+    "newfollowType": "New suscriber",
+    "creatorUpdate": "_helpbutton_ updated",
+    "deletedType": "_helpbutton_ deleted",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
     "newpost": "There is a new post '{0}' in the _helpbutton_ '{1}' by '{2}'",

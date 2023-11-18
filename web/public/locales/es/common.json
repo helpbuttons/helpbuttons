@@ -254,8 +254,12 @@
     "unknownPlace": "Sitio desconocido",
     "hideAddress": "Esconder ubicación exacta",
     "created": "creado",
-    "follow": "Seguir",
+    "follow": "Suscribirme",
     "unfollow": "Dejar de seguir",
+    "followAlert": "Te has suscrito a _helpbutton_, recibirás sus novedades.",
+    "unfollowAlert": "Te has desuscrito de _helpbutton_, dejarás de recibir sus novedades",
+    "unfollowAlertError": "Error al desuscribir",
+    "followAlertError": "Error al suscribir",
     "showPhone":"Mostrar teléfono"
   },
   "calendarOnce": {

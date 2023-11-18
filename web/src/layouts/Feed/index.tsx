@@ -140,7 +140,7 @@ export function FeedElement({
               <>
                 <Btn
                   submit={false}
-                  btnType={BtnType.iconActions}
+                  btnType={BtnType.filterCorp}
                   iconLink={<IoChatbubbleEllipsesSharp />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.right}
@@ -156,7 +156,7 @@ export function FeedElement({
                 />
                 <Btn
                   submit={false}
-                  btnType={BtnType.iconActions}
+                  btnType={BtnType.filterCorp}
                   iconLink={<IoMailOutline />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.right}
@@ -178,7 +178,7 @@ export function FeedElement({
                 isAdmin(loggedInUser)) && (
                 <Btn
                   submit={false}
-                  btnType={BtnType.iconActions}
+                  btnType={BtnType.filterCorp}
                   iconLink={<IoTrashBinOutline />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.right}
@@ -188,9 +188,10 @@ export function FeedElement({
               {!loggedInUser && 
                 <Btn
                 submit={false}
-                btnType={BtnType.iconActions}
+                btnType={BtnType.filterCorp}
                 iconLink={<IoChatbubbleEllipsesSharp />}
                 iconLeft={IconType.circle}
+                caption=''
                 contentAlignment={ContentAlignment.right}
                 onClick={() =>
                   setShowComposePostReply(() => {

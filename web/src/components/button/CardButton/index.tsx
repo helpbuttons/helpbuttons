@@ -365,6 +365,15 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
 function ShowPhone({button}) {
   const [showPhone, toggleShowPhone] = useState(false)
   const [phone, setPhone] = useState(null)
+  const onCallClick = () => {
+    if (phone == null)
+    {
+      store.emit(new GetPhone(button.id, (phone) => {
+        setPhone(phone)
+      }, () => {}))
+    }
+    window.open('tel:'+ phone)
+  }
   const onShowPhoneClick = () => {
     if (phone == null)
     {
@@ -384,13 +393,22 @@ function ShowPhone({button}) {
               iconLeft={IconType.circle}
               iconLink={<IoCallOutline />}
               submit={true}
-              onClick={() => onShowPhoneClick()}
+              onClick={() => onCallClick()}
 
         />    
+         {!showPhone &&
+          <Btn
+                btnType={BtnType.filterCorp}
+                contentAlignment={ContentAlignment.center}
+                caption={t('button.showPhone')}
+                iconLeft={IconType.circle}
+                onClick={() => onShowPhoneClick()}
+          />   
+         }
         {showPhone && 
-          <div>{phone}</div>
+          <div className='card-button__rating--phone'>{phone}</div>
         }
-
+{/* 
         <Btn
               btnType={BtnType.filterCorp}
               contentAlignment={ContentAlignment.center}
@@ -404,14 +422,13 @@ function ShowPhone({button}) {
               iconLeft={IconType.circle}
               iconLink={<IoMailOutline />}
               submit={true}
-        />                  
+        />                   */}
       </>
     }
     </>)
 }
 
 export function CardButtonHeadActions({ button }) {
-
 
   return (
     <div className="card-button__rating">
