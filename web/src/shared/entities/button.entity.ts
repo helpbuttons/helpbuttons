@@ -103,4 +103,7 @@ export class Button extends BaseEntity {
     type: 'timestamp',
   })
   eventEnd: Date;
+
+  @Column({default: false})
+  hasPhone: boolean;
 }

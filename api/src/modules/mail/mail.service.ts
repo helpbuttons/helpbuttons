@@ -174,7 +174,8 @@ export class MailService {
       subject: subject,
       template: 'daily-outbox',
       context: {
-          activities
+          activities,
+          subject
       },
     });
   }

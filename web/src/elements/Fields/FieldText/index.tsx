@@ -10,7 +10,7 @@ interface IFieldText {
     classNameInput?: string,
     placeholder?: string,
     multiInput?: boolean,
-    subInputLink: string
+    // subInputLink: string
 }
 
 const FieldText = React.forwardRef(({
@@ -26,8 +26,8 @@ const FieldText = React.forwardRef(({
     explain,
     extraMessage,
     maxLength = -1,
-    subInputLink,
-    subInputLinkText
+    // subInputLink,
+    // subInputLinkText
 }, ref): IFieldText => {
     const [textLength, setTextLength] = useState(0);
     const onInput = (obj) => {
@@ -73,14 +73,14 @@ const FieldText = React.forwardRef(({
                     </label>
                 </div>
                 
-                {subInputLink &&
+                {/* {subInputLink &&
 
                     <div className="form__input-subtitle-side">
                         <a href={subInputLink} className="form__input-subtitle--text link">
                             {subInputLinkText}
                         </a>
                     </div>
-                }
+                } */}
 
             </div>
 

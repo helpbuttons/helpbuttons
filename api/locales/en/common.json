@@ -369,6 +369,6 @@
     "activateLinkCaption": "Click here to activate your account",
     "activitySubject": "New activity",
     "buttonLinkCaption": "Click here to open",
-    "dailyOutBox": "There were {0} activities"
+    "dailyOutBox": "There are {0} activities in {1}, {2}"
   }
 }

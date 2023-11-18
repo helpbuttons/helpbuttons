@@ -107,6 +107,9 @@ export class User extends BaseEntity {
 
   @Column({default: 0})
   radius: number;
+
+  @Column('text', {nullable: true})
+  phone?: string;
 }
 
 export interface UserRelations {

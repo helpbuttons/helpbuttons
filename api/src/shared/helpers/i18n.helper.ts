@@ -71,3 +71,14 @@ function setNomeclature(locale, translatedString)
     const translating = translatedString.replace('_helpbuttons_', nomeclaturePlural)
     return translating.replace('_helpbutton_', nomeclature)
   }
+
+export function readableDate(locale, date: Date = new Date()) {
+    if(typeof date !== typeof Date) {
+      date = new Date(date)
+    }
+    return date.toLocaleDateString(locale, {
+      weekday: 'long',
+      month: 'short',
+      day: 'numeric'
+    });
+}

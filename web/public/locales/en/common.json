@@ -53,7 +53,7 @@
     "queryLabel": "What do you search",
     "queryExplain": "Write whatever you want to find",
     "queryPlaceHolder": "Friends, food, toys, clothes,...",
-    "followTag":"I want to receive notifications about {0}",
+    "followTag":"I want to receive notifications about",
     "where": "Where ?",
     "whereExplain": "Search the place you want or click the icon to check your location.",
     "distance": "Search Distance",
@@ -73,7 +73,8 @@
     "byProximity": "By proximity",
     "byEventDate": "By start of event",
     "orderBy": "Order",
-    "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list"
+    "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list",
+    "followTagSucess": "{0} has been added to your interests"
   },
   "setup": {
     "hostname": "Hostname",
@@ -374,6 +375,6 @@
     "activateLinkCaption": "Click here to activate your account",
     "activitySubject": "New activity",
     "buttonLinkCaption": "Click here to open",
-    "dailyOutBox": "There were {0} activities"
+    "dailyOutBox": "There are {0} activities in {1}, {2}"
   }
 }

@@ -103,7 +103,7 @@ export class ButtonController {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
         }
-        return this.buttonService.update(buttonId, updateDto);
+        return this.buttonService.update(buttonId, updateDto, user);
       });
   }
 
@@ -161,4 +161,10 @@ export class ButtonController {
     return await this.buttonService.findByOwner(userId);
   }
 
+  @AllowGuest()
+  @Get('getphone/:buttonId')
+  async getPhone(@Param('buttonId') buttonId: string)
+  {
+    return this.buttonService.getPhone(buttonId)
+  }
 }
