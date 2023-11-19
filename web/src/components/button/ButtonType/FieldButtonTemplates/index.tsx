@@ -52,7 +52,7 @@ const FieldButtonTemplates = forwardRef(
         });
       } else {
         alertService.warn(
-          'You need to pick a color and add a name before adding a new template button',
+          t('configuration.templateMissingFields'),
         );
       }
     };
@@ -90,11 +90,10 @@ const FieldButtonTemplates = forwardRef(
                 value={color}
                 hideBoilerPlate={true}
             />
-            <Accordion title={t('configuration.customFields')}>
-              <AddCustomFields
-                setCustomFields={setCustomFields}
-              />
-            </Accordion>
+            <label className="form__label">{t('configuration.customFields')}:</label>
+            <AddCustomFields
+              setCustomFields={setCustomFields}
+            />
             <Btn
               caption={t('configuration.addType')}
               onClick={() => onAddNewButtonTemplate()}

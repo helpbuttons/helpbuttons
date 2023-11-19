@@ -304,6 +304,7 @@
     "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here",
     "createButtonTypePlaceholder": "Write your _helpbutton_ type name here",
     "createButtonTypeAction": "Create new type",
+    "templateMissingFields": "You need to pick a color and add a name before adding a new template button",
     "nameLabel": "Network name",
     "descriptionLabel": "Network description",
     "nomeclatureLabel": "Rename your _helpbuttons_",

@@ -365,7 +365,7 @@ width: 100%;
 
 .form__input--button-type-field button {
   // flex-basis: 20%; /* Take 20% of the width */
-  margin-bottom: $margin-medium;
+  // margin-bottom: $margin-medium;
 }
 
 .form__field .btn--corporative {
@@ -543,6 +543,7 @@ width: 100%;
   .form__input--button-type-field {
 
     // flex-direction: row;
+    padding-bottom: $padding-big;
 
   }
 
