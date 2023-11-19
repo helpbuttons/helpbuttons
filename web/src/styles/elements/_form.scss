@@ -346,7 +346,15 @@ width: 100%;
   display: flex;
   flex-direction: column;
   width: stretch;
+  margin-bottom: $margin-small;
   gap: $margin-small;
+  border-radius: $border-radius-circle;
+  border: 1px $color-gray dashed;
+  padding: $padding-big;
+  padding-bottom: 0;
+
+
+
 }
 
 
@@ -534,7 +542,7 @@ width: 100%;
 
   .form__input--button-type-field {
 
-    flex-direction: row;
+    // flex-direction: row;
 
   }
 

@@ -118,7 +118,7 @@ export default function HomeInfo({
                     </h3>
                   </div>
 
-                  <div className="card__section">
+                  <div className="card__section card__section--actions">
 
                       <Btn
                         btnType={BtnType.corporative}
@@ -128,6 +128,14 @@ export default function HomeInfo({
                         onClick={()=>router.push('Explore')}
                       />
 
+                      <Btn
+                        btnType={BtnType.filterCorp}
+                        contentAlignment={ContentAlignment.center}
+                        iconLeft={IconType.svg}
+                        extraClass='info-overlay__network-title-card--buttons'
+                        caption={t('homeinfo.goToCreate')}
+                        onClick={()=>router.push('ButtonNew')}
+                      />  
                   </div>
                 </div>
 

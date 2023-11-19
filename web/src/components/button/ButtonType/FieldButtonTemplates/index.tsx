@@ -6,7 +6,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { IoTrashBinOutline } from 'react-icons/io5';
 import { useState, forwardRef, useEffect } from 'react';
-import { CircleColorPick } from 'elements/Fields/FieldColorPick';
+import { CircleColorPick, FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import Accordion from 'elements/Accordion';
@@ -71,7 +71,7 @@ const FieldButtonTemplates = forwardRef(
             className="field-text"
             onChange={(e) => setText(() => e.target.value)}
           />
-
+{/* 
           <CircleColorPick
             name="buttonTemplateColor"
             classNameInput="squared"
@@ -80,19 +80,27 @@ const FieldButtonTemplates = forwardRef(
             actionName={t('button.pickButtonTemplateColor')}
             value={color}
             hideBoilerPlate={true}
-          />
+          /> */}
+          <FieldColorPick
+                name="buttonTemplateColor"
+                classNameInput="squared"
+                validationError={errors.buttonTemplateColor}
+                setValue={(name, value) => setColor(value)}
+                actionName={t('button.pickButtonTemplateColor')}
+                value={color}
+                hideBoilerPlate={true}
+            />
+            <Accordion title={t('configuration.customFields')}>
+              <AddCustomFields
+                setCustomFields={setCustomFields}
+              />
+            </Accordion>
+            <Btn
+              caption={t('configuration.addType')}
+              onClick={() => onAddNewButtonTemplate()}
+              btnType={BtnType.corporative}
+            />
         </div>
-        <Accordion title={t('configuration.customFields')}>
-          <AddCustomFields
-            setCustomFields={setCustomFields}
-          />
-        </Accordion>
-
-        <Btn
-          caption={'+ Add type'}
-          onClick={() => onAddNewButtonTemplate()}
-          btnType={BtnType.corporative}
-        />
 
         <div className="form__list--button-type-field">
           {watchValue?.length > 0 &&

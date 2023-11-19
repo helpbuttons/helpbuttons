@@ -589,7 +589,7 @@ const followButton = (buttonId) => {
 }
 
 const unFollowButton = (buttonId) => {
-  store.emit(new UnfollowButton(buttonId, () => alertService.success(t('button.unfollowAlert')), () => {alertService.warn(t('button.unfollowErrorAlert'))}))
+  store.emit(new UnfollowButton(buttonId, () => alertService.info(t('button.unfollowAlert')), () => {alertService.warn(t('button.unfollowErrorAlert'))}))
 }
 function isButtonOwner(loggedInUser, button) {
   return (

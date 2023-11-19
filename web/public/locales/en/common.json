@@ -16,6 +16,7 @@
     "info": "What's this Network about?",
     "loading": "...",
     "goToExplore": "Explore the _helpbuttons_",
+    "goToCreate": "Create your _helpbutton_",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
@@ -317,7 +318,8 @@
     "currencyLabel": "Currency",
     "moderationList": "Moderation",
     "createSupportButton": "Create your network's support button",
-    "moderation": "Moderation"
+    "moderation": "Moderation",
+    "addType":"+ Create _helpbutton_ type with the above"
   },
   "configure": {
     "browsePins": "",

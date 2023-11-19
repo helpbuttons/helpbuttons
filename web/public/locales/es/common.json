@@ -17,6 +17,7 @@
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
     "goToExplore": "Explorar _helpbuttons_",
+    "goToCreate": "Crea tu _helpbutton_",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
     "stats": "¿Qué hay en esta red?",
     "users": "{0} usuarios en esta Red",
@@ -90,13 +91,14 @@
     "pickSecondaryColor": "Escoge color secundario para tu red",
     "configureNetwork": "Configura tu Red",
     "buttonTemplateLabel": "Elige tus tipos de botón",
-    "buttonTemplatePlaceHolder": "Escribe el nombre de tu nuevo tipo",
+    "buttonTemplatePlaceHolder": "Escribe el nombre de tu nuevo tipo de _helpbutton_",
     "contactAdmin": "Contactar al administrador",
     "priceFieldAdd": "Añadir precio",
     "moderationList": "Moderacion",
     "createSupportButton": "Crea tu boton de soporte para tu red",
     "moderation": "Moderacion",
-    "customFields": "Campos personalizados"
+    "customFields": "Campos personalizados",
+    "addType":"+ Crear tipo de _helpbutton_ con los campos superiores"
   },
   "activities": {
     "allNotifications":"Todas las notificationes",
