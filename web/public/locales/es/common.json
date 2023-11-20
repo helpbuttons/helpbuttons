@@ -371,7 +371,9 @@
     "inviteOnly": "Sólo permitir el registro con una invitación"
   },
   "customFields": {
-    "priceLabel": "Precio ({0})"
+    "priceLabel": "Precio ({0})",
+    "consult": "Precio a consultar",
+    "free": "Gratis"
   },
   "email": {
     "loginTokenContent": "Bienvenido a {0}",

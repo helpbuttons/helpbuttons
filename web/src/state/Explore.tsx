@@ -237,6 +237,10 @@ export class UpdateFilters implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      if(this.filters?.where.center)
+      {
+        newState.explore.settings.center = this.filters.where.center
+      }
       newState.explore.map.filters = this.filters;
     });
   }

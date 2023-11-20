@@ -180,25 +180,31 @@ export class ButtonService {
   }
 
   async update(id: string, updateDto: UpdateButtonDto, currentUser: User) {
+    const currentButton = await this.findById(id)
+
     let location = {};
+    let hexagon = {}
     if (updateDto.latitude > 0 && updateDto.longitude > 0) {
       location = {
         location: () =>
           `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
       };
+      hexagon = {hexagon: () =>
+      `h3_lat_lng_to_cell(POINT(${updateDto.longitude}, ${updateDto.latitude}), ${maxResolution})`}
     } else {
       delete updateDto.latitude;
       delete updateDto.longitude;
     }
 
     let hasPhone = false
-    if(currentUser.phone)
+    if(currentButton.owner.phone)
     {
       hasPhone = true
     }
     const button = {
       ...updateDto,
       ...location,
+      ...hexagon,
       hasPhone,
       images: [],
       id,
