@@ -17,11 +17,28 @@ export function CardButtonCustomFields({ customFields, button }) {
       const type = fieldProps.type;
       let field = <>{JSON.stringify(fieldProps)}</>;
       if (type == 'price') {
-        field = (
+        
+        if(button.price < 0)
+        {
+          field = (
           <div className='card-button__price'>
-            {formatCurrency(button.price, selectedNetwork.currency)}
-          </div>
-        );
+              {t('customFields.consult')}
+            </div>
+          )
+        }else if(button.price == 0)
+        {
+          field = (
+          <div className='card-button__price'>
+              {t('customFields.free')}
+            </div>
+          )
+        }else{
+          field = (
+            <div className='card-button__price'>
+              {formatCurrency(button.price, selectedNetwork.currency)}
+            </div>
+          );
+        }
       }
       if (type == 'event') {
         field = (
