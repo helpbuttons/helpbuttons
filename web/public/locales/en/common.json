@@ -367,7 +367,9 @@
     "inviteOnly": "Only allow signup with an invitation"
   },
   "customFields": {
-    "priceLabel": "Price ({0})"
+    "priceLabel": "Price ({0})",
+    "consult": "Price to consult",
+    "free": "Free"
   },
   "email": {
     "loginTokenContent": "Welcome to {0}",

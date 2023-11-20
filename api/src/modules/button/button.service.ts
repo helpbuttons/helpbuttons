@@ -183,11 +183,14 @@ export class ButtonService {
     const currentButton = await this.findById(id)
 
     let location = {};
+    let hexagon = {}
     if (updateDto.latitude > 0 && updateDto.longitude > 0) {
       location = {
         location: () =>
           `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
       };
+      hexagon = {hexagon: () =>
+      `h3_lat_lng_to_cell(POINT(${updateDto.longitude}, ${updateDto.latitude}), ${maxResolution})`}
     } else {
       delete updateDto.latitude;
       delete updateDto.longitude;
@@ -201,6 +204,7 @@ export class ButtonService {
     const button = {
       ...updateDto,
       ...location,
+      ...hexagon,
       hasPhone,
       images: [],
       id,

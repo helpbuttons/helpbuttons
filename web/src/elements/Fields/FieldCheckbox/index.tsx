@@ -13,12 +13,12 @@ export const FieldCheckbox = React.forwardRef(({
   }, ref) => {
     const [checked, setChecked] = useState(defaultValue)
 
-    useEffect(() => {
-      onChanged(checked)
-    }, [checked])
-
     const onChange = () => {
-      setChecked((prevValue) => !prevValue)
+      setChecked((prevValue) => {
+        onChanged(!prevValue)
+        return !prevValue
+      })
+      
     }
     return (
     <div className="form__field">
