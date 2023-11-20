@@ -36,7 +36,7 @@ export default function FieldCustomFields({ customFields, watch, setValue, setFo
                 eventStart={watch('eventStart')}
                 eventEnd={watch('eventEnd')}
                 setEventStart={(value) => setValue('eventStart', value)}
-                setEventEnd={(value) =>{console.log('event end..');console.log(value); setValue('eventEnd', value)}}
+                setEventEnd={(value) =>{setValue('eventEnd', value)}}
                 title={t('button.whenLabel')}
                 isUTC={!!watch('id')}
                 register={register}
