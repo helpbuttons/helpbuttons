@@ -86,6 +86,11 @@ $info-content-head-margin: calc( $footer-height-mobile );
   align-items: center;
   justify-content: space-evenly;
 
+}
+
+.info-overlay__network-title-card--buttons {
+
+  margin-top: $margin-small;
 
 }
 
@@ -226,6 +231,13 @@ $info-content-head-margin: calc( $footer-height-mobile );
 
 }
 
+.card__section--actions {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
 
 .info-overlay__bottom {
 

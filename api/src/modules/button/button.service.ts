@@ -180,6 +180,8 @@ export class ButtonService {
   }
 
   async update(id: string, updateDto: UpdateButtonDto, currentUser: User) {
+    const currentButton = await this.findById(id)
+
     let location = {};
     let hexagon = {}
     if (updateDto.latitude > 0 && updateDto.longitude > 0) {
@@ -195,7 +197,7 @@ export class ButtonService {
     }
 
     let hasPhone = false
-    if(currentUser.phone)
+    if(currentButton.owner.phone)
     {
       hasPhone = true
     }

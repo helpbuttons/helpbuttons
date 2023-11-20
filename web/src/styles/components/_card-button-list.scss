@@ -47,12 +47,10 @@ $card-button-list-border-height: $border-general-height;
 .card-button-list:hover{
 
   cursor: pointer;
-  border-left: solid 2px $color-gray ;
-  border-bottom: solid 4px $color-gray ;
-  border-right: solid 4px $color-gray ;
-  // box-shadow: inner $box-hard-shadow;
-  // transform: translateY(-2px);
-
+  // border-left: solid 2px $color-gray ;
+  // border-bottom: solid 4px $color-gray ;
+  // border-right: solid 4px $color-gray ;
+  // box-shadow: outer $box-hard-shadow;
 
 }
 

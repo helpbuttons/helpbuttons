@@ -5,6 +5,10 @@ import {
   IoHeartOutline,
   IoAddCircleOutline,
   IoEllipsisHorizontalSharp,
+  IoHeartSharp,
+  IoMailOutline,
+  IoChatbubbleEllipsesSharp,
+  IoCallOutline,
   IoHeart,
 } from 'react-icons/io5';
 import t from 'i18n';
@@ -361,6 +365,15 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
 function ShowPhone({button}) {
   const [showPhone, toggleShowPhone] = useState(false)
   const [phone, setPhone] = useState(null)
+  const onCallClick = () => {
+    if (phone == null)
+    {
+      store.emit(new GetPhone(button.id, (phone) => {
+        setPhone(phone)
+      }, () => {}))
+    }
+    window.open('tel:'+ phone)
+  }
   const onShowPhoneClick = () => {
     if (phone == null)
     {
@@ -377,13 +390,39 @@ function ShowPhone({button}) {
       <Btn
               btnType={BtnType.filterCorp}
               contentAlignment={ContentAlignment.center}
-              caption={t('button.showPhone')}
               iconLeft={IconType.circle}
-              onClick={() => onShowPhoneClick()}
-        />
-      {showPhone && 
-        <div>{phone}</div>
-      }
+              iconLink={<IoCallOutline />}
+              submit={true}
+              onClick={() => onCallClick()}
+
+        />    
+         {!showPhone &&
+          <Btn
+                btnType={BtnType.filterCorp}
+                contentAlignment={ContentAlignment.center}
+                caption={t('button.showPhone')}
+                iconLeft={IconType.circle}
+                onClick={() => onShowPhoneClick()}
+          />   
+         }
+        {showPhone && 
+          <div className='card-button__rating--phone'>{phone}</div>
+        }
+{/* 
+        <Btn
+              btnType={BtnType.filterCorp}
+              contentAlignment={ContentAlignment.center}
+              iconLeft={IconType.circle}
+              iconLink={<IoChatbubbleEllipsesSharp />}
+              submit={true}
+        />   
+        <Btn
+              btnType={BtnType.filterCorp}
+              contentAlignment={ContentAlignment.center}
+              iconLeft={IconType.circle}
+              iconLink={<IoMailOutline />}
+              submit={true}
+        />                   */}
       </>
     }
     </>)
@@ -391,10 +430,8 @@ function ShowPhone({button}) {
 
 export function CardButtonHeadActions({ button }) {
 
-
   return (
     <div className="card-button__rating">
-
       <ShowPhone button={button}/>
       {button.hearts && (
         <span className="btn-circle__icon">
@@ -552,7 +589,7 @@ const followButton = (buttonId) => {
 }
 
 const unFollowButton = (buttonId) => {
-  store.emit(new UnfollowButton(buttonId, () => alertService.success(t('button.unfollowAlert')), () => {alertService.warn(t('button.unfollowErrorAlert'))}))
+  store.emit(new UnfollowButton(buttonId, () => alertService.info(t('button.unfollowAlert')), () => {alertService.warn(t('button.unfollowErrorAlert'))}))
 }
 function isButtonOwner(loggedInUser, button) {
   return (

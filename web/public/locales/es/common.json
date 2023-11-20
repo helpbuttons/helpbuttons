@@ -17,6 +17,7 @@
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
     "goToExplore": "Explorar _helpbuttons_",
+    "goToCreate": "Crea tu _helpbutton_",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
     "stats": "¿Qué hay en esta red?",
     "users": "{0} usuarios en esta Red",
@@ -59,12 +60,14 @@
     "deleteSuccess": ""
   },
   "configuration": {
+    "nameLabel": "Nombre de tu Red",
     "namePlaceHolder": "Red de agricultores de Vilanova",
+    "descriptionLabel": "Descripción de tu Red",
     "privacySetPrivate": "Pulsa aquí para volver a red privada",
     "images": "Imágenes de Red",
     "jumbo": "Selecciona imagen de fondo de la Red",
     "locationExplain": "El mapa se centrará siempre sobre el lugar y el radio de tu Red  cada vez que alguien entre en la herramienta",
-    "tagsExplain": "Las palabras clave de tu Red harán más fácil la búsqueda de temas y para saber de qué trata tu red.",
+    "tagsExplain": "Las palabras clave de tu Red harán más fácil la búsqueda de temas, servirán para oreganizar el contenido y para saber de qué trata tu red en la página de inicio.",
     "centerOfMap": "Selecciona la ubicación base de tu Red",
     "description": "Aquí puedes modificar la configuración de tu Red",
     "title": "Configuración de tu Red y administrador",
@@ -81,7 +84,7 @@
     "nomeclatureLabel": "Renombra los _helpbuttons_",
     "nomeclatureExplain": "Este nombre se mostrará en vez de _helpbuttons_. Escribe el singular y el plural.",
     "nomeclaturePlaceHolder": "Escribe un nuevo nombre",
-    "buttonTemplateExplain": "Aquí puedes elegir los tipòs de _helpbutton_ que va a tener tu red. Intenta que sean pocos tipos y generales como 'Ofrecer' o 'Necesitar'. Si quieres ser más específico/a pùedes usar etiquetas para categorizar más adelante.",
+    "buttonTemplateExplain": "Aquí puedes elegir los tipos de _helpbutton_ que va a tener tu red y los campos que incluyan. Intenta que sean pocos tipos y generales como 'Ofrecer' o 'Necesitar'. Si quieres ser más específico/a pùedes usar etiquetas para categorizar más adelante.",
     "moderateNetwork": "Modera tu Red",
     "blockedExplain": "Bloqueados",
     "adminUsers": "Administradores",
@@ -90,13 +93,16 @@
     "pickSecondaryColor": "Escoge color secundario para tu red",
     "configureNetwork": "Configura tu Red",
     "buttonTemplateLabel": "Elige tus tipos de botón",
-    "buttonTemplatePlaceHolder": "Escribe el nombre de tu nuevo tipo",
+    "createButtonTypePlaceholder": "Escribe el nombre de tu nuevo tipo de _helpbutton_",
+    "templateMissingFields": "Escoge un nombre y un color para crear tu tipo de _helpbutton_",
     "contactAdmin": "Contactar al administrador",
     "priceFieldAdd": "Añadir precio",
     "moderationList": "Moderacion",
     "createSupportButton": "Crea tu boton de soporte para tu red",
     "moderation": "Moderacion",
-    "customFields": "Campos personalizados"
+    "customFields": "Campos extra",
+    "addType":"+ Crear tipo de _helpbutton_ con los campos superiores",
+    "currencyLabel": "Divisa"
   },
   "activities": {
     "allNotifications":"Todas las notificationes",
@@ -108,7 +114,12 @@
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
     "markedAllAsRead": "",
     "newcommentSubject": "Alguien ha comentado en un _helpbutton_",
-    "newfollow": "'{0}' esta ahora seguindo tu _helpbutton_ '{1}'"
+    "newfollow": "'{0}' esta ahora seguindo tu _helpbutton_ '{1}'",
+    "newbuttonType": "Nuevo _helpbutton_",
+    "newcommentType": "Comentario",
+    "newfollowType": "Nuevo suscriptor",
+    "creatorUpdate": "Actualización _helpbutton_",
+    "deletedType": "Eliminación _helpbutton_"
   },
   "user": {
     "login":"Escribe tus datos si tienes cuenta",
@@ -249,8 +260,12 @@
     "unknownPlace": "Sitio desconocido",
     "hideAddress": "Esconder ubicación exacta",
     "created": "creado",
-    "follow": "Seguir",
+    "follow": "Suscribirme",
     "unfollow": "Dejar de seguir",
+    "followAlert": "Te has suscrito a _helpbutton_, recibirás sus novedades.",
+    "unfollowAlert": "Te has desuscrito de _helpbutton_, dejarás de recibir sus novedades",
+    "unfollowAlertError": "Error al desuscribir",
+    "followAlertError": "Error al suscribir",
     "showPhone":"Mostrar teléfono"
   },
   "calendarOnce": {
@@ -309,7 +324,7 @@
     "calendarHeaderText": "Elige fecha y hora",
     "from": "De... ",
     "until": "Hasta... ",
-    "eventFieldAdd": "Añade una fecha",
+    "eventFieldAdd": "Añadir fecha",
     "once":"Una fecha",
     "multipleDates":"Multiples fechas",
     "recurring":"Evento recurrente",
