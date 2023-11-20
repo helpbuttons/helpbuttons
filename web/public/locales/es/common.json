@@ -109,7 +109,7 @@
     "allMessages":"Todos los mensajes",
     "allPosts":"Todos los posts",
     "newbutton": "Hay un nuevo _helpbutton_  '{0}' en '{1}'",
-    "newpost": "Hay una nueva publicacion '{0}' en el botón '{1}' por '{2}'",
+    "newpost": "Hay una novedad '{0}' en el botón '{1}' por '{2}'",
     "newcomment": "'{2}' ha comentado '{0}' en respuesta al post '{1}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
     "markedAllAsRead": "",
@@ -206,13 +206,13 @@
   "buttonFilters": {
     "queryLabel": "¿Qué buscas?",
     "searchBarTop": "{1} _helpbuttons_ {0}",
-    "queryExplain": "Escribe lo que quieras encontrar",
+    "queryExplain": "Especifica con palabras concretas aquello que quieras encontrar",
     "followTag":"Quiero recibir alertas sobre",
     "tagsExplain": "Las palabras clave son los temas más importantes o más tratados en la Red",
     "where": "¿Dónde?",
     "distance": "Distancia de búsqueda",
     "allButtonTypes": "Todos los tipos",
-    "queryPlaceHolder": "Amigos, comida, ropa, herramientas...",
+    "queryPlaceHolder": "Escribe aquí lo que buscas",
     "whereExplain": "Busca el lugar en que quieras buscar o pulsa en el icono para marcar tu ubicación",
     "types": "Tipos de _helpbuttons_",
     "typesExplain": "Selecciona los tipos de _helpbuttons_ que quieras filtrar",
@@ -312,7 +312,7 @@
   "comment": {
     "placeholderWrite": "Escribe un mensaje en esta publicación",
     "public":"Este comentario es público, todos podrán verlo.",
-    "private":"Estas mandando un mensaje privado. Sólo el destinatario podrá verlo.",
+    "private":"Estás mandando un mensaje privado. Sólo el destinatario podrá verlo.",
     "delete": "Borrar"
   },
   "picker": {
