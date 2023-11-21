@@ -25,7 +25,7 @@ export class ActivityCron {
     private readonly networkService: NetworkService,
   ) {}
 
-  @Cron('12 13 * * *', {
+  @Cron('27 18 * * *', {
     name: 'notifications',
   })
   async triggerNotifications() {
