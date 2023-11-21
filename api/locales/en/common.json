@@ -16,7 +16,7 @@
     "info": "What's this Network about?",
     "loading": "...",
     "goToExplore": "Explore the _helpbuttons_",
-    "goToPublish": "Create your _helpbutton_",
+    "goToCreate": "Create your _helpbutton_",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
@@ -52,8 +52,8 @@
     "searchBarTop": "{1} _helpbuttons_ found {0}",
     "selectedArea": "in the selected area",
     "queryLabel": "What do you search",
-    "queryExplain": "Write whatever you want to find",
-    "queryPlaceHolder": "Friends, food, toys, clothes,...",
+    "queryExplain": "Specify whatever you want to find",
+    "queryPlaceHolder": "Type here the words",
     "followTag":"I want to receive notifications about",
     "where": "Where ?",
     "whereExplain": "Search the place you want or click the icon to check your location.",
@@ -304,6 +304,7 @@
     "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here",
     "createButtonTypePlaceholder": "Write your _helpbutton_ type name here",
     "createButtonTypeAction": "Create new type",
+    "templateMissingFields": "You need to pick a color and add a name before adding a new template button",
     "nameLabel": "Network name",
     "descriptionLabel": "Network description",
     "nomeclatureLabel": "Rename your _helpbuttons_",
@@ -318,7 +319,8 @@
     "currencyLabel": "Currency",
     "moderationList": "Moderation",
     "createSupportButton": "Create your network's support button",
-    "moderation": "Moderation"
+    "moderation": "Moderation",
+    "addType":"+ Create _helpbutton_ type with the above"
   },
   "configure": {
     "browsePins": "",
@@ -365,7 +367,9 @@
     "inviteOnly": "Only allow signup with an invitation"
   },
   "customFields": {
-    "priceLabel": "Price ({0})"
+    "priceLabel": "Price ({0})",
+    "consult": "Price to consult",
+    "free": "Free"
   },
   "email": {
     "loginTokenContent": "Welcome to {0}",
