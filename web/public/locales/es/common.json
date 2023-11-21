@@ -56,7 +56,7 @@
     "done": "Hecho",
     "remove": "Eliminar",
     "click": "Haz click aquí",
-    "publishTitle": "Publicar {0}",
+    "publishTitle": "Crear {0}",
     "deleteSuccess": ""
   },
   "configuration": {
@@ -149,11 +149,12 @@
     "newLoginTokenSent": "Si tienes una cuenta, recibirás un email con un link para hacer login.",
     "sendLoginToken": "Mandar enlace de Inicio de Sesión",
     "loginLink": "Tengo cuenta",
+    "loginWEmail": "Entrar con contraseña",
     "avatar": "Elige avatar",
     "avatarLabel": "Imagen de perfil",
     "avatarExplain": "Esta es la imagen de perfil/avatar que te representará en esta Red",
     "newPasswordPlaceHolder": "Tu nueva contraseña",
-    "usernamePlaceHolder": "Excribe un nombre de usuario",
+    "usernamePlaceHolder": "Escribe un nombre de usuario",
     "editProfile": "Editar perfil",
     "noAccount": "No tengo cuenta",
     "tags": "Tus intereses",
