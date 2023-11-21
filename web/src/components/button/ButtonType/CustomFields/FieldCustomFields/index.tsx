@@ -31,7 +31,7 @@ export default function FieldCustomFields({
               }}
               {...register('consultPrice')}
             />
-            {price > -1 && (
+            {price != -1 && (
               <FieldNumber
                 name={'price'}
                 label={t(

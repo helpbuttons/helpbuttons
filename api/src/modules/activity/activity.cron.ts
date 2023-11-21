@@ -42,7 +42,7 @@ export class ActivityCron {
 
   findUsersWithPendingNotifications() {
     return this.entityManager.query(
-      `select "ownerId" as id, count(id) as numberActivities from activity where outbox = true AND created_at::date = now()::date group by "ownerId"`,
+      `select "ownerId" as id, count(id) as numberActivities from activity where outbox = true AND  created_at between now() - INTERVAL '1 day' AND now() group by "ownerId"`,
     );
   }
 
