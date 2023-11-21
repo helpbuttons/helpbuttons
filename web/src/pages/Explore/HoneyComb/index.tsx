@@ -566,16 +566,17 @@ function useHexagonMap({
   };
 
   const fetchBounds = (bounds, zoom) => {
+    const zoomFloor = Math.floor(zoom)
     const hexagonsForBounds = convertBoundsToGeoJsonHexagons(
       bounds,
-      getResolution(zoom),
+      getResolution(zoomFloor),
     );
     if (hexagonsForBounds.length > 1000) {
       console.error('too many hexes.. canceling..');
       return;
     }
     setHexagonsToFetch(() => {return {
-      resolution: getResolution(zoom),
+      resolution: getResolution(zoomFloor),
       hexagons: hexagonsForBounds,
     }});
   }
