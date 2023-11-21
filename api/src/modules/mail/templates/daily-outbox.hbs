@@ -2,15 +2,17 @@
 <html lang='en'>
 {{> head}} <!-- Include the head partial here -->
 <body>
-    <p class='title'>{{subject}}</p>
-    {{#list activities}}
-     <div class='container'>
-        <p class='thanks'></p>
-        {{content}}
-    
-        <p><a href='{{link}}'>{{linkCaption}}</a> </p>
-     </div>
-    {{/list }}
+    <div class='wrapper'>
+      <p class='title'>{{subject}}</p>
+      {{#list activities}}
+      <div class='container'>
+          <p class='thanks'></p>
+          {{content}}
+      
+          <p><a href='{{link}}'>{{linkCaption}}</a> </p>
+      </div>
+      {{/list }}
+    </div>
   {{> footer}} <!-- Include the footer partial here -->
 </body>
 </html>
