@@ -24,7 +24,7 @@ export default function LoginClick() {
     };
 
     const onError = (err) => {
-      alertService.error('failed to login, please try again');
+      alertService.error(t('login.error'));
       router.push('/HomeInfo');
     };
     if (!initialized.current) {

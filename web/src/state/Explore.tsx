@@ -237,6 +237,10 @@ export class UpdateFilters implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      if(this.filters?.where.center)
+      {
+        newState.explore.settings.center = this.filters.where.center
+      }
       newState.explore.map.filters = this.filters;
     });
   }
@@ -387,5 +391,22 @@ export class SetExploreSettingsBoundsLoaded implements UpdateEvent{
     return produce(state, (newState) => {
       newState.explore.settings.bounds = null;
     });
+  }
+}
+
+
+export class GetPhone implements WatchEvent {
+  public constructor(
+    private buttonId: string,
+    private onSuccess,
+    private onError,
+  ) {}
+  public watch(state: GlobalState) {
+    return ButtonService.getPhone(this.buttonId).pipe(
+      map((data) => {
+        this.onSuccess(data);
+      }),
+      catchError((error) => handleError(this.onError, error)),
+    );
   }
 }

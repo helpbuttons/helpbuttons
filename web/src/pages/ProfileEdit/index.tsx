@@ -31,6 +31,10 @@ import t from 'i18n';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import Accordion from 'elements/Accordion';
+import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import FieldTags from 'elements/Fields/FieldTags';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 export default function ProfileEdit() {
   const {
@@ -47,9 +51,14 @@ export default function ProfileEdit() {
     locale: 'en',
     receiveNotifications: true,
     showButtons: false,
+    tags: [],
+    address: '',
+    center: {coordinates: null},
+    radius: 0,
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
+
 
   const router = useRouter();
   const { pathname, asPath, query } = useRouter()
@@ -60,19 +69,23 @@ export default function ProfileEdit() {
   const [locale, setLocale] = useState(null)
 
   const onSubmit = (data: UserUpdateDto) => {
-    const dataToSubmit : UserUpdateDto =
+    let dataToSubmit : UserUpdateDto =
     {
       name: data.name,
       email: data.email,
       avatar: data.avatar,
-      password_current: data.password_current,
       password_new: data.password_new,
       password_new_confirm: data.password_new_confirm,
       set_new_password: setNewPassword,
       description: data.description,
       locale: locale,
       receiveNotifications: data.receiveNotifications,
-      showButtons: data.showButtons
+      showButtons: data.showButtons,
+      tags: data.tags,
+      center: data.center,
+      address: data.address,
+      radius: data.radius,
+      phone: data.phone,
     }
     if (setNewPassword)  {
       // check passwords match.. send to backend
@@ -80,7 +93,9 @@ export default function ProfileEdit() {
       {
         setError('password_new',  { type: 'custom', message: t('user.passwordMismatch')})
         setError('password_new_confirm',  { type: 'custom', message: t('user.passwordMismatch')})
-      }
+      }else{
+        dataToSubmit = {...dataToSubmit, set_new_password: true}
+      } 
     }
     
     store.emit(new UpdateProfile(dataToSubmit, onSuccess, onError));
@@ -109,11 +124,15 @@ export default function ProfileEdit() {
       reset(loggedInUser);
     }
   }, [loggedInUser]);
+
+  const radius = watch('radius')
+  const coordinates = watch('center.coordinates')
+  const center = coordinates ? [coordinates[1],coordinates[0]] : null;
   return (
     <>
       {loggedInUser && (
         <>
-          <Popup title={t('user.updateProfile')} linkFwd="/HomeInfo">
+          <Popup title={t('user.updateProfile')} linkFwd="/Profile">
             <Form
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="login"
@@ -121,6 +140,8 @@ export default function ProfileEdit() {
               <div className='form__label'> {loggedInUser.username}@{getHostname()} </div>
               
                 <div className="form__inputs-wrapper">
+                <Accordion title={t('user.personalData')}>
+
                   <FieldText
                     name="name"
                     label={t('user.name')}
@@ -130,6 +151,19 @@ export default function ProfileEdit() {
                     validationError={errors.name}
                     {...register('name', { required: true })}
                   ></FieldText>
+                  <FieldImageUpload
+                    name="avatar"
+                    text={t('user.avatar')}
+                    label={t('user.avatarLabel')}
+                    explain={t('user.avatarExplain')}
+                    control={control}
+                    width={150}
+                    height={150}
+                    subtitle={'150x150px'}
+                    validationError={errors.avatar}
+                    setValue={setValue}
+                    {...register('avatar')}
+                  />
                    <FieldTextArea
                     name="description"
                     label={t('user.description')}
@@ -143,6 +177,7 @@ export default function ProfileEdit() {
                   />
                                   
                   <FieldLanguagePick onChange={(value) => setLocale(value)} explain={t('user.pickLanguageExplain')} defaultValue={loggedInUser.locale}/>
+
                   <FieldText
                     name="email"
                     label={t('user.email')}
@@ -152,14 +187,17 @@ export default function ProfileEdit() {
                     validationError={errors.email}
                     {...register('email', { required: true })}
                   ></FieldText>  
-                  <FieldCheckbox
-                    label={t('user.receiveNotifications')}
-                    explain={t('user.receiveNotificationsExplain')}                                 
-                    name='receiveNotifications'
-                    defaultValue={loggedInUser.receiveNotifications}
-                    text={t('user.textReceiveNotifications')}
-                    onChanged={(value) => {setValue('receiveNotifications', value)}}
-                  />
+
+                  <FieldText
+                    name="phone"
+                    label={t('user.phone')}
+                    explain={t('user.phoneExplain')}
+                    classNameInput="squared"
+                    placeholder={t('user.phonePlaceHolder')}
+                    validationError={errors.phone}
+                    {...register('phone')}
+                  ></FieldText>  
+
                   <FieldCheckbox
                     name='showButtons'
                     label={t('user.showButtonsProfileLabel')}
@@ -168,45 +206,75 @@ export default function ProfileEdit() {
                     text={t('user.showButtons')}
                     onChanged={(value) => {setValue('showButtons', value)}}
                   />
-                  <FieldImageUpload
-                    name="avatar"
-                    text={t('user.avatar')}
-                    label={t('user.avatarLabel')}
-                    explain={t('user.avatarExplain')}
-                    control={control}
-                    width={150}
-                    height={150}
-                    subtitle={'150x150px'}
-                    validationError={errors.avatar}
-                    setValue={setValue}
-                    {...register('avatar', { required: true })}
+
+                </Accordion>
+                <Accordion title={t('user.notificationConfig')}>
+
+                  <FieldCheckbox
+                    label={t('user.receiveNotifications')}
+                    explain={t('user.receiveNotificationsExplain')}                                 
+                    name='receiveNotifications'
+                    defaultValue={loggedInUser.receiveNotifications}
+                    text={t('user.textReceiveNotifications')}
+                    onChanged={(value) => {setValue('receiveNotifications', value)}}
                   />
+
+
+                  <DropDownSearchLocation
+                    label={t('user.location')}
+                    handleSelectedPlace={(newPlace) => {setValue('center', {coordinates: [newPlace.geometry.lat, newPlace.geometry.lng]}); setValue('address', newPlace.formatted)}}
+                    placeholder={t('user.location')}
+                    address={watch('address')}
+                    explain={t('user.locationExplain')}
+                    center={center}
+                  />
+                <div className="form__field">
+                    <label className="form__label">
+                      {t('user.distance')} ({radius} km)
+                    </label>
+                    <div className='form__explain'>{t('user.distanceExplain')} </div>
+                    <div style={{ padding: '1rem' }}>
+                      <Slider
+                        min={0}
+                        max={300}
+                        onChange={(radiusValue) =>
+                          setValue('radius', radiusValue)
+                        }
+                        value={radius}
+                      />
+                    </div>
+                  </div>
+                <FieldTags
+                  label={t('user.tags')}
+                  explain={t('user.tagsExplain')}
+                  placeholder={t('common.add')}
+                  validationError={errors.tags}
+                  setTags={(tags) => {
+                    setValue('tags', tags);
+                  }}
+                  tags={watch('tags')}
+                />
+                
+                </Accordion>
+
+
                 {errorMsg && (
                   <div className="form__input-subtitle--error">
                     {errorMsg}
                   </div>
                 )}
-                <hr></hr>
+                 
                 <Accordion 
                   title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
+                  handleClick={() => setSetNewPassword(() => !setNewPassword)}
                 >
-                        <FieldPassword
-                          name="password_current"
-                          label={t('user.password')}
-                          classNameInput="squared"
-                          placeholder={t('user.passwordPlaceHolder')}
-                          validationError={errors.password}
-                          {...register('password_current', {
-                            minLength: 8,
-                          })}
-                        ></FieldPassword>
 
                         <FieldPassword
                           name="password_new"
                           label={t('user.newPassword')}
                           classNameInput="squared"
                           placeholder={t('user.newPasswordPlaceHolder')}
-                          validationError={errors.password}
+                          validationError={errors.password_new}
                           {...register('password_new', {
                             minLength: 8,
                           })}
@@ -216,7 +284,7 @@ export default function ProfileEdit() {
                           label={t('user.passwordConfirmation')}
                           classNameInput="squared"
                           placeholder={t('user.passwordConfirmationPlaceHolder')}
-                          validationError={errors.password}
+                          validationError={errors.password_new_confirm}
                           {...register('password_new_confirm', {
                             minLength: 8,
                           })}

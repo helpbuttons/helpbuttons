@@ -16,6 +16,7 @@
     "info": "What's this Network about?",
     "loading": "...",
     "goToExplore": "Explore the _helpbuttons_",
+    "goToPublish": "Create your _helpbutton_",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
@@ -53,8 +54,9 @@
     "queryLabel": "What do you search",
     "queryExplain": "Write whatever you want to find",
     "queryPlaceHolder": "Friends, food, toys, clothes,...",
-    "where": "Where",
-    "whereExplain": "Search the place where you want to go",
+    "followTag":"I want to receive notifications about",
+    "where": "Where ?",
+    "whereExplain": "Search the place you want or click the icon to check your location.",
     "distance": "Search Distance",
     "allButtonTypes": "All types",
     "types": "_helpbuttons_ types",
@@ -71,7 +73,9 @@
     "byDate": "By creation date",
     "byProximity": "By proximity",
     "byEventDate": "By start of event",
-    "orderBy": "Order"
+    "orderBy": "Order",
+    "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list",
+    "followTagSucess": "{0} has been added to your interests"
   },
   "setup": {
     "hostname": "Hostname",
@@ -90,11 +94,21 @@
     "test": ""
   },
   "activities": {
-    "newbutton": "You published '{0}' in '{1}'",
+    "allNotifications":"All Notifications",
+    "allMessages":"All messages",
+    "allPosts":"All Posts",
+    "newbutton": "A new _helpbutton_ was published '{0}' in '{1}'",
+    "newbuttonType": "New _helpbutton_",
+    "newcommentType": "Comment",
+    "newfollowType": "New suscriber",
+    "creatorUpdate": "_helpbutton_ updated",
+    "deletedType": "_helpbutton_ deleted",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
-    "newpost": "There is a new post '{0}' in your button '{1}' by '{2}'",
-    "newcomment": "'{2}' commented '{0}' answer to the post '{1}'"
+    "newpost": "There is a new post '{0}' in the _helpbutton_ '{1}' by '{2}'",
+    "newcomment": "'{2}' commented '{0}' answer to the post '{1}'",
+    "newcommentSubject": "Someone commented on your _helpbutton_",
+    "newfollow": "{0} is now following your _helpbutton_ {1}"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -132,6 +146,7 @@
     "whereLabel": "Where ?",
     "changePlaceLabel": "Choose place",
     "whenLabel": "When ?",
+    "invalidDates":"Invalid Dates",
     "changeDateLabel": "Choose date",
     "placeHolderTitle": "Write a title for your _helpbutton_",
     "placeHolderDescription": "Write a description for your _helpbutton_",
@@ -146,9 +161,16 @@
     "unknownPlace": "Unknown Place",
     "hideAddress": "Hide exact location",
     "follow": "Follow",
-    "unfollow": "Unfollow"
+    "unfollow": "Unfollow",
+    "followAlert": "Followed",
+    "unfollowAlert": "Unfollowed",
+    "unfollowAlertError": "Unfollow Error",
+    "followAlertError": "Follow error",
+    "showPhone":"Show phone number"
   },
   "user": {
+    "login":"Write your credentials",
+    "signup":"SignUp in order to take part",
     "updateProfile": "Complete/Edit Profile",
     "profileView": "Your profile",
     "otherProfileView": "User",
@@ -158,18 +180,18 @@
     "username": "Username",
     "usernameExplain": "The username is what will identify you in this network and others",
     "usernamePlaceHolder": "Type a unique name",
-    "password": "Password",
+    "password": "Current Password",
     "pickLanguageLabel": "Pick your language",
     "pickLanguageExplain": "The app menus will be translated to the language you choose",
-    "passwordPlaceHolder": "Repeat your password",
-    "passwordConfirmation": "Password confirmation",
+    "passwordPlaceHolder": "Type your password here",
+    "passwordConfirmation": "Repeat the new password",
     "passwordConfirmationPlaceHolder": "Type your password again please",
     "newPassword": "Type your new password",
     "newPasswordPlaceHolder": "Your new password",
     "passwordMismatch": "passwords won't match",
     "loginButton": "ENTER",
     "noAccount": "I don&apos;t have an account",
-    "tags": "Related interests",
+    "tags": "Your interests",
     "editProfile": "Edit profile",
     "name": "Profile name",
     "nameExplain": "This is your free name that other users will see",
@@ -202,7 +224,18 @@
     "unsubscribed": "You will no longer receive this kind of emails",
     "showButtonsProfileLabel": "_helpbuttons_ on my profile page",
     "showButtonsProfileExplain": "Mark if you want to show a list of what you publish in your public profile",
-    "showButtons": "Show my _helpbuttons_ on my profile page"
+    "showButtons": "Show my _helpbuttons_ on my profile page",
+    "loginError":"Failed to login, please try again or contact the admin",
+    "tagsExplain":"Write words that you are interested in and you will receive notifications of the _helpbuttons_ created. Write and press enter or separate by commas to add a word.",
+    "distance":"Maximum distance of notification",
+    "distanceExplain":"_helpbuttons_ created farer from this radius won't be notified",
+    "location":"Your base location",
+    "locationExplain":"Specify a base location for notifications",
+    "personalData":"Your user data",
+    "notificationConfig":"Your notification configuration",
+    "phone":"Phone",
+    "phoneExplain":"Add your phone if you want people to contact you through it",
+    "phonePlaceHolder":"i.e. 34699000000"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -223,7 +256,8 @@
   },
   "validation": {
     "fieldRequired": "{0} is required.",
-    "tooShort": "{0} is too short."
+    "tooShort": "{0} is too short.",
+    "error": "Check the fields, there are errors in the form"
   },
   "post": {
     "comment": "comment",
@@ -236,7 +270,10 @@
   },
   "comment": {
     "delete": "Borrar",
-    "placeholderWrite": "Write a message in this post"
+    "private":"You're sending a private message. Only the destination user could see it.",
+    "public":"This comment is public, everyone could see it.",
+    "placeholderWrite": "Write a message in this post",
+    "posted":"Comment posted"
   },
   "configuration": {
     "title": "Network and Administrator settings",
@@ -338,6 +375,7 @@
     "activateSubject": "Please activate your account",
     "activateLinkCaption": "Click here to activate your account",
     "activitySubject": "New activity",
-    "buttonLinkCaption": "Click here to open"
+    "buttonLinkCaption": "Click here to open",
+    "dailyOutBox": "There are {0} activities in {1}, {2}"
   }
 }

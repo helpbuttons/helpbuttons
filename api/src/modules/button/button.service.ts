@@ -5,7 +5,8 @@ import {
   Injectable,
   forwardRef,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { OnEvent } from '@nestjs/event-emitter';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { Repository, In, EntityManager, Not } from 'typeorm';
 import { TagService } from '../tag/tag.service';
@@ -25,6 +26,7 @@ import { maxResolution } from '@src/shared/types/honeycomb.const';
 import { PostService } from '../post/post.service';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
+import { ActivityEventName } from '@src/shared/types/activity.list';
 
 @Injectable()
 export class ButtonService {
@@ -36,6 +38,8 @@ export class ButtonService {
     private readonly storageService: StorageService,
     @Inject(forwardRef(() => PostService))
     private postService: PostService,
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
   ) {}
 
   async create(
@@ -45,6 +49,12 @@ export class ButtonService {
     user: User,
   ) {
     const network = await this.networkService.findOne(networkId);
+
+    let hasPhone = false
+    if(user.phone)
+    {
+      hasPhone = true
+    }
 
     if (!network) {
       throw new HttpException(
@@ -100,6 +110,7 @@ export class ButtonService {
       eventStart: createDto.eventStart,
       eventEnd: createDto.eventEnd,
       eventType: createDto.eventType,
+      hasPhone,
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -168,21 +179,33 @@ export class ButtonService {
     return { ...button };
   }
 
-  async update(id: string, updateDto: UpdateButtonDto) {
+  async update(id: string, updateDto: UpdateButtonDto, currentUser: User) {
+    const currentButton = await this.findById(id)
+
     let location = {};
+    let hexagon = {}
     if (updateDto.latitude > 0 && updateDto.longitude > 0) {
       location = {
         location: () =>
           `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
       };
+      hexagon = {hexagon: () =>
+      `h3_lat_lng_to_cell(POINT(${updateDto.longitude}, ${updateDto.latitude}), ${maxResolution})`}
     } else {
       delete updateDto.latitude;
       delete updateDto.longitude;
     }
 
+    let hasPhone = false
+    if(currentButton.owner.phone)
+    {
+      hasPhone = true
+    }
     const button = {
       ...updateDto,
       ...location,
+      ...hexagon,
+      hasPhone,
       images: [],
       id,
       tags: this.tagService.formatTags(updateDto.tags),
@@ -313,7 +336,7 @@ export class ButtonService {
       button.followedBy.push(userId);
       return await this.buttonRepository.save(button);
     }
-    return true;
+    return button;
   }
   
   async unfollow(buttonId: string, userId: string) {
@@ -326,7 +349,30 @@ export class ButtonService {
     return true;
   }
 
+  async getPhone(buttonId: string)
+  {
+    const query = `SELECT public.user.phone from button, public.user WHERE button.id = '${buttonId}' AND "ownerId" = public.user.id`;
+    const result = await this.entityManager.query(query)
+    
+    if(result.length > 0)
+    {
+      return result[0].phone;
+    }
+    return '';
+  }
+
   deletedBlockedConditions() {
     return { deleted: false, owner: { role: Not(Role.blocked) } };
+  }
+
+  @OnEvent(ActivityEventName.NewPostComment)
+  async autoFollowButton(payload: any) {
+    switch (payload.activityEventName) {
+      case ActivityEventName.NewPostComment:
+        const buttonId = payload.data.button.id
+        const userId = payload.data.author.id
+        this.follow(buttonId, userId)
+        break;
+    }
   }
 }

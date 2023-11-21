@@ -76,7 +76,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   overflow-x: scroll;
   overflow-y: hidden;
   height: auto;
-  min-height: $card-button-list-height;
+  min-height: $card-button-list-height + $padding-big + $padding-medium;
   width: 100%;
 
   .list__element {
@@ -177,7 +177,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 @media (hover: none) {
 
   .list__container {
-    padding-bottom: calc($footer-height-mobile - 18px);
+    padding-bottom: calc($footer-height-mobile - 30px);
   }
 
 }

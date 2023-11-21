@@ -27,7 +27,7 @@ export default function PickerEventTypeOnceForm({
       ? eventStart.getHours() +
           ':' +
           String(eventStart.getMinutes()).padStart(2, '0')
-      : '0:00',
+      : '0:01',
   );
 
   const [endTime, setEndTime] = useState(
@@ -35,7 +35,7 @@ export default function PickerEventTypeOnceForm({
       ? eventEnd.getHours() +
           ':' +
           String(eventEnd.getMinutes()).padStart(2, '0')
-      : '0:00',
+      : '23:59',
   );
 
   useEffect(() => {
@@ -134,7 +134,7 @@ function TimePick({ time, setTime, label }) {
       {showFromTime && (
 
         <Picker
-        closeAction={() => {console.log('cerra-me')}}
+        closeAction={() => {setShowFromTime(false)}}
         headerText={t('eventType.headerText')}
         >
          <div className="picker__row">

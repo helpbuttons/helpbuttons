@@ -96,6 +96,18 @@ $card-button-border-height: $border-general-height;
     align-items: center;
     padding-right: 1rem;
   }
+
+  button {
+
+    margin-left: 0;
+
+  }
+}
+
+.card-button__rating--phone {
+
+ text-wrap: nowrap;
+
 }
 
 .card-button__submenu {
@@ -113,6 +125,7 @@ $card-button-border-height: $border-general-height;
 
   }
 }
+
 
 .card-button__submenu-show {
   background: $color-corporative;
@@ -199,11 +212,20 @@ $card-button-border-height: $border-general-height;
   color: $color-black;
   font-size: $font-size-title;
   padding: $padding-small 0;
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &::first-letter{
+
+    text-transform: uppercase;
+
+  }
 
 }
 
 .card-button__title:first-letter {
+
   text-transform: uppercase;
 }
 
@@ -370,8 +392,9 @@ $card-button-border-height: $border-general-height;
 // }
 
 .card-button__edit-icon {
-  width: 30px;
+  width: auto;
   height: 30px;
+  padding-right: $padding-big;
   position: absolute;
   right: 0;
 }

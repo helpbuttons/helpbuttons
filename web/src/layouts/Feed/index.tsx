@@ -134,14 +134,13 @@ export function FeedElement({
           </div>
         </div>
         <PostMessage post={post} />
-
         <>
           <div className="card-notification__answer-btn">
             {loggedInUser && (
               <>
                 <Btn
                   submit={false}
-                  btnType={BtnType.iconActions}
+                  btnType={BtnType.filterCorp}
                   iconLink={<IoChatbubbleEllipsesSharp />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.right}
@@ -157,7 +156,7 @@ export function FeedElement({
                 />
                 <Btn
                   submit={false}
-                  btnType={BtnType.iconActions}
+                  btnType={BtnType.filterCorp}
                   iconLink={<IoMailOutline />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.right}
@@ -179,7 +178,7 @@ export function FeedElement({
                 isAdmin(loggedInUser)) && (
                 <Btn
                   submit={false}
-                  btnType={BtnType.iconActions}
+                  btnType={BtnType.filterCorp}
                   iconLink={<IoTrashBinOutline />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.right}
@@ -189,9 +188,10 @@ export function FeedElement({
               {!loggedInUser && 
                 <Btn
                 submit={false}
-                btnType={BtnType.iconActions}
+                btnType={BtnType.filterCorp}
                 iconLink={<IoChatbubbleEllipsesSharp />}
                 iconLeft={IconType.circle}
+                caption=''
                 contentAlignment={ContentAlignment.right}
                 onClick={() =>
                   setShowComposePostReply(() => {
@@ -229,12 +229,14 @@ export function FeedElement({
           onComposeReplyToComment={(
             commentId,
             mentions,
+            privateMessage
           ) => {
             setShowComposePostReply(() => {
               return {
                 post: post.id,
                 comment: commentId,
                 mentions: mentions.concat([post.author.username]),
+                privateMessage: privateMessage
               };
             });
           }}
@@ -295,14 +297,20 @@ export function Compose({
         </div>
         <MessageNew
           isComment={true}
+          privateMessage={referer?.privateMessage}
           onCreate={(message) => {
+            let privacy = CommentPrivacyOptions.PUBLIC;
+            if (referer?.privateMessage) {
+              privacy = CommentPrivacyOptions.PRIVATE;
+            }
+
             store.emit(
               new CreateNewPostComment(
                 referer.post,
-                CommentPrivacyOptions.PUBLIC,
+                privacy,
                 { message: message },
                 () => {
-                  alertService.info('comment posted');
+                  alertService.info(t('comment.posted'));
                   onCreate();
                 },
                 (errorMessage) =>
@@ -346,7 +354,7 @@ export function Compose({
                 privacy,
                 { message: message },
                 () => {
-                  alertService.info('comment posted');
+                  alertService.info(t('comment.posted'));
                   onCreate();
                 },
                 (errorMessage) =>

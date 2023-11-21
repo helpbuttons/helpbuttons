@@ -1,6 +1,6 @@
 import t from 'i18n';
 import React, { useEffect, useState } from 'react';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import FieldText from 'elements/Fields/FieldText';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -20,6 +20,10 @@ import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import { IoMapOutline } from 'react-icons/io5';
+import Link from 'next/link';
+import { alertService } from 'services/Alert';
+import { FollowTag } from 'state/Users';
 
 
 export default function AdvancedFilters({
@@ -125,7 +129,10 @@ export default function AdvancedFilters({
               placeholder={t('buttonFilters.queryPlaceHolder')}
               explain={t('buttonFilters.queryExplain')}
               {...register('query')}
+              // subInputLink={'/'}
+              // subInputLinkText={t('buttonFilters.followTag')}
             />
+            <TagFollow tags={tags}/>
             {/* <TagList tags={tags} remove={(tag) => {
               setValue('query', query.replace(tag, ''))
               setTags((prevTags) => prevTags.filter((prevTag) => prevTag != tag))
@@ -175,6 +182,7 @@ export default function AdvancedFilters({
               placeholder={t('homeinfo.searchlocation')}
               handleSelectedPlace={handleSelectedPlace}
               address={address}
+              label={t('buttonFilters.where')}
               explain={t('buttonFilters.whereExplain')}
               center={center}
             />
@@ -274,6 +282,30 @@ export function AdvancedFiltersSortDropDown({className, label, orderBy, setOrder
       
     </>
   );
+}
+
+function TagFollow({tags}) {
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+  const followTag = (tag) => {
+    store.emit(new FollowTag(tag, () => {alertService.success(t('buttonFilters.followTagSucess', [tag]))}));
+  }
+  if(!loggedInUser || tags.length  < 1 )
+  {
+    return <></>
+  }
+
+  return (
+    <>
+        {t('buttonFilters.followTag')}
+        {tags.map((tag) => {
+          return <Link href="#" onClick={() => {followTag(tag)}}>{tag}</Link>
+        })}
+    </>
+  )
 }
 
 export enum ButtonsOrderBy {

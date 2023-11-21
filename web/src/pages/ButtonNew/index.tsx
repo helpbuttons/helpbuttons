@@ -94,7 +94,7 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
         query: { returnUrl: 'ButtonNew' },
       });
     }else if(err.errorName == ErrorName.invalidDates){
-      alertService.error('invalid dates')
+      alertService.error(t('button.invalidDates'))
     }else{
       console.error(JSON.stringify(err))
     }

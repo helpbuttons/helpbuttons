@@ -27,5 +27,10 @@ function linkify(text) {
 }
 
 export function mentionsOfMessage(message) {
-  return message.match(userPattern).map((user) => user.substring(1))
+  const matches = message.match(userPattern)
+  if(!matches)
+  {
+    return []
+  }
+  return matches.map((user) => user.substring(1))
 }

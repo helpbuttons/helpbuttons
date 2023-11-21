@@ -35,7 +35,7 @@
   },
   "feed": {
     "write": "Escribir mensaje",
-    "update": "Actualización del Usuario"
+    "update": "Actualización del Autor"
   },
   "hostname": "nombre de host",
   "common": {
@@ -99,16 +99,28 @@
     "customFields": "Campos personalizados"
   },
   "activities": {
-    "newbutton": "Creaste un nuevo botón '{0}' en '{1}'",
+    "allNotifications":"Todas las notificationes",
+    "allMessages":"Todos los mensajes",
+    "allPosts":"Todos los posts",
+    "newbutton": "Hay un nuevo _helpbutton_  '{0}' en '{1}'",
     "newpost": "Hay una nueva publicacion '{0}' en el botón '{1}' por '{2}'",
     "newcomment": "'{2}' ha comentado '{0}' en respuesta al post '{1}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
-    "markedAllAsRead": ""
+    "markedAllAsRead": "",
+    "newcommentSubject": "Alguien ha comentado en un _helpbutton_",
+    "newfollow": "'{0}' esta ahora seguindo tu _helpbutton_ '{1}'",
+    "newbuttonType": "Nuevo _helpbutton_",
+    "newcommentType": "Comentario",
+    "newfollowType": "Nuevo suscriptor",
+    "creatorUpdate": "Actualización _helpbutton_",
+    "deletedType": "Eliminación _helpbutton_"
   },
   "user": {
-    "updateProfile": "Completar/Editar Perfil",
+    "login":"Escribe tus datos si tienes cuenta",
+    "signup":"Únete para participar",
+    "updateProfile": "Completar Perfil",
     "profileView": "Tu Perfil",
-    "otherProfileView": "Usuario",
+    "otherProfileView": "Perfil de usuario",
     "email": "Email",
     "username": "Nombre de usuario",
     "password": "Contraseña",
@@ -133,12 +145,12 @@
     "loginLink": "Tengo cuenta",
     "avatar": "Elige avatar",
     "avatarLabel": "Imagen de perfil",
-    "avatarExplain": "Esta es la imagen de perfil/avatar que te representará en esta Read",
+    "avatarExplain": "Esta es la imagen de perfil/avatar que te representará en esta Red",
     "newPasswordPlaceHolder": "Tu nueva contraseña",
     "usernamePlaceHolder": "Excribe un nombre de usuario",
     "editProfile": "Editar perfil",
     "noAccount": "No tengo cuenta",
-    "tags": "Intereses relacionados",
+    "tags": "Tus intereses",
     "passwordConfirmationPlaceHolder": "Escribe tu contraseña otra vez por favor",
     "deactivate": "Desactivar cuenta",
     "dontChangePassword": "No cambies la contraseña",
@@ -149,7 +161,7 @@
     "pickLanguageExplain": "Los menús de la herramienta serán traducidos a la lengua que elijas",
     "textReceiveNotifications": "Recibir notificaciones por email",
     "receiveNotifications": "Notificaciones por email",
-    "receiveNotificationsExplain": "Marca si quieres recibir notificaciones por email cuando algún usuario te escriba algún mensaje o se publique algo sobre los usuarios que sigues o apoyas",
+    "receiveNotificationsExplain": "Selecciona si quieres recibir notificaciones por email cuando algún usuario te escriba algún mensaje o se publique algo sobre _helpbuttons_ o temas que sigues",
     "revoke": "Revocar derechos de administrador",
     "unblock": "Desbloquear",
     "block": "Bloquear",
@@ -157,7 +169,17 @@
     "unsubscribed": "No vas a recibir mas este tipo de emails",
     "showButtonsProfileLabel": "Contenido en tu página de perfil",
     "showButtonsProfileExplain": "Marca esta opción si quieres mostrar una lista pública de tus _helpbuttons_ en tu página de perfil",
-    "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil"
+    "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil",
+    "tagsExplain":"Escribe en este campo las palabras que te interesen y recibirás avisos cuando haya _helpbuttons_ sobre dichos temas. Escribe y pulsa enter o separa por comas para añadir.",
+    "distance":"Distancia máxima de avisos",
+    "distanceExplain":"_helpbuttons_ que se creen fuera de este radio respecto de tu posición no te serán notificados",
+    "location":"Tu localización base",
+    "locationExplain":"Especifica una localización base desde la que se medirá la distancia de notificaciones",
+    "personalData":"Tus datos personales",
+    "notificationConfig":"Tu configuración de notificaciones",
+    "phone":"Teléfono",
+    "phoneExplain":"Añade tu teléfono si quieres que te contacten a través de él",
+    "phonePlaceHolder":"i.e. 34699000000"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -167,7 +189,7 @@
   },
   "explore": {
     "emptyList": "Por favor, cambia tu búsqueda, mueve el mapa o  toca para encontrar más botones",
-    "createEmpty": "Crear",
+    "createEmpty": "Crear _helpbutton_",
     "noResults": "Lo siento, no hay resultados aquí",
     "selectedHexagon": "en el área seleccionada",
     "filteredRadius": "en {0} · {1}km",
@@ -179,12 +201,13 @@
     "queryLabel": "¿Qué buscas?",
     "searchBarTop": "{1} _helpbuttons_ {0}",
     "queryExplain": "Escribe lo que quieras encontrar",
+    "followTag":"Quiero recibir alertas sobre",
     "tagsExplain": "Las palabras clave son los temas más importantes o más tratados en la Red",
     "where": "¿Dónde?",
     "distance": "Distancia de búsqueda",
     "allButtonTypes": "Todos los tipos",
     "queryPlaceHolder": "Amigos, comida, ropa, herramientas...",
-    "whereExplain": "Busca el lugar al que quieres ir",
+    "whereExplain": "Busca el lugar en que quieras buscar o pulsa en el icono para marcar tu ubicación",
     "types": "Tipos de _helpbuttons_",
     "typesExplain": "Selecciona los tipos de _helpbuttons_ que quieras filtrar",
     "price": "Precio",
@@ -196,9 +219,11 @@
     "byDate": "Últimos creados",
     "byPrice": "Por precio",
     "orderBy": "Ordenar por",
+    "orderByExplain": "Elige el orden en el que aparecerán _helpbuttons_ en la lista",
     "priceExplain": "Filtrar por precio",
     "byProximity": "Por proximidad",
-    "byEventDate": "Por ínicio del evento"
+    "byEventDate": "Por ínicio del evento",
+    "followTagSucess": "{0} fue adicionado a tus intereses"
   },
   "button": {
     "title":"Vista de _helpbutton_",
@@ -229,8 +254,13 @@
     "unknownPlace": "Sitio desconocido",
     "hideAddress": "Esconder ubicación exacta",
     "created": "creado",
-    "follow": "Seguir",
-    "unfollow": "Dejar de seguir"
+    "follow": "Suscribirme",
+    "unfollow": "Dejar de seguir",
+    "followAlert": "Te has suscrito a _helpbutton_, recibirás sus novedades.",
+    "unfollowAlert": "Te has desuscrito de _helpbutton_, dejarás de recibir sus novedades",
+    "unfollowAlertError": "Error al desuscribir",
+    "followAlertError": "Error al suscribir",
+    "showPhone":"Mostrar teléfono"
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -245,7 +275,8 @@
   },
   "validation": {
     "fieldRequired": "se necesita {0}",
-    "tooShort": "{0} es muy corto"
+    "tooShort": "{0} es muy corto",
+    "error": "Revise los campos, hay errores en el formulario"
   },
   "setup": {
     "finish": "Finalizar configuración",
@@ -274,6 +305,8 @@
   },
   "comment": {
     "placeholderWrite": "Escribe un mensaje en esta publicación",
+    "public":"Este comentario es público, todos podrán verlo.",
+    "private":"Estas mandando un mensaje privado. Sólo el destinatario podrá verlo.",
     "delete": "Borrar"
   },
   "picker": {
@@ -321,12 +354,12 @@
     "1day": "1 dia",
     "1week": "1 semana",
     "expiresIn": "Expira",
-    "clickToCopy": "Copiar link de invitacion",
+    "clickToCopy": "Copiar link de invitación",
     "maximumUsageTimes": "Numero de utilizaciones",
     "nolimit": "Sin limite",
     "inviteOnlyNetwork": "Sólo puedes registrarte en esta red con una invitación.",
-    "generate": "Crear nuevo link de invitacion",
-    "copied": "Link de invitacion copiado {0}",
+    "generate": "Crear nuevo link de invitación",
+    "copied": "Link de invitación copiado {0}",
     "title": "Invitaciones",
     "description": "Invita a personas, administra y comparte enlaces con otras personas para permitirles acceder a tu red",
     "inviteOnly": "Sólo permitir el registro con una invitación"
@@ -339,9 +372,10 @@
     "loginTokenSubject": "Solicitaste un inicio de sesión con un solo clic",
     "loginTokenLinkCaption": "Haga clic aquí para acceder a su cuenta",
     "activateContent": "Bienvenido a {0}",
-    "activateSubject": "Por favor activa tu cuenta",
+    "activateSubject": "Por favor, activa tu cuenta",
     "activateLinkCaption": "Haga clic aquí para activar su cuenta",
-    "activitySubject": "Nueva atividad",
-    "buttonLinkCaption": "Presiona aqui para abrir-lo"
+    "activitySubject": "Novedad en Red Ejemplo",
+    "buttonLinkCaption": "Presiona aqui para abrirlo",
+    "dailyOutBox": "Tienes {0} novedades de '{1}', {2}"
   }
 }

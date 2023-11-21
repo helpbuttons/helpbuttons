@@ -67,7 +67,7 @@ export class ButtonController {
       images,
       user,
     ).then((button) => {
-      notifyUser(this.eventEmitter,ActivityEventName.NewButton,button, button.owner)
+      notifyUser(this.eventEmitter,ActivityEventName.NewButton,button)
       return button;
     });
   }
@@ -103,7 +103,7 @@ export class ButtonController {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
         }
-        return this.buttonService.update(buttonId, updateDto);
+        return this.buttonService.update(buttonId, updateDto, user);
       });
   }
 
@@ -140,7 +140,9 @@ export class ButtonController {
     @CurrentUser() user: User,
   )
   {
-    return this.buttonService.follow(buttonId, user.id);
+    return this.buttonService.follow(buttonId, user.id).then((button) => {
+      notifyUser(this.eventEmitter,ActivityEventName.NewFollowButton,{button, user})
+    })
   }
 
   @OnlyRegistered()
@@ -159,4 +161,10 @@ export class ButtonController {
     return await this.buttonService.findByOwner(userId);
   }
 
+  @AllowGuest()
+  @Get('getphone/:buttonId')
+  async getPhone(@Param('buttonId') buttonId: string)
+  {
+    return this.buttonService.getPhone(buttonId)
+  }
 }

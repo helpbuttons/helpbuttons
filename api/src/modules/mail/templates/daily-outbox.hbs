@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang='en'>
+{{> head}} <!-- Include the head partial here -->
+<body>
+    <div class='wrapper'>
+      <p class='title'>{{subject}}</p>
+      {{#list activities}}
+      <div class='container'>
+          <p class='thanks'></p>
+          {{content}}
+      
+          <p><a href='{{link}}'>{{linkCaption}}</a> </p>
+      </div>
+      {{/list }}
+    </div>
+  {{> footer}} <!-- Include the footer partial here -->
+</body>
+</html>

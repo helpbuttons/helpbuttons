@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FieldError from "../FieldError";
+import t from "i18n";
 
 interface IFieldText {
     label: string,
@@ -9,6 +10,7 @@ interface IFieldText {
     classNameInput?: string,
     placeholder?: string,
     multiInput?: boolean,
+    // subInputLink: string
 }
 
 const FieldText = React.forwardRef(({
@@ -23,7 +25,9 @@ const FieldText = React.forwardRef(({
     value,
     explain,
     extraMessage,
-    maxLength = -1
+    maxLength = -1,
+    // subInputLink,
+    // subInputLinkText
 }, ref): IFieldText => {
     const [textLength, setTextLength] = useState(0);
     const onInput = (obj) => {
@@ -56,12 +60,30 @@ const FieldText = React.forwardRef(({
                 value={value}
                 onInput={onInput}
             />
-            {maxLength > 0 && 
-                <>{textLength} / {maxLength}</>
-            }
             <div className="form__input-subtitle">
-                <FieldError validationError={validationError} extraMessage={extraMessage}/>
+
+                <div className="form__input-subtitle-side">
+                    {maxLength > 0 && 
+                        <label className="form__input-subtitle--text">
+                         {textLength} / {maxLength}
+                        </label>
+                    }
+                    <label className="form__input-subtitle--error">
+                        <FieldError validationError={validationError} extraMessage={extraMessage}/> 
+                    </label>
+                </div>
+                
+                {/* {subInputLink &&
+
+                    <div className="form__input-subtitle-side">
+                        <a href={subInputLink} className="form__input-subtitle--text link">
+                            {subInputLinkText}
+                        </a>
+                    </div>
+                } */}
+
             </div>
+
         </div>
     );
 });

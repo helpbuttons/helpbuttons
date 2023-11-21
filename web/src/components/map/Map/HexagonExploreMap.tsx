@@ -30,7 +30,7 @@ export default function HexagonExploreMap({
   const [isRedrawingMap, setIsRedrawingMap] = useState(true)
   const onBoundsChanged = ({ center, zoom, bounds }) => {
     setIsRedrawingMap(() => true)
-    handleBoundsChange(bounds, center, Math.floor(zoom))
+    handleBoundsChange(bounds, center, zoom)
 
     setCenterBounds(center);
   };
@@ -73,7 +73,6 @@ export default function HexagonExploreMap({
 
         </Overlay>
 
-        {!isRedrawingMap && 
         <GeoJson>
           {geoJsonFeatures.map((hexagonFeature) => (
             <GeoJsonFeature
@@ -132,7 +131,6 @@ export default function HexagonExploreMap({
             />
           )}
             </GeoJson>
-        }
         {/*
         show count of buttons per hexagon
         */}

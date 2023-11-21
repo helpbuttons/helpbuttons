@@ -7,6 +7,7 @@ import t from 'i18n';
 import {  IoAddCircleOutline, IoChatbubbleOutline, IoHandLeftOutline, IoHeartOutline, IoNotificationsOutline, IoPersonOutline, IoRibbonOutline } from "react-icons/io5";
 import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
+import { User } from 'shared/entities/user.entity';
 
 export default function CardNotification({ activity = {} }) {
   const notification = (activity) => {
@@ -16,7 +17,7 @@ export default function CardNotification({ activity = {} }) {
 
       return (
         <NotificationCard
-          title={'New Button'}
+          title={t('activities.newbuttonType')}
           image={button.image}
           notifIcon={notifIcon}
           date={button.created_at}
@@ -34,7 +35,7 @@ export default function CardNotification({ activity = {} }) {
 
       return (
         <NotificationCard
-          title={'Deleted Button'}
+          title={t('activities.deletedType')}
           notifIcon={notifIcon}
           image={button.image}
           date={button.created_at}
@@ -52,7 +53,7 @@ export default function CardNotification({ activity = {} }) {
 
       return (
         <NotificationCard
-          title={'Creator update'}
+          title={t('activities.creatorUpdate')}
           notifIcon={notifIcon}
           image={post.button.image}
           date={post.created_at}
@@ -74,7 +75,7 @@ export default function CardNotification({ activity = {} }) {
       return (
 
         <NotificationCard
-          title={'Comment'}
+          title={t('activities.newcommentType')}
           image={comment.button.image}
           notifIcon={notifIcon}
           date={comment.created_at}
@@ -87,12 +88,31 @@ export default function CardNotification({ activity = {} }) {
           read={activity.read}
         />
       );
+    } else if (
+        activity.eventName == ActivityEventName.NewFollowButton
+      ) {
+        const {button, user} = JSON.parse(activity.data);
+        const follower: User = user
+        const notifIcon =<IoChatbubbleOutline/>
+        return (
+          <NotificationCard
+            title={t('activities.newfollowType')}
+            image={follower.avatar}
+            notifIcon={notifIcon}
+            date={activity.created_at}
+            id={button.id}
+            message={t('activities.newfollow', [
+              follower.username, button.title
+            ])}
+            read={activity.read}
+          />
+        );
     } else {
       const notifIcon =<IoNotificationsOutline/>
 
       return (
         <NotificationCard
-          title={'Notification'}
+          title={'activities.notification'}
           notifIcon={notifIcon}
           image={'no'}
           date={activity.created_at}

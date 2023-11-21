@@ -1,6 +1,13 @@
 import { Column } from 'typeorm';
 import { User } from './user.entity';
-import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsArray,
+  IsOptional,
+} from 'class-validator';
 
 export class UserIdentification extends User {}
 
@@ -12,8 +19,6 @@ export class UserUpdateDto {
   name: string;
 
   avatar?: string;
-
-  password_current?: string;
 
   password_new?: string;
 
@@ -29,8 +34,22 @@ export class UserUpdateDto {
   @IsString()
   locale: string;
 
-  @Column({default: true})
+  @Column({ default: true })
   receiveNotifications: boolean;
 
-  inviteCode?: string;  
+  inviteCode?: string;
+
+  showButtons?: boolean;
+
+  @IsOptional()
+  @IsArray({})
+  tags: string[];
+
+  center?: number[];
+
+  address?: string;
+
+  radius?: number;
+
+  phone?: string;
 }

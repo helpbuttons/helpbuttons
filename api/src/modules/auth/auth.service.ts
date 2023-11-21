@@ -83,7 +83,9 @@ export class AuthService {
       description: '',
       locale: signupUserDto.locale,
       receiveNotifications: true,
-      showButtons: false
+      showButtons: false,
+      tags: [],
+      radius: 0,
     };
 
     const emailExists = await this.userService.isEmailExists(
@@ -141,6 +143,17 @@ export class AuthService {
     plainPassword,
   ): Promise<void | UserCredential> {
     return this.userCredentialService.createUserCredential({
+      userId: userId,
+      password: generateHash(plainPassword),
+    });
+  }
+
+  private async updateUserCredential(
+    userId,
+    plainPassword,
+  ) {
+    
+    return this.userCredentialService.updateUserCredential({
       userId: userId,
       password: generateHash(plainPassword),
     });
@@ -208,17 +221,6 @@ export class AuthService {
   }
 
   async update(data: UserUpdateDto, currentUser) {
-    if (data.set_new_password) {
-      // save new credentials
-      if (
-        !(await checkHash(data.password_new, currentUser.password))
-      ) {
-        throw new CustomHttpException(
-          ErrorName.CurrentPasswordWontMatch,
-        );
-      }
-    }
-
     let newUser = {
       avatar: null,
       email: data.email,
@@ -226,7 +228,12 @@ export class AuthService {
       description: data.description,
       locale: data.locale,
       receiveNotifications: data.receiveNotifications,
-      showButtons: data.showButtons
+      showButtons: data.showButtons,
+      tags: data.tags,
+      center: data.center,
+      address: data.address,
+      radius: data.radius,
+      phone: data.phone,
     };
 
     if (isImageData(data.avatar)) {
@@ -242,7 +249,7 @@ export class AuthService {
       .update(currentUser.id, newUser)
       .then(() => {
         if (data.set_new_password) {
-          return this.createUserCredential(
+          return this.updateUserCredential(
             currentUser.id,
             data.password_new,
           ).then(() => true);

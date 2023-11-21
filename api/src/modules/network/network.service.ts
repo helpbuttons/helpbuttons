@@ -34,6 +34,7 @@ import {
   CacheKey,
   CacheTTL,
 } from '@nestjs/cache-manager';
+import { updateNomeclature } from '@src/shared/helpers/i18n.helper';
 
 @Injectable()
 export class NetworkService {
@@ -139,6 +140,7 @@ export class NetworkService {
         return this.entityManager
           .query(`select * from network_button_types`)
           .then((networkByButtonTypes) => {
+            updateNomeclature(defaultNetwork.nomeclature, defaultNetwork.nomeclaturePlural)
             return {
               ...defaultNetwork,
               buttonTypesCount: networkByButtonTypes,

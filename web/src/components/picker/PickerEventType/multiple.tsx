@@ -10,6 +10,7 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import t from 'i18n';
+import { Picker } from '../Picker';
 
 export default function PickerEventTypeMultipleForm({
   eventStart,
@@ -18,12 +19,11 @@ export default function PickerEventTypeMultipleForm({
   setEventStart,
 }) {
   const loadRangeDates = () => {
-    if (eventStart && eventEnd)
-    {
-        return [eventStart, eventEnd]
+    if (eventStart && eventEnd) {
+      return [eventStart, eventEnd];
     }
     return null;
-  }
+  };
   const [rangeDates, setRangeDate] = useState(loadRangeDates);
 
   const [startTime, setStartTime] = useState(
@@ -31,7 +31,7 @@ export default function PickerEventTypeMultipleForm({
       ? eventStart.getHours() +
           ':' +
           String(eventStart.getMinutes()).padStart(2, '0')
-      : '0:00',
+      : '0:01',
   );
 
   const [endTime, setEndTime] = useState(
@@ -39,66 +39,61 @@ export default function PickerEventTypeMultipleForm({
       ? eventEnd.getHours() +
           ':' +
           String(eventEnd.getMinutes()).padStart(2, '0')
-      : '0:00',
+      : '23:59',
   );
 
   useEffect(() => {
-    if (rangeDates )
-    {
-        let datetimeStart = new Date();
-        if (rangeDates[0] && !startTime) {
-          datetimeStart = new Date(
-            rangeDates[0].getFullYear(),
-            rangeDates[0].getMonth(),
-            rangeDates[0].getDate(),
-            0,
-            1,
-          );
-        } else if (rangeDates[0] && startTime) {
-          const time = startTime.split(':');
-          datetimeStart = new Date(
-            rangeDates[0].getFullYear(),
-            rangeDates[0].getMonth(),
-            rangeDates[0].getDate(),
-            time[0],
-            time[1],
-          );
-        }
-    
-        setEventStart(datetimeStart);
+    if (rangeDates) {
+      let datetimeStart = new Date();
+      if (rangeDates[0] && !startTime) {
+        datetimeStart = new Date(
+          rangeDates[0].getFullYear(),
+          rangeDates[0].getMonth(),
+          rangeDates[0].getDate(),
+          0,
+          1,
+        );
+      } else if (rangeDates[0] && startTime) {
+        const time = startTime.split(':');
+        datetimeStart = new Date(
+          rangeDates[0].getFullYear(),
+          rangeDates[0].getMonth(),
+          rangeDates[0].getDate(),
+          time[0],
+          time[1],
+        );
+      }
+
+      setEventStart(datetimeStart);
     }
-    
   }, [rangeDates, startTime]);
 
-
   useEffect(() => {
-    if (rangeDates )
-    {
-        let datetimeStart = new Date();
-        if (rangeDates[0] && !startTime) {
-          datetimeStart = new Date(
-            rangeDates[1].getFullYear(),
-            rangeDates[1].getMonth(),
-            rangeDates[1].getDate(),
-            0,
-            1,
-          );
-        } else if (rangeDates[1] && startTime) {
-          const time = endTime.split(':');
-          datetimeStart = new Date(
-            rangeDates[1].getFullYear(),
-            rangeDates[1].getMonth(),
-            rangeDates[1].getDate(),
-            time[0],
-            time[1],
-          );
-        }
-    
-        setEventEnd(datetimeStart);
+    if (rangeDates) {
+      let datetimeStart = new Date();
+      if (rangeDates[0] && !startTime) {
+        datetimeStart = new Date(
+          rangeDates[1].getFullYear(),
+          rangeDates[1].getMonth(),
+          rangeDates[1].getDate(),
+          0,
+          1,
+        );
+      } else if (rangeDates[1] && startTime) {
+        const time = endTime.split(':');
+        datetimeStart = new Date(
+          rangeDates[1].getFullYear(),
+          rangeDates[1].getMonth(),
+          rangeDates[1].getDate(),
+          time[0],
+          time[1],
+        );
+      }
+
+      setEventEnd(datetimeStart);
     }
-    
   }, [rangeDates, endTime]);
-  
+
   return (
     <>
       <div className="picker__content">
@@ -107,7 +102,7 @@ export default function PickerEventTypeMultipleForm({
             <div className="picker__row">
               <Calendar
                 onChange={(newDates) => {
-                    setRangeDate(newDates)
+                  setRangeDate(newDates);
                 }}
                 value={rangeDates}
                 selectRange
@@ -148,26 +143,27 @@ function TimePick({ time, setTime, label }) {
         }
       />
       {showFromTime && (
-        <div className="picker__content">
-          <div className="picker__section">
-            <div className="picker__section__pick">
-              <div className="picker__row">
-                <TimeKeeper
-                time={time}
-                onChange={(newTime) => {
-                  setTime(() => {
-                    return newTime.formatted24;
-                  });
-                }}
-                onDoneClick={() => {
-                    setShowFromTime(() => false);
-                }}
-                switchToMinuteOnHourSelect
-              />
-              </div>
-            </div>
+        <Picker
+          closeAction={() => {
+            setShowFromTime(false);
+          }}
+          headerText={t('eventType.headerText')}
+        >
+          <div className="picker__row">
+            <TimeKeeper
+              time={time}
+              onChange={(newTime) => {
+                setTime(() => {
+                  return newTime.formatted24;
+                });
+              }}
+              onDoneClick={() => {
+                setShowFromTime(() => false);
+              }}
+              switchToMinuteOnHourSelect
+            />
           </div>
-        </div>
+        </Picker>
       )}
     </>
   );

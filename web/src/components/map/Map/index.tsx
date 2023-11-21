@@ -51,7 +51,7 @@ export function HbMap({
       onClick={({ event, latLng, pixel }) => {
         handleClick({ latLng });
       }}
-      zoomSnap={true}
+      zoomSnap={false}
       provider={tileProvider}
       maxZoom={16}
       minZoom={4}
