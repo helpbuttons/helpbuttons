@@ -18,10 +18,12 @@ const FieldPassword = React.forwardRef(({
     onChange,
     onBlur,
     validationError,
+    explain,
 }, ref): IFieldPassword => {
     return (
         <div className="form__field">
-            <label className="label">{label}</label>
+            <label className="form__label">{label}</label>
+            <p className="form__explain">{explain}</p>
             <input
                 name={name}
                 ref={ref}

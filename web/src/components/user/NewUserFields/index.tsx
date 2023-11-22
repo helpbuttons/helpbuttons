@@ -1,6 +1,8 @@
+import Accordion from 'elements/Accordion';
 import {FieldImageUpload} from 'elements/Fields/FieldImageUpload';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldPassword from 'elements/Fields/FieldPassword';
+import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
 import { useEffect, useState } from 'react';
@@ -24,6 +26,7 @@ export default function NewUserFields({
       <FieldText
         name="email"
         label={t('user.email')}
+        explain={t('user.emailExplain')}
         classNameInput="squared"
         placeholder={t('user.emailPlaceHolder')}
         validationError={errors.email}
@@ -34,6 +37,7 @@ export default function NewUserFields({
         label={`${t('user.username')} ${watch('username')}@${
           hostname
         }`}
+        explain={t('user.usernameCreateExplain')}
         classNameInput="squared"
         placeholder={t('user.usernamePlaceHolder')}
         validationError={errors.username}
@@ -41,13 +45,14 @@ export default function NewUserFields({
       ></FieldText>
       <FieldPassword
         name="password"
+        explain={t('user.passwordExplain')}
         label={t('user.password')}
         classNameInput="squared"
         placeholder={t('user.passwordPlaceHolder')}
         validationError={errors.password}
         {...register('password', { required: true, minLength: 8 })}
       ></FieldPassword>
-      <FieldPassword
+      {/* <FieldPassword
         name="password_confirm"
         label={t('user.passwordConfirmation')}
         classNameInput="squared"
@@ -57,22 +62,34 @@ export default function NewUserFields({
           required: true,
           minLength: 8,
         })}
-      ></FieldPassword>
-      
-      <FieldLanguagePick onChange={(value) => setValue('locale', value)} explain={t('user.pickLanguageExplain')} defaultValue={getLocale()}/>
-      <FieldImageUpload
-        name="avatar"
-        label={t('common.choose', ['avatar'])}
-        explain={t('user.avatarExplain')}
-        text={t('user.avatar')}
-        control={control}
-        width={150}
-        height={150}
-        validationError={errors.avatar}
-        setValue={setValue}
-        subtitle={'150x150px'}
-        {...register('avatar')}
-      />
+      ></FieldPassword> */}
+ 
+      {/* <Accordion title={t('user.signupOptions')}>
+        <FieldLanguagePick onChange={(value) => setValue('locale', value)} explain={t('user.pickLanguageExplain')} defaultValue={getLocale()}/>
+        <FieldImageUpload
+          name="avatar"
+          label={t('common.choose', ['avatar'])}
+          explain={t('user.avatarExplain')}
+          text={t('user.avatar')}
+          control={control}
+          width={150}
+          height={150}
+          validationError={errors.avatar}
+          setValue={setValue}
+          subtitle={'150x150px'}
+          {...register('avatar')}
+        />
+        <FieldTags
+          label={t('user.tags')}
+          explain={t('user.tagsExplain')}
+          placeholder={t('common.add')}
+          validationError={errors.tags}
+          setTags={(tags) => {
+            setValue('tags', tags);
+          }}
+          tags={watch('tags')}
+        />
+      </Accordion> */}
     </>
   );
 }

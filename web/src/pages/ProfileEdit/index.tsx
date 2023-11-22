@@ -290,7 +290,8 @@ export default function ProfileEdit() {
                           })}
                         ></FieldPassword>
 
-                      </Accordion>
+                  </Accordion>
+
                       <div className="publish__submit">
                         <Btn
                           btnType={BtnType.submit}
