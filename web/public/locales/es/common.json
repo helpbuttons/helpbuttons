@@ -128,8 +128,10 @@
     "profileView": "Tu Perfil",
     "otherProfileView": "Perfil de usuario",
     "email": "Email",
+    "emailExplain": "Este será tu email para entrar y donde recibirás las notificaciones",
     "username": "Nombre de usuario",
     "password": "Contraseña",
+    "passwordExplain": "Crea tu contraseña, mínimo 8 letras",
     "passwordConfirmation": "Confirmar contraseña",
     "created": "Creado",
     "loginButton": "ENTRAR",
@@ -138,7 +140,8 @@
     "name": "Nombre público",
     "nameExplain": "Este es tu nombre público que otros usuarios podran ver",
     "namePlaceHolder": "Escribe tu nombre con total libertad",
-    "usernameExplain": "The username is an unique identity what will identify you in this network and others",
+    "usernameExplain": "El nombre de usuario es un término que te identificará en esta red y otras",
+    "usernameCreateExplain": "Crea tu nombre de usuario. Debe ser un término único y breve como, por ejemplo: Manuel12, Bobby o RosaB.",
     "description": "Descripción",
     "descriptExplain": "Breve descripción sobre ti o lo que haces que se mostrará en tu perfil",
     "setNewPassword": "Crea una nueva contraseña",
@@ -186,7 +189,8 @@
     "notificationConfig":"Tu configuración de notificaciones",
     "phone":"Teléfono",
     "phoneExplain":"Añade tu teléfono si quieres que te contacten a través de él",
-    "phonePlaceHolder":"i.e. 34699000000"
+    "phonePlaceHolder":"i.e. 34699000000",
+    "signupOptions":"Opciones Extra"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -283,7 +287,18 @@
   "validation": {
     "fieldRequired": "se necesita {0}",
     "tooShort": "{0} es muy corto",
-    "error": "Revise los campos, hay errores en el formulario"
+    "error": "Revise los campos, hay errores en el formulario",
+    "ownership":"No eres e dueño/a",
+    "currentPass":"La contraseña que escribiste no es correcta",
+    "supportFiles":"Tipo de archivo no válido, usa jpeg o png",
+    "internalServer":"Error interno de servidor",
+    "emailRegistered":"Email ya registrado",
+    "userRegistered":"Nombre ya registrado",
+    "delete":"Nada que eliminar",
+    "invalidForm":"Error al validar el formulario",
+    "inviteOnly":"Acceso sólo con invitación",
+    "address":"Error al obtener la dirección",
+    "dates":"Fechas inválidas"
   },
   "setup": {
     "finish": "Finalizar configuración",

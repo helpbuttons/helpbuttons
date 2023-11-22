@@ -16,7 +16,7 @@
     "info": "What's this Network about?",
     "loading": "...",
     "goToExplore": "Explore the _helpbuttons_",
-    "goToCreate": "Create your _helpbutton_",
+    "goToCreate": "Publish",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
@@ -179,8 +179,10 @@
     "emailPlaceHolder": "email@example.tld",
     "username": "Username",
     "usernameExplain": "The username is what will identify you in this network and others",
+    "usernameCreateExplain": "Create your username. The username is what will identify you in this network and others",
     "usernamePlaceHolder": "Type a unique name",
     "password": "Current Password",
+    "passwordExplain": "Create your password, 8 characters minimum.",
     "pickLanguageLabel": "Pick your language",
     "pickLanguageExplain": "The app menus will be translated to the language you choose",
     "passwordPlaceHolder": "Type your password here",
@@ -235,7 +237,8 @@
     "notificationConfig":"Your notification configuration",
     "phone":"Phone",
     "phoneExplain":"Add your phone if you want people to contact you through it",
-    "phonePlaceHolder":"i.e. 34699000000"
+    "phonePlaceHolder":"i.e. 34699000000",
+    "signupOptions":"Extra options"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -257,7 +260,20 @@
   "validation": {
     "fieldRequired": "{0} is required.",
     "tooShort": "{0} is too short.",
-    "error": "Check the fields, there are errors in the form"
+    "error": "Check the fields, there are errors in the form",
+    "register":"You need to be registered to use this functionality",
+    "ownership":"You don't have ownership of this",
+    "currentPass":"The current password you type is not correct",
+    "supportFiles":"We don't support this files yet please upload a jpeg or png",
+    "internalServer":"Unspecified internal server error",
+    "emailRegistered":"Email already registered",
+    "userRegistered":"Username already registered",
+    "delete":"Nothing to delete",
+    "invalidForm":"Error validating the form",
+    "inviteOnly":"Invite only network",
+    "address":"Error getting address",
+    "dates":"Invalid dates"
+
   },
   "post": {
     "comment": "comment",
