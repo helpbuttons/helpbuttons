@@ -148,7 +148,17 @@ export class FindButton implements WatchEvent {
 
   public watch(state: GlobalState) {
     return ButtonService.findById(this.buttonId).pipe(
-      map((button) => this.onSuccess(button)),
+      map((button) => {
+        if(button.eventStart)
+        {
+          button.eventStart = new Date(button.eventStart)
+        }
+        if(button.eventEnd)
+        {
+          button.eventEnd = new Date(button.eventEnd)
+        }
+        this.onSuccess(button)
+      }),
       catchError((error) => handleError(this.onError, error)),
     );
   }
@@ -239,6 +249,8 @@ export class UpdateFilters implements UpdateEvent {
     return produce(state, (newState) => {
       if(this.filters?.where.center)
       {
+        const newZoom = getZoomFromRadius(this.filters.where.radius)
+        newState.explore.settings.zoom = newZoom 
         newState.explore.settings.center = this.filters.where.center
       }
       newState.explore.map.filters = this.filters;
@@ -246,6 +258,33 @@ export class UpdateFilters implements UpdateEvent {
   }
 }
 
+const getZoomFromRadius = (radius) => {
+  if (radius > 300)
+  {
+    return 7
+  }else if (radius > 200)
+  {
+    return 8
+  }else if (radius > 100)
+  {
+    return 9
+  }else if (radius > 50)
+  {
+    return 10
+  }else if (radius > 25)
+  {
+    return 11
+  }else if (radius > 15)
+  {
+    return 12
+  }else if (radius > 5)
+  {
+    return 13
+  }else{
+    return 15
+  }
+  
+}
 export class UpdateFiltersToFilterTag implements UpdateEvent {
   public constructor(private tag: string) {}
 
