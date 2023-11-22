@@ -1,5 +1,6 @@
 import { ShowDate } from 'elements/Fields/FieldDate';
 import t from 'i18n';
+import _ from 'lodash';
 import { GlobalState, store } from 'pages';
 import { formatCurrency } from 'shared/currency.utils';
 import { DateTypes, readableDateTime } from 'shared/date.utils';
@@ -13,7 +14,8 @@ export function CardButtonCustomFields({ customFields, button }) {
   );
 
   const renderFields = () => {
-    return customFields.map((fieldProps, key) => {
+    const reversedCustomFields = _.reverse([...customFields])
+    return reversedCustomFields.map((fieldProps, key) => {
       const type = fieldProps.type;
       let field = <>{JSON.stringify(fieldProps)}</>;
       if (type == 'price') {
