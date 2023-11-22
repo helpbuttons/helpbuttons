@@ -70,7 +70,7 @@ function Alert({ id, fade }) {
     alertas.forEach(element => {
         setTimeout(() => {
             store.emit(new RemoveAlert(element.id))
-        }, 2500)
+        }, 4500)
     });
     return (
         <div className="card-alert__container">
