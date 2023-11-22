@@ -22,15 +22,6 @@ export default function FieldCustomFields({
         const price = watch('price');
         field = (
           <>
-            <FieldCheckbox
-              name="consultPrice"
-              defaultValue={price < 0}
-              text={t('customFields.consult')}
-              onChanged={(value) => {
-                setValue('price', value ? '-1' : '0');
-              }}
-              {...register('consultPrice')}
-            />
             {price != -1 && (
               <FieldNumber
                 name={'price'}
@@ -48,6 +39,15 @@ export default function FieldCustomFields({
                 })}
               />
             )}
+            <FieldCheckbox
+              name="consultPrice"
+              defaultValue={price < 0}
+              text={t('customFields.consult')}
+              onChanged={(value) => {
+                setValue('price', value ? '-1' : '0');
+              }}
+              {...register('consultPrice')}
+            />
           </>
         );
       }

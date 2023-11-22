@@ -217,7 +217,8 @@ export function FeedElement({
             />
           )}
           {!loggedInUser && showComposePostReply?.post == post.id && (
-            <div className='message message--others'>Please <Link href="/Login">login</Link> or <Link href="/Signup">signup</Link> before comment</div>
+            <div className='message message--others'> {t('feed.please')} <Link href="/Login"> {t('feed.loginMessage')}</Link> {t('feed.or')} <Link href="/Signup"> {t('feed.signUp')}</Link> {t('feed.beforeComment')}
+            </div>
           )}
         </>
         <PostComments

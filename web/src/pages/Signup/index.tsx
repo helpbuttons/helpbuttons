@@ -49,13 +49,6 @@ export default function Signup() {
     },
   });
   const router = useRouter();
-  const { pathname, asPath, query } = router
-
-  const loggedInUser = useStore(
-    store,
-    (state: GlobalState) => state.loggedInUser,
-    false,
-  );
 
   const selectedNetwork: Network = useStore(
     store,
@@ -64,7 +57,7 @@ export default function Signup() {
   
   const onSubmit = (data) => {
     
-    if (passwordsMatch(data, setError)) {
+    // if (passwordsMatch(data, setError)) {
       store.emit(
         new SignupUser(
           {
@@ -72,7 +65,7 @@ export default function Signup() {
             email: data.email,
             password: data.password,
             name: '',
-            avatar: data.avatar,
+            avatar: null,
             locale: getLocale(),
             inviteCode: data.inviteCode
           },
@@ -80,7 +73,7 @@ export default function Signup() {
           onError,
         ),
       );
-    }
+    // }
   };
 
   const onSuccess = (userData) => {
