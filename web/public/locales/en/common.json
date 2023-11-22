@@ -36,7 +36,12 @@
   },
   "feed": {
     "write": "Write message",
-    "update": "Owner Update"
+    "update": "Owner Update",
+    "please": "Please",
+    "loginMessage": "login",
+    "or": "or",
+    "signUp": "signup",
+    "beforeComment": "before comment"
   },
   "explore": {
     "noResults": "Sorry, there are no results here",

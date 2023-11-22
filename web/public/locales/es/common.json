@@ -36,7 +36,12 @@
   },
   "feed": {
     "write": "Escribir mensaje",
-    "update": "Actualización del Autor"
+    "update": "Actualización del Autor",
+    "please": "Por favor",
+    "loginMessage": "Entra",
+    "or": "o",
+    "signUp": "Únete como nuevo usuario",
+    "beforeComment": "antes de comentar"
   },
   "hostname": "nombre de host",
   "common": {
