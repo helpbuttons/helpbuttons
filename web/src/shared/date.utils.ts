@@ -95,5 +95,5 @@ export function toUTC(date: Date, isUTC){
   {
     date = new Date(date)
   }
-  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), 0));
+  return date;
 }
