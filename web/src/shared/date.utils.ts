@@ -29,7 +29,6 @@ export function readableTimeLeftToDate(date: Date, isUTC = false) {
 
   var getRelativeTime = (d1, d2 = new Date()) => {
     var elapsed = Date.parse(d1) - d2.getTime();
-
     // "Math.abs" accounts for both "past" & "future" scenarios
     for (var u in units)
       if (Math.abs(elapsed) > units[u] || u == 'second')
@@ -39,8 +38,7 @@ export function readableTimeLeftToDate(date: Date, isUTC = false) {
         
   };
 
-  return getRelativeTime(UTCToLocale(date))
-  // return getRelativeTime(toUTC(date, isUTC))
+  return getRelativeTime(new Date(date))
 }
 
 export function readableDateTime(date: Date, isUTC = true) {
@@ -98,10 +96,4 @@ export function toUTC(date: Date, isUTC){
     date = new Date(date)
   }
   return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), 0));
-}
-
-function UTCToLocale(date) {
-  var dateLocal = new Date(date);
-  var newDate = new Date(dateLocal.getTime() - dateLocal.getTimezoneOffset()*60*1000);
-  return newDate;
 }
