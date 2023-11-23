@@ -8,10 +8,10 @@ export enum DateTypes {
   RECURRENT = 'recurrent',
 }
 
-export function readableTimeLeftToDate(date: Date, isUTC = true) {
-  if(typeof date !== typeof Date) {
-    date = new Date(date)
-  }
+export function readableTimeLeftToDate(date: Date, isUTC = false) {
+  // if(typeof date !== typeof Date) {
+  //   date = new Date(date)
+  // }
 
   // in miliseconds
   var units = {
@@ -39,7 +39,8 @@ export function readableTimeLeftToDate(date: Date, isUTC = true) {
         
   };
 
-  return getRelativeTime(toUTC(date, isUTC))
+  return getRelativeTime(UTCToLocale(date))
+  // return getRelativeTime(toUTC(date, isUTC))
 }
 
 export function readableDateTime(date: Date, isUTC = true) {
@@ -92,5 +93,15 @@ export function toUTC(date: Date, isUTC){
   {
     return date;
   }
+  if(typeof date !== typeof Date)
+  {
+    date = new Date(date)
+  }
   return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), 0));
+}
+
+function UTCToLocale(date) {
+  var dateLocal = new Date(date);
+  var newDate = new Date(dateLocal.getTime() - dateLocal.getTimezoneOffset()*60*1000);
+  return newDate;
 }
