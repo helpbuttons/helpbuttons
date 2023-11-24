@@ -8,12 +8,12 @@ import { maxResolution } from 'shared/types/honeycomb.const';
 
 export default function MarkerSelectorMap({
   markerPosition,
-  setMarkerPosition,
   zoom,
   markerColor,
   markerImage,
   markerCaption,
   showHexagon = false,
+  onMapClick = (latLng) => {}
 }) {
   const [mapCenter, setMapCenter] = useState<Point>(markerPosition);
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
@@ -26,7 +26,8 @@ export default function MarkerSelectorMap({
 
   const handleMapClicked = ({ event, latLng, pixel }) => {
     setMapCenter(latLng);
-    setMarkerPosition(latLng);
+    onMapClick(latLng)
+    // setMarkerPosition(latLng);
   };
 
   useEffect(() => {
