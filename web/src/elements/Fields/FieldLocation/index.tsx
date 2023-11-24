@@ -1,9 +1,9 @@
 //this is the component integrated in buttonNewPublish to display the location. It shows the current location and has a button to change the location that displays a picker with the differents location options for the network
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Picker } from 'components/picker/Picker';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
-import { useRef } from 'store/Store';
+import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
@@ -26,7 +26,7 @@ export default function FieldLocation({
   watch,
   setValue,
 }) {
-  const config: SetupDtoOut = useRef(
+  const config: SetupDtoOut = useStore(
     store,
     (state: GlobalState) => state.config,
   );
@@ -35,20 +35,37 @@ export default function FieldLocation({
   const [markerPosition, setMarkerPosition] = useState<Point>(
     selectedNetwork.exploreSettings.center,
   );
-  const [zoom, setZoom] = useState<Point>(
+  const [zoom, setZoom] = useState<number>(
     selectedNetwork.exploreSettings.zoom,
   );
   let closeMenu = () => {
     setHideMenu(false);
   };
 
-  const [showHideMenu, setHideMenu] = useState(false);
-  const handleSelectedPlace = (place) => {
-    setMarkerPosition([place.geometry.lat, place.geometry.lng]);
+  const onMapClick = (latLng) => {
+    setMarkerPosition(() => latLng);
+    requestAddressForPosition(latLng);
   };
+
+  const [showHideMenu, setHideMenu] = useState(false);
+  const handleSelectedPlace = (newPlace) => {
+    setMarkerPosition([newPlace.geometry.lat, newPlace.geometry.lng]);
+    setZoom(() => 10)
+    setPlace(() => newPlace);
+  };
+
+  useEffect(() => {
+    if (place) {
+      if (hideAddress) {
+        updateAddress(place.formatted_city);
+      } else {
+        updateAddress(place.formatted);
+      }
+    }
+  }, [place]);
   const hideAddress = watch('hideAddress');
-  const latitude = watch('latitude')
-  const longitude = watch('longitude')
+  const latitude = watch('latitude');
+  const longitude = watch('longitude');
 
   const requestAddressForPosition = (markerPosition) => {
     store.emit(
@@ -59,12 +76,7 @@ export default function FieldLocation({
           if (!place) {
             updateAddress(t('button.unknownPlace')[0]);
           } else {
-            if (hideAddress) {
-              updateAddress(place.formatted_city);
-            } else {
-              updateAddress(place.formatted);
-            }
-            setPlace(place);
+            setPlace(() => place);
           }
           updateMarkerPosition(markerPosition);
         },
@@ -76,11 +88,6 @@ export default function FieldLocation({
       ),
     );
   };
-  useEffect(() => {
-    if (markerPosition) {
-      requestAddressForPosition(markerPosition);
-    }
-  }, [markerPosition]);
 
   useEffect(() => {
     if (selectedNetwork) {
@@ -89,14 +96,13 @@ export default function FieldLocation({
   }, [selectedNetwork]);
 
   useEffect(() => {
-    if(longitude && latitude)
-    {
-      setMarkerPosition(() => [latitude, longitude])
+    if (longitude && latitude) {
+      setMarkerPosition(() => [latitude, longitude]);
     }
-  }, [latitude, longitude])
+  }, [latitude, longitude]);
+
   useEffect(() => {
-    if(place)
-    {
+    if (place) {
       if (hideAddress) {
         updateAddress(place.formatted_city);
       } else {
@@ -127,7 +133,6 @@ export default function FieldLocation({
           closeAction={closeMenu}
           headerText={t('picker.headerText')}
         >
-          
           <DropDownSearchLocation
             placeholder={t('homeinfo.searchlocation')}
             handleSelectedPlace={handleSelectedPlace}
@@ -139,7 +144,7 @@ export default function FieldLocation({
             label={''}
           />
           <MarkerSelectorMap
-            setMarkerPosition={setMarkerPosition}
+            onMapClick={onMapClick}
             zoom={zoom}
             markerColor={markerColor ? markerColor : 'pink'}
             markerPosition={markerPosition}
