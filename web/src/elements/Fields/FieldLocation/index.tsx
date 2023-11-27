@@ -91,7 +91,7 @@ export default function FieldLocation({
 
   useEffect(() => {
     if (selectedNetwork) {
-      setMarkerPosition(selectedNetwork.exploreSettings.center);
+      requestAddressForPosition(selectedNetwork.exploreSettings.center)
     }
   }, [selectedNetwork]);
 
