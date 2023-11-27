@@ -12,6 +12,7 @@ import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
+import { ButtonService } from '../button/button.service';
 
 @Injectable()
 export class ActivityService {
@@ -22,6 +23,7 @@ export class ActivityService {
     private readonly mailService: MailService,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
+    private readonly buttonService: ButtonService,
   ) {}
 
   @OnEvent(ActivityEventName.NewPost)
@@ -127,7 +129,11 @@ export class ActivityService {
           // notify users following this tag
           await Promise.all(
             usersToNotify.map((user) => {
-              return this.newActivity(user, payload, true);
+              // auto follow button!
+              return this.buttonService.follow(button.id, user.id).then(() => {
+                // add new button to activity of user following interest in their radius!
+                return this.newActivity(user, payload, true);
+              })
             }),
           );
         }

@@ -8,6 +8,7 @@ import { MailModule } from '../mail/mail.module';
 import { ActivityCron } from './activity.cron';
 import { NetworkModule } from '../network/network.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ButtonModule } from '../button/button.module';
 
 
 @Module({
@@ -16,7 +17,8 @@ import { ScheduleModule } from '@nestjs/schedule';
     UserModule,
     MailModule,
     NetworkModule,
-    ScheduleModule.forRoot()
+    ScheduleModule.forRoot(),
+    ButtonModule
   ],
   controllers: [
     ActivityController
