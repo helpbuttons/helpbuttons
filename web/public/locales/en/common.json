@@ -102,6 +102,8 @@
     "allNotifications":"All Notifications",
     "allMessages":"All messages",
     "allPosts":"All Posts",
+    "my": "My activity",
+    "interests": "My interests activity",
     "newbutton": "A new _helpbutton_ was published '{0}' in '{1}'",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
@@ -113,7 +115,8 @@
     "newpost": "There is a new post '{0}' in the _helpbutton_ '{1}' by '{2}'",
     "newcomment": "'{2}' commented '{0}' answer to the post '{1}'",
     "newcommentSubject": "Someone commented on your _helpbutton_",
-    "newfollow": "{0} is now following your _helpbutton_ {1}"
+    "newfollow": "{0} is now following your _helpbutton_ {1}",
+    "newfollowing": "your are now following the _helpbutton_ '{0}'"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",

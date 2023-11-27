@@ -13,19 +13,29 @@ import PopupButtonFile from 'components/popup/PopupButtonFile';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
 import router from 'next/router';
+import { updateCurrentButton } from 'state/Explore';
+import { GlobalState, store } from 'pages';
+import { useStore } from 'store/Store';
 export default function ButtonFile({
   metadata,
-  currentButton,
+  currentButtonServer,
 }) {
   const [buttonTypes, setButtonTypes] = useState([]);
+  const currentButton = useStore(
+    store,
+    (state: GlobalState) => state.explore.currentButton,
+  );
   useButtonTypes(setButtonTypes);
 
   useEffect(() => {
-    if(!currentButton)
-  {
-    Router.push('/Error')
-  }
-  }, [currentButton])
+    if(!currentButtonServer)
+    {
+      console.log(currentButtonServer)
+      Router.push('/Error')
+    }else{
+      store.emit(new updateCurrentButton(currentButtonServer));
+    }
+  }, [currentButtonServer])
   
   return (
     <>
@@ -82,7 +92,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
   return {
     props: {
       ...serverPropsModified,
-      currentButton: await currentButtonData,
+      currentButtonServer: await currentButtonData,
     },
   };
 };

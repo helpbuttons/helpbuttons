@@ -93,11 +93,6 @@ export class ActivityService {
       case ActivityEventName.NewButton: {
         const button = payload.data;
 
-        if (button.tags.length < 1) {
-          break;
-        }
-
-
         // calculate users to be notified:
         // - check users with this interests/tags
         // - if radius = 0, include user, else check if user is in radius.!
@@ -105,8 +100,7 @@ export class ActivityService {
           const tagQuery = button.tags
             .map((tag) => `'${tag}' = any(tags)`)
             .join(' OR ');
-          const query = `select id, radius,center,ST_Distance(center, ST_Point(${button.longitude}, ${button.latitude},4326)::geography ) / 1000 as distance from public.user where ${tagQuery}`;
-
+          const query = `select id, radius,center,ST_Distance(center, ST_Point(${button.longitude}, ${button.latitude},4326)::geography ) / 1000 as distance, tags from public.user where ${tagQuery}`;
           return this.entityManager
             .query(query)
             .then((usersDistanceToNotify) => {
@@ -123,18 +117,20 @@ export class ActivityService {
             });
         };
 
-        const usersIds = (await getUsersToNotify(button))
-          .map((user) => user.id)
-          .filter((userId) => userId != button.owner.id);
-
-        const usersToNotify =
-          await this.userService.findAllByIdsToBeNotified(usersIds);
-        // notify users following this tag
-        await Promise.all(
-          usersToNotify.map((user) => {
-            return this.newActivity(user, payload, true);
-          }),
-        );
+        if (button.tags.length > 0) {
+          const usersIds = (await getUsersToNotify(button))
+            .map((user) => user.id)
+            .filter((userId) => userId != button.owner.id);
+          const usersToNotify =
+            await this.userService.findAllByIdsToBeNotified(usersIds);
+          
+          // notify users following this tag
+          await Promise.all(
+            usersToNotify.map((user) => {
+              return this.newActivity(user, payload, true);
+            }),
+          );
+        }
 
         await this.newActivity(button.owner, payload, false);
         break;
@@ -145,8 +141,8 @@ export class ActivityService {
   @OnEvent(ActivityEventName.NewFollowButton)
   async newFollowButton(payload: any)
   {
-    const button = payload.data.button;
-    this.newActivity(button.owner, payload, false);    
+    const user = payload.data.user
+    this.newActivity(user, payload, false);    
   }
 
   findByUserId(userId: string) {

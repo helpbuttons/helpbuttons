@@ -101,8 +101,8 @@ export default function CardNotification({ activity = {} }) {
             notifIcon={notifIcon}
             date={activity.created_at}
             id={button.id}
-            message={t('activities.newfollow', [
-              follower.username, button.title
+            message={t('activities.newfollowing', [
+              button.title
             ])}
             read={activity.read}
           />
