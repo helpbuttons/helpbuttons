@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }) {
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
   const [noBackend, setNobackend] = useState(false);
-  const loadingConfig = useRef(false)
+  const loadingConfig = useRef(false);
 
   const config = useStore(
     store,
@@ -224,22 +224,31 @@ function MyApp({ Component, pageProps }) {
   }, [config, selectedNetwork]);
 
   const pageName = path.split('/')[1];
-  const { pathname, asPath, query, locale } = useRouter()
-  
+  const { pathname, asPath, query, locale } = useRouter();
+
   useEffect(() => {
-    if (selectedNetwork)
-    {
-      if(!loggedInUser && getLocale() != selectedNetwork.locale)
-      {
-        if(selectedNetwork.locale != 'en')
-        {
-          router.push({ pathname, query }, asPath, { locale: selectedNetwork.locale })
+    if (selectedNetwork) {
+      if (!loggedInUser && getLocale() != selectedNetwork.locale) {
+        if (selectedNetwork.locale != 'en') {
+          router.push({ pathname, query }, asPath, {
+            locale: selectedNetwork.locale,
+          });
         }
       }
-      updateNomeclature(selectedNetwork.nomeclature, selectedNetwork.nomeclaturePlural)
+      updateNomeclature(
+        selectedNetwork.nomeclature,
+        selectedNetwork.nomeclaturePlural,
+      );
     }
   }, [selectedNetwork, loggedInUser]);
 
+  let networkStyle = {};
+  if (selectedNetwork) {
+    networkStyle = {
+      '--network-background-color': selectedNetwork.backgroundColor,
+      '--network-text-color': selectedNetwork.textColor,
+    } as React.CSSProperties;
+  }
   return (
     <>
       <Head>
@@ -247,35 +256,28 @@ function MyApp({ Component, pageProps }) {
         <meta name="commit" content={version.git} />
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
-      {selectedNetwork && 
-      <div
-        className={`${user ? '' : 'index__container'}`}
-        style={
-          {
-            '--network-background-color': selectedNetwork.backgroundColor,
-            '--network-text-color': selectedNetwork.textColor,
-          } as React.CSSProperties
-        }
-      >
-        <Alert />
-        <div className="index__content">
-          {(isRoleAllowed(Role.guest, pathname) || authorized) && 
-              <Component {...pageProps} />
-          }
-          <NavBottom loggedInUser={loggedInUser}/>
-            </div>
-      </div>
-      }
-      {(isSetup && !selectedNetwork) &&
         <div
           className={`${user ? '' : 'index__container'}`}
+          style={networkStyle}
         >
-        <Alert />
-        <div className="index__content">
-              <Component {...pageProps} />
-            </div>
+          <Alert />
+          <div className="index__content">
+            {(isRoleAllowed(Role.guest, pathname) || authorized) && (
+              <>
+                <Component {...pageProps} />
+              </>
+            )}
+            <NavBottom loggedInUser={loggedInUser} />
+          </div>
         </div>
-      }
+      {isSetup && !selectedNetwork && (
+        <div className={`${user ? '' : 'index__container'}`}>
+          <Alert />
+          <div className="index__content">
+            <Component {...pageProps} />
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -283,7 +285,5 @@ function MyApp({ Component, pageProps }) {
 export const ClienteSideRendering = ({ children }) => {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => setIsClient(true), []);
-  return (<>
-    {isClient && children}</>
-  );
+  return <>{isClient && children}</>;
 };
