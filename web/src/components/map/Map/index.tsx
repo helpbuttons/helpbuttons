@@ -83,7 +83,7 @@ export function HbMapUncontrolled({
       onBoundsChanged: ({ center, zoom, bounds, initial }) => {
         onBoundsChanged({
           center: center,
-          zoom: Math.floor(zoom),
+          zoom: zoom,
           bounds,
         });
       },
@@ -110,6 +110,7 @@ export function HbMapUncontrolled({
         ...prevMapProps,
         provider: tileProvider,
         center: mapCenter,
+        zoom: mapZoom
       };
     });
   }, [tileType, mapZoom, mapCenter]);

@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Select from 'react-select';
 import { Subject } from 'rxjs';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { GlobalState, store } from 'pages';
-import { useRef } from 'store/Store';
+import { useStore } from 'store/Store';
 import { roundCoords } from 'shared/honeycomb.utils';
 import { useDebounce } from 'shared/custom.hooks';
 import { GeoFindAddress, GeoReverseFindAddress } from 'state/Geo';
 import t from 'i18n';
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import Btn, {
+  BtnType,
+  ContentAlignment,
+  IconType,
+} from 'elements/Btn';
 import { IoLocationOutline } from 'react-icons/io5';
 import Loading from 'components/loading';
+import AsyncSelect from 'react-select/async';
+import debounce from 'lodash.debounce';
 
 export default function DropDownSearchLocation({
   handleSelectedPlace = (place) => {
@@ -22,27 +28,15 @@ export default function DropDownSearchLocation({
   address = '',
   center = [0, 0],
 }) {
-  const [options, setOptions] = useState([]);
-
-  const timeInMsBetweenStrokes = 80; //ms
-  const config: SetupDtoOut = useRef(
+  const config: SetupDtoOut = useStore(
     store,
     (state: GlobalState) => state.config,
   );
-
-  const [input, setInput] = useState('');
-  const debounceInput = useDebounce(input, 300);
 
   const setSelectedOption = (selectedOption) => {
     const selectedPlace = JSON.parse(selectedOption.value);
     handleSelectedPlace(selectedPlace);
   };
-
-
-  const requestAddresses = (inputText) => {
-    setInput(() => inputText);
-  };
-
 
   const [loadingNewAddress, setLoadingNewAddress] = useState(false);
 
@@ -63,49 +57,59 @@ export default function DropDownSearchLocation({
       });
     }
   };
-
-
-  useEffect(() => {
-    if (debounceInput?.length > 2) {
-      store.emit(
-        new GeoFindAddress(debounceInput, (places) => {
-          setOptions(
-            places.map((place, key) => {
+  interface SelectOption {
+    readonly value: string;
+    readonly label: string;
+    readonly isFixed?: boolean;
+    readonly isDisabled?: boolean;
+  }
+  const bounce = useRef(false);
+  const options = useRef([]);
+  
+  const _loadSuggestions = (inputValue, callback) => {
+    fetch('/api/geo/search/' + inputValue).then((response) => {
+      return response.text().then((res) => {
+        {
+          const places = JSON.parse(res);
+          if (places.length > 0) {
+            options.current = places.map((place, key) => {
               return {
                 label: place.formatted,
                 value: JSON.stringify(place),
                 id: key,
               };
-            }),
-          );
-        }),
-      );
-    }
-  }, [debounceInput]);
+            });
+            bounce.current = false;
+            return callback(options.current);
+          }
+        }
+      });
+    });
+  };
+  const loadSuggestions = debounce(_loadSuggestions, 300);
 
   return (
-    <div className='form__field'>
+    <div className="form__field">
       <label className="form__label">
         {label}
         {address && center && (
-            <>
-              ({address} - {roundCoords(center).toString()})
-            </>
-          )}
+          <>
+            ({address} - {roundCoords(center).toString()})
+          </>
+        )}
       </label>
-      {explain && <div className='form__explain'>{explain}</div>}
-      <div className='form__field--location'>
-        <Select
+      {explain && <div className="form__explain">{explain}</div>}
+      <div className="form__field--location">
+        <AsyncSelect
           isSearchable
           onChange={setSelectedOption}
-          options={options}
-          onInputChange={(inputText) => requestAddresses(inputText)}
           className="form__input--plugin"
           placeholder={placeholder}
           noOptionsMessage={() => placeholder}
+          cacheOptions={false}
+          loadOptions={loadSuggestions}
         />
-        {!loadingNewAddress && 
-
+        {!loadingNewAddress && (
           <Btn
             btnType={BtnType.circle}
             iconLink={<IoLocationOutline />}
@@ -113,11 +117,10 @@ export default function DropDownSearchLocation({
             contentAlignment={ContentAlignment.center}
             onClick={setCenterFromBrowser}
           />
-        }
+        )}
 
         {loadingNewAddress && <Loading />}
       </div>
     </div>
-    
   );
 }

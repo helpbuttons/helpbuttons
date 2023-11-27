@@ -7,6 +7,7 @@ import { ActivityService } from './activity.service';
 import { MailModule } from '../mail/mail.module';
 import { ActivityCron } from './activity.cron';
 import { NetworkModule } from '../network/network.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 
 @Module({
@@ -14,7 +15,8 @@ import { NetworkModule } from '../network/network.module';
     TypeOrmModule.forFeature([Activity]),
     UserModule,
     MailModule,
-    NetworkModule
+    NetworkModule,
+    ScheduleModule.forRoot()
   ],
   controllers: [
     ActivityController

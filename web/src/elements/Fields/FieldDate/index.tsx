@@ -23,7 +23,6 @@ export default function FieldDate({
   eventEnd,
   setEventEnd,
   setEventStart,
-  isUTC = true,
   register,
 }) {
   const [showHideMenu, setHideMenu] = useState(false);
@@ -68,7 +67,6 @@ export default function FieldDate({
           eventEnd={eventEnd}
           eventType={eventType}
           title={title}
-          isUTC={isUTC}
         />
         <div className="btn" onClick={() => setHideMenu(true)}>
           {t('button.changeDateLabel')}
@@ -179,11 +177,10 @@ export function ShowDate({
   eventEnd,
   eventType,
   title,
-  isUTC = true,
 }) {
   return (
     <div className="card-button__date">
-      {readableEventDateTime(eventType, eventStart, eventEnd, isUTC)}
+      {readableEventDateTime(eventType, eventStart, eventEnd)}
     </div>
   );
 }
@@ -192,20 +189,19 @@ export function readableEventDateTime(
   eventType,
   eventStart,
   eventEnd,
-  isUTC,
 ) {
   if (eventType == DateTypes.ONCE && eventStart) {
     return (
-      readableDateTime(eventStart, isUTC) +
+      readableDateTime(eventStart) +
       ' - ' +
-      readableTime(eventEnd, isUTC)
+      readableTime(eventEnd)
     );
   }
   if (eventType == DateTypes.MULTIPLE && eventStart) {
     return (
-      readableDateTime(eventStart, isUTC) +
+      readableDateTime(eventStart) +
       ' - ' +
-      readableDateTime(eventEnd, isUTC)
+      readableDateTime(eventEnd)
     );
   }
 

@@ -285,7 +285,7 @@ function useExploreSettings({
       let obj = {};
       let urlParams = new URLSearchParams();
 
-      urlParams.append('zoom', exploreSettings.zoom);
+      urlParams.append('zoom', Math.floor(exploreSettings.zoom));
       urlParams.append('lat', roundCoord(exploreSettings.center[0]));
       urlParams.append('lng', roundCoord(exploreSettings.center[1]));
       obj = {

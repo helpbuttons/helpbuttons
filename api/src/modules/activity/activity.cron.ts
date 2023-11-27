@@ -8,7 +8,9 @@ import {
 import { Activity } from './activity.entity';
 import { EntityManager, Repository } from 'typeorm';
 import { ActivityEventName } from '@src/shared/types/activity.list';
-import translate, { readableDate } from '@src/shared/helpers/i18n.helper';
+import translate, {
+  readableDate,
+} from '@src/shared/helpers/i18n.helper';
 import { UserService } from '../user/user.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { NetworkService } from '../network/network.service';
@@ -83,14 +85,12 @@ export class ActivityCron {
           case ActivityEventName.NewButton:
             // add to email to send...
             return {
-              content: translate(user.locale, 'activities.newbutton', [
-                payload.title,
-                payload.address,
-              ]),
-              link: getUrl(
+              content: translate(
                 user.locale,
-                `/ButtonFile/${payload.id}`,
+                'activities.newbutton',
+                [payload.title, payload.address],
               ),
+              link: getUrl(user.locale, `/ButtonFile/${payload.id}`),
               linkCaption: translate(
                 user.locale,
                 'email.buttonLinkCaption',
@@ -101,14 +101,19 @@ export class ActivityCron {
             return null;
         }
       });
-       return this.networkService.findDefaultNetwork().then((network) => {
-        return this.mailService.sendDailyOutbox({
-          activities: activitiesToSend,
-          to: user.email,
-          subject: translate(user.locale, 'email.dailyOutBox', [activitiesToSend.length.toString(), network.name, readableDate(user.locale)]),
+      return this.networkService
+        .findDefaultNetwork()
+        .then((network) => {
+          return this.mailService.sendDailyOutbox({
+            activities: activitiesToSend,
+            to: user.email,
+            subject: translate(user.locale, 'email.dailyOutBox', [
+              activitiesToSend.length.toString(),
+              network.name,
+              readableDate(user.locale),
+            ]),
+          });
         });
-       })
-    
     });
   }
 }
