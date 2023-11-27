@@ -8,7 +8,7 @@ export enum DateTypes {
   RECURRENT = 'recurrent',
 }
 
-export function readableTimeLeftToDate(date: Date, isUTC = false) {
+export function readableTimeLeftToDate(date: Date) {
   // if(typeof date !== typeof Date) {
   //   date = new Date(date)
   // }
@@ -41,12 +41,12 @@ export function readableTimeLeftToDate(date: Date, isUTC = false) {
   return getRelativeTime(new Date(date))
 }
 
-export function readableDateTime(date: Date, isUTC = true) {
+export function readableDateTime(date: Date) {
   if(typeof date !== typeof Date) {
     date = new Date(date)
   }
 
-  return toUTC(date, isUTC).toLocaleDateString(getLocale(), {
+  return date.toLocaleDateString(getLocale(), {
     weekday: 'short',
     year: 'numeric',
     month: 'short',
@@ -56,11 +56,11 @@ export function readableDateTime(date: Date, isUTC = true) {
   });
 }
 
-export function readableDate(date: Date, isUTC = true) {
+export function readableDate(date: Date) {
   if(typeof date !== typeof Date) {
     date = new Date(date)
   }
-  return toUTC(date, isUTC).toLocaleDateString(getLocale(), {
+  return date.toLocaleDateString(getLocale(), {
     weekday: 'short',
     year: 'numeric',
     month: 'short',
@@ -68,32 +68,20 @@ export function readableDate(date: Date, isUTC = true) {
   });
 }
 
-export function readableShortDate(date: Date, isUTC = true) {
+export function readableShortDate(date: Date) {
   if(typeof date !== typeof Date) {
     date = new Date(date)
   }
-  return toUTC(date, isUTC).toLocaleDateString(getLocale(), {
+  return date.toLocaleDateString(getLocale(), {
     year: 'numeric',
     month: 'short',
     day: 'numeric'
   });
 }
 
-export function readableTime(date: Date, isUTC = true) {
+export function readableTime(date: Date) {
   if(typeof date !== typeof Date) {
     date = new Date(date)
   }
-  return new Intl.DateTimeFormat(getLocale(), {hour: 'numeric', minute: 'numeric'}).format( toUTC(date, isUTC));
-}
-
-export function toUTC(date: Date, isUTC){
-  if(!isUTC)
-  {
-    return date;
-  }
-  if(typeof date !== typeof Date)
-  {
-    date = new Date(date)
-  }
-  return date;
+  return new Intl.DateTimeFormat(getLocale(), {hour: 'numeric', minute: 'numeric'}).format(date);
 }

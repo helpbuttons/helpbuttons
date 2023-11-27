@@ -64,7 +64,6 @@ export default function FieldCustomFields({
                 setValue('eventEnd', value);
               }}
               title={t('button.whenLabel')}
-              isUTC={!!watch('id')}
               register={register}
             />
           </>
