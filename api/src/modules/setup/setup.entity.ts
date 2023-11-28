@@ -87,12 +87,6 @@ export class SetupDtoOut {
     type: String,
     required: true,
   })
-  mapifyApiKey: string;
-
-  @ApiProperty({
-    type: String,
-    required: true,
-  })
   leafletTiles: string;
   @ApiProperty({
     type: [String],
