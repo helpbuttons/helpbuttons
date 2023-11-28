@@ -16,9 +16,13 @@ import t from 'i18n';
 import ContentList from 'components/list/ContentList';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { useScrollHeight } from 'elements/scroll';
+import { NextPageContext } from 'next';
+import { ServerPropsService } from 'services/ServerProps';
+import { HttpStatus } from 'shared/types/http-status.enum';
+import { makeImageUrl } from 'shared/sys.helper';
+import SEO from 'components/seo';
 
-export default function Profile() {
-  const [userProfile, setUserProfile] = useState(null);
+export default function p({metadata, userProfile}) {
   const [userButtons,setUserButtons] = useState([])
   const knownUsers = useRef(
     store,
@@ -36,23 +40,6 @@ export default function Profile() {
     if(!router.isReady) return;
     const username = router.query.username as string;
     let newUserProfile = '';
-    if (!userProfile) {
-      if (knownUsers) {
-        newUserProfile = knownUsers.filter((user: User) => {
-          return user?.username == username;
-        });
-      }
-      if (newUserProfile.length > 0) {
-        setUserProfile(newUserProfile[0]);
-      } else {
-        store.emit(
-          new FindUser(username, (user) => {
-            setUserProfile(user);
-            store.emit(new FindUserButtons(user.id, (userButtons) => setUserButtons(userButtons)))
-          }),
-        );
-      }
-    }
     if (userProfile) {
       if (userProfile.role == Role.admin) {
         store.emit(
@@ -62,6 +49,10 @@ export default function Profile() {
             }
           }),
         );
+      }
+      if(!userButtons)
+      {
+        store.emit(new FindUserButtons(userProfile.id, (userButtons) => setUserButtons(userButtons)))
       }
     }
     if (loggedInUser) {
@@ -78,12 +69,13 @@ export default function Profile() {
   
   return (
     <>
+          <SEO {...metadata} />
           <Popup linkFwd="/Explore" title={t('user.otherProfileView')} onScroll={handleScrollHeight}>
             {userProfile && <CardProfile user={userProfile} showAdminOptions={loggedInUser?.role == Role.admin}/>}
             {userProfile?.role == Role.admin && adminButtonId && (
               <LinkAdminButton adminButtonId={adminButtonId} />
             )}
-            {userButtons && 
+            {(userButtons && userButtons.length > 0)&& 
             <div className='card-profile__button-list'>
               <ContentList buttons={userButtons.slice(0, sliceSize)} buttonTypes={buttonTypes} linkToPopup={false}/>
             </div>}
@@ -91,3 +83,39 @@ export default function Profile() {
     </>
   );
 }
+
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  const serverProps = await ServerPropsService.general(
+    'New Button',
+    ctx,
+  );
+  const profileUrl = `${process.env.API_URL}/users/find/${ctx.params.username}`;
+  const userProfileFetch = await fetch(profileUrl, {
+    next: { revalidate: 10 },
+  });
+  const currentUserData = await userProfileFetch.json();
+  if(currentUserData?.statusCode == HttpStatus.NOT_FOUND)
+  {
+    return {props: serverProps};
+  }
+  const serverPropsModified = {
+    ...serverProps,
+    metadata: {
+      ...serverProps.metadata,
+      title: `${currentUserData.username} - ${serverProps.selectedNetwork.name}`,
+      description: currentUserData.description,
+      image: `${makeImageUrl(
+        currentUserData.avatar,
+        serverProps.config.hostName + '/api',
+      )}`,
+    },
+  };
+
+  return {
+    props: {
+      ...serverPropsModified,
+      userProfile: await currentUserData,
+    },
+  };
+};

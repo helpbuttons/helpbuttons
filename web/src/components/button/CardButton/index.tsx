@@ -262,7 +262,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
   const [showMap, setShowMap] = useState(false);
   const profileHref = isButtonOwner(loggedInUser, button)
     ? `/Profile/`
-    : `/Profile/${button.owner.username}`;
+    : `/p/${button.owner.username}`;
   return (
     <>
       <CardButtonSubmenu button={button} />
@@ -291,7 +291,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
               </span>
             </div>
             <div className="card-button__name">
-              <Link href={`/Profile/${button.owner.username}`}>
+              <Link href={profileHref}>
                 {button.owner.name}{' '}
                 <span className="card-button__username">
                   {' '}

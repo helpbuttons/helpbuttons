@@ -56,7 +56,7 @@ function UserCard({ username, avatar, name }) {
       <div className="card-button__header">
         <div className="card-button__avatar">
           <div className="avatar-big">
-            <Link href={`/Profile/${username}`}>
+            <Link href={`/p/${username}`}>
               <ImageWrapper
                 imageType={ImageType.avatarBig}
                 src={avatar}
@@ -68,7 +68,7 @@ function UserCard({ username, avatar, name }) {
 
         <div className="card-button__info">
           <div className="card-button__name">
-            <Link href={`/Profile/${username}`}>
+            <Link href={`/p/${username}`}>
               {name}{' '}
               <span className="card-button__username">
                 @{username}

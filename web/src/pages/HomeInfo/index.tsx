@@ -153,7 +153,7 @@ export default function HomeInfo({
                   <div className='info-overlay__description'>
                       {t('homeinfo.administeredby')}
                       <NavLink
-                        href={`/Profile/${selectedNetwork.administrator.username}`}
+                        href={`/p/${selectedNetwork.administrator.username}`}
                       >
                         <span>
                           {selectedNetwork.administrator.username}@
