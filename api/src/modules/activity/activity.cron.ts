@@ -52,7 +52,7 @@ export class ActivityCron {
     return this.activityRepository
       .createQueryBuilder('activity')
       .where(
-        'outbox = true AND created_at::date = now()::date AND "ownerId" = :ownerId',
+        `outbox = true AND  created_at between now() - INTERVAL '1 day' AND now() AND "ownerId" = :ownerId`,
         { ownerId: userId },
       )
       .getMany();
