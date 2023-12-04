@@ -110,9 +110,11 @@
     "currencyLabel": "Divisa"
   },
   "activities": {
-    "allNotifications":"Todas las notificationes",
+    "allNotifications":"Todas las actualizaciones de _helpbuttons_",
     "allMessages":"Todos los mensajes",
     "allPosts":"Todos los posts",
+    "my": "Mi actividad",
+    "interests": "Actividad en mis suscripciones",
     "newbutton": "Hay un nuevo _helpbutton_  '{0}' en '{1}'",
     "newpost": "Hay una novedad '{0}' en el botón '{1}' por '{2}'",
     "newcomment": "'{2}' ha comentado '{0}' en respuesta al post '{1}'",
@@ -120,6 +122,7 @@
     "markedAllAsRead": "",
     "newcommentSubject": "Alguien ha comentado en un _helpbutton_",
     "newfollow": "'{0}' esta ahora seguindo tu _helpbutton_ '{1}'",
+    "newfollowing": "estas ahora seguindo _helpbutton_ '{0}'",
     "newbuttonType": "Nuevo _helpbutton_",
     "newcommentType": "Comentario",
     "newfollowType": "Nuevo suscriptor",

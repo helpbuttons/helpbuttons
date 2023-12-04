@@ -15,7 +15,7 @@ export const allowedPathsPerRole =
             '/ButtonFile/:id',
             '/LoginClick',
             '/LoginClick/:loginToken',
-            '/Profile/:username',
+            '/p/:username',
             '/Signup/Invite/:code',
             '/Unsubscribe'
         ]

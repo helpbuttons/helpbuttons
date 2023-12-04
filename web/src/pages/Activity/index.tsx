@@ -17,6 +17,12 @@ export default function Activity() {
     store,
     (state: GlobalState) => state.activities,
   );
+  const loggedInUser = useRef(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+
   useEffect(() => {
       if(unreadActivities> 0){
         alertService.info(t('activities.markedAllAsRead'))
@@ -32,8 +38,8 @@ export default function Activity() {
 
   return (
     <>
-          <LoadabledComponent loading={!activities}>
-            <FeedProfile allActivities={activities} />
+          <LoadabledComponent loading={!activities || !loggedInUser}>
+            <FeedProfile allActivities={activities} loggedInUser={loggedInUser}/>
           </LoadabledComponent>
     </>
   );

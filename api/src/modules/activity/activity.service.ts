@@ -12,6 +12,7 @@ import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
+import { ButtonService } from '../button/button.service';
 
 @Injectable()
 export class ActivityService {
@@ -22,6 +23,7 @@ export class ActivityService {
     private readonly mailService: MailService,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
+    private readonly buttonService: ButtonService,
   ) {}
 
   @OnEvent(ActivityEventName.NewPost)
@@ -54,7 +56,7 @@ export class ActivityService {
                 subject: translate(user.locale, 'activities.newcommentSubject'),
                 link: getUrl(
                   user.locale,
-                  `/ButtonFile/${payload.id}`,
+                  `/ButtonFile/${payload.data.button.id}`,
                 ),
                 linkCaption: translate(
                   user.locale,
@@ -93,11 +95,6 @@ export class ActivityService {
       case ActivityEventName.NewButton: {
         const button = payload.data;
 
-        if (button.tags.length < 1) {
-          break;
-        }
-
-
         // calculate users to be notified:
         // - check users with this interests/tags
         // - if radius = 0, include user, else check if user is in radius.!
@@ -105,8 +102,7 @@ export class ActivityService {
           const tagQuery = button.tags
             .map((tag) => `'${tag}' = any(tags)`)
             .join(' OR ');
-          const query = `select id, radius,center,ST_Distance(center, ST_Point(${button.longitude}, ${button.latitude},4326)::geography ) / 1000 as distance from public.user where ${tagQuery}`;
-
+          const query = `select id, radius,center,ST_Distance(center, ST_Point(${button.longitude}, ${button.latitude},4326)::geography ) / 1000 as distance, tags from public.user where ${tagQuery}`;
           return this.entityManager
             .query(query)
             .then((usersDistanceToNotify) => {
@@ -123,18 +119,24 @@ export class ActivityService {
             });
         };
 
-        const usersIds = (await getUsersToNotify(button))
-          .map((user) => user.id)
-          .filter((userId) => userId != button.owner.id);
-
-        const usersToNotify =
-          await this.userService.findAllByIdsToBeNotified(usersIds);
-        // notify users following this tag
-        await Promise.all(
-          usersToNotify.map((user) => {
-            return this.newActivity(user, payload, true);
-          }),
-        );
+        if (button.tags.length > 0) {
+          const usersIds = (await getUsersToNotify(button))
+            .map((user) => user.id)
+            .filter((userId) => userId != button.owner.id);
+          const usersToNotify =
+            await this.userService.findAllByIdsToBeNotified(usersIds);
+          
+          // notify users following this tag
+          await Promise.all(
+            usersToNotify.map((user) => {
+              // auto follow button!
+              return this.buttonService.follow(button.id, user.id).then(() => {
+                // add new button to activity of user following interest in their radius!
+                return this.newActivity(user, payload, true);
+              })
+            }),
+          );
+        }
 
         await this.newActivity(button.owner, payload, false);
         break;
@@ -145,8 +147,8 @@ export class ActivityService {
   @OnEvent(ActivityEventName.NewFollowButton)
   async newFollowButton(payload: any)
   {
-    const button = payload.data.button;
-    this.newActivity(button.owner, payload, false);    
+    const user = payload.data.user
+    this.newActivity(user, payload, false);    
   }
 
   findByUserId(userId: string) {

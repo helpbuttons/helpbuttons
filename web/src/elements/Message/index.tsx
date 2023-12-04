@@ -18,7 +18,7 @@ function linkify(text) {
   
   text = text.replace(userPattern, function (user) {
     return (
-      '<a href="/Profile/' + user.substring(1) + '">' + user + '</a>'
+      '<a href="/p/' + user.substring(1) + '">' + user + '</a>'
     );
   });
   return (text || '').replace(urlPattern, function (url) {

@@ -3,14 +3,16 @@ import Btn, { ContentAlignment } from 'elements/Btn';
 
 import t from 'i18n';
 import router from 'next/router';
-import { useToggle } from 'shared/custom.hooks';
 import { useState } from 'react';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 import { ActivityEventName } from 'shared/types/activity.list';
-import Popup from 'components/popup/Popup';
+import { Activity } from 'shared/entities/activity.entity';
+import { Button } from 'shared/entities/button.entity';
+import { Comment } from 'shared/entities/comment.entity';
+import { Post } from 'shared/entities/post.entity';
 
-export default function FeedProfile({ allActivities }) {
-  const [activities, setActivities] = useState(allActivities);
+export default function FeedProfile({ allActivities, loggedInUser }) {
+  const [activities, setActivities] = useState<Activity[]>(allActivities);
 
   const notificationTypeOptions = [
     {
@@ -18,14 +20,23 @@ export default function FeedProfile({ allActivities }) {
       value: 'all',
     },
     {
-      name: t('activities.allMessages'),
-      value: 'message',
+      name: t('activities.my'),
+      value: 'my',
     },
     {
-      name: t('activities.allPosts'),
-      value: 'post',
+      name: t('activities.interests'),
+      value: 'interests',
     },
   ];
+  // all
+  // my activity
+    // my created buttons
+    // my created posts
+    // my created comments
+  // my interests activity
+    // interests created buttons on specific tag
+    // created post on followed buttons
+    // i started following a new button X  
   const onChange = (value) => {
     setActivities(() => {
       if (value == 'message') {
@@ -36,6 +47,55 @@ export default function FeedProfile({ allActivities }) {
       if (value == 'post') {
         return allActivities.filter(
           (activity) => !(activity.eventName.indexOf(ActivityEventName.NewPostComment) > -1),
+        );
+      }
+      if(value == 'my') {
+        // my created buttons
+        // my created posts
+        // my created comments
+        return allActivities.filter(
+          (activity: Activity) => 
+          {
+            switch(activity.eventName)
+            {
+              case ActivityEventName.NewButton:{
+                const button :Button = activity.data
+                return button.owner.id == loggedInUser.id
+              }
+              case ActivityEventName.NewPostComment:{
+                const comment : Comment = JSON.parse(activity.data)
+                return comment.author.id == loggedInUser.id
+              }
+              case ActivityEventName.NewPost:
+                const post: Post = JSON.parse(activity.data)
+                return post.author.id == loggedInUser.id
+            }
+            return false;
+          }
+        );
+      }
+      if(value == 'interests') {
+        // interests created buttons on specific tag
+        // created post on followed buttons
+        return allActivities.filter(
+          (activity: Activity) => {
+            switch(activity.eventName)
+            {
+              case ActivityEventName.NewButton:{
+                const button :Button = activity.data
+                return button.owner.id != activity.owner.id
+              }
+              case ActivityEventName.NewPostComment:{
+                return false;
+              }
+              case ActivityEventName.NewPost:
+                return false;
+                return post.author.id == loggedInUser.id
+              case ActivityEventName.NewFollowButton:
+                return true;
+            }
+            return false;
+          }
         );
       }
       return allActivities;
@@ -50,7 +110,6 @@ export default function FeedProfile({ allActivities }) {
             defaultSelected={"all"}
           />
         </div>
-
         <div className="feed-section--activity">
           <div className="feed-section--activity-content">
             {activities &&
