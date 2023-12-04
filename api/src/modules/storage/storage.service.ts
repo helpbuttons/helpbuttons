@@ -4,14 +4,13 @@ import {
 } from '@nestjs/common';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
-import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { Repository } from 'typeorm';
 import { ImageFile } from './image-file.entity';
-import { writeFilePromise } from '@src/shared/helpers/io.helper';
 import { getFilesRoute, uploadDir } from './storage.utils';
 import { ErrorName } from '@src/shared/types/error.list';
+import * as sharp from 'sharp';
 
 @Injectable()
 export class StorageService {
@@ -38,12 +37,12 @@ export class StorageService {
     }`;
     let buffer = Buffer.from(data, 'base64');
 
-
-    return writeFilePromise(`./${uploadDir}${fileImageName}`, buffer)
-    .then((fileName :string) => {
-      console.log(fileName.split('/'))
-      fileName = `${getFilesRoute}${fileName.split('/')[3]}`;
-      
+    const fileName = `${uploadDir}${fileImageName}`
+    return sharp(buffer)
+    .resize(1024)
+    .toFile(fileName)
+    .then((result :string) => {
+      const fileName = `${getFilesRoute}${fileImageName}`;
       return {
         id: dbIdGenerator(),
         name: fileName,
@@ -62,6 +61,8 @@ export class StorageService {
           'Could not upload file, do you configured an upload directory?',
         );
         throw new HttpException('Need to configure upload directory?', HttpStatus.PRECONDITION_REQUIRED)
+      }else{
+        console.log(err)
       }
     })
     
