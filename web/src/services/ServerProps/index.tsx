@@ -63,18 +63,6 @@ export class ServerPropsService {
       // throw new Error(errorMsg);
     }
 
-    let hostname;
-    try {
-      ({ hostname } = new URL(configData.hostName));
-    } catch (error) {
-      const errorMsg =
-        'error getting hostname from config hostname ' +
-        JSON.stringify(configData);
-      console.log(errorMsg);
-      return catchMetadata
-      // throw new Error(errorMsg);
-    }
-
     return {
       metadata: getMetadata(
         subtitle,
@@ -83,7 +71,7 @@ export class ServerPropsService {
         ctx.resolvedUrl,
       ),
       selectedNetwork: networkConfigData,
-      config: { ...configData, hostname },
+      config: configData,
     };
   }
 }

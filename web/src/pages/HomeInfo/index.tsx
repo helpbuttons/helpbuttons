@@ -13,7 +13,6 @@ import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import NavLink from 'elements/Navlink';
 import {
   IoAddOutline,
-  IoCashOutline,
   IoGlobeOutline,
   IoHelpOutline,
   IoLogInOutline,
@@ -21,7 +20,6 @@ import {
 import SEO from 'components/seo';
 import { ServerPropsService } from 'services/ServerProps';
 import { NextPageContext } from 'next';
-import { SetupSteps } from 'shared/setupSteps';
 import {  useState } from 'react';
 import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import AdvancedFilters from 'components/search/AdvancedFilters';
@@ -29,7 +27,7 @@ import { useToggle } from 'shared/custom.hooks';
 import { UpdateFiltersToFilterButtonType, UpdateFiltersToFilterTag } from 'state/Explore';
 import Alert from 'components/overlay/Alert';
 import { formatMessage } from 'elements/Message';
-import Link from 'next/link';
+import { LinkProfile } from 'components/user/LinkProfile';
 
 
 export default function HomeInfo({
@@ -150,16 +148,25 @@ export default function HomeInfo({
                   <div className="info-overlay__description">
                     {formatMessage(selectedNetwork.description)}
                   </div>
-                  <div className='info-overlay__description'>
-                      {t('homeinfo.administeredby')}
-                      <NavLink
-                        href={`/p/${selectedNetwork.administrator.username}`}
-                      >
-                        <span>
-                          {selectedNetwork.administrator.username}@
-                          {config.hostname}
-                        </span>
-                      </NavLink>
+                </div>
+
+                <div className="card">
+                  <div className="card__header">
+                    <h3 className="card__header-title">
+                    {t('homeinfo.administeredby')}
+                    </h3>
+                  </div>
+                  <hr></hr>
+                  <div className="info-overlay__description">
+                    {selectedNetwork.administrators.map((user) => {
+                        return (
+                          <LinkProfile
+                            username={user.username}
+                            avatar={user.avatar}
+                            name={user.name}
+                          ></LinkProfile>
+                        )
+                      })}
                   </div>
                 </div>
 

@@ -1,8 +1,6 @@
-import { LoadabledComponent } from 'components/loading';
 import Popup from 'components/popup/Popup';
-import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
+import { LinkProfile } from 'components/user/LinkProfile';
 import t from 'i18n';
-import Link from 'next/link';
 import { store } from 'pages';
 import { useEffect, useState } from 'react';
 import { ModerationList } from 'state/Users';
@@ -28,55 +26,26 @@ export default function Moderation() {
         {moderationList !== null &&
           moderationList.administrators.map((user) => {
             return (
-              <UserCard
+              <LinkProfile
                 username={user.username}
                 avatar={user.avatar}
                 name={user.name}
-              ></UserCard>
+              ></LinkProfile>
             );
           })}
         <h2>Blocked</h2>
         {moderationList !== null &&
           moderationList.blocked.map((user) => {
             return (
-              <UserCard
+              <LinkProfile
                 username={user.username}
                 avatar={user.avatar}
                 name={user.name}
-              ></UserCard>
+              ></LinkProfile>
             );
           })}
       </Popup>
     </>
   );
 }
-function UserCard({ username, avatar, name }) {
-  return (
-    <div className="form__list--button-type-field">
-      <div className="card-button__header">
-        <div className="card-button__avatar">
-          <div className="avatar-big">
-            <Link href={`/p/${username}`}>
-              <ImageWrapper
-                imageType={ImageType.avatarBig}
-                src={avatar}
-                alt="Avatar"
-              />
-            </Link>
-          </div>
-        </div>
 
-        <div className="card-button__info">
-          <div className="card-button__name">
-            <Link href={`/p/${username}`}>
-              {name}{' '}
-              <span className="card-button__username">
-                @{username}
-              </span>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}

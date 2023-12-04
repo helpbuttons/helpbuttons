@@ -84,13 +84,16 @@ export const getConfig = async () => {
       const dataJSON = fs.readFileSync(configFullPath, 'utf8');
       const data: SetupDto = new SetupDto(JSON.parse(dataJSON));
 
+      const { hostname } = new URL(data.hostName);
+
       const dataToWeb: SetupDtoOut = {
         hostName: data.hostName,
         leafletTiles: data.leafletTiles,
         allowedDomains: data.allowedDomains,
         databaseNumberMigrations: migrationsNumber,
         userCount: userCount,
-        commit: version.git
+        commit: version.git,
+        hostname
       };
 
       return dataToWeb;

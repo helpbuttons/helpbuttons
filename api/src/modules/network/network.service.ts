@@ -117,7 +117,6 @@ export class NetworkService {
   @CacheKey('defaultNetwork')
   @CacheTTL(30) // override TTL to 30 seconds
   findDefaultNetwork(): Promise<NetworkDto> {
-
     return this.networkRepository
       .find({ order: { created_at: 'ASC' } })
       .then((networks) => {
@@ -130,17 +129,13 @@ export class NetworkService {
         return networks[0];
       })
       .then((defaultNetwork) => {
-        return this.userService
-          .findAdministrator()
-          .then((administrator: User) => {
-            return { ...defaultNetwork, administrator };
-          });
-      })
-      .then((defaultNetwork) => {
         return this.entityManager
           .query(`select * from network_button_types`)
           .then((networkByButtonTypes) => {
-            updateNomeclature(defaultNetwork.nomeclature, defaultNetwork.nomeclaturePlural)
+            updateNomeclature(
+              defaultNetwork.nomeclature,
+              defaultNetwork.nomeclaturePlural,
+            );
             return {
               ...defaultNetwork,
               buttonTypesCount: networkByButtonTypes,
@@ -153,9 +148,17 @@ export class NetworkService {
                 0,
               ),
               buttonTemplates: JSON.parse(
-                defaultNetwork.buttonTemplates
+                defaultNetwork.buttonTemplates,
               ),
             };
+          });
+      })
+      .then((network) => {
+        // find admins...
+        return this.userService
+          .findAdministrators()
+          .then((administrators) => {
+            return { ...network, administrators };
           });
       })
       .catch((error) => {
@@ -172,16 +175,20 @@ export class NetworkService {
 
   async update(updateDto: UpdateNetworkDto) {
     const defaultNetwork = await this.findDefaultNetwork();
-    
-    const buttonsToDelete = await this.buttonsToDeleteFromButtonTemplates(
-      defaultNetwork.buttonTemplates,
-      updateDto.buttonTemplates,
-    );
-    if(buttonsToDelete.length > 0){
-      const message = buttonsToDelete.map((btnType) => `can't delete '${btnType.type}', there are already ${btnType.count} buttons with this template`)
+
+    const buttonsToDelete =
+      await this.buttonsToDeleteFromButtonTemplates(
+        defaultNetwork.buttonTemplates,
+        updateDto.buttonTemplates,
+      );
+    if (buttonsToDelete.length > 0) {
+      const message = buttonsToDelete.map(
+        (btnType) =>
+          `can't delete '${btnType.type}', there are already ${btnType.count} buttons with this template`,
+      );
       throw new ValidationException({ buttonTemplates: message });
     }
-    
+
     const network = {
       id: defaultNetwork.id,
       description: updateDto.description,
@@ -248,7 +255,10 @@ export class NetworkService {
     return getConfig();
   }
 
-  async buttonsToDeleteFromButtonTemplates(currentBtnTypes, _newBtnTypes) {
+  async buttonsToDeleteFromButtonTemplates(
+    currentBtnTypes,
+    _newBtnTypes,
+  ) {
     const networkBtnTypes = currentBtnTypes.map(
       (btnType) => btnType.name,
     );
@@ -271,6 +281,6 @@ export class NetworkService {
 
       return await this.entityManager.query(query);
     }
-    return []
+    return [];
   }
 }

@@ -39,9 +39,9 @@ export class UserService {
   async userCount() {
     return await this.userRepository.count();
   }
-  async findAdministrator() {
-    // returning only the first admin
-    return await this.userRepository.findOne({
+
+  findAdministrators() {
+    return this.userRepository.find({
       where: { role: Role.admin },
       order: { id: 'DESC' },
     });
@@ -120,7 +120,7 @@ export class UserService {
   async moderationList()
   {
     return {
-      administrators: await this.userRepository.find({where: {role: Role.admin}}),
+      administrators: await this.findAdministrators(),
       blocked: await this.userRepository.find({where: {role: Role.blocked}}),
     } 
   }
