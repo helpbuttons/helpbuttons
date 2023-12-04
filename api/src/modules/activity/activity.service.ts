@@ -56,7 +56,7 @@ export class ActivityService {
                 subject: translate(user.locale, 'activities.newcommentSubject'),
                 link: getUrl(
                   user.locale,
-                  `/ButtonFile/${payload.id}`,
+                  `/ButtonFile/${payload.data.button.id}`,
                 ),
                 linkCaption: translate(
                   user.locale,
