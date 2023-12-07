@@ -27,6 +27,7 @@ import { PostService } from '../post/post.service';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
 import { ActivityEventName } from '@src/shared/types/activity.list';
+import * as fs from 'fs';
 
 @Injectable()
 export class ButtonService {
@@ -361,6 +362,25 @@ export class ButtonService {
     return '';
   }
 
+  findDeletedAndRemoveMedia()
+  { // created more than 1 month ago
+    return this.entityManager.query(
+      `select id, images from button where deleted = true AND updated_at < now() - INTERVAL '1 month'`,
+    ).then((buttonsDeleted) => {
+      return buttonsDeleted.map((button) => {
+        return this.removeMedia(button.id, button.images)
+      })
+    })
+  }
+  private removeMedia(buttonId: string, images: string[])
+  {
+      return images.map((imagePath) => {
+        const path = imagePath.replace('/files/get/', './uploads/')
+        console.log('removing media: ' + path)
+        return fs.unlinkSync(path)
+      })
+  }
+
   deletedBlockedConditions() {
     return { deleted: false, owner: { role: Not(Role.blocked) } };
   }
@@ -374,5 +394,13 @@ export class ButtonService {
         this.follow(buttonId, userId)
         break;
     }
+  }
+
+  @OnEvent(ActivityEventName.NewPost)
+  @OnEvent(ActivityEventName.NewPostComment)
+  async updateModifiedDate(payload: any)
+  {
+    const buttonId = payload.data.button.id
+    this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP WHERE id = '${buttonId}'`)
   }
 }

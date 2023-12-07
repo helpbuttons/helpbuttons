@@ -263,11 +263,14 @@ export class AuthService {
       .findOneByEmail(email)
       .then((user: User) => {
         if (user) {
-          const newUser = {...user, verificationToken: publicNanoidGenerator()};
-          this.userService.update(user.id, newUser)
-          this.sendLoginToken(newUser, false);
+          this.userService.createNewLoginToken(user.id)
+          .then((verificationToken) => {
+            this.sendLoginToken( {...user, verificationToken: verificationToken}, false);
+          })
         }
         return Promise.resolve(true);
       });
   }
+
+  
 }
