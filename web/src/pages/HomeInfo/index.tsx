@@ -161,6 +161,7 @@ export default function HomeInfo({
                     {selectedNetwork.administrators.map((user) => {
                         return (
                           <LinkProfile
+                            key={user.id}
                             username={user.username}
                             avatar={user.avatar}
                             name={user.name}
