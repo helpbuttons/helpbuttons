@@ -24,7 +24,7 @@ export class ButtonCron {
     private readonly buttonService: ButtonService,
   ) {}
 
-  @Cron('27 18 * * *', {
+  @Cron('27 20 * * *', {
     name: 'clearEventButtons',
   }) // https://github.com/helpbuttons/helpbuttons/issues/508 clearing events..
   async clearEventButtons() {
@@ -102,7 +102,7 @@ export class ButtonCron {
     );
   }
 
-  @Cron('27 18 * * *', {
+  @Cron('27 21 * * *', {
     name: 'clearOldButtons',
   })// https://github.com/helpbuttons/helpbuttons/issues/508 clearing old buttons > 3months..
   async clearOldButtons() {
