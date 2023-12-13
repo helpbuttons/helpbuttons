@@ -154,6 +154,13 @@ export class NetworkService {
           });
       })
       .then((network) => {
+        return this.entityManager
+          .query(`select tag,count(tag) as count from (select unnest(tags) as tag from button) as tags group by tag order by count desc limit 10`)
+          .then((topTags) => {
+            return {...network, topTags: topTags}
+          })
+      })
+      .then((network) => {
         // find admins...
         return this.userService
           .findAdministrators()
