@@ -1,5 +1,5 @@
 //EXPLORE MAP
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 //components
 import {
@@ -18,9 +18,10 @@ import {
   updateCurrentButton,
   FindButton,
   clearHexagonClicked,
+  UpdateFilters,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
-import { useRef, useStore } from 'store/Store';
+import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { withRouter } from 'next/router';
 import List from 'components/list/List';
@@ -68,7 +69,7 @@ import Btn, {
 const defaultZoomPlace = 13;
 
 function HoneyComb({ router, selectedNetwork }) {
-  const currentButton = useRef(
+  const currentButton = useStore(
     store,
     (state: GlobalState) => state.explore.currentButton,
   );
@@ -84,6 +85,11 @@ function HoneyComb({ router, selectedNetwork }) {
     (state: GlobalState) => state.explore.settings,
     false,
   );
+  const filters = useStore(
+    store,
+    (state: GlobalState) => state.explore.map.filters,
+    false
+  );
   const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
   const [showMap, toggleShowMap] = useToggle(true);
@@ -95,6 +101,7 @@ function HoneyComb({ router, selectedNetwork }) {
     selectedNetwork,
     toggleShowFiltersForm,
     currentButton,
+    filters,
   });
 
   const {
@@ -224,6 +231,7 @@ function useExploreSettings({
   toggleShowFiltersForm,
   exploreSettings,
   currentButton,
+  filters
 }) {
   let queryExploreSettings = {};
   let URLParamsCoords = false;
@@ -237,6 +245,27 @@ function useExploreSettings({
       const zoom = parseInt(params.get('zoom'));
       const btnId = params.get('btn');
       const showFilters = params.get('showFilters');
+
+      let newFilters = null;
+      if(params.has('q'))
+      {
+        newFilters = {...newFilters, query: params.get('q')}
+      }
+      if(params.has('orderBy'))
+      {
+        newFilters = {...newFilters, orderBy: params.get('orderBy')}
+      }
+      if(params.has('hbTypes'))
+      {
+        newFilters = {...newFilters, helpButtonTypes: params.get('hbTypes').split(',')}
+        console.log(newFilters)
+      }
+
+      if(newFilters)
+      {
+        store.emit(new UpdateFilters({...filters, ...newFilters}))
+      }
+
       if (lat && lng) {
         URLParamsCoords = true;
         let newUpdateSettings = { center: [lat, lng] };
@@ -281,9 +310,9 @@ function useExploreSettings({
   }, [selectedNetwork]);
 
   useEffect(() => {
-    if (exploreSettings?.center && !URLParamsCoords) {
+    if (exploreSettings?.center && !URLParamsCoords && filters) {
       let obj = {};
-      let urlParams = new URLSearchParams();
+      const urlParams = new URLSearchParams()
 
       urlParams.append('zoom', Math.floor(exploreSettings.zoom));
       urlParams.append('lat', roundCoord(exploreSettings.center[0]));
@@ -298,15 +327,30 @@ function useExploreSettings({
         obj = { ...obj, btn: currentButton.id };
         urlParams.append('btn', currentButton.id);
       }
+
+      if(filters.helpButtonTypes.length > 0){
+        console.log(filters.helpButtonTypes)
+        urlParams.append('hbTypes', filters.helpButtonTypes)
+      }
+
+      if(filters.query.length > 0){
+        urlParams.append('q', filters.query)
+      }
+
+      if(filters.orderBy != 'date')
+      {
+        urlParams.append('orderBy', filters.orderBy)
+      }
       const locale = getLocale() == 'en' ? '' : `/${getLocale()}`;
       window.history.pushState(
         obj,
         'Title',
         `${locale}/Explore?${urlParams.toString()}`,
       );
-      // window.location.replace(`#?${urlParams.toString()}`);
     }
-  }, [exploreSettings, currentButton]);
+    
+  }, [exploreSettings, currentButton, filters]);
+
 }
 
 // const loaded = false
