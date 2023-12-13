@@ -7,6 +7,7 @@ import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import { configFileName } from '@src/shared/helpers/config-name.const';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { TagService } from '../tag/tag.service';
+import { publicNanoidGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 const config = require(`../../..${configFileName}`);
 
 @Injectable()
@@ -160,5 +161,28 @@ export class UserService {
       }
     );
   }
-  
+  createNewLoginToken(userId)
+  {
+    const verificationToken = publicNanoidGenerator();
+    return this.userRepository.update(
+      userId,
+      {verificationToken: verificationToken}
+    )
+    .then((result) => {
+      return verificationToken
+    });
+  }
+
+
+  getUserLoginParams(userId) {
+    return this.createNewLoginToken(userId)
+      .then((loginToken) => {
+        if (loginToken) {
+          console.log(userId)
+          console.log(loginToken)
+          return `?loginToken=${loginToken}`;
+        }
+        return '';
+      });
+  }
 }

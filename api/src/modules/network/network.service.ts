@@ -283,4 +283,13 @@ export class NetworkService {
     }
     return [];
   }
+
+  getButtonTemplates()
+  {
+    return this.networkRepository
+      .find({ order: { created_at: 'ASC' } })
+      .then((networks) => {
+        return JSON.parse(networks[0].buttonTemplates)
+      })
+  }
 }

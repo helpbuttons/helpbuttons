@@ -174,7 +174,11 @@
     "unfollowAlert": "Unfollowed",
     "unfollowAlertError": "Unfollow Error",
     "followAlertError": "Follow error",
-    "showPhone":"Show phone number"
+    "showPhone":"Show phone number",
+    "isExpiringEventMail": "Due end of event date, your button is going to be erased in 3 days, please visit the link and change the date if you want to keep it alive. If there's no new activity it will be erased in 3 days.",
+    "isExpiringEventMailSubject": "Your _helpbutton_ has passed its due date",
+    "isExpiringMail": "Due to lack of activity, your button is going to be erased in one month, please visit the link if you want to keep it alive. If there's no new activity it will be erased in one month.",
+    "isExpiringMailSubject": "Your _helpbutton_ has passed is expiring"
   },
   "user": {
     "login":"Write your credentials",
