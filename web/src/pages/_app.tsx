@@ -246,7 +246,7 @@ function MyApp({ Component, pageProps }) {
   const triedToLogin = useRef(false)
   useEffect(() => {
     const loginToken = searchParams.get('loginToken')
-    if(!triedToLogin.current){
+    if(!triedToLogin.current && loginToken){
       const onSuccess = () => {
         alertService.success(t('user.loginSucess'));
       };
