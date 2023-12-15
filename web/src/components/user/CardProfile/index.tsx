@@ -14,7 +14,7 @@ import { CardSubmenu, CardSubmenuOption } from "components/card/CardSubmenu";
 import { Role } from "shared/types/roles";
 
 
-export default function CardProfile({ user, showAdminOptions }) {
+export default function CardProfile({ user, showAdminOptions = false}) {
 
   return (
     <>

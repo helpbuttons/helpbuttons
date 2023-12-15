@@ -45,7 +45,6 @@ export class UserService {
 
   public static findUser(username: string)
   {
-
     return httpService.get<User>(`users/find/${username}`);
   }
 
@@ -98,4 +97,10 @@ export class UserService {
   public static followTag(tag : string): Observable<any> {
     return httpService.post<any>(`/users/followTag/${tag}`);
   }
+
+  public static findExtra(userId: string)
+  {
+    return httpService.get<User>(`/users/findExtra/${userId}`);
+  }
+  
 }
