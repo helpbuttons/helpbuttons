@@ -229,8 +229,8 @@ export default function HomeInfo({
                   </div>
                   <hr></hr>
                   <div className="info-overlay__hashtags">
-                  {selectedNetwork.tags.map((tag, idx) => {
-                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
+                  {selectedNetwork.topTags.map((tag, idx) => {
+                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag.tag} #{tag.count}</div>;
                     })}
                   </div>
                 </div>
