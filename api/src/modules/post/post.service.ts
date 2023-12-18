@@ -49,11 +49,13 @@ export class PostService {
         },
       })
       .then((posts) => {
-        let deleteCommentsPosts = this.removeDeletedComments(posts);
-        return this.removePrivateComments(
-          deleteCommentsPosts,
+        let commentPosts = this.removeDeletedComments(posts);
+        commentPosts = this.removePrivateComments(
+          commentPosts,
           currentUser,
         );
+        commentPosts = this.removeBlockedUsersComments(commentPosts)
+        return commentPosts;
       });
   }
 
@@ -77,6 +79,19 @@ export class PostService {
             comment.privacy == CommentPrivacyOptions.PUBLIC ||
             post.author.id == currentUser?.id ||
             comment.author.id == currentUser?.id,
+        ),
+      };
+    });
+  }
+
+  removeBlockedUsersComments(posts) {
+    return posts.map((post) => {
+      return {
+        ...post,
+        comments: post.comments.filter(
+          (comment) =>
+            post.author.role == Role.blocked ||
+            comment.author.id == Role.blocked,
         ),
       };
     });
