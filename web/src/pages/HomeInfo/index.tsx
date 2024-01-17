@@ -229,8 +229,8 @@ export default function HomeInfo({
                   </div>
                   <hr></hr>
                   <div className="info-overlay__hashtags">
-                  {selectedNetwork.tags.map((tag, idx) => {
-                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
+                  {selectedNetwork.topTags.map((tag, idx) => {
+                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag.tag)}>{tag.tag}</div>;
                     })}
                   </div>
                 </div>
@@ -239,13 +239,13 @@ export default function HomeInfo({
                 <div className="card">
                   <div className="card__header">
                     <h3 className="card__header-title">
-                      {t('homeinfo.popularHashtags')}
+                      {t('homeinfo.recommendedHashtags')}
                     </h3>
                   </div>
                   <hr></hr>
                   <div className="info-overlay__hashtags">
-                  {selectedNetwork.topTags.map((tag, idx) => {
-                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag.tag)}>{tag.tag}</div>;
+                  {selectedNetwork.tags.map((tag, idx) => {
+                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
                     })}
                   </div>
                 </div>
