@@ -1,12 +1,21 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { User } from './user.entity';
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
+import {
+  InjectEntityManager,
+  InjectRepository,
+} from '@nestjs/typeorm';
 import { EntityManager, In, Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import { configFileName } from '@src/shared/helpers/config-name.const';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { TagService } from '../tag/tag.service';
+import { publicNanoidGenerator } from '@src/shared/helpers/nanoid-generator.helper';
+import { plainToClass } from 'class-transformer';
 const config = require(`../../..${configFileName}`);
 
 @Injectable()
@@ -39,12 +48,22 @@ export class UserService {
   async userCount() {
     return await this.userRepository.count();
   }
-  async findAdministrator() {
-    // returning only the first admin
-    return await this.userRepository.findOne({
-      where: { role: Role.admin },
-      order: { id: 'DESC' },
-    });
+
+  findAdministrators() {
+    return this.userRepository
+      .find({
+        where: { role: Role.admin },
+        order: { id: 'DESC' },
+      })
+      .then(
+        (admins) =>
+          admins.map((admin) => {
+            const adminFields = plainToClass(User, admin, {
+              excludeExtraneousValues: true,
+            });
+            return { ...adminFields, hasPhone: admin.publishPhone };
+          }),
+      );
   }
 
   async findOneByEmail(email: string) {
@@ -54,51 +73,65 @@ export class UserService {
   }
 
   async findByUsername(username: string, includeCounts = false) {
-    return await this.userRepository.findOne({
-      where: { username: `${username}` },
-    }).then(async (user) => {
-      if(includeCounts)
-      {
-        const buttonCount = await this.entityManager.query(`select count(button.id) as "buttonsCount" from button where "ownerId" = '${user.id}'`);
-        const postCount = await this.entityManager.query(`select count(post.id) as "postsCount" from post where "authorId" = '${user.id}'`);
-        const commentCount = await this.entityManager.query(`select count(comment.id) as "commentsCount" from comment where "authorId" = '${user.id}'`);
-        return {...user, postCount: postCount[0].postsCount, commentCount: commentCount[0].commentsCount, buttonCount: buttonCount[0].buttonsCount}
-      }
-      return user;
-    });
+    return await this.userRepository
+      .findOne({
+        where: { username: `${username}` },
+      })
+      .then(async (user) => {
+        if (includeCounts) {
+          const buttonCount = await this.entityManager.query(
+            `select count(button.id) as "buttonsCount" from button where "ownerId" = '${user.id}'`,
+          );
+          const postCount = await this.entityManager.query(
+            `select count(post.id) as "postsCount" from post where "authorId" = '${user.id}'`,
+          );
+          const commentCount = await this.entityManager.query(
+            `select count(comment.id) as "commentsCount" from comment where "authorId" = '${user.id}'`,
+          );
+          return {
+            ...user,
+            postCount: postCount[0].postsCount,
+            commentCount: commentCount[0].commentsCount,
+            buttonCount: buttonCount[0].buttonsCount,
+          };
+        }
+        return user;
+      });
   }
 
   async update(userId: string, newUser) {
-    let center = null
-    if (newUser.center?.coordinates)
-    {
-      const center =
-      `ST_Point(${newUser.center.coordinates[1]}, ${newUser.center.coordinates[0]}, 4326) ::geography`
-      this.entityManager.query(`update public.user set center = ${center} where id = '${userId}'`)
+    let center = null;
+    if (newUser.center?.coordinates) {
+      const center = `ST_Point(${newUser.center.coordinates[1]}, ${newUser.center.coordinates[0]}, 4326) ::geography`;
+      this.entityManager.query(
+        `update public.user set center = ${center} where id = '${userId}'`,
+      );
     }
-    
-    delete(newUser.center)
-    return this.userRepository.update(
-      userId,
-      {
-          ...newUser,
-           tags: this.tagService.formatTags(newUser.tags),
-      }
-    );
+
+    delete newUser.center;
+    return this.userRepository.update(userId, {
+      ...newUser,
+      tags: this.tagService.formatTags(newUser.tags),
+    });
   }
 
   loginToken(verificationToken: string) {
-    if(verificationToken.length < 2)
-    {
-      throw new HttpException('token not found', HttpStatus.UNAUTHORIZED)
+    if (verificationToken.length < 2) {
+      throw new HttpException(
+        'token not found',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     return this.userRepository
       .findOne({
         where: { verificationToken: `${verificationToken}` },
       })
       .then((user: User) => {
-        if(!user) {
-          throw new HttpException('token not found', HttpStatus.UNAUTHORIZED)
+        if (!user) {
+          throw new HttpException(
+            'token not found',
+            HttpStatus.UNAUTHORIZED,
+          );
         }
         return this.userRepository
           .update(user.id, {
@@ -112,53 +145,75 @@ export class UserService {
       });
   }
 
-  updateRole(userId, newRole)
-  {
-    return this.userRepository.update(userId, {role: newRole})
+  updateRole(userId, newRole) {
+    return this.userRepository.update(userId, { role: newRole });
   }
 
-  async moderationList()
-  {
+  async moderationList() {
     return {
-      administrators: await this.userRepository.find({where: {role: Role.admin}}),
-      blocked: await this.userRepository.find({where: {role: Role.blocked}}),
-    } 
+      administrators: await this.findAdministrators(),
+      blocked: await this.userRepository.find({
+        where: { role: Role.blocked },
+      }),
+    };
   }
 
-  async unsubscribe(email)
-  {
-    const user = await this.findOneByEmail(email)
-    if(user)
-    {
-      await this.userRepository.update(user.id, {receiveNotifications: false})
+  async unsubscribe(email) {
+    const user = await this.findOneByEmail(email);
+    if (user) {
+      await this.userRepository.update(user.id, {
+        receiveNotifications: false,
+      });
     }
     return true;
   }
 
-  async findAllByIdsToBeNotified(usersIds)
-  {
+  async findAllByIdsToBeNotified(usersIds) {
     return await this.userRepository.find({
       where: {
         id: In(usersIds),
-        receiveNotifications: true
-      }
-    })
+        receiveNotifications: true,
+      },
+    });
   }
 
-  async addTag(tag, user: User)
-  {
+  async addTag(tag, user: User) {
     let tags = user.tags;
-    if(tags.indexOf(tag) > -1)
-    {
+    if (tags.indexOf(tag) > -1) {
       return;
     }
-    tags.push(tag)
-    return this.userRepository.update(
-      user.id,
-      {
-        tags: this.tagService.formatTags(tags),
-      }
-    );
+    tags.push(tag);
+    return this.userRepository.update(user.id, {
+      tags: this.tagService.formatTags(tags),
+    });
   }
-  
+  createNewLoginToken(userId) {
+    const verificationToken = publicNanoidGenerator();
+    return this.userRepository
+      .update(userId, { verificationToken: verificationToken })
+      .then((result) => {
+        return verificationToken;
+      });
+  }
+
+  getUserLoginParams(userId) {
+    return this.createNewLoginToken(userId).then((loginToken) => {
+      if (loginToken) {
+        console.log(userId);
+        console.log(loginToken);
+        return `?loginToken=${loginToken}`;
+      }
+      return '';
+    });
+  }
+
+  getPhone(userId) {
+    return this.findById(userId).then((user) => {
+      if(user.publishPhone)
+      {
+        return user.phone
+      }
+      return ''
+    });
+  }
 }

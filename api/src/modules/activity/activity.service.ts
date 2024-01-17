@@ -50,20 +50,23 @@ export class ActivityService {
         ).then((usersMentioned) => {
           return Promise.all(
             usersMentioned.map((user) => {
-              this.mailService.sendWithLink({
-                to: user.email,
-                content: translate(user.locale, 'activities.newcomment', [author.username, user.username, message]),
-                subject: translate(user.locale, 'activities.newcommentSubject'),
-                link: getUrl(
-                  user.locale,
-                  `/ButtonFile/${payload.data.button.id}`,
-                ),
-                linkCaption: translate(
-                  user.locale,
-                  'email.buttonLinkCaption',
-                ),
-              })
-              return this.newActivity(user, payload, false);
+              return this.userService.getUserLoginParams(user.id).then(
+                (loginParams) => {
+                  this.mailService.sendWithLink({
+                    to: user.email,
+                    content: translate(user.locale, 'activities.newcomment', [author.username, user.username, message]),
+                    subject: translate(user.locale, 'activities.newcommentSubject'),
+                    link: getUrl(
+                      user.locale,
+                      `/ButtonFile/${payload.data.button.id}${loginParams}`,
+                    ),
+                    linkCaption: translate(
+                      user.locale,
+                      'email.buttonLinkCaption',
+                    ),
+                  })
+                  return this.newActivity(user, payload, false);
+                })
             }),
           );
         });

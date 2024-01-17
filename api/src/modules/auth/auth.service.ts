@@ -234,6 +234,7 @@ export class AuthService {
       address: data.address,
       radius: data.radius,
       phone: data.phone,
+      publishPhone: data.publishPhone
     };
 
     if (isImageData(data.avatar)) {
@@ -244,6 +245,8 @@ export class AuthService {
       } catch (err) {
         console.log(`avatar: ${err.message}`);
       }
+    }else if(data.avatar){
+      newUser.avatar = data.avatar;
     }
     return this.userService
       .update(currentUser.id, newUser)
@@ -263,11 +266,14 @@ export class AuthService {
       .findOneByEmail(email)
       .then((user: User) => {
         if (user) {
-          const newUser = {...user, verificationToken: publicNanoidGenerator()};
-          this.userService.update(user.id, newUser)
-          this.sendLoginToken(newUser, false);
+          this.userService.createNewLoginToken(user.id)
+          .then((verificationToken) => {
+            this.sendLoginToken( {...user, verificationToken: verificationToken}, false);
+          })
         }
         return Promise.resolve(true);
       });
   }
+
+  
 }

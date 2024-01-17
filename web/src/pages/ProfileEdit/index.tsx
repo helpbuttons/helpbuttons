@@ -35,6 +35,7 @@ import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import FieldTags from 'elements/Fields/FieldTags';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import { Role } from 'shared/types/roles';
 
 export default function ProfileEdit() {
   const {
@@ -55,6 +56,7 @@ export default function ProfileEdit() {
     address: '',
     center: {coordinates: null},
     radius: 0,
+    publishPhone: false,
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
@@ -86,6 +88,7 @@ export default function ProfileEdit() {
       address: data.address,
       radius: data.radius,
       phone: data.phone,
+      publishPhone: data.publishPhone
     }
     if (setNewPassword)  {
       // check passwords match.. send to backend
@@ -198,6 +201,14 @@ export default function ProfileEdit() {
                     {...register('phone')}
                   ></FieldText>  
 
+                  {loggedInUser.role == Role.admin && 
+                    <FieldCheckbox
+                      name='publishPhone'
+                      defaultValue={loggedInUser.publishPhone}
+                      text={t('user.adminPhonePublish')}
+                      onChanged={(value) => {setValue('publishPhone', value)}}
+                    />
+                  }
                   <FieldCheckbox
                     name='showButtons'
                     label={t('user.showButtonsProfileLabel')}

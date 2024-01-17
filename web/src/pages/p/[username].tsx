@@ -7,7 +7,7 @@ import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { User } from 'shared/entities/user.entity';
-import { FindAdminButton, FindUser, FindUserButtons, Logout } from 'state/Users';
+import { FindAdminButton, FindExtraFieldsUser, FindUserButtons } from 'state/Users';
 import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
 import { useRouter } from 'next/router';
@@ -24,6 +24,7 @@ import SEO from 'components/seo';
 
 export default function p({metadata, userProfile}) {
   const [userButtons,setUserButtons] = useState([])
+  const [extraFields,setExtraFields] = useState([])
   const knownUsers = useRef(
     store,
     (state: GlobalState) => state.knownUsers,
@@ -54,6 +55,14 @@ export default function p({metadata, userProfile}) {
       {
         store.emit(new FindUserButtons(userProfile.id, (userButtons) => setUserButtons(userButtons)))
       }
+      // if user is admin... get more data!
+      if(loggedInUser?.role == Role.admin)
+      {
+        store.emit(new FindExtraFieldsUser(userProfile.id, (extraFields) => {
+          setExtraFields(extraFields)
+        }, () => {}))
+      }
+      // store.emit(FindExtraFieldsUser(userProfile.id))
     }
     if (loggedInUser) {
       if (loggedInUser.username == username) {
@@ -75,6 +84,9 @@ export default function p({metadata, userProfile}) {
             {userProfile?.role == Role.admin && adminButtonId && (
               <LinkAdminButton adminButtonId={adminButtonId} />
             )}
+            {loggedInUser?.role == Role.admin &&
+              <>Email: {extraFields.email}</>
+            }
             {(userButtons && userButtons.length > 0)&& 
             <div className='card-profile__button-list'>
               <ContentList buttons={userButtons.slice(0, sliceSize)} buttonTypes={buttonTypes} linkToPopup={false}/>

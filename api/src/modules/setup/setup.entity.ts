@@ -109,4 +109,8 @@ export class SetupDtoOut {
   @ApiProperty({
   })
   commit: string;
+
+  @ApiProperty({
+  })
+  hostname: string;
 }

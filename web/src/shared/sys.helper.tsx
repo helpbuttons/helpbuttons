@@ -119,7 +119,7 @@ export const readableDistance = (distance: number) => {
 };
 
 export const getUrlParams = (path, router) => {
-  const findHash = path.indexOf('#');
+  const findHash = path.indexOf('?');
   if (findHash) {
     let params = new URLSearchParams(
       router.asPath.substr(findHash + 1),

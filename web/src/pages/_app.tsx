@@ -10,7 +10,7 @@ import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
 import { FetchDefaultNetwork } from 'state/Networks';
-import { FetchUserData } from 'state/Users';
+import { FetchUserData, LoginToken } from 'state/Users';
 
 import { useStore } from 'store/Store';
 import { GetConfig } from 'state/Setup';
@@ -29,6 +29,7 @@ import SEO from 'components/seo';
 import { refeshActivities } from 'state/Activity';
 import t, { updateNomeclature } from 'i18n';
 import { useInterval } from 'shared/custom.hooks';
+import { useSearchParams } from 'next/navigation'
 
 export default appWithTranslation(MyApp);
 
@@ -51,7 +52,6 @@ function MyApp({ Component, pageProps }) {
     (state: GlobalState) => state.config,
   );
   const path = router.asPath.split('?')[0];
-
   const [metadata, setMetadata] = useState(null);
 
   const loggedInUser = useStore(
@@ -242,6 +242,23 @@ function MyApp({ Component, pageProps }) {
     }
   }, [selectedNetwork, loggedInUser]);
 
+  const searchParams = useSearchParams()
+  const triedToLogin = useRef(false)
+  useEffect(() => {
+    const loginToken = searchParams.get('loginToken')
+    if(!triedToLogin.current && loginToken){
+      const onSuccess = () => {
+        alertService.success(t('user.loginSucess'));
+      };
+  
+      const onError = (err) => {
+        alertService.error(t('login.error'));
+      };
+      store.emit(new LoginToken(loginToken, onSuccess, onError));
+    }
+    triedToLogin.current = true
+
+  },[])
   let networkStyle = {};
   if (selectedNetwork) {
     networkStyle = {

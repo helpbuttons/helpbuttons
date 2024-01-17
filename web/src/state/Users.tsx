@@ -134,6 +134,22 @@ export class FindUser implements WatchEvent {
   }
 }
 
+export class FindExtraFieldsUser implements WatchEvent {
+  public constructor(
+    private userId,
+    private onSuccess = undefined,
+    private onError = undefined,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.findExtra(this.userId).pipe(
+      map((userData) => { 
+        // new AddUserToKnownUsers(userData);
+        this.onSuccess(userData);
+      }),
+    );
+  }
+}
 export class FindAdminButton implements WatchEvent {
   public constructor(
     private onSuccess = undefined,
@@ -359,4 +375,20 @@ export function isAdmin(loggedInUser)
     return true;
   }
   return false;
+}
+
+export class GetAdminPhone implements WatchEvent {
+  public constructor(
+    private userId: string,
+    private onSuccess,
+    private onError,
+  ) {}
+  public watch(state: GlobalState) {
+    return UserService.getPhone(this.userId).pipe(
+      map((data) => {
+        this.onSuccess(data);
+      }),
+      catchError((error) => handleError(this.onError, error)),
+    );
+  }
 }

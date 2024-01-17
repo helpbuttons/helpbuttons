@@ -1,4 +1,3 @@
-import t from 'i18n';
 import { HttpStatus } from './http-status.enum';
 export interface ErrorText {
     name: ErrorName;
@@ -25,62 +24,62 @@ export const errorsList: ErrorText[] =
 [
     {
         name: ErrorName.NoOwnerShip,
-        caption: t("user.ownership"),
+        caption: `You don't have ownership of this`,
         status: HttpStatus.FORBIDDEN
     },
     {
         name: ErrorName.NeedToBeRegistered,
-        caption: t("validation.register"),
+        caption: `You need to be registered to use this functionality`,
         status: HttpStatus.FORBIDDEN
     },
     {
         name: ErrorName.CurrentPasswordWontMatch,
-        caption: t("validation.currenPass"),
+        caption: `The "current password" you type is not correct`,
         status: HttpStatus.NOT_ACCEPTABLE
     },
     {
         name: ErrorName.InvalidMimetype,
-        caption: t("validation.supportFiles"),
+        caption: `We don't support this files yet please upload a jpeg or png`,
         status: HttpStatus.BAD_REQUEST
     },
     {
         name: ErrorName.UnspecifiedInternalServerError,
-        caption: t("validation.internalServer"),
+        caption: `Unspecified internal server error`,
         status: HttpStatus.INTERNAL_SERVER_ERROR
     },
     {
         name: ErrorName.EmailAlreadyRegistered,
-        caption: t("validation.emailRegistered"),
+        caption: `Email already registered`,
         status: HttpStatus.CONFLICT
     },
     {
         name: ErrorName.UsernameAlreadyRegistered,
-        caption: t("validation.userRagistered"),
+        caption: `Username already registered`,
         status: HttpStatus.CONFLICT
     },
     {
         name: ErrorName.nothingToDelete,
-        caption: t("validation.delete"),
+        caption: `Nothing to delete`,
         status: HttpStatus.GONE
     },
     {
         name: ErrorName.validationError,
-        caption: t("validation.invalidForm"),
+        caption: `Error validating the form`,
         status: HttpStatus.BAD_REQUEST
     },
     {
         name: ErrorName.inviteOnly,
-        caption: t("validation.inviteOnly"),
+        caption: `Invite only network`,
         status: HttpStatus.FORBIDDEN
     },
     {
         name: ErrorName.geoCodingError,
-        caption: t("validation.address"),
+        caption: `Error getting address`,
         status: HttpStatus.BAD_GATEWAY
     },
     {
         name: ErrorName.invalidDates,
-        caption: t("validation.dates"),
+        caption: `Invalid dates`,
         status: HttpStatus.NOT_ACCEPTABLE
     },
 ]

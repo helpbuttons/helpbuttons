@@ -7,6 +7,9 @@ import { TagModule } from '../tag/tag.module';
 import { NetworkModule } from '../network/network.module';
 import { StorageModule } from '../storage/storage.module';
 import { PostModule } from '../post/post.module';
+import { ButtonCron } from './button.cron';
+import { MailModule } from '../mail/mail.module';
+import { UserModule } from '../user/user.module';
 
 
 @Module({
@@ -15,13 +18,16 @@ import { PostModule } from '../post/post.module';
     TagModule,
     NetworkModule,
     StorageModule,
-    forwardRef(() => PostModule)
+    forwardRef(() => PostModule),
+    MailModule,
+    UserModule
   ],
   controllers: [
     ButtonController
   ],
   providers: [
-    ButtonService
+    ButtonService,
+    ButtonCron
   ],
   exports: [
     ButtonService

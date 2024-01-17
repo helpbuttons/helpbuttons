@@ -88,7 +88,6 @@ export class CreateNetworkDto implements Partial<Network> {
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}
 
 export class NetworkDto extends Network {
-
   @Column({})
-  administrator: User;
+  administrators: User[];
 }
