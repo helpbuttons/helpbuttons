@@ -234,6 +234,7 @@ export class AuthService {
       address: data.address,
       radius: data.radius,
       phone: data.phone,
+      publishPhone: data.publishPhone
     };
 
     if (isImageData(data.avatar)) {
@@ -244,6 +245,8 @@ export class AuthService {
       } catch (err) {
         console.log(`avatar: ${err.message}`);
       }
+    }else if(data.avatar){
+      newUser.avatar = data.avatar;
     }
     return this.userService
       .update(currentUser.id, newUser)

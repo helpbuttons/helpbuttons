@@ -52,4 +52,6 @@ export class UserUpdateDto {
   radius?: number;
 
   phone?: string;
+
+  publishPhone?: boolean;
 }

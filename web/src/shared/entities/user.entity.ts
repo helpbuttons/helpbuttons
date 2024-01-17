@@ -110,6 +110,9 @@ export class User extends BaseEntity {
 
   @Column('text', {nullable: true})
   phone?: string;
+
+  @Column({default: false})
+  publishPhone?: boolean;
 }
 
 export interface UserRelations {
