@@ -1,7 +1,7 @@
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
 import Link from "next/link";
 
-export function LinkProfile({ username, avatar, name }) {
+export function LinkProfile({ username, avatar, name, extra = <></>}) {
     return (
       <div className="form__list--button-type-field">
         <div className="card-button__header">
@@ -26,6 +26,7 @@ export function LinkProfile({ username, avatar, name }) {
                 </span>
               </Link>
             </div>
+            {extra}
           </div>
         </div>
       </div>

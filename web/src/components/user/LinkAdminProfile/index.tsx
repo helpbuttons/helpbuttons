@@ -11,6 +11,7 @@ import { IoCallOutline } from 'react-icons/io5';
 import t from 'i18n';
 
 export function LinkAdminProfile({ user }) {
+  const extra = <ShowPhone user={user} />
   return (
     <>
       <LinkProfile
@@ -18,8 +19,9 @@ export function LinkAdminProfile({ user }) {
         username={user.username}
         avatar={user.avatar}
         name={user.name}
+        extra={extra}
       ></LinkProfile>
-      <ShowPhone user={user} />
+      
     </>
   );
 }
