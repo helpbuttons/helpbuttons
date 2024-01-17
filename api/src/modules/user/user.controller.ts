@@ -76,4 +76,10 @@ export class UserController {
   async follow(@Param('tag') tag: string, @CurrentUser() user: User) {
     return await this.userService.addTag(tag, user);
   }
+
+  @OnlyRegistered()
+  @Get('/getPhone/:userId')
+  async getPhone(@Param('userId') userId: string) {
+    return await this.userService.getPhone(userId)
+  }
 }

@@ -28,6 +28,7 @@ import { UpdateFiltersToFilterButtonType, UpdateFiltersToFilterTag } from 'state
 import Alert from 'components/overlay/Alert';
 import { formatMessage } from 'elements/Message';
 import { LinkProfile } from 'components/user/LinkProfile';
+import { LinkAdminProfile } from 'components/user/LinkAdminProfile';
 
 
 export default function HomeInfo({
@@ -158,14 +159,9 @@ export default function HomeInfo({
                   </div>
                   <hr></hr>
                   <div className="info-overlay__description">
-                    {selectedNetwork.administrators.map((user) => {
+                    {selectedNetwork.administrators.map((user, idx) => {
                         return (
-                          <LinkProfile
-                            key={user.id}
-                            username={user.username}
-                            avatar={user.avatar}
-                            name={user.name}
-                          ></LinkProfile>
+                          <LinkAdminProfile user={user} key={idx}/>
                         )
                       })}
                   </div>

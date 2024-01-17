@@ -27,7 +27,11 @@ import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import Link from 'next/link';
-import { GetPhone, UpdateFiltersToFilterTag, updateCurrentButton } from 'state/Explore';
+import {
+  GetPhone,
+  UpdateFiltersToFilterTag,
+  updateCurrentButton,
+} from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { formatMessage } from 'elements/Message';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
@@ -38,7 +42,11 @@ import {
 } from 'components/card/CardSubmenu';
 import { FollowButton, UnfollowButton } from 'state/Follow';
 import { alertService } from 'services/Alert';
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import Btn, {
+  BtnType,
+  ContentAlignment,
+  IconType,
+} from 'elements/Btn';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -194,17 +202,15 @@ function CardButtonSubmenu({ button }) {
   }, [config]);
 
   const FollowButtonMenuOption = (button) => {
-
-    if(!canFollowButton(button, loggedInUser))
-    {
+    if (!canFollowButton(button, loggedInUser)) {
       return;
     }
-  
-    if (isFollowingButton(button,loggedInUser)) {
+
+    if (isFollowingButton(button, loggedInUser)) {
       return (
         <CardSubmenuOption
           onClick={() => {
-            followButton(button.id)
+            followButton(button.id);
           }}
           label={t('button.follow')}
         />
@@ -213,7 +219,7 @@ function CardButtonSubmenu({ button }) {
     return (
       <CardSubmenuOption
         onClick={() => {
-          unFollowButton(button.id)
+          unFollowButton(button.id);
         }}
         label={t('button.unfollow')}
       />
@@ -303,9 +309,12 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
           </div>
         </div>
 
-        <div className="card-button__title">{button.title}
-        <FollowButtonHeart button={button} loggedInUser={loggedInUser}/>
-        
+        <div className="card-button__title">
+          {button.title}
+          <FollowButtonHeart
+            button={button}
+            loggedInUser={loggedInUser}
+          />
         </div>
 
         <div className="card-button__paragraph">
@@ -339,8 +348,11 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         )}
         <div className="card-button__locDate">
           <div
-            className={ 'card-button__city card-button__everywhere' + 
-              ( !button.hideAddress ? ' card-button__city--displayMap' : '')
+            className={
+              'card-button__city card-button__everywhere' +
+              (!button.hideAddress
+                ? ' card-button__city--displayMap'
+                : '')
             }
             onClick={() => setShowMap(() => !showMap)}
           >
@@ -362,77 +374,75 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
   );
 }
 
-function ShowPhone({button}) {
-  const [showPhone, toggleShowPhone] = useState(false)
-  const [phone, setPhone] = useState(null)
+function ShowPhone({ button }) {
+  const [showPhone, toggleShowPhone] = useState(false);
+  const [phone, setPhone] = useState(null);
   const onCallClick = () => {
-    if (phone == null)
-    {
-      store.emit(new GetPhone(button.id, (phone) => {
-        setPhone(phone)
-      }, () => {}))
+    if (phone == null) {
+      store.emit(
+        new GetPhone(
+          button.id,
+          (phone) => {
+            setPhone(phone);
+          },
+          () => {},
+        ),
+      );
     }
-    window.open('tel:'+ phone)
-  }
+    window.open('tel:' + phone);
+  };
   const onShowPhoneClick = () => {
-    if (phone == null)
-    {
-      store.emit(new GetPhone(button.id, (phone) => {
-        setPhone(phone)
-      }, () => {}))
+    if (phone == null) {
+      store.emit(
+        new GetPhone(
+          button.id,
+          (phone) => {
+            setPhone(phone);
+          },
+          () => {},
+        ),
+      );
     }
-    toggleShowPhone(!showPhone)
-  }
+    toggleShowPhone(!showPhone);
+  };
   return (
     <>
-    {button.hasPhone && 
-      <>
-      <Btn
+      {button.hasPhone && (
+        <>
+          {!showPhone && (
+            <Btn
               btnType={BtnType.filterCorp}
               contentAlignment={ContentAlignment.center}
+              caption={t('button.showPhone')}
               iconLeft={IconType.circle}
-              iconLink={<IoCallOutline />}
-              submit={true}
-              onClick={() => onCallClick()}
-
-        />    
-         {!showPhone &&
-          <Btn
+              onClick={() => onShowPhoneClick()}
+            />
+          )}
+          {showPhone && (
+            <>
+              <Btn
                 btnType={BtnType.filterCorp}
                 contentAlignment={ContentAlignment.center}
-                caption={t('button.showPhone')}
                 iconLeft={IconType.circle}
-                onClick={() => onShowPhoneClick()}
-          />   
-         }
-        {showPhone && 
-          <div className='card-button__rating--phone'>{phone}</div>
-        }
-{/* 
-        <Btn
-              btnType={BtnType.filterCorp}
-              contentAlignment={ContentAlignment.center}
-              iconLeft={IconType.circle}
-              iconLink={<IoChatbubbleEllipsesSharp />}
-              submit={true}
-        />   
-        <Btn
-              btnType={BtnType.filterCorp}
-              contentAlignment={ContentAlignment.center}
-              iconLeft={IconType.circle}
-              iconLink={<IoMailOutline />}
-              submit={true}
-        />                   */}
-      </>
-    }
-    </>)
+                iconLink={<IoCallOutline />}
+                submit={true}
+                onClick={() => onCallClick()}
+              />
+              <div className="card-button__rating--phone">
+                {phone}
+              </div>
+            </>
+          )}
+        </>
+      )}
+    </>
+  );
 }
 
 export function CardButtonHeadActions({ button }) {
-
   return (
     <div className="card-button__rating">
-      <ShowPhone button={button}/>
+      <ShowPhone button={button} />
       {button.hearts && (
         <span className="btn-circle__icon">
           <IoHeartOutline />
@@ -535,62 +545,72 @@ export function CardButtonOptions() {
   );
 }
 
-function FollowButtonHeart({button, loggedInUser})
-{
-      
-  if(!canFollowButton(button, loggedInUser))
-  {
+function FollowButtonHeart({ button, loggedInUser }) {
+  if (!canFollowButton(button, loggedInUser)) {
     return;
   }
 
-  if (isFollowingButton(button,loggedInUser)) {
-    return (    
+  if (isFollowingButton(button, loggedInUser)) {
+    return (
       <Btn
-          btnType={BtnType.iconActions}
-          contentAlignment={ContentAlignment.center}
-          iconLink={<IoHeartOutline />}
-          iconLeft={IconType.circle}
-          onClick={() => followButton(button.id)}
+        btnType={BtnType.iconActions}
+        contentAlignment={ContentAlignment.center}
+        iconLink={<IoHeartOutline />}
+        iconLeft={IconType.circle}
+        onClick={() => followButton(button.id)}
       />
-    )
+    );
   }
 
   return (
     <Btn
-        btnType={BtnType.iconActions}
-        contentAlignment={ContentAlignment.center}
-        iconLink={<IoHeart />}
-        iconLeft={IconType.circle}
-        onClick={() => unFollowButton(button.id)}
+      btnType={BtnType.iconActions}
+      contentAlignment={ContentAlignment.center}
+      iconLink={<IoHeart />}
+      iconLeft={IconType.circle}
+      onClick={() => unFollowButton(button.id)}
     />
-  )
-  
+  );
 }
 
-const canFollowButton = (button, user) =>
-{
+const canFollowButton = (button, user) => {
   if (!user) {
     return false;
   }
 
-  if(user.id == button.owner.id)
-  {
+  if (user.id == button.owner.id) {
     return false;
   }
   return true;
-}
+};
 
 const isFollowingButton = (button, user) => {
-  return (button.followedBy.indexOf(user.id) < 0)
-}
+  return button.followedBy.indexOf(user.id) < 0;
+};
 
 const followButton = (buttonId) => {
-  store.emit(new FollowButton(buttonId, () => alertService.success(t('button.followAlert')), () => {alertService.warn(t('button.followErrorAlert'))}))
-}
+  store.emit(
+    new FollowButton(
+      buttonId,
+      () => alertService.success(t('button.followAlert')),
+      () => {
+        alertService.warn(t('button.followErrorAlert'));
+      },
+    ),
+  );
+};
 
 const unFollowButton = (buttonId) => {
-  store.emit(new UnfollowButton(buttonId, () => alertService.info(t('button.unfollowAlert')), () => {alertService.warn(t('button.unfollowErrorAlert'))}))
-}
+  store.emit(
+    new UnfollowButton(
+      buttonId,
+      () => alertService.info(t('button.unfollowAlert')),
+      () => {
+        alertService.warn(t('button.unfollowErrorAlert'));
+      },
+    ),
+  );
+};
 function isButtonOwner(loggedInUser, button) {
   return (
     loggedInUser && loggedInUser.username == button.owner.username

@@ -103,4 +103,7 @@ export class UserService {
     return httpService.get<User>(`/users/findExtra/${userId}`);
   }
   
+  public static getPhone(userId : string): Observable<any> {
+    return httpService.get<any>(`/users/getPhone/${userId}`);
+  }
 }
