@@ -12,13 +12,15 @@ export default function FieldTags({
   tags = [],
   setTags,
   placeholder,
-  explain
+  explain,
+  defaultSuggestedTags = []
 }) {
   const onInputChange = (e) => {
     let inputText = e.target.value;
 
     setInput(inputText);
   };
+  const [suggestedTags, setSuggestedTags] = useState(defaultSuggestedTags)
   const [input, setInput] = useState('');
 
   const addTag = (newTag: string) => {
@@ -34,6 +36,9 @@ export default function FieldTags({
     
     tags.push(tagify(newTag));
     setTags(tags);
+    setSuggestedTags((prevValue) => {
+      return prevValue.filter((stag) => stag.tag != newTag)
+    })
   };
 
   const inputKeyDown = (e) => {
@@ -70,7 +75,11 @@ export default function FieldTags({
         onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
       />
       <TagList tags={tags} remove={remove}/>
-      
+      <div className="info-overlay__hashtags">
+        {suggestedTags.map((tag, idx) => {
+          return <div className="hashtag" key={idx} onClick={() => addTag(tag.tag)}>{tag.tag}</div>
+        })}
+      </div>
       <FieldError validationError={validationError} />
     </div>
   );

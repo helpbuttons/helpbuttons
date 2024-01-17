@@ -216,7 +216,7 @@ export default function HomeInfo({
                   </div>
                 </div>
 
-                {/* HASHTAGS CARD */}
+                {/* HASHTAGS CARD OF NETWORK CONFIGURATION */}
                 <div className="card">
                   <div className="card__header">
                     <h3 className="card__header-title">
@@ -226,7 +226,22 @@ export default function HomeInfo({
                   <hr></hr>
                   <div className="info-overlay__hashtags">
                   {selectedNetwork.topTags.map((tag, idx) => {
-                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag.tag} #{tag.count}</div>;
+                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag.tag)}>{tag.tag}</div>;
+                    })}
+                  </div>
+                </div>
+
+                {/* TOP 10 HASHTAGS CARD OF NETWORK */}
+                <div className="card">
+                  <div className="card__header">
+                    <h3 className="card__header-title">
+                      {t('homeinfo.recommendedHashtags')}
+                    </h3>
+                  </div>
+                  <hr></hr>
+                  <div className="info-overlay__hashtags">
+                  {selectedNetwork.tags.map((tag, idx) => {
+                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
                     })}
                   </div>
                 </div>
