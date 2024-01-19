@@ -90,8 +90,8 @@ export class PostService {
         ...post,
         comments: post.comments.filter(
           (comment) =>
-            post.author.role == Role.blocked ||
-            comment.author.id == Role.blocked,
+            post.author.role != Role.blocked &&
+            comment.author.role != Role.blocked,
         ),
       };
     });
