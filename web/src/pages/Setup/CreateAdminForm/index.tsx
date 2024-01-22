@@ -87,7 +87,7 @@ function CreateAdminForm() {
   }, [config])
 
   const onSubmit = (data) => {
-    if (passwordsMatch(data, setError)) {
+    // if (passwordsMatch(data, setError)) {
       store.emit(
         new CreateAdmin(
           {
@@ -117,7 +117,7 @@ function CreateAdminForm() {
           },
         ),
       );
-    }
+    // }
   };
 
   return (
