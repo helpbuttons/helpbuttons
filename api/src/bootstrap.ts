@@ -52,7 +52,18 @@ export const bootstrap = async () => {
   
 
     const nodemailer = require('nodemailer');
-    const transporter = nodemailer.createTransport(configs.smtpUrl);
+    
+    const smtpConfig = {
+      host: configs.smtpHost,
+      port: configs.smtpPort,
+      auth: {
+        user: configs.smtpUser,
+        pass: configs.smtpPass
+      }
+    }
+    
+    const transporter = nodemailer.createTransport(smtpConfig);
+
     await transporter
       .verify()
       .then(() => {

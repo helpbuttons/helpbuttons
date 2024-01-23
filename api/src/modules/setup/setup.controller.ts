@@ -11,7 +11,7 @@ import {
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
 import { ApiTags } from '@nestjs/swagger';
-import { SetupDto, SetupDtoOut } from './setup.entity';
+import { SetupDto, SetupDtoOut, SmtpConfigTest } from './setup.entity';
 import { SetupService } from './setup.service';
 
 @ApiTags('setup')
@@ -32,7 +32,7 @@ export class SetupController {
   }
 
   @Post('smtpTest')
-  async smtpTest(@Body() smtpUrl: any) {
-    return await this.setupService.smtpTest(smtpUrl.smtpUrl);
+  async smtpTest(@Body() smtpConfigTest: SmtpConfigTest) {
+    return await this.setupService.smtpTest(smtpConfigTest);
   }
 }
