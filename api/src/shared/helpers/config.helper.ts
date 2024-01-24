@@ -88,7 +88,6 @@ export const getConfig = async () => {
 
       const dataToWeb: SetupDtoOut = {
         hostName: data.hostName,
-        leafletTiles: data.leafletTiles,
         allowedDomains: data.allowedDomains,
         databaseNumberMigrations: migrationsNumber,
         userCount: userCount,

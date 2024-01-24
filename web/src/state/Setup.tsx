@@ -110,13 +110,16 @@ export class CreateConfig implements WatchEvent {
 
 export class SmtpTest implements WatchEvent {
   public constructor(
-    private smtpUrl: string,
+    private smtpHost: string,
+    private smtpPort: string,
+    private smtpUser: string,
+    private smtpPass: string,
     private onSuccess,
     private onError,
   ) {}
 
   public watch(state: GlobalState) {
-    return SetupService.smtpTest(this.smtpUrl).pipe(
+    return SetupService.smtpTest(this.smtpHost,this.smtpPort,this.smtpUser,this.smtpPass ).pipe(
       map(() => {
         this.onSuccess();
       }),

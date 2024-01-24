@@ -15,18 +15,6 @@ export class SetupDto {
     type: String,
     required: true,
   })
-  mapifyApiKey: string;
-
-  @ApiProperty({
-    type: String,
-    required: true,
-  })
-  leafletTiles: string;
-
-  @ApiProperty({
-    type: String,
-    required: true,
-  })
   postgresUser: string;
 
   @ApiProperty({
@@ -53,10 +41,20 @@ export class SetupDto {
   postgresPort: number;
   
   @ApiProperty({
-    type: String,
-    required: true,
   })
-  smtpUrl: string;
+  smtpHost: string;
+
+  @ApiProperty({
+  })
+  smtpPort: string;
+
+  @ApiProperty({
+  })
+  smtpUser: string;
+
+  @ApiProperty({
+  })
+  smtpPass: string;
 
   @ApiProperty({
     type: [String],
@@ -84,11 +82,6 @@ export class SetupDtoOut {
   hostName: string;
 
   @ApiProperty({
-    type: String,
-    required: true,
-  })
-  leafletTiles: string;
-  @ApiProperty({
     type: [String],
     required: false,
   })
@@ -113,4 +106,22 @@ export class SetupDtoOut {
   @ApiProperty({
   })
   hostname: string;
+}
+
+export class SmtpConfigTest {
+  @ApiProperty({
+  })
+  smtpHost: string;
+
+  @ApiProperty({
+  })
+  smtpPort: string;
+
+  @ApiProperty({
+  })
+  smtpUser: string;
+
+  @ApiProperty({
+  })
+  smtpPass: string;
 }
