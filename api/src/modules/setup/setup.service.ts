@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { SetupDto, SetupDtoOut } from './setup.entity';
+import { SetupDto, SetupDtoOut, SmtpConfigTest } from './setup.entity';
 import * as fs from 'fs';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { checkDatabase, configFullPath, getConfig, isConfigFileCreated } from '@src/shared/helpers/config.helper';
@@ -15,8 +15,16 @@ export class SetupService {
   constructor(
   ) {}
 
-  async smtpTest(smtpUrl: string): Promise<any> {
-    const transporter = nodemailer.createTransport(smtpUrl);
+  async smtpTest(smtpConfig: SmtpConfigTest): Promise<any> {
+    const transporter = nodemailer.createTransport({
+      host: smtpConfig.smtpHost,
+      port: smtpConfig.smtpPort,
+      auth:
+      {
+        user: smtpConfig.smtpUser,
+        pass: smtpConfig.smtpPass
+      }
+    });
     await transporter
       .verify()
       .then(() => {

@@ -31,15 +31,16 @@ export default function SysadminConfig() {
   } = useForm({
     defaultValues: {
       hostName: '',
-      mapifyApiKey: '',
       postgresHostName: 'db',
       postgresDb: 'hb-db',
       postgresUser: 'postgres',
       postgresPassword: 'PASSWORD',
       postgresPort: 5432,
-      smtpUrl:
-        'smtp://info@helpbuttons.org:some-string@smtp.some-provider.com:587',
-        from: "'helpbuttons' <helpbuttons@coletivos.org>"
+      smtpHost: '',
+      smtpPort: '',
+      smtpUser: '',
+      smtpPass: '',
+      from: "'helpbuttons' <mail@nomail.com>"
     },
   });
 
@@ -104,7 +105,7 @@ export default function SysadminConfig() {
 
   const onSmtpTest = (data) => {
     store.emit(
-      new SmtpTest(data.smtpUrl, onSmtpSuccess, onSmtpError),
+      new SmtpTest(data.smtpHost, data.smtpPort, data.smtpUser, data.smtpPass, onSmtpSuccess, onSmtpError),
     );
   };
 
@@ -145,13 +146,6 @@ export default function SysadminConfig() {
                 {...register('hostName', { required: true })}
               />
               <FieldText
-                name="mapifyApiKey"
-                label="OpenCage ApiKey"
-                classNameInput="squared"
-                validationError={errors.mapifyApiKey}
-                {...register('mapifyApiKey', { required: true })}
-              />
-              <FieldText
                 name="postgresUser"
                 label={`${t('setup.postgresUser')}`}
                 {...register('postgresUser')}
@@ -180,10 +174,26 @@ export default function SysadminConfig() {
               ></FieldText>
 
               <FieldText
-                name="smtpUrl"
-                label={`${t('setup.smtpUrl')}:`}
-                {...register('smtpUrl')}
+                name="smtpHost"
+                label={`${t('setup.smtpHost')}:`}
+                {...register('smtpHost')}
               ></FieldText>
+              <FieldText
+                name="smtpPort"
+                label={`${t('setup.smtpPort')}:`}
+                {...register('smtpPort')}
+              ></FieldText>
+              <FieldText
+                name="smtpUser"
+                label={`${t('setup.smtpUser')}:`}
+                {...register('smtpUser')}
+              ></FieldText>
+              <FieldText
+                name="smtpPass"
+                label={`${t('setup.smtpPass')}:`}
+                {...register('smtpPass')}
+              ></FieldText>
+
               <FieldText
                 name="from"
                 label={`${t('setup.from')}:`}

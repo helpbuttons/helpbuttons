@@ -23,6 +23,7 @@
     "users": "{0} usuarios en esta Red",
     "actions": "¿Qué puedes hacer?",
     "popularHashtags": "¿Qué temas se tratan?",
+    "recommendedHashtags": "Otros temas recomendados",
     "profileSubtitle": "Comprueba tu perfil",
     "createSubtitle": "Crea tu _helpbutton_ y colabora",
     "faqsSubtitle": "Lee más sobre esta app",
@@ -198,7 +199,8 @@
     "phone":"Teléfono",
     "phoneExplain":"Añade tu teléfono si quieres que te contacten a través de él",
     "phonePlaceHolder":"i.e. 34699000000",
-    "signupOptions":"Opciones Extra"
+    "signupOptions":"Opciones Extra",
+    "adminPhonePublish": "Eres administrador de la red, ¿quieres que tu teléfono este disponible en la página principal?"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",

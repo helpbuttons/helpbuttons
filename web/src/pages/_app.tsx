@@ -29,7 +29,7 @@ import SEO from 'components/seo';
 import { refeshActivities } from 'state/Activity';
 import t, { updateNomeclature } from 'i18n';
 import { useInterval } from 'shared/custom.hooks';
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation';
 
 export default appWithTranslation(MyApp);
 
@@ -242,23 +242,22 @@ function MyApp({ Component, pageProps }) {
     }
   }, [selectedNetwork, loggedInUser]);
 
-  const searchParams = useSearchParams()
-  const triedToLogin = useRef(false)
+  const searchParams = useSearchParams();
+  const triedToLogin = useRef(false);
   useEffect(() => {
-    const loginToken = searchParams.get('loginToken')
-    if(!triedToLogin.current && loginToken){
+    const loginToken = searchParams.get('loginToken');
+    if (!triedToLogin.current && loginToken) {
       const onSuccess = () => {
         alertService.success(t('user.loginSucess'));
       };
-  
+
       const onError = (err) => {
         alertService.error(t('login.error'));
       };
       store.emit(new LoginToken(loginToken, onSuccess, onError));
     }
-    triedToLogin.current = true
-
-  },[])
+    triedToLogin.current = true;
+  }, []);
   let networkStyle = {};
   if (selectedNetwork) {
     networkStyle = {
@@ -273,28 +272,21 @@ function MyApp({ Component, pageProps }) {
         <meta name="commit" content={version.git} />
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
-        <div
-          className={`${user ? '' : 'index__container'}`}
-          style={networkStyle}
-        >
-          <Alert />
-          <div className="index__content">
-            {(isRoleAllowed(Role.guest, pathname) || authorized) && (
-              <>
-                <Component {...pageProps} />
-              </>
-            )}
-            <NavBottom loggedInUser={loggedInUser} />
-          </div>
+      <div
+        className={`${user ? '' : 'index__container'}`}
+        style={networkStyle}
+      >
+        <Alert />
+        <div className="index__content">
+          {selectedNetwork && (
+            <>
+              <Component {...pageProps} />
+              <NavBottom loggedInUser={loggedInUser} />
+            </>
+          )}
+          {!selectedNetwork && <Component {...pageProps} />}
         </div>
-      {isSetup && !selectedNetwork && (
-        <div className={`${user ? '' : 'index__container'}`}>
-          <Alert />
-          <div className="index__content">
-            <Component {...pageProps} />
-          </div>
-        </div>
-      )}
+      </div>
     </>
   );
 }
