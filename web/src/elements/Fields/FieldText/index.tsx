@@ -22,10 +22,10 @@ const FieldText = React.forwardRef(({
     onBlur,
     validationError,
     multiInput=false,
-    value,
     explain,
     extraMessage,
     maxLength = -1,
+    defaultValue,
     // subInputLink,
     // subInputLinkText
 }, ref): IFieldText => {
@@ -57,7 +57,7 @@ const FieldText = React.forwardRef(({
                 onChange={onChange}
                 onBlur={onBlur}
                 className={`form__input ${classNameInput} ${validationError ? 'validation-error' : ''}`} 
-                value={value}
+                defaultValue={defaultValue}
                 onInput={onInput}
             />
             <div className="form__input-subtitle">
