@@ -341,7 +341,7 @@
     "write": "Publica una Novedad",
     "delete": "Borrar",
     "NoComments": "No hay comentarios aún",
-    "private": "",
+    "private": "privado",
     "renewPost": "¡Hola!, renové helpbutton el día {0}. Deja un comentario si quieres comunicar conmigo."
   },
   "comment": {
