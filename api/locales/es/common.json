@@ -284,8 +284,12 @@
     "showPhone":"Mostrar teléfono",
     "isExpiringEventMail": "Debido a la fecha de finalización del evento, su botón se borrará en 3 días; visite el enlace y cambie la fecha si desea mantenerlo activo. Si no hay nueva actividad se borrará en 3 días.",
     "isExpiringEventMailSubject": "Su _helpbutton_ ha pasado la fecha de vencimiento",
-    "isExpiringMail": "Debido a la falta de actividad, su botón se borrará en un mes; visite el enlace si desea mantenerlo activo. Si no hay nueva actividad se borrará en un mes.",
-    "isExpiringMailSubject": "Su _helpbutton_ ha pasado y está por vencer"
+    "isExpiringMail": "Debido a la falta de actividad, su _helpbutton_ '{0}' se borrará en un mes; visite el enlace si desea mantenerlo activo. Si no hay nueva actividad se borrará en un mes.",
+    "isExpiringMailSubject": "Su _helpbutton_ ha pasado y está por vencer",
+    "renewSuccess": "Felicidades, renovaste tu _helpbutton_ otros 3 meses",
+    "renewError": "Error al renovar tu _helpbutton_",
+    "renewMailSubject": "Renovado con éxito",
+    "renewMail": "Renovaste tu _helpbutton_ '{0}' por otros 3 meses."
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -337,7 +341,8 @@
     "write": "Publica una Novedad",
     "delete": "Borrar",
     "NoComments": "No hay comentarios aún",
-    "private": ""
+    "private": "",
+    "renewPost": "¡Hola!, renové helpbutton el día {0}. Deja un comentario si quieres comunicar conmigo."
   },
   "comment": {
     "placeholderWrite": "Escribe un mensaje en esta publicación",

@@ -167,4 +167,23 @@ export class ButtonController {
   {
     return this.buttonService.getPhone(buttonId)
   }
+
+  @OnlyRegistered()
+  @Get('/renew/:buttonId')
+  async renew(@Param('buttonId') buttonId: string, @CurrentUser() user: User)
+  {
+    return await this.buttonService
+    .isOwner(user, buttonId)
+    .then((isOwner) => {
+      if (!isOwner) {
+        throw new CustomHttpException(ErrorName.NoOwnerShip);
+      }
+      return this.buttonService.renew(buttonId, user).then(() =>{
+        return this.buttonService.findById(buttonId).then((button) => {
+          notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: user})
+        })
+      })
+    });
+  }
+  
 }
