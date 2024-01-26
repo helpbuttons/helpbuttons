@@ -449,3 +449,19 @@ export class GetPhone implements WatchEvent {
     );
   }
 }
+
+export class ButtonUpdateModifiedDate implements WatchEvent{
+  public constructor(
+    private buttonId: string,
+    private onSuccess,
+    private onError,
+  ) {}
+  public watch(state: GlobalState) {
+    return ButtonService.renew(this.buttonId).pipe(
+      map((data) => {
+        this.onSuccess(data);
+      }),
+      catchError((error) => handleError(this.onError, error)),
+    );
+  }
+}

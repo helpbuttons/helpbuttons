@@ -28,6 +28,7 @@ import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-
 import { ErrorName } from '@src/shared/types/error.list';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import * as fs from 'fs';
+import translate, { readableDate } from '@src/shared/helpers/i18n.helper';
 
 @Injectable()
 export class ButtonService {
@@ -398,9 +399,21 @@ export class ButtonService {
 
   @OnEvent(ActivityEventName.NewPost)
   @OnEvent(ActivityEventName.NewPostComment)
-  async updateModifiedDate(payload: any)
+  async updateDate(payload: any)
   {
     const buttonId = payload.data.button.id
-    this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP WHERE id = '${buttonId}'`)
+    await this.updateModifiedDate(buttonId)
+  }
+  
+  renew(buttonId: string, user: User)
+  {
+    return this.updateModifiedDate(buttonId).then(() => {
+        return this.postService.new(translate(user.locale, 'post.renewPost', [readableDate(user.locale)]), buttonId, user)
+    })
+  }
+
+  updateModifiedDate(buttonId: string)
+  {
+    return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP WHERE id = '${buttonId}'`)
   }
 }
