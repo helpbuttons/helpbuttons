@@ -57,7 +57,7 @@ export class ButtonCron {
         "','",
       )}') AND "eventEnd" < now() - INTERVAL '1 day' AND "eventEnd" > now() - INTERVAL '2 day'`,
     );
-
+/*
     await Promise.all(
       buttonsToExpire.map((button) => {
         this.userService.findById(button.ownerId).then((user) => {
@@ -69,6 +69,7 @@ export class ButtonCron {
                 content: translate(
                   user.locale,
                   'button.isExpiringEventMail',
+                  [button.title]
                 ),
                 subject: translate(
                   user.locale,
@@ -76,7 +77,7 @@ export class ButtonCron {
                 ),
                 link: getUrl(
                   user.locale,
-                  `/ButtonFile/${button.id}${loginParams}`,
+                  `/ButtonEdit/${button.id}${loginParams}`,
                 ),
                 linkCaption: translate(
                   user.locale,
@@ -87,7 +88,7 @@ export class ButtonCron {
         });
       }),
     );
-
+*/
     // remove buttons after 3 days passed...
     // erase button and images
     const buttonsExpired = await this.entityManager.query(
@@ -109,7 +110,7 @@ export class ButtonCron {
     // change update button modified date when there is new post or comment: done   @OnEvent(ActivityEventName.NewPost) @OnEvent(ActivityEventName.NewPostComment) on button service
     // check if modified between interval now() - 3 months now()
     const buttonsToExpire = await this.entityManager.query(
-      `select id,"eventEnd","ownerId", updated_at from button where deleted = false AND "updated_at" < now() - INTERVAL '3 months' AND ("updated_at" > now() - INTERVAL '4 months')`,
+      `select id,"eventEnd","ownerId",title, updated_at from button where deleted = false AND "updated_at" < now() - INTERVAL '3 months' AND ("updated_at" > now() - INTERVAL '4 months')`,
     );
     // update button set updated_at = now() - interval '3 months' where id =
     // send mail to creator
@@ -124,6 +125,7 @@ export class ButtonCron {
                 content: translate(
                   user.locale,
                   'button.isExpiringMail',
+                  [button.title]
                 ),
                 subject: translate(
                   user.locale,
@@ -131,7 +133,7 @@ export class ButtonCron {
                 ),
                 link: getUrl(
                   user.locale,
-                  `/ButtonFile/${button.id}${loginParams}`,
+                  `/ButtonRenew/${button.id}${loginParams}`,
                 ),
                 linkCaption: translate(
                   user.locale,

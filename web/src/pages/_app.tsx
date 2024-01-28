@@ -255,9 +255,11 @@ function MyApp({ Component, pageProps }) {
         alertService.error(t('login.error'));
       };
       store.emit(new LoginToken(loginToken, onSuccess, onError));
+    }else if(loginToken){
+      triedToLogin.current = true;
     }
-    triedToLogin.current = true;
-  }, []);
+    
+  }, [searchParams]);
   let networkStyle = {};
   if (selectedNetwork) {
     networkStyle = {
