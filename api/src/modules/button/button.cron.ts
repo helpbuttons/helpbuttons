@@ -110,7 +110,7 @@ export class ButtonCron {
     // change update button modified date when there is new post or comment: done   @OnEvent(ActivityEventName.NewPost) @OnEvent(ActivityEventName.NewPostComment) on button service
     // check if modified between interval now() - 3 months now()
     const buttonsToExpire = await this.entityManager.query(
-      `select id,"eventEnd","ownerId",title, updated_at from button where deleted = false AND "updated_at" < now() - INTERVAL '3 months' AND ("updated_at" > now() - INTERVAL '4 months')`,
+      `select id,"eventEnd","ownerId", updated_at from button where deleted = false AND "updated_at" < now() - INTERVAL '3 months' AND "updated_at" > now() - INTERVAL '3 months 1 day'`,
     );
     // update button set updated_at = now() - interval '3 months' where id =
     // send mail to creator
