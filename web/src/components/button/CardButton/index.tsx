@@ -41,12 +41,14 @@ import {
   CardSubmenuOption,
 } from 'components/card/CardSubmenu';
 import { FollowButton, UnfollowButton } from 'state/Follow';
-import { alertService } from 'services/Alert';
+import { AlertType, alertService } from 'services/Alert';
 import Btn, {
   BtnType,
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
+import { diffInMonths } from 'shared/date.utils';
+import { FixedAlert } from 'components/overlay/Alert';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -272,7 +274,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
   return (
     <>
       <CardButtonSubmenu button={button} />
-
+      <ExpiringAlert button={button} isOwner={isButtonOwner(loggedInUser, button)}/>
       <div className="card-button__content">
         <div className="card-button__header">
           <div className="card-button__avatar">
@@ -374,6 +376,17 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
   );
 }
 
+function ExpiringAlert({button, isOwner = false}) {
+  if(!isOwner)
+  {
+    return;
+  }
+  if(diffInMonths(new Date(), new Date(button.updated_at)) < 3)
+  {
+     return;
+  }
+  return <FixedAlert alertType={AlertType.Success} message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id}">${t('button.renewLink')}</a>`}/>
+}
 function ShowPhone({ button }) {
   const [showPhone, toggleShowPhone] = useState(false);
   const [phone, setPhone] = useState(null);

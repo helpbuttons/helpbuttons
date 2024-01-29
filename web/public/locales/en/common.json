@@ -183,7 +183,9 @@
     "renewSuccess": "Congratulations, you renewed your _helpbutton_ for another 3 months",
     "renewError": "Error renewing your _helpbutton_",
     "renewMailSubject": "Renewed successfuly",
-    "renewMail": "You renewed your _helpbutton_ '{0}' for more 3 months."
+    "renewMail": "You renewed your _helpbutton_ '{0}' for more 3 months.",
+    "isExpiringLink": "Due to lack of activity, your _helpbutton_ is going to be erased in one month.",
+    "renewLink": "Renew your _helpbutton_"
   },
   "user": {
     "login":"Write your credentials",

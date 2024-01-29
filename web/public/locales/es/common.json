@@ -289,7 +289,9 @@
     "renewSuccess": "Felicidades, renovaste tu _helpbutton_ otros 3 meses",
     "renewError": "Error al renovar tu _helpbutton_",
     "renewMailSubject": "Renovado con éxito",
-    "renewMail": "Renovaste tu _helpbutton_ '{0}' por otros 3 meses."
+    "renewMail": "Renovaste tu _helpbutton_ '{0}' por otros 3 meses.",
+    "isExpiringLink": "Debido a la falta de actividad, su _helpbutton_ se borrará en un mes.",
+    "renewLink": "Renovar tu _helpbutton_"
   },
   "calendarOnce": {
     "label": "Una vez",

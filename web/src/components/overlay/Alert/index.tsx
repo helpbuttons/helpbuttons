@@ -27,6 +27,18 @@ Alert.defaultProps = {
     fade: true
 };
 
+const alertTypeClass = {
+  [AlertType.Success]: 'card-alert--success',
+  [AlertType.Error]: 'card-alert--error',
+  [AlertType.Info]: 'card-alert--info',
+  [AlertType.Warning]: 'card-alert--warning',
+};
+const alertTypeIcon = {
+  [AlertType.Success]: <IoHappyOutline />,
+  [AlertType.Error]: <IoSadOutline />,
+  [AlertType.Info]: <IoInformationCircleOutline />,
+  [AlertType.Warning]: <IoWarningOutline />,
+};
 function Alert({ id, fade }) {
     const router = useRouter();
     const alertas = useRef(store, (state: GlobalState) => state.alerts);
@@ -35,15 +47,6 @@ function Alert({ id, fade }) {
         if (!alert) return;
 
         const classes = ['card-alert', 'card-alert'];
-
-        const alertTypeClass = {
-            [AlertType.Success]: 'card-alert--success',
-            [AlertType.Error]: 'card-alert--error',
-            [AlertType.Info]: 'card-alert--info',
-            [AlertType.Warning]: 'card-alert--warning'
-        }
-
-
         classes.push(alertTypeClass[alert.type]);
 
         if (alert.fade) {
@@ -55,13 +58,6 @@ function Alert({ id, fade }) {
 
     function iconShape(alert) {
         if (!alert) return;
-
-        const alertTypeIcon = {
-            [AlertType.Success]: <IoHappyOutline/>,
-            [AlertType.Error]: <IoSadOutline/>,
-            [AlertType.Info]: <IoInformationCircleOutline/>,
-            [AlertType.Warning]: <IoWarningOutline/>
-        }
 
         return alertTypeIcon[alert.type];
     }
@@ -85,4 +81,22 @@ function Alert({ id, fade }) {
                 )}
         </div>
     );
+}
+
+export function FixedAlert({ alertType = AlertType.Info, message }) {
+  return (
+    <>
+        <div className={alertTypeClass[alertType]}>
+          <div className="card-alert__content">
+            <div className="card-alert__icon">
+              {alertTypeIcon[alertType]}
+            </div>
+            <span
+              className="card-alert__title"
+              dangerouslySetInnerHTML={{ __html: message }}
+            ></span>
+          </div>
+        </div>
+    </>
+  );
 }
