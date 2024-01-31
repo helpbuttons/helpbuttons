@@ -115,6 +115,19 @@ export class MailService {
           console.log('could not add network name to from')
         }
 
+        if(config?.dontSendMail)
+        {
+          console.log(JSON.stringify({
+            to,
+            cc,
+            bcc,
+            from: from,
+            subject: subject,
+            template,
+            context: {...context, hostName: config.hostName, to: to},
+          }))
+          return;
+        }
         return this.mailerService
           .sendMail({
             to,
