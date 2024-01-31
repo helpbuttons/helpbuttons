@@ -85,3 +85,8 @@ export function readableTime(date: Date) {
   }
   return new Intl.DateTimeFormat(getLocale(), {hour: 'numeric', minute: 'numeric'}).format(date);
 }
+
+export function diffInMonths(end, start){
+  var timeDiff = Math.abs(end.getTime() - start.getTime());
+  return Math.round(timeDiff / (2e3 * 3600 * 365.25));
+}
