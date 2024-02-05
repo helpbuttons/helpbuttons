@@ -134,11 +134,13 @@ export class ButtonCron {
     );
 
     const buttonsExpired = await this.entityManager.query(
-      `select id,"eventEnd","ownerId",updated_at from button where deleted = false AND "updated_at" < now() - INTERVAL '4 months'`,
+      `select id,"eventEnd","ownerId",updated_at from button where deleted = false AND "updated_at" < now() - INTERVAL '4 months' AND type NOT IN ('${btnTemplateEvents.join(
+        "','",
+      )}'`,
     );
     await Promise.all(
       buttonsExpired.map((button) => {
-        // return this.buttonService.delete(button.id);
+        return this.buttonService.delete(button.id);
       }),
     );
   }
