@@ -29,28 +29,10 @@ export class ButtonCron {
   }) // https://github.com/helpbuttons/helpbuttons/issues/508 clearing events..
   async clearEventButtons() {
     // find buttons expired
-    const buttonTemplates =
-      await this.networkService.getButtonTemplates();
-    const buttonTemplatesEvents = buttonTemplates.filter(
-      (buttonTemplate) => {
-        if (!buttonTemplate.customFields) {
-          return false;
-        }
-        const buttonTemplatesEvents =
-          buttonTemplate.customFields.filter((customField) => {
-            return customField.type == 'event';
-          });
-        if (buttonTemplatesEvents.length > 0) {
-          return true;
-        }
-        return false;
-      },
-    );
-    const btnTemplateEvents = buttonTemplatesEvents.map(
-      (buttonTemplateEvent) => {
-        return buttonTemplateEvent.name;
-      },
-    );
+   
+    const btnTemplateEvents =
+      await this.networkService.getButtonTemplatesEvents();
+    
 
     const buttonsToExpire = await this.entityManager.query(
       `select id,title,"eventEnd","ownerId" from button where deleted = false AND type IN ('${btnTemplateEvents.join(
@@ -109,8 +91,14 @@ export class ButtonCron {
   async clearOldButtons() {
     // change update button modified date when there is new post or comment: done   @OnEvent(ActivityEventName.NewPost) @OnEvent(ActivityEventName.NewPostComment) on button service
     // check if modified between interval now() - 3 months now()
+
+    const btnTemplateEvents =
+      await this.networkService.getButtonTemplatesEvents();
+
     const buttonsToExpire = await this.entityManager.query(
-      `select id,"eventEnd","ownerId", updated_at from button where deleted = false AND "updated_at" < now() - INTERVAL '3 months' AND "updated_at" > now() - INTERVAL '3 months 1 day'`,
+      `select id,"eventEnd","ownerId", updated_at from button where deleted = false AND "updated_at" < now() - INTERVAL '3 months' AND "updated_at" > now() - INTERVAL '3 months 1 day' AND type NOT IN ('${btnTemplateEvents.join(
+        "','",
+      )}')`,
     );
     // update button set updated_at = now() - interval '3 months' where id =
     // send mail to creator
@@ -150,7 +138,7 @@ export class ButtonCron {
     );
     await Promise.all(
       buttonsExpired.map((button) => {
-        return this.buttonService.delete(button.id);
+        // return this.buttonService.delete(button.id);
       }),
     );
   }
@@ -158,6 +146,6 @@ export class ButtonCron {
   @Cron('0 0 1 * *')
   async clearMediaFromButtons() {
     // older than 1 month
-    await this.buttonService.findDeletedAndRemoveMedia();
+    // await this.buttonService.findDeletedAndRemoveMedia();
   }
 }
