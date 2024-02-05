@@ -39,13 +39,14 @@ export class PostService {
   }
 
   public findByButtonId(buttonId, currentUser) {
+    // return [];
     return this.postRepository
       .find({
         where: { button: { id: buttonId }, deleted: false },
         relations: ['comments', 'author', 'comments.author'],
         order: {
           created_at: 'DESC',
-          comments: { created_at: 'DESC' },
+          comments: { created_at: 'ASC' },
         },
       })
       .then((posts) => {
