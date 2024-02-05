@@ -39,7 +39,6 @@ export class PostService {
   }
 
   public findByButtonId(buttonId, currentUser) {
-    // return [];
     return this.postRepository
       .find({
         where: { button: { id: buttonId }, deleted: false },
