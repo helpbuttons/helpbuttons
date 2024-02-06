@@ -179,8 +179,14 @@
     "showPhone":"Show phone number",
     "isExpiringEventMail": "Due end of event date, your button is going to be erased in 3 days, please visit the link and change the date if you want to keep it alive. If there's no new activity it will be erased in 3 days.",
     "isExpiringEventMailSubject": "Your _helpbutton_ has passed its due date",
-    "isExpiringMail": "Due to lack of activity, your button is going to be erased in one month, please visit the link if you want to keep it alive. If there's no new activity it will be erased in one month.",
-    "isExpiringMailSubject": "Your _helpbutton_ has passed is expiring"
+    "isExpiringMail": "Due to lack of activity, your _helpbutton_ '{0}' is going to be erased in one month, please visit the link if you want to keep it alive. If there's no new activity it will be erased in one month.",
+    "isExpiringMailSubject": "Your _helpbutton_ has passed is expiring",
+    "renewSuccess": "Congratulations, you renewed your _helpbutton_ for another 3 months",
+    "renewError": "Error renewing your _helpbutton_",
+    "renewMailSubject": "Renewed successfuly",
+    "renewMail": "You renewed your _helpbutton_ '{0}' for more 3 months.",
+    "isExpiringLink": "Due to lack of activity, your _helpbutton_ is going to be erased in one month.",
+    "renewLink": "Renew your _helpbutton_"
   },
   "user": {
     "login":"Write your credentials",
@@ -297,7 +303,8 @@
     "delete": "Delete",
     "placeholderWrite": "Write a new update for your _helpbutton_",
     "NoComments": "No comments yet",
-    "private": "private"
+    "private": "private",
+    "renewPost": "Hello, I renewed helpbutton on day {0}. Leave a comment if you want to communicate with me."
   },
   "comment": {
     "delete": "Borrar",

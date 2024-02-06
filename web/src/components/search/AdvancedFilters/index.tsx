@@ -293,7 +293,12 @@ function TagFollow({tags}) {
   }
   if(!loggedInUser || tags.length  < 1 )
   {
-    return <></>
+    return <>
+      {t('buttonFilters.followTag')}
+      {tags.map((tag) => {
+        return <Link href="/Login">{tag}</Link>
+      })}
+    </>
   }
 
   return (

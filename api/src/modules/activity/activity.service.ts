@@ -30,6 +30,7 @@ export class ActivityService {
   @OnEvent(ActivityEventName.NewPostComment)
   @OnEvent(ActivityEventName.NewButton)
   @OnEvent(ActivityEventName.DeleteButton)
+  @OnEvent(ActivityEventName.RenewButton)
   async notifyOwner(payload: any) {
     switch (payload.activityEventName) {
       /*
@@ -144,6 +145,27 @@ export class ActivityService {
         await this.newActivity(button.owner, payload, false);
         break;
       }
+      case ActivityEventName.RenewButton:
+        {
+          const owner = payload.data.owner;
+          const button = payload.data.button;
+          return this.userService.getUserLoginParams(owner.id).then(
+            (loginParams) => {
+          this.mailService.sendWithLink({
+                to: owner.email,
+                content: translate(owner.locale, 'button.renewMail', [button.title]),
+                subject: translate(owner.locale, 'button.renewMailSubject'),
+                link: getUrl(
+                  owner.locale,
+                  `/ButtonFile/${button.id}${loginParams}`,
+                ),
+                linkCaption: translate(
+                  owner.locale,
+                  'email.buttonLinkCaption',
+                ),
+              })
+            })
+        }
     }
   }
 

@@ -295,6 +295,19 @@ margin: $margin-medium 0;
     flex-wrap: wrap;
     max-width: 100%;
 
+    .tags__list-interest__selected {
+      background-color: $color-gray
+
+    }
+    .tags__list-interest, .tags__list-interest__selected {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid $color-gray-border;
+      // margin: 5px;
+      padding: 10px ;
+      border-radius: $border-radius-circle;
+    }
     .tags__list-tag {
 
         display: flex;

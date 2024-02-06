@@ -24,7 +24,6 @@ import { getManager } from 'typeorm';
 import { StorageService } from '../storage/storage.service';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { UserService } from '../user/user.service';
-import { User } from '../user/user.entity';
 import { SetupDtoOut } from '../setup/setup.entity';
 import { getConfig } from '@src/shared/helpers/config.helper';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
@@ -155,10 +154,12 @@ export class NetworkService {
       })
       .then((network) => {
         return this.entityManager
-          .query(`select tag,count(tag) as count from (select unnest(tags) as tag from button) as tags group by tag order by count desc limit 10`)
+          .query(
+            `select tag,count(tag) as count from (select unnest(tags) as tag from button) as tags group by tag order by count desc limit 10`,
+          )
           .then((topTags) => {
-            return {...network, topTags: topTags}
-          })
+            return { ...network, topTags: topTags };
+          });
       })
       .then((network) => {
         // find admins...
@@ -291,12 +292,34 @@ export class NetworkService {
     return [];
   }
 
-  getButtonTemplates()
-  {
+  async getButtonTemplates() {
     return this.networkRepository
       .find({ order: { created_at: 'ASC' } })
       .then((networks) => {
-        return JSON.parse(networks[0].buttonTemplates)
+        return JSON.parse(networks[0].buttonTemplates);
+      });
+  }
+
+  getButtonTemplatesEvents() {
+    return this.getButtonTemplates()
+      .then((buttonTemplates) => {
+        return buttonTemplates
+          .filter((buttonTemplate) => {
+            if (!buttonTemplate.customFields) {
+              return false;
+            }
+            const buttonTemplatesEvents =
+              buttonTemplate.customFields.filter((customField) => {
+                return customField.type == 'event';
+              });
+            if (buttonTemplatesEvents.length > 0) {
+              return true;
+            }
+            return false;
+          })
+          .map((buttonTemplateEvent) => {
+            return buttonTemplateEvent.name;
+          });
       })
   }
 }

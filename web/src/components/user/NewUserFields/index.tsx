@@ -1,5 +1,6 @@
 import Accordion from 'elements/Accordion';
 import {FieldImageUpload} from 'elements/Fields/FieldImageUpload';
+import FieldInterets from 'elements/Fields/FieldInterests';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldTags from 'elements/Fields/FieldTags';
@@ -52,6 +53,17 @@ export default function NewUserFields({
         validationError={errors.password}
         {...register('password', { required: true, minLength: 8 })}
       ></FieldPassword>
+      <FieldInterets
+          label={t('user.tags')}
+          explain={t('user.tagsExplain')}
+          placeholder={t('common.add')}
+          validationError={errors.tags}
+          setInterests={(tags) => {
+            console.log('adding interests ' + JSON.stringify(tags))
+            setValue('tags', tags);
+          }}
+          interests={watch('tags')}
+        />
       {/* <FieldPassword
         name="password_confirm"
         label={t('user.passwordConfirmation')}
@@ -79,16 +91,7 @@ export default function NewUserFields({
           subtitle={'150x150px'}
           {...register('avatar')}
         />
-        <FieldTags
-          label={t('user.tags')}
-          explain={t('user.tagsExplain')}
-          placeholder={t('common.add')}
-          validationError={errors.tags}
-          setTags={(tags) => {
-            setValue('tags', tags);
-          }}
-          tags={watch('tags')}
-        />
+        
       </Accordion> */}
     </>
   );

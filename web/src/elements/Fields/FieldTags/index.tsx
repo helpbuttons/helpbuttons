@@ -6,15 +6,8 @@ import { IoClose } from 'react-icons/io5';
 import { tagify } from 'shared/sys.helper';
 
 
-export default function FieldTags({
-  label,
-  validationError,
-  tags = [],
-  setTags,
-  placeholder,
-  explain,
-  defaultSuggestedTags = []
-}) {
+export function useTagsList({defaultSuggestedTags, tags, setTags})
+{
   const onInputChange = (e) => {
     let inputText = e.target.value;
 
@@ -58,6 +51,24 @@ export default function FieldTags({
     tags = tags.filter(tag => tag !== newTag);
     setTags(tags);
   };
+  return ({
+    onInputChange, inputKeyDown, input, remove, suggestedTags, addTag
+  })
+}
+export default function FieldTags({
+  label,
+  validationError,
+  tags = [],
+  setTags,
+  placeholder,
+  explain,
+  defaultSuggestedTags = []
+}) {
+  const {onInputChange, inputKeyDown, input, remove, suggestedTags, addTag} = useTagsList({
+    defaultSuggestedTags,
+    tags,
+    setTags
+  })
   return (
     <div className="tag__field">
       {label && <div className="form__label">{label}</div>}

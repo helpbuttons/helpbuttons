@@ -52,8 +52,21 @@ export const bootstrap = async () => {
   
 
     const nodemailer = require('nodemailer');
-    const transporter = nodemailer.createTransport(configs.smtpUrl);
-    await transporter
+    
+    const smtpConfig = {
+      host: configs.smtpHost,
+      port: configs.smtpPort,
+      auth: {
+        user: configs.smtpUser,
+        pass: configs.smtpPass
+      }
+    }
+    
+    const transporter = nodemailer.createTransport(smtpConfig);
+
+    if(!(configs?.dontSendMail))
+    {
+      await transporter
       .verify()
       .then(() => {
         console.log(`SMTP is OK!`);
@@ -62,6 +75,10 @@ export const bootstrap = async () => {
       .catch((error) => {
         console.log(`Error connecting to smtp: ${JSON.stringify(error)}`);
       });
+    }else{
+      console.log('not testing smtp, remove "dontSendMail" on config.json')
+    }
+    
 
     const config = new DocumentBuilder()
       .setTitle('Helpbuttons backend')

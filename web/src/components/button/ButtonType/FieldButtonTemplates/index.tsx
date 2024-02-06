@@ -4,7 +4,7 @@ import { ContentAlignment } from 'elements/ImageWrapper';
 import t from 'i18n';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { IoTrashBinOutline } from 'react-icons/io5';
+import { IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
 import { useState, forwardRef, useEffect } from 'react';
 import { CircleColorPick, FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
@@ -34,13 +34,16 @@ const FieldButtonTemplates = forwardRef(
     const [color, setColor] = useState();
     const [text, setText] = useState();
 
-    const { remove, append } = useFieldArray({
+    const { remove, append, update } = useFieldArray({
       name,
       control,
     });
 
     const [customFields, setCustomFields] = useState([]);
-
+    const [editFieldIdx, setEditFieldIdx] = useState(null)
+    const [editFieldCaption, setEditFieldCaption] = useState(null)
+    const [editFieldCssColor, setEditFieldCssColor] = useState(null)
+    
     const watchValue = watch(name);
     const onAddNewButtonTemplate = () => {
       if (text && color) {
@@ -57,6 +60,23 @@ const FieldButtonTemplates = forwardRef(
       }
     };
 
+    const edit = (value, idx) => {
+      setEditFieldIdx(() => idx)
+      setEditFieldCssColor(() => value.cssColor)
+      setEditFieldCaption(() => value.caption)
+    }
+
+    const saveEdit = (value) => {
+      update(editFieldIdx, {
+        ...value, 
+        cssColor: editFieldCssColor, 
+        caption: editFieldCaption
+      })
+      setEditFieldIdx(() => null)
+      setEditFieldCssColor(() => null)
+      setEditFieldCaption(() => null)
+    }
+
     return (
       <div className="form__field">
         <label className="form__label">{label}</label>
@@ -71,16 +91,6 @@ const FieldButtonTemplates = forwardRef(
             className="field-text"
             onChange={(e) => setText(() => e.target.value)}
           />
-{/* 
-          <CircleColorPick
-            name="buttonTemplateColor"
-            classNameInput="squared"
-            validationError={errors.buttonTemplateColor}
-            setValue={(name, value) => setColor(value)}
-            actionName={t('button.pickButtonTemplateColor')}
-            value={color}
-            hideBoilerPlate={true}
-          /> */}
           <FieldColorPick
                 name="buttonTemplateColor"
                 classNameInput="squared"
@@ -109,13 +119,51 @@ const FieldButtonTemplates = forwardRef(
                 key={idx}
                 style={buttonColorStyle(val.cssColor)}
               >
-                <Btn
-                  btnType={BtnType.filter}
-                  iconLeft={IconType.color}
-                  contentAlignment={ContentAlignment.left}
-                  caption={val.caption}
-                  color={val.cssColor}
-                />
+                {editFieldIdx == idx && 
+                  <>
+                    <FieldText
+                      name="buttonTemplate.name"
+                      className="field-text"
+                      onChange={(e) => setEditFieldCaption(() => e.target.value)}
+                      defaultValue={editFieldCaption}
+                    />
+                    <CircleColorPick
+                      name="buttonTemplateColor"
+                      classNameInput="squared"
+                      validationError={errors.buttonTemplateColor}
+                      setValue={(name, value) => setEditFieldCssColor(value)}
+                      actionName={t('button.pickButtonTemplateColor')}
+                      value={editFieldCssColor}
+                      hideBoilerPlate={true}
+                    />
+                    <Btn
+                      btnType={BtnType.iconActions}
+                      iconLink={<IoSaveOutline />}
+                      iconLeft={IconType.circle}
+                      contentAlignment={ContentAlignment.center}
+                      onClick={() => saveEdit(val)}
+                    />
+                  </>
+                }
+                {editFieldIdx != idx && 
+                  <>
+                    <Btn
+                      btnType={BtnType.filter}
+                      iconLeft={IconType.color}
+                      contentAlignment={ContentAlignment.left}
+                      caption={val.caption}
+                      color={val.cssColor}
+                    />
+                    <Btn
+                      btnType={BtnType.iconActions}
+                      iconLink={<IoPencilOutline />}
+                      iconLeft={IconType.circle}
+                      contentAlignment={ContentAlignment.center}
+                      onClick={() => edit(val, idx)}
+                    />
+                  </>
+                } 
+                
                 <Btn
                   btnType={BtnType.iconActions}
                   iconLink={<IoTrashBinOutline />}

@@ -32,6 +32,7 @@ import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
 import { DropdownField } from 'elements/Dropdown/Dropdown';
 import { availableCurrencies } from 'shared/currency.utils';
+import { alertService } from 'services/Alert';
 
 export default NetworkForm;
 
@@ -74,11 +75,13 @@ function NetworkForm({
   }
   }, [buttonTemplates])
 
+  const onError = (errors, e) => alertService.error(t('validation.error'))
+
   return (
     <>
       <Form
         classNameExtra="configuration"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit, onError)}
       >
         <div className="form__inputs-wrapper">
           <div className="form__field">

@@ -24,7 +24,14 @@ export class MailerModuleConfig implements MailerOptionsFactory {
     }
     
     return {
-      transport: config.smtpUrl,
+      transport: {
+        host: config.smtpHost,
+        port: config.smtpPort,
+        auth: {
+          user: config.smtpUser,
+          pass: config.smtpPass
+        }
+      },
       defaults: {
         from: config.from,
       },

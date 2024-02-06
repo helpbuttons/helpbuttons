@@ -28,6 +28,7 @@ import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-
 import { ErrorName } from '@src/shared/types/error.list';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import * as fs from 'fs';
+import translate, { readableDate } from '@src/shared/helpers/i18n.helper';
 
 @Injectable()
 export class ButtonService {
@@ -165,9 +166,9 @@ export class ButtonService {
     return await button;
   }
 
-  async findById(id: string) {
+  async findById(id: string, includeDeleted: boolean = false) {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id, ...this.deletedBlockedConditions() },
+      where: { id, ...this.deletedBlockedConditions(includeDeleted) },
       relations: ['owner'],
     });
 
@@ -291,8 +292,8 @@ export class ButtonService {
     });
   }
 
-  public isOwner(currentUser: User, buttonId: string) {
-    return this.findById(buttonId).then((button) => {
+  public isOwner(currentUser: User, buttonId: string, includeDeleted :boolean = false) {
+    return this.findById(buttonId, includeDeleted).then((button) => {
       if (
         currentUser.role == Role.admin ||
         currentUser.id == button.owner.id
@@ -381,8 +382,13 @@ export class ButtonService {
       })
   }
 
-  deletedBlockedConditions() {
-    return { deleted: false, owner: { role: Not(Role.blocked) } };
+  deletedBlockedConditions(includeDeleted: boolean = false) {
+    const blocked = { owner: { role: Not(Role.blocked) } };
+    if(includeDeleted)
+    {
+      return blocked;  
+    }
+    return { deleted: false, ...blocked};
   }
 
   @OnEvent(ActivityEventName.NewPostComment)
@@ -398,9 +404,21 @@ export class ButtonService {
 
   @OnEvent(ActivityEventName.NewPost)
   @OnEvent(ActivityEventName.NewPostComment)
-  async updateModifiedDate(payload: any)
+  async updateDate(payload: any)
   {
     const buttonId = payload.data.button.id
-    this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP WHERE id = '${buttonId}'`)
+    await this.updateModifiedDate(buttonId)
+  }
+  
+  renew(buttonId: string, user: User)
+  {
+    return this.updateModifiedDate(buttonId).then(() => {
+        return this.postService.new(translate(user.locale, 'post.renewPost', [readableDate(user.locale)]), buttonId, user)
+    })
+  }
+
+  updateModifiedDate(buttonId: string)
+  {
+    return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false WHERE id = '${buttonId}'`)
   }
 }
