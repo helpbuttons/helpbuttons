@@ -294,9 +294,15 @@ function TagFollow({tags}) {
   if(!loggedInUser || tags.length  < 1 )
   {
     return <>
-      {t('buttonFilters.followTag')}
       {tags.map((tag) => {
-        return <Link href="/Login">{tag}</Link>
+        return ( 
+        <Btn
+            btnType={BtnType.submit}
+            contentAlignment={ContentAlignment.center}
+            caption={`${t('buttonFilters.followTag')} '${tag}'`}
+            onClick={() => { router.push(`/Signup?follow=${tag}`) }}
+          />
+        )
       })}
     </>
   }

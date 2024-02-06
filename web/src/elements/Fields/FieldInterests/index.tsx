@@ -8,10 +8,10 @@ export default function FieldInterets({
   setInterests,
   placeholder,
   explain,
-  defaultSuggestedTags = ['suggested']
+  defaultSuggestedTags = ['suggested'],
+  defaultTrendingTags = []
 }) {
-  const {onInputChange, inputKeyDown, input, remove, suggestedTags, addTag} = useTagsList({
-    defaultSuggestedTags,
+  const {onInputChange, inputKeyDown, input, remove, addTag} = useTagsList({
     tags: interests,
     setTags: setInterests
   })
@@ -20,8 +20,8 @@ export default function FieldInterets({
   <div className="tag__field">
       {label && <div className="form__label">{label}</div>}
       {explain && <div className="form__explain">{explain}</div>}
-      
-      <InterestsList interests={interests} suggestedInterests={suggestedTags} add={(item) => addTag(item)} remove={(item) => {remove(item)}}/>
+
+      <InterestsList interests={interests} suggestedInterests={defaultSuggestedTags} trendingInterests={defaultTrendingTags} add={(item) => addTag(item)} remove={(item) => {remove(item)}}/>
       <input
         type="text"
         onChange={onInputChange}
@@ -38,7 +38,7 @@ export default function FieldInterets({
     </>);
 }
 
-export function InterestsList({interests, suggestedInterests, add, remove})
+export function InterestsList({interests, suggestedInterests,trendingInterests, add, remove})
 {
   const isSelected = (interest, interests) => {
     if(interests.length > 0 && interests.indexOf(interest) > -1 )
@@ -56,19 +56,27 @@ export function InterestsList({interests, suggestedInterests, add, remove})
     add(interest)
   }
   
+  const interestList = (list) => {
+    if(list.length > 0 ) {
+      return list.map((item, index) => {
+        if(!isSelected(item, interests)) {
+          return  (<><InterestElement item={item} index={index} onClick={() => {addToItems(item)}}/></>)
+        }else{
+          return  (<><InterestElement selected={true} item={item} index={index} onClick={() => {remove(item)}}/></>)
+        }
+      })
+    }
+  }
   return (<div className="form__tags-list">
         <ul className="tags__list">
-          {suggestedInterests.length > 0 &&
-            suggestedInterests.map((item, index) => {
-              if(!isSelected(item, interests)) {
-                return  (<><InterestElement item={item} index={index} onClick={() => {addToItems(item)}}/></>)
-              }
-            })
-          }
+          {interestList(suggestedInterests)}
+          {interestList(trendingInterests)}
           {interests.length > 0 &&
-            interests.map((item, index) => (
-              <InterestElement item={item} index={index} onClick={() => {remove(item)}} selected={true}/>
-          ))}
+            interests.map((item, index) => {
+              if(!(suggestedInterests.indexOf(item) > -1) && !(trendingInterests.indexOf(item) > -1)) {
+                return <InterestElement item={item} index={index} onClick={() => {remove(item)}} selected={true}/>
+              }
+            })}
         </ul>
       </div>
   );
