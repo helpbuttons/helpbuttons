@@ -166,9 +166,9 @@ export class ButtonService {
     return await button;
   }
 
-  async findById(id: string) {
+  async findById(id: string, includeDeleted: boolean = false) {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id, ...this.deletedBlockedConditions() },
+      where: { id, ...this.deletedBlockedConditions(includeDeleted) },
       relations: ['owner'],
     });
 
@@ -292,8 +292,8 @@ export class ButtonService {
     });
   }
 
-  public isOwner(currentUser: User, buttonId: string) {
-    return this.findById(buttonId).then((button) => {
+  public isOwner(currentUser: User, buttonId: string, includeDeleted :boolean = false) {
+    return this.findById(buttonId, includeDeleted).then((button) => {
       if (
         currentUser.role == Role.admin ||
         currentUser.id == button.owner.id
@@ -382,8 +382,13 @@ export class ButtonService {
       })
   }
 
-  deletedBlockedConditions() {
-    return { deleted: false, owner: { role: Not(Role.blocked) } };
+  deletedBlockedConditions(includeDeleted: boolean = false) {
+    const blocked = { owner: { role: Not(Role.blocked) } };
+    if(includeDeleted)
+    {
+      return blocked;  
+    }
+    return { deleted: false, ...blocked};
   }
 
   @OnEvent(ActivityEventName.NewPostComment)
@@ -414,6 +419,6 @@ export class ButtonService {
 
   updateModifiedDate(buttonId: string)
   {
-    return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP WHERE id = '${buttonId}'`)
+    return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false WHERE id = '${buttonId}'`)
   }
 }

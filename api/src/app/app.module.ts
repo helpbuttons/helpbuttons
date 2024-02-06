@@ -29,7 +29,8 @@ import { ActivityModule } from '@src/modules/activity/activity.module';
 import { InviteModule } from '@src/modules/invite/invite.module';
 import { GeoModule } from '@src/modules/geo/geo.module';
 import { BullModule } from '@nestjs/bull';
-
+import { CommandModule } from 'nestjs-command';
+import { ButtonCron } from '@src/modules/button/button.cron';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -40,6 +41,7 @@ import { BullModule } from '@nestjs/bull';
       load: [webAppConfig],
       validate: validate,
     }),
+    CommandModule,
     MailModule,
     // FIXME: READ this confs using ConfigService
     TypeOrmModule.forRoot(dataSourceOptions),
@@ -74,6 +76,7 @@ import { BullModule } from '@nestjs/bull';
   controllers: [AppController],
   providers: [
     AppService,
+    ButtonCron
   ],
 })
 export class AppModule implements NestModule {

@@ -173,8 +173,9 @@ export class ButtonController {
   async renew(@Param('buttonId') buttonId: string, @CurrentUser() user: User)
   {
     return await this.buttonService
-    .isOwner(user, buttonId)
+    .isOwner(user, buttonId, true)
     .then((isOwner) => {
+      console.log('oi')
       if (!isOwner) {
         throw new CustomHttpException(ErrorName.NoOwnerShip);
       }
