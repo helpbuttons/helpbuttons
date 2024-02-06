@@ -159,11 +159,14 @@ export default function HomeInfo({
                   </div>
                   <hr></hr>
                   <div className="info-overlay__description">
-                    {selectedNetwork.administrators.map((user, idx) => {
-                        return (
-                          <LinkAdminProfile user={user} key={idx}/>
-                        )
-                      })}
+                        {t('homeinfo.adminInstructions')}
+                      <div className="info-overlay__users">
+                        {selectedNetwork.administrators.map((user, idx) => {
+                            return (
+                              <LinkAdminProfile user={user} key={idx}/>
+                            )
+                          })}
+                       </div>
                   </div>
                 </div>
 
@@ -216,7 +219,7 @@ export default function HomeInfo({
                   </div>
                 </div>
 
-                {/* HASHTAGS CARD OF NETWORK CONFIGURATION */}
+                {/* TOP 10 HASHTAGS CARD OF NETWORK */}
                 <div className="card">
                   <div className="card__header">
                     <h3 className="card__header-title">
@@ -231,20 +234,23 @@ export default function HomeInfo({
                   </div>
                 </div>
 
-                {/* TOP 10 HASHTAGS CARD OF NETWORK */}
-                <div className="card">
-                  <div className="card__header">
-                    <h3 className="card__header-title">
-                      {t('homeinfo.recommendedHashtags')}
-                    </h3>
+                {/* HASHTAGS CARD OF NETWORK CONFIGURATION  */}
+                {selectedNetwork.tags.count >= 0  &&    
+                
+                  <div className="card">
+                    <div className="card__header">
+                      <h3 className="card__header-title">
+                        {t('homeinfo.recommendedHashtags')}
+                      </h3>
+                    </div>
+                    <hr></hr>
+                    <div className="info-overlay__hashtags">
+                    {selectedNetwork.tags.map((tag, idx) => {
+                        return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
+                      })}
+                    </div>
                   </div>
-                  <hr></hr>
-                  <div className="info-overlay__hashtags">
-                  {selectedNetwork.tags.map((tag, idx) => {
-                      return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
-                    })}
-                  </div>
-                </div>
+                }
 
 
                 {/* ACTIONS CARD */}

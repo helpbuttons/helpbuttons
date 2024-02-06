@@ -24,7 +24,7 @@ export default function LoginClick() {
     };
 
     const onError = (err) => {
-      alertService.error(t('login.error'));
+      alertService.error(t('user.loginError'));
       router.push('/HomeInfo');
     };
     if (!initialized.current) {

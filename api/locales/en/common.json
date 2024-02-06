@@ -20,14 +20,16 @@
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
-    "popularHashtags": "What are they about?",
+    "popularHashtags": "Which topics are covered?",
+    "recommendedHashtags": "Which topics are recomended by the admins?",
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
     "locationDetected": "Do you want to navigate to check _helpbuttons_ in your region?",
     "stats": "What's in this Network?",
     "buttons": "There are {1} users and {0} _helpbuttons_ in this network, divided by the following types:",
     "users": "{0} users in this network",
-    "administeredby": "Administered by ",
+    "administeredby": "Admin and support ",
+    "adminInstructions": "Contact any of the following users if you need help using the app",
     "actions": "What can I do?",
     "createNetworkButton": "Create your own network",
     "createNetwork": "You can contact with the team if you need help making your own network",
@@ -250,7 +252,8 @@
     "phone":"Phone",
     "phoneExplain":"Add your phone if you want people to contact you through it",
     "phonePlaceHolder":"i.e. 34699000000",
-    "signupOptions":"Extra options"
+    "signupOptions":"Extra options",
+    "adminPhonePublish": "You are a network administrator, do you want your phone to be available on the main page?"
   },
   "picker": {
     "headerText": "Choose a location"

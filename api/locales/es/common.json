@@ -23,11 +23,13 @@
     "users": "{0} usuarios en esta Red",
     "actions": "¿Qué puedes hacer?",
     "popularHashtags": "¿Qué temas se tratan?",
+    "recommendedHashtags": "Temas recomendados por los administradores",
     "profileSubtitle": "Comprueba tu perfil",
     "createSubtitle": "Crea tu _helpbutton_ y colabora",
     "faqsSubtitle": "Lee más sobre esta app",
     "exploreSubtitle": "Busca y encuentra los _helpbuttons_ en esta herramienta",
-    "administeredby": "Administrado por ",
+    "administeredby": "Moderadores y asistencia ",
+    "adminInstructions": "Contacta a cualquiera de los siguientes usuarios si necesitas ayuda con la página web",
     "loginSubtitle": "¡Entra o crea tu cuenta!",
     "buttons": "Hay {0} _helpbuttons_ en esta Red",
     "createNetworkButton": "Crea tu propia red",
@@ -198,7 +200,8 @@
     "phone":"Teléfono",
     "phoneExplain":"Añade tu teléfono si quieres que te contacten a través de él",
     "phonePlaceHolder":"i.e. 34699000000",
-    "signupOptions":"Opciones Extra"
+    "signupOptions":"Opciones Extra",
+    "adminPhonePublish": "Eres administrador de la red, ¿quieres que tu teléfono este disponible en la página principal?"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -217,6 +220,7 @@
     "showMap":"Mostrar Mapa"
   },
   "buttonFilters": {
+    "selectedArea": "en el área seleccionada",
     "queryLabel": "¿Qué buscas?",
     "searchBarTop": "{1} _helpbuttons_ {0}",
     "queryExplain": "Especifica con palabras concretas aquello que quieras encontrar",
@@ -283,7 +287,7 @@
     "isExpiringEventMail": "Debido a la fecha de finalización del evento, su botón se borrará en 3 días; visite el enlace y cambie la fecha si desea mantenerlo activo. Si no hay nueva actividad se borrará en 3 días.",
     "isExpiringEventMailSubject": "Su _helpbutton_ ha pasado la fecha de vencimiento",
     "isExpiringMail": "Debido a la falta de actividad, su botón se borrará en un mes; visite el enlace si desea mantenerlo activo. Si no hay nueva actividad se borrará en un mes.",
-    "isExpiringMailSubject": "Su _helpbutton_ ha pasado y está por vencer"
+    "isExpiringMailSubject": "Su _helpbutton_ ha pasado y está a punto de caducar"
   },
   "calendarOnce": {
     "label": "Una vez",
