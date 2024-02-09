@@ -55,7 +55,7 @@ export default function NewUserFields({
       ></FieldPassword>
       <FieldInterets
           label={t('user.tags')}
-          explain={t('user.tagsExplain')}
+          explain={t('user.tagsSignupExplain')}
           placeholder={t('common.add')}
           validationError={errors.tags}
           setInterests={(tags) => {
