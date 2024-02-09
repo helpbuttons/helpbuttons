@@ -68,7 +68,8 @@ export class GeoService {
       .then(async (network) => {
         let addressesFound = [];
         // @ts-ignore
-        const url = `https://photon.komoot.io/api/?q=${address}&lat=${network.exploreSettings.center[0]}&lon=${network.exploreSettings.center[1]}&limit=5`;
+        // const url = `https://photon.komoot.io/api/?q=${address}&lat=${network.exploreSettings.center[0]}&lon=${network.exploreSettings.center[1]}&limit=5`;
+        const url = `https://photon.komoot.io/api/?q=${address}&limit=5`;
         const uri = encodeURI(url);
         return await firstValueFrom(this.httpService.get(uri)).then(
           (result) => {
