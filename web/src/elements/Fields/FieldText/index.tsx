@@ -26,6 +26,7 @@ const FieldText = React.forwardRef(({
     extraMessage,
     maxLength = -1,
     defaultValue,
+    children
     // subInputLink,
     // subInputLinkText
 }, ref): IFieldText => {
@@ -81,9 +82,8 @@ const FieldText = React.forwardRef(({
                         </a>
                     </div>
                 } */}
-
             </div>
-
+            {children}
         </div>
     );
 });

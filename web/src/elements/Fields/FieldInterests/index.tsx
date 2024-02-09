@@ -25,7 +25,7 @@ export default function FieldInterets({
       <input
         type="text"
         onChange={onInputChange}
-        className={`form__input ${validationError ? 'validation-error' : ''
+        className={`form__input-interest ${validationError ? 'validation-error' : ''
           }`}
         onKeyDown={inputKeyDown}
         value={input}

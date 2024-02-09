@@ -6,6 +6,7 @@ import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
+import { useRouter } from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { Network } from 'shared/entities/network.entity';
@@ -29,6 +30,16 @@ export default function NewUserFields({
       setHostname(() => getHostname())
     }
   }, [])
+
+  const router = useRouter();
+  const params: URLSearchParams = new URLSearchParams(router.query);
+  useEffect(() => {
+    if(router?.query)
+    {
+      setValue('tags',[ params.get('follow')])
+    }
+  }, [router])
+
   return (
     <>
       <FieldText
