@@ -191,6 +191,7 @@
     "showButtonsProfileExplain": "Marca esta opción si quieres mostrar una lista pública de tus _helpbuttons_ en tu página de perfil",
     "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil",
     "tagsExplain":"Escribe en este campo las palabras que te interesen y recibirás avisos cuando haya _helpbuttons_ sobre dichos temas. Escribe y pulsa enter o separa por comas para añadir.",
+    "tagsSignupExplain":"Opcionalmente, selecciona y/o escribe temas en los que estés interesado/a y recibirás información sobre las publicaciones de esos temas. Escribe y pulsa enter o separa con comas para añadir nuevos temas",
     "distance":"Distancia máxima de avisos",
     "distanceExplain":"_helpbuttons_ que se creen fuera de este radio respecto de tu posición no te serán notificados",
     "location":"Tu localización base",

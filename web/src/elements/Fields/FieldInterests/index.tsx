@@ -17,7 +17,7 @@ export default function FieldInterets({
   })
 
   return (<>
-  <div className="tag__field">
+  <div className="form__field">
       {label && <div className="form__label">{label}</div>}
       {explain && <div className="form__explain">{explain}</div>}
 
