@@ -88,7 +88,11 @@ export class ButtonCron {
       await this.networkService.getButtonTemplatesEvents();
 
     const buttonsToExpire = await this.entityManager.query(
-      `select id,"eventEnd","ownerId", updated_at from button where deleted = false AND "updated_at" < now() - INTERVAL '3 months' AND "updated_at" > now() - INTERVAL '3 months 1 day' AND type NOT IN ('${btnTemplateEvents.join(
+      `select id,"eventEnd","ownerId", updated_at from button where 
+      deleted = false 
+      AND "updated_at" < now() - INTERVAL '3 months' 
+      AND "updated_at" > now() - INTERVAL '3 months 1 day' 
+      AND type NOT IN ('${btnTemplateEvents.join(
         "','",
       )}')`,
     );

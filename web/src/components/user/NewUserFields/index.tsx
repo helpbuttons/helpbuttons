@@ -6,8 +6,12 @@ import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
+import { useRouter } from 'next/router';
+import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
+import { Network } from 'shared/entities/network.entity';
 import { getHostname, getLocale } from 'shared/sys.helper';
+import { useStore } from 'store/Store';
 
 export default function NewUserFields({
   register,
@@ -17,11 +21,25 @@ export default function NewUserFields({
   watch,
 }) {
   const [hostname, setHostname] = useState('')
+  const selectedNetwork: Network = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
   useEffect(() => {
     if(window){
       setHostname(() => getHostname())
     }
   }, [])
+
+  const router = useRouter();
+  const params: URLSearchParams = new URLSearchParams(router.query);
+  useEffect(() => {
+    if(router?.query)
+    {
+      setValue('tags',[ params.get('follow')])
+    }
+  }, [router])
+
   return (
     <>
       <FieldText
@@ -53,17 +71,21 @@ export default function NewUserFields({
         validationError={errors.password}
         {...register('password', { required: true, minLength: 8 })}
       ></FieldPassword>
-      <FieldInterets
-          label={t('user.tags')}
-          explain={t('user.tagsSignupExplain')}
-          placeholder={t('common.add')}
-          validationError={errors.tags}
-          setInterests={(tags) => {
-            console.log('adding interests ' + JSON.stringify(tags))
-            setValue('tags', tags);
-          }}
-          interests={watch('tags')}
-        />
+      {selectedNetwork && 
+        <FieldInterets
+            label={t('user.tags')}
+            explain={t('user.tagsExplain')}
+            placeholder={t('common.add')}
+            validationError={errors.tags}
+            setInterests={(tags) => {
+              setValue('tags', tags);
+            }}
+            interests={watch('tags')}
+            defaultSuggestedTags={selectedNetwork.tags}
+            defaultTrendingTags={selectedNetwork.topTags.map((tag) => tag.tag)}
+          />
+        
+      }
       {/* <FieldPassword
         name="password_confirm"
         label={t('user.passwordConfirmation')}

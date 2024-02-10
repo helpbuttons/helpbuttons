@@ -6,14 +6,14 @@ import { IoClose } from 'react-icons/io5';
 import { tagify } from 'shared/sys.helper';
 
 
-export function useTagsList({defaultSuggestedTags, tags, setTags})
+export function useTagsList({tags, setTags})
 {
   const onInputChange = (e) => {
     let inputText = e.target.value;
 
     setInput(inputText);
   };
-  const [suggestedTags, setSuggestedTags] = useState(defaultSuggestedTags)
+  // const [suggestedTags, setSuggestedTags] = useState(defaultSuggestedTags)
   const [input, setInput] = useState('');
 
   const addTag = (newTag: string) => {
@@ -29,9 +29,9 @@ export function useTagsList({defaultSuggestedTags, tags, setTags})
     
     tags.push(tagify(newTag));
     setTags(tags);
-    setSuggestedTags((prevValue) => {
-      return prevValue.filter((stag) => stag.tag != newTag)
-    })
+    // setSuggestedTags((prevValue) => {
+    //   return prevValue.filter((stag) => stag.tag != newTag)
+    // })
   };
 
   const inputKeyDown = (e) => {
@@ -52,7 +52,7 @@ export function useTagsList({defaultSuggestedTags, tags, setTags})
     setTags(tags);
   };
   return ({
-    onInputChange, inputKeyDown, input, remove, suggestedTags, addTag
+    onInputChange, inputKeyDown, input, remove, addTag
   })
 }
 export default function FieldTags({
@@ -64,8 +64,7 @@ export default function FieldTags({
   explain,
   defaultSuggestedTags = []
 }) {
-  const {onInputChange, inputKeyDown, input, remove, suggestedTags, addTag} = useTagsList({
-    defaultSuggestedTags,
+  const {onInputChange, inputKeyDown, input, remove, addTag} = useTagsList({
     tags,
     setTags
   })
@@ -87,7 +86,7 @@ export default function FieldTags({
       />
       <TagList tags={tags} remove={remove}/>
       <div className="info-overlay__hashtags">
-        {suggestedTags.map((tag, idx) => {
+        {defaultSuggestedTags.map((tag, idx) => {
           return <div className="hashtag" key={idx} onClick={() => addTag(tag.tag)}>{tag.tag}</div>
         })}
       </div>

@@ -231,6 +231,9 @@ margin: $margin-medium 0;
 
 }
 
+.form__input-interest{
+
+}
 
 .form__input-tags {
 
@@ -294,9 +297,10 @@ margin: $margin-medium 0;
     align-items: center;
     flex-wrap: wrap;
     max-width: 100%;
-
+    font-size:small;
     .tags__list-interest__selected {
-      background-color: $color-gray
+      background-color: $color-dark-gray;
+      color: white;
 
     }
     .tags__list-interest, .tags__list-interest__selected {
@@ -304,9 +308,10 @@ margin: $margin-medium 0;
       justify-content: center;
       align-items: center;
       border: 1px solid $color-gray-border;
-      // margin: 5px;
-      padding: 10px ;
-      border-radius: $border-radius-circle;
+      margin: 5px;
+      padding: 5px ;
+      border-radius: $border-radius-semicircle;
+      
     }
     .tags__list-tag {
 
@@ -365,9 +370,6 @@ width: 100%;
   border: 1px $color-gray dashed;
   padding: $padding-big;
   padding-bottom: 0;
-
-
-
 }
 
 
