@@ -21,11 +21,10 @@ export default function FieldInterets({
       {label && <div className="form__label">{label}</div>}
       {explain && <div className="form__explain">{explain}</div>}
 
-      <InterestsList interests={interests} suggestedInterests={defaultSuggestedTags} trendingInterests={defaultTrendingTags} add={(item) => addTag(item)} remove={(item) => {remove(item)}}/>
       <input
         type="text"
         onChange={onInputChange}
-        className={`form__input-interest ${validationError ? 'validation-error' : ''
+        className={`form__input-tags ${validationError ? 'validation-error' : ''
           }`}
         onKeyDown={inputKeyDown}
         value={input}
@@ -33,6 +32,9 @@ export default function FieldInterets({
         autoComplete="off"
         onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
       />
+      
+      <InterestsList interests={interests} suggestedInterests={defaultSuggestedTags} trendingInterests={defaultTrendingTags} add={(item) => addTag(item)} remove={(item) => {remove(item)}}/>
+
       <FieldError validationError={validationError} />
     </div>
     </>);
