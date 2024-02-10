@@ -36,10 +36,14 @@ export default function NewUserFields({
   useEffect(() => {
     if(router?.query)
     {
-      setValue('tags',[ params.get('follow')])
+      const follow = params.get('follow')
+      if (follow)
+      {
+        setValue('tags',[ params.get('follow')])
+      }
+      
     }
   }, [router])
-
   return (
     <>
       <FieldText

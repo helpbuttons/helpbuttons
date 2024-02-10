@@ -62,9 +62,9 @@ export function InterestsList({interests, suggestedInterests,trendingInterests, 
     if(list.length > 0 ) {
       return list.map((item, index) => {
         if(!isSelected(item, interests)) {
-          return  (<><InterestElement item={item} index={index} onClick={() => {addToItems(item)}}/></>)
+          return  (<InterestElement item={item} index={index} onClick={() => {addToItems(item)}} key={index}/>)
         }else{
-          return  (<><InterestElement selected={true} item={item} index={index} onClick={() => {remove(item)}}/></>)
+          return  (<InterestElement selected={true} item={item} index={index} onClick={() => {remove(item)}} key={index}/>)
         }
       })
     }
@@ -76,7 +76,7 @@ export function InterestsList({interests, suggestedInterests,trendingInterests, 
           {interests.length > 0 &&
             interests.map((item, index) => {
               if(!(suggestedInterests.indexOf(item) > -1) && !(trendingInterests.indexOf(item) > -1)) {
-                return <InterestElement item={item} index={index} onClick={() => {remove(item)}} selected={true}/>
+                return <InterestElement item={item} index={index} onClick={() => {remove(item)}} selected={true} key={index}/>
               }
             })}
         </ul>
@@ -88,12 +88,12 @@ function InterestElement({index, item, onClick, selected = false})
 {
   return (<>
     {selected && 
-    <li key={`${index}`} className="tags__list-interest__selected" onClick={onClick}>
+    <li className="tags__list-interest__selected" onClick={onClick}>
       {item}
     </li>
     }
     {!selected && 
-      <li key={`${index}`} className="tags__list-interest" onClick={onClick}>
+      <li className="tags__list-interest" onClick={onClick}>
       {item}
     </li>
     }

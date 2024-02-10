@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import FieldError from '../FieldError';
-
-import t from 'i18n';
 import { IoClose } from 'react-icons/io5';
 import { tagify } from 'shared/sys.helper';
 
@@ -13,7 +11,6 @@ export function useTagsList({tags, setTags})
 
     setInput(inputText);
   };
-  // const [suggestedTags, setSuggestedTags] = useState(defaultSuggestedTags)
   const [input, setInput] = useState('');
 
   const addTag = (newTag: string) => {
@@ -29,9 +26,6 @@ export function useTagsList({tags, setTags})
     
     tags.push(tagify(newTag));
     setTags(tags);
-    // setSuggestedTags((prevValue) => {
-    //   return prevValue.filter((stag) => stag.tag != newTag)
-    // })
   };
 
   const inputKeyDown = (e) => {

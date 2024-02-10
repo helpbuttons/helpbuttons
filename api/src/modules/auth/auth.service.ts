@@ -84,7 +84,7 @@ export class AuthService {
       locale: signupUserDto.locale,
       receiveNotifications: true,
       showButtons: false,
-      tags: [],
+      tags: signupUserDto.tags,
       radius: 0,
     };
 
