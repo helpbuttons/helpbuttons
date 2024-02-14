@@ -190,6 +190,20 @@ $info-content-head-margin: calc( $footer-height-mobile );
 
   }
 
+  .info-overlay__users {
+
+    overflow:auto;
+    white-space: normal;
+    padding: $padding-medium 0;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    gap: $margin-small;
+    width: 98%;
+    max-width: 98%;
+
+  }
+
   .info-overlay__hashtags {
 
     display: flex;

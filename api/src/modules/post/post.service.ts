@@ -45,7 +45,7 @@ export class PostService {
         relations: ['comments', 'author', 'comments.author'],
         order: {
           created_at: 'DESC',
-          comments: { created_at: 'DESC' },
+          comments: { created_at: 'ASC' },
         },
       })
       .then((posts) => {

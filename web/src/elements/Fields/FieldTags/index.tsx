@@ -1,26 +1,16 @@
 import { useState } from 'react';
 import FieldError from '../FieldError';
-
-import t from 'i18n';
 import { IoClose } from 'react-icons/io5';
 import { tagify } from 'shared/sys.helper';
 
 
-export default function FieldTags({
-  label,
-  validationError,
-  tags = [],
-  setTags,
-  placeholder,
-  explain,
-  defaultSuggestedTags = []
-}) {
+export function useTagsList({tags, setTags})
+{
   const onInputChange = (e) => {
     let inputText = e.target.value;
 
     setInput(inputText);
   };
-  const [suggestedTags, setSuggestedTags] = useState(defaultSuggestedTags)
   const [input, setInput] = useState('');
 
   const addTag = (newTag: string) => {
@@ -36,9 +26,6 @@ export default function FieldTags({
     
     tags.push(tagify(newTag));
     setTags(tags);
-    setSuggestedTags((prevValue) => {
-      return prevValue.filter((stag) => stag.tag != newTag)
-    })
   };
 
   const inputKeyDown = (e) => {
@@ -58,6 +45,23 @@ export default function FieldTags({
     tags = tags.filter(tag => tag !== newTag);
     setTags(tags);
   };
+  return ({
+    onInputChange, inputKeyDown, input, remove, addTag
+  })
+}
+export default function FieldTags({
+  label,
+  validationError,
+  tags = [],
+  setTags,
+  placeholder,
+  explain,
+  defaultSuggestedTags = []
+}) {
+  const {onInputChange, inputKeyDown, input, remove, addTag} = useTagsList({
+    tags,
+    setTags
+  })
   return (
     <div className="tag__field">
       {label && <div className="form__label">{label}</div>}
@@ -76,7 +80,7 @@ export default function FieldTags({
       />
       <TagList tags={tags} remove={remove}/>
       <div className="info-overlay__hashtags">
-        {suggestedTags.map((tag, idx) => {
+        {defaultSuggestedTags.map((tag, idx) => {
           return <div className="hashtag" key={idx} onClick={() => addTag(tag.tag)}>{tag.tag}</div>
         })}
       </div>

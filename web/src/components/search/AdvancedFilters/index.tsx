@@ -127,25 +127,8 @@ export default function AdvancedFilters({
               placeholder={t('buttonFilters.queryPlaceHolder')}
               explain={t('buttonFilters.queryExplain')}
               {...register('query')}
-              // subInputLink={'/'}
-              // subInputLinkText={t('buttonFilters.followTag')}
-            />
-            <TagFollow tags={tags}/>
-            {/* <TagList tags={tags} remove={(tag) => {
-              setValue('query', query.replace(tag, ''))
-              setTags((prevTags) => prevTags.filter((prevTag) => prevTag != tag))
-              }}/> */}
-
-            {/* <FieldTags
-              label={t('buttonFilters.tagsLabel')}
-              explain={t('buttonFilters.tagsExplain')}
-              placeholder={t('common.add')}
-              validationError={errors.tags}
-              setTags={(tags) => {
-                setValue('tags', tags)
-              }}
-              tags={tags}
-            /> */}
+            ><TagFollow tags={tags}/></FieldText>
+            
             <FieldMultiSelect
               label={t('buttonFilters.types')}
               validationError={null}
@@ -289,18 +272,25 @@ function TagFollow({tags}) {
     false,
   );
   const followTag = (tag) => {
+    if (!loggedInUser) {
+      router.push(`/Signup?follow=${tag}`)
+      return;
+    }
     store.emit(new FollowTag(tag, () => {alertService.success(t('buttonFilters.followTagSucess', [tag]))}));
-  }
-  if(!loggedInUser || tags.length  < 1 )
-  {
-    return <></>
   }
 
   return (
     <>
         {t('buttonFilters.followTag')}
         {tags.map((tag) => {
-          return <Link href="#" onClick={() => {followTag(tag)}}>{tag}</Link>
+          return ( 
+                  <Btn
+                      btnType={BtnType.submit}
+                      contentAlignment={ContentAlignment.center}
+                      caption={`${t('buttonFilters.followTag')} '${tag}'`}
+                      onClick={() => { followTag(tag) }}
+                    />
+                  )
         })}
     </>
   )

@@ -23,12 +23,13 @@
     "users": "{0} usuarios en esta Red",
     "actions": "¿Qué puedes hacer?",
     "popularHashtags": "¿Qué temas se tratan?",
-    "recommendedHashtags": "Otros temas recomendados",
+    "recommendedHashtags": "Temas recomendados por los administradores",
     "profileSubtitle": "Comprueba tu perfil",
     "createSubtitle": "Crea tu _helpbutton_ y colabora",
     "faqsSubtitle": "Lee más sobre esta app",
     "exploreSubtitle": "Busca y encuentra los _helpbuttons_ en esta herramienta",
-    "administeredby": "Administrado por ",
+    "administeredby": "Moderadores y asistencia ",
+    "adminInstructions": "Contacta a cualquiera de los siguientes usuarios si necesitas ayuda con la página web",
     "loginSubtitle": "¡Entra o crea tu cuenta!",
     "buttons": "Hay {0} _helpbuttons_ en esta Red",
     "createNetworkButton": "Crea tu propia red",
@@ -190,6 +191,7 @@
     "showButtonsProfileExplain": "Marca esta opción si quieres mostrar una lista pública de tus _helpbuttons_ en tu página de perfil",
     "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil",
     "tagsExplain":"Escribe en este campo las palabras que te interesen y recibirás avisos cuando haya _helpbuttons_ sobre dichos temas. Escribe y pulsa enter o separa por comas para añadir.",
+    "tagsSignupExplain":"Opcionalmente, selecciona y/o escribe temas en los que estés interesado/a y recibirás información sobre las publicaciones de esos temas. Escribe y pulsa enter o separa con comas para añadir nuevos temas",
     "distance":"Distancia máxima de avisos",
     "distanceExplain":"_helpbuttons_ que se creen fuera de este radio respecto de tu posición no te serán notificados",
     "location":"Tu localización base",
@@ -219,6 +221,7 @@
     "showMap":"Mostrar Mapa"
   },
   "buttonFilters": {
+    "selectedArea": "en el área seleccionada",
     "queryLabel": "¿Qué buscas?",
     "searchBarTop": "{1} _helpbuttons_ {0}",
     "queryExplain": "Especifica con palabras concretas aquello que quieras encontrar",
@@ -289,7 +292,9 @@
     "renewSuccess": "Felicidades, renovaste tu _helpbutton_ otros 3 meses",
     "renewError": "Error al renovar tu _helpbutton_",
     "renewMailSubject": "Renovado con éxito",
-    "renewMail": "Renovaste tu _helpbutton_ '{0}' por otros 3 meses."
+    "renewMail": "Renovaste tu _helpbutton_ '{0}' por otros 3 meses.",
+    "isExpiringLink": "Debido a la falta de actividad, su _helpbutton_ se borrará en un mes.",
+    "renewLink": "Renovar tu _helpbutton_"
   },
   "calendarOnce": {
     "label": "Una vez",

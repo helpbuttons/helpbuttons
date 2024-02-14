@@ -199,8 +199,6 @@ export class UserService {
   getUserLoginParams(userId) {
     return this.createNewLoginToken(userId).then((loginToken) => {
       if (loginToken) {
-        console.log(userId);
-        console.log(loginToken);
         return `?loginToken=${loginToken}`;
       }
       return '';

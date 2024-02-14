@@ -10,6 +10,7 @@ import { PostModule } from '../post/post.module';
 import { ButtonCron } from './button.cron';
 import { MailModule } from '../mail/mail.module';
 import { UserModule } from '../user/user.module';
+import { ButtonCommand } from './button.command';
 
 
 @Module({
@@ -27,7 +28,8 @@ import { UserModule } from '../user/user.module';
   ],
   providers: [
     ButtonService,
-    ButtonCron
+    ButtonCron,
+    ButtonCommand
   ],
   exports: [
     ButtonService

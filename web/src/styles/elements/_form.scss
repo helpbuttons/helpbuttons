@@ -231,11 +231,14 @@ margin: $margin-medium 0;
 
 }
 
+.form__input-interest{
+
+}
 
 .form__input-tags {
 
   @extend .form__input;
-
+  padding: $padding-small;
   & ul {
     // overflow-x: scroll;
     // overflow-y: hidden;
@@ -284,7 +287,7 @@ margin: $margin-medium 0;
   justify-content: flex-start;
   align-items: center;
   margin: 5px 0;
-  margin-bottom: $margin-big;
+  // margin-bottom: $margin-big;
   // min-height: 38px;
 
   .tags__list {
@@ -294,14 +297,32 @@ margin: $margin-medium 0;
     align-items: center;
     flex-wrap: wrap;
     max-width: 100%;
+    font-size:small;
 
+    .tags__list-interest__selected {
+      background-color: $color-dark-gray;
+      color: white;
+
+    }
+
+    .tags__list-interest, .tags__list-interest__selected {
+      
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid $color-gray-border;
+        margin-right: $margin-xsmall;
+        padding: 0 $padding-medium 0 $padding-medium ;
+        border-radius: $border-radius-circle;
+      
+    }
     .tags__list-tag {
 
         display: flex;
         justify-content: center;
         align-items: center;
         border: 1px solid $color-gray-border;
-        // margin: 5px;
+        margin-right: $margin-xsmall;
         padding: 0 0 0 10px ;
         border-radius: $border-radius-circle;
 
@@ -352,9 +373,6 @@ width: 100%;
   border: 1px $color-gray dashed;
   padding: $padding-big;
   padding-bottom: 0;
-
-
-
 }
 
 

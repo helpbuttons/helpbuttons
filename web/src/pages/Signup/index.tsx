@@ -45,7 +45,8 @@ export default function Signup() {
       password_confirm: '',
       email: '',
       locale: 'en',
-      inviteCode: ''
+      inviteCode: '',
+      tags: []
     },
   });
   const router = useRouter();
@@ -67,7 +68,8 @@ export default function Signup() {
             name: '',
             avatar: null,
             locale: getLocale(),
-            inviteCode: data.inviteCode
+            inviteCode: data.inviteCode,
+            tags: data.tags
           },
           onSuccess,
           onError,

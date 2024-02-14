@@ -29,7 +29,10 @@
     "migration:revert": "npm run typeorm migration:revert",
     "schema:drop": "yarn typeorm schema:drop",
     "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.ts",
-    "translations": "cp -r ../web/public/locales ."
+    "translations": "cp -r ../web/public/locales .",
+    "cron:events:removepast": "CLI_PATH=./dist/cli.js npx nestjs-command cron:events:removepast",
+    "cron:buttons:removepast": "CLI_PATH=./dist/cli.js npx nestjs-command cron:buttons:removepast"
+    
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -59,6 +62,7 @@
     "handlebars": "^4.7.7",
     "http-status": "^1.6.2",
     "nanoid": "^3.3.3",
+    "nestjs-command": "^3.1.4",
     "nestjs-seeder": "^0.3.0",
     "nodemailer": "^6.9.3",
     "passport": "^0.5.2",
