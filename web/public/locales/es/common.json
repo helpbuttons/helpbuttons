@@ -425,5 +425,14 @@
     "activitySubject": "Novedad en Red Ejemplo",
     "buttonLinkCaption": "Presiona aqui para abrirlo",
     "dailyOutBox": "Tienes {0} novedades de '{1}', {2}"
+  },
+  "dates":{
+    "eachMonthFrom": "de cada més desde",
+    "until": "hasta",
+    "of": "de",
+    "the": "El",
+    "each": "Cada",
+    "from": "desde",
+    "at": "a las"
   }
 }

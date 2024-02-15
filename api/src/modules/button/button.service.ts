@@ -29,6 +29,7 @@ import { ErrorName } from '@src/shared/types/error.list';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import * as fs from 'fs';
 import translate, { readableDate } from '@src/shared/helpers/i18n.helper';
+// import { RRule } from 'rrule';
 
 @Injectable()
 export class ButtonService {
@@ -113,6 +114,7 @@ export class ButtonService {
       eventEnd: createDto.eventEnd,
       eventType: createDto.eventType,
       hasPhone,
+      eventData: createDto.eventData
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -249,6 +251,9 @@ export class ButtonService {
 
   async findh3(resolution, hexagons) {
     try {
+      // const btnTemplateEvents =
+      // await this.networkService.getButtonTemplatesEvents();
+
       if (hexagons && hexagons.length > 1000) {
         throw new HttpException(
           'too many hexagons requested, aborting',
@@ -275,6 +280,14 @@ export class ButtonService {
         order: {
           created_at: 'DESC',
         },
+      // }).then((buttons) => {
+      //   return buttons.map((button) => {
+      //     if(btnTemplateEvents.indexOf(button.type) > -1)
+      //     {
+      //       return this.calculateRecurrent(button)
+      //     }
+      //     return button;
+      //   })
       });
     } catch (err) {
       console.log(err);
