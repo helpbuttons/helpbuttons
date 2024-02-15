@@ -1,6 +1,6 @@
 //is the component or element integrated in buttonNewPublish. Right before activate button. It displays the current selected date and a button to chang it, that ddisplays a picker with the date options for the net that's selecte
 import { Picker } from 'components/picker/Picker';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import {
   DateTypes,
@@ -13,7 +13,7 @@ import FieldRadioOption from '../FieldRadio/option';
 import PickerEventTypeOnceForm from 'components/picker/PickerEventType/once';
 import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multiple';
 import FieldError from '../FieldError';
-import PickerEventTypeRecurrentForm from 'components/picker/PickerEventType/recurrent';
+import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
 
 export default function FieldDate({
   title,
@@ -24,26 +24,12 @@ export default function FieldDate({
   setEventEnd,
   setEventStart,
   register,
+  setEventData,
+  eventData = null,
 }) {
   const [showHideMenu, setHideMenu] = useState(false);
   const [invalidDates, setInvalidDates] = useState(false);
-  /*
-  recurrent:
-   when = {
-    type: 'recurrent'
-    data: {
-      frequency: '1m', // '1w'
-    }
-   }
   
-   multidate = {
-    type: 'multidate' // start and endDate define the dates..
-   }
-
-   once = {
-    type: 'once' // only start date
-   }
-  */
   const datesAreValid = () => {
     if (eventEnd?.getTime() < eventStart?.getTime()) {
       setInvalidDates(() => true);
@@ -66,6 +52,7 @@ export default function FieldDate({
           eventStart={eventStart}
           eventEnd={eventEnd}
           eventType={eventType}
+          eventData={eventData}
           title={title}
         />
         <div className="btn" onClick={() => setHideMenu(true)}>
@@ -106,7 +93,11 @@ export default function FieldDate({
                   ></PickerEventTypeMultipleForm>
               )}
               {eventType == DateTypes.RECURRENT && (
-                <>Every week/Every month</>
+                <PickerEventTypeRecurrentForm
+                  rrule={loadRrules(eventData)}
+                  setRrule={(rrule) => {setEventData(rrule); setEventStart(new Date(rrule.dtstart)); setEventEnd(new Date(rrule.until))}}
+                  closeMenu={closeMenu}
+                />
               )}
               {invalidDates && 
                 <FieldError validationError={{message: 'invalid dates'}} />
@@ -137,11 +128,11 @@ const EventType = React.forwardRef(
         explain: t('eventType.multipleExplain'),
         type: DateTypes.MULTIPLE,
       },
-     //{
-     //   label: t('eventType.recurring'),
-     //  explain: t('eventType.recurringExplain'),
-     //   type: DateTypes.RECURRENT,
-     //},
+      {
+        label: t('eventType.recurring'),
+        explain: t('eventType.recurringExplain'),
+        type: DateTypes.RECURRENT,
+      },
     ];
     return (
       <>
@@ -177,10 +168,11 @@ export function ShowDate({
   eventEnd,
   eventType,
   title,
+  eventData
 }) {
   return (
     <div className="card-button__date">
-      {readableEventDateTime(eventType, eventStart, eventEnd)}
+      {readableEventDateTime(eventType, eventStart, eventEnd, loadRrules(eventData))}
     </div>
   );
 }
@@ -189,23 +181,24 @@ export function readableEventDateTime(
   eventType,
   eventStart,
   eventEnd,
+  eventData
 ) {
-  if (eventType == DateTypes.ONCE && eventStart) {
+  if (eventType == DateTypes.ONCE && eventStart && eventEnd) {
     return (
       readableDateTime(eventStart) +
       ' - ' +
       readableTime(eventEnd)
     );
   }
-  if (eventType == DateTypes.MULTIPLE && eventStart) {
+  if (eventType == DateTypes.MULTIPLE && eventStart && eventEnd) {
     return (
-      readableDateTime(eventStart) +
-      ' - ' +
+      t('dates.from') + ' ' + readableDateTime(eventStart) + ' ' +
+      t('dates.until') + ' ' +
       readableDateTime(eventEnd)
     );
   }
 
   if (eventType == DateTypes.RECURRENT) {
-    return 'recurrent';
+    return (recurrentToText(eventData))
   }
 }

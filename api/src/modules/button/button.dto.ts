@@ -89,6 +89,8 @@ export class CreateButtonDto implements Partial<Button> {
   eventType?: string;
 
   images?: string[];
+
+  eventData: string;
 }
 
 export class UpdateButtonDto extends PartialType(CreateButtonDto) {}
