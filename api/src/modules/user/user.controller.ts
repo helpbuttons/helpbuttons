@@ -77,7 +77,7 @@ export class UserController {
     return await this.userService.addTag(tag, user);
   }
 
-  @OnlyRegistered()
+  @AllowGuest()
   @Get('/getPhone/:userId')
   async getPhone(@Param('userId') userId: string) {
     return await this.userService.getPhone(userId)
