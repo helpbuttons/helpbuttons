@@ -127,6 +127,7 @@
     "newfollowing": "estas ahora seguindo _helpbutton_ '{0}'",
     "newbuttonType": "Nuevo _helpbutton_",
     "newcommentType": "Comentario",
+    "newprivatecommentType": "Mensaje privada",
     "newfollowType": "Nuevo suscriptor",
     "creatorUpdate": "Actualización _helpbutton_",
     "deletedType": "Eliminación _helpbutton_"
@@ -433,6 +434,6 @@
     "the": "El",
     "each": "Cada",
     "from": "desde",
-    "at": "a las"
+    "at": "desde las"
   }
 }
