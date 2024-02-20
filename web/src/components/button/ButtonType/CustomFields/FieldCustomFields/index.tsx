@@ -27,7 +27,7 @@ export default function FieldCustomFields({
                 name={'price'}
                 label={t(
                   'customFields.priceLabel',
-                  getSymbol(currency),
+                  [getSymbol(currency)]
                 )}
                 watch={watch}
                 setValue={setValue}
