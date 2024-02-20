@@ -4,27 +4,20 @@ import Calendar from 'react-calendar';
 import { getLocale } from 'shared/sys.helper';
 import { RRule } from 'rrule';
 import {
+  readableDayOfLongWeek,
   readableMonth,
   readableShortDate,
   readableTime,
 } from 'shared/date.utils';
 import t from 'i18n';
 import { TimePick } from './timepick';
+import WeekDayPicker from './weekDayPicker';
 
 const convertWeekDay = (date) => {
   const weekday = date.getDay() - 1;
   return weekday > -1 ? weekday : 6;
 };
 
-const WeekDay = (date) => {
-  if (typeof date !== typeof Date)
-  {
-    date = new Date(date)
-  }
-  return date.toLocaleDateString(getLocale(), {
-    weekday: 'long',
-  });
-};
 export default function PickerEventTypeRecurrentForm({
   rrule,
   setRrule,
@@ -38,7 +31,7 @@ export default function PickerEventTypeRecurrentForm({
   );
 
   const [periodicity, setPeriodicity] = useState(
-    rrule?.freq ? rrule.freq : null,
+    rrule?.freq ? rrule.freq : RRule.WEEKLY,
   );
   const [recrule, setRecrule] = useState<RRule>(
     rrule ? new RRule(rrule) : null,
@@ -55,9 +48,7 @@ export default function PickerEventTypeRecurrentForm({
             dtstart: startDate,
             until: endDate,
           };
-
-          setRrule(newRules);
-          setRecrule(() => new RRule(newRules));
+          setRrule(JSON.parse(JSON.stringify(newRules)));
           break;
         }
         case RRule.MONTHLY: {
@@ -68,13 +59,19 @@ export default function PickerEventTypeRecurrentForm({
             until: endDate,
           };
           setRrule(JSON.parse(JSON.stringify(newRules)));
-          setRecrule(() => new RRule(newRules));
-
           break;
         }
       }
     }
   }, [endDate, startDate, periodicity]);
+
+  useEffect(() => {
+    if(rrule)
+    {
+      console.log(rrule)
+      setRecrule(() => new RRule(rrule));
+    }
+  }, [rrule])
 
   const weekOfMonth = function (date) {
     var month = date.getMonth(),
@@ -96,7 +93,6 @@ export default function PickerEventTypeRecurrentForm({
           <div className="picker__section__pick">
             <Dropdown
               options={[
-                {},
                 {
                   value: RRule.WEEKLY,
                   name: 'Every week',
@@ -123,6 +119,11 @@ export default function PickerEventTypeRecurrentForm({
                     selectRange
                     minDate={new Date()}
                   />
+                  {(startDate || endDate) && 
+                    <WeekDayPicker selectedWeekDays={rrule?.byweekday ? rrule.byweekday : []} setSelectedWeekDays={(weekDays) => {
+                      setRrule({...rrule, byweekday: weekDays})
+                    }}/>
+                  }
                 </div>
                 <br />
                 {recrule && <>{recurrentToText(rrule)}</>}
@@ -166,6 +167,12 @@ export default function PickerEventTypeRecurrentForm({
   );
 }
 
+function WeekDay(dayOfWeek) {
+  const current = new Date()
+  var first = current.getDate() - current.getDay() + (dayOfWeek+1);
+  return readableDayOfLongWeek(new Date(current.setDate(first++)))
+}
+
 export const recurrentToText = (rrule) => {
   if (!rrule) {
     return '';
@@ -174,7 +181,7 @@ export const recurrentToText = (rrule) => {
     case RRule.WEEKLY: {
       return (
         <>
-          {t('dates.each')} {WeekDay(rrule.dtstart)} {t('dates.from')}{' '}
+          {t('dates.each')} {rrule.byweekday.map(weekday => WeekDay(weekday)).toString()}  {t('dates.from')}{' '}
           {readableShortDate(rrule.dtstart)} {t('dates.until')}{' '}
           {readableShortDate(rrule.until)} {t('dates.at')} {readableTime(rrule.dtstart)} {t('dates.until')} {readableTime(rrule.until)}
         </>
