@@ -1,9 +1,10 @@
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import t from 'i18n';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { IoPaperPlaneOutline } from 'react-icons/io5';
+import { IoMailOutline, IoPaperPlaneOutline } from 'react-icons/io5';
 import { uniqueArray } from 'shared/sys.helper';
 
 export default function MessageNew({
@@ -67,13 +68,16 @@ export default function MessageNew({
                 <label className="form__input-subtitle--error">
                   {t('comment.public')}
                 </label>
+
               </div>
             )}
             {isComment && privateMessage && (
               <div className="form__input-subtitle-side">
                 <label className="form__input-subtitle--error">
                   {t('comment.private')}
+
                 </label>
+
               </div>
             )}
           </div>

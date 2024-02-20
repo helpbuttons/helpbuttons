@@ -10,6 +10,8 @@ import {
   IoChatbubbleEllipsesSharp,
   IoCallOutline,
   IoHeart,
+  IoCreate,
+  IoCreateOutline,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -456,6 +458,7 @@ export function CardButtonHeadActions({ button }) {
   return (
     <div className="card-button__rating">
       <ShowPhone button={button} />
+
       {button.hearts && (
         <span className="btn-circle__icon">
           <IoHeartOutline />

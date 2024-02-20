@@ -48,7 +48,14 @@ export default function PostComments({
           <>
             {comments.map((comment, key) => {
               return (
-                <div key={key} className="card-notification--comment">
+                <div key={key} 
+                  className={
+                    'card-notification--comment ' +
+                    (comment.privacy == CommentPrivacyOptions.PRIVATE
+                      ? ' card-notification--comment-private'
+                      : '')
+                  }
+                >
                   <CommentMessage
                     post={comment}
                   />
@@ -70,7 +77,7 @@ export default function PostComments({
                      <Btn
                        submit={false}
                        btnType={BtnType.iconActions}
-                       iconLink={<IoChatbubbleEllipsesSharp/>}
+                       iconLink={<IoMailOutline/>}
                        iconLeft={IconType.circle}
                        contentAlignment={ContentAlignment.right}
                        onClick={() =>

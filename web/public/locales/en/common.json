@@ -186,7 +186,8 @@
     "renewMailSubject": "Renewed successfuly",
     "renewMail": "You renewed your _helpbutton_ '{0}' for more 3 months.",
     "isExpiringLink": "Due to lack of activity, your _helpbutton_ is going to be erased in one month.",
-    "renewLink": "Renew your _helpbutton_"
+    "renewLink": "Renew your _helpbutton_",
+    "createUpdate":"Publish Update"
   },
   "user": {
     "login":"Write your credentials",
@@ -312,7 +313,9 @@
     "private":"You're sending a private message. Only the destination user could see it.",
     "public":"This comment is public, everyone could see it.",
     "placeholderWrite": "Write a message in this post",
-    "posted":"Comment posted"
+    "posted":"Comment posted",
+    "sendPublic":"Comment",
+    "sendPrivate":"Private"
   },
   "configuration": {
     "title": "Network and Administrator settings",

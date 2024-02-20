@@ -1,3 +1,4 @@
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { useState } from 'react';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 
@@ -12,7 +13,14 @@ export function CardSubmenu({ children }) {
         }}
         className="card-button__edit-icon card-button__submenu"
       >
-        <IoEllipsisHorizontalSharp />
+        <Btn
+          btnType={BtnType.filterCorp}
+          contentAlignment={ContentAlignment.left}
+          caption='Opciones'
+          iconLeft={IconType.svg}
+          iconLink={<IoEllipsisHorizontalSharp />}
+          submit={true}
+        />
       </div>
       {showSubmenu && (
         <div className="card-button__dropdown-container">

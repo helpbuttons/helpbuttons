@@ -311,7 +311,7 @@ $btn-font-size-medium: $font-size-medium;
 
   @extend .btn-circle--small;
 
-  background-color: $color-white;
+  background-color: transparent;
   border: none;
 
   & .btn-circle__icon{

@@ -11,6 +11,7 @@ import {
   IoAddOutline,
   IoChatbubbleEllipsesSharp,
   IoCloseOutline,
+  IoCreateOutline,
   IoMailOutline,
   IoPersonOutline,
   IoTrashBinOutline,
@@ -32,6 +33,7 @@ import { useStore } from 'store/Store';
 import MessageNew from 'components/feed/MessageNew';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
 import Link from 'next/link';
+import { useToggle } from 'shared/custom.hooks';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -66,7 +68,7 @@ export default function Feed({ button }: { button: Button }) {
   return (
     <div className="feed-container">
       {loggedInUser && isButtonOwner && (
-        <Compose
+        <ComposePost
           referer={{ button: button.id }}
           onCancel={() => {}}
           onCreate={() => {
@@ -141,8 +143,9 @@ export function FeedElement({
                 <Btn
                   submit={false}
                   btnType={BtnType.filterCorp}
-                  iconLink={<IoChatbubbleEllipsesSharp />}
-                  iconLeft={IconType.circle}
+                  iconLink={<IoMailOutline />}
+                  caption={t("comment.sendPublic")}
+                  iconLeft={IconType.svg}
                   contentAlignment={ContentAlignment.right}
                   onClick={() =>
                     setShowComposePostReply(() => {
@@ -158,7 +161,8 @@ export function FeedElement({
                   submit={false}
                   btnType={BtnType.filterCorp}
                   iconLink={<IoMailOutline />}
-                  iconLeft={IconType.circle}
+                  iconLeft={IconType.svg}
+                  caption={t("comment.sendPrivate")}
                   contentAlignment={ContentAlignment.right}
                   onClick={() =>
                     setShowComposePostReply(() => {
@@ -180,7 +184,7 @@ export function FeedElement({
                   submit={false}
                   btnType={BtnType.filterCorp}
                   iconLink={<IoTrashBinOutline />}
-                  iconLeft={IconType.circle}
+                  iconLeft={IconType.svg}
                   contentAlignment={ContentAlignment.right}
                   onClick={() => deletePost(post.id)}
                 />
@@ -189,9 +193,8 @@ export function FeedElement({
                 <Btn
                 submit={false}
                 btnType={BtnType.filterCorp}
-                iconLink={<IoChatbubbleEllipsesSharp />}
+                iconLink={<IoMailOutline />}
                 iconLeft={IconType.circle}
-                caption=''
                 contentAlignment={ContentAlignment.right}
                 onClick={() =>
                   setShowComposePostReply(() => {
@@ -247,6 +250,42 @@ export function FeedElement({
   );
 }
 
+export function ComposePost({
+  referer,
+  onCreate,
+  onCancel,
+}) {
+  const [show, toggleShow]= useToggle(false);
+  return (  
+    <>
+      {show &&
+
+        <Compose referer={referer} onCreate={onCreate} onCancel={onCancel}/> 
+
+        }
+        {!show &&
+            <div className="button-file__action-section">
+
+              <div className="button-file__action-section--field feeds__new-message">
+                <Btn
+                  submit={false}
+                  btnType={BtnType.corporative}
+                  caption={t("button.createUpdate")}
+                  iconLink={<IoCreateOutline />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() => {
+                    toggleShow(true);
+                  }}
+                />
+              </div>
+            </div>
+          }
+    </>
+    
+  )
+}
+
 export function Compose({
   referer,
   onCreate,
@@ -258,8 +297,10 @@ export function Compose({
   }
   if (referer.button) {
     return (
+      
       <div className="button-file__action-section">
-        <MessageNew
+
+          <MessageNew
           onCreate={(message) => {
             store.emit(
               new CreateNewPost(
@@ -278,6 +319,7 @@ export function Compose({
           }}
           mentions={[]}
         />
+        
       </div>
     );
   }
