@@ -3,7 +3,6 @@ import t from 'i18n';
 import _ from 'lodash';
 import { GlobalState, store } from 'pages';
 import { formatCurrency } from 'shared/currency.utils';
-import { DateTypes, readableDateTime } from 'shared/date.utils';
 import { Network } from 'shared/entities/network.entity';
 import { useStore } from 'store/Store';
 
@@ -50,6 +49,7 @@ export function CardButtonCustomFields({ customFields, button }) {
               eventEnd={button.eventEnd}
               eventType={button.eventType}
               title={button.title}
+              eventData={button.eventData}
             />
           </>
         );

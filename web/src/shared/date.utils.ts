@@ -74,8 +74,18 @@ export function readableShortDate(date: Date) {
   }
   return date.toLocaleDateString(getLocale(), {
     year: 'numeric',
-    month: 'short',
+    month: 'long',
     day: 'numeric'
+  });
+}
+
+export function readableMonth(date: Date) {
+  if(typeof date !== typeof Date) {
+    date = new Date(date)
+  }
+  return date.toLocaleDateString(getLocale(), {
+    year: 'numeric',
+    month: 'long',
   });
 }
 

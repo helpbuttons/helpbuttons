@@ -1,7 +1,6 @@
 import ButtonForm from 'components/button/ButtonForm';
-import { GlobalState, store } from 'pages';
+import { store } from 'pages';
 import { CreateButton, SaveButtonDraft, UpdateCachedHexagons } from 'state/Explore';
-import { useRef } from 'store/Store';
 import Router from 'next/router';
 import { alertService } from 'services/Alert';
 import { useForm } from 'react-hook-form';
@@ -28,14 +27,12 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
     address: '',
     when: { dates: [], type: null },
     hideAddress: false,
+    eventData: null
   };
   const {
     register,
     handleSubmit,
     formState: {
-      isDirty,
-      dirtyFields,
-      touchedFields,
       errors,
       isSubmitting,
     },

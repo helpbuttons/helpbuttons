@@ -14,9 +14,14 @@ export const availableCurrencies = [
       name: formatCurrency(100, 'USD'),
       caption: '$'
     },
+    {
+      value: 'Junas',
+      name: formatCurrency(100, 'Junas'),
+      caption: 'Junas'
+    },
   ];
   export function getSymbol(currency: string) {
-    return availableCurrencies.filter((value) => value.value == currency)[0].caption
+    return availableCurrencies.find((value) => value.value == currency).caption
   }
 export function formatCurrency(value = 0, currency) {
     
@@ -35,7 +40,7 @@ export function formatCurrency(value = 0, currency) {
     if (currency == 'BTC') {
       return formatBTC(value);
     }
-    return value;
+    return value + ' ' + currency;
     
     function formatBTC(amount) {
       return 'BTC ' + amount;

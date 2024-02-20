@@ -127,6 +127,7 @@
     "newfollowing": "estas ahora seguindo _helpbutton_ '{0}'",
     "newbuttonType": "Nuevo _helpbutton_",
     "newcommentType": "Comentario",
+    "newprivatecommentType": "Mensaje privada",
     "newfollowType": "Nuevo suscriptor",
     "creatorUpdate": "Actualización _helpbutton_",
     "deletedType": "Eliminación _helpbutton_"
@@ -425,5 +426,14 @@
     "activitySubject": "Novedad en Red Ejemplo",
     "buttonLinkCaption": "Presiona aqui para abrirlo",
     "dailyOutBox": "Tienes {0} novedades de '{1}', {2}"
+  },
+  "dates":{
+    "eachMonthFrom": "de cada més desde",
+    "until": "hasta",
+    "of": "de",
+    "the": "El",
+    "each": "Cada",
+    "from": "desde",
+    "at": "desde las"
   }
 }

@@ -109,6 +109,7 @@
     "newbutton": "A new _helpbutton_ was published '{0}' in '{1}'",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
+    "newprivatecommentType": "Private message",
     "newfollowType": "New suscriber",
     "creatorUpdate": "_helpbutton_ updated",
     "deletedType": "_helpbutton_ deleted",
@@ -420,5 +421,14 @@
     "activitySubject": "New activity",
     "buttonLinkCaption": "Click here to open",
     "dailyOutBox": "There are {0} activities in {1}, {2}"
+  },
+  "dates":{
+    "eachMonthFrom": "of each month from",
+    "until": "until",
+    "of": "of",
+    "the": "The",
+    "each": "each",
+    "from": "from",
+    "at": "at"
   }
 }

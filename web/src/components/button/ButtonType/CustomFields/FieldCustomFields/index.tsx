@@ -27,7 +27,7 @@ export default function FieldCustomFields({
                 name={'price'}
                 label={t(
                   'customFields.priceLabel',
-                  getSymbol(currency),
+                  [getSymbol(currency)]
                 )}
                 watch={watch}
                 setValue={setValue}
@@ -59,6 +59,8 @@ export default function FieldCustomFields({
               setEventType={(value) => setValue('eventType', value)}
               eventStart={watch('eventStart')}
               eventEnd={watch('eventEnd')}
+              eventData={watch('eventData')}
+              setEventData={(value) => setValue('eventData', value)}
               setEventStart={(value) => setValue('eventStart', value)}
               setEventEnd={(value) => {
                 setValue('eventEnd', value);
