@@ -130,7 +130,8 @@
     "newprivatecommentType": "Mensaje privada",
     "newfollowType": "Nuevo suscriptor",
     "creatorUpdate": "Actualización _helpbutton_",
-    "deletedType": "Eliminación _helpbutton_"
+    "deletedType": "Eliminación _helpbutton_",
+    "myhelpbuttons": "Mis _helpbuttons_"
   },
   "user": {
     "login":"Escribe tus datos si tienes cuenta",

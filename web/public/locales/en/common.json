@@ -119,7 +119,8 @@
     "newcomment": "'{2}' commented '{0}' answer to the post '{1}'",
     "newcommentSubject": "Someone commented on your _helpbutton_",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
-    "newfollowing": "your are now following the _helpbutton_ '{0}'"
+    "newfollowing": "your are now following the _helpbutton_ '{0}'",
+    "myhelpbuttons": "My _helpbuttons_"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
