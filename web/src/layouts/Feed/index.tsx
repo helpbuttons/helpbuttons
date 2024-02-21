@@ -8,10 +8,12 @@ import Btn, {
 } from 'elements/Btn';
 import t from 'i18n';
 import {
+  IoAdd,
   IoAddOutline,
   IoChatbubbleEllipsesSharp,
   IoCloseOutline,
   IoCreateOutline,
+  IoMailOpenOutline,
   IoMailOutline,
   IoPersonOutline,
   IoTrashBinOutline,
@@ -34,6 +36,7 @@ import MessageNew from 'components/feed/MessageNew';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
 import Link from 'next/link';
 import { useToggle } from 'shared/custom.hooks';
+import { CardButtonHeadActions } from 'components/button/CardButton';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -74,7 +77,11 @@ export default function Feed({ button }: { button: Button }) {
           onCreate={() => {
             reloadPosts();
           }}
+          button={button}
         />
+      )}
+      {!isButtonOwner && (      
+        <CardButtonHeadActions button={button} />         
       )}
       &nbsp;
       <div className="feed-line"></div>
@@ -143,7 +150,7 @@ export function FeedElement({
                 <Btn
                   submit={false}
                   btnType={BtnType.filterCorp}
-                  iconLink={<IoMailOutline />}
+                  iconLink={<IoMailOpenOutline />}
                   caption={t("comment.sendPublic")}
                   iconLeft={IconType.svg}
                   contentAlignment={ContentAlignment.right}
@@ -258,7 +265,7 @@ export function ComposePost({
   const [show, toggleShow]= useToggle(false);
   return (  
     <>
-      {show &&
+        {show &&
 
         <Compose referer={referer} onCreate={onCreate} onCancel={onCancel}/> 
 
@@ -271,7 +278,7 @@ export function ComposePost({
                   submit={false}
                   btnType={BtnType.corporative}
                   caption={t("button.createUpdate")}
-                  iconLink={<IoCreateOutline />}
+                  iconLink={<IoAdd />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.center}
                   onClick={() => {

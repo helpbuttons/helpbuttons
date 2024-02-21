@@ -149,7 +149,9 @@ $card-notification-delete-size: 100px;
   margin: 0px 10px 10px 10px;
   display: flex;
   justify-content: flex-end;
+  gap: $padding-small 0;
   align-items: baseline;
+  flex-wrap: wrap;
 
     button {
 

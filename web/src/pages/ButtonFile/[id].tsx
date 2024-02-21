@@ -43,8 +43,8 @@ export default function ButtonFile({
       {currentButton && 
             <Popup
             sectionClass=''
-            title={t('button.title')}
-            onCloseClicked={() => router.back()}
+            // onCloseClicked={() => router.back()}
+            linkBack={() => router.back()}
             >
 
                 {buttonTypes?.length > 0 && (

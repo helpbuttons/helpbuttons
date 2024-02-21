@@ -19,12 +19,12 @@ export default function PopupHeader({children, linkBack = null,linkFwd = null, o
       <div className="popup__header">
         <header className="popup__header-content">
           <div className="popup__header-left">
-            {linkBack &&
-              <Link href={linkBack} className="popup__header-button">
+            {(onCloseClicked ||linkBack )&&            
+              <div onClick={onCloseClick} className="popup__header-button">
                 <div className="btn-circle__icon">
                   <IoClose />
                 </div>
-              </Link>
+              </div>           
             }
           </div>
           <div className="popup__header-center">
@@ -33,13 +33,13 @@ export default function PopupHeader({children, linkBack = null,linkFwd = null, o
             </h1>
           </div>
           <div className="popup__header-right">
-            {(onCloseClicked || linkFwd) &&
+            {/* {(onCloseClicked || linkFwd) &&
               <div onClick={onCloseClick} className="popup__header-button">
                 <div className="btn-circle__icon">
                   <IoClose />
                 </div>
               </div>
-            }
+            } */}
           </div>
         </header>
       </div>

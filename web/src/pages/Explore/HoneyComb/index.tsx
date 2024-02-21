@@ -129,7 +129,7 @@ function HoneyComb({ router, selectedNetwork }) {
     <>
       {currentButton && (
         <PopupButtonFile
-          title={t('button.title')}
+          
           onCloseClicked={() => {
             store.emit(new updateCurrentButton(null));
           }}

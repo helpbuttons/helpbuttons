@@ -14,10 +14,9 @@ export function CardSubmenu({ children }) {
         className="card-button__edit-icon card-button__submenu"
       >
         <Btn
-          btnType={BtnType.filterCorp}
-          contentAlignment={ContentAlignment.left}
-          caption='Opciones'
-          iconLeft={IconType.svg}
+          btnType={BtnType.smallCircle}
+          contentAlignment={ContentAlignment.center}
+          iconRight={IconType.circle}
           iconLink={<IoEllipsisHorizontalSharp />}
           submit={true}
         />
@@ -25,10 +24,9 @@ export function CardSubmenu({ children }) {
       {showSubmenu && (
         <div className="card-button__dropdown-container">
           <div className="card-button__dropdown-arrow"></div>
-
-          <div className="card-button__dropdown-content" id="listid">
-            {children}
-          </div>
+            <div className="card-button__dropdown-content" id="listid">
+              {children}
+            </div>
         </div>
       )}
     </>

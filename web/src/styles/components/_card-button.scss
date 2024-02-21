@@ -28,7 +28,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__content > * {
 
-  display: -webkit-box;
+  display: flex;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -69,6 +69,15 @@ $card-button-border-height: $border-general-height;
   justify-content: space-between;
 }
 
+.card-button__author {
+  display: flex;
+  flex-flow: row nowrap;
+  padding:  $padding-medium $padding-big;
+  justify-content: space-between;
+  border-top: 1px $color-ligth-gray solid;
+
+}
+
 .card-button__avatar {
   flex: 0 1 12%;
   & > button {
@@ -80,8 +89,6 @@ $card-button-border-height: $border-general-height;
 
 .card-button__info {
   flex: 100%;
-  width: 0rem;
-  margin-left: $margin-xsmall;
   text-align: left;
   align-items: start;
 }
@@ -92,6 +99,7 @@ $card-button-border-height: $border-general-height;
   display: flex;
   align-items: center;
   vertical-align: baseline;
+  overflow:scroll;
   span {
     align-items: center;
     padding-right: 1rem;
@@ -104,9 +112,48 @@ $card-button-border-height: $border-general-height;
   }
 }
 
+.card-button__description {
+
+ color: $color-dark-gray;
+}
+
+
+.card-button__actions {
+  padding: $padding-big;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: baseline;
+  background-color: $color-white;
+  overflow:scroll;
+  border-top: 1px dashed $color-ligth-gray;
+  span {
+    align-items: center;
+    padding-right: 1rem;
+  }
+
+  button {
+
+    margin-left: 0;
+
+  }
+}
+
+.card-button__phone-section{
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap:inherit;
+  gap: $padding-medium;
+
+}
+
 .card-button__rating--phone {
 
- text-wrap: nowrap;
+//  text-wrap: nowrap;
+ font-weight: $font-weight-bold;
 
 }
 
@@ -115,13 +162,14 @@ $card-button-border-height: $border-general-height;
   background-size: 100%;
   height: 100%;
   position: relative;
+  margin-top: $margin-xsmall;
   text-indent: -9999999px;
   width: 18px;
 
   svg {
 
-    padding-top: $padding-big;
-    display: block;
+    // padding-top: $padding-big;
+    // display: block;
 
   }
 }
@@ -394,9 +442,8 @@ $card-button-border-height: $border-general-height;
 .card-button__edit-icon {
   width: auto;
   height: 30px;
-  padding-right: $padding-big;
   position: absolute;
-  right: 0;
+  right: $padding-xsmall;
 }
 
 .card-button__options-menu {
@@ -442,7 +489,7 @@ $card-button-border-height: $border-general-height;
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 20px solid $color-dark-gray;
+  border-bottom: 5px solid $color-ligth-gray;
   margin-left: auto;
   margin-right: $card-button__submenu-top-arrow-right;
 }
@@ -516,6 +563,17 @@ $card-button-border-height: $border-general-height;
 
 .card-button__city--displayMap {
   text-decoration: underline;
+  text-decoration-color: $color-black;
+  background-color: transparent;
+}
+
+.card-button__city--displayMap::after {
+  background: var(--network-background-color);
+  border-radius: 34px;
+  content: "";
+  display: inline-block;
+  height: 10px;
+  width: 10px;
 }
 
 .card-button__city-list {
