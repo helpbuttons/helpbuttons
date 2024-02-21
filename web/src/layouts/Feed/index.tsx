@@ -24,6 +24,7 @@ import { useEffect, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
 import {
+  CreateNewCommentReply,
   CreateNewPost,
   CreateNewPostComment,
   DeletePost,
@@ -40,6 +41,7 @@ import { CardButtonHeadActions } from 'components/button/CardButton';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
+  const [showReplyFirstPost, toggleShowReplyFirstPost] = useToggle(false);
 
   const loggedInUser = useStore(
     store,
@@ -70,18 +72,17 @@ export default function Feed({ button }: { button: Button }) {
 
   return (
     <div className="feed-container">
-      {loggedInUser && isButtonOwner && (
+      {(loggedInUser && isButtonOwner) && (
         <ComposePost
           referer={{ button: button.id }}
           onCancel={() => {}}
           onCreate={() => {
             reloadPosts();
           }}
-          button={button}
         />
       )}
       {!isButtonOwner && (      
-        <CardButtonHeadActions button={button} />         
+        <CardButtonHeadActions button={button} toggleShowReplyFirstPost={toggleShowReplyFirstPost}/>         
       )}
       &nbsp;
       <div className="feed-line"></div>
@@ -99,6 +100,7 @@ export default function Feed({ button }: { button: Button }) {
                 isButtonOwner={isButtonOwner}
                 reloadPosts={reloadPosts}
                 buttonId={button.id}
+                showCompose={(showReplyFirstPost && idx == 0)}
               />
           ))}
         {!posts ||
@@ -122,6 +124,7 @@ export function FeedElement({
   isButtonOwner = false,
   reloadPosts,
   buttonId,
+  showCompose = false,
 }) {
   const [showComposePostReply, setShowComposePostReply] =
     useState(null);
@@ -132,6 +135,18 @@ export function FeedElement({
       }),
     );
   };
+  useEffect(() => {
+    if(showCompose)
+    {
+      setShowComposePostReply(() => {
+        return {
+          post: post.id,
+          privateMessage: false,
+          mentions: [post.author.username],
+        };
+      })
+    }
+  }, [showCompose])
   return (
     <div className="feed-element">
       <div className="card-notification card-notification--feed">
@@ -223,6 +238,7 @@ export function FeedElement({
               }}
               onCreate={() => {
                 reloadPosts();
+                setShowComposePostReply(() => null)
               }}
             />
           )}
@@ -232,25 +248,11 @@ export function FeedElement({
           )}
         </>
         <PostComments
-          buttonOwnerId={buttonOwnerId}
           comments={post.comments}
           reloadPosts={reloadPosts}
           loggedInUser={loggedInUser}
           isButtonOwner={isButtonOwner}
-          onComposeReplyToComment={(
-            commentId,
-            mentions,
-            privateMessage
-          ) => {
-            setShowComposePostReply(() => {
-              return {
-                post: post.id,
-                comment: commentId,
-                mentions: mentions.concat([post.author.username]),
-                privateMessage: privateMessage
-              };
-            });
-          }}
+          post={post}
         />
       </div>
     </div>
@@ -353,10 +355,10 @@ export function Compose({
             if (referer?.privateMessage) {
               privacy = CommentPrivacyOptions.PRIVATE;
             }
-
             store.emit(
-              new CreateNewPostComment(
+              new CreateNewCommentReply(
                 referer.post,
+                referer.comment,
                 privacy,
                 { message: message },
                 () => {

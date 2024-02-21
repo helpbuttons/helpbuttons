@@ -13,7 +13,6 @@ import {
   UpdateExploreSettings,
   ExploreSettings,
   ClearCachedHexagons,
-  SetExploreSettingsBoundsLoaded,
   UpdateHexagonClicked,
   updateCurrentButton,
   FindButton,
@@ -55,16 +54,8 @@ import {
   orderByPrice,
 } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
-import t from 'i18n';
-import { IoClose, IoMapOutline } from 'react-icons/io5';
-import CardButton from 'components/button/CardButton';
-import Feed from 'layouts/Feed';
 import { alertService } from 'services/Alert';
-import Btn, {
-  BtnType,
-  ContentAlignment,
-  IconType,
-} from 'elements/Btn';
+import { ButtonShow } from 'pages/ButtonFile/[id]';
 
 const defaultZoomPlace = 13;
 
@@ -135,12 +126,11 @@ function HoneyComb({ router, selectedNetwork }) {
           }}
         >
           {selectedNetwork.buttonTemplates?.length > 0 && (
-            <CardButton
-              button={currentButton}
-              buttonTypes={selectedNetwork.buttonTemplates}
-            />
+              <ButtonShow
+                currentButton={currentButton}
+                buttonTypes={selectedNetwork.buttonTemplates}
+              />
           )}
-          <Feed button={currentButton} />
         </PopupButtonFile>
       )}
       <div className="index__explore-container">

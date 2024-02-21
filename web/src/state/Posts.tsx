@@ -83,6 +83,32 @@ export class CreateNewPostComment implements WatchEvent, UpdateEvent {
   }
 }
 
+export class CreateNewCommentReply implements WatchEvent, UpdateEvent {
+  public constructor(
+    private postId: string,
+    private commentId: string,
+    private privacy: CommentPrivacyOptions,
+    private message,
+    private onSuccess,
+    private onError,
+  ) {}
+  public watch(state: GlobalState) {
+    return PostService.newCommentReply(this.postId, this.commentId, this.privacy, this.message).pipe(
+      map((data) => this.onSuccess(data)),
+      catchError((error) => handleError(this.onError, error)),
+    );
+  }
+  
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.loggedInUser.id]
+      newState.explore.map.boundsFilteredButtons = []
+      newState.explore.map.cachedHexagons = []
+      newState.explore.map.listButtons = []
+    });
+  }
+}
+
 export class DeletePost implements WatchEvent {
   public constructor(
     private postId: string,

@@ -31,6 +31,23 @@ export class CommentService {
     });
   }
 
+  newReply(message: string, postId: string, commentParentId: string, author: User, privacy: CommentPrivacyOptions) {
+
+    return this.postSerice.findById(postId).then((post) => {
+      const comment = {
+        id: dbIdGenerator(),
+        message,
+        post,
+        author,
+        privacy,
+        commentParentId: commentParentId,
+      };
+      return this.commentRepository.insert([comment]).then((result) => {
+        return {...comment, button: post.button}
+      });
+    });
+  }
+
   findById(id: string) {
     return this.commentRepository.findOne({
       where: { id },

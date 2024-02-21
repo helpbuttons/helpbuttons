@@ -58,6 +58,24 @@ export class PostController {
       return comment;  
       })
     }
+
+
+    @OnlyRegistered()
+    @Post('new/comment/:privacy/:postId/:commentParentId')
+    async newCommentReply(
+      @Body() message: MessageDto,
+      @Param('privacy') privacy: CommentPrivacyOptions,
+      @Param('postId') postId: string,
+      @Param('commentParentId') commentParentId: string,
+      @CurrentUser() user: User,
+    ){
+      return await this.commentService.newReply(message.message, postId, commentParentId, user, privacy).then((comment) => {
+        notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, comment)
+      return comment;  
+      })
+    }
+
+
     @OnlyRegistered()
     @Post('update')
     async update(

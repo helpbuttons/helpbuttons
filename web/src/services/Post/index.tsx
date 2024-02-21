@@ -26,6 +26,15 @@ export class PostService {
     return httpService.post(`/post/new/comment/${privacy}/${postId}`, data);
   }
 
+  public static newCommentReply(
+    postId: string,
+    commentId: string,
+    privacy: CommentPrivacyOptions,
+    data: MessageDto,
+  ): Observable<any> {
+    return httpService.post(`/post/new/comment/${privacy}/${postId}/${commentId}`, data);
+  }
+
   public static delete(
     postId: string,
   ): Observable<any> {

@@ -440,7 +440,8 @@ function ShowPhone({ button }) {
   );
 }
 
-export function CardButtonHeadActions({ button }) {
+export function CardButtonHeadActions({ button, toggleShowReplyFirstPost }) {
+  
   return (
     <div className="card-button__actions">
       <ShowPhone button={button} />
@@ -450,7 +451,7 @@ export function CardButtonHeadActions({ button }) {
           iconLeft={IconType.circle}
           iconLink={<IoMailOutline />}
           submit={true}
-        
+          onClick={() => { toggleShowReplyFirstPost(true)}}
       />
       {button.hearts && (
         <span className="btn-circle__icon">
