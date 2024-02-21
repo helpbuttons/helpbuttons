@@ -9,6 +9,9 @@ export default function PopupHeader({children, linkBack = null,linkFwd = null, o
   {
     if(linkFwd){
       Router.push(linkFwd);
+    }
+    else if(linkBack){
+      Router.push(linkBack);
     }else{
       onCloseClicked();
     }
@@ -19,7 +22,7 @@ export default function PopupHeader({children, linkBack = null,linkFwd = null, o
       <div className="popup__header">
         <header className="popup__header-content">
           <div className="popup__header-left">
-            {(onCloseClicked ||linkBack )&&            
+            {(onCloseClicked || linkBack || linkFwd)&&            
               <div onClick={onCloseClick} className="popup__header-button">
                 <div className="btn-circle__icon">
                   <IoClose />

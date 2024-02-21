@@ -69,7 +69,7 @@ body {
 .popup__header {
 
   width: 100%;
-  padding: .5rem;
+  padding: $padding-big;
   position:  relative;
   border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
   height: $popup-header-height-mobile;
