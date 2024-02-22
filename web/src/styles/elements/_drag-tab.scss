@@ -105,9 +105,9 @@ $drag-tab-icon-size: 25px;
     flex-direction: row-reverse;
     
     height: auto;
-    left: 35%;
+    left: calc(35% + 40px);
     bottom: 60px;
-    border-radius: 0 $border-radius-circle $border-radius-circle 0;
+    border-radius: $border-radius-circle;
     cursor: pointer; /* fallback if grab cursor is unsupported */
     padding: $padding-small;
     transition: $transition-default-slow;
@@ -116,8 +116,13 @@ $drag-tab-icon-size: 25px;
 
   }
 
+  .drag-tab--open::after {
+    content: "";
+  }
+
   .drag-tab--open {
 
+    border-radius: 0 $border-radius-circle $border-radius-circle 0;
     left: 0;
 
   }

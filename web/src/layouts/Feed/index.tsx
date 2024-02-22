@@ -84,7 +84,6 @@ export default function Feed({ button }: { button: Button }) {
       {!isButtonOwner && (      
         <CardButtonHeadActions button={button} toggleShowReplyFirstPost={toggleShowReplyFirstPost}/>         
       )}
-      &nbsp;
       <div className="feed-line"></div>
       <div className="feed-section">
         {posts &&
@@ -273,9 +272,8 @@ export function ComposePost({
 
         }
         {!show &&
-            <div className="button-file__action-section">
+            <div className="card-button__actions">
 
-              <div className="button-file__action-section--field feeds__new-message">
                 <Btn
                   submit={false}
                   btnType={BtnType.corporative}
@@ -287,7 +285,6 @@ export function ComposePost({
                     toggleShow(true);
                   }}
                 />
-              </div>
             </div>
           }
     </>
@@ -335,7 +332,7 @@ export function Compose({
   if (referer.comment) {
     return (
       <div className="button-file__action-section">
-        <div className="button-file__action-section-close">
+        {/* <div className="button-file__action-section-close">
           <Btn
             submit={false}
             btnType={BtnType.iconActions}
@@ -346,7 +343,7 @@ export function Compose({
               onCancel();
             }}
           />
-        </div>
+        </div> */}
         <MessageNew
           isComment={true}
           privateMessage={referer?.privateMessage}
@@ -380,7 +377,7 @@ export function Compose({
   if (referer.post) {
     return (
       <div className="button-file__action-section">
-        <div className="button-file__action-section-close">
+        {/* <div className="button-file__action-section-close">
           <Btn
               submit={false}
               btnType={BtnType.iconActions}
@@ -391,7 +388,7 @@ export function Compose({
                 onCancel();
               }}
             />
-        </div>
+        </div> */}
         <MessageNew
           isComment={true}
           privateMessage={referer?.privateMessage}

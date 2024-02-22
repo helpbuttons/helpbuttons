@@ -2,7 +2,7 @@ $popup-background: rgba(0,0,0,.2);
 $popup-header-height: 50px;
 $popup-header-height-mobile: 50px;
 $popup-options-height: 80px;
-$popup-options-border-top: 3px $color-black;
+$popup-options-border-top: 1px solid $color-dark-gray;
 $popup-max-width: $grid-max-width;
 $popup-content-height: calc( 100vh - #{$popup-header-height });
 $popup-header-lateral: calc( 100% / 2 - #{$popup-max-width} / 2 );
@@ -383,6 +383,7 @@ body {
   .popup--button-file {
 
     width: 100%;
+    border-right: $popup-options-border-top;
   }  
 
   .popup__header,

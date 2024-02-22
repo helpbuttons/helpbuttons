@@ -8,8 +8,13 @@ import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';
 import {
+  IoArrowBack,
+  IoArrowRedo,
+  IoArrowUndoOutline,
   IoChatbubbleEllipsesSharp,
   IoMailOutline,
+  IoReturnDownBackSharp,
+  IoReturnUpBackOutline,
   IoTrashBinOutline,
 } from 'react-icons/io5';
 import { readableTimeLeftToDate } from 'shared/date.utils';
@@ -20,6 +25,7 @@ import { uniqueArray } from 'shared/sys.helper';
 import { Compose } from 'layouts/Feed';
 import { useState } from 'react';
 import { useToggle } from 'shared/custom.hooks';
+import t from 'i18n';
 
 export default function PostComments({
   comments,
@@ -107,9 +113,8 @@ export function PostComment({
         {(comment.privacy == CommentPrivacyOptions.PRIVATE && !isReply) && (
           <Btn
             submit={false}
-            btnType={BtnType.iconActions}
-            iconLink={<IoMailOutline />}
-            iconLeft={IconType.circle}
+            btnType={BtnType.smallLink}
+            caption={t("comment.sendPublic")}
             contentAlignment={ContentAlignment.right}
             onClick={() =>
               toggleShowComposeComment(ComposeCommentState.PRIVATE)
@@ -119,9 +124,8 @@ export function PostComment({
         {(comment.privacy == CommentPrivacyOptions.PUBLIC && !isReply) && (
           <Btn
             submit={false}
-            btnType={BtnType.iconActions}
-            iconLink={<IoMailOutline />}
-            iconLeft={IconType.circle}
+            btnType={BtnType.smallLink}
+            caption={t("comment.sendPrivate")}
             contentAlignment={ContentAlignment.right}
             onClick={() =>
               toggleShowComposeComment(ComposeCommentState.PUBLIC)

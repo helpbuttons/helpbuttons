@@ -13,6 +13,7 @@ export enum BtnType {
     smallCircle,
     iconActions,
     filterCorp,
+    smallLink,
 }
 
 export enum IconType {
@@ -137,6 +138,9 @@ export default function Btn({
             break;
         case BtnType.iconActions:
             classNames.push("btn btn-circle--big-icon");
+            break;
+        case BtnType.smallLink:
+            classNames.push("btn btn--link-small");
             break;
         default:
             if (hasIcon) {

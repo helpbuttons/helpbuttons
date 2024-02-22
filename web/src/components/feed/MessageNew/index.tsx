@@ -70,7 +70,7 @@ export default function MessageNew({
                 </label>
 
               </div>
-            )}
+            )} */}
             {isComment && privateMessage && (
               <div className="form__input-subtitle-side">
                 <label className="form__input-subtitle--error">
@@ -79,7 +79,7 @@ export default function MessageNew({
                 </label>
 
               </div>
-            )} */}
+            )}
           </div>
             <Btn
                 submit={true}

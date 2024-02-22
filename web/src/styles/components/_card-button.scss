@@ -78,8 +78,15 @@ $card-button-border-height: $border-general-height;
 
 }
 
+.card-button__author-title {
+
+  color: $color-gray;
+  font-size: $font-size-general;
+
+}
+
 .card-button__avatar {
-  flex: 0 1 12%;
+  // flex: 0 1 12%;
   & > button {
     border: none;
     background: none;
@@ -121,12 +128,13 @@ $card-button-border-height: $border-general-height;
 .card-button__actions {
   padding: $padding-big;
   display: flex;
+  overflow: hidden;
   flex-direction: column;
   align-items: center;
   vertical-align: baseline;
   background-color: $color-white;
-  overflow:scroll;
   border-top: 1px dashed $color-ligth-gray;
+  border-radius: 0 0 $border-radius-circle $border-radius-circle;
   span {
     align-items: center;
     padding-right: 1rem;
@@ -467,7 +475,7 @@ $card-button-border-height: $border-general-height;
   justify-content: flex-start;
   align-items: flex-start;
   border-radius: $border-radius-basic;
-  z-index: $z-index-01;
+  z-index: $z-index-03;
   height: 100%;
   overflow-y: auto;
   color: white;

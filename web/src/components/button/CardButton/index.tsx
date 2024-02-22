@@ -536,7 +536,9 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
     : `/p/${button.owner.username}`;
   return (
     <div className="card-button__author">
+          
           <div className="card-button__info">
+          <div className="card-button__author-title">{t('button.authorTitle')}</div>
             <Link href={profileHref}>
               <div className="card-button__name">
                 

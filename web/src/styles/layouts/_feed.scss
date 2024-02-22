@@ -102,11 +102,9 @@ $feed-new-message-radius: $border-radius-circle;
 
   width: 100%;
   display: block;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-direction: row;
   // background-color: $color-white;
   padding: $feed-padding;
+  padding-top: 0;
 
   .dropdown-select__trigger {
 
@@ -118,7 +116,9 @@ $feed-new-message-radius: $border-radius-circle;
   button {
 
     margin: $margin-xsmall 0;
+    margin-left: auto;
 
+    // float: right;
   }
 
 }
