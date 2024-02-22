@@ -254,7 +254,7 @@
   "button": {
     "title":"Vista de _helpbutton_",
     "copy": "Copiar enlace",
-    "delete": "Borrar",
+    "delete": "Finalizar",
     "typeExplain": "Por favor elige qué tipo de _helpbutton_ te gustaría publicar",
     "placeHolderTitle": "Escribe un nuevo título para tu _helpbutton_",
     "descriptionLabel": "Descripción",
