@@ -104,7 +104,7 @@ export function PostComment({
       <Comment comment={comment} />
       
       <div className="message__actions">
-        {(comment.privacy == CommentPrivacyOptions.PRIVATE && !isReply) && (
+        {(comment.privacy == CommentPrivacyOptions.PRIVATE) && (
           <Btn
             submit={false}
             btnType={BtnType.iconActions}
@@ -116,7 +116,7 @@ export function PostComment({
             }
           />
         )}
-        {(comment.privacy == CommentPrivacyOptions.PUBLIC && !isReply) && (
+        {(comment.privacy == CommentPrivacyOptions.PUBLIC) && (
           <Btn
             submit={false}
             btnType={BtnType.iconActions}
@@ -143,11 +143,11 @@ export function PostComment({
             />
           )}
       </div>
-      {(!isReply && showComposeComment != ComposeCommentState.HIDE) && (
+      {(showComposeComment != ComposeCommentState.HIDE) && (
         <Compose
           referer={{
             post: post.id,
-            comment: comment.id,
+            comment: comment.commentParentId ? comment.commentParentId : comment.id,
             privateMessage:
               ComposeCommentState.PRIVATE == showComposeComment,
             mentions: [
@@ -164,6 +164,7 @@ export function PostComment({
           }}
         />
       )}
+     
       {replies.length > 0 && (
         <>
           {replies.map((reply, key) => {
