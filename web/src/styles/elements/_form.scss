@@ -188,7 +188,11 @@ margin: $margin-medium 0;
 .form__input--text-length {
 
   font-size: $font-size-small;
+  display: block;
+  position: absolute;
   color: $color-gray;
+  bottom: 4.5rem;
+  left: 1rem;
   
 }
 

@@ -315,7 +315,8 @@
     "placeholderWrite": "Write a message in this post",
     "posted":"Comment posted",
     "sendPublic":"Comment",
-    "sendPrivate":"Private"
+    "sendPrivate":"Private",
+    "send":"Send"
   },
   "configuration": {
     "title": "Network and Administrator settings",

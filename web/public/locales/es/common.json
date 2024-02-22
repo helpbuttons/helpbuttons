@@ -356,7 +356,8 @@
     "private":"Estás mandando un mensaje privado. Sólo el destinatario podrá verlo.",
     "delete": "Borrar",
     "sendPublic":"Responder en público",
-    "sendPrivate":"Privado"
+    "sendPrivate":"Privado",
+    "send":"Enviar"
   },
   "picker": {
     "headerText": "Elige una localización"

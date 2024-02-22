@@ -63,7 +63,7 @@ export default function MessageNew({
               {...register('message', { required: true })}
               maxLength={500}
             />
-            {isComment && !privateMessage && (
+            {/* {isComment && !privateMessage && (
               <div className="form__input-subtitle-side">
                 <label className="form__input-subtitle--error">
                   {t('comment.public')}
@@ -79,14 +79,17 @@ export default function MessageNew({
                 </label>
 
               </div>
-            )}
+            )} */}
           </div>
-          <button
-            type="submit"
-            className="btn-circle btn-circle__icon btn-circle__content"
-          >
-            <IoPaperPlaneOutline />
-          </button>
+            <Btn
+                submit={true}
+                btnType={BtnType.filterCorp}
+                caption={t("comment.send")}
+                iconLink={<IoPaperPlaneOutline />}
+                iconLeft={IconType.svg}
+                contentAlignment={ContentAlignment.center}
+              />
+          
         </Form>
       </div>
     </>
