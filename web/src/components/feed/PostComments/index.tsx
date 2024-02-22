@@ -114,7 +114,7 @@ export function PostComment({
           <Btn
             submit={false}
             btnType={BtnType.smallLink}
-            caption={t("comment.sendPublic")}
+            caption={t("comment.sendPrivate")}
             contentAlignment={ContentAlignment.right}
             onClick={() =>
               toggleShowComposeComment(ComposeCommentState.PRIVATE)
@@ -125,7 +125,7 @@ export function PostComment({
           <Btn
             submit={false}
             btnType={BtnType.smallLink}
-            caption={t("comment.sendPrivate")}
+            caption={t("comment.sendPublic")}
             contentAlignment={ContentAlignment.right}
             onClick={() =>
               toggleShowComposeComment(ComposeCommentState.PUBLIC)
