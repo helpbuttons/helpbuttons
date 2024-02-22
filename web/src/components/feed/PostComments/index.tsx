@@ -139,9 +139,10 @@ export function PostComment({
             isAdmin(loggedInUser)) && (
             <Btn
               submit={true}
-              btnType={BtnType.iconActions}
-              iconLink={<IoTrashBinOutline />}
-              iconLeft={IconType.circle}
+              btnType={BtnType.smallLink}
+              // iconLink={<IoTrashBinOutline />}
+              caption={t("comment.delete")}
+              // iconLeft={IconType.circle}
               contentAlignment={ContentAlignment.right}
               onClick={() => deleteComment(comment.id)}
             />

@@ -310,7 +310,7 @@
     "renewPost": "Hello, I renewed helpbutton on day {0}. Leave a comment if you want to communicate with me."
   },
   "comment": {
-    "delete": "Borrar",
+    "delete": "Delete",
     "private":"You're sending a private message. Only the destination user could see it.",
     "public":"This comment is public, everyone could see it.",
     "placeholderWrite": "Write a message in this post",
