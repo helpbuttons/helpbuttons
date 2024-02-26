@@ -282,7 +282,7 @@ function TagFollow({tags}) {
 
   return (
     <>
-        {t('buttonFilters.followTag')}
+
         {tags.map((tag) => {
           return ( 
                   <Btn

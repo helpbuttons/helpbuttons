@@ -84,3 +84,18 @@ $index-mobile-fixed-z-index: $z-index-05;
   }
   
 }
+
+
+@media #{$breakpoints-xxlarge} {
+
+  .index__content-left {
+    min-width: 30vw;
+    width: 20vw;
+
+  }
+
+  .index__content-left--hide {
+    margin-left: -30vw;
+  }
+
+}

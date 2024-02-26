@@ -17,11 +17,10 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 .nav-header__content {
 
-  width: 100%;
   display: flex;
   position: relative;
   // height: $nav-header-height;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: $color-corporative;
   border-radius: 0 0 0 0;
@@ -37,8 +36,12 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 }
 
+
+
 .nav-header__content-message {
   flex-grow:1;
+  display: flex;
+  flex-direction: row;
 }
 
 .nav-header__content-input {
@@ -65,8 +68,18 @@ $nav-header-new-message-radius: $border-radius-circle;
   .nav-header__container {
 
     background-color: $color-corporative;
+    padding: $padding-medium;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: flex-start;
 
   }
+
+
+.nav-header__content {
+  max-width: $grid-max-width;
+  justify-content: flex-start;
+}
 
   .nav-header__content {
 

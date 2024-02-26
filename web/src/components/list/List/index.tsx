@@ -1,7 +1,7 @@
 //List of elements component that can be used in home, profile and other pages/layouts where we need to ddisplay buttons/networks/other elements
 //a foreach => buttons
 import React, { useState } from 'react';
-import { IoChevronForwardOutline, IoMapOutline } from 'react-icons/io5';
+import { IoArrowDown, IoArrowUp, IoBackspaceOutline, IoChevronForwardOutline, IoClose, IoList, IoMap, IoMapOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import ContentList from 'components/list/ContentList';
 import { useButtonTypes } from 'shared/buttonTypes';
@@ -34,6 +34,14 @@ function List({
   const showMapCaption = showMap
     ? 'explore.hideMap'
     : 'explore.showMap';
+
+  const showMapIcon = showMap
+  ? <IoClose/>
+  : <IoMapOutline/>;
+
+  const showListCaption = showLeftColumn
+  ? 'explore.hideList'
+  : 'explore.showList';
 
   const handleChangeShowMap = (event) => {
     toggleShowMap(event.target.value);
@@ -69,21 +77,25 @@ function List({
 
             <div 
               className={
-                'list__order ' +
+                'list__order ' +  
+                (showLeftColumn ? '' : ' list__order--hidden') +
                 (showMap ? '' : ' list__order--full-screen')
               }
             
             >
               <>
                 {/* <div>{t('buttonFilters.orderBy')}</div> */}
-
-                <AdvancedFiltersSortDropDown
+                {showLeftColumn &&
+                  <AdvancedFiltersSortDropDown
                   className={'dropdown__dropdown-trigger--list'}
                   orderBy={filters.orderBy}
                   setOrderBy={(value) => updatesOrderByFilters(value)}
                   buttonTypes={buttonTypes}
                   selectedButtonTypes={filters.helpButtonTypes}
                 />
+
+                }
+                
               </>
               
               <div
@@ -92,29 +104,44 @@ function List({
                     'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')
                   }
                 >
+
                   <span className="drag-tab__line"></span>
 
                   <div className="drag-tab__icon">
-                    {showLeftColumn ? (
-                      <IoChevronBackOutline />
+                    {(!showLeftColumn) ? (
+                      <Btn
+                      btnType={BtnType.link}
+                      iconLeft={IconType.svg}
+                      iconLink={<IoList />}
+                      contentAlignment={ContentAlignment.center}
+                      caption={t(showListCaption)}
+                        />
                     ) : (
-                      <IoChevronForwardOutline />
+                      
+                      <Btn
+                      btnType={BtnType.link}
+                      iconLeft={IconType.svg}
+                      iconLink={<IoClose />}
+                      contentAlignment={ContentAlignment.center}
+                      caption={t(showListCaption)}
+                      />
                     )}
                   </div>
                 </div>
 
               <ShowMobileOnly>
-                
-                <div className="list__show-map-button">
-                  <Btn
-                    btnType={BtnType.filterCorp}
-                    iconLeft={IconType.svg}
-                    iconLink={<IoMapOutline />}
-                    contentAlignment={ContentAlignment.center}
-                    caption={t(showMapCaption)}
-                    onClick={handleChangeShowMap}
-                  />
-                </div>
+                {showLeftColumn &&
+                  <div className="list__show-map-button">
+                    <Btn
+                      btnType={BtnType.link}
+                      iconLeft={IconType.svg}
+                      iconLink={showMapIcon}
+                      contentAlignment={ContentAlignment.center}
+                      caption={t(showMapCaption)}
+                      onClick={handleChangeShowMap}
+                    />
+                  </div>
+                  }
               </ShowMobileOnly>
 
             </div>

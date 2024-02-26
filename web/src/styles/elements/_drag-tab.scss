@@ -12,21 +12,21 @@ $drag-tab-icon-size: 25px;
 
 .drag-tab {
 
-  position: relative;
-  display: block;
+  position: absolute;
+  display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   height: $drag-tab-height;
   background-color: $color-corporative;
   margin: 0;
   z-index: $z-index-03;
-  padding: $padding-small $padding-small;
-  border-radius: $border-radius-circle $border-radius-circle 0 0 ;
-  transform: translateY(-35px);
+  margin-bottom: 95px;
+  // padding: $padding-small $padding-small;
+  border-radius: $border-radius-circle $border-radius-circle;
+  // transform: translateY(-35px);
   transition: $transition-default-slow;
-  width: auto;
-  right: 0;
+
   // margin-right: $margin-small;
 
 
@@ -80,7 +80,7 @@ $drag-tab-icon-size: 25px;
 
   svg {
     transition: $transition-no;
-    transform: rotate(-90deg);
+    // transform: rotate(-90deg);
     transform-origin: 50% 50%;
     width: $drag-tab-icon-size;
     height: $drag-tab-icon-size;
@@ -106,7 +106,7 @@ $drag-tab-icon-size: 25px;
     
     height: auto;
     left: calc(35% + 40px);
-    bottom: 60px;
+    top: 150px;
     border-radius: $border-radius-circle;
     cursor: pointer; /* fallback if grab cursor is unsupported */
     padding: $padding-small;
@@ -143,6 +143,22 @@ $drag-tab-icon-size: 25px;
       height: $drag-tab-icon-size;
     }
 
+
+  }
+
+}
+
+@media #{$breakpoints-xxlarge} {
+
+  .drag-tab {
+   
+    left: calc(30vw + 40px);
+
+
+  }
+
+  .drag-tab--open {
+    left: 0;
 
   }
 

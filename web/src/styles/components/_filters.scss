@@ -56,6 +56,7 @@ $filters-padding: 10px;
   background-color: $color-corporative;
   padding: $padding-medium $padding-medium;
   transition: $transition-default-slow;
+  height: $footer-height-mobile;
 
   .btn {
 
@@ -129,6 +130,9 @@ $filters-padding: 10px;
   .filters__container{
 
     width: 100%;
+    display: flex;
+    justify-content: flex-start;
+
   }
 
 
@@ -147,7 +151,10 @@ $filters-padding: 10px;
 
   .filters__actions--home {
 
-    width: 100vw;
+    max-width: $grid-max-width;
+    justify-content: center;
+    position: absolute;
+    bottom: $footer-height-mobile;
 
   }
   

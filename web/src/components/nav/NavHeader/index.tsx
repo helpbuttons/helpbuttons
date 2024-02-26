@@ -4,6 +4,8 @@ import React from 'react';
 import { HeaderSearch } from 'elements/HeaderSearch';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import { IoFilter } from 'react-icons/io5';
 
 function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount, hexagonClicked = false, isHome = false}) {
   const exploreMapState = useStore(
@@ -24,7 +26,7 @@ function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount, hexagonCli
               />
             </div>
           </form>
-        
+          
       </div>
     </>
   );
