@@ -118,21 +118,7 @@ function HoneyComb({ router, selectedNetwork }) {
 
   return (
     <>
-      {currentButton && (
-        <PopupButtonFile
-          
-          onCloseClicked={() => {
-            store.emit(new updateCurrentButton(null));
-          }}
-        >
-          {selectedNetwork.buttonTemplates?.length > 0 && (
-              <ButtonShow
-                currentButton={currentButton}
-                buttonTypes={selectedNetwork.buttonTemplates}
-              />
-          )}
-        </PopupButtonFile>
-      )}
+
       <div className="index__explore-container">
         <div
           className={
@@ -140,15 +126,32 @@ function HoneyComb({ router, selectedNetwork }) {
             (showLeftColumn ? '' : 'index__content-left--hide')
           }
         >
-          <NavHeader
-            hexagonClicked={hexagonClicked}
-            toggleShowFiltersForm={toggleShowFiltersForm}
-            totalNetworkButtonsCount={selectedNetwork?.buttonCount}
-          />
-          <AdvancedFilters
-            showFiltersForm={showFiltersForm}
-            toggleShowFiltersForm={toggleShowFiltersForm}
-          />
+          {currentButton && (
+            <PopupButtonFile
+              
+              onCloseClicked={() => {
+                store.emit(new updateCurrentButton(null));
+              }}
+            >
+              {selectedNetwork.buttonTemplates?.length > 0 && (
+                  <ButtonShow
+                    currentButton={currentButton}
+                    buttonTypes={selectedNetwork.buttonTemplates}
+                  />
+              )}
+            </PopupButtonFile>
+          )}
+          <ShowMobileOnly>
+            <NavHeader
+              hexagonClicked={hexagonClicked}
+              toggleShowFiltersForm={toggleShowFiltersForm}
+              totalNetworkButtonsCount={selectedNetwork?.buttonCount}
+            />
+            <AdvancedFilters
+              showFiltersForm={showFiltersForm}
+              toggleShowFiltersForm={toggleShowFiltersForm}
+            />
+          </ShowMobileOnly>
 
           <ShowDesktopOnly>
             <List

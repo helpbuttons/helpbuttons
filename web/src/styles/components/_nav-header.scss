@@ -68,22 +68,30 @@ $nav-header-new-message-radius: $border-radius-circle;
   .nav-header__container {
 
     background-color: $color-corporative;
-    padding: $padding-medium;
-    padding-bottom: 0;
+    padding: 0 $padding-medium;
     display: flex;
     justify-content: flex-start;
+    border-bottom: 1px solid $nav-header-color-gray-border;
 
   }
 
 
-.nav-header__content {
-  max-width: $grid-max-width;
-  justify-content: flex-start;
-}
-
   .nav-header__content {
-
+    max-width: $grid-max-width;
+    justify-content: flex-start;
+    flex: 0.9;
     width: 100%;
+
+  }
+
+  .nav-header__filters {
+
+    display: flex;
+    background-color: $color-ligth-gray;
+    align-items: center;
+    justify-content: center;
+    padding: $padding-small;
+    border-bottom: 1px solid $color-gray-border;
 
   }
 

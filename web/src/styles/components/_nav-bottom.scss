@@ -191,12 +191,14 @@ $nav-bottom-border: 32px;
   .nav-bottom {
     border-radius: 0 0 $nav-bottom-border  $nav-bottom-border;
     // flex-direction: column;
-    width: $nav-bottom-height-desktop;
-    height: $nav-bottom-width-desktop;
+    width: auto;
+    // height: $nav-bottom-width-desktop;
     z-index: $z-index-04;
-    right: 8vw;
-    left: auto;
-
+    justify-content: flex-end;
+    gap: $margin-big;
+    // flex: 0.5;
+    right: 3vw;
+    position: relative;
     // top: calc( 50% - #{$nav-bottom-height-desktop} / 2 );
     top: 0;
     padding-top: $padding-big;

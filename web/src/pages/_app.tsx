@@ -30,6 +30,9 @@ import { refeshActivities } from 'state/Activity';
 import t, { updateNomeclature } from 'i18n';
 import { useInterval } from 'shared/custom.hooks';
 import { useSearchParams } from 'next/navigation';
+import NavHeader from 'components/nav/NavHeader';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import AdvancedFilters from 'components/search/AdvancedFilters';
 
 export default appWithTranslation(MyApp);
 
@@ -282,8 +285,21 @@ function MyApp({ Component, pageProps }) {
         <div className="index__content">
           {selectedNetwork && (
             <>
+              <ShowDesktopOnly>
+                <NavHeader
+                  totalNetworkButtonsCount={selectedNetwork?.buttonCount} 
+                  toggleShowFiltersForm={undefined}              
+                />                 
+                <AdvancedFilters 
+                toggleShowFiltersForm={undefined} 
+                showFiltersForm={false}                  
+                />
+              </ShowDesktopOnly>
+
               <Component {...pageProps} />
-              <NavBottom loggedInUser={loggedInUser} />
+              <ShowMobileOnly>
+                <NavBottom loggedInUser={loggedInUser} />
+              </ShowMobileOnly>
             </>
           )}
           {!selectedNetwork && <Component {...pageProps} />}
