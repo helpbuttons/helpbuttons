@@ -134,33 +134,41 @@ function HoneyComb({ router, selectedNetwork }) {
         </PopupButtonFile>
       )}
       <div className="index__explore-container">
-        <div
-          className={
-            'index__content-left ' +
-            (showLeftColumn ? '' : 'index__content-left--hide')
-          }
-        >
-          <NavHeader
-            hexagonClicked={hexagonClicked}
-            toggleShowFiltersForm={toggleShowFiltersForm}
-            totalNetworkButtonsCount={selectedNetwork?.buttonCount}
-          />
-          <AdvancedFilters
-            showFiltersForm={showFiltersForm}
-            toggleShowFiltersForm={toggleShowFiltersForm}
-          />
+        <NavHeader
+          hexagonClicked={hexagonClicked}
+          toggleShowFiltersForm={toggleShowFiltersForm}
+          totalNetworkButtonsCount={selectedNetwork?.buttonCount}
+        />
+        <div className="index__explore-content">
+          <div
+            className={
+              'index__content-left ' +
+              (showLeftColumn ? '' : 'index__content-left--hide')
+            }
+          >
+            {/* <ShowMobileOnly>
+              <NavHeader
+                hexagonClicked={hexagonClicked}
+                toggleShowFiltersForm={toggleShowFiltersForm}
+                totalNetworkButtonsCount={selectedNetwork?.buttonCount}
+              />
+            </ShowMobileOnly> */}
 
-          <ShowDesktopOnly>
-            <List
+            <AdvancedFilters
               showFiltersForm={showFiltersForm}
-              buttons={exploreMapState.listButtons}
-              showLeftColumn={showLeftColumn}
-              onLeftColumnToggle={toggleShowLeftColumn}
-              showMap={true} 
+              toggleShowFiltersForm={toggleShowFiltersForm}
             />
-          </ShowDesktopOnly>
-        </div>
 
+            <ShowDesktopOnly>
+              <List
+                showFiltersForm={showFiltersForm}
+                buttons={exploreMapState.listButtons}
+                showLeftColumn={showLeftColumn}
+                onLeftColumnToggle={toggleShowLeftColumn}
+                showMap={true} 
+              />
+            </ShowDesktopOnly>
+          </div>
         {/* {!showFiltersForm && (
           <ShowMobileOnly>
             <div className="list__show-map-button">
@@ -179,16 +187,19 @@ function HoneyComb({ router, selectedNetwork }) {
         <LoadabledComponent
           loading={exploreSettings.loading && !selectedNetwork}
         >
-          <HexagonExploreMap
-            exploreSettings={exploreSettings}
-            h3TypeDensityHexes={h3TypeDensityHexes}
-            currentButton={currentButton}
-            handleBoundsChange={handleBoundsChange}
-            setHexagonsToFetch={setHexagonsToFetch}
-            setHexagonClicked={setHexagonClicked}
-            hexagonClicked={hexagonClickedStored}
-            selectedNetwork={selectedNetwork}
-          />
+          <div className='index__content-map'>
+            <HexagonExploreMap
+              exploreSettings={exploreSettings}
+              h3TypeDensityHexes={h3TypeDensityHexes}
+              currentButton={currentButton}
+              handleBoundsChange={handleBoundsChange}
+              setHexagonsToFetch={setHexagonsToFetch}
+              setHexagonClicked={setHexagonClicked}
+              hexagonClicked={hexagonClickedStored}
+              selectedNetwork={selectedNetwork}
+            />
+          </div>
+          
         </LoadabledComponent>
         <ShowMobileOnly>
           <div
@@ -208,6 +219,7 @@ function HoneyComb({ router, selectedNetwork }) {
             />
           </div>
         </ShowMobileOnly>
+        </div>
       </div>
     </>
   );
