@@ -121,7 +121,7 @@ function HoneyComb({ router, selectedNetwork }) {
       {currentButton && (
         <PopupButtonFile
           
-          onCloseClicked={() => {
+          linkBack={() => {
             store.emit(new updateCurrentButton(null));
           }}
         >

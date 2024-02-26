@@ -106,7 +106,7 @@ function Configuration() {
   return (
     <>
       {selectedNetwork && (
-        <Popup title={t('configuration.title')} linkFwd="/Profile">
+        <Popup title={t('configuration.title')} linkBack="/Profile">
             <NetworkForm
               handleSubmit={handleSubmit}
               onSubmit={onSubmit}

@@ -1,19 +1,18 @@
 ///Header for popups, with cclose option and optional other elements
-import { IoClose } from "react-icons/io5";
+import { IoArrowBack, IoClose } from "react-icons/io5";
 import { Link } from 'elements/Link';
 import Router from 'next/router';
 
 
-export default function PopupHeader({children, linkBack = null,linkFwd = null, onCloseClicked = null}) {
-  const onCloseClick = () =>
-  {
-    if(linkFwd){
-      Router.push(linkFwd);
-    }
-    else if(linkBack){
-      Router.push(linkBack);
-    }else{
-      onCloseClicked();
+export default function PopupHeader({children, linkBack = null,linkFwd = null}) {
+  const onClick =(action)=> {
+    if (action instanceof Function)
+    {
+      action()
+    } else if (typeof action === "string") {
+      Router.push(action)
+    } else {
+      console.log('wrong action ' + typeof action)
     }
   }
   return (
@@ -22,10 +21,10 @@ export default function PopupHeader({children, linkBack = null,linkFwd = null, o
       <div className="popup__header">
         <header className="popup__header-content">
           <div className="popup__header-left">
-            {(onCloseClicked || linkBack || linkFwd)&&            
-              <div onClick={onCloseClick} className="popup__header-button">
+            {linkBack &&            
+              <div onClick={()=>onClick(linkBack)} className="popup__header-button">
                 <div className="btn-circle__icon">
-                  <IoClose />
+                  <IoArrowBack />
                 </div>
               </div>           
             }
@@ -36,13 +35,13 @@ export default function PopupHeader({children, linkBack = null,linkFwd = null, o
             </h1>
           </div>
           <div className="popup__header-right">
-            {/* {(onCloseClicked || linkFwd) &&
-              <div onClick={onCloseClick} className="popup__header-button">
+            {linkFwd &&
+              <div onClick={()=>onClick(linkFwd)} className="popup__header-button">
                 <div className="btn-circle__icon">
                   <IoClose />
                 </div>
               </div>
-            } */}
+            }
           </div>
         </header>
       </div>
