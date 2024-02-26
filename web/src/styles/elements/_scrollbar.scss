@@ -66,8 +66,8 @@
 
   ::-webkit-scrollbar {
     display: block;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  
+    -ms-overflow-style: auto;  /* IE and Edge */
+    scrollbar-width: auto;  
   }
 
 

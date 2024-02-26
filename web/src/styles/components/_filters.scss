@@ -56,7 +56,7 @@ $filters-padding: 10px;
   background-color: $color-corporative;
   padding: $padding-medium $padding-medium;
   transition: $transition-default-slow;
-  height: $footer-height-mobile;
+  // height: $footer-height-mobile;
 
   .btn {
 
@@ -158,5 +158,15 @@ $filters-padding: 10px;
 
   }
   
+
+}
+
+@media #{$breakpoints-xlarge} {
+
+  .filters__actions {
+
+    width: 30vw;
+    
+  }
 
 }
