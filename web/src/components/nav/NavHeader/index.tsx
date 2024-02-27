@@ -15,6 +15,7 @@ import { ShowDesktopOnly } from 'elements/SizeOnly';
 import t from 'i18n';
 import router from 'next/router';
 import { ToggleAdvancedFilters } from 'state/Explore';
+import { ListButtonTypes } from '../ButtonTypes';
 
 function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
   const showAdvancedFilters = useStore(
@@ -66,20 +67,7 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
       </div>
       <ShowDesktopOnly>
         <div className="nav-header__filters">
-          <Btn
-            btnType={BtnType.filter}
-            iconLeft={IconType.circle}
-            contentAlignment={ContentAlignment.left}
-            caption={t('common.publish')}
-            submit={true}
-          />
-          <Btn
-            btnType={BtnType.filter}
-            iconLeft={IconType.circle}
-            contentAlignment={ContentAlignment.left}
-            caption={t('common.publish')}
-            submit={true}
-          />
+          <ListButtonTypes selectedNetwork={selectedNetwork}/>
         </div>
       </ShowDesktopOnly>
     </div>

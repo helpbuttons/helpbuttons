@@ -30,6 +30,7 @@ import { formatMessage } from 'elements/Message';
 import { LinkProfile } from 'components/user/LinkProfile';
 import { LinkAdminProfile } from 'components/user/LinkAdminProfile';
 import { ShowMobileOnly } from 'elements/SizeOnly';
+import { ListButtonTypes } from 'components/nav/ButtonTypes';
 
 
 export default function HomeInfo({
@@ -37,17 +38,8 @@ export default function HomeInfo({
   selectedNetwork,
   config,
 }) {
-  const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
-  const [buttonTypes, setButtonTypes] = useState([]);
-  useButtonTypes(setButtonTypes);
-  
   const filterTag = (tag) => {
     store.emit(new UpdateFiltersToFilterTag(tag));
-    router.push('/Explore')
-  };
-
-  const filterButtonType = (buttonType) => {
-    store.emit(new UpdateFiltersToFilterButtonType(buttonType));
     router.push('/Explore')
   };
   
@@ -180,36 +172,7 @@ export default function HomeInfo({
                       config.userCount.toString(),
                     ])}
                     <div className="info-overlay__hashtags">
-                      {buttonTypes.map((buttonType, idx) => {
-                        const buttonTypeFound =
-                          selectedNetwork.buttonTypesCount.find(
-                            (buttonTypeCount) =>
-                              buttonTypeCount.type == buttonType.name,
-                          );
-                        const buttoTypeCountText =
-                          (buttonTypeFound?.count
-                            ? buttonTypeFound?.count
-                            : 0
-                          ).toString() +
-                          ' ' +
-                          buttonType.caption;
-                        return (
-                          <div 
-                            className='hashtags__list-item'
-                            key={idx}
-                            style={buttonColorStyle(
-                              buttonType.cssColor,
-                            )}
-                          >
-                            <Btn
-                              btnType={BtnType.filter}
-                              iconLeft={IconType.color}
-                              caption={buttoTypeCountText}
-                              onClick={() => filterButtonType(buttonType.name)}
-                            />
-                          </div>
-                        );
-                      })}
+                      <ListButtonTypes selectedNetwork={selectedNetwork}/>
                     </div>
                     
                   </div>
