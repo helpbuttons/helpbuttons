@@ -19,7 +19,7 @@ import {
   clearHexagonClicked,
   UpdateFilters,
 } from 'state/Explore';
-import NavHeader from 'components/nav/NavHeader'; //just for mobile
+import NavHeader, { AppHeader } from 'components/nav/NavHeader'; //just for mobile
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { withRouter } from 'next/router';
@@ -128,7 +128,6 @@ function HoneyComb({ router, selectedNetwork }) {
         >
           {currentButton && (
             <PopupButtonFile
-              
               onCloseClicked={() => {
                 store.emit(new updateCurrentButton(null));
               }}
@@ -142,15 +141,7 @@ function HoneyComb({ router, selectedNetwork }) {
             </PopupButtonFile>
           )}
           <ShowMobileOnly>
-            <NavHeader
-              hexagonClicked={hexagonClicked}
-              toggleShowFiltersForm={toggleShowFiltersForm}
-              totalNetworkButtonsCount={selectedNetwork?.buttonCount}
-            />
-            <AdvancedFilters
-              showFiltersForm={showFiltersForm}
-              toggleShowFiltersForm={toggleShowFiltersForm}
-            />
+            <AppHeader selectedNetwork={selectedNetwork}/>
           </ShowMobileOnly>
 
           <ShowDesktopOnly>

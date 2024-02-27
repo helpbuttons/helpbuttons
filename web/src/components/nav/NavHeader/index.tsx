@@ -10,6 +10,8 @@ import NavBottom from '../NavBottom';
 import BrandCard from 'components/map/Map/BrandCard';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
 import t from 'i18n';
+import AdvancedFilters from 'components/search/AdvancedFilters';
+import { useToggle } from 'shared/custom.hooks';
 
 function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount, hexagonClicked = false, isHome = false}) {
   const exploreMapState = useStore(
@@ -25,7 +27,7 @@ function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount, hexagonCli
             <BrandCard/>
           </ShowDesktopOnly>
           <form className="nav-header__content">
-            <div className="nav-header__content-message" onClick={toggleShowFiltersForm}>
+            <div className="nav-header__content-message" onClick={ toggleShowFiltersForm} >
               <HeaderSearch
                 results={{count: !exploreMapState.initialized ? totalNetworkButtonsCount : exploreMapState.listButtons.length}}
                 isHome={isHome}
@@ -55,8 +57,39 @@ function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount, hexagonCli
               />
             </div>
       </ShowDesktopOnly>
+
       </div>
+
+
   );
 }
 
 export default NavHeader;
+
+
+export function AppHeader ({selectedNetwork}) {
+
+  const [showFiltersForm, toggleShowFiltersForm]=useToggle(false);
+  const hexagonClicked = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.hexagonClicked,
+    false,
+  );
+
+  return (
+      <>
+          <NavHeader
+            hexagonClicked={hexagonClicked}
+            totalNetworkButtonsCount={selectedNetwork?.buttonCount} 
+            toggleShowFiltersForm={toggleShowFiltersForm}              
+          />                 
+          <AdvancedFilters 
+            toggleShowFiltersForm={toggleShowFiltersForm} 
+            showFiltersForm={showFiltersForm}                  
+          />
+      </>
+
+  )
+
+
+}

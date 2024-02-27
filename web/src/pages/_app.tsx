@@ -30,7 +30,7 @@ import { refeshActivities } from 'state/Activity';
 import t, { updateNomeclature } from 'i18n';
 import { useInterval } from 'shared/custom.hooks';
 import { useSearchParams } from 'next/navigation';
-import NavHeader from 'components/nav/NavHeader';
+import NavHeader, { AppHeader } from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 
@@ -286,16 +286,8 @@ function MyApp({ Component, pageProps }) {
           {selectedNetwork && (
             <>
               <ShowDesktopOnly>
-                <NavHeader
-                  totalNetworkButtonsCount={selectedNetwork?.buttonCount} 
-                  toggleShowFiltersForm={undefined}              
-                />                 
-                <AdvancedFilters 
-                toggleShowFiltersForm={undefined} 
-                showFiltersForm={false}                  
-                />
+                <AppHeader selectedNetwork={selectedNetwork}/>
               </ShowDesktopOnly>
-
               <Component {...pageProps} />
               <ShowMobileOnly>
                 <NavBottom loggedInUser={loggedInUser} />
