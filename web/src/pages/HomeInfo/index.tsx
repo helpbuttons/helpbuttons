@@ -70,7 +70,7 @@ export default function HomeInfo({
 
         <ShowMobileOnly>
           <div className="info-overlay__search-section">
-            <NavHeader selectedNetwork={selectedNetwork}/>
+            <NavHeader selectedNetwork={selectedNetwork} pageName={'HomeInfo'}/>
             <AdvancedFilters isHome={true}/>
           </div>
         </ShowMobileOnly>

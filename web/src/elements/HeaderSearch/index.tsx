@@ -9,7 +9,7 @@ import { customFieldsFiltersText } from 'components/button/ButtonType/CustomFiel
 import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 
 ///search button in explore and home
-export function HeaderSearch({ results }) {
+export function HeaderSearch({ results, isHome = false}) {
   const exploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,
@@ -22,7 +22,7 @@ export function HeaderSearch({ results }) {
     <div className={filtering ?"header-search__tool--filtered" :"header-search__tool"} >
       <div className="header-search__form">
         <LoadabledComponent
-          loading={exploreMapState.loading && buttonTypes}
+          loading={(exploreMapState.loading && !isHome) && buttonTypes}
         >
           <div className="header-search__column">
             <SearchText

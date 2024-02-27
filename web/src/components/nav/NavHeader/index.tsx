@@ -16,7 +16,7 @@ import t from 'i18n';
 import router from 'next/router';
 import { ToggleAdvancedFilters } from 'state/Explore';
 
-function NavHeader({ selectedNetwork, isHome = false, pageName = 'Explore' }) {
+function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
   const showAdvancedFilters = useStore(
     store,
     (state: GlobalState) => state.explore.map.showAdvancedFilters,
@@ -56,6 +56,7 @@ function NavHeader({ selectedNetwork, isHome = false, pageName = 'Explore' }) {
                   ? selectedNetwork?.buttonCount
                   : exploreMapState.listButtons.length,
               }}
+              isHome={pageName == 'HomeInfo'}
             />
           </div>
         </form>
