@@ -1,7 +1,7 @@
 //List of elements component that can be used in home, profile and other pages/layouts where we need to ddisplay buttons/networks/other elements
 //a foreach => buttons
 import React, { useState } from 'react';
-import { IoArrowDown, IoArrowUp, IoBackspaceOutline, IoChevronForwardOutline, IoClose, IoList, IoMap, IoMapOutline } from 'react-icons/io5';
+import { IoClose, IoList, IoMap, IoMapOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import ContentList from 'components/list/ContentList';
 import { useButtonTypes } from 'shared/buttonTypes';
@@ -20,7 +20,6 @@ function List({
   onLeftColumnToggle,
   buttons,
   showLeftColumn,
-  showFiltersForm,
   showMap,
   toggleShowMap = (e) => {},
 }) {
@@ -29,7 +28,11 @@ function List({
     (state: GlobalState) => state.explore.map.filters,
     false,
   );
-
+  const showAdvancedFilters = useStore(
+    store,
+    (state: GlobalState) => state.explore.map.showAdvancedFilters,
+    false
+  );
   
   const showMapCaption = showMap
     ? 'explore.hideMap'
@@ -63,7 +66,7 @@ function List({
 
   return (
     <>
-      {!showFiltersForm && (
+      {!showAdvancedFilters && (
         <>
           
 

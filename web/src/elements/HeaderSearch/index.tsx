@@ -15,6 +15,7 @@ export function HeaderSearch({ results, isHome = false}) {
     (state: GlobalState) => state.explore.map,
     false,
   );
+  
   const [buttonTypes, setButtonTypes] = useState(null);
   useButtonTypes(setButtonTypes);
   const filtering= JSON.stringify(defaultFilters) != JSON.stringify(exploreMapState.filters);

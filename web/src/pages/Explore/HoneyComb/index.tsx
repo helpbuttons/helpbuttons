@@ -19,7 +19,7 @@ import {
   clearHexagonClicked,
   UpdateFilters,
 } from 'state/Explore';
-import NavHeader, { AppHeader } from 'components/nav/NavHeader'; //just for mobile
+import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { withRouter } from 'next/router';
@@ -81,7 +81,6 @@ function HoneyComb({ router, selectedNetwork }) {
     (state: GlobalState) => state.explore.map.filters,
     false
   );
-  const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
   const [showMap, toggleShowMap] = useToggle(true);
 
@@ -90,7 +89,6 @@ function HoneyComb({ router, selectedNetwork }) {
     exploreSettings,
     router,
     selectedNetwork,
-    toggleShowFiltersForm,
     currentButton,
     filters,
   });
@@ -142,12 +140,10 @@ function HoneyComb({ router, selectedNetwork }) {
           )}
           <ShowMobileOnly>
             <NavHeader selectedNetwork={selectedNetwork}/>
-            
           </ShowMobileOnly>
           <AdvancedFilters/>
           <ShowDesktopOnly>
             <List
-              showFiltersForm={showFiltersForm}
               buttons={exploreMapState.listButtons}
               showLeftColumn={showLeftColumn}
               onLeftColumnToggle={toggleShowLeftColumn}
@@ -155,21 +151,6 @@ function HoneyComb({ router, selectedNetwork }) {
             />
           </ShowDesktopOnly>
         </div>
-
-        {/* {!showFiltersForm && (
-          <ShowMobileOnly>
-            <div className="list__show-map-button">
-              <Btn
-                btnType={BtnType.filterCorp}
-                iconLeft={IconType.svg}
-                iconLink={<IoMapOutline />}
-                contentAlignment={ContentAlignment.center}
-                caption={t(showMapCaption)}
-                onClick={handleChangeShowMap}
-              />
-            </div>
-          </ShowMobileOnly>
-        )} */}
 
         <LoadabledComponent
           loading={exploreSettings.loading && !selectedNetwork}
@@ -194,7 +175,6 @@ function HoneyComb({ router, selectedNetwork }) {
             }
           >
             <List
-              showFiltersForm={showFiltersForm}
               buttons={exploreMapState.listButtons}
               showLeftColumn={showLeftColumn}
               showMap={showMap}
@@ -213,7 +193,6 @@ export default withRouter(HoneyComb);
 function useExploreSettings({
   router,
   selectedNetwork,
-  toggleShowFiltersForm,
   exploreSettings,
   currentButton,
   filters
@@ -229,7 +208,6 @@ function useExploreSettings({
       const lng = parseFloat(params.get('lng'));
       const zoom = parseInt(params.get('zoom'));
       const btnId = params.get('btn');
-      const showFilters = params.get('showFilters');
 
       let newFilters = null;
       if(params.has('q'))
@@ -273,10 +251,6 @@ function useExploreSettings({
         );
       } else {
         store.emit(new updateCurrentButton(null));
-      }
-      if (showFilters == 'true') {
-        toggleShowFiltersForm(true);
-        params.delete('showFilters');
       }
     }
   }, []);

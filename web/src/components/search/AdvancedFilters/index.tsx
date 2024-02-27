@@ -37,16 +37,12 @@ export default function AdvancedFilters({
     (state: GlobalState) => state.explore.map.queryFoundTags,
     false
   );
+
   const showAdvancedFilters = useStore(
     store,
     (state: GlobalState) => state.explore.map.showAdvancedFilters,
-    false,
+    false
   );
-    
-  const toggleAdvancedFilters = (value?) => {
-    store.emit(new ToggleAdvancedFilters(value));
-  }
-  
   const [buttonTypes, setButtonTypes] = useState([]);
   useButtonTypes(setButtonTypes);
 
@@ -66,12 +62,13 @@ export default function AdvancedFilters({
     reset(defaultFilters)
     store.emit(new UpdateFilters(defaultFilters));
 
-    toggleAdvancedFilters(false);
+    store.emit(new ToggleAdvancedFilters(false))
   };
   const onSubmit = (data) => {
     const newFilters = { ...filters, ...data }
     store.emit(new UpdateFilters(newFilters));
-    toggleAdvancedFilters(false);
+    store.emit(new ToggleAdvancedFilters(false))
+
     if (isHome) {
       router.push('/Explore');
     }
@@ -118,6 +115,18 @@ export default function AdvancedFilters({
   useEffect(() => {
     reset(filters)
   }, [filters])
+
+  useEffect(() => {
+    const params = new URLSearchParams(router.query)
+    if(params.has('showFilters'))
+    {
+      store.emit(new ToggleAdvancedFilters(true))
+    }else{
+      store.emit(new ToggleAdvancedFilters(false))
+    }
+    
+  }, [])
+  
   return (
     <>
       {showAdvancedFilters && (
@@ -226,7 +235,7 @@ export default function AdvancedFilters({
   );
 }
 
-export function AdvancedFiltersSortDropDown({className, label, orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm, explain }) {
+export function AdvancedFiltersSortDropDown({className, label = '', orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm = false, explain = '' }) {
 
 //   -Order by creation date (default)
 // -Order by proximity (When a place is selected)
