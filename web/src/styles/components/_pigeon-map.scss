@@ -164,6 +164,7 @@ $map-btns-size-mobile: 30px;
 
   }
 
+
   @keyframes createBox {
     from {
         
@@ -195,7 +196,7 @@ $map-btns-size-mobile: 30px;
 
     font-size: $font-size-hex-unselected;
     font-weight: $font-weight-bold;
-    opacity: 0.3;
+    opacity: 0.8;
     display: flex;
     justify-content: center;
     align-items: center;

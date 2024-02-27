@@ -425,6 +425,11 @@ body {
 
 @media #{$breakpoints-xlarge} {
 
+  .popup__header {
+
+    margin-top: $margin-medium;
+
+  }
 
   .popup__content {
 

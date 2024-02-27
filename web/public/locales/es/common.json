@@ -218,7 +218,8 @@
     "filteredRadius": "en {0} · {1}km",
     "noFilter": "en la zona",
     "hideMap":"Ocultar Mapa",
-    "showMap":"Mostrar Mapa"
+    "showMap":"Mostrar Mapa",
+    "displayInstructions":"Pulsa un hexágono para obtener información sobre _helpbuttons_ en esa zona"
   },
   "buttonFilters": {
     "selectedArea": "en el área seleccionada",

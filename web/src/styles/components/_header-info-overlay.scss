@@ -149,7 +149,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
           word-wrap: break-word;
           display: flex;
           border-radius: $border-radius-basic;
-          background-color: $color-black;
+          background-color: $color-dark-gray;
           padding: $padding-big;
           color: $color-white;
           max-width: 70%;
@@ -309,6 +309,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
     
     // max-height: calc(100vh - 300px);
     max-width: $grid-max-width;
+    padding-bottom: 0;
 
 
   }

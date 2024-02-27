@@ -10,6 +10,7 @@ import { GlobalState, store } from 'pages';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
 import UserAvatar from 'components/user/components';
 import NetworkLogo from 'components/network/Components';
+import Link from 'next/link';
 
 export default function BrandCard({
 }) {
@@ -26,25 +27,28 @@ export default function BrandCard({
 
   return (
     <>
-      <div className="search-map__network-title">
-            <ShowDesktopOnly>
+        <div className="search-map__network-title">
+              <ShowDesktopOnly>
 
-              <div className="avatar-medium--home">
-                <NetworkLogo network={selectedNetwork} />
+                <div className="avatar-medium--home">
+                  <Link href="/HomeInfo">
+                    <NetworkLogo network={selectedNetwork} />
+                  </Link>  
+
+                </div>
+
+              </ShowDesktopOnly>
+
+              <div className='search-map__name'>
+                <Link href="/HomeInfo">
+                  {selectedNetwork.name}
+                </Link>  
+                <div className="search-map__sign">
+                  made with{' '}
+                  <a href="https://helpbuttons.org">Helpbuttons</a>
+                </div>
               </div>
-
-            </ShowDesktopOnly>
-
-            <div className='search-map__name'>
-              {selectedNetwork.name}
-              <div className="search-map__sign">
-                made with{' '}
-                <a href="https://helpbuttons.org">Helpbuttons</a>
-              </div>
-            </div>
-            
-            
-      </div>
+        </div>
     </>
   );
 }

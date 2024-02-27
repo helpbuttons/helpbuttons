@@ -55,7 +55,8 @@
     "hideMap":"Map",
     "showMap":"Map",
     "showList":"List",
-    "hideList":"List"
+    "hideList":"List",
+    "displayInstructions":"Press an hexagon to display _helpbuttons_ info in that area"
 
   },
   "buttonFilters": {
@@ -85,7 +86,8 @@
     "byEventDate": "By start of event",
     "orderBy": "Order",
     "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list",
-    "followTagSucess": "{0} has been added to your interests"
+    "followTagSucess": "{0} has been added to your interests",
+    "filteredSearch":"in filtered search by:"
   },
   "setup": {
     "hostname": "Hostname",

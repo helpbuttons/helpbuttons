@@ -153,8 +153,8 @@ $filters-padding: 10px;
 
     max-width: $grid-max-width;
     justify-content: center;
-    position: absolute;
-    bottom: $footer-height-mobile;
+    position: fixed;
+    bottom: 0;
 
   }
   
