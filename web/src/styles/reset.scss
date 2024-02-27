@@ -92,11 +92,12 @@ body,
 .list__container--full-list,
 .popup,
 .index__content,
-.index__explore-container,
-.filters__container, {
+.index__explore-container {
   height: var(--vh) !important;
   /* Add other styles as needed */
 }
+
+
 html,
 body,
 #__next,
@@ -161,7 +162,7 @@ a {
   .popup-content,
   .popup--button-file,
   .index__explore-container,
-  .filters__container, {
+  .filters__container {
     height: calc(var(--vh) - 115px) !important;
     /* Add other styles as needed */
   }

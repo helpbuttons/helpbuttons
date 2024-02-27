@@ -123,7 +123,12 @@ function HoneyComb({ router, selectedNetwork }) {
             'index__content-left ' +
             (showLeftColumn ? '' : 'index__content-left--hide')
           }
-        >
+        >         
+          <ShowMobileOnly>
+            <NavHeader selectedNetwork={selectedNetwork}/>
+          </ShowMobileOnly>
+         <AdvancedFilters/>
+
           {currentButton && (
             <PopupButtonFile
               onCloseClicked={() => {
@@ -138,10 +143,7 @@ function HoneyComb({ router, selectedNetwork }) {
               )}
             </PopupButtonFile>
           )}
-          <ShowMobileOnly>
-            <NavHeader selectedNetwork={selectedNetwork}/>
-          </ShowMobileOnly>
-          <AdvancedFilters/>
+
           <ShowDesktopOnly>
             <List
               buttons={exploreMapState.listButtons}

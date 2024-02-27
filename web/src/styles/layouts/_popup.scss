@@ -43,7 +43,7 @@ body {
   background: $color-white;
   box-shadow: unset;
   padding: 0;
-  z-index: $z-index-05;
+  z-index: $z-index-03;
   height: 100%;
 
   // Header Top Content Bottom
@@ -427,8 +427,7 @@ body {
 
   .popup__header {
 
-    margin-top: $margin-medium;
-
+    border-radius: 0;
   }
 
   .popup__content {

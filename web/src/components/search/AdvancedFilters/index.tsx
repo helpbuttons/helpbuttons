@@ -130,11 +130,12 @@ export default function AdvancedFilters({
   return (
     <>
       {showAdvancedFilters && (
-        <div className="filters__container">
           <Form
-            classNameExtra="filters--vertical"
+            classNameExtra="filters__container"
             onSubmit={handleSubmit(onSubmit)}
           >
+          <div className="filters__content">
+
             <FieldText
               name="query"
               label={t('buttonFilters.queryLabel')}
@@ -211,25 +212,26 @@ export default function AdvancedFilters({
               selectedButtonTypes={watch('helpButtonTypes')}
             />
 
-            <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
-            
-            <div className={ isHome ? 'filters__actions--home' : 'filters__actions'  }>
-              <Btn
-                btnType={BtnType.link}
-                caption={t('common.reset')}
-                contentAlignment={ContentAlignment.center}
-                onClick={clearFilters}
-              />
+              <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
+            </div>
+            <div className={ isHome ? 'filters__actions' : 'filters__actions'  }>
+              <div className={'filters__actions--buttons'}>
+                <Btn
+                  btnType={BtnType.corporative}
+                  caption={t('common.reset')}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={clearFilters}
+                />
 
-              <Btn
-                submit={true}
-                btnType={BtnType.submit}
-                caption={t('common.search')}
-                contentAlignment={ContentAlignment.center}
-              />
+                <Btn
+                  submit={true}
+                  btnType={BtnType.submit}
+                  caption={t('common.search')}
+                  contentAlignment={ContentAlignment.center}
+                />
+              </div>
             </div>
           </Form>
-        </div>
       )}
     </>
   );
