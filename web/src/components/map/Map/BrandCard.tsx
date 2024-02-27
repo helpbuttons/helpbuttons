@@ -12,8 +12,7 @@ import UserAvatar from 'components/user/components';
 import NetworkLogo from 'components/network/Components';
 import Link from 'next/link';
 
-export default function BrandCard({
-}) {
+export default function BrandCard({}) {
 
   const selectedNetwork = useStore(
     store,

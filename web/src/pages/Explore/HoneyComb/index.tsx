@@ -141,9 +141,10 @@ function HoneyComb({ router, selectedNetwork }) {
             </PopupButtonFile>
           )}
           <ShowMobileOnly>
-            <AppHeader selectedNetwork={selectedNetwork}/>
+            <NavHeader selectedNetwork={selectedNetwork}/>
+            
           </ShowMobileOnly>
-
+          <AdvancedFilters/>
           <ShowDesktopOnly>
             <List
               showFiltersForm={showFiltersForm}

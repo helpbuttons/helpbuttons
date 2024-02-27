@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { GlobalState, store } from 'pages';
-import { UpdateFilters } from 'state/Explore';
+import { ToggleAdvancedFilters, UpdateFilters } from 'state/Explore';
 import router from 'next/router';
 import { useStore } from 'store/Store';
 import { useButtonTypes } from 'shared/buttonTypes';
@@ -19,15 +19,11 @@ import MultiSelectOption from 'elements/MultiSelectOption';
 import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
-import Link from 'next/link';
 import { alertService } from 'services/Alert';
 import { FollowTag } from 'state/Users';
-import { IoAccessibility } from 'react-icons/io5';
 
 
 export default function AdvancedFilters({
-  toggleShowFiltersForm,
-  showFiltersForm,
   isHome = false,
 }) {
   const filters = useStore(
@@ -41,6 +37,16 @@ export default function AdvancedFilters({
     (state: GlobalState) => state.explore.map.queryFoundTags,
     false
   );
+  const showAdvancedFilters = useStore(
+    store,
+    (state: GlobalState) => state.explore.map.showAdvancedFilters,
+    false,
+  );
+    
+  const toggleAdvancedFilters = (value?) => {
+    store.emit(new ToggleAdvancedFilters(value));
+  }
+  
   const [buttonTypes, setButtonTypes] = useState([]);
   useButtonTypes(setButtonTypes);
 
@@ -60,16 +66,14 @@ export default function AdvancedFilters({
     reset(defaultFilters)
     store.emit(new UpdateFilters(defaultFilters));
 
-    toggleShowFiltersForm(false);
+    toggleAdvancedFilters(false);
   };
   const onSubmit = (data) => {
     const newFilters = { ...filters, ...data }
     store.emit(new UpdateFilters(newFilters));
-
+    toggleAdvancedFilters(false);
     if (isHome) {
       router.push('/Explore');
-    }else {
-      toggleShowFiltersForm(false);
     }
   };
 
@@ -116,7 +120,7 @@ export default function AdvancedFilters({
   }, [filters])
   return (
     <>
-      {showFiltersForm && (
+      {showAdvancedFilters && (
         <div className="filters__container">
           <Form
             classNameExtra="filters--vertical"

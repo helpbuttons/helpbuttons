@@ -29,6 +29,7 @@ import Alert from 'components/overlay/Alert';
 import { formatMessage } from 'elements/Message';
 import { LinkProfile } from 'components/user/LinkProfile';
 import { LinkAdminProfile } from 'components/user/LinkAdminProfile';
+import { ShowMobileOnly } from 'elements/SizeOnly';
 
 
 export default function HomeInfo({
@@ -66,18 +67,13 @@ export default function HomeInfo({
   return (
     <>
       <SEO {...metadata} />
-      <div className="info-overlay__search-section">
-        <NavHeader
-          toggleShowFiltersForm={toggleShowFiltersForm}
-          totalNetworkButtonsCount={selectedNetwork.buttonCount}
-          isHome={true}
-        />
-        <AdvancedFilters
-          showFiltersForm={showFiltersForm}
-          toggleShowFiltersForm={toggleShowFiltersForm}
-          isHome={true}
-        />
-      </div>
+
+        <ShowMobileOnly>
+          <div className="info-overlay__search-section">
+            <NavHeader selectedNetwork={selectedNetwork}/>
+            <AdvancedFilters isHome={true}/>
+          </div>
+        </ShowMobileOnly>
       <div
         className='info-overlay__container'
       >

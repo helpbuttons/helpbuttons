@@ -9,7 +9,7 @@ import { customFieldsFiltersText } from 'components/button/ButtonType/CustomFiel
 import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 
 ///search button in explore and home
-export function HeaderSearch({ results, isHome, hexagonClicked }) {
+export function HeaderSearch({ results }) {
   const exploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,
@@ -22,13 +22,12 @@ export function HeaderSearch({ results, isHome, hexagonClicked }) {
     <div className={filtering ?"header-search__tool--filtered" :"header-search__tool"} >
       <div className="header-search__form">
         <LoadabledComponent
-          loading={exploreMapState.loading && !isHome && buttonTypes}
+          loading={exploreMapState.loading && buttonTypes}
         >
           <div className="header-search__column">
             <SearchText
               count={results.count}
               where={exploreMapState.filters.where}
-              hexagonClicked={hexagonClicked}
               filtering={filtering}
             />
             
