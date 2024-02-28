@@ -31,7 +31,7 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-section {
 
-  padding-bottom: calc($footer-height-mobile + $padding-small*4);
+  padding-bottom: $padding-small;
 
 }
 
@@ -187,6 +187,12 @@ $feed-new-message-radius: $border-radius-circle;
     max-width: $body-max-width;
     margin: auto;
     
+  }
+
+  .feed-section {
+
+    padding-bottom: $padding-small;
+
   }
 
 }

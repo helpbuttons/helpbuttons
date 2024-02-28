@@ -51,6 +51,7 @@ export interface ExploreMapState {
   cachedHexagons: any[];
   loading: boolean;
   initialized: boolean;
+  showAdvancedFilters: boolean;
 }
 export const exploreInitial = {
   draftButton: null,
@@ -63,6 +64,7 @@ export const exploreInitial = {
     cachedHexagons: [],
     loading: true,
     initialized: false,
+    showAdvancedFilters: false,
   },
   settings: exploreSettingsDefault,
 };
@@ -463,5 +465,20 @@ export class ButtonUpdateModifiedDate implements WatchEvent{
       }),
       catchError((error) => handleError(this.onError, error)),
     );
+  }
+}
+
+export class ToggleAdvancedFilters implements UpdateEvent {
+  public constructor(private value?) {}  
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      if(this.value === false || this.value === true)
+      {
+        newState.explore.map.showAdvancedFilters = this.value
+      }else{
+        newState.explore.map.showAdvancedFilters = !state.explore.map.showAdvancedFilters
+      }
+    });
   }
 }

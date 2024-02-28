@@ -33,6 +33,7 @@ $hashtag-color-l-gray: $color-med-gray;
   font-size: 0.9rem;
   color: $hashtag-color-gray;
   background-color: transparent;
+  word-break: keep-all;
 
   &--yellow {
     background-color: $hashtag-color-corporative;

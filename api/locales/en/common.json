@@ -38,7 +38,7 @@
   },
   "feed": {
     "write": "Write message",
-    "update": "Owner Update",
+    "update": "Author Update",
     "please": "Please",
     "loginMessage": "login",
     "or": "or",
@@ -52,8 +52,11 @@
     "selectedHexagon": "in the selected area",
     "filteredRadius": "in {0} · {1}km",
     "noFilter": "in the area",
-    "hideMap":"Hide Map",
-    "showMap":"Show Map"
+    "hideMap":"Map",
+    "showMap":"Map",
+    "showList":"List",
+    "hideList":"List"
+
   },
   "buttonFilters": {
     "searchBarTop": "{1} _helpbuttons_ found {0}",
@@ -109,7 +112,7 @@
     "newbutton": "A new _helpbutton_ was published '{0}' in '{1}'",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
-    "newfollowType": "New suscriber",
+    "newfollowType": "New Suscription",
     "creatorUpdate": "_helpbutton_ updated",
     "deletedType": "_helpbutton_ deleted",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
@@ -187,7 +190,8 @@
     "renewMail": "You renewed your _helpbutton_ '{0}' for more 3 months.",
     "isExpiringLink": "Due to lack of activity, your _helpbutton_ is going to be erased in one month.",
     "renewLink": "Renew your _helpbutton_",
-    "createUpdate":"Publish Update"
+    "createUpdate":"Publish Update",
+    "authorTitle":"Author:"
   },
   "user": {
     "login":"Write your credentials",
@@ -309,13 +313,13 @@
     "renewPost": "Hello, I renewed helpbutton on day {0}. Leave a comment if you want to communicate with me."
   },
   "comment": {
-    "delete": "Borrar",
+    "delete": "Delete",
     "private":"You're sending a private message. Only the destination user could see it.",
     "public":"This comment is public, everyone could see it.",
     "placeholderWrite": "Write a message in this post",
     "posted":"Comment posted",
-    "sendPublic":"Comment",
-    "sendPrivate":"Private",
+    "sendPublic":"Answer",
+    "sendPrivate":"Answer privately",
     "send":"Send"
   },
   "configuration": {

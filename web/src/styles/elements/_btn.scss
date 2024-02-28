@@ -325,6 +325,7 @@ $btn-font-size-medium: $font-size-medium;
 }
 
 
+
 //DISABLED BUTTONS
 
 .btn[disabled],
@@ -461,27 +462,49 @@ $btn-font-size-medium: $font-size-medium;
   text-align: left;
   overflow-x: hidden;
   height: auto;
-  // padding: 0 ;
+  margin: 0;
   width: inherit;
   text-decoration: underline;
   border: none;
   background: transparent;
-  color: $color-gray;
+  padding: 0 $btn-padding;
+  font-weight: $font-weight-light;
+  color: $color-black;
   transition: all 0.2s ease-in-out;
-  font-size: $font-size-general;
+  font-size: $font-size-xsmall;
 
   &:hover {
     cursor: pointer;
+    border-radius: $border-radius-circle;
+    background: transparent;
+    color: $color-black;
+    & svg {
+      color: $color-black; 
+      fill: $color-black;
+    }
   }
   &:focus {
     cursor: pointer;
     border-radius: $border-radius-circle;
-    background: $color-white;
+    background: transparent;
+    color: $color-black;
+    & svg {
+      color: $color-black; 
+      fill: $color-black;
+    }
+
   }
   &:active {
     cursor: pointer;
     border-radius: $border-radius-circle;
-    background: $color-ligth-gray;
+    background: transparent;
+    color: $color-black;
+
+    & svg {
+      color: $color-black; 
+      fill: $color-black;
+    }
+
   }
 
 }

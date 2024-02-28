@@ -2,6 +2,8 @@ $nav-header-border-radius: $border-radius-buttons;
 $nav-header-color-gray-border: $color-gray-border;
 $nav-header-padding: $padding-big;
 $nav-header-height: $header-height-mobile;
+$nav-header-height-desktop: $header-height-desktop;
+$filters-bar-height-desktop: 45px;
 $nav-header-color-corporative: $color-corporative;
 $nav-header-margin-big: $margin-big;
 $nav-header-icon-width: 20px;
@@ -17,11 +19,10 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 .nav-header__content {
 
-  width: 100%;
   display: flex;
   position: relative;
   // height: $nav-header-height;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: $color-corporative;
   border-radius: 0 0 0 0;
@@ -37,8 +38,12 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 }
 
+
+
 .nav-header__content-message {
   flex-grow:1;
+  display: flex;
+  flex-direction: row;
 }
 
 .nav-header__content-input {
@@ -65,12 +70,32 @@ $nav-header-new-message-radius: $border-radius-circle;
   .nav-header__container {
 
     background-color: $color-corporative;
+    padding: 0 $padding-medium;
+    display: flex;
+    height: $nav-header-height-desktop;
+    justify-content: flex-start;
+    // border-bottom: 1px solid $nav-header-color-gray-border;
 
   }
 
-  .nav-header__content {
 
+  .nav-header__content {
+    max-width: $grid-max-width;
+    justify-content: flex-start;
+    flex: 0.9;
     width: 100%;
+
+  }
+
+  .nav-header__filters {
+
+    display: flex;
+    background-color: $color-corporative;
+    align-items: center;
+    justify-content: center;
+    padding: $padding-small;
+    height: $filters-bar-height-desktop;
+    // border-bottom: 1px solid $color-gray-border;
 
   }
 

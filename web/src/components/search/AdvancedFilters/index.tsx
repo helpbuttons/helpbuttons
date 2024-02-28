@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { GlobalState, store } from 'pages';
-import { UpdateFilters } from 'state/Explore';
+import { ToggleAdvancedFilters, UpdateFilters } from 'state/Explore';
 import router from 'next/router';
 import { useStore } from 'store/Store';
 import { useButtonTypes } from 'shared/buttonTypes';
@@ -19,15 +19,11 @@ import MultiSelectOption from 'elements/MultiSelectOption';
 import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
-import Link from 'next/link';
 import { alertService } from 'services/Alert';
 import { FollowTag } from 'state/Users';
-import { IoAccessibility } from 'react-icons/io5';
 
 
 export default function AdvancedFilters({
-  toggleShowFiltersForm,
-  showFiltersForm,
   isHome = false,
 }) {
   const filters = useStore(
@@ -39,6 +35,12 @@ export default function AdvancedFilters({
   const queryFoundTags = useStore(
     store,
     (state: GlobalState) => state.explore.map.queryFoundTags,
+    false
+  );
+
+  const showAdvancedFilters = useStore(
+    store,
+    (state: GlobalState) => state.explore.map.showAdvancedFilters,
     false
   );
   const [buttonTypes, setButtonTypes] = useState([]);
@@ -60,16 +62,15 @@ export default function AdvancedFilters({
     reset(defaultFilters)
     store.emit(new UpdateFilters(defaultFilters));
 
-    toggleShowFiltersForm(false);
+    store.emit(new ToggleAdvancedFilters(false))
   };
   const onSubmit = (data) => {
     const newFilters = { ...filters, ...data }
     store.emit(new UpdateFilters(newFilters));
+    store.emit(new ToggleAdvancedFilters(false))
 
     if (isHome) {
       router.push('/Explore');
-    }else {
-      toggleShowFiltersForm(false);
     }
   };
 
@@ -114,14 +115,27 @@ export default function AdvancedFilters({
   useEffect(() => {
     reset(filters)
   }, [filters])
+
+  useEffect(() => {
+    const params = new URLSearchParams(router.query)
+    if(params.has('showFilters'))
+    {
+      store.emit(new ToggleAdvancedFilters(true))
+    }else{
+      store.emit(new ToggleAdvancedFilters(false))
+    }
+    
+  }, [])
+  
   return (
     <>
-      {showFiltersForm && (
-        <div className="filters__container">
+      {showAdvancedFilters && (
           <Form
-            classNameExtra="filters--vertical"
+            classNameExtra="filters__container"
             onSubmit={handleSubmit(onSubmit)}
           >
+          <div className="filters__content">
+
             <FieldText
               name="query"
               label={t('buttonFilters.queryLabel')}
@@ -198,31 +212,32 @@ export default function AdvancedFilters({
               selectedButtonTypes={watch('helpButtonTypes')}
             />
 
-            <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
-            
-            <div className={ isHome ? 'filters__actions--home' : 'filters__actions'  }>
-              <Btn
-                btnType={BtnType.link}
-                caption={t('common.reset')}
-                contentAlignment={ContentAlignment.center}
-                onClick={clearFilters}
-              />
+              <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
+            </div>
+            <div className={ isHome ? 'filters__actions' : 'filters__actions'  }>
+              <div className={'filters__actions--buttons'}>
+                <Btn
+                  btnType={BtnType.corporative}
+                  caption={t('common.reset')}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={clearFilters}
+                />
 
-              <Btn
-                submit={true}
-                btnType={BtnType.submit}
-                caption={t('common.search')}
-                contentAlignment={ContentAlignment.center}
-              />
+                <Btn
+                  submit={true}
+                  btnType={BtnType.submit}
+                  caption={t('common.search')}
+                  contentAlignment={ContentAlignment.center}
+                />
+              </div>
             </div>
           </Form>
-        </div>
       )}
     </>
   );
 }
 
-export function AdvancedFiltersSortDropDown({className, label, orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm, explain }) {
+export function AdvancedFiltersSortDropDown({className, label = '', orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm = false, explain = '' }) {
 
 //   -Order by creation date (default)
 // -Order by proximity (When a place is selected)
@@ -282,7 +297,7 @@ function TagFollow({tags}) {
 
   return (
     <>
-        {t('buttonFilters.followTag')}
+
         {tags.map((tag) => {
           return ( 
                   <Btn

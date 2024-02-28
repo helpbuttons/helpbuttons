@@ -4,17 +4,16 @@
 
   ::-webkit-scrollbar {
     display: block;
-    width: auto;
-    height: 12px;
+    width: 8px;
+    height: 8px;
   
   }
   ::-webkit-scrollbar-thumb {
-    background: $color-ligth-gray;
     scrollbar-width: thin;
-    border-radius: 16px;
-    width: 16px;
-    background: url('https://www.pngjoy.com/pngl/41/952512_hamburger-icon-menubuttom-hamburger-menu-icon-white-transparent.png') $color-gray;
-    background-size:8px 16px;
+    border-radius: 10px;
+    width: 5px;
+    background: $color-corporative;
+    background-size: 8px 8px;
     background-repeat:no-repeat;
     background-position:center;
     
@@ -22,6 +21,7 @@
   ::-webkit-scrollbar-thumb:hover{
     background: $color-dark-gray;
     cursor: pointer;
+    width: 4px;
 
   }
   ::-webkit-scrollbar-track{
@@ -66,8 +66,8 @@
 
   ::-webkit-scrollbar {
     display: block;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  
+    -ms-overflow-style: auto;  /* IE and Edge */
+    scrollbar-width: auto;  
   }
 
 

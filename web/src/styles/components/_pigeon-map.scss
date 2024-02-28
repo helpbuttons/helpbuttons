@@ -1,4 +1,6 @@
 $font-size-hex-unselected: calc($font-size-huge - 5px);
+$map-btns-size-desktop: 40px;
+$map-btns-size-mobile: 30px;
 
 .pigeon-click-block {
     g {
@@ -15,7 +17,7 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
     top: 90px !important;
     display: block;
     left: auto !important;
-    z-index: $z-index-04;
+    z-index: $z-index-03;
 
     &:hover {
         cursor: pointer;
@@ -62,21 +64,22 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
 
 
 
-    .pigeon-center-view,
-    .pigeon-zoom-in, .pigeon-zoom-out {
 
-        max-width: auto !important;
-        max-height: auto !important;
-        min-width: 20px !important;
-        width: 30px !important;
-        text-align: center;
-        height: auto !important;
-        padding: 0px 0px !important;
-        margin: 5px 0 !important;
-        line-height: 30px !important;
-        border-radius: $border-radius-circle !important;
 
-    }
+}
+
+.pigeon-zoom-in, .pigeon-zoom-out {
+
+    max-width: auto !important;
+    max-height: auto !important;
+    min-width: 20px !important;
+    width: 30px !important;
+    text-align: center;
+    height: auto !important;
+    padding: 0px 0px !important;
+    margin: 5px 0 !important;
+    line-height: 30px !important;
+    border-radius: $border-radius-circle !important;
 
 }
 
@@ -161,6 +164,7 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
 
   }
 
+
   @keyframes createBox {
     from {
         
@@ -192,7 +196,7 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
 
     font-size: $font-size-hex-unselected;
     font-weight: $font-weight-bold;
-    opacity: 0.3;
+    opacity: 0.8;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -209,9 +213,24 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
     .pigeon-center-buttons{
 
         right: 30px !important;
-        top: 115px !important;
+        top: 150px !important;
         display: block;
         left: auto !important;
+
+        & svg {
+
+         padding: $padding-medium;
+
+        }
+        
+
+    }
+
+    .pigeon-center-view {
+
+        height: $map-btns-size-desktop;
+        width: $map-btns-size-desktop;
+        // padding: $padding-medium;
 
     }
 
@@ -222,6 +241,12 @@ $font-size-hex-unselected: calc($font-size-huge - 5px);
         display: block;
         left: auto !important;
     
+    }
+    .pigeon-zoom-in, .pigeon-zoom-out  {
+
+        height: $map-btns-size-desktop !important;;
+        width: $map-btns-size-desktop !important;;
+        // padding: $padding-medium !important;;
     }
   
 }

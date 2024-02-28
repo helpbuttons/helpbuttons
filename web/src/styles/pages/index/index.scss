@@ -76,11 +76,26 @@ $index-mobile-fixed-z-index: $z-index-05;
     height: 100%;
     transition: $transition-default-slow;
     min-width: 35vw;
-    border-right: $popup-options-border-top;
+    // border-right: $popup-soptions-border-top;
   }
   .index__content-left--hide {
     margin-left: -35vw;
     bottom: 0;
   }
   
+}
+
+
+@media #{$breakpoints-xxlarge} {
+
+  .index__content-left {
+    min-width: 30vw;
+    width: 20vw;
+
+  }
+
+  .index__content-left--hide {
+    margin-left: -30vw;
+  }
+
 }

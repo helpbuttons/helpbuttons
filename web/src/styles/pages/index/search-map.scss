@@ -11,7 +11,7 @@ $search-map-height: 0; // Altura del header
   max-width: 80vw;
   left: 10px;
   top: 10px;
-  z-index: $z-index-04;
+  z-index: $z-index-03;
 
 }
 
@@ -24,26 +24,68 @@ $search-map-height: 0; // Altura del header
 }
 
 
+.search-map__instructions {
+
+  bottom: 30px;
+  color: $color-white;
+  padding: $padding-big;
+  top: 50%;
+  position: relative;
+  bottom: 50%;
+  width: auto;
+  overflow: visible;
+  max-width: 300px;
+  text-align: center;
+  text-wrap:balance;
+  margin-left: auto;
+  z-index: $z-index-05;
+  margin-top: $margin-medium;
+  background-color: $color-blue;
+  border-radius: $border-radius-circle;
+  font-weight: $font-weight-bold;
+
+}
+
 @media #{$breakpoints-xlarge} {
 
   .search-map__network-title{
 
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    height: 100%;
+
     font-size: $font-size-huge;
     font-weight: $font-weight-bold;
-    color: $color-white;
+    color: $color-black;
+    text-shadow: none;
     position: relative;
-    left: 40px;
-    top: 30px;
     z-index: $z-index-05;
+    flex: 1;
+    gap: 1rem;
+
+    & a {
+
+      color: $color-dark-gray;
+    }
   
   }
 
+  .search-map__name{
 
-.search-map__sign {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    align-items: flex-start;
 
-  font-size: $font-size-small;
-  line-height: 40px;
+  }
 
-}
+  .search-map__sign {
+
+    font-size: $font-size-small;
+    line-height: 40px;
+    color: $color-gray;
+
+  }
   
 }

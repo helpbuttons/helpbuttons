@@ -6,28 +6,32 @@ import { LoadabledComponent } from 'components/loading';
 import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { customFieldsFiltersText } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
+import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 
 ///search button in explore and home
-export function HeaderSearch({ results, isHome, hexagonClicked }) {
+export function HeaderSearch({ results, isHome = false}) {
   const exploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,
     false,
   );
+  
   const [buttonTypes, setButtonTypes] = useState(null);
   useButtonTypes(setButtonTypes);
+  const filtering= JSON.stringify(defaultFilters) != JSON.stringify(exploreMapState.filters);
   return (
-    <div className="header-search__tool">
+    <div className={filtering ?"header-search__tool--filtered" :"header-search__tool"} >
       <div className="header-search__form">
         <LoadabledComponent
-          loading={exploreMapState.loading && !isHome && buttonTypes}
+          loading={(exploreMapState.loading && !isHome) && buttonTypes}
         >
           <div className="header-search__column">
             <SearchText
               count={results.count}
               where={exploreMapState.filters.where}
-              hexagonClicked={hexagonClicked}
+              filtering={filtering}
             />
+            
             {buttonTypes && (
               <SearchInfo
                 helpButtonTypes={
@@ -48,7 +52,7 @@ export function HeaderSearch({ results, isHome, hexagonClicked }) {
   );
 }
 
-function SearchText({ count, where }) {
+function SearchText({ count, where , filtering=false}) {
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -62,11 +66,17 @@ function SearchText({ count, where }) {
   );
 
   const address = (where) => {
+
+
     if(hexagonClicked)
     {
       return t('buttonFilters.selectedArea');
     }else if (where.address && where.radius) {
       return `${t('common.in')} ${where.address} · ${where.radius}km`;
+    }else if (filtering) {
+      return `${t('buttonFilters.filteredSearch')}`;
+    }else if(selectedNetwork?.buttonCount != count){
+      return `${t('buttonFilters.focusedArea')}`;
     }else if (selectedNetwork) {
       return `${t('common.in')} ${selectedNetwork.name}`;
     } else {

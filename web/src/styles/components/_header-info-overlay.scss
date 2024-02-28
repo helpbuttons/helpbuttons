@@ -24,7 +24,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
 .info-overlay__container {
 
   // background-color: $color-white;
-  margin-top: $info-content-head-margin;
+  padding-top: $info-content-head-margin;
   margin-bottom: calc( $footer-height-mobile*4 );
   width:100%;
   z-index: $z-index-02;
@@ -149,7 +149,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
           word-wrap: break-word;
           display: flex;
           border-radius: $border-radius-basic;
-          background-color: $color-black;
+          background-color: $color-dark-gray;
           padding: $padding-big;
           color: $color-white;
           max-width: 70%;
@@ -287,6 +287,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
   .info-overlay__container {
 
     margin-bottom: 0;
+    padding-top: 0;
 
   }
 
@@ -308,6 +309,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
     
     // max-height: calc(100vh - 300px);
     max-width: $grid-max-width;
+    padding-bottom: 0;
 
 
   }

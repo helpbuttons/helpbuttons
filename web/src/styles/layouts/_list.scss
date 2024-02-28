@@ -40,13 +40,12 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 .list__show-map-button {
 
-  position: relative;
+position: absolute;
  display: flex;
 //  bottom: calc($footer-height-mobile + 0.9rem);
  width: auto;
  z-index: $z-index-04;
- left: 0;
- right: 0;
+ right: $padding-big;
 
  .btn--center {
   // width: 80px;
@@ -164,8 +163,8 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 $padding-medium;
+  justify-content: space-around;
+  // padding: 0 $padding-medium;
   gap: $padding-small;
   position: relative;
   height: $list-drag-tab-height;
@@ -173,6 +172,20 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
+.list__order--hidden {
+
+  position: absolute;
+  width: 100%;
+  // margin-bottom: 80px;
+
+}
+
+
+.list__order--hide {
+
+  background-color: $color-corporative;
+
+}
 //change movement when there's no scrollbar
 @media (hover: none) {
 

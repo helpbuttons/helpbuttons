@@ -92,11 +92,12 @@ body,
 .list__container--full-list,
 .popup,
 .index__content,
-.index__explore-container,
-.filters__container, {
+.index__explore-container {
   height: var(--vh) !important;
   /* Add other styles as needed */
 }
+
+
 html,
 body,
 #__next,
@@ -142,4 +143,29 @@ button {
 }
 a {
   color: $color-corporative;  
+  &:hover {
+
+    color: $color-gray;
+
+  }
+}
+
+
+@media #{$breakpoints-xlarge} {
+
+  // .index__container,
+  .info-overlay__content,
+  .info-overlay__container,
+  .info-overlay__card,
+  .list__container--full-list,
+  .popup,
+  .popup-content,
+  .popup--button-file,
+  .index__explore-container,
+  .filters__container {
+    height: calc(var(--vh) - 115px) !important;
+    /* Add other styles as needed */
+  }
+
+
 }

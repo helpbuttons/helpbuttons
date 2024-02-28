@@ -45,12 +45,11 @@ $avatar-medium-max-width: 50px;
 .avatar-medium--home {
 
   @extend .avatar-big;
-  color: $color-black;
+  color: $color-dark-gray;
   border-style: solid;
   object-fit: cover;
   overflow: hidden;
-  border-width: 7px;
-
+  border-width: 2px;
 
 
 }

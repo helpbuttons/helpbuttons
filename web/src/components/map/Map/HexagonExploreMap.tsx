@@ -12,6 +12,8 @@ import _ from 'lodash';
 import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 import { IoStorefrontSharp } from 'react-icons/io5';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import t from 'i18n';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -61,17 +63,26 @@ export default function HexagonExploreMap({
         tileType={selectedNetwork.exploreSettings.tileType}
         handleClick={onMapCLick}
       >
-        <Overlay anchor={[100, 100]}>
-          <div className="search-map__network-title">
-            <div>{selectedNetwork.name}</div>
-            <div className="search-map__sign">
-              made with{' '}
-              <a href="https://helpbuttons.org">Helpbuttons</a>
-            </div>
-            
+        {/* DISPLAY INSTRUCTIONS OVER MAP*/}
+        <Overlay anchor={[0, 0]}  offset={[  150, -100]}>
+          <div className="search-map__instructions">
+            {t("explore.displayInstructions")}             
           </div>
-
         </Overlay>
+        <ShowMobileOnly>
+          <Overlay anchor={[100, 100]}>
+            <div className="search-map__network-title">
+              <div>{selectedNetwork.name}</div>
+              <div className="search-map__sign">
+                made with{' '}
+                <a href="https://helpbuttons.org">Helpbuttons</a>
+              </div>
+              
+            </div>
+          </Overlay>
+        </ShowMobileOnly>
+
+
 
         <GeoJson>
           {geoJsonFeatures.map((hexagonFeature) => (
