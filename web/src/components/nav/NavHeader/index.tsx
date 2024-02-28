@@ -10,7 +10,6 @@ import { ShowDesktopOnly } from 'elements/SizeOnly';
 import router from 'next/router';
 import { ListButtonTypes } from '../ButtonTypes';
 import { ToggleAdvancedFilters } from 'state/Explore';
-import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 
 function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
 
@@ -19,8 +18,10 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
     (state: GlobalState) => state.explore.map,
     false,
   );
-  const filtering = JSON.stringify(defaultFilters) != JSON.stringify(exploreMapState.filters);
-
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+  );
   return (
     <div className="nav-header">
       <div className="nav-header__container">
@@ -41,7 +42,7 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
           >
             <HeaderSearch
               results={{
-                count: !filtering
+                count: pageName != 'Explore'
                   ? selectedNetwork?.buttonCount
                   : exploreMapState.listButtons.length,
               }}
@@ -50,7 +51,7 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
           </div>
         </form>
         <ShowDesktopOnly>
-          <NavBottom loggedInUser={undefined} />
+          <NavBottom loggedInUser={loggedInUser} />
         </ShowDesktopOnly>
       </div>
       <ShowDesktopOnly>

@@ -20,10 +20,6 @@ export default function BrandCard({}) {
     false,
   );
 
-  useEffect(() => {
-    
-  });
-
   return (
     <>
         <div className="search-map__network-title">

@@ -75,8 +75,8 @@ function SearchText({ count, where , filtering=false}) {
       return `${t('common.in')} ${where.address} · ${where.radius}km`;
     }else if (filtering) {
       return `${t('buttonFilters.filteredSearch')}`;
-    // }else if(selectedNetwork.buttonCount != count){
-    //   return `${t('buttonFilters.focusedArea')}`;
+    }else if(selectedNetwork?.buttonCount != count){
+      return `${t('buttonFilters.focusedArea')}`;
     }else if (selectedNetwork) {
       return `${t('common.in')} ${selectedNetwork.name}`;
     } else {
