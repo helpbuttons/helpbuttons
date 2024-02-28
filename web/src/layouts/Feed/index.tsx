@@ -100,6 +100,7 @@ export default function Feed({ button }: { button: Button }) {
                 reloadPosts={reloadPosts}
                 buttonId={button.id}
                 showCompose={(showReplyFirstPost && idx == 0)}
+                isLast={idx == (posts.length - 1 )}
               />
           ))}
         {!posts ||
@@ -124,6 +125,7 @@ export function FeedElement({
   reloadPosts,
   buttonId,
   showCompose = false,
+  isLast = false,
 }) {
   const [showComposePostReply, setShowComposePostReply] =
     useState(null);
@@ -201,14 +203,15 @@ export function FeedElement({
               (loggedInUser.id == post.author.id ||
                 isButtonOwner ||
                 isAdmin(loggedInUser)) && (
-                <Btn
-                  submit={false}
-                  btnType={BtnType.filterCorp}
-                  iconLink={<IoTrashBinOutline />}
-                  iconLeft={IconType.svg}
-                  contentAlignment={ContentAlignment.right}
-                  onClick={() => deletePost(post.id)}
-                />
+                  <Btn
+                        submit={false}
+                        btnType={BtnType.filterCorp}
+                        iconLink={<IoTrashBinOutline />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.right}
+                        onClick={() => deletePost(post.id)}
+                        disabled={isLast}
+                      />
               )}
               {!loggedInUser && 
                 <Btn

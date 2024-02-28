@@ -114,6 +114,7 @@
     "newbutton": "A new _helpbutton_ was published '{0}' in '{1}'",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
+    "newprivatecommentType": "Private message",
     "newfollowType": "New Suscription",
     "creatorUpdate": "_helpbutton_ updated",
     "deletedType": "_helpbutton_ deleted",
@@ -123,7 +124,8 @@
     "newcomment": "'{2}' commented '{0}' answer to the post '{1}'",
     "newcommentSubject": "Someone commented on your _helpbutton_",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
-    "newfollowing": "your are now following the _helpbutton_ '{0}'"
+    "newfollowing": "your are now following the _helpbutton_ '{0}'",
+    "myhelpbuttons": "My _helpbuttons_"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -168,7 +170,7 @@
     "firstPost": "Hi! I created this _helpbutton_ at {0}, leave a comment if you want",
     "share": "Share",
     "copy": "Copy Link",
-    "delete": "Delete",
+    "delete": "Finalize",
     "edit": "Edit",
     "created": "Your _helpbutton_ has been published",
     "errorCreated": "",

@@ -71,11 +71,13 @@ export default function CardNotification({ activity = {} }) {
     ) {
       const comment = JSON.parse(activity.data);
       const notifIcon =<IoChatbubbleOutline/>
-
+      let title = t('activities.newcommentType');
+      if(comment.privacy == 'private') {
+        title = t('activities.newprivatecommentType')
+      }
       return (
-
         <NotificationCard
-          title={t('activities.newcommentType')}
+          title={title}
           image={comment.button.image}
           notifIcon={notifIcon}
           date={comment.created_at}

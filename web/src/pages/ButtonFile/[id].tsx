@@ -42,9 +42,7 @@ export default function ButtonFile({
       {currentButton && (
         <Popup
           sectionClass=""
-          onCloseClicked={() => router.back()}
           linkBack={() => router.back()}
-          linkFwd={() => router.back()}
         >
           {buttonTypes?.length > 0 && (
             <ButtonShow
@@ -53,7 +51,6 @@ export default function ButtonFile({
             />
           )}
 
-          <Feed button={currentButton} />
         </Popup>
       )}
     </>
