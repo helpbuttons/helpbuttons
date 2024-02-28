@@ -38,7 +38,7 @@
   },
   "feed": {
     "write": "Escribir mensaje",
-    "update": "Actualización del Autor",
+    "update": "Novedad del Autor",
     "please": "Por favor",
     "loginMessage": "Entra",
     "or": "o",
@@ -296,7 +296,10 @@
     "renewMailSubject": "Renovado con éxito",
     "renewMail": "Renovaste tu _helpbutton_ '{0}' por otros 3 meses.",
     "isExpiringLink": "Debido a la falta de actividad, su _helpbutton_ se borrará en un mes.",
-    "renewLink": "Renovar tu _helpbutton_"
+    "renewLink": "Renovar tu _helpbutton_",
+    "createUpdate":"Publicar Novedad",
+    "authorTitle":"Autor:"
+
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -355,7 +358,10 @@
     "placeholderWrite": "Escribe un mensaje en esta publicación",
     "public":"Este comentario es público, todos podrán verlo.",
     "private":"Estás mandando un mensaje privado. Sólo el destinatario podrá verlo.",
-    "delete": "Borrar"
+    "delete": "Borrar",
+    "sendPublic":"Responder",
+    "sendPrivate":"Responder en privado",
+    "send":"Enviar"
   },
   "picker": {
     "headerText": "Elige una localización"

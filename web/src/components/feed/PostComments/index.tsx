@@ -7,20 +7,78 @@ import { store } from 'pages';
 import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';
-import { IoChatbubbleEllipsesSharp, IoMailOutline, IoTrashBinOutline } from 'react-icons/io5';
+import {
+  IoArrowBack,
+  IoArrowRedo,
+  IoArrowUndoOutline,
+  IoChatbubbleEllipsesSharp,
+  IoMailOutline,
+  IoReturnDownBackSharp,
+  IoReturnUpBackOutline,
+  IoTrashBinOutline,
+} from 'react-icons/io5';
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
 import { formatMessage, mentionsOfMessage } from 'elements/Message';
 import { uniqueArray } from 'shared/sys.helper';
+import { Compose } from 'layouts/Feed';
+import { useState } from 'react';
+import { useToggle } from 'shared/custom.hooks';
+import t from 'i18n';
 
 export default function PostComments({
   comments,
   reloadPosts,
   loggedInUser,
   isButtonOwner,
-  buttonOwnerId,
-  onComposeReplyToComment,
+  post,
+}) {
+  const commentParentIds = comments.filter(
+    (comment) => comment.commentParentId,
+  );
+  return (
+    <>
+      <>
+        {comments.length > 0 && (
+          <>
+            {comments
+              .filter((comment) => !comment.commentParentId)
+              .map((comment, key) => {
+                return (
+                  <PostComment
+                    key={key}
+                    comment={comment}
+                    loggedInUser={loggedInUser}
+                    isButtonOwner={isButtonOwner}
+                    reloadPosts={reloadPosts}
+                    post={post}
+                    replies={commentParentIds.filter(
+                      (reply) => reply.commentParentId == comment.id,
+                    )}
+                  />
+                );
+              })}
+          </>
+        )}
+      </>
+    </>
+  );
+}
+enum ComposeCommentState {
+  HIDE,
+  PRIVATE,
+  PUBLIC,
+}
+
+export function PostComment({
+  comment,
+  loggedInUser,
+  isButtonOwner,
+  reloadPosts,
+  post,
+  replies,
+  isReply = false
 }) {
   const deleteComment = (commentId) => {
     store.emit(
@@ -29,104 +87,134 @@ export default function PostComments({
       }),
     );
   };
+  const [showComposeComment, setShowComposeComment] =
+    useState<ComposeCommentState>(ComposeCommentState.HIDE);
 
-  const handleClick = (comment, privateMessage) => {
-    let mentions = mentionsOfMessage(comment.message)
-    mentions.push(comment.author.username)
-    
-    onComposeReplyToComment(
-      comment.id,
-      mentions,
-      privateMessage
-    )
-  }
-  
+  const toggleShowComposeComment = (privacy: ComposeCommentState) => {
+    if (showComposeComment == ComposeCommentState.HIDE) {
+      setShowComposeComment(() => privacy);
+    } else {
+      setShowComposeComment(() => ComposeCommentState.HIDE);
+    }
+  };
   return (
-    <>
-      <>
-        {comments.length > 0 && (
-          <>
-            {comments.map((comment, key) => {
-              return (
-                <div key={key} className="card-notification--comment">
-                  <CommentMessage
-                    post={comment}
-                  />
-                  <div className="message__actions">
-
-                  {(comment.privacy == CommentPrivacyOptions.PRIVATE) &&
-                     <Btn
-                       submit={false}
-                       btnType={BtnType.iconActions}
-                       iconLink={<IoMailOutline />}
-                       iconLeft={IconType.circle}
-                       contentAlignment={ContentAlignment.right}
-                       onClick={() =>
-                         handleClick(comment, true)
-                       }
-                     />
-                  }
-                   {(comment.privacy == CommentPrivacyOptions.PUBLIC) &&
-                     <Btn
-                       submit={false}
-                       btnType={BtnType.iconActions}
-                       iconLink={<IoChatbubbleEllipsesSharp/>}
-                       iconLeft={IconType.circle}
-                       contentAlignment={ContentAlignment.right}
-                       onClick={() =>
-                         handleClick(comment, false)
-                       }
-                     />
-                  }
-                 
-                 
-                    {loggedInUser &&
-                      (loggedInUser.id == comment.author.id ||
-                        isButtonOwner ||
-                        isAdmin(loggedInUser)) && (
-                        <Btn
-                          submit={true}
-                          btnType={BtnType.iconActions}
-                          iconLink={<IoTrashBinOutline />}
-                          iconLeft={IconType.circle}
-                          contentAlignment={ContentAlignment.right}
-                          onClick={() => deleteComment(comment.id)}
-                        />
-                      )}
-                  </div>
-                </div>
-              );
-            })}
-          </>
+    <div
+      className={
+        'card-notification--comment ' +
+        (comment.privacy == CommentPrivacyOptions.PRIVATE
+          ? ' card-notification--comment-private'
+          : '')
+        + (isReply ? ' card-notification--reply' : '')
+      }
+    >
+      <Comment comment={comment} />
+      
+      <div className="message__actions">
+        {(comment.privacy == CommentPrivacyOptions.PRIVATE) && (
+          <Btn
+            submit={false}
+            btnType={BtnType.smallLink}
+            caption={t("comment.sendPrivate")}
+            contentAlignment={ContentAlignment.right}
+            onClick={() =>
+              toggleShowComposeComment(ComposeCommentState.PRIVATE)
+            }
+          />
         )}
-      </>
-    </>
+        {(comment.privacy == CommentPrivacyOptions.PUBLIC) && (
+          <Btn
+            submit={false}
+            btnType={BtnType.smallLink}
+            caption={t("comment.sendPublic")}
+            contentAlignment={ContentAlignment.right}
+            onClick={() =>
+              toggleShowComposeComment(ComposeCommentState.PUBLIC)
+            }
+          />
+        )}
+
+        {loggedInUser &&
+          (loggedInUser.id == comment.author.id ||
+            isButtonOwner ||
+            isAdmin(loggedInUser)) && (
+            <Btn
+              submit={true}
+              btnType={BtnType.smallLink}
+              // iconLink={<IoTrashBinOutline />}
+              caption={t("comment.delete")}
+              // iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.right}
+              onClick={() => deleteComment(comment.id)}
+            />
+          )}
+      </div>
+      {(showComposeComment != ComposeCommentState.HIDE) && (
+        <Compose
+          referer={{
+            post: post.id,
+            comment: comment.commentParentId ? comment.commentParentId : comment.id,
+            privateMessage:
+              ComposeCommentState.PRIVATE == showComposeComment,
+            mentions: [
+              ...[comment.author.username],
+              ...mentionsOfMessage(comment.message),
+            ],
+          }}
+          onCreate={() => {
+            reloadPosts();
+            toggleShowComposeComment(ComposeCommentState.HIDE);
+          }}
+          onCancel={() => {
+            toggleShowComposeComment(ComposeCommentState.HIDE);
+          }}
+        />
+      )}
+     
+      {replies.length > 0 && (
+        <>
+          {replies.map((reply, key) => {
+            return (
+              <PostComment
+                isReply={true}
+                key={key}
+                comment={reply}
+                loggedInUser={loggedInUser}
+                isButtonOwner={isButtonOwner}
+                reloadPosts={reloadPosts}
+                post={post}
+                replies={[]}
+              />
+            );
+          })}
+        </>
+      )}
+
+      
+    </div>
   );
 }
-
-export function CommentMessage({ post }) {
+export function Comment({ comment }) {
   return (
     <>
-      {/* {!isButtonOwnerComment && ( */}
       <div className="message message--others">
         <div className="message__header">
           <div className="message__user-name-container">
             <p className="message__author">
               <span className="message__name">
-                {post.author.name}
+                {comment.author.name}
               </span>{' '}
-              @{post.author.username}
+              @{comment.author.username}
             </p>
           </div>
         </div>
 
         <div className="message__content">
-          {formatMessage(post.message)}
+          {formatMessage(comment.message)}
         </div>
 
         <div className="message__hour">
-          {readableTimeLeftToDate(post.created_at)},{' '}
-          {post.privacy == CommentPrivacyOptions.PRIVATE && (
+          {readableTimeLeftToDate(comment.created_at)},{' '}
+          {comment.privacy == CommentPrivacyOptions.PRIVATE && (
             <span style={{ color: 'red' }}>private</span>
           )}
         </div>
@@ -134,7 +222,7 @@ export function CommentMessage({ post }) {
         <div className="message__avatar">
           <ImageWrapper
             imageType={ImageType.avatar}
-            src={post.author.avatar}
+            src={comment.author.avatar}
             alt="Avatar"
           />
         </div>

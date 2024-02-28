@@ -8,9 +8,12 @@ import Btn, {
 } from 'elements/Btn';
 import t from 'i18n';
 import {
+  IoAdd,
   IoAddOutline,
   IoChatbubbleEllipsesSharp,
   IoCloseOutline,
+  IoCreateOutline,
+  IoMailOpenOutline,
   IoMailOutline,
   IoPersonOutline,
   IoTrashBinOutline,
@@ -21,6 +24,7 @@ import { useEffect, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
 import {
+  CreateNewCommentReply,
   CreateNewPost,
   CreateNewPostComment,
   DeletePost,
@@ -32,9 +36,12 @@ import { useStore } from 'store/Store';
 import MessageNew from 'components/feed/MessageNew';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
 import Link from 'next/link';
+import { useToggle } from 'shared/custom.hooks';
+import { CardButtonHeadActions } from 'components/button/CardButton';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
+  const [showReplyFirstPost, toggleShowReplyFirstPost] = useToggle(false);
 
   const loggedInUser = useStore(
     store,
@@ -65,8 +72,8 @@ export default function Feed({ button }: { button: Button }) {
 
   return (
     <div className="feed-container">
-      {loggedInUser && isButtonOwner && (
-        <Compose
+      {(loggedInUser && isButtonOwner) && (
+        <ComposePost
           referer={{ button: button.id }}
           onCancel={() => {}}
           onCreate={() => {
@@ -74,7 +81,9 @@ export default function Feed({ button }: { button: Button }) {
           }}
         />
       )}
-      &nbsp;
+      {!isButtonOwner && (      
+        <CardButtonHeadActions button={button} toggleShowReplyFirstPost={toggleShowReplyFirstPost}/>         
+      )}
       <div className="feed-line"></div>
       <div className="feed-section">
         {posts &&
@@ -90,6 +99,7 @@ export default function Feed({ button }: { button: Button }) {
                 isButtonOwner={isButtonOwner}
                 reloadPosts={reloadPosts}
                 buttonId={button.id}
+                showCompose={(showReplyFirstPost && idx == 0)}
                 isLast={idx == (posts.length - 1 )}
               />
           ))}
@@ -114,6 +124,7 @@ export function FeedElement({
   isButtonOwner = false,
   reloadPosts,
   buttonId,
+  showCompose = false,
   isLast = false,
 }) {
   const [showComposePostReply, setShowComposePostReply] =
@@ -125,6 +136,18 @@ export function FeedElement({
       }),
     );
   };
+  useEffect(() => {
+    if(showCompose)
+    {
+      setShowComposePostReply(() => {
+        return {
+          post: post.id,
+          privateMessage: false,
+          mentions: [post.author.username],
+        };
+      })
+    }
+  }, [showCompose])
   return (
     <div className="feed-element">
       <div className="card-notification card-notification--feed">
@@ -143,8 +166,9 @@ export function FeedElement({
                 <Btn
                   submit={false}
                   btnType={BtnType.filterCorp}
-                  iconLink={<IoChatbubbleEllipsesSharp />}
-                  iconLeft={IconType.circle}
+                  iconLink={<IoMailOpenOutline />}
+                  caption={t("comment.sendPublic")}
+                  iconLeft={IconType.svg}
                   contentAlignment={ContentAlignment.right}
                   onClick={() =>
                     setShowComposePostReply(() => {
@@ -160,7 +184,8 @@ export function FeedElement({
                   submit={false}
                   btnType={BtnType.filterCorp}
                   iconLink={<IoMailOutline />}
-                  iconLeft={IconType.circle}
+                  iconLeft={IconType.svg}
+                  caption={t("comment.sendPrivate")}
                   contentAlignment={ContentAlignment.right}
                   onClick={() =>
                     setShowComposePostReply(() => {
@@ -192,9 +217,8 @@ export function FeedElement({
                 <Btn
                 submit={false}
                 btnType={BtnType.filterCorp}
-                iconLink={<IoChatbubbleEllipsesSharp />}
+                iconLink={<IoMailOutline />}
                 iconLeft={IconType.circle}
-                caption=''
                 contentAlignment={ContentAlignment.right}
                 onClick={() =>
                   setShowComposePostReply(() => {
@@ -216,6 +240,7 @@ export function FeedElement({
               }}
               onCreate={() => {
                 reloadPosts();
+                setShowComposePostReply(() => null)
               }}
             />
           )}
@@ -225,29 +250,49 @@ export function FeedElement({
           )}
         </>
         <PostComments
-          buttonOwnerId={buttonOwnerId}
           comments={post.comments}
           reloadPosts={reloadPosts}
           loggedInUser={loggedInUser}
           isButtonOwner={isButtonOwner}
-          onComposeReplyToComment={(
-            commentId,
-            mentions,
-            privateMessage
-          ) => {
-            setShowComposePostReply(() => {
-              return {
-                post: post.id,
-                comment: commentId,
-                mentions: mentions.concat([post.author.username]),
-                privateMessage: privateMessage
-              };
-            });
-          }}
+          post={post}
         />
       </div>
     </div>
   );
+}
+
+export function ComposePost({
+  referer,
+  onCreate,
+  onCancel,
+}) {
+  const [show, toggleShow]= useToggle(false);
+  return (  
+    <>
+        {show &&
+
+        <Compose referer={referer} onCreate={onCreate} onCancel={onCancel}/> 
+
+        }
+        {!show &&
+            <div className="card-button__actions">
+
+                <Btn
+                  submit={false}
+                  btnType={BtnType.corporative}
+                  caption={t("button.createUpdate")}
+                  iconLink={<IoAdd />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() => {
+                    toggleShow(true);
+                  }}
+                />
+            </div>
+          }
+    </>
+    
+  )
 }
 
 export function Compose({
@@ -261,8 +306,10 @@ export function Compose({
   }
   if (referer.button) {
     return (
+      
       <div className="button-file__action-section">
-        <MessageNew
+
+          <MessageNew
           onCreate={(message) => {
             store.emit(
               new CreateNewPost(
@@ -281,13 +328,14 @@ export function Compose({
           }}
           mentions={[]}
         />
+        
       </div>
     );
   }
   if (referer.comment) {
     return (
       <div className="button-file__action-section">
-        <div className="button-file__action-section-close">
+        {/* <div className="button-file__action-section-close">
           <Btn
             submit={false}
             btnType={BtnType.iconActions}
@@ -298,7 +346,7 @@ export function Compose({
               onCancel();
             }}
           />
-        </div>
+        </div> */}
         <MessageNew
           isComment={true}
           privateMessage={referer?.privateMessage}
@@ -307,10 +355,10 @@ export function Compose({
             if (referer?.privateMessage) {
               privacy = CommentPrivacyOptions.PRIVATE;
             }
-
             store.emit(
-              new CreateNewPostComment(
+              new CreateNewCommentReply(
                 referer.post,
+                referer.comment,
                 privacy,
                 { message: message },
                 () => {
@@ -332,7 +380,7 @@ export function Compose({
   if (referer.post) {
     return (
       <div className="button-file__action-section">
-        <div className="button-file__action-section-close">
+        {/* <div className="button-file__action-section-close">
           <Btn
               submit={false}
               btnType={BtnType.iconActions}
@@ -343,7 +391,7 @@ export function Compose({
                 onCancel();
               }}
             />
-        </div>
+        </div> */}
         <MessageNew
           isComment={true}
           privateMessage={referer?.privateMessage}

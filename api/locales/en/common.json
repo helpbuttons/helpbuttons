@@ -176,7 +176,7 @@
     "unfollowAlert": "Unfollowed",
     "unfollowAlertError": "Unfollow Error",
     "followAlertError": "Follow error",
-    "showPhone":"Show phone number",
+    "showPhone":"Show phone",
     "isExpiringEventMail": "Due end of event date, your button is going to be erased in 3 days, please visit the link and change the date if you want to keep it alive. If there's no new activity it will be erased in 3 days.",
     "isExpiringEventMailSubject": "Your _helpbutton_ has passed its due date",
     "isExpiringMail": "Due to lack of activity, your _helpbutton_ '{0}' is going to be erased in one month, please visit the link if you want to keep it alive. If there's no new activity it will be erased in one month.",
@@ -186,7 +186,8 @@
     "renewMailSubject": "Renewed successfuly",
     "renewMail": "You renewed your _helpbutton_ '{0}' for more 3 months.",
     "isExpiringLink": "Due to lack of activity, your _helpbutton_ is going to be erased in one month.",
-    "renewLink": "Renew your _helpbutton_"
+    "renewLink": "Renew your _helpbutton_",
+    "createUpdate":"Publish Update"
   },
   "user": {
     "login":"Write your credentials",
@@ -312,7 +313,10 @@
     "private":"You're sending a private message. Only the destination user could see it.",
     "public":"This comment is public, everyone could see it.",
     "placeholderWrite": "Write a message in this post",
-    "posted":"Comment posted"
+    "posted":"Comment posted",
+    "sendPublic":"Comment",
+    "sendPrivate":"Private",
+    "send":"Send"
   },
   "configuration": {
     "title": "Network and Administrator settings",

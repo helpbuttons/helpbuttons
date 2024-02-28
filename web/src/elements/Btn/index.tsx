@@ -10,8 +10,10 @@ export enum BtnType {
     link,
     dropdown,
     circle,
+    smallCircle,
     iconActions,
     filterCorp,
+    smallLink,
 }
 
 export enum IconType {
@@ -131,8 +133,14 @@ export default function Btn({
         case BtnType.circle:
             classNames.push("btn btn--corporative btn-circle");
             break;
+        case BtnType.smallCircle:
+            classNames.push("btn btn--corporative btn-circle--small");
+            break;
         case BtnType.iconActions:
             classNames.push("btn btn-circle--big-icon");
+            break;
+        case BtnType.smallLink:
+            classNames.push("btn btn--link-small");
             break;
         default:
             if (hasIcon) {

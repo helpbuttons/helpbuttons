@@ -28,6 +28,7 @@ $btn-circle-height: 54px;
 $btn-circle-small-height: 35px;
 $btn-circle-big-icon-height: 28px;
 $btn-circle-icon-height: 20px;
+$btn-circle-small-icon-height: 15px;
 
 
 $btn-border-radius-semicircle: $border-radius-semicircle;
@@ -271,14 +272,15 @@ $btn-font-size-medium: $font-size-medium;
   @extend .btn-circle;
 
   border: none;
-  max-height: 35px;
-  max-width: 35px;
-  min-width: 35px;
+  max-height: 20px;
+  max-width: 25px;
+  min-width: 25px;
+  border-radius: $btn-border-radius;
 
   & svg {
     margin: auto;
-    height: 18px;
-    width: 18px;
+    height: 14px;
+    width: 14px;
   }
 
 }
@@ -295,8 +297,6 @@ $btn-font-size-medium: $font-size-medium;
     width: $btn-circle-icon-height;
 
   }
-
-
 }
 
 .btn-circle__content {
@@ -311,7 +311,7 @@ $btn-font-size-medium: $font-size-medium;
 
   @extend .btn-circle--small;
 
-  background-color: $color-white;
+  background-color: transparent;
   border: none;
 
   & .btn-circle__icon{
@@ -451,12 +451,51 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+//LINK btn VARIATION
+
 .btn--link {
 
   cursor: pointer;
   border: none;
 
+  text-align: left;
+  overflow-x: hidden;
+  height: auto;
+  // padding: 0 ;
+  width: inherit;
+  text-decoration: underline;
+  border: none;
+  background: transparent;
+  color: $color-gray;
+  transition: all 0.2s ease-in-out;
+  font-size: $font-size-general;
+
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    cursor: pointer;
+    border-radius: $border-radius-circle;
+    background: $color-white;
+  }
+  &:active {
+    cursor: pointer;
+    border-radius: $border-radius-circle;
+    background: $color-ligth-gray;
+  }
+
 }
+
+//SMALL LINK btn VARIATION
+.btn--link-small {
+
+  @extend .btn--link;
+
+  font-size: $font-size-small;
+  margin-top: 0;
+
+
+} 
 
 //CENTER btn VARIATION
 

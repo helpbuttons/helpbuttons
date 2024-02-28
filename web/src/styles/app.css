@@ -7663,7 +7663,7 @@ body {
 }
 
 .button-file__action-section--field {
-  background-color: #fff;
+  background-color: $color-light-grey;
   border-radius: 0 0 8px 8px;
 }
 

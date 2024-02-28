@@ -10,6 +10,9 @@ import {
   IoChatbubbleEllipsesSharp,
   IoCallOutline,
   IoHeart,
+  IoCreate,
+  IoCreateOutline,
+  IoMail,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -63,6 +66,8 @@ export default function CardButton({ button, buttonTypes }) {
     <>
       {button && (
         <>
+          <CardButtonOptions />
+
           <div
             className="card-button card-button__file"
             style={buttonColorStyle(buttonType.cssColor)}
@@ -73,7 +78,11 @@ export default function CardButton({ button, buttonTypes }) {
             />
           </div>
           <CardButtonImages button={button} />
-          <CardButtonOptions />
+
+          <CardButtonAuthorSection 
+          button={button}
+          buttonTypes={buttonTypes}
+          />
         </>
       )}
     </>
@@ -85,7 +94,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
   return (
     <div className="card-button__content">
       <div className="card-button__header">
-        <div className="card-button__avatar">
+        {/* <div className="card-button__avatar">
           <div className="avatar-small">
             <ImageWrapper
               imageType={ImageType.avatar}
@@ -93,7 +102,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
               alt={button.owner.username}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="card-button__info">
           <div className="card-button__status card-button__status">
@@ -104,13 +113,13 @@ export function CardButtonHeadMedium({ button, buttonType }) {
               {buttonType.caption}
             </span>
           </div>
-          <div className="card-button__name">
+          {/* <div className="card-button__name">
             {button.owner.name}
             <span className="card-button__username">
               {' '}
               @{button.owner.username}
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -277,17 +286,6 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
       <ExpiringAlert button={button} isOwner={isButtonOwner(loggedInUser, button)}/>
       <div className="card-button__content">
         <div className="card-button__header">
-          <div className="card-button__avatar">
-            <div className="avatar-big">
-              <Link href={profileHref}>
-                <ImageWrapper
-                  imageType={ImageType.avatarBig}
-                  src={button.owner.avatar}
-                  alt="Avatar"
-                />
-              </Link>
-            </div>
-          </div>
 
           <div className="card-button__info">
             <div className="card-button__status card-button__status">
@@ -298,16 +296,6 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
                 {caption}
               </span>
             </div>
-            <div className="card-button__name">
-              <Link href={profileHref}>
-                {button.owner.name}{' '}
-                <span className="card-button__username">
-                  {' '}
-                  @{button.owner.username}
-                </span>
-              </Link>
-            </div>
-            <CardButtonHeadActions button={button} />
           </div>
         </div>
 
@@ -424,7 +412,7 @@ function ShowPhone({ button }) {
         <>
           {!showPhone && (
             <Btn
-              btnType={BtnType.filterCorp}
+              btnType={BtnType.corporative}
               contentAlignment={ContentAlignment.center}
               caption={t('button.showPhone')}
               iconLeft={IconType.circle}
@@ -432,9 +420,9 @@ function ShowPhone({ button }) {
             />
           )}
           {showPhone && (
-            <>
+            <div className='card-button__phone-section'>
               <Btn
-                btnType={BtnType.filterCorp}
+                btnType={BtnType.corporative}
                 contentAlignment={ContentAlignment.center}
                 iconLeft={IconType.circle}
                 iconLink={<IoCallOutline />}
@@ -444,7 +432,7 @@ function ShowPhone({ button }) {
               <div className="card-button__rating--phone">
                 {phone}
               </div>
-            </>
+            </div>
           )}
         </>
       )}
@@ -452,10 +440,19 @@ function ShowPhone({ button }) {
   );
 }
 
-export function CardButtonHeadActions({ button }) {
+export function CardButtonHeadActions({ button, toggleShowReplyFirstPost }) {
+  
   return (
-    <div className="card-button__rating">
+    <div className="card-button__actions">
       <ShowPhone button={button} />
+      <Btn
+          btnType={BtnType.corporative}
+          contentAlignment={ContentAlignment.center}
+          iconLeft={IconType.circle}
+          iconLink={<IoMailOutline />}
+          submit={true}
+          onClick={() => { toggleShowReplyFirstPost(true)}}
+      />
       {button.hearts && (
         <span className="btn-circle__icon">
           <IoHeartOutline />
@@ -520,12 +517,64 @@ export function CardButtonImages({ button }) {
     </>
   );
 }
+
+
+export function CardButtonAuthorSection({ button, buttonTypes }) {
+  const { cssColor, caption, customFields } = buttonTypes.find(
+    (buttonType) => {
+      return buttonType.name === button.type;
+    },
+  );
+  const loggedInUser = useRef(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+  const [showMap, setShowMap] = useState(false);
+  const profileHref = isButtonOwner(loggedInUser, button)
+    ? `/Profile/`
+    : `/p/${button.owner.username}`;
+  return (
+    <div className="card-button__author">
+          
+          <div className="card-button__info">
+          <div className="card-button__author-title">{t('button.authorTitle')}</div>
+            <Link href={profileHref}>
+              <div className="card-button__name">
+                
+                  {button.owner.name}{' '}
+                  <span className="card-button__username">
+                    {' '}
+                    @{button.owner.username}
+                  </span>
+
+              </div>
+              <div className="card-button__description">
+                {button.owner.description}
+              </div>
+            </Link>
+          </div>
+          <div className="card-button__avatar">
+            <div className="avatar-big">
+              <Link href={profileHref}>
+                <ImageWrapper
+                  imageType={ImageType.avatarBig}
+                  src={button.owner.avatar}
+                  alt="Avatar"
+                />
+              </Link>
+            </div>
+          </div>
+      </div>
+  );
+}
+
+
 export function CardButtonOptions() {
   return (
     <div className="card-button__options-menu">
       <div className="card-button__trigger">
         <div className="card-button__edit-icon card-button__submenu">
-          {' '}
           <IoEllipsisHorizontalSharp />
         </div>
       </div>

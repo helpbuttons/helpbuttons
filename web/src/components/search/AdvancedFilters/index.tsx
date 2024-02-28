@@ -22,6 +22,7 @@ import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import Link from 'next/link';
 import { alertService } from 'services/Alert';
 import { FollowTag } from 'state/Users';
+import { IoAccessibility } from 'react-icons/io5';
 
 
 export default function AdvancedFilters({
