@@ -166,6 +166,7 @@ function List({
                 <ContentList
                   buttons={buttons.slice(0, sliceSize)}
                   buttonTypes={buttonTypes}
+                  showMap={showMap}
                 />
               )}
             </div>

@@ -8,7 +8,7 @@ import { updateCurrentButton } from 'state/Explore';
 import { store } from 'pages';
 import router from 'next/router';
 
-export default function CardButtonList({ buttonTypes, button, linkToPopup }) {
+export default function CardButtonList({ buttonTypes, button, showMap, linkToPopup }) {
   const buttonType = buttonTypes.find(
     (buttonTemplate) => buttonTemplate.name == button.type,
   );
@@ -30,7 +30,7 @@ export default function CardButtonList({ buttonTypes, button, linkToPopup }) {
           }}
           >
           <div style={buttonColorStyle(buttonType.cssColor)}>
-              <div className="card-button-list">
+              <div className={showMap ? "card-button-list" : "card-button-list--vertical"}>
                 {button.image && (
                   <div className="card-button-list__picture-container">
                     <div className="card-button-list__nav">

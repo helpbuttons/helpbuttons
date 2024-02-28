@@ -549,7 +549,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
                   </span>
 
               </div>
-              <div className="card-button__description">
+              <div className="card-button__author-description">
                 {button.owner.description}
               </div>
             </Link>

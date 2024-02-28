@@ -10,6 +10,7 @@ import Btn, { ContentAlignment } from 'elements/Btn';
 export default function ContentList({
   buttons,
   buttonTypes,
+  showMap,
   linkToPopup = true,
   ...props
 }) {
@@ -34,6 +35,6 @@ export default function ContentList({
   }
   return buttons.map((btn, i) => (
     // <>{JSON.stringify(buttonTypes)}</>
-    <CardButtonList key={i} button={btn} buttonTypes={buttonTypes} linkToPopup={linkToPopup}/>
+    <CardButtonList key={i} button={btn} buttonTypes={buttonTypes} showMap={showMap} linkToPopup={linkToPopup}/>
   ));
 }
