@@ -12,7 +12,8 @@ export class NetworkService {
   }
   // //Get network by id
   public static findById(id: string = ""): Observable<Network | undefined> {
-    return httpService.get<Network>("networks/findById/" + id)
+    return httpService.get<Network>("networks/findById")
+    // return httpService.get<Network>("networks/findById" + id)
   }
 
   public static get(): Observable<SetupDtoOut | undefined> {
