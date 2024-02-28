@@ -26,23 +26,23 @@ $search-map-height: 0; // Altura del header
 
 .search-map__instructions {
 
-  bottom: 30px;
   color: $color-white;
-  padding: $padding-big;
-  top: 50%;
-  position: relative;
-  bottom: 50%;
+  padding: $padding-medium;
+  top: 10%;
+  position: absolute;
+  left: calc(50% - 100px);
   width: auto;
   overflow: visible;
-  max-width: 300px;
+  max-width: 200px;
   text-align: center;
   text-wrap:balance;
   margin-left: auto;
   z-index: $z-index-05;
-  margin-top: $margin-medium;
+  margin-top: $margin-small;
   background-color: $color-blue;
-  border-radius: $border-radius-circle;
+  border-radius: $border-radius-basic;
   font-weight: $font-weight-bold;
+  font-size: $font-size-small;
 
 }
 

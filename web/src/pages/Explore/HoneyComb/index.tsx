@@ -56,6 +56,7 @@ import {
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { alertService } from 'services/Alert';
 import { ButtonShow } from 'pages/ButtonFile/[id]';
+import t from 'i18n';
 
 const defaultZoomPlace = 13;
 

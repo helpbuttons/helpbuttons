@@ -1,4 +1,4 @@
-import { IoSearch } from 'react-icons/io5';
+import { IoClose, IoSearch } from 'react-icons/io5';
 import React, { useState } from 'react';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -42,9 +42,15 @@ export function HeaderSearch({ results, isHome = false}) {
                 filters={exploreMapState.filters}
               />
             )}
-            <div className="header-search__icon">
-              <IoSearch />
+            <div className="header-search__icons">
+              <div className="header-search__icon">
+                <IoSearch />
+              </div>
+              <div className="header-search__icon--close">
+                <IoClose />
+              </div>
             </div>
+ 
           </div>
         </LoadabledComponent>
       </div>
