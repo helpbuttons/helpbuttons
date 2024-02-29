@@ -58,9 +58,6 @@ export default function HexagonExploreMap({
 
     {exploreSettings.center && 
       <>
-        <div className="search-map__instructions">
-            {t("explore.displayInstructions")}
-        </div>
       <HbMap
         mapCenter={exploreSettings.center}
         mapZoom={exploreSettings.zoom}

@@ -52,6 +52,7 @@ export interface ExploreMapState {
   loading: boolean;
   initialized: boolean;
   showAdvancedFilters: boolean;
+  showInstructions: boolean;
 }
 export const exploreInitial = {
   draftButton: null,
@@ -65,6 +66,7 @@ export const exploreInitial = {
     loading: true,
     initialized: false,
     showAdvancedFilters: false,
+    showInstructions: true,
   },
   settings: exploreSettingsDefault,
 };
@@ -367,6 +369,10 @@ export class UpdateHexagonClicked implements UpdateEvent {
       newState.explore.map.loading = false;
       newState.explore.map.initialized = true;
       newState.explore.settings.hexagonClicked = this.hexagonClicked;
+      if(this.hexagonClicked)
+      {
+        newState.explore.map.showInstructions = false
+      }
     });
   }
 }

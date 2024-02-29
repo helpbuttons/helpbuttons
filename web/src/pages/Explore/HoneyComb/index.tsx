@@ -158,6 +158,7 @@ function HoneyComb({ router, selectedNetwork }) {
         <LoadabledComponent
           loading={exploreSettings.loading && !selectedNetwork}
         >
+          <DisplayInstructions/>
           <HexagonExploreMap
             exploreSettings={exploreSettings}
             h3TypeDensityHexes={h3TypeDensityHexes}
@@ -692,3 +693,26 @@ const orderBy = (buttons, orderBy, center) => {
   }
   return buttons;
 };
+
+
+function DisplayInstructions() {
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+  const showInstructions = useStore(
+    store,
+    (state: GlobalState) => state.explore.map.showInstructions,
+    false,
+  );
+  return (
+    <>
+      {(showInstructions && !loggedInUser ) && (
+        <div className="search-map__instructions">
+          {t('explore.displayInstructions')}
+        </div>
+      )}
+    </>
+  );
+}
