@@ -17,7 +17,8 @@ export enum ErrorName{
     validationError= 'validation-error',
     inviteOnly = 'invite-only-network',
     geoCodingError = 'geo-coding-error',
-    invalidDates = 'invalid-dates'
+    invalidDates = 'invalid-dates',
+    InvalidUsername = 'invalid-username',
 }
 
 export const errorsList: ErrorText[] = 
@@ -80,6 +81,11 @@ export const errorsList: ErrorText[] =
     {
         name: ErrorName.invalidDates,
         caption: `Invalid dates`,
+        status: HttpStatus.NOT_ACCEPTABLE
+    },
+    {
+        name: ErrorName.InvalidUsername,
+        caption: `Invalid username`,
         status: HttpStatus.NOT_ACCEPTABLE
     },
 ]

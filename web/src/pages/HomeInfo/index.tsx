@@ -92,7 +92,7 @@ export default function HomeInfo({
                                   
                   style={
                     {
-                      '--network-jumbo': `url('/api/${selectedNetwork.jumbo}'`,
+                      '--network-jumbo': `url('/api${selectedNetwork.jumbo}'`,
                     } as React.CSSProperties
                   }
                 >

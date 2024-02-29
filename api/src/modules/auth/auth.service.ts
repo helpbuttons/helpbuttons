@@ -88,6 +88,12 @@ export class AuthService {
       radius: 0,
     };
 
+    const regex = /^[a-zA-Z0-9\_\-\.]+$/gm;
+    if(!signupUserDto.username.match(regex))
+    {
+      throw new CustomHttpException(ErrorName.InvalidUsername);
+    }
+
     const emailExists = await this.userService.isEmailExists(
       signupUserDto.email,
     );

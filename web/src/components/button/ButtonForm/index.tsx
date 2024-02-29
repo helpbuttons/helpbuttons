@@ -104,16 +104,13 @@ export default function ButtonForm({
     }
   }, [buttonType, buttonTypes]);
 
-  const closeClicked = () => {
-    Router.push('/Explore');
-  };
 
   const onError = (errors, e) => alertService.error(t('validation.error'))
 
   return (
     <LoadabledComponent loading={!selectedNetwork}>
       {selectedNetwork && 
-      <Popup title={title} onCloseClicked={closeClicked}>
+      <Popup title={title} linkFwd={'/Explore'}>
         <Form
           onSubmit={handleSubmit(onSubmit, onError)}
           classNameExtra="publish_btn"

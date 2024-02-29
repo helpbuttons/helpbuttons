@@ -95,7 +95,9 @@ export default function FieldDate({
               {eventType == DateTypes.RECURRENT && (
                 <PickerEventTypeRecurrentForm
                   rrule={loadRrules(eventData)}
-                  setRrule={(rrule) => {setEventData(rrule); setEventStart(new Date(rrule.dtstart)); setEventEnd(new Date(rrule.until))}}
+                  setRrule={(rrule) => {
+                    setEventData(rrule); 
+                    setEventStart(new Date(rrule.dtstart)); setEventEnd(new Date(rrule.until))}}
                   closeMenu={closeMenu}
                 />
               )}
