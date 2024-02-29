@@ -76,9 +76,19 @@ export class PostService {
         ...post,
         comments: post.comments.filter(
           (comment) =>
-            comment.privacy == CommentPrivacyOptions.PUBLIC ||
+          {
+            if(comment.message.indexOf(`@${currentUser.username}`) > -1) 
+            {
+              return true
+            }
+            if(comment.privacy == CommentPrivacyOptions.PUBLIC ||
             post.author.id == currentUser?.id ||
-            comment.author.id == currentUser?.id,
+            comment.author.id == currentUser?.id )
+            {
+              return true;
+            }
+          }
+
         ),
       };
     });

@@ -7,7 +7,11 @@ import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { User } from 'shared/entities/user.entity';
-import { FindAdminButton, FindExtraFieldsUser, FindUserButtons } from 'state/Users';
+import {
+  FindAdminButton,
+  FindExtraFieldsUser,
+  FindUserButtons,
+} from 'state/Users';
 import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
 import { useRouter } from 'next/router';
@@ -22,9 +26,9 @@ import { HttpStatus } from 'shared/types/http-status.enum';
 import { makeImageUrl } from 'shared/sys.helper';
 import SEO from 'components/seo';
 
-export default function p({metadata, userProfile}) {
-  const [userButtons,setUserButtons] = useState([])
-  const [extraFields,setExtraFields] = useState([])
+export default function p({ metadata, userProfile }) {
+  const [userButtons, setUserButtons] = useState(null);
+  const [extraFields, setExtraFields] = useState([]);
   const knownUsers = useRef(
     store,
     (state: GlobalState) => state.knownUsers,
@@ -38,7 +42,7 @@ export default function p({metadata, userProfile}) {
   const router = useRouter();
 
   useEffect(() => {
-    if(!router.isReady) return;
+    if (!router.isReady) return;
     const username = router.query.username as string;
     let newUserProfile = '';
     if (userProfile) {
@@ -51,16 +55,25 @@ export default function p({metadata, userProfile}) {
           }),
         );
       }
-      if(!userButtons)
-      {
-        store.emit(new FindUserButtons(userProfile.id, (userButtons) => setUserButtons(userButtons)))
+      if (userProfile.showButtons && !userButtons) {
+        console.log('getting user btns');
+        store.emit(
+          new FindUserButtons(userProfile.id, (userButtons) =>
+            setUserButtons(userButtons),
+          ),
+        );
       }
       // if user is admin... get more data!
-      if(loggedInUser?.role == Role.admin)
-      {
-        store.emit(new FindExtraFieldsUser(userProfile.id, (extraFields) => {
-          setExtraFields(extraFields)
-        }, () => {}))
+      if (loggedInUser?.role == Role.admin) {
+        store.emit(
+          new FindExtraFieldsUser(
+            userProfile.id,
+            (extraFields) => {
+              setExtraFields(extraFields);
+            },
+            () => {},
+          ),
+        );
       }
       // store.emit(FindExtraFieldsUser(userProfile.id))
     }
@@ -73,29 +86,45 @@ export default function p({metadata, userProfile}) {
 
   const [buttonTypes, setButtonTypes] = useState([]);
   useButtonTypes(setButtonTypes);
+  const { sliceSize, handleScrollHeight } = useScrollHeight(
+    userButtons?.length,
+  );
 
-  const {sliceSize, handleScrollHeight} = useScrollHeight(userButtons.length)
-  
   return (
     <>
-          <SEO {...metadata} />
-          <Popup linkFwd="/Explore" title={t('user.otherProfileView')} onScroll={handleScrollHeight}>
-            {userProfile && <CardProfile user={userProfile} showAdminOptions={loggedInUser?.role == Role.admin}/>}
-            {userProfile?.role == Role.admin && adminButtonId && (
-              <LinkAdminButton adminButtonId={adminButtonId} />
-            )}
-            {loggedInUser?.role == Role.admin &&
-              <>Email: {extraFields.email}</>
-            }
-            {(userButtons && userButtons.length > 0)&& 
-            <div className='card-profile__button-list'>
-              <ContentList buttons={userButtons.slice(0, sliceSize)} buttonTypes={buttonTypes} linkToPopup={false}/>
-            </div>}
-          </Popup>
+      <SEO {...metadata} />
+      <Popup
+        linkFwd="/Explore"
+        title={t('user.otherProfileView')}
+        onScroll={handleScrollHeight}
+      >
+        {userProfile && (
+          <CardProfile
+            user={userProfile}
+            showAdminOptions={loggedInUser?.role == Role.admin}
+          />
+        )}
+        {userProfile?.role == Role.admin && adminButtonId && (
+          <LinkAdminButton adminButtonId={adminButtonId} />
+        )}
+        {loggedInUser?.role == Role.admin && (
+          <>Email: {extraFields.email}</>
+        )}
+        {userProfile.showButtons &&
+          userButtons &&
+          userButtons?.length > 0 && (
+            <div className="card-profile__button-list">
+              <ContentList
+                buttons={userButtons.slice(0, sliceSize)}
+                buttonTypes={buttonTypes}
+                linkToPopup={false}
+              />
+            </div>
+          )}
+      </Popup>
     </>
   );
 }
-
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const serverProps = await ServerPropsService.general(
@@ -107,9 +136,8 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     next: { revalidate: 10 },
   });
   const currentUserData = await userProfileFetch.json();
-  if(currentUserData?.statusCode == HttpStatus.NOT_FOUND)
-  {
-    return {props: serverProps};
+  if (currentUserData?.statusCode == HttpStatus.NOT_FOUND) {
+    return { props: serverProps };
   }
   const serverPropsModified = {
     ...serverProps,

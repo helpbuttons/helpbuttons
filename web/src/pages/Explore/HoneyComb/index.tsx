@@ -117,8 +117,8 @@ function HoneyComb({ router, selectedNetwork }) {
 
   return (
     <>
-
-      <div className="index__explore-container">
+    
+    <div className="index__explore-container">
         <div
           className={
             'index__content-left ' +
@@ -132,7 +132,7 @@ function HoneyComb({ router, selectedNetwork }) {
 
           {currentButton && (
             <PopupButtonFile
-              onCloseClicked={() => {
+              linkBack={() => {
                 store.emit(new updateCurrentButton(null));
               }}
             >

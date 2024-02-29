@@ -27,6 +27,10 @@ export default function FeedProfile({ allActivities, loggedInUser }) {
       name: t('activities.interests'),
       value: 'interests',
     },
+    {
+      name: t('activities.myhelpbuttons'),
+      value: 'myhelpbuttons',
+    },
   ];
   // all
   // my activity
@@ -83,7 +87,7 @@ export default function FeedProfile({ allActivities, loggedInUser }) {
             {
               case ActivityEventName.NewButton:{
                 const button :Button = activity.data
-                return button.owner.id != activity.owner.id
+                return button.owner.id != loggedInUser.id
               }
               case ActivityEventName.NewPostComment:{
                 return false;
@@ -93,6 +97,24 @@ export default function FeedProfile({ allActivities, loggedInUser }) {
                 return post.author.id == loggedInUser.id
               case ActivityEventName.NewFollowButton:
                 return true;
+            }
+            return false;
+          }
+        );
+      }
+      if(value == 'myhelpbuttons') {
+        return allActivities.filter(
+          (activity: Activity) => {
+            switch(activity.eventName)
+            {
+              case ActivityEventName.NewButton:{
+                const button :Button = activity.data
+                console.log(button.owner.id)
+                // console.log(log)
+                return button.owner.id == loggedInUser.id
+              }
+              default:
+                return false;
             }
             return false;
           }

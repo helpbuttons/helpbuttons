@@ -16,11 +16,11 @@ export class ButtonService {
     data: Button,
     networkId: string
   ): Observable<any> {
-    return httpService.post("/buttons/new?networkId=" + networkId, data);
+    return httpService.post("buttons/new?networkId=" + networkId, data);
   }
 
   public static update(buttonId: string, data: UpdateButtonDto): Observable<any> {
-    return httpService.post("/buttons/update/" + buttonId, data);
+    return httpService.post("buttons/update/" + buttonId, data);
   }
 
   public static findJson(optionsJson: string): Observable<Button[]> {
@@ -44,11 +44,11 @@ export class ButtonService {
       console.error('empty hexagons...')
       return of([]);
     }
-    return httpService.post<Button[]>(`/buttons/findh3/${resolution}`,{hexagons});
+    return httpService.post<Button[]>(`buttons/findh3/${resolution}`,{hexagons});
   }
 
   public static findById(id: string): Observable<any> {
-    return httpService.get<Button>("/buttons/findById/" + id)
+    return httpService.get<Button>("buttons/findById/" + id)
   }
 
   public static delete(id: any): Observable<any> {
@@ -56,7 +56,7 @@ export class ButtonService {
   }
 
   public static findAdminButton(): Observable<any> {
-    return httpService.get<Button>("/buttons/findAdminButton/")
+    return httpService.get<Button>("buttons/findAdminButton/")
   }
 
   public static follow(id: any): Observable<any> {
