@@ -20,8 +20,7 @@ $card-button-list-size-icon-before: 18px;
 $card-button-list-whitespace: .5rem;
 $card-button-list-border-height: $border-general-height;
 
-.card-button-list,
-.card-button-list--vertical {
+.card-button-list {
 
   background: $color-white;
   border: $card-button-list-border;
@@ -41,15 +40,6 @@ $card-button-list-border-height: $border-general-height;
     cursor:none;
 
   }
-}
-
-.card-button-list--vertical {
-
-  flex-flow: column;
-  height: auto;
-  max-height: none;
-
-
 }
 
 
@@ -75,6 +65,22 @@ $card-button-list-border-height: $border-general-height;
   background:  var(--button-color);
 }
 
+.card-button-list--vertical {
+
+  @extend .card-button-list;
+
+  flex-flow: column;
+  height: auto;
+  max-height: none;
+  margin-top: $margin-xsmall;
+
+  .card-button-list__picture-container {
+
+    // width: 100%;
+  
+  }
+
+}
 
 .card-button-list--deactivated {
 
@@ -351,7 +357,6 @@ $card-button-list-border-height: $border-general-height;
 
     width: auto;
     object-fit: cover;
-
 
   }
 

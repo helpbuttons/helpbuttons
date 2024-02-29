@@ -2,7 +2,7 @@ $list-container-height: 300px;
 $list-drag-tab-height: 35px;
 $list-container-hide-height: calc($footer-height-mobile - $list-container-height);
 $list-order-tabs-bottom: calc($footer-height-mobile + $list-container-height);
-$list-container-hide-nohover-height: calc($footer-height-mobile - $list-container-height + $list-drag-tab-height);
+$list-container-hide-nohover-height: calc($footer-height-mobile - $list-container-height + 15px);
 $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-height - 40px);
 
 
@@ -169,7 +169,6 @@ position: absolute;
   position: relative;
   height: $list-drag-tab-height;
 
-
 }
 
 .list__order--hidden {
@@ -180,17 +179,18 @@ position: absolute;
 
 }
 
-
 .list__order--hide {
 
   background-color: $color-corporative;
 
 }
+
 //change movement when there's no scrollbar
 @media (hover: none) {
 
   .list__container {
-    padding-bottom: calc($footer-height-mobile - 30px);
+    padding-bottom: calc($footer-height-mobile - 15px);
+
   }
 
 }

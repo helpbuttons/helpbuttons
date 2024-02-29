@@ -250,7 +250,8 @@
     "priceExplain": "Filtrar por precio",
     "byProximity": "Por proximidad",
     "byEventDate": "Por ínicio del evento",
-    "followTagSucess": "{0} fue adicionado a tus intereses"
+    "followTagSucess": "{0} fue adicionado a tus intereses",
+    "focusedArea":"en la zona"
   },
   "button": {
     "title":"Vista de _helpbutton_",

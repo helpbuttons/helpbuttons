@@ -87,7 +87,8 @@
     "orderBy": "Order",
     "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list",
     "followTagSucess": "{0} has been added to your interests",
-    "filteredSearch":"in filtered search by:"
+    "filteredSearch":"in filtered search by:",
+    "focusedArea":"in framed area"
   },
   "setup": {
     "hostname": "Hostname",

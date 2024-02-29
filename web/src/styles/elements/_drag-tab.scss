@@ -21,7 +21,7 @@ $drag-tab-icon-size: 25px;
   background-color: $color-corporative;
   margin: 0;
   z-index: $z-index-01;
-  margin-bottom: 95px;
+  margin-bottom: calc( $footer-height-mobile + 70px);
   // padding: $padding-small $padding-small;
   border-radius: $border-radius-circle $border-radius-circle;
   // transform: translateY(-35px);

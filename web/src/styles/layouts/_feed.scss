@@ -13,11 +13,6 @@ $feed-button-width: 47px;
 $feed-padding: $padding-medium;
 $feed-new-message-radius: $border-radius-circle;
 
-.feed__container {
-
-
-}
-
 .feed-line {
 
   display: none;
@@ -49,7 +44,7 @@ $feed-new-message-radius: $border-radius-circle;
 
   height: 100vh;
   overflow-y: auto;
-  padding-bottom: calc($footer-height-mobile*2 + $padding-small*4);
+  padding-bottom: calc($footer-height-mobile + 100px);
 
 }
 
