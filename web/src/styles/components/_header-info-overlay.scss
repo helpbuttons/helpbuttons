@@ -88,6 +88,22 @@ $info-content-head-margin: calc( $footer-height-mobile );
 
 }
 
+.info-overlay__network-title {
+
+  padding: $padding-big;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: $border-radius-basic;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+
+}
+
 .info-overlay__network-title-card--buttons {
 
   margin-top: $margin-small;
@@ -119,14 +135,12 @@ $info-content-head-margin: calc( $footer-height-mobile );
     .card__header {
 
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       margin-bottom: 0;
       padding-bottom: $padding-small;
       width: 100%;
       gap: $padding-medium;
-
-
   
       .card__header-image {
   
@@ -149,10 +163,10 @@ $info-content-head-margin: calc( $footer-height-mobile );
           word-wrap: break-word;
           display: flex;
           border-radius: $border-radius-basic;
-          background-color: $color-dark-gray;
+          // background-color: $color-dark-gray;
           padding: $padding-big;
-          color: $color-white;
-          max-width: 70%;
+          color: $color-dark-gray;
+          max-width: 100%;
           align-self: center;
           justify-content: center;
 

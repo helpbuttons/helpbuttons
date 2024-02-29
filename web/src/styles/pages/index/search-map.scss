@@ -26,23 +26,27 @@ $search-map-height: 0; // Altura del header
 
 .search-map__instructions {
 
-  bottom: 30px;
-  color: $color-white;
-  padding: $padding-big;
-  top: 50%;
-  position: relative;
-  bottom: 50%;
+  color: $color-dark-gray;
+  padding: $padding-medium;
+  top: 10%;
+  position: absolute;
+  left: calc(50% - 100px);
   width: auto;
   overflow: visible;
-  max-width: 300px;
+  max-width: 200px;
   text-align: center;
   text-wrap:balance;
   margin-left: auto;
-  z-index: $z-index-05;
-  margin-top: $margin-medium;
+  z-index: $z-index-03;
+  margin-top: $margin-small;
   background-color: $color-blue;
-  border-radius: $border-radius-circle;
+  border-radius: $border-radius-basic;
   font-weight: $font-weight-bold;
+  font-size: $font-size-small;
+
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 
 }
 
@@ -55,7 +59,9 @@ $search-map-height: 0; // Altura del header
     align-items: center;
     height: 100%;
 
-    font-size: $font-size-huge;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-size: $font-size-title;
     font-weight: $font-weight-bold;
     color: $color-black;
     text-shadow: none;
@@ -78,13 +84,34 @@ $search-map-height: 0; // Altura del header
     flex-flow: column;
     align-items: flex-start;
 
+    max-width: 300px;
+
+    a {
+
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* number of lines to show */
+      line-clamp: 2; 
+      -webkit-box-orient: vertical;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      max-height: 2.4em;
+      line-height: 1.2em;
+
+    }
+    
+
   }
 
   .search-map__sign {
 
-    font-size: $font-size-small;
-    line-height: 40px;
+    font-size: $font-size-xsmall;
+    line-height: 1em;
     color: $color-gray;
+    width: auto;
+    line-break: strict;
+    text-wrap:nowrap;
 
   }
   

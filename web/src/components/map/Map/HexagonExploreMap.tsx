@@ -55,7 +55,12 @@ export default function HexagonExploreMap({
   useButtonTypes(setButtonTypes);
   return (
     <>
+
     {exploreSettings.center && 
+      <>
+        <div className="search-map__instructions">
+            {t("explore.displayInstructions")}
+        </div>
       <HbMap
         mapCenter={exploreSettings.center}
         mapZoom={exploreSettings.zoom}
@@ -64,11 +69,6 @@ export default function HexagonExploreMap({
         handleClick={onMapCLick}
       >
         {/* DISPLAY INSTRUCTIONS OVER MAP*/}
-        <Overlay anchor={[0, 0]}  offset={[  150, -100]}>
-          <div className="search-map__instructions">
-            {t("explore.displayInstructions")}             
-          </div>
-        </Overlay>
         <ShowMobileOnly>
           <Overlay anchor={[100, 100]}>
             <div className="search-map__network-title">
@@ -241,6 +241,7 @@ export default function HexagonExploreMap({
           </Overlay>
         )}
       </HbMap>
+      </>
       }
     </>
   );
