@@ -5,7 +5,7 @@ import { AllowGuest, OnlyAdmin, OnlyRegistered } from '@src/shared/decorator/rol
 import { Role } from '@src/shared/types/roles';
 import { Auth } from '@src/shared/decorator/auth.decorator';
 import { CurrentUser } from '@src/shared/decorator/current-user';
-import { User } from './user.entity';
+import { User, UserExtended } from './user.entity';
 import { InviteService } from '../invite/invite.service';
 import { InviteCreateDto } from '../invite/invite.dto';
 import { plainToClass } from 'class-transformer';
@@ -29,7 +29,7 @@ export class UserController {
   async find(@Param('username') username: string) {
     const user = await this.userService
       .findByUsername(username, true);
-     return plainToClass(User, user, { excludeExtraneousValues: true })
+     return plainToClass(UserExtended, user, { excludeExtraneousValues: true })
   }
 
   @OnlyAdmin()
