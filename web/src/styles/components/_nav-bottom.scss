@@ -51,8 +51,10 @@ $nav-bottom-border: 32px;
   align-content: flex-end;
   display: flex;
 
+
   &:hover, :active {
 
+    color: $color-blue !important;
     cursor: pointer;
 
     .nav-bottom__icon {
@@ -83,11 +85,10 @@ $nav-bottom-border: 32px;
 
   font-weight: bolder;
 
-
 }
 
 .nav-bottom__link--current{
-  color: var(--network-text-color);
+  color: var(--network-text-color) !important;
 
   .nav-bottom__text::after {
     content: "";
@@ -103,11 +104,9 @@ $nav-bottom-border: 32px;
     animation: spread 1s ease-out forwards;
   }
 
-
 }
 
 .nav-bottom__link--create {
-
 
   .nav-bottom__icon {
     svg {
@@ -235,6 +234,29 @@ $nav-bottom-border: 32px;
 
         }
         
+    }
+
+    &:hover, :active {
+
+      color: $color-blue !important;
+    
+      cursor: pointer;
+
+      .nav-bottom__icon {
+
+        svg {
+
+          fill: $color-blue !important;
+          color: $color-blue !important;
+
+          }
+
+        color: $color-blue !important;
+        transition: 0.2s;
+        transform: translateY(-0.4rem);
+
+      }
+
     }
 
   }

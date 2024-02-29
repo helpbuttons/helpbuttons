@@ -49,7 +49,7 @@ $feed-new-message-radius: $border-radius-circle;
 
   height: 100vh;
   overflow-y: auto;
-  padding-bottom: calc($footer-height-mobile*2 + $padding-small*4);
+  margin-bottom: calc($footer-height-mobile);
 
 }
 

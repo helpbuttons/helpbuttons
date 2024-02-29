@@ -92,6 +92,7 @@ body,
 .list__container--full-list,
 .popup,
 .index__content,
+.feed-container,
 .index__explore-container {
   height: var(--vh) !important;
   /* Add other styles as needed */
@@ -162,6 +163,7 @@ a {
   .popup-content,
   .popup--button-file,
   .index__explore-container,
+  .feed-section--activity,
   .filters__container {
     height: calc(var(--vh) - 115px) !important;
     /* Add other styles as needed */
