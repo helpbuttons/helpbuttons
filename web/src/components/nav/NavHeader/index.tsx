@@ -22,6 +22,16 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
     store,
     (state: GlobalState) => state.loggedInUser,
   );
+
+  const toggleAdvancedFilters = () => {
+    if(pageName == 'Explore')
+    {
+      store.emit(new ToggleAdvancedFilters())
+    }else{
+      router.push('/Explore?showFilters=true')
+    }
+  }
+
   return (
     <div className="nav-header">
       <div className="nav-header__container">
@@ -29,17 +39,7 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
           <BrandCard />
         </ShowDesktopOnly>
         <form className="nav-header__content">
-          <div
-            className="nav-header__content-message"
-            onClick={() => {
-              if(pageName == 'Explore')
-              {
-                store.emit(new ToggleAdvancedFilters())
-              }else{
-                router.push('/Explore?showFilters=true')
-              }
-            }}
-          >
+          <div className="nav-header__content-message">
             <HeaderSearch
               results={{
                 count: pageName != 'Explore'
@@ -47,6 +47,7 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
                   : exploreMapState.listButtons.length,
               }}
               isHome={pageName == 'HomeInfo'}
+              toggleAdvancedFilters={toggleAdvancedFilters}
             />
           </div>
         </form>

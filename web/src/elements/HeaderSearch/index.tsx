@@ -1,5 +1,5 @@
 import { IoClose, IoSearch } from 'react-icons/io5';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { LoadabledComponent } from 'components/loading';
@@ -7,21 +7,32 @@ import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { customFieldsFiltersText } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
+import { ToggleAdvancedFilters, UpdateFilters } from 'state/Explore';
 
 ///search button in explore and home
-export function HeaderSearch({ results, isHome = false}) {
+export function HeaderSearch({ results, toggleAdvancedFilters, isHome = false}) {
   const exploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,
     false,
   );
+
+  const clearButton = useRef(null)
   
   const [buttonTypes, setButtonTypes] = useState(null);
   useButtonTypes(setButtonTypes);
   const filtering= JSON.stringify(defaultFilters) != JSON.stringify(exploreMapState.filters);
   return (
     <div className={filtering ?"header-search__tool--filtered" :"header-search__tool"} >
-      <div className="header-search__form">
+      <div className="header-search__form" onClick={(e) => { 
+        if(clearButton.current?.contains(e.target))
+        {
+          store.emit(new UpdateFilters(defaultFilters));
+          store.emit(new ToggleAdvancedFilters(false))
+        } else{ 
+          toggleAdvancedFilters()
+        }
+        }}>
         <LoadabledComponent
           loading={(exploreMapState.loading && !isHome) && buttonTypes}
         >
@@ -46,7 +57,7 @@ export function HeaderSearch({ results, isHome = false}) {
               <div className="header-search__icon">
                 <IoSearch />
               </div>
-              <div className="header-search__icon--close">
+              <div ref={clearButton} className="header-search__icon--close">
                 <IoClose />
               </div>
             </div>
