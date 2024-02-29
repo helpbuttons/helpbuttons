@@ -127,9 +127,11 @@
     "newfollowing": "estas ahora seguindo _helpbutton_ '{0}'",
     "newbuttonType": "Nuevo _helpbutton_",
     "newcommentType": "Comentario",
+    "newprivatecommentType": "Mensaje privada",
     "newfollowType": "Nuevo suscriptor",
     "creatorUpdate": "Actualización _helpbutton_",
-    "deletedType": "Eliminación _helpbutton_"
+    "deletedType": "Eliminación _helpbutton_",
+    "myhelpbuttons": "Mis _helpbuttons_"
   },
   "user": {
     "login":"Escribe tus datos si tienes cuenta",
@@ -218,7 +220,8 @@
     "filteredRadius": "en {0} · {1}km",
     "noFilter": "en la zona",
     "hideMap":"Ocultar Mapa",
-    "showMap":"Mostrar Mapa"
+    "showMap":"Mostrar Mapa",
+    "displayInstructions":"Pulsa un hexágono para obtener información sobre _helpbuttons_ en esa zona"
   },
   "buttonFilters": {
     "selectedArea": "en el área seleccionada",
@@ -247,12 +250,13 @@
     "priceExplain": "Filtrar por precio",
     "byProximity": "Por proximidad",
     "byEventDate": "Por ínicio del evento",
-    "followTagSucess": "{0} fue adicionado a tus intereses"
+    "followTagSucess": "{0} fue adicionado a tus intereses",
+    "focusedArea":"en la zona"
   },
   "button": {
     "title":"Vista de _helpbutton_",
     "copy": "Copiar enlace",
-    "delete": "Borrar",
+    "delete": "Finalizar",
     "typeExplain": "Por favor elige qué tipo de _helpbutton_ te gustaría publicar",
     "placeHolderTitle": "Escribe un nuevo título para tu _helpbutton_",
     "descriptionLabel": "Descripción",
@@ -439,6 +443,6 @@
     "the": "El",
     "each": "Cada",
     "from": "desde",
-    "at": "a las"
+    "at": "desde las"
   }
 }

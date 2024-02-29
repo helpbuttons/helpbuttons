@@ -55,7 +55,8 @@
     "hideMap":"Map",
     "showMap":"Map",
     "showList":"List",
-    "hideList":"List"
+    "hideList":"List",
+    "displayInstructions":"Press an hexagon to display _helpbuttons_ info in that area"
 
   },
   "buttonFilters": {
@@ -85,7 +86,9 @@
     "byEventDate": "By start of event",
     "orderBy": "Order",
     "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list",
-    "followTagSucess": "{0} has been added to your interests"
+    "followTagSucess": "{0} has been added to your interests",
+    "filteredSearch":"in filtered search by:",
+    "focusedArea":"in framed area"
   },
   "setup": {
     "hostname": "Hostname",
@@ -112,6 +115,7 @@
     "newbutton": "A new _helpbutton_ was published '{0}' in '{1}'",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
+    "newprivatecommentType": "Private message",
     "newfollowType": "New Suscription",
     "creatorUpdate": "_helpbutton_ updated",
     "deletedType": "_helpbutton_ deleted",
@@ -121,7 +125,8 @@
     "newcomment": "'{2}' commented '{0}' answer to the post '{1}'",
     "newcommentSubject": "Someone commented on your _helpbutton_",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
-    "newfollowing": "your are now following the _helpbutton_ '{0}'"
+    "newfollowing": "your are now following the _helpbutton_ '{0}'",
+    "myhelpbuttons": "My _helpbuttons_"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -166,11 +171,11 @@
     "firstPost": "Hi! I created this _helpbutton_ at {0}, leave a comment if you want",
     "share": "Share",
     "copy": "Copy Link",
-    "delete": "Delete",
+    "delete": "Finalize",
     "edit": "Edit",
     "created": "Your _helpbutton_ has been published",
     "errorCreated": "",
-    "pickButtonTemplateColor": "",
+    "pickButtonTemplateColor": "Pick a color for this kind of _helpbutton_",
     "unknownPlace": "Unknown Place",
     "hideAddress": "Hide exact location",
     "follow": "Follow",
