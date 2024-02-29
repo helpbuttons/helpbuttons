@@ -1,10 +1,9 @@
-import { defaultFilters } from "components/search/AdvancedFilters/filters.type";
 import Btn, { BtnType, IconType } from "elements/Btn";
 import router from "next/router";
 import { GlobalState, store } from "pages";
 import { useState } from "react";
 import { buttonColorStyle, useButtonTypes } from "shared/buttonTypes";
-import { ToggleAdvancedFilters, UpdateFilters, UpdateFiltersToFilterButtonType } from "state/Explore";
+import { ResetFilters, ToggleAdvancedFilters, UpdateFiltersToFilterButtonType } from "state/Explore";
 import { useStore } from "store/Store";
 
 export function ListButtonTypes({ selectedNetwork }) {
@@ -17,7 +16,7 @@ export function ListButtonTypes({ selectedNetwork }) {
 
     const filterButtonType = (buttonType) => {
       store.emit(new ToggleAdvancedFilters(false))
-      store.emit(new UpdateFilters(defaultFilters));
+      store.emit(new ResetFilters());
       store.emit(new UpdateFiltersToFilterButtonType(buttonType));
 
       router.push('/Explore');

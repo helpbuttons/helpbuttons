@@ -7,7 +7,7 @@ import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { customFieldsFiltersText } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
-import { ToggleAdvancedFilters, UpdateFilters } from 'state/Explore';
+import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 
 ///search button in explore and home
 export function HeaderSearch({ results, toggleAdvancedFilters, isHome = false}) {
@@ -27,7 +27,7 @@ export function HeaderSearch({ results, toggleAdvancedFilters, isHome = false}) 
       <div className="header-search__form" onClick={(e) => { 
         if(clearButton.current?.contains(e.target))
         {
-          store.emit(new UpdateFilters(defaultFilters));
+          store.emit(new ResetFilters());
           store.emit(new ToggleAdvancedFilters(false))
         } else{ 
           toggleAdvancedFilters()

@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { GlobalState, store } from 'pages';
-import { ToggleAdvancedFilters, UpdateFilters } from 'state/Explore';
+import { ResetFilters, ToggleAdvancedFilters, UpdateFilters } from 'state/Explore';
 import router from 'next/router';
 import { useStore } from 'store/Store';
 import { useButtonTypes } from 'shared/buttonTypes';
@@ -60,8 +60,7 @@ export default function AdvancedFilters({
   const clearFilters = (e) => {
     e.preventDefault();
     reset(defaultFilters)
-    store.emit(new UpdateFilters(defaultFilters));
-
+    store.emit(new ResetFilters());
     store.emit(new ToggleAdvancedFilters(false))
   };
   const onSubmit = (data) => {

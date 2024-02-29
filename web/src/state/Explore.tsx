@@ -127,6 +127,8 @@ export class CreateButton implements WatchEvent, UpdateEvent {
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
       newState.explore.map.listButtons = []
+      newState.explore.map.filters = defaultFilters
+      newState.explore.map.showAdvancedFilters = false
     });
   }
 }
@@ -256,6 +258,16 @@ export class UpdateFilters implements UpdateEvent {
         newState.explore.settings.center = this.filters.where.center
       }
       newState.explore.map.filters = this.filters;
+    });
+  }
+}
+
+export class ResetFilters implements UpdateEvent {
+  public constructor() {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.filters = defaultFilters;
     });
   }
 }
