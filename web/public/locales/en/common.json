@@ -174,7 +174,7 @@
     "edit": "Edit",
     "created": "Your _helpbutton_ has been published",
     "errorCreated": "",
-    "pickButtonTemplateColor": "",
+    "pickButtonTemplateColor": "Pick a color for this kind of _helpbutton_",
     "unknownPlace": "Unknown Place",
     "hideAddress": "Hide exact location",
     "follow": "Follow",
