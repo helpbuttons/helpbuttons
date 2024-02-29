@@ -69,6 +69,8 @@ $card-button-border-height: $border-general-height;
   flex-flow: row nowrap;
   overflow-x: hidden;
   justify-content: space-between;
+  gap: $padding-big;
+
 }
 
 .card-button__author {

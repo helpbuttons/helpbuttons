@@ -97,12 +97,14 @@ export default function HomeInfo({
                   }
                 >
                   <div className="card__header">
-                    <div className="avatar-medium--home">
-                      <NetworkLogo network={selectedNetwork} />
+                    <div className='info-overlay__network-title'>
+                      <div className="avatar-medium--home">
+                        <NetworkLogo network={selectedNetwork} />
+                      </div>
+                      <h3 className="card__header-title network-title">
+                        {selectedNetwork.name}
+                      </h3>
                     </div>
-                    <h3 className="card__header-title network-title">
-                      {selectedNetwork.name}
-                    </h3>
                   </div>
 
                   <div className="card__section card__section--actions">
