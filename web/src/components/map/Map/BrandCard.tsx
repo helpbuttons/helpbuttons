@@ -39,8 +39,8 @@ export default function BrandCard({}) {
                   {selectedNetwork.name}
                 </Link>  
                 <div className="search-map__sign">
-                  made with{' '}
-                  <a href="https://helpbuttons.org">Helpbuttons</a>
+                  <p>made with{' '}</p>
+                  <a href="https://helpbuttons.org">{' '}Helpbuttons</a>
                 </div>
               </div>
         </div>

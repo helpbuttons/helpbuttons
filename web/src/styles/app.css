@@ -7343,8 +7343,12 @@ body {
     z-index: 500;
   }
   .search-map__sign {
-    font-size: 14px;
-    line-height: 40px;
+    display: flex;
+    line-break: strict;
+    align-items: center;
+    gap: $padding-small;
+    flex-direction: row;
+    text-wrap: nowrap;
   }
 }
 .login {
