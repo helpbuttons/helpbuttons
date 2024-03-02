@@ -444,5 +444,9 @@
     "each": "Cada",
     "from": "desde",
     "at": "desde las"
+  },
+  "error": {
+    "error":"Algo fue mal",
+    "notFoundMessage": "Página no encontrada."
   }
 }

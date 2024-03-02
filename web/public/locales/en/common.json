@@ -146,7 +146,9 @@
     "choose": "Choose {0}",
     "click": "Click here",
     "reloadConfig": "",
-    "deleteSuccess": ""
+    "deleteSuccess": "",
+    "error":"Something went wrong",
+    "notFoundMessage": "Página no encontrada"
   },
   "button": {
     "title":"_helpbutton_ view",
@@ -442,5 +444,9 @@
     "each": "each",
     "from": "from",
     "at": "at"
+  },
+  "error": {
+    "error":"Something went wrong",
+    "notFoundMessage": "Page not found"
   }
 }
