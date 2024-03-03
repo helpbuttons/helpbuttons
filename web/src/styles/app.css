@@ -2041,6 +2041,7 @@ a:hover {
   overflow-x: hidden;
   height: auto;
   padding: 0;
+  max-width: 100px;
   width: inherit;
   text-decoration: underline;
   border: none;
