@@ -43,9 +43,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   position: relative;
   display: flex;
   width: auto;
-  z-index: $z-index-04;
-  max-width: 30px;
-  
+  z-index: $z-index-04;  
   // right: $padding-big;
 
  .btn--center {

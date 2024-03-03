@@ -28,7 +28,7 @@ $search-map-height: 0; // Altura del header
 
   color: $color-dark-gray;
   padding: $padding-medium;
-  top: 10%;
+  top: 20%;
   position: absolute;
   left: calc(50% - 100px);
   width: auto;
@@ -37,7 +37,7 @@ $search-map-height: 0; // Altura del header
   text-align: center;
   text-wrap:balance;
   margin-left: auto;
-  z-index: $z-index-03;
+  z-index: $z-index-01;
   margin-top: $margin-small;
   background-color: $color-blue;
   border-radius: $border-radius-basic;

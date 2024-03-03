@@ -7127,7 +7127,6 @@ hr {
   display: flex;
   width: auto;
   z-index: 400;
-  max-width: 30px;
 }
 .list__show-map-button .btn--center {
   padding: 5px;
