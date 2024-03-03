@@ -101,7 +101,6 @@ $dropdown-max-width: 30rem;
   overflow-x: hidden;
   height: auto;
   padding: 0 ;
-  left: $padding-big;
   width: inherit;
   text-decoration: underline;
   border: none;
@@ -110,7 +109,6 @@ $dropdown-max-width: 30rem;
   color: $color-black;
   transition: all 0.2s ease-in-out;
   font-size: $font-size-general;
-  position: absolute;
 
 
   &:hover {

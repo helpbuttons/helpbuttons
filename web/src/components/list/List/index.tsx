@@ -14,7 +14,8 @@ import { useStore } from 'store/Store';
 import { UpdateFilters } from 'state/Explore';
 import { useScrollHeightAndWidth } from 'elements/scroll';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
-import { ShowMobileOnly } from 'elements/SizeOnly';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import { Dropdown } from 'elements/Dropdown/Dropdown';
 
 function List({
   onLeftColumnToggle,
@@ -55,6 +56,27 @@ function List({
     store.emit(new UpdateFilters(newFilters));
   };
 
+  const updatesDisplayOptions = (value) => {
+    console.log(value)
+    if(value=="map")
+    {
+      console.log("pongo map" + event.target)
+      toggleShowMap(true);
+      onLeftColumnToggle(false);
+    }
+    if(value=="list")
+    {
+      console.log("pongo lista")
+      toggleShowMap(false);
+      onLeftColumnToggle(true);
+    }
+    if(value=="both")
+    {
+      toggleShowMap(true);
+      onLeftColumnToggle(true);
+    }
+  };
+
   const handleChange = (event) => {
     onLeftColumnToggle(event.target.value);
   };
@@ -64,52 +86,39 @@ function List({
 
   const {sliceSize, handleScrollHeight, handleScrollWidth} = useScrollHeightAndWidth(buttons.length)
 
+  let dropdownMapOptions = [
+    {
+      value: "map",
+      name: t(showMapCaption),
+    },
+    {
+      value: "list",
+      name: t(showListCaption),
+    },
+    {
+      value: "both",
+      name: t("explore.showBoth"),
+    },
+  ]
+
   return (
     <>
       {!showAdvancedFilters && (
         <>
-          
-
-          <div
-            className={
-              'list__container ' +
-              (showMap ? '' : ' list__container--full-list')
-            }
-            onScroll={handleScrollHeight}
-          >
-
-            <div 
-              className={
-                'list__order ' +  
-                (showLeftColumn ? '' : ' list__order--hidden') +
-                (showMap ? '' : ' list__order--full-screen')
-              }
-            
-            >
-              <>
-                {/* <div>{t('buttonFilters.orderBy')}</div> */}
-                {showLeftColumn &&
-                  <AdvancedFiltersSortDropDown
+          <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-list')} onScroll={handleScrollHeight}>
+            <div className={ 'list__order ' +  (showLeftColumn ? '' : ' list__order--hidden') + (showMap ? '' : ' list__order--full-screen')} >
+              {showLeftColumn &&
+                <AdvancedFiltersSortDropDown
                   className={'dropdown__dropdown-trigger--list'}
                   orderBy={filters.orderBy}
                   setOrderBy={(value) => updatesOrderByFilters(value)}
                   buttonTypes={buttonTypes}
                   selectedButtonTypes={filters.helpButtonTypes}
                 />
-
-                }
-                
-              </>
-              
-              <div
-                  onClick={handleChange}
-                  className={
-                    'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')
-                  }
-                >
-
+              }
+              <ShowDesktopOnly>
+                <div onClick={handleChange} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
                   <span className="drag-tab__line"></span>
-
                   <div className="drag-tab__icon">
                     {(!showLeftColumn) ? (
                       <Btn
@@ -120,7 +129,6 @@ function List({
                       caption={t(showListCaption)}
                         />
                     ) : (
-                      
                       <Btn
                       btnType={BtnType.link}
                       iconLeft={IconType.svg}
@@ -131,28 +139,18 @@ function List({
                     )}
                   </div>
                 </div>
-
+              </ShowDesktopOnly>
               <ShowMobileOnly>
-                {showLeftColumn &&
-                  <div className="list__show-map-button">
-                    <Btn
-                      btnType={BtnType.link}
-                      iconLeft={IconType.svg}
-                      iconLink={showMapIcon}
-                      contentAlignment={ContentAlignment.center}
-                      caption={t(showMapCaption)}
-                      onClick={handleChangeShowMap}
+                <div className={'list__show-map-button ' + (showLeftColumn ? '' : ' list__show-map-button--hideList')}>
+                  <Dropdown
+                      options={dropdownMapOptions}
+                      className={'dropdown__dropdown-trigger--list'}
+                      onChange={(value) => {updatesDisplayOptions(value)}}
+                      // defaultSelected={orderBy}
                     />
-                  </div>
-                  }
+                </div>
               </ShowMobileOnly>
-
             </div>
-
-
-
-            
-
             <div
               className={
                 'list__content ' +

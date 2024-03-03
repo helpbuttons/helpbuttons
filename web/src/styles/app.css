@@ -2041,7 +2041,6 @@ a:hover {
   overflow-x: hidden;
   height: auto;
   padding: 0;
-  left: 15px;
   width: inherit;
   text-decoration: underline;
   border: none;
@@ -2050,7 +2049,6 @@ a:hover {
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
-  position: absolute;
 }
 .dropdown__dropdown-trigger--list:hover {
   cursor: pointer;
@@ -7124,15 +7122,22 @@ hr {
 }
 
 .list__show-map-button {
-  position: absolute;
+  position: relative;
   display: flex;
   width: auto;
   z-index: 400;
-  right: 15px;
+  max-width: 30px;
 }
 .list__show-map-button .btn--center {
   padding: 5px;
   margin: auto;
+}
+
+.list__show-map-button--hideList {
+  bottom: 60px;
+  position: absolute;
+  right: 0;
+  padding-right: 15px;
 }
 
 .list__content {
@@ -7211,7 +7216,8 @@ hr {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 0 10px;
   gap: 5px;
   position: relative;
   height: 35px;
@@ -8165,8 +8171,12 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
+  padding: 15px;
+  justify-content: center;
+  flex: 1;
   font-weight: 700;
   margin: auto;
+  font-size: 22px;
   text-align: center;
 }
 
