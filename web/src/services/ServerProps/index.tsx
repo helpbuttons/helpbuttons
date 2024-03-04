@@ -1,3 +1,4 @@
+import { logError } from 'shared/log';
 import { makeImageUrl, setSSRLocale } from 'shared/sys.helper';
 
 export class ServerPropsService {
@@ -32,7 +33,8 @@ export class ServerPropsService {
       configData = await configRes.json();
     } catch (error) {
       const errorMsg = 'error getting config ' + configURL;
-      console.log(errorMsg);
+      // console.log(errorMsg);
+      logError(errorMsg, error)
       // throw new Error(errorMsg);
       return catchMetadata
     }
@@ -49,7 +51,8 @@ export class ServerPropsService {
       networkConfigData = await networkConfigRes.json();
     } catch (error) {
       const errorMsg = 'error getting network configuration';
-      console.log(errorMsg);
+      // console.log(errorMsg);
+      logError(errorMsg, error)
       return catchMetadata
       // throw new Error(errorMsg);
     }
@@ -58,7 +61,8 @@ export class ServerPropsService {
       networkConfigData?.statusCode == 404
     ) {
       const errorMsg = 'error getting network configuration 2';
-      console.log(errorMsg);
+      logError(errorMsg, networkConfigData)
+
       return catchMetadata
       // throw new Error(errorMsg);
     }
