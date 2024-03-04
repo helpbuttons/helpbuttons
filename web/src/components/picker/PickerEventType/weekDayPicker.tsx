@@ -8,8 +8,7 @@ export default function WeekDayPicker({
   const elements = days(new Date());
 
   const add = (weekday) => {
-    selectedWeekDays.push(weekday);
-    setSelectedWeekDays(selectedWeekDays);
+    setSelectedWeekDays([...selectedWeekDays, weekday]);
   };
   const remove = (newweekday) => {
     if(selectedWeekDays.length > 1){

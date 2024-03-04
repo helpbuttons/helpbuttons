@@ -83,3 +83,12 @@ $picker-date-height: 40px;
 .picker-date__calendar-container{
   max-height: 50wh;
 }
+
+.react-calendar__selected:enabled{
+  background: green !important;
+  font-weight: bold;
+}
+
+.picker-date__recurrent .react-calendar{
+  margin:auto;
+}

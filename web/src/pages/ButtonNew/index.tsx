@@ -166,17 +166,14 @@ function useButtonDraft({watch, getValues, reset, defaultValues}) {
     
     if(JSON.stringify(watchAllFields) != watchedValues)
     {
-      console.log('they different')
       setWatchedValues((prevWatchedFields) => {
         return JSON.stringify(watchAllFields)
       })
     }
-    
   }, [watchAllFields])
 
   useEffect(() => {
     store.emit(new SaveButtonDraft(getValues()));
-    console.log('changed values...')
   }, [watchedValues])
 
   return {loadedDraft}
