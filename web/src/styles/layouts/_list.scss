@@ -40,12 +40,11 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 .list__show-map-button {
 
-position: absolute;
- display: flex;
-//  bottom: calc($footer-height-mobile + 0.9rem);
- width: auto;
- z-index: $z-index-04;
- right: $padding-big;
+  position: relative;
+  display: flex;
+  width: auto;
+  z-index: $z-index-04;  
+  // right: $padding-big;
 
  .btn--center {
   // width: 80px;
@@ -56,6 +55,14 @@ position: absolute;
 
 }
 
+.list__show-map-button--hideList {
+
+  bottom: 60px;
+  position: absolute;
+  right: 0;
+  padding-right: $padding-big;
+
+}
 
 .list__content {
 
@@ -163,8 +170,8 @@ position: absolute;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
-  // padding: 0 $padding-medium;
+  justify-content: space-between;
+  padding: 0 $padding-medium;
   gap: $padding-small;
   position: relative;
   height: $list-drag-tab-height;

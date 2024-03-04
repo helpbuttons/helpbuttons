@@ -1,5 +1,5 @@
 //EXPLORE MAP
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 //components
 import {
@@ -98,7 +98,6 @@ function HoneyComb({ router, selectedNetwork }) {
     handleBoundsChange,
     setHexagonsToFetch,
     setHexagonClicked,
-    hexagonClicked,
     h3TypeDensityHexes,
   } = useHexagonMap({
     toggleShowLeftColumn,
@@ -201,7 +200,6 @@ function useExploreSettings({
   currentButton,
   filters
 }) {
-  let queryExploreSettings = {};
   let URLParamsCoords = false;
 
   useEffect(() => {
@@ -313,10 +311,8 @@ function useExploreSettings({
     }
     
   }, [exploreSettings, currentButton, filters]);
-
 }
 
-// const loaded = false
 store.emit(new ClearCachedHexagons());
 
 function useHexagonMap({
