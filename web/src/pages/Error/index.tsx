@@ -13,7 +13,7 @@ export default function Error() {
     <>
       <Popup
         title={t('common.error')}
-        linkBack={() => router.back()}    
+        linkBack={() => router.replace({ pathname: '/HomeInfo?'+ (new Date()).getTime() })}    
         >        
         <div className='error__message'>
 
