@@ -19,20 +19,19 @@ export default function Error({metadata}) {
       <SEO {...metadata} />
       <Popup
         title={t('common.error')}
-        linkBack={() => router.replace({ pathname: '/HomeInfo?'+ (new Date()).getTime() })}    
-        >        
-        <div className='error__message'>
+        linkBack={() => {
 
+          router.push('/HomeInfo?try=' + new Date().getTime());
+          window.location.reload()
+        }}
+      >
+        <div className="error__message">
           {t('error.notFoundMessage')}
-
         </div>
       </Popup>
-      <NavBottom loggedInUser={null}/>
+      <NavBottom loggedInUser={null} />
     </>
   );
-
-  
-  
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
