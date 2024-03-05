@@ -105,38 +105,40 @@ export default function PickerEventTypeRecurrentForm({
         />
         {periodicity == RRule.WEEKLY && (
           <>
-            <Calendar
-              onChange={(newDates) => {
-                setStartDate(() => newDates[0]);
-                setEndDate(() => newDates[1]);
-              }}
-              value={[startDate, endDate]}
-              selectRange
-              minDate={new Date()}
-              tileClassName={({ date, view }) => {
-                if (
-                  recrule
-                    ?.all()
-                    .find(
-                      (dateRule) =>
-                        date.toDateString() ==
-                        dateRule.toDateString(),
-                    )
-                ) {
-                  return 'react-calendar__selected';
-                }
-              }}
-            />
-            {(startDate || endDate) && (
-              <WeekDayPicker
-                selectedWeekDays={
-                  rrule?.byweekday ? rrule.byweekday : []
-                }
-                setSelectedWeekDays={(weekDays) => {
-                  setRrule({ ...rrule, byweekday: weekDays });
+            <div className="picker-date__recurrent_weekly">
+              <Calendar
+                onChange={(newDates) => {
+                  setStartDate(() => newDates[0]);
+                  setEndDate(() => newDates[1]);
+                }}
+                value={[startDate, endDate]}
+                selectRange
+                minDate={new Date()}
+                tileClassName={({ date, view }) => {
+                  if (
+                    recrule
+                      ?.all()
+                      .find(
+                        (dateRule) =>
+                          date.toDateString() ==
+                          dateRule.toDateString(),
+                      )
+                  ) {
+                    return 'react-calendar__selected';
+                  }
                 }}
               />
-            )}
+              {(startDate || endDate) && (
+                <WeekDayPicker
+                  selectedWeekDays={
+                    rrule?.byweekday ? rrule.byweekday : []
+                  }
+                  setSelectedWeekDays={(weekDays) => {
+                    setRrule({ ...rrule, byweekday: weekDays });
+                  }}
+                />
+              )}
+            </div>
           </>
         )}
         {periodicity == RRule.MONTHLY && (
