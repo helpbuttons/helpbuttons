@@ -14,6 +14,8 @@ import { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
 import { ServerPropsService } from 'services/ServerProps';
 import { useStore } from 'store/Store';
+import { latLngToCell } from 'h3-js';
+import { maxResolution } from 'shared/types/honeycomb.const';
 
 export default function ButtonNew({metadata,selectedNetwork,config}) {
   const defaultValues = {
@@ -60,7 +62,8 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
   };
 
   const jumpToExploreButton = (buttonData) => {
-    router.push(`/Explore?lat=${buttonData.latitude}&lng=${buttonData.longitude}`);
+    const cell = latLngToCell(buttonData.latitude, buttonData.longitude, maxResolution)
+    router.push(`/Explore?lat=${buttonData.latitude}&lng=${buttonData.longitude}&hex=${cell}`);
   }
   const onSuccess = (buttonData : Button) => {
     store.emit(new SaveButtonDraft(defaultValues));

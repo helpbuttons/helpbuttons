@@ -29,6 +29,7 @@ import { LoadabledComponent } from 'components/loading';
 import HexagonExploreMap from 'components/map/Map/HexagonExploreMap';
 import {
   calculateDensityMap,
+  cellToZoom,
   convertBoundsToGeoJsonHexagons,
   getResolution,
   recalculateDensityMap,
@@ -198,6 +199,12 @@ function useExploreSettings({
       const lng = parseFloat(params.get('lng'));
       const zoom = parseInt(params.get('zoom'));
       const btnId = params.get('btn');
+      const hex = params.get('hex')
+
+      if(hex)
+      {
+        store.emit(new UpdateHexagonClicked(cellToZoom(hex, exploreSettings.zoom)))
+      }
 
       let newFilters = null;
       if(params.has('q'))
