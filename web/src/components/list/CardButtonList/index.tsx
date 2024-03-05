@@ -4,7 +4,7 @@ import { IoChevronForwardOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { CardButtonHeadMedium } from 'components/button/CardButton';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import { updateCurrentButton } from 'state/Explore';
+import { HiglightHexagonFromButton, updateCurrentButton } from 'state/Explore';
 import { store } from 'pages';
 import router from 'next/router';
 
@@ -20,6 +20,8 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkToPop
     <>
       {buttonType && (
         <div className="list__element" 
+          onMouseEnter={() => {store.emit(new HiglightHexagonFromButton(button.hexagon))}}
+          onMouseLeave={() => {store.emit(new HiglightHexagonFromButton(null))}}
           onClick={() => {
             if(linkToPopup)
             {

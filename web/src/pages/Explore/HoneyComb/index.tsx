@@ -96,8 +96,6 @@ function HoneyComb({ router, selectedNetwork }) {
 
   const {
     handleBoundsChange,
-    setHexagonsToFetch,
-    setHexagonClicked,
     h3TypeDensityHexes,
   } = useHexagonMap({
     toggleShowLeftColumn,
@@ -107,12 +105,6 @@ function HoneyComb({ router, selectedNetwork }) {
     cachedHexagons: exploreMapState.cachedHexagons,
     buttonTypes: selectedNetwork?.buttonTemplates,
   });
-
-  const hexagonClickedStored = useStore(
-    store,
-    (state: GlobalState) => state.explore.settings.hexagonClicked,
-    false,
-  );
 
   return (
     <>
@@ -161,11 +153,7 @@ function HoneyComb({ router, selectedNetwork }) {
           <HexagonExploreMap
             exploreSettings={exploreSettings}
             h3TypeDensityHexes={h3TypeDensityHexes}
-            currentButton={currentButton}
             handleBoundsChange={handleBoundsChange}
-            setHexagonsToFetch={setHexagonsToFetch}
-            setHexagonClicked={setHexagonClicked}
-            hexagonClicked={hexagonClickedStored}
             selectedNetwork={selectedNetwork}
           />
         </LoadabledComponent>
@@ -322,8 +310,6 @@ function useHexagonMap({
   cachedHexagons,
   buttonTypes,
 }) {
-  const [hexagonClicked, setHexagonClicked] = useState(null);
-  const debouncedHexagonClicked = useDebounce(hexagonClicked, 70);
 
   const [hexagonsToFetch, setHexagonsToFetch] = useState({
     resolution: 1,
@@ -434,7 +420,6 @@ function useHexagonMap({
   }
 
   useEffect(() => {
-    setHexagonClicked(() => 'unset');
     updateDensityMap();
   }, [filters]);
 
@@ -550,9 +535,6 @@ function useHexagonMap({
   };
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
-    if (zoom != exploreSettings.zoom) {
-      setHexagonClicked(() => 'zooming');
-    }
     if (bounds) {
       store.emit(
         new UpdateExploreSettings({
@@ -582,51 +564,9 @@ function useHexagonMap({
       hexagons: hexagonsForBounds,
     }});
   }
-
-  useEffect(() => {
-    if (debouncedHexagonClicked) {
-      store.emit(new updateCurrentButton(null));
-      if (
-        debouncedHexagonClicked == 'unset' ||
-        debouncedHexagonClicked == 'zooming'
-      ) {
-        store.emit(
-          new UpdateHexagonClicked(boundsFilteredButtons, null),
-        );
-      } else {
-        toggleShowLeftColumn(true);
-
-        if (
-          debouncedHexagonClicked.properties.buttons &&
-          debouncedHexagonClicked.properties.buttons.length > 0
-        ) {
-          const hexagonButtonsOrdered = orderBy(
-            debouncedHexagonClicked.properties.buttons,
-            filters.orderBy,
-            filters.where?.center,
-          );
-          store.emit(
-            new UpdateHexagonClicked(
-              hexagonButtonsOrdered,
-              debouncedHexagonClicked,
-            ),
-          );
-        }
-      }
-    } else {
-
-      store.emit(
-        new clearHexagonClicked(),
-      );
-
-    }
-  }, [debouncedHexagonClicked]);
-
   return {
     handleBoundsChange,
     setHexagonsToFetch,
-    setHexagonClicked,
-    hexagonClicked,
     h3TypeDensityHexes,
   };
 }
