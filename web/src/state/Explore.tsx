@@ -53,7 +53,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   loading: true,
   hexagonClicked: null,
   hexagonHighlight: null,
-  viewMode: ExploreViewMode.MAP
+  viewMode: ExploreViewMode.BOTH
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
@@ -384,6 +384,8 @@ export class UpdateHexagonClicked implements UpdateEvent {
         newState.explore.map.showInstructions = false;
         const resolutionRequested = getResolution(this.hexagonClicked)
         newState.explore.map.listButtons =  state.explore.map.boundsFilteredButtons.filter((button) => cellToParent(button.hexagon, resolutionRequested) == this.hexagonClicked)
+      }else{
+        newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
       }
     });
   }
