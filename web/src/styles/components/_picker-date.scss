@@ -85,7 +85,7 @@ $picker-date-height: 40px;
 }
 
 .react-calendar__selected:enabled{
-  background: green !important;
+  background: $color-dark-gray !important;
   font-weight: bold;
 }
 
@@ -113,6 +113,8 @@ $picker-date-height: 40px;
   flex-wrap: wrap;
   max-width: 100%;
   font-size: small;
+  margin: 2px;
+
 }
 .form__weekdays-list .weekdays__list .weekdays__list-interest__selected {
   background-color: #2E2E2E;
@@ -125,6 +127,7 @@ $picker-date-height: 40px;
   border: 1px solid #D4D4D4;
   // margin-right: 7px;
   padding: 0 10px 0 10px;
+  margin: 1.9px;
 }
 .form__weekdays-list .weekdays__list .weekdays__list-tag {
   display: flex;
@@ -160,6 +163,7 @@ $picker-date-height: 40px;
     flex-wrap: wrap;
     max-width: 100%;
     font-size:small;
+    margin: 2px;
 
     .weekdays__list-interest__selected {
       background-color: $color-dark-gray;
