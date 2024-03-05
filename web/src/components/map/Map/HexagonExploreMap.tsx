@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { GeoJson, GeoJsonFeature, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store } from 'pages';
 import {
+  HiglightHexagonFromButton,
   UpdateExploreSettings, UpdateHexagonClicked,
 } from 'state/Explore';
 import { HbMap } from '.';
@@ -93,6 +94,12 @@ export default function HexagonExploreMap({
           {/* DRAW HEXAGONS ON MAP */}
         {geoJsonFeatures.map((hexagonFeature) => (
             <GeoJsonFeature
+              // onMouseOver={() => {
+              //   if(hexagonClicked != hexagonFeature.properties.hex)
+              //   {
+              //     store.emit(new UpdateHexagonClicked(hexagonFeature.properties.hex))
+              //   }
+              // }}
               onClick={(feature) => {
                 if (hexagonFeature.properties.count > 0) {
                   store.emit(new UpdateHexagonClicked(hexagonFeature.properties.hex))
