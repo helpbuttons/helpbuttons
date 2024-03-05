@@ -507,6 +507,7 @@ export class RecenterExplore implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.settings.center = state.networks.selectedNetwork.exploreSettings.center
+      newState.explore.settings.zoom = state.networks.selectedNetwork.exploreSettings.zoom
     });
   }
 }
