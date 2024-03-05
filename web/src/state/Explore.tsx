@@ -16,6 +16,7 @@ import {
   defaultFilters,
 } from 'components/search/AdvancedFilters/filters.type';
 import { Bounds } from 'pigeon-maps';
+import { cellToZoom } from 'shared/honeycomb.utils';
 import { cellToParent, getResolution } from 'h3-js';
 
 export interface ExploreState {
@@ -33,6 +34,7 @@ export interface ExploreSettings {
   prevZoom: number;
   loading: boolean;
   hexagonClicked: string;
+  hexagonHighlight: string;
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -42,7 +44,8 @@ export const exploreSettingsDefault: ExploreSettings = {
   honeyCombFeatures: null,
   prevZoom: 0,
   loading: true,
-  hexagonClicked: null
+  hexagonClicked: null,
+  hexagonHighlight: null
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
@@ -379,6 +382,23 @@ export class UpdateHexagonClicked implements UpdateEvent {
     });
   }
 }
+
+
+export class HiglightHexagonFromButton implements UpdateEvent {
+  public constructor(private buttonHexagon: string) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      if(this.buttonHexagon)
+      {
+        newState.explore.settings.hexagonHighlight = cellToZoom(this.buttonHexagon, state.explore.settings.zoom)
+      }else{
+        newState.explore.settings.hexagonHighlight = null
+      }
+    });
+  }
+}
+
 
 
 export class clearHexagonClicked implements UpdateEvent {

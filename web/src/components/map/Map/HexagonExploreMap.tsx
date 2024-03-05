@@ -33,6 +33,12 @@ export default function HexagonExploreMap({
     false,
   );
 
+  const hexagonHighlight = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.hexagonHighlight,
+    false,
+  );
+
   const onBoundsChanged = ({ center, zoom, bounds }) => {
     setIsRedrawingMap(() => true)
     handleBoundsChange(bounds, center, zoom)
@@ -61,6 +67,14 @@ export default function HexagonExploreMap({
     setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonClicked))
   }, [hexagonClicked, geoJsonFeatures])
 
+  useEffect(() => {
+    if(!hexagonHighlight)
+    {
+      setHexagonClickedFeatures(() => null)
+    }else{
+      setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonHighlight))
+    }
+  }, [hexagonHighlight])
   useButtonTypes(setButtonTypes);
   return (
     <>
@@ -143,8 +157,6 @@ export default function HexagonExploreMap({
         {!isRedrawingMap &&
           geoJsonFeatures.map((hexagonFeature) => {
             if (
-              hexagonFeature.properties.hex !==
-              hexagonClicked &&
               hexagonFeature.properties.count > 0
             ) {
               return (

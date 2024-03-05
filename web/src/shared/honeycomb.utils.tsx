@@ -299,3 +299,9 @@ export function calculateDensityMap(
 
   return groupbyType;
 }
+
+export function cellToZoom(hexagon, zoom)
+{
+  const resolution = getResolution(zoom)
+  return cellToParent(hexagon, resolution)
+}
