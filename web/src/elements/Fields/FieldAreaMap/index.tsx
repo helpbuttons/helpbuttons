@@ -19,6 +19,7 @@ export default function FieldAreaMap({
   marker,
   label,
   explain,
+  markerColor = 'pink'
 }) {
 
   const [mapSettings, setMapSettings] = useState(() => {
@@ -119,6 +120,7 @@ export default function FieldAreaMap({
                 marker={marker}
                 setBrowseType={setBrowseType}
                 tileType={mapSettings.tileType}
+                markerColor={markerColor}
               />
               {/* <DropDownSearchLocation
                 placeholder={t('homeinfo.searchlocation')}

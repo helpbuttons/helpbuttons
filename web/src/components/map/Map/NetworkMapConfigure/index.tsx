@@ -7,6 +7,7 @@ import { BrowseType } from '../Map.consts';
 import { GeoJson } from 'pigeon-maps';
 import { MarkerButtonIcon } from '../MarkerButton';
 import { makeImageUrl } from 'shared/sys.helper';
+import { useEffect } from 'react';
 export function NetworkMapConfigure({
   mapSettings,
   onBoundsChanged,
@@ -14,9 +15,9 @@ export function NetworkMapConfigure({
   handleMapClick,
   marker,
   setBrowseType,
-  tileType
+  tileType,
+  markerColor
 }) {
-
   return (
     <>
       {/* <RadiusSelector
@@ -70,8 +71,14 @@ export function NetworkMapConfigure({
               }}
             />
           } */}
-
-          {(mapSettings.browseType == BrowseType.PINS) && 
+            <MarkerButtonIcon
+              anchor={mapSettings.center}
+              offset={[35, 65]}
+              cssColor={markerColor}
+              image={makeImageUrl(marker.image)}
+              title={marker.caption}
+            />
+          {/* {(mapSettings.browseType == BrowseType.PINS) && 
               <MarkerButtonIcon
               anchor={mapSettings.center}
               offset={[35, 65]}
@@ -89,7 +96,7 @@ export function NetworkMapConfigure({
               image={makeImageUrl(marker.image, '/api')}
               title={marker.caption}
             />
-          }
+          } */}
 
           
           {/*

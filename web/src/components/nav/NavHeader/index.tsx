@@ -51,7 +51,7 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
           </div>
         </form>
         <ShowDesktopOnly>
-          <NavBottom loggedInUser={loggedInUser} />
+          <NavBottom pageName={pageName} loggedInUser={loggedInUser} />
         </ShowDesktopOnly>
       </div>
       <ShowDesktopOnly>

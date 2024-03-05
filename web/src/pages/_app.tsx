@@ -274,7 +274,7 @@ function MyApp({ Component, pageProps }) {
               </ShowDesktopOnly>
               <Component {...pageProps} />
               <ShowMobileOnly>
-                <NavBottom loggedInUser={loggedInUser} />
+                <NavBottom  pageName={pageName} loggedInUser={loggedInUser} />
               </ShowMobileOnly>
             </>
           )}

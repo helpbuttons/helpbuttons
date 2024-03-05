@@ -226,6 +226,7 @@ function useExploreSettings({
         console.log(newFilters)
       }
 
+      
       if(newFilters)
       {
         store.emit(new UpdateFilters({...filters, ...newFilters}))
