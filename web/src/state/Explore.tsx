@@ -16,6 +16,7 @@ import {
   defaultFilters,
 } from 'components/search/AdvancedFilters/filters.type';
 import { Bounds } from 'pigeon-maps';
+import { cellToParent, getResolution } from 'h3-js';
 
 export interface ExploreState {
   draftButton: any;
@@ -361,17 +362,19 @@ export class UpdateExploreUpdating implements UpdateEvent {
 }
 
 export class UpdateHexagonClicked implements UpdateEvent {
-  public constructor(private listButtons: Button[], private hexagonClicked: string) {}
+  public constructor(private hexagonClicked: string) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.listButtons = this.listButtons;
       newState.explore.map.loading = false;
       newState.explore.map.initialized = true;
       newState.explore.settings.hexagonClicked = this.hexagonClicked;
+      
       if(this.hexagonClicked)
       {
-        newState.explore.map.showInstructions = false
+        newState.explore.map.showInstructions = false;
+        const resolutionRequested = getResolution(this.hexagonClicked)
+        newState.explore.map.listButtons =  state.explore.map.boundsFilteredButtons.filter((button) => cellToParent(button.hexagon, resolutionRequested) == this.hexagonClicked)
       }
     });
   }
