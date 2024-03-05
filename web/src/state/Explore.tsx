@@ -19,6 +19,12 @@ import { Bounds } from 'pigeon-maps';
 import { cellToZoom } from 'shared/honeycomb.utils';
 import { cellToParent, getResolution } from 'h3-js';
 
+
+export enum ExploreViewMode {
+  BOTH = 'both',
+  MAP = 'map',
+  LIST = 'list',
+}
 export interface ExploreState {
   draftButton: any;
   currentButton: Button;
@@ -35,6 +41,7 @@ export interface ExploreSettings {
   loading: boolean;
   hexagonClicked: string;
   hexagonHighlight: string;
+  viewMode: ExploreViewMode;
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -45,7 +52,8 @@ export const exploreSettingsDefault: ExploreSettings = {
   prevZoom: 0,
   loading: true,
   hexagonClicked: null,
-  hexagonHighlight: null
+  hexagonHighlight: null,
+  viewMode: ExploreViewMode.MAP
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
@@ -540,3 +548,12 @@ export class RecenterExplore implements UpdateEvent {
 }
 
 
+export class UpdateExploreViewMode implements UpdateEvent{
+  public constructor(private viewMode: ExploreViewMode) {}  
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings.viewMode = this.viewMode
+    });
+  }
+}

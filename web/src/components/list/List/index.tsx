@@ -1,6 +1,6 @@
 //List of elements component that can be used in home, profile and other pages/layouts where we need to ddisplay buttons/networks/other elements
 //a foreach => buttons
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoClose, IoList, IoMap, IoMapOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import ContentList from 'components/list/ContentList';
@@ -11,17 +11,12 @@ import {
 } from 'components/search/AdvancedFilters';
 import { GlobalState, store } from 'pages';
 import { useStore } from 'store/Store';
-import { UpdateFilters } from 'state/Explore';
+import { ExploreViewMode, UpdateExploreViewMode, UpdateFilters } from 'state/Explore';
 import { useScrollHeightAndWidth } from 'elements/scroll';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 
-enum ExploreMapView {
-  BOTH = 'both',
-  MAP = 'map',
-  LIST = 'list',
-}
 
 function List({
   onLeftColumnToggle,
@@ -33,6 +28,11 @@ function List({
   const filters = useStore(
     store,
     (state: GlobalState) => state.explore.map.filters,
+    false,
+  );
+  const viewMode = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.viewMode,
     false,
   );
   const showAdvancedFilters = useStore(
@@ -54,19 +54,22 @@ function List({
     store.emit(new UpdateFilters(newFilters));
   };
 
+  useEffect(() => {
+    updatesDisplayOptions(viewMode)
+  }, [viewMode])
   const updatesDisplayOptions = (value) => {
     switch (value) {
-      case ExploreMapView.BOTH: {
+      case ExploreViewMode.BOTH: {
         toggleShowMap(true);
         onLeftColumnToggle(true);  
         break;
       }
-      case ExploreMapView.MAP: {
+      case ExploreViewMode.MAP: {
         toggleShowMap(true);
         onLeftColumnToggle(false);
         break;
       }
-      case ExploreMapView.LIST: {
+      case ExploreViewMode.LIST: {
         toggleShowMap(false);
         onLeftColumnToggle(true);
         break;
@@ -83,17 +86,17 @@ function List({
 
   const {sliceSize, handleScrollHeight, handleScrollWidth} = useScrollHeightAndWidth(buttons.length)
 
-  let dropdownMapOptions = [
+  let dropdownExploreViewOptions = [
     {
-      value: ExploreMapView.BOTH,
+      value: ExploreViewMode.BOTH,
       name: t("explore.both"),
     },
     {
-      value: ExploreMapView.MAP,
+      value: ExploreViewMode.MAP,
       name:  t("explore.map"),
     },
     {
-      value: ExploreMapView.LIST,
+      value: ExploreViewMode.LIST,
       name:  t("explore.list"),
     },
   ]
@@ -140,10 +143,10 @@ function List({
               <ShowMobileOnly>
                 <div className={'list__show-map-button ' + (showLeftColumn ? '' : ' list__show-map-button--hideList')}>
                   <Dropdown
-                      options={dropdownMapOptions}
+                      options={dropdownExploreViewOptions}
                       className={'dropdown__dropdown-trigger--list'}
-                      onChange={(value) => {updatesDisplayOptions(value)}}
-                      // defaultSelected={orderBy}
+                      onChange={(value : ExploreViewMode) => store.emit(new UpdateExploreViewMode(value))}
+                      defaultSelected={viewMode}
                     />
                 </div>
               </ShowMobileOnly>
