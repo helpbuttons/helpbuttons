@@ -17,6 +17,12 @@ import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 
+enum ExploreMapView {
+  BOTH = 'both',
+  MAP = 'map',
+  LIST = 'list',
+}
+
 function List({
   onLeftColumnToggle,
   buttons,
@@ -34,18 +40,10 @@ function List({
     (state: GlobalState) => state.explore.map.showAdvancedFilters,
     false
   );
-  
-  const showMapCaption = showMap
-    ? 'explore.hideMap'
-    : 'explore.showMap';
 
   const showMapIcon = showMap
   ? <IoClose/>
   : <IoMapOutline/>;
-
-  const showListCaption = showLeftColumn
-  ? 'explore.hideList'
-  : 'explore.showList';
 
   const handleChangeShowMap = (event) => {
     toggleShowMap(event.target.value);
@@ -57,23 +55,22 @@ function List({
   };
 
   const updatesDisplayOptions = (value) => {
-    console.log(value)
-    if(value=="map")
-    {
-      console.log("pongo map" + event.target)
-      toggleShowMap(true);
-      onLeftColumnToggle(false);
-    }
-    if(value=="list")
-    {
-      console.log("pongo lista")
-      toggleShowMap(false);
-      onLeftColumnToggle(true);
-    }
-    if(value=="both")
-    {
-      toggleShowMap(true);
-      onLeftColumnToggle(true);
+    switch (value) {
+      case ExploreMapView.BOTH: {
+        toggleShowMap(true);
+        onLeftColumnToggle(true);  
+        break;
+      }
+      case ExploreMapView.MAP: {
+        toggleShowMap(true);
+        onLeftColumnToggle(false);
+        break;
+      }
+      case ExploreMapView.LIST: {
+        toggleShowMap(false);
+        onLeftColumnToggle(true);
+        break;
+      }
     }
   };
 
@@ -88,16 +85,16 @@ function List({
 
   let dropdownMapOptions = [
     {
-      value: "map",
-      name: t(showMapCaption),
+      value: ExploreMapView.BOTH,
+      name: t("explore.both"),
     },
     {
-      value: "list",
-      name: t(showListCaption),
+      value: ExploreMapView.MAP,
+      name:  t("explore.map"),
     },
     {
-      value: "both",
-      name: t("explore.showBoth"),
+      value: ExploreMapView.LIST,
+      name:  t("explore.list"),
     },
   ]
 
@@ -126,7 +123,7 @@ function List({
                       iconLeft={IconType.svg}
                       iconLink={<IoList />}
                       contentAlignment={ContentAlignment.center}
-                      caption={t(showListCaption)}
+                      caption={t("explore.showList")}
                         />
                     ) : (
                       <Btn
@@ -134,7 +131,7 @@ function List({
                       iconLeft={IconType.svg}
                       iconLink={<IoClose />}
                       contentAlignment={ContentAlignment.center}
-                      caption={t(showListCaption)}
+                      caption={t("explore.hideList")}
                       />
                     )}
                   </div>

@@ -221,7 +221,10 @@
     "noFilter": "en la zona",
     "hideMap":"Ocultar Mapa",
     "showMap":"Mostrar Mapa",
-    "displayInstructions":"Pulsa un hexágono para obtener información sobre _helpbuttons_ en esa zona"
+    "displayInstructions":"Pulsa un hexágono para obtener información sobre _helpbuttons_ en esa zona",
+    "both": "Mapa & Lista",
+    "list": "Lista",
+    "map": "Mapa"
   },
   "buttonFilters": {
     "selectedArea": "en el área seleccionada",
