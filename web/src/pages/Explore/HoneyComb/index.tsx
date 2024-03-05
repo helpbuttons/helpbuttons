@@ -223,7 +223,6 @@ function useExploreSettings({
       if(params.has('hbTypes'))
       {
         newFilters = {...newFilters, helpButtonTypes: params.get('hbTypes').split(',')}
-        console.log(newFilters)
       }
 
       
@@ -291,7 +290,6 @@ function useExploreSettings({
       }
 
       if(filters.helpButtonTypes.length > 0){
-        console.log(filters.helpButtonTypes)
         urlParams.append('hbTypes', filters.helpButtonTypes)
       }
 
