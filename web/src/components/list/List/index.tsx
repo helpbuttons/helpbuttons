@@ -55,15 +55,7 @@ function List({
   };
 
   useEffect(() => {
-    updatesDisplayOptions(viewMode)
-  }, [viewMode])
-  const updatesDisplayOptions = (value) => {
-    switch (value) {
-      case ExploreViewMode.BOTH: {
-        toggleShowMap(true);
-        onLeftColumnToggle(true);  
-        break;
-      }
+    switch (viewMode) {
       case ExploreViewMode.MAP: {
         toggleShowMap(true);
         onLeftColumnToggle(false);
@@ -74,8 +66,14 @@ function List({
         onLeftColumnToggle(true);
         break;
       }
+      default:
+      case ExploreViewMode.BOTH: {
+        toggleShowMap(true);
+        onLeftColumnToggle(true);  
+        break;
+      }
     }
-  };
+  }, [viewMode])
 
   const handleChange = (event) => {
     onLeftColumnToggle(event.target.value);
@@ -127,6 +125,7 @@ function List({
                       iconLink={<IoList />}
                       contentAlignment={ContentAlignment.center}
                       caption={t("explore.showList")}
+                      onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.BOTH))}
                         />
                     ) : (
                       <Btn
@@ -135,6 +134,7 @@ function List({
                       iconLink={<IoClose />}
                       contentAlignment={ContentAlignment.center}
                       caption={t("explore.hideList")}
+                      onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))}
                       />
                     )}
                   </div>
