@@ -500,3 +500,15 @@ export class ToggleAdvancedFilters implements UpdateEvent {
     });
   }
 }
+
+export class RecenterExplore implements UpdateEvent {
+  public constructor(private value?) {}  
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings.center = state.networks.selectedNetwork.exploreSettings.center
+    });
+  }
+}
+
+
