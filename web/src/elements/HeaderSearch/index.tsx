@@ -10,7 +10,7 @@ import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 
 ///search button in explore and home
-export function HeaderSearch({ results, toggleAdvancedFilters, isHome = false}) {
+export function HeaderSearch({ results, toggleAdvancedFilters}) {
   const exploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,
@@ -33,9 +33,6 @@ export function HeaderSearch({ results, toggleAdvancedFilters, isHome = false}) 
           toggleAdvancedFilters()
         }
         }}>
-        <LoadabledComponent
-          loading={(exploreMapState.loading && !isHome) && buttonTypes}
-        >
           <div className="header-search__column">
             <SearchText
               count={results.count}
@@ -65,7 +62,7 @@ export function HeaderSearch({ results, toggleAdvancedFilters, isHome = false}) 
             </div>
  
           </div>
-        </LoadabledComponent>
+        {/* </LoadabledComponent> */}
       </div>
     </div>
   );

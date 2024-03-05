@@ -42,11 +42,10 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
           <div className="nav-header__content-message">
             <HeaderSearch
               results={{
-                count: pageName != 'Explore'
+                count: (pageName != 'Explore' || !exploreMapState.listButtons)
                   ? selectedNetwork?.buttonCount
                   : exploreMapState.listButtons.length,
               }}
-              isHome={pageName == 'HomeInfo'}
               toggleAdvancedFilters={toggleAdvancedFilters}
             />
           </div>
