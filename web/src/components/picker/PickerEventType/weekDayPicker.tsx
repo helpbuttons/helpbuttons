@@ -52,8 +52,8 @@ function ElementsList({
   };
 
   return (
-    <div className="form__tags-list">
-      <ul className="tags__list">
+    <div className="form__weekdays-list react-calendar">
+      <ul className="weekdays__list">
         {elements.length > 0 &&
           elements.map(({idx, label}, index) => {
             return (
@@ -78,14 +78,14 @@ function Element({ index, item, onClick, selected = false }) {
     <>
       {selected && (
         <li
-          className="tags__list-interest__selected"
+          className="weekdays__list-interest__selected"
           onClick={onClick}
         >
           {item}
         </li>
       )}
       {!selected && (
-        <li className="tags__list-interest" onClick={onClick}>
+        <li className="weekdays__list-interest" onClick={onClick}>
           {item}
         </li>
       )}
@@ -95,7 +95,6 @@ function Element({ index, item, onClick, selected = false }) {
 
 function days(current) {
   var week = new Array();
-  // Starting Monday not Sunday
   var first = current.getDate() - current.getDay() + 1;
   for (var i = 0; i < 7; i++) {
     week.push({idx: i, label: readableDayOfWeek(new Date(current.setDate(first++)))}); 
