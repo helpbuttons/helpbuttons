@@ -201,11 +201,6 @@ function useExploreSettings({
       const btnId = params.get('btn');
       const hex = params.get('hex')
 
-      if(hex)
-      {
-        store.emit(new UpdateHexagonClicked(cellToZoom(hex, exploreSettings.zoom)))
-      }
-
       let newFilters = null;
       if(params.has('q'))
       {
@@ -219,7 +214,11 @@ function useExploreSettings({
       {
         newFilters = {...newFilters, helpButtonTypes: params.get('hbTypes').split(',')}
       }
-
+      
+      if(hex)
+      {
+        store.emit(new UpdateHexagonClicked(cellToZoom(hex, exploreSettings.zoom)))
+      }
       
       if(newFilters)
       {

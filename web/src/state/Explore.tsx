@@ -369,8 +369,6 @@ export class UpdateHexagonClicked implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.loading = false;
-      newState.explore.map.initialized = true;
       newState.explore.settings.hexagonClicked = this.hexagonClicked;
       
       if(this.hexagonClicked)
@@ -422,6 +420,12 @@ export class UpdateListButtons implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.listButtons = this.listButtons;
+      if(state.explore.settings.hexagonClicked)
+      {
+        const hexagonClicked = state.explore.settings.hexagonClicked
+        const resolutionRequested = getResolution(hexagonClicked)
+        newState.explore.map.listButtons =  state.explore.map.boundsFilteredButtons.filter((button) => cellToParent(button.hexagon, resolutionRequested) == hexagonClicked)
+      }
       newState.explore.map.loading = false;
       newState.explore.map.initialized = true;
     });
