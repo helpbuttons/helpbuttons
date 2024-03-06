@@ -28,6 +28,7 @@ const FieldNumber = React.forwardRef(({
                 onBlur={onBlur}
                 className={`form__input ${classNameInput} ${validationError ? 'validation-error' : ''}`} 
                 value={value}
+                step="any"
             />
             <div className="form__input-subtitle">
                 <FieldError validationError={validationError} extraMessage={extraMessage}/>

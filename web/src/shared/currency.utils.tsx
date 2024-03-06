@@ -43,6 +43,6 @@ export function formatCurrency(value = 0, currency) {
     return value + ' ' + currency;
     
     function formatBTC(amount) {
-      return 'BTC ' + amount;
+      return amount + ' BTC';
     }
   }
