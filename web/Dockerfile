@@ -8,7 +8,8 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN apk add git
-
+COPY package.json /app/
+COPY yarn.lock /app/
 RUN yarn
 
 COPY . /app/
