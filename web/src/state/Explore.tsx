@@ -466,6 +466,7 @@ export class UpdateExploreSettings implements UpdateEvent {
   ) {}
 
   public update(state: GlobalState) {
+
     return produce(state, (newState) => {
       const prevSettings = state.explore.settings;
       const newExploreSettings = {
@@ -474,6 +475,10 @@ export class UpdateExploreSettings implements UpdateEvent {
         ...this.newExploreSettings,
         loading: false,
       };
+      if(prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center))
+      {
+        newState.explore.map.showInstructions = false;
+      }
       newState.explore.settings = newExploreSettings;
     });
   }
