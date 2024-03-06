@@ -23,9 +23,7 @@ export function useTagsList({tags, setTags})
     ) {
       return;
     }
-    
-    tags.push(tagify(newTag));
-    setTags(tags);
+    setTags([...tags, tagify(newTag)])
   };
 
   const inputKeyDown = (e) => {
