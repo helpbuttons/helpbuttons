@@ -1,14 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { HbMapUncontrolled } from '.';
-import { GeoJson, Point } from 'pigeon-maps';
-import { latLngToGeoJson } from 'shared/honeycomb.utils';
-import { MarkerButtonIcon } from './MarkerButton';
-import { cellToLatLng, latLngToCell } from 'h3-js';
-import { maxResolution } from 'shared/types/honeycomb.const';
+import React from 'react';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
-import UserAvatar from 'components/user/components';
 import NetworkLogo from 'components/network/Components';
 import Link from 'next/link';
 
