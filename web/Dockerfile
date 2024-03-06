@@ -1,5 +1,6 @@
 FROM node:16.17.1-alpine as builder
-
+ARG API_URL
+ENV API_URL "http://api:3001"
 RUN mkdir -p /app/
 WORKDIR /app
 
