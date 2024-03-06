@@ -30,14 +30,12 @@ export default function HexagonExploreMap({
 
   const hexagonClicked = useStore(
     store,
-    (state: GlobalState) => state.explore.settings.hexagonClicked,
-    false,
+    (state: GlobalState) => state.explore.settings.hexagonClicked
   );
 
   const hexagonHighlight = useStore(
     store,
-    (state: GlobalState) => state.explore.settings.hexagonHighlight,
-    false,
+    (state: GlobalState) => state.explore.settings.hexagonHighlight
   );
 
   const onBoundsChanged = ({ center, zoom, bounds }) => {
@@ -65,7 +63,13 @@ export default function HexagonExploreMap({
 
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
   useEffect(() => {
-    setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonClicked))
+    if (!hexagonClicked)
+    {
+      setHexagonClickedFeatures(() => null)
+    }else{
+      setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonClicked))
+    }
+    
   }, [hexagonClicked, geoJsonFeatures])
 
   useEffect(() => {

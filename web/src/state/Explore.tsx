@@ -5,7 +5,7 @@ import { WatchEvent } from 'store/Event';
 import { UpdateEvent } from '../store/Event';
 
 import { ButtonService } from 'services/Buttons';
-import { GlobalState } from 'pages';
+import { GlobalState, store } from 'pages';
 import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
@@ -18,6 +18,8 @@ import {
 import { Bounds } from 'pigeon-maps';
 import { cellToZoom } from 'shared/honeycomb.utils';
 import { cellToParent, getResolution } from 'h3-js';
+import { UpdateZoom } from './Map';
+import { of } from 'rxjs';
 
 
 export enum ExploreViewMode {
@@ -37,7 +39,6 @@ export interface ExploreSettings {
   zoom: number;
   bounds: Bounds;
   honeyCombFeatures: any;
-  prevZoom: number;
   loading: boolean;
   hexagonClicked: string;
   hexagonHighlight: string;
@@ -49,7 +50,6 @@ export const exploreSettingsDefault: ExploreSettings = {
   zoom: 4,
   bounds: null,
   honeyCombFeatures: null,
-  prevZoom: 0,
   loading: true,
   hexagonClicked: null,
   hexagonHighlight: null,
@@ -356,6 +356,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.map.boundsFilteredButtons =
         this.boundsFilteredButtons;
+      newState.explore.map.listButtons = this.boundsFilteredButtons
       newState.explore.map.loading = false;
       newState.explore.map.initialized = true;
     });
@@ -378,12 +379,10 @@ export class UpdateHexagonClicked implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.settings.hexagonClicked = this.hexagonClicked;
-      
       if(this.hexagonClicked)
       {
         newState.explore.map.showInstructions = false;
-        const resolutionRequested = getResolution(this.hexagonClicked)
-        newState.explore.map.listButtons =  state.explore.map.boundsFilteredButtons.filter((button) => cellToParent(button.hexagon, resolutionRequested) == this.hexagonClicked)
+        newState.explore.map.listButtons = listButtonsFilteredByHexagon(this.hexagonClicked, state.explore.map.boundsFilteredButtons)
         newState.explore.currentButton = null
         
       }else{
@@ -409,41 +408,14 @@ export class HiglightHexagonFromButton implements UpdateEvent {
   }
 }
 
-
-
-export class clearHexagonClicked implements UpdateEvent {
-  public constructor() {}
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons;
-      newState.explore.map.loading = false;
-      newState.explore.map.initialized = true;
-      newState.explore.settings.hexagonClicked = null;
-    });
-  }
+function listButtonsFilteredByHexagon(hexagonClicked, boundsFilteredButtons) {
+  const resolutionRequested = getResolution(hexagonClicked);
+  return boundsFilteredButtons.filter(
+      (button) =>
+        cellToParent(button.hexagon, resolutionRequested) ==
+        hexagonClicked,
+    );
 }
-
-
-
-export class UpdateListButtons implements UpdateEvent {
-  public constructor(private listButtons: Button[]) {}
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.map.listButtons = this.listButtons;
-      if(state.explore.settings.hexagonClicked)
-      {
-        const hexagonClicked = state.explore.settings.hexagonClicked
-        const resolutionRequested = getResolution(hexagonClicked)
-        newState.explore.map.listButtons =  state.explore.map.boundsFilteredButtons.filter((button) => cellToParent(button.hexagon, resolutionRequested) == hexagonClicked)
-      }
-      newState.explore.map.loading = false;
-      newState.explore.map.initialized = true;
-    });
-  }
-}
-
 export class UpdateCachedHexagons implements UpdateEvent {
   public constructor(private cachedHexagons: any[]) {}
 
@@ -466,6 +438,12 @@ export class UpdateExploreSettings implements UpdateEvent {
   public constructor(
     private newExploreSettings: Partial<ExploreSettings>,
   ) {}
+  public watch(state: GlobalState) {
+      if (this.newExploreSettings.zoom) {
+        store.emit(new UpdateZoom(this.newExploreSettings.zoom))
+      }
+      return of(undefined)
+  }
 
   public update(state: GlobalState) {
 
@@ -473,14 +451,18 @@ export class UpdateExploreSettings implements UpdateEvent {
       const prevSettings = state.explore.settings;
       const newExploreSettings = {
         ...prevSettings,
-        prevZoom: prevSettings.zoom,
         ...this.newExploreSettings,
         loading: false,
       };
+      
       if(prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center))
       {
         newState.explore.map.showInstructions = false;
       }
+      if(newExploreSettings.zoom)
+      {
+        delete newExploreSettings.zoom;
+      }      
       newState.explore.settings = newExploreSettings;
     });
   }

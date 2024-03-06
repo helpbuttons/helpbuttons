@@ -9,14 +9,12 @@ import {
   UpdateCachedHexagons,
   UpdateExploreUpdating,
   UpdateQueryFoundTags,
-  UpdateListButtons,
   UpdateExploreSettings,
   ExploreSettings,
   ClearCachedHexagons,
   UpdateHexagonClicked,
   updateCurrentButton,
   FindButton,
-  clearHexagonClicked,
   UpdateFilters,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
@@ -31,7 +29,7 @@ import {
   calculateDensityMap,
   cellToZoom,
   convertBoundsToGeoJsonHexagons,
-  getResolution,
+  getZoomResolution,
   recalculateDensityMap,
   roundCoord,
 } from 'shared/honeycomb.utils';
@@ -422,7 +420,6 @@ function useHexagonMap({
     store.emit(
       new UpdateBoundsFilteredButtons(orderedFilteredButtons),
     );
-    store.emit(new UpdateListButtons(orderedFilteredButtons));
   }
 
   useEffect(() => {
@@ -559,14 +556,14 @@ function useHexagonMap({
     const zoomFloor = Math.floor(zoom)
     const hexagonsForBounds = convertBoundsToGeoJsonHexagons(
       bounds,
-      getResolution(zoomFloor),
+      getZoomResolution(zoomFloor),
     );
     if (hexagonsForBounds.length > 1000) {
       console.error('too many hexes.. canceling..');
       return;
     }
     setHexagonsToFetch(() => {return {
-      resolution: getResolution(zoomFloor),
+      resolution: getZoomResolution(zoomFloor),
       hexagons: hexagonsForBounds,
     }});
   }

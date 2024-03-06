@@ -100,7 +100,7 @@ export function getDegreesBleed(
   return newBounds;
 }
 
-export function getResolution(zoom) {
+export function getZoomResolution(zoom) {
   switch (zoom) {
     case 4:
       return 2;
@@ -187,7 +187,7 @@ export function convertH3DensityToFeatures(hexagones) {
 export function getBoundsHexFeatures(bounds, mapZoom) {
   const newGeoJsonHexesBounds = getGeoJsonHexesForBounds(
     getDegreesBleed(mapZoom, bounds),
-    getResolution(mapZoom),
+    getZoomResolution(mapZoom),
   );
   if (newGeoJsonHexesBounds.length > 500) {
     console.error(
@@ -302,6 +302,6 @@ export function calculateDensityMap(
 
 export function cellToZoom(hexagon, zoom)
 {
-  const resolution = getResolution(zoom)
+  const resolution = getZoomResolution(zoom)
   return cellToParent(hexagon, resolution)
 }
