@@ -53,5 +53,6 @@ module.exports = {
     images: {
       formats: ['image/avif', 'image/webp'],
     },
-    i18n
+    i18n,
+    output: 'standalone',
 }

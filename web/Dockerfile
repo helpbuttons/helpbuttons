@@ -4,13 +4,14 @@ ENV API_URL "http://api:3001"
 RUN mkdir -p /app/
 WORKDIR /app
 
-COPY . /app/
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN apk add git
 
 RUN yarn
+
+COPY . /app/
 RUN yarn build
 
 FROM node:16.17.1-alpine as runner
