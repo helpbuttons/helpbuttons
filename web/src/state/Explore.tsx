@@ -384,6 +384,8 @@ export class UpdateHexagonClicked implements UpdateEvent {
         newState.explore.map.showInstructions = false;
         const resolutionRequested = getResolution(this.hexagonClicked)
         newState.explore.map.listButtons =  state.explore.map.boundsFilteredButtons.filter((button) => cellToParent(button.hexagon, resolutionRequested) == this.hexagonClicked)
+        newState.explore.currentButton = null
+        
       }else{
         newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
       }
