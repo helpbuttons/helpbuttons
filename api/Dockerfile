@@ -1,7 +1,7 @@
 FROM node:16.17.1-alpine AS builder
 WORKDIR /app
 # install first what will probably never change
-# RUN apk add git
+RUN apk add git
 
 # copy only what you need to build node_modules
 COPY package.json yarn.lock ./
