@@ -22,6 +22,7 @@ COPY --from=builder /app/yarn.lock ./
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/src ./src
+COPY --from=builder /app/locales ./locales
 
 EXPOSE 3001 
 CMD [ "node", "dist/main" ]
