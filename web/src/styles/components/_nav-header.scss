@@ -27,7 +27,7 @@ $nav-header-new-message-radius: $border-radius-circle;
   background-color: $color-corporative;
   border-radius: 0 0 0 0;
   padding: $padding-small $nav-header-padding;
-  z-index: $z-index-01;
+  z-index: $z-index-base;
 
 }
 
@@ -84,6 +84,7 @@ $nav-header-new-message-radius: $border-radius-circle;
     justify-content: flex-start;
     flex: 0.9;
     width: 100%;
+    z-index: 0;
 
   }
 

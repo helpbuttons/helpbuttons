@@ -13,6 +13,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { RemoveAlert } from 'state/Alerts';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 
 
 export default Alert;
@@ -76,7 +77,13 @@ function Alert({ id, fade }) {
                           <div className="card-alert__icon">{iconShape(alert)}</div>
                           <span className="card-alert__title" dangerouslySetInnerHTML={{ __html: alert.message }}></span>
                         </div>
-                        <a className="btn-circle--small" onClick={() => {alertService.clear(alert.id)}}><IoCloseOutline/></a>
+                        <Btn
+                          btnType={BtnType.smallCircle}
+                          iconLink={<IoCloseOutline />}
+                          iconLeft={IconType.circle}
+                          contentAlignment={ContentAlignment.center}
+                          onClick={() => {alertService.clear(alert.id)}}
+                        />
                     </div>
                 )}
         </div>

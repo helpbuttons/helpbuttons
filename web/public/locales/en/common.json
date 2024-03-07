@@ -262,7 +262,7 @@
     "showButtonsProfileExplain": "Mark if you want to show a list of what you publish in your public profile",
     "showButtons": "Show my _helpbuttons_ on my profile page",
     "loginError":"Failed to login, please try again or contact the admin",
-    "tagsExplain":"Write words that you are interested in and you will receive notifications of the _helpbuttons_ created. Write and press enter or separate by commas to add a word.",
+    "tagsExplain":"Select or write words that you are interested in and you will receive notifications of the _helpbuttons_ created. Write and press enter or separate by commas to add a word.",
     "tagsSignupExplain":"Optionally, select and write words that you are interested in and you will receive notifications of the _helpbuttons_ created with those topics. Write and press enter or separate by commas to add a word.",
     "distance":"Maximum distance of notification",
     "distanceExplain":"_helpbuttons_ created farer from this radius won't be notified",
@@ -291,7 +291,7 @@
     "recurring":"Recurring Dates",
     "multipleExplain":"Select the days and a time for your events",
     "onceExplain":"Select date and time for your event",
-    "recurringExplain":"Select recurring dates and time"
+    "recurringExplain":"Select starting and finish dates, days of the week and time"
   },
   "validation": {
     "fieldRequired": "{0} is required.",
