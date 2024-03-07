@@ -8,3 +8,4 @@ FROM postgis/postgis:13-3.3-alpine as runner
 
 COPY --from=builder /usr/local/lib/postgresql/ /usr/local/lib/postgresql/
 COPY --from=builder /usr/local/share/postgresql/ /usr/local/share/
+COPY --from=builder /usr/local/share/postgresql/extension/ /usr/local/share/postgresql/extension/
