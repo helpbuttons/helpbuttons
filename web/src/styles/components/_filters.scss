@@ -19,73 +19,73 @@ $filters-padding: 10px;
 
   background: $color-corporative;
   overflow: auto;
-  margin-bottom: $margin-big;
-
-
-}
-
-.filters--vertical {
-
-  width: auto;
-  height: auto;
-  position: relative;
-  padding-bottom:$footer-height-mobile;
-  top: 0;
   display: flex;
-  flex-direction: column;
-  max-width: $grid-max-width;
-  // margin: auto;
-  // overflow-y: scroll;
-  padding: $padding-big $padding-big 200px $padding-big;
-  z-index: $z-index-06;
+  margin-bottom: $margin-big;
+  position: relative;
+  z-index: $z-index-05;
+  // padding: $filters-padding;
+  overflow: hidden;
 
 }
 
+.filters__container {
+  height: calc(var(--vh) - $footer-height-mobile) !important;
+  /* Add other styles as needed */
+}
 
 .filters__actions {
 
-  position: fixed;
-  margin-top: auto;
+  position: absolute;
   width: 100%;
   bottom: 0;
   display: flex;
-  left: 0;
   border-top: 1px dashed $color-gray-border ;
-  justify-content: space-between;
-  flex-direction: row !important;
   background-color: $color-corporative;
   padding: $padding-medium $padding-medium;
-  transition: $transition-default-slow;
 
-  .btn {
+  // .btn {
 
-    display: flex;
+  //   display: flex;
 
-  }
+  // }
 
-  .btn--link {
+  // .btn--link {
 
-    background-color: transparent;
+  //   background-color: transparent;
 
-  }
-
-}
-
-.filters__actions--home {
-
-
-  @extend .filters__actions;
+  // }
 
 }
 
-.filters__actions > button:nth-child(1) {
+.filters__content {
+
+  position: relative;
+  display: flex;
+  padding: 0 $filters-padding;
+  padding-top: $padding-big;
+  padding-bottom: $footer-height-mobile;
+  flex-direction: column;
+  overflow: auto;
+  // margin-bottom: $footer-height-mobile;
+
+}
+
+.filters__actions--buttons {
+
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  
+}
+
+.filters__actions--buttons > button:nth-child(1) {
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 4; /* Takes up 2/5 of the width */
 }
 
-.filters__actions > button:nth-child(2) {
+.filters__actions--buttons > button:nth-child(2) {
   flex: 5; /* Takes up 3/5 of the width */
 
 }
@@ -126,30 +126,32 @@ $filters-padding: 10px;
     padding: $padding-big $padding-small;
   }
 
-  .filters__container{
-
-    width: 100%;
+  .filters__container {
+    height: calc(var(--vh) - 115px) !important;
+    /* Add other styles as needed */
   }
 
 
   .filters--vertical {
 
     position: relative;
+    display: flex;
     width: auto;
 
   }
 
+
+  
+
+}
+
+@media #{$breakpoints-xlarge} {
+
   .filters__actions {
 
-    width: 35vw;
+    position: absolute;
     
   }
 
-  .filters__actions--home {
-
-    width: 100vw;
-
-  }
-  
 
 }

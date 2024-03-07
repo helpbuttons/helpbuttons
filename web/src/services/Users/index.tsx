@@ -54,56 +54,56 @@ export class UserService {
   }
 
   public static update(data: UserUpdateDto): Observable<any> {
-    return httpService.post<UserUpdateDto>("/users/update", data);
+    return httpService.post<UserUpdateDto>("users/update", data);
   }
 
   public static requestNewLoginToken(email:string): Observable<ICurrentUser | undefined> {
-    return httpService.get<ICurrentUser>(`/users/requestNewLoginToken/${email}`);
+    return httpService.get<ICurrentUser>(`users/requestNewLoginToken/${email}`);
   }
 
   public static loginToken(token :string): Observable<ICurrentUser | undefined> {
-    return httpService.get<ICurrentUser>(`/users/loginToken/${token}`).pipe(
+    return httpService.get<ICurrentUser>(`users/loginToken/${token}`).pipe(
       tap((user) => httpService.setAccessToken(user?.token)));
   }
 
   public static invites(): Observable<[Invite]> {
-    return httpService.get<[Invite]>(`/users/invites`);
+    return httpService.get<[Invite]>(`users/invites`);
   }
 
   public static createInvite(newInvitation: InviteCreateDto): Observable<Invite> {
-    return httpService.post<Invite>(`/users/createInvite`, newInvitation);
+    return httpService.post<Invite>(`users/createInvite`, newInvitation);
   }
 
   public static invite(code: string): Observable<any> {
-    return httpService.get<any>(`/users/invite/${code}`);
+    return httpService.get<any>(`users/invite/${code}`);
   }
 
   public static updateRole(userId : string,newRole :Role): Observable<any> {
-    return httpService.post<any>(`/users/updateRole/${userId}/${newRole}`);
+    return httpService.post<any>(`users/updateRole/${userId}/${newRole}`);
   }
 
   public static moderationList(): Observable<any> {
-    return httpService.get<any>(`/users/moderationList`);
+    return httpService.get<any>(`users/moderationList`);
   }
 
   public static unsubscribe(email : string): Observable<any> {
-    return httpService.post<any>(`/users/unsubscribe/${email}`);
+    return httpService.post<any>(`users/unsubscribe/${email}`);
   }
 
   public static findByOwner(userId : string): Observable<any> {
-    return httpService.get<any>(`/buttons/findByOwner/${userId}`);
+    return httpService.get<any>(`buttons/findByOwner/${userId}`);
   }
 
   public static followTag(tag : string): Observable<any> {
-    return httpService.post<any>(`/users/followTag/${tag}`);
+    return httpService.post<any>(`users/followTag/${tag}`);
   }
 
   public static findExtra(userId: string)
   {
-    return httpService.get<User>(`/users/findExtra/${userId}`);
+    return httpService.get<User>(`users/findExtra/${userId}`);
   }
   
   public static getPhone(userId : string): Observable<any> {
-    return httpService.get<any>(`/users/getPhone/${userId}`);
+    return httpService.get<any>(`users/getPhone/${userId}`);
   }
 }

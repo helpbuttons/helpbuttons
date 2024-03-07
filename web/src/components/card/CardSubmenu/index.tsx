@@ -1,3 +1,4 @@
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { useState } from 'react';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 
@@ -12,15 +13,20 @@ export function CardSubmenu({ children }) {
         }}
         className="card-button__edit-icon card-button__submenu"
       >
-        <IoEllipsisHorizontalSharp />
+        <Btn
+          btnType={BtnType.smallCircle}
+          contentAlignment={ContentAlignment.center}
+          iconRight={IconType.circle}
+          iconLink={<IoEllipsisHorizontalSharp />}
+          submit={true}
+        />
       </div>
       {showSubmenu && (
         <div className="card-button__dropdown-container">
           <div className="card-button__dropdown-arrow"></div>
-
-          <div className="card-button__dropdown-content" id="listid">
-            {children}
-          </div>
+            <div className="card-button__dropdown-content" id="listid">
+              {children}
+            </div>
         </div>
       )}
     </>

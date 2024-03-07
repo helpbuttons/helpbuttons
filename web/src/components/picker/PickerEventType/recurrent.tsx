@@ -1,7 +1,6 @@
-import { Dropdown } from 'elements/Dropdown/Dropdown';
+import { DropdownField } from 'elements/Dropdown/Dropdown';
 import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
-import { getLocale } from 'shared/sys.helper';
 import { RRule } from 'rrule';
 import {
   readableDayOfLongWeek,
@@ -21,7 +20,6 @@ const convertWeekDay = (date) => {
 export default function PickerEventTypeRecurrentForm({
   rrule,
   setRrule,
-  closeMenu,
 }) {
   const [startDate, setStartDate] = useState<Date>(
     rrule?.dtstart ? rrule.dtstart : null,
@@ -44,7 +42,7 @@ export default function PickerEventTypeRecurrentForm({
           const newRules = {
             freq: RRule.WEEKLY,
             interval: 1,
-            byweekday: [convertWeekDay(startDate)],
+            byweekday: rrule?.byweekday ? rrule.byweekday : [convertWeekDay(startDate)],
             dtstart: startDate,
             until: endDate,
           };
@@ -88,81 +86,96 @@ export default function PickerEventTypeRecurrentForm({
 
   return (
     <>
-      <div className="picker__content">
-        <div className="picker__section">
-          <div className="picker__section__pick">
-            <Dropdown
-              options={[
-                {
-                  value: RRule.WEEKLY,
-                  name: 'Every week',
-                },
-                {
-                  value: RRule.MONTHLY,
-                  name: 'Every month',
-                },
-              ]}
-              onChange={(value) => {
-                setPeriodicity(() => value);
-              }}
-              defaultSelected={periodicity}
-            />
-            {periodicity == RRule.WEEKLY && (
-              <>
-                <div className="picker__row">
-                  <Calendar
-                    onChange={(newDates) => {
-                      setStartDate(() => newDates[0]);
-                      setEndDate(() => newDates[1]);
-                    }}
-                    value={[startDate, endDate]}
-                    selectRange
-                    minDate={new Date()}
-                  />
-                  {(startDate || endDate) && 
-                    <WeekDayPicker selectedWeekDays={rrule?.byweekday ? rrule.byweekday : []} setSelectedWeekDays={(weekDays) => {
-                      setRrule({...rrule, byweekday: weekDays})
-                    }}/>
+      <div className="picker-date__recurrent">
+
+        <DropdownField
+          options={[
+            {
+              value: RRule.WEEKLY,
+              name: 'Every week',
+            },
+            {
+              value: RRule.MONTHLY,
+              name: 'Every month',
+            },
+          ]}
+          onChange={(value) => {
+            setPeriodicity(() => value);
+          }}
+          defaultSelected={periodicity}
+        />
+        {periodicity == RRule.WEEKLY && (
+           <div className="form__field">
+
+            <div className="picker-date__recurrent_weekly">
+              <Calendar
+                onChange={(newDates) => {
+                  setStartDate(() => newDates[0]);
+                  setEndDate(() => newDates[1]);
+                }}
+                value={[startDate, endDate]}
+                selectRange
+                minDate={new Date()}
+                tileClassName={({ date, view }) => {
+                  if (
+                    recrule
+                      ?.all()
+                      .find(
+                        (dateRule) =>
+                          date.toDateString() ==
+                          dateRule.toDateString(),
+                      )
+                  ) {
+                    return 'react-calendar__selected';
                   }
-                </div>
-                <br />
-                {recrule && <>{recurrentToText(rrule)}</>}
-              </>
-            )}
-            {periodicity == RRule.MONTHLY && (
-              <>
-                <div className="picker__row">
-                  <Calendar
-                    onChange={(newDates) => {
-                      setStartDate(() => newDates[0]);
-                      setEndDate(() => newDates[1]);
-                    }}
-                    value={[startDate, endDate]}
-                    selectRange
-                    minDate={new Date()}
-                  />
-                </div>
-                {recrule && <>{recurrentToText(rrule)}</>}
-              </>
-            )}
-            {(startDate && endDate) && (
-              <>
-                <TimePick
-                  dateTime={startDate}
-                  setDateTime={(value) => setStartDate(value)}
-                  label={t('eventType.from') + readableTime(startDate)}
+                }}
+              />
+              {(startDate || endDate) && (
+                <WeekDayPicker
+                  selectedWeekDays={
+                    rrule?.byweekday ? rrule.byweekday : []
+                  }
+                  setSelectedWeekDays={(weekDays) => {
+                    setRrule({ ...rrule, byweekday: weekDays });
+                  }}
                 />
-                 <TimePick
-                  dateTime={endDate}
-                  setDateTime={(value) => setEndDate(value)}
-                  label={t('eventType.until') + readableTime(endDate)}
-                />
-            </>)
-            }
+              )}
+            </div>
           </div>
+        )}
+        {periodicity == RRule.MONTHLY && (
+          <>
+            <div className="picker__row">
+              <Calendar
+                onChange={(newDates) => {
+                  setStartDate(() => newDates[0]);
+                  setEndDate(() => newDates[1]);
+                }}
+                value={[startDate, endDate]}
+                selectRange
+                minDate={new Date()}
+              />
+            </div>
+          </>
+        )}
+        {startDate && endDate && (
+          <div className="form__field">
+            <TimePick
+              dateTime={startDate}
+              setDateTime={(value) => setStartDate(value)}
+              label={t('eventType.from') + readableTime(startDate)}
+            />
+            <TimePick
+              dateTime={endDate}
+              setDateTime={(value) => setEndDate(value)}
+              label={t('eventType.until') + readableTime(endDate)}
+            />
+          </div>
+        )}
+        <div className="form__field">
+          <div className='form__label'>{recrule && <>{recurrentToText(rrule)}</>}</div>
         </div>
       </div>
-      
     </>
   );
 }

@@ -6,10 +6,10 @@ import { SetupDtoOut } from './config.type';
 export class SetupService {
 
   public static smtpTest(smtpHost: string,smtpPort: string,smtpUser: string,smtpPass: string ): Observable<string> {
-    return httpService.post<SetupDtoOut>(`/setup/smtpTest`, {smtpHost, smtpPort, smtpUser, smtpPass});
+    return httpService.post<SetupDtoOut>(`setup/smtpTest`, {smtpHost, smtpPort, smtpUser, smtpPass});
   }
 
   public static save(config: SetupDtoOut): Observable<any> {
-    return httpService.post<SetupDtoOut>("/setup/save", config).pipe();
+    return httpService.post<SetupDtoOut>("setup/save", config).pipe();
   }
 }

@@ -29,6 +29,8 @@ import Alert from 'components/overlay/Alert';
 import { formatMessage } from 'elements/Message';
 import { LinkProfile } from 'components/user/LinkProfile';
 import { LinkAdminProfile } from 'components/user/LinkAdminProfile';
+import { ShowMobileOnly } from 'elements/SizeOnly';
+import { ListButtonTypes } from 'components/nav/ButtonTypes';
 
 
 export default function HomeInfo({
@@ -36,17 +38,8 @@ export default function HomeInfo({
   selectedNetwork,
   config,
 }) {
-  const [showFiltersForm, toggleShowFiltersForm] = useToggle(false);
-  const [buttonTypes, setButtonTypes] = useState([]);
-  useButtonTypes(setButtonTypes);
-  
   const filterTag = (tag) => {
     store.emit(new UpdateFiltersToFilterTag(tag));
-    router.push('/Explore')
-  };
-
-  const filterButtonType = (buttonType) => {
-    store.emit(new UpdateFiltersToFilterButtonType(buttonType));
     router.push('/Explore')
   };
   
@@ -66,18 +59,13 @@ export default function HomeInfo({
   return (
     <>
       <SEO {...metadata} />
-      <div className="info-overlay__search-section">
-        <NavHeader
-          toggleShowFiltersForm={toggleShowFiltersForm}
-          totalNetworkButtonsCount={selectedNetwork.buttonCount}
-          isHome={true}
-        />
-        <AdvancedFilters
-          showFiltersForm={showFiltersForm}
-          toggleShowFiltersForm={toggleShowFiltersForm}
-          isHome={true}
-        />
-      </div>
+
+        <ShowMobileOnly>
+          <div className="info-overlay__search-section">
+            <NavHeader selectedNetwork={selectedNetwork} pageName={'HomeInfo'}/>
+            <AdvancedFilters isHome={true}/>
+          </div>
+        </ShowMobileOnly>
       <div
         className='info-overlay__container'
       >
@@ -104,17 +92,19 @@ export default function HomeInfo({
                                   
                   style={
                     {
-                      '--network-jumbo': `url('/api/${selectedNetwork.jumbo}'`,
+                      '--network-jumbo': `url('/api${selectedNetwork.jumbo}'`,
                     } as React.CSSProperties
                   }
                 >
                   <div className="card__header">
-                    <div className="avatar-medium--home">
-                      <NetworkLogo network={selectedNetwork} />
+                    <div className='info-overlay__network-title'>
+                      <div className="avatar-medium--home">
+                        <NetworkLogo network={selectedNetwork} />
+                      </div>
+                      <h3 className="card__header-title network-title">
+                        {selectedNetwork.name}
+                      </h3>
                     </div>
-                    <h3 className="card__header-title network-title">
-                      {selectedNetwork.name}
-                    </h3>
                   </div>
 
                   <div className="card__section card__section--actions">
@@ -184,36 +174,7 @@ export default function HomeInfo({
                       config.userCount.toString(),
                     ])}
                     <div className="info-overlay__hashtags">
-                      {buttonTypes.map((buttonType, idx) => {
-                        const buttonTypeFound =
-                          selectedNetwork.buttonTypesCount.find(
-                            (buttonTypeCount) =>
-                              buttonTypeCount.type == buttonType.name,
-                          );
-                        const buttoTypeCountText =
-                          (buttonTypeFound?.count
-                            ? buttonTypeFound?.count
-                            : 0
-                          ).toString() +
-                          ' ' +
-                          buttonType.caption;
-                        return (
-                          <div 
-                            className='hashtags__list-item'
-                            key={idx}
-                            style={buttonColorStyle(
-                              buttonType.cssColor,
-                            )}
-                          >
-                            <Btn
-                              btnType={BtnType.filter}
-                              iconLeft={IconType.color}
-                              caption={buttoTypeCountText}
-                              onClick={() => filterButtonType(buttonType.name)}
-                            />
-                          </div>
-                        );
-                      })}
+                      <ListButtonTypes selectedNetwork={selectedNetwork}/>
                     </div>
                     
                   </div>

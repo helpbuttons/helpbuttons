@@ -28,40 +28,43 @@ export default function ButtonFile({
   useButtonTypes(setButtonTypes);
 
   useEffect(() => {
-    if(!currentButtonServer)
-    {
-      console.log(currentButtonServer)
-      Router.push('/Error')
-    }else{
+    if (!currentButtonServer) {
+      console.log(currentButtonServer);
+      Router.push('/Error');
+    } else {
       store.emit(new updateCurrentButton(currentButtonServer));
     }
-  }, [currentButtonServer])
-  
+  }, [currentButtonServer]);
+
   return (
     <>
       <SEO {...metadata} />
-      {currentButton && 
-            <Popup
-            sectionClass=''
-            title={t('button.title')}
-            onCloseClicked={() => router.back()}
-            >
+      {currentButton && (
+        <Popup
+          sectionClass=""
+          linkBack={() => router.back()}
+        >
+          {buttonTypes?.length > 0 && (
+            <ButtonShow
+              currentButton={currentButton}
+              buttonTypes={buttonTypes}
+            />
+          )}
 
-                {buttonTypes?.length > 0 && (
-                  <CardButton
-                    button={currentButton}
-                    buttonTypes={buttonTypes}
-                  />
-                )}
-
-                <Feed button={currentButton} />
-                
-            </Popup> 
-      }
+        </Popup>
+      )}
     </>
   );
 }
 
+export function ButtonShow({ currentButton, buttonTypes }) {
+  return (
+    <>
+      <CardButton button={currentButton} buttonTypes={buttonTypes} />
+      <Feed button={currentButton} />
+    </>
+  );
+}
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const serverProps = await ServerPropsService.general(
     'New Button',
@@ -72,9 +75,8 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     next: { revalidate: 10 },
   });
   const currentButtonData: Button = await currentButtonFetch.json();
-  if(currentButtonData?.statusCode == HttpStatus.NOT_FOUND)
-  {
-    return {props: serverProps};
+  if (currentButtonData?.statusCode == HttpStatus.NOT_FOUND) {
+    return { props: serverProps };
   }
   const serverPropsModified = {
     ...serverProps,

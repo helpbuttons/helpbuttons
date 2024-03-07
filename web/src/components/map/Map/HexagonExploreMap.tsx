@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { GeoJson, GeoJsonFeature, Overlay, Point } from 'pigeon-maps';
-import { store } from 'pages';
+import { GlobalState, store } from 'pages';
 import {
-  UpdateExploreSettings,
+  HiglightHexagonFromButton,
+  UpdateExploreSettings, UpdateHexagonClicked,
 } from 'state/Explore';
 import { HbMap } from '.';
 import {
@@ -12,15 +13,13 @@ import _ from 'lodash';
 import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 import { IoStorefrontSharp } from 'react-icons/io5';
+import { ShowMobileOnly } from 'elements/SizeOnly';
+import { useStore } from 'store/Store';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
-  currentButton,
   handleBoundsChange,
   exploreSettings,
-  setHexagonsToFetch,
-  setHexagonClicked,
-  hexagonClicked,
   selectedNetwork,
 }) {
   const [centerBounds, setCenterBounds] = useState<Point>(null);
@@ -28,6 +27,17 @@ export default function HexagonExploreMap({
 
   const maxButtonsHexagon = useRef(1)
   const [isRedrawingMap, setIsRedrawingMap] = useState(true)
+
+  const hexagonClicked = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.hexagonClicked
+  );
+
+  const hexagonHighlight = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.hexagonHighlight
+  );
+
   const onBoundsChanged = ({ center, zoom, bounds }) => {
     setIsRedrawingMap(() => true)
     handleBoundsChange(bounds, center, zoom)
@@ -35,8 +45,8 @@ export default function HexagonExploreMap({
     setCenterBounds(center);
   };
 
-  const onMapCLick =() => {
-    setHexagonClicked( () => null ) 
+  const onMapClick = () => {
+    store.emit(new UpdateHexagonClicked(null))
   };
 
   useEffect(() => {
@@ -50,37 +60,55 @@ export default function HexagonExploreMap({
   }, [h3TypeDensityHexes]);
 
   const [buttonTypes, setButtonTypes] = useState([]);
+
+  const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
+  useEffect(() => {
+    if (!hexagonClicked)
+    {
+      setHexagonClickedFeatures(() => null)
+    }else{
+      setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonClicked))
+    }
+    
+  }, [hexagonClicked, geoJsonFeatures])
+
+  useEffect(() => {
+    if(!hexagonHighlight)
+    {
+      setHexagonClickedFeatures(() => null)
+    }else{
+      setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonHighlight))
+    }
+  }, [hexagonHighlight])
   useButtonTypes(setButtonTypes);
   return (
     <>
+
     {exploreSettings.center && 
+      <>
       <HbMap
         mapCenter={exploreSettings.center}
         mapZoom={exploreSettings.zoom}
         onBoundsChanged={onBoundsChanged}
         tileType={selectedNetwork.exploreSettings.tileType}
-        handleClick={onMapCLick}
+        handleClick={onMapClick}
       >
-        <Overlay anchor={[100, 100]}>
-          <div className="search-map__network-title">
-            <div>{selectedNetwork.name}</div>
-            <div className="search-map__sign">
-              made with{' '}
-              <a href="https://helpbuttons.org">Helpbuttons</a>
-            </div>
-            
-          </div>
-
-        </Overlay>
-
+        <HbMapOverlay selectedNetwork={selectedNetwork}/>
         <GeoJson>
-          {geoJsonFeatures.map((hexagonFeature) => (
+          {/* DRAW HEXAGONS ON MAP */}
+        {geoJsonFeatures.map((hexagonFeature) => (
             <GeoJsonFeature
+              // onMouseOver={() => {
+              //   if(hexagonClicked != hexagonFeature.properties.hex)
+              //   {
+              //     store.emit(new UpdateHexagonClicked(hexagonFeature.properties.hex))
+              //   }
+              // }}
               onClick={(feature) => {
                 if (hexagonFeature.properties.count > 0) {
-                  setHexagonClicked(() => feature.payload);
+                  store.emit(new UpdateHexagonClicked(hexagonFeature.properties.hex))
                 } else {
-                  setHexagonClicked(() => 'unset');
+                  store.emit(new UpdateHexagonClicked(null))
                 }
               }}
               feature={hexagonFeature}
@@ -118,27 +146,28 @@ export default function HexagonExploreMap({
               }}
             />
           ))}
-          {(!isRedrawingMap && hexagonClicked) && (
+          
+          {/* DRAW CLICKED HEXAGON ON MAP */}
+          {(!isRedrawingMap && hexagonClicked && hexagonClickedFeatures) && (
             <GeoJsonFeature
-              feature={hexagonClicked}
-              key={`clicked_${hexagonClicked.properties.hex}`}
+              feature={hexagonClickedFeatures}
+              key={`clicked_${hexagonClicked}`}
               styleCallback={(feature, hover) => {
                 return { fill: 'white' };
               }}
               onClick={() => {
-                setHexagonClicked(() => 'unset');
+                store.emit(new UpdateHexagonClicked(null))
               }}
             />
           )}
-            </GeoJson>
+          </GeoJson>
+          
         {/*
         show count of buttons per hexagon
         */}
         {!isRedrawingMap &&
           geoJsonFeatures.map((hexagonFeature) => {
             if (
-              hexagonFeature.properties.hex !==
-                hexagonClicked?.properties.hex &&
               hexagonFeature.properties.count > 0
             ) {
               return (
@@ -150,7 +179,7 @@ export default function HexagonExploreMap({
                 >
                   <div
                     onClick={() =>
-                      setHexagonClicked(() => hexagonFeature)
+                      store.emit(new UpdateHexagonClicked(hexagonFeature.properties.hex))
                     }
                     className="pigeon-map__hex-wrap"
                   >
@@ -166,15 +195,17 @@ export default function HexagonExploreMap({
               );
             }
           })}
-        {(!isRedrawingMap && hexagonClicked) && (
+
+          {/* draw clicked hexagon */}
+        {(!isRedrawingMap && hexagonClickedFeatures) && (
           <Overlay
-            anchor={hexagonClicked.properties.center}
+            anchor={hexagonClickedFeatures.properties.center}
             offset={[20, 0]}
             className="pigeon-map__custom-block"
-            key={hexagonClicked.properties.hex}
+            key={hexagonClickedFeatures.properties.hex}
           >
             <div className="pigeon-map__hex-wrap pigeon-map__hex-wrap--selected">
-              {hexagonClicked.properties.groupByType.map(
+              {hexagonClickedFeatures.properties.groupByType.map(
                 (hexagonBtnType, idx) => {
                   if (hexagonBtnType.count < 1) {
                     return;
@@ -213,6 +244,8 @@ export default function HexagonExploreMap({
           </Overlay>
       
         )}
+
+        {/* draw go to center icon */}
         <Overlay anchor={[100, 100]} className='pigeon-center-buttons'>
           <button className='pigeon-center-view' onClick={() => {      
             store.emit(
@@ -230,7 +263,29 @@ export default function HexagonExploreMap({
           </Overlay>
         )}
       </HbMap>
+      </>
       }
     </>
+  );
+}
+
+
+function HbMapOverlay({ selectedNetwork }) {
+  {
+    /* DISPLAY INSTRUCTIONS OVER MAP*/
+  }
+
+  return (
+    <ShowMobileOnly>
+      <Overlay anchor={[100, 100]}>
+        <div className="search-map__network-title">
+          <div>{selectedNetwork.name}</div>
+          <div className="search-map__sign">
+            made with{' '}
+            <a href="https://helpbuttons.org">Helpbuttons</a>
+          </div>
+        </div>
+      </Overlay>
+    </ShowMobileOnly>
   );
 }

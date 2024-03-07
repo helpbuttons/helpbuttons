@@ -28,12 +28,14 @@ $card-button-border-height: $border-general-height;
 
 .card-button__content > * {
 
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
+  display: flex;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
+
+  line-clamp: 2; 
 
 }
 
@@ -54,7 +56,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__content {
 
-  padding: $padding-medium;
+  padding: $padding-big;
   display: flex;
   flex-flow: column nowrap;
   height: 100%;
@@ -67,10 +69,40 @@ $card-button-border-height: $border-general-height;
   flex-flow: row nowrap;
   overflow-x: hidden;
   justify-content: space-between;
+  gap: $padding-big;
+
+}
+
+.card-button__author {
+  display: flex;
+  flex-flow: row nowrap;
+  padding:  $padding-medium $padding-big;
+  justify-content: space-between;
+  border-top: 1px $color-ligth-gray solid;
+
+}
+
+.card-button__author-title {
+
+  color: $color-gray;
+  font-size: $font-size-general;
+
+}
+
+.card-button__author-description {
+
+  font-size: $font-size-small;
+  color: $color-gray;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  max-height: 3.6em;
+  line-height: $text-line-height-xsmall;
+
 }
 
 .card-button__avatar {
-  flex: 0 1 12%;
+  // flex: 0 1 12%;
   & > button {
     border: none;
     background: none;
@@ -80,8 +112,6 @@ $card-button-border-height: $border-general-height;
 
 .card-button__info {
   flex: 100%;
-  width: 0rem;
-  margin-left: $margin-xsmall;
   text-align: left;
   align-items: start;
 }
@@ -92,6 +122,7 @@ $card-button-border-height: $border-general-height;
   display: flex;
   align-items: center;
   vertical-align: baseline;
+  overflow:scroll;
   span {
     align-items: center;
     padding-right: 1rem;
@@ -104,9 +135,50 @@ $card-button-border-height: $border-general-height;
   }
 }
 
+.card-button__description {
+
+ color: $color-dark-gray;
+}
+
+
+.card-button__actions {
+  padding: $padding-big;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: baseline;
+  background-color: $color-white;
+  border-top: 1px dashed $color-ligth-gray;
+  border-radius: 0 0 $border-radius-circle $border-radius-circle;
+  span {
+    align-items: center;
+    padding-right: 1rem;
+  }
+
+  button {
+
+    margin-left: 0;
+
+  }
+}
+
+.card-button__phone-section{
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap:inherit;
+  font-size: $font-size-small;
+  gap: $padding-medium;
+
+}
+
 .card-button__rating--phone {
 
- text-wrap: nowrap;
+//  text-wrap: nowrap;
+ font-weight: $font-weight-bold;
 
 }
 
@@ -115,13 +187,14 @@ $card-button-border-height: $border-general-height;
   background-size: 100%;
   height: 100%;
   position: relative;
+  margin-top: $margin-xsmall;
   text-indent: -9999999px;
   width: 18px;
 
   svg {
 
-    padding-top: $padding-big;
-    display: block;
+    // padding-top: $padding-big;
+    // display: block;
 
   }
 }
@@ -214,7 +287,13 @@ $card-button-border-height: $border-general-height;
   padding: $padding-small 0;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items:flex-start;
+  word-wrap: break-word;
+  max-height: 2.2em;
+  line-height: 1.1em;
+  margin-bottom: $margin-xsmall;
+  text-overflow: ellipsis;
+
 
   &::first-letter{
 
@@ -394,9 +473,8 @@ $card-button-border-height: $border-general-height;
 .card-button__edit-icon {
   width: auto;
   height: 30px;
-  padding-right: $padding-big;
   position: absolute;
-  right: 0;
+  right: $padding-xsmall;
 }
 
 .card-button__options-menu {
@@ -419,7 +497,7 @@ $card-button-border-height: $border-general-height;
   justify-content: flex-start;
   align-items: flex-start;
   border-radius: $border-radius-basic;
-  z-index: $z-index-01;
+  z-index: $z-index-03;
   height: 100%;
   overflow-y: auto;
   color: white;
@@ -440,9 +518,10 @@ $card-button-border-height: $border-general-height;
 .card-button__dropdown-arrow {
   width: 0;
   height: 0;
+  background-color: transparent;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 20px solid $color-dark-gray;
+  border-bottom: 5px solid transparent;
   margin-left: auto;
   margin-right: $card-button__submenu-top-arrow-right;
 }
@@ -507,6 +586,15 @@ $card-button-border-height: $border-general-height;
   white-space:pre-wrap; 
   overflow: hidden;
   text-overflow: ellipsis;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  max-height: 2.6em;
+  line-height: 1.3em;
 }
 
 .card-button__city {
@@ -516,6 +604,17 @@ $card-button-border-height: $border-general-height;
 
 .card-button__city--displayMap {
   text-decoration: underline;
+  text-decoration-color: $color-black;
+  background-color: transparent;
+}
+
+.card-button__city--displayMap::after {
+  background: var(--network-background-color);
+  border-radius: 34px;
+  content: "";
+  display: inline-block;
+  height: 10px;
+  width: 10px;
 }
 
 .card-button__city-list {

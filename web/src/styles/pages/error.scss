@@ -1,0 +1,13 @@
+.error__message {
+
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: $padding-big;
+    justify-content: center;
+    flex: 1;
+    font-weight: $font-weight-bold;
+    margin: auto;
+    font-size: $font-size-title;
+    text-align: center;
+}

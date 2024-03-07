@@ -31,19 +31,17 @@ export function readableTimeLeftToDate(date: Date) {
     var elapsed = Date.parse(d1) - d2.getTime();
     // "Math.abs" accounts for both "past" & "future" scenarios
     for (var u in units)
-      if (Math.abs(elapsed) > units[u] || u == 'second')
-      {
+      if (Math.abs(elapsed) > units[u] || u == 'second') {
         return rtf.format(Math.round(elapsed / units[u]), u);
       }
-        
   };
 
-  return getRelativeTime(new Date(date))
+  return getRelativeTime(new Date(date));
 }
 
 export function readableDateTime(date: Date) {
-  if(typeof date !== typeof Date) {
-    date = new Date(date)
+  if (typeof date !== typeof Date) {
+    date = new Date(date);
   }
 
   return date.toLocaleDateString(getLocale(), {
@@ -57,31 +55,31 @@ export function readableDateTime(date: Date) {
 }
 
 export function readableDate(date: Date) {
-  if(typeof date !== typeof Date) {
-    date = new Date(date)
+  if (typeof date !== typeof Date) {
+    date = new Date(date);
   }
   return date.toLocaleDateString(getLocale(), {
     weekday: 'short',
     year: 'numeric',
     month: 'short',
-    day: 'numeric'
+    day: 'numeric',
   });
 }
 
 export function readableShortDate(date: Date) {
-  if(typeof date !== typeof Date) {
-    date = new Date(date)
+  if (typeof date !== typeof Date) {
+    date = new Date(date);
   }
   return date.toLocaleDateString(getLocale(), {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   });
 }
 
 export function readableMonth(date: Date) {
-  if(typeof date !== typeof Date) {
-    date = new Date(date)
+  if (typeof date !== typeof Date) {
+    date = new Date(date);
   }
   return date.toLocaleDateString(getLocale(), {
     year: 'numeric',
@@ -90,13 +88,36 @@ export function readableMonth(date: Date) {
 }
 
 export function readableTime(date: Date) {
-  if(typeof date !== typeof Date) {
-    date = new Date(date)
+  if (typeof date !== typeof Date) {
+    date = new Date(date);
   }
-  return new Intl.DateTimeFormat(getLocale(), {hour: 'numeric', minute: 'numeric'}).format(date);
+  return new Intl.DateTimeFormat(getLocale(), {
+    hour: 'numeric',
+    minute: 'numeric',
+  }).format(date);
 }
 
-export function diffInMonths(end, start){
+export function diffInMonths(end, start) {
   var timeDiff = Math.abs(end.getTime() - start.getTime());
   return Math.round(timeDiff / (2e3 * 3600 * 365.25));
+}
+
+export function readableDayOfWeek(date: Date) {
+  if (typeof date !== typeof Date) {
+    date = new Date(date);
+  }
+
+  return date.toLocaleDateString(getLocale(), {
+    weekday: 'short',
+  });
+}
+
+export function readableDayOfLongWeek(date: Date) {
+  if (typeof date !== typeof Date) {
+    date = new Date(date);
+  }
+
+  return date.toLocaleDateString(getLocale(), {
+    weekday: 'long',
+  });
 }

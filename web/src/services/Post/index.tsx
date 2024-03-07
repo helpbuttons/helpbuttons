@@ -9,13 +9,13 @@ export class PostService {
     buttonId: string,
     data: MessageDto,
   ): Observable<any> {
-    return httpService.post("/post/new/" + buttonId, data);
+    return httpService.post("post/new/" + buttonId, data);
   }
 
   public static findByButtonId(
     buttonId: string,
   ): Observable<any> {
-    return httpService.get("/post/findByButtonId/" + buttonId);
+    return httpService.get("post/findByButtonId/" + buttonId);
   }
   
   public static newComment(
@@ -23,19 +23,28 @@ export class PostService {
     privacy: CommentPrivacyOptions,
     data: MessageDto,
   ): Observable<any> {
-    return httpService.post(`/post/new/comment/${privacy}/${postId}`, data);
+    return httpService.post(`post/new/comment/${privacy}/${postId}`, data);
+  }
+
+  public static newCommentReply(
+    postId: string,
+    commentId: string,
+    privacy: CommentPrivacyOptions,
+    data: MessageDto,
+  ): Observable<any> {
+    return httpService.post(`post/new/comment/${privacy}/${postId}/${commentId}`, data);
   }
 
   public static delete(
     postId: string,
   ): Observable<any> {
-    return httpService.delete("/post/delete/" + postId);
+    return httpService.delete("post/delete/" + postId);
   }
 
   public static deleteComment(
     commentId: string,
   ): Observable<any> {
-    return httpService.delete("/post/comment/delete/" + commentId);
+    return httpService.delete("post/comment/delete/" + commentId);
   }
   
 }

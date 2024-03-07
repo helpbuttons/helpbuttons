@@ -5,7 +5,7 @@ import { WatchEvent } from 'store/Event';
 import { UpdateEvent } from '../store/Event';
 
 import { ButtonService } from 'services/Buttons';
-import { GlobalState } from 'pages';
+import { GlobalState, store } from 'pages';
 import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
@@ -16,7 +16,17 @@ import {
   defaultFilters,
 } from 'components/search/AdvancedFilters/filters.type';
 import { Bounds } from 'pigeon-maps';
+import { cellToZoom } from 'shared/honeycomb.utils';
+import { cellToParent, getResolution } from 'h3-js';
+import { UpdateZoom } from './Map';
+import { of } from 'rxjs';
 
+
+export enum ExploreViewMode {
+  BOTH = 'both',
+  MAP = 'map',
+  LIST = 'list',
+}
 export interface ExploreState {
   draftButton: any;
   currentButton: Button;
@@ -29,9 +39,10 @@ export interface ExploreSettings {
   zoom: number;
   bounds: Bounds;
   honeyCombFeatures: any;
-  prevZoom: number;
   loading: boolean;
   hexagonClicked: string;
+  hexagonHighlight: string;
+  viewMode: ExploreViewMode;
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -39,9 +50,10 @@ export const exploreSettingsDefault: ExploreSettings = {
   zoom: 4,
   bounds: null,
   honeyCombFeatures: null,
-  prevZoom: 0,
   loading: true,
-  hexagonClicked: null
+  hexagonClicked: null,
+  hexagonHighlight: null,
+  viewMode: ExploreViewMode.BOTH
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
@@ -51,6 +63,8 @@ export interface ExploreMapState {
   cachedHexagons: any[];
   loading: boolean;
   initialized: boolean;
+  showAdvancedFilters: boolean;
+  showInstructions: boolean;
 }
 export const exploreInitial = {
   draftButton: null,
@@ -63,6 +77,8 @@ export const exploreInitial = {
     cachedHexagons: [],
     loading: true,
     initialized: false,
+    showAdvancedFilters: false,
+    showInstructions: true,
   },
   settings: exploreSettingsDefault,
 };
@@ -125,6 +141,8 @@ export class CreateButton implements WatchEvent, UpdateEvent {
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
       newState.explore.map.listButtons = []
+      newState.explore.map.filters = defaultFilters
+      newState.explore.map.showAdvancedFilters = false
     });
   }
 }
@@ -258,6 +276,16 @@ export class UpdateFilters implements UpdateEvent {
   }
 }
 
+export class ResetFilters implements UpdateEvent {
+  public constructor() {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.filters = defaultFilters;
+    });
+  }
+}
+
 const getZoomFromRadius = (radius) => {
   if (radius > 300)
   {
@@ -328,6 +356,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.map.boundsFilteredButtons =
         this.boundsFilteredButtons;
+      newState.explore.map.listButtons = this.boundsFilteredButtons
       newState.explore.map.loading = false;
       newState.explore.map.initialized = true;
     });
@@ -345,46 +374,51 @@ export class UpdateExploreUpdating implements UpdateEvent {
 }
 
 export class UpdateHexagonClicked implements UpdateEvent {
-  public constructor(private listButtons: Button[], private hexagonClicked: string) {}
+  public constructor(private hexagonClicked: string) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.listButtons = this.listButtons;
-      newState.explore.map.loading = false;
-      newState.explore.map.initialized = true;
       newState.explore.settings.hexagonClicked = this.hexagonClicked;
+      if(this.hexagonClicked)
+      {
+        newState.explore.map.showInstructions = false;
+        newState.explore.map.listButtons = listButtonsFilteredByHexagon(this.hexagonClicked, state.explore.map.boundsFilteredButtons)
+        newState.explore.currentButton = null
+        if(state.explore.settings.viewMode == ExploreViewMode.MAP)
+        {
+          newState.explore.settings.viewMode = ExploreViewMode.BOTH
+        }
+      }else{
+        newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
+      }
     });
   }
 }
 
 
-export class clearHexagonClicked implements UpdateEvent {
-  public constructor() {}
+export class HiglightHexagonFromButton implements UpdateEvent {
+  public constructor(private buttonHexagon: string) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons;
-      newState.explore.map.loading = false;
-      newState.explore.map.initialized = true;
-      newState.explore.settings.hexagonClicked = null;
+      if(this.buttonHexagon)
+      {
+        newState.explore.settings.hexagonHighlight = cellToZoom(this.buttonHexagon, state.explore.settings.zoom)
+      }else{
+        newState.explore.settings.hexagonHighlight = null
+      }
     });
   }
 }
 
-
-
-export class UpdateListButtons implements UpdateEvent {
-  public constructor(private listButtons: Button[]) {}
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.map.listButtons = this.listButtons;
-      newState.explore.map.loading = false;
-      newState.explore.map.initialized = true;
-    });
-  }
+function listButtonsFilteredByHexagon(hexagonClicked, boundsFilteredButtons) {
+  const resolutionRequested = getResolution(hexagonClicked);
+  return boundsFilteredButtons.filter(
+      (button) =>
+        cellToParent(button.hexagon, resolutionRequested) ==
+        hexagonClicked,
+    );
 }
-
 export class UpdateCachedHexagons implements UpdateEvent {
   public constructor(private cachedHexagons: any[]) {}
 
@@ -407,16 +441,31 @@ export class UpdateExploreSettings implements UpdateEvent {
   public constructor(
     private newExploreSettings: Partial<ExploreSettings>,
   ) {}
+  public watch(state: GlobalState) {
+      if (this.newExploreSettings.zoom) {
+        store.emit(new UpdateZoom(this.newExploreSettings.zoom))
+      }
+      return of(undefined)
+  }
 
   public update(state: GlobalState) {
+
     return produce(state, (newState) => {
       const prevSettings = state.explore.settings;
       const newExploreSettings = {
         ...prevSettings,
-        prevZoom: prevSettings.zoom,
         ...this.newExploreSettings,
         loading: false,
       };
+      
+      if(prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center))
+      {
+        newState.explore.map.showInstructions = false;
+      }
+      if(newExploreSettings.zoom)
+      {
+        delete newExploreSettings.zoom;
+      }      
       newState.explore.settings = newExploreSettings;
     });
   }
@@ -463,5 +512,42 @@ export class ButtonUpdateModifiedDate implements WatchEvent{
       }),
       catchError((error) => handleError(this.onError, error)),
     );
+  }
+}
+
+export class ToggleAdvancedFilters implements UpdateEvent {
+  public constructor(private value?) {}  
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      if(this.value === false || this.value === true)
+      {
+        newState.explore.map.showAdvancedFilters = this.value
+      }else{
+        newState.explore.map.showAdvancedFilters = !state.explore.map.showAdvancedFilters
+      }
+    });
+  }
+}
+
+export class RecenterExplore implements UpdateEvent {
+  public constructor(private value?) {}  
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings.center = state.networks.selectedNetwork.exploreSettings.center
+      newState.explore.settings.zoom = state.networks.selectedNetwork.exploreSettings.zoom
+    });
+  }
+}
+
+
+export class UpdateExploreViewMode implements UpdateEvent{
+  public constructor(private viewMode: ExploreViewMode) {}  
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.settings.viewMode = this.viewMode
+    });
   }
 }

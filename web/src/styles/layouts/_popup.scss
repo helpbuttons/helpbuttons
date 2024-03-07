@@ -1,8 +1,8 @@
 $popup-background: rgba(0,0,0,.2);
-$popup-header-height: 80px;
+$popup-header-height: 50px;
 $popup-header-height-mobile: 50px;
 $popup-options-height: 80px;
-$popup-options-border-top: 3px $color-black;
+$popup-options-border-top: 1px solid $color-ligth-gray;
 $popup-max-width: $grid-max-width;
 $popup-content-height: calc( 100vh - #{$popup-header-height });
 $popup-header-lateral: calc( 100% / 2 - #{$popup-max-width} / 2 );
@@ -43,7 +43,7 @@ body {
   background: $color-white;
   box-shadow: unset;
   padding: 0;
-  z-index: $z-index-05;
+  z-index: $z-index-04;
   height: 100%;
 
   // Header Top Content Bottom
@@ -69,10 +69,11 @@ body {
 .popup__header {
 
   width: 100%;
-  padding: .5rem;
+  padding: $padding-big;
   position:  relative;
   border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
   height: $popup-header-height-mobile;
+  border-bottom: 1px solid $color-ligth-gray;
 
 }
 
@@ -382,6 +383,7 @@ body {
   .popup--button-file {
 
     width: 100%;
+    border-right: $popup-options-border-top;
   }  
 
   .popup__header,
@@ -423,6 +425,10 @@ body {
 
 @media #{$breakpoints-xlarge} {
 
+  .popup__header {
+
+    border-radius: 0;
+  }
 
   .popup__content {
 

@@ -38,7 +38,7 @@
   },
   "feed": {
     "write": "Escribir mensaje",
-    "update": "Actualización del Autor",
+    "update": "Novedad del Autor",
     "please": "Por favor",
     "loginMessage": "Entra",
     "or": "o",
@@ -130,7 +130,8 @@
     "newprivatecommentType": "Mensaje privada",
     "newfollowType": "Nuevo suscriptor",
     "creatorUpdate": "Actualización _helpbutton_",
-    "deletedType": "Eliminación _helpbutton_"
+    "deletedType": "Eliminación _helpbutton_",
+    "myhelpbuttons": "Mis _helpbuttons_"
   },
   "user": {
     "login":"Escribe tus datos si tienes cuenta",
@@ -191,7 +192,7 @@
     "showButtonsProfileLabel": "Contenido en tu página de perfil",
     "showButtonsProfileExplain": "Marca esta opción si quieres mostrar una lista pública de tus _helpbuttons_ en tu página de perfil",
     "showButtons": "Mostrar mis _helpbuttons_ en mi pagina de perfil",
-    "tagsExplain":"Escribe en este campo las palabras que te interesen y recibirás avisos cuando haya _helpbuttons_ sobre dichos temas. Escribe y pulsa enter o separa por comas para añadir.",
+    "tagsExplain":"Selecciona o escribe en este campo las palabras que te interesen y recibirás avisos cuando haya _helpbuttons_ sobre dichos temas. Escribe y pulsa enter o separa por comas para añadir.",
     "tagsSignupExplain":"Opcionalmente, selecciona y/o escribe temas en los que estés interesado/a y recibirás información sobre las publicaciones de esos temas. Escribe y pulsa enter o separa con comas para añadir nuevos temas",
     "distance":"Distancia máxima de avisos",
     "distanceExplain":"_helpbuttons_ que se creen fuera de este radio respecto de tu posición no te serán notificados",
@@ -219,7 +220,11 @@
     "filteredRadius": "en {0} · {1}km",
     "noFilter": "en la zona",
     "hideMap":"Ocultar Mapa",
-    "showMap":"Mostrar Mapa"
+    "showMap":"Mostrar Mapa",
+    "displayInstructions":"Pulsa un hexágono para obtener información sobre _helpbuttons_ en esa zona",
+    "both": "Mapa & Lista",
+    "list": "Lista",
+    "map": "Mapa"
   },
   "buttonFilters": {
     "selectedArea": "en el área seleccionada",
@@ -248,12 +253,13 @@
     "priceExplain": "Filtrar por precio",
     "byProximity": "Por proximidad",
     "byEventDate": "Por ínicio del evento",
-    "followTagSucess": "{0} fue adicionado a tus intereses"
+    "followTagSucess": "{0} fue adicionado a tus intereses",
+    "focusedArea":"en la zona"
   },
   "button": {
     "title":"Vista de _helpbutton_",
     "copy": "Copiar enlace",
-    "delete": "Borrar",
+    "delete": "Finalizar",
     "typeExplain": "Por favor elige qué tipo de _helpbutton_ te gustaría publicar",
     "placeHolderTitle": "Escribe un nuevo título para tu _helpbutton_",
     "descriptionLabel": "Descripción",
@@ -295,7 +301,10 @@
     "renewMailSubject": "Renovado con éxito",
     "renewMail": "Renovaste tu _helpbutton_ '{0}' por otros 3 meses.",
     "isExpiringLink": "Debido a la falta de actividad, su _helpbutton_ se borrará en un mes.",
-    "renewLink": "Renovar tu _helpbutton_"
+    "renewLink": "Renovar tu _helpbutton_",
+    "createUpdate":"Publicar Novedad",
+    "authorTitle":"Autor:"
+
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -354,7 +363,10 @@
     "placeholderWrite": "Escribe un mensaje en esta publicación",
     "public":"Este comentario es público, todos podrán verlo.",
     "private":"Estás mandando un mensaje privado. Sólo el destinatario podrá verlo.",
-    "delete": "Borrar"
+    "delete": "Borrar",
+    "sendPublic":"Responder",
+    "sendPrivate":"Responder en privado",
+    "send":"Enviar"
   },
   "picker": {
     "headerText": "Elige una localización"
@@ -371,7 +383,7 @@
     "recurring":"Evento recurrente",
     "multipleExplain":"Selecciona el día y la hora para tus eventos",
     "onceExplain":"Selecciona el día y la hora para tus evento",
-    "recurringExplain":"Selecciona días y la hora para tus eventos"
+    "recurringExplain":"Selecciona días de inicio y final, días de la semana y la hora para tus eventos"
   },
   "faqs": {
     "title": "Preguntas frecuentes",
@@ -435,5 +447,9 @@
     "each": "Cada",
     "from": "desde",
     "at": "desde las"
+  },
+  "error": {
+    "error":"Algo fue mal",
+    "notFoundMessage": "Página no encontrada."
   }
 }

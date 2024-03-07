@@ -44,10 +44,6 @@ export default function ButtonForm({
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
-  const buttonDraft = useRef(
-    store,
-    (state: GlobalState) => state.explore.draftButton,
-  );
 
   const [buttonTypes, setButtonTypes] = useState([]);
   useButtonTypes(setButtonTypes);
@@ -59,12 +55,7 @@ export default function ButtonForm({
   const [isReadyForLocationAndTime, setIsReadyForLocationAndTime] =
     useState(false);
   const [markerColor, setMarkerColor] = useState(null);
-  useEffect(() => {
-    if (buttonDraft) {
-      reset(buttonDraft);
-    }
-  }, [buttonDraft]);
-
+  
   const buttonType = watch('type');
 
   useEffect(() => {
@@ -104,16 +95,13 @@ export default function ButtonForm({
     }
   }, [buttonType, buttonTypes]);
 
-  const closeClicked = () => {
-    Router.push('/Explore');
-  };
 
   const onError = (errors, e) => alertService.error(t('validation.error'))
 
   return (
     <LoadabledComponent loading={!selectedNetwork}>
       {selectedNetwork && 
-      <Popup title={title} onCloseClicked={closeClicked}>
+      <Popup title={title} linkFwd={'/Explore'}>
         <Form
           onSubmit={handleSubmit(onSubmit, onError)}
           classNameExtra="publish_btn"

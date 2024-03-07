@@ -135,7 +135,7 @@ export default function ProfileEdit() {
     <>
       {loggedInUser && (
         <>
-          <Popup title={t('user.updateProfile')} linkFwd="/Profile">
+          <Popup title={t('user.updateProfile')} linkBack={() => router.back()}>
             <Form
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="login"

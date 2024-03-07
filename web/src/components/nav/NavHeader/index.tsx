@@ -4,29 +4,62 @@ import React from 'react';
 import { HeaderSearch } from 'elements/HeaderSearch';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
+import NavBottom from '../NavBottom';
+import BrandCard from 'components/map/Map/BrandCard';
+import { ShowDesktopOnly } from 'elements/SizeOnly';
+import router from 'next/router';
+import { ListButtonTypes } from '../ButtonTypes';
+import { ToggleAdvancedFilters } from 'state/Explore';
 
-function NavHeader({ toggleShowFiltersForm, totalNetworkButtonsCount, hexagonClicked = false, isHome = false}) {
+function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
+
   const exploreMapState = useStore(
     store,
     (state: GlobalState) => state.explore.map,
-    false
+    false,
   );
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+  );
+
+  const toggleAdvancedFilters = () => {
+    if(pageName == 'Explore')
+    {
+      store.emit(new ToggleAdvancedFilters())
+    }else{
+      router.push('/Explore?showFilters=true')
+    }
+  }
+
   return (
-    <>
+    <div className="nav-header">
       <div className="nav-header__container">
-          <form className="nav-header__content">
-            
-            <div className="nav-header__content-message" onClick={toggleShowFiltersForm}>
-              <HeaderSearch
-                results={{count: !exploreMapState.initialized ? totalNetworkButtonsCount : exploreMapState.listButtons.length}}
-                isHome={isHome}
-                hexagonClicked={hexagonClicked}
-              />
-            </div>
-          </form>
-        
+        <ShowDesktopOnly>
+          <BrandCard />
+        </ShowDesktopOnly>
+        <form className="nav-header__content">
+          <div className="nav-header__content-message">
+            <HeaderSearch
+              results={{
+                count: (pageName != 'Explore' || !exploreMapState.listButtons)
+                  ? selectedNetwork?.buttonCount
+                  : exploreMapState.listButtons.length,
+              }}
+              toggleAdvancedFilters={toggleAdvancedFilters}
+            />
+          </div>
+        </form>
+        <ShowDesktopOnly>
+          <NavBottom pageName={pageName} loggedInUser={loggedInUser} />
+        </ShowDesktopOnly>
       </div>
-    </>
+      <ShowDesktopOnly>
+        <div className="nav-header__filters">
+          <ListButtonTypes selectedNetwork={selectedNetwork}/>
+        </div>
+      </ShowDesktopOnly>
+    </div>
   );
 }
 

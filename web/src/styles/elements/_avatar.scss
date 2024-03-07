@@ -44,14 +44,13 @@ $avatar-medium-max-width: 50px;
 
 .avatar-medium--home {
 
-  @extend .avatar-big;
-  color: $color-black;
+  @extend .avatar-medium;
+  color: $color-dark-gray;
   border-style: solid;
   object-fit: cover;
   overflow: hidden;
-  border-width: 7px;
-
-
+  top: 0;
+  border-width: 2px;
 
 }
 

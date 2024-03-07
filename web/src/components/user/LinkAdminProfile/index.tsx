@@ -66,7 +66,7 @@ function ShowPhone({ user }) {
             />
           )}
           {showPhone && (
-            <>
+            <div className='card-button__phone-section'>
               <Btn
                 btnType={BtnType.filterCorp}
                 contentAlignment={ContentAlignment.center}
@@ -75,10 +75,10 @@ function ShowPhone({ user }) {
                 submit={true}
                 onClick={() => onCallClick()}
               />
-              <div className="card-button__rating--phone">
+              <div className="">
                 {phone}
               </div>
-            </>
+            </div>
           )}
         </>
       )}

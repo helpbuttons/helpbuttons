@@ -1,25 +1,20 @@
 //Mobile bottom navigation component with just creation , profile and home buttons if logged in. It not logged it shows home, Button creation , login and faqs too.
-import { useEffect, useState } from 'react';
-
 import NavLink from 'elements/Navlink';
 import { IoAddOutline, IoPersonAddOutline } from 'react-icons/io5';
 import { IoPersonOutline } from 'react-icons/io5';
 import { IoHeartOutline } from 'react-icons/io5';
 import { IoLogInOutline } from 'react-icons/io5';
-import { IoHelpOutline } from 'react-icons/io5';
 import { IoGlobeOutline } from 'react-icons/io5';
 import { IoHomeOutline } from 'react-icons/io5';
-
 import t from 'i18n';
 import { GlobalState, store } from 'pages';
 import { useStore } from 'store/Store';
-import { FindActivities, unreadActivities } from 'state/Activity';
-import { alertService } from 'services/Alert';
 import { useRouter } from 'next/router';
+import { RecenterExplore, UpdateExploreSettings } from 'state/Explore';
 
 export default NavBottom;
 
-function NavBottom({loggedInUser}) {
+function NavBottom({loggedInUser, pageName}) {
   const activities = useStore(
     store,
     (state: GlobalState) => state.activities,
@@ -29,9 +24,9 @@ function NavBottom({loggedInUser}) {
     (state: GlobalState) => state.unreadActivities,
   );
 
-  const router = useRouter();
-  const path = router.asPath.split('?')[0];
-  const pageName = path.split('/')[1];
+  // const router = useRouter();
+  // const path = router.asPath.split('?')[0];
+  // const pageName = path.split('/')[1];
   const isCurrent = (menuName) => {
     if (pageName.startsWith(menuName)) {
       return 'nav-bottom__link--current';
@@ -55,7 +50,9 @@ function NavBottom({loggedInUser}) {
           </NavLink>
 
           <NavLink
-            href="/Explore"
+            onClick={(e) => {
+              (pageName == 'Explore'? store.emit(new RecenterExplore()) : 'lala')}}
+            href={"/Explore"}
             className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
               'Explore',
             )}`}

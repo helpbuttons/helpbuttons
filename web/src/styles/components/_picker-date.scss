@@ -83,3 +83,128 @@ $picker-date-height: 40px;
 .picker-date__calendar-container{
   max-height: 50wh;
 }
+
+.react-calendar__selected:enabled{
+  background: $color-dark-gray !important;
+  font-weight: bold;
+}
+
+.picker-date__recurrent .react-calendar{
+  margin:auto;
+}
+
+.picker-date__recurrent_weekly .react-calendar__month-view__weekdays__weekday{
+  display: none;
+}
+
+
+
+
+.form__weekdays-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 5px 0;
+}
+.form__weekdays-list .weekdays__list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  font-size: small;
+  margin: 2px;
+
+}
+.form__weekdays-list .weekdays__list .weekdays__list-interest__selected {
+  background-color: #2E2E2E;
+  color: white;
+}
+.form__weekdays-list .weekdays__list .weekdays__list-interest, .form__weekdays-list .weekdays__list .weekdays__list-interest__selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #D4D4D4;
+  // margin-right: 7px;
+  padding: 0 10px 0 10px;
+  margin: 1.9px;
+}
+.form__weekdays-list .weekdays__list .weekdays__list-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #D4D4D4;
+  margin-right: 7px;
+  padding: 0 0 0 10px;
+}
+.form__weekdays-list .weekdays__list .weekdays__list-tag .weekday__btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.form__weekdays-list {
+        
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  // margin: 5px 0;
+  // margin-bottom: $margin-big;
+  // min-height: 38px;
+
+  .weekdays__list {
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 100%;
+    font-size:small;
+    margin: 2px;
+
+    .weekdays__list-interest__selected {
+      background-color: $color-dark-gray;
+      color: white;
+
+    }
+
+    .weekdays__list-interest, .weekdays__list-interest__selected {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid $color-gray-border;
+        // margin-right: $margin-xsmall;
+        // padding: 0 $padding-big 0 $padding-big ;
+        // border-radius: $border-radius-circle;
+      
+    }
+    .weekdays__list-tag {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid $color-gray-border;
+        // margin-right: $margin-xsmall;
+        padding: 0 0 0 10px ;
+        // border-radius: $border-radius-circle;
+
+        .weekday__btn {
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+
+        }
+
+    }
+
+  }
+
+}

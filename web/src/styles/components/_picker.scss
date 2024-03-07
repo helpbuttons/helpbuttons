@@ -318,18 +318,21 @@ $picker-comments-item-padding: 25px;
 @media #{$breakpoints-medium} {
   .picker {
 
+    height: auto;
+
   }
 
   .picker__header,
   .picker__content {
     background: $color-white;
     max-width: $picker-max-width;//revise voy a poner 600 px luego pasar a variable $picker-max-width
+    height: auto;
   }
 
   .picker--over {
     max-width: 500px;
-    height: auto;
     z-index: $z-index-05;
+    max-height: 90%;
   }
 
   .picker__map--over{

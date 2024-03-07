@@ -1,4 +1,0 @@
-echo "
-$ source /usr/bin/virtualenvwrapper.sh
-$ workon helpbuttons
-"

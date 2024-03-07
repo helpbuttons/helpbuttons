@@ -21,6 +21,7 @@ import {
 } from 'shared/date.utils';
 import { getShareLink } from 'shared/sys.helper';
 import { alertService } from 'services/Alert';
+import router from 'next/router';
 
 export default function Invites() {
   const invites: Invite[] = useStore(
@@ -129,7 +130,7 @@ export default function Invites() {
           </div>
           </Form>
         </Popup> */}
-          <Popup title={t('invite.title')} linkFwd="/Profile">
+          <Popup title={t('invite.title')} linkBack={() => router.back()}>
             <Form
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="invite"

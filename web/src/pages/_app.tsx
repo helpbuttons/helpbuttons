@@ -1,11 +1,9 @@
-import type { AppProps } from 'next/app';
 import '../styles/app.scss';
 import Head from 'next/head';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
-import { httpService } from 'services/HttpService';
 import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
@@ -16,20 +14,16 @@ import { useStore } from 'store/Store';
 import { GetConfig } from 'state/Setup';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
-import { SetupDtoOut } from 'shared/entities/setup.entity';
 
-import { pathToRegexp } from 'path-to-regexp';
-import { allowedPathsPerRole } from '../shared/pagesRoles';
 import { Role } from 'shared/types/roles';
 import { getLocale, isRoleAllowed } from 'shared/sys.helper';
 import { version } from 'shared/commit';
-import Loading from 'components/loading';
-import { getMetadata } from 'services/ServerProps';
-import SEO from 'components/seo';
 import { refeshActivities } from 'state/Activity';
 import t, { updateNomeclature } from 'i18n';
 import { useInterval } from 'shared/custom.hooks';
 import { useSearchParams } from 'next/navigation';
+import NavHeader from 'components/nav/NavHeader';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 
 export default appWithTranslation(MyApp);
 
@@ -44,7 +38,6 @@ function MyApp({ Component, pageProps }) {
   const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
-  const [noBackend, setNobackend] = useState(false);
   const loadingConfig = useRef(false);
 
   const config = useStore(
@@ -52,7 +45,6 @@ function MyApp({ Component, pageProps }) {
     (state: GlobalState) => state.config,
   );
   const path = router.asPath.split('?')[0];
-  const [metadata, setMetadata] = useState(null);
 
   const loggedInUser = useStore(
     store,
@@ -62,11 +54,6 @@ function MyApp({ Component, pageProps }) {
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
-  );
-
-  const activities = useStore(
-    store,
-    (state: GlobalState) => state.activities,
   );
 
   const setupPaths: string[] = [
@@ -282,8 +269,13 @@ function MyApp({ Component, pageProps }) {
         <div className="index__content">
           {selectedNetwork && (
             <>
+              <ShowDesktopOnly>
+                <NavHeader pageName={pageName} selectedNetwork={selectedNetwork}/>
+              </ShowDesktopOnly>
               <Component {...pageProps} />
-              <NavBottom loggedInUser={loggedInUser} />
+              <ShowMobileOnly>
+                <NavBottom  pageName={pageName} loggedInUser={loggedInUser} />
+              </ShowMobileOnly>
             </>
           )}
           {!selectedNetwork && <Component {...pageProps} />}

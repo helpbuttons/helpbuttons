@@ -246,6 +246,7 @@ function NetworkForm({
               onChange={(exploreSettings) => {
                 setValue('exploreSettings', exploreSettings);
               }}
+              markerColor={watch('backgroundColor')}
             />
 
             <FieldTags

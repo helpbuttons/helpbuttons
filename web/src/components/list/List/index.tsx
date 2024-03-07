@@ -1,7 +1,7 @@
 //List of elements component that can be used in home, profile and other pages/layouts where we need to ddisplay buttons/networks/other elements
 //a foreach => buttons
-import React, { useState } from 'react';
-import { IoChevronForwardOutline, IoMapOutline } from 'react-icons/io5';
+import React, { useEffect, useState } from 'react';
+import { IoClose, IoList, IoMap, IoMapOutline } from 'react-icons/io5';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import ContentList from 'components/list/ContentList';
 import { useButtonTypes } from 'shared/buttonTypes';
@@ -11,16 +11,17 @@ import {
 } from 'components/search/AdvancedFilters';
 import { GlobalState, store } from 'pages';
 import { useStore } from 'store/Store';
-import { UpdateFilters } from 'state/Explore';
+import { ExploreViewMode, UpdateExploreViewMode, UpdateFilters } from 'state/Explore';
 import { useScrollHeightAndWidth } from 'elements/scroll';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
-import { ShowMobileOnly } from 'elements/SizeOnly';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import { Dropdown } from 'elements/Dropdown/Dropdown';
+
 
 function List({
   onLeftColumnToggle,
   buttons,
   showLeftColumn,
-  showFiltersForm,
   showMap,
   toggleShowMap = (e) => {},
 }) {
@@ -29,11 +30,20 @@ function List({
     (state: GlobalState) => state.explore.map.filters,
     false,
   );
+  const viewMode = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.viewMode,
+    false,
+  );
+  const showAdvancedFilters = useStore(
+    store,
+    (state: GlobalState) => state.explore.map.showAdvancedFilters,
+    false
+  );
 
-  
-  const showMapCaption = showMap
-    ? 'explore.hideMap'
-    : 'explore.showMap';
+  const showMapIcon = showMap
+  ? <IoClose/>
+  : <IoMapOutline/>;
 
   const handleChangeShowMap = (event) => {
     toggleShowMap(event.target.value);
@@ -44,6 +54,27 @@ function List({
     store.emit(new UpdateFilters(newFilters));
   };
 
+  useEffect(() => {
+    switch (viewMode) {
+      case ExploreViewMode.MAP: {
+        toggleShowMap(true);
+        onLeftColumnToggle(false);
+        break;
+      }
+      case ExploreViewMode.LIST: {
+        toggleShowMap(false);
+        onLeftColumnToggle(true);
+        break;
+      }
+      default:
+      case ExploreViewMode.BOTH: {
+        toggleShowMap(true);
+        onLeftColumnToggle(true);  
+        break;
+      }
+    }
+  }, [viewMode])
+
   const handleChange = (event) => {
     onLeftColumnToggle(event.target.value);
   };
@@ -53,30 +84,28 @@ function List({
 
   const {sliceSize, handleScrollHeight, handleScrollWidth} = useScrollHeightAndWidth(buttons.length)
 
+  let dropdownExploreViewOptions = [
+    {
+      value: ExploreViewMode.BOTH,
+      name: t("explore.both"),
+    },
+    {
+      value: ExploreViewMode.MAP,
+      name:  t("explore.map"),
+    },
+    {
+      value: ExploreViewMode.LIST,
+      name:  t("explore.list"),
+    },
+  ]
+
   return (
     <>
-      {!showFiltersForm && (
+      {!showAdvancedFilters && (
         <>
-          
-
-          <div
-            className={
-              'list__container ' +
-              (showMap ? '' : ' list__container--full-list')
-            }
-            onScroll={handleScrollHeight}
-          >
-
-            <div 
-              className={
-                'list__order ' +
-                (showMap ? '' : ' list__order--full-screen')
-              }
-            
-            >
-              <>
-                {/* <div>{t('buttonFilters.orderBy')}</div> */}
-
+          <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-list')} onScroll={handleScrollHeight}>
+            <div className={ 'list__order ' +  (showLeftColumn ? '' : ' list__order--hidden') + (showMap ? '' : ' list__order--full-screen')} >
+              {showLeftColumn &&
                 <AdvancedFiltersSortDropDown
                   className={'dropdown__dropdown-trigger--list'}
                   orderBy={filters.orderBy}
@@ -84,45 +113,44 @@ function List({
                   buttonTypes={buttonTypes}
                   selectedButtonTypes={filters.helpButtonTypes}
                 />
-              </>
-              
-              <div
-                  onClick={handleChange}
-                  className={
-                    'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')
-                  }
-                >
+              }
+              <ShowDesktopOnly>
+                <div onClick={handleChange} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
                   <span className="drag-tab__line"></span>
-
                   <div className="drag-tab__icon">
-                    {showLeftColumn ? (
-                      <IoChevronBackOutline />
+                    {(!showLeftColumn) ? (
+                      <Btn
+                      btnType={BtnType.link}
+                      iconLeft={IconType.svg}
+                      iconLink={<IoList />}
+                      contentAlignment={ContentAlignment.center}
+                      caption={t("explore.showList")}
+                      onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.BOTH))}
+                        />
                     ) : (
-                      <IoChevronForwardOutline />
+                      <Btn
+                      btnType={BtnType.link}
+                      iconLeft={IconType.svg}
+                      iconLink={<IoClose />}
+                      contentAlignment={ContentAlignment.center}
+                      caption={t("explore.hideList")}
+                      onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))}
+                      />
                     )}
                   </div>
                 </div>
-
+              </ShowDesktopOnly>
               <ShowMobileOnly>
-                
-                <div className="list__show-map-button">
-                  <Btn
-                    btnType={BtnType.filterCorp}
-                    iconLeft={IconType.svg}
-                    iconLink={<IoMapOutline />}
-                    contentAlignment={ContentAlignment.center}
-                    caption={t(showMapCaption)}
-                    onClick={handleChangeShowMap}
-                  />
+                <div className={'list__show-map-button ' + (showLeftColumn ? '' : ' list__show-map-button--hideList')}>
+                  <Dropdown
+                      options={dropdownExploreViewOptions}
+                      className={'dropdown__dropdown-trigger--list'}
+                      onChange={(value : ExploreViewMode) => store.emit(new UpdateExploreViewMode(value))}
+                      defaultSelected={viewMode}
+                    />
                 </div>
               </ShowMobileOnly>
-
             </div>
-
-
-
-            
-
             <div
               className={
                 'list__content ' +
@@ -136,6 +164,7 @@ function List({
                 <ContentList
                   buttons={buttons.slice(0, sliceSize)}
                   buttonTypes={buttonTypes}
+                  showMap={showMap}
                 />
               )}
             </div>

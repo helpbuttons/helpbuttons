@@ -2,7 +2,7 @@ $list-container-height: 300px;
 $list-drag-tab-height: 35px;
 $list-container-hide-height: calc($footer-height-mobile - $list-container-height);
 $list-order-tabs-bottom: calc($footer-height-mobile + $list-container-height);
-$list-container-hide-nohover-height: calc($footer-height-mobile - $list-container-height + $list-drag-tab-height);
+$list-container-hide-nohover-height: calc($footer-height-mobile - $list-container-height + 15px);
 $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-height - 40px);
 
 
@@ -41,12 +41,10 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 .list__show-map-button {
 
   position: relative;
- display: flex;
-//  bottom: calc($footer-height-mobile + 0.9rem);
- width: auto;
- z-index: $z-index-04;
- left: 0;
- right: 0;
+  display: flex;
+  width: auto;
+  z-index: $z-index-04;  
+  // right: $padding-big;
 
  .btn--center {
   // width: 80px;
@@ -57,6 +55,14 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
+.list__show-map-button--hideList {
+
+  bottom: 60px;
+  position: absolute;
+  right: 0;
+  padding-right: $padding-big;
+
+}
 
 .list__content {
 
@@ -170,6 +176,19 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   position: relative;
   height: $list-drag-tab-height;
 
+}
+
+.list__order--hidden {
+
+  position: absolute;
+  width: 100%;
+  // margin-bottom: 80px;
+
+}
+
+.list__order--hide {
+
+  background-color: $color-corporative;
 
 }
 
@@ -177,7 +196,8 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 @media (hover: none) {
 
   .list__container {
-    padding-bottom: calc($footer-height-mobile - 30px);
+    padding-bottom: calc($footer-height-mobile - 15px);
+
   }
 
 }

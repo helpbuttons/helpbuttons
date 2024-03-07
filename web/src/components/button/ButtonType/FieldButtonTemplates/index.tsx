@@ -9,7 +9,6 @@ import { useState, forwardRef, useEffect } from 'react';
 import { CircleColorPick, FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import Accordion from 'elements/Accordion';
 import { AddCustomFields } from '../CustomFields/AddCustomFields';
 
 const FieldButtonTemplates = forwardRef(
@@ -120,7 +119,7 @@ const FieldButtonTemplates = forwardRef(
                 style={buttonColorStyle(val.cssColor)}
               >
                 {editFieldIdx == idx && 
-                  <>
+                  <div className="form__button-type-section">
                     <FieldText
                       name="buttonTemplate.name"
                       className="field-text"
@@ -136,14 +135,15 @@ const FieldButtonTemplates = forwardRef(
                       value={editFieldCssColor}
                       hideBoilerPlate={true}
                     />
+                    {/* <EmojiPicker/> */}
                     <Btn
-                      btnType={BtnType.iconActions}
+                      btnType={BtnType.corporative}
                       iconLink={<IoSaveOutline />}
                       iconLeft={IconType.circle}
                       contentAlignment={ContentAlignment.center}
                       onClick={() => saveEdit(val)}
                     />
-                  </>
+                  </div>
                 }
                 {editFieldIdx != idx && 
                   <>
@@ -161,16 +161,16 @@ const FieldButtonTemplates = forwardRef(
                       contentAlignment={ContentAlignment.center}
                       onClick={() => edit(val, idx)}
                     />
+                    <Btn
+                      btnType={BtnType.iconActions}
+                      iconLink={<IoTrashBinOutline />}
+                      iconLeft={IconType.circle}
+                      contentAlignment={ContentAlignment.center}
+                      onClick={() => remove(idx)}
+                    />
                   </>
                 } 
                 
-                <Btn
-                  btnType={BtnType.iconActions}
-                  iconLink={<IoTrashBinOutline />}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.center}
-                  onClick={() => remove(idx)}
-                />
               </div>
             ))}
         </div>

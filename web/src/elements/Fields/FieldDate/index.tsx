@@ -30,17 +30,19 @@ export default function FieldDate({
   const [showHideMenu, setHideMenu] = useState(false);
   const [invalidDates, setInvalidDates] = useState(false);
   
-  const datesAreValid = () => {
+  const datesAreValid = (eventEnd, eventStart) => {
     if (eventEnd?.getTime() < eventStart?.getTime()) {
-      setInvalidDates(() => true);
       return false;
     }
-    setInvalidDates(() => false);
     return true;
   };
+
   let closeMenu = () => {
-    if (datesAreValid()) {
+    if (datesAreValid(eventEnd, eventStart)) {
       setHideMenu(false);
+      setInvalidDates(() => false);
+    }else{
+      setInvalidDates(() => true);
     }
   };
 
@@ -170,12 +172,21 @@ export function ShowDate({
   eventEnd,
   eventType,
   title,
-  eventData
+  eventData,
 }) {
   return (
-    <div className="card-button__date">
-      {readableEventDateTime(eventType, eventStart, eventEnd, loadRrules(eventData))}
-    </div>
+    <>
+      {(eventStart || eventData) && (
+        <div className="card-button__date">
+          {readableEventDateTime(
+            eventType,
+            eventStart,
+            eventEnd,
+            loadRrules(eventData),
+          )}
+        </div>
+      )}{' '}
+    </>
   );
 }
 

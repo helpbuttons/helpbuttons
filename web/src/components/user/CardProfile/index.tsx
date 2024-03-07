@@ -48,7 +48,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
               <figure className="card-profile__rating">
 
                 <div className="paragraph grid-three__column">
-                   {user.buttonCount}
+                   {user.followsCount}
                   <div className="btn-circle__icon">
                     <IoHeartOutline />
                   </div>

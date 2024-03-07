@@ -1,5 +1,5 @@
 import ButtonForm from 'components/button/ButtonForm';
-import { store } from 'pages';
+import { GlobalState, store } from 'pages';
 import { CreateButton, SaveButtonDraft, UpdateCachedHexagons } from 'state/Explore';
 import Router from 'next/router';
 import { alertService } from 'services/Alert';
@@ -13,6 +13,9 @@ import { readableDate } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
 import { ServerPropsService } from 'services/ServerProps';
+import { useStore } from 'store/Store';
+import { latLngToCell } from 'h3-js';
+import { maxResolution } from 'shared/types/honeycomb.const';
 
 export default function ButtonNew({metadata,selectedNetwork,config}) {
   const defaultValues = {
@@ -46,6 +49,7 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
     defaultValues
   });
 
+
   const onSubmit = (data) => {
     store.emit(
       new CreateButton(
@@ -57,12 +61,12 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
     );
   };
 
-  const [loaded, setLoaded] = useState(false);
   const jumpToExploreButton = (buttonData) => {
-    router.push(`/Explore?lat=${buttonData.latitude}&lng=${buttonData.longitude}`);
+    const cell = latLngToCell(buttonData.latitude, buttonData.longitude, maxResolution)
+    router.push(`/Explore?lat=${buttonData.latitude}&lng=${buttonData.longitude}&hex=${cell}`);
   }
   const onSuccess = (buttonData : Button) => {
-    store.emit(new SaveButtonDraft(null));
+    store.emit(new SaveButtonDraft(defaultValues));
     store.emit(
       new CreateNewPost(
         buttonData.id,
@@ -97,15 +101,10 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
     }
   };
 
-  useEffect(() => {
-    if(!loaded)
-    {
-      reset(defaultValues)
-      setLoaded(true)
-    }
-  }, [loaded])
+  const {loadedDraft} = useButtonDraft({watch, getValues, reset, defaultValues})
   return (
     <>
+    {loadedDraft && 
       <ButtonForm
         watch={watch}
         reset={reset}
@@ -120,6 +119,7 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
         onSubmit={onSubmit}
         title={t('common.publishTitle', ['_helpbutton_'])}
       ></ButtonForm>
+    }
     </>
   );
 }
@@ -140,3 +140,44 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     };
   }
 };
+
+
+function useButtonDraft({watch, getValues, reset, defaultValues}) {
+  const buttonDraft = useStore(
+    store,
+    (state: GlobalState) => state.explore.draftButton,
+    false
+  );
+  const [watchedValues, setWatchedValues] = useState(JSON.stringify(watch()))
+  const watchAllFields = watch()
+  const [loadedDraft, setLoadedDraft] = useState(false);
+
+  useEffect(() => {
+    if(!loadedDraft && buttonDraft !== false)
+    {
+      if(buttonDraft)
+      {
+        reset(buttonDraft)
+      }else{
+        reset(defaultValues)
+      }
+      setLoadedDraft(() => true)
+    }
+      
+  }, [buttonDraft])
+  useEffect(() => {
+    
+    if(JSON.stringify(watchAllFields) != watchedValues)
+    {
+      setWatchedValues((prevWatchedFields) => {
+        return JSON.stringify(watchAllFields)
+      })
+    }
+  }, [watchAllFields])
+
+  useEffect(() => {
+    store.emit(new SaveButtonDraft(getValues()));
+  }, [watchedValues])
+
+  return {loadedDraft}
+}

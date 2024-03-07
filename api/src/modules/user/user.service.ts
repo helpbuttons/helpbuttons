@@ -12,7 +12,6 @@ import { EntityManager, In, Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import { configFileName } from '@src/shared/helpers/config-name.const';
-import { getUrl } from '@src/shared/helpers/mail.helper';
 import { TagService } from '../tag/tag.service';
 import { publicNanoidGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { plainToClass } from 'class-transformer';
@@ -79,6 +78,9 @@ export class UserService {
       })
       .then(async (user) => {
         if (includeCounts) {
+          const followsCount = await this.entityManager.query(
+            `select sum(cardinality("followedBy")) as "followsCount" from button where "ownerId"= '${user.id}' `
+          );
           const buttonCount = await this.entityManager.query(
             `select count(button.id) as "buttonsCount" from button where "ownerId" = '${user.id}'`,
           );
@@ -90,8 +92,8 @@ export class UserService {
           );
           return {
             ...user,
-            postCount: postCount[0].postsCount,
-            commentCount: commentCount[0].commentsCount,
+            followsCount: followsCount[0].followsCount,
+            commentCount: parseInt(commentCount[0].commentsCount) + parseInt(postCount[0].postsCount),
             buttonCount: buttonCount[0].buttonsCount,
           };
         }
