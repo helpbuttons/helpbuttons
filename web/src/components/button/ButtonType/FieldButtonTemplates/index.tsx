@@ -9,7 +9,6 @@ import { useState, forwardRef, useEffect } from 'react';
 import { CircleColorPick, FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import Accordion from 'elements/Accordion';
 import { AddCustomFields } from '../CustomFields/AddCustomFields';
 
 const FieldButtonTemplates = forwardRef(
@@ -136,6 +135,7 @@ const FieldButtonTemplates = forwardRef(
                       value={editFieldCssColor}
                       hideBoilerPlate={true}
                     />
+                    {/* <EmojiPicker/> */}
                     <Btn
                       btnType={BtnType.iconActions}
                       iconLink={<IoSaveOutline />}
