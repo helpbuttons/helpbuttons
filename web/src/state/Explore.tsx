@@ -384,7 +384,10 @@ export class UpdateHexagonClicked implements UpdateEvent {
         newState.explore.map.showInstructions = false;
         newState.explore.map.listButtons = listButtonsFilteredByHexagon(this.hexagonClicked, state.explore.map.boundsFilteredButtons)
         newState.explore.currentButton = null
-        
+        if(state.explore.settings.viewMode == ExploreViewMode.MAP)
+        {
+          newState.explore.settings.viewMode = ExploreViewMode.BOTH
+        }
       }else{
         newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
       }
