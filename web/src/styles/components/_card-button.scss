@@ -315,12 +315,9 @@ $card-button-border-height: $border-general-height;
   flex-direction: row;
   align-items:flex-start;
   word-wrap: break-word;
-  max-height: 2.2em;
-  line-height: 0.96em;
+  line-height: 1.3em;
   margin-bottom: $margin-xsmall;
   text-overflow: ellipsis;
-
-
 
 }
 
@@ -679,7 +676,7 @@ $card-button-border-height: $border-general-height;
   content: '';
   display: inline-block;
   height: $card-button-size-icon-before;
-  margin-right: .5rem;
+  margin-right: .1rem;
   transform: translateY(.25rem);
   width: $card-button-size-icon-before;
 }

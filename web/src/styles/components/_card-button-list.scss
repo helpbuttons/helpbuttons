@@ -220,16 +220,16 @@ $card-button-list-border-height: $border-general-height;
 .card-button-list__title {
   font-size: $font-size-general;
   margin-bottom: 0;
-
   font-weight: $font-weight-bold;
   color: $color-black;
   font-size: $font-size-title;
-  padding: $padding-small 0;
+  margin: $padding-small 0;
   display: flex;
   flex-direction: row;
   align-items:flex-start;
   word-wrap: break-word;
-  max-height: 2.2em;
+  height: 1.95em;
+  max-height: 1.95em;
   line-height: 0.96em;
   text-overflow: ellipsis;
 

@@ -3924,12 +3924,13 @@ li, ol, ul, h2 {
   font-weight: 700;
   color: #0E0E0E;
   font-size: 22px;
-  padding: 5px 0;
+  margin: 5px 0;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   word-wrap: break-word;
-  max-height: 2.2em;
+  height: 1.95em;
+  max-height: 1.95em;
   line-height: 0.96em;
   text-overflow: ellipsis;
 }
@@ -5197,8 +5198,7 @@ li, ol, ul, h2 {
   flex-direction: row;
   align-items: flex-start;
   word-wrap: break-word;
-  max-height: 2.2em;
-  line-height: 0.96em;
+  line-height: 1.3em;
   margin-bottom: 7px;
   text-overflow: ellipsis;
 }
@@ -5504,7 +5504,7 @@ li, ol, ul, h2 {
   content: "";
   display: inline-block;
   height: 18px;
-  margin-right: 0.5rem;
+  margin-right: 0.1rem;
   transform: translateY(0.25rem);
   width: 18px;
 }
