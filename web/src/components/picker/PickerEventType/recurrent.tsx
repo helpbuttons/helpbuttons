@@ -87,6 +87,7 @@ export default function PickerEventTypeRecurrentForm({
   return (
     <>
       <div className="picker-date__recurrent">
+
         <DropdownField
           options={[
             {
@@ -104,7 +105,8 @@ export default function PickerEventTypeRecurrentForm({
           defaultSelected={periodicity}
         />
         {periodicity == RRule.WEEKLY && (
-          <>
+           <div className="form__field">
+
             <div className="picker-date__recurrent_weekly">
               <Calendar
                 onChange={(newDates) => {
@@ -139,7 +141,7 @@ export default function PickerEventTypeRecurrentForm({
                 />
               )}
             </div>
-          </>
+          </div>
         )}
         {periodicity == RRule.MONTHLY && (
           <>
@@ -157,7 +159,7 @@ export default function PickerEventTypeRecurrentForm({
           </>
         )}
         {startDate && endDate && (
-          <>
+          <div className="form__field">
             <TimePick
               dateTime={startDate}
               setDateTime={(value) => setStartDate(value)}
@@ -168,9 +170,11 @@ export default function PickerEventTypeRecurrentForm({
               setDateTime={(value) => setEndDate(value)}
               label={t('eventType.until') + readableTime(endDate)}
             />
-          </>
+          </div>
         )}
-        <div>{recrule && <>{recurrentToText(rrule)}</>}</div>
+        <div className="form__field">
+          <div className='form__label'>{recrule && <>{recurrentToText(rrule)}</>}</div>
+        </div>
       </div>
     </>
   );

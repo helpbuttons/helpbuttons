@@ -52,7 +52,7 @@ function ElementsList({
   };
 
   return (
-    <div className="form__weekdays-list react-calendar">
+    <div className="form__weekdays-list picker__row react-calendar">
       <ul className="weekdays__list">
         {elements.length > 0 &&
           elements.map(({idx, label}, index) => {
@@ -78,14 +78,14 @@ function Element({ index, item, onClick, selected = false }) {
     <>
       {selected && (
         <li
-          className="weekdays__list-interest__selected"
+          className="weekdays__list-interest__selected btn-circle"
           onClick={onClick}
         >
           {item}
         </li>
       )}
       {!selected && (
-        <li className="weekdays__list-interest" onClick={onClick}>
+        <li className="weekdays__list-interest btn-circle" onClick={onClick}>
           {item}
         </li>
       )}

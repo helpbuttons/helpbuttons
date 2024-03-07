@@ -278,9 +278,10 @@ $btn-font-size-medium: $font-size-medium;
   @extend .btn-circle;
 
   border: none;
-  max-height: 20px;
+  max-height: 25px;
   max-width: 25px;
   min-width: 25px;
+  padding: $padding-big;
   border-radius: $btn-border-radius;
 
   & svg {

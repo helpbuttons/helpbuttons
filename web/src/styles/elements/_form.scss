@@ -360,10 +360,19 @@ width: 100%;
 
   display: flex;
   flex-direction: row;
+  align-items: center;
   flex-grow: 1;
   width: 100%;
   justify-content: space-between;
   margin-bottom: $margin-small;
+  
+  }
+
+.form__button-type-section {
+
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   
   }
 
@@ -377,7 +386,7 @@ width: 100%;
   border-radius: $border-radius-circle;
   border: 1px $color-gray dashed;
   padding: $padding-big;
-  padding-bottom: 0;
+  // padding-bottom: 0;
 }
 
 

@@ -192,7 +192,7 @@ $nav-bottom-border: 32px;
     // flex-direction: column;
     width: auto;
     // height: $nav-bottom-width-desktop;
-    z-index: $z-index-04;
+    z-index: 0;
     justify-content: flex-end;
     gap: $margin-big;
     // flex: 0.5;
@@ -201,7 +201,6 @@ $nav-bottom-border: 32px;
     // top: calc( 50% - #{$nav-bottom-height-desktop} / 2 );
     top: 0;
     padding-top: $padding-big;
-
     align-items: center;
 
   }

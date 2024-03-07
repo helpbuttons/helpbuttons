@@ -119,7 +119,7 @@ const FieldButtonTemplates = forwardRef(
                 style={buttonColorStyle(val.cssColor)}
               >
                 {editFieldIdx == idx && 
-                  <>
+                  <div className="form__button-type-section">
                     <FieldText
                       name="buttonTemplate.name"
                       className="field-text"
@@ -137,13 +137,13 @@ const FieldButtonTemplates = forwardRef(
                     />
                     {/* <EmojiPicker/> */}
                     <Btn
-                      btnType={BtnType.iconActions}
+                      btnType={BtnType.corporative}
                       iconLink={<IoSaveOutline />}
                       iconLeft={IconType.circle}
                       contentAlignment={ContentAlignment.center}
                       onClick={() => saveEdit(val)}
                     />
-                  </>
+                  </div>
                 }
                 {editFieldIdx != idx && 
                   <>
@@ -161,16 +161,16 @@ const FieldButtonTemplates = forwardRef(
                       contentAlignment={ContentAlignment.center}
                       onClick={() => edit(val, idx)}
                     />
+                    <Btn
+                      btnType={BtnType.iconActions}
+                      iconLink={<IoTrashBinOutline />}
+                      iconLeft={IconType.circle}
+                      contentAlignment={ContentAlignment.center}
+                      onClick={() => remove(idx)}
+                    />
                   </>
                 } 
                 
-                <Btn
-                  btnType={BtnType.iconActions}
-                  iconLink={<IoTrashBinOutline />}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.center}
-                  onClick={() => remove(idx)}
-                />
               </div>
             ))}
         </div>

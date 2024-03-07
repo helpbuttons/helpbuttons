@@ -1200,10 +1200,17 @@ a:hover {
 .form__list-item--button-type-field {
   display: flex;
   flex-direction: row;
+  align-items: center;
   flex-grow: 1;
   width: 100%;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+
+.form__button-type-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .form__input--button-type-field {
@@ -1217,7 +1224,6 @@ a:hover {
   border-radius: 34px;
   border: 1px #828282 dashed;
   padding: 15px;
-  padding-bottom: 0;
 }
 
 .form__input--button-type-field .form__field, .form__input--button-type-field .info-overlay__nets, .form__input--button-type-field .info-overlay__content, .form__input--button-type-field .form__image-upload-wrapper {
@@ -1514,9 +1520,10 @@ a:hover {
 
 .btn-circle--small, .card-button__picture-nav .arrow, .card-button-list__nav .arrow, .card-button-map__nav .arrow, .btn-circle--big-icon {
   border: none;
-  max-height: 20px;
+  max-height: 25px;
   max-width: 25px;
   min-width: 25px;
+  padding: 15px;
   border-radius: 24px;
 }
 .btn-circle--small svg, .card-button__picture-nav .arrow svg, .card-button-list__nav .arrow svg, .card-button-map__nav .arrow svg, .btn-circle--big-icon svg {
@@ -2892,6 +2899,109 @@ li, ol, ul, h2 {
   max-height: 50wh;
 }
 
+.react-calendar__selected:enabled {
+  background: #2E2E2E !important;
+  font-weight: bold;
+}
+
+.picker-date__recurrent .react-calendar {
+  margin: auto;
+}
+
+.picker-date__recurrent_weekly .react-calendar__month-view__weekdays__weekday {
+  display: none;
+}
+
+.form__weekdays-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.form__weekdays-list .weekdays__list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  font-size: small;
+  margin: 2px;
+}
+
+.form__weekdays-list .weekdays__list .weekdays__list-interest__selected {
+  background-color: #2E2E2E;
+  color: white;
+}
+
+.form__weekdays-list .weekdays__list .weekdays__list-interest, .form__weekdays-list .weekdays__list .weekdays__list-interest__selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #D4D4D4;
+  padding: 0 10px 0 10px;
+  margin: 1.9px;
+}
+
+.form__weekdays-list .weekdays__list .weekdays__list-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #D4D4D4;
+  margin-right: 7px;
+  padding: 0 0 0 10px;
+}
+
+.form__weekdays-list .weekdays__list .weekdays__list-tag .weekday__btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.form__weekdays-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.form__weekdays-list .weekdays__list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  font-size: small;
+  margin: 2px;
+}
+.form__weekdays-list .weekdays__list .weekdays__list-interest__selected {
+  background-color: #2E2E2E;
+  color: white;
+}
+.form__weekdays-list .weekdays__list .weekdays__list-interest, .form__weekdays-list .weekdays__list .weekdays__list-interest__selected {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #D4D4D4;
+}
+.form__weekdays-list .weekdays__list .weekdays__list-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #D4D4D4;
+  padding: 0 0 0 10px;
+}
+.form__weekdays-list .weekdays__list .weekdays__list-tag .weekday__btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 .dropdown-nets__friend-net {
   max-width: 100% !important;
 }
@@ -3266,15 +3376,19 @@ li, ol, ul, h2 {
 }
 
 @media only screen and (min-width: 991px) {
+  .picker {
+    height: auto;
+  }
   .picker__header,
   .picker__content {
     background: #fff;
     max-width: 480px;
+    height: auto;
   }
   .picker--over {
     max-width: 500px;
-    height: auto;
     z-index: 500;
+    max-height: 90%;
   }
   .picker__map--over {
     position: absolute;
@@ -4164,7 +4278,7 @@ li, ol, ul, h2 {
   .nav-bottom, .nav-bottom--repo {
     border-radius: 0 0 32px 32px;
     width: auto;
-    z-index: 400;
+    z-index: 0;
     justify-content: flex-end;
     gap: 30px;
     right: 3vw;
@@ -4249,7 +4363,7 @@ li, ol, ul, h2 {
   background-color: var(--network-background-color);
   border-radius: 0 0 0 0;
   padding: 5px 15px;
-  z-index: 100;
+  z-index: 10;
 }
 
 .nav-header--hide {
@@ -4294,6 +4408,7 @@ li, ol, ul, h2 {
     justify-content: flex-start;
     flex: 0.9;
     width: 100%;
+    z-index: 0;
   }
   .nav-header__filters {
     display: flex;
@@ -5210,9 +5325,10 @@ li, ol, ul, h2 {
 .card-button__dropdown-arrow {
   width: 0;
   height: 0;
+  background-color: transparent;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 5px solid #f0f0f0;
+  border-bottom: 5px solid transparent;
   margin-left: auto;
   margin-right: 15px;
 }
@@ -7757,7 +7873,7 @@ body {
 .search-map__instructions {
   color: #2E2E2E;
   padding: 10px;
-  top: 10%;
+  top: 20%;
   position: absolute;
   left: calc(50% - 100px);
   width: auto;
@@ -7766,7 +7882,7 @@ body {
   text-align: center;
   text-wrap: balance;
   margin-left: auto;
-  z-index: 300;
+  z-index: 100;
   margin-top: 20px;
   background-color: #18AAD2;
   border-radius: 8px;
@@ -7822,6 +7938,11 @@ body {
     color: #828282;
     width: auto;
     line-break: strict;
+    display: flex;
+    gap: 4px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     text-wrap: nowrap;
   }
 }
