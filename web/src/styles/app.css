@@ -1967,6 +1967,19 @@ a:hover {
 .textarea {
   max-width: 100%;
 }
+.emoji-picker {
+  position: absolute;
+  right: 20px;
+  margin-top: -35px;
+}
+
+em-emoji-picker {
+  position: absolute;
+  right: 10px;
+  margin-top: -10px;
+  z-index: 100;
+}
+
 .dropdown__dropdown {
   text-align: left;
   overflow-x: hidden;
@@ -3820,6 +3833,14 @@ li, ol, ul, h2 {
   justify-content: space-between;
 }
 
+.card-button-list__info-content {
+  padding: 15px;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  width: 100%;
+}
+
 .card-button-list__nav, .card-button-list__nav .arrow--right, .card-button-list__nav .arrow--left {
   width: 100%;
   height: 100%;
@@ -3898,8 +3919,19 @@ li, ol, ul, h2 {
 }
 
 .card-button-list__title {
-  color: #828282;
   font-size: 16px;
+  margin-bottom: 0;
+  font-weight: 700;
+  color: #0E0E0E;
+  font-size: 22px;
+  padding: 5px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  word-wrap: break-word;
+  max-height: 2.2em;
+  line-height: 0.96em;
+  text-overflow: ellipsis;
 }
 
 .card-button-list__situation {
@@ -4940,7 +4972,7 @@ li, ol, ul, h2 {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  word-break: break-all;
+  word-break: break-word;
   line-clamp: 2;
 }
 
@@ -4962,6 +4994,11 @@ li, ol, ul, h2 {
   flex-flow: column nowrap;
   height: 100%;
   width: 100%;
+}
+
+.card-button__content--small {
+  padding-top: 10px;
+  padding-left: 10px;
 }
 
 .card-button__header {
@@ -5059,6 +5096,17 @@ li, ol, ul, h2 {
   font-weight: 700;
 }
 
+.card-button__custom-fields-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: end;
+}
+
+.card-button__custom-fields-wrapper {
+  flex: 1;
+}
+
 .card-button__submenu {
   background-size: 100%;
   height: 100%;
@@ -5150,12 +5198,9 @@ li, ol, ul, h2 {
   align-items: flex-start;
   word-wrap: break-word;
   max-height: 2.2em;
-  line-height: 1.1em;
+  line-height: 0.96em;
   margin-bottom: 7px;
   text-overflow: ellipsis;
-}
-.card-button__title::first-letter {
-  text-transform: uppercase;
 }
 
 .card-button__title:first-letter {
@@ -5215,6 +5260,8 @@ li, ol, ul, h2 {
 }
 .card-button__paragraph p {
   margin-top: 0;
+  line-height: 1em;
+  height: 2.5em;
 }
 .card-button__paragraph a {
   color: var(--network-text-color);
@@ -5240,6 +5287,10 @@ li, ol, ul, h2 {
   font-weight: 700;
   color: var(--network-text-color);
   white-space: nowrap;
+}
+
+.card-button__price--button-page {
+  font-size: 22px;
 }
 
 .resume {
@@ -5391,14 +5442,16 @@ li, ol, ul, h2 {
   white-space: pre-wrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  bottom: 0;
+  align-self: baseline;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* number of lines to show */
   line-clamp: 2;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   word-wrap: break-word;
-  max-height: 2.6em;
-  line-height: 1.3em;
+  height: 2.6em;
+  line-height: 1.1em;
 }
 
 .card-button__city {

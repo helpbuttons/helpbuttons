@@ -92,7 +92,7 @@ export default function CardButton({ button, buttonTypes }) {
 // card button list on explore
 export function CardButtonHeadMedium({ button, buttonType }) {
   return (
-    <div className="card-button__content">
+    <div className="card-button__content card-button__content--small">
       <div className="card-button__header">
         {/* <div className="card-button__avatar">
           <div className="avatar-small">
@@ -123,7 +123,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
         </div>
       </div>
 
-      <div className="card-button__title">{button.title}</div>
+      <div className="card-button-list__title">{button.title}</div>
       <div className="card-button-list__paragraph--small-card card-button-list__paragraph">
         <p>{button.description}</p>
       </div>
@@ -136,19 +136,19 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           );
         })}
       </div> */}
-      {buttonType.customFields && buttonType.customFields.length > 0 && (
-        <>
-          <CardButtonCustomFields
-            customFields={buttonType.customFields}
-            button={button}
-          />
-        </>
-      )}
-      <div className="card-button__city card-button__everywhere ">
-        {button.address}{' '}
-        {button?.distance && (
-          <> - {readableDistance(button?.distance)}</>
+      <div className='card-button__custom-fields-container'>
+        {buttonType.customFields && buttonType.customFields.length > 0 && (
+            <CardButtonCustomFields
+              customFields={buttonType.customFields}
+              button={button}
+            />
         )}
+        <div className="card-button__city card-button__everywhere ">
+          {button.address}{' '}
+          {button?.distance && (
+            <> - {readableDistance(button?.distance)}</>
+          )}
+        </div>
       </div>
     </div>
   );

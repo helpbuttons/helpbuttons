@@ -33,7 +33,7 @@ $card-button-border-height: $border-general-height;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  word-break: break-all;
+  word-break: break-word;
 
   line-clamp: 2; 
 
@@ -63,6 +63,15 @@ $card-button-border-height: $border-general-height;
   width: 100%;
 
 }
+
+.card-button__content--small {
+
+  padding-top: $padding-medium;
+  padding-left:  $padding-medium;
+  $padding-right: $padding-medium;
+
+}
+
 
 .card-button__header {
   display: flex;
@@ -182,6 +191,22 @@ $card-button-border-height: $border-general-height;
 
 }
 
+.card-button__custom-fields-container{
+
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: end;
+
+}
+
+.card-button__custom-fields-wrapper {
+
+  flex: 1;
+
+}
+
+
 .card-button__submenu {
   // background: transparent url('../../../public/assets/svg/icons/down.svg') center no-repeat;
   background-size: 100%;
@@ -280,6 +305,7 @@ $card-button-border-height: $border-general-height;
 
 }
 
+
 .card-button__title {
   font-weight: $font-weight-bold;
   color: $color-black;
@@ -290,18 +316,14 @@ $card-button-border-height: $border-general-height;
   align-items:flex-start;
   word-wrap: break-word;
   max-height: 2.2em;
-  line-height: 1.1em;
+  line-height: 0.96em;
   margin-bottom: $margin-xsmall;
   text-overflow: ellipsis;
 
 
-  &::first-letter{
-
-    text-transform: uppercase;
-
-  }
 
 }
+
 
 .card-button__title:first-letter {
 
@@ -371,6 +393,8 @@ $card-button-border-height: $border-general-height;
 
   & p {
     margin-top: 0;//Revise
+    line-height: 1em;
+    height: 2.5em;
   }
 
   & a {
@@ -400,9 +424,14 @@ $card-button-border-height: $border-general-height;
 
 .card-button__price {
   word-break: break-word;
+
   font-weight: $font-weight-bold;
   color: var(--network-text-color);
   white-space: nowrap;
+}
+
+.card-button__price--button-page {
+ font-size: $font-size-title;
 }
 
 .resume {
@@ -586,15 +615,17 @@ $card-button-border-height: $border-general-height;
   white-space:pre-wrap; 
   overflow: hidden;
   text-overflow: ellipsis;
-
+  // position: absolute;
+  bottom: 0;
+  align-self: baseline;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* number of lines to show */
   line-clamp: 2; 
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   word-wrap: break-word;
-  max-height: 2.6em;
-  line-height: 1.3em;
+  height: 2.6em;
+  line-height: 1.1em;
 }
 
 .card-button__city {

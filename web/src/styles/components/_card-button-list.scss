@@ -113,6 +113,16 @@ $card-button-list-border-height: $border-general-height;
 }
 
 
+.card-button-list__info-content {
+
+  padding: $padding-big;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  width: 100%;
+
+}
+
 ///image arrows
 .card-button-list__nav {
 
@@ -208,8 +218,21 @@ $card-button-list-border-height: $border-general-height;
 }
 
 .card-button-list__title {
-  color: $color-gray;
   font-size: $font-size-general;
+  margin-bottom: 0;
+
+  font-weight: $font-weight-bold;
+  color: $color-black;
+  font-size: $font-size-title;
+  padding: $padding-small 0;
+  display: flex;
+  flex-direction: row;
+  align-items:flex-start;
+  word-wrap: break-word;
+  max-height: 2.2em;
+  line-height: 0.96em;
+  text-overflow: ellipsis;
+
 }
 
 .card-button-list__situation {
