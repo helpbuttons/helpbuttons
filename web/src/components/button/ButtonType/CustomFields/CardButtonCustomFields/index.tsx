@@ -13,10 +13,24 @@ export function CardButtonCustomFields({ customFields, button }) {
   );
 
   const renderFields = () => {
-    const reversedCustomFields = _.reverse([...customFields])
+    const reversedCustomFields = [...customFields]
     return reversedCustomFields.map((fieldProps, key) => {
       const type = fieldProps.type;
       let field = <>{JSON.stringify(fieldProps)}</>;
+
+
+      if (type == 'event') {
+        field = (
+            <ShowDate
+              eventStart={button.eventStart}
+              eventEnd={button.eventEnd}
+              eventType={button.eventType}
+              title={button.title}
+              eventData={button.eventData}
+            />
+        );
+      }
+
       if (type == 'price') {
         
         if(button.price < 0)
@@ -41,20 +55,10 @@ export function CardButtonCustomFields({ customFields, button }) {
           );
         }
       }
-      if (type == 'event') {
-        field = (
-          <>
-            <ShowDate
-              eventStart={button.eventStart}
-              eventEnd={button.eventEnd}
-              eventType={button.eventType}
-              title={button.title}
-              eventData={button.eventData}
-            />
-          </>
-        );
-      }
-      return <div key={key}>{field}</div>;
+
+
+     
+      return <div className='card-button__custom-field' key={key}>{field}</div>;
     });
   };
   return <>{selectedNetwork && renderFields()}</>;
