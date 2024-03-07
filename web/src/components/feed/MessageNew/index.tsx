@@ -62,6 +62,8 @@ export default function MessageNew({
               validationError={errors.message}
               {...register('message', { required: true })}
               maxLength={500}
+              watch={watch}
+              setFocus={setFocus}
             />
             {/* {isComment && !privateMessage && (
               <div className="form__input-subtitle-side">
