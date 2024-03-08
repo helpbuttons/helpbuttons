@@ -166,10 +166,11 @@ export default function ButtonForm({
                 <>
                   <FieldLocation
                     label={t('button.whereLabel')}
-                    updateMarkerPosition={([lat, lng]) => {
+                    setMarkerPosition={([lat, lng]) => {
                       setValue('latitude', lat);
                       setValue('longitude', lng);
                     }}
+                    markerPosition={[watch('latitude'),watch('longitude')]}
                     updateAddress={(address) => {
                       setValue('address', address);
                     }}
