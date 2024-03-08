@@ -192,12 +192,10 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__custom-fields-container{
-
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  justify-content: end;
-
+  justify-content: flex-end;
 }
 
 .card-button__custom-fields-wrapper {
