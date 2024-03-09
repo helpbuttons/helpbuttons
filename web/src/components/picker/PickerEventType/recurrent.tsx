@@ -194,7 +194,7 @@ export const recurrentToText = (rrule) => {
     case RRule.WEEKLY: {
       return (
         <>
-          {t('dates.each')} {rrule.byweekday.map(weekday => WeekDay(weekday)).toString()}  {t('dates.from')}{' '}
+          {t('dates.each')} {rrule.byweekday.map(weekday => WeekDay(weekday)).join(', ').toString()}  {t('dates.from')}{' '}
           {readableShortDate(rrule.dtstart)} {t('dates.until')}{' '}
           {readableShortDate(rrule.until)} {t('dates.at')} {readableTime(rrule.dtstart)} {t('dates.until')} {readableTime(rrule.until)}
         </>

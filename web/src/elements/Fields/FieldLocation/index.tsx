@@ -21,7 +21,8 @@ export default function FieldLocation({
   markerAddress,
   selectedNetwork,
   updateAddress,
-  updateMarkerPosition,
+  setMarkerPosition,
+  markerPosition,
   label,
   watch,
   setValue,
@@ -32,9 +33,7 @@ export default function FieldLocation({
   );
 
   const [place, setPlace] = useState(null);
-  const [markerPosition, setMarkerPosition] = useState<Point>(
-    selectedNetwork.exploreSettings.center,
-  );
+
   const [zoom, setZoom] = useState<number>(
     selectedNetwork.exploreSettings.zoom,
   );
@@ -43,7 +42,7 @@ export default function FieldLocation({
   };
 
   const onMapClick = (latLng) => {
-    setMarkerPosition(() => latLng);
+    setMarkerPosition(latLng);
     requestAddressForPosition(latLng);
   };
 
@@ -78,7 +77,7 @@ export default function FieldLocation({
           } else {
             setPlace(() => place);
           }
-          updateMarkerPosition(markerPosition);
+          setMarkerPosition(() => markerPosition);
         },
         () => {
           console.log(
@@ -90,14 +89,15 @@ export default function FieldLocation({
   };
 
   useEffect(() => {
-    if (selectedNetwork) {
+    if (selectedNetwork && !markerPosition) {
+      setMarkerPosition(selectedNetwork.exploreSettings.center);
       requestAddressForPosition(selectedNetwork.exploreSettings.center)
     }
   }, [selectedNetwork]);
 
   useEffect(() => {
     if (longitude && latitude) {
-      setMarkerPosition(() => [latitude, longitude]);
+      setMarkerPosition([latitude, longitude]);
     }
   }, [latitude, longitude]);
 
