@@ -160,8 +160,8 @@ export function NotificationCard({ title, image, notifIcon, date, message, id, r
             }
             
           </div>
-          <h2 className="card-notification__title">{formatMessage(message[0])}</h2>
-          <div className="card-notification__paragraph"></div>
+          <h2 className="card-notification__title"></h2>
+          <div className="card-notification__paragraph">{formatMessage(message[0])}</div>
         </div>
       </div>
     </Link>
