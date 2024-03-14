@@ -95,7 +95,8 @@ export default function FeedProfile({ allActivities, loggedInUser }) {
               case ActivityEventName.NewPost:
                 return false;
                 return post.author.id == loggedInUser.id
-              case ActivityEventName.NewFollowButton:
+              case ActivityEventName.NewFollowingButton:
+              case ActivityEventName.NewFollowedButton:
                 return true;
             }
             return false;
@@ -109,9 +110,10 @@ export default function FeedProfile({ allActivities, loggedInUser }) {
             {
               case ActivityEventName.NewButton:{
                 const button :Button = activity.data
-                console.log(button.owner.id)
-                // console.log(log)
                 return button.owner.id == loggedInUser.id
+              }
+              case ActivityEventName.DeleteButton:{
+                return true;
               }
               default:
                 return false;

@@ -166,16 +166,30 @@ export class ActivityService {
               })
             })
         }
+        case ActivityEventName.DeleteButton: {
+          const button = payload.data.button;
+  
+          // notify button owner
+          await this.newActivity(button.owner, payload, false);
+          break;
+        }
     }
   }
 
-  @OnEvent(ActivityEventName.NewFollowButton)
-  async newFollowButton(payload: any)
+  @OnEvent(ActivityEventName.NewFollowingButton)
+  async newFollowingButton(payload: any)
   {
-    const user = payload.data.user
-    this.newActivity(user, payload, false);    
+    const {user, button} = payload.data
+    this.newActivity(user, payload, false);
   }
 
+  @OnEvent(ActivityEventName.NewFollowedButton)
+  async newFollowedButton(payload: any)
+  {
+    const {user, button} = payload.data
+    this.newActivity(button.owner, payload, false);
+  }
+  
   findByUserId(userId: string) {
     return this.activityRepository.find({
       where: { owner: { id: userId } },
