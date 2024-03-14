@@ -23,8 +23,8 @@ export default function DropDownSearchLocation({
     console.log(place);
   },
   placeholder,
-  label,
-  explain,
+  label = '',
+  explain = '',
   address = '',
   center = [0, 0],
 }) {
