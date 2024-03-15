@@ -215,19 +215,23 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     if (selectedNetwork) {
-      if (!loggedInUser && getLocale() != selectedNetwork.locale) {
-        if (selectedNetwork.locale != 'en') {
-          router.push({ pathname, query }, asPath, {
-            locale: selectedNetwork.locale,
-          });
-        }
-      }
       updateNomeclature(
         selectedNetwork.nomeclature,
         selectedNetwork.nomeclaturePlural,
       );
     }
   }, [selectedNetwork, loggedInUser]);
+
+  useEffect(() => {
+    if(loggedInUser)
+    {
+      if (getLocale() != loggedInUser.locale) {
+          router.push({ pathname, query }, asPath, {
+            locale: loggedInUser.locale,
+          });
+      }
+    }
+  }, [loggedInUser])
 
   const searchParams = useSearchParams();
   const triedToLogin = useRef(false);
@@ -278,7 +282,7 @@ function MyApp({ Component, pageProps }) {
               </ShowMobileOnly>
             </>
           )}
-          {!selectedNetwork && <Component {...pageProps} />}
+          {(!selectedNetwork && isSetup) && <Component {...pageProps} />}
         </div>
       </div>
     </>
