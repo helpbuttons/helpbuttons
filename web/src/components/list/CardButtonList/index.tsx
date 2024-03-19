@@ -21,7 +21,7 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkToPop
       {buttonType && (
         <div className="list__element" 
           onMouseEnter={() => {store.emit(new HiglightHexagonFromButton(button.hexagon))}}
-          // onMouseLeave={() => {store.emit(new HiglightHexagonFromButton(null))}}
+          onMouseLeave={() => {store.emit(new HiglightHexagonFromButton(null))}}
           onClick={() => {
             if(linkToPopup)
             {
