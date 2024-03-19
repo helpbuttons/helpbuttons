@@ -121,6 +121,7 @@ export class ButtonController {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
         }
         return this.buttonService.delete(buttonId).then((button) => {
+          notifyUser(this.eventEmitter,ActivityEventName.DeleteButton,{button, user})
           return true;
         });
       });
@@ -141,7 +142,9 @@ export class ButtonController {
   )
   {
     return this.buttonService.follow(buttonId, user.id).then((button) => {
-      notifyUser(this.eventEmitter,ActivityEventName.NewFollowButton,{button, user})
+      notifyUser(this.eventEmitter,ActivityEventName.NewFollowingButton,{button, user})
+      // notify owner of button
+      notifyUser(this.eventEmitter, ActivityEventName.NewFollowedButton, {button, user})
     })
   }
 
@@ -175,7 +178,6 @@ export class ButtonController {
     return await this.buttonService
     .isOwner(user, buttonId, true)
     .then((isOwner) => {
-      console.log('oi')
       if (!isOwner) {
         throw new CustomHttpException(ErrorName.NoOwnerShip);
       }

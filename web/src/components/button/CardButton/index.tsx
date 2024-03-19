@@ -52,6 +52,7 @@ import Btn, {
 } from 'elements/Btn';
 import { diffInMonths } from 'shared/date.utils';
 import { FixedAlert } from 'components/overlay/Alert';
+import { maxZoom } from 'components/map/Map/Map.consts';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -354,8 +355,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         {!button.hideAddress && showMap && (
           <MarkerSelectorMap
             markerPosition={[button.latitude, button.longitude]}
-            setMarkerPosition={() => {}}
-            zoom={10}
+            defaultZoom={maxZoom}
             markerColor={cssColor}
             markerImage={button.image}
             markerCaption={button.title}

@@ -1,15 +1,17 @@
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import { ActivityEventName } from 'shared/types/activity.list';
-import { Button } from 'shared/entities/button.entity';
-import { makeImageUrl } from 'shared/sys.helper';
 import t from 'i18n';
-import {  IoAddCircleOutline, IoChatbubbleOutline, IoHandLeftOutline, IoHeartOutline, IoNotificationsOutline, IoPersonOutline, IoRibbonOutline } from "react-icons/io5";
+import {  IoAddCircleOutline, IoChatbubbleOutline, IoNotificationsOutline, IoPersonOutline } from "react-icons/io5";
 import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
 import { User } from 'shared/entities/user.entity';
+import { useButtonTypes } from 'shared/buttonTypes';
+import { useState } from 'react';
 
 export default function CardNotification({ activity = {} }) {
+  const [buttonTypes, setButtonTypes] = useState([])
+  useButtonTypes(setButtonTypes)
   const notification = (activity) => {
     if (activity.eventName == ActivityEventName.NewButton) {
       const button = activity.data
@@ -17,33 +19,31 @@ export default function CardNotification({ activity = {} }) {
 
       return (
         <NotificationCard
-          title={t('activities.newbuttonType')}
+          type={t('activities.newbuttonType')}
           image={button.image}
           notifIcon={notifIcon}
           date={button.created_at}
           id={button.id}
+          title={button.title}
           message={t('activities.newbutton', [
-            button.title,
-            button.address,
-          ])}
+            button.address
+          ], true)}
           read={activity.read}
         />
       );
     } else if (activity.eventName == ActivityEventName.DeleteButton) {
-      const button = JSON.parse(activity.data);
+      const {button, user} = JSON.parse(activity.data);
       const notifIcon =<IoAddCircleOutline/>
-
       return (
         <NotificationCard
-          title={t('activities.deletedType')}
+          type={t('activities.deletedType')}
           notifIcon={notifIcon}
           image={button.image}
           date={button.created_at}
           id={button.id}
-          message={t('activities.deletebutton', [
-            button.id,
-            button.title,
-          ])}
+          title={t('activities.deletebutton', [
+            button.title
+          ], true)}
           read={activity.read}
         />
       );
@@ -53,16 +53,16 @@ export default function CardNotification({ activity = {} }) {
 
       return (
         <NotificationCard
-          title={t('activities.creatorUpdate')}
+          type={t('activities.creatorUpdate')}
           notifIcon={notifIcon}
           image={post.button.image}
           date={post.created_at}
           id={post.button.id}
-          message={t('activities.newpost', [
-            post.message,
+          title={t('activities.newpost', [
             post.button.title,
             post.author.username,
-          ])}
+          ], true)}
+          message={post.message}
           read={activity.read}
         />
       );
@@ -77,39 +77,64 @@ export default function CardNotification({ activity = {} }) {
       }
       return (
         <NotificationCard
-          title={title}
+          type={title}
           image={comment.button.image}
           notifIcon={notifIcon}
           date={comment.created_at}
           id={comment.button.id}
-          message={t('activities.newcomment', [
-            comment.message,
-            comment.post.message,
+          title={t('activities.newcomment', [
             comment.author.username,
-          ])}
+            comment.button.title
+          ], true)}
+          message={comment.message}
           read={activity.read}
         />
       );
     } else if (
-        activity.eventName == ActivityEventName.NewFollowButton
+        activity.eventName == ActivityEventName.NewFollowingButton
       ) {
         const {button, user} = JSON.parse(activity.data);
         const follower: User = user
         const notifIcon =<IoChatbubbleOutline/>
         return (
+          <>
+          {buttonTypes?.length > 0 && 
+            <NotificationCard
+              type={t('activities.newfollowType')}
+              title={t('activities.newfollowing', [buttonTypes.find(btnType => btnType.name == button.type).caption], false)}
+              image={follower.avatar}
+              notifIcon={notifIcon}
+              date={activity.created_at}
+              id={button.id}
+              message={button.title}
+              read={activity.read}
+            />
+          }
+          </>
+        );
+    }  else if (
+      activity.eventName == ActivityEventName.NewFollowedButton
+    ) {
+      const {button, user} = JSON.parse(activity.data);
+      const follower: User = user
+      const notifIcon =<IoChatbubbleOutline/>
+      return (
+        <>
+        {buttonTypes?.length > 0 && 
           <NotificationCard
-            title={t('activities.newfollowType')}
+            type={t('activities.newfollowType')}
+            title={t('activities.newfollowed', [user.username, buttonTypes.find(btnType => btnType.name == button.type).caption], false)}
             image={follower.avatar}
             notifIcon={notifIcon}
             date={activity.created_at}
             id={button.id}
-            message={t('activities.newfollowing', [
-              button.title
-            ])}
+            message={button.title}
             read={activity.read}
           />
-        );
-    } else {
+        }
+        </>
+      );
+  } else {
       const notifIcon =<IoNotificationsOutline/>
 
       return (
@@ -129,12 +154,12 @@ export default function CardNotification({ activity = {} }) {
   return <>{notification(activity)}</>;
 }
 
-export function NotificationCard({ title, image, notifIcon, date, message, id, read }) {
+export function NotificationCard({ type, title, image, notifIcon, date, message = '', id, read }) {
   return (
     <Link href={'/ButtonFile/'+ id.toString()} className="card-notification card-notification">
       <div className="card-notification__comment-count">
         <div className="card-notification__label">
-          <div className="hashtag hashtag--blue hashtag--with-icon">{notifIcon}{title}</div>
+          <div className="hashtag hashtag--blue hashtag--with-icon">{notifIcon}{type}</div>
         </div>
       </div>
       <div className="card-notification__content">
@@ -160,8 +185,8 @@ export function NotificationCard({ title, image, notifIcon, date, message, id, r
             }
             
           </div>
-          <h2 className="card-notification__title">{formatMessage(message[0])}</h2>
-          <div className="card-notification__paragraph"></div>
+          <h2 className="card-notification__title">{title}</h2>
+          <div className="card-notification__paragraph">{message && formatMessage(message)}</div>
         </div>
       </div>
     </Link>
