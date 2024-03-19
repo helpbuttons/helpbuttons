@@ -59,8 +59,8 @@ export default function CardNotification({ activity = {} }) {
           date={post.created_at}
           id={post.button.id}
           title={t('activities.newpost', [
-            post.button.title,
             post.author.username,
+            post.button.title,
           ], true)}
           message={post.message}
           read={activity.read}
