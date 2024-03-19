@@ -4052,16 +4052,17 @@ li, ol, ul, h2 {
 }
 
 .card-button-list__picture-container {
-  width: 200px;
-  min-width: 200px;
-  height: 200px;
+  width: 150px;
+  min-width: 150px;
+  height: 210px;
   overflow: hidden;
   position: relative;
   border-radius: 8px;
   display: flex;
+  background-size: cover;
   align-content: center;
   justify-content: center;
-  margin: 0.5rem 0 0.5rem 0.5rem;
+  margin: 0.5rem 0 0 5px;
 }
 .card-button-list__picture-container img {
   width: auto;
@@ -5004,8 +5005,7 @@ li, ol, ul, h2 {
 }
 
 .card-button__content--small {
-  padding-top: 10px;
-  padding-left: 10px;
+  padding: 10px 5px 5px 10px;
 }
 
 .card-button__header {

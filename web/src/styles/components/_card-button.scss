@@ -66,9 +66,8 @@ $card-button-border-height: $border-general-height;
 
 .card-button__content--small {
 
-  padding-top: $padding-medium;
-  padding-left:  $padding-medium;
-  $padding-right: $padding-medium;
+  padding:  $padding-medium $padding-small $padding-small $padding-medium;
+
 
 }
 
