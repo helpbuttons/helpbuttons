@@ -1,7 +1,7 @@
 // import React, { useState } from 'react'
 import { Map, Point, ZoomControl } from 'pigeon-maps';
 import { useEffect, useState } from 'react';
-import { HbMapTiles, HbTiles } from './Map.consts';
+import { HbMapTiles, HbTiles, maxZoom } from './Map.consts';
 
 interface HbMapProps {
   center: Point;
@@ -53,7 +53,7 @@ export function HbMap({
       }}
       zoomSnap={false}
       provider={tileProvider}
-      maxZoom={16}
+      maxZoom={maxZoom}
       minZoom={4}
     >
       {children}
@@ -92,7 +92,7 @@ export function HbMapUncontrolled({
         handleMapClick({ latLng });
       },
       provider: tileProvider,
-      maxZoom: 16,
+      maxZoom: maxZoom,
       minZoom: 4,
     };
     if (width !== null) {

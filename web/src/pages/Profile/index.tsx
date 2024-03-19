@@ -5,9 +5,9 @@ import CardProfile, {
 
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import router from 'next/router';
+import router, { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FindAdminButton } from 'state/Users';
+import { FindAdminButton, Logout } from 'state/Users';
 import Link from 'next/link';
 import {
   IoAlarm,
@@ -24,6 +24,8 @@ import { Role } from 'shared/types/roles';
 import t from 'i18n';
 import { LoadabledComponent } from 'components/loading';
 import Popup from 'components/popup/Popup';
+import { getLocale } from 'shared/sys.helper';
+import { Network } from 'shared/entities/network.entity';
 
 export default function Profile() {
   const loggedInUser = useRef(
@@ -46,8 +48,18 @@ export default function Profile() {
     }
   }, [loggedInUser]);
 
+  const { asPath } = useRouter();
+  const selectedNetwork: Network = useRef(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
   function logout() {
     UserService.logout();
+    if (getLocale() != selectedNetwork.locale) {
+      router.push({ pathname: '/HomeInfo'}, asPath, {
+        locale: selectedNetwork.locale,
+      });
+    }
   }
 
   const removeProfile = () => {

@@ -16,7 +16,7 @@ import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
 
 import { Role } from 'shared/types/roles';
-import { getLocale, isRoleAllowed } from 'shared/sys.helper';
+import { getLocale, isRoleAllowed, setSSRLocale } from 'shared/sys.helper';
 import { version } from 'shared/commit';
 import { refeshActivities } from 'state/Activity';
 import t, { updateNomeclature } from 'i18n';
@@ -211,23 +211,25 @@ function MyApp({ Component, pageProps }) {
   }, [config, selectedNetwork]);
 
   const pageName = path.split('/')[1];
-  const { pathname, asPath, query, locale } = useRouter();
 
   useEffect(() => {
     if (selectedNetwork) {
-      if (!loggedInUser && getLocale() != selectedNetwork.locale) {
-        if (selectedNetwork.locale != 'en') {
-          router.push({ pathname, query }, asPath, {
-            locale: selectedNetwork.locale,
-          });
-        }
-      }
       updateNomeclature(
         selectedNetwork.nomeclature,
         selectedNetwork.nomeclaturePlural,
       );
+      setSSRLocale(selectedNetwork.locale)
     }
-  }, [selectedNetwork, loggedInUser]);
+  }, [selectedNetwork]);
+
+  useEffect(() => {
+    if(loggedInUser)
+    {
+      if (getLocale() != loggedInUser.locale) {
+          setSSRLocale(loggedInUser.locale)
+      }
+    }
+  }, [loggedInUser])
 
   const searchParams = useSearchParams();
   const triedToLogin = useRef(false);
@@ -278,7 +280,7 @@ function MyApp({ Component, pageProps }) {
               </ShowMobileOnly>
             </>
           )}
-          {!selectedNetwork && <Component {...pageProps} />}
+          {(!selectedNetwork && isSetup) && <Component {...pageProps} />}
         </div>
       </div>
     </>

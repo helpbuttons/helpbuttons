@@ -30,7 +30,6 @@ export function getLocale(availableLocales = null) {
       return locale;
     });
   }
-
   try {
     const splitHref = getHref().split('/');
 
@@ -44,7 +43,7 @@ export function getLocale(availableLocales = null) {
   } catch (err) {
     return SSRLocale;
   }
-  return 'en';
+  return SSRLocale;
 }
 
 export function makeImageUrl(image, baseUrl = '') {

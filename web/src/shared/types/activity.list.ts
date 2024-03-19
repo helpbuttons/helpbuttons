@@ -3,6 +3,7 @@ export enum ActivityEventName {
     NewPost = 'new.post',
     NewPostComment = 'new.post.comment',
     DeleteButton = 'delete.button',
-    NewFollowButton = 'follow.button',
+    NewFollowingButton = 'following.button',
+    NewFollowedButton = 'followed.button',
     RenewButton = 'renew.button'
   }
