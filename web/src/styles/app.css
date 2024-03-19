@@ -5456,7 +5456,6 @@ li, ol, ul, h2 {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   word-wrap: break-word;
-  height: 2.6em;
   line-height: 1.1em;
 }
 

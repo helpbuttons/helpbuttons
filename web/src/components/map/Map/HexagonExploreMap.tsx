@@ -116,11 +116,11 @@ export default function HexagonExploreMap({
               styleCallback={(feature, hover) => {
                 if (hover) {
                   return {
-                    fill: 'white',
-                    strokeWidth: '0.7',
+                    fill: '#18AAD2',
+                    strokeWidth: '4',
                     stroke: '#18AAD2',
                     r: '20',
-                    opacity: 0.7,
+                    opacity: 0.8,
                   };
                 }
                 if (hexagonFeature.properties.count < 1) {
@@ -129,7 +129,7 @@ export default function HexagonExploreMap({
                     strokeWidth: '1',
                     stroke: '#18AAD2',
                     r: '20',
-                    opacity: 0.2,
+                    opacity: 0.1,
                   };
                 }
                 return {
@@ -137,11 +137,11 @@ export default function HexagonExploreMap({
                   strokeWidth: '2',
                   stroke: '#18AAD2',
                   r: '20',
-                  opacity:
-                    0.2 +
-                    (hexagonFeature.properties.count * 50) /
-                      (maxButtonsHexagon.current - maxButtonsHexagon.current / 4) /
-                      100,
+                  opacity:'0.4',
+                    
+                    // (hexagonFeature.properties.count * 30) /
+                    //   (maxButtonsHexagon.current - maxButtonsHexagon.current / 7) /
+                    //   100,
                 };
               }}
             />

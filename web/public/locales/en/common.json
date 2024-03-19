@@ -147,8 +147,8 @@
     "next": "Next",
     "choose": "Choose {0}",
     "click": "Click here",
-    "reloadConfig": "",
-    "deleteSuccess": "",
+    "reloadConfig": "Reload Config",
+    "deleteSuccess": "Deleted",
     "error":"Something went wrong",
     "notFoundMessage": "Página no encontrada"
   },

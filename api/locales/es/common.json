@@ -63,8 +63,9 @@
     "done": "Hecho",
     "remove": "Eliminar",
     "click": "Haz click aquí",
+    "reloadConfig": "Recargar configuración",
     "publishTitle": "Crear {0}",
-    "deleteSuccess": ""
+    "deleteSuccess": "Finalizado con éxito"
   },
   "configuration": {
     "nameLabel": "Nombre de tu Red",
@@ -147,7 +148,7 @@
     "passwordConfirmation": "Confirmar contraseña",
     "created": "Creado",
     "loginButton": "ENTRAR",
-    "loginClick": "Iniciar sesión con enlace al email",
+    "loginClick": "No recuerdo mi contraseña",
     "passwordMismatch": "Las contraseñas no coinciden",
     "name": "Nombre público",
     "nameExplain": "Este es tu nombre público que otros usuarios podran ver",
@@ -161,7 +162,7 @@
     "passwordPlaceHolder": "Escribe tu contraseña",
     "logout": "Cerrar sesión",
     "register": "REGISTRARSE",
-    "newLoginTokenSent": "Si tienes una cuenta, recibirás un email con un link para hacer login.",
+    "newLoginTokenSent": "Si tienes una cuenta, recibirás un correo con una dirección en la que pulsar para entrar.",
     "sendLoginToken": "Mandar enlace de Inicio de Sesión",
     "loginLink": "Tengo cuenta",
     "loginWEmail": "Entrar con contraseña",

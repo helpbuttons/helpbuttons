@@ -63,8 +63,9 @@
     "done": "Hecho",
     "remove": "Eliminar",
     "click": "Haz click aquí",
+    "reloadConfig": "Recargar configuración",
     "publishTitle": "Crear {0}",
-    "deleteSuccess": ""
+    "deleteSuccess": "Finalizado con éxito"
   },
   "configuration": {
     "nameLabel": "Nombre de tu Red",
