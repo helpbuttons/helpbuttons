@@ -12,10 +12,15 @@ import NetworkLogo from 'components/network/Components';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import NavLink from 'elements/Navlink';
 import {
+  IoAdd,
+  IoAddCircle,
   IoAddOutline,
   IoGlobeOutline,
   IoHelpOutline,
   IoLogInOutline,
+  IoMagnet,
+  IoMapOutline,
+  IoSearch,
 } from 'react-icons/io5';
 import SEO from 'components/seo';
 import { ServerPropsService } from 'services/ServerProps';
@@ -112,15 +117,17 @@ export default function HomeInfo({
                       <Btn
                         btnType={BtnType.corporative}
                         contentAlignment={ContentAlignment.center}
+                        iconLink={<IoMapOutline/>}
                         iconLeft={IconType.svg}
                         caption={t('homeinfo.goToExplore')}
                         onClick={()=>router.push('Explore')}
                       />
 
                       <Btn
-                        btnType={BtnType.filterCorp}
+                        btnType={BtnType.corporative}
                         contentAlignment={ContentAlignment.center}
                         iconLeft={IconType.svg}
+                        iconLink={<IoAddCircle/>}
                         extraClass='info-overlay__network-title-card--buttons'
                         caption={t('homeinfo.goToCreate')}
                         onClick={()=>router.push('ButtonNew')}
