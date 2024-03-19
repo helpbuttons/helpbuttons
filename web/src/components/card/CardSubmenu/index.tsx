@@ -6,7 +6,7 @@ export function CardSubmenu({ children }) {
   const [showSubmenu, setShowSubmenu] = useState(false);
 
   return (
-    <>
+    <div onBlur={() => setShowSubmenu(false)}>
       <div
         onClick={() => {
           setShowSubmenu(!showSubmenu);
@@ -29,7 +29,7 @@ export function CardSubmenu({ children }) {
             </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
