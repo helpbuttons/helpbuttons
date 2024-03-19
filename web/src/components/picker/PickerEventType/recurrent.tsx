@@ -186,23 +186,24 @@ function WeekDay(dayOfWeek) {
   return readableDayOfLongWeek(new Date(current.setDate(first++)))
 }
 
-export const recurrentToText = (rrule) => {
+export const recurrentToText = (rrule, hideRecurrentDates = false) => {
   if (!rrule) {
     return '';
   }
   switch (parseInt(rrule.freq)) {
     case RRule.WEEKLY: {
-      return (
-        <>
-          {t('dates.each')} {rrule.byweekday.map(weekday => WeekDay(weekday)).join(', ').toString()}  {t('dates.from')}{' '}
-          {readableShortDate(rrule.dtstart)} {t('dates.until')}{' '}
-          {readableShortDate(rrule.until)} {t('dates.at')} {readableTime(rrule.dtstart)} {t('dates.until')} {readableTime(rrule.until)}
-        </>
-      );
+      return recurrentWeeklyToText(rrule, hideRecurrentDates);
     }
     case RRule.MONTHLY: {
+      return recurrentMonthlyToText(rrule, hideRecurrentDates)
+    }
+  }
+};
+
+const recurrentMonthlyToText = (rrule, hideRecurrentDate) => {
       const startDate = new Date(rrule.dtstart);
       const endDate = new Date(rrule.until);
+      
       const until =
         endDate.getMonth() != startDate.getMonth() ? (
           <>
@@ -219,11 +220,34 @@ export const recurrentToText = (rrule) => {
           {t('dates.the')} {startDate.getDate()}  {until} {t('dates.at')} {readableTime(startDate)} {t('dates.until')} {readableTime(endDate)}
         </>
       );
-    }
+}
+
+const recurrentWeeklyToText = (rrule, hideRecurrentDates) => {
+  if (hideRecurrentDates) {
+    return (
+      <>
+        {t('dates.each')}{' '}
+        {rrule.byweekday
+          .map((weekday) => WeekDay(weekday))
+          .join(', ')
+          .toString()}
+      </>
+    );
   }
+  return (
+    <>
+      {t('dates.each')}{' '}
+      {rrule.byweekday
+        .map((weekday) => WeekDay(weekday))
+        .join(', ')
+        .toString()}{' '}
+      {t('dates.from')} {readableShortDate(rrule.dtstart)}{' '}
+      {t('dates.until')} {readableShortDate(rrule.until)}{' '}
+      {t('dates.at')} {readableTime(rrule.dtstart)} {t('dates.until')}{' '}
+      {readableTime(rrule.until)}
+    </>
+  );
 };
-
-
 
 export const loadRrules = (obj) => {
   if(!obj)
