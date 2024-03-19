@@ -68,7 +68,7 @@ export class ButtonService {
 
     const buttonTemplates = network.buttonTemplates;
     const buttonTemplate = buttonTemplates.find(
-      (buttonTemplate) => buttonTemplate.name == createDto.type,
+      (btnTemplate) => btnTemplate.name == createDto.type,
     );
 
     if (buttonTemplate?.customFields) {
@@ -97,7 +97,7 @@ export class ButtonService {
       description: createDto.description,
       latitude: createDto.latitude,
       longitude: createDto.longitude,
-      tags: this.tagService.formatTags(createDto.tags),
+      tags: this.tagService.formatTags([...createDto.tags, buttonTemplate.caption]),
       location: () =>
         `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
       network: network,
