@@ -84,22 +84,24 @@ $search-map-height: 0; // Altura del header
     flex-flow: column;
     align-items: flex-start;
     overflow: hidden;
-
+    max-height: 2.4rem;
+    overflow-y: hidden;
+    text-overflow: ellipsis;
     max-width: 300px;
+    margin-bottom: $padding-big;
 
     a {
 
       display: -webkit-box;
-      -webkit-line-clamp: 2; /* number of lines to show */
-      line-clamp: 2; 
+      -webkit-line-clamp: 1; /* number of lines to show */
+      line-clamp: 1; 
       -webkit-box-orient: vertical;
-
+      text-overflow: ellipsis;
       overflow: hidden;
       text-overflow: ellipsis;
       word-wrap: break-word;
       max-height: 2.4em;
       line-height: 1.2em;
-
     }
     
 

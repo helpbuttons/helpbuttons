@@ -49,6 +49,8 @@ $btn-font-size-medium: $font-size-medium;
   font-size: $font-size-general;
   border-top: 1px solid $color-gray-border;
   border-right: 1px solid $color-gray-border;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
 
 }

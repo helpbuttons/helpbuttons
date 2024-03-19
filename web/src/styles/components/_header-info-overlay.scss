@@ -107,6 +107,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
 .info-overlay__network-title-card--buttons {
 
   margin-top: $margin-small;
+  width: fit-content;
 
 }
 
@@ -264,6 +265,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 
 }
 

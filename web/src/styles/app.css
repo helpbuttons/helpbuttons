@@ -427,6 +427,7 @@ a:hover {
   -o-object-fit: cover;
      object-fit: cover;
   overflow: hidden;
+  justify-content: center;
   top: 0;
   border-width: 2px;
 }
@@ -1365,6 +1366,8 @@ a:hover {
   font-size: 16px;
   border-top: 1px solid #D4D4D4;
   border-right: 1px solid #D4D4D4;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .btn, .card__section a, .accordion {
@@ -4532,6 +4535,8 @@ li, ol, ul, h2 {
 
 .info-overlay__network-title-card--buttons {
   margin-top: 20px;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .info-overlay__card {
@@ -4634,6 +4639,7 @@ li, ol, ul, h2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .info-overlay__bottom {
@@ -5101,7 +5107,7 @@ li, ol, ul, h2 {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .card-button__custom-fields-wrapper {
@@ -7972,13 +7978,18 @@ body {
     flex-flow: column;
     align-items: flex-start;
     overflow: hidden;
+    max-height: 2.4rem;
+    overflow-y: hidden;
+    text-overflow: ellipsis;
     max-width: 300px;
+    margin-bottom: 15px;
   }
   .search-map__name a {
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* number of lines to show */
-    line-clamp: 2;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    line-clamp: 1;
     -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
