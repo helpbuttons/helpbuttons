@@ -4448,12 +4448,15 @@ li, ol, ul, h2 {
     z-index: 0;
   }
   .nav-header__filters {
-    display: -webkit-box;
+    display: flex;
     background-color: var(--network-background-color);
     align-items: center;
     justify-content: center;
     padding: 5px 15px;
     overflow-x: auto;
+  }
+  .nav-header__filters .hashtags__list-item:nth-of-type(1) {
+    margin-left: 120px;
   }
 }
 .info-overlay__selected {
