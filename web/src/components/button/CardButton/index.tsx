@@ -158,6 +158,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
 }
 
 // Pin of the map
+/*
 export function CardButtonHeadSmall({ button }) {
   const { cssColor } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
@@ -193,7 +194,7 @@ export function CardButtonHeadSmall({ button }) {
     </>
   );
 }
-
+*/
 function CardButtonSubmenu({ button }) {
   const config: SetupDtoOut = useRef(
     store,
@@ -244,6 +245,7 @@ function CardButtonSubmenu({ button }) {
       <CardSubmenuOption
         onClick={() => {
           navigator.clipboard.writeText(linkButton);
+          alertService.info(`${linkButton}`)
         }}
         label={t('button.copy')}
       />
