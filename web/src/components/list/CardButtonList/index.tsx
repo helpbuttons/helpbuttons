@@ -35,7 +35,7 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkToPop
           <div style={buttonColorStyle(buttonType.cssColor)}>
               <div className={showMap ? "card-button-list" : "card-button-list--vertical"}>
                 {button.image && (
-                  <div className="card-button-list__picture-container">
+                  <div className={showMap ? "card-button-list__picture-container" : "card-button-list__picture-container--vertical"}>
                     <div className="card-button-list__nav">
                       <div className="arrow btn-circle__icon">
                         <IoChevronBackOutline />

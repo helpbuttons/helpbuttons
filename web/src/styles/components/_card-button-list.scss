@@ -7,8 +7,8 @@ $card-button-list-paragraph-color: $color-gray;
 $card-button-list-margin-bottom: $margin-xsmall;
 $card-button-list-width: 400px;
 $card-button-list-height: 225px;
-$card-button-list-image-height: 200px;
-$card-button-list-image-width: 200px;
+$card-button-list-image-height: 210px;
+$card-button-list-image-width: 150px;
 $card-button-list-margin: 0.5rem;
 $card-button-list-situation-background-size: 14px;
 $card-button-list__submenu-show-width: 120px;
@@ -362,7 +362,7 @@ $card-button-list-border-height: $border-general-height;
 }
 
 .card-button-list__picture-container {
-  width: $card-button-list-image-height;
+  width: $card-button-list-image-width;
   min-width: $card-button-list-image-width;
   //
   height: $card-button-list-image-height;
@@ -370,9 +370,10 @@ $card-button-list-border-height: $border-general-height;
   position: relative;
   border-radius: $border-radius-basic;
   display: flex;
+  background-size: cover;
   align-content: center;
   justify-content: center;
-  margin: $card-button-list-margin 0 $card-button-list-margin $card-button-list-margin;
+  margin: $card-button-list-margin 0 0 $padding-small;
   // display: flex;
   // justify-content:  flex-start;
 

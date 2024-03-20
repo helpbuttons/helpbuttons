@@ -66,9 +66,8 @@ $card-button-border-height: $border-general-height;
 
 .card-button__content--small {
 
-  padding-top: $padding-medium;
-  padding-left:  $padding-medium;
-  $padding-right: $padding-medium;
+  padding:  $padding-medium $padding-small $padding-small $padding-medium;
+
 
 }
 
@@ -619,7 +618,7 @@ $card-button-border-height: $border-general-height;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   word-wrap: break-word;
-  height: 2.6em;
+  // height: 2.6em;
   line-height: 1.1em;
 }
 
@@ -637,6 +636,7 @@ $card-button-border-height: $border-general-height;
 .card-button__city--displayMap::after {
   background: var(--network-background-color);
   border-radius: 34px;
+  margin-left: $margin-xxsmall;
   content: "";
   display: inline-block;
   height: 10px;
@@ -715,11 +715,12 @@ $card-button-border-height: $border-general-height;
   display: flex;
   justify-content: space-between;
   gap: $margin-xsmall;
+  margin-bottom: $margin-small;
 }
 
 
 .card-button__locDate--small {
   margin-top:auto;
-
+  margin-bottom: 0;
 }
 

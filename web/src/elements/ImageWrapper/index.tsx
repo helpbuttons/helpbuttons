@@ -99,7 +99,7 @@ export default function ImageWrapper({
         style={{ objectFit: 'cover', display: 'flex' }}
         src={makeImageUrl(src, '/api')}
         alt={alt}
-        height={200}
+        height={210}
         width={200}
       />
     );
