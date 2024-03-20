@@ -24,7 +24,6 @@ import { NextPageContext } from 'next';
 import { ServerPropsService } from 'services/ServerProps';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { makeImageUrl } from 'shared/sys.helper';
-import SEO from 'components/seo';
 
 export default function p({ metadata, userProfile }) {
   const [userButtons, setUserButtons] = useState(null);
@@ -92,7 +91,6 @@ export default function p({ metadata, userProfile }) {
 
   return (
     <>
-      <SEO {...metadata} />
       <Popup
         linkFwd="/Explore"
         title={t('user.otherProfileView')}

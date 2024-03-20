@@ -22,7 +22,6 @@ import {
   IoMapOutline,
   IoSearch,
 } from 'react-icons/io5';
-import SEO from 'components/seo';
 import { ServerPropsService } from 'services/ServerProps';
 import { NextPageContext } from 'next';
 import {  useState } from 'react';
@@ -63,8 +62,6 @@ export default function HomeInfo({
   
   return (
     <>
-      <SEO {...metadata} />
-
         <ShowMobileOnly>
           <div className="info-overlay__search-section">
             <NavHeader selectedNetwork={selectedNetwork} pageName={'HomeInfo'}/>

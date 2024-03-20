@@ -1,7 +1,6 @@
 //QUESTIONS AND INFO
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import SEO from 'components/seo';
 import { ServerPropsService } from 'services/ServerProps';
 
 
@@ -27,9 +26,6 @@ export default function Faqs({
   return (
 
     <>
-
-      <SEO {...metadata} />
-
       <Popup title={t('faqs.title')} linkFwd="/Explore">
 
         <Accordion title={t('faqs.networkQuestion', [selectedNetwork.name])}>

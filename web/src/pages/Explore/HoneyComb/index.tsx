@@ -54,8 +54,8 @@ import {
 } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { alertService } from 'services/Alert';
-import { ButtonShow } from 'pages/ButtonFile/[id]';
 import t from 'i18n';
+import { ButtonShow } from 'components/button/ButtonShow';
 
 const defaultZoomPlace = 13;
 

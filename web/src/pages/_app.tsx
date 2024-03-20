@@ -24,6 +24,7 @@ import { useInterval } from 'shared/custom.hooks';
 import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
+import SEO from 'components/seo';
 
 export default appWithTranslation(MyApp);
 
@@ -263,6 +264,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="commit" content={version.git} />
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
+      {pageProps.metadata && <SEO {...pageProps.metadata}/>} 
       <div
         className={`${user ? '' : 'index__container'}`}
         style={networkStyle}
