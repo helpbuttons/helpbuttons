@@ -153,7 +153,10 @@ export default function HexagonExploreMap({
               feature={hexagonClickedFeatures}
               key={`clicked_${hexagonClicked}`}
               styleCallback={(feature, hover) => {
-                return { fill: 'white' };
+                return { 
+                  fill: 'white',
+                  opacity:'0.2',
+              };
               }}
               onClick={() => {
                 store.emit(new UpdateHexagonClicked(null))

@@ -4448,7 +4448,7 @@ li, ol, ul, h2 {
     z-index: 0;
   }
   .nav-header__filters {
-    display: flex;
+    display: -webkit-box;
     background-color: var(--network-background-color);
     align-items: center;
     justify-content: center;
@@ -5473,6 +5473,7 @@ li, ol, ul, h2 {
 .card-button__city--displayMap::after {
   background: var(--network-background-color);
   border-radius: 34px;
+  margin-left: 4px;
   content: "";
   display: inline-block;
   height: 10px;
@@ -5549,10 +5550,12 @@ li, ol, ul, h2 {
   display: flex;
   justify-content: space-between;
   gap: 7px;
+  margin-bottom: 20px;
 }
 
 .card-button__locDate--small {
   margin-top: auto;
+  margin-bottom: 0;
 }
 
 .card-notification {

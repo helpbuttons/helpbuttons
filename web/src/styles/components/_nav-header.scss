@@ -90,7 +90,7 @@ $nav-header-new-message-radius: $border-radius-circle;
 
   .nav-header__filters {
 
-    display: flex;
+    display: -webkit-box;
     background-color: $color-corporative;
     align-items: center;
     justify-content: center;
