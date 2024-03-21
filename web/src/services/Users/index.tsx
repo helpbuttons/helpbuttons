@@ -40,7 +40,7 @@ export class UserService {
 
   //Check user
   public static whoAmI(): Observable<any> {
-    return httpService.get<IUser>("/users/whoami");
+    return httpService.get<IUser>("users/whoami");
   }
 
   public static findUser(username: string)
