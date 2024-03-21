@@ -127,17 +127,13 @@ export default function ImageWrapper({
 
 export function HbImage(props) {
   const [loading, setLoading] = useState(true);
-  const imageLoaded = () => {
-    console.log('loaded...')
-    setLoading(false);
-  }
   return (<>
       <div style={{ display: loading ? 'block' : 'none' }}>
         <Loading/>
       </div>
       <Image
         {...props}
-        onLoadingComplete={(img) => {setLoading(false) }} 
+        onLoadingComplete={(img) => {setLoading(() => false) }} 
       />
     </>
   );
