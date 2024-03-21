@@ -4,7 +4,7 @@ import {
   SetupDtoOut,
 } from '@src/modules/setup/setup.entity';
 import * as fs from 'fs';
-import { version } from '../commit';
+// import { version } from '../commit';
 import { configFileName } from './config-name.const';
 const { Pool } = require('pg');
 
@@ -58,6 +58,7 @@ export const checkDatabase = async (
     }
     if (error?.code === '28P01') {
       msg = `db-connection-error`;
+      console.log(JSON.stringify(error))
     }
     if(error?.code === '42P01') {}
     console.log(`${HttpStatus.SERVICE_UNAVAILABLE} :: ${msg}`);
@@ -91,7 +92,8 @@ export const getConfig = async () => {
         allowedDomains: data.allowedDomains,
         databaseNumberMigrations: migrationsNumber,
         userCount: userCount,
-        commit: version.git,
+        // commit: version.git,
+        commit: 'todo',
         hostname
       };
 
