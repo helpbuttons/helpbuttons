@@ -24,6 +24,8 @@ services:
       - db
     networks:
       - internal_network
+    # ports: 
+    #  - 3001:3001
 
   db:
     # build: postgres/
