@@ -12,6 +12,7 @@ export enum ImageType {
   marker,
   cardMap,
   cardList,
+  cardListVertical,
   buttonCard,
   avatarBig,
   avatarMed,
@@ -101,6 +102,17 @@ export default function ImageWrapper({
         alt={alt}
         height={210}
         width={200}
+      />
+    );
+  }
+  if (imageType == ImageType.cardListVertical) {
+    return (
+      <HbImage
+        style={{ objectFit: 'cover', display: 'flex' }}
+        src={makeImageUrl(src, '/api')}
+        alt={alt}
+        height={210}
+        width={300}
       />
     );
   }
