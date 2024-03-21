@@ -34,11 +34,10 @@ export default function LoginForm() {
   const onSuccess = (userData) => {
     alertService.success(t('user.loginSucess'))
     let returnUrl: string = `/HomeInfo`;
-
     if (router?.query?.returnUrl) {
       returnUrl = router.query.returnUrl.toString();
     }
-    router.push(returnUrl, null, { locale: userData.locale })
+    router.push(returnUrl)
   };
 
   const onError = (err) => {

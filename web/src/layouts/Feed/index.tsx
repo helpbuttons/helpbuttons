@@ -1,4 +1,3 @@
-//FEED SECTION - HERE COMME ALL THE NOTIFFICATIONS, MESSAGES and CONVERSATION LINKS FROM EXTERNAL RESOURCES
 import PostComments from 'components/feed/PostComments';
 import PostMessage from 'components/feed/PostMessage';
 import Btn, {
@@ -9,10 +8,6 @@ import Btn, {
 import t from 'i18n';
 import {
   IoAdd,
-  IoAddOutline,
-  IoChatbubbleEllipsesSharp,
-  IoCloseOutline,
-  IoCreateOutline,
   IoMailOpenOutline,
   IoMailOutline,
   IoPersonOutline,
@@ -31,13 +26,13 @@ import {
   LoadPosts,
 } from 'state/Posts';
 import { isAdmin } from 'state/Users';
-import router from 'next/router';
 import { useStore } from 'store/Store';
 import MessageNew from 'components/feed/MessageNew';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
-import Link from 'next/link';
 import { useToggle } from 'shared/custom.hooks';
 import { CardButtonHeadActions } from 'components/button/CardButton';
+import LoginOrSignup from 'components/authorization';
+import router from 'next/router';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -47,7 +42,6 @@ export default function Feed({ button }: { button: Button }) {
     store,
     (state: GlobalState) => state.loggedInUser,
   );
-  const [refererCompose, setRefererCompose] = useState(null);
 
   const reloadPosts = () => {
     if (button && button.id) {
@@ -72,6 +66,7 @@ export default function Feed({ button }: { button: Button }) {
 
   return (
     <div className="feed-container">
+      
       {(loggedInUser && isButtonOwner) && (
         <ComposePost
           referer={{ button: button.id }}
@@ -81,8 +76,15 @@ export default function Feed({ button }: { button: Button }) {
           }}
         />
       )}
-      {!isButtonOwner && (      
-        <CardButtonHeadActions button={button} toggleShowReplyFirstPost={toggleShowReplyFirstPost}/>         
+      
+      {(!isButtonOwner && loggedInUser) && (      
+        <CardButtonHeadActions button={button} action={() => toggleShowReplyFirstPost(true)}/>         
+      )}
+      {(!isButtonOwner && !loggedInUser) && (      
+        <CardButtonHeadActions button={button} action={() => router.push({
+          pathname: '/Login',
+          query: { returnUrl: document.location.pathname + document.location.search },
+        })}/>
       )}
       <div className="feed-line"></div>
       <div className="feed-section">
@@ -148,6 +150,7 @@ export function FeedElement({
       })
     }
   }, [showCompose])
+
   return (
     <div className="feed-element">
       <div className="card-notification card-notification--feed">
@@ -221,13 +224,12 @@ export function FeedElement({
                 iconLeft={IconType.circle}
                 contentAlignment={ContentAlignment.right}
                 onClick={() =>
-                  setShowComposePostReply(() => {
-                    return {
-                      post: post.id,
-                      privateMessage: false,
-                      mentions: [post.author.username],
-                    };
-                  })
+                  {
+                    router.push({
+                      pathname: '/Login',
+                      query: { returnUrl: document.location.pathname + document.location.search  },
+                    });
+                  }
                 }
               />
               }
@@ -244,10 +246,9 @@ export function FeedElement({
               }}
             />
           )}
-          {!loggedInUser && showComposePostReply?.post == post.id && (
-            <div className='message message--others'> {t('feed.please')} <Link href="/Login"> {t('feed.loginMessage')}</Link> {t('feed.or')} <Link href="/Signup"> {t('feed.signUp')}</Link> {t('feed.beforeComment')}
-            </div>
-          )}
+          {!loggedInUser && 
+            <LoginOrSignup/>
+          }
         </>
         <PostComments
           comments={post.comments}
