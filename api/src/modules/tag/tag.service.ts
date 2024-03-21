@@ -14,6 +14,7 @@ export class TagService {
 
   formatTags(tags: string[])
   {
+    console.log('formatting tags.. ' + JSON.stringify(tags))
     return tags.map((tag) => tagify(tag))
   }
 

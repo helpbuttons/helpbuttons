@@ -97,7 +97,7 @@ export class ButtonService {
       description: createDto.description,
       latitude: createDto.latitude,
       longitude: createDto.longitude,
-      tags: this.tagService.formatTags([...createDto.tags, buttonTemplate.caption]),
+      tags: this.tagService.formatTags([...createDto.tags, ...[buttonTemplate.caption]]),
       location: () =>
         `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
       network: network,
