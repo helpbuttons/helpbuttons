@@ -27,7 +27,7 @@ export default function LoginForm() {
 
   const onSubmit = (data) => {
     store.emit(
-      new Login(data.email, data.password, onSuccess, onError),
+      new Login(data.email.toLowerCase(), data.password, onSuccess, onError),
     );
   };
 
