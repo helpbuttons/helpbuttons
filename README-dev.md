@@ -6,33 +6,66 @@
 
 You can run the api & database in docker you can do:
 
-`$ docker-compose build db api`
+`$ docker-compose up -d api`
 
-`$ docker-compose up -d db api`
+You want to be able to access 3001 port from the api
+```
+ ports: 
+  - 3001:3001
+```
 
-if the database you use is not in dev mode add your port to your docker-compose.yml:
+and make sure api is in the external_network network by uncomenting the line on the networks of the api
+` - external_network`
 
-`ports: - 5432:5432`
+to run the ui in development mode
 
-you might need to run also (if you never built the project before)
+first enter the nextjs project folder
+`$ cd web`
 
-`$ cd api && yarn dev`
+create an .env file with the address of the api and port (3001 is the one you have to uncomment on the docker-compose.yml file)
+`$ echo "API_URL=http://localhost:3001/" > .env`
 
-you need to generate a jwt key
+install all node_modules packages
+`$ yarn`
 
-`$ cd web && yarn hb jwt` (in the web folder)
+run the app in watch mode
+`$ yarn dev`
 
-also don't forget to run the migrations on the api
+run migrations:
+`$ docker-compose exec api yarn migration:run`
+### develop api
+You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
 
+put all containers down
+`$ docker-compose down`
+
+run the database
+`$ docker-compose up -d db`
+
+You want to be able to access 5432 port from the db
+```
+ ports: 
+  - 5432:5432
+```
+
+
+and make sure api is in the external_network network by uncomenting the line on the networks of the db
+` - external_network`
+
+run the api in watch mode:
+
+enter the nestjs project folder
+`$ cd api`
+
+install all node_modules packages
+`$ yarn`
+
+run in watch/development mode
+`$ yarn dev`
+
+run the migrations
 `$ yarn migration:run`
-
-and then run the web with:
-
-`$ cd web && yarn && yarn write-version && yarn dev`
-
-you probably need to edit the .env file of web to point to the api:
-
-`$ echo "API_URL=http://localhost:3001/" > web/.env`
+(follow the instructions of the web on top of this file, to run the ui)
 
 ### common errors
 
@@ -43,28 +76,6 @@ If you find this error with yarn dev in web directory
 try this command and retry:
 
 `export NODE_OPTIONS=--openssl-legacy-provider`
-
-### develop api
-You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
-
-`$ docker-compose up -d db`
-
-run the api in watch mode:
-
-`$ cd api && yarn && yarn dev`
-
-run the web in watch mode:
-
-`$ cd api && yarn && yarn web`
-
-### developer-extras
-you might need to run also (if you never built the project before)
-
-`$ yarn write-version`
-
-also don't forget to run the migrations on the api
-
-`$ cd api yarn migration:run`
 
 ## Key Elements, Components and Layouts
 

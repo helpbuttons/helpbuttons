@@ -24,6 +24,7 @@ services:
       - db
     networks:
       - internal_network
+    #  - external_network
     # ports: 
     #  - 3001:3001
 
@@ -34,7 +35,7 @@ services:
     command: ["postgres", "-c", "log_statement=all"]
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=doesntmatter
+      - POSTGRES_PASSWORD=changeme
       - POSTGRES_DB=hb-db
     volumes:
       - db:/var/lib/postgresql/data:rw
@@ -53,13 +54,13 @@ services:
   redis:
     restart: always
     image: redis:7-alpine
-    networks:
-      - internal_network
-    #  - external_network
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
     volumes:
       - redis:/data
+    networks:
+      - internal_network
+    #  - external_network
     #ports: 
     # - 6379:6379
 

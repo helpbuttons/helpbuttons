@@ -17,7 +17,7 @@ import { SetupSteps } from '../shared/setupSteps';
 
 import { Role } from 'shared/types/roles';
 import { getLocale, isRoleAllowed, setSSRLocale } from 'shared/sys.helper';
-import { version } from 'shared/commit';
+// import { version } from 'shared/commit';
 import { refeshActivities } from 'state/Activity';
 import t, { updateNomeclature } from 'i18n';
 import { useInterval } from 'shared/custom.hooks';
@@ -261,7 +261,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <title>Helpbuttons.org</title>
-        <meta name="commit" content={version.git} />
+        {/* <meta name="commit" content={version.git} /> */}
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
       {pageProps.metadata && <SEO {...pageProps.metadata}/>} 
