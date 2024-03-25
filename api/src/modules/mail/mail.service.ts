@@ -1,12 +1,11 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { NetworkService } from '../network/network.service';
-import { configFileName } from '@src/shared/helpers/config-name.const';
+import configs from '@src/config/configuration';
 import { Queue } from 'bull';
 import { InjectQueue } from '@nestjs/bull';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
-const config = require(`../../..${configFileName}`);
 
 @Injectable()
 export class MailService {
@@ -107,15 +106,15 @@ export class MailService {
     this.networkService
       .findDefaultNetwork()
       .then((network) => {
-        let from  = config.from
+        let from  = configs().from
         try {
-          from = network.name + config.from.slice(config.from.indexOf('<'))
+          from = network.name + configs().from.slice(configs().from.indexOf('<'))
         }catch(err)
         {
           console.log('could not add network name to from')
         }
 
-        if(config?.dontSendMail)
+        if(configs()?.smtpHost)
         {
           console.log(JSON.stringify({
             to,
@@ -124,7 +123,7 @@ export class MailService {
             from: from,
             subject: subject,
             template,
-            context: {...context, hostName: config.hostName, to: to},
+            context: {...context, hostName: configs().hostName, to: to},
           }))
           return;
         }
@@ -136,7 +135,7 @@ export class MailService {
             from: from,
             subject: subject,
             template,
-            context: {...context, hostName: config.hostName, to: to},
+            context: {...context, hostName: configs().hostName, to: to},
           })
           .then((mail) => {
             console.log(

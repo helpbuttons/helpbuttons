@@ -9,10 +9,10 @@ export class ServerPropsService {
 
     const catchMetadata = {
       metadata: {
-        title: '_',
+        title: '...',
         description: ' made with Helpbuttons.org',
         image: '',
-        siteTitle: '_',
+        siteTitle: '...',
         pageurl: `${ctx.uri}`,
       },
       selectedNetwork: {

@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { ValidationError, ValidationPipe } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { initializeTransactionalContext } from 'typeorm-transactional-cls-hooked';
@@ -14,8 +13,9 @@ import {
   ValidationException,
   ValidationFilter,
 } from './shared/middlewares/errors/validation-filter.middleware';
-import { configFileName } from './shared/helpers/config-name.const';
+import configs from './config/configuration';
 import { GlobalVarHelper } from './shared/helpers/global-var.helper';
+import { checkDatabase } from './shared/helpers/config.helper';
 
 export const bootstrap = async () => {
     /**
@@ -27,9 +27,8 @@ export const bootstrap = async () => {
     var path = require('path');
   
     const app = await NestFactory.create(AppModule);
-    const configs = require(`@src/../../${configFileName}`);
 
-    app.enableCors({ origin: configs.hostName });
+    app.enableCors({ origin: configs().hostName });
   
     app.use(bodyParser.json({ limit: '50mb' }));
     app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -54,17 +53,17 @@ export const bootstrap = async () => {
     const nodemailer = require('nodemailer');
     
     const smtpConfig = {
-      host: configs.smtpHost,
-      port: configs.smtpPort,
+      host: configs().smtpHost,
+      port: configs().smtpPort,
       auth: {
-        user: configs.smtpUser,
-        pass: configs.smtpPass
+        user: configs().smtpUser,
+        pass: configs().smtpPass
       }
     }
     
     const transporter = nodemailer.createTransport(smtpConfig);
 
-    if(!(configs?.dontSendMail))
+    if(!(configs().smtpHost))
     {
       await transporter
       .verify()
@@ -76,9 +75,14 @@ export const bootstrap = async () => {
         console.log(`Error connecting to smtp: ${JSON.stringify(error)}`);
       });
     }else{
-      console.log('not testing smtp, remove "dontSendMail" on config.json')
+      console.log('no smtp server set. passing...')
     }
     
+
+    await checkDatabase(configs())
+    .then(() => console.log('Database connection is ok!'))
+    .catch((err) => {console.log('error connecting to database'); console.log(err)
+  throw Error("Can't connect to database")}) 
 
     const config = new DocumentBuilder()
       .setTitle('Helpbuttons backend')

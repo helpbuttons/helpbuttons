@@ -2,12 +2,9 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
-  NotFoundException,
 } from '@nestjs/common';
-import { SetupDto, SetupDtoOut, SmtpConfigTest } from './setup.entity';
-import * as fs from 'fs';
-import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { checkDatabase, configFullPath, getConfig, isConfigFileCreated } from '@src/shared/helpers/config.helper';
+import { SetupDtoOut, SmtpConfigTest } from './setup.entity';
+import { getConfig } from '@src/shared/helpers/config.helper';
 const nodemailer = require('nodemailer');
 
 @Injectable()
@@ -36,24 +33,6 @@ export class SetupService {
         console.log(`${HttpStatus.SERVICE_UNAVAILABLE} :: ${msg}`)
         throw new HttpException(msg, HttpStatus.SERVICE_UNAVAILABLE);
       });
-  }
-
-  async save(setupDto: SetupDto) {
-    if(await isConfigFileCreated()) {
-      throw new HttpException(`Please remove ${configFullPath} before editing the configurations of your server!`, HttpStatus.CONFLICT);
-    }
-
-    await checkDatabase(setupDto);
-
-    fs.writeFileSync(
-      configFullPath,
-      JSON.stringify({
-        ...setupDto,
-        ...{ jwtSecret: dbIdGenerator() },
-      }),
-    );
-    console.log(`${configFullPath} written to api`)
-    return "OK"
   }
 
   get(): Promise<SetupDtoOut> {

@@ -1,7 +1,6 @@
-import { configFileName } from '@src/shared/helpers/config-name.const';
-const config = require(`../../..${configFileName}`);
+import configs from '@src/config/configuration';
 
 export const getUrl = (locale, url) => {
     const localeUrl = locale == 'en' ? '' : `/${locale}` 
-    return `${config.hostName}${localeUrl}${url}`
+    return `${configs().hostName}${localeUrl}${url}`
 };
