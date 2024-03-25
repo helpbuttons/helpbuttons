@@ -57,7 +57,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     'New Button',
     ctx,
   );
-  const buttonUrl = `${process.env.API_URL}/buttons/findById/${ctx.params.id}`;
+  const buttonUrl = `${process.env.API_URL}buttons/findById/${ctx.params.id}`;
   const currentButtonFetch = await fetch(buttonUrl, {
     next: { revalidate: 10 },
   });
