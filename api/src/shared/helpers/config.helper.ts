@@ -48,11 +48,11 @@ export const checkDatabase = async (
     }
     if (error?.code === '28P01') {
       msg = `db-connection-error`;
-      console.log(JSON.stringify(error));
     }
     if (error?.code === '42P01') {
     }
     console.log(`${HttpStatus.SERVICE_UNAVAILABLE} :: ${msg}`);
+    console.log(JSON.stringify(error));
 
     throw new HttpException(msg, HttpStatus.SERVICE_UNAVAILABLE);
   }

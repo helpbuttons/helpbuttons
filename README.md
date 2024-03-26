@@ -21,16 +21,16 @@ This is the repository for helpbuttons.org. check the hb-docs repo (https://gith
 
 ### Using docker
 
-Copy the docker-compose.yml to the folder where you want to work.
+copy the env.sample file:
+`$ cp env.sample .env`
 
-Edit the part of the docker-compose.yml to setup the credentials of the database, where it says:
+edit the `.env` file according to your needs
 
-```
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=CHANGE_ME
-      - POSTGRES_DB=hb-db
-```
+generate jwt token:
+
+`$ docker-compose run api yarn cli config:genjwt`
+
+add the jwtSecret generated to the .env file
 
 lets put it all up
 

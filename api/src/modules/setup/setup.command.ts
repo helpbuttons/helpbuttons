@@ -1,5 +1,6 @@
 import { Command } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
+import configs from '@src/config/configuration';
 
 @Injectable()
 export class SetupCommand {
@@ -12,21 +13,15 @@ export class SetupCommand {
   async generateJwt() {
     const fs = require('fs');
     const { nanoid } = require('nanoid');
-
-    const data = fs.readFileSync('./.env', 'utf8');
-    const regex = /jwtSecret.+[\r\n]+/gm;
-    const subst = `jwtSecret=${nanoid(36)}\n\r`;
-
-    const result = data.replace(regex, subst);
-    fs.writeFileSync('./.env', result);
+    console.log(`jwtSecret=${nanoid(36)}`)
   }
 
   @Command({
     command: 'config:convert',
     describe: 'converts old config.json to .env',
   })
+  
   async convertToEnv() {
-    const configs = require('@src/../config/config.json');
     const fs = require('fs');
 
     const convertKeys = {
@@ -37,15 +32,20 @@ export class SetupCommand {
       postgresPort: 'POSTGRES_PORT',
     };
 
-    const out = Object.keys(configs).map((entry) => {
+    const out = Object.keys(configs()).map((entry) => {
       let entryOut = entry;
       if (convertKeys.hasOwnProperty(entry)) {
         entryOut = convertKeys[entry];
       }
-      return `${entryOut}=${configs[entry]}`;
+      if (entry == 'from')
+      {
+        return `${entryOut}="${configs()[entry]}"`;
+      }
+      return `${entryOut}=${configs()[entry]}`;
     });
 
-    console.log('writing to env:')
-    fs.writeFileSync('./.env', out.join('\n'))
+    console.log('writing .env...')
+    console.log('copy this into your .env file:')
+    console.log(out.join('\n'))
   }
 }

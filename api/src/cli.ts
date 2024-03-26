@@ -9,15 +9,15 @@ async function bootstrap () {
   
   if(process.argv.length > 1 && ['config:genjwt', 'config:convert'].indexOf(process.argv[2]) > -1)
   {
-    console.log('using setup module')
+    // console.log('using setup module')
     module = SetupModule
   }else{
-    console.log('using app module')
+    // console.log('using app module')
     module = AppModule
   }
 
   const app = await NestFactory.createApplicationContext(module, {
-    logger: ['log','error', 'warn', 'debug']
+    logger: ['error', 'warn']
   });
   try {
     await app
