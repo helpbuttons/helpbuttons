@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     # build: web/
-    image: helpbuttons/helpbuttons-web:dev
+    image: helpbuttons/helpbuttons-web:main
     ports:
       - "3000:3000"
     depends_on:
@@ -13,11 +13,10 @@ services:
 
   api:
     # build: api/
-    image: helpbuttons/helpbuttons-api:dev
+    image: helpbuttons/helpbuttons-api:main
     env_file:
       - .env
     volumes:
-      - config:/app/config/:rw
       - uploads:/app/uploads
     depends_on:
       - db

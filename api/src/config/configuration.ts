@@ -1,6 +1,7 @@
 require('dotenv').config()
+const fs = require('fs')
 
-export default () => ({
+let configs = {
   hostName: process.env.hostName,
   postgresHostName: process.env.POSTGRES_HOSTNAME ? process.env.POSTGRES_HOSTNAME : 'db',
   postgresDb: process.env.POSTGRES_DB,
@@ -13,4 +14,11 @@ export default () => ({
   smtpPass: process.env.smtpPass,
   from: process.env.from,
   jwtSecret: process.env.jwtSecret
-});
+}
+
+if (fs.existsSync(`${__dirname}/../../config/config.json`)) {
+  configs = require(`${__dirname}/../../config/config.json`)
+  console.log('loading old config..')
+}
+
+export default () => (configs);
