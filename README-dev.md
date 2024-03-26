@@ -22,8 +22,8 @@ to run the ui in development mode
 first enter the nextjs project folder
 `$ cd web`
 
-create an .env file with the address of the api and port (3001 is the one you have to uncomment on the docker-compose.yml file)
-`$ echo "API_URL=http://localhost:3001/" > .env`
+create an .env file with the address of the api and port
+`$ cp env.development .env` (you can edit this file if you change your api host)
 
 install all node_modules packages
 `$ yarn`
@@ -38,6 +38,11 @@ You need a postgis database. postgres+opengis you can use our docker-compose fil
 
 put all containers down
 `$ docker-compose down`
+
+create an .env 
+`$ cp api/env.development api/.env` (you can edit this file if you change your api host)
+
+edit the file `api/.env`
 
 run the database
 `$ docker-compose up -d db`
