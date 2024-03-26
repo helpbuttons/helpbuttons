@@ -65,6 +65,9 @@ enter the nestjs project folder
 install all node_modules packages
 `$ yarn`
 
+generate jwt key
+`$ yarn config:genjwt`
+
 run in watch/development mode
 `$ yarn dev`
 
