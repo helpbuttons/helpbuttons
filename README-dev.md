@@ -4,6 +4,16 @@
 
 ### Develop web
 
+copy the sample env file, and edit accordingly.
+
+`$ cp env.sample .env`
+
+generate jwt token:
+
+`$ docker-compose run api yarn cli config:genjwt`
+
+add the jwtSecret generated to the .env file
+
 You can run the api & database in docker you can do:
 
 `$ docker-compose up -d api`
@@ -22,8 +32,8 @@ to run the ui in development mode
 first enter the nextjs project folder
 `$ cd web`
 
-create an .env file with the address of the api and port (3001 is the one you have to uncomment on the docker-compose.yml file)
-`$ echo "API_URL=http://localhost:3001/" > .env`
+create an .env file with the address of the api and port
+`echo "API_URL=http://localhost:3001/" > .env`
 
 install all node_modules packages
 `$ yarn`
@@ -33,11 +43,17 @@ run the app in watch mode
 
 run migrations:
 `$ docker-compose exec api yarn migration:run`
+
 ### develop api
 You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
 
 put all containers down
 `$ docker-compose down`
+
+create an .env 
+`$ cp env.sample api/.env` (you can edit this file if you change your api host)
+
+edit the file `api/.env` acoording to ur needs
 
 run the database
 `$ docker-compose up -d db`
@@ -59,6 +75,9 @@ enter the nestjs project folder
 
 install all node_modules packages
 `$ yarn`
+
+generate jwt key
+`$ yarn config:genjwt`
 
 run in watch/development mode
 `$ yarn dev`

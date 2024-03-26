@@ -37,6 +37,7 @@ import { Role } from '@src/shared/types/roles';
     ) {
       return await this.networkService.update(updateNetworkDto);
     }
+  
 
     @AllowGuest()
     @Get('config')

@@ -18,11 +18,7 @@ import { SetupService } from './setup.service';
 @Controller('setup')
 export class SetupController {
   constructor(private readonly setupService: SetupService) {}
-  @Post('save')
-  async save(@Body() setupDto: SetupDto) {
-    return await this.setupService.save(setupDto);
-  }
-
+  
   @Get('')
   async get(): Promise<SetupDtoOut> {
     return await this.setupService.get()

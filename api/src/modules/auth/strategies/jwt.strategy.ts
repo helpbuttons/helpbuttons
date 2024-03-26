@@ -6,16 +6,15 @@ import {
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthService } from '../auth.service';
-import { configFileName } from '@src/shared/helpers/config-name.const';
+import configs from '@src/config/configuration';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
-    const configs = require(`@src/../../${configFileName}`);
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: true,
-      secretOrKey: configs.jwtSecret,
+      secretOrKey: configs().jwtSecret,
       signOptions: { expiresIn: '365d' },
     });
   }

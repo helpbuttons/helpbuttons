@@ -31,6 +31,7 @@ import { GeoModule } from '@src/modules/geo/geo.module';
 import { BullModule } from '@nestjs/bull';
 import { CommandModule } from 'nestjs-command';
 import { ButtonCron } from '@src/modules/button/button.cron';
+import { SetupModule } from '@src/modules/setup/setup.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -72,6 +73,7 @@ import { ButtonCron } from '@src/modules/button/button.cron';
         backoff: 1000*10,
       }
     }),
+    SetupModule
   ],
   controllers: [AppController],
   providers: [

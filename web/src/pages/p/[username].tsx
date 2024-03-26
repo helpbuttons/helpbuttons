@@ -129,7 +129,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     'New Button',
     ctx,
   );
-  const profileUrl = `${process.env.API_URL}/users/find/${ctx.params.username}`;
+  const profileUrl = `${process.env.API_URL}users/find/${ctx.params.username}`;
   const userProfileFetch = await fetch(profileUrl, {
     next: { revalidate: 10 },
   });
