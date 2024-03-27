@@ -51,8 +51,9 @@ function NetworkCreation() {
     store,
     (state: GlobalState) => state.loggedInUser,
   );
-
+  register("exploreSettings", { required: true })
   const onSubmit = (data) => {
+
     store.emit(
       new CreateNetwork(
         {

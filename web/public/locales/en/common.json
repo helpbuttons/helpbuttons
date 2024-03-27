@@ -106,7 +106,9 @@
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
     "configureInstanceTitle": "Setup the last details of your network",
-    "test": ""
+    "test": "",
+    "needLogo": "Before selecting a place for your network, please upload a logo",
+    "needPlace": "Please select the area of your network"
   },
   "activities": {
     "allNotifications":"All Notifications",
