@@ -76,11 +76,19 @@ $card-button-list-border-height: $border-general-height;
 
   .card-button-list__picture-container {
 
-    // width: 100%;
+    width: 100%;
+
+    & img {
+
+      width: revert-layer;
+      object-fit: cover;
   
+    }
+    
   }
 
 }
+
 
 .card-button-list--deactivated {
 
