@@ -114,8 +114,9 @@ export class MailService {
           console.log('could not add network name to from')
         }
 
-        if(configs()?.smtpHost)
+        if(!configs().smtpHost)
         {
+          console.log('smtp host not set. not sending')
           console.log(JSON.stringify({
             to,
             cc,
