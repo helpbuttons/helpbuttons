@@ -1,8 +1,21 @@
+For developers, open [Readme-dev](/README-dev.md) 
+
 ![HB cover](/web/public/assets/images/hb_landscape_02_small.jpg?raw=true "hb cover")
 
-helpbuttons is a one-on-one social collaboration app with no money exchange. Find volunteers, share, help and get recognition for your action in a simple way. We need people. If you believe in social collaboration beyond consumption.
+Build your own collaboration app tools with with Helpbuttons. Cooperate in the topic you want and generate a connected community in the area/collective you want. Share, help and get recognition for your action in a simple way. We need people. If you believe in social collaboration beyond consumption. 
 
-This software helps build collaborative tools for any activity, such as sharing transport or seizing food. It connects people with specific needs to create networks. Mutual support groups, neighborhood communities, schools, town halls or emergency teams will benefit from it.
+You can install your own tool in your server with this repo or ask us for help and host it at <a rel="me" href="https://helpbuttons.org">helputtons.org</a>
+
+We accept donations: 
+
+[USD/EUR](https://buy.stripe.com/9AQ5kl3CYaIvgRW6ou)
+
+[BTC](https://pagosinreglas.ddns.net/plugins/lnbank/lnurl/4165ff8c-2fc8-4e0f-ae43-b7d3d3852322)
+
+
+![UX view](https://watchoutfreedom.com/wp-content/uploads/2024/03/Captura-de-Pantalla-2024-03-13-a-las-21.30.09-2048x1124.jpg "UX view")
+
+This software helps build collaborative tools for any activity, such as sharing transport or seizing food. It connects people with specific needs to create networks. Mutual support groups, neighborhood communities, schools, town halls or emergency teams would be great benefit from it.
 
 [<img src="https://static.fsf.org/nosvn/images/socials/mastodon.png" width="48">
 ](https://fosstodon.org/@helpbuttonsorg)
@@ -13,10 +26,11 @@ This software helps build collaborative tools for any activity, such as sharing 
 
 <a rel="me" href="https://fosstodon.org/@helpbuttonsorg">Mastodon</a>
 
-contact us: helpbuttons _at_ tutanota.com
+contact us: help _at_ helpbuttons.org
 # Welcome to Helpbuttons Repository
 
-This is the repository for helpbuttons.org. check the hb-docs repo (https://github.com/helpbuttons/hb-docs).
+This is the repository for helpbuttons.org. check more documentations at the repo (https://github.com/helpbuttons/hb-docs).
+
 ## Getting Started
 
 ### Using docker
