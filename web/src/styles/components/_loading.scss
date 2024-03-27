@@ -25,3 +25,28 @@
       -webkit-transform: rotate(360deg);
     }
   }
+
+
+  .loading__img {
+    width: 2em;
+    height: 2em;
+    border: 3px solid rgba(255, 255, 255, .3);
+    border-radius: 70%;
+    border-top-color: var(--network-text-color);
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+    z-index: $z-index-06;
+    margin: auto;
+    position: relative;
+  }
+  
+  @keyframes spin {
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes spin {
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }

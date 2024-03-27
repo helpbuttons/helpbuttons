@@ -1,10 +1,8 @@
 ///image included in ButtonCard
 ///Btn is the project convention for tradittional buttons, in order to avoidd confussion with app's buttons
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { makeImageUrl } from 'shared/sys.helper';
-import { audit } from 'rxjs';
-import Loading from 'components/loading';
+import { ImageLoader } from './ImageLoader';
 
 export enum ImageType {
   avatar,
@@ -126,17 +124,9 @@ export default function ImageWrapper({
 }
 
 export function HbImage(props) {
-  const [loading, setLoading] = useState(true);
-  return (<>
-      <div style={{ display: loading ? 'block' : 'none' }}>
-        <Loading/>
-      </div>
-      <Image
-        {...props}
-        onLoadingComplete={(img) => {setLoading(() => false) }} 
-      />
-    </>
-  );
+  return (<ImageLoader
+      {...props}
+    />)
 }
 export function ImageContainer({
   height = 200,

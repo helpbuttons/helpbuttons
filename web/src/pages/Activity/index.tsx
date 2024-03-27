@@ -38,9 +38,12 @@ export default function Activity() {
 
   return (
     <>
-          <LoadabledComponent loading={!activities || !loggedInUser}>
-            <FeedProfile allActivities={activities} loggedInUser={loggedInUser}/>
-          </LoadabledComponent>
+      {activities && loggedInUser && (
+        <FeedProfile
+          allActivities={activities}
+          loggedInUser={loggedInUser}
+        />
+      )}
     </>
   );
 }
