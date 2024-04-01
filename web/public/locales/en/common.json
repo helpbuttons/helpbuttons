@@ -359,6 +359,7 @@
     "chooseColorsExplain": "Main color would define backgrounds, secondary color would define details.",
     "pickMainColor": "Pick main color",
     "pickSecondaryColor": "Pick secondary color",
+    "buttonTemplateName": "Name",
     "buttonTemplateLabel": "Create your _helpbutton_ types",
     "buttonTemplateExplain": "These are the main types of _helpbuttons_ that your users can create. Add a name and choose your color to differenciate them",
     "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here",

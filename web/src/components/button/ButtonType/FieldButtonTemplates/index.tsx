@@ -83,7 +83,8 @@ const FieldButtonTemplates = forwardRef(
 
         <div className="form__input--button-type-field">
           <FieldText
-            name="buttonTemplate.name"
+            name={t('buttonTemplate.name')}
+            label={t('buttonTemplate.name')}
             placeholder={t(
               'configuration.createButtonTypePlaceholder',
             )}
