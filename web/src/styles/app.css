@@ -207,6 +207,7 @@ td {
   text-decoration: none;
   vertical-align: baseline;
   box-sizing: border-box;
+  word-wrap: break-word;
 }
 
 /* remember to define focus styles! */
@@ -3810,6 +3811,15 @@ li, ol, ul, h2 {
   max-height: none;
   margin-top: 7px;
 }
+.card-button-list--vertical .card-button-list__picture-container {
+  width: 100%;
+}
+.card-button-list--vertical .card-button-list__picture-container img {
+  width: revert-layer;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 .card-button-list--deactivated {
   opacity: 0.5;
   background: grey;
