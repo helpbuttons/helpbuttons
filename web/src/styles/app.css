@@ -1087,6 +1087,7 @@ a:hover {
   font-size: 16px;
   height: 54px;
   margin: 7px 0;
+  text-overflow: ellipsis;
 }
 .form__input ul, .form__input--dark-bg ul, .form__input-tags ul, .form__input--plugin ul {
   width: 100%;
