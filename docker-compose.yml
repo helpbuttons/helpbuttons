@@ -14,26 +14,25 @@ services:
   api:
     # build: api/
     image: helpbuttons/helpbuttons-api:main
+    env_file:
+      - .env
     volumes:
-      - config:/app/config/:rw
       - uploads:/app/uploads
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
     depends_on:
       - db
     networks:
       - internal_network
+    #  - external_network
+    # ports: 
+    #  - 3001:3001
 
   db:
     # build: postgres/
     image: helpbuttons/helpbuttons-psql:main
     restart: always
     command: ["postgres", "-c", "log_statement=all"]
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=doesntmatter
-      - POSTGRES_DB=hb-db
+    env_file:
+      - .env
     volumes:
       - db:/var/lib/postgresql/data:rw
     healthcheck:
@@ -43,21 +42,21 @@ services:
       retries: 5
     networks:
       - internal_network
-      # - external_network
+    # - external_network
     #uncomment if using docker-compose up db and yarn dev for backend and not docker-compose.dev
     # ports: 
-    #  - 5432:5432
+    # - 5432:5432
 
   redis:
     restart: always
     image: redis:7-alpine
-    networks:
-      - internal_network
-    #  - external_network
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
     volumes:
       - redis:/data
+    networks:
+      - internal_network
+    #  - external_network
     #ports: 
     # - 6379:6379
 

@@ -4,7 +4,7 @@
 import PopupHeader from 'components/popup/PopupHeader';
 
 
-export default function PopupButtonFile({children, title, linkBack = null, linkFwd = null, ...props}) {
+export default function PopupButtonFile({children, title = '', linkBack = null, linkFwd = null, ...props}) {
 
   return (
           <div className="popup--button-file">

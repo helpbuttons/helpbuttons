@@ -34,3 +34,5 @@ export enum BrowseType {
   HONEYCOMB = 'honeycomb',
   LIST = 'list',
 }
+
+export const maxZoom = 16;

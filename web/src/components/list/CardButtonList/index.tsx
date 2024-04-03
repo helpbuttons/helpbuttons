@@ -21,7 +21,7 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkToPop
       {buttonType && (
         <div className="list__element" 
           onMouseEnter={() => {store.emit(new HiglightHexagonFromButton(button.hexagon))}}
-          // onMouseLeave={() => {store.emit(new HiglightHexagonFromButton(null))}}
+          onMouseLeave={() => {store.emit(new HiglightHexagonFromButton(null))}}
           onClick={() => {
             if(linkToPopup)
             {
@@ -35,7 +35,7 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkToPop
           <div style={buttonColorStyle(buttonType.cssColor)}>
               <div className={showMap ? "card-button-list" : "card-button-list--vertical"}>
                 {button.image && (
-                  <div className="card-button-list__picture-container">
+                  <div className={showMap ? "card-button-list__picture-container" : "card-button-list__picture-container"}>
                     <div className="card-button-list__nav">
                       <div className="arrow btn-circle__icon">
                         <IoChevronBackOutline />
@@ -44,12 +44,19 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkToPop
                         <IoChevronForwardOutline />
                       </div>
                     </div>
-
-                    <ImageWrapper
-                      imageType={ImageType.cardList}
-                      src={button.image}
-                      alt={button.description}
-                    />
+                    {showMap ?
+                      <ImageWrapper
+                        imageType={ImageType.cardList}
+                        src={button.image}
+                        alt={button.description}
+                      />
+                    :
+                      <ImageWrapper
+                        imageType={ImageType.cardListVertical}
+                        src={button.image}
+                        alt={button.description}
+                      />
+                    }
                   </div>
                 )}
                 <div className="card-button-list__content">

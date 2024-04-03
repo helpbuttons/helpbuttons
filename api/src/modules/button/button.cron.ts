@@ -38,7 +38,7 @@ export class ButtonCron {
       `select id,title,"eventEnd","ownerId" from button where deleted = false 
       AND type IN ('${btnTemplateEvents.join(
         "','",)}')
-      AND "eventEnd" < now() - INTERVAL '3 days'
+      AND "eventEnd" < now() - INTERVAL '1 days'
       AND "updated_at" < now() - INTERVAL '3 months' 
       `,
     );

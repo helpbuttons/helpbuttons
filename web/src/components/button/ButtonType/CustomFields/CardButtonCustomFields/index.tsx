@@ -27,6 +27,7 @@ export function CardButtonCustomFields({ customFields, button }) {
               eventType={button.eventType}
               title={button.title}
               eventData={button.eventData}
+              hideRecurrentDates={true}
             />
         );
       }

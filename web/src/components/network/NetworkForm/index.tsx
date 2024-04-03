@@ -75,8 +75,30 @@ function NetworkForm({
   }
   }, [buttonTemplates])
 
-  const onError = (errors, e) => alertService.error(t('validation.error'))
+  const onError = (errors, e) => {console.log(errors);alertService.error(t('validation.error'))}
 
+  const hasErrors = (chapter) => {
+    const findError = (errorsToFind, errors) => {
+      if (Object.keys(errors).length < 1) {
+        return false;
+      }
+      return errorsToFind.reduce((acc, currentField) => {
+        return acc ? acc : errors[currentField]
+      }, false)
+    }
+    switch(chapter)
+    {
+      case "defineNetwork":
+        
+        return findError(['name', 'description'], errors)
+      case "appearance":
+        return findError(['logo', 'jumbo'], errors)
+      case "configuration":
+        return findError(['exploreSettings'], errors)
+      default:
+      return false;
+    }
+  }
   return (
     <>
       <Form
@@ -92,7 +114,7 @@ function NetworkForm({
           </div>
 
 
-          <Accordion title={t('configuration.defineNetwork')}>
+          <Accordion collapsed={hasErrors('defineNetwork')} title={t('configuration.defineNetwork')}>
             <FieldText
               name="name"
               label={t('configuration.nameLabel')}
@@ -129,7 +151,7 @@ function NetworkForm({
 
            </Accordion>
          
-           <Accordion title={t('configuration.customizeAppearance')}>
+           <Accordion collapsed={hasErrors('appearance')} title={t('configuration.customizeAppearance')}>
 
              <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
              <FieldText
@@ -208,7 +230,7 @@ function NetworkForm({
 
           </Accordion>
 
-          <Accordion title={t('configuration.configureNetwork')}>
+          <Accordion collapsed={hasErrors('configuration')} title={t('configuration.configureNetwork')}>
 
             {/* BUTTON TYPES */}
 
@@ -242,7 +264,7 @@ function NetworkForm({
                 caption: watch('name'),
                 image: watch('logo'),
               }}
-              validationError={errors.location}
+              validationError={errors.exploreSettings}
               onChange={(exploreSettings) => {
                 setValue('exploreSettings', exploreSettings);
               }}

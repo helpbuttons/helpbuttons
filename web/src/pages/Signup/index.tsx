@@ -63,7 +63,7 @@ export default function Signup() {
         new SignupUser(
           {
             username: data.username,
-            email: data.email,
+            email: data.email.toLowerCase(),
             password: data.password,
             name: '',
             avatar: null,

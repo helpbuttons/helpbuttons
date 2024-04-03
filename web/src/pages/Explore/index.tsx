@@ -1,7 +1,6 @@
 import { NextPageContext } from 'next';
 import HoneyComb from './HoneyComb';
 import { ServerPropsService } from 'services/ServerProps';
-import SEO from 'components/seo';
 import { ClienteSideRendering } from 'pages/_app';
 import { Button } from 'shared/entities/button.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
@@ -14,7 +13,6 @@ export default function Explore({
 }) {
   return (
     <>
-      <SEO {...metadata} />
       <ClienteSideRendering>
         <HoneyComb selectedNetwork={selectedNetwork} />
       </ClienteSideRendering>
@@ -29,7 +27,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
   );  
   if (ctx.query?.btn) {
     const btnId = ctx.query.btn;
-    const buttonUrl = `${process.env.API_URL}/buttons/findById/${btnId}`;
+    const buttonUrl = `${process.env.API_URL}buttons/findById/${btnId}`;
     const currentButtonFetch = await fetch(buttonUrl, {
       next: { revalidate: 10 },
     });

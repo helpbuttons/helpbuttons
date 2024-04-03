@@ -3,9 +3,8 @@ import {
   MailerOptionsFactory,
 } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { configFileName } from '@src/shared/helpers/config-name.const';
+import configs from '@src/config/configuration';
 
-const config = require(`../../..${configFileName}`);
 export class MailerModuleConfig implements MailerOptionsFactory {
   constructor(
   ) {}
@@ -25,15 +24,15 @@ export class MailerModuleConfig implements MailerOptionsFactory {
     
     return {
       transport: {
-        host: config.smtpHost,
-        port: config.smtpPort,
+        host: configs().smtpHost,
+        port: configs().smtpPort,
         auth: {
-          user: config.smtpUser,
-          pass: config.smtpPass
+          user: configs().smtpUser,
+          pass: configs().smtpPass
         }
       },
       defaults: {
-        from: config.from,
+        from: configs().from,
       },
       template: {
         dir: __dirname + '/templates',

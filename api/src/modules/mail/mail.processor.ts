@@ -1,11 +1,7 @@
 import { Processor, Process, OnQueueFailed } from '@nestjs/bull';
 import { Job } from 'bull';
 import { NetworkService } from '../network/network.service';
-import { MailerService } from '@nestjs-modules/mailer';
-import { configFileName } from '@src/shared/helpers/config-name.const';
-import { GlobalVarHelper } from '@src/shared/helpers/global-var.helper';
 import { MailService } from './mail.service';
-const config = require(`../../..${configFileName}`);
 export interface MailJob {
     to: string;
     cc: string;

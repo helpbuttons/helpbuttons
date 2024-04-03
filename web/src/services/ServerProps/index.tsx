@@ -3,17 +3,16 @@ import { makeImageUrl, setSSRLocale } from 'shared/sys.helper';
 
 export class ServerPropsService {
   public static async general(subtitle, ctx) {
-    setSSRLocale(ctx.locale);
     const baseURL = process.env.API_URL;
-    const configURL = `${baseURL}/networks/config`;
-    const networkConfigURL = `${baseURL}/networks/findById`;
+    const configURL = `${baseURL}networks/config`;
+    const networkConfigURL = `${baseURL}networks/findById`;
 
     const catchMetadata = {
       metadata: {
-        title: '_',
+        title: '...',
         description: ' made with Helpbuttons.org',
         image: '',
-        siteTitle: '_',
+        siteTitle: '...',
         pageurl: `${ctx.uri}`,
       },
       selectedNetwork: {
@@ -22,6 +21,7 @@ export class ServerPropsService {
         nomeclature: 'helpbutton',
         nomeclaturePlural: 'helpbuttons',
         config: {},
+        locale: 'en'
       },
     };
 
@@ -43,6 +43,7 @@ export class ServerPropsService {
       name: 'error',
       description: 'error',
       logo: 'error',
+      locale: 'en'
     };
     try {
       const networkConfigRes = await fetch(networkConfigURL, {
@@ -64,8 +65,8 @@ export class ServerPropsService {
       logError(errorMsg, networkConfigData)
 
       return catchMetadata
-      // throw new Error(errorMsg);
     }
+    setSSRLocale(networkConfigData.locale);
 
     return {
       metadata: getMetadata(

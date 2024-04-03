@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 
 export function CardSubmenu({ children }) {
-  const [showSubmenu, setShowSubmenu] = useState(false);
-
+  const [showSubmenu, setShowSubmenu] = useState(false);  
   return (
-    <>
+    <div>
       <div
         onClick={() => {
           setShowSubmenu(!showSubmenu);
@@ -29,7 +28,7 @@ export function CardSubmenu({ children }) {
             </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

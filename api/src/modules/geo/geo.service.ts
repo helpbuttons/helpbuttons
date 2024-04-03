@@ -1,12 +1,9 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
-import { configFileName } from '@src/shared/helpers/config-name.const';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
 import { NetworkService } from '../network/network.service';
-
-const config = require(`../../..${configFileName}`);
 
 @Injectable()
 export class GeoService {
@@ -31,36 +28,36 @@ export class GeoService {
     }
   }
 
-  // photon.komoot.io/reverse?lon=10&lat=52
-  async geokeo(address: string) {
-    const url = `https://geokeo.com/geocode/v1/reverse.php?q=${address}&api=${config.geokeo}`;
-    return firstValueFrom(this.httpService.get(url)).then(
-      (result) => {
-        // @ts-ignore
-        if (!result.data.results) {
-          throw new CustomHttpException(ErrorName.geoCodingError);
-        }
-        let addressesFound = [];
-        // @ts-ignore
-        result.data.results.map((place) => {
-          const name = place.address_components.street
-            ? place.address_components.street
-            : place.address_components.name;
-          addressesFound.push({
-            formatted: `${name}, ${place.address_components.district}, ${place.address_components.country}`,
-            geometry: place.geometry,
-          });
-        });
-        return addressesFound;
-      },
-    );
-  }
+  // // photon.komoot.io/reverse?lon=10&lat=52
+  // async geokeo(address: string) {
+  //   const url = `https://geokeo.com/geocode/v1/reverse.php?q=${address}&api=${configs().geokeo}`;
+  //   return firstValueFrom(this.httpService.get(url)).then(
+  //     (result) => {
+  //       // @ts-ignore
+  //       if (!result.data.results) {
+  //         throw new CustomHttpException(ErrorName.geoCodingError);
+  //       }
+  //       let addressesFound = [];
+  //       // @ts-ignore
+  //       result.data.results.map((place) => {
+  //         const name = place.address_components.street
+  //           ? place.address_components.street
+  //           : place.address_components.name;
+  //         addressesFound.push({
+  //           formatted: `${name}, ${place.address_components.district}, ${place.address_components.country}`,
+  //           geometry: place.geometry,
+  //         });
+  //       });
+  //       return addressesFound;
+  //     },
+  //   );
+  // }
 
-  async opencage(address: string) {
-    const url = `https://api.opencagedata.com/geocode/v1/json?q=${address}&key=${config.mapifyApiKey}`;
-    const { data } = await firstValueFrom(this.httpService.get(url));
-    return data;
-  }
+  // async opencage(address: string) {
+  //   const url = `https://api.opencagedata.com/geocode/v1/json?q=${address}&key=${config.mapifyApiKey}`;
+  //   const { data } = await firstValueFrom(this.httpService.get(url));
+  //   return data;
+  // }
 
   async komoot(address: string) {
     return await this.networkService

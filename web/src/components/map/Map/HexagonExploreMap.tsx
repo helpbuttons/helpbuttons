@@ -62,24 +62,18 @@ export default function HexagonExploreMap({
   const [buttonTypes, setButtonTypes] = useState([]);
 
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
-  useEffect(() => {
-    if (!hexagonClicked)
-    {
-      setHexagonClickedFeatures(() => null)
-    }else{
-      setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonClicked))
-    }
-    
-  }, [hexagonClicked, geoJsonFeatures])
 
   useEffect(() => {
-    if(!hexagonHighlight)
+    if(!hexagonHighlight && !hexagonClicked)
     {
       setHexagonClickedFeatures(() => null)
-    }else{
+    }else if(hexagonClicked){
+      setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonClicked))
+    }else if(hexagonHighlight){
       setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonHighlight))
     }
-  }, [hexagonHighlight])
+  }, [hexagonHighlight,hexagonClicked, geoJsonFeatures])
+  
   useButtonTypes(setButtonTypes);
   return (
     <>
@@ -153,7 +147,10 @@ export default function HexagonExploreMap({
               feature={hexagonClickedFeatures}
               key={`clicked_${hexagonClicked}`}
               styleCallback={(feature, hover) => {
-                return { fill: 'white' };
+                return { 
+                  fill: 'white',
+                  opacity:'0.2',
+              };
               }}
               onClick={() => {
                 store.emit(new UpdateHexagonClicked(null))

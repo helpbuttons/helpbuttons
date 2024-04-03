@@ -106,7 +106,9 @@
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
     "configureInstanceTitle": "Setup the last details of your network",
-    "test": ""
+    "test": "",
+    "needLogo": "Before selecting a place for your network, please upload a logo",
+    "needPlace": "Please select the area of your network"
   },
   "activities": {
     "allNotifications":"All Notifications",
@@ -114,7 +116,7 @@
     "allPosts":"All Posts",
     "my": "My activity",
     "interests": "My interests activity",
-    "newbutton": "A new _helpbutton_ was published '{0}' in '{1}'",
+    "newbutton": "Your _helpbutton_ was published in '{0}', press this card to visit",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
     "newprivatecommentType": "Private message",
@@ -123,12 +125,14 @@
     "deletedType": "_helpbutton_ deleted",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
-    "newpost": "There is a new post '{0}' in the _helpbutton_ '{1}' by '{2}'",
-    "newcomment": "'{2}' commented '{0}' answer to the post '{1}'",
+    "newpost": "'{0}' posted in '{1}':",
+    "newcomment": "'{0}' replied in '{1}'",
     "newcommentSubject": "Someone commented on your _helpbutton_",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
-    "newfollowing": "your are now following the _helpbutton_ '{0}'",
-    "myhelpbuttons": "My _helpbuttons_"
+    "newfollowing": "your are now following the '{0}'",
+    "newfollowed": "{0} now follows your '{1}'",
+    "myhelpbuttons": "My _helpbuttons_",
+    "deletebutton": "{0} was deleted"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -355,6 +359,7 @@
     "chooseColorsExplain": "Main color would define backgrounds, secondary color would define details.",
     "pickMainColor": "Pick main color",
     "pickSecondaryColor": "Pick secondary color",
+    "buttonTemplateName": "Type Name",
     "buttonTemplateLabel": "Create your _helpbutton_ types",
     "buttonTemplateExplain": "These are the main types of _helpbuttons_ that your users can create. Add a name and choose your color to differenciate them",
     "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here",

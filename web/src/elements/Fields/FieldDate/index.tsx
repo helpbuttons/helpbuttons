@@ -173,6 +173,7 @@ export function ShowDate({
   eventType,
   title,
   eventData,
+  hideRecurrentDates = false,
 }) {
   return (
     <>
@@ -183,6 +184,7 @@ export function ShowDate({
             eventStart,
             eventEnd,
             loadRrules(eventData),
+            hideRecurrentDates
           )}
         </div>
       )}{' '}
@@ -194,7 +196,8 @@ export function readableEventDateTime(
   eventType,
   eventStart,
   eventEnd,
-  eventData
+  eventData,
+  hideRecurrentDates = false
 ) {
   if (eventType == DateTypes.ONCE && eventStart && eventEnd) {
     return (
@@ -212,6 +215,6 @@ export function readableEventDateTime(
   }
 
   if (eventType == DateTypes.RECURRENT) {
-    return (recurrentToText(eventData))
+    return (recurrentToText(eventData, hideRecurrentDates))
   }
 }

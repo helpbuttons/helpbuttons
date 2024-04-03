@@ -1,8 +1,6 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
-import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { LoginRequestDto, SignupRequestDto } from './auth.dto';
+import { SignupRequestDto } from './auth.dto';
 import { UserService } from '../user/user.service';
 import {
   dbIdGenerator,
@@ -27,12 +25,9 @@ import { UserUpdateDto } from '../user/user.dto';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
-import { ValidationError } from 'class-validator';
-import { configFileName } from '@src/shared/helpers/config-name.const';
 import { NetworkService } from '../network/network.service';
 import { InviteService } from '../invite/invite.service';
 import { Exception } from 'handlebars';
-const config = require(`../../..${configFileName}`);
 @Injectable()
 export class AuthService {
   constructor(

@@ -11,6 +11,7 @@ import { NetworkMapConfigure } from 'components/map/Map/NetworkMapConfigure';
 import { BrowseType, HbMapTiles } from 'components/map/Map/Map.consts';
 import circleToPolygon from 'circle-to-polygon';
 import { getBoundsHexFeatures } from 'shared/honeycomb.utils';
+import FieldError from '../FieldError';
 
 export default function FieldAreaMap({
   validationError,
@@ -20,6 +21,50 @@ export default function FieldAreaMap({
   label,
   explain,
   markerColor = 'pink'
+}) {
+
+  const [showHideMenu, setHideMenu] = useState(false);
+  let closeMenu = () => {
+    setHideMenu(false);
+  };
+  
+  return (
+    <>
+      <div className="form__field">
+        <div className="form__label">{label}</div>
+        <div className="form__explain">{explain}</div>
+
+        {!marker?.image ? (
+          <span style={{ color: 'red' }}>{t('setup.needLogo')}</span>
+        ) : (
+          <div
+            className="btn"
+            onClick={() => setHideMenu(!showHideMenu)}
+          >
+            {t('button.changePlaceLabel')}
+          </div>
+        )}
+        <FieldError validationError={validationError} />
+      </div>
+      {showHideMenu && (
+        <FieldAreaMapSettings
+          defaultExploreSettings={defaultExploreSettings}
+          onChange={onChange}
+          marker={marker}
+          closeMenu={closeMenu}
+        />
+      )}
+    </>
+  );
+}
+
+
+export function FieldAreaMapSettings({
+  defaultExploreSettings,
+  onChange,
+  marker,
+  markerColor = 'pink',
+  closeMenu
 }) {
 
   const [mapSettings, setMapSettings] = useState(() => {
@@ -52,10 +97,7 @@ export default function FieldAreaMap({
     }
   }
 
-  const [showHideMenu, setHideMenu] = useState(false);
-  let closeMenu = () => {
-    setHideMenu(false);
-  };
+
 
   const setRadius = (newRadius) => {
     setMapSettings((prevSettings) => {return {...prevSettings, radius: newRadius, geometry: circleToPolygon([prevSettings.center[1],prevSettings.center[0]], newRadius)}})
@@ -93,25 +135,8 @@ export default function FieldAreaMap({
   useEffect(() => {
     onChange({zoom: mapSettings.zoom, center: mapSettings.center, radius: mapSettings.radius, tileType: mapSettings.tileType, browseType: mapSettings.browseType})
   }, [mapSettings])
-
-  return (
-    <>
-      <div className="form__field">
-        <div className="form__label">
-          {label}
-        </div>
-        <div className="form__explain">
-          {explain}
-        </div>
-        <div
-          className="btn"
-          onClick={() => setHideMenu(!showHideMenu)}
-        >
-          {t('button.changePlaceLabel')}
-        </div>
-      </div>
-      {showHideMenu && (
-        <Picker closeAction={closeMenu} headerText={t('picker.headerText')}>
+return (
+  <Picker closeAction={closeMenu} headerText={t('picker.headerText')}>
               <NetworkMapConfigure
                 mapSettings={mapSettings}
                 onBoundsChanged={onBoundsChanged}
@@ -130,11 +155,8 @@ export default function FieldAreaMap({
                 btnType={BtnType.submit}
                 caption={t('common.save')}
                 contentAlignment={ContentAlignment.center}
-                onClick={() => setHideMenu(!showHideMenu)}
+                onClick={() => closeMenu()}
               />
         </Picker>
-      )}
-      <span style={{ color: 'red' }}>{validationError}</span>
-    </>
-  );
+)
 }

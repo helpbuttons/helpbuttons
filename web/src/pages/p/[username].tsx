@@ -24,7 +24,6 @@ import { NextPageContext } from 'next';
 import { ServerPropsService } from 'services/ServerProps';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { makeImageUrl } from 'shared/sys.helper';
-import SEO from 'components/seo';
 
 export default function p({ metadata, userProfile }) {
   const [userButtons, setUserButtons] = useState(null);
@@ -92,7 +91,6 @@ export default function p({ metadata, userProfile }) {
 
   return (
     <>
-      <SEO {...metadata} />
       <Popup
         linkFwd="/Explore"
         title={t('user.otherProfileView')}
@@ -131,7 +129,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     'New Button',
     ctx,
   );
-  const profileUrl = `${process.env.API_URL}/users/find/${ctx.params.username}`;
+  const profileUrl = `${process.env.API_URL}users/find/${ctx.params.username}`;
   const userProfileFetch = await fetch(profileUrl, {
     next: { revalidate: 10 },
   });

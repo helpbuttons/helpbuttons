@@ -34,9 +34,6 @@ export default function FieldLocation({
 
   const [place, setPlace] = useState(null);
 
-  const [zoom, setZoom] = useState<number>(
-    selectedNetwork.exploreSettings.zoom,
-  );
   let closeMenu = () => {
     setHideMenu(false);
   };
@@ -49,7 +46,6 @@ export default function FieldLocation({
   const [showHideMenu, setHideMenu] = useState(false);
   const handleSelectedPlace = (newPlace) => {
     setMarkerPosition([newPlace.geometry.lat, newPlace.geometry.lng]);
-    setZoom(() => 10)
     setPlace(() => newPlace);
   };
 
@@ -145,7 +141,7 @@ export default function FieldLocation({
           />
           <MarkerSelectorMap
             onMapClick={onMapClick}
-            zoom={zoom}
+            defaultZoom={selectedNetwork.exploreSettings.zoom}
             markerColor={markerColor ? markerColor : 'pink'}
             markerPosition={markerPosition}
             markerCaption={markerCaption}

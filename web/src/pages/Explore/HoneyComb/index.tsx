@@ -23,7 +23,6 @@ import { GlobalState, store } from 'pages';
 import { withRouter } from 'next/router';
 import List from 'components/list/List';
 import { Point } from 'pigeon-maps';
-import { LoadabledComponent } from 'components/loading';
 import HexagonExploreMap from 'components/map/Map/HexagonExploreMap';
 import {
   calculateDensityMap,
@@ -54,8 +53,8 @@ import {
 } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { alertService } from 'services/Alert';
-import { ButtonShow } from 'pages/ButtonFile/[id]';
 import t from 'i18n';
+import { ButtonShow } from 'components/button/ButtonShow';
 
 const defaultZoomPlace = 13;
 
@@ -144,10 +143,6 @@ function HoneyComb({ router, selectedNetwork }) {
             />
           </ShowDesktopOnly>
         </div>
-
-        <LoadabledComponent
-          loading={exploreSettings.loading && !selectedNetwork}
-        >
           <DisplayInstructions/>
           <HexagonExploreMap
             exploreSettings={exploreSettings}
@@ -155,7 +150,6 @@ function HoneyComb({ router, selectedNetwork }) {
             handleBoundsChange={handleBoundsChange}
             selectedNetwork={selectedNetwork}
           />
-        </LoadabledComponent>
         <ShowMobileOnly>
           <div
             className={

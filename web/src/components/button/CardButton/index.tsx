@@ -52,6 +52,7 @@ import Btn, {
 } from 'elements/Btn';
 import { diffInMonths } from 'shared/date.utils';
 import { FixedAlert } from 'components/overlay/Alert';
+import { maxZoom } from 'components/map/Map/Map.consts';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -157,6 +158,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
 }
 
 // Pin of the map
+/*
 export function CardButtonHeadSmall({ button }) {
   const { cssColor } = buttonTypes.find((buttonType) => {
     return buttonType.name === button.type;
@@ -192,7 +194,7 @@ export function CardButtonHeadSmall({ button }) {
     </>
   );
 }
-
+*/
 function CardButtonSubmenu({ button }) {
   const config: SetupDtoOut = useRef(
     store,
@@ -243,6 +245,7 @@ function CardButtonSubmenu({ button }) {
       <CardSubmenuOption
         onClick={() => {
           navigator.clipboard.writeText(linkButton);
+          alertService.info(`${linkButton}`)
         }}
         label={t('button.copy')}
       />
@@ -354,8 +357,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         {!button.hideAddress && showMap && (
           <MarkerSelectorMap
             markerPosition={[button.latitude, button.longitude]}
-            setMarkerPosition={() => {}}
-            zoom={10}
+            defaultZoom={maxZoom}
             markerColor={cssColor}
             markerImage={button.image}
             markerCaption={button.title}
@@ -442,7 +444,7 @@ function ShowPhone({ button }) {
   );
 }
 
-export function CardButtonHeadActions({ button, toggleShowReplyFirstPost }) {
+export function CardButtonHeadActions({ button, action }) {
   
   return (
     <div className="card-button__actions">
@@ -453,7 +455,7 @@ export function CardButtonHeadActions({ button, toggleShowReplyFirstPost }) {
           iconLeft={IconType.circle}
           iconLink={<IoMailOutline />}
           submit={true}
-          onClick={() => { toggleShowReplyFirstPost(true)}}
+          onClick={action}
       />
       {button.hearts && (
         <span className="btn-circle__icon">
