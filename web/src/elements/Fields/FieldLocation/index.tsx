@@ -13,6 +13,7 @@ import { Point } from 'pigeon-maps';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { ReverseGeo } from 'state/Explore';
 import { FieldCheckbox } from '../FieldCheckbox';
+import FieldError from '../FieldError';
 export default function FieldLocation({
   validationError,
   markerImage,
@@ -122,6 +123,7 @@ export default function FieldLocation({
         >
           {t('button.changePlaceLabel')}
         </label>
+        <FieldError validationError={validationError} />
       </div>
 
       {showHideMenu && markerPosition && (
@@ -162,7 +164,6 @@ export default function FieldLocation({
           />
         </Picker>
       )}
-      <span style={{ color: 'red' }}>{validationError}</span>
     </>
   );
 }
