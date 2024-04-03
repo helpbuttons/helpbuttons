@@ -37,7 +37,6 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
     handleSubmit,
     formState: {
       errors,
-      isSubmitting,
     },
     setFocus,
     control,
@@ -49,8 +48,11 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
     defaultValues
   });
 
+  register("address", { required: true })
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const onSubmit = (data) => {
+    setIsSubmitting(() => true)
     store.emit(
       new CreateButton(
         data,
@@ -99,6 +101,7 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
     }else{
       console.error(JSON.stringify(err))
     }
+    setIsSubmitting(() => false)
   };
 
   const {loadedDraft} = useButtonDraft({watch, getValues, reset, defaultValues})
