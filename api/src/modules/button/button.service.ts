@@ -8,7 +8,7 @@ import {
 import { OnEvent } from '@nestjs/event-emitter';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { Repository, In, EntityManager, Not } from 'typeorm';
+import { Repository, In, EntityManager, Not} from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { Button } from './button.entity';
@@ -265,7 +265,7 @@ export class ButtonService {
         .createQueryBuilder('button')
         .select('id')
         .where(
-          `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false`,
+          `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false AND expired = false`,
           { hexagons: hexagons },
         )
         .limit(1000)
@@ -337,7 +337,7 @@ export class ButtonService {
 
   async findByOwner(ownerId: string) {
     let buttons: Button[] = await this.buttonRepository.find({
-      where: { owner: {id: ownerId, role: Not(Role.blocked)}, deleted: false},
+      where: { owner: {id: ownerId, role: Not(Role.blocked)}, deleted: false, expired: false},
       relations: [
         'owner',
       ],
@@ -402,7 +402,7 @@ export class ButtonService {
     {
       return blocked;  
     }
-    return { deleted: false, ...blocked};
+    return { deleted: false, expired: false, ...blocked};
   }
 
   @OnEvent(ActivityEventName.NewPostComment)
@@ -433,6 +433,12 @@ export class ButtonService {
 
   updateModifiedDate(buttonId: string)
   {
-    return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false WHERE id = '${buttonId}'`)
+    return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = '${buttonId}'`)
+  }
+
+  setExpired(buttonId: string)
+  {
+    return this.buttonRepository.update(buttonId, {expired: true})
   }
 }
+
