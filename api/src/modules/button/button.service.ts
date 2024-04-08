@@ -171,7 +171,7 @@ export class ButtonService {
 
   async findById(id: string, includeDeleted: boolean = false) {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id, ...this.deletedBlockedConditions(includeDeleted) },
+      where: { id, ...this.expiredBlockedConditions(includeDeleted) },
       relations: ['owner'],
     });
 
@@ -276,7 +276,7 @@ export class ButtonService {
         relations: ['feed', 'owner'],
         where: {
           id: In(buttonsIds),
-          ...this.deletedBlockedConditions(),
+          ...this.expiredBlockedConditions(),
         },
         order: {
           created_at: 'DESC',
@@ -396,13 +396,13 @@ export class ButtonService {
       })
   }
 
-  deletedBlockedConditions(includeDeleted: boolean = false) {
-    const blocked = { owner: { role: Not(Role.blocked) } };
-    if(includeDeleted)
+  expiredBlockedConditions(includeExpired: boolean = false) {
+    const blocked = { owner: { role: Not(Role.blocked) }, deleted: false };
+    if(includeExpired)
     {
       return blocked;  
     }
-    return { deleted: false, expired: false, ...blocked};
+    return { expired: false, ...blocked};
   }
 
   @OnEvent(ActivityEventName.NewPostComment)
