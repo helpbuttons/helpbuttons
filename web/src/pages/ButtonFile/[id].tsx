@@ -60,7 +60,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
   const buttonUrl = `${process.env.API_URL}buttons/findById/${ctx.params.id}`;
   const currentButtonFetch = await fetch(buttonUrl, {
     next: { revalidate: 10 },
-  });
+  }).catch((err) => {console.log(err);return { props: serverProps };});
   const currentButtonData: Button = await currentButtonFetch.json();
   if (currentButtonData?.statusCode == HttpStatus.NOT_FOUND) {
     return { props: serverProps };

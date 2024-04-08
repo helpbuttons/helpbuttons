@@ -120,3 +120,15 @@ export interface UserRelations {
 }
 
 export type UserWithRelations = User & UserRelations;
+
+
+export class UserExtended extends User {
+  @Expose()
+  followsCount: number;
+
+  @Expose()
+  commentCount: number;
+
+  @Expose()
+  buttonCount: number;
+} 
