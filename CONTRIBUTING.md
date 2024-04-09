@@ -1,7 +1,9 @@
 ## Contributing
 If you would like to contribute to helpbuttons, we recommend that either you pick an issue in the github helpbuttons repository, or create a new issue, so that we can agree into adding this new feature or bugfix into the main code of helpbuttons. We recommend that you take a look at the issues labeled with [good first issue](https://github.com/helpbuttons/helpbuttons/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
 
-After picking up your issue, you should known that we use git flow. So you should do a branch from the `dev`, and when you feel your code is ready push your branch and open a pull request to the `dev` branch
+After picking up your issue, you should known that we use git flow. So you should do a branch from the `dev`, and when you feel your code is ready push your branch and open a pull request to the `dev` branch.
+
+The instance of helpbuttons runnning in https://dev.helpbuttons.org is up to date with the latest changes in the `dev` branch, the changes are automatically pulled.
 
 ## Requirements (recommended)
  - Docker >= 24.0.7
