@@ -1,8 +1,15 @@
+## Contributing
+If you would like to contribute to helpbuttons, we recommend that either you pick an issue in the github helpbuttons repository, or create a new issue, so that we can agree into adding this new feature or bugfix into the main code of helpbuttons. We recommend that you take a look at the issues labeled with [good first issue](https://github.com/helpbuttons/helpbuttons/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
 
+After picking up your issue, you should known that we use git flow. So you should do a branch from the `dev`, and when you feel your code is ready push your branch and open a pull request to the `dev` branch
 
-## Developers
+## Requirements (recommended)
+ - Docker >= 24.0.7
+ - docker-compose >= 2.23.3
+ - node >= v20.11.0
+ - yarn >= 1.22.21 
 
-### Develop web
+## Contributing to frontend
 
 copy the sample env file, and edit accordingly.
 
@@ -14,11 +21,7 @@ generate jwt token:
 
 add the jwtSecret generated to the .env file
 
-You can run the api & database in docker you can do:
-
-`$ docker-compose up api`
-
-You want to be able to access 3001 port from the api
+Edit the docker-compose.yml, so that the frontend has access to the api, by binding the port 3001
 ```
  ports: 
   - 3001:3001
@@ -28,9 +31,15 @@ and make sure api is in the external_network network by uncomenting the line on 
 
 ` - external_network`
 
-to run the ui in development mode
+You can run the api & database in docker you can do:
 
-first enter the nextjs project folder
+`$ docker-compose up api`
+
+run all the migrations / setup the database schema:
+
+`$ docker-compose exec api yarn migration:run`
+
+to run the ui in development mode, enter the frontend source folder
 
 `$ cd web`
 
@@ -46,25 +55,13 @@ run the app in watch mode
 
 `$ yarn dev`
 
-run migrations:
-
-`$ docker-compose exec api yarn migration:run`
-
-### develop api
-You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to 
-
-put all containers down
+You can now browse to `http://localhost:3000` to configure helpbuttons!
+## Contributing to the backend/api
+You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to put all containers down
 
 `$ docker-compose down`
 
-create an .env 
-`$ cp env.sample api/.env` (you can edit this file if you change your api host)
-
-edit the file `api/.env` acoording to ur needs
-
-run the database
-
-`$ docker-compose up -d db`
+#### Setup database
 
 You want to be able to access 5432 port from the db
 ```
@@ -72,14 +69,22 @@ You want to be able to access 5432 port from the db
   - 5432:5432
 ```
 
-
 and make sure api is in the external_network network by uncomenting the line on the networks of the db
 
 ` - external_network`
 
-run the api in watch mode:
+run the database
 
-enter the nestjs project folder
+`$ docker-compose up db`
+
+#### Run the backend in development mode
+
+create an .env 
+`$ cp env.sample api/.env` (you can edit this file if you change your api host)
+
+edit the file `api/.env` acoording to your needs, you will need to change the POSTGRES_HOSTNAME to `localhost`.
+
+to run the api in watch mode you need firstly to go into the api folder
 
 `$ cd api`
 
@@ -87,24 +92,17 @@ install all node_modules packages
 
 `$ yarn`
 
-generate jwt key
-
-`$ yarn build`
-
-`$ yarn cli config:genjwt`
-
-
 run in watch/development mode
 
 `$ yarn dev`
 
-run the migrations
+run all the migrations / setup the database schema:
 
 `$ yarn migration:run`
 
-(follow the instructions of the web on top of this file, to run the ui)
+You can now browse to `http://localhost:3000` to configure helpbuttons!
 
-### common errors
+### Troubleshooting
 
 If you find this error with yarn dev in web directory
 
@@ -128,7 +126,7 @@ Please load and read complete documentation
 [hb-docs](https://github.com/helpbuttons/hb-docs)
 
 
-## guide to build a new attribute in a network
+## guide to add a new attribute in a network
 
 go to api/src/modules/network
 
@@ -136,9 +134,9 @@ add the new attr to
  - network.entity.ts (this is to define in the db)
  - network.dto.ts (this is for the post request to validate)
 
-run `yarn migration:generate src/data/migrations/name`
+run `$ yarn migration:generate src/data/migrations/name`
 
-run `yarn migration:run`
+run `$ yarn migration:run`
 
 in the frontend:
 web/src/pages/Configuration/index.tsx
