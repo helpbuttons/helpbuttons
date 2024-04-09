@@ -72,7 +72,6 @@ export class ButtonCron {
                   });
                 });
             })
-            .then(() => this.buttonService.delete(button.id));
         });
       }),
     );

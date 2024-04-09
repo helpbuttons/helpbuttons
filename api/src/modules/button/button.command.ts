@@ -8,11 +8,12 @@ export class ButtonCommand {
 
   @Command({
     command: 'cron:buttons:removepast',
-    describe: 'remove buttons with more than 3 months of inactivity',
+    describe: 'remove buttons with more than 3 months of inactivity, and events which already passed',
   })
-  async cronRemoveOldButtons(
+  async cronRemovePastEvents(
     
   ) {
-    this.buttonCron.clearOldButtons()
+    await this.buttonCron.clearEventButtons()
+    await this.buttonCron.clearOldButtons()
   }
 }
