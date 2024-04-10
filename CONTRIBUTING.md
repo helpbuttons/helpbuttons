@@ -136,6 +136,12 @@ to run the api in watch mode you need firstly to go into the api directory
 
 `$ cd api`
 
+create the uploads directory and give the correct permissions
+
+`$ mkdir uploads`
+
+`$ chmod o+w uploads`
+
 install all node_modules packages
 
 `$ yarn`
