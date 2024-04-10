@@ -34,13 +34,11 @@ add the jwtSecret generated to the .env file
 
 lets put it all up
 
-`$ docker-compose up -d`
+`$ docker-compose up`
 
 Open the browser on **http://host:3000**
 
-setup the database according to what you setup in env.db and get an [opencage](https://opencagedata.com/) api key
-
-then please setup the database scheme:
+run all the migrations / setup the database schema:
 
 `$ docker-compose run api yarn migration:run`
 
