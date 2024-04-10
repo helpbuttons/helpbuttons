@@ -1,4 +1,28 @@
 ## Contributing
+
+Read our [Code of Conduct](./CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
+
+In this guide you will get an overview of the contribution workflow from opening an issue, creating a PR, reviewing, and merging the PR.
+Use the table of contents icon (TOC) on the top left corner of the this document to get to a specific section of this guide quickly.
+
+## New contributor guide
+
+To get an overview of the project, read the [README](README.md). Here are some resources to help you get started with open source contributions:
+
+- [Finding ways to contribute to open source on GitHub](https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github)
+- [Set up Git](https://docs.github.com/en/get-started/quickstart/set-up-git)
+- [GitHub flow](https://docs.github.com/en/get-started/quickstart/github-flow)
+- [Collaborating with pull requests](https://docs.github.com/en/github/collaborating-with-pull-requests)
+
+
+### Issues
+
+#### Create a new issue
+
+If you spot a problem with the help buttons backend, [search if an issue already exists](https://docs.github.com/en/github/searching-for-information-on-github/searching-on-github/searching-issues-and-pull-requests#search-by-the-title-body-or-comments). If a related issue doesn't exist, you can open a new issue.
+
+## Contributing with a Pull Request
+
 If you would like to contribute to helpbuttons, we recommend that either you pick an issue in the github helpbuttons repository, or create a new issue, so that we can agree into adding this new feature or bugfix into the main code of helpbuttons. We recommend that you take a look at the issues labeled with [good first issue](https://github.com/helpbuttons/helpbuttons/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
 
 After picking up your issue, you should known that we use git flow. So you should do a branch from the `dev`, and when you feel your code is ready push your branch and open a pull request to the `dev` branch.
@@ -11,15 +35,22 @@ The instance of helpbuttons runnning in https://dev.helpbuttons.org is up to dat
  - node >= v20.11.0
  - yarn >= 1.22.21 
 
-## Contributing to frontend
+## Setup frontend for development
+Change to the dev branch
+`$ git checkout dev`
 
 copy the sample env file, and edit accordingly.
 
 `$ cp env.sample .env`
 
+> Note:
+> set hostName to `localhost`
+> set VERSION to `dev`
+> set API_URL to `http://localhost:3001/`
+
 generate jwt token:
 
-`$ docker-compose run api yarn cli config:genjwt`
+`$ docker-compose run api yarn config:genjwt`
 
 add the jwtSecret generated to the .env file
 
@@ -45,9 +76,8 @@ to run the ui in development mode, enter the frontend source folder
 
 `$ cd web`
 
-create an .env file with the address of the api and port
-
-`echo "API_URL=http://localhost:3001/" > .env`
+create a symlink or copy the .env file to the api directory
+`$ ln -s ../.env .` or `$ cp ../.env .`
 
 install all node_modules packages
 
@@ -58,12 +88,14 @@ run the app in watch mode
 `$ yarn dev`
 
 You can now browse to `http://localhost:3000` to configure helpbuttons!
-## Contributing to the backend/api
+
+
+## Setup frontend & api/backend
 You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to put all containers down
 
-`$ docker-compose down`
+#### Setup database using docker
 
-#### Setup database
+Notice: Our postgres image is modified to include the [h3](https://github.com/uber/h3) extension and postgis, so you won't be able to use plain postgres.
 
 You want to be able to access 5432 port from the db
 ```
@@ -81,18 +113,29 @@ run the database
 
 #### Run the backend in development mode
 
-create an .env 
-`$ cp env.sample api/.env` (you can edit this file if you change your api host)
+copy the sample env file, and edit accordingly.
 
-edit the file `api/.env` acoording to your needs, you will need to change the POSTGRES_HOSTNAME to `localhost`.
+`$ cp env.sample .env`
+> Note:
+> set POSTGRES_HOSTNAME to `localhost`.
+> set hostName to `localhost`
+> set VERSION to `dev`
+> set API_URL to `http://localhost:3001/`
 
-to run the api in watch mode you need firstly to go into the api folder
+to run the api in watch mode you need firstly to go into the api directory
 
 `$ cd api`
 
 install all node_modules packages
 
 `$ yarn`
+
+generate jwt token and add it to the .env file 
+`$ yarn config:genjwt`
+> set jwtSecret on the `.env` file
+
+create a symlink or copy the .env file to the api directory
+`$ ln -s ../.env .` or `$ cp ../.env .`
 
 run in watch/development mode
 

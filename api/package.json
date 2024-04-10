@@ -30,10 +30,10 @@
     "schema:drop": "yarn typeorm schema:drop",
     "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.ts",
     "translations": "cp -r ../web/public/locales .",
-    "cli": "CLI_PATH=./dist/cli.js npx nestjs-command",
-    "cron:events:removepast": "yarn cli -- cron:events:removepast",
-    "cron:buttons:removepast": "yarn cli -- cron:buttons:removepast"
-    
+    "cli": "npx nestjs-command",
+    "cron:events:removepast": "yarn cli cron:events:removepast",
+    "cron:buttons:removepast": "yarn cli cron:buttons:removepast",
+    "config:genjwt": "yarn cli config:genjwt"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
