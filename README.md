@@ -1,4 +1,4 @@
-For developers, open [Readme-dev](/README-dev.md) 
+For developers, open [CONTRIBUTING.md](/CONTRIBUTING.md) 
 
 ![HB cover](/web/public/assets/images/hb_landscape_02_small.jpg?raw=true "hb cover")
 
