@@ -30,9 +30,8 @@ export const bootstrap = async () => {
   console.log(configs());
 
   const app = await NestFactory.create(AppModule);
-
-  app.enableCors({ origin: configs().hostName });
-
+  app.enableCors({origin: configs().WEB_URL})
+  
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 

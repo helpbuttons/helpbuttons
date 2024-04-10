@@ -13,7 +13,8 @@ let configs = {
   smtpUser: process.env.smtpUser,
   smtpPass: process.env.smtpPass,
   from: process.env.from,
-  jwtSecret: process.env.jwtSecret
+  jwtSecret: process.env.jwtSecret,
+  WEB_URL: process.env.WEB_URL
 }
 
 if (fs.existsSync(`${__dirname}/../../config/config.json`)) {
