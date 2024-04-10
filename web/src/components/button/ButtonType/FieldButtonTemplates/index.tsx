@@ -30,7 +30,7 @@ const FieldButtonTemplates = forwardRef(
     },
     ref,
   ) => {
-    const [color, setColor] = useState();
+    const [color, setColor] = useState('#000');
     const [text, setText] = useState();
 
     const { remove, append, update } = useFieldArray({

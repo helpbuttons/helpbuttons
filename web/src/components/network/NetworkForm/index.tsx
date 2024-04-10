@@ -2,13 +2,10 @@
 import Btn, {
   BtnType,
   ContentAlignment,
-  IconType,
 } from 'elements/Btn';
 
 import FieldAreaMap from 'elements/Fields/FieldAreaMap';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
-import FieldLocation from 'elements/Fields/FieldLocation';
-import { FieldPrivacy } from 'elements/Fields/FieldPrivacy';
 import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
@@ -16,16 +13,11 @@ import Form from 'elements/Form';
 
 import t from 'i18n';
 import { useRouter } from 'next/router';
-import { getLocale, getUrlOrigin } from 'shared/sys.helper';
+import { getUrlOrigin } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
 
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { useEffect, useState } from 'react';
-import { store } from 'pages';
-import {
-  UpdateNetworkBackgroundColor,
-  UpdateNetworkTextColor,
-} from 'state/Networks';
 import Accordion from 'elements/Accordion';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
