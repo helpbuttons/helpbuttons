@@ -37,6 +37,7 @@ The instance of helpbuttons runnning in https://dev.helpbuttons.org is up to dat
 
 ## Setup frontend for development
 Change to the dev branch
+
 `$ git checkout dev`
 
 copy the sample env file, and edit accordingly.
@@ -44,17 +45,21 @@ copy the sample env file, and edit accordingly.
 `$ cp env.sample .env`
 
 > Note:
-> set hostName to `localhost`
-> set VERSION to `dev`
-> set API_URL to `http://localhost:3001/`
+>
+> set `hostName` to `localhost`
+>
+> set `VERSION` to `dev`
+>
+> set `API_URL` to `http://localhost:3001/`
 
 generate jwt token:
 
 `$ docker-compose run api yarn config:genjwt`
 
-add the jwtSecret generated to the .env file
+add the generated string as a `jwtSecret` to the `.env`
 
-Edit the docker-compose.yml, so that the frontend has access to the api, by binding the port 3001
+Edit the `docker-compose.yml`, so that the frontend has access to the api, by binding the port 3001
+
 ```
  ports: 
   - 3001:3001
@@ -77,6 +82,7 @@ to run the ui in development mode, enter the frontend source folder
 `$ cd web`
 
 create a symlink or copy the .env file to the api directory
+
 `$ ln -s ../.env .` or `$ cp ../.env .`
 
 install all node_modules packages
@@ -90,14 +96,13 @@ run the app in watch mode
 You can now browse to `http://localhost:3000` to configure helpbuttons!
 
 
-## Setup frontend & api/backend
-You need a postgis database. postgres+opengis you can use our docker-compose file. You will need to put all containers down
+## Setup frontend & api/backend for development
+
+We recommend that you use our pre-build docker image for postgres, because we added goodies like the [h3](https://github.com/uber/h3) library and gis.
 
 #### Setup database using docker
+You want to be able to access 5432 port on your localhost machine so you have to expose it. by editing the `docker-compose.yml` file.
 
-Notice: Our postgres image is modified to include the [h3](https://github.com/uber/h3) extension and postgis, so you won't be able to use plain postgres.
-
-You want to be able to access 5432 port from the db
 ```
  ports: 
   - 5432:5432
@@ -117,10 +122,14 @@ copy the sample env file, and edit accordingly.
 
 `$ cp env.sample .env`
 > Note:
-> set POSTGRES_HOSTNAME to `localhost`.
-> set hostName to `localhost`
-> set VERSION to `dev`
-> set API_URL to `http://localhost:3001/`
+>
+> set `POSTGRES_HOSTNAME` to `localhost`.
+>
+> set `hostName` to `localhost`
+>
+> set `VERSION` to `dev`
+>
+> set `API_URL` to `http://localhost:3001/`
 
 to run the api in watch mode you need firstly to go into the api directory
 
@@ -131,10 +140,13 @@ install all node_modules packages
 `$ yarn`
 
 generate jwt token and add it to the .env file 
+
 `$ yarn config:genjwt`
-> set jwtSecret on the `.env` file
+
+> add the generated string as a `jwtSecret` to the `.env`
 
 create a symlink or copy the .env file to the api directory
+
 `$ ln -s ../.env .` or `$ cp ../.env .`
 
 run in watch/development mode
