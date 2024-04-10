@@ -32,7 +32,11 @@ export default function CardNotification({ activity = {} }) {
         />
       );
     } else if (activity.eventName == ActivityEventName.DeleteButton) {
-      const {button, user} = JSON.parse(activity.data);
+      let {button} = JSON.parse(activity.data);
+      if(!button)
+      {
+        button = JSON.parse(activity.data);
+      }
       const notifIcon =<IoAddCircleOutline/>
       return (
         <NotificationCard
