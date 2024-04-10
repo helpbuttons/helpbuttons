@@ -30,7 +30,7 @@ const FieldButtonTemplates = forwardRef(
     },
     ref,
   ) => {
-    const [color, setColor] = useState();
+    const [color, setColor] = useState('#000');
     const [text, setText] = useState();
 
     const { remove, append, update } = useFieldArray({
@@ -83,7 +83,8 @@ const FieldButtonTemplates = forwardRef(
 
         <div className="form__input--button-type-field">
           <FieldText
-            name="buttonTemplate.name"
+            name={t('configuration.buttonTemplateName')}
+            label={t('configuration.buttonTemplateName')}
             placeholder={t(
               'configuration.createButtonTypePlaceholder',
             )}

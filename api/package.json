@@ -11,7 +11,7 @@
     "build": "nest build --path tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "dev": "yarn translations && nest start -p tsconfig.json --watch --preserveWatchOutput",
+    "dev": "nest start -p tsconfig.json --watch --preserveWatchOutput",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -30,9 +30,10 @@
     "schema:drop": "yarn typeorm schema:drop",
     "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.ts",
     "translations": "cp -r ../web/public/locales .",
-    "cron:events:removepast": "CLI_PATH=./dist/cli.js npx nestjs-command cron:events:removepast",
-    "cron:buttons:removepast": "CLI_PATH=./dist/cli.js npx nestjs-command cron:buttons:removepast"
-    
+    "cli": "npx nestjs-command",
+    "cron:events:removepast": "yarn cli cron:events:removepast",
+    "cron:buttons:removepast": "yarn cli cron:buttons:removepast",
+    "config:genjwt": "yarn cli config:genjwt"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -57,6 +58,7 @@
     "cache-manager": "^5.2.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "dotenv": "^16.4.5",
     "geojson": "^0.5.0",
     "h3-js": "^4.1.0",
     "handlebars": "^4.7.7",

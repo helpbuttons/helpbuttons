@@ -1,16 +1,14 @@
 
-import { configFileName } from "../../shared/helpers/config-name.const";
 import { DataSourceOptions } from "typeorm";
-
-var configFile = require(`../../..${configFileName}`);
+import configs from '@src/config/configuration';
 
 export const dataSourceOptions:DataSourceOptions = {
     type: 'postgres',
-    host: configFile.postgresHostName ? configFile.postgresHostName : 'db',
-    port: configFile.postgresPort ? configFile.postgresPort : 5432,
-    username: configFile.postgresUser,
-    password: configFile.postgresPassword,
-    database: configFile.postgresDb,
+    host: configs().postgresHostName,
+    port: configs().postgresPort,
+    username: configs().postgresUser,
+    password: configs().postgresPassword,
+    database: configs().postgresDb,
     entities: ['dist/modules/**/*.entity.js'],
     /* Note : it is unsafe to use synchronize: true for schema synchronization
     on production once you get data in your database. */

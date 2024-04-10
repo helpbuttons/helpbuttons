@@ -7,7 +7,6 @@ return <>{network && (<ImageContainer
                   alt={network.name}
                   width={68}
                   height={68}
-                  localUrl
                 />)
               }
               </>

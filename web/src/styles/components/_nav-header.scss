@@ -92,16 +92,20 @@ $nav-header-new-message-radius: $border-radius-circle;
 
     display: flex;
     background-color: $color-corporative;
-    align-items: center;
-    justify-content: center;
+    // align-items: center;
+    // justify-content: center;
     padding: $padding-small $padding-big ;
     overflow-x:auto;
     // border-bottom: 1px solid $color-gray-border;
 
   }
 
-  .nav-header__filters .hashtags__list-item:nth-of-type(1){
-    margin-left: 120px;
+  .hashtags__list-item:nth-of-type(1){
+    margin-left: auto;
+   }
+
+   .hashtags__list-item:last-child{
+    margin-right: auto;
    }
 
 }

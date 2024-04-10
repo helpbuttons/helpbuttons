@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import configs from '@src/config/configuration';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
@@ -11,17 +11,14 @@ import { TagModule } from '../tag/tag.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { StorageModule } from '../storage/storage.module';
-import { configFileName } from '@src/shared/helpers/config-name.const';
 import { NetworkModule } from '../network/network.module';
 import { InviteModule } from '../invite/invite.module';
-
-var configFile = require(`../../../${configFileName}`);
 
 @Module({
   imports: [
     PassportModule,
     JwtModule.register({
-      secret: configFile.jwtSecret,
+      secret: configs().jwtSecret,
       signOptions: {expiresIn: '60s'}
     }),
     UserCredentialModule,

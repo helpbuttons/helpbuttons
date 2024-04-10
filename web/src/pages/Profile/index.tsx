@@ -85,13 +85,15 @@ export default function Profile() {
                       caption={t('user.editProfile')}
                     />
                   </Link>
-                  <Link href="/Profile/Invites">
-                    <Btn
-                      iconLeft={IconType.svg}
-                      iconLink={<IoPersonAddOutline />}
-                      caption={t('invite.title')}
-                    />
-                  </Link>
+                  {selectedNetwork?.inviteOnly && 
+                    <Link href="/Profile/Invites">
+                      <Btn
+                        iconLeft={IconType.svg}
+                        iconLink={<IoPersonAddOutline />}
+                        caption={t('invite.title')}
+                      />
+                    </Link>
+                  }
                   <Link href="/HomeInfo">
                     <div onClick={logout} className="btn-with-icon">
                       <div className="btn-with-icon__icon">

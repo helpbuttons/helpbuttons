@@ -1,18 +1,8 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import {
-  SetupDto,
-  SetupDtoOut,
-} from '@src/modules/setup/setup.entity';
-import * as fs from 'fs';
-import { version } from '../commit';
-import { configFileName } from './config-name.const';
+import configs from '@src/config/configuration';
+import { SetupDtoOut } from '@src/modules/setup/setup.entity';
+
 const { Pool } = require('pg');
-
-export const configFullPath: string = `.${configFileName}`;
-
-export const isConfigFileCreated = async () => {
-  return fs.existsSync(configFullPath);
-};
 
 export const checkDatabase = async (
   config,
@@ -36,7 +26,7 @@ export const checkDatabase = async (
     const userCount = await poolconnection.query(
       `SELECT count(id) from public.user`,
     );
-    poolconnection.release()
+    poolconnection.release();
     return {
       migrationsNumber: migrationsNumber.rows[0].count,
       userCount: userCount.rows[0].count,
@@ -59,40 +49,25 @@ export const checkDatabase = async (
     if (error?.code === '28P01') {
       msg = `db-connection-error`;
     }
-    if(error?.code === '42P01') {}
+    if (error?.code === '42P01') {
+    }
     console.log(`${HttpStatus.SERVICE_UNAVAILABLE} :: ${msg}`);
+    console.log(JSON.stringify(error));
 
     throw new HttpException(msg, HttpStatus.SERVICE_UNAVAILABLE);
   }
-
-  
 };
-
-
 export const getConfig = async () => {
-  if (!await isConfigFileCreated()) {
-    throw new HttpException(
-      `${configFullPath} nao existe!`,
-      HttpStatus.BAD_REQUEST,
-    );
-  }
-
-  const config = require(`../../..${configFileName}`);
-
-  return checkDatabase(config).then(
+  return checkDatabase(configs()).then(
     ({ migrationsNumber, userCount }) => {
-      const dataJSON = fs.readFileSync(configFullPath, 'utf8');
-      const data: SetupDto = new SetupDto(JSON.parse(dataJSON));
-
-      const { hostname } = new URL(data.hostName);
+      const data = configs();
 
       const dataToWeb: SetupDtoOut = {
         hostName: data.hostName,
-        allowedDomains: data.allowedDomains,
+        allowedDomains: [],
         databaseNumberMigrations: migrationsNumber,
         userCount: userCount,
-        commit: version.git,
-        hostname
+        commit: 'todo',
       };
 
       return dataToWeb;

@@ -24,8 +24,6 @@ import { getManager } from 'typeorm';
 import { StorageService } from '../storage/storage.service';
 import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { UserService } from '../user/user.service';
-import { SetupDtoOut } from '../setup/setup.entity';
-import { getConfig } from '@src/shared/helpers/config.helper';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import {
@@ -34,6 +32,8 @@ import {
   CacheTTL,
 } from '@nestjs/cache-manager';
 import { updateNomeclature } from '@src/shared/helpers/i18n.helper';
+import { getConfig } from '@src/shared/helpers/config.helper';
+import { SetupDtoOut } from '../setup/setup.entity';
 
 @Injectable()
 export class NetworkService {
@@ -262,7 +262,7 @@ export class NetworkService {
   getConfig(): Promise<SetupDtoOut> {
     return getConfig();
   }
-
+  
   async buttonsToDeleteFromButtonTemplates(
     currentBtnTypes,
     _newBtnTypes,

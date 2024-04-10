@@ -1,15 +1,20 @@
 ///Accordion section component for displaying long section data
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 
 export default function Accordion({
     title,
     children,
-    handleClick = () => {}
+    handleClick = () => {},
+    collapsed = false,
 }) {
 
-  const [showChildren, setShowChildren] = useState(false);
+  const [showChildren, setShowChildren] = useState(collapsed);
 
+  useEffect(() => {
+    setShowChildren(() => collapsed)
+  }, [collapsed])
+  
   const classNames = showChildren ? 'accordion accordion--open' : 'accordion';
 
     return (

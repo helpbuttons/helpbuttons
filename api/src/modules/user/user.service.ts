@@ -11,11 +11,9 @@ import {
 import { EntityManager, In, Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
-import { configFileName } from '@src/shared/helpers/config-name.const';
 import { TagService } from '../tag/tag.service';
 import { publicNanoidGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { plainToClass } from 'class-transformer';
-const config = require(`../../..${configFileName}`);
 
 @Injectable()
 export class UserService {

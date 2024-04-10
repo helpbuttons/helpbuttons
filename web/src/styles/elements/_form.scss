@@ -163,6 +163,7 @@ margin: $margin-medium 0;
   font-size: $font-size-general;
   height: $form-input-height;
   margin: $margin-xsmall 0;
+  text-overflow: ellipsis;
 
   & ul {
 
@@ -387,6 +388,7 @@ width: 100%;
   border: 1px $color-gray dashed;
   padding: $padding-big;
   // padding-bottom: 0;
+
 }
 
 

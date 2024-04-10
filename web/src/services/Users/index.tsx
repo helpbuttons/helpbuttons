@@ -22,14 +22,14 @@ export class UserService {
 
   //Signup in the new user
   public static signup(signupRequestDto : SignupRequestDto): Observable<any> {
-    return httpService.post<ICurrentUser>("/users/signup", signupRequestDto).pipe(
+    return httpService.post<ICurrentUser>("users/signup", signupRequestDto).pipe(
       tap((response) => httpService.setAccessToken(response?.token))
     );
   }
 
   //Login user
   public static login(email:string, password:string): Observable<ICurrentUser | undefined> {
-    return httpService.post<ICurrentUser>("/users/login", {email, password}).pipe(
+    return httpService.post<ICurrentUser>("users/login", {email, password}).pipe(
       tap((user) => httpService.setAccessToken(user?.token))
     );
   }
@@ -40,7 +40,7 @@ export class UserService {
 
   //Check user
   public static whoAmI(): Observable<any> {
-    return httpService.get<IUser>("/users/whoami");
+    return httpService.get<IUser>("users/whoami");
   }
 
   public static findUser(username: string)

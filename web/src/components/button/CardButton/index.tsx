@@ -53,6 +53,7 @@ import Btn, {
 import { diffInMonths } from 'shared/date.utils';
 import { FixedAlert } from 'components/overlay/Alert';
 import { maxZoom } from 'components/map/Map/Map.consts';
+import { Button } from 'shared/entities/button.entity';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -368,12 +369,12 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
   );
 }
 
-function ExpiringAlert({button, isOwner = false}) {
+function ExpiringAlert({button, isOwner = false} : {button: Button, isOwner: boolean}) {
   if(!isOwner)
   {
     return;
   }
-  if(diffInMonths(new Date(), new Date(button.updated_at)) < 3)
+  if(!button.expired)
   {
      return;
   }
@@ -444,7 +445,7 @@ function ShowPhone({ button }) {
   );
 }
 
-export function CardButtonHeadActions({ button, toggleShowReplyFirstPost }) {
+export function CardButtonHeadActions({ button, action }) {
   
   return (
     <div className="card-button__actions">
@@ -455,7 +456,7 @@ export function CardButtonHeadActions({ button, toggleShowReplyFirstPost }) {
           iconLeft={IconType.circle}
           iconLink={<IoMailOutline />}
           submit={true}
-          onClick={() => { toggleShowReplyFirstPost(true)}}
+          onClick={action}
       />
       {button.hearts && (
         <span className="btn-circle__icon">

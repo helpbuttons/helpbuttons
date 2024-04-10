@@ -87,7 +87,7 @@ export class ButtonController {
   @AllowIfNetworkIsPublic()
   @Get('findById/:buttonId')
   async findOne(@Param('buttonId') buttonId: string) {
-    return await this.buttonService.findById(buttonId);
+    return this.buttonService.findById(buttonId, true);
   }
 
   @OnlyRegistered()

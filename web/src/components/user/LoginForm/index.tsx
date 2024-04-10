@@ -27,18 +27,17 @@ export default function LoginForm() {
 
   const onSubmit = (data) => {
     store.emit(
-      new Login(data.email, data.password, onSuccess, onError),
+      new Login(data.email.toLowerCase(), data.password, onSuccess, onError),
     );
   };
 
   const onSuccess = (userData) => {
     alertService.success(t('user.loginSucess'))
     let returnUrl: string = `/HomeInfo`;
-
     if (router?.query?.returnUrl) {
       returnUrl = router.query.returnUrl.toString();
     }
-    router.push(returnUrl, null, { locale: userData.locale })
+    router.push(returnUrl)
   };
 
   const onError = (err) => {

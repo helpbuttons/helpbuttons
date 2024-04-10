@@ -35,26 +35,24 @@ This is the repository for helpbuttons.org. check more documentations at the rep
 
 ### Using docker
 
-Copy the docker-compose.yml to the folder where you want to work.
+copy the env.sample file:
+`$ cp env.sample .env`
 
-Edit the part of the docker-compose.yml to setup the credentials of the database, where it says:
+edit the `.env` file according to your needs
 
-```
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=CHANGE_ME
-      - POSTGRES_DB=hb-db
-```
+generate jwt token:
+
+`$ docker-compose run api yarn cli config:genjwt`
+
+add the jwtSecret generated to the .env file
 
 lets put it all up
 
-`$ docker-compose up -d`
+`$ docker-compose up`
 
 Open the browser on **http://host:3000**
 
-setup the database according to what you setup in env.db and get an [opencage](https://opencagedata.com/) api key
-
-then please setup the database scheme:
+run all the migrations / setup the database schema:
 
 `$ docker-compose run api yarn migration:run`
 
