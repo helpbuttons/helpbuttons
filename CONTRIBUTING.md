@@ -100,6 +100,20 @@ You can now browse to `http://localhost:3000` to configure helpbuttons!
 
 We recommend that you use our pre-build docker image for postgres, because we added goodies like the [h3](https://github.com/uber/h3) library and gis.
 
+#### create .env file with your settings
+copy the sample env file, and edit accordingly.
+
+`$ cp env.sample .env`
+> Note:
+>
+> set `POSTGRES_HOSTNAME` to `localhost`.
+>
+> set `hostName` to `localhost`
+>
+> set `VERSION` to `dev`
+>
+> set `API_URL` to `http://localhost:3001/`
+
 #### Setup database using docker
 You want to be able to access 5432 port on your localhost machine so you have to expose it. by editing the `docker-compose.yml` file.
 
@@ -118,19 +132,6 @@ run the database
 
 #### Run the backend in development mode
 
-copy the sample env file, and edit accordingly.
-
-`$ cp env.sample .env`
-> Note:
->
-> set `POSTGRES_HOSTNAME` to `localhost`.
->
-> set `hostName` to `localhost`
->
-> set `VERSION` to `dev`
->
-> set `API_URL` to `http://localhost:3001/`
-
 to run the api in watch mode you need firstly to go into the api directory
 
 `$ cd api`
@@ -143,7 +144,7 @@ generate jwt token and add it to the .env file
 
 `$ yarn config:genjwt`
 
-> add the generated string as a `jwtSecret` to the `.env`
+> add the generated string as a `jwtSecret` to the `.env` file
 
 create a symlink or copy the .env file to the api directory
 
@@ -156,6 +157,22 @@ run in watch/development mode
 run all the migrations / setup the database schema:
 
 `$ yarn migration:run`
+
+to run the ui in development mode, enter the frontend source folder
+
+`$ cd web`
+
+create a symlink or copy the .env file to the api directory
+
+`$ ln -s ../.env .` or `$ cp ../.env .`
+
+install all node_modules packages
+
+`$ yarn`
+
+run the app in watch mode
+
+`$ yarn dev`
 
 You can now browse to `http://localhost:3000` to configure helpbuttons!
 
