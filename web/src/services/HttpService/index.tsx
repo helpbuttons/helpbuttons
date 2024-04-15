@@ -27,7 +27,7 @@ export class HttpService {
       this.isAuthenticated$.next(true);
     }
     const { publicRuntimeConfig } = getConfig()
-    this.apiUrl = `${publicRuntimeConfig.apiUrl}`;
+    this.apiUrl = `${publicRuntimeConfig.apiUrl}/`;
   }
   public getAccessToken()
   {

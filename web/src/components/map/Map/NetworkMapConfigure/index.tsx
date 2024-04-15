@@ -83,7 +83,7 @@ export function NetworkMapConfigure({
               anchor={mapSettings.center}
               offset={[35, 65]}
               cssColor={'red'}
-              image={makeImageUrl(marker.image, '/api')}
+              image={makeImageUrl(marker.image)}
               title={marker.caption}
             />
           }
@@ -93,7 +93,7 @@ export function NetworkMapConfigure({
               anchor={mapSettings.center}
               offset={[35, 65]}
               cssColor={'red'}
-              image={makeImageUrl(marker.image, '/api')}
+              image={makeImageUrl(marker.image)}
               title={marker.caption}
             />
           } */}

@@ -86,8 +86,7 @@ export function getMetadata(subtitle, selectedNetwork, baseUrl, uri) {
     ? `${selectedNetwork.name} - ${subtitle}`
     : selectedNetwork.name;
   const imageUrl = makeImageUrl(
-    selectedNetwork.logo,
-    baseUrl + '/api',
+    selectedNetwork.logo
   );
   return {
     title: title,
