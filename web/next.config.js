@@ -4,10 +4,16 @@ const { i18n } = require('./next-i18next.config');
 module.exports = {
     reactStrictMode: true,
     publicRuntimeConfig: {
-        apiUrl: process.env.API_URL
+        apiUrl: '/api'
     },
     typescript:{
         ignoreBuildErrors: true,
+    },
+    async rewrites() {
+      return [{
+        source: '/api/:path*',
+        destination: `${process.env.API_URL}/:path*`
+      }]
     },
     async redirects() {
       return [
@@ -29,8 +35,7 @@ module.exports = {
       ]
     },
     images: {
-      formats: ['image/avif', 'image/webp'],
-      domains: [process.env.ALLOWED_IMAGES_DOMAINS]
+      formats: ['image/avif', 'image/webp']
     },
     i18n,
     output: 'standalone',
