@@ -31,5 +31,9 @@ async function bootstrap () {
     process.exit(1);
   }
 }
+process.on('unhandledRejection', reason => {
+  console.log(reason)
+  return;
+});
 
 bootstrap();
