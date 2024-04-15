@@ -130,3 +130,7 @@ export const getUrlParams = (path, router) => {
   }
   return [];
 };
+
+export const getReturnUrl = () => {
+  return document.location.pathname + document.location.search 
+}
