@@ -52,7 +52,7 @@ export default function ImageWrapper({
     return (
       <HbImage
         style={{ objectFit: 'cover' }}
-        src={makeImageUrl(src, '/api')}
+        src={makeImageUrl(src)}
         alt={alt}
         width={30}
         height={30}
@@ -63,7 +63,7 @@ export default function ImageWrapper({
     return (
       <HbImage
         style={{ objectFit: 'cover' }}
-        src={makeImageUrl(src, '/api')}
+        src={makeImageUrl(src)}
         alt={alt}
         width={68}
         height={68}
@@ -74,7 +74,7 @@ export default function ImageWrapper({
     return (
       <HbImage
         style={{ objectFit: 'cover' }}
-        src={makeImageUrl(src, '/api')}
+        src={makeImageUrl(src)}
         alt={alt}
         width={50}
         height={50}
@@ -85,7 +85,7 @@ export default function ImageWrapper({
     return (
       <HbImage
         style={{ objectFit: 'cover' }}
-        src={makeImageUrl(src, '/api')}
+        src={makeImageUrl(src)}
         alt={alt}
         width={90}
         height={90}
@@ -96,7 +96,7 @@ export default function ImageWrapper({
     return (
       <HbImage
         style={{ objectFit: 'cover', display: 'flex' }}
-        src={makeImageUrl(src, '/api')}
+        src={makeImageUrl(src)}
         alt={alt}
         height={210}
         width={200}
@@ -107,7 +107,7 @@ export default function ImageWrapper({
     return (
       <HbImage
         style={{ objectFit: 'cover', display: 'flex' }}
-        src={makeImageUrl(src, '/api')}
+        src={makeImageUrl(src)}
         alt={alt}
         height={210}
         width={300}
@@ -118,7 +118,7 @@ export default function ImageWrapper({
     return (
       <HbImage
         style={{ objectFit: 'cover', objectPosition: 'center' }}
-        src={makeImageUrl(src, '/api')}
+        src={makeImageUrl(src)}
         alt={alt}
         height={300}
         width={300}
@@ -128,7 +128,7 @@ export default function ImageWrapper({
   return (
     <HbImage
       style={{ objectFit: 'cover' }}
-      src={makeImageUrl(src, '/api')}
+      src={makeImageUrl(src)}
       alt={alt}
       fill={true}
     />
@@ -153,7 +153,7 @@ export function ImageContainer({
 
   return (
     <HbImage
-      src={makeImageUrl(src, '/api')}
+      src={makeImageUrl(src)}
       alt={alt}
       width={width}
       height={height}

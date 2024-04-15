@@ -42,8 +42,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
         title: currentButtonData.title,
         description: currentButtonData.description,
         image: `${makeImageUrl(
-          currentButtonData.image,
-          serverProps.config.hostName + '/api',
+          currentButtonData.image
         )}`,
       },
     };

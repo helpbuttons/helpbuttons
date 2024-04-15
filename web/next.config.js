@@ -30,6 +30,7 @@ module.exports = {
     },
     images: {
       formats: ['image/avif', 'image/webp'],
+      domains: [process.env.ALLOWED_IMAGES_DOMAINS]
     },
     i18n,
     output: 'standalone',

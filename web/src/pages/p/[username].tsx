@@ -144,8 +144,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
       title: `${currentUserData.username} - ${serverProps.selectedNetwork.name}`,
       description: currentUserData.description,
       image: `${makeImageUrl(
-        currentUserData.avatar,
-        serverProps.config.hostName + '/api',
+        currentUserData.avatar
       )}`,
     },
   };
