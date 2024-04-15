@@ -3,7 +3,7 @@ import { makeImageUrl, setSSRLocale } from 'shared/sys.helper';
 
 export class ServerPropsService {
   public static async general(subtitle, ctx) {
-    const baseURL = process.env.API_URL;
+    const baseURL = `${process.env.API_URL}/`;
     const configURL = `${baseURL}networks/config`;
     const networkConfigURL = `${baseURL}networks/findById`;
 
