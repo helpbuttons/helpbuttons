@@ -3,6 +3,8 @@ services:
   web:
     # build: web/
     image: helpbuttons/helpbuttons-web:${VERSION}
+    env_file:
+      - .env
     ports:
       - "3000:3000"
     depends_on:
