@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "seed": "node dist/data/seed/seeder",
-    "prebuild": "rimraf dist && yarn write-version",
+    "prebuild": "rimraf dist",
     "build": "nest build --path tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -28,7 +28,6 @@
     "migration:create": "npm run typeorm migration:create src/data/migrations/",
     "migration:revert": "npm run typeorm migration:revert",
     "schema:drop": "yarn typeorm schema:drop",
-    "write-version": "echo \"export const version = {'git' : '`git rev-list HEAD | head -n1`'}\" > src/shared/commit.ts",
     "translations": "cp -r ../web/public/locales .",
     "cli": "CLI_PATH=./dist/cli.js npx nestjs-command",
     "cron:buttons:removepast": "yarn cli cron:buttons:removepast",
