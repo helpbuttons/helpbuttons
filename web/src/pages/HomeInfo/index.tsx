@@ -113,6 +113,13 @@ export default function HomeInfo({
                         contentAlignment={ContentAlignment.center}
                       />
                     </div>
+                    <Btn
+                      btnType={BtnType.smallCircle}
+                      iconLink={<IoClose />}
+                      iconLeft={IconType.circle}
+                      contentAlignment={ContentAlignment.center}
+                      onClick={() => toggleShowMessage(true)}
+                    />
 
                 </>
               :
