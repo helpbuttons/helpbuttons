@@ -2345,10 +2345,12 @@ li, ol, ul, h2 {
 .card-alert__content {
   display: flex;
   height: 100%;
+  align-items: center;
   margin: auto 0;
   padding-right: 15px;
   font-weight: 700;
   color: #fff;
+  gap: 5px;
 }
 
 .card-alert__icon {

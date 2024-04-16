@@ -113,25 +113,27 @@ export default function HomeInfo({
                         contentAlignment={ContentAlignment.center}
                       />
                     </div>
-                    <Btn
-                      btnType={BtnType.smallCircle}
-                      iconLink={<IoClose />}
-                      iconLeft={IconType.circle}
-                      contentAlignment={ContentAlignment.center}
-                      onClick={() => toggleShowMessage(true)}
-                    />
+
                 </>
               :
               <>
+          
                 <div className="card-alert__content">
-                  {t("homeinfo.callToAdmin")}
-                </div>
                 <Btn
                   btnType={BtnType.circle}
                   iconLink={<IoCall />}
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.center}
                   onClick={() => toggleShowMessage(true)}
+                />    
+                  {t("homeinfo.callToAdmin")}
+                </div>
+                <Btn
+                    btnType={BtnType.smallCircle}
+                    iconLink={<IoClose />}
+                    iconLeft={IconType.circle}
+                    contentAlignment={ContentAlignment.center}
+                    onClick={() => toggleShowMessage(true)}
                 />
               </>
               }

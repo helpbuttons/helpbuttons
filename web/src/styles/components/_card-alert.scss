@@ -59,11 +59,12 @@ $card-alert-icon-size: 30px;
 
   display: flex;
   height: 100%;
+  align-items: center;
   margin: auto 0;
   padding-right: $padding-big;
   font-weight: $font-weight-bold;
   color: $color-white;
-
+  gap: $padding-small;
 
 }
 
