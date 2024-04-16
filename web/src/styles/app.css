@@ -2375,6 +2375,7 @@ li, ol, ul, h2 {
 .card-alert__btn-options {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 5px;
 }
 

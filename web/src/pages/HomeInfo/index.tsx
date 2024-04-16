@@ -17,6 +17,7 @@ import {
   IoAddOutline,
   IoCall,
   IoCallOutline,
+  IoClose,
   IoCloseOutline,
   IoGlobeOutline,
   IoHelpOutline,
@@ -82,35 +83,44 @@ export default function HomeInfo({
         <div className="card-alert__container card-alert__container--bottom">
             <div className="card-alert card-alert--error">
               {showMessage ? 
-              <div className='card-alert__btn-options'>
-                <Btn
-                  btnType={BtnType.circle}
-                  iconLink={<IoCallOutline />}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.center}
-                />
+                <>
+                    <div className='card-alert__btn-options'>
+                      <Btn
+                        btnType={BtnType.circle}
+                        iconLink={<IoCallOutline />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                      />
 
-                <Btn
-                  btnType={BtnType.circle}
-                  iconLink={<IoMailOutline />}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.center}
-                />
+                      <Btn
+                        btnType={BtnType.circle}
+                        iconLink={<IoMailOutline />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                      />
 
-                <Btn
-                  btnType={BtnType.circle}
-                  iconLink={<IoLogoWhatsapp />}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.center}
-                />
+                      <Btn
+                        btnType={BtnType.circle}
+                        iconLink={<IoLogoWhatsapp />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                      />
 
-                <Btn
-                  btnType={BtnType.circle}
-                  iconLink={<IoSendOutline />}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.center}
-                />
-              </div>
+                      <Btn
+                        btnType={BtnType.circle}
+                        iconLink={<IoSendOutline />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                      />
+                    </div>
+                    <Btn
+                      btnType={BtnType.smallCircle}
+                      iconLink={<IoClose />}
+                      iconLeft={IconType.circle}
+                      contentAlignment={ContentAlignment.center}
+                      onClick={() => toggleShowMessage(true)}
+                    />
+                </>
               :
               <>
                 <div className="card-alert__content">
