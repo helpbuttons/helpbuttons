@@ -34,7 +34,9 @@
     "buttons": "Hay {0} _helpbuttons_ en esta Red",
     "createNetworkButton": "Crea tu propia red",
     "createNetwork": "También puedes contactar al equipo si necesitas ayuda creando tu propia red",
-    "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación: "
+    "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación: ",
+    "callToAdmin": "¿Eres nuevo/a? Contacta con un asistente si no sabes entrar o publicar"
+
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -76,7 +78,7 @@
     "locationExplain": "El mapa se centrará siempre sobre el lugar y el radio de tu Red  cada vez que alguien entre en la herramienta",
     "tagsExplain": "Las palabras clave de tu Red harán más fácil la búsqueda de temas, servirán para oreganizar el contenido y para saber de qué trata tu red en la página de inicio.",
     "centerOfMap": "Selecciona la ubicación base de tu Red",
-    "description": "Aquí puedes modificar la configuración de tu Red",
+    "description": "Aquí puedes modificar la configuración de tu Red. Si es la primera vez, tienes que añadir al menos el nombre, descripción, imagen de perfil, imagen de fondo y una localización para completar la creación.",
     "title": "Configuración de tu Red y administrador",
     "privacySetPublic": "Pulsa aquí para volver a red pública",
     "tagsPlaceHolder": "Comida, herramientas, juguetes, ropa...",

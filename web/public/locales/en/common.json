@@ -34,7 +34,8 @@
     "createNetworkButton": "Create your own network",
     "createNetwork": "You can contact with the team if you need help making your own network",
     "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:",
-    "networkIsPrivate": "Private network"
+    "networkIsPrivate": "Private network",
+    "callToAdmin": "Hi! Contact an assitant if you need help registering or publishing"
   },
   "feed": {
     "write": "Write message",
@@ -337,7 +338,7 @@
   },
   "configuration": {
     "title": "Network and Administrator settings",
-    "description": "Here you can modify different settings of your network",
+    "description": "Here you can modify different settings of your network. If it's your first time, you need to add at least a name, description, avatar image, background image and location to complete the setup.",
     "namePlaceHolder": "Network of permaculture farmers from Vilanova",
     "descriptionPlaceHolder": "Welcome to the network of sharing ...",
     "privacySetPrivate": "Set as private network",
@@ -369,9 +370,9 @@
     "nameLabel": "Network name",
     "descriptionLabel": "Network description",
     "nomeclatureLabel": "Rename your _helpbuttons_",
-    "nomeclatureExplain": "These names will be shown instead of _helpbuttons_. In singular and plural.",
+    "nomeclatureExplain": "_helpbuttons_ is the default name of this app's post. Here you can remane them to 'posts', ' publication', 'orders' or whatever you want (later these names will be shown instead of _helpbutton_ ) . The first field is for singular and the second for plural.",
     "nomeclaturePlaceHolder": "Type new name",
-    "moderateNetwork": "Moderate Nettwork",
+    "moderateNetwork": "Moderate Network",
     "blockedExplain": "These users are blocked from your network. To edit visit their profiles",
     "adminUsers": "These are your Network's Administrator. To edit visit their profiles",
     "contactAdmin": "Contact the administrator",

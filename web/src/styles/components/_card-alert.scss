@@ -28,6 +28,17 @@ $card-alert-icon-size: 30px;
 
 }
 
+.card-alert__container--bottom {
+  top: auto;
+  bottom: 0;
+  padding: $padding-big;
+  min-width: 150px;
+  width: auto;
+  position: fixed;
+  float: right;
+  margin-bottom: $footer-height-mobile;
+}
+
 .card-alert--success {
   background-color: $color-green;
 }
@@ -49,6 +60,9 @@ $card-alert-icon-size: 30px;
   display: flex;
   height: 100%;
   margin: auto 0;
+  padding-right: $padding-big;
+  font-weight: $font-weight-bold;
+  color: $color-white;
 
 
 }
@@ -77,5 +91,15 @@ $card-alert-icon-size: 30px;
 
   margin-bottom: 0;
   font-size: $font-size-small;
+
+}
+
+
+.card-alert__btn-options {
+
+  display: flex;
+  flex-direction: row;
+  gap: $padding-small;
+
 
 }

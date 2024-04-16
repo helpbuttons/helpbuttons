@@ -15,12 +15,20 @@ import {
   IoAdd,
   IoAddCircle,
   IoAddOutline,
+  IoCall,
+  IoCallOutline,
+  IoCloseOutline,
   IoGlobeOutline,
   IoHelpOutline,
   IoLogInOutline,
+  IoLogoWhatsapp,
   IoMagnet,
+  IoMail,
+  IoMailOutline,
   IoMapOutline,
   IoSearch,
+  IoSend,
+  IoSendOutline,
 } from 'react-icons/io5';
 import { ServerPropsService } from 'services/ServerProps';
 import { NextPageContext } from 'next';
@@ -52,6 +60,8 @@ export default function HomeInfo({
     (state: GlobalState) => state.loggedInUser,
   );
 
+  const [showMessage, toggleShowMessage] = useToggle(false);
+
   const [navigatorCoordinates, setNavigatorCoordinates] =
     useState(null);
 
@@ -68,11 +78,65 @@ export default function HomeInfo({
             <AdvancedFilters isHome={true}/>
           </div>
         </ShowMobileOnly>
+
+        <div className="card-alert__container card-alert__container--bottom">
+            <div className="card-alert card-alert--error">
+              {showMessage ? 
+              <div className='card-alert__btn-options'>
+                <Btn
+                  btnType={BtnType.circle}
+                  iconLink={<IoCallOutline />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                />
+
+                <Btn
+                  btnType={BtnType.circle}
+                  iconLink={<IoMailOutline />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                />
+
+                <Btn
+                  btnType={BtnType.circle}
+                  iconLink={<IoLogoWhatsapp />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                />
+
+                <Btn
+                  btnType={BtnType.circle}
+                  iconLink={<IoSendOutline />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                />
+              </div>
+              :
+              <>
+                <div className="card-alert__content">
+                  {t("homeinfo.callToAdmin")}
+                </div>
+                <Btn
+                  btnType={BtnType.circle}
+                  iconLink={<IoCall />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() => toggleShowMessage(true)}
+                />
+              </>
+              }
+                
+            </div>
+        </div>  
+
       <div
         className='info-overlay__container'
       >
+          
+
           <div className="info-overlay__content">
             <>
+                
               <div className="info-overlay__card">
 
                 {navigatorCoordinates && (
@@ -89,6 +153,9 @@ export default function HomeInfo({
                     </div>
                   </div>
                 )}
+
+                
+
                 {/* INFO CARD */}
                 <div className="card info-overlay__card--header"
                                   

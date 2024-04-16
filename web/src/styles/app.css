@@ -2315,6 +2315,17 @@ li, ol, ul, h2 {
   z-index: 600;
   top: 0;
 }
+.card-alert__container--bottom {
+  top: auto;
+  bottom: 0;
+  padding: 15px;
+  min-width: 150px;
+  width: auto;
+  position: fixed;
+  float: right;
+  margin-bottom: 50px;
+}
+
 .card-alert--success {
   background-color: #19AF96;
 }
@@ -2335,6 +2346,9 @@ li, ol, ul, h2 {
   display: flex;
   height: 100%;
   margin: auto 0;
+  padding-right: 15px;
+  font-weight: 700;
+  color: #fff;
 }
 
 .card-alert__icon {
@@ -2356,6 +2370,12 @@ li, ol, ul, h2 {
 .card-alert__subtitle {
   margin-bottom: 0;
   font-size: 14px;
+}
+
+.card-alert__btn-options {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }
 
 .marker-button {
@@ -5761,7 +5781,7 @@ li, ol, ul, h2 {
 .card-notification__title {
   color: #828282;
   font-size: 16px;
-  padding: 0.5rem 0 0 0;
+  padding: 0;
   text-align: left;
 }
 
