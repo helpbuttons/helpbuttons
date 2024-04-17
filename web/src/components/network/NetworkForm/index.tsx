@@ -42,7 +42,6 @@ function NetworkForm({
   setFocus,
   description,
   showClose = true,
-  defaultExploreSettings = null,
 }) {
   const router = useRouter();
 
@@ -249,7 +248,6 @@ function NetworkForm({
               />
             }
             <FieldAreaMap
-              defaultExploreSettings={defaultExploreSettings}
               label={t('configuration.locationLabel')}
               explain={t('configuration.locationExplain')}
               marker={{
@@ -260,6 +258,7 @@ function NetworkForm({
               onChange={(exploreSettings) => {
                 setValue('exploreSettings', exploreSettings);
               }}
+              value={watch('exploreSettings')}
               markerColor={watch('backgroundColor')}
             />
 
