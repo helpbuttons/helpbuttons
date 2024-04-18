@@ -57,18 +57,11 @@ export class ButtonCron {
   }) // https://github.com/helpbuttons/helpbuttons/issues/508 clearing old buttons > 3months..
   async clearOldButtons() {
     // change update button modified date when there is new post or comment: done   @OnEvent(ActivityEventName.NewPost) @OnEvent(ActivityEventName.NewPostComment) on button service
-    // check if modified between interval now() - 3 months now()
-
-    const btnTemplateEvents =
-      await this.networkService.getButtonTypesWithEventField();
 
     const buttonsToExpire = await this.entityManager.query(
       `select id,"eventEnd","ownerId", updated_at from button where 
       deleted = false AND expired = false
-      AND "updated_at" < now() - INTERVAL '3 months' 
-      AND type NOT IN ('${btnTemplateEvents.join(
-        "','",
-      )}')`,
+      AND "updated_at" < now() - INTERVAL '3 months' )`,
     );
     // update button set updated_at = now() - interval '3 months' where id =
     // send mail to creator
