@@ -31,7 +31,7 @@ export class ButtonCron {
   async clearEventButtons() {
     // find buttons expired
     const btnTemplateEvents =
-      await this.networkService.getButtonTemplatesEvents();
+      await this.networkService.getButtonTypesWithEventField();
 
     // remove buttons after 3 days passed...
     const buttonsExpired = await this.entityManager.query(
@@ -43,36 +43,11 @@ export class ButtonCron {
     );
     await Promise.all(
       buttonsExpired.map((button) => {
-        return this.buttonService.setExpired(button.id).then(() => {
-          return this.userService
-            .findById(button.ownerId)
-            .then((user) => {
-              return this.userService
-                .getUserLoginParams(user.id)
-                .then((loginParams) => {
-                  return this.mailService.sendWithLink({
-                    to: user.email,
-                    content: translate(
-                      user.locale,
-                      'button.isExpiringEventMail',
-                      [button.title],
-                    ),
-                    subject: translate(
-                      user.locale,
-                      'button.isExpiringEventMailSubject',
-                    ),
-                    link: getUrl(
-                      user.locale,
-                      `/ButtonRenew/${button.id}${loginParams}`,
-                    ),
-                    linkCaption: translate(
-                      user.locale,
-                      'email.buttonLinkCaption',
-                    ),
-                  });
-                });
-            })
+        return this.buttonService.setExpired(button.id)
+        .then(() => {
+          return this.buttonService.notifyOwnerExpiredButton(button, true)
         });
+        
       }),
     );
   }
@@ -85,7 +60,7 @@ export class ButtonCron {
     // check if modified between interval now() - 3 months now()
 
     const btnTemplateEvents =
-      await this.networkService.getButtonTemplatesEvents();
+      await this.networkService.getButtonTypesWithEventField();
 
     const buttonsToExpire = await this.entityManager.query(
       `select id,"eventEnd","ownerId", updated_at from button where 
@@ -99,33 +74,9 @@ export class ButtonCron {
     // send mail to creator
     return await Promise.all(
       buttonsToExpire.map((button) => {
-        this.userService.findById(button.ownerId).then((user) => {
-          return this.buttonService.setExpired(button.id).then(() => {
-            return this.userService
-            .getUserLoginParams(user.id)
-            .then((loginParams) => {
-              return this.mailService.sendWithLink({
-                to: user.email,
-                content: translate(
-                  user.locale,
-                  'button.isExpiringMail',
-                  [button.title],
-                ),
-                subject: translate(
-                  user.locale,
-                  'button.isExpiringMailSubject',
-                ),
-                link: getUrl(
-                  user.locale,
-                  `/ButtonRenew/${button.id}${loginParams}`,
-                ),
-                linkCaption: translate(
-                  user.locale,
-                  'email.buttonLinkCaption',
-                ),
-              });
-            });
-          })
+        return this.buttonService.setExpired(button.id)
+        .then(() => {
+          return this.buttonService.notifyOwnerExpiredButton(button)
         });
       }),
     );
