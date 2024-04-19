@@ -3,10 +3,10 @@ import router from "next/router";
 import { GlobalState, store } from "pages";
 import { useState } from "react";
 import { buttonColorStyle, useButtonTypes } from "shared/buttonTypes";
-import { ResetFilters, ToggleAdvancedFilters, UpdateFiltersToFilterButtonType } from "state/Explore";
+import { ClearCurrentButton, ResetFilters, ToggleAdvancedFilters, UpdateFiltersToFilterButtonType } from "state/Explore";
 import { useStore } from "store/Store";
 
-export function ListButtonTypes({ selectedNetwork }) {
+export function ListButtonTypes({ selectedNetwork, pageName }) {
 
     const showAdvancedFilters = useStore(
       store,
@@ -18,8 +18,12 @@ export function ListButtonTypes({ selectedNetwork }) {
       store.emit(new ToggleAdvancedFilters(false))
       store.emit(new ResetFilters());
       store.emit(new UpdateFiltersToFilterButtonType(buttonType));
-
-      router.push('/Explore');
+      store.emit(new ClearCurrentButton())
+      if(pageName != 'Explore')
+      {
+        router.push('/Explore');
+      } 
+      
     };
     const [buttonTypes, setButtonTypes] = useState([]);
     useButtonTypes(setButtonTypes);
