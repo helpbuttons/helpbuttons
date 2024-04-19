@@ -26,11 +26,15 @@ function linkify(text) {
   });
 }
 
-export function mentionsOfMessage(message) {
+export function mentionsOfMessage(message, username) {
   const matches = message.match(userPattern)
   if(!matches)
   {
     return []
   }
-  return matches.map((user) => user.substring(1))
+
+  const usersNames = matches.map((user) => user.substring(1))
+  console.log(username)
+  console.log(usersNames)
+  return usersNames.filter((usernm) => usernm != username )
 }
