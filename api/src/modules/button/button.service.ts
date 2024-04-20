@@ -181,13 +181,12 @@ export class ButtonService {
     return await button;
   }
 
-  async findById(id: string, includeDeleted: boolean = false) {
+  async findById(id: string, includeExpired: boolean = false) {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id, ...this.expiredBlockedConditions(includeDeleted) },
+      where: { id, ...this.expiredBlockedConditions(includeExpired) },
       relations: ['owner'],
     });
-    
-    if (!button || button.expired) {
+    if (!button) {
       throw new HttpException(
         'button not found',
         HttpStatus.NOT_FOUND,
@@ -330,9 +329,9 @@ export class ButtonService {
   public isOwner(
     currentUser: User,
     buttonId: string,
-    includeDeleted: boolean = false,
+    includeExpired: boolean = false,
   ) {
-    return this.findById(buttonId, includeDeleted).then((button) => {
+    return this.findById(buttonId, includeExpired).then((button) => {
       if (
         currentUser.role == Role.admin ||
         currentUser.id == button.owner.id
@@ -470,6 +469,10 @@ export class ButtonService {
   }
 
   checkAndSetExpired(button: Button) {
+    if(button.expired)
+    {
+      return button;
+    }
     return this.networkService
       .getButtonTypesWithEventField()
       .then(async (btnTemplateEvents) => {
