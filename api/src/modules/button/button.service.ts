@@ -186,8 +186,6 @@ export class ButtonService {
       where: { id, ...this.expiredBlockedConditions(includeDeleted) },
       relations: ['owner'],
     });
-
-    await this.checkAndSetExpired(button);
     
     if (!button || button.expired) {
       throw new HttpException(
@@ -195,6 +193,9 @@ export class ButtonService {
         HttpStatus.NOT_FOUND,
       );
     }
+
+    await this.checkAndSetExpired(button);
+
     return { ...button };
   }
 
