@@ -6,7 +6,10 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
+import {
+  InjectEntityManager,
+  InjectRepository,
+} from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { Repository, In, EntityManager, Not } from 'typeorm';
 import { TagService } from '../tag/tag.service';
@@ -28,7 +31,12 @@ import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-
 import { ErrorName } from '@src/shared/types/error.list';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import * as fs from 'fs';
-import translate, { readableDate } from '@src/shared/helpers/i18n.helper';
+import translate, {
+  readableDate,
+} from '@src/shared/helpers/i18n.helper';
+import { UserService } from '../user/user.service';
+import { MailService } from '../mail/mail.service';
+import { getUrl } from '@src/shared/helpers/mail.helper';
 // import { RRule } from 'rrule';
 
 @Injectable()
@@ -38,7 +46,9 @@ export class ButtonService {
     private readonly buttonRepository: Repository<Button>,
     private readonly tagService: TagService,
     private readonly networkService: NetworkService,
+    private readonly userService: UserService,
     private readonly storageService: StorageService,
+    private readonly mailService: MailService,
     @Inject(forwardRef(() => PostService))
     private postService: PostService,
     @InjectEntityManager()
@@ -53,10 +63,9 @@ export class ButtonService {
   ) {
     const network = await this.networkService.findOne(networkId);
 
-    let hasPhone = false
-    if(user.phone)
-    {
-      hasPhone = true
+    let hasPhone = false;
+    if (user.phone) {
+      hasPhone = true;
     }
 
     if (!network) {
@@ -97,7 +106,10 @@ export class ButtonService {
       description: createDto.description,
       latitude: createDto.latitude,
       longitude: createDto.longitude,
-      tags: this.tagService.formatTags([...createDto.tags, ...[buttonTemplate.caption]]),
+      tags: this.tagService.formatTags([
+        ...createDto.tags,
+        ...[buttonTemplate.caption],
+      ]),
       location: () =>
         `ST_MakePoint(${createDto.latitude}, ${createDto.longitude})`,
       network: network,
@@ -114,9 +126,9 @@ export class ButtonService {
       eventEnd: createDto.eventEnd,
       eventType: createDto.eventType,
       hasPhone,
-      eventData: createDto.eventData
+      eventData: createDto.eventData,
     };
-    console.log('adding button ' + JSON.stringify(button))
+    console.log('adding button ' + JSON.stringify(button));
     await getManager().transaction(
       async (transactionalEntityManager) => {
         if (Array.isArray(button.tags)) {
@@ -169,42 +181,49 @@ export class ButtonService {
     return await button;
   }
 
-  async findById(id: string, includeDeleted: boolean = false) {
+  async findById(id: string, includeExpired: boolean = false) {
     let button: Button = await this.buttonRepository.findOne({
-      where: { id, ...this.deletedBlockedConditions(includeDeleted) },
+      where: { id, ...this.expiredBlockedConditions(includeExpired) },
       relations: ['owner'],
     });
-
     if (!button) {
       throw new HttpException(
         'button not found',
         HttpStatus.NOT_FOUND,
       );
     }
+
+    await this.checkAndSetExpired(button);
+
     return { ...button };
   }
 
-  async update(id: string, updateDto: UpdateButtonDto, currentUser: User) {
-    const currentButton = await this.findById(id)
+  async update(
+    id: string,
+    updateDto: UpdateButtonDto,
+    currentUser: User,
+  ) {
+    const currentButton = await this.findById(id);
 
     let location = {};
-    let hexagon = {}
+    let hexagon = {};
     if (updateDto.latitude > 0 && updateDto.longitude > 0) {
       location = {
         location: () =>
           `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
       };
-      hexagon = {hexagon: () =>
-      `h3_lat_lng_to_cell(POINT(${updateDto.longitude}, ${updateDto.latitude}), ${maxResolution})`}
+      hexagon = {
+        hexagon: () =>
+          `h3_lat_lng_to_cell(POINT(${updateDto.longitude}, ${updateDto.latitude}), ${maxResolution})`,
+      };
     } else {
       delete updateDto.latitude;
       delete updateDto.longitude;
     }
 
-    let hasPhone = false
-    if(currentButton.owner.phone)
-    {
-      hasPhone = true
+    let hasPhone = false;
+    if (currentButton.owner.phone) {
+      hasPhone = true;
     }
     const button = {
       ...updateDto,
@@ -265,7 +284,7 @@ export class ButtonService {
         .createQueryBuilder('button')
         .select('id')
         .where(
-          `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false`,
+          `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false AND expired = false`,
           { hexagons: hexagons },
         )
         .limit(1000)
@@ -276,19 +295,20 @@ export class ButtonService {
         relations: ['feed', 'owner'],
         where: {
           id: In(buttonsIds),
-          ...this.deletedBlockedConditions(),
+          ...this.expiredBlockedConditions(),
         },
         order: {
           created_at: 'DESC',
         },
-      // }).then((buttons) => {
-      //   return buttons.map((button) => {
-      //     if(btnTemplateEvents.indexOf(button.type) > -1)
-      //     {
-      //       return this.calculateRecurrent(button)
-      //     }
-      //     return button;
-      //   })
+      })
+      .then((buttons) => {
+        return Promise.all(buttons.map(async (button) => {
+          return this.checkAndSetExpired(button)
+        }))
+        .then((btns) => {
+          return btns.filter((btn) => !btn.expired)
+        })
+        // return Promise.all(btns)
       });
     } catch (err) {
       console.log(err);
@@ -306,8 +326,12 @@ export class ButtonService {
     });
   }
 
-  public isOwner(currentUser: User, buttonId: string, includeDeleted :boolean = false) {
-    return this.findById(buttonId, includeDeleted).then((button) => {
+  public isOwner(
+    currentUser: User,
+    buttonId: string,
+    includeExpired: boolean = false,
+  ) {
+    return this.findById(buttonId, includeExpired).then((button) => {
       if (
         currentUser.role == Role.admin ||
         currentUser.id == button.owner.id
@@ -337,10 +361,12 @@ export class ButtonService {
 
   async findByOwner(ownerId: string) {
     let buttons: Button[] = await this.buttonRepository.find({
-      where: { owner: {id: ownerId, role: Not(Role.blocked)}, deleted: false},
-      relations: [
-        'owner',
-      ],
+      where: {
+        owner: { id: ownerId, role: Not(Role.blocked) },
+        deleted: false,
+        expired: false,
+      },
+      relations: ['owner'],
     });
     return buttons;
   }
@@ -354,7 +380,7 @@ export class ButtonService {
     }
     return button;
   }
-  
+
   async unfollow(buttonId: string, userId: string) {
     const button = await this.findById(buttonId);
     const index = button.followedBy.indexOf(userId);
@@ -365,74 +391,154 @@ export class ButtonService {
     return true;
   }
 
-  async getPhone(buttonId: string)
-  {
+  async getPhone(buttonId: string) {
     const query = `SELECT public.user.phone from button, public.user WHERE button.id = '${buttonId}' AND "ownerId" = public.user.id`;
-    const result = await this.entityManager.query(query)
-    
-    if(result.length > 0)
-    {
+    const result = await this.entityManager.query(query);
+
+    if (result.length > 0) {
       return result[0].phone;
     }
     return '';
   }
 
-  findDeletedAndRemoveMedia()
-  { // created more than 1 month ago
-    return this.entityManager.query(
-      `select id, images from button where deleted = true AND updated_at < now() - INTERVAL '1 month'`,
-    ).then((buttonsDeleted) => {
-      return buttonsDeleted.map((button) => {
-        return this.removeMedia(button.id, button.images)
-      })
-    })
+  findDeletedAndRemoveMedia() {
+    // created more than 1 month ago
+    return this.entityManager
+      .query(
+        `select id, images from button where deleted = true AND updated_at < now() - INTERVAL '1 month'`,
+      )
+      .then((buttonsDeleted) => {
+        return buttonsDeleted.map((button) => {
+          return this.removeMedia(button.id, button.images);
+        });
+      });
   }
-  private removeMedia(buttonId: string, images: string[])
-  {
-      return images.map((imagePath) => {
-        const path = imagePath.replace('/files/get/', './uploads/')
-        console.log('removing media: ' + path)
-        return fs.unlinkSync(path)
-      })
+  private removeMedia(buttonId: string, images: string[]) {
+    return images.map((imagePath) => {
+      const path = imagePath.replace('/files/get/', './uploads/');
+      console.log('removing media: ' + path);
+      return fs.unlinkSync(path);
+    });
   }
 
-  deletedBlockedConditions(includeDeleted: boolean = false) {
-    const blocked = { owner: { role: Not(Role.blocked) } };
-    if(includeDeleted)
-    {
-      return blocked;  
+  expiredBlockedConditions(includeExpired: boolean = false) {
+    const blocked = {
+      owner: { role: Not(Role.blocked) },
+      deleted: false,
+    };
+    if (includeExpired) {
+      return blocked;
     }
-    return { deleted: false, ...blocked};
+    return { expired: false, ...blocked };
   }
 
   @OnEvent(ActivityEventName.NewPostComment)
   async autoFollowButton(payload: any) {
     switch (payload.activityEventName) {
       case ActivityEventName.NewPostComment:
-        const buttonId = payload.data.button.id
-        const userId = payload.data.author.id
-        this.follow(buttonId, userId)
+        const buttonId = payload.data.button.id;
+        const userId = payload.data.author.id;
+        this.follow(buttonId, userId);
         break;
     }
   }
 
   @OnEvent(ActivityEventName.NewPost)
   @OnEvent(ActivityEventName.NewPostComment)
-  async updateDate(payload: any)
-  {
-    const buttonId = payload.data.button.id
-    await this.updateModifiedDate(buttonId)
-  }
-  
-  renew(buttonId: string, user: User)
-  {
-    return this.updateModifiedDate(buttonId).then(() => {
-        return this.postService.new(translate(user.locale, 'post.renewPost', [readableDate(user.locale)]), buttonId, user)
-    })
+  async updateDate(payload: any) {
+    const buttonId = payload.data.button.id;
+    await this.updateModifiedDate(buttonId);
   }
 
-  updateModifiedDate(buttonId: string)
+  renew(buttonId: string, user: User) {
+    return this.updateModifiedDate(buttonId).then(() => {
+      return this.postService.new(
+        translate(user.locale, 'post.renewPost', [
+          readableDate(user.locale),
+        ]),
+        buttonId,
+        user,
+      );
+    });
+  }
+
+  updateModifiedDate(buttonId: string) {
+    return this.entityManager.query(
+      `UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = '${buttonId}'`,
+    );
+  }
+
+  checkAndSetExpired(button: Button) {
+    if(button.expired)
+    {
+      return button;
+    }
+    return this.networkService
+      .getButtonTypesWithEventField()
+      .then(async (btnTemplateEvents) => {
+
+        // if its a button type with an event field
+        if (btnTemplateEvents.indexOf(button.type) > -1) {
+          const now = new Date();
+          if (button.eventEnd < now) {
+            await this.setExpired(button.id)
+            await this.notifyOwnerExpiredButton(button, true)
+            return {...button, expired: true};
+          }
+        }
+        var expiredUpdatesDate = new Date();
+        expiredUpdatesDate.setMonth(expiredUpdatesDate.getMonth() - 3);
+        if (button.updated_at < expiredUpdatesDate) {
+          const now = new Date();
+          if (button.eventEnd < now) {
+            await this.setExpired(button.id)
+            await this.notifyOwnerExpiredButton(button)
+            return {...button, expired: true};
+          }
+        }
+        return button;
+      });
+  }
+
+  notifyOwnerExpiredButton(button: Button, isEvent: boolean = false)
   {
-    return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false WHERE id = '${buttonId}'`)
+    return this.userService
+            .findById(button.owner.id)
+            .then((user) => {
+              return this.userService
+                .getUserLoginParams(user.id)
+                .then((loginParams) => {
+                  let content_ = 'button.isExpiringMail'
+                  let subject_ = 'button.isExpiringMailSubject'
+                  if(isEvent)
+                  {
+                    content_ = 'button.isExpiringEventMail'
+                    subject_ = 'button.isExpiringEventMailSubject'
+                  }
+                  return this.mailService.sendWithLink({
+                    to: user.email,
+                    content: translate(
+                      user.locale,
+                      content_,
+                      [button.title],
+                    ),
+                    subject: translate(
+                      user.locale,
+                      subject_,
+                    ),
+                    link: getUrl(
+                      user.locale,
+                      `/ButtonRenew/${button.id}${loginParams}`,
+                    ),
+                    linkCaption: translate(
+                      user.locale,
+                      'email.buttonLinkCaption',
+                    ),
+                  });
+                });
+            })
+  }
+  setExpired(buttonId: string) {
+    return this.buttonRepository.update(buttonId, { expired: true });
   }
 }

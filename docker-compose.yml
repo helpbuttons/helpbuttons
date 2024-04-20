@@ -2,7 +2,9 @@ version: '3'
 services:
   web:
     # build: web/
-    image: helpbuttons/helpbuttons-web:main
+    image: helpbuttons/helpbuttons-web:${VERSION}
+    env_file:
+      - .env
     ports:
       - "3000:3000"
     depends_on:
@@ -13,7 +15,7 @@ services:
 
   api:
     # build: api/
-    image: helpbuttons/helpbuttons-api:main
+    image: helpbuttons/helpbuttons-api:${VERSION}
     env_file:
       - .env
     volumes:
@@ -28,7 +30,7 @@ services:
 
   db:
     # build: postgres/
-    image: helpbuttons/helpbuttons-psql:main
+    image: helpbuttons/helpbuttons-psql:${VERSION}
     restart: always
     command: ["postgres", "-c", "log_statement=all"]
     env_file:

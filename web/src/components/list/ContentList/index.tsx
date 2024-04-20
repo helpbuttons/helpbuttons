@@ -10,7 +10,7 @@ import Btn, { ContentAlignment } from 'elements/Btn';
 export default function ContentList({
   buttons,
   buttonTypes,
-  showMap,
+  showMap = false,
   linkToPopup = true,
   ...props
 }) {

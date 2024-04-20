@@ -129,7 +129,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     'New Button',
     ctx,
   );
-  const profileUrl = `${process.env.API_URL}users/find/${ctx.params.username}`;
+  const profileUrl = `${process.env.API_URL}/users/find/${ctx.params.username}`;
   const userProfileFetch = await fetch(profileUrl, {
     next: { revalidate: 10 },
   });
@@ -144,8 +144,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
       title: `${currentUserData.username} - ${serverProps.selectedNetwork.name}`,
       description: currentUserData.description,
       image: `${makeImageUrl(
-        currentUserData.avatar,
-        serverProps.config.hostName + '/api',
+        currentUserData.avatar
       )}`,
     },
   };

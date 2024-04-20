@@ -28,4 +28,7 @@ export class Comment extends BaseEntity {
     default: CommentPrivacyOptions.PUBLIC,
   })
   privacy: CommentPrivacyOptions;
+
+  @Column({default: null})
+  commentParentId?: string;
 }

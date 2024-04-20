@@ -300,7 +300,8 @@ export class NetworkService {
       });
   }
 
-  getButtonTemplatesEvents() {
+  getButtonTypesWithEventField()
+  {
     return this.getButtonTemplates()
       .then((buttonTemplates) => {
         return buttonTemplates

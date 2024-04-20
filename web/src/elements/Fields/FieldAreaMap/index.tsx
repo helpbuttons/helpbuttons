@@ -15,12 +15,12 @@ import FieldError from '../FieldError';
 
 export default function FieldAreaMap({
   validationError,
-  defaultExploreSettings,
   onChange,
   marker,
   label,
   explain,
-  markerColor = 'pink'
+  markerColor = 'pink',
+  value
 }) {
 
   const [showHideMenu, setHideMenu] = useState(false);
@@ -48,7 +48,7 @@ export default function FieldAreaMap({
       </div>
       {showHideMenu && (
         <FieldAreaMapSettings
-          defaultExploreSettings={defaultExploreSettings}
+          defaultExploreSettings={value}
           onChange={onChange}
           marker={marker}
           closeMenu={closeMenu}

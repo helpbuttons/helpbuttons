@@ -99,7 +99,7 @@ export default function ButtonForm({
   const onError = (errors, e) => alertService.error(t('validation.error'))
 
   return (
-    <LoadabledComponent loading={!selectedNetwork || isSubmitting}>
+    <LoadabledComponent loading={!selectedNetwork}>
       {selectedNetwork && 
       <Popup title={title} linkFwd={'/Explore'}>
         <Form
