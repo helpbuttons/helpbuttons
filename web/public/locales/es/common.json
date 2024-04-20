@@ -207,7 +207,8 @@
     "phoneExplain":"Añade tu teléfono si quieres que te contacten a través de él",
     "phonePlaceHolder":"i.e. 34699000000",
     "signupOptions":"Opciones Extra",
-    "adminPhonePublish": "Eres administrador de la red, ¿quieres que tu teléfono este disponible en la página principal?"
+    "adminPhonePublish": "Eres administrador de la red, ¿quieres que tu teléfono este disponible en la página principal?",
+    "addSupport": "Eres administrador, añade tu teléfono o crea un _helpbutton_ de contacto para que puedan contactarte más fácilmente"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
