@@ -1,8 +1,9 @@
 import Btn, { BtnType, IconType } from "elements/Btn";
 import router from "next/router";
 import { GlobalState, store } from "pages";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { buttonColorStyle, useButtonTypes } from "shared/buttonTypes";
+import { Button } from "shared/entities/button.entity";
 import { ClearCurrentButton, ResetFilters, ToggleAdvancedFilters, UpdateFiltersToFilterButtonType } from "state/Explore";
 import { useStore } from "store/Store";
 
@@ -16,7 +17,6 @@ export function ListButtonTypes({ selectedNetwork, pageName }) {
 
     const filterButtonType = (buttonType) => {
       store.emit(new ToggleAdvancedFilters(false))
-      store.emit(new ResetFilters());
       store.emit(new UpdateFiltersToFilterButtonType(buttonType));
       store.emit(new ClearCurrentButton())
       if(pageName != 'Explore')

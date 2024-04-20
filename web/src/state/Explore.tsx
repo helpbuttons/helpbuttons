@@ -57,6 +57,7 @@ export const exploreSettingsDefault: ExploreSettings = {
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
+  buttonTypeClicked: boolean; // this is used to jump to center of network if no buttons are found
   queryFoundTags: string[];
   listButtons: Button[]; // if hexagon clicked, can be different from boundsButtons
   boundsFilteredButtons: Button[];
@@ -341,6 +342,7 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      newState.explore.map.buttonTypeClicked = true
       newState.explore.map.filters = {
         ...defaultFilters,
         helpButtonTypes: [this.buttonType],
@@ -349,20 +351,59 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
   }
 }
 
-export class UpdateBoundsFilteredButtons implements UpdateEvent {
+export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
   public constructor(private boundsFilteredButtons: Button[]) {}
+
+  public watch(state: GlobalState) {
+
+    /** this functionality is used so that when a button type is clicked, and no buttons are found the map will be recentered */
+    if (state.explore.map.buttonTypeClicked) {
+      store.emit(new ResetButtonTypeClicked())
+      if (
+        this.boundsFilteredButtons.length < 1 &&
+        state.explore.map.filters.helpButtonTypes.length == 1 &&
+        state.networks.selectedNetwork?.exploreSettings
+      ) {
+        if (
+          state.explore.settings.zoom !=
+            state.networks.selectedNetwork.exploreSettings.zoom ||
+          JSON.stringify(state.explore.settings.center) !=
+            JSON.stringify(
+              state.networks.selectedNetwork.exploreSettings.center,
+            )
+        ) {
+          store.emit(
+            new UpdateExploreSettings({
+              center:
+                state.networks.selectedNetwork.exploreSettings.center,
+              zoom: state.networks.selectedNetwork.exploreSettings
+                .zoom,
+            }),
+          );
+        }
+      }
+    }
+  }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.boundsFilteredButtons =
         this.boundsFilteredButtons;
-      newState.explore.map.listButtons = this.boundsFilteredButtons
+      newState.explore.map.listButtons = this.boundsFilteredButtons;
       newState.explore.map.loading = false;
       newState.explore.map.initialized = true;
     });
   }
 }
+export class ResetButtonTypeClicked implements UpdateEvent {
+  public constructor() {}
 
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.buttonTypeClicked = false;
+    });
+  }
+}
 export class UpdateExploreUpdating implements UpdateEvent {
   public constructor() {}
 
