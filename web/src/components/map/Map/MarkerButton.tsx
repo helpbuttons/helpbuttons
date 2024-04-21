@@ -13,7 +13,7 @@ interface MarkerButtonProps extends PigeonProps {
   children?: React.ReactNode;
   button: Button;
   handleMarkerClicked: any;
-  currentButtonId: string;
+  color: string;
 }
 
 interface MarkerButtonIconProps extends PigeonProps {
@@ -49,7 +49,7 @@ export function MarkerButton(props: MarkerButtonProps) {
     <>
       <MarkerButtonIcon
         {...props}
-        cssColor={cssColor}
+        cssColor={props.color}
         image={props.button.image}
         title={props.button.title}
         onClick={() => handleMarkerClicked(props.button)}

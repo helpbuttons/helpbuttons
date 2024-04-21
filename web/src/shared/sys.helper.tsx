@@ -2,6 +2,7 @@ import { translations } from 'i18n';
 import { pathToRegexp } from 'path-to-regexp';
 import { allowedPathsPerRole } from './pagesRoles';
 import { Role } from './types/roles';
+import getConfig from 'next/config';
 
 let SSRLocale = '';
 
@@ -46,7 +47,9 @@ export function getLocale(availableLocales = null) {
   return SSRLocale;
 }
 
-export function makeImageUrl(image, baseUrl = '') {
+export function makeImageUrl(image) {
+  const { publicRuntimeConfig } = getConfig()
+
   if (!image) {
     return '/assets/images/noIcon.png';
   }
@@ -57,7 +60,7 @@ export function makeImageUrl(image, baseUrl = '') {
     if (image.match(regexHref)) {
       return image;
     }
-    return `${baseUrl}${image}`;
+    return `${publicRuntimeConfig.apiUrl}${image}`;
   }
   return image;
 }
@@ -127,3 +130,7 @@ export const getUrlParams = (path, router) => {
   }
   return [];
 };
+
+export const getReturnUrl = () => {
+  return document.location.pathname + document.location.search 
+}

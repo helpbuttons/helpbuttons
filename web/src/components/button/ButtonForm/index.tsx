@@ -18,7 +18,7 @@ import { GlobalState, store } from 'pages';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import { Network } from 'shared/entities/network.entity';
 import t from 'i18n';
-import { LoadabledComponent } from 'components/loading';
+import Loading, { LoadabledComponent } from 'components/loading';
 import Router from 'next/router';
 import { SaveButtonDraft } from 'state/Explore';
 import { useButtonTypes } from 'shared/buttonTypes';
@@ -179,7 +179,7 @@ export default function ButtonForm({
                     markerCaption={watch('title')}
                     markerColor={markerColor}
                     selectedNetwork={selectedNetwork}
-                    validationError={errors.location}
+                    validationError={errors.address}
                     watch={watch}
                     setValue={setValue}
                   />
@@ -190,6 +190,7 @@ export default function ButtonForm({
             <ButtonShare />
           </div>
           <div className="publish__submit">
+          {isSubmitting ? <Loading/>: 
             <Btn
               btnType={BtnType.submit}
               contentAlignment={ContentAlignment.center}
@@ -197,6 +198,7 @@ export default function ButtonForm({
               isSubmitting={isSubmitting}
               submit={true}
             />
+                  }
           </div>
         </Form>
       </Popup>

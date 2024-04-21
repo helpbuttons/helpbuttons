@@ -106,4 +106,10 @@ export class Button extends BaseEntity {
 
   @Column({default: false})
   hasPhone: boolean;
+
+  @Column('text', {nullable: true})
+  eventData?: string;
+
+  @Column({default: false})
+  expired?: boolean;
 }

@@ -33,6 +33,7 @@ import { useToggle } from 'shared/custom.hooks';
 import { CardButtonHeadActions } from 'components/button/CardButton';
 import LoginOrSignup from 'components/authorization';
 import router from 'next/router';
+import { getReturnUrl } from 'shared/sys.helper';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -83,7 +84,7 @@ export default function Feed({ button }: { button: Button }) {
       {(!isButtonOwner && !loggedInUser) && (      
         <CardButtonHeadActions button={button} action={() => router.push({
           pathname: '/Login',
-          query: { returnUrl: document.location.pathname + document.location.search },
+          query: { returnUrl: getReturnUrl() },
         })}/>
       )}
       <div className="feed-line"></div>
@@ -227,7 +228,7 @@ export function FeedElement({
                   {
                     router.push({
                       pathname: '/Login',
-                      query: { returnUrl: document.location.pathname + document.location.search  },
+                      query: { returnUrl: getReturnUrl() },
                     });
                   }
                 }

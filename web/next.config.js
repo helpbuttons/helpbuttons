@@ -3,33 +3,17 @@ const { i18n } = require('./next-i18next.config');
 
 module.exports = {
     reactStrictMode: true,
-    // env: {
-    //     mapifyApiKey: process.env.MAPIFY_API_KEY,
-    // },
-    // serverRuntimeConfig: {
-    //     secret: process.env.JWT_SECRET
-    // },
     publicRuntimeConfig: {
-        apiUrl: '/api/',
+        apiUrl: '/api'
     },
     typescript:{
         ignoreBuildErrors: true,
     },
-    rewrites: async () => {
-        return [
-          {
-            source: '/geoapify/:path*',
-            destination: 'https://api.geoapify.com/:path*',
-          },
-          {
-            source: '/api/:path*',
-            destination: `${process.env.API_URL}/:path*`
-          },
-          {
-            source: '/opencage/:path*',
-            destination: 'https://api.opencagedata.com/geocode/v1/:path*',
-          },
-        ]
+    async rewrites() {
+      return [{
+        source: '/api/:path*',
+        destination: `${process.env.API_URL}/:path*`
+      }]
     },
     async redirects() {
       return [
@@ -51,7 +35,7 @@ module.exports = {
       ]
     },
     images: {
-      formats: ['image/avif', 'image/webp'],
+      formats: ['image/avif', 'image/webp']
     },
     i18n,
     output: 'standalone',

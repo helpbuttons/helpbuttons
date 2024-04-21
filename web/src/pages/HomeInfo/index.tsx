@@ -44,6 +44,7 @@ import { LinkProfile } from 'components/user/LinkProfile';
 import { LinkAdminProfile } from 'components/user/LinkAdminProfile';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
+import getConfig from 'next/config';
 
 
 export default function HomeInfo({
@@ -56,6 +57,9 @@ export default function HomeInfo({
     router.push('/Explore')
   };
   
+  const { publicRuntimeConfig } = getConfig()
+  const apiUrl = publicRuntimeConfig.apiUrl;
+
   const currentUser = useStore(
     store,
     (state: GlobalState) => state.loggedInUser,
@@ -180,7 +184,7 @@ export default function HomeInfo({
                                   
                   style={
                     {
-                      '--network-jumbo': `url('/api${selectedNetwork.jumbo}'`,
+                      '--network-jumbo': `url('${apiUrl}${selectedNetwork.jumbo}'`,
                     } as React.CSSProperties
                   }
                 >

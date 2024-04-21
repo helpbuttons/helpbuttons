@@ -3,7 +3,7 @@ import { makeImageUrl, setSSRLocale } from 'shared/sys.helper';
 
 export class ServerPropsService {
   public static async general(subtitle, ctx) {
-    const baseURL = process.env.API_URL;
+    const baseURL = `${process.env.API_URL}/`;
     const configURL = `${baseURL}networks/config`;
     const networkConfigURL = `${baseURL}networks/findById`;
 
@@ -86,8 +86,7 @@ export function getMetadata(subtitle, selectedNetwork, baseUrl, uri) {
     ? `${selectedNetwork.name} - ${subtitle}`
     : selectedNetwork.name;
   const imageUrl = makeImageUrl(
-    selectedNetwork.logo,
-    baseUrl + '/api',
+    selectedNetwork.logo
   );
   return {
     title: title,

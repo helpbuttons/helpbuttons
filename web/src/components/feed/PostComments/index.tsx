@@ -103,34 +103,39 @@ export function PostComment({
         'card-notification--comment ' +
         (comment.privacy == CommentPrivacyOptions.PRIVATE
           ? ' card-notification--comment-private'
-          : '')
-        + (isReply ? ' card-notification--reply' : '')
+          : '') +
+        (isReply ? ' card-notification--reply' : '')
       }
     >
       <Comment comment={comment} />
-      
       <div className="message__actions">
-        {(comment.privacy == CommentPrivacyOptions.PRIVATE) && (
-          <Btn
-            submit={false}
-            btnType={BtnType.smallLink}
-            caption={t("comment.sendPrivate")}
-            contentAlignment={ContentAlignment.right}
-            onClick={() =>
-              toggleShowComposeComment(ComposeCommentState.PRIVATE)
-            }
-          />
-        )}
-        {(comment.privacy == CommentPrivacyOptions.PUBLIC) && (
-          <Btn
-            submit={false}
-            btnType={BtnType.smallLink}
-            caption={t("comment.sendPublic")}
-            contentAlignment={ContentAlignment.right}
-            onClick={() =>
-              toggleShowComposeComment(ComposeCommentState.PUBLIC)
-            }
-          />
+        {loggedInUser && (
+          <>
+            {comment.privacy == CommentPrivacyOptions.PRIVATE && (
+              <Btn
+                submit={false}
+                btnType={BtnType.smallLink}
+                caption={t('comment.sendPrivate')}
+                contentAlignment={ContentAlignment.right}
+                onClick={() =>
+                  toggleShowComposeComment(
+                    ComposeCommentState.PRIVATE,
+                  )
+                }
+              />
+            )}
+            {comment.privacy == CommentPrivacyOptions.PUBLIC && (
+              <Btn
+                submit={false}
+                btnType={BtnType.smallLink}
+                caption={t('comment.sendPublic')}
+                contentAlignment={ContentAlignment.right}
+                onClick={() =>
+                  toggleShowComposeComment(ComposeCommentState.PUBLIC)
+                }
+              />
+            )}
+          </>
         )}
 
         {loggedInUser &&
@@ -141,23 +146,25 @@ export function PostComment({
               submit={true}
               btnType={BtnType.smallLink}
               // iconLink={<IoTrashBinOutline />}
-              caption={t("comment.delete")}
+              caption={t('comment.delete')}
               // iconLeft={IconType.circle}
               contentAlignment={ContentAlignment.right}
               onClick={() => deleteComment(comment.id)}
             />
           )}
       </div>
-      {(showComposeComment != ComposeCommentState.HIDE) && (
+      {showComposeComment != ComposeCommentState.HIDE && (
         <Compose
           referer={{
             post: post.id,
-            comment: comment.commentParentId ? comment.commentParentId : comment.id,
+            comment: comment.commentParentId
+              ? comment.commentParentId
+              : comment.id,
             privateMessage:
               ComposeCommentState.PRIVATE == showComposeComment,
             mentions: [
-              ...[comment.author.username],
-              ...mentionsOfMessage(comment.message),
+              ... loggedInUser.username != comment.author.username ? [comment.author.username] : [],
+              ...mentionsOfMessage(comment.message, loggedInUser.username),
             ],
           }}
           onCreate={() => {
@@ -169,7 +176,7 @@ export function PostComment({
           }}
         />
       )}
-     
+
       {replies.length > 0 && (
         <>
           {replies.map((reply, key) => {
@@ -188,8 +195,6 @@ export function PostComment({
           })}
         </>
       )}
-
-      
     </div>
   );
 }

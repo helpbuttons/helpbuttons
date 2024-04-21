@@ -61,7 +61,6 @@ export const getConfig = async () => {
   return checkDatabase(configs()).then(
     ({ migrationsNumber, userCount }) => {
       const data = configs();
-      const { hostname } = new URL(data.hostName);
 
       const dataToWeb: SetupDtoOut = {
         hostName: data.hostName,

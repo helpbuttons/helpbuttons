@@ -6,6 +6,7 @@ import {
   localStorageService,
   LocalStorageVars,
 } from 'services/LocalStorage';
+import getConfig from 'next/config';
 
 export function isHttpError(err: object) {
   return err && err.statusCode && err.message;
@@ -25,7 +26,8 @@ export class HttpService {
     if (this.accessToken) {
       this.isAuthenticated$.next(true);
     }
-    this.apiUrl = '/api/';
+    const { publicRuntimeConfig } = getConfig()
+    this.apiUrl = `${publicRuntimeConfig.apiUrl}/`;
   }
   public getAccessToken()
   {
