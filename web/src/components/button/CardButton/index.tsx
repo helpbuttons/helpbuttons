@@ -512,7 +512,7 @@ export function CardButtonImages({ button }) {
             >
               <ImageWrapper
                 imageType={ImageType.buttonCard}
-                src={makeImageUrl(image)}
+                src={image}
                 alt={button.description}
               />
             </div>
