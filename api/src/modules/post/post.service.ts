@@ -77,7 +77,7 @@ export class PostService {
         comments: post.comments.filter(
           (comment) =>
           {
-            if(comment.message.indexOf(`@${currentUser.username}`) > -1) 
+            if(currentUser && comment.message.indexOf(`@${currentUser.username}`) > -1) 
             {
               return true
             }

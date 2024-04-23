@@ -266,7 +266,7 @@ export default function HexagonExploreMap({
                 const btnType = buttonTypes.find((type) => {
                   return type.name == button.type;
                 });
-                if(button.hideAddress) {
+                if(button.hideAddress || !btnType) {
                   return (<></>)
                 }
                 return (
