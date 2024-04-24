@@ -1,4 +1,4 @@
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { produce } from 'immer';
 
 import { WatchEvent } from 'store/Event';
@@ -20,6 +20,7 @@ import { cellToZoom } from 'shared/honeycomb.utils';
 import { cellToParent, getResolution } from 'h3-js';
 import { UpdateZoom } from './Map';
 import { of } from 'rxjs';
+import { maxZoom } from 'components/map/Map/Map.consts';
 
 
 export enum ExploreViewMode {
@@ -236,8 +237,8 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
   ) {}
   public watch(state: GlobalState) {
     return ButtonService.update(this.buttonId, this.button).pipe(
-      map((data) => {
-        this.onSuccess(data);
+      tap((data) => {
+        this.onSuccess(data[0]);
       }),
       catchError((error) => handleError(this.onError, error)),
     );
