@@ -258,6 +258,11 @@ export class updateCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
+      if(this.button && !this.button.hideAddress)
+      {
+        newState.explore.settings.center = [this.button.latitude, this.button.longitude]
+        newState.explore.settings.zoom = maxZoom
+      }
     });
   }
 }
