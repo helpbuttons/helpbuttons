@@ -106,6 +106,8 @@ export default function ButtonForm({
           onSubmit={handleSubmit(onSubmit, onError)}
           classNameExtra="publish_btn"
         >
+          {isSubmitting ? <Loading/> : 
+          <>
           <div className="form__inputs-wrapper">
             <ButtonType
               name="type"
@@ -190,7 +192,6 @@ export default function ButtonForm({
             <ButtonShare />
           </div>
           <div className="publish__submit">
-          {isSubmitting ? <Loading/>: 
             <Btn
               btnType={BtnType.submit}
               contentAlignment={ContentAlignment.center}
@@ -198,8 +199,8 @@ export default function ButtonForm({
               isSubmitting={isSubmitting}
               submit={true}
             />
-                  }
           </div>
+          </>}
         </Form>
       </Popup>
       }
