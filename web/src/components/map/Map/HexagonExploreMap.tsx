@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store } from 'pages';
 import {
-  HiglightHexagonFromButton,
-  UpdateExploreSettings, UpdateHexagonClicked, updateCurrentButton,
+  RecenterExplore,
+  UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
 import {
@@ -289,12 +289,7 @@ export default function HexagonExploreMap({
               <button
                 className="pigeon-center-view"
                 onClick={() => {
-                  store.emit(
-                    new UpdateExploreSettings({
-                      center: selectedNetwork.exploreSettings.center,
-                      zoom: selectedNetwork.exploreSettings.zoom,
-                    }),
-                  );
+                  store.emit( new RecenterExplore());
                 }}
               >
                 <IoStorefrontSharp />
