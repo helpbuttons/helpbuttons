@@ -259,6 +259,8 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
 export class updateCurrentButton implements WatchEvent, UpdateEvent {
   public constructor(private button: Button) {}
   public watch(state: GlobalState) {
+    return;
+    // TODO: when enabling this feature, when navigating back to the map it stays on full zoom, and has more bugs
     if(this.button && !this.button.hideAddress)
     {
       store.emit(new UpdateExploreSettings({center: [this.button.latitude, this.button.longitude], zoom: maxZoom}))
