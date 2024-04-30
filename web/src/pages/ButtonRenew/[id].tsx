@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect, useRef, useState } from 'react';
 import { alertService } from 'services/Alert';
-import { ButtonUpdateModifiedDate } from 'state/Explore';
+import { ButtonRenew } from 'state/Explore';
 import { useStore } from 'store/Store';
 
 export default function ButtonBump({}) {
@@ -26,14 +26,14 @@ export default function ButtonBump({}) {
   useEffect(() => {
     if (id && loggedInUser) {
       store.emit(
-        new ButtonUpdateModifiedDate(
+        new ButtonRenew(
           id,
           () => {
             alertService.success(t('button.renewSuccess'));
             router.push(`/ButtonFile/${id}`);
           },
-          () => {
-            alertService.error(t('button.renewError'));
+          (error) => {
+            alertService.error(error.caption);
             router.push(`/ButtonFile/${id}`);
           },
         ),

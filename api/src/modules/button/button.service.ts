@@ -5,7 +5,7 @@ import {
   Injectable,
   forwardRef,
 } from '@nestjs/common';
-import { OnEvent } from '@nestjs/event-emitter';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import {
   InjectEntityManager,
   InjectRepository,
@@ -37,6 +37,7 @@ import translate, {
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
+import { notifyUser } from '@src/app/app.event';
 // import { RRule } from 'rrule';
 
 @Injectable()
@@ -53,6 +54,7 @@ export class ButtonService {
     private postService: PostService,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async create(
@@ -203,7 +205,7 @@ export class ButtonService {
     updateDto: UpdateButtonDto,
     currentUser: User,
   ) {
-    const currentButton = await this.findById(id);
+    const currentButton = await this.findById(id, true);
 
     let location = {};
     let hexagon = {};
@@ -450,16 +452,18 @@ export class ButtonService {
     await this.updateModifiedDate(buttonId);
   }
 
-  renew(buttonId: string, user: User) {
-    return this.updateModifiedDate(buttonId).then(() => {
-      return this.postService.new(
-        translate(user.locale, 'post.renewPost', [
-          readableDate(user.locale),
-        ]),
-        buttonId,
-        user,
-      );
-    });
+  renew(button: Button, user: User) {
+    return this.isEventExpired(button)
+    .then(async (isExpired) => {
+      if(isExpired)
+      {
+        throw new CustomHttpException(ErrorName.invalidEndDate);
+      }else{
+        return this.updateModifiedDate(button.id).then(() => {
+          return button;
+        });
+      }
+    })
   }
 
   updateModifiedDate(buttonId: string) {
@@ -473,6 +477,31 @@ export class ButtonService {
     {
       return button;
     }
+    return this.isEventExpired(button)
+    .then(async (isExpired) => {
+      if(isExpired)
+      {
+        await this.setExpired(button.id)
+        await this.notifyOwnerExpiredButton(button, true)
+        return {...button, expired: true};
+      }
+      return button
+    })
+    .then(async (button) => {
+      var expiredUpdatesDate = new Date();
+      expiredUpdatesDate.setMonth(expiredUpdatesDate.getMonth() - 3);
+      if (button.updated_at < expiredUpdatesDate) {
+        const now = new Date();
+        if (button.updated_at < now) {
+          await this.setExpired(button.id)
+          await this.notifyOwnerExpiredButton(button)
+          return {...button, expired: true};
+        }
+      }
+      return button;
+
+    });
+    /*
     return this.networkService
       .getButtonTypesWithEventField()
       .then(async (btnTemplateEvents) => {
@@ -486,20 +515,40 @@ export class ButtonService {
             return {...button, expired: true};
           }
         }
-        var expiredUpdatesDate = new Date();
-        expiredUpdatesDate.setMonth(expiredUpdatesDate.getMonth() - 3);
-        if (button.updated_at < expiredUpdatesDate) {
-          const now = new Date();
-          if (button.eventEnd < now) {
-            await this.setExpired(button.id)
-            await this.notifyOwnerExpiredButton(button)
-            return {...button, expired: true};
-          }
-        }
+        
         return button;
-      });
+      })
+    .then(async (button) => {
+      var expiredUpdatesDate = new Date();
+      expiredUpdatesDate.setMonth(expiredUpdatesDate.getMonth() - 3);
+      if (button.updated_at < expiredUpdatesDate) {
+        const now = new Date();
+        if (button.eventEnd < now) {
+          await this.setExpired(button.id)
+          await this.notifyOwnerExpiredButton(button)
+          return {...button, expired: true};
+        }
+      }
+      return button;
+
+    });*/
   }
 
+  isEventExpired(button: Button)
+  {
+    return this.networkService
+    .getButtonTypesWithEventField()
+    .then(async (btnTemplateEvents) => {
+      // if its a button type with an event field
+      if (btnTemplateEvents.indexOf(button.type) > -1) {
+        const now = new Date();
+        if (button.eventEnd < now) {
+          return true;
+        }
+      }
+      return false;
+    })
+  }
   notifyOwnerExpiredButton(button: Button, isEvent: boolean = false)
   {
     return this.userService
