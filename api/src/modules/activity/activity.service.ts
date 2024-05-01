@@ -146,26 +146,27 @@ export class ActivityService {
         break;
       }
       case ActivityEventName.RenewButton:
-        {
-          const owner = payload.data.owner;
-          const button = payload.data.button;
-          return this.userService.getUserLoginParams(owner.id).then(
-            (loginParams) => {
-          this.mailService.sendWithLink({
-                to: owner.email,
-                content: translate(owner.locale, 'button.renewMail', [button.title]),
-                subject: translate(owner.locale, 'button.renewMailSubject'),
-                link: getUrl(
-                  owner.locale,
-                  `/ButtonFile/${button.id}${loginParams}`,
-                ),
-                linkCaption: translate(
-                  owner.locale,
-                  'email.buttonLinkCaption',
-                ),
-              })
-            })
-        }
+        // deactivating this email
+        // {
+        //   const owner = payload.data.owner;
+        //   const button = payload.data.button;
+        //   return this.userService.getUserLoginParams(owner.id).then(
+        //     (loginParams) => {
+        //   this.mailService.sendWithLink({
+        //         to: owner.email,
+        //         content: translate(owner.locale, 'button.renewMail', [button.title]),
+        //         subject: translate(owner.locale, 'button.renewMailSubject'),
+        //         link: getUrl(
+        //           owner.locale,
+        //           `/ButtonFile/${button.id}${loginParams}`,
+        //         ),
+        //         linkCaption: translate(
+        //           owner.locale,
+        //           'email.buttonLinkCaption',
+        //         ),
+        //       })
+        //     })
+        // }
         case ActivityEventName.DeleteButton: {
           const button = payload.data.button;
   
