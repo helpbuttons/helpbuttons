@@ -25,7 +25,7 @@ import {
   makeImageUrl,
   readableDistance,
 } from 'shared/sys.helper';
-import { buttonColorStyle } from 'shared/buttonTypes';
+import { buttonColorStyle, isButtonTypeEvent } from 'shared/buttonTypes';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -50,7 +50,6 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import { diffInMonths } from 'shared/date.utils';
 import { FixedAlert } from 'components/overlay/Alert';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
@@ -377,6 +376,12 @@ function ExpiringAlert({button, isOwner = false} : {button: Button, isOwner: boo
   if(!button.expired)
   {
      return;
+  }
+  const isEvent = isButtonTypeEvent(button.type);
+
+  if(isEvent && new Date(button.eventEnd) < new Date())
+  { 
+    return <FixedAlert alertType={AlertType.Success} message={`${t('button.endDatesExpired')}`}/>
   }
   return <FixedAlert alertType={AlertType.Success} message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id}">${t('button.renewLink')}</a>`}/>
 }

@@ -202,6 +202,7 @@
     "renewMailSubject": "Renewed successfuly",
     "renewMail": "You renewed your _helpbutton_ '{0}' for more 3 months.",
     "isExpiringLink": "Due to lack of activity, your _helpbutton_ is going to be erased in one month.",
+    "endDatesExpired": "The end date of this _helpbutton_ is in the past, so it has been set as expired, and won't show on the public list",
     "renewLink": "Renew your _helpbutton_",
     "createUpdate":"Publish Update",
     "authorTitle":"Author:"

@@ -45,8 +45,7 @@ export default function ButtonForm({
     (state: GlobalState) => state.networks.selectedNetwork,
   );
 
-  const [buttonTypes, setButtonTypes] = useState([]);
-  useButtonTypes(setButtonTypes);
+  const buttonTypes = useButtonTypes();
 
   const [date, setDate] = useState('');
 

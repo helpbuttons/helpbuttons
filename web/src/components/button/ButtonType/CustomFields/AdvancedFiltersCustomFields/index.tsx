@@ -227,6 +227,10 @@ export const orderByEventDate = (buttons) => {
 }
 
 const getCustomFields = (buttonTypes, selectedButtonTypes) => {
+  if(!buttonTypes)
+  {
+    return []
+  }
   const filteredButtonTypes = buttonTypes.filter((buttonType) => {
       
     if (selectedButtonTypes.indexOf(buttonType.name) > -1) {

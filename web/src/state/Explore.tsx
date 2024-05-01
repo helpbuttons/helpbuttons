@@ -552,7 +552,7 @@ export class GetPhone implements WatchEvent {
   }
 }
 
-export class ButtonUpdateModifiedDate implements WatchEvent{
+export class ButtonRenew implements WatchEvent{
   public constructor(
     private buttonId: string,
     private onSuccess,

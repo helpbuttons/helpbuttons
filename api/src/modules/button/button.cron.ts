@@ -58,6 +58,8 @@ export class ButtonCron {
   async clearOldButtons() {
     // change update button modified date when there is new post or comment: done   @OnEvent(ActivityEventName.NewPost) @OnEvent(ActivityEventName.NewPostComment) on button service
 
+    // https://github.com/helpbuttons/helpbuttons/issues/703
+    return;
     const buttonsToExpire = await this.entityManager.query(
       `select id,"eventEnd","ownerId", updated_at from button where 
       deleted = false AND expired = false
