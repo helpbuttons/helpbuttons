@@ -132,7 +132,9 @@
     "newfollowing": "your are now following the '{0}'",
     "newfollowed": "{0} now follows your '{1}'",
     "myhelpbuttons": "My _helpbuttons_",
-    "deletebutton": "{0} was deleted"
+    "deletebutton": "{0} was deleted",
+    "expiredEventType": "_helpbutton_ ended",
+    "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list."
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",

@@ -70,9 +70,14 @@ export default function FeedProfile({ allActivities, loggedInUser }) {
                 const comment : Comment = JSON.parse(activity.data)
                 return comment.author.id == loggedInUser.id
               }
-              case ActivityEventName.NewPost:
+              case ActivityEventName.NewPost:{
                 const post: Post = JSON.parse(activity.data)
                 return post.author.id == loggedInUser.id
+              }
+              case ActivityEventName.ExpiredButton:{
+                const button: Button = JSON.parse(activity.data)
+                return button.owner.id == loggedInUser.id
+              }
             }
             return false;
           }
@@ -94,7 +99,6 @@ export default function FeedProfile({ allActivities, loggedInUser }) {
               }
               case ActivityEventName.NewPost:
                 return false;
-                return post.author.id == loggedInUser.id
               case ActivityEventName.NewFollowingButton:
               case ActivityEventName.NewFollowedButton:
                 return true;

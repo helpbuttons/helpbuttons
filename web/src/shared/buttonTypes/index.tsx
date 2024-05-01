@@ -29,3 +29,13 @@ export const isButtonTypeEvent = (buttonType) => {
   }
   return btnType.customFields.find((field) => field.type == 'event')
 }
+
+export const isEventAndIsExpired = (button) => {
+  const isEvent = isButtonTypeEvent(button.type);
+
+  if(isEvent && new Date(button.eventEnd) < new Date())
+  { 
+    return true;
+  }
+  return false;
+}
