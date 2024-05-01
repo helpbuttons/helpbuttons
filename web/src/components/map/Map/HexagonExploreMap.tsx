@@ -68,7 +68,7 @@ export default function HexagonExploreMap({
 
   }, [h3TypeDensityHexes]);
 
-  const [buttonTypes, setButtonTypes] = useState([]);
+  const buttonTypes = useButtonTypes();
 
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
 
@@ -83,7 +83,6 @@ export default function HexagonExploreMap({
     }
   }, [hexagonHighlight,hexagonClicked, geoJsonFeatures])
   
-  useButtonTypes(setButtonTypes);
   return (
     <>
       {exploreSettings.center && (

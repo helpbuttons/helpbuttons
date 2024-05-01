@@ -25,12 +25,11 @@ export function ListButtonTypes({ selectedNetwork, pageName }) {
       } 
       
     };
-    const [buttonTypes, setButtonTypes] = useState([]);
-    useButtonTypes(setButtonTypes);
+    const buttonTypes = useButtonTypes();
   
     return (
       <>
-        {buttonTypes.map((buttonType, idx) => {
+        {buttonTypes && buttonTypes.map((buttonType, idx) => {
           const buttonTypeFound = selectedNetwork.buttonTypesCount.find(
             (buttonTypeCount) =>
               buttonTypeCount.type == buttonType.name,

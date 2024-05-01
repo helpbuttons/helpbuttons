@@ -10,8 +10,9 @@ import { useButtonTypes } from 'shared/buttonTypes';
 import { useState } from 'react';
 
 export default function CardNotification({ activity = {} }) {
-  const [buttonTypes, setButtonTypes] = useState([])
-  useButtonTypes(setButtonTypes)
+  
+  const buttonTypes = useButtonTypes();
+  
   const notification = (activity) => {
     if (activity.eventName == ActivityEventName.NewButton) {
       const button = activity.data
