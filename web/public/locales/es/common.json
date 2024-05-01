@@ -134,7 +134,9 @@
     "newfollowType": "Nuevo suscriptor",
     "creatorUpdate": "Actualización _helpbutton_",
     "deletedType": "Eliminación _helpbutton_",
-    "myhelpbuttons": "Mis _helpbuttons_"
+    "myhelpbuttons": "Mis _helpbuttons_",
+    "expiredEventType": "_helpbutton_ terminó",
+    "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública."
   },
   "user": {
     "login":"Escribe tus datos si tienes cuenta",

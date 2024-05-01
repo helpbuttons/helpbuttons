@@ -13,6 +13,8 @@ import { UserService } from '../user/user.service';
 import { User } from '../user/user.entity';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
+import { ActivityEventName } from '@src/shared/types/activity.list';
+import { notifyUser } from '@src/app/app.event';
 
 @Injectable()
 export class ButtonCron {
@@ -43,11 +45,7 @@ export class ButtonCron {
     );
     await Promise.all(
       buttonsExpired.map((button) => {
-        return this.buttonService.setExpired(button.id)
-        .then(() => {
-          return this.buttonService.notifyOwnerExpiredButton(button, true)
-        });
-        
+        return this.buttonService.checkAndSetExpired(button);
       }),
     );
   }
@@ -69,10 +67,7 @@ export class ButtonCron {
     // send mail to creator
     return await Promise.all(
       buttonsToExpire.map((button) => {
-        return this.buttonService.setExpired(button.id)
-        .then(() => {
-          return this.buttonService.notifyOwnerExpiredButton(button)
-        });
+        return this.buttonService.checkAndSetExpired(button);
       }),
     );
   }

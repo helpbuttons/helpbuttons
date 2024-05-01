@@ -25,7 +25,7 @@ import {
   makeImageUrl,
   readableDistance,
 } from 'shared/sys.helper';
-import { buttonColorStyle, isButtonTypeEvent } from 'shared/buttonTypes';
+import { buttonColorStyle, isEventAndIsExpired } from 'shared/buttonTypes';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -377,9 +377,8 @@ function ExpiringAlert({button, isOwner = false} : {button: Button, isOwner: boo
   {
      return;
   }
-  const isEvent = isButtonTypeEvent(button.type);
-
-  if(isEvent && new Date(button.eventEnd) < new Date())
+  
+  if(isEventAndIsExpired(button))
   { 
     return <FixedAlert alertType={AlertType.Success} message={`${t('button.endDatesExpired')}`}/>
   }

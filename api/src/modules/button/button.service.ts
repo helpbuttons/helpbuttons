@@ -37,6 +37,7 @@ import translate, {
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
+import { notifyUser } from '@src/app/app.event';
 // import { RRule } from 'rrule';
 
 @Injectable()
@@ -194,9 +195,7 @@ export class ButtonService {
       );
     }
 
-    await this.checkAndSetExpired(button);
-
-    return { ...button };
+    return await this.checkAndSetExpired(button);
   }
 
   async update(
@@ -476,7 +475,7 @@ export class ButtonService {
     );
   }
 
-  checkAndSetExpired(button: Partial<Button>) {
+  checkAndSetExpired(button: Button) {
     if(button.expired)
     {
       return Promise.resolve(button);
@@ -486,7 +485,7 @@ export class ButtonService {
       if(isExpired)
       {
         await this.setExpired(button.id)
-        await this.notifyOwnerExpiredButton(button, true)
+        notifyUser(this.eventEmitter,ActivityEventName.ExpiredButton,button)
         return {...button, expired: true};
       }
       return button
@@ -523,44 +522,7 @@ export class ButtonService {
       return false;
     })
   }
-  notifyOwnerExpiredButton(button: Partial<Button>, isEvent: boolean = false)
-  {
-    return this.userService
-            .findById(button.owner.id)
-            .then((user) => {
-              return this.userService
-                .getUserLoginParams(user.id)
-                .then((loginParams) => {
-                  let content_ = 'button.isExpiringMail'
-                  let subject_ = 'button.isExpiringMailSubject'
-                  if(isEvent)
-                  {
-                    content_ = 'button.isExpiringEventMail'
-                    subject_ = 'button.isExpiringEventMailSubject'
-                  }
-                  return this.mailService.sendWithLink({
-                    to: user.email,
-                    content: translate(
-                      user.locale,
-                      content_,
-                      [button.title],
-                    ),
-                    subject: translate(
-                      user.locale,
-                      subject_,
-                    ),
-                    link: getUrl(
-                      user.locale,
-                      `/ButtonRenew/${button.id}${loginParams}`,
-                    ),
-                    linkCaption: translate(
-                      user.locale,
-                      'email.buttonLinkCaption',
-                    ),
-                  });
-                });
-            })
-  }
+
   setExpired(buttonId: string) {
     return this.buttonRepository.update(buttonId, { expired: true });
   }
