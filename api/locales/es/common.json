@@ -333,6 +333,8 @@
     "userRegistered":"Nombre ya registrado",
     "delete":"Nada que eliminar",
     "invalidForm":"Error al validar el formulario",
+    "inviteOnlyLabel":"Privacidad de la red",
+    "inviteOnlyExplain":"Si habilitas esto, los usuarios solo podrán registrarse y publicar con invitación.",
     "inviteOnly":"Acceso sólo con invitación",
     "address":"Error al obtener la dirección",
     "dates":"Fechas inválidas"

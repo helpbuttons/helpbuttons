@@ -77,40 +77,15 @@ const FieldButtonTemplates = forwardRef(
     }
 
     return (
-      <div className="form__field">
-        <label className="form__label">{label}</label>
-        <p className="form__explain">{explain}</p>
+      <>
+        <div className="form__field">
 
-        <div className="form__input--button-type-field">
-          <FieldText
-            name={t('configuration.buttonTemplateName')}
-            label={t('configuration.buttonTemplateName')}
-            placeholder={t(
-              'configuration.createButtonTypePlaceholder',
-            )}
-            className="field-text"
-            onChange={(e) => setText(() => e.target.value)}
-          />
-          <FieldColorPick
-                name="buttonTemplateColor"
-                classNameInput="squared"
-                validationError={errors.buttonTemplateColor}
-                setValue={(name, value) => setColor(value)}
-                actionName={t('button.pickButtonTemplateColor')}
-                value={color}
-                hideBoilerPlate={true}
-            />
-            <label className="form__label">{t('configuration.customFields')}:</label>
-            <AddCustomFields
-              setCustomFields={setCustomFields}
-            />
-            <Btn
-              caption={t('configuration.addType')}
-              onClick={() => onAddNewButtonTemplate()}
-              btnType={BtnType.corporative}
-            />
-        </div>
+            <div className="form__section-title">
+              {t('configuration.buttonTemplateFormListTitle')}
+            </div>
+            <p className="form__explain">{t('configuration.buttonTemplateExplain')}</p>
 
+        </div>  
         <div className="form__list--button-type-field">
           {watchValue?.length > 0 &&
             watchValue.map((val, idx) => (
@@ -175,7 +150,41 @@ const FieldButtonTemplates = forwardRef(
               </div>
             ))}
         </div>
-      </div>
+        <div className="form__field">
+          <div className="form__section-title">{label}</div>
+          <p className="form__explain">{explain}</p>
+        </div>
+        <div className="form__input--button-type-field">
+            <FieldText
+              name={t('configuration.buttonTemplateName')}
+              label={t('configuration.buttonTemplateName')}
+              placeholder={t(
+                'configuration.createButtonTypePlaceholder',
+              )}
+              className="field-text"
+              onChange={(e) => setText(() => e.target.value)}
+            />
+            <FieldColorPick
+                  name="buttonTemplateColor"
+                  classNameInput="squared"
+                  validationError={errors.buttonTemplateColor}
+                  setValue={(name, value) => setColor(value)}
+                  actionName={t('button.pickButtonTemplateColor')}
+                  value={color}
+                  hideBoilerPlate={true}
+              />
+              <label className="form__label">{t('configuration.customFields')}:</label>
+              <p className="form__explain">{t('configuration.customFieldsExplain')}</p>
+              <AddCustomFields
+                setCustomFields={setCustomFields}
+              />
+              <Btn
+                caption={t('configuration.addType')}
+                onClick={() => onAddNewButtonTemplate()}
+                btnType={BtnType.corporative}
+              />
+          </div>
+      </>
     );
   },
 );

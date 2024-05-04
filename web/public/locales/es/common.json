@@ -109,6 +109,8 @@
     "createSupportButton": "Crea tu boton de soporte para tu red",
     "moderation": "Moderacion",
     "customFields": "Campos extra",
+    "priceFieldAddLabel": "Muestra un precio en tu tipo de _helpbutton_ para que los usuarios puedan comprar o vender",
+    "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
     "addType":"+ Crear tipo de _helpbutton_ con los campos superiores",
     "currencyLabel": "Divisa"
   },
@@ -427,6 +429,8 @@
     "copied": "Link de invitación copiado {0}",
     "title": "Invitaciones",
     "description": "Invita a personas, administra y comparte enlaces con otras personas para permitirles acceder a tu red",
+    "inviteOnlyLabel":"Privacidad de la red",
+    "inviteOnlyExplain":"Si habilitas esto, los usuarios solo podrán registrarse y publicar con invitación.",
     "inviteOnly": "Sólo permitir el registro con una invitación"
   },
   "customFields": {
