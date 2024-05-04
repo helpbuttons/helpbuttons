@@ -4,6 +4,17 @@ $card-alert-text-margin: $margin-xsmall;
 $card-alert-radius: $border-radius-basic;
 $card-alert-icon-size: 30px;
 
+
+
+.card-alert__container {
+  position: absolute;
+  width: 100vw;
+  height: auto;
+  z-index: $z-index-06;
+  top: 0;
+}
+
+//css object of the card
 .card-alert {
   padding: $card-alert-padding;
   margin: 15px 0;
@@ -13,19 +24,6 @@ $card-alert-icon-size: 30px;
   border-radius: $card-alert-radius;
   color: $color-dark-gray;
   display: flex;
-}
-
-.card-alert__container {
-  position: absolute;
-  width: 100vw;
-  height: auto;
-  z-index: $z-index-06;
-  top: 0;
-
-  a {
-
-  }
-
 }
 
 .card-alert--success {
@@ -77,5 +75,18 @@ $card-alert-icon-size: 30px;
 
   margin-bottom: 0;
   font-size: $font-size-small;
+
+}
+
+
+@media #{$breakpoints-medium} {
+
+  .card-alert {
+
+    width: 50%;
+    margin: auto;
+    margin-top: $margin-big;
+
+  }
 
 }

@@ -153,7 +153,7 @@ function List({
               className={
                 'list__content ' +
                 (showMap
-                  ? 'list__content--row'
+                  ? 'list__content--mid-screen'
                   : 'list__content--full-screen')
               }
               onScroll={handleScrollWidth}
