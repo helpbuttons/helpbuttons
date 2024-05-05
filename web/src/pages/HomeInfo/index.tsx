@@ -15,12 +15,21 @@ import {
   IoAdd,
   IoAddCircle,
   IoAddOutline,
+  IoCall,
+  IoCallOutline,
+  IoClose,
+  IoCloseOutline,
   IoGlobeOutline,
   IoHelpOutline,
   IoLogInOutline,
+  IoLogoWhatsapp,
   IoMagnet,
+  IoMail,
+  IoMailOutline,
   IoMapOutline,
   IoSearch,
+  IoSend,
+  IoSendOutline,
 } from 'react-icons/io5';
 import { ServerPropsService } from 'services/ServerProps';
 import { NextPageContext } from 'next';
@@ -55,6 +64,9 @@ export default function HomeInfo({
     (state: GlobalState) => state.loggedInUser,
   );
 
+  const [showMessage, toggleShowMessage] = useToggle(false);
+  const [showContactDialog, toggleshowContactDialog] = useToggle(true);
+
   const [navigatorCoordinates, setNavigatorCoordinates] =
     useState(null);
 
@@ -71,11 +83,78 @@ export default function HomeInfo({
             <AdvancedFilters isHome={true}/>
           </div>
         </ShowMobileOnly>
+
+        {showContactDialog &&
+            <div className="card-alert__container card-alert__container--bottom">
+              <div className="card-alert card-alert--error">
+                {showMessage ? 
+                  <>
+                      <div className='card-alert__btn-options'>
+                        <Btn
+                          btnType={BtnType.circle}
+                          iconLink={<IoCallOutline />}
+                          iconLeft={IconType.circle}
+                          contentAlignment={ContentAlignment.center}
+                        />
+
+                        <Btn
+                          btnType={BtnType.circle}
+                          iconLink={<IoMailOutline />}
+                          iconLeft={IconType.circle}
+                          contentAlignment={ContentAlignment.center}
+                        />
+
+                        <Btn
+                          btnType={BtnType.circle}
+                          iconLink={<IoLogoWhatsapp />}
+                          iconLeft={IconType.circle}
+                          contentAlignment={ContentAlignment.center}
+                        />
+
+                      </div>
+                      <Btn
+                        btnType={BtnType.smallCircle}
+                        iconLink={<IoClose />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                        onClick={() => toggleshowContactDialog(false)}
+                      />
+
+                  </>
+                :
+                <>
+                  <div className="card-alert__content">
+                      {t("homeinfo.callToAdmin")}
+                      <Btn
+                      btnType={BtnType.circle}
+                      iconLink={<IoCall />}
+                      iconLeft={IconType.circle}
+                      contentAlignment={ContentAlignment.center}
+                      onClick={() => toggleShowMessage(true)}
+                    />   
+                  </div>
+
+                  <Btn
+                      btnType={BtnType.smallCircle}
+                      iconLink={<IoClose />}
+                      iconLeft={IconType.circle}
+                      contentAlignment={ContentAlignment.center}
+                      onClick={() => toggleshowContactDialog(false)}
+                  />
+                </>
+                }
+              </div>
+            </div> 
+        }
+         
       <div
         className='info-overlay__container'
       >
+          
+
           <div className="info-overlay__content">
             <>
+                
               <div className="info-overlay__card">
 
                 {navigatorCoordinates && (
@@ -92,6 +171,9 @@ export default function HomeInfo({
                     </div>
                   </div>
                 )}
+
+                
+
                 {/* INFO CARD */}
                 <div className="card info-overlay__card--header"
                                   
@@ -272,7 +354,7 @@ export default function HomeInfo({
                   )}
                   <div className="card__section">
                     <p>{t('homeinfo.createNetwork')}</p>
-                    <NavLink href="mailto:mail@watchoutfreedom.com">
+                    <NavLink href="https://helpbuttons.org">
                       <IoAddOutline />
                       <span>{t('homeinfo.createNetworkButton')}</span>
                     </NavLink>

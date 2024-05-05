@@ -31,6 +31,12 @@ $marker-arrow-height: 25px;
     overflow: hidden;
     border-width: $marker-button-line;
     display: flex;
+
+    &:hover {
+
+      cursor: pointer;
+
+    }
 }
 
 .marker-button--name-alone {
@@ -236,6 +242,12 @@ $marker-arrow-height: 25px;
   font-size: $font-size-general;
   font-weight: $font-weight-bold;
   padding: $padding-small $padding-medium;
+
+  &:hover {
+
+    cursor: pointer;
+
+  }
 
 }
 

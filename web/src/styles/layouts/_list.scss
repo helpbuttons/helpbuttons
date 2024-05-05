@@ -20,23 +20,11 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
+.list__container--full-screen {
 
-.list__container--full-list {
-
-  // margin-top: $list-drag-tab-height;
-  height: 100vh;
-  // padding-bottom: 200px;
+  padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
 
 }
-
-// .list__container::before {
-
-//   content: "";
-//   display: block;
-//   height: 5px;
-//   background: white;
-
-// }
 
 .list__show-map-button {
 
@@ -57,7 +45,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 .list__show-map-button--hideList {
 
-  bottom: 60px;
+  bottom: 40px;
   position: absolute;
   right: 0;
   padding-right: $padding-big;
@@ -70,14 +58,24 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   padding: $padding-small $padding-small;
   background-color: $color-ligth-gray;
   z-index: $z-index-02;
+  width: 100%;
   transition: $transition-default-slow;
   align-content: flex-start; /* Add this*/
 
 }
 
-.list__content--row {
 
-  display: flex;
+.list__element {
+
+  height: auto;
+  // flex-grow: 1;
+  flex-basis: 100%;
+  padding-right: $padding-xsmall;
+
+}
+
+.list__content--mid-screen {
+
   flex-direction: row;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -108,7 +106,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   overflow-x: hidden;
   overflow-y: auto;
   height: 100vh;
-  margin-bottom: $margin-xbig;
+  padding-bottom: calc($footer-height-mobile + $margin-medium);
   min-height: none;
 
 
@@ -123,14 +121,6 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
-.list__element {
-
-  height: auto;
-  // flex-grow: 1;
-  flex-basis: 100%;
-  padding-right: $padding-xsmall;
-
-}
 
 .list__empty-message{
 
@@ -170,11 +160,11 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: auto;
   justify-content: space-between;
-  padding: 0 $padding-medium;
+  padding: $padding-small $padding-xsmall;
   gap: $padding-small;
   position: relative;
-  height: $list-drag-tab-height;
 
 }
 
@@ -195,9 +185,8 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 //change movement when there's no scrollbar
 @media (hover: none) {
 
-  .list__container {
+  .list__container  {
     padding-bottom: calc($footer-height-mobile - 15px);
-
   }
 
 }
@@ -213,16 +202,19 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 }
 
 
-
-
-
 @media #{$breakpoints-medium} {
 
+  .list__order {
 
-}
+    padding: $padding-medium $padding-big;
+    
+  }
 
-@media #{$breakpoints-medium} {
+  .list__show-map-button--hideList {
 
+    bottom: 40px;
+  
+  }
 
   .list__content--full-screen {
 
@@ -237,6 +229,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     }
   
   }
+
 
 }
 
@@ -277,14 +270,12 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
   }
 
-
   .list__content {
 
-    flex-direction: column;
     width: 100%;
     overflow-y: auto;
-    padding-bottom: 4em;
     overflow-x: hidden;
+    flex-wrap: wrap;
 
   }
 
@@ -292,20 +283,26 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
     height: auto;
     width: 100%;
-    flex-basis: 100%;
+    flex-basis: 30%;
     min-width: $card-button-list-width;
 
   }
 
-  .list__content--row {
+  .list__content--mid-screen {
+
+    flex-direction: unset;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-wrap: wrap;
+    min-height: auto;
+    width: auto;
 
     .list__element {
 
       height: auto;
-      width: 100%;
-      flex-basis: 100%;
+      flex-basis: 50%;
+      min-width: auto;
       max-width: none;
-      min-width: $card-button-list-width;
 
     }
   }
@@ -314,9 +311,11 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
     position: relative;
     bottom: auto;
+    height: auto;
     left: auto;
     border-radius: 0;
-
+    padding: $padding-medium $padding-big;
+    
   }
 
 }

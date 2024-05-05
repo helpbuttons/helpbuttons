@@ -33,7 +33,7 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkToPop
           }}
           >
           <div style={buttonColorStyle(buttonType.cssColor)}>
-              <div className={showMap ? "card-button-list" : "card-button-list--vertical"}>
+              <div className={showMap ? "card-button-list" : "card-button-list"}>
                 {button.image && (
                   <div className={showMap ? "card-button-list__picture-container" : "card-button-list__picture-container"}>
                     <div className="card-button-list__nav">

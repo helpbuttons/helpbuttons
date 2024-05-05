@@ -84,8 +84,9 @@ function Configuration() {
         const mimetypeError = 'invalid-mimetype-';
         if(err?.validationErrors?.jumbo && err.validationErrors.jumbo.indexOf(mimetypeError) === 0 ){
             const mimetype = err.validationErrors.jumbo.substr(mimetypeError.length);
-            const mimetypeErrorMessage = t('common.invalidMimeType', ['jumbo',mimetype]);
-            setError('jumbo',{ type: 'custom', message: mimetypeErrorMessage
+            console.log(mimetype)
+            const mimetypeErrorMessage = t('common.invalidMimeType', ['background image',mimetype]);
+            setError('background image',{ type: 'custom', message: mimetypeErrorMessage
           })
         }else if(err?.validationErrors?.logo && err.validationErrors.logo.indexOf(mimetypeError) === 0 ){
           const mimetype = err.validationErrors.logo.substr(mimetypeError.length);

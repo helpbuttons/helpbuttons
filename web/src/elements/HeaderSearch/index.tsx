@@ -51,9 +51,11 @@ export function HeaderSearch({ results, toggleAdvancedFilters}) {
               />
             )}
             <div className="header-search__icons">
-              <div className="header-search__icon">
-                <IoSearch />
-              </div>
+              {!filtering &&
+                <div className="header-search__icon">
+                  <IoSearch />
+                </div>
+              }
               {filtering && 
                 <div ref={clearButton} className="header-search__icon--close">
                   <IoClose />

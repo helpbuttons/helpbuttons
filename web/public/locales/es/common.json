@@ -13,7 +13,7 @@
   "homeinfo": {
     "selectedArea": "en el area seleccionada",
     "start": "¿Dónde quieres empezar?",
-    "info": "¿De qué trata esta red?",
+    "info": "¿De qué se trata?",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
     "goToExplore": "Explorar _helpbuttons_",
@@ -29,12 +29,14 @@
     "faqsSubtitle": "Lee más sobre esta app",
     "exploreSubtitle": "Busca y encuentra los _helpbuttons_ en esta herramienta",
     "administeredby": "Moderadores y asistencia ",
-    "adminInstructions": "Contacta a cualquiera de los siguientes usuarios si necesitas ayuda con la página web",
+    "adminInstructions": "Estas personas se encargan de mantener la web. Contáctalos si necesitas ayuda con la página web:",
     "loginSubtitle": "¡Entra o crea tu cuenta!",
     "buttons": "Hay {0} _helpbuttons_ en esta Red",
     "createNetworkButton": "Crea tu propia red",
     "createNetwork": "También puedes contactar al equipo si necesitas ayuda creando tu propia red",
-    "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación: "
+    "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación: ",
+    "callToAdmin": "Pulsa aquí si necesitas ayuda de alguien para entrar o publicar"
+
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -50,7 +52,7 @@
     "save": "Guardar",
     "in": "en",
     "publish": "Publicar",
-    "saveSuccess": "{0} guardado",
+    "saveSuccess": "Guardado",
     "choose": "Elige {0}",
     "search": "Buscar",
     "reset": "Limpiar filtros",
@@ -62,6 +64,7 @@
     "done": "Hecho",
     "remove": "Eliminar",
     "click": "Haz click aquí",
+    "error":"Hubo un problema",
     "reloadConfig": "Recargar configuración",
     "publishTitle": "Crear {0}",
     "deleteSuccess": "Finalizado con éxito"
@@ -76,8 +79,8 @@
     "locationExplain": "El mapa se centrará siempre sobre el lugar y el radio de tu Red  cada vez que alguien entre en la herramienta",
     "tagsExplain": "Las palabras clave de tu Red harán más fácil la búsqueda de temas, servirán para oreganizar el contenido y para saber de qué trata tu red en la página de inicio.",
     "centerOfMap": "Selecciona la ubicación base de tu Red",
-    "description": "Aquí puedes modificar la configuración de tu Red",
-    "title": "Configuración de tu Red y administrador",
+    "description": "Aquí puedes modificar la configuración de tu Red. Si es la primera vez, tienes que añadir al menos el nombre, descripción, imagen de perfil, imagen de fondo y una localización para completar la creación.",
+    "title": "Configura tu Red",
     "privacySetPublic": "Pulsa aquí para volver a red pública",
     "tagsPlaceHolder": "Comida, herramientas, juguetes, ropa...",
     "tags": "Palabras clave de la Red",
@@ -103,12 +106,14 @@
     "buttonTemplateLabel": "Elige tus tipos de botón",
     "createButtonTypePlaceholder": "Escribe el nombre de tu nuevo tipo de _helpbutton_",
     "templateMissingFields": "Escoge un nombre y un color para crear tu tipo de _helpbutton_",
-    "contactAdmin": "Contactar al administrador",
+    "contactAdmin": "Contacta al administrador principal",
     "priceFieldAdd": "Añadir precio",
-    "moderationList": "Moderacion",
+    "moderationList": "Moderación",
     "createSupportButton": "Crea tu boton de soporte para tu red",
-    "moderation": "Moderacion",
+    "moderation": "Modera usuarios y edita administradores",
     "customFields": "Campos extra",
+    "priceFieldAddLabel": "Muestra un precio en tu tipo de _helpbutton_ para que los usuarios puedan comprar o vender",
+    "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
     "addType":"+ Crear tipo de _helpbutton_ con los campos superiores",
     "currencyLabel": "Divisa"
   },
@@ -164,7 +169,7 @@
     "setNewPassword": "Crea una nueva contraseña",
     "newPassword": "Escribe tu nueva contraseña",
     "passwordPlaceHolder": "Escribe tu contraseña",
-    "logout": "Cerrar sesión",
+    "logout": "Cierra tu sesión",
     "register": "REGISTRARSE",
     "newLoginTokenSent": "Si tienes una cuenta, recibirás un correo con una dirección en la que pulsar para entrar.",
     "sendLoginToken": "Mandar enlace de Inicio de Sesión",
@@ -175,7 +180,7 @@
     "avatarExplain": "Esta es la imagen de perfil/avatar que te representará en esta Red",
     "newPasswordPlaceHolder": "Tu nueva contraseña",
     "usernamePlaceHolder": "Escribe un nombre de usuario",
-    "editProfile": "Editar perfil",
+    "editProfile": "Edita tu perfil de usuario",
     "noAccount": "No tengo cuenta",
     "tags": "Tus intereses",
     "passwordConfirmationPlaceHolder": "Escribe tu contraseña otra vez por favor",
@@ -209,7 +214,9 @@
     "phoneExplain":"Añade tu teléfono si quieres que te contacten a través de él",
     "phonePlaceHolder":"i.e. 34699000000",
     "signupOptions":"Opciones Extra",
-    "adminPhonePublish": "Eres administrador de la red, ¿quieres que tu teléfono este disponible en la página principal?"
+    "adminPhonePublishExplain": "Eres administrador de la red, ¿quieres que tu teléfono este disponible en la página principal? Puedes indicar también si quieres que te puedan contactar por Whatsapp.",
+    "adminPhonePublish": "Publicar mi teléfono en la página de inicio",
+    "showWhatsapp": "Mostrar Whatsapp"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -236,7 +243,7 @@
     "queryLabel": "¿Qué buscas?",
     "searchBarTop": "{1} _helpbuttons_ {0}",
     "queryExplain": "Especifica con palabras concretas aquello que quieras encontrar",
-    "followTag":"Quiero recibir alertas sobre",
+    "followTag":"Mándame alertas",
     "tagsExplain": "Las palabras clave son los temas más importantes o más tratados en la Red",
     "where": "¿Dónde?",
     "distance": "Distancia de búsqueda",
@@ -258,7 +265,7 @@
     "priceExplain": "Filtrar por precio",
     "byProximity": "Por proximidad",
     "byEventDate": "Por ínicio del evento",
-    "followTagSucess": "{0} fue adicionado a tus intereses",
+    "followTagSucess": "{0} fue añadido a tus temas de interés. Para ver tus temas de interés ve a Mi Perfil.",
     "focusedArea":"en la zona"
   },
   "button": {
@@ -394,9 +401,9 @@
   "faqs": {
     "title": "Preguntas frecuentes",
     "networkQuestion": "¿Qué es {0}?",
-    "helpbuttonsQuestion": "¿Qué son Helpbuttons?",
+    "helpbuttonsQuestion": "¿Qué son Botones de ayuda?",
     "forQuestion": "¿Para qué sirve?",
-    "helpbuttonQuestion": "¿Qué es un Helpbutton?",
+    "helpbuttonQuestion": "¿Qué es un Helpbutton o Botón?",
     "networkDescription": "Una Red se refiere a tu instancia individual de Helpbuttons. Puedes crear tu propia red, designar un propósito (como compartir comida, ayudar a los animales, cuidar a los ancianos, etc.) y comenzar a colaborar con cualquier grupo que desees (ya sea tu vecindario, club deportivo, pueblo, compañeros de curso, etc.).",
     "communityQuestion": "La comunidad",
     "ethicsQuestion": "Políticas de Ética",
@@ -404,14 +411,15 @@
     "securityQuestion": "Políticas de Seguridad",
     "contactQuestion": "Contacto",
     "helpbuttonsHighlight": "Helpbuttons",
-    "helpbuttonsDescription": "Helpbuttons es el software de código abierto que impulsa esta aplicación. Con Helpbuttons, puedes crear tus propias redes para compartir comida, vivienda, transporte o cualquier otra cosa que tengas en mente, y luego federarte con otras redes para compartir usuarios y recursos. Helpbuttons se especializa en conectar a personas que aún no se conocen, para diversos propósitos, en el mundo real.",
+    "helpbuttonsDescription": "ó Botones de ayuda es el software de código abierto que impulsa esta aplicación. Con Helpbuttons, puedes crear tus propias redes para compartir comida, vivienda, transporte o cualquier otra cosa que tengas en mente, y luego federarte con otras redes para compartir usuarios y recursos. Helpbuttons se especializa en conectar a personas que aún no se conocen, para diversos propósitos, en el mundo real.",
     "forDescription": "Nuestro objetivo es fomentar una sociedad cohesionada, promover la cooperación y optimizar el diseño de herramientas colaborativas para aprovechar al máximo las ventajas de internet. En resumen, hemos observado las cantidades sustanciales de dinero, tiempo y participación de los usuarios requeridos cada vez que se lanza una nueva aplicación colaborativa. Esto parece innecesario. La mayoría de estas herramientas comparten una parte significativa de sus funcionalidades básicas. Creemos que estas similitudes podrían ser gestionadas mediante el mismo software, simplemente adaptado para cada propósito único a través de diversos módulos.",
     "helpbuttonDescription": "Un Helpbutton se refiere a una publicación. Cada publicación realizada por un usuario en Helpbuttons se llama Helpbutton. Los Helpbuttons pueden representar ofertas, necesidades, intercambios, propuestas de transporte, negocios, etc. También se pueden renombrar para adaptarse a las necesidades específicas de tu aplicación.",
-    "communityDescription": "La comunidad de Helpbuttons es el pilar de este proyecto, proporcionándole sostenibilidad. Esta herramienta está diseñada para ser adaptable a una multitud de propósitos, beneficiando así a una amplia gama de usuarios al mismo tiempo que fomenta el apoyo al proyecto. Al federarte con otras aplicaciones de Helpbuttons, puedes compartir usuarios y recursos. Este método de colaboración nos permite unir a más personas y mejorar en última instancia la herramienta que proporcionamos.",
-    "ethicsDescription": "En Helpbuttons, estamos comprometidos a mantener los más altos estándares de conducta ética. Creemos en la transparencia, la honestidad y el respeto por todas las personas. Nuestro software está diseñado para conectar a las personas y facilitar el intercambio, lo cual es una responsabilidad que tomamos en serio. Alentamos a nuestros usuarios a usar nuestra plataforma con los mismos valores en mente, priorizando la comunicación respetuosa y el intercambio consciente. Cualquier mal uso del software, incluida la explotación, el daño a otros o la manipulación de las funcionalidades de la plataforma con fines personales, no será tolerado. Los usuarios deben adherirse a estas políticas éticas en todo momento.",
-    "privacyDescription": "En Helpbuttons, respetamos tu privacidad y estamos comprometidos a proteger tus datos personales. Nuestra política de privacidad describe cómo recopilamos, almacenamos, usamos y divulgamos tu información personal. Cumplimos con todas las leyes y regulaciones de privacidad relevantes, asegurando que tus datos se utilicen únicamente con el propósito de proporcionar y mejorar nuestro servicio. Somos transparentes en cuanto a nuestros procesos de recopilación de datos, y tienes el derecho de acceder, actualizar o eliminar tus datos personales en cualquier momento. Recuerda que compartir información personal en las publicaciones de Helpbuttons está a tu discreción, sé consciente y comparte solo lo que te sientas cómodo compartiendo con los demás.\nPor favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
-    "securityDescription": "Tu seguridad es nuestra principal prioridad. En Helpbuttons, implementamos medidas de seguridad estrictas para proteger la integridad de nuestro software y la seguridad de nuestros usuarios. Actualizamos y revisamos continuamente nuestros sistemas para garantizar que cumplan con los más altos estándares de ciberseguridad. Sin embargo, también creemos que la seguridad es una responsabilidad compartida. Alentamos a nuestros usuarios a practicar comportamientos seguros en línea, como usar contraseñas fuertes y proteger la información personal.\nPor favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
-    "contactDescription": "Por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org"
+    "communityDescription": "Helpbuttons o Botonesdeayuda está hecho por un grupo de programadores independientes de España y Portugal. Principalmente con aportaciones desinteresadas en su tiempo libre. Actualmente el proyecto se encuentra en fase de búsqueda de financiación para poder sostener el mantenimiento en su uso para el público general. Estos programadores, junto con la comunidad de usuarios que empieza a usar la herramienta, forman la comunidad que el proyecto necesita para sostenerse frente a otros modelos de aplicaciones tradicionales. Esta herramienta está diseñada para ser adaptable a una multitud de propósitos, beneficiando así a una amplia gama de usuarios al mismo tiempo que fomenta el apoyo al proyecto. Más adelante, al federarnos con otras aplicaciones de Helpbuttons/Botonesdeayuda, podremos compartir usuarios y recursos. Este método de colaboración nos permite unir a más personas y mejorar en última instancia la herramienta que proporcionamos.\n\n El representante legal que actúa como interlocutor con la administración es la asociación sin ánimo de lucro 'Watch Out, Freedom!'",
+    "networksEthicsDescription": "Ejemplo de políticas de ética de la network",
+    "ethicsDescription": "En Helpbuttons/Botonesdeayuda, estamos comprometidos a mantener los más altos estándares de conducta ética. Creemos en la transparencia, la honestidad y el respeto por todas las personas. Si bien no podemos controlar el uso que se hace de nuestro software en otros servidores, en la medida de lo posible no permitiremos conductas que vayan contra la integridad y dignidad humanas, o que fomenten el maltrato animal. Nuestro software está diseñado para conectar a las personas y facilitar el intercambio, lo cual es una responsabilidad que tomamos en serio. Alentamos a nuestros usuarios a usar la plataforma y aquella rèplicas que hagan con los mismos valores en mente, priorizando la comunicación respetuosa y el intercambio consciente. Cualquier mal uso del software dentro de nuestros servidores, incluida la explotación, el daño a otros o la manipulación de las funcionalidades de la plataforma con fines personales, no será tolerado.",
+    "privacyDescription": "En Helpbuttons/Botonesdeayuda, respetamos tu privacidad y estamos comprometidos a proteger tus datos personales. Nuestra política de privacidad describe cómo recopilamos, almacenamos, usamos y divulgamos tu información personal. Cumplimos con todas las leyes y regulaciones de privacidad relevantes, asegurando que tus datos se utilicen únicamente con el propósito de proporcionar y mejorar nuestro servicio. Somos transparentes en cuanto a nuestros procesos de recopilación de datos, y tienes el derecho de acceder, actualizar o eliminar tus datos personales en cualquier momento. Recuerda que compartir información personal en las publicaciones de Helpbuttons está a tu discreción, sé consciente y comparte solo lo que te sientas cómodo compartiendo con los demás.\nPor favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
+    "securityDescription": "Tu seguridad es nuestra principal prioridad. En Helpbuttons, implementamos medidas de seguridad estrictas para proteger la integridad de nuestro software y la seguridad de nuestros usuarios. Actualizamos y revisamos continuamente nuestros sistemas para garantizar que cumplan con los más altos estándares de ciberseguridad. Sin embargo, también creemos que la seguridad es una responsabilidad compartida. Si has instalado esta herrmaienta en tu servidor, te alentamos a practicar comportamientos seguros en línea, como usar contraseñas fuertes y proteger la información personal.\n Por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
+    "contactDescription": "Si quieres comunicar con los gestores de la página, acude a la sección de Inicio. Si quieres ponerte en contacto con los programadores que hacen posible la app, por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org"
   },
   "invite": {
     "never": "Nunca",
@@ -427,6 +435,8 @@
     "copied": "Link de invitación copiado {0}",
     "title": "Invitaciones",
     "description": "Invita a personas, administra y comparte enlaces con otras personas para permitirles acceder a tu red",
+    "inviteOnlyLabel":"Privacidad de la red",
+    "inviteOnlyExplain":"Si habilitas esto, los usuarios solo podrán registrarse y publicar con invitación.",
     "inviteOnly": "Sólo permitir el registro con una invitación"
   },
   "customFields": {
@@ -456,6 +466,6 @@
   },
   "error": {
     "error":"Algo fue mal",
-    "notFoundMessage": "Página no encontrada."
+    "notFoundMessage": "Página no encontrada o borrada"
   }
 }

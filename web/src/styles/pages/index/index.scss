@@ -2,6 +2,7 @@
 // blocks in other style files too, ex: aside-info
 
 $index-mobile-fixed-z-index: $z-index-05;
+$index-content-left--distance: 60vw;
 
 .index__mobile-fixed {
   width: 100%;
@@ -71,15 +72,15 @@ $index-mobile-fixed-z-index: $z-index-05;
   }
   .index__content-left {
     flex-direction: column;
-    width: 35vw;
+    width: $index-content-left--distance;
     float: left;
     height: 100%;
     transition: $transition-default-slow;
-    min-width: 35vw;
+    min-width: $index-content-left--distance;
     // border-right: $popup-soptions-border-top;
   }
   .index__content-left--hide {
-    margin-left: -35vw;
+    margin-left: $index-content-left--distance;
     bottom: 0;
   }
   
@@ -89,13 +90,12 @@ $index-mobile-fixed-z-index: $z-index-05;
 @media #{$breakpoints-xxlarge} {
 
   .index__content-left {
-    min-width: 30vw;
-    width: 20vw;
+    width: $index-content-left--distance;
 
   }
 
   .index__content-left--hide {
-    margin-left: -30vw;
+    margin-left: -$index-content-left--distance;
   }
 
 }

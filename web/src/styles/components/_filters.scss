@@ -29,7 +29,7 @@ $filters-padding: 10px;
 }
 
 .filters__container {
-  height: calc(var(--vh) - $footer-height-mobile) !important;
+  height: calc(var(--vh) - 68px) !important;
   /* Add other styles as needed */
 }
 

@@ -105,7 +105,7 @@ body {
 .popup__header-right {
   @extend .popup__header-nav;
   text-align: right;
-  margin-right: $margin-small;
+  // margin-right: $margin-small;
 }
 
 .popup__header-content {
@@ -427,7 +427,8 @@ body {
 
   .popup__header {
 
-    border-radius: 0;
+    border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
+    margin-top: $margin-xsmall;
   }
 
   .popup__content {

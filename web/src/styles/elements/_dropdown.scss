@@ -100,14 +100,15 @@ $dropdown-max-width: 30rem;
   text-align: left;
   overflow-x: hidden;
   height: auto;
-  padding: 0 ;
-  max-width: 100px;
+  padding: $padding-small;
+  // max-width: 100px;
   width: inherit;
-  text-decoration: underline;
+  text-decoration: none;
   border: none;
   border-radius: 2rem;
-  background: $color-corporative;
+  background: $color-white;
   color: $color-black;
+
   transition: all 0.2s ease-in-out;
   font-size: $font-size-general;
 

@@ -26,7 +26,7 @@ $nav-header-new-message-radius: $border-radius-circle;
   align-items: center;
   background-color: $color-corporative;
   border-radius: 0 0 0 0;
-  padding: $padding-small $nav-header-padding;
+  padding: $padding-medium $nav-header-padding;
   z-index: $z-index-base;
 
 }
@@ -94,9 +94,9 @@ $nav-header-new-message-radius: $border-radius-circle;
     background-color: $color-corporative;
     // align-items: center;
     // justify-content: center;
-    padding: $padding-small $padding-big ;
+    padding: $padding-medium $padding-big ;
     overflow-x:auto;
-    // border-bottom: 1px solid $color-gray-border;
+    border-bottom: 1px solid $color-gray-border;
 
   }
 
