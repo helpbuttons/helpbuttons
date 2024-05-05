@@ -64,6 +64,7 @@
     "done": "Hecho",
     "remove": "Eliminar",
     "click": "Haz click aquí",
+    "error":"Hubo un problema",
     "reloadConfig": "Recargar configuración",
     "publishTitle": "Crear {0}",
     "deleteSuccess": "Finalizado con éxito"
