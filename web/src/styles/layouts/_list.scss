@@ -57,7 +57,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 .list__show-map-button--hideList {
 
-  bottom: 60px;
+  bottom: 40px;
   position: absolute;
   right: 0;
   padding-right: $padding-big;
@@ -170,11 +170,11 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: auto;
   justify-content: space-between;
-  padding: 0 $padding-medium;
+  padding: $padding-small $padding-xsmall;
   gap: $padding-small;
   position: relative;
-  height: $list-drag-tab-height;
 
 }
 
@@ -215,14 +215,19 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 
 
-
 @media #{$breakpoints-medium} {
 
+  .list__order {
 
-}
+    padding: $padding-medium $padding-big;
+    
+  }
 
-@media #{$breakpoints-medium} {
+  .list__show-map-button--hideList {
 
+    bottom: 40px;
+  
+  }
 
   .list__content--full-screen {
 
@@ -314,8 +319,11 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
     position: relative;
     bottom: auto;
+    height: auto;
     left: auto;
     border-radius: 0;
+    padding: $padding-medium $padding-big;
+    
 
   }
 

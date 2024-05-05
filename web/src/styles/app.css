@@ -2065,13 +2065,12 @@ em-emoji-picker {
   text-align: left;
   overflow-x: hidden;
   height: auto;
-  padding: 0;
-  max-width: 100px;
+  padding: 5px;
   width: inherit;
-  text-decoration: underline;
+  text-decoration: none;
   border: none;
   border-radius: 2rem;
-  background: var(--network-background-color);
+  background: #fff;
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
@@ -4439,7 +4438,7 @@ li, ol, ul, h2 {
   align-items: center;
   background-color: var(--network-background-color);
   border-radius: 0 0 0 0;
-  padding: 5px 15px;
+  padding: 10px 15px;
   z-index: 10;
 }
 
@@ -7373,7 +7372,7 @@ hr {
 }
 
 .list__show-map-button--hideList {
-  bottom: 60px;
+  bottom: 40px;
   position: absolute;
   right: 0;
   padding-right: 15px;
@@ -7455,11 +7454,11 @@ hr {
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: auto;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 5px 4px;
   gap: 5px;
   position: relative;
-  height: 35px;
 }
 
 .list__order--hidden {
@@ -7484,6 +7483,12 @@ hr {
 }
 
 @media only screen and (min-width: 991px) {
+  .list__order {
+    padding: 10px 15px;
+  }
+  .list__show-map-button--hideList {
+    bottom: 40px;
+  }
   .list__content--full-screen .list__element {
     flex: 0;
     flex-basis: 100%;
@@ -7531,8 +7536,10 @@ hr {
   .list__order {
     position: relative;
     bottom: auto;
+    height: auto;
     left: auto;
     border-radius: 0;
+    padding: 10px 15px;
   }
 }
 body {
