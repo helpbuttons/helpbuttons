@@ -66,6 +66,7 @@ export default function HomeInfo({
   );
 
   const [showMessage, toggleShowMessage] = useToggle(false);
+  const [showContactDialog, toggleshowContactDialog] = useToggle(true);
 
   const [navigatorCoordinates, setNavigatorCoordinates] =
     useState(null);
@@ -84,74 +85,69 @@ export default function HomeInfo({
           </div>
         </ShowMobileOnly>
 
-        <div className="card-alert__container card-alert__container--bottom">
-            <div className="card-alert card-alert--error">
-              {showMessage ? 
+        {showContactDialog &&
+            <div className="card-alert__container card-alert__container--bottom">
+              <div className="card-alert card-alert--error">
+                {showMessage ? 
+                  <>
+                      <div className='card-alert__btn-options'>
+                        <Btn
+                          btnType={BtnType.circle}
+                          iconLink={<IoCallOutline />}
+                          iconLeft={IconType.circle}
+                          contentAlignment={ContentAlignment.center}
+                        />
+
+                        <Btn
+                          btnType={BtnType.circle}
+                          iconLink={<IoMailOutline />}
+                          iconLeft={IconType.circle}
+                          contentAlignment={ContentAlignment.center}
+                        />
+
+                        <Btn
+                          btnType={BtnType.circle}
+                          iconLink={<IoLogoWhatsapp />}
+                          iconLeft={IconType.circle}
+                          contentAlignment={ContentAlignment.center}
+                        />
+
+                      </div>
+                      <Btn
+                        btnType={BtnType.smallCircle}
+                        iconLink={<IoClose />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                        onClick={() => toggleshowContactDialog(false)}
+                      />
+
+                  </>
+                :
                 <>
-                    <div className='card-alert__btn-options'>
+                  <div className="card-alert__content">
+                      {t("homeinfo.callToAdmin")}
                       <Btn
-                        btnType={BtnType.circle}
-                        iconLink={<IoCallOutline />}
-                        iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.center}
-                      />
+                      btnType={BtnType.circle}
+                      iconLink={<IoCall />}
+                      iconLeft={IconType.circle}
+                      contentAlignment={ContentAlignment.center}
+                      onClick={() => toggleShowMessage(true)}
+                    />   
+                  </div>
 
-                      <Btn
-                        btnType={BtnType.circle}
-                        iconLink={<IoMailOutline />}
-                        iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.center}
-                      />
-
-                      <Btn
-                        btnType={BtnType.circle}
-                        iconLink={<IoLogoWhatsapp />}
-                        iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.center}
-                      />
-
-                      <Btn
-                        btnType={BtnType.circle}
-                        iconLink={<IoSendOutline />}
-                        iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.center}
-                      />
-                    </div>
-                    <Btn
+                  <Btn
                       btnType={BtnType.smallCircle}
                       iconLink={<IoClose />}
                       iconLeft={IconType.circle}
                       contentAlignment={ContentAlignment.center}
-                      onClick={() => toggleShowMessage(true)}
-                    />
-
+                      onClick={() => toggleshowContactDialog(false)}
+                  />
                 </>
-              :
-              <>
-          
-                <div className="card-alert__content">
-                <Btn
-                  btnType={BtnType.circle}
-                  iconLink={<IoCall />}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.center}
-                  onClick={() => toggleShowMessage(true)}
-                />    
-                  {t("homeinfo.callToAdmin")}
-                </div>
-                <Btn
-                    btnType={BtnType.smallCircle}
-                    iconLink={<IoClose />}
-                    iconLeft={IconType.circle}
-                    contentAlignment={ContentAlignment.center}
-                    onClick={() => toggleShowMessage(true)}
-                />
-              </>
-              }
-                
-            </div>
-        </div>  
-
+                }
+              </div>
+            </div> 
+        }
+         
       <div
         className='info-overlay__container'
       >
@@ -359,7 +355,7 @@ export default function HomeInfo({
                   )}
                   <div className="card__section">
                     <p>{t('homeinfo.createNetwork')}</p>
-                    <NavLink href="mailto:mail@watchoutfreedom.com">
+                    <NavLink href="https://helpbuttons.org">
                       <IoAddOutline />
                       <span>{t('homeinfo.createNetworkButton')}</span>
                     </NavLink>

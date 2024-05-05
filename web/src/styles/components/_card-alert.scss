@@ -105,3 +105,14 @@ $card-alert-icon-size: 30px;
 
 
 }
+
+
+
+@media #{$breakpoints-medium} {
+
+  .card-alert__container--bottom {
+    margin-bottom: 0;
+    margin-left: $margin-big;
+  }
+
+}

@@ -279,7 +279,9 @@
     "phoneExplain":"Add your phone if you want people to contact you through it",
     "phonePlaceHolder":"i.e. 34699000000",
     "signupOptions":"Extra options",
-    "adminPhonePublish": "You are a network administrator, do you want your phone to be available on the main page?"
+    "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
+    "adminPhonePublish": "Publish my phone in the home page",
+    "showWhatsapp": "Mostrar Whatsapp"
   },
   "picker": {
     "headerText": "Choose a location"

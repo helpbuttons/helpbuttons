@@ -1105,7 +1105,7 @@ a:hover {
   display: block;
   position: relative;
   color: #828282;
-  bottom: 2.2rem;
+  bottom: 1rem;
   left: 0.3rem;
   height: 0;
 }
@@ -2381,6 +2381,12 @@ li, ol, ul, h2 {
   gap: 5px;
 }
 
+@media only screen and (min-width: 991px) {
+  .card-alert__container--bottom {
+    margin-bottom: 0;
+    margin-left: 30px;
+  }
+}
 .marker-button {
   height: 70px;
   width: 70px;
