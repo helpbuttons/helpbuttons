@@ -169,10 +169,8 @@ export function FeedElement({
               <>
                 <Btn
                   submit={false}
-                  btnType={BtnType.filterCorp}
-                  iconLink={<IoMailOpenOutline />}
+                  btnType={BtnType.smallLink}
                   caption={t("comment.sendPublic")}
-                  iconLeft={IconType.svg}
                   contentAlignment={ContentAlignment.right}
                   onClick={() =>
                     setShowComposePostReply(() => {
@@ -186,9 +184,7 @@ export function FeedElement({
                 />
                 <Btn
                   submit={false}
-                  btnType={BtnType.filterCorp}
-                  iconLink={<IoMailOutline />}
-                  iconLeft={IconType.svg}
+                  btnType={BtnType.smallLink}
                   caption={t("comment.sendPrivate")}
                   contentAlignment={ContentAlignment.right}
                   onClick={() =>
@@ -209,9 +205,8 @@ export function FeedElement({
                 isAdmin(loggedInUser)) && (
                   <Btn
                         submit={false}
-                        btnType={BtnType.filterCorp}
-                        iconLink={<IoTrashBinOutline />}
-                        iconLeft={IconType.circle}
+                        btnType={BtnType.smallLink}
+                        caption={t('comment.delete')}
                         contentAlignment={ContentAlignment.right}
                         onClick={() => deletePost(post.id)}
                         disabled={isLast}
@@ -220,9 +215,8 @@ export function FeedElement({
               {!loggedInUser && 
                 <Btn
                 submit={false}
-                btnType={BtnType.filterCorp}
-                iconLink={<IoMailOutline />}
-                iconLeft={IconType.circle}
+                btnType={BtnType.smallLink}
+                caption={t('comment.delete')}
                 contentAlignment={ContentAlignment.right}
                 onClick={() =>
                   {

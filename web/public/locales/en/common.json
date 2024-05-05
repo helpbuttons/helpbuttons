@@ -157,7 +157,7 @@
     "reloadConfig": "Reload Config",
     "deleteSuccess": "Deleted",
     "error":"Something went wrong",
-    "notFoundMessage": "Página no encontrada"
+    "notFoundMessage": "Page not found or deleted"
   },
   "button": {
     "title":"_helpbutton_ view",

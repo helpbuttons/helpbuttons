@@ -232,7 +232,7 @@ body,
 .index__container,
 .info-overlay__content,
 .info-overlay__card,
-.list__container--full-list,
+.list__container--full-screen,
 .popup,
 .index__content,
 .feed__container,
@@ -295,7 +295,7 @@ a:hover {
   .info-overlay__content,
   .info-overlay__container,
   .info-overlay__card,
-  .list__container--full-list,
+  .list__container--full-screen,
   .popup,
   .popup-content,
   .popup--button-file,
@@ -2318,7 +2318,6 @@ li, ol, ul, h2 {
   display: flex;
 }
 
-<<<<<<< HEAD
 .card-alert__container {
   position: absolute;
   width: 100vw;
@@ -2337,8 +2336,6 @@ li, ol, ul, h2 {
   margin-bottom: 50px;
 }
 
-=======
->>>>>>> network-form-css
 .card-alert--success {
   background-color: #19AF96;
 }
@@ -2387,7 +2384,6 @@ li, ol, ul, h2 {
   font-size: 14px;
 }
 
-<<<<<<< HEAD
 .card-alert__btn-options {
   display: flex;
   flex-direction: row;
@@ -2399,13 +2395,6 @@ li, ol, ul, h2 {
   .card-alert__container--bottom {
     margin-bottom: 0;
     margin-left: 30px;
-=======
-@media only screen and (min-width: 991px) {
-  .card-alert {
-    width: 50%;
-    margin: auto;
-    margin-top: 30px;
->>>>>>> network-form-css
   }
 }
 .marker-button {
@@ -6617,6 +6606,7 @@ hr {
   height: auto;
   display: flex;
   flex-direction: column;
+  padding-bottom: 10px;
 }
 
 .feed-element {
@@ -7269,6 +7259,7 @@ hr {
   height: auto;
   display: flex;
   flex-direction: column;
+  padding-bottom: 10px;
 }
 
 .feed-element {
@@ -7304,8 +7295,8 @@ hr {
   padding-bottom: 55px;
 }
 
-.list__container--full-list {
-  height: 100vh;
+.list__container--full-screen {
+  padding-bottom: 50px;
 }
 
 .list__show-map-button {
@@ -7418,11 +7409,6 @@ hr {
   background-color: var(--network-background-color);
 }
 
-@media (hover: none) {
-  .list__container {
-    padding-bottom: 35px;
-  }
-}
 .list__order--full-screen {
   position: relative;
   bottom: auto;
@@ -7464,7 +7450,6 @@ hr {
   .list__content {
     width: 100%;
     overflow-y: auto;
-    padding-bottom: 4em;
     overflow-x: hidden;
     flex-wrap: wrap;
   }
@@ -7865,23 +7850,23 @@ body {
   }
   .index__content-left, .popup--button-file {
     flex-direction: column;
-    width: 50vw;
+    width: 60vw;
     float: left;
     height: 100%;
     transition: all 1s;
-    min-width: 50vw;
+    min-width: 60vw;
   }
   .index__content-left--hide {
-    margin-left: 50vw;
+    margin-left: 60vw;
     bottom: 0;
   }
 }
 @media only screen and (min-width: 1440px) {
   .index__content-left, .popup--button-file {
-    width: 50vw;
+    width: 60vw;
   }
   .index__content-left--hide {
-    margin-left: -50vw;
+    margin-left: -60vw;
   }
 }
 .publish_btn {
@@ -8444,7 +8429,7 @@ body {
     width: auto;
     flex-direction: row-reverse;
     height: auto;
-    left: calc(50vw + 40px);
+    left: calc(60vw + 40px);
     top: 140px;
     border-radius: 34px;
     cursor: pointer; /* fallback if grab cursor is unsupported */
@@ -8473,7 +8458,7 @@ body {
 }
 @media only screen and (min-width: 1440px) {
   .drag-tab {
-    left: calc(50vw + 40px);
+    left: calc(60vw + 40px);
     margin-bottom: 5px;
   }
   .drag-tab--open {

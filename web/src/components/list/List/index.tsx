@@ -101,7 +101,7 @@ function List({
     <>
       {!showAdvancedFilters && (
         <>
-          <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-list')} onScroll={handleScrollHeight}>
+          <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}>
             <div className={ 'list__order ' +  (showLeftColumn ? '' : ' list__order--hidden') + (showMap ? '' : ' list__order--full-screen')} >
               {showLeftColumn &&
                 <AdvancedFiltersSortDropDown

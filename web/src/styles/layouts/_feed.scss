@@ -156,6 +156,7 @@ $feed-new-message-radius: $border-radius-circle;
   height: auto;
   display: flex;
   flex-direction: column;
+  padding-bottom: $feed-padding;
 }
 
 .feed-element{

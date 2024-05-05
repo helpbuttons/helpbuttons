@@ -80,7 +80,7 @@
     "tagsExplain": "Las palabras clave de tu Red harán más fácil la búsqueda de temas, servirán para oreganizar el contenido y para saber de qué trata tu red en la página de inicio.",
     "centerOfMap": "Selecciona la ubicación base de tu Red",
     "description": "Aquí puedes modificar la configuración de tu Red. Si es la primera vez, tienes que añadir al menos el nombre, descripción, imagen de perfil, imagen de fondo y una localización para completar la creación.",
-    "title": "Configuración de tu Red y administrador",
+    "title": "Configura tu Red",
     "privacySetPublic": "Pulsa aquí para volver a red pública",
     "tagsPlaceHolder": "Comida, herramientas, juguetes, ropa...",
     "tags": "Palabras clave de la Red",
@@ -106,11 +106,11 @@
     "buttonTemplateLabel": "Elige tus tipos de botón",
     "createButtonTypePlaceholder": "Escribe el nombre de tu nuevo tipo de _helpbutton_",
     "templateMissingFields": "Escoge un nombre y un color para crear tu tipo de _helpbutton_",
-    "contactAdmin": "Contactar al administrador",
+    "contactAdmin": "Contacta al administrador principal",
     "priceFieldAdd": "Añadir precio",
-    "moderationList": "Moderacion",
+    "moderationList": "Moderación",
     "createSupportButton": "Crea tu boton de soporte para tu red",
-    "moderation": "Moderacion",
+    "moderation": "Modera usuarios y edita administradores",
     "customFields": "Campos extra",
     "priceFieldAddLabel": "Muestra un precio en tu tipo de _helpbutton_ para que los usuarios puedan comprar o vender",
     "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
@@ -169,7 +169,7 @@
     "setNewPassword": "Crea una nueva contraseña",
     "newPassword": "Escribe tu nueva contraseña",
     "passwordPlaceHolder": "Escribe tu contraseña",
-    "logout": "Cerrar sesión",
+    "logout": "Cierra tu sesión",
     "register": "REGISTRARSE",
     "newLoginTokenSent": "Si tienes una cuenta, recibirás un correo con una dirección en la que pulsar para entrar.",
     "sendLoginToken": "Mandar enlace de Inicio de Sesión",
@@ -180,7 +180,7 @@
     "avatarExplain": "Esta es la imagen de perfil/avatar que te representará en esta Red",
     "newPasswordPlaceHolder": "Tu nueva contraseña",
     "usernamePlaceHolder": "Escribe un nombre de usuario",
-    "editProfile": "Editar perfil",
+    "editProfile": "Edita tu perfil de usuario",
     "noAccount": "No tengo cuenta",
     "tags": "Tus intereses",
     "passwordConfirmationPlaceHolder": "Escribe tu contraseña otra vez por favor",
@@ -466,6 +466,6 @@
   },
   "error": {
     "error":"Algo fue mal",
-    "notFoundMessage": "Página no encontrada."
+    "notFoundMessage": "Página no encontrada o borrada"
   }
 }

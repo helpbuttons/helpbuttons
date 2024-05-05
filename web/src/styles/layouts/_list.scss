@@ -21,22 +21,12 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 }
 
 
-.list__container--full-list {
+.list__container--full-screen {
 
-  // margin-top: $list-drag-tab-height;
-  height: 100vh;
-  // padding-bottom: 200px;
+  padding-bottom: calc($footer-height-mobile );
 
 }
 
-// .list__container::before {
-
-//   content: "";
-//   display: block;
-//   height: 5px;
-//   background: white;
-
-// }
 
 .list__show-map-button {
 
@@ -198,7 +188,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 @media (hover: none) {
 
   .list__container {
-    padding-bottom: calc($footer-height-mobile - 15px);
+    // padding-bottom: calc($footer-height-mobile - 15px);
 
   }
 
@@ -285,12 +275,10 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
   }
 
-
   .list__content {
 
     width: 100%;
     overflow-y: auto;
-    padding-bottom: 4em;
     overflow-x: hidden;
     flex-wrap: wrap;
 
