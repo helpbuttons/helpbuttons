@@ -7296,7 +7296,7 @@ hr {
 }
 
 .list__container--full-screen {
-  padding-bottom: 50px;
+  padding-bottom: 100px;
 }
 
 .list__show-map-button {
@@ -7409,6 +7409,11 @@ hr {
   background-color: var(--network-background-color);
 }
 
+@media (hover: none) {
+  .list__container {
+    padding-bottom: 35px;
+  }
+}
 .list__order--full-screen {
   position: relative;
   bottom: auto;

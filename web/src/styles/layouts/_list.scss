@@ -20,13 +20,11 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
-
 .list__container--full-screen {
 
-  padding-bottom: calc($footer-height-mobile );
+  padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
 
 }
-
 
 .list__show-map-button {
 
@@ -187,9 +185,8 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 //change movement when there's no scrollbar
 @media (hover: none) {
 
-  .list__container {
-    // padding-bottom: calc($footer-height-mobile - 15px);
-
+  .list__container  {
+    padding-bottom: calc($footer-height-mobile - 15px);
   }
 
 }
@@ -203,8 +200,6 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   border-radius: 0;
 
 }
-
-
 
 
 @media #{$breakpoints-medium} {
@@ -321,7 +316,6 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     border-radius: 0;
     padding: $padding-medium $padding-big;
     
-
   }
 
 }
