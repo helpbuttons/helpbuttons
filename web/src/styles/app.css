@@ -2379,7 +2379,7 @@ li, ol, ul, h2 {
   gap: 5px;
 }
 
-@media only screen and (min-width: 991px) {
+@media only screen and (min-width: 1280px) {
   .card-alert__container--bottom {
     margin-bottom: 0;
     margin-left: 30px;
@@ -3150,7 +3150,7 @@ li, ol, ul, h2 {
 
 @media only screen and (min-width: 1440px) {
   .dropdown-nets__dropdown-trigger {
-    max-width: 840px;
+    max-width: 960px;
     min-width: 5rem;
   }
 }
@@ -3834,7 +3834,7 @@ li, ol, ul, h2 {
 
 .card-button-list--vertical {
   flex-flow: column;
-  height: auto;
+  height: 100%;
   max-height: none;
   margin-top: 7px;
 }
@@ -4090,7 +4090,7 @@ li, ol, ul, h2 {
 }
 
 .card-button-list__picture-container {
-  width: 150px;
+  width: 220px;
   min-width: 150px;
   height: 210px;
   overflow: hidden;
@@ -4479,7 +4479,7 @@ li, ol, ul, h2 {
     justify-content: flex-start;
   }
   .nav-header__content {
-    max-width: 840px;
+    max-width: 960px;
     justify-content: flex-start;
     flex: 0.9;
     width: 100%;
@@ -4591,12 +4591,15 @@ li, ol, ul, h2 {
   overflow: auto;
   min-height: 100px;
   padding-bottom: 100px;
+  justify-content: space-around;
+  align-items: flex-start;
 }
 .info-overlay__card .card {
   border-radius: 10px;
   background-color: #fff;
   padding: 15px;
-  margin: 20px 0;
+  margin: 7px 4px;
+  flex: 0.8 0 49%;
   overflow: auto;
 }
 .info-overlay__card .card .card__header {
@@ -4715,10 +4718,13 @@ li, ol, ul, h2 {
   }
   .info-overlay__card--header {
     height: 20rem;
+    flex-basis: 100% !important;
   }
   .info-overlay__card {
-    max-width: 840px;
     padding-bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
   }
 }
 .header-search__content {
@@ -6100,7 +6106,7 @@ li, ol, ul, h2 {
     flex-flow: column nowrap;
     height: 100%;
     width: 100%;
-    min-width: 840px;
+    min-width: 960px;
     margin-bottom: 0;
     padding-bottom: 10px;
   }
@@ -6685,7 +6691,7 @@ hr {
 
 @media only screen and (min-width: 991px) {
   .feed__container {
-    max-width: 840px;
+    max-width: 960px;
     margin: auto;
   }
   .feed-section {
@@ -7337,7 +7343,7 @@ hr {
 
 @media only screen and (min-width: 991px) {
   .feed__container {
-    max-width: 840px;
+    max-width: 960px;
     margin: auto;
   }
   .feed-section {
@@ -7799,7 +7805,7 @@ body {
 @media only screen and (min-width: 991px) {
   .popup {
     margin: 0px auto;
-    max-width: 840px;
+    max-width: 960px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -8241,7 +8247,7 @@ body {
 .button-file__container {
   overflow-y: scroll;
   height: 100vh;
-  max-width: 840px;
+  max-width: 960px;
   padding-bottom: 50px;
 }
 

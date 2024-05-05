@@ -121,13 +121,16 @@ $info-content-head-margin: calc( $footer-height-mobile );
   overflow: auto; 
   min-height: 100px;
   padding-bottom: $info-content-mobile-bottom-padding;
+  justify-content:space-around;
+  align-items: flex-start;
 
   .card {
 
     border-radius: 10px;
     background-color: $color-white;
     padding: $padding-big;
-    margin: $margin-small 0;
+    margin: $margin-xsmall $margin-xxsmall;
+    flex: 0.8 0 49%;
     // max-height: 100%;
     // height: fit-content;
     overflow: auto;
@@ -317,15 +320,18 @@ $info-content-head-margin: calc( $footer-height-mobile );
   .info-overlay__card--header {
 
     height: 20rem;
-    
+    flex-basis: 100% !important;
   
   }
 
   .info-overlay__card {
     
     // max-height: calc(100vh - 300px);
-    max-width: $grid-max-width;
+    // max-width: $grid-max-width;
     padding-bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    padding: $margin-small;
 
 
   }
