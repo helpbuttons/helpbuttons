@@ -108,7 +108,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   overflow-x: hidden;
   overflow-y: auto;
   height: 100vh;
-  margin-bottom: $margin-xbig;
+  padding-bottom: calc($footer-height-mobile + $margin-medium);
   min-height: none;
 
 

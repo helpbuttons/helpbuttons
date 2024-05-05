@@ -3,7 +3,7 @@ $info-nets-field-bottom: 90px;
 $info-nets-max-width: $grid-max-width--mobile;
 $info-image-height: 700px;
 $info-content-mobile-bottom-padding: calc( $footer-height-mobile*2 );
-$info-content-head-margin: calc( $footer-height-mobile );
+$info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padding-small );
 
 .info-overlay__selected {
 
@@ -24,8 +24,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
 .info-overlay__container {
 
   // background-color: $color-white;
-  padding-top: $info-content-head-margin;
-  margin-bottom: calc( $footer-height-mobile*4 );
+  padding: $info-content-head-margin 0;
   width:100%;
   z-index: $z-index-02;
   box-sizing: border-box;
