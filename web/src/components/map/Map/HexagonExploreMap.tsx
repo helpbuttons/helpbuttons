@@ -12,7 +12,7 @@ import {
 import _ from 'lodash';
 import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import Loading from 'components/loading';
-import { IoStorefrontSharp } from 'react-icons/io5';
+import { IoAddCircle, IoStorefrontSharp } from 'react-icons/io5';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { useStore } from 'store/Store';
 import { maxZoom } from './Map.consts';
@@ -248,7 +248,7 @@ export default function HexagonExploreMap({
                                 btnType.cssColor,
                               )}
                             >
-                              <div className="btn-filter__icon pigeon-map__hex-info--icon"></div>
+                              <div className="btn-filter__icon pigeon-map__hex-info--icon"><IoAddCircle/></div>
                               <div className="pigeon-map__hex-info--text">
                                 {hexagonBtnType.count.toString()}
                               </div>

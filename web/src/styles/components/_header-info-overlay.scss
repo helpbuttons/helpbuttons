@@ -232,6 +232,7 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
     .hashtags__list-item {
 
       margin-top: $padding-medium;
+      margin-left: unset;
 
     }
 

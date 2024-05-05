@@ -1380,7 +1380,7 @@ a:hover {
   border: 1px solid #D4D4D4;
 }
 
-.btn-filter, .dropdown-select__trigger--filter, .dropdown__filter, .btn-filter-with-icon, .checkbox-filter__content, .radio-filter__content {
+.btn-filter, .dropdown-select__trigger--filter, .dropdown__filter, .btn-filter-with-icon, .btn-filter-with-emoji, .checkbox-filter__content, .radio-filter__content {
   padding: 0 15px;
   width: auto;
   background-color: #fff;
@@ -1397,22 +1397,28 @@ a:hover {
   text-align: center;
   margin: 0 4px;
 }
-.btn-filter a, .dropdown-select__trigger--filter a, .dropdown__filter a, .btn-filter-with-icon a, .checkbox-filter__content a, .radio-filter__content a {
+.btn-filter a, .dropdown-select__trigger--filter a, .dropdown__filter a, .btn-filter-with-icon a, .btn-filter-with-emoji a, .checkbox-filter__content a, .radio-filter__content a {
   height: 18px;
   width: 18px;
 }
-.btn-filter svg, .dropdown-select__trigger--filter svg, .dropdown__filter svg, .btn-filter-with-icon svg, .checkbox-filter__content svg, .radio-filter__content svg {
+.btn-filter svg, .dropdown-select__trigger--filter svg, .dropdown__filter svg, .btn-filter-with-icon svg, .btn-filter-with-emoji svg, .checkbox-filter__content svg, .radio-filter__content svg {
   height: 18px;
   width: 18px;
   padding-left: 4px;
 }
-.btn-filter:empty, .dropdown-select__trigger--filter:empty, .dropdown__filter:empty, .btn-filter-with-icon:empty, .checkbox-filter__content:empty, .radio-filter__content:empty {
+.btn-filter:empty, .dropdown-select__trigger--filter:empty, .dropdown__filter:empty, .btn-filter-with-icon:empty, .btn-filter-with-emoji:empty, .checkbox-filter__content:empty, .radio-filter__content:empty {
   height: 1.25rem;
   line-height: 2.25rem;
 }
 
-.btn-filter-with-icon {
+.btn-filter-with-icon, .btn-filter-with-emoji {
   padding: 10px !important;
+}
+
+.btn-filter-with-emoji {
+  border-width: 6px;
+  border-color: var(--button-color);
+  font-weight: 800;
 }
 
 .btn-filter__icon, .pigeon-map__hex-info--icon, .checkbox__icon, .radio__icon {
@@ -1583,7 +1589,8 @@ a:hover {
 [disabled].dropdown__filter,
 [disabled].checkbox-filter__content,
 [disabled].radio-filter__content,
-[disabled].btn-filter-with-icon {
+[disabled].btn-filter-with-icon,
+[disabled].btn-filter-with-emoji {
   background: #f0f0f0;
   color: #828282;
   border: 1px solid #D4D4D4;
@@ -1604,7 +1611,8 @@ a:hover {
 [disabled].dropdown__filter div,
 [disabled].checkbox-filter__content div,
 [disabled].radio-filter__content div,
-[disabled].btn-filter-with-icon div {
+[disabled].btn-filter-with-icon div,
+[disabled].btn-filter-with-emoji div {
   background: transparent;
 }
 .btn[disabled] svg, .card__section a[disabled] svg, [disabled].accordion svg,
@@ -1623,7 +1631,8 @@ a:hover {
 [disabled].dropdown__filter svg,
 [disabled].checkbox-filter__content svg,
 [disabled].radio-filter__content svg,
-[disabled].btn-filter-with-icon svg {
+[disabled].btn-filter-with-icon svg,
+[disabled].btn-filter-with-emoji svg {
   fill: #828282;
 }
 .btn[disabled]:hover, .card__section a[disabled]:hover, [disabled].accordion:hover,
@@ -1642,7 +1651,8 @@ a:hover {
 [disabled].dropdown__filter:hover,
 [disabled].checkbox-filter__content:hover,
 [disabled].radio-filter__content:hover,
-[disabled].btn-filter-with-icon:hover {
+[disabled].btn-filter-with-icon:hover,
+[disabled].btn-filter-with-emoji:hover {
   cursor: default;
   border-color: #D4D4D4;
   color: #828282;
@@ -1664,7 +1674,8 @@ a:hover {
 [disabled].dropdown__filter:hover svg,
 [disabled].checkbox-filter__content:hover svg,
 [disabled].radio-filter__content:hover svg,
-[disabled].btn-filter-with-icon:hover svg {
+[disabled].btn-filter-with-icon:hover svg,
+[disabled].btn-filter-with-emoji:hover svg {
   fill: #828282;
 }
 .btn[disabled]:active, .card__section a[disabled]:active, [disabled].accordion:active,
@@ -1683,7 +1694,8 @@ a:hover {
 [disabled].dropdown__filter:active,
 [disabled].checkbox-filter__content:active,
 [disabled].radio-filter__content:active,
-[disabled].btn-filter-with-icon:active {
+[disabled].btn-filter-with-icon:active,
+[disabled].btn-filter-with-emoji:active {
   cursor: default;
   color: #828282;
   background-color: #f0f0f0;
@@ -1704,7 +1716,8 @@ a:hover {
 [disabled].dropdown__filter:active svg,
 [disabled].checkbox-filter__content:active svg,
 [disabled].radio-filter__content:active svg,
-[disabled].btn-filter-with-icon:active svg {
+[disabled].btn-filter-with-icon:active svg,
+[disabled].btn-filter-with-emoji:active svg {
   fill: #828282;
 }
 .btn[disabled]:focus, .card__section a[disabled]:focus, [disabled].accordion:focus,
@@ -1723,7 +1736,8 @@ a:hover {
 [disabled].dropdown__filter:focus,
 [disabled].checkbox-filter__content:focus,
 [disabled].radio-filter__content:focus,
-[disabled].btn-filter-with-icon:focus {
+[disabled].btn-filter-with-icon:focus,
+[disabled].btn-filter-with-emoji:focus {
   cursor: default;
   color: #828282;
   background-color: #f0f0f0;
@@ -1744,7 +1758,8 @@ a:hover {
 [disabled].dropdown__filter:focus svg,
 [disabled].checkbox-filter__content:focus svg,
 [disabled].radio-filter__content:focus svg,
-[disabled].btn-filter-with-icon:focus svg {
+[disabled].btn-filter-with-icon:focus svg,
+[disabled].btn-filter-with-emoji:focus svg {
   fill: #828282;
 }
 
@@ -1764,7 +1779,8 @@ a:hover {
 .dropdown__filter:hover,
 .checkbox-filter__content:hover,
 .radio-filter__content:hover,
-.btn-filter-with-icon:hover {
+.btn-filter-with-icon:hover,
+.btn-filter-with-emoji:hover {
   border-color: #828282;
   color: #fff;
   cursor: pointer;
@@ -1786,7 +1802,8 @@ a:hover {
 .dropdown__filter:hover svg,
 .checkbox-filter__content:hover svg,
 .radio-filter__content:hover svg,
-.btn-filter-with-icon:hover svg {
+.btn-filter-with-icon:hover svg,
+.btn-filter-with-emoji:hover svg {
   color: #fff;
   fill: #fff;
 }
@@ -1806,7 +1823,8 @@ a:hover {
 .dropdown__filter:focus,
 .checkbox-filter__content:focus,
 .radio-filter__content:focus,
-.btn-filter-with-icon:focus {
+.btn-filter-with-icon:focus,
+.btn-filter-with-emoji:focus {
   background-color: #828282;
   color: #fff;
   border-color: #828282;
@@ -1827,7 +1845,8 @@ a:hover {
 .dropdown__filter:focus svg,
 .checkbox-filter__content:focus svg,
 .radio-filter__content:focus svg,
-.btn-filter-with-icon:focus svg {
+.btn-filter-with-icon:focus svg,
+.btn-filter-with-emoji:focus svg {
   color: #fff;
   fill: #fff;
 }
@@ -1847,7 +1866,8 @@ a:hover {
 .dropdown__filter:active,
 .checkbox-filter__content:active,
 .radio-filter__content:active,
-.btn-filter-with-icon:active {
+.btn-filter-with-icon:active,
+.btn-filter-with-emoji:active {
   background-color: #0E0E0E;
   color: #fff;
   border-color: #0E0E0E;
@@ -1868,7 +1888,8 @@ a:hover {
 .dropdown__filter:active svg,
 .checkbox-filter__content:active svg,
 .radio-filter__content:active svg,
-.btn-filter-with-icon:active svg {
+.btn-filter-with-icon:active svg,
+.btn-filter-with-emoji:active svg {
   color: #fff;
   fill: #fff;
 }
@@ -1944,7 +1965,7 @@ a:hover {
 }
 
 @media only screen and (min-width: 1024px) {
-  .btn-filter, .dropdown-select__trigger--filter, .dropdown__filter, .checkbox-filter__content, .radio-filter__content, .btn-filter-with-icon {
+  .btn-filter, .dropdown-select__trigger--filter, .dropdown__filter, .checkbox-filter__content, .radio-filter__content, .btn-filter-with-icon, .btn-filter-with-emoji {
     margin: 0 5px;
   }
 }
@@ -2068,7 +2089,8 @@ em-emoji-picker {
   text-align: left;
   overflow-x: hidden;
   height: auto;
-  padding: 5px;
+  padding: 5px 10px;
+  padding-right: 1.5rem;
   width: inherit;
   text-decoration: none;
   border: none;
@@ -2077,6 +2099,12 @@ em-emoji-picker {
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 50%;
 }
 .dropdown__dropdown-trigger--list:hover {
   cursor: pointer;
@@ -4689,6 +4717,7 @@ li, ol, ul, h2 {
 }
 .info-overlay__card .info-overlay__hashtags .hashtags__list-item {
   margin-top: 10px;
+  margin-left: unset;
 }
 
 .card__section {
