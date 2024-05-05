@@ -39,7 +39,7 @@ $filters-padding: 10px;
   width: 100%;
   bottom: 0;
   display: flex;
-  border-top: 1px dashed $color-gray-border ;
+  border-top: $border-style-basic;
   background-color: $color-corporative;
   padding: $padding-medium $padding-medium;
 

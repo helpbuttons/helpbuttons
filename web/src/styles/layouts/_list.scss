@@ -161,6 +161,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   flex-direction: row;
   align-items: center;
   height: auto;
+  border-bottom: $border-style-basic;
   justify-content: space-between;
   padding: $padding-small $padding-xsmall;
   gap: $padding-small;
@@ -267,6 +268,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
+    border-right: $border-style-basic;
 
   }
 

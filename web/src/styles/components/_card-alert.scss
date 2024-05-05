@@ -6,13 +6,13 @@ $card-alert-icon-size: 30px;
 
 
 
-.card-alert__container {
-  position: absolute;
-  width: 100vw;
-  height: auto;
-  z-index: $z-index-06;
-  top: 0;
-}
+// .card-alert__container {
+//   position: absolute;
+//   width: 100vw;
+//   height: auto;
+//   z-index: $z-index-06;
+//   top: 0;
+// }
 
 //css object of the card
 .card-alert {
@@ -27,24 +27,12 @@ $card-alert-icon-size: 30px;
 }
 
 .card-alert__container {
-  position: absolute;
-  width: 100vw;
-  height: auto;
-  z-index: $z-index-06;
-  top: 0;
-
-  a {
-
-  }
-
-}
-
-.card-alert__container--bottom {
   top: auto;
   bottom: 0;
+  z-index: $z-index-06;
   padding: $padding-big;
   min-width: 150px;
-  width: auto;
+  width: 100vw;
   position: fixed;
   float: right;
   margin-bottom: $footer-height-mobile;
@@ -121,7 +109,15 @@ $card-alert-icon-size: 30px;
 
 @media #{$breakpoints-xlarge} {
 
-  .card-alert__container--bottom {
+  .card-alert__container {
+    top: auto;
+    bottom: 0;
+    padding: $padding-big;
+    min-width: 150px;
+    width: auto;
+    position: fixed;
+    float: right;
+    margin-bottom: $footer-height-mobile;
     margin-bottom: 0;
     margin-left: $margin-big;
   }

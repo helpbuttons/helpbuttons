@@ -264,7 +264,7 @@
     "orderByExplain": "Elige el orden en el que aparecerán _helpbuttons_ en la lista",
     "priceExplain": "Filtrar por precio",
     "byProximity": "Por proximidad",
-    "byEventDate": "Por ínicio del evento",
+    "byEventDate": "Por inicio del evento",
     "followTagSucess": "{0} fue añadido a tus temas de interés. Para ver tus temas de interés ve a Mi Perfil.",
     "focusedArea":"en la zona"
   },

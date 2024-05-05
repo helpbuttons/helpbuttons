@@ -2327,14 +2327,6 @@ li, ol, ul, h2 {
   padding: 10px;
 }
 
-.card-alert__container {
-  position: absolute;
-  width: 100vw;
-  height: auto;
-  z-index: 600;
-  top: 0;
-}
-
 .card-alert {
   padding: 15px;
   margin: 15px 0;
@@ -2347,18 +2339,12 @@ li, ol, ul, h2 {
 }
 
 .card-alert__container {
-  position: absolute;
-  width: 100vw;
-  height: auto;
-  z-index: 600;
-  top: 0;
-}
-.card-alert__container--bottom {
   top: auto;
   bottom: 0;
+  z-index: 600;
   padding: 15px;
   min-width: 150px;
-  width: auto;
+  width: 100vw;
   position: fixed;
   float: right;
   margin-bottom: 50px;
@@ -2420,7 +2406,15 @@ li, ol, ul, h2 {
 }
 
 @media only screen and (min-width: 1280px) {
-  .card-alert__container--bottom {
+  .card-alert__container {
+    top: auto;
+    bottom: 0;
+    padding: 15px;
+    min-width: 150px;
+    width: auto;
+    position: fixed;
+    float: right;
+    margin-bottom: 50px;
     margin-bottom: 0;
     margin-left: 30px;
   }
@@ -5907,7 +5901,7 @@ li, ol, ul, h2 {
   width: 100%;
   bottom: 0;
   display: flex;
-  border-top: 1px dashed #D4D4D4;
+  border-top: 1px solid #D4D4D4;
   background-color: var(--network-background-color);
   padding: 10px 10px;
 }
@@ -6564,6 +6558,7 @@ hr {
   height: 5.3rem;
   background-color: var(--network-background-color);
   padding: 15px;
+  border-bottom: 1px solid #D4D4D4;
 }
 
 .feed-selector--activity {
@@ -6654,9 +6649,17 @@ hr {
   .feed__container {
     max-width: 960px;
     margin: auto;
+    border-right: 1px solid #D4D4D4;
+    border-left: 1px solid #D4D4D4;
   }
   .feed-section {
     padding-bottom: 5px;
+  }
+}
+@media only screen and (min-width: 1280px) {
+  .feed__container {
+    border-right: 1px solid #D4D4D4;
+    border-left: 1px solid #D4D4D4;
   }
 }
 .button-new-location {
@@ -7217,6 +7220,7 @@ hr {
   height: 5.3rem;
   background-color: var(--network-background-color);
   padding: 15px;
+  border-bottom: 1px solid #D4D4D4;
 }
 
 .feed-selector--activity {
@@ -7307,9 +7311,17 @@ hr {
   .feed__container {
     max-width: 960px;
     margin: auto;
+    border-right: 1px solid #D4D4D4;
+    border-left: 1px solid #D4D4D4;
   }
   .feed-section {
     padding-bottom: 5px;
+  }
+}
+@media only screen and (min-width: 1280px) {
+  .feed__container {
+    border-right: 1px solid #D4D4D4;
+    border-left: 1px solid #D4D4D4;
   }
 }
 .list__container {
@@ -7423,6 +7435,7 @@ hr {
   flex-direction: row;
   align-items: center;
   height: auto;
+  border-bottom: 1px solid #D4D4D4;
   justify-content: space-between;
   padding: 5px 4px;
   gap: 5px;
@@ -7480,6 +7493,7 @@ hr {
     overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
+    border-right: 1px solid #D4D4D4;
   }
   .list__content {
     width: 100%;
