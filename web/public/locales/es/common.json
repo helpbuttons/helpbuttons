@@ -111,6 +111,8 @@
     "createSupportButton": "Crea tu boton de soporte para tu red",
     "moderation": "Moderacion",
     "customFields": "Campos extra",
+    "priceFieldAddLabel": "Muestra un precio en tu tipo de _helpbutton_ para que los usuarios puedan comprar o vender",
+    "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
     "addType":"+ Crear tipo de _helpbutton_ con los campos superiores",
     "currencyLabel": "Divisa"
   },
@@ -136,7 +138,9 @@
     "newfollowType": "Nuevo suscriptor",
     "creatorUpdate": "Actualización _helpbutton_",
     "deletedType": "Eliminación _helpbutton_",
-    "myhelpbuttons": "Mis _helpbuttons_"
+    "myhelpbuttons": "Mis _helpbuttons_",
+    "expiredEventType": "_helpbutton_ terminó",
+    "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública."
   },
   "user": {
     "login":"Escribe tus datos si tienes cuenta",
@@ -308,6 +312,7 @@
     "renewMailSubject": "Renovado con éxito",
     "renewMail": "Renovaste tu _helpbutton_ '{0}' por otros 3 meses.",
     "isExpiringLink": "Debido a la falta de actividad, su _helpbutton_ se borrará en un mes.",
+    "endDatesExpired": "La fecha de finalización de este _helpbutton_ ya pasó, por lo que se estableció como vencida y no se mostrará en la lista pública.",
     "renewLink": "Renovar tu _helpbutton_",
     "createUpdate":"Publicar Novedad",
     "authorTitle":"Autor:"
@@ -429,6 +434,8 @@
     "copied": "Link de invitación copiado {0}",
     "title": "Invitaciones",
     "description": "Invita a personas, administra y comparte enlaces con otras personas para permitirles acceder a tu red",
+    "inviteOnlyLabel":"Privacidad de la red",
+    "inviteOnlyExplain":"Si habilitas esto, los usuarios solo podrán registrarse y publicar con invitación.",
     "inviteOnly": "Sólo permitir el registro con una invitación"
   },
   "customFields": {

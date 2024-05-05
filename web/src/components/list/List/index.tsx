@@ -2,9 +2,7 @@
 //a foreach => buttons
 import React, { useEffect, useState } from 'react';
 import { IoClose, IoList, IoMap, IoMapOutline } from 'react-icons/io5';
-import { IoChevronBackOutline } from 'react-icons/io5';
 import ContentList from 'components/list/ContentList';
-import { useButtonTypes } from 'shared/buttonTypes';
 import t from 'i18n';
 import {
   AdvancedFiltersSortDropDown,
@@ -16,6 +14,7 @@ import { useScrollHeightAndWidth } from 'elements/scroll';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
+import { useButtonTypes } from 'shared/buttonTypes';
 
 
 function List({
@@ -79,8 +78,7 @@ function List({
     onLeftColumnToggle(event.target.value);
   };
 
-  const [buttonTypes, setButtonTypes] = useState([]);
-  useButtonTypes(setButtonTypes);
+  const buttonTypes = useButtonTypes();
 
   const {sliceSize, handleScrollHeight, handleScrollWidth} = useScrollHeightAndWidth(buttons.length)
 
@@ -155,7 +153,7 @@ function List({
               className={
                 'list__content ' +
                 (showMap
-                  ? 'list__content--row'
+                  ? 'list__content--mid-screen'
                   : 'list__content--full-screen')
               }
               onScroll={handleScrollWidth}

@@ -98,13 +98,14 @@ $drag-tab-icon-size: 25px;
 
 @media #{$breakpoints-xlarge} {
   .drag-tab {
+
     display: flex;
     right: auto;
     position: fixed;
     width: auto;
     flex-direction: row-reverse;
     height: auto;
-    left: calc(35% + 40px);
+    left: calc($index-content-left--distance + 40px);
     top: 140px;
     border-radius: $border-radius-circle;
     cursor: pointer; /* fallback if grab cursor is unsupported */
@@ -151,7 +152,7 @@ $drag-tab-icon-size: 25px;
 
   .drag-tab {
    
-    left: calc(30vw + 40px);
+    left: calc($index-content-left--distance + 40px);
     margin-bottom: 5px;
 
   }

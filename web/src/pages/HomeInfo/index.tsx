@@ -34,7 +34,6 @@ import {
 import { ServerPropsService } from 'services/ServerProps';
 import { NextPageContext } from 'next';
 import {  useState } from 'react';
-import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { UpdateFiltersToFilterButtonType, UpdateFiltersToFilterTag } from 'state/Explore';

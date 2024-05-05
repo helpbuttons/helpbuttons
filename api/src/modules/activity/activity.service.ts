@@ -31,6 +31,7 @@ export class ActivityService {
   @OnEvent(ActivityEventName.NewButton)
   @OnEvent(ActivityEventName.DeleteButton)
   @OnEvent(ActivityEventName.RenewButton)
+  @OnEvent(ActivityEventName.ExpiredButton)
   async notifyOwner(payload: any) {
     switch (payload.activityEventName) {
       /*
@@ -146,32 +147,79 @@ export class ActivityService {
         break;
       }
       case ActivityEventName.RenewButton:
-        {
-          const owner = payload.data.owner;
-          const button = payload.data.button;
-          return this.userService.getUserLoginParams(owner.id).then(
-            (loginParams) => {
-          this.mailService.sendWithLink({
-                to: owner.email,
-                content: translate(owner.locale, 'button.renewMail', [button.title]),
-                subject: translate(owner.locale, 'button.renewMailSubject'),
-                link: getUrl(
-                  owner.locale,
-                  `/ButtonFile/${button.id}${loginParams}`,
-                ),
-                linkCaption: translate(
-                  owner.locale,
-                  'email.buttonLinkCaption',
-                ),
-              })
-            })
-        }
+        console.log('doing nothing for now')
+        // https://github.com/helpbuttons/helpbuttons/issues/703
+        // deactivating this email
+        // {
+        //   const owner = payload.data.owner;
+        //   const button = payload.data.button;
+        //   return this.userService.getUserLoginParams(owner.id).then(
+        //     (loginParams) => {
+        //   this.mailService.sendWithLink({
+        //         to: owner.email,
+        //         content: translate(owner.locale, 'button.renewMail', [button.title]),
+        //         subject: translate(owner.locale, 'button.renewMailSubject'),
+        //         link: getUrl(
+        //           owner.locale,
+        //           `/ButtonFile/${button.id}${loginParams}`,
+        //         ),
+        //         linkCaption: translate(
+        //           owner.locale,
+        //           'email.buttonLinkCaption',
+        //         ),
+        //       })
+        //     })
+        // }
         case ActivityEventName.DeleteButton: {
           const button = payload.data.button;
   
           // notify button owner
           await this.newActivity(button.owner, payload, false);
           break;
+        }
+        case ActivityEventName.ExpiredButton: {
+          const button = payload.data;
+          console.log(button)
+          await this.newActivity(button.owner, payload, false);
+          break;
+          /*notifyOwnerExpiredButton(button: Partial<Button>, isEvent: boolean = false)
+          {
+            return this.userService
+                    .findById(button.owner.id)
+                    .then((user) => {
+                      return this.userService
+                        .getUserLoginParams(user.id)
+                        .then((loginParams) => {
+                          let content_ = 'button.isExpiringMail'
+                          let subject_ = 'button.isExpiringMailSubject'
+                          if(isEvent)
+                          {
+                            content_ = 'button.isExpiringEventMail'
+                            subject_ = 'button.isExpiringEventMailSubject'
+                          }
+                          return this.mailService.sendWithLink({
+                            to: user.email,
+                            content: translate(
+                              user.locale,
+                              content_,
+                              [button.title],
+                            ),
+                            subject: translate(
+                              user.locale,
+                              subject_,
+                            ),
+                            link: getUrl(
+                              user.locale,
+                              `/ButtonRenew/${button.id}${loginParams}`,
+                            ),
+                            linkCaption: translate(
+                              user.locale,
+                              'email.buttonLinkCaption',
+                            ),
+                          });
+                        });
+                    })
+          }*/
         }
     }
   }

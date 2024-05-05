@@ -1,17 +1,18 @@
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
-import { readableTimeLeftToDate } from 'shared/date.utils';
+import { readableDate, readableTimeLeftToDate } from 'shared/date.utils';
 import { ActivityEventName } from 'shared/types/activity.list';
 import t from 'i18n';
 import {  IoAddCircleOutline, IoChatbubbleOutline, IoNotificationsOutline, IoPersonOutline } from "react-icons/io5";
 import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
 import { User } from 'shared/entities/user.entity';
-import { useButtonTypes } from 'shared/buttonTypes';
+import { isEventAndIsExpired, useButtonTypes } from 'shared/buttonTypes';
 import { useState } from 'react';
 
 export default function CardNotification({ activity = {} }) {
-  const [buttonTypes, setButtonTypes] = useState([])
-  useButtonTypes(setButtonTypes)
+  
+  const buttonTypes = useButtonTypes();
+  
   const notification = (activity) => {
     if (activity.eventName == ActivityEventName.NewButton) {
       const button = activity.data
@@ -137,6 +138,27 @@ export default function CardNotification({ activity = {} }) {
           />
         }
         </>
+      );
+    }  else if (
+      activity.eventName == ActivityEventName.ExpiredButton
+    ) {
+      const button = JSON.parse(activity.data);
+      const notifIcon =<IoChatbubbleOutline/>
+      return (
+        <>
+        {isEventAndIsExpired(button) && 
+          <NotificationCard
+            type={t('activities.expiredEventType')}
+            title={t('activities.expiredEventTitle', [button.title, readableDate(button.eventEnd)])}
+            image={button.images[0]}
+            notifIcon={notifIcon}
+            date={activity.created_at}
+            id={button.id}
+            read={activity.read}
+          />
+        }
+        </>
+        // https://github.com/helpbuttons/helpbuttons/issues/703
       );
   } else {
       const notifIcon =<IoNotificationsOutline/>

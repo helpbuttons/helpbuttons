@@ -19,8 +19,8 @@ export function HeaderSearch({ results, toggleAdvancedFilters}) {
 
   const clearButton = useRef(null)
   
-  const [buttonTypes, setButtonTypes] = useState(null);
-  useButtonTypes(setButtonTypes);
+  const buttonTypes = useButtonTypes();
+
   const filtering= JSON.stringify(defaultFilters) != JSON.stringify(exploreMapState.filters);
   return (
     <div className={filtering ?"header-search__tool--filtered" :"header-search__tool"} >

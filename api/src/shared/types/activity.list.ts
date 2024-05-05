@@ -5,5 +5,6 @@ export enum ActivityEventName {
   DeleteButton = 'delete.button',
   NewFollowingButton = 'following.button',
   NewFollowedButton = 'followed.button',
-  RenewButton = 'renew.button'
+  RenewButton = 'renew.button',
+  ExpiredButton = 'expired.button'
 }

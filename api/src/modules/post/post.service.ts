@@ -7,6 +7,7 @@ import { ButtonService } from '../button/button.service';
 import { User } from '../user/user.entity';
 import { Post } from './post.entity';
 import { CommentPrivacyOptions } from '@src/shared/types/privacy.enum';
+import translate, { readableDate } from '@src/shared/helpers/i18n.helper';
 
 @Injectable()
 export class PostService {
@@ -18,7 +19,7 @@ export class PostService {
   ) {}
 
   new(message: string, buttonId: string, author: User) {
-    return this.buttonService.findById(buttonId).then((button) => {
+    return this.buttonService.findById(buttonId, true).then((button) => {
       const post = {
         id: dbIdGenerator(),
         message,
@@ -77,7 +78,7 @@ export class PostService {
         comments: post.comments.filter(
           (comment) =>
           {
-            if(comment.message.indexOf(`@${currentUser.username}`) > -1) 
+            if(currentUser && comment.message.indexOf(`@${currentUser.username}`) > -1) 
             {
               return true
             }
@@ -115,5 +116,16 @@ export class PostService {
           return post;
         });
     });
+  }
+
+  renewButtonPost(user, button)
+  {
+    return this.new(
+      translate(user.locale, 'post.renewPost', [
+        readableDate(user.locale),
+      ]),
+      button.id,
+      user,
+    )
   }
 }

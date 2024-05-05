@@ -43,8 +43,8 @@ export default function AdvancedFilters({
     (state: GlobalState) => state.explore.map.showAdvancedFilters,
     false
   );
-  const [buttonTypes, setButtonTypes] = useState([]);
-  useButtonTypes(setButtonTypes);
+  
+  const buttonTypes = useButtonTypes();
 
   const {
     handleSubmit,

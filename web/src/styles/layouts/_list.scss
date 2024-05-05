@@ -70,14 +70,24 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   padding: $padding-small $padding-small;
   background-color: $color-ligth-gray;
   z-index: $z-index-02;
+  width: 100%;
   transition: $transition-default-slow;
   align-content: flex-start; /* Add this*/
 
 }
 
-.list__content--row {
 
-  display: flex;
+.list__element {
+
+  height: auto;
+  // flex-grow: 1;
+  flex-basis: 100%;
+  padding-right: $padding-xsmall;
+
+}
+
+.list__content--mid-screen {
+
   flex-direction: row;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -123,14 +133,6 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
-.list__element {
-
-  height: auto;
-  // flex-grow: 1;
-  flex-basis: 100%;
-  padding-right: $padding-xsmall;
-
-}
 
 .list__empty-message{
 
@@ -243,6 +245,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   
   }
 
+
 }
 
 @media #{$breakpoints-large} {
@@ -285,11 +288,11 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
   .list__content {
 
-    flex-direction: column;
     width: 100%;
     overflow-y: auto;
     padding-bottom: 4em;
     overflow-x: hidden;
+    flex-wrap: wrap;
 
   }
 
@@ -297,20 +300,26 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
     height: auto;
     width: 100%;
-    flex-basis: 100%;
+    flex-basis: 30%;
     min-width: $card-button-list-width;
 
   }
 
-  .list__content--row {
+  .list__content--mid-screen {
+
+    flex-direction: unset;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-wrap: wrap;
+    min-height: auto;
+    width: auto;
 
     .list__element {
 
       height: auto;
-      width: 100%;
-      flex-basis: 100%;
+      flex-basis: 50%;
+      min-width: auto;
       max-width: none;
-      min-width: $card-button-list-width;
 
     }
   }

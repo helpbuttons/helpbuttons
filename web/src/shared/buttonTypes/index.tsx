@@ -9,16 +9,33 @@ export const buttonColorStyle = (cssColor: string) => {
   return { '--button-color': cssColor } as React.CSSProperties;
 };
 
-
-export const useButtonTypes = (setButtonTypes) => {
-  const selectedNetwork: Network = useStore(
+export const useButtonTypes = () => {
+  return useStore(
     store,
-    (state: GlobalState) => state.networks.selectedNetwork,
+    (state: GlobalState) => state.networks.selectedNetwork.buttonTemplates,
   );
-  useEffect(() => {
-    if (selectedNetwork) {
-      setButtonTypes(() => selectedNetwork.buttonTemplates
-      );
-    }
-  }, [selectedNetwork]);
-};
+}
+
+export const isButtonTypeEvent = (buttonType) => {
+  const buttonTypes = useButtonTypes()
+  if(!buttonTypes)
+  {
+    return false;
+  }
+  const btnType = buttonTypes.find(({name}) => name == buttonType)
+  if(!btnType.customFields)
+  {
+    return false;
+  }
+  return btnType.customFields.find((field) => field.type == 'event')
+}
+
+export const isEventAndIsExpired = (button) => {
+  const isEvent = isButtonTypeEvent(button.type);
+
+  if(isEvent && new Date(button.eventEnd) < new Date())
+  { 
+    return true;
+  }
+  return false;
+}

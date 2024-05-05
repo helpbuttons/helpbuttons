@@ -33,7 +33,7 @@ export default function LoginForm() {
 
   const onSuccess = (userData) => {
     alertService.success(t('user.loginSucess'))
-    let returnUrl: string = `/HomeInfo`;
+    let returnUrl: string = `/Explore`;
     if (router?.query?.returnUrl) {
       returnUrl = router.query.returnUrl.toString();
     }

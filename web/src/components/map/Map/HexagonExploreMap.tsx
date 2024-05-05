@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store } from 'pages';
 import {
-  HiglightHexagonFromButton,
-  UpdateExploreSettings, UpdateHexagonClicked, updateCurrentButton,
+  RecenterExplore,
+  UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
 import {
@@ -68,7 +68,7 @@ export default function HexagonExploreMap({
 
   }, [h3TypeDensityHexes]);
 
-  const [buttonTypes, setButtonTypes] = useState([]);
+  const buttonTypes = useButtonTypes();
 
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
 
@@ -83,7 +83,6 @@ export default function HexagonExploreMap({
     }
   }, [hexagonHighlight,hexagonClicked, geoJsonFeatures])
   
-  useButtonTypes(setButtonTypes);
   return (
     <>
       {exploreSettings.center && (
@@ -266,7 +265,7 @@ export default function HexagonExploreMap({
                 const btnType = buttonTypes.find((type) => {
                   return type.name == button.type;
                 });
-                if(button.hideAddress) {
+                if(button.hideAddress || !btnType) {
                   return (<></>)
                 }
                 return (
@@ -289,12 +288,7 @@ export default function HexagonExploreMap({
               <button
                 className="pigeon-center-view"
                 onClick={() => {
-                  store.emit(
-                    new UpdateExploreSettings({
-                      center: selectedNetwork.exploreSettings.center,
-                      zoom: selectedNetwork.exploreSettings.zoom,
-                    }),
-                  );
+                  store.emit( new RecenterExplore());
                 }}
               >
                 <IoStorefrontSharp />

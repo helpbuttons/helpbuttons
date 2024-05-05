@@ -4,6 +4,17 @@ $card-alert-text-margin: $margin-xsmall;
 $card-alert-radius: $border-radius-basic;
 $card-alert-icon-size: 30px;
 
+
+
+.card-alert__container {
+  position: absolute;
+  width: 100vw;
+  height: auto;
+  z-index: $z-index-06;
+  top: 0;
+}
+
+//css object of the card
 .card-alert {
   padding: $card-alert-padding;
   margin: 15px 0;

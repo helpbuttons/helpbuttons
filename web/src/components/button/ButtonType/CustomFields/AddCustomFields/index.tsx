@@ -27,6 +27,7 @@ export function AddCustomFields({ setCustomFields }) {
     <>
       <FieldCheckbox
         name="priceField"
+        explain={t('configuration.priceFieldAddLabel')}
         defaultValue={watch('priceField')}
         text={t('configuration.priceFieldAdd')}
         onChanged={(value) => updateCustomField('price', value)}
@@ -34,6 +35,7 @@ export function AddCustomFields({ setCustomFields }) {
       />
       <FieldCheckbox
         name="eventField"
+        explain={t('configuration.dateFieldAddLabel')}
         defaultValue={watch('eventField')}
         text={t('eventType.eventFieldAdd')}
         onChanged={(value) => updateCustomField('event', value)}
