@@ -181,11 +181,13 @@ export function NotificationCard({ type, title, image, notifIcon, date, message 
             <div className="card-notification__info">
             </div>
             {read ? 
-              readableTimeLeftToDate(date)
+              <div className="card-notification__date">
+               {readableTimeLeftToDate(date)}
+              </div>
             : 
-            <div className="card-notification__date">
-              {readableTimeLeftToDate(date)}
-            </div>
+              <div className="card-notification__date">
+                {readableTimeLeftToDate(date)}
+              </div>
             }
             
           </div>

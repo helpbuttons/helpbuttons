@@ -1887,7 +1887,6 @@ a:hover {
   height: auto;
   margin: 0;
   width: inherit;
-  text-decoration: underline;
   border: none;
   background: transparent;
   padding: 0 10px;
@@ -4489,8 +4488,9 @@ li, ol, ul, h2 {
   .nav-header__filters {
     display: flex;
     background-color: var(--network-background-color);
-    padding: 5px 15px;
+    padding: 10px 15px;
     overflow-x: auto;
+    border-bottom: 1px solid #D4D4D4;
   }
   .hashtags__list-item:nth-of-type(1) {
     margin-left: auto;
@@ -5713,7 +5713,7 @@ li, ol, ul, h2 {
   flex: 0 1 50%;
   color: #828282;
   text-align: right;
-  font-size: 14px;
+  font-size: 10px;
 }
 
 .card-notification__date--nflex {
@@ -5842,7 +5842,7 @@ li, ol, ul, h2 {
 }
 
 .filters__container {
-  height: calc(var(--vh) - 50px) !important;
+  height: calc(var(--vh) - 68px) !important;
   /* Add other styles as needed */
 }
 

@@ -13,7 +13,7 @@
   "homeinfo": {
     "selectedArea": "en el area seleccionada",
     "start": "¿Dónde quieres empezar?",
-    "info": "¿De qué trata esta red?",
+    "info": "¿De qué se trata?",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
     "goToExplore": "Explorar _helpbuttons_",
@@ -260,7 +260,7 @@
     "priceExplain": "Filtrar por precio",
     "byProximity": "Por proximidad",
     "byEventDate": "Por ínicio del evento",
-    "followTagSucess": "{0} fue adicionado a tus intereses",
+    "followTagSucess": "{0} fue añadido a tus temas de interés. Para ver tus temas de interés ve a Mi Perfil.",
     "focusedArea":"en la zona"
   },
   "button": {

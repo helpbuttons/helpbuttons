@@ -467,13 +467,12 @@ $btn-font-size-medium: $font-size-medium;
 
   cursor: pointer;
   border: none;
-
   text-align: left;
   overflow-x: hidden;
   height: auto;
   margin: 0;
   width: inherit;
-  text-decoration: underline;
+  // text-decoration: underline;
   border: none;
   background: transparent;
   padding: 0 $btn-padding;
