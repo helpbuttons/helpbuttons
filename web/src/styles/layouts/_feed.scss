@@ -52,6 +52,7 @@ $feed-new-message-radius: $border-radius-circle;
   height: $feed-selector-height;
   background-color: $feed-color-corporative;
   padding: $padding-big;
+  border-bottom: $border-style-basic;
 }
 
 .feed-selector--activity {
@@ -180,14 +181,28 @@ $feed-new-message-radius: $border-radius-circle;
 @media #{$breakpoints-medium} {
 
   .feed__container {
+
     max-width: $body-max-width;
     margin: auto;
+    border-right: $border-style-basic;
+    border-left: $border-style-basic;
     
   }
 
   .feed-section {
 
     padding-bottom: $padding-small;
+
+  }
+
+}
+
+@media #{$breakpoints-xlarge} {
+
+  .feed__container {
+
+    border-right: $border-style-basic;
+    border-left: $border-style-basic;
 
   }
 
