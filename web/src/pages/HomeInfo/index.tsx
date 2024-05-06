@@ -38,7 +38,7 @@ import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { UpdateFiltersToFilterButtonType, UpdateFiltersToFilterTag } from 'state/Explore';
 import Alert from 'components/overlay/Alert';
-import { formatMessage } from 'elements/Message';
+import { TextFormatted, formatMessage } from 'elements/Message';
 import { LinkProfile } from 'components/user/LinkProfile';
 import { LinkAdminProfile } from 'components/user/LinkAdminProfile';
 import { ShowMobileOnly } from 'elements/SizeOnly';
@@ -225,8 +225,9 @@ export default function HomeInfo({
                     </h3>
                   </div>
                   <hr></hr>
+
                   <div className="info-overlay__description">
-                    {formatMessage(selectedNetwork.description)}
+                    <TextFormatted text={selectedNetwork.description}/>
                   </div>
                 </div>
 

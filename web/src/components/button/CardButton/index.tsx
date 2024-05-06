@@ -36,7 +36,7 @@ import {
   updateCurrentButton,
 } from 'state/Explore';
 import { isAdmin } from 'state/Users';
-import { formatMessage } from 'elements/Message';
+import { TextFormatted, formatMessage } from 'elements/Message';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
 import {
@@ -313,7 +313,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
 
         <div className="card-button__paragraph">
-          {formatMessage(button.description)}
+          <TextFormatted text={button.description}/>
         </div>
 
         <div className="card-button__hashtags">
