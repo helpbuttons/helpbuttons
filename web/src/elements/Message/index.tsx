@@ -1,5 +1,16 @@
 import { useEffect, useRef } from 'react';
 const userPattern = /@[\w]+/gi;
+
+export function TextFormatted ({text}) {
+
+  return  (
+    <>
+      {formatMessage(text)}
+    </>
+  )
+
+}
+
 export function formatMessage(text) {
   const aRef = useRef();
   const content = linkify(text);

@@ -198,7 +198,7 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   .info-overlay__description {
 
     overflow:auto;
-    white-space: normal;
+    white-space: pre-wrap;
     padding: $padding-medium 0;
     word-wrap: break-word;
     display: inline-block;
