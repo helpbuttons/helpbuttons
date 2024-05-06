@@ -95,7 +95,6 @@ export default function HexagonExploreMap({
             handleClick={onMapClick}
           >
             <HbMapOverlay selectedNetwork={selectedNetwork} />
-            {!(exploreSettings.zoom == maxZoom) && (
               <GeoJson>
                 {/* DRAW HEXAGONS ON MAP */}
                 {geoJsonFeatures.map((hexagonFeature) => (
@@ -172,7 +171,6 @@ export default function HexagonExploreMap({
                     />
                   )}
               </GeoJson>
-            )}
             {/*
         show count of buttons per hexagon
         */}
