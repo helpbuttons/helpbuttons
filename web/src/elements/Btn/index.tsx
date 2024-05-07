@@ -166,7 +166,7 @@ export default function Btn({
         
     return (
         <button {...attr} onClick={onClick} disabled={disabled} className={className + ' ' + extraClass} 
-        style={{'border-color': backgroundColor} as React.CSSProperties}  
+        style={{'borderColor': backgroundColor} as React.CSSProperties}  
         >
             {isSubmitting && <Spinner />}
             <BtnIcon icon={iconLeft} iconLink={iconLink} 

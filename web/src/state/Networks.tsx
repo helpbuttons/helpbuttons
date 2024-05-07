@@ -20,7 +20,11 @@ export interface NetworksState {
 
 export const networksInitial = {
   // networks: [],
-  selectedNetwork: undefined,
+  selectedNetwork: {
+    name: '...',
+    description: '',
+    buttonTemplates: []
+  },
   selectedNetworkLoading: false,
 };
 
