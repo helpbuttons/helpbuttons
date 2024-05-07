@@ -53,7 +53,5 @@ $textarea-textarea-color-gray: $color-gray;
 
 em-emoji-picker{
   position: absolute;
-  right: 10px;
-  margin-top: -10px;
-  z-index: 100;
+  float: right;
 }
