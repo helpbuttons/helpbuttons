@@ -13,6 +13,7 @@ import { AddCustomFields } from '../CustomFields/AddCustomFields';
 import { EmojiPicker } from 'components/emoji';
 import { Picker } from 'components/picker/Picker';
 
+
 const FieldButtonTemplates = forwardRef(
   (
     {
@@ -44,10 +45,12 @@ const FieldButtonTemplates = forwardRef(
     const [editFieldIdx, setEditFieldIdx] = useState(null)
     const [editFieldCaption, setEditFieldCaption] = useState(null)
     const [editFieldCssColor, setEditFieldCssColor] = useState(null)
+
     let closeMenu = () => {
       setEditFieldIdx(false);
     };
 
+    const [emoji, setEmoji] = useState('😀')
     const watchValue = watch(name);
     const onAddNewButtonTemplate = () => {
       if (text && color) {
@@ -55,7 +58,8 @@ const FieldButtonTemplates = forwardRef(
           caption: text,
           name: tagify(text),
           cssColor: color,
-          customFields: customFields
+          customFields: customFields,
+          icon: emoji
         });
       } else {
         alertService.warn(
@@ -68,6 +72,12 @@ const FieldButtonTemplates = forwardRef(
       setEditFieldIdx(() => idx)
       setEditFieldCssColor(() => value.cssColor)
       setEditFieldCaption(() => value.caption)
+      if(value.icon)
+      {
+        setEmoji(() => value.icon)
+      }else{
+        setEmoji(() => '😀')
+      }
     }
 
     const saveEdit = (value) => {
@@ -104,7 +114,7 @@ const FieldButtonTemplates = forwardRef(
                 style={buttonColorStyle(val.cssColor)}
               >
                 {editFieldIdx == idx &&
-                <Picker closeAction={closeMenu} headerText={"set type"}>
+                <Picker closeAction={() => setEditFieldIdx(() => null)} headerText={t('configuration.setType')}>
                   <div className="form__button-type-section">
                     <FieldText
                       name="buttonTemplate.name"
@@ -112,7 +122,7 @@ const FieldButtonTemplates = forwardRef(
                       onChange={(e) => setEditFieldCaption(() => e.target.value)}
                       defaultValue={editFieldCaption}
                     />
-                    <EmojiPicker updateEmoji={addEmoji} pickerEmoji="😀"/>
+                    <EmojiPicker updateEmoji={(newEmoji) => setEmoji(() => newEmoji)} pickerEmoji={emoji}/>
 
                     <CircleColorPick
                       name="buttonTemplateColor"
@@ -123,7 +133,6 @@ const FieldButtonTemplates = forwardRef(
                       value={editFieldCssColor}
                       hideBoilerPlate={true}
                     />
-                    {/* <EmojiPicker/> */}
                     <Btn
                       btnType={BtnType.corporative}
                       iconLink={<IoSaveOutline />}
