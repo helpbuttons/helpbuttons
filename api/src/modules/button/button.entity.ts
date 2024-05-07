@@ -9,17 +9,21 @@ import {
 import { Network } from '../network/network.entity';
 import { Post } from '../post/post.entity';
 import { User } from '../user/user.entity';
+import { Expose } from 'class-transformer';
 // https://stackoverflow.com/a/67557083
 
 @Entity()
 export class Button extends BaseEntity {
+  @Expose()
   @Column({})
   @PrimaryColumn()
   public id: string;
 
+  @Expose()
   @Column({})
   title: string;
 
+  @Expose()
   @Column({})
   description: string;
 
@@ -38,6 +42,7 @@ export class Button extends BaseEntity {
   @Column({})
   type: string;
 
+  @Expose()
   @Column({ type: 'text', nullable: true })
   image?: string;
 

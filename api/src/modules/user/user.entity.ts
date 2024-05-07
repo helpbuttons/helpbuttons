@@ -6,7 +6,6 @@ import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 import { UserCredential } from '../user-credential/user-credential.entity';
 
 @Entity()
-@Exclude()
 export class User extends BaseEntity {
   @Expose()
   @PrimaryColumn({
@@ -16,6 +15,7 @@ export class User extends BaseEntity {
   })
   id?: string;
 
+  @Exclude()
   @Column({
     type: 'varchar',
     nullable: true,
@@ -34,6 +34,7 @@ export class User extends BaseEntity {
   })
   username: string;
 
+  @Exclude()
   @Column({
     type: 'varchar',
     unique: true,
@@ -49,6 +50,7 @@ export class User extends BaseEntity {
   })
   name: string;
 
+  @Exclude()
   @Column({
     type: 'boolean',
     name: 'email_verified',
@@ -56,6 +58,7 @@ export class User extends BaseEntity {
   })
   emailVerified?: boolean;
 
+  @Exclude()
   @Column({
     type: 'varchar',
     name: 'verification_token',

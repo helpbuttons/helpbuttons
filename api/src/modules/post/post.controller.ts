@@ -38,8 +38,10 @@ export class PostController {
             throw new CustomHttpException(ErrorName.NoOwnerShip)
           }
           return this.postService.new(message.message, buttonId, user).then((post) => {
-            notifyUser(this.eventEmitter,ActivityEventName.NewPost,post)
-          return post;  
+            return this.postService.findById(post.id).then((postFound) => {
+              notifyUser(this.eventEmitter,ActivityEventName.NewPost,postFound)
+              return postFound
+            })
           })
         }
       )

@@ -69,8 +69,11 @@ export class ButtonController {
       images,
       user,
     ).then((button) => {
-      notifyUser(this.eventEmitter,ActivityEventName.NewButton,button)
-      return button;
+      return this.buttonService.findById(button.id)
+      .then((buttonFound) => {
+        notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button: buttonFound})
+        return buttonFound
+      })
     });
   }
 
@@ -194,6 +197,7 @@ export class ButtonController {
           return this.postService.renewButtonPost(user, button)
           .then((post) => {
             notifyUser(this.eventEmitter,ActivityEventName.NewPost,post)
+            
             return post;  
           })
         })
