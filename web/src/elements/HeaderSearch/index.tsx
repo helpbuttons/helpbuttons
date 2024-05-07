@@ -118,7 +118,7 @@ function SearchInfo({ helpButtonTypes, filters, what, buttonTypes }) {
   );
 
   const types = (helpButtonTypes) => {
-    if (helpButtonTypes.length < 1) {
+    if (helpButtonTypes.length) {
       return t('buttonFilters.allButtonTypes');
     }
     const buttonTypesCaptions = helpButtonTypes.map(
@@ -139,7 +139,7 @@ function SearchInfo({ helpButtonTypes, filters, what, buttonTypes }) {
   
   return (
     <div className="header-search__info">
-      {whatText(what)} {types(helpButtonTypes)} {customFieldsFiltersText(filters, selectedNetwork.currency)}
+      {whatText(what)} {helpButtonTypes && types(helpButtonTypes)} {customFieldsFiltersText(filters, selectedNetwork.currency)}
     </div>
   );
 }

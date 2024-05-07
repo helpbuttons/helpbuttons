@@ -7,12 +7,13 @@ export function DropdownField({
   defaultSelected = null,
   explain = '',
   className = 'dropdown-select__trigger',
+  value = null
 }) {
   return (
     <div className='form__field'>
       {label && <label className="form__label"> {label}</label>}
       {explain && <p className="form__explain">{explain}</p>}
-      <Dropdown className={className} options={options} onChange={onChange} defaultSelected={defaultSelected}/>
+      <Dropdown className={className} options={options} onChange={onChange} defaultSelected={defaultSelected} value={value}/>
     </div>
   );
 }
@@ -22,6 +23,7 @@ export function Dropdown({
   defaultSelected = null,
   explain = '',
   className = 'dropdown-select__trigger',
+  value = null
 }) {
   const [selected, setSelected] = useState(defaultSelected);
 
@@ -31,12 +33,23 @@ export function Dropdown({
     onChange(selectedIndex);
   };
 
+  let selectAttrs = {
+    className: className,
+    onChange: handleChange,
+    defaultValue: defaultSelected,
+  }
+  if(!defaultSelected)
+  {
+    selectAttrs = {
+      className: className,
+      onChange: handleChange,
+      value: value,
+    }
+  }
   return (
     <>
       <select
-        className={className}
-        onChange={handleChange}
-        defaultValue={defaultSelected}
+        {...selectAttrs}
       >
         {options.map((option, index) => (
           <option
