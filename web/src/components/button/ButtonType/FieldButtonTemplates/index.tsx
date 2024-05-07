@@ -10,6 +10,8 @@ import { CircleColorPick, FieldColorPick } from 'elements/Fields/FieldColorPick'
 import { tagify } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { AddCustomFields } from '../CustomFields/AddCustomFields';
+import { EmojiPicker } from 'components/emoji';
+import { Picker } from 'components/picker/Picker';
 
 const FieldButtonTemplates = forwardRef(
   (
@@ -42,7 +44,10 @@ const FieldButtonTemplates = forwardRef(
     const [editFieldIdx, setEditFieldIdx] = useState(null)
     const [editFieldCaption, setEditFieldCaption] = useState(null)
     const [editFieldCssColor, setEditFieldCssColor] = useState(null)
-    
+    let closeMenu = () => {
+      setEditFieldIdx(false);
+    };
+
     const watchValue = watch(name);
     const onAddNewButtonTemplate = () => {
       if (text && color) {
@@ -76,6 +81,10 @@ const FieldButtonTemplates = forwardRef(
       setEditFieldCaption(() => null)
     }
 
+    function addEmoji(emoji: any): void {
+      throw new Error('Function not implemented.');
+    }
+
     return (
       <>
         <div className="form__field">
@@ -94,7 +103,8 @@ const FieldButtonTemplates = forwardRef(
                 key={idx}
                 style={buttonColorStyle(val.cssColor)}
               >
-                {editFieldIdx == idx && 
+                {editFieldIdx == idx &&
+                <Picker closeAction={closeMenu} headerText={"set type"}>
                   <div className="form__button-type-section">
                     <FieldText
                       name="buttonTemplate.name"
@@ -102,6 +112,8 @@ const FieldButtonTemplates = forwardRef(
                       onChange={(e) => setEditFieldCaption(() => e.target.value)}
                       defaultValue={editFieldCaption}
                     />
+                    <EmojiPicker updateEmoji={addEmoji} pickerEmoji="😀"/>
+
                     <CircleColorPick
                       name="buttonTemplateColor"
                       classNameInput="squared"
@@ -120,6 +132,7 @@ const FieldButtonTemplates = forwardRef(
                       onClick={() => saveEdit(val)}
                     />
                   </div>
+                </Picker>
                 }
                 {editFieldIdx != idx && 
                   <>

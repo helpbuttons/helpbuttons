@@ -3361,6 +3361,7 @@ li, ol, ul, h2 {
   top: 0;
   left: 0;
   overflow: scroll;
+  z-index: 400;
 }
 
 .picker__close-overlay {
