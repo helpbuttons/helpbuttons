@@ -11,11 +11,14 @@ import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
 import ActivityCardNewButton, { ActivityCardDeleteButton, ActivityCardExpiredButton, ActivityCardNewFollowedButton, ActivityCardNewFollowingButton } from './types/button';
 import ActivityCardNewPost, { ActivityCardNewPostComment } from './types/post';
+import { useButtonTypes } from 'shared/buttonTypes';
+import { useEffect } from 'react';
 
-export default function ActivityCardNotification({ activity = {} }) {
-  // const buttonTypes = []
-  const notification = (activity) => {
-    // return <>{activity.eventName} - {JSON.stringify(activity.data, null, 2)}</>
+export default function ActivityCardNotification({ activity, buttonTypes }) {
+
+  return (
+    <div>
+  {(() => {
     switch (activity.eventName) {
       case ActivityEventName.NewButton: {
         const button = activity.data.button ? activity.data.button : activity.data
@@ -27,9 +30,9 @@ export default function ActivityCardNotification({ activity = {} }) {
         );
       }
       case ActivityEventName.NewPost: {
-        const payload = JSON.parse(activity.data);
-        const button = payload.button 
-        const post = payload
+        const {post} = JSON.parse(activity.data);
+        const button = post.button
+
         return (
           <ActivityCardNewPost
             post={post}
@@ -39,7 +42,7 @@ export default function ActivityCardNotification({ activity = {} }) {
         );
       }
       case ActivityEventName.NewPostComment: {
-        const comment = JSON.parse(activity.data)
+        const {comment} = JSON.parse(activity.data)
         const button = comment.button 
         return (
           <ActivityCardNewPostComment
@@ -57,6 +60,7 @@ export default function ActivityCardNotification({ activity = {} }) {
             follower={user}
             isRead={activity.read}
             date={activity.created_at}
+            buttonTypes={buttonTypes}
           />
         )
       }
@@ -68,6 +72,7 @@ export default function ActivityCardNotification({ activity = {} }) {
             followed={user}
             isRead={activity.read}
             date={activity.created_at}
+            buttonTypes={buttonTypes}
           />
         )
       }
@@ -83,7 +88,7 @@ export default function ActivityCardNotification({ activity = {} }) {
       }
       case ActivityEventName.DeleteButton: {
         const {button} = JSON.parse(activity.data)
-        return <ActivityCardDeleteButton button={button} isRead={activity.read}/>
+        return <ActivityCardDeleteButton button={button} isRead={activity.read} date={activity.created_at}/>
       }
       
       
@@ -104,11 +109,9 @@ export default function ActivityCardNotification({ activity = {} }) {
         )
       }
     }
-
-  };
-
-  // return <>{JSON.stringify(activity)}</>
-  return <>{notification(activity)} {JSON.stringify(activity.data, null, 2)}</>;
+  })()}
+  </div>
+    )
 }
 
 export function NotificationCard({

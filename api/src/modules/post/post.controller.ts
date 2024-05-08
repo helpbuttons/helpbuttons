@@ -38,10 +38,7 @@ export class PostController {
             throw new CustomHttpException(ErrorName.NoOwnerShip)
           }
           return this.postService.new(message.message, buttonId, user).then((post) => {
-            return this.postService.findById(post.id).then((postFound) => {
-              notifyUser(this.eventEmitter,ActivityEventName.NewPost,postFound)
-              return postFound
-            })
+              notifyUser(this.eventEmitter,ActivityEventName.NewPost,{post})
           })
         }
       )
@@ -56,7 +53,7 @@ export class PostController {
       @CurrentUser() user: User,
     ){
       return await this.commentService.new(message.message, postId, user, privacy).then((comment) => {
-        notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, comment)
+        notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, {comment})
       return comment;  
       })
     }
@@ -72,7 +69,7 @@ export class PostController {
       @CurrentUser() user: User,
     ){
       return await this.commentService.newReply(message.message, postId, commentParentId, user, privacy).then((comment) => {
-        notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, comment)
+        notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, {comment})
       return comment;  
       })
     }

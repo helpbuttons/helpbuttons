@@ -19,7 +19,6 @@ export interface NetworksState {
 }
 
 export const networksInitial = {
-  // networks: [],
   selectedNetwork: {
     name: '...',
     description: '',

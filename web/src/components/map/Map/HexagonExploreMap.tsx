@@ -85,13 +85,13 @@ export default function HexagonExploreMap({
   
   return (
     <>
-      {exploreSettings.center && (
+      {(exploreSettings.center && selectedNetwork) && (
         <>
           <HbMap
             mapCenter={exploreSettings.center}
             mapZoom={exploreSettings.zoom}
             onBoundsChanged={onBoundsChanged}
-            tileType={selectedNetwork.exploreSettings.tileType}
+            tileType={exploreSettings.tileType}
             handleClick={onMapClick}
           >
             <HbMapOverlay selectedNetwork={selectedNetwork} />

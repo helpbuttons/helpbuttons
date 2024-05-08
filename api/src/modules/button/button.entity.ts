@@ -39,6 +39,7 @@ export class Button extends BaseEntity {
   @Column({ type: 'geometry' })
   location: object;
 
+  @Expose()
   @Column({})
   type: string;
 
@@ -46,9 +47,11 @@ export class Button extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   image?: string;
 
+  @Expose()
   @Column('text', { array: true, nullable: true, default: [] })
   tags: string[];
 
+  @Expose()
   @Column('text', { array: true, nullable: true })
   images: string[];
 
@@ -61,6 +64,7 @@ export class Button extends BaseEntity {
   @OneToMany(() => Post, (feed) => feed.button)
   feed: Post[];
 
+  @Expose()
   @ManyToOne((type) => User)
   owner: User;
 

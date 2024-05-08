@@ -28,7 +28,7 @@ export class ActivityService {
 
   @OnEvent(ActivityEventName.NewPost)
   async onNewPost(payload: any) {
-    const button_ = payload.data.button;
+    const button_ = payload.data.post.button;
     // check users following the button of this post, and add a new actitivy to the daily outbox
     this.buttonService.findById(button_.id).then(async (button) => {
       const usersFollowing =
@@ -56,8 +56,8 @@ export class ActivityService {
     // - dont send mail to author of comment
     // - send mail to owner of button if owner is not author
     // - notify users mentioned on comment
-    const message = payload.data.message;
-    const author = payload.data.author;
+    const message = payload.data.comment.message;
+    const author = payload.data.comment.author;
 
     // check users mentioned in comment, and notify them, not on outbox, but directly
     await this.findUserMentionsInMessage(
@@ -154,8 +154,7 @@ export class ActivityService {
 
   @OnEvent(ActivityEventName.DeleteButton)
   async onDeleteButton(payload: any) {
-    const {button} = payload.data;
-
+    const {user, button} = payload.data;
     // notify button owner
     await this.newActivity(button.owner, payload, false);
   }
@@ -305,6 +304,7 @@ export class ActivityService {
     console.log(
       `new activity [${user.username}] ${payload.activityEventName} outbox? ${outbox}`,
     );
+    
     const activity = {
       id: dbIdGenerator(),
       owner: user,

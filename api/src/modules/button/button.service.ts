@@ -437,21 +437,24 @@ export class ButtonService {
     return { expired: false, ...blocked };
   }
 
+
+  @OnEvent(ActivityEventName.NewPost)
+  async updateDate(payload: any) {
+    const buttonId = payload.data.post.button.id;
+    await this.updateModifiedDate(buttonId);
+  }
+
+
   @OnEvent(ActivityEventName.NewPostComment)
   async autoFollowButton(payload: any) {
     switch (payload.activityEventName) {
       case ActivityEventName.NewPostComment:
-        const buttonId = payload.data.button.id;
-        const userId = payload.data.author.id;
-        this.follow(buttonId, userId);
+        const buttonId = payload.data.comment.button.id;
+        const userId = payload.data.comment.author.id;
+        this.follow(buttonId, userId); 
         break;
     }
-  }
-
-  @OnEvent(ActivityEventName.NewPost)
-  @OnEvent(ActivityEventName.NewPostComment)
-  async updateDate(payload: any) {
-    const buttonId = payload.data.button.id;
+    const buttonId = payload.data.comment.post.button.id;
     await this.updateModifiedDate(buttonId);
   }
 

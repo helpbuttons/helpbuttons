@@ -39,7 +39,6 @@ function MyApp({ Component, pageProps }) {
   const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
-  const loadingConfig = useRef(false);
 
   const config = useStore(
     store,
@@ -69,8 +68,7 @@ function MyApp({ Component, pageProps }) {
       setIsSetup(true);
     }
 
-    if (!config && !loadingConfig.current) {
-      loadingConfig.current = true;
+    if (!config ) {
       store.emit(
         new GetConfig(
           (config) => {

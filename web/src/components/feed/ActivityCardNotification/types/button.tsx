@@ -4,7 +4,6 @@ import {
 } from 'react-icons/io5';
 import { NotificationCard } from '..';
 import t from 'i18n';
-import { useButtonTypes } from 'shared/buttonTypes';
 import { readableDate } from 'shared/date.utils';
 
 export default function ActivityCardNewButton({ button, isRead }) {
@@ -24,14 +23,14 @@ export default function ActivityCardNewButton({ button, isRead }) {
   );
 }
 
-export function ActivityCardDeleteButton({ button, isRead }) {
+export function ActivityCardDeleteButton({ button, isRead, date }) {
   const notifIcon = <IoAddCircleOutline />;
   return (
     <NotificationCard
       type={t('activities.deletedType')}
       notifIcon={notifIcon}
       image={button.image}
-      date={button.created_at}
+      date={date}
       buttonId={button.id}
       title={t('activities.deletebutton', [button.title], true)}
       read={isRead}
@@ -44,9 +43,9 @@ export function ActivityCardNewFollowingButton({
   follower,
   isRead,
   date,
+  buttonTypes,
 }) {
   const notifIcon = <IoChatbubbleOutline />;
-  const buttonTypes = useButtonTypes();
 
   return (
     <>
@@ -79,9 +78,9 @@ export function ActivityCardNewFollowedButton({
   followed,
   isRead,
   date,
+  buttonTypes,
 }) {
   const notifIcon = <IoChatbubbleOutline />;
-  const buttonTypes = useButtonTypes();
 
   return (
     <>

@@ -3,11 +3,12 @@ import Btn, { ContentAlignment } from 'elements/Btn';
 
 import t from 'i18n';
 import router from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 import { ActivityEventName } from 'shared/types/activity.list';
 import { Activity } from 'shared/entities/activity.entity';
 import { Comment } from 'shared/entities/comment.entity';
+import { useButtonTypes } from 'shared/buttonTypes';
 
 enum NotificationType {
   All,
@@ -18,7 +19,7 @@ enum NotificationType {
 
 export default function ActivityLayout({ allActivities, loggedInUser }) {
   const [activities, setActivities] = useState<Activity[]>(allActivities);
-
+  const buttonTypes = useButtonTypes()
   const notificationTypeOptions = [
     {
       name: t('activities.allNotifications'),
@@ -47,10 +48,7 @@ export default function ActivityLayout({ allActivities, loggedInUser }) {
     // created post on followed buttons
     // i started following a new button X  
   const onChange = (selectedActivityGroup : NotificationType) => {
-    console.log('change to ' + selectedActivityGroup)
     setActivities(() => {
-      console.log('oiii...')
-      console.log(NotificationType.All)
       if(selectedActivityGroup == NotificationType.All)
       {
         return allActivities;
@@ -138,7 +136,7 @@ export default function ActivityLayout({ allActivities, loggedInUser }) {
               activities.map((activity, key) => {
                 return (
                   <div className="feed-element" key={key}>
-                    <ActivityCardNotification activity={activity} />
+                    <ActivityCardNotification activity={activity} buttonTypes={buttonTypes}/>
                   </div>
                 );
               })}
