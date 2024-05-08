@@ -65,7 +65,7 @@ export default function HomeInfo({
   );
 
   const [showMessage, toggleShowMessage] = useToggle(false);
-  const [showContactDialog, toggleshowContactDialog] = useToggle(true);
+  const [showContactDialog, toggleshowContactDialog] = useToggle(false);
 
   const [navigatorCoordinates, setNavigatorCoordinates] =
     useState(null);
