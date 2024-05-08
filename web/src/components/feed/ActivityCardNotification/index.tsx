@@ -77,7 +77,7 @@ export default function ActivityCardNotification({ activity, buttonTypes }) {
         )
       }
       case ActivityEventName.ExpiredButton: {
-        const button = JSON.parse(activity.data)
+        const {button} = JSON.parse(activity.data)
         return (
           <ActivityCardExpiredButton
             button={button}

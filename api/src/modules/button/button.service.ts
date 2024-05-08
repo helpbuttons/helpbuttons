@@ -488,7 +488,7 @@ export class ButtonService {
       if(isExpired)
       {
         await this.setExpired(button.id)
-        notifyUser(this.eventEmitter,ActivityEventName.ExpiredButton,button)
+        notifyUser(this.eventEmitter,ActivityEventName.ExpiredButton,{button})
         return {...button, expired: true};
       }
       return button

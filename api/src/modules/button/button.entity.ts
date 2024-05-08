@@ -79,10 +79,12 @@ export class Button extends BaseEntity {
 
   /** Custom Fields **/
   /** price: **/
+  @Expose()
   @Column({default: 0, type: 'double precision' })
   price: number;
 
   /** event: **/
+  @Expose()
   @Column('text') // recurrent, multidate, once, always
   eventType: string;
   
@@ -103,16 +105,19 @@ export class Button extends BaseEntity {
     type: 'once' // only start date
    }
   */
+  @Expose()
   @Column({
     type: 'timestamp',
   })
   eventStart: Date;
 
+  @Expose()
   @Column({
     type: 'timestamp',
   })
   eventEnd: Date;
 
+  @Expose()
   @Column({default: false})
   hasPhone: boolean;
 

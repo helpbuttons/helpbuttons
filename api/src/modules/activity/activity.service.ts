@@ -186,7 +186,7 @@ export class ActivityService {
   }
   @OnEvent(ActivityEventName.ExpiredButton)
   async onExpiredButton(payload: any) {
-    const button = payload.data;
+    const {button} = payload.data;
     await this.newActivity(button.owner, payload, false);
     /*notifyOwnerExpiredButton(button: Partial<Button>, isEvent: boolean = false)
     {
@@ -248,20 +248,6 @@ export class ActivityService {
     }).then((activities) => {
       return activities.map((activity) => 
       {
-        console.log( activity.eventName)
-        // console.log(JSON.stringify(JSON.parse(activity.data)))
-
-        // if(!JSON.parse(activity.data).button){
-        //   console.log('no button defineed... ' + activity.eventName)
-        // }
-        // if(activity.eventName == ActivityEventName.NewButton)
-        // {
-          // if(!JSON.parse(activity.data).button){
-          //   const fixData = JSON.parse(activity.data)
-          //   console.log('fixing... ' + fixData.title) 
-          //   return {...activity, data: JSON.stringify({button: fixData})}
-          // }
-        // }
         return activity
       })
     });
