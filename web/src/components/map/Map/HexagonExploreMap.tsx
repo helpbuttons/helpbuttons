@@ -68,7 +68,7 @@ export default function HexagonExploreMap({
 
   }, [h3TypeDensityHexes]);
 
-  const buttonTypes = useButtonTypes();
+  const buttonTypes = selectedNetwork.buttonTemplates;
 
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
 
