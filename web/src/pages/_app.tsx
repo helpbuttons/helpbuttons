@@ -62,13 +62,14 @@ function MyApp({ Component, pageProps }) {
     SetupSteps.NETWORK_CREATION,
     SetupSteps.SYSADMIN_CONFIG,
   ];
-
+  const loadingConfig = useRef(false);
   useEffect(() => {
     if (setupPaths.includes(path)) {
       setIsSetup(true);
     }
 
-    if (!config ) {
+    if (!config && !loadingConfig.current) {
+      loadingConfig.current = true;
       store.emit(
         new GetConfig(
           (config) => {
