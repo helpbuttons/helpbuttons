@@ -286,9 +286,9 @@ export class ActivityService {
     );
   }
 
-  newActivity(user, payload, outbox = false) {
+  newActivity(user, payload, addToDailyMailResume = false) {
     console.log(
-      `new activity [${user.username}] ${payload.activityEventName} outbox? ${outbox}`,
+      `new activity [${user.username}] ${payload.activityEventName} outbox? ${addToDailyMailResume}`,
     );
     
     const activity = {
@@ -296,7 +296,7 @@ export class ActivityService {
       owner: user,
       eventName: payload.activityEventName,
       data: JSON.stringify(payload.data),
-      outbox: outbox,
+      outbox: addToDailyMailResume,
     };
     return this.activityRepository.insert([activity]);
   }
