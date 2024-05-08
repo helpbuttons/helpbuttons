@@ -16,13 +16,16 @@ export interface NetworksState {
   // networks: Network[];
   selectedNetwork: Network;
   selectedNetworkLoading: boolean;
-}
+} 
 
 export const networksInitial = {
   selectedNetwork: {
     name: '...',
     description: '',
-    buttonTemplates: []
+    buttonTemplates: [],
+    topTags: [],
+    backgroundColor: 'grey',
+    textColor: 'pink'
   },
   selectedNetworkLoading: false,
 };

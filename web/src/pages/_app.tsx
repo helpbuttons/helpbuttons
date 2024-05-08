@@ -248,13 +248,7 @@ function MyApp({ Component, pageProps }) {
     }
     
   }, [searchParams]);
-  let networkStyle = {};
-  if (selectedNetwork) {
-    networkStyle = {
-      '--network-background-color': selectedNetwork.backgroundColor,
-      '--network-text-color': selectedNetwork.textColor,
-    } as React.CSSProperties;
-  }
+
   return (
     <>
       <Head>
@@ -265,7 +259,13 @@ function MyApp({ Component, pageProps }) {
       {pageProps.metadata && <SEO {...pageProps.metadata}/>} 
       <div
         className={`${user ? '' : 'index__container'}`}
-        style={networkStyle}
+        style={ selectedNetwork ? {
+          '--network-background-color': selectedNetwork.backgroundColor,
+          '--network-text-color': selectedNetwork.textColor,
+        } as React.CSSProperties : {
+          '--network-background-color': 'grey',
+          '--network-text-color': 'pink',
+        } as React.CSSProperties}
       >
         <Alert />
         <div className="index__content">
