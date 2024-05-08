@@ -106,7 +106,9 @@
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
     "configureInstanceTitle": "Setup the last details of your network",
-    "test": ""
+    "test": "",
+    "needLogo": "Before selecting a place for your network, please upload a logo",
+    "needPlace": "Please select the area of your network"
   },
   "activities": {
     "allNotifications":"All Notifications",
@@ -200,6 +202,7 @@
     "renewMailSubject": "Renewed successfuly",
     "renewMail": "You renewed your _helpbutton_ '{0}' for more 3 months.",
     "isExpiringLink": "Due to lack of activity, your _helpbutton_ is going to be erased in one month.",
+    "endDatesExpired": "The end date of this _helpbutton_ is in the past, so it has been set as expired, and won't show on the public list",
     "renewLink": "Renew your _helpbutton_",
     "createUpdate":"Publish Update",
     "authorTitle":"Author:"
@@ -357,6 +360,7 @@
     "chooseColorsExplain": "Main color would define backgrounds, secondary color would define details.",
     "pickMainColor": "Pick main color",
     "pickSecondaryColor": "Pick secondary color",
+    "buttonTemplateName": "Type Name",
     "buttonTemplateLabel": "Create your _helpbutton_ types",
     "buttonTemplateExplain": "These are the main types of _helpbuttons_ that your users can create. Add a name and choose your color to differenciate them",
     "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here",

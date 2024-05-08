@@ -1,35 +1,41 @@
-import CardNotification from '../../components/feed/CardNotification';
+import ActivityCardNotification from '../../components/feed/ActivityCardNotification';
 import Btn, { ContentAlignment } from 'elements/Btn';
 
 import t from 'i18n';
 import router from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 import { ActivityEventName } from 'shared/types/activity.list';
 import { Activity } from 'shared/entities/activity.entity';
-import { Button } from 'shared/entities/button.entity';
 import { Comment } from 'shared/entities/comment.entity';
-import { Post } from 'shared/entities/post.entity';
+import { useButtonTypes } from 'shared/buttonTypes';
 
-export default function FeedProfile({ allActivities, loggedInUser }) {
+enum NotificationType {
+  All,
+  MyActivity,
+  Interests,
+  MyHelpbuttons
+}
+
+export default function ActivityLayout({ allActivities, loggedInUser }) {
   const [activities, setActivities] = useState<Activity[]>(allActivities);
-
+  const buttonTypes = useButtonTypes()
   const notificationTypeOptions = [
     {
       name: t('activities.allNotifications'),
-      value: 'all',
+      value: NotificationType.All,
     },
     {
       name: t('activities.my'),
-      value: 'my',
+      value: NotificationType.MyActivity,
     },
     {
       name: t('activities.interests'),
-      value: 'interests',
+      value: NotificationType.Interests,
     },
     {
       name: t('activities.myhelpbuttons'),
-      value: 'myhelpbuttons',
+      value: NotificationType.MyHelpbuttons,
     },
   ];
   // all
@@ -41,79 +47,53 @@ export default function FeedProfile({ allActivities, loggedInUser }) {
     // interests created buttons on specific tag
     // created post on followed buttons
     // i started following a new button X  
-  const onChange = (value) => {
+  const onChange = (selectedActivityGroup : NotificationType) => {
     setActivities(() => {
-      if (value == 'message') {
-        return allActivities.filter(
-          (activity) => activity.eventName.indexOf(ActivityEventName.NewPostComment) > -1,
-        );
-      }
-      if (value == 'post') {
-        return allActivities.filter(
-          (activity) => !(activity.eventName.indexOf(ActivityEventName.NewPostComment) > -1),
-        );
-      }
-      if(value == 'my') {
-        // my created buttons
-        // my created posts
-        // my created comments
+      if(selectedActivityGroup == NotificationType.All)
+      {
+        return allActivities;
+      }else if(selectedActivityGroup == NotificationType.MyActivity){
         return allActivities.filter(
           (activity: Activity) => 
           {
             switch(activity.eventName)
             {
               case ActivityEventName.NewButton:{
-                const button :Button = activity.data
+                const {button} = (activity.data)
                 return button.owner.id == loggedInUser.id
               }
               case ActivityEventName.NewPostComment:{
-                const comment : Comment = JSON.parse(activity.data)
+                const comment : Comment =JSON.parse(activity.data)
                 return comment.author.id == loggedInUser.id
               }
-              case ActivityEventName.NewPost:
-                const post: Post = JSON.parse(activity.data)
+              case ActivityEventName.NewPost:{
+                const post = JSON.parse(activity.data)
                 return post.author.id == loggedInUser.id
-            }
-            return false;
-          }
-        );
-      }
-      if(value == 'interests') {
-        // interests created buttons on specific tag
-        // created post on followed buttons
-        return allActivities.filter(
-          (activity: Activity) => {
-            switch(activity.eventName)
-            {
-              case ActivityEventName.NewButton:{
-                const button :Button = activity.data
-                return button.owner.id != loggedInUser.id
               }
-              case ActivityEventName.NewPostComment:{
-                return false;
-              }
-              case ActivityEventName.NewPost:
-                return false;
-                return post.author.id == loggedInUser.id
-              case ActivityEventName.NewFollowingButton:
-              case ActivityEventName.NewFollowedButton:
-                return true;
-            }
-            return false;
-          }
-        );
-      }
-      if(value == 'myhelpbuttons') {
-        return allActivities.filter(
-          (activity: Activity) => {
-            switch(activity.eventName)
-            {
-              case ActivityEventName.NewButton:{
-                const button :Button = activity.data
+              case ActivityEventName.ExpiredButton:{
+                console.log(activity.data)
+                const {button} = JSON.parse(activity.data)
                 return button.owner.id == loggedInUser.id
               }
               case ActivityEventName.DeleteButton:{
                 return true;
+              }
+            }
+            return false;
+          }
+        );
+      }else if(selectedActivityGroup == NotificationType.MyHelpbuttons){
+        return allActivities.filter(
+          (activity: Activity) => {
+            switch(activity.eventName)
+            {
+              case ActivityEventName.NewButton:{
+                const {button} = activity.data
+                return button.owner.id == loggedInUser.id
+              }
+              case ActivityEventName.DeleteButton:{
+                return true;
+                // return true;
               }
               default:
                 return false;
@@ -121,10 +101,25 @@ export default function FeedProfile({ allActivities, loggedInUser }) {
             return false;
           }
         );
+      }else if(selectedActivityGroup == NotificationType.Interests){
+        return allActivities.filter(
+          (activity: Activity) => {
+            switch(activity.eventName)
+            {
+              case ActivityEventName.NewButton:{
+                const {button} = activity.data
+                return button.owner.id != loggedInUser.id
+              }
+              case ActivityEventName.NewFollowingButton:
+              case ActivityEventName.NewFollowedButton:
+                return true;
+            }
+            return false;
+          })
       }
-      return allActivities;
-    });
-  };
+    })
+  }
+
   return (
       <div className='feed__container'>
         <div className="feed-selector feed-selector--activity">
@@ -136,11 +131,12 @@ export default function FeedProfile({ allActivities, loggedInUser }) {
         </div>
         <div className="feed-section--activity">
           <div className="feed-section--activity-content">
+            {/* {JSON.stringify(activities)} */}
             {activities &&
               activities.map((activity, key) => {
                 return (
                   <div className="feed-element" key={key}>
-                    <CardNotification activity={activity} />
+                    <ActivityCardNotification activity={activity} buttonTypes={buttonTypes}/>
                   </div>
                 );
               })}

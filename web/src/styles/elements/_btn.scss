@@ -116,10 +116,18 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
-.btn-filter-with-icon {
+.btn-filter-with-icon, .btn-filter-with-emoji{
 
   @extend .btn-filter;
   padding: $padding-medium !important;
+
+}
+
+.btn-filter-with-emoji {
+
+  border-width: 6px;
+  border-color: var(--button-color);
+  font-weight: 800;
 
 }
 
@@ -467,13 +475,12 @@ $btn-font-size-medium: $font-size-medium;
 
   cursor: pointer;
   border: none;
-
   text-align: left;
   overflow-x: hidden;
   height: auto;
   margin: 0;
   width: inherit;
-  text-decoration: underline;
+  // text-decoration: underline;
   border: none;
   background: transparent;
   padding: 0 $btn-padding;

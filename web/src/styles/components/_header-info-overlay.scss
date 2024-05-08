@@ -3,7 +3,7 @@ $info-nets-field-bottom: 90px;
 $info-nets-max-width: $grid-max-width--mobile;
 $info-image-height: 700px;
 $info-content-mobile-bottom-padding: calc( $footer-height-mobile*2 );
-$info-content-head-margin: calc( $footer-height-mobile );
+$info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padding-small );
 
 .info-overlay__selected {
 
@@ -24,8 +24,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
 .info-overlay__container {
 
   // background-color: $color-white;
-  padding-top: $info-content-head-margin;
-  margin-bottom: calc( $footer-height-mobile*4 );
+  padding: $info-content-head-margin 0;
   width:100%;
   z-index: $z-index-02;
   box-sizing: border-box;
@@ -121,13 +120,16 @@ $info-content-head-margin: calc( $footer-height-mobile );
   overflow: auto; 
   min-height: 100px;
   padding-bottom: $info-content-mobile-bottom-padding;
+  justify-content:space-around;
+  align-items: flex-start;
 
   .card {
 
     border-radius: 10px;
     background-color: $color-white;
     padding: $padding-big;
-    margin: $margin-small 0;
+    margin: $margin-xsmall $margin-xxsmall;
+    flex: 0.8 0 49%;
     // max-height: 100%;
     // height: fit-content;
     overflow: auto;
@@ -196,7 +198,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
   .info-overlay__description {
 
     overflow:auto;
-    white-space: normal;
+    white-space: pre-wrap;
     padding: $padding-medium 0;
     word-wrap: break-word;
     display: inline-block;
@@ -230,6 +232,7 @@ $info-content-head-margin: calc( $footer-height-mobile );
     .hashtags__list-item {
 
       margin-top: $padding-medium;
+      margin-left: unset;
 
     }
 
@@ -317,15 +320,18 @@ $info-content-head-margin: calc( $footer-height-mobile );
   .info-overlay__card--header {
 
     height: 20rem;
-    
+    flex-basis: 100% !important;
   
   }
 
   .info-overlay__card {
     
     // max-height: calc(100vh - 300px);
-    max-width: $grid-max-width;
+    // max-width: $grid-max-width;
     padding-bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    padding: $margin-small;
 
 
   }

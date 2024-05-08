@@ -39,11 +39,18 @@ $textarea-textarea-color-gray: $color-gray;
 }
 
 .emoji-picker{
-  position: absolute;
-  right: 20px;
-  margin-top: -35px;
+  position: relative;
+  right: 10px;
+  float: right;
+  bottom: 40px;
+  margin: auto;
+  &:hover {
 
+    cursor: pointer;
+
+  }
 }
+
 em-emoji-picker{
   position: absolute;
   right: 10px;

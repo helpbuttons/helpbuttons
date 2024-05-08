@@ -25,7 +25,7 @@ import {
   makeImageUrl,
   readableDistance,
 } from 'shared/sys.helper';
-import { buttonColorStyle } from 'shared/buttonTypes';
+import { buttonColorStyle, isEventAndIsExpired } from 'shared/buttonTypes';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -36,7 +36,7 @@ import {
   updateCurrentButton,
 } from 'state/Explore';
 import { isAdmin } from 'state/Users';
-import { formatMessage } from 'elements/Message';
+import { TextFormatted, formatMessage } from 'elements/Message';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
 import {
@@ -50,7 +50,6 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import { diffInMonths } from 'shared/date.utils';
 import { FixedAlert } from 'components/overlay/Alert';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
@@ -314,7 +313,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
 
         <div className="card-button__paragraph">
-          {formatMessage(button.description)}
+          <TextFormatted text={button.description}/>
         </div>
 
         <div className="card-button__hashtags">
@@ -377,6 +376,11 @@ function ExpiringAlert({button, isOwner = false} : {button: Button, isOwner: boo
   if(!button.expired)
   {
      return;
+  }
+  
+  if(isEventAndIsExpired(button))
+  { 
+    return <FixedAlert alertType={AlertType.Success} message={`${t('button.endDatesExpired')}`}/>
   }
   return <FixedAlert alertType={AlertType.Success} message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id}">${t('button.renewLink')}</a>`}/>
 }

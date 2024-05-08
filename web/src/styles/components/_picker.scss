@@ -302,6 +302,13 @@ $picker-comments-item-padding: 25px;
   display: flex;
   margin-bottom: $margin-medium;
 
+  .pigeon-zoom-buttons {
+
+    right: $padding-small;
+    top: 0;
+
+  }
+
 }
 
 .picker--over {

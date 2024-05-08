@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
 import { GlobalState, store } from 'pages';
 import {
-  HiglightHexagonFromButton,
-  UpdateExploreSettings, UpdateHexagonClicked, updateCurrentButton,
+  RecenterExplore,
+  UpdateHexagonClicked, updateCurrentButton,
 } from 'state/Explore';
 import { HbMap } from '.';
 import {
@@ -12,7 +12,7 @@ import {
 import _ from 'lodash';
 import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
 import Loading from 'components/loading';
-import { IoStorefrontSharp } from 'react-icons/io5';
+import { IoAddCircle, IoStorefrontSharp } from 'react-icons/io5';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { useStore } from 'store/Store';
 import { maxZoom } from './Map.consts';
@@ -68,7 +68,7 @@ export default function HexagonExploreMap({
 
   }, [h3TypeDensityHexes]);
 
-  const [buttonTypes, setButtonTypes] = useState([]);
+  const buttonTypes = useButtonTypes();
 
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
 
@@ -83,20 +83,18 @@ export default function HexagonExploreMap({
     }
   }, [hexagonHighlight,hexagonClicked, geoJsonFeatures])
   
-  useButtonTypes(setButtonTypes);
   return (
     <>
-      {exploreSettings.center && (
+      {(exploreSettings.center && selectedNetwork) && (
         <>
           <HbMap
             mapCenter={exploreSettings.center}
             mapZoom={exploreSettings.zoom}
             onBoundsChanged={onBoundsChanged}
-            tileType={selectedNetwork.exploreSettings.tileType}
+            tileType={exploreSettings.tileType}
             handleClick={onMapClick}
           >
             <HbMapOverlay selectedNetwork={selectedNetwork} />
-            {!(exploreSettings.zoom == maxZoom) && (
               <GeoJson>
                 {/* DRAW HEXAGONS ON MAP */}
                 {geoJsonFeatures.map((hexagonFeature) => (
@@ -173,7 +171,6 @@ export default function HexagonExploreMap({
                     />
                   )}
               </GeoJson>
-            )}
             {/*
         show count of buttons per hexagon
         */}
@@ -249,7 +246,7 @@ export default function HexagonExploreMap({
                                 btnType.cssColor,
                               )}
                             >
-                              <div className="btn-filter__icon pigeon-map__hex-info--icon"></div>
+                              <div className="btn-filter__icon pigeon-map__hex-info--icon"><IoAddCircle/></div>
                               <div className="pigeon-map__hex-info--text">
                                 {hexagonBtnType.count.toString()}
                               </div>
@@ -266,7 +263,7 @@ export default function HexagonExploreMap({
                 const btnType = buttonTypes.find((type) => {
                   return type.name == button.type;
                 });
-                if(button.hideAddress) {
+                if(button.hideAddress || !btnType) {
                   return (<></>)
                 }
                 return (
@@ -289,12 +286,7 @@ export default function HexagonExploreMap({
               <button
                 className="pigeon-center-view"
                 onClick={() => {
-                  store.emit(
-                    new UpdateExploreSettings({
-                      center: selectedNetwork.exploreSettings.center,
-                      zoom: selectedNetwork.exploreSettings.zoom,
-                    }),
-                  );
+                  store.emit( new RecenterExplore());
                 }}
               >
                 <IoStorefrontSharp />

@@ -81,7 +81,7 @@ export default function Signup() {
   const onSuccess = (userData) => {
     const returnUrl: string = router.query.returnUrl
       ? router.query.returnUrl.toString()
-      : '/ProfileEdit';
+      : '/Explore';
     router.push(returnUrl, null, { locale: userData.locale })
   };
 

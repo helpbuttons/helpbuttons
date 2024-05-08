@@ -13,6 +13,8 @@ import { UserService } from '../user/user.service';
 import { User } from '../user/user.entity';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
+import { ActivityEventName } from '@src/shared/types/activity.list';
+import { notifyUser } from '@src/app/app.event';
 
 @Injectable()
 export class ButtonCron {
@@ -43,11 +45,7 @@ export class ButtonCron {
     );
     await Promise.all(
       buttonsExpired.map((button) => {
-        return this.buttonService.setExpired(button.id)
-        .then(() => {
-          return this.buttonService.notifyOwnerExpiredButton(button, true)
-        });
-        
+        return this.buttonService.checkAndSetExpired(button);
       }),
     );
   }
@@ -58,6 +56,8 @@ export class ButtonCron {
   async clearOldButtons() {
     // change update button modified date when there is new post or comment: done   @OnEvent(ActivityEventName.NewPost) @OnEvent(ActivityEventName.NewPostComment) on button service
 
+    // https://github.com/helpbuttons/helpbuttons/issues/703
+    return;
     const buttonsToExpire = await this.entityManager.query(
       `select id,"eventEnd","ownerId", updated_at from button where 
       deleted = false AND expired = false
@@ -67,10 +67,7 @@ export class ButtonCron {
     // send mail to creator
     return await Promise.all(
       buttonsToExpire.map((button) => {
-        return this.buttonService.setExpired(button.id)
-        .then(() => {
-          return this.buttonService.notifyOwnerExpiredButton(button)
-        });
+        return this.buttonService.checkAndSetExpired(button);
       }),
     );
   }

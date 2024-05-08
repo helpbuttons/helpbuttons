@@ -83,8 +83,8 @@ export default function p({ metadata, userProfile }) {
     }
   }, [userProfile, loggedInUser, router.isReady]);
 
-  const [buttonTypes, setButtonTypes] = useState([]);
-  useButtonTypes(setButtonTypes);
+  const buttonTypes = useButtonTypes();
+
   const { sliceSize, handleScrollHeight } = useScrollHeight(
     userButtons?.length,
   );

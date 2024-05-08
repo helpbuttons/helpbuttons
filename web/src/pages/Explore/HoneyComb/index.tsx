@@ -204,7 +204,26 @@ function useExploreSettings({
       }
       if(params.has('hbTypes'))
       {
-        newFilters = {...newFilters, helpButtonTypes: params.get('hbTypes').split(',')}
+
+        const hbTypes = params.get('hbTypes').split(',');
+        
+        const buttonTypes = hbTypes.map((_buttonTypeSelected) => 
+        {
+          const btnType = selectedNetwork.buttonTemplates.find((_btnType) => _btnType.name == _buttonTypeSelected)
+          console.log('sel:')
+          console.log(btnType)
+          if (btnType?.customFields) {
+            const btnTypeEvents = btnType.customFields.find(
+              (customField) => customField.type == 'event',
+            );
+            if (btnTypeEvents) {
+              newFilters = {...newFilters, orderBy: ButtonsOrderBy.EVENT_DATE}
+
+            }
+          }
+        
+        })
+        newFilters = {...newFilters, helpButtonTypes: hbTypes}
       }
       
       if(hex)

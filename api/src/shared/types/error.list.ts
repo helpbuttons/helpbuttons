@@ -19,6 +19,7 @@ export enum ErrorName{
     geoCodingError = 'geo-coding-error',
     invalidDates = 'invalid-dates',
     InvalidUsername = 'invalid-username',
+    expiredDates = 'expired-dates',
 }
 
 export const errorsList: ErrorText[] = 
@@ -86,6 +87,11 @@ export const errorsList: ErrorText[] =
     {
         name: ErrorName.InvalidUsername,
         caption: `Invalid username`,
+        status: HttpStatus.NOT_ACCEPTABLE
+    },
+    {
+        name: ErrorName.expiredDates,
+        caption: `The end date has passed`,
         status: HttpStatus.NOT_ACCEPTABLE
     },
 ]

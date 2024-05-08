@@ -4,7 +4,7 @@ import { allowedPathsPerRole } from './pagesRoles';
 import { Role } from './types/roles';
 import getConfig from 'next/config';
 
-let SSRLocale = '';
+let SSRLocale = 'en';
 
 export function setSSRLocale(_locale) {
   SSRLocale = _locale;

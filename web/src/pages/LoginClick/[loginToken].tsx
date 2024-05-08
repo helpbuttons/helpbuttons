@@ -15,7 +15,7 @@ export default function LoginClick() {
   useEffect(() => {
     if (!router.isReady) return;
     const onSuccess = () => {
-      let returnUrl: string = '/HomeInfo';
+      let returnUrl: string = '/Explore';
       if (router?.query?.returnUrl) {
         returnUrl = router.query.returnUrl.toString();
       }

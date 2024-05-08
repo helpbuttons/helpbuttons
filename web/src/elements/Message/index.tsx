@@ -1,5 +1,16 @@
 import { useEffect, useRef } from 'react';
 const userPattern = /@[\w]+/gi;
+
+export function TextFormatted ({text}) {
+
+  return  (
+    <>
+      {formatMessage(text)}
+    </>
+  )
+
+}
+
 export function formatMessage(text) {
   const aRef = useRef();
   const content = linkify(text);
@@ -34,7 +45,5 @@ export function mentionsOfMessage(message, username) {
   }
 
   const usersNames = matches.map((user) => user.substring(1))
-  console.log(username)
-  console.log(usersNames)
   return usersNames.filter((usernm) => usernm != username )
 }

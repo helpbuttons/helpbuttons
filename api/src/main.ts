@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { ValidationError, ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { ClassSerializerInterceptor, ValidationError, ValidationPipe } from '@nestjs/common';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { initializeTransactionalContext } from 'typeorm-transactional-cls-hooked';
 
@@ -35,6 +35,9 @@ export const bootstrap = async () => {
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(
+    app.get(Reflector))
+  );
   app.useGlobalFilters(new HttpExceptionFilter());
   // validation filters
   app.useGlobalFilters(new ValidationFilter());

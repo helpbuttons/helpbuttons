@@ -202,12 +202,21 @@ export default function ProfileEdit() {
                   ></FieldText>  
 
                   {loggedInUser.role == Role.admin && 
-                    <FieldCheckbox
-                      name='publishPhone'
-                      defaultValue={loggedInUser.publishPhone}
-                      text={t('user.adminPhonePublish')}
-                      onChanged={(value) => {setValue('publishPhone', value)}}
-                    />
+                    <>
+                      <FieldCheckbox
+                        name='publishPhone'
+                        defaultValue={loggedInUser.publishPhone}
+                        text={t('user.adminPhonePublish')}
+                        explain={t('user.adminPhonePublishExplain')}
+                        onChanged={(value) => {setValue('publishPhone', value)}}
+                      />
+                      <FieldCheckbox
+                        name='contactWhatsapp'
+                        defaultValue={loggedInUser.publishPhone}
+                        text={t('user.showWhatsapp')}
+                        onChanged={(value) => {setValue('publishPhone', value)}}
+                      />
+                    </>
                   }
                   <FieldCheckbox
                     name='showButtons'

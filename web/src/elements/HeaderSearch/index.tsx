@@ -19,8 +19,8 @@ export function HeaderSearch({ results, toggleAdvancedFilters}) {
 
   const clearButton = useRef(null)
   
-  const [buttonTypes, setButtonTypes] = useState(null);
-  useButtonTypes(setButtonTypes);
+  const buttonTypes = useButtonTypes();
+
   const filtering= JSON.stringify(defaultFilters) != JSON.stringify(exploreMapState.filters);
   return (
     <div className={filtering ?"header-search__tool--filtered" :"header-search__tool"} >
@@ -51,9 +51,11 @@ export function HeaderSearch({ results, toggleAdvancedFilters}) {
               />
             )}
             <div className="header-search__icons">
-              <div className="header-search__icon">
-                <IoSearch />
-              </div>
+              {!filtering &&
+                <div className="header-search__icon">
+                  <IoSearch />
+                </div>
+              }
               {filtering && 
                 <div ref={clearButton} className="header-search__icon--close">
                   <IoClose />
@@ -116,7 +118,7 @@ function SearchInfo({ helpButtonTypes, filters, what, buttonTypes }) {
   );
 
   const types = (helpButtonTypes) => {
-    if (helpButtonTypes.length < 1) {
+    if (helpButtonTypes.length) {
       return t('buttonFilters.allButtonTypes');
     }
     const buttonTypesCaptions = helpButtonTypes.map(
@@ -137,7 +139,7 @@ function SearchInfo({ helpButtonTypes, filters, what, buttonTypes }) {
   
   return (
     <div className="header-search__info">
-      {whatText(what)} {types(helpButtonTypes)} {customFieldsFiltersText(filters, selectedNetwork.currency)}
+      {whatText(what)} {helpButtonTypes && types(helpButtonTypes)} {customFieldsFiltersText(filters, selectedNetwork.currency)}
     </div>
   );
 }

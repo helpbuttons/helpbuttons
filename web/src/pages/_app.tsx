@@ -39,7 +39,6 @@ function MyApp({ Component, pageProps }) {
   const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
-  const loadingConfig = useRef(false);
 
   const config = useStore(
     store,
@@ -63,7 +62,7 @@ function MyApp({ Component, pageProps }) {
     SetupSteps.NETWORK_CREATION,
     SetupSteps.SYSADMIN_CONFIG,
   ];
-
+  const loadingConfig = useRef(false);
   useEffect(() => {
     if (setupPaths.includes(path)) {
       setIsSetup(true);
@@ -236,7 +235,7 @@ function MyApp({ Component, pageProps }) {
   const triedToLogin = useRef(false);
   useEffect(() => {
     const loginToken = searchParams.get('loginToken');
-    if (!triedToLogin.current && loginToken) {
+    if (!triedToLogin.current && loginToken && pageName != 'LoginClick') {
       const onSuccess = () => {
         alertService.success(t('user.loginSucess'));
       };
@@ -250,13 +249,7 @@ function MyApp({ Component, pageProps }) {
     }
     
   }, [searchParams]);
-  let networkStyle = {};
-  if (selectedNetwork) {
-    networkStyle = {
-      '--network-background-color': selectedNetwork.backgroundColor,
-      '--network-text-color': selectedNetwork.textColor,
-    } as React.CSSProperties;
-  }
+
   return (
     <>
       <Head>
@@ -267,7 +260,13 @@ function MyApp({ Component, pageProps }) {
       {pageProps.metadata && <SEO {...pageProps.metadata}/>} 
       <div
         className={`${user ? '' : 'index__container'}`}
-        style={networkStyle}
+        style={ selectedNetwork ? {
+          '--network-background-color': selectedNetwork.backgroundColor,
+          '--network-text-color': selectedNetwork.textColor,
+        } as React.CSSProperties : {
+          '--network-background-color': 'grey',
+          '--network-text-color': 'pink',
+        } as React.CSSProperties}
       >
         <Alert />
         <div className="index__content">

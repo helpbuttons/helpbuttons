@@ -14,6 +14,7 @@ export enum BtnType {
     iconActions,
     filterCorp,
     smallLink,
+    filterEmoji,
 }
 
 export enum IconType {
@@ -127,6 +128,9 @@ export default function Btn({
         case BtnType.filterCorp:
                 classNames.push("btn-filter btn--corporative");
             break;
+        case BtnType.filterEmoji:
+                classNames.push("btn-filter-with-emoji");
+            break;
         case BtnType.dropdown:
             classNames.push("dropdown__dropdown");
             break;
@@ -161,7 +165,8 @@ export default function Btn({
     }
         
     return (
-        <button {...attr} onClick={onClick} disabled={disabled} className={className + ' ' + extraClass}   
+        <button {...attr} onClick={onClick} disabled={disabled} className={className + ' ' + extraClass} 
+        style={{'borderColor': backgroundColor} as React.CSSProperties}  
         >
             {isSubmitting && <Spinner />}
             <BtnIcon icon={iconLeft} iconLink={iconLink} 

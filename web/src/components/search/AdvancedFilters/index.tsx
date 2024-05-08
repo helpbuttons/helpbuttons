@@ -43,8 +43,8 @@ export default function AdvancedFilters({
     (state: GlobalState) => state.explore.map.showAdvancedFilters,
     false
   );
-  const [buttonTypes, setButtonTypes] = useState([]);
-  useButtonTypes(setButtonTypes);
+  
+  const buttonTypes = useButtonTypes();
 
   const {
     handleSubmit,
@@ -147,8 +147,8 @@ export default function AdvancedFilters({
               label={t('buttonFilters.types')}
               validationError={null}
               explain={t('buttonFilters.typesExplain')}
-            >
-              {buttonTypes.map((buttonType) => {
+            > 
+              {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType) => {
                 return (
                   <div
                     key={buttonType.name}
@@ -264,14 +264,14 @@ export function AdvancedFiltersSortDropDown({className, label = '', orderBy, set
             label={label}
             options={dropdownOptions}
             onChange={(value) => {setOrderBy(value)}}
-            defaultSelected={orderBy}
+            value={orderBy}
           />
         ) : (
           <Dropdown
           className={className}
           options={dropdownOptions}
           onChange={(value) => {setOrderBy(value)}}
-          defaultSelected={orderBy}
+          value={orderBy}
           />
         )  
       }

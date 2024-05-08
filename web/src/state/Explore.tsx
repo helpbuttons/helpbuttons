@@ -1,4 +1,4 @@
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { produce } from 'immer';
 
 import { WatchEvent } from 'store/Event';
@@ -18,8 +18,10 @@ import {
 import { Bounds } from 'pigeon-maps';
 import { cellToZoom } from 'shared/honeycomb.utils';
 import { cellToParent, getResolution } from 'h3-js';
-import { UpdateZoom } from './Map';
 import { of } from 'rxjs';
+import { maxZoom } from 'components/map/Map/Map.consts';
+import { UpdateZoom } from './Map';
+import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
 
 
 export enum ExploreViewMode {
@@ -37,6 +39,8 @@ export interface ExploreState {
 export interface ExploreSettings {
   center: number[];
   zoom: number;
+  prevZoom: number;
+  prevCenter: number[];
   bounds: Bounds;
   honeyCombFeatures: any;
   loading: boolean;
@@ -48,6 +52,8 @@ export interface ExploreSettings {
 export const exploreSettingsDefault: ExploreSettings = {
   center: null,
   zoom: 4,
+  prevCenter: null,
+  prevZoom: 4,
   bounds: null,
   honeyCombFeatures: null,
   loading: true,
@@ -236,8 +242,8 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
   ) {}
   public watch(state: GlobalState) {
     return ButtonService.update(this.buttonId, this.button).pipe(
-      map((data) => {
-        this.onSuccess(data);
+      tap((data) => {
+        this.onSuccess(data[0]);
       }),
       catchError((error) => handleError(this.onError, error)),
     );
@@ -251,9 +257,19 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
     });
   }
 }
-export class updateCurrentButton implements UpdateEvent {
+export class updateCurrentButton implements WatchEvent, UpdateEvent {
   public constructor(private button: Button) {}
-
+  public watch(state: GlobalState) {
+    return;
+    // TODO: when enabling this feature, when navigating back to the map it stays on full zoom, and has more bugs
+    if(this.button && !this.button.hideAddress)
+    {
+      store.emit(new UpdateExploreSettings({center: [this.button.latitude, this.button.longitude], zoom: maxZoom}))
+    }else if(!this.button)
+    {
+      store.emit(new UpdateExploreSettings({center: state.explore.settings.prevCenter, zoom: state.explore.settings.prevZoom}))
+    }
+  }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
@@ -263,7 +279,6 @@ export class updateCurrentButton implements UpdateEvent {
 
 export class UpdateFilters implements UpdateEvent {
   public constructor(private filters: ButtonFilters) {}
-
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       if(this.filters?.where.center)
@@ -342,11 +357,31 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.buttonTypeClicked = true
-      newState.explore.map.filters = {
+      newState.explore.map.buttonTypeClicked = true;
+
+      let newFilters = {
         ...defaultFilters,
         helpButtonTypes: [this.buttonType],
       };
+
+      if (state?.networks && state.networks?.selectedNetwork) {
+        const btnType =
+          state.networks.selectedNetwork.buttonTemplates.find(
+            (buttonType) => {
+              return buttonType.name == this.buttonType;
+            },
+          );
+
+        if (btnType?.customFields) {
+          const btnTypeEvents = btnType.customFields.find(
+            (customField) => customField.type == 'event',
+          );
+          if (btnTypeEvents) {
+            newFilters.orderBy = ButtonsOrderBy.EVENT_DATE;
+          }
+        }
+      }
+      newState.explore.map.filters = newFilters;
     });
   }
 }
@@ -497,16 +532,14 @@ export class UpdateExploreSettings implements UpdateEvent {
         ...prevSettings,
         ...this.newExploreSettings,
         loading: false,
+        prevCenter: state.explore.settings.center,
+        zoom: state.explore.settings.zoom
       };
       
       if(prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center))
       {
         newState.explore.map.showInstructions = false;
       }
-      if(newExploreSettings.zoom)
-      {
-        delete newExploreSettings.zoom;
-      }      
       newState.explore.settings = newExploreSettings;
     });
   }
@@ -540,7 +573,7 @@ export class GetPhone implements WatchEvent {
   }
 }
 
-export class ButtonUpdateModifiedDate implements WatchEvent{
+export class ButtonRenew implements WatchEvent{
   public constructor(
     private buttonId: string,
     private onSuccess,
@@ -571,14 +604,14 @@ export class ToggleAdvancedFilters implements UpdateEvent {
   }
 }
 
-export class RecenterExplore implements UpdateEvent {
+export class RecenterExplore implements WatchEvent {
   public constructor(private value?) {}  
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.settings.center = state.networks.selectedNetwork.exploreSettings.center
-      newState.explore.settings.zoom = state.networks.selectedNetwork.exploreSettings.zoom
-    });
+  public watch( state: GlobalState)
+  {
+    if(state?.networks.selectedNetwork.exploreSettings)
+    {
+      store.emit(new UpdateExploreSettings({zoom: state.networks.selectedNetwork.exploreSettings.zoom,center: state.networks.selectedNetwork.exploreSettings.center }))
+    }
   }
 }
 
