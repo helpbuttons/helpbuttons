@@ -256,8 +256,6 @@ function useExploreSettings({
             },
           ),
         );
-      } else {
-        store.emit(new updateCurrentButton(null));
       }
     }
   }, []);
