@@ -83,16 +83,13 @@ const FieldButtonTemplates = forwardRef(
     const saveEdit = (value) => {
       update(editFieldIdx, {
         ...value, 
+        icon: emoji,
         cssColor: editFieldCssColor, 
         caption: editFieldCaption
       })
       setEditFieldIdx(() => null)
       setEditFieldCssColor(() => null)
       setEditFieldCaption(() => null)
-    }
-
-    function addEmoji(emoji: any): void {
-      throw new Error('Function not implemented.');
     }
 
     return (
