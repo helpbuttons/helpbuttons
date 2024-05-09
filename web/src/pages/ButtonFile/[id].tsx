@@ -36,7 +36,7 @@ export default function ButtonFile({
       {currentButton && (
         <Popup
           sectionClass=""
-          linkBack={() => router.push(`/Explore`)}
+          linkBack={() => router.back()}
         >
           {buttonTypes?.length > 0 && (
             <ButtonShow
