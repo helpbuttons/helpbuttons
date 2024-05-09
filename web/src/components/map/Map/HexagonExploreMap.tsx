@@ -18,6 +18,7 @@ import { useStore } from 'store/Store';
 import { maxZoom } from './Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton } from './MarkerButton';
+import t from 'i18n';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -95,6 +96,7 @@ export default function HexagonExploreMap({
             handleClick={onMapClick}
           >
             <HbMapOverlay selectedNetwork={selectedNetwork} />
+            <DisplayInstructions/>
               <GeoJson>
                 {/* DRAW HEXAGONS ON MAP */}
                 {geoJsonFeatures.map((hexagonFeature) => (
@@ -330,5 +332,29 @@ function HbMapOverlay({ selectedNetwork }) {
         </div>
       </Overlay>
     </ShowMobileOnly>
+
+  );
+}
+
+
+function DisplayInstructions() {
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+  const showInstructions = useStore(
+    store,
+    (state: GlobalState) => state.explore.map.showInstructions,
+    false,
+  );
+  return (
+    <>
+      {(showInstructions && !loggedInUser ) && (
+        <div className="search-map__instructions">
+          {t('explore.displayInstructions')}
+        </div>
+      )}
+    </>
   );
 }
