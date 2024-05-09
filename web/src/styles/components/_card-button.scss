@@ -258,10 +258,20 @@ $card-button-border-height: $border-general-height;
   color:  var(--button-color);
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
+}
+
+.card-button__emoji{
+
+  font-size: $font-size-title;
+  margin-right: $padding-small;
+
 }
 
 .card-button__file:after{

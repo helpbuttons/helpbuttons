@@ -106,7 +106,8 @@ export function CardButtonHeadMedium({ button, buttonType }) {
         </div> */}
 
         <div className="card-button__info">
-          <div className="card-button__status card-button__status">
+          <div className="card-button__status">
+            <div className="card-button__emoji">{buttonType.icon}</div>
             <span
               className="card-button"
               style={buttonColorStyle(buttonType.cssColor)}
@@ -271,7 +272,7 @@ function CardButtonSubmenu({ button }) {
   );
 }
 export function CardButtonHeadBig({ button, buttonTypes }) {
-  const { cssColor, caption, customFields } = buttonTypes.find(
+  const { cssColor, caption, customFields, icon } = buttonTypes.find(
     (buttonType) => {
       return buttonType.name === button.type;
     },
@@ -293,7 +294,8 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         <div className="card-button__header">
 
           <div className="card-button__info">
-            <div className="card-button__status card-button__status">
+            <div className="card-button__status">
+              <div className="card-button__emoji">{icon}</div>
               <span
                 className="card-button__status"
                 style={buttonColorStyle(cssColor)}
