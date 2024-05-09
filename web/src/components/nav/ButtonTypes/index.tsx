@@ -51,7 +51,7 @@ export function ListButtonTypes({ selectedNetwork, pageName }) {
               <Btn
                 btnType={BtnType.filterEmoji}
                 iconLeft={IconType.svg}
-                iconLink={<IoAdd/>}
+                iconLink={buttonType?.icon}
                 caption={buttoTypeCountText}
                 onClick={() => filterButtonType(buttonType.name)}
               />

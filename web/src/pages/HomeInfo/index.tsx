@@ -264,7 +264,7 @@ export default function HomeInfo({
                       config.userCount.toString(),
                     ])}
                     <div className="info-overlay__hashtags">
-                      <ListButtonTypes selectedNetwork={selectedNetwork}/>
+                      <ListButtonTypes selectedNetwork={selectedNetwork} pageName={'HomeInfo'}/>
                     </div>
                     
                   </div>

@@ -394,7 +394,7 @@
     "createSupportButton": "Create your network's support button",
     "moderation": "Moderation",
     "addType":"+ Create _helpbutton_ type with the above",
-    "setType": "Configure the button type"
+    "setType":"Set _helpbutton_ type properties"
   },
   "configure": {
     "browsePins": "",

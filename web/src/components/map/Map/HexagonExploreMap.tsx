@@ -257,7 +257,7 @@ export default function HexagonExploreMap({
                                 btnType.cssColor,
                               )}
                             >
-                              <div className="btn-filter__icon pigeon-map__hex-info--icon"><IoAddCircle/></div>
+                              <div className="pigeon-map__emoji pigeon-map__hex-info--icon">{btnType.icon}</div>
                               <div className="pigeon-map__hex-info--text">
                                 {hexagonBtnType.count.toString()}
                               </div>

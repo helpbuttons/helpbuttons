@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useToggle } from 'shared/custom.hooks'
 import { getLocale } from 'shared/sys.helper'
 
-export function EmojiPicker({updateEmoji = (emoji) => { console.log(emoji)}, pickerEmoji = null})
+export function EmojiPicker({updateEmoji = (emoji) => { console.log(emoji)}, pickerEmoji = null, label, explain})
 {
     const [showPicker, toggleShowPicker] = useToggle(false);
     const [emoji, setEmoji] = useState(null)
@@ -14,9 +14,14 @@ export function EmojiPicker({updateEmoji = (emoji) => { console.log(emoji)}, pic
         }
     }, [emoji])
     return (<>
-    <p className="emoji-picker" onClick={() => {toggleShowPicker(!showPicker)}}>{pickerEmoji ? pickerEmoji : emoji}</p>
-        {showPicker && 
-            <Picker data={data} onEmojiSelect={(emoji) => {setEmoji(() => emoji.native);toggleShowPicker(false)}} locale={getLocale()} noCountryFlags={true} emojiSize={16} theme="light"/>
+        {label && <label className="form__label">{label}</label>}
+        {explain && 
+            <p className="form__explain">{explain}</p>
         }
-    </>)
+        <p className="emoji-picker" onClick={() => {toggleShowPicker(!showPicker)}}>{pickerEmoji ? pickerEmoji : emoji}</p>
+            {showPicker && 
+                <Picker data={data} onEmojiSelect={(emoji) => {setEmoji(() => emoji.native);toggleShowPicker(false)}} locale={getLocale()} noCountryFlags={true} emojiSize={16} theme="light"/>
+            }
+        </>
+    )
 }
