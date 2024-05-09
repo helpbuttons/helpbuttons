@@ -119,7 +119,8 @@ $btn-font-size-medium: $font-size-medium;
 .btn-filter-with-icon, .btn-filter-with-emoji{
 
   @extend .btn-filter;
-  padding: $padding-medium !important;
+  padding: $padding-small;
+
 
 }
 
@@ -127,11 +128,15 @@ $btn-font-size-medium: $font-size-medium;
 
   border-width: $btn-filter-border;
   border-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 7px 3px !important;
   font-weight: $font-weight-bold;
 
   .btn-with-icon__icon{
 
     font-size: $font-size-huge;
+    margin-right: $padding-medium;
 
   }
 

@@ -159,6 +159,7 @@ export default function AdvancedFilters({
                         helpButtonTypes.indexOf(buttonType.name) > -1
                       } 
                       iconLink={buttonType.icon}
+                      color={buttonType.cssColor}
                       icon='emoji'
                       name={buttonType.name}
                       handleChange={(name, newValue) => {

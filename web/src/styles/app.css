@@ -1412,16 +1412,20 @@ a:hover {
 }
 
 .btn-filter-with-icon, .btn-filter-with-emoji {
-  padding: 10px !important;
+  padding: 5px;
 }
 
 .btn-filter-with-emoji {
   border-width: 1px;
   border-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 7px 3px !important;
   font-weight: 700;
 }
 .btn-filter-with-emoji .btn-with-icon__icon {
   font-size: 29px;
+  margin-right: 10px;
 }
 
 .btn-with-icon__emoji {

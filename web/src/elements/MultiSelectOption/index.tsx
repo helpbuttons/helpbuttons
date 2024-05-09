@@ -35,6 +35,7 @@ export default function MultiSelectOption({
   icon,
   iconLink,
   ref,
+  color,
 }: {
   defaultValue: boolean;
   name: string;
@@ -43,6 +44,7 @@ export default function MultiSelectOption({
   icon: IconType;
   ref: any;
   iconLink:string;
+  color:string;
 }) {
   const [checked, setChecked] = useState<boolean>(defaultValue);
 
@@ -52,7 +54,7 @@ export default function MultiSelectOption({
   };
 
   return (
-    <div className="checkbox">
+    <div className="checkbox" >
       <label className="checkbox__label">
         <input
           type="checkbox"
@@ -61,11 +63,13 @@ export default function MultiSelectOption({
           checked={checked}
           onChange={onChange}
           ref={ref}
+          style={{'background-color': 'red'} as React.CSSProperties}
         ></input>
         <div
           className={`checkbox__content ${checked ? 'checked' : ''}`}
+          style={{'border-color': color} as React.CSSProperties}
         >
-          <MultiSelectOptionIcon checked={checked} icon={icon} iconLink={iconLink}/>
+          <MultiSelectOptionIcon checked={checked} icon={icon} iconLink={iconLink} />
           {children}
         </div>
       </label>
