@@ -115,14 +115,20 @@ const FieldButtonTemplates = forwardRef(
                   <div className="form__button-type-section">
                     <FieldText
                       name="buttonTemplate.name"
+                      label={t('configuration.buttonTemplateName')}
                       className="field-text"
                       onChange={(e) => setEditFieldCaption(() => e.target.value)}
                       defaultValue={editFieldCaption}
                     />
-                    <EmojiPicker updateEmoji={(newEmoji) => setEmoji(() => newEmoji)} pickerEmoji={emoji}/>
-
+                    <EmojiPicker
+                     updateEmoji={(newEmoji) => setEmoji(() => newEmoji)} 
+                     pickerEmoji={emoji}
+                     label={t('configuration.buttonTemplateName')}
+                     
+                     />
                     <CircleColorPick
                       name="buttonTemplateColor"
+                      label={t('configuration.buttonTemplateName')}
                       classNameInput="squared"
                       validationError={errors.buttonTemplateColor}
                       setValue={(name, value) => setEditFieldCssColor(value)}
@@ -143,10 +149,11 @@ const FieldButtonTemplates = forwardRef(
                 {editFieldIdx != idx && 
                   <>
                     <Btn
-                      btnType={BtnType.filter}
-                      iconLeft={IconType.color}
+                      btnType={BtnType.filterEmoji}
+                      iconLeft={IconType.svg}
                       contentAlignment={ContentAlignment.left}
                       caption={val.caption}
+                      iconLink={val.icon}
                       color={val.cssColor}
                     />
                     <Btn

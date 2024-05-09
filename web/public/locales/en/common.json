@@ -393,7 +393,8 @@
     "moderationList": "Moderation",
     "createSupportButton": "Create your network's support button",
     "moderation": "Moderation",
-    "addType":"+ Create _helpbutton_ type with the above"
+    "addType":"+ Create _helpbutton_ type with the above",
+    "setType":"Set _helpbutton_ type properties"
   },
   "configure": {
     "browsePins": "",

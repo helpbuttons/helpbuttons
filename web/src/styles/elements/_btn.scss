@@ -125,9 +125,21 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn-filter-with-emoji {
 
-  border-width: 6px;
+  border-width: $btn-filter-border;
   border-color: var(--button-color);
-  font-weight: 800;
+  font-weight: $font-weight-bold;
+
+  .btn-with-icon__icon{
+
+    font-size: $font-size-huge;
+
+  }
+
+}
+
+.btn-with-icon__emoji{
+
+  font-size: $font-size-huge;
 
 }
 

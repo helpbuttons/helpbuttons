@@ -157,13 +157,15 @@ export default function AdvancedFilters({
                     <MultiSelectOption
                       defaultValue={
                         helpButtonTypes.indexOf(buttonType.name) > -1
-                      }
+                      } 
+                      iconLink={buttonType.icon}
+                      icon='emoji'
                       name={buttonType.name}
                       handleChange={(name, newValue) => {
                         setButtonTypeValue(name, newValue);
                       }}
                     >
-                      <div className="btn-filter__icon"></div>
+                      {/* <div className="btn-filter__icon"></div> */}
                       <div className="btn-with-icon__text">
                         {buttonType.caption}
                       </div>
