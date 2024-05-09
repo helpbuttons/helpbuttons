@@ -221,7 +221,6 @@ export default function HexagonExploreMap({
                   <div className="pigeon-map__hex-wrap pigeon-map__hex-wrap--selected">
                     {hexagonClickedFeatures.properties.groupByType.map(
                       (hexagonBtnType, idx) => {
-                        console.log(buttonTypes)
                         if (hexagonBtnType.count < 1) {
                           return;
                         }
