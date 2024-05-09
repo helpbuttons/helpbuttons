@@ -21,6 +21,7 @@ import { cellToParent, getResolution } from 'h3-js';
 import { of } from 'rxjs';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import { UpdateZoom } from './Map';
+import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
 
 
 export enum ExploreViewMode {
@@ -259,8 +260,6 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
 export class updateCurrentButton implements WatchEvent, UpdateEvent {
   public constructor(private button: Button) {}
   public watch(state: GlobalState) {
-    return;
-    // TODO: when enabling this feature, when navigating back to the map it stays on full zoom, and has more bugs
     if(this.button && !this.button.hideAddress)
     {
       store.emit(new UpdateExploreSettings({center: [this.button.latitude, this.button.longitude], zoom: maxZoom}))
@@ -356,11 +355,31 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.map.buttonTypeClicked = true
-      newState.explore.map.filters = {
+      newState.explore.map.buttonTypeClicked = true;
+
+      let newFilters = {
         ...defaultFilters,
         helpButtonTypes: [this.buttonType],
       };
+
+      if (state?.networks && state.networks?.selectedNetwork) {
+        const btnType =
+          state.networks.selectedNetwork.buttonTemplates.find(
+            (buttonType) => {
+              return buttonType.name == this.buttonType;
+            },
+          );
+
+        if (btnType?.customFields) {
+          const btnTypeEvents = btnType.customFields.find(
+            (customField) => customField.type == 'event',
+          );
+          if (btnTypeEvents) {
+            newFilters.orderBy = ButtonsOrderBy.EVENT_DATE;
+          }
+        }
+      }
+      newState.explore.map.filters = newFilters;
     });
   }
 }
@@ -587,7 +606,10 @@ export class RecenterExplore implements WatchEvent {
   public constructor(private value?) {}  
   public watch( state: GlobalState)
   {
-    store.emit(new UpdateExploreSettings({zoom: state.networks.selectedNetwork.exploreSettings.zoom,center: state.networks.selectedNetwork.exploreSettings.center }))
+    if(state?.networks.selectedNetwork.exploreSettings)
+    {
+      store.emit(new UpdateExploreSettings({zoom: state.networks.selectedNetwork.exploreSettings.zoom,center: state.networks.selectedNetwork.exploreSettings.center }))
+    }
   }
 }
 
