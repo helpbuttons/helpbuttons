@@ -137,6 +137,15 @@ export default function HexagonExploreMap({
                           opacity: 0.1,
                         };
                       }
+                      if (exploreSettings.zoom == maxZoom ) {
+                        return {
+                          fill: 'transparent',
+                          strokeWidth: '5',
+                          stroke: '#18AAD2',
+                          r: '20',
+                          opacity: 0.1,
+                        };
+                      }
                       return {
                         fill: '#18AAD2',
                         strokeWidth: '2',

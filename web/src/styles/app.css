@@ -6268,7 +6268,7 @@ li, ol, ul, h2 {
   }
 }
 .pigeon-click-block g {
-  color: aqua;
+  color: red;
   transition: width 2s, height 2s, background-color 2s, rotate 2s;
 }
 .pigeon-click-block g:hover {
