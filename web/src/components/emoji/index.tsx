@@ -18,7 +18,7 @@ export function EmojiPicker({updateEmoji = (emoji) => { console.log(emoji)}, pic
         {explain && 
             <p className="form__explain">{explain}</p>
         }
-        <p className="emoji-picker" onClick={() => {toggleShowPicker(!showPicker)}}>{pickerEmoji ? pickerEmoji : emoji}</p>
+        <div className="emoji-picker" onClick={() => {toggleShowPicker(!showPicker)}}>{pickerEmoji ? pickerEmoji : emoji}</div>
             {showPicker && 
                 <Picker data={data} onEmojiSelect={(emoji) => {setEmoji(() => emoji.native);toggleShowPicker(false)}} locale={getLocale()} noCountryFlags={true} emojiSize={16} theme="light"/>
             }

@@ -105,7 +105,7 @@ $drag-tab-icon-size: 25px;
     width: auto;
     flex-direction: row-reverse;
     height: auto;
-    left: calc($index-content-left--distance + 40px);
+    left: calc($index-content-left--distance + 20px);
     top: 140px;
     border-radius: $border-radius-circle;
     cursor: pointer; /* fallback if grab cursor is unsupported */
@@ -152,7 +152,7 @@ $drag-tab-icon-size: 25px;
 
   .drag-tab {
    
-    left: calc($index-content-left--distance + 40px);
+    left: calc($index-content-left--distance + 20px);
     margin-bottom: 5px;
 
   }

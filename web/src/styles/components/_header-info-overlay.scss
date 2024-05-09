@@ -78,10 +78,13 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   background-position: center;
   background-size: cover;
   height: auto;
+  padding: 0;
   align-items: center;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  margin: 0;
+  border-radius: 0;
   align-items: center;
   justify-content: space-evenly;
 
@@ -116,7 +119,7 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   margin: auto;
   // margin-top: $margin-small;
   color: $color-dark-gray;
-  max-width: $grid-max-width--mobile;
+  // max-width: $grid-max-width--mobile;
   overflow: auto; 
   min-height: 100px;
   padding-bottom: $info-content-mobile-bottom-padding;
