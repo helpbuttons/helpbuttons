@@ -6,7 +6,7 @@ interface DraggableProps {
   style?: React.CSSProperties;
   onScroll:any,
   onFullScreen:any,
-  onListOpen:any,
+  isListOpen?: boolean; // New prop for isListOpen
 }
 
 const DraggableList: React.FC<DraggableProps> = ({
@@ -16,7 +16,7 @@ const DraggableList: React.FC<DraggableProps> = ({
   onScroll,
   style,
   onFullScreen,
-  onListOpen,
+  isListOpen // New prop for isListOpen
 }) => {
 
   const [pos, setPos] = useState<{ x: number; y: number }>(initialPos || { x: 0, y: window.innerHeight - 0 });
@@ -24,41 +24,38 @@ const DraggableList: React.FC<DraggableProps> = ({
   const [rel, setRel] = useState<{ x: number; y: number } | null>(null);
 
   const functionHandler = (data) => {
-    // console.log(pos.y)
     if(pos.y < window.innerHeight - 360 ){
         onFullScreen(true);
     }
     if(pos.y >= window.innerHeight - 360){
         onFullScreen(false);
-        // onListOpen(true);
-    }
-    if(pos.y < window.innerHeight - 150){
-        // onFullScreen(false);
-        onListOpen(true);
-    }
-    if(pos.y >= window.innerHeight - 150){
-        onListOpen(false);
     }
   };
 
-  const transitionToPosition = (targetY: number) => {
-    const transitionInterval = setInterval(() => {
-      const currentY = pos.y;
-      const newY = currentY + (targetY - currentY) / 5; // Adjust divisor for transition speed
+  useEffect(() => {
 
-      setPos((prevPos) => ({ ...prevPos, y: newY }));
+    if (isListOpen) {
+        console.log('isopen!!!')
+        const targetY = window.innerHeight - 150; // Example target Y value
 
-      if (Math.abs(newY - targetY) < 1) {
-        clearInterval(transitionInterval);
-        setDragging(false); // Ensure dragging is set to false after transition
+        setPos((prevPos) => ({ ...prevPos, y: targetY }));
+        setDragging(true); // Optional: Set dragging to true if needed
       }
-    }, 16); // Adjust interval for smoother transition
-  };
+    }, [isListOpen]);
 
+    //MOUSE
   const onMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
     const pos = { x: e.pageX - (e.currentTarget.offsetLeft || 0), y: e.pageY - (e.currentTarget.offsetTop || 0) };
     
+
+    const targetTagName = (e.target as HTMLElement).tagName.toLowerCase();
+    const allowedTags = ['input', 'textarea', 'select']; // Add more tag names if needed
+
+    if (!allowedTags.includes(targetTagName)) {
+        e.preventDefault();
+    }
+
     // Firefox requires setData to enable dragging
     if ((e.nativeEvent as any).dataTransfer) {
         (e.nativeEvent as any).dataTransfer.setData('application/json', JSON.stringify(pos));
@@ -68,13 +65,70 @@ const DraggableList: React.FC<DraggableProps> = ({
     setDragging(true);
     setRel(pos);
     e.stopPropagation();
+  };
+
+  const onMouseUp = (e: MouseEvent<HTMLDivElement>) => {
+
+    let newY = e.pageY - (pos.y || 0); // Calculate the new Y position
+
+    if(isListOpen)
+        {
+            newY=window.innerHeight - 355;
+            functionHandler(newY);
+            setDragging(false);
+            setPos((prevPos) => ({
+              ...prevPos,
+              y: newY,
+            }));
+        }
+    if(pos.y < window.innerHeight - 360)
+        {
+            newY=68;
+            functionHandler(newY);
+            setDragging(false);
+            setPos((prevPos) => ({
+              ...prevPos,
+              y: newY,
+            }));
+        }
+    if(pos.y > window.innerHeight - 200)
+        {
+            newY= window.innerHeight - 120;
+            functionHandler(newY);
+            setDragging(false);
+            setPos((prevPos) => ({
+                ...prevPos,
+                y: newY,
+            }));
+        }
+
+    e.stopPropagation();
     e.preventDefault();
   };
 
+
+  const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!dragging || !rel) return;
+    const newPos = { x: e.pageX - rel.x, y: e.pageY - rel.y };
+    let newPosY = e.pageY - rel.y;
+
+    // console.log(newPosY);
+
+    if(newPosY<68)
+    newPosY=68;
+
+    newPos.y=newPosY;
+
+    functionHandler(newPos.y);
+    setPos(newPos);
+    e.stopPropagation();
+    e.preventDefault();
+  };
+
+  //TOUCH
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     const touch = e.touches[0];
     startDragging(touch.pageX, touch.pageY);
-    e.preventDefault();
   };
 
   const startDragging = (x: number, y: number) => {
@@ -87,7 +141,6 @@ const DraggableList: React.FC<DraggableProps> = ({
     if (!dragging || !rel || e.touches.length !== 1) return;
     const touch = e.touches[0];
     moveElement(touch.pageX, touch.pageY);
-    e.preventDefault();
   };
 
   const moveElement = (x: number, y: number) => {
@@ -98,70 +151,43 @@ const DraggableList: React.FC<DraggableProps> = ({
     if(newPos.y>window.innerHeight - 120)
     newPos.y=window.innerHeight - 120;
 
-        // Apply smooth transition for pos.y when mouse is up or touch ends
-    // if (!dragging && newPos.y < window.innerHeight - 360) {
-    //     console.log("happening")
-    //     newPos.y += (68 - newPos.y) / 5; // Adjust the divisor for speed of transition
-    //     } else if (!dragging && (newPos.y < window.innerHeight - 50 || newPos.y > 60)) {
-    //         console.log("happening")
-
-    //     newPos.y += ((window.innerHeight - 358) - newPos.y) / 5; // Adjust the divisor for speed of transition
-    //     }
-
     functionHandler(newPos.y);
     setPos(newPos);
   };
 
-  const onMouseUp = (e: MouseEvent<HTMLDivElement>) => {
-    // const newPos = { x: e.pageX - rel.x, y: e.pageY - rel.y };
+  
+  const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
+    const touch = e.changedTouches[0]; // Get the touch that ended
+    let newY = touch.pageY - (pos.y || 0); // Calculate the new Y position
 
- 
-    // const smoothTransition = () => {
-    //     if (newPos.y < window.innerHeight - 360) {
-    //     newPos.y += (68 - newPos.y) / 5; // Adjust the divisor for speed of transition
-    //     } else if (newPos.y < window.innerHeight - 150 ) {
-    //     newPos.y += ((window.innerHeight - 358) - newPos.y) / 5; // Adjust the divisor for speed of transition
-    //     } else if (newPos.y > window.innerHeight - 150 ) {
-    //         newPos.y += ((window.innerHeight - 50) - newPos.y) / 5; // Adjust the divisor for speed of transition
-    //     }
-
-    //     setPos(newPos);
-
-    //     if (newPos.y != window.innerHeight - 358 || (newPos.y != window.innerHeight - 50 || newPos.y != 68)) {
-    //     requestAnimationFrame(smoothTransition);
-    //     } else {
-    //     setDragging(false);
-    //     }
-    // };
-
-    // smoothTransition();
+    if(pos.y < window.innerHeight - 360)
+        {
+            newY=68;
+            functionHandler(newY);
+            setDragging(false);
+            setPos((prevPos) => ({
+              ...prevPos,
+              y: newY,
+            }));
+        }
+    if(pos.y > window.innerHeight - 200)
+        {
+            newY= window.innerHeight - 120;
+            functionHandler(newY);
+            setDragging(false);
+            setPos((prevPos) => ({
+                ...prevPos,
+                y: newY,
+            }));
+        }
 
     setDragging(false);
-    e.stopPropagation();
-    e.preventDefault();
+    setPos((prevPos) => ({
+      ...prevPos,
+      y: newY,
+    }));
   };
 
-  const handleTouchEnd = () => {
-    setDragging(false);
-  };
-
-  const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!dragging || !rel) return;
-    const newPos = { x: e.pageX - rel.x, y: e.pageY - rel.y };
-    let newPosY = e.pageY - rel.y;
-
-    console.log(newPosY);
-
-    if(newPosY<68)
-    newPosY=68;
-
-    newPos.y=newPosY;
-
-    functionHandler(newPos.y);
-    setPos(newPos);
-    e.stopPropagation();
-    e.preventDefault();
-  };
 
   return (
     <div

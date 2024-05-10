@@ -108,21 +108,21 @@ function List({
         <>
           <ShowMobileOnly>
             <DraggableList  
-              className={'list__container ' + (isFullScreen ? ' list__container--full-screen' : ' ') + (isLisOpen ? ' list__container--list-open' : ' ')} 
+              className={'list__container ' + (isFullScreen ? ' list__container--full-screen' : ' ') + (showLeftColumn ? ' list__container--list-open' : ' ')} 
               onScroll={handleScrollHeight} 
               initialPos={{
                 x: 0,
                 y: window.innerHeight - 120,
               }} 
               onFullScreen={setFullScreen}
-              onListOpen={setListOpen}
+              isListOpen={showLeftColumn}
             >
               {/* <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}> */}
 
                 <div className={ 'list__order ' + (isFullScreen ? 'list__order--full-screen' : ' ')} >
                 <div className='drag-tab__line'></div>
 
-                  {isFullScreen &&
+                  {showLeftColumn &&
                     <AdvancedFiltersSortDropDown
                       className={'dropdown__dropdown-trigger--list'}
                       orderBy={filters.orderBy}
@@ -131,14 +131,17 @@ function List({
                       selectedButtonTypes={filters.helpButtonTypes}
                     />
                   }
-                    {/* <div className={'list__show-map-button ' + (showLeftColumn ? '' : ' list__show-map-button--hideList')}>
+                  {isFullScreen &&
+                    <div className={'list__show-map-button ' + (showLeftColumn ? '' : ' list__show-map-button--hideList')}>
                       <Dropdown
                           options={dropdownExploreViewOptions}
                           className={'dropdown__dropdown-trigger--list'}
                           onChange={(value : ExploreViewMode) => store.emit(new UpdateExploreViewMode(value))}
                           defaultSelected={viewMode}
                         />
-                    </div> */}
+                    </div>
+                  }
+                    
                 </div>
                 <div
                   className={
