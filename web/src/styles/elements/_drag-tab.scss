@@ -48,14 +48,16 @@ $drag-tab-icon-size: 25px;
 
 .drag-tab__line {
 
-  // position: relative;
-  // display: flex;
-  // border-radius: $border-radius-circle;
-  // margin: $margin-xsmall auto;
-  // background-color: $color-ligth-gray;
-  // width: 20%;
-  // height: $drag-tab-line-height;
-  display: none;
+  position: absolute;
+  display: flex;
+  border-radius: $border-radius-circle;
+  margin: $margin-xsmall auto;
+  background-color: $color-gray;
+  width: 20%;
+  margin: auto;
+  height: $drag-tab-line-height;
+  left: calc(50% - 10%);
+  top: $margin-xsmall;
 
 }
 

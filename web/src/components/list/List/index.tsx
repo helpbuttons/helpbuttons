@@ -80,16 +80,8 @@ function List({
   };
 
   const [isFullScreen, setFullScreen] = useState<boolean>(false);
-  const fullScreenClass = (e) => {
+  const [isLisOpen, setListOpen] = useState<boolean>(false);
 
-    if(isFullScreen) {
-        return "className";
-    }
-    else {
-      return "className";
-    }
-
-  } 
 
   const buttonTypes = useButtonTypes();
 
@@ -115,13 +107,22 @@ function List({
       {!showAdvancedFilters && (
         <>
           <ShowMobileOnly>
-            <DraggableList  className={'list__container ' + (isFullScreen ? ' list__container--full-screen' : ' ')} onScroll={handleScrollHeight} initialPos={{
-              x: 0,
-              y: window.innerHeight - 80
-            }} onStateChange={setFullScreen}>
+            <DraggableList  
+              className={'list__container ' + (isFullScreen ? ' list__container--full-screen' : ' ') + (isLisOpen ? ' list__container--list-open' : ' ')} 
+              onScroll={handleScrollHeight} 
+              initialPos={{
+                x: 0,
+                y: window.innerHeight - 120,
+              }} 
+              onFullScreen={setFullScreen}
+              onListOpen={setListOpen}
+            >
               {/* <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}> */}
-                <div className={ 'list__order ' +  (showLeftColumn ? '' : ' list__order--hidden') + (isFullScreen ? 'list__order--full-screen' : ' ')} >
-                  {showLeftColumn &&
+
+                <div className={ 'list__order ' + (isFullScreen ? 'list__order--full-screen' : ' ')} >
+                <div className='drag-tab__line'></div>
+
+                  {isFullScreen &&
                     <AdvancedFiltersSortDropDown
                       className={'dropdown__dropdown-trigger--list'}
                       orderBy={filters.orderBy}

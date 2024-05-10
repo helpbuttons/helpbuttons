@@ -14,7 +14,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   width: 100%;
   height: max-content;
   position: absolute;
-  z-index: $z-index-01;
+  z-index: $z-index-02;
   // transition: top 0.1s ease-out; /* Adjust transition duration and easing as needed */
 
   // transition: $transition-default-slow;
@@ -24,6 +24,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 .list__container--full-screen {
 
+  // top: 100px;
   // padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
 
 }
@@ -168,6 +169,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   padding: $padding-small $padding-xsmall;
   gap: $padding-small;
   position: relative;
+  min-height: 80px;
   border-radius: $border-radius-semicircle $border-radius-semicircle 0 0 ;
 
 }

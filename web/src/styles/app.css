@@ -6310,7 +6310,7 @@ li, ol, ul, h2 {
   top: 130px !important;
   display: block;
   left: auto !important;
-  z-index: 300;
+  z-index: 200;
 }
 .pigeon-center-buttons:hover {
   cursor: pointer;
@@ -7367,7 +7367,7 @@ hr {
   height: -moz-max-content;
   height: max-content;
   position: absolute;
-  z-index: 100;
+  z-index: 200;
 }
 
 .list__show-map-button {
@@ -7470,6 +7470,7 @@ hr {
   padding: 5px 4px;
   gap: 5px;
   position: relative;
+  min-height: 80px;
   border-radius: 24px 24px 0 0;
 }
 
@@ -7916,11 +7917,6 @@ body {
   margin-bottom: -250px;
 }
 
-@media (hover: none) {
-  .index__content-bottom--hide {
-    margin-bottom: -235px;
-  }
-}
 @media only screen and (min-width: 1280px) {
   .index__explore-container {
     position: fixed;
@@ -7936,7 +7932,7 @@ body {
     min-width: 60vw;
   }
   .index__content-left--hide {
-    margin-left: 60vw;
+    margin-left: -60vw;
     bottom: 0;
   }
 }
@@ -8009,7 +8005,7 @@ body {
   max-width: 80vw;
   left: 10px;
   top: 10px;
-  z-index: 300;
+  z-index: 200;
 }
 
 .search-map__sign {
@@ -8477,7 +8473,16 @@ body {
 }
 
 .drag-tab__line {
-  display: none;
+  position: absolute;
+  display: flex;
+  border-radius: 34px;
+  margin: 7px auto;
+  background-color: #828282;
+  width: 20%;
+  margin: auto;
+  height: 5px;
+  left: 40%;
+  top: 7px;
 }
 
 .drag-tab__order {
