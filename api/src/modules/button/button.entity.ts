@@ -9,17 +9,21 @@ import {
 import { Network } from '../network/network.entity';
 import { Post } from '../post/post.entity';
 import { User } from '../user/user.entity';
+import { Expose } from 'class-transformer';
 // https://stackoverflow.com/a/67557083
 
 @Entity()
 export class Button extends BaseEntity {
+  @Expose()
   @Column({})
   @PrimaryColumn()
   public id: string;
 
+  @Expose()
   @Column({})
   title: string;
 
+  @Expose()
   @Column({})
   description: string;
 
@@ -35,15 +39,19 @@ export class Button extends BaseEntity {
   @Column({ type: 'geometry' })
   location: object;
 
+  @Expose()
   @Column({})
   type: string;
 
+  @Expose()
   @Column({ type: 'text', nullable: true })
   image?: string;
 
+  @Expose()
   @Column('text', { array: true, nullable: true, default: [] })
   tags: string[];
 
+  @Expose()
   @Column('text', { array: true, nullable: true })
   images: string[];
 
@@ -56,6 +64,7 @@ export class Button extends BaseEntity {
   @OneToMany(() => Post, (feed) => feed.button)
   feed: Post[];
 
+  @Expose()
   @ManyToOne((type) => User)
   owner: User;
 
@@ -70,10 +79,12 @@ export class Button extends BaseEntity {
 
   /** Custom Fields **/
   /** price: **/
+  @Expose()
   @Column({default: 0, type: 'double precision' })
   price: number;
 
   /** event: **/
+  @Expose()
   @Column('text') // recurrent, multidate, once, always
   eventType: string;
   
@@ -94,16 +105,19 @@ export class Button extends BaseEntity {
     type: 'once' // only start date
    }
   */
+  @Expose()
   @Column({
     type: 'timestamp',
   })
   eventStart: Date;
 
+  @Expose()
   @Column({
     type: 'timestamp',
   })
   eventEnd: Date;
 
+  @Expose()
   @Column({default: false})
   hasPhone: boolean;
 
