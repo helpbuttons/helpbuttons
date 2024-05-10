@@ -13,16 +13,18 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   flex-direction: column;
   width: 100%;
   height: max-content;
-  position: relative;
+  position: absolute;
   z-index: $z-index-01;
-  transition: $transition-default-slow;
-  padding-bottom: calc($footer-height-mobile + 5px);
+  // transition: top 0.1s ease-out; /* Adjust transition duration and easing as needed */
+
+  // transition: $transition-default-slow;
+  // padding-bottom: calc($footer-height-mobile + 5px);
 
 }
 
 .list__container--full-screen {
 
-  padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
+  // padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
 
 }
 
@@ -166,6 +168,17 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   padding: $padding-small $padding-xsmall;
   gap: $padding-small;
   position: relative;
+  border-radius: $border-radius-semicircle $border-radius-semicircle 0 0 ;
+
+}
+
+//class for the select order tab when the map is hidden. Impose state
+.list__order--full-screen {
+
+  position: relative;
+  bottom: auto;
+  left: auto;
+  border-radius: 0;
 
 }
 
@@ -192,15 +205,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
-//class for the select order tab when the map is hidden. Impose state
-.list__order--full-screen {
 
-  position: relative;
-  bottom: auto;
-  left: auto;
-  border-radius: 0;
-
-}
 
 
 @media #{$breakpoints-medium} {

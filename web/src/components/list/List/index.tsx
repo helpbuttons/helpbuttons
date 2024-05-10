@@ -15,6 +15,7 @@ import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 import { useButtonTypes } from 'shared/buttonTypes';
+import DraggableList from '../DraggableList';
 
 
 function List({
@@ -78,6 +79,18 @@ function List({
     onLeftColumnToggle(event.target.value);
   };
 
+  const [isFullScreen, setFullScreen] = useState<boolean>(false);
+  const fullScreenClass = (e) => {
+
+    if(isFullScreen) {
+        return "className";
+    }
+    else {
+      return "className";
+    }
+
+  } 
+
   const buttonTypes = useButtonTypes();
 
   const {sliceSize, handleScrollHeight, handleScrollWidth} = useScrollHeightAndWidth(buttons.length)
@@ -101,72 +114,107 @@ function List({
     <>
       {!showAdvancedFilters && (
         <>
-          <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}>
-            <div className={ 'list__order ' +  (showLeftColumn ? '' : ' list__order--hidden') + (showMap ? '' : ' list__order--full-screen')} >
-              {showLeftColumn &&
-                <AdvancedFiltersSortDropDown
-                  className={'dropdown__dropdown-trigger--list'}
-                  orderBy={filters.orderBy}
-                  setOrderBy={(value) => updatesOrderByFilters(value)}
-                  buttonTypes={buttonTypes}
-                  selectedButtonTypes={filters.helpButtonTypes}
-                />
-              }
-              <ShowDesktopOnly>
-                <div onClick={handleChange} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
-                  <span className="drag-tab__line"></span>
-                  <div className="drag-tab__icon">
-                    {(!showLeftColumn) ? (
-                      <Btn
-                      btnType={BtnType.link}
-                      iconLeft={IconType.svg}
-                      iconLink={<IoList />}
-                      contentAlignment={ContentAlignment.center}
-                      caption={t("explore.showList")}
-                      onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.BOTH))}
-                        />
-                    ) : (
-                      <Btn
-                      btnType={BtnType.link}
-                      iconLeft={IconType.svg}
-                      iconLink={<IoClose />}
-                      contentAlignment={ContentAlignment.center}
-                      caption={t("explore.hideList")}
-                      onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))}
-                      />
-                    )}
-                  </div>
-                </div>
-              </ShowDesktopOnly>
-              <ShowMobileOnly>
-                <div className={'list__show-map-button ' + (showLeftColumn ? '' : ' list__show-map-button--hideList')}>
-                  <Dropdown
-                      options={dropdownExploreViewOptions}
+          <ShowMobileOnly>
+            <DraggableList  className={'list__container ' + (isFullScreen ? ' list__container--full-screen' : ' ')} onScroll={handleScrollHeight} initialPos={{
+              x: 0,
+              y: window.innerHeight - 80
+            }} onStateChange={setFullScreen}>
+              {/* <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}> */}
+                <div className={ 'list__order ' +  (showLeftColumn ? '' : ' list__order--hidden') + (isFullScreen ? 'list__order--full-screen' : ' ')} >
+                  {showLeftColumn &&
+                    <AdvancedFiltersSortDropDown
                       className={'dropdown__dropdown-trigger--list'}
-                      onChange={(value : ExploreViewMode) => store.emit(new UpdateExploreViewMode(value))}
-                      defaultSelected={viewMode}
+                      orderBy={filters.orderBy}
+                      setOrderBy={(value) => updatesOrderByFilters(value)}
+                      buttonTypes={buttonTypes}
+                      selectedButtonTypes={filters.helpButtonTypes}
                     />
+                  }
+                    {/* <div className={'list__show-map-button ' + (showLeftColumn ? '' : ' list__show-map-button--hideList')}>
+                      <Dropdown
+                          options={dropdownExploreViewOptions}
+                          className={'dropdown__dropdown-trigger--list'}
+                          onChange={(value : ExploreViewMode) => store.emit(new UpdateExploreViewMode(value))}
+                          defaultSelected={viewMode}
+                        />
+                    </div> */}
                 </div>
-              </ShowMobileOnly>
+                <div
+                  className={
+                    'list__content ' +
+                    (isFullScreen
+                      ? 'list__content--full-screen'
+                      : 'list__content--mid-screen')
+                  }
+                  onScroll={handleScrollWidth}
+                  >
+                  {buttonTypes?.length > 0 && (
+                    <ContentList
+                      buttons={buttons.slice(0, sliceSize)}
+                      buttonTypes={buttonTypes}
+                      showMap={showMap}
+                    />
+                  )}
+                </div>
+              {/* </div>     */}
+            </DraggableList>
+          </ShowMobileOnly>
+          <ShowDesktopOnly>
+            <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}>
+                <div className={ 'list__order ' +  (showLeftColumn ? '' : ' list__order--hidden') + (showMap ? '' : ' list__order--full-screen')} >
+                  {showLeftColumn &&
+                    <AdvancedFiltersSortDropDown
+                      className={'dropdown__dropdown-trigger--list'}
+                      orderBy={filters.orderBy}
+                      setOrderBy={(value) => updatesOrderByFilters(value)}
+                      buttonTypes={buttonTypes}
+                      selectedButtonTypes={filters.helpButtonTypes}
+                    />
+                  }
+                    <div onClick={handleChange} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
+                      <span className="drag-tab__line"></span>
+                      <div className="drag-tab__icon">
+                        {(!showLeftColumn) ? (
+                          <Btn
+                          btnType={BtnType.link}
+                          iconLeft={IconType.svg}
+                          iconLink={<IoList />}
+                          contentAlignment={ContentAlignment.center}
+                          caption={t("explore.showList")}
+                          onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.BOTH))}
+                            />
+                        ) : (
+                          <Btn
+                          btnType={BtnType.link}
+                          iconLeft={IconType.svg}
+                          iconLink={<IoClose />}
+                          contentAlignment={ContentAlignment.center}
+                          caption={t("explore.hideList")}
+                          onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))}
+                          />
+                        )}
+                      </div>
+                    </div>
+                </div>
+              <div
+                className={
+                  'list__content ' +
+                  (showMap
+                    ? 'list__content--mid-screen'
+                    : 'list__content--full-screen')
+                }
+                onScroll={handleScrollWidth}
+              >
+                {buttonTypes?.length > 0 && (
+                  <ContentList
+                    buttons={buttons.slice(0, sliceSize)}
+                    buttonTypes={buttonTypes}
+                    showMap={showMap}
+                  />
+                )}
+              </div>
             </div>
-            <div
-              className={
-                'list__content ' +
-                (showMap
-                  ? 'list__content--mid-screen'
-                  : 'list__content--full-screen')
-              }
-              onScroll={handleScrollWidth}
-            >
-              {buttonTypes?.length > 0 && (
-                <ContentList
-                  buttons={buttons.slice(0, sliceSize)}
-                  buttonTypes={buttonTypes}
-                  showMap={showMap}
-                />
-              )}
-            </div>
-          </div>
+          </ShowDesktopOnly>
         </>
       )}
     </>
