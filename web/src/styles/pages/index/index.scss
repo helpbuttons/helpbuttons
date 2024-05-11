@@ -80,7 +80,7 @@ $index-content-left--distance: 60vw;
     // border-right: $popup-soptions-border-top;
   }
   .index__content-left--hide {
-    margin-left: $index-content-left--distance;
+    margin-left: -$index-content-left--distance;
     bottom: 0;
   }
   
