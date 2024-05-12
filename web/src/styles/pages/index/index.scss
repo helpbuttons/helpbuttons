@@ -70,15 +70,19 @@ $index-content-left--distance: 60vw;
     display: flex;
     flex-direction: row;
   }
+
   .index__content-left {
+    border-right: $border-style-basic;
     flex-direction: column;
     width: $index-content-left--distance;
     float: left;
     height: 100%;
     transition: $transition-default-slow;
     min-width: $index-content-left--distance;
+    box-shadow: $box-shadow-divs;
     // border-right: $popup-soptions-border-top;
   }
+
   .index__content-left--hide {
     margin-left: -$index-content-left--distance;
     bottom: 0;

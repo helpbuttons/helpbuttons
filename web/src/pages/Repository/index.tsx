@@ -1191,7 +1191,7 @@ function Repository() {
         <hr></hr>
 
         <h3 className="repository__title">
-          component/header-info-overlay
+          component/header-homeinfo
         </h3>
 
         <section className="repository__section">

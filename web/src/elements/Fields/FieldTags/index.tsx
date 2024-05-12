@@ -77,7 +77,7 @@ export default function FieldTags({
         onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
       />
       <TagList tags={tags} remove={remove}/>
-      <div className="info-overlay__hashtags">
+      <div className="homeinfo__hashtags">
         {defaultSuggestedTags.map((tag, idx) => {
           return <div className="hashtag" key={idx} onClick={() => addTag(tag.tag)}>{tag.tag}</div>
         })}
