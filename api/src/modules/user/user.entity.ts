@@ -34,7 +34,8 @@ export class User extends BaseEntity {
   })
   username: string;
 
-  @Exclude()
+  // @Exclude()
+  @Expose()
   @Column({
     type: 'varchar',
     unique: true,
