@@ -56,8 +56,9 @@ export class ActivityService {
     // - dont send mail to author of comment
     // - send mail to owner of button if owner is not author
     // - notify users mentioned on comment
-    const message = payload.data.comment.message;
-    const author = payload.data.comment.author;
+    const comment = payload.data.comment;
+    const message = comment.message;
+    const author = comment.author;
 
     // check users mentioned in comment, and notify them, not on outbox, but directly
     await this.findUserMentionsInMessage(
@@ -82,7 +83,7 @@ export class ActivityService {
                 ),
                 link: getUrl(
                   user.locale,
-                  `/ButtonFile/${payload.data.button.id}${loginParams}`,
+                  `/ButtonFile/${comment.button.id}${loginParams}`,
                 ),
                 linkCaption: translate(
                   user.locale,
