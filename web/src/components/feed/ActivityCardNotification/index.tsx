@@ -9,19 +9,16 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
-import ActivityCardNewButton, { ActivityCardDeleteButton, ActivityCardExpiredButton, ActivityCardNewFollowedButton, ActivityCardNewFollowingButton } from './types/button';
-import ActivityCardNewPost, { ActivityCardNewPostComment } from './types/post';
-import { useButtonTypes } from 'shared/buttonTypes';
-import { useEffect } from 'react';
+import ActivityCardNewButton, { ActivityCardDeleteButton, ActivityCardExpiredButton, ActivityCardNewFollowedButton, ActivityCardNewFollowingButton, getButtonActivity } from './types/button';
+import ActivityCardNewPost, { ActivityCardNewPostComment, getCommentActivity, getPostActivity } from './types/post';
 
 export default function ActivityCardNotification({ activity, buttonTypes }) {
-
   return (
     <div>
   {(() => {
     switch (activity.eventName) {
       case ActivityEventName.NewButton: {
-        const button = activity.data.button ? activity.data.button : activity.data
+        const button = getButtonActivity(activity.data)
         return (
           <ActivityCardNewButton
             button={button}
@@ -30,8 +27,7 @@ export default function ActivityCardNotification({ activity, buttonTypes }) {
         );
       }
       case ActivityEventName.NewPost: {
-        const activityData = JSON.parse(activity.data)
-        const post = activityData?.post ? activityData.post : activityData;
+        const post = getPostActivity(activity.data)
         const button = post.button
 
         return (
@@ -43,8 +39,7 @@ export default function ActivityCardNotification({ activity, buttonTypes }) {
         );
       }
       case ActivityEventName.NewPostComment: {
-        const activityData = JSON.parse(activity.data)
-        const comment = activityData?.comment ? activityData.comment : activityData;
+        const comment = getCommentActivity(activity.data)
         const button = comment.button 
         return (
           <ActivityCardNewPostComment
