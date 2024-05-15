@@ -73,6 +73,9 @@ export default function Profile() {
           <Popup linkFwd="/Explore" title={t('user.profileView')}>
             <LoadabledComponent loading={!loggedInUser}>
               <CardProfile user={loggedInUser} />
+              {(loggedInUser && !loggedInUser.phone && !adminButtonId && loggedInUser?.role == Role.admin) && 
+               <span style={{"color": "red"}}>{t('user.addSupport')}</span>
+              }
               {loggedInUser?.role == Role.admin && adminButtonId && (
                 <LinkAdminButton adminButtonId={adminButtonId} />
               )}
