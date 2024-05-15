@@ -170,7 +170,8 @@ export class Logout implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.loggedInUser = false;
+      newState.loggedInUser = null;
+      newState.activities = []
     });
   }
 }

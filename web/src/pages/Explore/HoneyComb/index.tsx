@@ -143,7 +143,6 @@ function HoneyComb({ router, selectedNetwork }) {
             />
           </ShowDesktopOnly>
         </div>
-          <DisplayInstructions/>
           <HexagonExploreMap
             exploreSettings={exploreSettings}
             h3TypeDensityHexes={h3TypeDensityHexes}
@@ -256,8 +255,6 @@ function useExploreSettings({
             },
           ),
         );
-      } else {
-        store.emit(new updateCurrentButton(null));
       }
     }
   }, []);
@@ -645,25 +642,3 @@ const orderBy = (buttons, orderBy, center) => {
   return buttons;
 };
 
-
-function DisplayInstructions() {
-  const loggedInUser = useStore(
-    store,
-    (state: GlobalState) => state.loggedInUser,
-    false,
-  );
-  const showInstructions = useStore(
-    store,
-    (state: GlobalState) => state.explore.map.showInstructions,
-    false,
-  );
-  return (
-    <>
-      {(showInstructions && !loggedInUser ) && (
-        <div className="search-map__instructions">
-          {t('explore.displayInstructions')}
-        </div>
-      )}
-    </>
-  );
-}

@@ -44,6 +44,14 @@ $textarea-textarea-color-gray: $color-gray;
   float: right;
   bottom: 40px;
   margin: auto;
+
+  &section {
+
+    width: 100%;
+
+  }
+
+
   &:hover {
 
     cursor: pointer;
@@ -51,9 +59,11 @@ $textarea-textarea-color-gray: $color-gray;
   }
 }
 
+
 em-emoji-picker{
-  position: absolute;
-  right: 10px;
-  margin-top: -10px;
-  z-index: 100;
+  margin-left: auto;
+  // position: absolute;
+  // float: right;
+  // width: 100%;
+  // right: 0;
 }

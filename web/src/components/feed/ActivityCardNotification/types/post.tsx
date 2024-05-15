@@ -47,3 +47,8 @@ export function ActivityCardNewPostComment({ comment, isRead, button }) {
     );
   }
   
+// functions to support depecrated activities
+export const getPostActivity = (rawData) => { const data = JSON.parse(rawData); return data?.post ? data?.post: data }
+
+
+export const getCommentActivity = (rawData) => { const data = JSON.parse(rawData); return data?.comment ? data?.comment: data }

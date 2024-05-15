@@ -37,7 +37,7 @@ const ButtonType = React.forwardRef(
                 value={buttonType.name}
                 key={idx}
               >
-              <div className="btn-filter__icon"></div>
+              <div className="btn-with-icon__emoji">{buttonType.icon}</div>
               <div className="btn-with-icon__text">{buttonType.caption}</div>
               </FieldRadioOption>
             </div>

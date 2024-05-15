@@ -18,6 +18,7 @@ import { useStore } from 'store/Store';
 import { maxZoom } from './Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton } from './MarkerButton';
+import t from 'i18n';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -68,7 +69,7 @@ export default function HexagonExploreMap({
 
   }, [h3TypeDensityHexes]);
 
-  const buttonTypes = useButtonTypes();
+  const buttonTypes = selectedNetwork.buttonTemplates;
 
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
 
@@ -95,6 +96,7 @@ export default function HexagonExploreMap({
             handleClick={onMapClick}
           >
             <HbMapOverlay selectedNetwork={selectedNetwork} />
+            <DisplayInstructions/>
               <GeoJson>
                 {/* DRAW HEXAGONS ON MAP */}
                 {geoJsonFeatures.map((hexagonFeature) => (
@@ -132,6 +134,15 @@ export default function HexagonExploreMap({
                         return {
                           fill: 'transparent',
                           strokeWidth: '1',
+                          stroke: '#18AAD2',
+                          r: '20',
+                          opacity: 0.1,
+                        };
+                      }
+                      if (exploreSettings.zoom == maxZoom ) {
+                        return {
+                          fill: 'transparent',
+                          strokeWidth: '5',
                           stroke: '#18AAD2',
                           r: '20',
                           opacity: 0.1,
@@ -246,7 +257,7 @@ export default function HexagonExploreMap({
                                 btnType.cssColor,
                               )}
                             >
-                              <div className="btn-filter__icon pigeon-map__hex-info--icon"><IoAddCircle/></div>
+                              <div className="pigeon-map__emoji pigeon-map__hex-info--icon">{btnType.icon}</div>
                               <div className="pigeon-map__hex-info--text">
                                 {hexagonBtnType.count.toString()}
                               </div>
@@ -321,5 +332,29 @@ function HbMapOverlay({ selectedNetwork }) {
         </div>
       </Overlay>
     </ShowMobileOnly>
+
+  );
+}
+
+
+function DisplayInstructions() {
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+  const showInstructions = useStore(
+    store,
+    (state: GlobalState) => state.explore.map.showInstructions,
+    false,
+  );
+  return (
+    <>
+      {(showInstructions && !loggedInUser ) && (
+        <div className="search-map__instructions">
+          {t('explore.displayInstructions')}
+        </div>
+      )}
+    </>
   );
 }

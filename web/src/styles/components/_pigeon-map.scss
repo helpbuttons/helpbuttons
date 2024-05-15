@@ -4,7 +4,7 @@ $map-btns-size-mobile: 30px;
 
 .pigeon-click-block {
     g {
-        color: aqua;
+        color: red;
         transition:
         width 2s,
         height 2s,
@@ -121,6 +121,15 @@ $map-btns-size-mobile: 30px;
 
 }
 
+.pigeon-map__emoji{
+
+    font-size: $font-size-title;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
 .pigeon-attribution {
 
     background: transparent !important;
@@ -155,7 +164,7 @@ $map-btns-size-mobile: 30px;
     display: flex;
     flex-direction: column;
     align-items: baseline;
-    line-height: $line-height-regular;
+    // line-height: $line-height-;
 
 }
 
@@ -193,8 +202,7 @@ $map-btns-size-mobile: 30px;
     @extend .btn-filter__icon;
     width: 12px;
     height: 12px;
-    margin-bottom: 2px;
-    margin-right: 4px;
+    margin-right: 6px;
 
 }
 

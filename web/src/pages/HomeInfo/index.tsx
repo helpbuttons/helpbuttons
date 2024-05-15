@@ -36,7 +36,7 @@ import { NextPageContext } from 'next';
 import {  useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
-import { UpdateFiltersToFilterButtonType, UpdateFiltersToFilterTag } from 'state/Explore';
+import { UpdateFiltersToFilterTag } from 'state/Explore';
 import Alert from 'components/overlay/Alert';
 import { TextFormatted, formatMessage } from 'elements/Message';
 import { LinkProfile } from 'components/user/LinkProfile';
@@ -65,7 +65,7 @@ export default function HomeInfo({
   );
 
   const [showMessage, toggleShowMessage] = useToggle(false);
-  const [showContactDialog, toggleshowContactDialog] = useToggle(true);
+  const [showContactDialog, toggleshowContactDialog] = useToggle(false);
 
   const [navigatorCoordinates, setNavigatorCoordinates] =
     useState(null);
@@ -264,7 +264,7 @@ export default function HomeInfo({
                       config.userCount.toString(),
                     ])}
                     <div className="info-overlay__hashtags">
-                      <ListButtonTypes selectedNetwork={selectedNetwork}/>
+                      <ListButtonTypes selectedNetwork={selectedNetwork} pageName={'HomeInfo'}/>
                     </div>
                     
                   </div>

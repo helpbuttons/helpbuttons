@@ -16,8 +16,8 @@ export default function ActivityCardNewButton({ button, isRead }) {
       notifIcon={notifIcon}
       date={button.created_at}
       buttonId={button.id}
-      title={button.title}
-      message={t('activities.newbutton', [button.address], true)}
+      title={t('activities.newbutton', [button.address], true)}
+      message={button.title}
       read={isRead}
     />
   );
@@ -127,3 +127,7 @@ export function ActivityCardExpiredButton({ button, isRead, date }) {
     />
   );
 }
+
+// functions to support depecrated activities
+
+export const getButtonActivity = (rawData) => { return rawData.button ? rawData.button : rawData }

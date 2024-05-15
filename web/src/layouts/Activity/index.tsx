@@ -9,6 +9,8 @@ import { ActivityEventName } from 'shared/types/activity.list';
 import { Activity } from 'shared/entities/activity.entity';
 import { Comment } from 'shared/entities/comment.entity';
 import { useButtonTypes } from 'shared/buttonTypes';
+import { getButtonActivity } from 'components/feed/ActivityCardNotification/types/button';
+import { getCommentActivity, getPostActivity } from 'components/feed/ActivityCardNotification/types/post';
 
 enum NotificationType {
   All,
@@ -59,20 +61,19 @@ export default function ActivityLayout({ allActivities, loggedInUser }) {
             switch(activity.eventName)
             {
               case ActivityEventName.NewButton:{
-                const {button} = (activity.data)
+                const button = getButtonActivity(activity.data)
                 return button.owner.id == loggedInUser.id
               }
               case ActivityEventName.NewPostComment:{
-                const comment : Comment =JSON.parse(activity.data)
+                const comment : Comment = getCommentActivity(activity.data)
                 return comment.author.id == loggedInUser.id
               }
               case ActivityEventName.NewPost:{
-                const post = JSON.parse(activity.data)
+                const post =  getPostActivity(activity.data)
                 return post.author.id == loggedInUser.id
               }
               case ActivityEventName.ExpiredButton:{
-                console.log(activity.data)
-                const {button} = JSON.parse(activity.data)
+                const button = getButtonActivity(activity.data)
                 return button.owner.id == loggedInUser.id
               }
               case ActivityEventName.DeleteButton:{
@@ -88,7 +89,7 @@ export default function ActivityLayout({ allActivities, loggedInUser }) {
             switch(activity.eventName)
             {
               case ActivityEventName.NewButton:{
-                const {button} = activity.data
+                const button = getButtonActivity(activity.data)
                 return button.owner.id == loggedInUser.id
               }
               case ActivityEventName.DeleteButton:{
@@ -107,7 +108,7 @@ export default function ActivityLayout({ allActivities, loggedInUser }) {
             switch(activity.eventName)
             {
               case ActivityEventName.NewButton:{
-                const {button} = activity.data
+                const button = getButtonActivity(activity.data)
                 return button.owner.id != loggedInUser.id
               }
               case ActivityEventName.NewFollowingButton:

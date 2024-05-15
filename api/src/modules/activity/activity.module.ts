@@ -9,6 +9,7 @@ import { ActivityCron } from './activity.cron';
 import { NetworkModule } from '../network/network.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ButtonModule } from '../button/button.module';
+import { ActivityCommand } from './activity.command';
 
 
 @Module({
@@ -25,7 +26,8 @@ import { ButtonModule } from '../button/button.module';
   ],
   providers: [
     ActivityService,
-    ActivityCron
+    ActivityCron,
+    ActivityCommand
   ],
   exports: [
     ActivityService

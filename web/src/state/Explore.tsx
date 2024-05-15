@@ -199,15 +199,6 @@ export class ButtonFound implements UpdateEvent {
   }
 }
 
-export class ClearCurrentButton implements UpdateEvent {
-  public constructor() {}
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.currentButton = null;
-    });
-  }
-}
 export class ButtonDelete implements WatchEvent, UpdateEvent {
   public constructor(
     private buttonId: string,
@@ -260,12 +251,10 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
 export class updateCurrentButton implements WatchEvent, UpdateEvent {
   public constructor(private button: Button) {}
   public watch(state: GlobalState) {
-    return;
-    // TODO: when enabling this feature, when navigating back to the map it stays on full zoom, and has more bugs
     if(this.button && !this.button.hideAddress)
     {
       store.emit(new UpdateExploreSettings({center: [this.button.latitude, this.button.longitude], zoom: maxZoom}))
-    }else if(!this.button)
+    }else if(!this.button && state.explore.settings.zoom == maxZoom)
     {
       store.emit(new UpdateExploreSettings({center: state.explore.settings.prevCenter, zoom: state.explore.settings.prevZoom}))
     }
