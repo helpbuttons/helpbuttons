@@ -1030,6 +1030,7 @@ a:hover {
 }
 
 .form__field, .homeinfo__nets, .homeinfo__content, .form__image-upload-wrapper {
+  max-width: 700px;
   font-size: 18px;
   margin-bottom: 30px;
 }
@@ -3207,7 +3208,7 @@ li, ol, ul, h2 {
 
 @media only screen and (min-width: 1440px) {
   .dropdown-nets__dropdown-trigger {
-    max-width: 960px;
+    max-width: 700px;
     min-width: 5rem;
   }
 }
@@ -4541,7 +4542,7 @@ li, ol, ul, h2 {
     justify-content: flex-start;
   }
   .nav-header__content {
-    max-width: 960px;
+    max-width: 700px;
     justify-content: flex-start;
     flex: 0.9;
     width: 100%;
@@ -5955,6 +5956,7 @@ hr {
   padding-bottom: 50px;
   flex-direction: column;
   overflow: auto;
+  width: 100%;
 }
 
 .filters__actions--buttons {
@@ -6191,7 +6193,7 @@ hr {
     flex-flow: column nowrap;
     height: 100%;
     width: 100%;
-    min-width: 960px;
+    min-width: 700px;
     margin-bottom: 0;
     padding-bottom: 10px;
   }
@@ -6693,7 +6695,7 @@ hr {
 
 @media only screen and (min-width: 991px) {
   .feed__container {
-    max-width: 960px;
+    max-width: 700px;
     margin: auto;
     border-right: 1px solid #D4D4D4;
     border-left: 1px solid #D4D4D4;
@@ -7355,7 +7357,7 @@ hr {
 
 @media only screen and (min-width: 991px) {
   .feed__container {
-    max-width: 960px;
+    max-width: 700px;
     margin: auto;
     border-right: 1px solid #D4D4D4;
     border-left: 1px solid #D4D4D4;
@@ -7832,7 +7834,7 @@ body {
 @media only screen and (min-width: 991px) {
   .popup {
     margin: 0px auto;
-    max-width: 960px;
+    max-width: 700px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -8276,7 +8278,7 @@ body {
 .button-file__container {
   overflow-y: scroll;
   height: 100vh;
-  max-width: 960px;
+  max-width: 700px;
   padding-bottom: 50px;
 }
 
