@@ -13,13 +13,14 @@ export class ActivityCommand {
   async cronRemovePastEvents(
     
   ) {
-    const usersWithPendingNotifications = await this.activityCron.findUsersWithPendingNotifications();
+    await this.activityCron.triggerNotifications()
+    // const usersWithPendingNotifications = await this.activityCron.findUsersWithPendingNotifications();
 
-    await Promise.all(
-      usersWithPendingNotifications.map((user) => {
-        return this.activityCron.getUserOutBox(user.id)
-        .then((outboxUser) => console.log(outboxUser))
-      }),
-    );
+    // await Promise.all(
+    //   usersWithPendingNotifications.map((user) => {
+    //     return this.activityCron.getUserOutBox(user.id)
+    //     .then((outboxUser) => console.log(outboxUser))
+    //   }),
+    // );
   }
 }
