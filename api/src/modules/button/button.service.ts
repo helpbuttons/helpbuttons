@@ -5,7 +5,7 @@ import {
   Injectable,
   forwardRef,
 } from '@nestjs/common';
-import { OnEvent } from '@nestjs/event-emitter';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import {
   InjectEntityManager,
   InjectRepository,
@@ -37,6 +37,7 @@ import translate, {
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
+import { notifyUser } from '@src/app/app.event';
 // import { RRule } from 'rrule';
 
 @Injectable()
@@ -53,6 +54,7 @@ export class ButtonService {
     private postService: PostService,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async create(
@@ -128,7 +130,7 @@ export class ButtonService {
       hasPhone,
       eventData: createDto.eventData,
     };
-    console.log('adding button ' + JSON.stringify(button));
+    
     await getManager().transaction(
       async (transactionalEntityManager) => {
         if (Array.isArray(button.tags)) {
@@ -193,9 +195,7 @@ export class ButtonService {
       );
     }
 
-    await this.checkAndSetExpired(button);
-
-    return { ...button };
+    return await this.checkAndSetExpired(button);
   }
 
   async update(
@@ -203,7 +203,7 @@ export class ButtonService {
     updateDto: UpdateButtonDto,
     currentUser: User,
   ) {
-    const currentButton = await this.findById(id);
+    const currentButton = await this.findById(id, true);
 
     let location = {};
     let hexagon = {};
@@ -225,7 +225,7 @@ export class ButtonService {
     if (currentButton.owner.phone) {
       hasPhone = true;
     }
-    const button = {
+    const button : Partial<Button> = {
       ...updateDto,
       ...location,
       ...hexagon,
@@ -233,6 +233,7 @@ export class ButtonService {
       images: [],
       id,
       tags: this.tagService.formatTags(updateDto.tags),
+      expired: false,
     };
 
     if (button.tags) {
@@ -266,14 +267,18 @@ export class ButtonService {
       button.image = button.images[0];
     }
 
-    return this.buttonRepository.save([button]);
+    return this.isEventExpired(button)
+    .then((isExpired) => {
+      if(isExpired)
+      {
+        throw new CustomHttpException(ErrorName.expiredDates)
+      }
+      return this.buttonRepository.save([button]);
+    })
   }
 
   async findh3(resolution, hexagons) {
     try {
-      // const btnTemplateEvents =
-      // await this.networkService.getButtonTemplatesEvents();
-
       if (hexagons && hexagons.length > 1000) {
         throw new HttpException(
           'too many hexagons requested, aborting',
@@ -432,34 +437,39 @@ export class ButtonService {
     return { expired: false, ...blocked };
   }
 
+
+  @OnEvent(ActivityEventName.NewPost)
+  async updateDate(payload: any) {
+    const buttonId = payload.data.post.button.id;
+    await this.updateModifiedDate(buttonId);
+  }
+
+
   @OnEvent(ActivityEventName.NewPostComment)
   async autoFollowButton(payload: any) {
     switch (payload.activityEventName) {
       case ActivityEventName.NewPostComment:
-        const buttonId = payload.data.button.id;
-        const userId = payload.data.author.id;
-        this.follow(buttonId, userId);
+        const buttonId = payload.data.comment.button.id;
+        const userId = payload.data.comment.author.id;
+        this.follow(buttonId, userId); 
         break;
     }
-  }
-
-  @OnEvent(ActivityEventName.NewPost)
-  @OnEvent(ActivityEventName.NewPostComment)
-  async updateDate(payload: any) {
-    const buttonId = payload.data.button.id;
+    const buttonId = payload.data.comment.post.button.id;
     await this.updateModifiedDate(buttonId);
   }
 
-  renew(buttonId: string, user: User) {
-    return this.updateModifiedDate(buttonId).then(() => {
-      return this.postService.new(
-        translate(user.locale, 'post.renewPost', [
-          readableDate(user.locale),
-        ]),
-        buttonId,
-        user,
-      );
-    });
+  renew(button: Button, user: User) {
+    return this.isEventExpired(button)
+    .then(async (isExpired) => {
+      if(isExpired)
+      {
+        throw new CustomHttpException(ErrorName.expiredDates);
+      }else{
+        return this.updateModifiedDate(button.id).then(() => {
+          return button;
+        });
+      }
+    })
   }
 
   updateModifiedDate(buttonId: string) {
@@ -471,73 +481,51 @@ export class ButtonService {
   checkAndSetExpired(button: Button) {
     if(button.expired)
     {
-      return button;
+      return Promise.resolve(button);
     }
-    return this.networkService
-      .getButtonTypesWithEventField()
-      .then(async (btnTemplateEvents) => {
-
-        // if its a button type with an event field
-        if (btnTemplateEvents.indexOf(button.type) > -1) {
-          const now = new Date();
-          if (button.eventEnd < now) {
-            await this.setExpired(button.id)
-            await this.notifyOwnerExpiredButton(button, true)
-            return {...button, expired: true};
-          }
+    return this.isEventExpired(button)
+    .then(async (isExpired) => {
+      if(isExpired)
+      {
+        await this.setExpired(button.id)
+        notifyUser(this.eventEmitter,ActivityEventName.ExpiredButton,{button})
+        return {...button, expired: true};
+      }
+      return button
+    })
+    // deactivating to expire buttons after 3 months...
+    // https://github.com/helpbuttons/helpbuttons/issues/703
+    /*.then(async (button) => {
+      var expiredUpdatesDate = new Date();
+      expiredUpdatesDate.setMonth(expiredUpdatesDate.getMonth() - 3);
+      if (button.updated_at < expiredUpdatesDate) {
+        const now = new Date();
+        if (button.updated_at < now) {
+          await this.setExpired(button.id)
+          await this.notifyOwnerExpiredButton(button)
+          return {...button, expired: true};
         }
-        var expiredUpdatesDate = new Date();
-        expiredUpdatesDate.setMonth(expiredUpdatesDate.getMonth() - 3);
-        if (button.updated_at < expiredUpdatesDate) {
-          const now = new Date();
-          if (button.eventEnd < now) {
-            await this.setExpired(button.id)
-            await this.notifyOwnerExpiredButton(button)
-            return {...button, expired: true};
-          }
-        }
-        return button;
-      });
+      }
+      return button;
+    });*/
   }
 
-  notifyOwnerExpiredButton(button: Button, isEvent: boolean = false)
+  isEventExpired(button: Partial<Button>)
   {
-    return this.userService
-            .findById(button.owner.id)
-            .then((user) => {
-              return this.userService
-                .getUserLoginParams(user.id)
-                .then((loginParams) => {
-                  let content_ = 'button.isExpiringMail'
-                  let subject_ = 'button.isExpiringMailSubject'
-                  if(isEvent)
-                  {
-                    content_ = 'button.isExpiringEventMail'
-                    subject_ = 'button.isExpiringEventMailSubject'
-                  }
-                  return this.mailService.sendWithLink({
-                    to: user.email,
-                    content: translate(
-                      user.locale,
-                      content_,
-                      [button.title],
-                    ),
-                    subject: translate(
-                      user.locale,
-                      subject_,
-                    ),
-                    link: getUrl(
-                      user.locale,
-                      `/ButtonRenew/${button.id}${loginParams}`,
-                    ),
-                    linkCaption: translate(
-                      user.locale,
-                      'email.buttonLinkCaption',
-                    ),
-                  });
-                });
-            })
+    return this.networkService
+    .getButtonTypesWithEventField()
+    .then((btnTemplateEvents) => {
+      // if its a button type with an event field
+      if (btnTemplateEvents.indexOf(button.type) > -1) {
+        const now = new Date();
+        if (new Date(button.eventEnd) < now) {
+          return true;
+        }
+      }
+      return false;
+    })
   }
+
   setExpired(buttonId: string) {
     return this.buttonRepository.update(buttonId, { expired: true });
   }

@@ -2,9 +2,9 @@ import FieldError from 'elements/Fields/FieldError';
 import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { IoCheckmark } from 'react-icons/io5';
-type IconType = 'cross' | 'red' | 'check';
+type IconType = 'cross' | 'red' | 'check' | 'emoji';
 
-export function MultiSelectOptionIcon({checked, icon }: { icon: IconType, checked:boolean }) {
+export function MultiSelectOptionIcon({checked, icon, iconLink }: { icon: IconType, checked:boolean, iconLink:string }) {
   switch (icon) {
     case 'cross':
       return (
@@ -20,6 +20,8 @@ export function MultiSelectOptionIcon({checked, icon }: { icon: IconType, checke
     );
     case 'red':
       return <div className="btn-filter__icon"></div>;
+    case 'emoji':
+      return <div className="btn-with-icon__emoji">{iconLink}</div>;
     default:
       return null;
   }
@@ -31,7 +33,9 @@ export default function MultiSelectOption({
   handleChange = (name: string, value: any) => {},
   children,
   icon,
+  iconLink,
   ref,
+  color,
 }: {
   defaultValue: boolean;
   name: string;
@@ -39,6 +43,8 @@ export default function MultiSelectOption({
   children: any;
   icon: IconType;
   ref: any;
+  iconLink:string;
+  color:string;
 }) {
   const [checked, setChecked] = useState<boolean>(defaultValue);
 
@@ -48,7 +54,7 @@ export default function MultiSelectOption({
   };
 
   return (
-    <div className="checkbox">
+    <div className="checkbox" >
       <label className="checkbox__label">
         <input
           type="checkbox"
@@ -57,11 +63,13 @@ export default function MultiSelectOption({
           checked={checked}
           onChange={onChange}
           ref={ref}
+          style={{'background-color': 'red'} as React.CSSProperties}
         ></input>
         <div
           className={`checkbox__content ${checked ? 'checked' : ''}`}
+          style={{'border-color': color} as React.CSSProperties}
         >
-          <MultiSelectOptionIcon checked={checked} icon={icon}/>
+          <MultiSelectOptionIcon checked={checked} icon={icon} iconLink={iconLink} />
           {children}
         </div>
       </label>

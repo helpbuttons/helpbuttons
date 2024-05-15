@@ -10,6 +10,9 @@ import { CircleColorPick, FieldColorPick } from 'elements/Fields/FieldColorPick'
 import { tagify } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { AddCustomFields } from '../CustomFields/AddCustomFields';
+import { EmojiPicker } from 'components/emoji';
+import { Picker } from 'components/picker/Picker';
+
 
 const FieldButtonTemplates = forwardRef(
   (
@@ -42,7 +45,12 @@ const FieldButtonTemplates = forwardRef(
     const [editFieldIdx, setEditFieldIdx] = useState(null)
     const [editFieldCaption, setEditFieldCaption] = useState(null)
     const [editFieldCssColor, setEditFieldCssColor] = useState(null)
-    
+
+    let closeMenu = () => {
+      setEditFieldIdx(false);
+    };
+
+    const [emoji, setEmoji] = useState('😀')
     const watchValue = watch(name);
     const onAddNewButtonTemplate = () => {
       if (text && color) {
@@ -50,7 +58,8 @@ const FieldButtonTemplates = forwardRef(
           caption: text,
           name: tagify(text),
           cssColor: color,
-          customFields: customFields
+          customFields: customFields,
+          icon: emoji
         });
       } else {
         alertService.warn(
@@ -63,11 +72,18 @@ const FieldButtonTemplates = forwardRef(
       setEditFieldIdx(() => idx)
       setEditFieldCssColor(() => value.cssColor)
       setEditFieldCaption(() => value.caption)
+      if(value.icon)
+      {
+        setEmoji(() => value.icon)
+      }else{
+        setEmoji(() => '😀')
+      }
     }
 
     const saveEdit = (value) => {
       update(editFieldIdx, {
         ...value, 
+        icon: emoji,
         cssColor: editFieldCssColor, 
         caption: editFieldCaption
       })
@@ -77,40 +93,15 @@ const FieldButtonTemplates = forwardRef(
     }
 
     return (
-      <div className="form__field">
-        <label className="form__label">{label}</label>
-        <p className="form__explain">{explain}</p>
+      <>
+        <div className="form__field">
 
-        <div className="form__input--button-type-field">
-          <FieldText
-            name={t('configuration.buttonTemplateName')}
-            label={t('configuration.buttonTemplateName')}
-            placeholder={t(
-              'configuration.createButtonTypePlaceholder',
-            )}
-            className="field-text"
-            onChange={(e) => setText(() => e.target.value)}
-          />
-          <FieldColorPick
-                name="buttonTemplateColor"
-                classNameInput="squared"
-                validationError={errors.buttonTemplateColor}
-                setValue={(name, value) => setColor(value)}
-                actionName={t('button.pickButtonTemplateColor')}
-                value={color}
-                hideBoilerPlate={true}
-            />
-            <label className="form__label">{t('configuration.customFields')}:</label>
-            <AddCustomFields
-              setCustomFields={setCustomFields}
-            />
-            <Btn
-              caption={t('configuration.addType')}
-              onClick={() => onAddNewButtonTemplate()}
-              btnType={BtnType.corporative}
-            />
-        </div>
+            <div className="form__section-title">
+              {t('configuration.buttonTemplateFormListTitle')}
+            </div>
+            <p className="form__explain">{t('configuration.buttonTemplateExplain')}</p>
 
+        </div>  
         <div className="form__list--button-type-field">
           {watchValue?.length > 0 &&
             watchValue.map((val, idx) => (
@@ -119,16 +110,25 @@ const FieldButtonTemplates = forwardRef(
                 key={idx}
                 style={buttonColorStyle(val.cssColor)}
               >
-                {editFieldIdx == idx && 
+                {editFieldIdx == idx &&
+                <Picker closeAction={() => setEditFieldIdx(() => null)} headerText={t('configuration.setType')}>
                   <div className="form__button-type-section">
                     <FieldText
                       name="buttonTemplate.name"
+                      label={t('configuration.buttonTemplateName')}
                       className="field-text"
                       onChange={(e) => setEditFieldCaption(() => e.target.value)}
                       defaultValue={editFieldCaption}
                     />
+                    <EmojiPicker
+                     updateEmoji={(newEmoji) => setEmoji(() => newEmoji)} 
+                     pickerEmoji={emoji}
+                     label={t('configuration.buttonTemplateName')}
+                     
+                     />
                     <CircleColorPick
                       name="buttonTemplateColor"
+                      label={t('configuration.buttonTemplateName')}
                       classNameInput="squared"
                       validationError={errors.buttonTemplateColor}
                       setValue={(name, value) => setEditFieldCssColor(value)}
@@ -136,7 +136,6 @@ const FieldButtonTemplates = forwardRef(
                       value={editFieldCssColor}
                       hideBoilerPlate={true}
                     />
-                    {/* <EmojiPicker/> */}
                     <Btn
                       btnType={BtnType.corporative}
                       iconLink={<IoSaveOutline />}
@@ -145,14 +144,16 @@ const FieldButtonTemplates = forwardRef(
                       onClick={() => saveEdit(val)}
                     />
                   </div>
+                </Picker>
                 }
                 {editFieldIdx != idx && 
                   <>
                     <Btn
-                      btnType={BtnType.filter}
-                      iconLeft={IconType.color}
+                      btnType={BtnType.filterEmoji}
+                      iconLeft={IconType.svg}
                       contentAlignment={ContentAlignment.left}
                       caption={val.caption}
+                      iconLink={val.icon}
                       color={val.cssColor}
                     />
                     <Btn
@@ -175,7 +176,41 @@ const FieldButtonTemplates = forwardRef(
               </div>
             ))}
         </div>
-      </div>
+        <div className="form__field">
+          <div className="form__section-title">{label}</div>
+          <p className="form__explain">{explain}</p>
+        </div>
+        <div className="form__input--button-type-field">
+            <FieldText
+              name={t('configuration.buttonTemplateName')}
+              label={t('configuration.buttonTemplateName')}
+              placeholder={t(
+                'configuration.createButtonTypePlaceholder',
+              )}
+              className="field-text"
+              onChange={(e) => setText(() => e.target.value)}
+            />
+            <FieldColorPick
+                  name="buttonTemplateColor"
+                  classNameInput="squared"
+                  validationError={errors.buttonTemplateColor}
+                  setValue={(name, value) => setColor(value)}
+                  actionName={t('button.pickButtonTemplateColor')}
+                  value={color}
+                  hideBoilerPlate={true}
+              />
+              <label className="form__label">{t('configuration.customFields')}:</label>
+              <p className="form__explain">{t('configuration.customFieldsExplain')}</p>
+              <AddCustomFields
+                setCustomFields={setCustomFields}
+              />
+              <Btn
+                caption={t('configuration.addType')}
+                onClick={() => onAddNewButtonTemplate()}
+                btnType={BtnType.corporative}
+              />
+          </div>
+      </>
     );
   },
 );

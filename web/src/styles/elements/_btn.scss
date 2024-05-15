@@ -2,7 +2,7 @@
 $btn-with-icon-icon-width: $icon-width-medium;
 $btn-with-icon-small-icon-width: $icon-width-small;
 $btn-filter-with-icon-icon-width: 18px;
-$btn-filter-border: 1px;
+$btn-filter-border: 2px;
 $btn-background: $color-white;
 $btn-padding: $padding-medium;
 $btn-padding-y: $padding-medium;
@@ -116,10 +116,34 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
-.btn-filter-with-icon {
+.btn-filter-with-icon, .btn-filter-with-emoji{
 
   @extend .btn-filter;
-  padding: $padding-medium !important;
+  padding: $padding-small;
+
+}
+
+.btn-filter-with-emoji {
+
+  border-width: $btn-filter-border;
+  border-color: var(--button-color);
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 7px 3px !important;
+  font-weight: $font-weight-bold;
+
+  .btn-with-icon__icon{
+
+    font-size: $font-size-huge;
+    margin-right: $padding-medium;
+
+  }
+
+}
+
+.btn-with-icon__emoji{
+
+  font-size: $font-size-huge;
 
 }
 
@@ -467,13 +491,12 @@ $btn-font-size-medium: $font-size-medium;
 
   cursor: pointer;
   border: none;
-
   text-align: left;
   overflow-x: hidden;
   height: auto;
   margin: 0;
   width: inherit;
-  text-decoration: underline;
+  // text-decoration: underline;
   border: none;
   background: transparent;
   padding: 0 $btn-padding;

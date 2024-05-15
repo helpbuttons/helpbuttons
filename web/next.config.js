@@ -27,11 +27,6 @@ module.exports = {
           destination: '/HomeInfo',
           permanent: true,
         },
-        {
-          source: '/Profile/:path*',
-          destination: '/p/:path*',
-          permanent: true
-        }
       ]
     },
     images: {

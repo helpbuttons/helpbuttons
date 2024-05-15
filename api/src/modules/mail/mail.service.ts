@@ -125,7 +125,7 @@ export class MailService {
             subject: subject,
             template,
             context: {...context, hostName: configs().hostName, to: to},
-          }))
+          }, null, 2))
           return;
         }
         return this.mailerService

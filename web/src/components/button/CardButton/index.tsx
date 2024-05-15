@@ -25,7 +25,7 @@ import {
   makeImageUrl,
   readableDistance,
 } from 'shared/sys.helper';
-import { buttonColorStyle } from 'shared/buttonTypes';
+import { buttonColorStyle, isEventAndIsExpired } from 'shared/buttonTypes';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
@@ -36,7 +36,7 @@ import {
   updateCurrentButton,
 } from 'state/Explore';
 import { isAdmin } from 'state/Users';
-import { formatMessage } from 'elements/Message';
+import { TextFormatted, formatMessage } from 'elements/Message';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
 import {
@@ -50,7 +50,6 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import { diffInMonths } from 'shared/date.utils';
 import { FixedAlert } from 'components/overlay/Alert';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
@@ -107,7 +106,8 @@ export function CardButtonHeadMedium({ button, buttonType }) {
         </div> */}
 
         <div className="card-button__info">
-          <div className="card-button__status card-button__status">
+          <div className="card-button__status">
+            <div className="card-button__emoji">{buttonType.icon}</div>
             <span
               className="card-button"
               style={buttonColorStyle(buttonType.cssColor)}
@@ -272,7 +272,7 @@ function CardButtonSubmenu({ button }) {
   );
 }
 export function CardButtonHeadBig({ button, buttonTypes }) {
-  const { cssColor, caption, customFields } = buttonTypes.find(
+  const { cssColor, caption, customFields, icon } = buttonTypes.find(
     (buttonType) => {
       return buttonType.name === button.type;
     },
@@ -294,7 +294,8 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         <div className="card-button__header">
 
           <div className="card-button__info">
-            <div className="card-button__status card-button__status">
+            <div className="card-button__status">
+              <div className="card-button__emoji">{icon}</div>
               <span
                 className="card-button__status"
                 style={buttonColorStyle(cssColor)}
@@ -314,7 +315,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
 
         <div className="card-button__paragraph">
-          {formatMessage(button.description)}
+          <TextFormatted text={button.description}/>
         </div>
 
         <div className="card-button__hashtags">
@@ -377,6 +378,11 @@ function ExpiringAlert({button, isOwner = false} : {button: Button, isOwner: boo
   if(!button.expired)
   {
      return;
+  }
+  
+  if(isEventAndIsExpired(button))
+  { 
+    return <FixedAlert alertType={AlertType.Success} message={`${t('button.endDatesExpired')}`}/>
   }
   return <FixedAlert alertType={AlertType.Success} message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id}">${t('button.renewLink')}</a>`}/>
 }
@@ -512,7 +518,7 @@ export function CardButtonImages({ button }) {
             >
               <ImageWrapper
                 imageType={ImageType.buttonCard}
-                src={makeImageUrl(image)}
+                src={image}
                 alt={button.description}
               />
             </div>

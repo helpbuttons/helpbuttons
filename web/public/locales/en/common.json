@@ -34,7 +34,8 @@
     "createNetworkButton": "Create your own network",
     "createNetwork": "You can contact with the team if you need help making your own network",
     "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:",
-    "networkIsPrivate": "Private network"
+    "networkIsPrivate": "Private network",
+    "callToAdmin": "Hi! Contact an assitant if you need help registering or publishing"
   },
   "feed": {
     "write": "Write message",
@@ -116,7 +117,7 @@
     "allPosts":"All Posts",
     "my": "My activity",
     "interests": "My interests activity",
-    "newbutton": "Your _helpbutton_ was published in '{0}', press this card to visit",
+    "newbutton": "Your _helpbutton_ was published in '{0}'",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
     "newprivatecommentType": "Private message",
@@ -132,7 +133,9 @@
     "newfollowing": "your are now following the '{0}'",
     "newfollowed": "{0} now follows your '{1}'",
     "myhelpbuttons": "My _helpbuttons_",
-    "deletebutton": "{0} was deleted"
+    "deletebutton": "{0} was deleted",
+    "expiredEventType": "_helpbutton_ ended",
+    "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list."
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
@@ -154,7 +157,7 @@
     "reloadConfig": "Reload Config",
     "deleteSuccess": "Deleted",
     "error":"Something went wrong",
-    "notFoundMessage": "Página no encontrada"
+    "notFoundMessage": "Page not found or deleted"
   },
   "button": {
     "title":"_helpbutton_ view",
@@ -183,7 +186,7 @@
     "edit": "Edit",
     "created": "Your _helpbutton_ has been published",
     "errorCreated": "",
-    "pickButtonTemplateColor": "Pick a color for this kind of _helpbutton_",
+    "pickButtonTemplateColor": "Pick a color",
     "unknownPlace": "Unknown Place",
     "hideAddress": "Hide exact location",
     "follow": "Follow",
@@ -202,6 +205,7 @@
     "renewMailSubject": "Renewed successfuly",
     "renewMail": "You renewed your _helpbutton_ '{0}' for more 3 months.",
     "isExpiringLink": "Due to lack of activity, your _helpbutton_ is going to be erased in one month.",
+    "endDatesExpired": "The end date of this _helpbutton_ is in the past, so it has been set as expired, and won't show on the public list",
     "renewLink": "Renew your _helpbutton_",
     "createUpdate":"Publish Update",
     "authorTitle":"Author:"
@@ -278,6 +282,9 @@
     "phoneExplain":"Add your phone if you want people to contact you through it",
     "phonePlaceHolder":"i.e. 34699000000",
     "signupOptions":"Extra options",
+    "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
+    "adminPhonePublish": "Publish my phone in the home page",
+    "showWhatsapp": "Mostrar Whatsapp",
     "adminPhonePublish": "You are a network administrator, do you want your phone to be available on the main page?",
     "addSupport": "You're admin, add a phone or helpbutton of contact so people can reach you"
   },
@@ -338,7 +345,7 @@
   },
   "configuration": {
     "title": "Network and Administrator settings",
-    "description": "Here you can modify different settings of your network",
+    "description": "Here you can modify different settings of your network. If it's your first time, you need to add at least a name, description, avatar image, background image and location to complete the setup.",
     "namePlaceHolder": "Network of permaculture farmers from Vilanova",
     "descriptionPlaceHolder": "Welcome to the network of sharing ...",
     "privacySetPrivate": "Set as private network",
@@ -360,9 +367,12 @@
     "chooseColorsExplain": "Main color would define backgrounds, secondary color would define details.",
     "pickMainColor": "Pick main color",
     "pickSecondaryColor": "Pick secondary color",
+
     "buttonTemplateName": "Type Name",
+    "buttonTemplateFormTitle":"Complete fields to create a new _helpbutton_ type",
+    "buttonTemplateFormListTitle":"_helpbuttons_ types list",
     "buttonTemplateLabel": "Create your _helpbutton_ types",
-    "buttonTemplateExplain": "These are the main types of _helpbuttons_ that your users can create. Add a name and choose your color to differenciate them",
+    "buttonTemplateExplain": "These are the main types of _helpbuttons_ that you added, so the users can create them in your Network. Add a name and choose your color to differenciate them.",
     "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here",
     "createButtonTypePlaceholder": "Write your _helpbutton_ type name here",
     "createButtonTypeAction": "Create new type",
@@ -370,19 +380,23 @@
     "nameLabel": "Network name",
     "descriptionLabel": "Network description",
     "nomeclatureLabel": "Rename your _helpbuttons_",
-    "nomeclatureExplain": "These names will be shown instead of _helpbuttons_. In singular and plural.",
+    "nomeclatureExplain": "Write a name for your publications on the app, default is 'helpbutton' but you can display any name. Maybe this network is made to receive 'orders', or just something general like 'publications'. This name will be displayed instead of _helpbuttons_ and let your users understand what's about. Write first in singular and then in plural.",
     "nomeclaturePlaceHolder": "Type new name",
-    "moderateNetwork": "Moderate Nettwork",
+    "moderateNetwork": "Moderate Network",
     "blockedExplain": "These users are blocked from your network. To edit visit their profiles",
     "adminUsers": "These are your Network's Administrator. To edit visit their profiles",
     "contactAdmin": "Contact the administrator",
-    "customFields": "Add custom fields to _helpbutton_ type",
+    "customFields": "Custom fields",
+    "customFieldsExplain": "These are extra fields that you can add to your _helpbuttons_ so they accomplish different tasks. Add date if you want to haddle events, or price if you want the users to be able to sell products.",
     "priceFieldAdd": "Add price",
+    "priceFieldAddLabel": "Display a price so user can buy/sell in their _helpbuttons_",
+    "dateFieldAddLabel": "Display a date so the _helpbutton_ type behaves like an event and users can search by calendar",
     "currencyLabel": "Currency",
     "moderationList": "Moderation",
     "createSupportButton": "Create your network's support button",
     "moderation": "Moderation",
-    "addType":"+ Create _helpbutton_ type with the above"
+    "addType":"+ Create _helpbutton_ type with the above",
+    "setType":"Set _helpbutton_ type properties"
   },
   "configure": {
     "browsePins": "",
@@ -426,6 +440,8 @@
     "copied": "Invitation link copied to clipboard {0}",
     "title": "Invites",
     "description": "Invite people, manage and share links with other people to allow them to access your network",
+    "inviteOnlyLabel":"Network privacy",
+    "inviteOnlyExplain":"If you enable this, users will only be able to register and publish with invitation. They will still see the _helpbuttons_.",
     "inviteOnly": "Only allow signup with an invitation"
   },
   "customFields": {

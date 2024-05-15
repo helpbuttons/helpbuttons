@@ -31,7 +31,6 @@ export default function ButtonEdit() {
       dirtyFields,
       touchedFields,
       errors,
-      isSubmitting,
     },
     control,
     reset,
@@ -42,24 +41,30 @@ export default function ButtonEdit() {
   } = useForm();
 
   const [button, setButton] = useState<Button>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [id, setId] = useState(null)
   const router = useRouter()
   const onSubmit = (data) => {
+    setIsSubmitting(() => true)
+
     store.emit(
       new UpdateButton(id,
         data,
-        onSuccess(data),
-        // onSuccess({lat: data.latitude, lng: data.longitude}),
+        onSuccess,
         onError,
       ),
     );
   };
 
   const onSuccess = (data) => {
+
     router.push(`/Explore?lat=${data.lat}&lng=${data.lng}&btn=${data.id}`);
   };
 
-  const onError = (errorMessage) => alertService.error(errorMessage.caption)
+  const onError = (errorMessage) => {
+    alertService.error(errorMessage.caption);
+    setIsSubmitting(() => false);
+  };
   useEffect(() => {
     if(!router.isReady){
       return;

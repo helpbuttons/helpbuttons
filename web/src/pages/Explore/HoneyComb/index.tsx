@@ -143,7 +143,6 @@ function HoneyComb({ router, selectedNetwork }) {
             />
           </ShowDesktopOnly>
         </div>
-          <DisplayInstructions/>
           <HexagonExploreMap
             exploreSettings={exploreSettings}
             h3TypeDensityHexes={h3TypeDensityHexes}
@@ -204,7 +203,26 @@ function useExploreSettings({
       }
       if(params.has('hbTypes'))
       {
-        newFilters = {...newFilters, helpButtonTypes: params.get('hbTypes').split(',')}
+
+        const hbTypes = params.get('hbTypes').split(',');
+        
+        const buttonTypes = hbTypes.map((_buttonTypeSelected) => 
+        {
+          const btnType = selectedNetwork.buttonTemplates.find((_btnType) => _btnType.name == _buttonTypeSelected)
+          console.log('sel:')
+          console.log(btnType)
+          if (btnType?.customFields) {
+            const btnTypeEvents = btnType.customFields.find(
+              (customField) => customField.type == 'event',
+            );
+            if (btnTypeEvents) {
+              newFilters = {...newFilters, orderBy: ButtonsOrderBy.EVENT_DATE}
+
+            }
+          }
+        
+        })
+        newFilters = {...newFilters, helpButtonTypes: hbTypes}
       }
       
       if(hex)
@@ -237,8 +255,6 @@ function useExploreSettings({
             },
           ),
         );
-      } else {
-        store.emit(new updateCurrentButton(null));
       }
     }
   }, []);
@@ -626,25 +642,3 @@ const orderBy = (buttons, orderBy, center) => {
   return buttons;
 };
 
-
-function DisplayInstructions() {
-  const loggedInUser = useStore(
-    store,
-    (state: GlobalState) => state.loggedInUser,
-    false,
-  );
-  const showInstructions = useStore(
-    store,
-    (state: GlobalState) => state.explore.map.showInstructions,
-    false,
-  );
-  return (
-    <>
-      {(showInstructions && !loggedInUser ) && (
-        <div className="search-map__instructions">
-          {t('explore.displayInstructions')}
-        </div>
-      )}
-    </>
-  );
-}

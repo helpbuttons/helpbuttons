@@ -97,6 +97,11 @@ export default function Profile() {
                       />
                     </Link>
                   }
+
+                  {isAdmin && (
+                    <AdminOptions adminButtonId={adminButtonId} />
+                  )}
+                  
                   <Link href="/HomeInfo">
                     <div onClick={logout} className="btn-with-icon">
                       <div className="btn-with-icon__icon">
@@ -107,9 +112,6 @@ export default function Profile() {
                       </span>
                     </div>
                   </Link>
-                  {isAdmin && (
-                    <AdminOptions adminButtonId={adminButtonId} />
-                  )}
                 </div>
               )}
             </LoadabledComponent>

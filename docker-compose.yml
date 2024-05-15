@@ -11,7 +11,6 @@ services:
       - api
     networks:
       - external_network
-      - internal_network
 
   api:
     # build: api/
@@ -24,7 +23,7 @@ services:
       - db
     networks:
       - internal_network
-    #  - external_network
+      - external_network
     # ports: 
     #  - 3001:3001
 
@@ -44,10 +43,10 @@ services:
       retries: 5
     networks:
       - internal_network
-    # - external_network
+      - external_network
     #uncomment if using docker-compose up db and yarn dev for backend and not docker-compose.dev
-    # ports: 
-    # - 5432:5432
+    ports: 
+      - 5432:5432
 
   redis:
     restart: always

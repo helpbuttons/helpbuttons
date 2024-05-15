@@ -100,16 +100,25 @@ $dropdown-max-width: 30rem;
   text-align: left;
   overflow-x: hidden;
   height: auto;
-  padding: 0 ;
-  max-width: 100px;
+  padding: $padding-small $padding-medium;
+  padding-right: 1.5rem;
   width: inherit;
-  text-decoration: underline;
+  text-decoration: none;
   border: none;
   border-radius: 2rem;
-  background: $color-corporative;
+  background: $color-white;
   color: $color-black;
+
   transition: all 0.2s ease-in-out;
   font-size: $font-size-general;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 50%;
+
 
 
   &:hover {

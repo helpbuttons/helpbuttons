@@ -9,8 +9,7 @@ import { IoHomeOutline } from 'react-icons/io5';
 import t from 'i18n';
 import { GlobalState, store } from 'pages';
 import { useStore } from 'store/Store';
-import { useRouter } from 'next/router';
-import { RecenterExplore, UpdateExploreSettings } from 'state/Explore';
+import { RecenterExplore } from 'state/Explore';
 
 export default NavBottom;
 

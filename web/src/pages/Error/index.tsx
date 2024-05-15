@@ -13,9 +13,7 @@ export default function Error({metadata}) {
       <Popup
         title={t('common.error')}
         linkBack={() => {
-
-          router.push('/HomeInfo?try=' + new Date().getTime());
-          window.location.reload()
+          router.back()
         }}
       >
         <div className="error__message">

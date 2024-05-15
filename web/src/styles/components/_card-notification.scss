@@ -137,7 +137,7 @@ $card-notification-delete-size: 100px;
   flex: 0 1 50%;
   color: $color-gray;
   text-align: right;
-  font-size: $font-size-small;
+  font-size: $font-size-xsmall;
 }
 
 .card-notification__date--nflex {
@@ -238,7 +238,7 @@ $card-notification-delete-size: 100px;
 .card-notification__title {
   color: $color-gray;
   font-size: $font-size-general;
-  padding: .5rem 0 0 0;
+  padding: 0;
   text-align: left;
 }
 

@@ -18,9 +18,7 @@ export function HeaderSearch({ results, toggleAdvancedFilters}) {
   );
 
   const clearButton = useRef(null)
-  
-  const [buttonTypes, setButtonTypes] = useState(null);
-  useButtonTypes(setButtonTypes);
+
   const filtering= JSON.stringify(defaultFilters) != JSON.stringify(exploreMapState.filters);
   return (
     <div className={filtering ?"header-search__tool--filtered" :"header-search__tool"} >
@@ -40,20 +38,16 @@ export function HeaderSearch({ results, toggleAdvancedFilters}) {
               filtering={filtering}
             />
             
-            {buttonTypes && (
-              <SearchInfo
-                helpButtonTypes={
-                  exploreMapState.filters.helpButtonTypes
-                }
-                what={exploreMapState.filters.query}
-                buttonTypes={buttonTypes}
-                filters={exploreMapState.filters}
-              />
-            )}
+            <SearchInfo
+              what={exploreMapState.filters.query}
+              filters={exploreMapState.filters}
+            />
             <div className="header-search__icons">
-              <div className="header-search__icon">
-                <IoSearch />
-              </div>
+              {!filtering &&
+                <div className="header-search__icon">
+                  <IoSearch />
+                </div>
+              }
               {filtering && 
                 <div ref={clearButton} className="header-search__icon--close">
                   <IoClose />
@@ -108,22 +102,24 @@ function SearchText({ count, where , filtering=false}) {
   );
 }
 
-function SearchInfo({ helpButtonTypes, filters, what, buttonTypes }) {
+function SearchInfo({ filters, what }) {
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
     false,
   );
 
-  const types = (helpButtonTypes) => {
-    if (helpButtonTypes.length < 1) {
+  const helpButtonTypes = selectedNetwork.buttonTemplates;
+  const types = (buttonTypes) => {
+    if (buttonTypes.length < 1) {
       return t('buttonFilters.allButtonTypes');
     }
-    const buttonTypesCaptions = helpButtonTypes.map(
+
+    const buttonTypesCaptions = helpButtonTypes.filter(
       (type) =>
-        buttonTypes.find((buttonType) => type == buttonType.name)
-          .caption,
-    );
+        buttonTypes.find((buttonType) => type.name == buttonType),
+    ).map((type) => type.caption)
+
     return buttonTypesCaptions.toString();
   };
   
@@ -137,7 +133,7 @@ function SearchInfo({ helpButtonTypes, filters, what, buttonTypes }) {
   
   return (
     <div className="header-search__info">
-      {whatText(what)} {types(helpButtonTypes)} {customFieldsFiltersText(filters, selectedNetwork.currency)}
+      {whatText(what)} {types(filters.helpButtonTypes)} {customFieldsFiltersText(filters, selectedNetwork.currency)}
     </div>
   );
 }

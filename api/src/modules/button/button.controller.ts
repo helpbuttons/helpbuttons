@@ -35,12 +35,14 @@ import { ErrorName } from '@src/shared/types/error.list';
 import { EventEmitter2 } from '@nestjs/event-emitter'
 import { notifyUser } from '@src/app/app.event';
 import { ActivityEventName } from '@src/shared/types/activity.list';
+import { PostService } from '../post/post.service';
 
 @ApiTags('buttons')
 @Controller('buttons')
 export class ButtonController {
   constructor(
     private readonly buttonService: ButtonService,
+    private readonly postService: PostService,
     private eventEmitter: EventEmitter2
     ) {}
 
@@ -67,8 +69,8 @@ export class ButtonController {
       images,
       user,
     ).then((button) => {
-      notifyUser(this.eventEmitter,ActivityEventName.NewButton,button)
-      return button;
+        notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})
+        return button;
     });
   }
 
@@ -98,7 +100,7 @@ export class ButtonController {
     @CurrentUser() user: User,
   ) {
     return await this.buttonService
-      .isOwner(user, buttonId)
+      .isOwner(user, buttonId, true)
       .then((isOwner) => {
         if (!isOwner) {
           throw new CustomHttpException(ErrorName.NoOwnerShip);
@@ -181,9 +183,20 @@ export class ButtonController {
       if (!isOwner) {
         throw new CustomHttpException(ErrorName.NoOwnerShip);
       }
-      return this.buttonService.renew(buttonId, user).then(() =>{
-        return this.buttonService.findById(buttonId).then((button) => {
+      // return ;
+      return this.buttonService.findById(buttonId, true)
+      .then((button) => {
+        return this.buttonService.renew(button, user)
+        .then((button) => {
           notifyUser(this.eventEmitter,ActivityEventName.RenewButton,{button, owner: user})
+          return button;
+        }).then((button) => {
+          return this.postService.renewButtonPost(user, button)
+          .then((post) => {
+            notifyUser(this.eventEmitter,ActivityEventName.NewPost,{post})
+            
+            return post;  
+          })
         })
       })
     });

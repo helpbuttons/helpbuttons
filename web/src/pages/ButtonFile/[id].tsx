@@ -16,12 +16,11 @@ export default function ButtonFile({
   metadata,
   currentButtonServer,
 }) {
-  const [buttonTypes, setButtonTypes] = useState([]);
+  const buttonTypes = useButtonTypes();
   const currentButton = useStore(
     store,
     (state: GlobalState) => state.explore.currentButton,
   );
-  useButtonTypes(setButtonTypes);
 
   useEffect(() => {
     if (!currentButtonServer) {
@@ -37,7 +36,7 @@ export default function ButtonFile({
       {currentButton && (
         <Popup
           sectionClass=""
-          linkBack={() => router.push(`/Explore`)}
+          linkBack={() => router.back()}
         >
           {buttonTypes?.length > 0 && (
             <ButtonShow

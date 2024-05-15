@@ -127,10 +127,15 @@ function NetworkForm({
             />
             <FieldCheckbox
                     name='inviteOnly'
+                    label={t('invite.inviteOnlyLabel')}
+                    explain={t('invite.inviteOnlyExplain')}
                     defaultValue={watch('inviteOnly')}
                     text={t('invite.inviteOnly')}
                     onChanged={(value) => setValue('inviteOnly', value)}
             />
+
+            <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
+
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
             {/* <FieldPrivacy
               name="privacy"
@@ -144,7 +149,6 @@ function NetworkForm({
          
            <Accordion collapsed={hasErrors('appearance')} title={t('configuration.customizeAppearance')}>
 
-             <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
              <FieldText
                 name="nomeclature"
                 label={t('configuration.nomeclatureLabel')}
@@ -189,7 +193,7 @@ function NetworkForm({
             </div>
 
             <div className="form__field">
-              <div className="form__label">
+              <div className="form__section-title">
                 {t('configuration.images')}
               </div>
             </div>
@@ -224,10 +228,10 @@ function NetworkForm({
           <Accordion collapsed={hasErrors('configuration')} title={t('configuration.configureNetwork')}>
 
             {/* BUTTON TYPES */}
-
+          
             <FieldButtonTemplates
               label={t('configuration.buttonTemplateLabel')}
-              explain={t('configuration.buttonTemplateExplain')}
+              explain={t('configuration.buttonTemplateFormTitle')}
               name="buttonTemplates"
               placeholder={t('configuration.buttonTemplatePlaceHolder')}
               classNameInput="squared"

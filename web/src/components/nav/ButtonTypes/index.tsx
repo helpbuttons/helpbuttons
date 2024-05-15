@@ -1,10 +1,8 @@
 import Btn, { BtnType, IconType } from "elements/Btn";
 import router from "next/router";
 import { GlobalState, store } from "pages";
-import { useEffect, useState } from "react";
 import { buttonColorStyle, useButtonTypes } from "shared/buttonTypes";
-import { Button } from "shared/entities/button.entity";
-import { ClearCurrentButton, ResetFilters, ToggleAdvancedFilters, UpdateFiltersToFilterButtonType } from "state/Explore";
+import { ToggleAdvancedFilters, UpdateFiltersToFilterButtonType, updateCurrentButton } from "state/Explore";
 import { useStore } from "store/Store";
 
 export function ListButtonTypes({ selectedNetwork, pageName }) {
@@ -18,19 +16,18 @@ export function ListButtonTypes({ selectedNetwork, pageName }) {
     const filterButtonType = (buttonType) => {
       store.emit(new ToggleAdvancedFilters(false))
       store.emit(new UpdateFiltersToFilterButtonType(buttonType));
-      store.emit(new ClearCurrentButton())
+      store.emit(new updateCurrentButton(null))
       if(pageName != 'Explore')
       {
         router.push('/Explore');
       } 
       
     };
-    const [buttonTypes, setButtonTypes] = useState([]);
-    useButtonTypes(setButtonTypes);
+    const buttonTypes = useButtonTypes();
   
     return (
       <>
-        {buttonTypes.map((buttonType, idx) => {
+        {buttonTypes && buttonTypes.map((buttonType, idx) => {
           const buttonTypeFound = selectedNetwork.buttonTypesCount.find(
             (buttonTypeCount) =>
               buttonTypeCount.type == buttonType.name,
@@ -49,8 +46,9 @@ export function ListButtonTypes({ selectedNetwork, pageName }) {
               style={buttonColorStyle(buttonType.cssColor)}
             >
               <Btn
-                btnType={BtnType.filter}
-                iconLeft={IconType.color}
+                btnType={BtnType.filterEmoji}
+                iconLeft={IconType.svg}
+                iconLink={buttonType?.icon}
                 caption={buttoTypeCountText}
                 onClick={() => filterButtonType(buttonType.name)}
               />
