@@ -84,21 +84,22 @@ export class MailService {
     context
   })
   {
-    console.log(`added mail to queue: ${to} - ${subject}`)
-    if(this.mailQueue.client.status != 'ready')
-    {
-      console.log('redis is not running. no mail queue. sending directly.')
-      this.sendMailDirectly( {to, cc, bcc, subject, template, context})
-      return;
-    }
-    return await this.mailQueue.add({
-      to,
-      cc,
-      bcc,
-      subject,
-      template,
-      context
-    })
+    this.sendMailDirectly( {to, cc, bcc, subject, template, context})
+    return;
+    // console.log(`added mail to queue: ${to} - ${subject}`)
+    // if(this.mailQueue.client.status != 'ready')
+    // {
+    //   console.log('redis is not running. no mail queue. sending directly.')
+     
+    // }
+    // return await this.mailQueue.add({
+    //   to,
+    //   cc,
+    //   bcc,
+    //   subject,
+    //   template,
+    //   context
+    // })
   }
 
   sendMailDirectly( {to, cc, bcc, subject, template, context})
@@ -117,16 +118,14 @@ export class MailService {
         if(!configs().smtpHost)
         {
           console.log('smtp host not set. not sending')
-          console.log(JSON.stringify({
-            to,
-            cc,
-            bcc,
-            from: from,
-            subject: subject,
-            template,
-            context: {...context, hostName: configs().hostName, to: to},
-          }, null, 2))
           return;
+        }
+        let logo = 'no logo'
+        try{
+          logo = configs().WEB_URL + '/api' + network.logo
+        }catch(err)
+        {
+          console.log(err)
         }
         return this.mailerService
           .sendMail({
@@ -136,7 +135,7 @@ export class MailService {
             from: from,
             subject: subject,
             template,
-            context: {...context, hostName: configs().hostName, to: to},
+            context: {...context, hostName: configs().hostName, to: to, logo},
           })
           .then((mail) => {
             console.log(
