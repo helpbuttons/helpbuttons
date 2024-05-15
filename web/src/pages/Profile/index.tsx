@@ -74,7 +74,7 @@ export default function Profile() {
             <LoadabledComponent loading={!loggedInUser}>
               <CardProfile user={loggedInUser} />
               {(loggedInUser && !loggedInUser.phone && !adminButtonId && loggedInUser?.role == Role.admin) && 
-               <span style={{"color": "red"}}>You're admin, add a phone or helpbutton of contact so people can reach you</span>
+               <span style={{"color": "red"}}>{t('user.addSupport')}</span>
               }
               {loggedInUser?.role == Role.admin && adminButtonId && (
                 <LinkAdminButton adminButtonId={adminButtonId} />

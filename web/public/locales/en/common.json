@@ -284,6 +284,9 @@
     "signupOptions":"Extra options",
     "showWhatsapp": "Mostrar Whatsapp"
     "adminPhonePublish": "Publish my phone in the home page",
+    "showWhatsapp": "Show Whatsapp",
+    "adminPhonePublish": "You are a network administrator, do you want your phone to be available on the main page?",
+    "addSupport": "You're admin, add a phone or helpbutton of contact so people can reach you"
     "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
     "addSupport": "You're admin, add a phone or helpbutton of contact so people can reach you"
   },
