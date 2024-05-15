@@ -15,7 +15,7 @@ import { UserService } from '../user/user.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { NetworkService } from '../network/network.service';
 
-const outboxConditions = `created_at between now() - INTERVAL '2 day' AND now()`
+const outboxConditions = `created_at between now() - INTERVAL '2 day' AND now()`;
 @Injectable()
 export class ActivityCron {
   constructor(
@@ -71,7 +71,7 @@ export class ActivityCron {
       const activitiesToSend = outbox.map((activity) => {
         const payload = JSON.parse(activity.data);
         switch (activity.eventName) {
-          case ActivityEventName.NewPost:{
+          case ActivityEventName.NewPost: {
             const post = payload.post;
             const button = post.button;
             const author = post.author;
@@ -81,10 +81,7 @@ export class ActivityCron {
                 button.title,
                 author.username,
               ]),
-              link: getUrl(
-                user.locale,
-                `/ButtonFile/${button.id}`,
-              ),
+              link: getUrl(user.locale, `/ButtonFile/${button.id}`),
               linkCaption: translate(
                 user.locale,
                 'email.buttonLinkCaption',
@@ -92,19 +89,18 @@ export class ActivityCron {
             };
 
             // add to email to send...
-            break;}
-          case ActivityEventName.NewButton:{
-            console.log('new button')
-            console.log(payload)
-            const button = payload;
-            // const button = post.button;
-            // const author = post.author;
-            // add to email to send...
+            break;
+          }
+          case ActivityEventName.NewButton: {
+            const { button } = payload;
+            
+            const interests = user.tags.filter(x => button.tags.includes(x));
+
             return {
               content: translate(
                 user.locale,
-                'activities.newbutton',
-                [button.title, button.address],
+                'activities.newbuttoninterest',
+                [interests.join(',')],
               ),
               link: getUrl(user.locale, `/ButtonFile/${button.id}`),
               linkCaption: translate(
@@ -112,7 +108,8 @@ export class ActivityCron {
                 'email.buttonLinkCaption',
               ),
             };
-            break;}
+            break;
+          }
           default:
             return null;
         }
