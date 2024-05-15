@@ -35,7 +35,7 @@ export class PostService {
   findById(id: string) {
     return this.postRepository.findOne({
       where: { id },
-      relations: ['author', 'button'],
+      relations: ['author', 'button', 'button.owner'],
     });
   }
 

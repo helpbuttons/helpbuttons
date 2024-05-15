@@ -1,11 +1,8 @@
 import Btn, { BtnType, IconType } from "elements/Btn";
 import router from "next/router";
 import { GlobalState, store } from "pages";
-import { useEffect, useState } from "react";
-import { IoAccessibility, IoAccessibilitySharp, IoAdd } from "react-icons/io5";
 import { buttonColorStyle, useButtonTypes } from "shared/buttonTypes";
-import { Button } from "shared/entities/button.entity";
-import { ClearCurrentButton, ResetFilters, ToggleAdvancedFilters, UpdateFiltersToFilterButtonType } from "state/Explore";
+import { ToggleAdvancedFilters, UpdateFiltersToFilterButtonType, updateCurrentButton } from "state/Explore";
 import { useStore } from "store/Store";
 
 export function ListButtonTypes({ selectedNetwork, pageName }) {
@@ -19,7 +16,7 @@ export function ListButtonTypes({ selectedNetwork, pageName }) {
     const filterButtonType = (buttonType) => {
       store.emit(new ToggleAdvancedFilters(false))
       store.emit(new UpdateFiltersToFilterButtonType(buttonType));
-      store.emit(new ClearCurrentButton())
+      store.emit(new updateCurrentButton(null))
       if(pageName != 'Explore')
       {
         router.push('/Explore');
