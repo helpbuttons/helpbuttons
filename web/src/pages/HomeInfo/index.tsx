@@ -36,7 +36,7 @@ import { NextPageContext } from 'next';
 import {  useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
-import { UpdateFiltersToFilterButtonType, UpdateFiltersToFilterTag } from 'state/Explore';
+import { UpdateFiltersToFilterTag } from 'state/Explore';
 import Alert from 'components/overlay/Alert';
 import { TextFormatted, formatMessage } from 'elements/Message';
 import { LinkProfile } from 'components/user/LinkProfile';

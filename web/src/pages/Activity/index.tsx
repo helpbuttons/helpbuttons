@@ -3,10 +3,9 @@ import { GlobalState, store } from 'pages';
 import { useEffect } from 'react';
 import { ActivityMarkAllAsRead, FindActivities } from 'state/Activity';
 import { useRef } from 'store/Store';
-import FeedProfile from '../../layouts/FeedProfile';
-import { LoadabledComponent } from 'components/loading';
 import { alertService } from 'services/Alert';
 import t from 'i18n';
+import ActivityLayout from 'layouts/Activity';
 
 export default function Activity() {
   const unreadActivities = useRef(
@@ -39,7 +38,7 @@ export default function Activity() {
   return (
     <>
       {activities && loggedInUser && (
-        <FeedProfile
+        <ActivityLayout
           allActivities={activities}
           loggedInUser={loggedInUser}
         />

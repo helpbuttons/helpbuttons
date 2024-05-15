@@ -117,7 +117,7 @@
     "allPosts":"All Posts",
     "my": "My activity",
     "interests": "My interests activity",
-    "newbutton": "Your _helpbutton_ was published in '{0}', press this card to visit",
+    "newbutton": "Your _helpbutton_ was published in '{0}'",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
     "newprivatecommentType": "Private message",

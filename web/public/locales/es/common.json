@@ -118,12 +118,12 @@
     "currencyLabel": "Divisa"
   },
   "activities": {
-    "allNotifications":"Todas las actualizaciones de _helpbuttons_",
+    "allNotifications":"Todas las actualizaciones",
     "allMessages":"Todos los mensajes",
     "allPosts":"Todos los posts",
     "my": "Mi actividad",
     "interests": "Actividad en mis suscripciones",
-    "newbutton": "Hay un nuevo _helpbutton_  '{0}' en '{1}'",
+    "newbutton": "Hay un nuevo _helpbutton_ en '{0}'",
     "newpost": "'{0}' publicó en '{1}'",
     "newcomment": "'{0}' respondió en '{1}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",

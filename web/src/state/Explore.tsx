@@ -199,15 +199,6 @@ export class ButtonFound implements UpdateEvent {
   }
 }
 
-export class ClearCurrentButton implements UpdateEvent {
-  public constructor() {}
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.currentButton = null;
-    });
-  }
-}
 export class ButtonDelete implements WatchEvent, UpdateEvent {
   public constructor(
     private buttonId: string,
@@ -263,7 +254,7 @@ export class updateCurrentButton implements WatchEvent, UpdateEvent {
     if(this.button && !this.button.hideAddress)
     {
       store.emit(new UpdateExploreSettings({center: [this.button.latitude, this.button.longitude], zoom: maxZoom}))
-    }else if(!this.button)
+    }else if(!this.button && state.explore.settings.zoom == maxZoom)
     {
       store.emit(new UpdateExploreSettings({center: state.explore.settings.prevCenter, zoom: state.explore.settings.prevZoom}))
     }
