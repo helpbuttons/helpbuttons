@@ -31,7 +31,7 @@ export default function ActivityCardNotification({ activity, buttonTypes }) {
       }
       case ActivityEventName.NewPost: {
         const activityData = JSON.parse(activity.data)
-        const post = activityData?.post ? activity.post : activityData;
+        const post = activityData?.post ? activityData.post : activityData;
         const button = post.button
 
         return (
@@ -44,7 +44,7 @@ export default function ActivityCardNotification({ activity, buttonTypes }) {
       }
       case ActivityEventName.NewPostComment: {
         const activityData = JSON.parse(activity.data)
-        const comment = activityData?.comment ? activity.comment : activityData;
+        const comment = activityData?.comment ? activityData.comment : activityData;
         const button = comment.button 
         return (
           <ActivityCardNewPostComment

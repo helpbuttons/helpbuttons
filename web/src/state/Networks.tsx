@@ -19,14 +19,14 @@ export interface NetworksState {
 } 
 
 export const networksInitial = {
-  selectedNetwork: {
-    name: '...',
-    description: '',
-    buttonTemplates: [],
-    topTags: [],
-    backgroundColor: 'grey',
-    textColor: 'pink'
-  },
+  // selectedNetwork: {
+  //   name: '...',
+  //   description: '',
+  //   buttonTemplates: [],
+  //   topTags: [],
+  //   backgroundColor: 'grey',
+  //   textColor: 'pink'
+  // },
   selectedNetworkLoading: false,
 };
 
