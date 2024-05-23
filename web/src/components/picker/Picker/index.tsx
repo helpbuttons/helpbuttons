@@ -13,7 +13,7 @@ export function Picker({ closeAction, headerText, children }) {
               <div  className="picker__header-left"></div>
               <div  className="picker__header-center">{headerText}</div>
               <div  className="picker__header-right">
-                <a onClick={closeAction} className="picker__header-button">
+                <a onClick={() => closeAction()} className="picker__header-button">
                   <div className="btn-circle__icon">
                     <IoClose />
                   </div>
@@ -28,7 +28,7 @@ export function Picker({ closeAction, headerText, children }) {
       </div>
       <div
         className="picker__close-overlay"
-        onClick={closeAction}
+        onClick={() => closeAction()}
       ></div>
     </>
   );
