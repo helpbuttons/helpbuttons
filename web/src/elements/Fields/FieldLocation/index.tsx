@@ -113,7 +113,7 @@ export default function FieldLocation({
   const openPopup = () => setShowPopup(() => true)
   return (
     <>
-        <PopupForm showPopup={showPopup} setShowPopup={setShowPopup} validationError={validationError} label={markerPosition ? <LocationCoordinates
+        <PopupForm showPopup={showPopup} validationError={validationError} label={markerPosition ? <LocationCoordinates
             latitude={markerPosition[0]}
             longitude={markerPosition[1]}
             address={markerAddress}
