@@ -34,7 +34,6 @@ function NavBottom({loggedInUser, pageName}) {
   };
   return (
     <>
-      {loggedInUser !== null && (
         <nav id="bottom-nav" className="nav-bottom">
           <NavLink
             href="/HomeInfo"
@@ -144,7 +143,6 @@ function NavBottom({loggedInUser, pageName}) {
             </NavLink>
           )}
         </nav>
-      )}
     </>
   );
 }
