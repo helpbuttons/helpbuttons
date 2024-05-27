@@ -108,6 +108,10 @@ function HoneyComb({ router, selectedNetwork }) {
     <>
     
     <div className="index__explore-container">
+        
+        <ShowDesktopOnly>
+          <AdvancedFilters/>
+        </ShowDesktopOnly>
         <div
           className={
             'index__content-left ' +
@@ -116,8 +120,8 @@ function HoneyComb({ router, selectedNetwork }) {
         >         
           <ShowMobileOnly>
             <NavHeader selectedNetwork={selectedNetwork}/>
+            <AdvancedFilters/>
           </ShowMobileOnly>
-         <AdvancedFilters/>
 
           {currentButton && (
             <PopupButtonFile
@@ -143,12 +147,12 @@ function HoneyComb({ router, selectedNetwork }) {
             />
           </ShowDesktopOnly>
         </div>
-          <HexagonExploreMap
-            exploreSettings={exploreSettings}
-            h3TypeDensityHexes={h3TypeDensityHexes}
-            handleBoundsChange={handleBoundsChange}
-            selectedNetwork={selectedNetwork}
-          />
+        <HexagonExploreMap
+          exploreSettings={exploreSettings}
+          h3TypeDensityHexes={h3TypeDensityHexes}
+          handleBoundsChange={handleBoundsChange}
+          selectedNetwork={selectedNetwork}
+        />
         <ShowMobileOnly>
           <div
             className={
