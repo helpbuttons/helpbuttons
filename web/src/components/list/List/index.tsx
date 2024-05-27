@@ -139,9 +139,17 @@ function List({
                           onChange={(value : ExploreViewMode) => store.emit(new UpdateExploreViewMode(value))}
                           defaultSelected={viewMode}
                         />
-                    </div>
-                  }
-                    
+                    ) : (
+                      <Btn
+                      btnType={BtnType.link}
+                      iconLeft={IconType.svg}
+                      iconLink={<IoClose />}
+                      contentAlignment={ContentAlignment.center}
+                      // caption={t("explore.hideList")}
+                      onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))}
+                      />
+                    )}
+                  </div>
                 </div>
                 <div
                   className={

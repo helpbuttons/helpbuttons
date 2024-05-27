@@ -20,7 +20,6 @@ import debounce from 'lodash.debounce';
 
 export default function DropDownSearchLocation({
   handleSelectedPlace = (place) => {
-    console.log(place);
   },
   placeholder,
   label = '',

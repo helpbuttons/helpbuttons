@@ -45,7 +45,5 @@ export function mentionsOfMessage(message, username) {
   }
 
   const usersNames = matches.map((user) => user.substring(1))
-  console.log(username)
-  console.log(usersNames)
   return usersNames.filter((usernm) => usernm != username )
 }

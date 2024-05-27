@@ -21,6 +21,10 @@ import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { alertService } from 'services/Alert';
 import { FollowTag } from 'state/Users';
+import PopupForm from 'components/popup/PopupForm';
+import { roundCoords } from 'shared/honeycomb.utils';
+import FieldAccordion from 'elements/Fields/FieldAccordion';
+import Popup from 'components/popup/Popup';
 
 
 export default function AdvancedFilters({
@@ -129,59 +133,113 @@ export default function AdvancedFilters({
   return (
     <>
       {showAdvancedFilters && (
-          <Form
-            classNameExtra="filters__container"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-          <div className="filters__content">
-
-            <FieldText
-              name="query"
-              label={t('buttonFilters.queryLabel')}
-              placeholder={t('buttonFilters.queryPlaceHolder')}
-              explain={t('buttonFilters.queryExplain')}
-              {...register('query')}
-            ><TagFollow tags={tags}/></FieldText>
-            
-            <FieldMultiSelect
-              label={t('buttonFilters.types')}
-              validationError={null}
-              explain={t('buttonFilters.typesExplain')}
-            > 
-              {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType) => {
-                return (
-                  <div
-                    key={buttonType.name}
-                    style={buttonColorStyle(buttonType.cssColor)}
-                  >
-                    <MultiSelectOption
-                      defaultValue={
-                        helpButtonTypes.indexOf(buttonType.name) > -1
-                      } 
-                      iconLink={buttonType.icon}
-                      color={buttonType.cssColor}
-                      icon='emoji'
-                      name={buttonType.name}
-                      handleChange={(name, newValue) => {
-                        setButtonTypeValue(name, newValue);
-                      }}
+        <>
+          <div className='filters__wrapper'>
+            <Popup         
+              title={t('buttonFilters.filters')}
+              hasActions={true}
+              cancelAction={clearFilters}
+              approveAction={handleSubmit(onSubmit)}
+              linkBack={() => {
+                store.emit(new ToggleAdvancedFilters(false))
+              }}
+            >
+              <Form
+                classNameExtra="filters__container"
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <div className="filters__content">
+                    <AdvancedFiltersSortDropDown
+                      className={'dropdown__dropdown-trigger'}
+                      label={t('buttonFilters.orderBy')}
+                      explain={t('buttonFilters.orderByExplain')}
+                      orderBy={watch('orderBy')}
+                      isForm={true}
+                      setOrderBy={(value) => setValue('orderBy',value)}
+                      buttonTypes={buttonTypes}
+                      selectedButtonTypes={watch('helpButtonTypes')}
+                    />
+                    <FieldMultiSelect
+                      label={t('buttonFilters.types')}
+                      validationError={null}
+                      explain={t('buttonFilters.typesExplain')}
+                    > 
+                      {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType) => {
+                        return (
+                          <div
+                            key={buttonType.name}
+                            style={buttonColorStyle(buttonType.cssColor)}
+                          >
+                            <MultiSelectOption
+                              defaultValue={
+                                helpButtonTypes.indexOf(buttonType.name) > -1
+                              } 
+                              iconLink={buttonType.icon}
+                              color={buttonType.cssColor}
+                              icon='emoji'
+                              name={buttonType.name}
+                              handleChange={(name, newValue) => {
+                                setButtonTypeValue(name, newValue);
+                              }}
+                            >
+                              {/* <div className="btn-filter__icon"></div> */}
+                              <div className="btn-with-icon__text">
+                                {buttonType.caption}
+                              </div>
+                            </MultiSelectOption>
+                          </div>
+                        );
+                      })}
+                    </FieldMultiSelect>
+                    <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
+                    <FieldText
+                      name="query"
+                      label={t('buttonFilters.queryLabel')}
+                      placeholder={t('buttonFilters.queryPlaceHolder')}
+                      explain={t('buttonFilters.queryExplain')}
+                      {...register('query')}
                     >
-                      {/* <div className="btn-filter__icon"></div> */}
-                      <div className="btn-with-icon__text">
-                        {buttonType.caption}
-                      </div>
-                    </MultiSelectOption>
+                      <TagFollow tags={tags}/>
+                    </FieldText>
+                    <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
+
                   </div>
-                );
-              })}
-            </FieldMultiSelect>
-            
-            <DropDownSearchLocation
+                
+              </Form>
+            </Popup>
+          </div>
+          <div className='filters__close-overlay'
+            onClick={() => store.emit(new ToggleAdvancedFilters(false))}
+          >
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
+
+export function FilterByLocationRadius({handleSelectedPlace, address, center, radius, setRadius})
+{
+  const [showPopup, setShowPopup] =  useState(false)
+
+  const closePopup = () => setShowPopup(() => false)
+  const openPopup = () => setShowPopup(() => true)
+  
+  return (
+    <FieldAccordion 
+      collapsed={showPopup} 
+      btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))}
+      label={t("buttonFilters.where")}
+      explain={t("buttonFilters.whereExplain")}
+      title={t("buttonFilters.where")}
+      hideChildren={closePopup}
+    >
+     <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
               handleSelectedPlace={handleSelectedPlace}
               address={address}
-              label={t('buttonFilters.where')}
-              explain={t('buttonFilters.whereExplain')}
+              // label={t('buttonFilters.where')}
               center={center}
             />
             
@@ -195,50 +253,22 @@ export default function AdvancedFilters({
                     min={1}
                     max={300}
                     onChange={(radiusValue) =>
-                      setValue('where.radius', radiusValue)
+                      setRadius(radiusValue)
                     }
                     defaultValue={radius}
                   />
                 </div>
               </div>
             )}
-
-            <AdvancedFiltersSortDropDown
-              className={'dropdown__dropdown-trigger'}
-              label={t('buttonFilters.orderBy')}
-              explain={t('buttonFilters.orderByExplain')}
-              orderBy={watch('orderBy')}
-              isForm={true}
-              setOrderBy={(value) => setValue('orderBy',value)}
-              buttonTypes={buttonTypes}
-              selectedButtonTypes={watch('helpButtonTypes')}
-            />
-
-              <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
-            </div>
-            <div className={ isHome ? 'filters__actions' : 'filters__actions'  }>
-              <div className={'filters__actions--buttons'}>
                 <Btn
-                  btnType={BtnType.corporative}
-                  caption={t('common.reset')}
-                  contentAlignment={ContentAlignment.center}
-                  onClick={clearFilters}
-                />
-
-                <Btn
-                  submit={true}
-                  btnType={BtnType.submit}
-                  caption={t('common.search')}
-                  contentAlignment={ContentAlignment.center}
-                />
-              </div>
-            </div>
-          </Form>
-      )}
-    </>
+                btnType={BtnType.submit}
+                caption={t('common.save')}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => closePopup()}
+              />
+      </FieldAccordion>
   );
 }
-
 export function AdvancedFiltersSortDropDown({className, label = '', orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm = false, explain = '' }) {
 
 //   -Order by creation date (default)

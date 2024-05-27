@@ -1,47 +1,44 @@
 $filters-right: 4%;
 $filters-padding: 10px;
 
-
-.filters {
+.filters__wrapper {
 
   position: relative;
-  width: 100%;
-  top: 0;
-  display: flex;
-  background: $color-corporative;
-  overflow-x: scroll;
-  overflow: auto;
-  padding: $padding-small $padding-small;
+  background: none;
+  z-index: $z-index-06;
+  pointer-events: none; 
 
 }
 
 .filters__container {
 
-  background: $color-corporative;
+  background-color: $color-white;
   overflow: auto;
   display: flex;
   margin-bottom: $margin-big;
   position: relative;
   z-index: $z-index-05;
+  pointer-events: auto; 
   // padding: $filters-padding;
   overflow: hidden;
+
+  position: relative;
+  margin: auto;
+  width: 100%;
+  background-color: $color-white;
+  height: auto;
+  overflow: hidden;
+  flex-direction: column;
 
 }
 
 .filters__container {
-  height: calc(var(--vh) - 68px) !important;
+  // height: calc(var(--vh) - 68px);
   /* Add other styles as needed */
 }
 
 .filters__actions {
 
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  display: flex;
-  border-top: $border-style-basic;
-  background-color: $color-corporative;
-  padding: $padding-medium $padding-medium;
 
   // .btn {
 
@@ -65,7 +62,8 @@ $filters-padding: 10px;
   padding-top: $padding-big;
   padding-bottom: $footer-height-mobile;
   flex-direction: column;
-  overflow: auto;
+  overflow: hidden;
+  width: 100%;
   // margin-bottom: $footer-height-mobile;
 
 }
@@ -106,52 +104,72 @@ $filters-padding: 10px;
 
 @media #{$breakpoints-xlarge} {
 
-  .filters {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    left:0;
-    margin: 0;
-    // bottom: 15%;
-    padding: 0;
-    // right: $filters-right;
-    z-index: $z-index-01 + 1;
-    position: relative;
+  .filters__wrapper {
+
     width: 100%;
+    margin: auto;
+    height: 100%;
+    position: fixed;
+    z-index: $z-index-05 + 1;
     top: 0;
-    display: flex;
-    background: $color-corporative;
-    overflow-x: auto;
-    padding: $padding-big $padding-small;
+    // height: calc(var(--vh) - 125px) !important;
+    bottom: 0;
+  }
+  // .filters {
+  //   position: relative;
+  //   display: flex;
+  //   flex-direction: row;
+  //   align-items: flex-end;
+  //   margin: auto;
+  //   // bottom: 15%;
+  //   padding: 0;
+  //   width: 100%;
+  //   background: $color-corporative;
+  //   overflow-x: auto;
+  //   padding: $padding-big $padding-small;
+  // }
+
+  .filters__close-overlay {
+
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: $color-gray-transparent;
+    z-index: $z-index-05;
+
   }
 
   .filters__container {
-    height: calc(var(--vh) - 115px) !important;
+    position: relative;
+    z-index: $z-index-05;
+    margin: auto;
+    width: 100%;
+    background-color: $color-white;
+    height: auto;
+    overflow: hidden;
+    flex-direction: column;
     /* Add other styles as needed */
   }
 
+  .filters__content{
+    
+    overflow: hidden;
+
+  }
 
   .filters--vertical {
 
-    position: relative;
+    // position: relative;
     display: flex;
     width: auto;
 
   }
-
-
-  
-
-}
-
-@media #{$breakpoints-xlarge} {
 
   .filters__actions {
 
     position: absolute;
     
   }
-
 
 }

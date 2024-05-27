@@ -54,6 +54,7 @@ tbody,
 tfoot,
 thead,
 tr,
+select,
 th,
 td {
   margin: 0;
@@ -88,8 +89,8 @@ html,
 body,
 #__next,
 .index__container,
-.info-overlay__content,
-.info-overlay__card,
+.homeinfo__content,
+.homeinfo__card,
 .list__container--full-screen,
 .popup,
 .index__content,
@@ -97,6 +98,14 @@ body,
 .feed-section--activity,
 .index__explore-container {
   height: var(--vh) !important;
+  /* Add other styles as needed */
+}
+
+.popup,
+.popup-content,
+.filters__wrapper
+{
+  height: calc(var(--vh) - $header-height-mobile) !important;
   /* Add other styles as needed */
 }
 
@@ -157,17 +166,17 @@ a {
 @media #{$breakpoints-xlarge} {
 
   // .index__container,
-  .info-overlay__content,
-  .info-overlay__container,
-  .info-overlay__card,
+  .homeinfo__content,
+  .homeinfo__container,
+  .homeinfo__card,
   .list__container--full-screen,
   .popup,
   .popup-content,
   .popup--button-file,
-  .index__explore-container,
+  // .index__explore-container,
   .feed-section--activity-content,
-  .feed__container,
-  .filters__container {
+  .feed__container
+  {
     height: calc(var(--vh) - 115px) !important;
     /* Add other styles as needed */
   }

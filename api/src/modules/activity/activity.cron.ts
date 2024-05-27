@@ -15,6 +15,7 @@ import { UserService } from '../user/user.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { NetworkService } from '../network/network.service';
 
+const outboxConditions = `created_at between now() - INTERVAL '2 day' AND now()`;
 @Injectable()
 export class ActivityCron {
   constructor(
@@ -40,11 +41,18 @@ export class ActivityCron {
         });
       }),
     );
+    await this.setAsSent()
   }
 
-  findUsersWithPendingNotifications() {
+  public findUsersWithPendingNotifications() {
     return this.entityManager.query(
-      `select "ownerId" as id, count(id) as numberActivities from activity where outbox = true AND  created_at between now() - INTERVAL '1 day' AND now() group by "ownerId"`,
+      `select "ownerId" as id, count(id) as numberActivities from activity where outbox = true AND ${outboxConditions} group by "ownerId"`,
+    );
+  }
+
+  public setAsSent() {
+    return this.entityManager.query(
+      `update activity set outbox = false WHERE ${outboxConditions}`,
     );
   }
 
@@ -52,7 +60,7 @@ export class ActivityCron {
     return this.activityRepository
       .createQueryBuilder('activity')
       .where(
-        `outbox = true AND  created_at between now() - INTERVAL '1 day' AND now() AND "ownerId" = :ownerId`,
+        `outbox = true AND ${outboxConditions} AND "ownerId" = :ownerId`,
         { ownerId: userId },
       )
       .getMany();
@@ -63,17 +71,17 @@ export class ActivityCron {
       const activitiesToSend = outbox.map((activity) => {
         const payload = JSON.parse(activity.data);
         switch (activity.eventName) {
-          case ActivityEventName.NewPost:
+          case ActivityEventName.NewPost: {
+            const post = payload.post;
+            const button = post.button;
+            const author = post.author;
             return {
               content: translate(user.locale, 'activities.newpost', [
-                payload.message,
-                payload.button.title,
-                payload.author.username,
+                post.message,
+                button.title,
+                author.username,
               ]),
-              link: getUrl(
-                user.locale,
-                `/ButtonFile/${payload.button.id}`,
-              ),
+              link: getUrl(user.locale, `/ButtonFile/${button.id}`),
               linkCaption: translate(
                 user.locale,
                 'email.buttonLinkCaption',
@@ -82,21 +90,26 @@ export class ActivityCron {
 
             // add to email to send...
             break;
-          case ActivityEventName.NewButton:
-            // add to email to send...
+          }
+          case ActivityEventName.NewButton: {
+            const { button } = payload;
+            
+            const interests = user.tags.filter(x => button.tags.includes(x));
+
             return {
               content: translate(
                 user.locale,
-                'activities.newbutton',
-                [payload.title, payload.address],
+                'activities.newbuttoninterest',
+                [interests.join(',')],
               ),
-              link: getUrl(user.locale, `/ButtonFile/${payload.id}`),
+              link: getUrl(user.locale, `/ButtonFile/${button.id}`),
               linkCaption: translate(
                 user.locale,
                 'email.buttonLinkCaption',
               ),
             };
             break;
+          }
           default:
             return null;
         }
