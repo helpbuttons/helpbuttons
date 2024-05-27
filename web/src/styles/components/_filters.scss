@@ -4,8 +4,10 @@ $filters-padding: 10px;
 .filters__wrapper {
 
   position: relative;
-  background: transparent;
+  background: none;
   z-index: $z-index-06;
+  pointer-events: none; 
+
 }
 
 .filters__container {
@@ -16,6 +18,7 @@ $filters-padding: 10px;
   margin-bottom: $margin-big;
   position: relative;
   z-index: $z-index-05;
+  pointer-events: auto; 
   // padding: $filters-padding;
   overflow: hidden;
 

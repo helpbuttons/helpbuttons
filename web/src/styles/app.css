@@ -5920,8 +5920,9 @@ hr {
 
 .filters__wrapper {
   position: relative;
-  background: transparent;
+  background: none;
   z-index: 600;
+  pointer-events: none;
 }
 
 .filters__container {
@@ -5931,6 +5932,7 @@ hr {
   margin-bottom: 30px;
   position: relative;
   z-index: 500;
+  pointer-events: auto;
   overflow: hidden;
   position: relative;
   margin: auto;
