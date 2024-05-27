@@ -225,8 +225,14 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
   const openPopup = () => setShowPopup(() => true)
   
   return (
-    <PopupForm showPopup={showPopup} label={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))}
-   headerText={''} openPopup={openPopup} closePopup={closePopup}>
+    <PopupForm 
+      showPopup={showPopup} 
+      btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))}
+      headerText={''} 
+      label={t("buttonFilters.where")}
+      openPopup={openPopup} 
+      closePopup={closePopup}
+    >
      <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
               handleSelectedPlace={handleSelectedPlace}

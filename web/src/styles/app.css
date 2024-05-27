@@ -4848,11 +4848,12 @@ hr {
 
 .header-search__icon--close {
   background-color: #2E2E2E;
+  color: white;
   display: flex;
   padding: 5px;
+  padding-right: 10px;
   border-radius: 34px;
-  padding: 5px;
-  height: 35px;
+  height: 40px;
   /* width: 100%; */
   align-items: center;
   border-radius: 0 34px 34px 0;

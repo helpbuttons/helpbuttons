@@ -1,9 +1,11 @@
 import { Picker } from 'components/picker/Picker';
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import FieldError from 'elements/Fields/FieldError';
 
 export default function PopupForm({
   validationError = null,
   label,
+  btnLabel,
   explain = '',
   children,
   showPopup,
@@ -15,13 +17,18 @@ export default function PopupForm({
     <>
       <div className="form__field">
         <div
-          className="btn"
-          onClick={() => openPopup()}
+          className="form__label"
         >
           {label}
         </div>
         <div className="form__explain">{explain}</div>
         <FieldError validationError={validationError} />
+        <Btn
+              btnType={BtnType.splitIcon}
+              caption={btnLabel}
+              contentAlignment={ContentAlignment.left}
+              onClick={() => openPopup()}
+          />
       </div>
       {showPopup && 
       <>

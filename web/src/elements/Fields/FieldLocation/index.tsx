@@ -25,6 +25,7 @@ export default function FieldLocation({
   updateAddress,
   setMarkerPosition,
   markerPosition,
+  explain = '',
   label,
   watch,
   setValue,
@@ -112,40 +113,46 @@ export default function FieldLocation({
   const closePopup = () => setShowPopup(() => false)
   const openPopup = () => setShowPopup(() => true)
   return (
-    <>
-        <PopupForm showPopup={showPopup} validationError={validationError} label={markerPosition ? <LocationCoordinates
-            latitude={markerPosition[0]}
-            longitude={markerPosition[1]}
-            address={markerAddress}
-            label={label}
-          /> : label} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
-          <DropDownSearchLocation
-            placeholder={t('homeinfo.searchlocation')}
-            handleSelectedPlace={handleSelectedPlace}
-          />
-          <MarkerSelectorMap
-            onMapClick={onMapClick}
-            defaultZoom={selectedNetwork.exploreSettings.zoom}
-            markerColor={markerColor ? markerColor : 'pink'}
-            markerPosition={markerPosition}
-            markerCaption={markerCaption}
-            markerImage={markerImage}
-            showHexagon={watch('hideAddress')}
-          />
-          <FieldCheckbox
-            name="hideAddress"
-            defaultValue={watch('hideAddress')}
-            text={t('button.hideAddress')}
-            onChanged={(value) => setValue('hideAddress', value)}
-          />
-          <Btn
-            btnType={BtnType.submit}
-            caption={t('common.save')}
-            contentAlignment={ContentAlignment.center}
-            onClick={() => setShowPopup(!showPopup)}
-          />
-    </PopupForm>
-    </>
+          <PopupForm 
+          showPopup={showPopup} 
+          validationError={validationError} 
+          label={t('button.whereLabel')}
+          btnLabel={markerPosition ? <LocationCoordinates
+              latitude={markerPosition[0]}
+              longitude={markerPosition[1]}
+              address={markerAddress}
+              label={label}
+            /> : label} 
+          headerText={t('picker.headerText')} 
+          explain={t("button.whereExplain")}
+          openPopup={openPopup} 
+          closePopup={closePopup}>
+            <DropDownSearchLocation
+              placeholder={t('homeinfo.searchlocation')}
+              handleSelectedPlace={handleSelectedPlace}
+            />
+            <MarkerSelectorMap
+              onMapClick={onMapClick}
+              defaultZoom={selectedNetwork.exploreSettings.zoom}
+              markerColor={markerColor ? markerColor : 'pink'}
+              markerPosition={markerPosition}
+              markerCaption={markerCaption}
+              markerImage={markerImage}
+              showHexagon={watch('hideAddress')}
+            />
+            <FieldCheckbox
+              name="hideAddress"
+              defaultValue={watch('hideAddress')}
+              text={t('button.hideAddress')}
+              onChanged={(value) => setValue('hideAddress', value)}
+            />
+            <Btn
+              btnType={BtnType.submit}
+              caption={t('common.save')}
+              contentAlignment={ContentAlignment.center}
+              onClick={() => setShowPopup(!showPopup)}
+            />
+       </PopupForm>
   );
 }
 
@@ -156,7 +163,7 @@ function LocationCoordinates({
   label,
 }) {
   return (
-    <div className="card-button__city card-button__everywhere form__label">
+    <>
       {address && address.length > 1 ? (
         <>
           <span>{address}</span>
@@ -169,6 +176,6 @@ function LocationCoordinates({
       ) : (
         <>{label}</>
       )}
-    </div>
+    </>
   );
 }
