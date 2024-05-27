@@ -7,6 +7,7 @@ interface DraggableProps {
   onScroll:any,
   onFullScreen:any,
   isListOpen?: boolean; // New prop for isListOpen
+  isListFullScreen?: boolean; // New prop for full screen
 }
 
 const DraggableList: React.FC<DraggableProps> = ({
@@ -16,7 +17,8 @@ const DraggableList: React.FC<DraggableProps> = ({
   onScroll,
   style,
   onFullScreen,
-  isListOpen // New prop for isListOpen
+  isListOpen, // New prop for isListOpen
+  isListFullScreen // New prop for isListOpen
 }) => {
 
   const [pos, setPos] = useState<{ x: number; y: number }>(initialPos || { x: 0, y: window.innerHeight - 0 });
@@ -36,12 +38,19 @@ const DraggableList: React.FC<DraggableProps> = ({
 
     if (isListOpen) {
         console.log('isopen!!!')
-        const targetY = window.innerHeight - 150; // Example target Y value
+        const targetY = window.innerHeight - 130; // Example target Y value
+
+        setPos((prevPos) => ({ ...prevPos, y: targetY }));
+        setDragging(true); // Optional: Set dragging to true if needed
+      } else {
+        const targetY = window.innerHeight - 360; // Example target Y value
 
         setPos((prevPos) => ({ ...prevPos, y: targetY }));
         setDragging(true); // Optional: Set dragging to true if needed
       }
+
     }, [isListOpen]);
+
 
     //MOUSE
   const onMouseDown = (e: MouseEvent<HTMLDivElement>) => {
@@ -73,7 +82,7 @@ const DraggableList: React.FC<DraggableProps> = ({
 
     if(isListOpen)
         {
-            newY=window.innerHeight - 355;
+            newY=window.innerHeight - 360;
             functionHandler(newY);
             setDragging(false);
             setPos((prevPos) => ({

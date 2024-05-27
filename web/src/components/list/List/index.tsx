@@ -80,8 +80,12 @@ function List({
   };
 
   const [isFullScreen, setFullScreen] = useState<boolean>(false);
-  const [isLisOpen, setListOpen] = useState<boolean>(false);
+  const [isListOpen, setListOpen] = useState<boolean>(false);
 
+  const toggleListOpen = () => {
+    setListOpen(!isListOpen);
+    onLeftColumnToggle(!isListOpen);
+  };
 
   const buttonTypes = useButtonTypes();
 
@@ -115,14 +119,15 @@ function List({
                 y: window.innerHeight - 120,
               }} 
               onFullScreen={setFullScreen}
-              isListOpen={showLeftColumn}
+              isListOpen={isListOpen}
+              isListFullScreen={isFullScreen}
             >
               {/* <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}> */}
 
-                <div className={ 'list__order ' + (isFullScreen ? 'list__order--full-screen' : ' ')} >
-                <div className='drag-tab__line'></div>
+                <div className={ 'list__order list__order--full-screen ' + (isFullScreen ? 'list__order--full-screen' : ' ')} >
+                  <div className='drag-tab__line'></div>
 
-                  {showLeftColumn &&
+                  {/* {showLeftColumn &&
                     <AdvancedFiltersSortDropDown
                       className={'dropdown__dropdown-trigger--list'}
                       orderBy={filters.orderBy}
@@ -130,33 +135,45 @@ function List({
                       buttonTypes={buttonTypes}
                       selectedButtonTypes={filters.helpButtonTypes}
                     />
-                  }
+                  } */}
                   {isFullScreen &&
-                    <div className={'list__show-map-button ' + (showLeftColumn ? '' : ' list__show-map-button--hideList')}>
-                      <Dropdown
-                          options={dropdownExploreViewOptions}
+                    <>
+                        <AdvancedFiltersSortDropDown
                           className={'dropdown__dropdown-trigger--list'}
-                          onChange={(value : ExploreViewMode) => store.emit(new UpdateExploreViewMode(value))}
-                          defaultSelected={viewMode}
+                          orderBy={filters.orderBy}
+                          setOrderBy={(value) => updatesOrderByFilters(value)}
+                          buttonTypes={buttonTypes}
+                          selectedButtonTypes={filters.helpButtonTypes}
                         />
-                    ) : (
-                      <Btn
-                      btnType={BtnType.link}
-                      iconLeft={IconType.svg}
-                      iconLink={<IoClose />}
-                      contentAlignment={ContentAlignment.center}
-                      // caption={t("explore.hideList")}
-                      onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))}
-                      />
-                    )}
-                  </div>
+                        <Btn
+                          btnType={BtnType.smallLink}
+                          extraClass='dropdown__dropdown-trigger--list'
+                          // iconLeft={IconType.svg}
+                          iconLink={<IoMap />}
+                          contentAlignment={ContentAlignment.left}
+                          caption={t("explore.hideList")}
+                          onClick={toggleListOpen }
+                        />
+                    </>
+
+                    // <div className={'list__show-map-button ' + (showLeftColumn ? '' : ' list__show-map-button--hideList')}>
+                    //   <Dropdown
+                    //       options={dropdownExploreViewOptions}
+                    //       className={'dropdown__dropdown-trigger--list'}
+                    //       onChange={(value : ExploreViewMode) => store.emit(new UpdateExploreViewMode(value))}
+                    //       defaultSelected={viewMode}
+                    //     />
+             
+                    //                     </div>
+
+                    }
                 </div>
                 <div
                   className={
                     'list__content ' +
                     (isFullScreen
                       ? 'list__content--full-screen'
-                      : 'list__content--mid-screen')
+                      : 'list__content--full-screen')
                   }
                   onScroll={handleScrollWidth}
                   >

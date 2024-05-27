@@ -71,6 +71,7 @@
     "deleteSuccess": "Finalizado con éxito"
   },
   "configuration": {
+    "config": "Opciones avanzadas",
     "nameLabel": "Nombre de tu Red",
     "namePlaceHolder": "Red de agricultores de Vilanova",
     "descriptionLabel": "Descripción de tu Red",
@@ -255,7 +256,7 @@
     "distance": "Distancia de búsqueda",
     "allButtonTypes": "Todos los tipos",
     "queryPlaceHolder": "Escribe aquí lo que buscas",
-    "whereExplain": "Busca el lugar en que quieras buscar o pulsa en el icono para marcar tu ubicación",
+    "whereExplain": "Busca en el lugar que quieras o pulsa en el icono para marcar tu ubicación",
     "types": "Tipos de _helpbuttons_",
     "typesExplain": "Selecciona los tipos de _helpbuttons_ que quieras filtrar",
     "price": "Precio",
@@ -280,7 +281,7 @@
     "title":"Vista de _helpbutton_",
     "copy": "Copiar enlace",
     "delete": "Finalizar",
-    "typeExplain": "Por favor elige qué tipo de _helpbutton_ te gustaría publicar",
+    "typeExplain": "Por favor elige qué tipo de _helpbutton_ te gustaría crear",
     "placeHolderTitle": "Escribe un nuevo título para tu _helpbutton_",
     "descriptionLabel": "Descripción",
     "tagsLabel": "Palabras clave",

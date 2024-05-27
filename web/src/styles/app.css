@@ -4637,17 +4637,11 @@ li, ol, ul, h2 {
   background-position: center;
   background-size: cover;
   height: auto;
-<<<<<<< HEAD
-  padding: 0;
-=======
   border-radius: 0;
->>>>>>> unify-picker
   align-items: center;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin: 0;
-  border-radius: 0;
   align-items: center;
   justify-content: center;
   margin: 0;
@@ -5943,7 +5937,7 @@ hr {
   margin-bottom: 30px;
   position: relative;
   z-index: 500;
-  pointer-events: auto;
+  pointer-events: all;
   overflow: hidden;
   position: relative;
   margin: auto;
@@ -6021,6 +6015,7 @@ hr {
     height: auto;
     overflow: hidden;
     flex-direction: column;
+    pointer-events: auto;
     /* Add other styles as needed */
   }
   .filters__content {
@@ -7606,6 +7601,7 @@ body {
   z-index: 300;
   display: flex;
   flex-flow: column;
+  pointer-events: auto;
 }
 
 .popup--button-file {
@@ -7854,7 +7850,6 @@ body {
 @media only screen and (min-width: 991px) {
   .popup {
     margin: 0px auto;
-    max-width: 700px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -7871,6 +7866,9 @@ body {
     display: flex;
     flex-direction: column;
     margin-bottom: 0;
+  }
+  .popup__content {
+    border-radius: 0;
   }
   .popup__header {
     height: 50px;
@@ -7890,6 +7888,8 @@ body {
 @media only screen and (min-width: 1280px) {
   .popup {
     margin: auto;
+    max-width: 700px;
+    pointer-events: auto;
   }
   .popup__header {
     border-radius: 24px 24px 0 0;
@@ -8047,10 +8047,6 @@ body {
   max-width: 80vw;
   left: 10px;
   top: 10px;
-<<<<<<< HEAD
-  z-index: 200;
-=======
->>>>>>> unify-picker
 }
 
 .search-map__sign {

@@ -349,6 +349,7 @@
     "send":"Send"
   },
   "configuration": {
+    "config": "Advanced options",
     "title": "Network and Administrator settings",
     "description": "Here you can modify different settings of your network. If it's your first time, you need to add at least a name, description, avatar image, background image and location to complete the setup.",
     "namePlaceHolder": "Network of permaculture farmers from Vilanova",
