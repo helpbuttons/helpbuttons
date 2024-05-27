@@ -206,6 +206,7 @@ const DraggableList: React.FC<DraggableProps> = ({
         position: 'absolute',
         // left: pos.x + 'px',
         top: pos.y + 'px',
+        touchAction: 'none', // Prevent default touch actions
         cursor: dragging ? 'grabbing' : 'grab',
       }}
       onScroll={onScroll}

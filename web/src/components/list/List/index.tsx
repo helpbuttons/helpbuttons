@@ -112,7 +112,7 @@ function List({
         <>
           <ShowMobileOnly>
             <DraggableList  
-              className={'list__container ' + (isFullScreen ? ' list__container--full-screen' : ' ') + (showLeftColumn ? ' list__container--list-open' : ' ')} 
+              className={'list__container '} 
               onScroll={handleScrollHeight} 
               initialPos={{
                 x: 0,
