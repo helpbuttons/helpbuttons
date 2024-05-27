@@ -134,14 +134,6 @@ export default function AdvancedFilters({
             onSubmit={handleSubmit(onSubmit)}
           >
           <div className="filters__content">
-
-            <FieldText
-              name="query"
-              label={t('buttonFilters.queryLabel')}
-              placeholder={t('buttonFilters.queryPlaceHolder')}
-              explain={t('buttonFilters.queryExplain')}
-              {...register('query')}
-            ><TagFollow tags={tags}/></FieldText>
             
             <FieldMultiSelect
               label={t('buttonFilters.types')}
@@ -175,6 +167,17 @@ export default function AdvancedFilters({
                 );
               })}
             </FieldMultiSelect>
+
+
+            <FieldText
+              name="query"
+              label={t('buttonFilters.queryLabel')}
+              placeholder={t('buttonFilters.queryPlaceHolder')}
+              explain={t('buttonFilters.queryExplain')}
+              {...register('query')}
+            >
+              <TagFollow tags={tags}/>
+            </FieldText>
             
             <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
