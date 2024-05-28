@@ -124,7 +124,7 @@ function HoneyComb({ selectedNetwork }) {
           {currentButton && (
             <PopupButtonFile
               linkBack={() => {
-                store.emit(new updateCurrentButton(null));
+                router.back()
               }}
             >
               {selectedNetwork.buttonTemplates?.length > 0 && (
@@ -242,7 +242,6 @@ function useExploreSettings({
     }
 
     if (lat && lng) {
-      URLParamsCoords = true;
       let newUpdateSettings: Partial<ExploreSettings> = {
         center: [lat, lng],
       };
@@ -329,7 +328,7 @@ function useExploreSettings({
       const updateUrl =
         obj?.btn != currentButtonFromUrl ? true : false;
 
-      if (newUrl != windowUrl && updateUrl) {
+      if (newUrl != windowUrl && (updateUrl || !obj?.btn )) {
         window.history.pushState(
           { ...window.history.state, as: newUrl, url: newUrl },
           '',
