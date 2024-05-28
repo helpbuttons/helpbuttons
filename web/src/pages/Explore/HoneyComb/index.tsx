@@ -31,9 +31,14 @@ import {
   getZoomResolution,
   recalculateDensityMap,
   roundCoord,
+  roundCoords,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
-import { useBackButton, useDebounce, useToggle } from 'shared/custom.hooks';
+import {
+  useBackButton,
+  useDebounce,
+  useToggle,
+} from 'shared/custom.hooks';
 import AdvancedFilters, {
   ButtonsOrderBy,
 } from 'components/search/AdvancedFilters';
@@ -77,11 +82,10 @@ function HoneyComb({ selectedNetwork }) {
   const filters = useStore(
     store,
     (state: GlobalState) => state.explore.map.filters,
-    false
+    false,
   );
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
   const [showMap, toggleShowMap] = useToggle(true);
-
 
   useExploreSettings({
     exploreSettings,
@@ -91,10 +95,7 @@ function HoneyComb({ selectedNetwork }) {
     filters,
   });
 
-  const {
-    handleBoundsChange,
-    h3TypeDensityHexes,
-  } = useHexagonMap({
+  const { handleBoundsChange, h3TypeDensityHexes } = useHexagonMap({
     toggleShowLeftColumn,
     exploreSettings,
     filters: exploreMapState.filters,
@@ -105,20 +106,19 @@ function HoneyComb({ selectedNetwork }) {
 
   return (
     <>
-    <div className="index__explore-container">
-        
+      <div className="index__explore-container">
         <ShowDesktopOnly>
-          <AdvancedFilters/>
+          <AdvancedFilters />
         </ShowDesktopOnly>
         <div
           className={
             'index__content-left ' +
             (showLeftColumn ? '' : 'index__content-left--hide')
           }
-        >         
+        >
           <ShowMobileOnly>
-            <NavHeader selectedNetwork={selectedNetwork}/>
-            <AdvancedFilters/>
+            <NavHeader selectedNetwork={selectedNetwork} />
+            <AdvancedFilters />
           </ShowMobileOnly>
 
           {currentButton && (
@@ -128,10 +128,10 @@ function HoneyComb({ selectedNetwork }) {
               }}
             >
               {selectedNetwork.buttonTemplates?.length > 0 && (
-                  <ButtonShow
-                    currentButton={currentButton}
-                    buttonTypes={selectedNetwork.buttonTemplates}
-                  />
+                <ButtonShow
+                  currentButton={currentButton}
+                  buttonTypes={selectedNetwork.buttonTemplates}
+                />
               )}
             </PopupButtonFile>
           )}
@@ -141,7 +141,7 @@ function HoneyComb({ selectedNetwork }) {
               buttons={exploreMapState.listButtons}
               showLeftColumn={showLeftColumn}
               onLeftColumnToggle={toggleShowLeftColumn}
-              showMap={true} 
+              showMap={true}
             />
           </ShowDesktopOnly>
         </div>
@@ -181,111 +181,97 @@ function useExploreSettings({
   selectedNetwork,
   exploreSettings,
   currentButton,
-  filters
+  filters,
 }) {
-  let URLParamsCoords = false;
-
   const handleBackButton = () => {
-    // Your logic for handling the back button event goes here
-    console.log('Back button pressed!');
-    // handleUrl()
+    handleUrl();
   };
 
   useBackButton(handleBackButton);
-  
-  const handleUrl = () => {
-    const params = getUrlParams(router.asPath, router);
 
-      console.log('new params...')
-      console.log(params)
-      const lat = parseFloat(params.get('lat'));
-      const lng = parseFloat(params.get('lng'));
-      const zoom = parseInt(params.get('zoom'));
-      const btnId = params.get('btn');
-      const hex = params.get('hex')
+  const handleUrl = (newSearchParams = null) => {
+    const params = newSearchParams
+      ? newSearchParams
+      : new URLSearchParams(window.location.search);
 
-      let newFilters = null;
-      if(params.has('q'))
-      {
-        newFilters = {...newFilters, query: params.get('q')}
-      }
-      if(params.has('orderBy'))
-      {
-        newFilters = {...newFilters, orderBy: params.get('orderBy')}
-      }
-      if(params.has('hbTypes'))
-      {
+    const lat = parseFloat(params.get('lat'));
+    const lng = parseFloat(params.get('lng'));
+    const zoom = parseInt(params.get('zoom'));
+    const btnId = params.get('btn');
+    const hex = params.get('hex');
 
-        const hbTypes = params.get('hbTypes').split(',');
-        
-        const buttonTypes = hbTypes.map((_buttonTypeSelected) => 
-        {
-          const btnType = selectedNetwork.buttonTemplates.find((_btnType) => _btnType.name == _buttonTypeSelected)
-          if (btnType?.customFields) {
-            const btnTypeEvents = btnType.customFields.find(
-              (customField) => customField.type == 'event',
-            );
-            if (btnTypeEvents) {
-              newFilters = {...newFilters, orderBy: ButtonsOrderBy.EVENT_DATE}
+    let newFilters = null;
+    if (params.has('q')) {
+      newFilters = { ...newFilters, query: params.get('q') };
+    }
+    if (params.has('orderBy')) {
+      newFilters = { ...newFilters, orderBy: params.get('orderBy') };
+    }
+    if (params.has('hbTypes')) {
+      const hbTypes = params.get('hbTypes').split(',');
 
-            }
-          }
-        
-        })
-        newFilters = {...newFilters, helpButtonTypes: hbTypes}
-      }
-      
-      console.log('starting...')
-      if(hex)
-      {
-        console.log('hex...')
-        store.emit(new UpdateHexagonClicked(cellToZoom(hex, exploreSettings.zoom)))
-      }
-      
-      if(newFilters)
-      {
-        console.log('new filters...')
-        store.emit(new UpdateFilters({...filters, ...newFilters}))
-      }
-
-      if (lat && lng) {
-        console.log('new lat lng...')
-        URLParamsCoords = true;
-        let newUpdateSettings = { center: [lat, lng] };
-        if (Number.isInteger(zoom)) {
-          newUpdateSettings = { ...newUpdateSettings, zoom: zoom };
-        }
-        store.emit(new UpdateExploreSettings(newUpdateSettings));
-      }
-      if (btnId) {
-        console.log('btn id...')
-        store.emit(
-          new FindButton(
-            btnId,
-            (buttonFetched) => {
-              store.emit(new updateCurrentButton(buttonFetched));
-            },
-            (errorMessage) => {
-              alertService.error(errorMessage.caption);
-            },
-          ),
+      const buttonTypes = hbTypes.map((_buttonTypeSelected) => {
+        const btnType = selectedNetwork.buttonTemplates.find(
+          (_btnType) => _btnType.name == _buttonTypeSelected,
         );
+        if (btnType?.customFields) {
+          const btnTypeEvents = btnType.customFields.find(
+            (customField) => customField.type == 'event',
+          );
+          if (btnTypeEvents) {
+            newFilters = {
+              ...newFilters,
+              orderBy: ButtonsOrderBy.EVENT_DATE,
+            };
+          }
+        }
+      });
+      newFilters = { ...newFilters, helpButtonTypes: hbTypes };
+    }
+
+    if (hex) {
+      store.emit(
+        new UpdateHexagonClicked(
+          cellToZoom(hex, exploreSettings.zoom),
+        ),
+      );
+    }
+
+    if (newFilters) {
+      store.emit(new UpdateFilters({ ...filters, ...newFilters }));
+    }
+
+    if (lat && lng) {
+      URLParamsCoords = true;
+      let newUpdateSettings: Partial<ExploreSettings> = {
+        center: [lat, lng],
+      };
+      if (Number.isInteger(zoom)) {
+        newUpdateSettings = { ...newUpdateSettings, zoom: zoom };
       }
-    }
 
-  
-  useEffect(() => {
-    if (router && router.asPath) {
-      handleUrl()
+      newUpdateSettings = { ...newUpdateSettings, urlUpdated: true };
+      store.emit(new UpdateExploreSettings(newUpdateSettings));
     }
-  }, []);
-
-  useEffect(() => {
-    console.log(router.asPath)
-  }, [router])
+    if (btnId) {
+      store.emit(
+        new FindButton(
+          btnId,
+          (buttonFetched) => {
+            store.emit(new updateCurrentButton(buttonFetched));
+          },
+          (errorMessage) => {
+            alertService.error(errorMessage.caption);
+          },
+        ),
+      );
+    } else {
+      store.emit(new updateCurrentButton(null));
+    }
+  };
   useEffect(() => {
     if (selectedNetwork && exploreSettings) {
-      if (exploreSettings?.center == null && !URLParamsCoords) {
+      if (exploreSettings?.center == null) {
         store.emit(
           new UpdateExploreSettings({
             center: selectedNetwork.exploreSettings.center,
@@ -298,63 +284,59 @@ function useExploreSettings({
   }, [selectedNetwork]);
 
   useEffect(() => {
-    if (exploreSettings?.center && filters) {
+    if (
+      exploreSettings?.center &&
+      !exploreSettings.urlUpdated &&
+      filters
+    ) {
       let obj = {
-          zoom: exploreSettings.zoom,
-          lat: exploreSettings.center[0],
-          lng: exploreSettings.center[1],
-      }
+        zoom: exploreSettings.zoom,
+        lat: exploreSettings.center[0],
+        lng: exploreSettings.center[1],
+      };
 
       if (currentButton) {
         obj = { ...obj, btn: currentButton.id };
       }
 
-      if(filters.helpButtonTypes.length > 0){
-        obj = {...obj, hbTypes: filters.helpButtonTypes}
+      if (filters.helpButtonTypes.length > 0) {
+        obj = { ...obj, hbTypes: filters.helpButtonTypes };
       }
 
-      if(filters.query.length > 0){
-        obj = {...obj,q: filters.query}
+      if (filters.query.length > 0) {
+        obj = { ...obj, q: filters.query };
       }
 
-      if(filters.orderBy != 'date')
-      {
-        obj = {...obj,orderBy: filters.orderBy}
+      if (filters.orderBy != 'date') {
+        obj = { ...obj, orderBy: filters.orderBy };
       }
 
-      const urlParams = new URLSearchParams(obj)
-      // store.emit(
-      //   new UpdateExploreSettings({
-      //     center: [obj.lat, obj.lng],
-      //     zoom: obj.zoom,
-      //     loading: false,
-      //   }),
-      // );
-      // const newUrl = `Explore?${urlParams.toString()}`
+      const urlParams = new URLSearchParams(obj);
+
       const newUrl = `${
-        router.asPath.includes("?")
+        router.asPath.includes('?')
           ? router.pathname + `?${urlParams.toString()}`
           : router.pathname + `?${urlParams.toString()}`
       }`;
-      const windowUrl = window.location.pathname + window.location.search
-      console.log(windowUrl + ' != ' + newUrl)
-      
-      if(newUrl != windowUrl)
-      {
-        console.log('pushing new state')
-        console.log(newUrl)
-        window.history.pushState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
+      const windowUrl =
+        window.location.pathname + window.location.search;
+
+      /** dont update url if button is the same... */
+      const currentUrlSearchParams = new URLSearchParams(windowUrl);
+      const currentButtonFromUrl = currentUrlSearchParams.has('btn')
+        ? currentUrlSearchParams.get('btn')
+        : null;
+      const updateUrl =
+        obj?.btn != currentButtonFromUrl ? true : false;
+
+      if (newUrl != windowUrl && updateUrl) {
+        window.history.pushState(
+          { ...window.history.state, as: newUrl, url: newUrl },
+          '',
+          newUrl,
+        );
       }
-      
-      // window.history.pushState(
-      //   window.history.state,
-      //   "",
-      //   `Explore?${urlParams.toString()}`,
-      // );
-      // console.log('oiiiiii')
-      // router.push({pathname: 'Explore', query: obj})
     }
-    
   }, [exploreSettings, currentButton, filters]);
 }
 
@@ -368,7 +350,6 @@ function useHexagonMap({
   cachedHexagons,
   buttonTypes,
 }) {
-
   const [hexagonsToFetch, setHexagonsToFetch] = useState({
     resolution: 1,
     hexagons: [],
@@ -379,13 +360,11 @@ function useHexagonMap({
   const [h3TypeDensityHexes, seth3TypeDensityHexes] = useState([]);
   let cachedH3Hexes = React.useRef(cachedHexagons);
   useEffect(() => {
-    if(cachedHexagons.length < 1 && exploreSettings.bounds)
-    {
-      
-      cachedH3Hexes.current = []
-      fetchBounds(exploreSettings.bounds, exploreSettings.zoom)
+    if (cachedHexagons.length < 1 && exploreSettings.bounds) {
+      cachedH3Hexes.current = [];
+      fetchBounds(exploreSettings.bounds, exploreSettings.zoom);
     }
-  }, [cachedHexagons])
+  }, [cachedHexagons]);
   const calculateNonCachedHexagons = (
     debounceHexagonsToFetch,
     cachedH3Hexes,
@@ -602,12 +581,12 @@ function useHexagonMap({
         }),
       );
 
-      fetchBounds(bounds, zoom)
+      fetchBounds(bounds, zoom);
     }
   };
 
   const fetchBounds = (bounds, zoom) => {
-    const zoomFloor = Math.floor(zoom)
+    const zoomFloor = Math.floor(zoom);
     const hexagonsForBounds = convertBoundsToGeoJsonHexagons(
       bounds,
       getZoomResolution(zoomFloor),
@@ -616,11 +595,13 @@ function useHexagonMap({
       console.error('too many hexes.. canceling..');
       return;
     }
-    setHexagonsToFetch(() => {return {
-      resolution: getZoomResolution(zoomFloor),
-      hexagons: hexagonsForBounds,
-    }});
-  }
+    setHexagonsToFetch(() => {
+      return {
+        resolution: getZoomResolution(zoomFloor),
+        hexagons: hexagonsForBounds,
+      };
+    });
+  };
   return {
     handleBoundsChange,
     setHexagonsToFetch,
@@ -630,14 +611,12 @@ function useHexagonMap({
 
 const orderByClosestToCenter = (center, buttons) => {
   function buttonDistance(buttonA, buttonB) {
-    if(buttonA.distance < buttonB.distance)
-    {
+    if (buttonA.distance < buttonB.distance) {
       return -1;
-    }else if(buttonA.distance == buttonB.distance)
-    {
+    } else if (buttonA.distance == buttonB.distance) {
       return 0;
     }
-    return 1
+    return 1;
   }
 
   if (!center) {
@@ -658,16 +637,14 @@ const orderByClosestToCenter = (center, buttons) => {
 };
 
 export const orderByCreated = (buttons) => {
-  return [...buttons].sort(
-    (buttonA, buttonB) => {
-      if(buttonA.created_at < buttonB.created_at)
-      {
-        return 1
-      }else if (buttonA.created_at == buttonB.created_at){
-        return 0
-      }
-      return -1
-    });
+  return [...buttons].sort((buttonA, buttonB) => {
+    if (buttonA.created_at < buttonB.created_at) {
+      return 1;
+    } else if (buttonA.created_at == buttonB.created_at) {
+      return 0;
+    }
+    return -1;
+  });
 };
 
 const orderBy = (buttons, orderBy, center) => {
@@ -685,4 +662,3 @@ const orderBy = (buttons, orderBy, center) => {
   }
   return buttons;
 };
-
