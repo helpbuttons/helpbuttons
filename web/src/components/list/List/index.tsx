@@ -131,7 +131,7 @@ function List({
                       iconLeft={IconType.svg}
                       iconLink={<IoClose />}
                       contentAlignment={ContentAlignment.center}
-                      caption={t("explore.hideList")}
+                      // caption={t("explore.hideList")}
                       onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))}
                       />
                     )}

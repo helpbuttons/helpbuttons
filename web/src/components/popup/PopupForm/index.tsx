@@ -31,10 +31,9 @@ export default function PopupForm({
           />
       </div>
       {showPopup && 
-      <>
-        <Picker closeAction={closePopup} headerText={headerText}>
-        { children }</Picker>
-        </>
+          <Picker closeAction={closePopup} headerText={headerText}>
+          { children }
+          </Picker>
         }
     </>
   );

@@ -15,6 +15,7 @@ import { ReverseGeo } from 'state/Explore';
 import { FieldCheckbox } from '../FieldCheckbox';
 import FieldError from '../FieldError';
 import PopupForm from 'components/popup/PopupForm';
+import Accordion from 'elements/Accordion';
 export default function FieldLocation({
   validationError,
   markerImage,
@@ -114,19 +115,19 @@ export default function FieldLocation({
   const openPopup = () => setShowPopup(() => true)
   return (
           <PopupForm 
-          showPopup={showPopup} 
-          validationError={validationError} 
-          label={t('button.whereLabel')}
-          btnLabel={markerPosition ? <LocationCoordinates
-              latitude={markerPosition[0]}
-              longitude={markerPosition[1]}
-              address={markerAddress}
-              label={label}
-            /> : label} 
-          headerText={t('picker.headerText')} 
-          explain={t("button.whereExplain")}
-          openPopup={openPopup} 
-          closePopup={closePopup}>
+            showPopup={showPopup} 
+            validationError={validationError} 
+            label={t('button.whereLabel')}
+            btnLabel={markerPosition ? <LocationCoordinates
+                latitude={markerPosition[0]}
+                longitude={markerPosition[1]}
+                address={markerAddress}
+                label={label}
+              /> : label} 
+            headerText={t('picker.headerText')} 
+            explain={t("button.whereExplain")}
+            openPopup={openPopup} 
+            closePopup={closePopup}>
             <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
               handleSelectedPlace={handleSelectedPlace}

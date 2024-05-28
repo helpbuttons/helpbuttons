@@ -194,6 +194,7 @@ export default function HomeInfo({
                         contentAlignment={ContentAlignment.center}
                         iconLink={<IoMapOutline/>}
                         iconLeft={IconType.svg}
+                        extraClass='homeinfo__network-title-card--buttons'
                         caption={t('homeinfo.goToExplore')}
                         onClick={()=>router.push('Explore')}
                       />
@@ -272,6 +273,9 @@ export default function HomeInfo({
                       </h3>
                     </div>
                     <hr></hr>
+                    <div className="homeinfo__description">
+                      {t('homeinfo.popularHashtagsExplain')}
+                    </div>
                     <div className="homeinfo__hashtags">
                     {selectedNetwork.topTags.map((tag, idx) => {
                         return <div className="hashtag" key={idx} onClick={() => filterTag(tag.tag)}>{tag.tag}</div>;

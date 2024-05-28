@@ -21,6 +21,7 @@
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
     "popularHashtags": "Which topics are covered?",
+    "popularHashtagsExplain": "These are the topics created till now. Make your _helpbutton_ to add new topics.",
     "recommendedHashtags": "Which topics are recomended by the admins?",
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
@@ -63,6 +64,7 @@
     "map": "Map"
   },
   "buttonFilters": {
+    "filters":"Search filters",
     "searchBarTop": "{1} _helpbuttons_ found {0}",
     "selectedArea": "in the selected area",
     "queryLabel": "What do you search",
@@ -91,7 +93,9 @@
     "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list",
     "followTagSucess": "{0} has been added to your interests",
     "filteredSearch":"in filtered search by:",
-    "focusedArea":"in framed area"
+    "focusedArea":"in framed area",
+    "locationLimited": "Limited to {0}, {1}km",
+    "pickLocationLimits": "Choose a location"
   },
   "setup": {
     "hostname": "Hostname",

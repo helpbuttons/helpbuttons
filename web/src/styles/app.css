@@ -243,6 +243,13 @@ body,
   /* Add other styles as needed */
 }
 
+.popup,
+.popup-content,
+.filters__wrapper {
+  height: calc(var(--vh) - 70px) !important;
+  /* Add other styles as needed */
+}
+
 ol,
 ul {
   list-style: none;
@@ -300,10 +307,8 @@ a:hover {
   .popup,
   .popup-content,
   .popup--button-file,
-  .index__explore-container,
   .feed-section--activity-content,
-  .feed__container,
-  .filters__container {
+  .feed__container {
     height: calc(var(--vh) - 115px) !important;
     /* Add other styles as needed */
   }
@@ -5913,40 +5918,33 @@ hr {
   border-color: #f0f0f0;
 }
 
-.filters {
+.filters__wrapper {
   position: relative;
-  width: 100%;
-  top: 0;
-  display: flex;
-  background: var(--network-background-color);
-  overflow-x: scroll;
-  overflow: auto;
-  padding: 5px 5px;
+  background: none;
+  z-index: 600;
+  pointer-events: none;
 }
 
 .filters__container {
-  background: var(--network-background-color);
+  background-color: #fff;
   overflow: auto;
   display: flex;
   margin-bottom: 30px;
   position: relative;
   z-index: 500;
+  pointer-events: auto;
   overflow: hidden;
+  position: relative;
+  margin: auto;
+  width: 100%;
+  background-color: #fff;
+  height: auto;
+  overflow: hidden;
+  flex-direction: column;
 }
 
 .filters__container {
-  height: calc(var(--vh) - 68px) !important;
   /* Add other styles as needed */
-}
-
-.filters__actions {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  display: flex;
-  border-top: 1px solid #D4D4D4;
-  background-color: var(--network-background-color);
-  padding: 10px 10px;
 }
 
 .filters__content {
@@ -5956,7 +5954,7 @@ hr {
   padding-top: 15px;
   padding-bottom: 50px;
   flex-direction: column;
-  overflow: auto;
+  overflow: hidden;
   width: 100%;
 }
 
@@ -5986,34 +5984,41 @@ hr {
 }
 
 @media only screen and (min-width: 1280px) {
-  .filters {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    left: 0;
-    margin: 0;
-    padding: 0;
-    z-index: 101;
-    position: relative;
+  .filters__wrapper {
     width: 100%;
+    margin: auto;
+    height: 100%;
+    position: fixed;
+    z-index: 501;
     top: 0;
-    display: flex;
-    background: var(--network-background-color);
-    overflow-x: auto;
-    padding: 15px 5px;
+    bottom: 0;
+  }
+  .filters__close-overlay {
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 500;
   }
   .filters__container {
-    height: calc(var(--vh) - 115px) !important;
+    position: relative;
+    z-index: 500;
+    margin: auto;
+    width: 100%;
+    background-color: #fff;
+    height: auto;
+    overflow: hidden;
+    flex-direction: column;
     /* Add other styles as needed */
   }
+  .filters__content {
+    overflow: hidden;
+  }
   .filters--vertical {
-    position: relative;
     display: flex;
     width: auto;
   }
-}
-@media only screen and (min-width: 1280px) {
   .filters__actions {
     position: absolute;
   }
@@ -7687,7 +7692,6 @@ body {
   width: 100%;
   height: auto;
   overflow-y: auto;
-  margin-bottom: 50px;
   overflow-x: hidden;
   border-radius: 0 0 24px 24px;
   display: flex;
@@ -7828,6 +7832,13 @@ body {
   flex: 0 1 50%;
 }
 
+.popup__actions {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 0 0 24px 24px;
+  border-top: 1px solid #f0f0f0;
+}
+
 .popup-paragraph {
   text-align: center;
   margin-top: 20px;
@@ -7870,6 +7881,9 @@ body {
   }
 }
 @media only screen and (min-width: 1280px) {
+  .popup {
+    margin: auto;
+  }
   .popup__header {
     border-radius: 24px 24px 0 0;
     margin-top: 7px;
@@ -7877,6 +7891,7 @@ body {
   .popup__content {
     padding-bottom: 0;
     margin-bottom: 0 !important;
+    border-radius: 0;
   }
 }
 .repository {
@@ -8030,7 +8045,6 @@ body {
   max-width: 80vw;
   left: 10px;
   top: 10px;
-  z-index: 300;
 }
 
 .search-map__sign {
@@ -8075,7 +8089,6 @@ body {
     color: #0E0E0E;
     text-shadow: none;
     position: relative;
-    z-index: 500;
     flex: 1;
     gap: 1rem;
   }
