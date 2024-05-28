@@ -77,3 +77,15 @@ export function useInterval<T extends () => void>(
     return () => tickId.current && clearInterval(tickId.current)
   }, [delay, paused])
 }
+
+export const useBackButton = (callback) => {
+  const handleBackButton = useCallback(callback, [callback]);
+
+  useEffect(() => {
+    window.addEventListener('popstate', handleBackButton);
+    
+    return () => {
+      window.removeEventListener('popstate', handleBackButton);
+    };
+  }, [handleBackButton]);
+};

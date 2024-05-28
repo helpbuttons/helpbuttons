@@ -20,7 +20,7 @@ import {
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import { withRouter } from 'next/router';
+import router from 'next/router';
 import List from 'components/list/List';
 import { Point } from 'pigeon-maps';
 import HexagonExploreMap from 'components/map/Map/HexagonExploreMap';
@@ -33,7 +33,7 @@ import {
   roundCoord,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
-import { useDebounce, useToggle } from 'shared/custom.hooks';
+import { useBackButton, useDebounce, useToggle } from 'shared/custom.hooks';
 import AdvancedFilters, {
   ButtonsOrderBy,
 } from 'components/search/AdvancedFilters';
@@ -53,12 +53,11 @@ import {
 } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { alertService } from 'services/Alert';
-import t from 'i18n';
 import { ButtonShow } from 'components/button/ButtonShow';
 
 const defaultZoomPlace = 13;
 
-function HoneyComb({ router, selectedNetwork }) {
+function HoneyComb({ selectedNetwork }) {
   const currentButton = useStore(
     store,
     (state: GlobalState) => state.explore.currentButton,
@@ -106,7 +105,6 @@ function HoneyComb({ router, selectedNetwork }) {
 
   return (
     <>
-    
     <div className="index__explore-container">
         
         <ShowDesktopOnly>
@@ -175,7 +173,8 @@ function HoneyComb({ router, selectedNetwork }) {
   );
 }
 
-export default withRouter(HoneyComb);
+// export default withRouter(HoneyComb);
+export default HoneyComb;
 
 function useExploreSettings({
   router,
@@ -186,10 +185,19 @@ function useExploreSettings({
 }) {
   let URLParamsCoords = false;
 
-  useEffect(() => {
-    if (router && router.asPath) {
-      const params = getUrlParams(router.asPath, router);
+  const handleBackButton = () => {
+    // Your logic for handling the back button event goes here
+    console.log('Back button pressed!');
+    // handleUrl()
+  };
 
+  useBackButton(handleBackButton);
+  
+  const handleUrl = () => {
+    const params = getUrlParams(router.asPath, router);
+
+      console.log('new params...')
+      console.log(params)
       const lat = parseFloat(params.get('lat'));
       const lng = parseFloat(params.get('lng'));
       const zoom = parseInt(params.get('zoom'));
@@ -213,8 +221,6 @@ function useExploreSettings({
         const buttonTypes = hbTypes.map((_buttonTypeSelected) => 
         {
           const btnType = selectedNetwork.buttonTemplates.find((_btnType) => _btnType.name == _buttonTypeSelected)
-          console.log('sel:')
-          console.log(btnType)
           if (btnType?.customFields) {
             const btnTypeEvents = btnType.customFields.find(
               (customField) => customField.type == 'event',
@@ -229,17 +235,21 @@ function useExploreSettings({
         newFilters = {...newFilters, helpButtonTypes: hbTypes}
       }
       
+      console.log('starting...')
       if(hex)
       {
+        console.log('hex...')
         store.emit(new UpdateHexagonClicked(cellToZoom(hex, exploreSettings.zoom)))
       }
       
       if(newFilters)
       {
+        console.log('new filters...')
         store.emit(new UpdateFilters({...filters, ...newFilters}))
       }
 
       if (lat && lng) {
+        console.log('new lat lng...')
         URLParamsCoords = true;
         let newUpdateSettings = { center: [lat, lng] };
         if (Number.isInteger(zoom)) {
@@ -248,6 +258,7 @@ function useExploreSettings({
         store.emit(new UpdateExploreSettings(newUpdateSettings));
       }
       if (btnId) {
+        console.log('btn id...')
         store.emit(
           new FindButton(
             btnId,
@@ -261,7 +272,17 @@ function useExploreSettings({
         );
       }
     }
+
+  
+  useEffect(() => {
+    if (router && router.asPath) {
+      handleUrl()
+    }
   }, []);
+
+  useEffect(() => {
+    console.log(router.asPath)
+  }, [router])
   useEffect(() => {
     if (selectedNetwork && exploreSettings) {
       if (exploreSettings?.center == null && !URLParamsCoords) {
@@ -277,42 +298,61 @@ function useExploreSettings({
   }, [selectedNetwork]);
 
   useEffect(() => {
-    if (exploreSettings?.center && !URLParamsCoords && filters) {
-      let obj = {};
-      const urlParams = new URLSearchParams()
-
-      urlParams.append('zoom', Math.floor(exploreSettings.zoom));
-      urlParams.append('lat', roundCoord(exploreSettings.center[0]));
-      urlParams.append('lng', roundCoord(exploreSettings.center[1]));
-      obj = {
-        zoom: exploreSettings.zoom,
-        lat: exploreSettings.center[0],
-        lng: exploreSettings.center[1],
-      };
+    if (exploreSettings?.center && filters) {
+      let obj = {
+          zoom: exploreSettings.zoom,
+          lat: exploreSettings.center[0],
+          lng: exploreSettings.center[1],
+      }
 
       if (currentButton) {
         obj = { ...obj, btn: currentButton.id };
-        urlParams.append('btn', currentButton.id);
       }
 
       if(filters.helpButtonTypes.length > 0){
-        urlParams.append('hbTypes', filters.helpButtonTypes)
+        obj = {...obj, hbTypes: filters.helpButtonTypes}
       }
 
       if(filters.query.length > 0){
-        urlParams.append('q', filters.query)
+        obj = {...obj,q: filters.query}
       }
 
       if(filters.orderBy != 'date')
       {
-        urlParams.append('orderBy', filters.orderBy)
+        obj = {...obj,orderBy: filters.orderBy}
       }
-      const locale = getLocale() == 'en' ? '' : `/${getLocale()}`;
-      window.history.pushState(
-        obj,
-        'Title',
-        `${locale}/Explore?${urlParams.toString()}`,
-      );
+
+      const urlParams = new URLSearchParams(obj)
+      // store.emit(
+      //   new UpdateExploreSettings({
+      //     center: [obj.lat, obj.lng],
+      //     zoom: obj.zoom,
+      //     loading: false,
+      //   }),
+      // );
+      // const newUrl = `Explore?${urlParams.toString()}`
+      const newUrl = `${
+        router.asPath.includes("?")
+          ? router.pathname + `?${urlParams.toString()}`
+          : router.pathname + `?${urlParams.toString()}`
+      }`;
+      const windowUrl = window.location.pathname + window.location.search
+      console.log(windowUrl + ' != ' + newUrl)
+      
+      if(newUrl != windowUrl)
+      {
+        console.log('pushing new state')
+        console.log(newUrl)
+        window.history.pushState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
+      }
+      
+      // window.history.pushState(
+      //   window.history.state,
+      //   "",
+      //   `Explore?${urlParams.toString()}`,
+      // );
+      // console.log('oiiiiii')
+      // router.push({pathname: 'Explore', query: obj})
     }
     
   }, [exploreSettings, currentButton, filters]);
