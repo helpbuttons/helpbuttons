@@ -16,7 +16,7 @@ import {
   defaultFilters,
 } from 'components/search/AdvancedFilters/filters.type';
 import { Bounds } from 'pigeon-maps';
-import { cellToZoom } from 'shared/honeycomb.utils';
+import { cellToZoom, roundCoords } from 'shared/honeycomb.utils';
 import { cellToParent, getResolution } from 'h3-js';
 import { of } from 'rxjs';
 import { maxZoom } from 'components/map/Map/Map.consts';
@@ -47,6 +47,7 @@ export interface ExploreSettings {
   hexagonClicked: string;
   hexagonHighlight: string;
   viewMode: ExploreViewMode;
+  urlUpdated: boolean;
 }
 
 export const exploreSettingsDefault: ExploreSettings = {
@@ -59,7 +60,8 @@ export const exploreSettingsDefault: ExploreSettings = {
   loading: true,
   hexagonClicked: null,
   hexagonHighlight: null,
-  viewMode: ExploreViewMode.BOTH
+  viewMode: ExploreViewMode.BOTH,
+  urlUpdated: false,
 };
 export interface ExploreMapState {
   filters: ButtonFilters;
@@ -520,9 +522,11 @@ export class UpdateExploreSettings implements UpdateEvent {
       const newExploreSettings = {
         ...prevSettings,
         ...this.newExploreSettings,
+        center: roundCoords(this.newExploreSettings.center),
         loading: false,
         prevCenter: state.explore.settings.center,
-        zoom: state.explore.settings.zoom
+        zoom: Math.floor(state.explore.settings.zoom),
+        urlUpdated: this.newExploreSettings.urlUpdated ? this.newExploreSettings.urlUpdated : false
       };
       
       if(prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center))
