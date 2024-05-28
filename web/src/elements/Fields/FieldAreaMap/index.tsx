@@ -12,6 +12,7 @@ import { BrowseType, HbMapTiles } from 'components/map/Map/Map.consts';
 import circleToPolygon from 'circle-to-polygon';
 import { getBoundsHexFeatures } from 'shared/honeycomb.utils';
 import FieldError from '../FieldError';
+import PopupForm from 'components/popup/PopupForm';
 
 export default function FieldAreaMap({
   validationError,
@@ -22,40 +23,20 @@ export default function FieldAreaMap({
   markerColor = 'pink',
   value
 }) {
+  const [showPopup, setShowPopup] =  useState(false)
 
-  const [showHideMenu, setHideMenu] = useState(false);
-  let closeMenu = () => {
-    setHideMenu(false);
-  };
-  
+  const closePopup = () => setShowPopup(() => false)
+  const openPopup = () => setShowPopup(() => true)
   return (
-    <>
-      <div className="form__field">
-        <div className="form__label">{label}</div>
-        <div className="form__explain">{explain}</div>
-
-        {!marker?.image ? (
-          <span style={{ color: 'red' }}>{t('setup.needLogo')}</span>
-        ) : (
-          <div
-            className="btn"
-            onClick={() => setHideMenu(!showHideMenu)}
-          >
-            {t('button.changePlaceLabel')}
-          </div>
-        )}
-        <FieldError validationError={validationError} />
-      </div>
-      {showHideMenu && (
-        <FieldAreaMapSettings
+    <PopupForm showPopup={showPopup} validationError={validationError} label={label} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
+       <FieldAreaMapSettings
           defaultExploreSettings={value}
           onChange={onChange}
           marker={marker}
-          closeMenu={closeMenu}
+          closePopup={closePopup}
         />
-      )}
-    </>
-  );
+    </PopupForm>
+  )
 }
 
 
@@ -64,7 +45,7 @@ export function FieldAreaMapSettings({
   onChange,
   marker,
   markerColor = 'pink',
-  closeMenu
+  closePopup = () => {console.log('defailtt yyy')}
 }) {
 
   const [mapSettings, setMapSettings] = useState(() => {
@@ -136,7 +117,7 @@ export function FieldAreaMapSettings({
     onChange({zoom: mapSettings.zoom, center: mapSettings.center, radius: mapSettings.radius, tileType: mapSettings.tileType, browseType: mapSettings.browseType})
   }, [mapSettings])
 return (
-  <Picker closeAction={closeMenu} headerText={t('picker.headerText')}>
+  <>
               <NetworkMapConfigure
                 mapSettings={mapSettings}
                 onBoundsChanged={onBoundsChanged}
@@ -155,8 +136,8 @@ return (
                 btnType={BtnType.submit}
                 caption={t('common.save')}
                 contentAlignment={ContentAlignment.center}
-                onClick={() => closeMenu()}
+                onClick={() => closePopup()}
               />
-        </Picker>
+              </>
 )
 }

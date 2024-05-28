@@ -19,7 +19,6 @@ export const FieldColorPick = React.forwardRef(
       value,
       explain,
       setValue,
-      hideBoilerPlate = false,
     },
     ref,
   ) => {
@@ -57,12 +56,8 @@ export const FieldColorPick = React.forwardRef(
           />
         )}
         <FieldError validationError={validationError} />
-        {hideBoilerPlate && (
-          <>
-            <p className="form__label">{label}</p>
-            <p className="form__explain">{explain}</p>
-          </>
-        )}
+        {label && <p className="form__label">{label}</p>}
+        {explain && <p className="form__explain">{explain}</p>}
         <div
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}
@@ -73,47 +68,6 @@ export const FieldColorPick = React.forwardRef(
         </div>
  
       </div>
-    );
-  },
-);
-
-export const CircleColorPick = React.forwardRef(
-  (
-    {
-      label,
-      actionName,
-      name,
-      classNameInput,
-      placeholder,
-      onChange,
-      onBlur,
-      validationError,
-      value,
-      explain,
-      setValue,
-      hideBoilerPlate = false,
-    },
-    ref,
-  ) => {
-    const [stateColor, setStateColor] = useState(null);
-    const [showHideMenu, setHideMenu] = useState(false);
-    const deboungBgColor = useDebounce(stateColor, 50);
-    const setColor = (color) => {
-      setStateColor(() => color);
-    };
-
-    useEffect(() => {
-      if (deboungBgColor) {
-        setValue(name, deboungBgColor);
-      }
-    }, [deboungBgColor]);
-
-    return (
-          <HexColorPicker
-            className='picker__content'
-            color={value}
-            onChange={(color) => setColor(color)}
-          />
     );
   },
 );

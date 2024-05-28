@@ -200,9 +200,11 @@ $map-btns-size-mobile: 30px;
 .pigeon-map__hex-info--icon {
 
     @extend .btn-filter__icon;
+    background: none;
     width: 12px;
     height: 12px;
     margin-right: 6px;
+    // display: none;
 
 }
 

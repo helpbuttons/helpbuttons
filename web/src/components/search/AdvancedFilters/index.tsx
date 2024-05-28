@@ -21,6 +21,8 @@ import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { alertService } from 'services/Alert';
 import { FollowTag } from 'state/Users';
+import PopupForm from 'components/popup/PopupForm';
+import { roundCoords } from 'shared/honeycomb.utils';
 
 
 export default function AdvancedFilters({
@@ -134,14 +136,6 @@ export default function AdvancedFilters({
             onSubmit={handleSubmit(onSubmit)}
           >
           <div className="filters__content">
-
-            <FieldText
-              name="query"
-              label={t('buttonFilters.queryLabel')}
-              placeholder={t('buttonFilters.queryPlaceHolder')}
-              explain={t('buttonFilters.queryExplain')}
-              {...register('query')}
-            ><TagFollow tags={tags}/></FieldText>
             
             <FieldMultiSelect
               label={t('buttonFilters.types')}
@@ -175,33 +169,16 @@ export default function AdvancedFilters({
                 );
               })}
             </FieldMultiSelect>
-            
-            <DropDownSearchLocation
-              placeholder={t('homeinfo.searchlocation')}
-              handleSelectedPlace={handleSelectedPlace}
-              address={address}
-              label={t('buttonFilters.where')}
-              explain={t('buttonFilters.whereExplain')}
-              center={center}
-            />
-            
-            {center && (
-              <div className="form__field">
-                <label className="form__label">
-                  {t('buttonFilters.distance')} ({radius} km)
-                </label>
-                <div style={{ padding: '1rem' }}>
-                  <Slider
-                    min={1}
-                    max={300}
-                    onChange={(radiusValue) =>
-                      setValue('where.radius', radiusValue)
-                    }
-                    defaultValue={radius}
-                  />
-                </div>
-              </div>
-            )}
+            <FieldText
+              name="query"
+              label={t('buttonFilters.queryLabel')}
+              placeholder={t('buttonFilters.queryPlaceHolder')}
+              explain={t('buttonFilters.queryExplain')}
+              {...register('query')}
+            >
+              <TagFollow tags={tags}/>
+            </FieldText>
+            <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
 
             <AdvancedFiltersSortDropDown
               className={'dropdown__dropdown-trigger'}
@@ -239,6 +216,58 @@ export default function AdvancedFilters({
   );
 }
 
+
+export function FilterByLocationRadius({handleSelectedPlace, address, center, radius, setRadius})
+{
+  const [showPopup, setShowPopup] =  useState(false)
+
+  const closePopup = () => setShowPopup(() => false)
+  const openPopup = () => setShowPopup(() => true)
+  
+  return (
+    <PopupForm 
+      showPopup={showPopup} 
+      btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))}
+      headerText={''} 
+      label={t("buttonFilters.where")}
+      openPopup={openPopup} 
+      closePopup={closePopup}
+    >
+     <DropDownSearchLocation
+              placeholder={t('homeinfo.searchlocation')}
+              handleSelectedPlace={handleSelectedPlace}
+              address={address}
+              label={t('buttonFilters.where')}
+              explain={t('buttonFilters.whereExplain')}
+              center={center}
+            />
+            
+            {center && (
+              <div className="form__field">
+                <label className="form__label">
+                  {t('buttonFilters.distance')} ({radius} km)
+                </label>
+                <div style={{ padding: '1rem' }}>
+                  <Slider
+                    min={1}
+                    max={300}
+                    onChange={(radiusValue) =>
+                      setRadius(radiusValue)
+                    }
+                    defaultValue={radius}
+                  />
+                </div>
+              </div>
+            )}
+                <Btn
+                btnType={BtnType.submit}
+                caption={t('common.save')}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => closePopup()}
+              />
+      </PopupForm>
+  );
+}
 export function AdvancedFiltersSortDropDown({className, label = '', orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm = false, explain = '' }) {
 
 //   -Order by creation date (default)
