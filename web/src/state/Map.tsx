@@ -26,7 +26,7 @@ export class UpdateZoom implements WatchEvent, UpdateEvent {
         if(this.newZoom != state.explore.settings.zoom)
         {
           newState.explore.settings.prevZoom = state.explore.settings.zoom
-          newState.explore.settings.zoom = this.newZoom;
+          newState.explore.settings.zoom = Math.floor(this.newZoom);
         }
       });
     }

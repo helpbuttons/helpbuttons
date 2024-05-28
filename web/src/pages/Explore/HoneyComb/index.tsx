@@ -124,7 +124,7 @@ function HoneyComb({ selectedNetwork }) {
           {currentButton && (
             <PopupButtonFile
               linkBack={() => {
-                router.back()
+                store.emit(new updateCurrentButton(null))
               }}
             >
               {selectedNetwork.buttonTemplates?.length > 0 && (
@@ -189,13 +189,13 @@ function useExploreSettings({
 
   useBackButton(handleBackButton);
 
-  const handleUrl = (newSearchParams = null) => {
+  const handleUrl = (newSearchParams = null, selectedNetwork = null) => {
     const params = newSearchParams
       ? newSearchParams
       : new URLSearchParams(window.location.search);
 
-    const lat = parseFloat(params.get('lat'));
-    const lng = parseFloat(params.get('lng'));
+    const lat = params.has('lat') ?  parseFloat(params.get('lat')) : selectedNetwork ? selectedNetwork.center[0] : 0;
+    const lng = params.has('lng') ? parseFloat(params.get('lng'))  : selectedNetwork ? selectedNetwork.center[1] : 0;
     const zoom = parseInt(params.get('zoom'));
     const btnId = params.get('btn');
     const hex = params.get('hex');
@@ -271,13 +271,7 @@ function useExploreSettings({
   useEffect(() => {
     if (selectedNetwork && exploreSettings) {
       if (exploreSettings?.center == null) {
-        store.emit(
-          new UpdateExploreSettings({
-            center: selectedNetwork.exploreSettings.center,
-            zoom: selectedNetwork.exploreSettings.zoom,
-            loading: true,
-          }),
-        );
+        handleUrl(null, selectedNetwork)
       }
     }
   }, [selectedNetwork]);
@@ -317,17 +311,11 @@ function useExploreSettings({
           ? router.pathname + `?${urlParams.toString()}`
           : router.pathname + `?${urlParams.toString()}`
       }`;
-      const windowUrl =
-        window.location.pathname + window.location.search;
-
-      /** dont update url if button is the same... */
-      const currentUrlSearchParams = new URLSearchParams(windowUrl);
-      const currentButtonFromUrl = currentUrlSearchParams.has('btn')
-        ? currentUrlSearchParams.get('btn')
-        : null;
+      const currentButtonFromUrl = getCurrentButtonFromUrl()
       const updateUrl =
         obj?.btn != currentButtonFromUrl ? true : false;
-
+      const windowUrl =
+        window.location.pathname + window.location.search;
       if (newUrl != windowUrl && (updateUrl || !obj?.btn )) {
         window.history.pushState(
           { ...window.history.state, as: newUrl, url: newUrl },
@@ -339,6 +327,16 @@ function useExploreSettings({
   }, [exploreSettings, currentButton, filters]);
 }
 
+const getCurrentButtonFromUrl = () => {
+  const windowUrl =
+  window.location.pathname + window.location.search;
+
+  /** dont update url if button is the same... */
+  const currentUrlSearchParams = new URLSearchParams(windowUrl);
+  return currentUrlSearchParams.has('btn')
+    ? currentUrlSearchParams.get('btn')
+    : null;
+}
 store.emit(new ClearCachedHexagons());
 
 function useHexagonMap({
