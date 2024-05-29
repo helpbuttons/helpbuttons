@@ -194,8 +194,8 @@ function useExploreSettings({
       ? newSearchParams
       : new URLSearchParams(window.location.search);
 
-    const lat = params.has('lat') ?  parseFloat(params.get('lat')) : selectedNetwork ? selectedNetwork.center[0] : 0;
-    const lng = params.has('lng') ? parseFloat(params.get('lng'))  : selectedNetwork ? selectedNetwork.center[1] : 0;
+    const lat = params.has('lat') ?  parseFloat(params.get('lat')) : selectedNetwork ? selectedNetwork.exploreSettings.center[0] : 0;
+    const lng = params.has('lng') ? parseFloat(params.get('lng'))  : selectedNetwork ? selectedNetwork.exploreSettings.center[1] : 0;
     const zoom = parseInt(params.get('zoom'));
     const btnId = params.get('btn');
     const hex = params.get('hex');
