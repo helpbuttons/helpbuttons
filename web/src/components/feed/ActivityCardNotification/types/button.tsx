@@ -84,7 +84,7 @@ export function ActivityCardNewFollowedButton({
 
   return (
     <>
-      {buttonTypes && (
+      {buttonTypes?.length > 0 && (
         <NotificationCard
           type={t('activities.newfollowType')}
           title={t(
