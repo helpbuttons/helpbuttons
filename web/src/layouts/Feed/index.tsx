@@ -69,13 +69,16 @@ export default function Feed({ button }: { button: Button }) {
     <div className="feed-container">
       
       {(loggedInUser && isButtonOwner) && (
-        <ComposePost
-          referer={{ button: button.id }}
-          onCancel={() => {}}
-          onCreate={() => {
-            reloadPosts();
-          }}
-        />
+        <>
+          <CardButtonHeadActions button={button} action={null}/>
+          <ComposePost
+            referer={{ button: button.id }}
+            onCancel={() => {}}
+            onCreate={() => {
+              reloadPosts();
+            }}
+          />
+        </>
       )}
       
       {(!isButtonOwner && loggedInUser) && (      
