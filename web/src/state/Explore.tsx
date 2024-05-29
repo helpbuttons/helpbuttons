@@ -211,6 +211,7 @@ export class ButtonDelete implements WatchEvent, UpdateEvent {
   public watch(state: GlobalState) {
     return ButtonService.delete(this.buttonId).pipe(
       map((res) => {
+        store.emit(new updateCurrentButton(null))
         this.onSuccess();
       }),
       catchError((error) => handleError(this.onError, error)),
