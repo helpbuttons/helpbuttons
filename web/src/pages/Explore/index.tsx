@@ -13,9 +13,9 @@ export default function Explore({
 }) {
   return (
     <>
-      {/* <ClienteSideRendering> */}
-        <HoneyComb selectedNetwork={selectedNetwork} />
-      {/* </ClienteSideRendering> */}
+      <ClienteSideRendering>
+       <HoneyComb selectedNetwork={selectedNetwork} />
+      </ClienteSideRendering>
     </>
   );
 }
