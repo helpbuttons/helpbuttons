@@ -47,6 +47,9 @@ function List({
 
   const handleChangeShowMap = (event) => {
     toggleShowMap(event.target.value);
+    setListOpen(false);
+    onLeftColumnToggle(false);
+    setListFullScreen(false);
   };
 
   const updatesOrderByFilters = (value) => {
@@ -75,16 +78,17 @@ function List({
     }
   }, [viewMode])
 
-  const handleChange = (event) => {
+  const leftColumnToggle = (event, value) => {
     onLeftColumnToggle(event.target.value);
+
   };
 
-  const [isFullScreen, setFullScreen] = useState<boolean>(false);
+  const [isListFullScreen, setListFullScreen] = useState<boolean>(false);
   const [isListOpen, setListOpen] = useState<boolean>(false);
 
-  const toggleListOpen = () => {
-    setListOpen(!isListOpen);
-    onLeftColumnToggle(!isListOpen);
+  const toggleListOpen = (value1, value2) => {
+    setListOpen(value1);
+    setListFullScreen(value2);
   };
 
   const buttonTypes = useButtonTypes();
@@ -118,13 +122,13 @@ function List({
                 x: 0,
                 y: window.innerHeight - 120,
               }} 
-              onFullScreen={setFullScreen}
+              onFullScreen={toggleListOpen}
               isListOpen={isListOpen}
-              isListFullScreen={isFullScreen}
+              isListFullScreen={isListFullScreen}
             >
               {/* <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}> */}
 
-                <div className={ 'list__order list__order--full-screen ' + (isFullScreen ? 'list__order--full-screen' : ' ')} >
+                <div className={ 'list__order list__order--full-screen '} >
                   <div className='drag-tab__line'></div>
 
                   {/* {showLeftColumn &&
@@ -136,7 +140,7 @@ function List({
                       selectedButtonTypes={filters.helpButtonTypes}
                     />
                   } */}
-                  {isFullScreen &&
+                  {isListFullScreen &&
                     <>
                         <AdvancedFiltersSortDropDown
                           className={'dropdown__dropdown-trigger--list'}
@@ -147,12 +151,12 @@ function List({
                         />
                         <Btn
                           btnType={BtnType.smallLink}
-                          extraClass='dropdown__dropdown-trigger--list'
+                          // extraClass='dropdown__dropdown-trigger--list'
                           // iconLeft={IconType.svg}
                           iconLink={<IoMap />}
                           contentAlignment={ContentAlignment.left}
                           caption={t("explore.hideList")}
-                          onClick={toggleListOpen }
+                          onClick={toggleListOpen}
                         />
                     </>
 
@@ -170,10 +174,7 @@ function List({
                 </div>
                 <div
                   className={
-                    'list__content ' +
-                    (isFullScreen
-                      ? 'list__content--full-screen'
-                      : 'list__content--full-screen')
+                    'list__content list__content--full-screen ' 
                   }
                   onScroll={handleScrollWidth}
                   >
@@ -200,7 +201,7 @@ function List({
                       selectedButtonTypes={filters.helpButtonTypes}
                     />
                   }
-                    <div onClick={handleChange} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
+                    <div onClick={leftColumnToggle} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
                       <span className="drag-tab__line"></span>
                       <div className="drag-tab__icon">
                         {(!showLeftColumn) ? (

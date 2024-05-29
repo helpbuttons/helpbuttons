@@ -27,10 +27,10 @@ const DraggableList: React.FC<DraggableProps> = ({
 
   const functionHandler = (data) => {
     if(pos.y < window.innerHeight - 360 ){
-        onFullScreen(true);
+        onFullScreen(true, true);
     }
     if(pos.y >= window.innerHeight - 360){
-        onFullScreen(false);
+        onFullScreen(true, false);        
     }
   };
 
@@ -43,8 +43,8 @@ const DraggableList: React.FC<DraggableProps> = ({
         setPos((prevPos) => ({ ...prevPos, y: targetY }));
         setDragging(true); // Optional: Set dragging to true if needed
       } else {
-        const targetY = window.innerHeight - 360; // Example target Y value
-
+        const targetY = window.innerHeight - 120; // Example target Y value
+        console.log('isclosed!!!')
         setPos((prevPos) => ({ ...prevPos, y: targetY }));
         setDragging(true); // Optional: Set dragging to true if needed
       }
@@ -80,16 +80,7 @@ const DraggableList: React.FC<DraggableProps> = ({
 
     let newY = e.pageY - (pos.y || 0); // Calculate the new Y position
 
-    if(isListOpen)
-        {
-            newY=window.innerHeight - 360;
-            functionHandler(newY);
-            setDragging(false);
-            setPos((prevPos) => ({
-              ...prevPos,
-              y: newY,
-            }));
-        }
+
     if(pos.y < window.innerHeight - 360)
         {
             newY=68;
@@ -100,7 +91,7 @@ const DraggableList: React.FC<DraggableProps> = ({
               y: newY,
             }));
         }
-    if(pos.y > window.innerHeight - 200)
+    else if(pos.y > window.innerHeight - 200)
         {
             newY= window.innerHeight - 120;
             functionHandler(newY);
@@ -110,6 +101,26 @@ const DraggableList: React.FC<DraggableProps> = ({
                 y: newY,
             }));
         }
+    else if(pos.y > window.innerHeight - 120)
+      {
+          newY= window.innerHeight - 120;
+          functionHandler(newY);
+          setDragging(false);
+          setPos((prevPos) => ({
+              ...prevPos,
+              y: newY,
+          }));
+      }
+    else 
+      {
+          newY=window.innerHeight - 360;
+          functionHandler(newY);
+          setDragging(false);
+          setPos((prevPos) => ({
+            ...prevPos,
+            y: newY,
+          }));
+      }
 
     e.stopPropagation();
     e.preventDefault();
@@ -169,17 +180,28 @@ const DraggableList: React.FC<DraggableProps> = ({
     const touch = e.changedTouches[0]; // Get the touch that ended
     let newY = touch.pageY - (pos.y || 0); // Calculate the new Y position
 
-    if(pos.y < window.innerHeight - 360)
-        {
-            newY=68;
-            functionHandler(newY);
-            setDragging(false);
-            setPos((prevPos) => ({
-              ...prevPos,
-              y: newY,
-            }));
-        }
-    if(pos.y > window.innerHeight - 200)
+    
+        if(pos.y < window.innerHeight - 360)
+          {
+              newY=68;
+              functionHandler(newY);
+              setDragging(false);
+              setPos((prevPos) => ({
+                ...prevPos,
+                y: newY,
+              }));
+          }
+      else if(pos.y > window.innerHeight - 200)
+          {
+              newY= window.innerHeight - 120;
+              functionHandler(newY);
+              setDragging(false);
+              setPos((prevPos) => ({
+                  ...prevPos,
+                  y: newY,
+              }));
+          }
+      else if(pos.y > window.innerHeight - 120)
         {
             newY= window.innerHeight - 120;
             functionHandler(newY);
@@ -187,6 +209,16 @@ const DraggableList: React.FC<DraggableProps> = ({
             setPos((prevPos) => ({
                 ...prevPos,
                 y: newY,
+            }));
+        }
+      else
+        {
+            newY=window.innerHeight - 360;
+            functionHandler(newY);
+            setDragging(false);
+            setPos((prevPos) => ({
+              ...prevPos,
+              y: newY,
             }));
         }
 
