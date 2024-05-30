@@ -2,9 +2,9 @@ import { Picker } from 'components/picker/Picker';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import FieldError from 'elements/Fields/FieldError';
 
-export default function PopupForm({
+export default function PickerField({
   validationError = null,
-  label,
+  label = '',
   btnLabel,
   explain = '',
   children,

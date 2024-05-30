@@ -1,21 +1,16 @@
 //this is the component integrated in buttonNewPublish to display the location. It shows the current location and has a button to change the location that displays a picker with the differents location options for the network
-import React, { useEffect, useRef, useState } from 'react';
-import { Picker } from 'components/picker/Picker';
+import React, { useEffect, useState } from 'react';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
-import { Point } from 'pigeon-maps';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { ReverseGeo } from 'state/Explore';
 import { FieldCheckbox } from '../FieldCheckbox';
-import FieldError from '../FieldError';
-import PopupForm from 'components/popup/PopupForm';
-import Accordion from 'elements/Accordion';
+import PickerField from 'components/picker/PickerField';
 export default function FieldLocation({
   validationError,
   markerImage,
@@ -114,7 +109,7 @@ export default function FieldLocation({
   const closePopup = () => setShowPopup(() => false)
   const openPopup = () => setShowPopup(() => true)
   return (
-          <PopupForm 
+          <PickerField 
             showPopup={showPopup} 
             validationError={validationError} 
             label={t('button.whereLabel')}
@@ -153,7 +148,7 @@ export default function FieldLocation({
               contentAlignment={ContentAlignment.center}
               onClick={() => setShowPopup(!showPopup)}
             />
-       </PopupForm>
+       </PickerField>
   );
 }
 

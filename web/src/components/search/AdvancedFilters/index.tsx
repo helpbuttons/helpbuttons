@@ -21,11 +21,8 @@ import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { alertService } from 'services/Alert';
 import { FollowTag } from 'state/Users';
-import PopupForm from 'components/popup/PopupForm';
-import { roundCoords } from 'shared/honeycomb.utils';
 import FieldAccordion from 'elements/Fields/FieldAccordion';
 import Popup from 'components/popup/Popup';
-import { Picker } from 'components/picker/Picker';
 
 
 export default function AdvancedFilters({
@@ -226,6 +223,7 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
   const closePopup = () => setShowPopup(() => false)
   const openPopup = () => setShowPopup(() => true)
   
+  // <PickerField label={t("buttonFilters.where")} explain={t("buttonFilters.whereExplain")} title={t("buttonFilters.where")} btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
   return (
     <FieldAccordion 
       collapsed={showPopup} 

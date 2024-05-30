@@ -14,7 +14,7 @@ import PickerEventTypeOnceForm from 'components/picker/PickerEventType/once';
 import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multiple';
 import FieldError from '../FieldError';
 import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
-import PopupForm from 'components/popup/PopupForm';
+import PickerField from 'components/picker/PickerField';
 
 export default function FieldDate({
   title,
@@ -60,9 +60,9 @@ export default function FieldDate({
           eventData={eventData}
           title={title}
         />
-    <PopupForm
+    <PickerField
       showPopup={showPopup}
-      label={t('button.changeDateLabel')}
+      btnLabel={t('button.changeDateLabel')}
       headerText={''}
       openPopup={openPopup}
       closePopup={closePopup}
@@ -113,7 +113,7 @@ export default function FieldDate({
                 onClick={closeMenu}
               />
             </div>
-    </PopupForm>
+    </PickerField>
     </>
     
     // <>

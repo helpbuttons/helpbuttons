@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IoTimeOutline } from 'react-icons/io5';
 import TimeKeeper from 'react-timekeeper';
 import t from 'i18n';
-import PopupForm from 'components/popup/PopupForm';
+import PickerField from '../PickerField';
 
 export function TimePick({ dateTime, setDateTime, label }) {
   const [pickerTime, setPickerTime] = useState(false);
@@ -26,9 +26,9 @@ export function TimePick({ dateTime, setDateTime, label }) {
   const showPickTime = () => setPickerTime(() => true);
 
   return (
-    <PopupForm
+    <PickerField
       showPopup={pickerTime}
-      label={
+      btnLabel={
         <>
           <IoTimeOutline /> {label}
         </>
@@ -48,6 +48,6 @@ export function TimePick({ dateTime, setDateTime, label }) {
           switchToMinuteOnHourSelect
         />
       </div>
-    </PopupForm>
+    </PickerField>
   );
 }
