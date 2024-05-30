@@ -21,7 +21,7 @@ export class UserController {
   @OnlyRegistered()
   @Get('whoAmI')
   whoAmI(@Request() req) {
-    return req.user;
+    return {...req.user, t: 'k'}
   }
 
   @AllowGuest()

@@ -9,10 +9,11 @@ import {
 import { Network } from '../network/network.entity';
 import { Post } from '../post/post.entity';
 import { User } from '../user/user.entity';
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 // https://stackoverflow.com/a/67557083
 
 @Entity()
+@Exclude()
 export class Button extends BaseEntity {
   @Expose()
   @Column({})
@@ -27,15 +28,19 @@ export class Button extends BaseEntity {
   @Column({})
   description: string;
 
+  @Expose()
   @Column({nullable: true})
   address?: string;
 
+  @Expose()
   @Column({ type: 'double precision' })
   public latitude: number;
 
+  @Expose()
   @Column({ type: 'double precision' })
   public longitude: number;
 
+  @Exclude()
   @Column({ type: 'geometry' })
   location: object;
 
@@ -55,6 +60,7 @@ export class Button extends BaseEntity {
   @Column('text', { array: true, nullable: true })
   images: string[];
 
+  @Expose()
   @Column('text', { array: true, nullable: true, default: [] })
   followedBy: string[];
 
@@ -68,6 +74,7 @@ export class Button extends BaseEntity {
   @ManyToOne((type) => User)
   owner: User;
 
+  @Expose()
   @Column('text')
   hexagon: string;
 

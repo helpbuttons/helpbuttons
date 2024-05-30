@@ -36,6 +36,9 @@ import { EventEmitter2 } from '@nestjs/event-emitter'
 import { notifyUser } from '@src/app/app.event';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { PostService } from '../post/post.service';
+import { plainToInstance } from 'class-transformer';
+import { Button } from './button.entity';
+import { UserService } from '../user/user.service';
 
 @ApiTags('buttons')
 @Controller('buttons')
@@ -43,6 +46,7 @@ export class ButtonController {
   constructor(
     private readonly buttonService: ButtonService,
     private readonly postService: PostService,
+    private readonly userService: UserService,
     private eventEmitter: EventEmitter2
     ) {}
 
@@ -82,7 +86,10 @@ export class ButtonController {
     @Body('hexagons', new ParseArrayPipe({ items: String, separator: ',' }))
     hexagons: string[],
   ) {
-    return await this.buttonService.findh3(resolution, hexagons);
+    const btns = await this.buttonService.findh3(resolution, hexagons);
+    return btns.map((btn) => {
+      return plainToInstance(Button, btn, { excludeExtraneousValues: true })
+    })
   }
 
   @AllowGuest()
@@ -129,13 +136,6 @@ export class ButtonController {
       });
   }
 
-  @AllowGuest()
-  @AllowIfNetworkIsPublic()
-  @Get('findAdminButton')
-  async findAdminButton() {
-    return await this.buttonService.findAdminButton();
-  }
-
   @OnlyRegistered()
   @Get('/follow/:buttonId')
   async follow(
@@ -163,7 +163,15 @@ export class ButtonController {
   @AllowGuest()
   @Get('findByOwner/:userId')
   async findByOwner(@Param('userId') userId: string) {
-    return await this.buttonService.findByOwner(userId);
+    return await this.userService.findById(userId)
+    .then((user) => {
+      if(user.showButtons)
+      {
+        return this.buttonService.findByOwner(userId);
+      }else{
+        return []
+      }
+    })
   }
 
   @AllowGuest()

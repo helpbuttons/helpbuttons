@@ -45,9 +45,9 @@ export class ActivityController {
     return await this.activityService.markAllAsRead(user.id);
   }
 
-  @Get('triggerNotifications')
-  async triggerNotifications()
-  {
-    return await this.activityCron.triggerNotifications()
-  }
+  // @Get('triggerNotifications')
+  // async triggerNotifications()
+  // {
+  //   return await this.activityCron.triggerNotifications()
+  // }
 }

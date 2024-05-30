@@ -6,6 +6,7 @@ import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 import { UserCredential } from '../user-credential/user-credential.entity';
 
 @Entity()
+@Exclude()
 export class User extends BaseEntity {
   @Expose()
   @PrimaryColumn({
@@ -34,8 +35,7 @@ export class User extends BaseEntity {
   })
   username: string;
 
-  // @Exclude()
-  @Expose()
+  @Exclude()
   @Column({
     type: 'varchar',
     unique: true,
