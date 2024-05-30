@@ -62,17 +62,23 @@ function List({
       case ExploreViewMode.MAP: {
         toggleShowMap(true);
         onLeftColumnToggle(false);
+        setListOpen(false);
+        setListFullScreen(false);    
         break;
       }
       case ExploreViewMode.LIST: {
         toggleShowMap(false);
         onLeftColumnToggle(true);
+        setListOpen(true);
+        setListFullScreen(true);   
         break;
       }
       default:
       case ExploreViewMode.BOTH: {
         toggleShowMap(true);
         onLeftColumnToggle(true);  
+        setListOpen(true);
+        setListFullScreen(false);   
         break;
       }
     }
