@@ -90,8 +90,10 @@ function List({
   }, [viewMode])
 
   useEffect(() => {
+    
     if (hexagonClicked)
     {
+      console.log(isListOpen)
       setListOpen(() => true)
     }else{
       // setListOpen(() => false)
@@ -140,7 +142,7 @@ function List({
               onScroll={handleScrollHeight} 
               initialPos={{
                 x: 0,
-                y: window.innerHeight - 120,
+                y: window.innerHeight - 110,
               }} 
               onFullScreen={toggleListOpen}
               isListOpen={isListOpen}

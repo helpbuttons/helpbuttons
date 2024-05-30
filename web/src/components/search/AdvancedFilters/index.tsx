@@ -25,6 +25,7 @@ import PopupForm from 'components/popup/PopupForm';
 import { roundCoords } from 'shared/honeycomb.utils';
 import FieldAccordion from 'elements/Fields/FieldAccordion';
 import Popup from 'components/popup/Popup';
+import { Picker } from 'components/picker/Picker';
 
 
 export default function AdvancedFilters({
