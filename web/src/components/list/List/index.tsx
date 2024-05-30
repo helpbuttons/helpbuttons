@@ -41,6 +41,11 @@ function List({
     false
   );
 
+  const hexagonClicked = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.hexagonClicked
+  )
+
   const showMapIcon = showMap
   ? <IoClose/>
   : <IoMapOutline/>;
@@ -84,13 +89,22 @@ function List({
     }
   }, [viewMode])
 
+  useEffect(() => {
+    if (hexagonClicked)
+    {
+      setListOpen(() => true)
+    }else{
+      setListOpen(() => false)
+    }
+  }, [hexagonClicked])
+
   const leftColumnToggle = (event, value) => {
     onLeftColumnToggle(event.target.value);
 
   };
 
   const [isListFullScreen, setListFullScreen] = useState<boolean>(false);
-  const [isListOpen, setListOpen] = useState<boolean>(false);
+  const [isListOpen, setListOpen] = useState<boolean>(true);
 
   const toggleListOpen = (value1, value2) => {
     setListOpen(value1);

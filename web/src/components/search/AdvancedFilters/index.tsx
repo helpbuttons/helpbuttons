@@ -137,7 +137,6 @@ export default function AdvancedFilters({
           <div className='filters__wrapper'>
             <Popup         
               title={t('buttonFilters.filters')}
-              hasActions={true}
               cancelAction={clearFilters}
               approveAction={handleSubmit(onSubmit)}
               linkBack={() => {

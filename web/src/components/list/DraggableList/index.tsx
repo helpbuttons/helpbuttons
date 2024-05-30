@@ -37,14 +37,12 @@ const DraggableList: React.FC<DraggableProps> = ({
   useEffect(() => {
 
     if (isListOpen) {
-        console.log('isopen!!!')
-        const targetY = window.innerHeight - 130; // Example target Y value
+        const targetY = window.innerHeight - 360; // Example target Y value
 
         setPos((prevPos) => ({ ...prevPos, y: targetY }));
         setDragging(true); // Optional: Set dragging to true if needed
       } else {
         const targetY = window.innerHeight - 120; // Example target Y value
-        console.log('isclosed!!!')
         setPos((prevPos) => ({ ...prevPos, y: targetY }));
         setDragging(true); // Optional: Set dragging to true if needed
       }
