@@ -7,6 +7,7 @@ interface DraggableProps {
   onScroll: any;
   onFullScreen: any;
   isListOpen?: boolean; // New prop for isListOpen
+  setListOpen: any;
   isListFullScreen?: boolean; // New prop for full screen
 }
 
@@ -18,6 +19,7 @@ const DraggableList: React.FC<DraggableProps> = ({
   style,
   onFullScreen,
   isListOpen,
+  setListOpen,
   isListFullScreen
 }) => {
   const [pos, setPos] = useState<{ x: number; y: number }>(initialPos || { x: 0, y: window.innerHeight - 0 });
@@ -57,6 +59,13 @@ const DraggableList: React.FC<DraggableProps> = ({
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if(pos.y != getOpenListHeight())
+    {
+      setListOpen(() => false)
+    }
+  }, [pos])
 
   useEffect(() => {
     if (isListOpen) {

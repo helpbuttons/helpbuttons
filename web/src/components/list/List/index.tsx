@@ -147,6 +147,7 @@ function List({
               onFullScreen={toggleListOpen}
               isListOpen={isListOpen}
               isListFullScreen={isListFullScreen}
+              setListOpen={setListOpen}
             >
               {/* <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}> */}
 
