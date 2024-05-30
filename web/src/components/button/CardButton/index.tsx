@@ -456,14 +456,16 @@ export function CardButtonHeadActions({ button, action }) {
   return (
     <div className="card-button__actions">
       <ShowPhone button={button} />
-      <Btn
-          btnType={BtnType.corporative}
-          contentAlignment={ContentAlignment.center}
-          iconLeft={IconType.circle}
-          iconLink={<IoMailOutline />}
-          submit={true}
-          onClick={action}
-      />
+      {action && 
+        <Btn
+            btnType={BtnType.corporative}
+            contentAlignment={ContentAlignment.center}
+            iconLeft={IconType.circle}
+            iconLink={<IoMailOutline />}
+            submit={true}
+            onClick={action}
+        />
+      }
       {button.hearts && (
         <span className="btn-circle__icon">
           <IoHeartOutline />

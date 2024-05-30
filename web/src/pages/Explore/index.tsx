@@ -14,7 +14,7 @@ export default function Explore({
   return (
     <>
       <ClienteSideRendering>
-        <HoneyComb selectedNetwork={selectedNetwork} />
+       <HoneyComb selectedNetwork={selectedNetwork} />
       </ClienteSideRendering>
     </>
   );

@@ -313,6 +313,9 @@ export class ButtonService {
         .then((btns) => {
           return btns.filter((btn) => !btn.expired)
         })
+        .then((btns) => {
+          return btns.map((btn) => {return {...btn, hasPhone: btn.owner.phone ? true : false}})
+        })
         // return Promise.all(btns)
       });
     } catch (err) {

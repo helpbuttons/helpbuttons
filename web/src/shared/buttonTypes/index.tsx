@@ -1,7 +1,4 @@
-import { useEffect, useState } from 'react';
-
 import { GlobalState, store } from 'pages';
-import { Network } from 'shared/entities/network.entity';
 import { useStore } from 'store/Store';
 
 
@@ -10,10 +7,11 @@ export const buttonColorStyle = (cssColor: string) => {
 };
 
 export const useButtonTypes = () => {
-  return useStore(
+  const selectedNetwork = useStore(
     store,
-    (state: GlobalState) => state.networks.selectedNetwork.buttonTemplates,
+    (state: GlobalState) => state.networks.selectedNetwork,
   );
+  return selectedNetwork ? selectedNetwork.buttonTemplates : []
 }
 
 export const isButtonTypeEvent = (buttonType) => {
