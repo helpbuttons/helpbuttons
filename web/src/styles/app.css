@@ -7465,7 +7465,6 @@ hr {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 100%;
   width: 100%;
   margin: auto;
   align-items: center;
@@ -7493,10 +7492,10 @@ hr {
   height: auto;
   border-bottom: 1px solid #D4D4D4;
   justify-content: space-between;
-  padding: 5px 4px;
+  padding: 5px 15px;
   gap: 5px;
   position: relative;
-  min-height: 80px;
+  min-height: 60px;
   border-radius: 24px 24px 0 0;
 }
 
@@ -7829,8 +7828,9 @@ body {
 }
 
 .popup__options-h {
-  flex-wrap: wrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
+  gap: 5px;
 }
 .popup__options-h .popup__options-btn {
   flex: 0 1 50%;

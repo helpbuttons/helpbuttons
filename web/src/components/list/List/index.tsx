@@ -94,7 +94,7 @@ function List({
     {
       setListOpen(() => true)
     }else{
-      setListOpen(() => false)
+      // setListOpen(() => false)
     }
   }, [hexagonClicked])
 
@@ -160,8 +160,7 @@ function List({
                       selectedButtonTypes={filters.helpButtonTypes}
                     />
                   } */}
-                  {isListFullScreen &&
-                    <>
+                  {isListOpen &&
                         <AdvancedFiltersSortDropDown
                           className={'dropdown__dropdown-trigger--list'}
                           orderBy={filters.orderBy}
@@ -169,28 +168,20 @@ function List({
                           buttonTypes={buttonTypes}
                           selectedButtonTypes={filters.helpButtonTypes}
                         />
+                  }
+                  {isListFullScreen &&  
                         <Btn
                           btnType={BtnType.smallLink}
                           // extraClass='dropdown__dropdown-trigger--list'
                           // iconLeft={IconType.svg}
                           iconLink={<IoMap />}
                           contentAlignment={ContentAlignment.left}
-                          caption={t("explore.hideList")}
+                          caption={t("explore.showMap")}
                           onClick={toggleListOpen}
                         />
-                    </>
+                  }
 
-                    // <div className={'list__show-map-button ' + (showLeftColumn ? '' : ' list__show-map-button--hideList')}>
-                    //   <Dropdown
-                    //       options={dropdownExploreViewOptions}
-                    //       className={'dropdown__dropdown-trigger--list'}
-                    //       onChange={(value : ExploreViewMode) => store.emit(new UpdateExploreViewMode(value))}
-                    //       defaultSelected={viewMode}
-                    //     />
-             
-                    //                     </div>
 
-                    }
                 </div>
                 <div
                   className={

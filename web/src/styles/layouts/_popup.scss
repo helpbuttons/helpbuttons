@@ -337,9 +337,10 @@ body {
 
 .popup__options-h {
 
-  //flex-flow: row nowrap;
-  flex-wrap: wrap;
+  flex-flow: row nowrap;
+  // flex-wrap: wrap;
   justify-content: space-between;
+  gap: $padding-small;
 
   .popup__options-btn {
 
