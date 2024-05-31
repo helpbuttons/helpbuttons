@@ -1,7 +1,8 @@
 @import "~@fontsource/nunito/index.css";
 @import "~@fontsource/nunito/700.css";
 @import "~@fontsource/nunito/400.css";
-@import "~@fontsource/quicksand/400.css";
+@import "~@fontsource/quicksand/300.css";
+@import "~@fontsource/quicksand/500.css";
 @import "~@fontsource/quicksand/600.css";
 .spinner {
   animation: spin 2s infinite linear;
@@ -24,7 +25,7 @@
 
 .title__h1 {
   font-size: 4rem;
-  font-weight: 100;
+  font-weight: 500;
   line-height: 4.5rem;
 }
 
@@ -42,7 +43,7 @@
 
 .paragraph {
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.5rem;
 }
 .paragraph a {
@@ -296,6 +297,7 @@ button {
 
 a {
   color: var(--network-background-color);
+  word-break: break-all;
 }
 a:hover {
   color: #828282;
@@ -998,7 +1000,7 @@ a:hover {
   top: 7px;
   left: 24px;
   font-size: 16px;
-  font-weight: 100;
+  font-weight: 500;
   height: auto;
 }
 .form__explain:first-letter {
@@ -1933,7 +1935,7 @@ a:hover {
   border: none;
   background: transparent;
   padding: 0 10px;
-  font-weight: 100;
+  font-weight: 500;
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 10px;
@@ -3297,7 +3299,7 @@ li, ol, ul, h2 {
 .picker__header {
   width: 100%;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
   text-align: center;
 }
 
@@ -4764,7 +4766,7 @@ hr {
   border-radius: 8px;
   background-color: transparent;
   padding: 5px;
-  font-weight: 400;
+  font-weight: 500;
   margin-top: 7px;
   color: #828282;
   font-size: 14px;
@@ -4825,7 +4827,7 @@ hr {
 }
 
 .header-search__title {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 22px;
   margin: auto 12px;
 }
@@ -4845,7 +4847,7 @@ hr {
 
 .header-search__info {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   position: absolute;
   top: 1rem;
   margin-left: 10px;
@@ -4891,7 +4893,7 @@ hr {
 .header-search__description {
   display: none;
   font-family: "Worksans", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
 }
 
@@ -5347,7 +5349,7 @@ hr {
 
 .card-button__username {
   color: #828282;
-  font-weight: 100;
+  font-weight: 500;
 }
 
 .card-button__title {
@@ -6190,7 +6192,7 @@ hr {
 
 .card-profile__username {
   font-size: 18px;
-  font-weight: 100;
+  font-weight: 500;
   color: #828282;
 }
 
