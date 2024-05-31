@@ -123,7 +123,7 @@ const FieldButtonTemplates = forwardRef(
                     <EmojiPicker
                      updateEmoji={(newEmoji) => setEmoji(() => newEmoji)} 
                      pickerEmoji={emoji}
-                     label={t('configuration.buttonTemplateName')}
+                     label={t('configuration.buttonTemplateEmoji')}
                      />
 
                     <FieldColorPick
