@@ -92,21 +92,6 @@ export default function CardProfile({ user, showAdminOptions = false}) {
   );
 }
 
-
-export function LinkAdminButton({adminButtonId}) {
-  return (
-    <div>
-      <Link href={`/ButtonFile/${adminButtonId}`}>
-        <Btn
-          iconLeft={IconType.svg}
-          iconLink={<IoHandLeftOutline />}
-          caption={t('configuration.contactAdmin')}
-        />
-      </Link>
-    </div>
-  );
-}
-
 function ProfileAdminOptions({ user }) {
   const updateRole = (userId, newRole) => {
     store.emit(
