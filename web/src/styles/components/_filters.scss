@@ -18,7 +18,7 @@ $filters-padding: 10px;
   margin-bottom: $margin-big;
   position: relative;
   z-index: $z-index-05;
-  pointer-events: auto; 
+  pointer-events: all; 
   // padding: $filters-padding;
   overflow: hidden;
 
@@ -149,6 +149,7 @@ $filters-padding: 10px;
     height: auto;
     overflow: hidden;
     flex-direction: column;
+    pointer-events: auto; 
     /* Add other styles as needed */
   }
 

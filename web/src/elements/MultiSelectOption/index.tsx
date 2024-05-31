@@ -63,11 +63,11 @@ export default function MultiSelectOption({
           checked={checked}
           onChange={onChange}
           ref={ref}
-          style={{'background-color': 'red'} as React.CSSProperties}
+          style={{'backgroundColor': 'red'} as React.CSSProperties}
         ></input>
         <div
           className={`checkbox__content ${checked ? 'checked' : ''}`}
-          style={{'border-color': color} as React.CSSProperties}
+          style={{'borderColor': color} as React.CSSProperties}
         >
           <MultiSelectOptionIcon checked={checked} icon={icon} iconLink={iconLink} />
           {children}

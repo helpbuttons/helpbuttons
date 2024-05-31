@@ -21,10 +21,9 @@ import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { alertService } from 'services/Alert';
 import { FollowTag } from 'state/Users';
-import PopupForm from 'components/popup/PopupForm';
-import { roundCoords } from 'shared/honeycomb.utils';
 import FieldAccordion from 'elements/Fields/FieldAccordion';
 import Popup from 'components/popup/Popup';
+import PickerField from 'components/picker/PickerField';
 
 
 export default function AdvancedFilters({
@@ -137,7 +136,6 @@ export default function AdvancedFilters({
           <div className='filters__wrapper'>
             <Popup         
               title={t('buttonFilters.filters')}
-              hasActions={true}
               cancelAction={clearFilters}
               approveAction={handleSubmit(onSubmit)}
               linkBack={() => {
@@ -226,15 +224,26 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
   const closePopup = () => setShowPopup(() => false)
   const openPopup = () => setShowPopup(() => true)
   
+  // <PickerField label={t("buttonFilters.where")} explain={t("buttonFilters.whereExplain")} title={t("buttonFilters.where")} btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
   return (
-    <FieldAccordion 
+    <PickerField 
+      label={t("buttonFilters.where")} 
+      explain={t("buttonFilters.whereExplain")} 
+      title={t("buttonFilters.where")} 
+      btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))} 
+      showPopup={showPopup} 
+      openPopup={openPopup} 
+      closePopup={closePopup}
+    >
+
+    {/* <FieldAccordion 
       collapsed={showPopup} 
       btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))}
       label={t("buttonFilters.where")}
       explain={t("buttonFilters.whereExplain")}
       title={t("buttonFilters.where")}
       hideChildren={closePopup}
-    >
+    > */}
      <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
               handleSelectedPlace={handleSelectedPlace}
@@ -266,7 +275,7 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
                 contentAlignment={ContentAlignment.center}
                 onClick={() => closePopup()}
               />
-      </FieldAccordion>
+      </PickerField>
   );
 }
 export function AdvancedFiltersSortDropDown({className, label = '', orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm = false, explain = '' }) {

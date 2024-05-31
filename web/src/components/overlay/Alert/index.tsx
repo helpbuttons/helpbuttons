@@ -92,8 +92,8 @@ function Alert({ id, fade }) {
 
 export function FixedAlert({ alertType = AlertType.Info, message }) {
   return (
-    <>
-        <div className={alertTypeClass[alertType]}>
+    <div className="card-alert__container">
+        <div className={alertTypeClass[alertType]+' card-alert'}>
           <div className="card-alert__content">
             <div className="card-alert__icon">
               {alertTypeIcon[alertType]}
@@ -104,6 +104,6 @@ export function FixedAlert({ alertType = AlertType.Info, message }) {
             ></span>
           </div>
         </div>
-    </>
+    </div>
   );
 }

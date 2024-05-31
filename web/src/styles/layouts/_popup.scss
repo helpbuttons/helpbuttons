@@ -32,6 +32,7 @@ body {
   // Header Top Content Bottom
   display: flex;
   flex-flow: column;
+  pointer-events: auto;
 }
 
 .popup--button-file {
@@ -336,9 +337,10 @@ body {
 
 .popup__options-h {
 
-  //flex-flow: row nowrap;
-  flex-wrap: wrap;
+  flex-flow: row nowrap;
+  // flex-wrap: wrap;
   justify-content: space-between;
+  gap: $padding-small;
 
   .popup__options-btn {
 
@@ -378,14 +380,11 @@ body {
   .popup {
 
     margin: 0px auto;
-    max-width: $popup-max-width;
-
     // Centering
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     background: transparent;
-
     z-index: $z-index-03;
 
   }
@@ -398,6 +397,7 @@ body {
   .popup__header,
   .popup__content {
 
+    
     background: $color-white;
     display: flex;
     flex-direction: column;
@@ -405,7 +405,9 @@ body {
     margin-bottom: 0;
 
   }
-
+  .popup__content {
+    border-radius:  0;
+  }
   .popup__header {
 
     height: $popup-header-height;
@@ -436,6 +438,8 @@ body {
 
   .popup {
     margin: auto;
+    max-width: $popup-max-width;
+    pointer-events: auto;
   }
 
   .popup__header {

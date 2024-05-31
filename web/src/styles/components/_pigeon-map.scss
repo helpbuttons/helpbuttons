@@ -22,10 +22,7 @@ $map-btns-size-mobile: 30px;
         }
     }
 
-    
-
 }
-
 
 .pigeon-center-buttons {
 
@@ -34,7 +31,7 @@ $map-btns-size-mobile: 30px;
     top: 130px !important;
     display: block;
     left: auto !important;
-    z-index: $z-index-03;
+    z-index: $z-index-02;
 
     &:hover {
         cursor: pointer;

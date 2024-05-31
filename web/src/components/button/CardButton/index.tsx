@@ -382,7 +382,7 @@ function ExpiringAlert({button, isOwner = false} : {button: Button, isOwner: boo
   
   if(isEventAndIsExpired(button))
   { 
-    return <FixedAlert alertType={AlertType.Success} message={`${t('button.endDatesExpired')}`}/>
+    return <FixedAlert alertType={AlertType.Info} message={`${t('button.endDatesExpired')}`}/>
   }
   return <FixedAlert alertType={AlertType.Success} message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id}">${t('button.renewLink')}</a>`}/>
 }

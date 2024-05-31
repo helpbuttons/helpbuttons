@@ -15,6 +15,7 @@ import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 import { useButtonTypes } from 'shared/buttonTypes';
+import DraggableList from '../DraggableList';
 
 
 function List({
@@ -40,12 +41,20 @@ function List({
     false
   );
 
+  const hexagonClicked = useStore(
+    store,
+    (state: GlobalState) => state.explore.settings.hexagonClicked
+  )
+
   const showMapIcon = showMap
   ? <IoClose/>
   : <IoMapOutline/>;
 
   const handleChangeShowMap = (event) => {
     toggleShowMap(event.target.value);
+    setListOpen(false);
+    onLeftColumnToggle(false);
+    setListFullScreen(false);
   };
 
   const updatesOrderByFilters = (value) => {
@@ -58,24 +67,50 @@ function List({
       case ExploreViewMode.MAP: {
         toggleShowMap(true);
         onLeftColumnToggle(false);
+        setListOpen(false);
+        setListFullScreen(false);    
         break;
       }
       case ExploreViewMode.LIST: {
         toggleShowMap(false);
         onLeftColumnToggle(true);
+        setListOpen(true);
+        setListFullScreen(true);   
         break;
       }
       default:
       case ExploreViewMode.BOTH: {
         toggleShowMap(true);
         onLeftColumnToggle(true);  
+        setListOpen(true);
+        setListFullScreen(false);   
         break;
       }
     }
   }, [viewMode])
 
-  const handleChange = (event) => {
+  useEffect(() => {
+    
+    if (hexagonClicked)
+    {
+      console.log(isListOpen)
+      setListOpen(() => true)
+    }else{
+      // setListOpen(() => false)
+    }
+  }, [hexagonClicked])
+
+  const leftColumnToggle = (event, value) => {
     onLeftColumnToggle(event.target.value);
+
+  };
+
+  const [isListFullScreen, setListFullScreen] = useState<boolean>(false);
+  const [isListOpen, setListOpen] = useState<boolean>(true);
+
+  const toggleListOpen = (value1, value2) => {
+    setListOpen(value1);
+    setListFullScreen(value2);
   };
 
   const buttonTypes = useButtonTypes();
@@ -101,72 +136,123 @@ function List({
     <>
       {!showAdvancedFilters && (
         <>
-          <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}>
-            <div className={ 'list__order ' +  (showLeftColumn ? '' : ' list__order--hidden') + (showMap ? '' : ' list__order--full-screen')} >
-              {showLeftColumn &&
-                <AdvancedFiltersSortDropDown
-                  className={'dropdown__dropdown-trigger--list'}
-                  orderBy={filters.orderBy}
-                  setOrderBy={(value) => updatesOrderByFilters(value)}
-                  buttonTypes={buttonTypes}
-                  selectedButtonTypes={filters.helpButtonTypes}
-                />
-              }
-              <ShowDesktopOnly>
-                <div onClick={handleChange} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
-                  <span className="drag-tab__line"></span>
-                  <div className="drag-tab__icon">
-                    {(!showLeftColumn) ? (
-                      <Btn
-                      btnType={BtnType.link}
-                      iconLeft={IconType.svg}
-                      iconLink={<IoList />}
-                      contentAlignment={ContentAlignment.center}
-                      caption={t("explore.showList")}
-                      onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.BOTH))}
-                        />
-                    ) : (
-                      <Btn
-                      btnType={BtnType.link}
-                      iconLeft={IconType.svg}
-                      iconLink={<IoClose />}
-                      contentAlignment={ContentAlignment.center}
-                      // caption={t("explore.hideList")}
-                      onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))}
-                      />
-                    )}
-                  </div>
-                </div>
-              </ShowDesktopOnly>
-              <ShowMobileOnly>
-                <div className={'list__show-map-button ' + (showLeftColumn ? '' : ' list__show-map-button--hideList')}>
-                  <Dropdown
-                      options={dropdownExploreViewOptions}
-                      className={'dropdown__dropdown-trigger--list'}
-                      onChange={(value : ExploreViewMode) => store.emit(new UpdateExploreViewMode(value))}
-                      defaultSelected={viewMode}
-                    />
-                </div>
-              </ShowMobileOnly>
-            </div>
-            <div
-              className={
-                'list__content ' +
-                (showMap
-                  ? 'list__content--mid-screen'
-                  : 'list__content--full-screen')
-              }
-              onScroll={handleScrollWidth}
+          <ShowMobileOnly>
+            <DraggableList  
+              className={'list__container '} 
+              onScroll={handleScrollHeight} 
+              initialPos={{
+                x: 0,
+                y: window.innerHeight - 110,
+              }} 
+              onFullScreen={toggleListOpen}
+              isListOpen={isListOpen}
+              isListFullScreen={isListFullScreen}
+              setListOpen={setListOpen}
             >
-              {buttonTypes?.length > 0 && (
-                <ContentList
-                  buttons={buttons.slice(0, sliceSize)}
-                  buttonTypes={buttonTypes}
-                  showMap={showMap}
-                />
-              )}
+              {/* <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}> */}
+
+                <div className={ 'list__order  ' + (isListFullScreen ? ' list__order--full-screen' : '') } >
+                  <div className='drag-tab__line'></div>
+
+                  {/* {showLeftColumn &&
+                    <AdvancedFiltersSortDropDown
+                      className={'dropdown__dropdown-trigger--list'}
+                      orderBy={filters.orderBy}
+                      setOrderBy={(value) => updatesOrderByFilters(value)}
+                      buttonTypes={buttonTypes}
+                      selectedButtonTypes={filters.helpButtonTypes}
+                    />
+                  } */}
+                  {isListOpen &&
+                        <AdvancedFiltersSortDropDown
+                          className={'dropdown__dropdown-trigger--list'}
+                          orderBy={filters.orderBy}
+                          setOrderBy={(value) => updatesOrderByFilters(value)}
+                          buttonTypes={buttonTypes}
+                          selectedButtonTypes={filters.helpButtonTypes}
+                        />
+                  }
+                  {isListFullScreen &&  
+                        <Btn
+                          btnType={BtnType.smallLink}
+                          // extraClass='dropdown__dropdown-trigger--list'
+                          // iconLeft={IconType.svg}
+                          iconLink={<IoMap />}
+                          contentAlignment={ContentAlignment.left}
+                          caption={t("explore.showMap")}
+                          onClick={toggleListOpen}
+                        />
+                  }
+
+
+                </div>
+                <div
+                  className={
+                    'list__content list__content--full-screen ' 
+                  }
+                  onScroll={handleScrollWidth}
+                  >
+                  {buttonTypes?.length > 0 && (
+                    <ContentList
+                      buttons={buttons.slice(0, sliceSize)}
+                      buttonTypes={buttonTypes}
+                      showMap={showMap}
+                    />
+                  )}
+                </div>
+              {/* </div>     */}
+            </DraggableList>
+          </ShowMobileOnly>
+          <ShowDesktopOnly>
+            <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}>
+                <div className={ 'list__order ' +  (showLeftColumn ? '' : ' list__order--hidden') + (showMap ? '' : ' list__order--full-screen')} >
+                  {showLeftColumn &&
+                    <AdvancedFiltersSortDropDown
+                      className={'dropdown__dropdown-trigger--list'}
+                      orderBy={filters.orderBy}
+                      setOrderBy={(value) => updatesOrderByFilters(value)}
+                      buttonTypes={buttonTypes}
+                      selectedButtonTypes={filters.helpButtonTypes}
+                    />
+                  }
+                    
+                        {(!showLeftColumn) ? (
+                          <div onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.BOTH))} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
+                            <span className="drag-tab__line"></span>
+                            <div className="drag-tab__icon">
+                              <IoList />
+                            </div>
+                            {t("explore.showList")}
+                          </div>
+                        ) : (
+                          <div onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
+                            <span className="drag-tab__line"></span>
+                            <div className="drag-tab__icon">
+                              <IoClose />    
+                            </div>
+                          </div>
+                        )}
+
+                </div>
+              <div
+                className={
+                  'list__content ' +
+                  (showMap
+                    ? 'list__content--mid-screen'
+                    : 'list__content--full-screen')
+                }
+                onScroll={handleScrollWidth}
+              >
+                {buttonTypes?.length > 0 && (
+                  <ContentList
+                    buttons={buttons.slice(0, sliceSize)}
+                    buttonTypes={buttonTypes}
+                    showMap={showMap}
+                  />
+                )}
+              </div>
             </div>
-          </div>
+          </ShowDesktopOnly>
         </>
       )}
     </>

@@ -3,16 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { getDistance } from 'geolib';
 
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import { Picker } from 'components/picker/Picker';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
 
 import { NetworkMapConfigure } from 'components/map/Map/NetworkMapConfigure';
 import { BrowseType, HbMapTiles } from 'components/map/Map/Map.consts';
 import circleToPolygon from 'circle-to-polygon';
 import { getBoundsHexFeatures } from 'shared/honeycomb.utils';
-import FieldError from '../FieldError';
-import PopupForm from 'components/popup/PopupForm';
+import PickerField from 'components/picker/PickerField';
 
 export default function FieldAreaMap({
   validationError,
@@ -28,14 +25,14 @@ export default function FieldAreaMap({
   const closePopup = () => setShowPopup(() => false)
   const openPopup = () => setShowPopup(() => true)
   return (
-    <PopupForm showPopup={showPopup} validationError={validationError} label={label} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
+    <PickerField showPopup={showPopup} validationError={validationError} btnLabel={label} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
        <FieldAreaMapSettings
           defaultExploreSettings={value}
           onChange={onChange}
           marker={marker}
           closePopup={closePopup}
         />
-    </PopupForm>
+    </PickerField>
   )
 }
 

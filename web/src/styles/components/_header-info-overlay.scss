@@ -5,13 +5,13 @@ $info-image-height: 700px;
 $info-content-mobile-bottom-padding: calc( $footer-height-mobile*2 );
 $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padding-small );
 
-.homeinfo__selected {
+.info-overlay__selected {
 
   border: 1px solid $color-black;
 
 }
 
-.homeinfo__background {
+.info-overlay__background {
 
   height: 100%;
   position: absolute;
@@ -21,7 +21,7 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
 
 }
 
-.homeinfo__container {
+.info-overlay__container {
 
   // background-color: $color-white;
   padding: $info-content-head-margin 0;
@@ -36,7 +36,7 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
 
 }
 
-.homeinfo__content {
+.info-overlay__content {
 
   @extend .form__field;
   margin: auto;
@@ -46,29 +46,14 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   background-color: transparent;
   width: 100%;
   height: 100vh;
-  overflow: scroll;
+  overflow: hidden;
   box-sizing: border-box;
   // margin-top: $margin-small;
   margin-bottom: $info-content-mobile-bottom-padding;
 
  }
 
-
-.homeinfo-card {
-
-  border-radius: $border-radius-basic;
-  background-color: $color-white;
-  padding: $padding-big;
-  // margin: $margin-xsmall 0;
-  margin: $margin-medium $margin-small;
-  flex: 0.8 0 49%;
-  // max-height: 100%;
-  // height: fit-content;
-  overflow: auto;
-
-}
-
-.homeinfo__search-section {
+.info-overlay__search-section {
 
   background-color: $color-corporative;
   padding: 0;
@@ -86,30 +71,26 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
 
 }
 
-.homeinfo__card--title-card {
+.info-overlay__card--header {
 
   background-image:var(--network-jumbo);
   background-repeat: no-repeat, repeat;
   background-position: center;
   background-size: cover;
   height: auto;
-  border-radius: 0;
+  padding: 0;
   align-items: center;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  margin: 0 ;
-  height: 20rem;
-  flex-basis: 100%;
-  padding: $padding-big;
+  margin: 0;
   border-radius: 0;
+  align-items: center;
+  justify-content: space-evenly;
 
 }
 
-
-.homeinfo__network-title {
+.info-overlay__network-title {
 
   padding: $padding-big;
   display: flex;
@@ -117,46 +98,24 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   justify-content: center;
   align-items: center;
   border-radius: $border-radius-basic;
-  min-width: 300px;
-  width: auto;
-  background-color: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 
-}
-
-.homeinfo__network-title-text {
-
-  font-size: $font-size-huge;
-  line-height: $font-size-huge;
-  word-wrap: break-word;
-  display: flex;
-  border-radius: $border-radius-basic;
-  // background-color: $color-dark-gray;
-  padding: $padding-big;
-  color: $color-dark-gray;
-  max-width: 100%;
-  align-self: center;
-  justify-content: center;
-
-  ::first-letter {
-
-    text-transform: uppercase;
-
-  }
 
 }
 
-.homeinfo__network-title-card--buttons {
+.info-overlay__network-title-card--buttons {
 
   margin-top: $margin-small;
   width: fit-content;
 
 }
 
-.homeinfo__sections {
+.info-overlay__card {
 
-   flex-grow: 1;
+  flex-grow: 1;
   margin: auto;
   // margin-top: $margin-small;
   color: $color-dark-gray;
@@ -167,93 +126,124 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   justify-content:space-around;
   align-items: flex-start;
 
-}
+  .card {
+
+    border-radius: 10px;
+    background-color: $color-white;
+    padding: $padding-big;
+    margin: $margin-xsmall $margin-xxsmall;
+    flex: 0.8 0 49%;
+    // max-height: 100%;
+    // height: fit-content;
+    overflow: auto;
 
 
-.homeinfo-card__header {
+    .card__header {
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0;
-  padding-bottom: $padding-small;
-  width: 100%;
-  gap: $padding-medium;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0;
+      padding-bottom: $padding-small;
+      width: 100%;
+      gap: $padding-medium;
+  
+      .card__header-image {
+  
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        background-color: $color-gray;
+  
+      }
+  
+      .card__header-title {
+  
+        font-size: $font-size-title;
+        line-height: $font-size-title;
 
-  .homeinfo-card__header-image {
+        &.network-title {
+  
+          font-size: $font-size-huge;
+          line-height: $font-size-huge;
+          word-wrap: break-word;
+          display: flex;
+          border-radius: $border-radius-basic;
+          // background-color: $color-dark-gray;
+          padding: $padding-big;
+          color: $color-dark-gray;
+          max-width: 100%;
+          align-self: center;
+          justify-content: center;
 
-    height: 25px;
-    width: 25px;
-    border-radius: 50%;
-    background-color: $color-gray;
+          ::first-letter {
 
-  }
+            text-transform: uppercase;
 
-  .homeinfo-card__header-title {
-
-    font-size: $font-size-title;
-    line-height: $font-size-title;
-
-  }
-
-}
-
-
-
-
-
-hr {
-
-  border-top: 0.5px solid $color-ligth-gray;
-
-}
+          }
+    
+        }
+  
+      }
 
 
 
-.homeinfo__description {
+    }
 
-  overflow:auto;
-  white-space: pre-wrap;
-  padding: $padding-medium 0;
-  word-wrap: break-word;
-  display: inline-block;
-  width: 98%;
-  max-width: 98%;
+    hr {
 
-}
+      border-top: 0.5px solid $color-ligth-gray;
 
-.homeinfo__users {
-
-  overflow:auto;
-  white-space: normal;
-  padding: $padding-medium 0;
-  word-wrap: break-word;
-  display: flex;
-  flex-direction: column;
-  gap: $margin-small;
-  width: 98%;
-  max-width: 98%;
-
-}
-
-.homeinfo__hashtags {
-
-  display: flex;
-  flex-wrap:wrap;
-  overflow: auto;
-  padding-bottom: $padding-medium;
-  padding-top: $padding-medium;
-
-  .hashtags__list-item {
-
-    margin-top: $padding-medium;
-    margin-left: unset;
+    }
 
   }
 
+  .info-overlay__description {
+
+    overflow:auto;
+    white-space: pre-wrap;
+    padding: $padding-medium 0;
+    word-wrap: break-word;
+    display: inline-block;
+    width: 98%;
+    max-width: 98%;
+
+  }
+
+  .info-overlay__users {
+
+    overflow:auto;
+    white-space: normal;
+    padding: $padding-medium 0;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    gap: $margin-small;
+    width: 98%;
+    max-width: 98%;
+
+  }
+
+  .info-overlay__hashtags {
+
+    display: flex;
+    flex-wrap:wrap;
+    overflow: auto;
+    padding-bottom: $padding-medium;
+    padding-top: $padding-medium;
+
+    .hashtags__list-item {
+
+      margin-top: $padding-medium;
+      margin-left: unset;
+
+    }
+
+  }
+
 }
 
-.homeinfo-card__section {
+.card__section {
 
   border-radius: $border-radius-basic;
   background-color: transparent;
@@ -276,7 +266,7 @@ hr {
 
 }
 
-.homeinfo-card__section--actions {
+.card__section--actions {
 
   display: flex;
   flex-direction: column;
@@ -285,7 +275,7 @@ hr {
 
 }
 
-.homeinfo__bottom {
+.info-overlay__bottom {
 
   width: 100%;
   padding: $padding-big;
@@ -293,7 +283,7 @@ hr {
 
 }
 
-.homeinfo__nets {
+.info-overlay__nets {
 
   @extend .form__field;
   margin: auto;
@@ -301,7 +291,7 @@ hr {
 
 }
 
-.homeinfo__body {
+.info-overlay__body {
 
   position: relative;
 
@@ -310,44 +300,43 @@ hr {
 
  @media #{$breakpoints-xlarge} {
 
-  .homeinfo__bottom {
+  .info-overlay__bottom {
 
     bottom: 2%;
 
   }
 
-  .homeinfo__container {
+  .info-overlay__container {
 
     margin-bottom: 0;
     padding-top: 0;
 
   }
 
-  .homeinfo__content {
+  .info-overlay__content {
 
     padding-bottom: 0px;
     height: 100vh;
 
-  } 
+  }
 
-  .homeinfo__sections {
+  .info-overlay__card--header {
+
+    height: 20rem;
+    flex-basis: 100% !important;
   
+  }
+
+  .info-overlay__card {
+    
+    // max-height: calc(100vh - 300px);
+    // max-width: $grid-max-width;
     padding-bottom: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: $margin-small;
-    margin: $margin-small;
-    margin-bottom: $margin-small;
-  
-  }
+    padding: $margin-small;
 
-  .homeinfo-card {
-
-    margin: 0;
-    padding: $margin-medium;
-    margin-bottom: $margin-xsmall;
 
   }
-
 
  }

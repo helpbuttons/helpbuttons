@@ -26,6 +26,7 @@ import { LoadabledComponent } from 'components/loading';
 import Popup from 'components/popup/Popup';
 import { getLocale } from 'shared/sys.helper';
 import { Network } from 'shared/entities/network.entity';
+import Accordion from 'elements/Accordion';
 
 export default function Profile() {
   const loggedInUser = useRef(
@@ -79,41 +80,44 @@ export default function Profile() {
               {loggedInUser?.role == Role.admin && adminButtonId && (
                 <LinkAdminButton adminButtonId={adminButtonId} />
               )}
-              {loggedInUser?.username == loggedInUser?.username && (
-                <div className="card-profile__actions">
-                  <Link href="/ProfileEdit">
-                    <Btn
-                      iconLeft={IconType.svg}
-                      iconLink={<IoHammerOutline />}
-                      caption={t('user.editProfile')}
-                    />
-                  </Link>
-                  {selectedNetwork?.inviteOnly && 
-                    <Link href="/Profile/Invites">
+              <Accordion title={t('configuration.config')}>
+                {loggedInUser?.username == loggedInUser?.username && (
+                  <div className="card-profile__actions">
+                    <Link href="/ProfileEdit">
                       <Btn
                         iconLeft={IconType.svg}
-                        iconLink={<IoPersonAddOutline />}
-                        caption={t('invite.title')}
+                        iconLink={<IoHammerOutline />}
+                        caption={t('user.editProfile')}
                       />
                     </Link>
-                  }
+                    {selectedNetwork?.inviteOnly && 
+                      <Link href="/Profile/Invites">
+                        <Btn
+                          iconLeft={IconType.svg}
+                          iconLink={<IoPersonAddOutline />}
+                          caption={t('invite.title')}
+                        />
+                      </Link>
+                    }
 
-                  {isAdmin && (
-                    <AdminOptions adminButtonId={adminButtonId} />
-                  )}
-                  
-                  <Link href="/HomeInfo">
-                    <div onClick={logout} className="btn-with-icon">
-                      <div className="btn-with-icon__icon">
-                        <IoLogOutOutline />
+                    {isAdmin && (
+                      <AdminOptions adminButtonId={adminButtonId} />
+                    )}
+                    
+                    <Link href="/HomeInfo">
+                      <div onClick={logout} className="btn-with-icon">
+                        <div className="btn-with-icon__icon">
+                          <IoLogOutOutline />
+                        </div>
+                        <span className="btn-with-icon__text">
+                          {t('user.logout')}
+                        </span>
                       </div>
-                      <span className="btn-with-icon__text">
-                        {t('user.logout')}
-                      </span>
-                    </div>
-                  </Link>
-                </div>
-              )}
+                    </Link>
+                  </div>
+                )}
+              </Accordion>
+              
             </LoadabledComponent>
           </Popup>
     </>
