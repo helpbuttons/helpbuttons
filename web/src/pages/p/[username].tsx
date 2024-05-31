@@ -1,18 +1,11 @@
 //Users buttons an profile info URL
-import CardProfile, {
-  LinkAdminButton,
-} from 'components/user/CardProfile';
-
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
-import { User } from 'shared/entities/user.entity';
 import {
-  FindAdminButton,
   FindExtraFieldsUser,
   FindUserButtons,
 } from 'state/Users';
-import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
 import { useRouter } from 'next/router';
 import Popup from 'components/popup/Popup';
@@ -24,6 +17,7 @@ import { NextPageContext } from 'next';
 import { ServerPropsService } from 'services/ServerProps';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { makeImageUrl } from 'shared/sys.helper';
+import CardProfile from 'components/user/CardProfile';
 
 export default function p({ metadata, userProfile }) {
   const [userButtons, setUserButtons] = useState(null);
@@ -45,15 +39,6 @@ export default function p({ metadata, userProfile }) {
     const username = router.query.username as string;
     let newUserProfile = '';
     if (userProfile) {
-      if (userProfile.role == Role.admin) {
-        store.emit(
-          new FindAdminButton((buttonData) => {
-            if (buttonData?.id) {
-              setAdminButtonId(() => buttonData.id);
-            }
-          }),
-        );
-      }
       if (userProfile.showButtons && !userButtons) {
         console.log('getting user btns');
         store.emit(
@@ -101,9 +86,6 @@ export default function p({ metadata, userProfile }) {
             user={userProfile}
             showAdminOptions={loggedInUser?.role == Role.admin}
           />
-        )}
-        {userProfile?.role == Role.admin && adminButtonId && (
-          <LinkAdminButton adminButtonId={adminButtonId} />
         )}
         {loggedInUser?.role == Role.admin && (
           <>Email: {extraFields.email}</>

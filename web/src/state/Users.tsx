@@ -150,21 +150,6 @@ export class FindExtraFieldsUser implements WatchEvent {
     );
   }
 }
-export class FindAdminButton implements WatchEvent {
-  public constructor(
-    private onSuccess = undefined,
-  ) {}
-
-  public watch(state: GlobalState) {
-    return ButtonService.findAdminButton().pipe(
-      map((buttonData) => {
-        this.onSuccess(buttonData);
-      }),
-      catchError((error) => {this.onSuccess(null); return  of(undefined)})
-    )
-  }
-}
-
 export class Logout implements UpdateEvent {
   public constructor() {}
 

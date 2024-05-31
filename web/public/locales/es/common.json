@@ -222,7 +222,7 @@
     "adminPhonePublishExplain": "Eres administrador de la red, ¿quieres que tu teléfono este disponible en la página principal? Puedes indicar también si quieres que te puedan contactar por Whatsapp.",
     "adminPhonePublish": "Publicar mi teléfono en la página de inicio",
     "showWhatsapp": "Mostrar Whatsapp",
-    "addSupport": "Eres administrador, añade tu teléfono o crea un _helpbutton_ de contacto para que puedan contactarte más fácilmente"
+    "addSupport": "Eres administrador, añade tu teléfono para que puedan contactarte más fácilmente"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
