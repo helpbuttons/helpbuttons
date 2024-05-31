@@ -24,7 +24,7 @@ import { User } from 'shared/entities/user.entity';
 import { useRef } from 'store/Store';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import FieldPassword from 'elements/Fields/FieldPassword';
-import { getHostname } from 'shared/sys.helper';
+import { findError, getHostname } from 'shared/sys.helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import t from 'i18n';
@@ -121,6 +121,19 @@ export default function ProfileEdit() {
     alertService.error(errorMessage.caption);
   };
 
+  const accordionChapters = [
+    { name: 'basics', fields: ['name', 'avatar', 'description', 'email', 'phone'] },
+  ];
+  const hasErrors = (chapterName) => {
+    const chapter = accordionChapters.find(
+      (chapter) => chapter.name == chapterName,
+    );
+    if (!chapter) {
+      return false;
+    }
+    return findError(chapter.fields, errors);
+  };
+  
   useEffect(() => {
     if (loggedInUser) {
       setLocale(loggedInUser.locale)
@@ -143,7 +156,7 @@ export default function ProfileEdit() {
               <div className='form__label'> {loggedInUser.username}@{getHostname()} </div>
               
                 <div className="form__inputs-wrapper">
-                <Accordion title={t('user.personalData')}>
+                <Accordion collapsed={hasErrors('basics')} title={t('user.personalData')}>
 
                   <FieldText
                     name="name"
@@ -228,7 +241,7 @@ export default function ProfileEdit() {
                   />
 
                 </Accordion>
-                <Accordion title={t('user.notificationConfig')}>
+                <Accordion collapsed={hasErrors('notifications')} title={t('user.notificationConfig')}>
 
                   <FieldCheckbox
                     label={t('user.receiveNotifications')}
