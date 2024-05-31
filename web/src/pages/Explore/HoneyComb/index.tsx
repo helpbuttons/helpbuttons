@@ -108,9 +108,7 @@ function HoneyComb({ selectedNetwork }) {
     <>
       <ShowDesktopOnly>
         <div className="index__explore-container">
-          <ShowDesktopOnly>
-            <AdvancedFilters />
-          </ShowDesktopOnly>
+          <AdvancedFilters />
           <div
             className={
               'index__content-left ' +
@@ -132,14 +130,12 @@ function HoneyComb({ selectedNetwork }) {
               </PopupButtonFile>
             )}
 
-            <ShowDesktopOnly>
-              <List
-                buttons={exploreMapState.listButtons}
-                showLeftColumn={showLeftColumn}
-                onLeftColumnToggle={toggleShowLeftColumn}
-                showMap={true}
-              />
-            </ShowDesktopOnly>
+            <List
+              buttons={exploreMapState.listButtons}
+              showLeftColumn={showLeftColumn}
+              onLeftColumnToggle={toggleShowLeftColumn}
+              showMap={true}
+            />
           </div>
           <HexagonExploreMap
             exploreSettings={exploreSettings}
