@@ -23,6 +23,7 @@ import { alertService } from 'services/Alert';
 import { FollowTag } from 'state/Users';
 import FieldAccordion from 'elements/Fields/FieldAccordion';
 import Popup from 'components/popup/Popup';
+import PickerField from 'components/picker/PickerField';
 
 
 export default function AdvancedFilters({
@@ -225,14 +226,24 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
   
   // <PickerField label={t("buttonFilters.where")} explain={t("buttonFilters.whereExplain")} title={t("buttonFilters.where")} btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
   return (
-    <FieldAccordion 
+    <PickerField 
+      label={t("buttonFilters.where")} 
+      explain={t("buttonFilters.whereExplain")} 
+      title={t("buttonFilters.where")} 
+      btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))} 
+      showPopup={showPopup} 
+      openPopup={openPopup} 
+      closePopup={closePopup}
+    >
+
+    {/* <FieldAccordion 
       collapsed={showPopup} 
       btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))}
       label={t("buttonFilters.where")}
       explain={t("buttonFilters.whereExplain")}
       title={t("buttonFilters.where")}
       hideChildren={closePopup}
-    >
+    > */}
      <DropDownSearchLocation
               placeholder={t('homeinfo.searchlocation')}
               handleSelectedPlace={handleSelectedPlace}
@@ -264,7 +275,7 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
                 contentAlignment={ContentAlignment.center}
                 onClick={() => closePopup()}
               />
-      </FieldAccordion>
+      </PickerField>
   );
 }
 export function AdvancedFiltersSortDropDown({className, label = '', orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm = false, explain = '' }) {

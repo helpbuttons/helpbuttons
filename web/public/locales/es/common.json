@@ -71,7 +71,7 @@
     "deleteSuccess": "Finalizado con éxito"
   },
   "configuration": {
-    "config": "Opciones avanzadas",
+    "config": "Opciones de configuración",
     "nameLabel": "Nombre de tu Red",
     "namePlaceHolder": "Red de agricultores de Vilanova",
     "descriptionLabel": "Descripción de tu Red",

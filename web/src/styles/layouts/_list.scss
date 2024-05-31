@@ -169,10 +169,16 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   padding: $padding-small $padding-big;
   gap: $padding-small;
   position: relative;
+  bottom: auto;
+  left: auto;
   min-height: 60px;
   border-radius: $border-radius-semicircle $border-radius-semicircle 0 0 ;
+  box-shadow: $box-shadow-divs;
+
 
 }
+
+
 
 //class for the select order tab when the map is hidden. Impose state
 .list__order--full-screen {
@@ -181,6 +187,8 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   bottom: auto;
   left: auto;
   border-radius: 0;
+  box-shadow: none;
+
 
 }
 

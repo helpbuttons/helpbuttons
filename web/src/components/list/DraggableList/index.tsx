@@ -42,7 +42,7 @@ const DraggableList: React.FC<DraggableProps> = ({
     const handleResize = () => {
       setPos((prevPos) => {
         let newY = prevPos.y;
-        if (prevPos.y < getOpenListHeight()) {
+        if (prevPos.y < getOpenListHeight()-100) {
           newY = getFullScreenListHeight();
         } else if (prevPos.y > window.innerHeight - 200) {
           newY = getClosedListHeight();
@@ -61,22 +61,22 @@ const DraggableList: React.FC<DraggableProps> = ({
   }, []);
 
   useEffect(() => {
-    if(pos.y != getOpenListHeight())
+    if(pos.y == getClosedListHeight())
     {
       setListOpen(() => false)
-    }
+    } 
   }, [pos])
 
   useEffect(() => {
     if (isListOpen) {
       const targetY = getOpenListHeight();
       setPos((prevPos) => ({ ...prevPos, y: targetY }));
-      setDragging(false);
+      setDragging(true);
       
     } else {
       const targetY = getClosedListHeight();
       setPos((prevPos) => ({ ...prevPos, y: targetY }));
-      setDragging(true);
+      setDragging(false);
     }
   }, [isListOpen]);
 

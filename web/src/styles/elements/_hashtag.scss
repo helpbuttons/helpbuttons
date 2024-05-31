@@ -22,10 +22,10 @@ $hashtag-color-l-gray: $color-med-gray;
   align-items: baseline;
   width: fit-content;
   border-radius: $border-radius-semicircle;
-  padding: $hashtag-padding-xsmall $padding-medium 0.1rem $padding-medium;
+  padding: 0.1rem $padding-medium 0.1rem $padding-medium;
 
   font-size: $font-size-general;
-  line-height: 1rem;
+  // line-height: 1rem;
   border: 2px solid $hashtag-color-gray;
   text-decoration: none;
   margin: 0 $hashtag-margin-x $hashtag-margin-x 0;

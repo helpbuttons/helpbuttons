@@ -151,7 +151,7 @@ function List({
             >
               {/* <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}> */}
 
-                <div className={ 'list__order list__order--full-screen '} >
+                <div className={ 'list__order  ' + (isListFullScreen ? ' list__order--full-screen' : '') } >
                   <div className='drag-tab__line'></div>
 
                   {/* {showLeftColumn &&
@@ -215,30 +215,23 @@ function List({
                       selectedButtonTypes={filters.helpButtonTypes}
                     />
                   }
-                    <div onClick={leftColumnToggle} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
-                      <span className="drag-tab__line"></span>
-                      <div className="drag-tab__icon">
+                    
                         {(!showLeftColumn) ? (
-                          <Btn
-                          btnType={BtnType.link}
-                          iconLeft={IconType.svg}
-                          iconLink={<IoList />}
-                          contentAlignment={ContentAlignment.center}
-                          caption={t("explore.showList")}
-                          onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.BOTH))}
-                            />
+                          <div onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.BOTH))} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
+                            <span className="drag-tab__line"></span>
+                            <div className="drag-tab__icon">
+                              <IoList />{t("explore.showList")}
+                            </div>
+                          </div>
                         ) : (
-                          <Btn
-                          btnType={BtnType.link}
-                          iconLeft={IconType.svg}
-                          iconLink={<IoClose />}
-                          contentAlignment={ContentAlignment.center}
-                          caption={t("explore.hideList")}
-                          onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))}
-                          />
+                          <div onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
+                            <span className="drag-tab__line"></span>
+                            <div className="drag-tab__icon">
+                              <IoClose />    
+                            </div>
+                          </div>
                         )}
-                      </div>
-                    </div>
+
                 </div>
               <div
                 className={
