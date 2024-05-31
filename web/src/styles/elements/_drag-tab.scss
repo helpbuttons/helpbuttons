@@ -103,6 +103,7 @@ $drag-tab-icon-size: 25px;
     width: auto;
     flex-direction: row-reverse;
     height: auto;
+    gap: $padding-medium;
     left: calc($index-content-left--distance + 20px);
     top: 140px;
     border-radius: $border-radius-circle;

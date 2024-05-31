@@ -220,8 +220,9 @@ function List({
                           <div onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.BOTH))} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>
                             <span className="drag-tab__line"></span>
                             <div className="drag-tab__icon">
-                              <IoList />{t("explore.showList")}
+                              <IoList />
                             </div>
+                            {t("explore.showList")}
                           </div>
                         ) : (
                           <div onClick={() => store.emit(new UpdateExploreViewMode(ExploreViewMode.MAP))} className={'drag-tab ' + (showLeftColumn ? '' : 'drag-tab--open') +  (showMap ? '' : 'drag-tab--hide')}>

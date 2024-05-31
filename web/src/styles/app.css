@@ -1398,12 +1398,12 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   white-space: nowrap;
-  line-height: 0rem;
   border: 2px solid #D4D4D4;
   border-radius: 24px;
   text-decoration: none;
   text-align: center;
   margin: 0 4px;
+  min-height: 43px;
 }
 .btn-filter a, .dropdown-select__trigger--filter a, .dropdown__filter a, .btn-filter-with-icon a, .btn-filter-with-emoji a, .checkbox-filter__content a, .radio-filter__content a {
   height: 18px;
@@ -1428,12 +1428,12 @@ a:hover {
   border-color: var(--button-color);
   display: flex;
   align-items: center;
-  padding: 10px 10px 7px 3px !important;
+  padding-right: 10px;
   font-weight: 600;
 }
 .btn-filter-with-emoji .btn-with-icon__icon {
   font-size: 22px;
-  margin-right: 10px;
+  margin: 0px 7px 0px 4px;
 }
 
 .btn-with-icon__emoji {
@@ -1516,7 +1516,6 @@ a:hover {
 }
 
 .btn-with-icon__icon {
-  max-height: 25px;
   max-width: 25px;
   margin-right: 4px;
   display: flex;
@@ -3391,7 +3390,7 @@ li, ol, ul, h2 {
   width: 100%;
   height: 100%;
   width: 100vw;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.12);
@@ -4300,7 +4299,7 @@ li, ol, ul, h2 {
   z-index: 300;
   align-items: flex-start;
   justify-content: space-around;
-  border-top: 32px;
+  border-top: 1px solid #D4D4D4;
 }
 
 .nav-bottom--repo {
@@ -8567,6 +8566,7 @@ body {
     width: auto;
     flex-direction: row-reverse;
     height: auto;
+    gap: 10px;
     left: calc(60vw + 20px);
     top: 140px;
     border-radius: 34px;

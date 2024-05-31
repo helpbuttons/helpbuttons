@@ -7,11 +7,10 @@ $btn-background: $color-white;
 $btn-padding: $padding-medium;
 $btn-padding-y: $padding-medium;
 $btn-padding-x: $padding-big;
-$btn-filter-height: 35px;
+$btn-filter-height: 43px;
 $btn-small-padding: $padding-small;
 $btn-filter-margin: 10px;
 $btn-filter-padding-y: 0;
-$btn-filter-height: 20px;
 $btn-hashtag-close-height: 13px;
 $btn-hashtag-close-margin: 7px;
 $btn-filter-icon-margin: $margin-xsmall;
@@ -84,12 +83,14 @@ $btn-font-size-medium: $font-size-medium;
   align-items: center ;
   // height: 35px ;
   white-space: nowrap;
-  line-height: 0rem ;
+  // line-height: 0rem ;
   border: $btn-filter-border solid $color-gray-border;
   border-radius: $btn-border-radius ;
   text-decoration: none;
   text-align: center ;
   margin: 0 $margin-xxsmall ;
+  min-height: $btn-filter-height;
+
 
   a {
 
@@ -129,13 +130,15 @@ $btn-font-size-medium: $font-size-medium;
   border-color: var(--button-color);
   display: flex;
   align-items: center;
-  padding: 10px 10px 7px 3px !important;
+  // padding: 10px 7px 8px 0;
+  padding-right: $btn-padding;
   font-weight: $font-weight-bold;
 
   .btn-with-icon__icon{
 
     font-size: $font-size-title;
-    margin-right: $padding-medium;
+    margin: 0px $margin-xsmall 0px $margin-xxsmall;
+
 
   }
 
@@ -252,7 +255,7 @@ $btn-font-size-medium: $font-size-medium;
 
 .btn-with-icon__icon {
 
-  max-height: $btn-with-icon-icon-width;
+  // max-height: $btn-with-icon-icon-width;
   max-width: $btn-with-icon-icon-width;
   margin-right: $margin-xxsmall;
   display: flex;
