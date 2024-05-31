@@ -155,6 +155,8 @@ button {
 }
 a {
   color: $color-corporative;  
+  word-break: break-all;
+
   &:hover {
 
     color: $color-gray;
