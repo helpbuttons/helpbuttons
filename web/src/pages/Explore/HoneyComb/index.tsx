@@ -106,52 +106,81 @@ function HoneyComb({ selectedNetwork }) {
 
   return (
     <>
-      <div className="index__explore-container">
-        <ShowDesktopOnly>
-          <AdvancedFilters />
-        </ShowDesktopOnly>
-        <div
-          className={
-            'index__content-left ' +
-            (showLeftColumn ? '' : 'index__content-left--hide')
-          }
-        >
-          <ShowMobileOnly>
+      <ShowDesktopOnly>
+        <div className="index__explore-container">
+          <ShowDesktopOnly>
+            <AdvancedFilters />
+          </ShowDesktopOnly>
+          <div
+            className={
+              'index__content-left ' +
+              (showLeftColumn ? '' : 'index__content-left--hide')
+            }
+          >
+            {currentButton && (
+              <PopupButtonFile
+                linkBack={() => {
+                  store.emit(new updateCurrentButton(null));
+                }}
+              >
+                {selectedNetwork.buttonTemplates?.length > 0 && (
+                  <ButtonShow
+                    currentButton={currentButton}
+                    buttonTypes={selectedNetwork.buttonTemplates}
+                  />
+                )}
+              </PopupButtonFile>
+            )}
+
+            <ShowDesktopOnly>
+              <List
+                buttons={exploreMapState.listButtons}
+                showLeftColumn={showLeftColumn}
+                onLeftColumnToggle={toggleShowLeftColumn}
+                showMap={true}
+              />
+            </ShowDesktopOnly>
+          </div>
+          <HexagonExploreMap
+            exploreSettings={exploreSettings}
+            h3TypeDensityHexes={h3TypeDensityHexes}
+            handleBoundsChange={handleBoundsChange}
+            selectedNetwork={selectedNetwork}
+          />
+        </div>
+      </ShowDesktopOnly>
+      <ShowMobileOnly>
+        <div className="index__explore-container">
+          <div
+            className={
+              'index__content-left ' +
+              (showLeftColumn ? '' : 'index__content-left--hide')
+            }
+          >
             <NavHeader selectedNetwork={selectedNetwork} />
             <AdvancedFilters />
-          </ShowMobileOnly>
 
-          {currentButton && (
-            <PopupButtonFile
-              linkBack={() => {
-                store.emit(new updateCurrentButton(null))
-              }}
-            >
-              {selectedNetwork.buttonTemplates?.length > 0 && (
-                <ButtonShow
-                  currentButton={currentButton}
-                  buttonTypes={selectedNetwork.buttonTemplates}
-                />
-              )}
-            </PopupButtonFile>
-          )}
-
-          <ShowDesktopOnly>
-            <List
-              buttons={exploreMapState.listButtons}
-              showLeftColumn={showLeftColumn}
-              onLeftColumnToggle={toggleShowLeftColumn}
-              showMap={true}
-            />
-          </ShowDesktopOnly>
-        </div>
-        <HexagonExploreMap
-          exploreSettings={exploreSettings}
-          h3TypeDensityHexes={h3TypeDensityHexes}
-          handleBoundsChange={handleBoundsChange}
-          selectedNetwork={selectedNetwork}
-        />
-        <ShowMobileOnly>
+            {currentButton && (
+              <PopupButtonFile
+                linkBack={() => {
+                  store.emit(new updateCurrentButton(null));
+                }}
+              >
+                {selectedNetwork.buttonTemplates?.length > 0 && (
+                  <ButtonShow
+                    currentButton={currentButton}
+                    buttonTypes={selectedNetwork.buttonTemplates}
+                  />
+                )}
+              </PopupButtonFile>
+            )}
+          </div>
+          <HexagonExploreMap
+            exploreSettings={exploreSettings}
+            h3TypeDensityHexes={h3TypeDensityHexes}
+            handleBoundsChange={handleBoundsChange}
+            selectedNetwork={selectedNetwork}
+          />
           <div
             className={
               'index__content-bottom ' +
@@ -167,8 +196,8 @@ function HoneyComb({ selectedNetwork }) {
               onLeftColumnToggle={toggleShowLeftColumn}
             />
           </div>
-        </ShowMobileOnly>
-      </div>
+        </div>
+      </ShowMobileOnly>
     </>
   );
 }
@@ -189,21 +218,21 @@ function useExploreSettings({
 
   useBackButton(handleBackButton);
 
-  const handleUrl = (newSearchParams = null, selectedNetwork = null) => {
+  const handleUrl = (
+    newSearchParams = null,
+    selectedNetwork = null,
+  ) => {
     const params = newSearchParams
       ? newSearchParams
       : new URLSearchParams(window.location.search);
 
-    let zoom = selectedNetwork.exploreSettings.zoom 
-    let lat = selectedNetwork.exploreSettings.center[0]
-    let lng = selectedNetwork.exploreSettings.center[1]
+    let zoom = selectedNetwork.exploreSettings.zoom;
+    let lat = selectedNetwork.exploreSettings.center[0];
+    let lng = selectedNetwork.exploreSettings.center[1];
 
-    try{
-      [zoom, lat, lng] = Array.from(router.query.params) 
-    }catch(err)
-    {
-      
-    }
+    try {
+      [zoom, lat, lng] = Array.from(router.query.params);
+    } catch (err) {}
     const btnId = params.get('btn');
     const hex = params.get('hex');
 
@@ -278,7 +307,7 @@ function useExploreSettings({
   useEffect(() => {
     if (selectedNetwork && exploreSettings) {
       if (exploreSettings?.center == null) {
-        handleUrl(null, selectedNetwork)
+        handleUrl(null, selectedNetwork);
       }
     }
   }, [selectedNetwork]);
@@ -289,7 +318,7 @@ function useExploreSettings({
       !exploreSettings.urlUpdated &&
       filters
     ) {
-      let obj = {}
+      let obj = {};
 
       if (currentButton) {
         obj = { ...obj, btn: currentButton.id };
@@ -308,14 +337,16 @@ function useExploreSettings({
       }
 
       const urlParams = new URLSearchParams(obj);
-      const newUrl = `/Explore/${exploreSettings.zoom}/${exploreSettings.center[0]}/${exploreSettings.center[1]}/?${urlParams.toString()}`
-      
-      const currentButtonFromUrl = getCurrentButtonFromUrl()
+      const newUrl = `/Explore/${exploreSettings.zoom}/${
+        exploreSettings.center[0]
+      }/${exploreSettings.center[1]}/?${urlParams.toString()}`;
+
+      const currentButtonFromUrl = getCurrentButtonFromUrl();
       const updateUrl =
         obj?.btn != currentButtonFromUrl ? true : false;
       const windowUrl =
         window.location.pathname + window.location.search;
-      if (newUrl != windowUrl && (updateUrl || !obj?.btn )) {
+      if (newUrl != windowUrl && (updateUrl || !obj?.btn)) {
         window.history.pushState(
           { ...window.history.state, as: newUrl, url: newUrl },
           '',
@@ -327,15 +358,14 @@ function useExploreSettings({
 }
 
 const getCurrentButtonFromUrl = () => {
-  const windowUrl =
-  window.location.pathname + window.location.search;
+  const windowUrl = window.location.pathname + window.location.search;
 
   /** dont update url if button is the same... */
   const currentUrlSearchParams = new URLSearchParams(windowUrl);
   return currentUrlSearchParams.has('btn')
     ? currentUrlSearchParams.get('btn')
     : null;
-}
+};
 store.emit(new ClearCachedHexagons());
 
 function useHexagonMap({

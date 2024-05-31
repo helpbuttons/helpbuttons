@@ -99,7 +99,6 @@ function List({
 
   useEffect(() => {
     if (hexagonClicked) {
-      console.log(isListOpen);
       setListOpen(() => true);
     } else {
       // setListOpen(() => false)
