@@ -1,13 +1,10 @@
 //Users buttons an profile info URL
-import CardProfile, {
-  LinkAdminButton,
-} from 'components/user/CardProfile';
+import CardProfile from 'components/user/CardProfile';
 
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import router, { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { FindAdminButton, Logout } from 'state/Users';
+import { Logout } from 'state/Users';
 import Link from 'next/link';
 import {
   IoAlarm,
@@ -33,21 +30,6 @@ export default function Profile() {
     store,
     (state: GlobalState) => state.loggedInUser,
   );
-  const [adminButtonId, setAdminButtonId] = useState(null);
-
-  useEffect(() => {
-    if (loggedInUser) {
-      if (loggedInUser.role == Role.admin) {
-        store.emit(
-          new FindAdminButton((buttonData) => {
-            if (buttonData?.id) {
-              setAdminButtonId(() => buttonData.id);
-            }
-          }),
-        );
-      }
-    }
-  }, [loggedInUser]);
 
   const { asPath } = useRouter();
   const selectedNetwork: Network = useRef(
@@ -74,12 +56,9 @@ export default function Profile() {
           <Popup linkFwd="/Explore" title={t('user.profileView')}>
             <LoadabledComponent loading={!loggedInUser}>
               <CardProfile user={loggedInUser} />
-              {(loggedInUser && !loggedInUser.phone && !adminButtonId && loggedInUser?.role == Role.admin) && 
+              {(loggedInUser && !loggedInUser.phone && loggedInUser?.role == Role.admin) && 
                <span style={{"color": "red"}}>{t('user.addSupport')}</span>
               }
-              {loggedInUser?.role == Role.admin && adminButtonId && (
-                <LinkAdminButton adminButtonId={adminButtonId} />
-              )}
               <Accordion title={t('configuration.config')}>
                 {loggedInUser?.username == loggedInUser?.username && (
                   <div className="card-profile__actions">
@@ -101,7 +80,7 @@ export default function Profile() {
                     }
 
                     {isAdmin && (
-                      <AdminOptions adminButtonId={adminButtonId} />
+                      <AdminOptions/>
                     )}
                     
                     <Link href="/HomeInfo">
@@ -124,7 +103,7 @@ export default function Profile() {
   );
 }
 
-function AdminOptions({ adminButtonId }) {
+function AdminOptions() {
   return (
     <>
       <div>
@@ -145,17 +124,6 @@ function AdminOptions({ adminButtonId }) {
           />
         </Link>
       </div>
-      {!adminButtonId && (
-        <div>
-          <Link href="/ButtonNew">
-            <Btn
-              iconLeft={IconType.svg}
-              iconLink={<IoHandLeftOutline />}
-              caption={t('configuration.createSupportButton')}
-            />
-          </Link>
-        </div>
-      )}
     </>
   );
 }

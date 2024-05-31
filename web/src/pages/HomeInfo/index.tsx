@@ -33,7 +33,7 @@ import {
 } from 'react-icons/io5';
 import { ServerPropsService } from 'services/ServerProps';
 import { NextPageContext } from 'next';
-import {  useState } from 'react';
+import {  useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { UpdateFiltersToFilterTag } from 'state/Explore';
@@ -64,12 +64,10 @@ export default function HomeInfo({
     (state: GlobalState) => state.loggedInUser,
   );
 
-  const [showMessage, toggleShowMessage] = useToggle(false);
-  const [showContactDialog, toggleshowContactDialog] = useToggle(false);
-
   const [navigatorCoordinates, setNavigatorCoordinates] =
     useState(null);
 
+  const scrollToContact = useRef();
   if(!config)
   {
     return (<Alert>Error getting backend</Alert>)
@@ -84,72 +82,8 @@ export default function HomeInfo({
           </div>
         </ShowMobileOnly>
 
-        {showContactDialog &&
-            <div className="card-alert__container card-alert__container--bottom">
-              <div className="card-alert card-alert--error">
-                {showMessage ? 
-                  <>
-                      <div className='card-alert__btn-options'>
-                        <Btn
-                          btnType={BtnType.circle}
-                          iconLink={<IoCallOutline />}
-                          iconLeft={IconType.circle}
-                          contentAlignment={ContentAlignment.center}
-                        />
-
-                        <Btn
-                          btnType={BtnType.circle}
-                          iconLink={<IoMailOutline />}
-                          iconLeft={IconType.circle}
-                          contentAlignment={ContentAlignment.center}
-                        />
-
-                        <Btn
-                          btnType={BtnType.circle}
-                          iconLink={<IoLogoWhatsapp />}
-                          iconLeft={IconType.circle}
-                          contentAlignment={ContentAlignment.center}
-                        />
-
-                      </div>
-                      <Btn
-                        btnType={BtnType.smallCircle}
-                        iconLink={<IoClose />}
-                        iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.center}
-                        onClick={() => toggleshowContactDialog(false)}
-                      />
-
-                  </>
-                :
-                <>
-                  <div className="card-alert__content">
-                      {t("homeinfo.callToAdmin")}
-                      <Btn
-                      btnType={BtnType.circle}
-                      iconLink={<IoCall />}
-                      iconLeft={IconType.circle}
-                      contentAlignment={ContentAlignment.center}
-                      onClick={() => toggleShowMessage(true)}
-                    />   
-                  </div>
-
-                  <Btn
-                      btnType={BtnType.smallCircle}
-                      iconLink={<IoClose />}
-                      iconLeft={IconType.circle}
-                      contentAlignment={ContentAlignment.center}
-                      onClick={() => toggleshowContactDialog(false)}
-                  />
-                </>
-                }
-              </div>
-            </div> 
-        }
-         
-      <div
-        className='homeinfo__container'
-      >
+      <SupportBanner scrollToContact={scrollToContact}/>
+      <div className='homeinfo__container'>
           <div className="homeinfo__content">                
 
                 {navigatorCoordinates && (
@@ -226,7 +160,7 @@ export default function HomeInfo({
                     </div>
                   </div>
 
-                  <div className="homeinfo-card">
+                  <div className="homeinfo-card"  ref={scrollToContact}>
                     <div className="homeinfo-card__header">
                       <h3 className="homeinfo-card__header-title">
                       {t('homeinfo.administeredby')}
@@ -369,6 +303,42 @@ export default function HomeInfo({
                 </div>
         </div>
       </div>
+    </>
+  );
+}
+
+function SupportBanner({ scrollToContact }) {
+  const [showContactDialog, toggleshowContactDialog] = useToggle(true);
+  return (
+    <>
+      {showContactDialog && (
+        <div className="card-alert__container card-alert__container--bottom">
+          <div className="card-alert card-alert--error">
+            <>
+              <div className="card-alert__content">
+                {t('homeinfo.callToAdmin')}
+                <Btn
+                  btnType={BtnType.circle}
+                  iconLink={<IoCall />}
+                  iconLeft={IconType.circle}
+                  contentAlignment={ContentAlignment.center}
+                  onClick={() =>
+                    scrollToContact.current.scrollIntoView()
+                  }
+                />
+              </div>
+
+              <Btn
+                btnType={BtnType.smallCircle}
+                iconLink={<IoClose />}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => toggleshowContactDialog(false)}
+              />
+            </>
+          </div>
+        </div>
+      )}
     </>
   );
 }
