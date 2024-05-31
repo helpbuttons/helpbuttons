@@ -210,12 +210,12 @@ export default function ProfileEdit() {
                         explain={t('user.adminPhonePublishExplain')}
                         onChanged={(value) => {setValue('publishPhone', value)}}
                       />
-                      <FieldCheckbox
-                        name='contactWhatsapp'
-                        defaultValue={loggedInUser.publishPhone}
+                      {/* <FieldCheckbox
+                        name='showWhatsapp'
+                        defaultValue={loggedInUser.showWhatsapp}
                         text={t('user.showWhatsapp')}
-                        onChanged={(value) => {setValue('publishPhone', value)}}
-                      />
+                        onChanged={(value) => {setValue('showWhatsapp', value)}}
+                      /> */}
                     </>
                   }
                   <FieldCheckbox
