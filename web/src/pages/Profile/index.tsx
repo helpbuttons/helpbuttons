@@ -59,7 +59,6 @@ export default function Profile() {
               {(loggedInUser && !loggedInUser.phone && loggedInUser?.role == Role.admin) && 
                <span style={{"color": "red"}}>{t('user.addSupport')}</span>
               }
-              <Accordion title={t('configuration.config')}>
                 {loggedInUser?.username == loggedInUser?.username && (
                   <div className="card-profile__actions">
                     <Link href="/ProfileEdit">
@@ -95,7 +94,6 @@ export default function Profile() {
                     </Link>
                   </div>
                 )}
-              </Accordion>
               
             </LoadabledComponent>
           </Popup>
