@@ -184,7 +184,7 @@ function useExploreSettings({
   filters,
 }) {
   const handleBackButton = () => {
-    handleUrl();
+    handleUrl(null, selectedNetwork);
   };
 
   useBackButton(handleBackButton);
@@ -194,9 +194,16 @@ function useExploreSettings({
       ? newSearchParams
       : new URLSearchParams(window.location.search);
 
-    const lat = params.has('lat') ?  parseFloat(params.get('lat')) : selectedNetwork ? selectedNetwork.exploreSettings.center[0] : 0;
-    const lng = params.has('lng') ? parseFloat(params.get('lng'))  : selectedNetwork ? selectedNetwork.exploreSettings.center[1] : 0;
-    const zoom = parseInt(params.get('zoom'));
+    let zoom = selectedNetwork.exploreSettings.zoom 
+    let lat = selectedNetwork.exploreSettings.center[0]
+    let lng = selectedNetwork.exploreSettings.center[1]
+
+    try{
+      [zoom, lat, lng] = Array.from(router.query.params) 
+    }catch(err)
+    {
+      
+    }
     const btnId = params.get('btn');
     const hex = params.get('hex');
 
@@ -282,11 +289,7 @@ function useExploreSettings({
       !exploreSettings.urlUpdated &&
       filters
     ) {
-      let obj = {
-        zoom: exploreSettings.zoom,
-        lat: exploreSettings.center[0],
-        lng: exploreSettings.center[1],
-      };
+      let obj = {}
 
       if (currentButton) {
         obj = { ...obj, btn: currentButton.id };
@@ -305,12 +308,8 @@ function useExploreSettings({
       }
 
       const urlParams = new URLSearchParams(obj);
-
-      const newUrl = `${
-        router.asPath.includes('?')
-          ? router.pathname + `?${urlParams.toString()}`
-          : router.pathname + `?${urlParams.toString()}`
-      }`;
+      const newUrl = `/Explore/${exploreSettings.zoom}/${exploreSettings.center[0]}/${exploreSettings.center[1]}/?${urlParams.toString()}`
+      
       const currentButtonFromUrl = getCurrentButtonFromUrl()
       const updateUrl =
         obj?.btn != currentButtonFromUrl ? true : false;
