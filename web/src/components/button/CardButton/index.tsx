@@ -454,7 +454,7 @@ function ShowPhone({ button }) {
 export function CardButtonHeadActions({ button, action }) {
   
   return (
-    <div className="card-button__actions">
+    <>
       <ShowPhone button={button} />
       {action && 
         <Btn
@@ -479,7 +479,7 @@ export function CardButtonHeadActions({ button, action }) {
           {button.createdButtonsCount}
         </span>
       )}
-    </div>
+    </>
   );
 }
 export function CardButtonImages({ button }) {

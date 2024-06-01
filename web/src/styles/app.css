@@ -456,7 +456,7 @@ a:hover {
   display: flex;
 }
 
-.hashtag, .form__input-tags li {
+.hashtag, .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .tags__list-interest__selected, .form__input-tags li {
   display: flex;
   vertical-align: middle;
   align-items: baseline;
@@ -502,7 +502,7 @@ a:hover {
   background-color: #828282;
   color: #fff;
 }
-.hashtag svg, .form__input-tags li svg {
+.hashtag svg, .form__tags-list .tags__list .tags__list-interest svg, .form__tags-list .tags__list .tags__list-interest__selected svg, .form__input-tags li svg {
   height: 10px;
   width: 10px;
   background-color: #828282;
@@ -531,7 +531,7 @@ a:hover {
   background: #19AF96;
 }
 
-.hashtag:hover, .form__input-tags li:hover {
+.hashtag:hover, .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__input-tags li:hover {
   color: #fff;
   cursor: pointer;
   text-decoration: none;
@@ -1147,9 +1147,6 @@ a:hover {
   z-index: 600;
 }
 
-.form__input-tags {
-  padding: 5px;
-}
 .form__input-tags ul {
   display: flex;
   flex-flow: row wrap;
@@ -1182,15 +1179,6 @@ a:hover {
 .form__tags-list .tags__list .tags__list-interest__selected {
   background-color: #2E2E2E;
   color: white;
-}
-.form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .tags__list-interest__selected {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #D4D4D4;
-  margin-right: 7px;
-  padding: 0 10px 0 10px;
-  border-radius: 34px;
 }
 .form__tags-list .tags__list .tags__list-tag {
   display: flex;
@@ -3686,29 +3674,29 @@ li, ol, ul, h2 {
   padding: 0.25rem 0 0 0;
 }
 
-.card-button-map__need .hashtag, .card-button-map__need .form__input-tags li, .form__input-tags .card-button-map__need li {
+.card-button-map__need .hashtag, .card-button-map__need .form__input-tags li, .form__input-tags .card-button-map__need li, .card-button-map__need .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-map__need .tags__list-interest, .card-button-map__need .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-map__need .tags__list-interest__selected {
   background: #EA5648;
   font-weight: bold;
 }
-.card-button-map__need .hashtag:hover, .card-button-map__need .form__input-tags li:hover, .form__input-tags .card-button-map__need li:hover {
+.card-button-map__need .hashtag:hover, .card-button-map__need .form__input-tags li:hover, .form__input-tags .card-button-map__need li:hover, .card-button-map__need .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-map__need .tags__list-interest:hover, .card-button-map__need .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-map__need .tags__list-interest__selected:hover {
   color: #fff;
   background: #0E0E0E;
 }
 
-.card-button-map__offer .hashtag, .card-button-map__offer .form__input-tags li, .form__input-tags .card-button-map__offer li {
+.card-button-map__offer .hashtag, .card-button-map__offer .form__input-tags li, .form__input-tags .card-button-map__offer li, .card-button-map__offer .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-map__offer .tags__list-interest, .card-button-map__offer .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-map__offer .tags__list-interest__selected {
   background: #19AF96;
   font-weight: bold;
 }
-.card-button-map__offer .hashtag:hover, .card-button-map__offer .form__input-tags li:hover, .form__input-tags .card-button-map__offer li:hover {
+.card-button-map__offer .hashtag:hover, .card-button-map__offer .form__input-tags li:hover, .form__input-tags .card-button-map__offer li:hover, .card-button-map__offer .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-map__offer .tags__list-interest:hover, .card-button-map__offer .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-map__offer .tags__list-interest__selected:hover {
   color: #fff;
   background: #0E0E0E;
 }
 
-.card-button-map__exchange .hashtag, .card-button-map__exchange .form__input-tags li, .form__input-tags .card-button-map__exchange li {
+.card-button-map__exchange .hashtag, .card-button-map__exchange .form__input-tags li, .form__input-tags .card-button-map__exchange li, .card-button-map__exchange .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-map__exchange .tags__list-interest, .card-button-map__exchange .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-map__exchange .tags__list-interest__selected {
   background: #0E0E0E;
   font-weight: bold;
 }
-.card-button-map__exchange .hashtag:hover, .card-button-map__exchange .form__input-tags li:hover, .form__input-tags .card-button-map__exchange li:hover {
+.card-button-map__exchange .hashtag:hover, .card-button-map__exchange .form__input-tags li:hover, .form__input-tags .card-button-map__exchange li:hover, .card-button-map__exchange .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-map__exchange .tags__list-interest:hover, .card-button-map__exchange .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-map__exchange .tags__list-interest__selected:hover {
   color: #fff;
   background: #19AF96;
 }
@@ -3890,7 +3878,7 @@ li, ol, ul, h2 {
   justify-content: space-between;
   border-radius: 8px 8px 8px 8px;
 }
-.card-button-list .hashtag, .card-button-list--vertical .hashtag, .card-button-list .form__input-tags li, .card-button-list--vertical .form__input-tags li, .form__input-tags .card-button-list li, .form__input-tags .card-button-list--vertical li {
+.card-button-list .hashtag, .card-button-list--vertical .hashtag, .card-button-list .form__input-tags li, .card-button-list--vertical .form__input-tags li, .form__input-tags .card-button-list li, .form__input-tags .card-button-list--vertical li, .card-button-list .form__tags-list .tags__list .tags__list-interest, .card-button-list--vertical .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-list .tags__list-interest, .form__tags-list .tags__list .card-button-list--vertical .tags__list-interest, .card-button-list .form__tags-list .tags__list .tags__list-interest__selected, .card-button-list--vertical .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list--vertical .tags__list-interest__selected {
   cursor: none;
 }
 
@@ -3936,7 +3924,7 @@ li, ol, ul, h2 {
 .card-button-list__content .card-button__hashtags {
   pointer-events: none;
 }
-.card-button-list__content .card-button__hashtags .hashtag, .card-button-list__content .card-button__hashtags .form__input-tags li, .form__input-tags .card-button-list__content .card-button__hashtags li {
+.card-button-list__content .card-button__hashtags .hashtag, .card-button-list__content .card-button__hashtags .form__input-tags li, .form__input-tags .card-button-list__content .card-button__hashtags li, .card-button-list__content .card-button__hashtags .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-list__content .card-button__hashtags .tags__list-interest, .card-button-list__content .card-button__hashtags .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list__content .card-button__hashtags .tags__list-interest__selected {
   padding: 5px 5px;
   margin: 2px;
 }
@@ -4086,29 +4074,29 @@ li, ol, ul, h2 {
   padding: 0.25rem 0 0 0;
 }
 
-.card-button-list__need .hashtag, .card-button-list__need .form__input-tags li, .form__input-tags .card-button-list__need li {
+.card-button-list__need .hashtag, .card-button-list__need .form__input-tags li, .form__input-tags .card-button-list__need li, .card-button-list__need .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-list__need .tags__list-interest, .card-button-list__need .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list__need .tags__list-interest__selected {
   background: #EA5648;
   font-weight: bold;
 }
-.card-button-list__need .hashtag:hover, .card-button-list__need .form__input-tags li:hover, .form__input-tags .card-button-list__need li:hover {
+.card-button-list__need .hashtag:hover, .card-button-list__need .form__input-tags li:hover, .form__input-tags .card-button-list__need li:hover, .card-button-list__need .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-list__need .tags__list-interest:hover, .card-button-list__need .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-list__need .tags__list-interest__selected:hover {
   color: #fff;
   background: #0E0E0E;
 }
 
-.card-button-list__offer .hashtag, .card-button-list__offer .form__input-tags li, .form__input-tags .card-button-list__offer li {
+.card-button-list__offer .hashtag, .card-button-list__offer .form__input-tags li, .form__input-tags .card-button-list__offer li, .card-button-list__offer .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-list__offer .tags__list-interest, .card-button-list__offer .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list__offer .tags__list-interest__selected {
   background: #19AF96;
   font-weight: bold;
 }
-.card-button-list__offer .hashtag:hover, .card-button-list__offer .form__input-tags li:hover, .form__input-tags .card-button-list__offer li:hover {
+.card-button-list__offer .hashtag:hover, .card-button-list__offer .form__input-tags li:hover, .form__input-tags .card-button-list__offer li:hover, .card-button-list__offer .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-list__offer .tags__list-interest:hover, .card-button-list__offer .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-list__offer .tags__list-interest__selected:hover {
   color: #fff;
   background: #0E0E0E;
 }
 
-.card-button-list__exchange .hashtag, .card-button-list__exchange .form__input-tags li, .form__input-tags .card-button-list__exchange li {
+.card-button-list__exchange .hashtag, .card-button-list__exchange .form__input-tags li, .form__input-tags .card-button-list__exchange li, .card-button-list__exchange .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-list__exchange .tags__list-interest, .card-button-list__exchange .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list__exchange .tags__list-interest__selected {
   background: #0E0E0E;
   font-weight: bold;
 }
-.card-button-list__exchange .hashtag:hover, .card-button-list__exchange .form__input-tags li:hover, .form__input-tags .card-button-list__exchange li:hover {
+.card-button-list__exchange .hashtag:hover, .card-button-list__exchange .form__input-tags li:hover, .form__input-tags .card-button-list__exchange li:hover, .card-button-list__exchange .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-list__exchange .tags__list-interest:hover, .card-button-list__exchange .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-list__exchange .tags__list-interest__selected:hover {
   color: #fff;
   background: #EA5648;
 }
@@ -5408,12 +5396,12 @@ hr {
   overflow: scroll;
   color: black;
 }
-.card-button__ofrece .hashtag, .card-button__ofrece .form__input-tags li, .form__input-tags .card-button__ofrece li {
+.card-button__ofrece .hashtag, .card-button__ofrece .form__input-tags li, .form__input-tags .card-button__ofrece li, .card-button__ofrece .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button__ofrece .tags__list-interest, .card-button__ofrece .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button__ofrece .tags__list-interest__selected {
   background: #19AF96;
   font-weight: bold;
   background: #0E0E0E;
 }
-.card-button__ofrece .hashtag:hover, .card-button__ofrece .form__input-tags li:hover, .form__input-tags .card-button__ofrece li:hover {
+.card-button__ofrece .hashtag:hover, .card-button__ofrece .form__input-tags li:hover, .form__input-tags .card-button__ofrece li:hover, .card-button__ofrece .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button__ofrece .tags__list-interest:hover, .card-button__ofrece .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button__ofrece .tags__list-interest__selected:hover {
   color: #fff;
   background: #0E0E0E;
 }

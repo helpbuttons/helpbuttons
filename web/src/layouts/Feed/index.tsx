@@ -69,7 +69,7 @@ export default function Feed({ button }: { button: Button }) {
     <div className="feed-container">
       
       {(loggedInUser && isButtonOwner) && (
-        <>
+        <div className="card-button__actions">
           <CardButtonHeadActions button={button} action={null}/>
           <ComposePost
             referer={{ button: button.id }}
@@ -78,7 +78,7 @@ export default function Feed({ button }: { button: Button }) {
               reloadPosts();
             }}
           />
-        </>
+        </div>
       )}
       
       {(!isButtonOwner && loggedInUser) && (      
@@ -258,7 +258,7 @@ export function ComposePost({
 
         }
         {!show &&
-            <div className="card-button__actions">
+            <>
 
                 <Btn
                   submit={false}
@@ -271,7 +271,7 @@ export function ComposePost({
                     toggleShow(true);
                   }}
                 />
-            </div>
+            </>
           }
     </>
     
