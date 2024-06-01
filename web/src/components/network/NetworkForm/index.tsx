@@ -13,7 +13,7 @@ import Form from 'elements/Form';
 
 import t from 'i18n';
 import { useRouter } from 'next/router';
-import { getUrlOrigin } from 'shared/sys.helper';
+import { findError, getUrlOrigin } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
 
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
@@ -68,28 +68,20 @@ function NetworkForm({
 
   const onError = (errors, e) => {console.log(errors);alertService.error(t('validation.error'))}
 
-  const hasErrors = (chapter) => {
-    const findError = (errorsToFind, errors) => {
-      if (Object.keys(errors).length < 1) {
-        return false;
-      }
-      return errorsToFind.reduce((acc, currentField) => {
-        return acc ? acc : errors[currentField]
-      }, false)
-    }
-    switch(chapter)
-    {
-      case "defineNetwork":
-        
-        return findError(['name', 'description'], errors)
-      case "appearance":
-        return findError(['logo', 'jumbo'], errors)
-      case "configuration":
-        return findError(['exploreSettings'], errors)
-      default:
+  const accordionChapters = [
+    { name: 'defineNetwork', fields: ['name', 'description'] },
+    { name: 'appearance', fields: ['logo', 'jumbo'] },
+    { name: 'configuration', fields: ['exploreSettings'] },
+  ];
+  const hasErrors = (chapterName) => {
+    const chapter = accordionChapters.find(
+      (chapter) => chapter.name == chapterName,
+    );
+    if (!chapter) {
       return false;
     }
-  }
+    return findError(chapter.fields, errors);
+  };
   return (
     <>
       <Form

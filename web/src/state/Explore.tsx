@@ -416,7 +416,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
     return produce(state, (newState) => {
       newState.explore.map.boundsFilteredButtons =
         this.boundsFilteredButtons;
-      newState.explore.map.listButtons = this.boundsFilteredButtons;
+      newState.explore.map.listButtons = listButtonsFilteredByHexagon(state.explore.settings.hexagonClicked, this.boundsFilteredButtons)
       newState.explore.map.loading = false;
       newState.explore.map.initialized = true;
     });
@@ -481,11 +481,16 @@ export class HiglightHexagonFromButton implements UpdateEvent {
 
 function listButtonsFilteredByHexagon(hexagonClicked, boundsFilteredButtons) {
   const resolutionRequested = getResolution(hexagonClicked);
-  return boundsFilteredButtons.filter(
+  if (hexagonClicked)
+  {
+    return boundsFilteredButtons.filter(
       (button) =>
         cellToParent(button.hexagon, resolutionRequested) ==
         hexagonClicked,
     );
+  }
+  return boundsFilteredButtons
+  
 }
 export class UpdateCachedHexagons implements UpdateEvent {
   public constructor(private cachedHexagons: any[]) {}

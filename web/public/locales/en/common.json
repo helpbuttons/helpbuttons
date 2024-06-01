@@ -292,7 +292,7 @@
     "adminPhonePublish": "Publish my phone in the home page",
     "showWhatsapp": "Show Whatsapp",
     "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
-    "addSupport": "You're admin, add a phone or _helpbutton_ of contact so people can reach you"
+    "addSupport": "You're admin, add a phone of contact so people can reach you"
   },
   "picker": {
     "headerText": "Choose a location"
