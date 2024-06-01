@@ -99,9 +99,10 @@ $nav-header-new-message-radius: $border-radius-circle;
     display: flex;
     background-color: $color-corporative;
     // align-items: center;
-    // justify-content: center;
     padding: $padding-medium $padding-big ;
     overflow-x:auto;
+
+    height: 64px;
     border-bottom: 1px solid $color-gray-border;
     
   }

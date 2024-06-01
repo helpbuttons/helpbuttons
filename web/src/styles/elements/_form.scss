@@ -42,6 +42,7 @@ margin: $margin-medium 0;
 
 .form__explain {
   z-index: $z-index-base;
+  color: $color-gray;
   top: 7px;
   left: 24px;
   font-size: $font-size-general;
@@ -501,6 +502,12 @@ width: 100%;
 
   margin: 0 0 $margin-xxsmall $margin-small;
   font-size: $font-size-small;
+
+  &:hover {
+
+    cursor: pointer;
+
+  }
 
 }
 

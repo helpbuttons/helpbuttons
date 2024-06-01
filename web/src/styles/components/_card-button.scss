@@ -84,6 +84,8 @@ $card-button-border-height: $border-general-height;
 .card-button__author {
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
+  gap: $padding-big;
   padding:  $padding-medium $padding-big;
   justify-content: space-between;
   border-top: 1px $color-ligth-gray solid;
@@ -111,6 +113,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__avatar {
   // flex: 0 1 12%;
+
   & > button {
     border: none;
     background: none;
@@ -493,6 +496,7 @@ $card-button-border-height: $border-general-height;
 .card-button__picture-nav .arrow {
 
   @extend .btn-circle--small !optional;
+  padding: 0;
 
 }
 

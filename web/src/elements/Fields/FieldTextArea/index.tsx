@@ -39,7 +39,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
     return (
       <>
       <div className="form__field">
-        <p className="form__label">{label}</p>
+        <label className="form__label">{label}</label>
         <p className="form__explain">{explain}</p>
 
         <textarea

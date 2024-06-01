@@ -256,6 +256,7 @@
     "description": "Description",
     "descriptExplain": "Short description of waht you do or what you are",
     "loginLink": "I have an account",
+    "showPassword": "Show Password",
     "loginWEmail": "Login with password",
     "register": "REGISTER",
     "sendLoginToken": "Send login email",

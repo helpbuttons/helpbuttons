@@ -105,7 +105,7 @@ body,
 .popup-content,
 .filters__wrapper
 {
-  height: calc(var(--vh) - $header-height-mobile) !important;
+  height: calc(var(--vh) ) !important;
   /* Add other styles as needed */
 }
 

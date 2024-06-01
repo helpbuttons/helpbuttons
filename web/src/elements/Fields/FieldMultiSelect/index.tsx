@@ -9,7 +9,7 @@ export default function FieldMultiSelect({
 }) {
     return (
         <div className="form__field">
-            <p className="form__label">{label}</p>
+            <label className="form__label">{label}</label>
             <p className="form__explain">{explain}</p>
             <div>{children}</div>
             <FieldError validationError={validationError}/>

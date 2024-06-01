@@ -165,6 +165,7 @@
     "created": "Creado",
     "loginButton": "ENTRAR",
     "loginClick": "No recuerdo mi contraseña",
+    "showPassword": "Mostrar contraseña",
     "passwordMismatch": "Las contraseñas no coinciden",
     "name": "Nombre público",
     "nameExplain": "Este es tu nombre público que otros usuarios podran ver",

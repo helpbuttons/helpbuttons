@@ -249,7 +249,7 @@ body,
 .popup,
 .popup-content,
 .filters__wrapper {
-  height: calc(var(--vh) - 70px) !important;
+  height: calc(var(--vh)) !important;
   /* Add other styles as needed */
 }
 
@@ -997,6 +997,7 @@ a:hover {
 
 .form__explain {
   z-index: 10;
+  color: #828282;
   top: 7px;
   left: 24px;
   font-size: 16px;
@@ -1308,6 +1309,9 @@ a:hover {
 .form__input-subtitle--text, .form__input-subtitle--error {
   margin: 0 0 4px 20px;
   font-size: 14px;
+}
+.form__input-subtitle--text:hover, .form__input-subtitle--error:hover {
+  cursor: pointer;
 }
 
 .form__input-subtitle-side {
@@ -4569,6 +4573,7 @@ li, ol, ul, h2 {
     background-color: var(--network-background-color);
     padding: 10px 15px;
     overflow-x: auto;
+    height: 64px;
     border-bottom: 1px solid #D4D4D4;
   }
   .hashtags__list-item:nth-of-type(1) {
@@ -5165,6 +5170,8 @@ hr {
 .card-button__author {
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
+  gap: 15px;
   padding: 10px 15px;
   justify-content: space-between;
   border-top: 1px #f0f0f0 solid;
@@ -5492,6 +5499,10 @@ hr {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.card-button__picture-nav .arrow {
+  padding: 0;
 }
 
 .card-button__edit-icon {
@@ -5935,7 +5946,8 @@ hr {
 }
 
 .filters__wrapper {
-  position: relative;
+  position: absolute;
+  top: 0;
   background: none;
   z-index: 600;
   pointer-events: none;
@@ -6004,10 +6016,9 @@ hr {
     width: 100%;
     margin: auto;
     height: 100%;
+    display: flex;
     position: fixed;
     z-index: 501;
-    top: 0;
-    bottom: 0;
   }
   .filters__close-overlay {
     top: 0;
@@ -6423,7 +6434,8 @@ hr {
   background: transparent !important;
   padding: 0 !important;
   margin: 0 !important;
-  font-size: 6px !important;
+  bottom: 140px !important;
+  font-size: 7px !important;
   writing-mode: vertical-rl !important;
   text-orientation: mixed !important;
 }

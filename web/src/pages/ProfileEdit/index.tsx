@@ -140,7 +140,7 @@ export default function ProfileEdit() {
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="login"
             >
-              <div className='form__label'> {loggedInUser.username}@{getHostname()} </div>
+              <label className='form__label'> {loggedInUser.username}@{getHostname()} </label>
               
                 <div className="form__inputs-wrapper">
                 <Accordion title={t('user.personalData')}>
@@ -252,7 +252,7 @@ export default function ProfileEdit() {
                     <label className="form__label">
                       {t('user.distance')} ({radius} km)
                     </label>
-                    <div className='form__explain'>{t('user.distanceExplain')} </div>
+                    <p className='form__explain'>{t('user.distanceExplain')} </p>
                     <div style={{ padding: '1rem' }}>
                       <Slider
                         min={0}

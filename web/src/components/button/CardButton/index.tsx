@@ -503,12 +503,20 @@ export function CardButtonImages({ button }) {
         <div className="card-button__picture">
           {button.images.length > 1 && (
             <div className="card-button__picture-nav">
-              <div className="arrow btn-circle__icon" onClick={prev}>
-                <IoChevronBackOutline />
-              </div>
-              <div className="arrow btn-circle__icon" onClick={next}>
-                <IoChevronForwardOutline />
-              </div>
+              <Btn
+                btnType={BtnType.smallCircle}
+                iconLink={<IoChevronBackOutline />}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => prev()}
+              />
+              <Btn
+                btnType={BtnType.smallCircle}
+                iconLink={<IoChevronForwardOutline />}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => next()}
+              />
             </div>
           )}
           {images.map((image, idx) => (

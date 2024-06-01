@@ -173,7 +173,7 @@ export default function PickerEventTypeRecurrentForm({
           </div>
         )}
         <div className="form__field">
-          <div className='form__label'>{recrule && <>{recurrentToText(rrule)}</>}</div>
+          <label className='form__label'>{recrule && <>{recurrentToText(rrule)}</>}</label>
         </div>
       </div>
     </>

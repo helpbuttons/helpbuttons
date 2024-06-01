@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import FieldError from "../FieldError";
+import t from "i18n";
 
 interface IFieldPassword {
     label: string,
@@ -20,20 +21,38 @@ const FieldPassword = React.forwardRef(({
     validationError,
     explain,
 }, ref): IFieldPassword => {
+
+    const [showPassword, setShowPassword] = useState(false);
+    
     return (
         <div className="form__field">
-            <label className="form__label">{label}</label>
-            <p className="form__explain">{explain}</p>
+            {label &&  <label className="form__label">{label}</label>}
+            {explain && <p className="form__explain">{explain}</p>}
             <input
                 name={name}
                 ref={ref}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 onChange={onChange}
                 onBlur={onBlur}
                 className={`form__input ${classNameInput} ${validationError ? 'validation-error' : ''}`} 
                 placeholder={placeholder ? placeholder : label}
             />
-            <FieldError validationError={validationError}/>
+            {/* <FieldError validationError={validationError}/> */}
+            <div className="form__input-subtitle">
+
+                <div className="form__input-subtitle-side">
+                    <label className="form__input-subtitle--error">
+                        <FieldError validationError={validationError}/> 
+                    </label>
+                </div>
+                
+                <div className="form__input-subtitle-side">
+                    <div onClick={() => setShowPassword(!showPassword)} className="form__input-subtitle--text">
+                        {t('user.showPassword')}
+                    </div>
+                </div>
+                
+            </div>
         </div>
     );
 });

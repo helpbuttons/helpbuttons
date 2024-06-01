@@ -16,12 +16,12 @@ export default function PickerField({
   return (
     <>
       <div className="form__field">
-        <div
+        <label
           className="form__label"
         >
           {label}
-        </div>
-        <div className="form__explain">{explain}</div>
+        </label>
+        <p className="form__explain">{explain}</p>
         <FieldError validationError={validationError} />
         <Btn
               btnType={BtnType.splitIcon}

@@ -3,7 +3,8 @@ $filters-padding: 10px;
 
 .filters__wrapper {
 
-  position: relative;
+  position: absolute;
+  top: 0;
   background: none;
   z-index: $z-index-06;
   pointer-events: none; 
@@ -109,11 +110,10 @@ $filters-padding: 10px;
     width: 100%;
     margin: auto;
     height: 100%;
+    display: flex;
     position: fixed;
     z-index: $z-index-05 + 1;
-    top: 0;
     // height: calc(var(--vh) - 125px) !important;
-    bottom: 0;
   }
   // .filters {
   //   position: relative;

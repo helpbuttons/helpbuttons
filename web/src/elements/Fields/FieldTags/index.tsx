@@ -62,7 +62,7 @@ export default function FieldTags({
   })
   return (
     <div className="tag__field">
-      {label && <div className="form__label">{label}</div>}
+      {label && <label className="form__label">{label}</label>}
       {explain && <div className="form__explain">{explain}</div>}
       <input
         name={name}

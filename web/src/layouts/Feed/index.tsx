@@ -215,22 +215,6 @@ export function FeedElement({
                         disabled={isLast}
                       />
               )}
-              {!loggedInUser && 
-                <Btn
-                submit={false}
-                btnType={BtnType.smallLink}
-                caption={t('comment.delete')}
-                contentAlignment={ContentAlignment.right}
-                onClick={() =>
-                  {
-                    router.push({
-                      pathname: '/Login',
-                      query: { returnUrl: getReturnUrl() },
-                    });
-                  }
-                }
-              />
-              }
           </div>
           {loggedInUser && showComposePostReply?.post == post.id && (
             <Compose
