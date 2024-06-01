@@ -25,7 +25,7 @@ export function EmojiPicker({updateEmoji = (emoji) => { console.log(emoji)}, pic
                         btnType={BtnType.splitIcon}
                         caption={pickerEmoji ? pickerEmoji : emoji}
                         iconLeft={IconType.circle}
-                        contentAlignment={ContentAlignment.center}
+                        contentAlignment={ContentAlignment.left}
                         onClick={() => {toggleShowPicker(!showPicker)}}
                     />       
                 {/* <div className="emoji-picker btn" onClick={() => {toggleShowPicker(!showPicker)}}>{pickerEmoji ? pickerEmoji : emoji}</div> */}

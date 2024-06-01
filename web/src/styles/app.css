@@ -313,7 +313,7 @@ a:hover {
   .popup--button-file,
   .feed-section--activity-content,
   .feed__container {
-    height: calc(var(--vh) - 115px) !important;
+    height: calc(var(--vh) - 134px) !important;
     /* Add other styles as needed */
   }
 }
@@ -3016,6 +3016,24 @@ li, ol, ul, h2 {
 
 .picker-date__recurrent_weekly .react-calendar__month-view__weekdays__weekday {
   display: none;
+}
+
+.react-calendar {
+  width: 100% !important;
+  border-radius: 24px;
+  padding: 15px;
+  border-color: #D4D4D4 !important;
+}
+
+.react-calendar__tile {
+  height: 50px;
+  border-radius: 34px;
+  margin: 25px;
+  padding: 15px;
+}
+
+.react-calendar__tile--active {
+  background-color: var(--network-text-color) !important;
 }
 
 .form__weekdays-list {
