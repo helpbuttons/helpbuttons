@@ -67,29 +67,31 @@ export default function Feed({ button }: { button: Button }) {
 
   return (
     <div className="feed-container">
-      
-      {(loggedInUser && isButtonOwner) && (
-        <div className="card-button__actions">
-          <CardButtonHeadActions button={button} action={null}/>
-          <ComposePost
-            referer={{ button: button.id }}
-            onCancel={() => {}}
-            onCreate={() => {
-              reloadPosts();
-            }}
-          />
-        </div>
-      )}
-      
-      {(!isButtonOwner && loggedInUser) && (      
-        <CardButtonHeadActions button={button} action={() => toggleShowReplyFirstPost(true)}/>         
-      )}
-      {(!isButtonOwner && !loggedInUser) && (      
-        <CardButtonHeadActions button={button} action={() => router.push({
-          pathname: '/Login',
-          query: { returnUrl: getReturnUrl() },
-        })}/>
-      )}
+      <div className="card-button__actions">
+        <>
+          {(loggedInUser && isButtonOwner) && (
+            <>
+              <CardButtonHeadActions button={button} action={null}/>
+              <ComposePost
+                referer={{ button: button.id }}
+                onCancel={() => {}}
+                onCreate={() => {
+                  reloadPosts();
+                }}
+              />
+            </>
+          )}
+          {(!isButtonOwner && loggedInUser) && (      
+            <CardButtonHeadActions button={button} action={() => toggleShowReplyFirstPost(true)}/>         
+          )}
+          {(!isButtonOwner && !loggedInUser) && (      
+            <CardButtonHeadActions button={button} action={() => router.push({
+              pathname: '/Login',
+              query: { returnUrl: getReturnUrl() },
+            })}/>
+          )}
+       </>
+      </div>
       <div className="feed-line"></div>
       <div className="feed-section">
         {posts &&
