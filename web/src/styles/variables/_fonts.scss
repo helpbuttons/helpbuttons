@@ -1,7 +1,8 @@
 @import "~@fontsource/nunito/index.css";
 @import "~@fontsource/nunito/700.css";
 @import "~@fontsource/nunito/400.css";
-@import "~@fontsource/quicksand/400.css";
+@import "~@fontsource/quicksand/300.css";
+@import "~@fontsource/quicksand/500.css";
 @import "~@fontsource/quicksand/600.css";
 
 
@@ -11,8 +12,8 @@ $font-family-first: 'quicksand', sans-serif;;
 
 $font-family-second: 'Worksans', sans-serif;
 
-$font-weight-light: 100;
-$font-weight-regular: 400;
+$font-weight-light: 500;
+$font-weight-regular: 500;
 $font-weight-bold: 600;
 
 $font-size-xsmall: 10px;

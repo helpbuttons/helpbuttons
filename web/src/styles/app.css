@@ -1,7 +1,8 @@
 @import "~@fontsource/nunito/index.css";
 @import "~@fontsource/nunito/700.css";
 @import "~@fontsource/nunito/400.css";
-@import "~@fontsource/quicksand/400.css";
+@import "~@fontsource/quicksand/300.css";
+@import "~@fontsource/quicksand/500.css";
 @import "~@fontsource/quicksand/600.css";
 .spinner {
   animation: spin 2s infinite linear;
@@ -24,7 +25,7 @@
 
 .title__h1 {
   font-size: 4rem;
-  font-weight: 100;
+  font-weight: 500;
   line-height: 4.5rem;
 }
 
@@ -42,7 +43,7 @@
 
 .paragraph {
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.5rem;
 }
 .paragraph a {
@@ -248,7 +249,7 @@ body,
 .popup,
 .popup-content,
 .filters__wrapper {
-  height: calc(var(--vh) - 70px) !important;
+  height: calc(var(--vh)) !important;
   /* Add other styles as needed */
 }
 
@@ -296,6 +297,7 @@ button {
 
 a {
   color: var(--network-background-color);
+  word-break: break-all;
 }
 a:hover {
   color: #828282;
@@ -311,7 +313,7 @@ a:hover {
   .popup--button-file,
   .feed-section--activity-content,
   .feed__container {
-    height: calc(var(--vh) - 115px) !important;
+    height: calc(var(--vh) - 134px) !important;
     /* Add other styles as needed */
   }
 }
@@ -454,7 +456,7 @@ a:hover {
   display: flex;
 }
 
-.hashtag, .form__input-tags li {
+.hashtag, .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .tags__list-interest__selected, .form__input-tags li {
   display: flex;
   vertical-align: middle;
   align-items: baseline;
@@ -500,7 +502,7 @@ a:hover {
   background-color: #828282;
   color: #fff;
 }
-.hashtag svg, .form__input-tags li svg {
+.hashtag svg, .form__tags-list .tags__list .tags__list-interest svg, .form__tags-list .tags__list .tags__list-interest__selected svg, .form__input-tags li svg {
   height: 10px;
   width: 10px;
   background-color: #828282;
@@ -529,7 +531,7 @@ a:hover {
   background: #19AF96;
 }
 
-.hashtag:hover, .form__input-tags li:hover {
+.hashtag:hover, .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__input-tags li:hover {
   color: #fff;
   cursor: pointer;
   text-decoration: none;
@@ -995,10 +997,11 @@ a:hover {
 
 .form__explain {
   z-index: 10;
+  color: #828282;
   top: 7px;
   left: 24px;
   font-size: 16px;
-  font-weight: 100;
+  font-weight: 500;
   height: auto;
 }
 .form__explain:first-letter {
@@ -1144,9 +1147,6 @@ a:hover {
   z-index: 600;
 }
 
-.form__input-tags {
-  padding: 5px;
-}
 .form__input-tags ul {
   display: flex;
   flex-flow: row wrap;
@@ -1179,15 +1179,6 @@ a:hover {
 .form__tags-list .tags__list .tags__list-interest__selected {
   background-color: #2E2E2E;
   color: white;
-}
-.form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .tags__list-interest__selected {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #D4D4D4;
-  margin-right: 7px;
-  padding: 0 10px 0 10px;
-  border-radius: 34px;
 }
 .form__tags-list .tags__list .tags__list-tag {
   display: flex;
@@ -1306,6 +1297,9 @@ a:hover {
 .form__input-subtitle--text, .form__input-subtitle--error {
   margin: 0 0 4px 20px;
   font-size: 14px;
+}
+.form__input-subtitle--text:hover, .form__input-subtitle--error:hover {
+  cursor: pointer;
 }
 
 .form__input-subtitle-side {
@@ -1933,7 +1927,7 @@ a:hover {
   border: none;
   background: transparent;
   padding: 0 10px;
-  font-weight: 100;
+  font-weight: 500;
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 10px;
@@ -3024,6 +3018,24 @@ li, ol, ul, h2 {
   display: none;
 }
 
+.react-calendar {
+  width: 100% !important;
+  border-radius: 24px;
+  padding: 15px;
+  border-color: #D4D4D4 !important;
+}
+
+.react-calendar__tile {
+  height: 50px;
+  border-radius: 34px;
+  margin: 25px;
+  padding: 15px;
+}
+
+.react-calendar__tile--active {
+  background-color: var(--network-text-color) !important;
+}
+
 .form__weekdays-list {
   display: flex;
   justify-content: flex-start;
@@ -3297,7 +3309,7 @@ li, ol, ul, h2 {
 .picker__header {
   width: 100%;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
   text-align: center;
 }
 
@@ -3680,29 +3692,29 @@ li, ol, ul, h2 {
   padding: 0.25rem 0 0 0;
 }
 
-.card-button-map__need .hashtag, .card-button-map__need .form__input-tags li, .form__input-tags .card-button-map__need li {
+.card-button-map__need .hashtag, .card-button-map__need .form__input-tags li, .form__input-tags .card-button-map__need li, .card-button-map__need .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-map__need .tags__list-interest, .card-button-map__need .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-map__need .tags__list-interest__selected {
   background: #EA5648;
   font-weight: bold;
 }
-.card-button-map__need .hashtag:hover, .card-button-map__need .form__input-tags li:hover, .form__input-tags .card-button-map__need li:hover {
+.card-button-map__need .hashtag:hover, .card-button-map__need .form__input-tags li:hover, .form__input-tags .card-button-map__need li:hover, .card-button-map__need .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-map__need .tags__list-interest:hover, .card-button-map__need .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-map__need .tags__list-interest__selected:hover {
   color: #fff;
   background: #0E0E0E;
 }
 
-.card-button-map__offer .hashtag, .card-button-map__offer .form__input-tags li, .form__input-tags .card-button-map__offer li {
+.card-button-map__offer .hashtag, .card-button-map__offer .form__input-tags li, .form__input-tags .card-button-map__offer li, .card-button-map__offer .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-map__offer .tags__list-interest, .card-button-map__offer .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-map__offer .tags__list-interest__selected {
   background: #19AF96;
   font-weight: bold;
 }
-.card-button-map__offer .hashtag:hover, .card-button-map__offer .form__input-tags li:hover, .form__input-tags .card-button-map__offer li:hover {
+.card-button-map__offer .hashtag:hover, .card-button-map__offer .form__input-tags li:hover, .form__input-tags .card-button-map__offer li:hover, .card-button-map__offer .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-map__offer .tags__list-interest:hover, .card-button-map__offer .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-map__offer .tags__list-interest__selected:hover {
   color: #fff;
   background: #0E0E0E;
 }
 
-.card-button-map__exchange .hashtag, .card-button-map__exchange .form__input-tags li, .form__input-tags .card-button-map__exchange li {
+.card-button-map__exchange .hashtag, .card-button-map__exchange .form__input-tags li, .form__input-tags .card-button-map__exchange li, .card-button-map__exchange .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-map__exchange .tags__list-interest, .card-button-map__exchange .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-map__exchange .tags__list-interest__selected {
   background: #0E0E0E;
   font-weight: bold;
 }
-.card-button-map__exchange .hashtag:hover, .card-button-map__exchange .form__input-tags li:hover, .form__input-tags .card-button-map__exchange li:hover {
+.card-button-map__exchange .hashtag:hover, .card-button-map__exchange .form__input-tags li:hover, .form__input-tags .card-button-map__exchange li:hover, .card-button-map__exchange .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-map__exchange .tags__list-interest:hover, .card-button-map__exchange .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-map__exchange .tags__list-interest__selected:hover {
   color: #fff;
   background: #19AF96;
 }
@@ -3884,7 +3896,7 @@ li, ol, ul, h2 {
   justify-content: space-between;
   border-radius: 8px 8px 8px 8px;
 }
-.card-button-list .hashtag, .card-button-list--vertical .hashtag, .card-button-list .form__input-tags li, .card-button-list--vertical .form__input-tags li, .form__input-tags .card-button-list li, .form__input-tags .card-button-list--vertical li {
+.card-button-list .hashtag, .card-button-list--vertical .hashtag, .card-button-list .form__input-tags li, .card-button-list--vertical .form__input-tags li, .form__input-tags .card-button-list li, .form__input-tags .card-button-list--vertical li, .card-button-list .form__tags-list .tags__list .tags__list-interest, .card-button-list--vertical .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-list .tags__list-interest, .form__tags-list .tags__list .card-button-list--vertical .tags__list-interest, .card-button-list .form__tags-list .tags__list .tags__list-interest__selected, .card-button-list--vertical .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list--vertical .tags__list-interest__selected {
   cursor: none;
 }
 
@@ -3930,7 +3942,7 @@ li, ol, ul, h2 {
 .card-button-list__content .card-button__hashtags {
   pointer-events: none;
 }
-.card-button-list__content .card-button__hashtags .hashtag, .card-button-list__content .card-button__hashtags .form__input-tags li, .form__input-tags .card-button-list__content .card-button__hashtags li {
+.card-button-list__content .card-button__hashtags .hashtag, .card-button-list__content .card-button__hashtags .form__input-tags li, .form__input-tags .card-button-list__content .card-button__hashtags li, .card-button-list__content .card-button__hashtags .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-list__content .card-button__hashtags .tags__list-interest, .card-button-list__content .card-button__hashtags .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list__content .card-button__hashtags .tags__list-interest__selected {
   padding: 5px 5px;
   margin: 2px;
 }
@@ -4080,29 +4092,29 @@ li, ol, ul, h2 {
   padding: 0.25rem 0 0 0;
 }
 
-.card-button-list__need .hashtag, .card-button-list__need .form__input-tags li, .form__input-tags .card-button-list__need li {
+.card-button-list__need .hashtag, .card-button-list__need .form__input-tags li, .form__input-tags .card-button-list__need li, .card-button-list__need .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-list__need .tags__list-interest, .card-button-list__need .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list__need .tags__list-interest__selected {
   background: #EA5648;
   font-weight: bold;
 }
-.card-button-list__need .hashtag:hover, .card-button-list__need .form__input-tags li:hover, .form__input-tags .card-button-list__need li:hover {
+.card-button-list__need .hashtag:hover, .card-button-list__need .form__input-tags li:hover, .form__input-tags .card-button-list__need li:hover, .card-button-list__need .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-list__need .tags__list-interest:hover, .card-button-list__need .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-list__need .tags__list-interest__selected:hover {
   color: #fff;
   background: #0E0E0E;
 }
 
-.card-button-list__offer .hashtag, .card-button-list__offer .form__input-tags li, .form__input-tags .card-button-list__offer li {
+.card-button-list__offer .hashtag, .card-button-list__offer .form__input-tags li, .form__input-tags .card-button-list__offer li, .card-button-list__offer .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-list__offer .tags__list-interest, .card-button-list__offer .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list__offer .tags__list-interest__selected {
   background: #19AF96;
   font-weight: bold;
 }
-.card-button-list__offer .hashtag:hover, .card-button-list__offer .form__input-tags li:hover, .form__input-tags .card-button-list__offer li:hover {
+.card-button-list__offer .hashtag:hover, .card-button-list__offer .form__input-tags li:hover, .form__input-tags .card-button-list__offer li:hover, .card-button-list__offer .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-list__offer .tags__list-interest:hover, .card-button-list__offer .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-list__offer .tags__list-interest__selected:hover {
   color: #fff;
   background: #0E0E0E;
 }
 
-.card-button-list__exchange .hashtag, .card-button-list__exchange .form__input-tags li, .form__input-tags .card-button-list__exchange li {
+.card-button-list__exchange .hashtag, .card-button-list__exchange .form__input-tags li, .form__input-tags .card-button-list__exchange li, .card-button-list__exchange .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button-list__exchange .tags__list-interest, .card-button-list__exchange .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button-list__exchange .tags__list-interest__selected {
   background: #0E0E0E;
   font-weight: bold;
 }
-.card-button-list__exchange .hashtag:hover, .card-button-list__exchange .form__input-tags li:hover, .form__input-tags .card-button-list__exchange li:hover {
+.card-button-list__exchange .hashtag:hover, .card-button-list__exchange .form__input-tags li:hover, .form__input-tags .card-button-list__exchange li:hover, .card-button-list__exchange .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button-list__exchange .tags__list-interest:hover, .card-button-list__exchange .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button-list__exchange .tags__list-interest__selected:hover {
   color: #fff;
   background: #EA5648;
 }
@@ -4567,6 +4579,7 @@ li, ol, ul, h2 {
     background-color: var(--network-background-color);
     padding: 10px 15px;
     overflow-x: auto;
+    height: 64px;
     border-bottom: 1px solid #D4D4D4;
   }
   .hashtags__list-item:nth-of-type(1) {
@@ -4764,7 +4777,7 @@ hr {
   border-radius: 8px;
   background-color: transparent;
   padding: 5px;
-  font-weight: 400;
+  font-weight: 500;
   margin-top: 7px;
   color: #828282;
   font-size: 14px;
@@ -4825,7 +4838,7 @@ hr {
 }
 
 .header-search__title {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 22px;
   margin: auto 12px;
 }
@@ -4845,7 +4858,7 @@ hr {
 
 .header-search__info {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   position: absolute;
   top: 1rem;
   margin-left: 10px;
@@ -4891,7 +4904,7 @@ hr {
 .header-search__description {
   display: none;
   font-family: "Worksans", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
 }
 
@@ -5163,6 +5176,8 @@ hr {
 .card-button__author {
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
+  gap: 15px;
   padding: 10px 15px;
   justify-content: space-between;
   border-top: 1px #f0f0f0 solid;
@@ -5347,7 +5362,7 @@ hr {
 
 .card-button__username {
   color: #828282;
-  font-weight: 100;
+  font-weight: 500;
 }
 
 .card-button__title {
@@ -5399,12 +5414,12 @@ hr {
   overflow: scroll;
   color: black;
 }
-.card-button__ofrece .hashtag, .card-button__ofrece .form__input-tags li, .form__input-tags .card-button__ofrece li {
+.card-button__ofrece .hashtag, .card-button__ofrece .form__input-tags li, .form__input-tags .card-button__ofrece li, .card-button__ofrece .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button__ofrece .tags__list-interest, .card-button__ofrece .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button__ofrece .tags__list-interest__selected {
   background: #19AF96;
   font-weight: bold;
   background: #0E0E0E;
 }
-.card-button__ofrece .hashtag:hover, .card-button__ofrece .form__input-tags li:hover, .form__input-tags .card-button__ofrece li:hover {
+.card-button__ofrece .hashtag:hover, .card-button__ofrece .form__input-tags li:hover, .form__input-tags .card-button__ofrece li:hover, .card-button__ofrece .form__tags-list .tags__list .tags__list-interest:hover, .form__tags-list .tags__list .card-button__ofrece .tags__list-interest:hover, .card-button__ofrece .form__tags-list .tags__list .tags__list-interest__selected:hover, .form__tags-list .tags__list .card-button__ofrece .tags__list-interest__selected:hover {
   color: #fff;
   background: #0E0E0E;
 }
@@ -5490,6 +5505,10 @@ hr {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.card-button__picture-nav .arrow {
+  padding: 0;
 }
 
 .card-button__edit-icon {
@@ -5933,7 +5952,8 @@ hr {
 }
 
 .filters__wrapper {
-  position: relative;
+  position: absolute;
+  top: 0;
   background: none;
   z-index: 600;
   pointer-events: none;
@@ -6002,10 +6022,9 @@ hr {
     width: 100%;
     margin: auto;
     height: 100%;
+    display: flex;
     position: fixed;
     z-index: 501;
-    top: 0;
-    bottom: 0;
   }
   .filters__close-overlay {
     top: 0;
@@ -6190,7 +6209,7 @@ hr {
 
 .card-profile__username {
   font-size: 18px;
-  font-weight: 100;
+  font-weight: 500;
   color: #828282;
 }
 
@@ -6421,7 +6440,8 @@ hr {
   background: transparent !important;
   padding: 0 !important;
   margin: 0 !important;
-  font-size: 6px !important;
+  bottom: 140px !important;
+  font-size: 7px !important;
   writing-mode: vertical-rl !important;
   text-orientation: mixed !important;
 }

@@ -25,7 +25,7 @@ export default function FieldAreaMap({
   const closePopup = () => setShowPopup(() => false)
   const openPopup = () => setShowPopup(() => true)
   return (
-    <PickerField showPopup={showPopup} validationError={validationError} btnLabel={label} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
+    <PickerField showPopup={showPopup} validationError={validationError} label={label} btnLabel={label} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
        <FieldAreaMapSettings
           defaultExploreSettings={value}
           onChange={onChange}

@@ -123,7 +123,7 @@ const FieldButtonTemplates = forwardRef(
                     <EmojiPicker
                      updateEmoji={(newEmoji) => setEmoji(() => newEmoji)} 
                      pickerEmoji={emoji}
-                     label={t('configuration.buttonTemplateName')}
+                     label={t('configuration.buttonTemplateEmoji')}
                      />
 
                     <FieldColorPick
@@ -131,7 +131,8 @@ const FieldButtonTemplates = forwardRef(
                       classNameInput="squared"
                       validationError={errors.buttonTemplateColor}
                       setValue={(name, value) => setEditFieldCssColor(value)}
-                      actionName={t('configuration.buttonTemplateName')}
+                      label={t('configuration.buttonTemplateColor')}
+                      actionName={t('configuration.buttonTemplateColor')}
                       value={editFieldCssColor}
                     />
                     <Btn
@@ -191,11 +192,12 @@ const FieldButtonTemplates = forwardRef(
             <EmojiPicker
               updateEmoji={(newEmoji) => setEmoji(() => newEmoji)} 
               pickerEmoji={emoji}
-              label={t('configuration.buttonTemplateName')}
+              label={t('configuration.buttonTemplateEmoji')}
             />
             <FieldColorPick
                   name="buttonTemplateColor"
                   classNameInput="squared"
+                  label={t('configuration.buttonTemplateColor')}
                   validationError={errors.buttonTemplateColor}
                   setValue={(name, value) => setColor(value)}
                   actionName={t('button.pickButtonTemplateColor')}

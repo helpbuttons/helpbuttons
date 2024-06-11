@@ -42,6 +42,7 @@ margin: $margin-medium 0;
 
 .form__explain {
   z-index: $z-index-base;
+  color: $color-gray;
   top: 7px;
   left: 24px;
   font-size: $font-size-general;
@@ -250,7 +251,7 @@ margin: $margin-medium 0;
 .form__input-tags {
 
   @extend .form__input;
-  padding: $padding-small;
+  // padding: $padding-small;
   & ul {
     // overflow-x: scroll;
     // overflow-y: hidden;
@@ -312,22 +313,17 @@ margin: $margin-medium 0;
     font-size:small;
 
     .tags__list-interest__selected {
+
       background-color: $color-dark-gray;
       color: white;
 
     }
 
     .tags__list-interest, .tags__list-interest__selected {
-      
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid $color-gray-border;
-        margin-right: $margin-xsmall;
-        padding: 0 $padding-medium 0 $padding-medium ;
-        border-radius: $border-radius-circle;
+        @extend .hashtag;
       
     }
+    
     .tags__list-tag {
 
         display: flex;
@@ -501,6 +497,12 @@ width: 100%;
 
   margin: 0 0 $margin-xxsmall $margin-small;
   font-size: $font-size-small;
+
+  &:hover {
+
+    cursor: pointer;
+
+  }
 
 }
 

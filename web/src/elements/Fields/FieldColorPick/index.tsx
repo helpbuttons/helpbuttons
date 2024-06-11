@@ -56,7 +56,7 @@ export const FieldColorPick = React.forwardRef(
           />
         )}
         <FieldError validationError={validationError} />
-        {label && <p className="form__label">{label}</p>}
+        {label && <label className="form__label">{label}</label>}
         {explain && <p className="form__explain">{explain}</p>}
         <div
           className="btn"

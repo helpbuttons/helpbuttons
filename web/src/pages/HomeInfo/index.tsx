@@ -109,17 +109,18 @@ export default function HomeInfo({
                     } as React.CSSProperties
                   }
                 >
-                  <div className="homeinfo-card__header">
-                    <div className='homeinfo__network-title'>
-                      <div className="avatar-medium--home">
-                        <NetworkLogo network={selectedNetwork} />
+                  <ShowMobileOnly>
+                    <div className="homeinfo-card__header">
+                      <div className='homeinfo__network-title'>
+                        <div className="avatar-medium--home">
+                          <NetworkLogo network={selectedNetwork} />
+                        </div>
+                        <h3 className="homeinfo__network-title-text">
+                          {selectedNetwork.name}
+                        </h3>
                       </div>
-                      <h3 className="homeinfo__network-title-text">
-                        {selectedNetwork.name}
-                      </h3>
                     </div>
-                  </div>
-
+                  </ShowMobileOnly>
 
                   <div className="homeinfo-card__section--actions">
 

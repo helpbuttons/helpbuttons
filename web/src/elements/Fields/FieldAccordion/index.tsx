@@ -24,7 +24,7 @@ export default function FieldAccordion({
 
     return (
       <div className="form__field">
-          <p className="form__label">{label}</p>
+          <label className="form__label">{label}</label>
           <p className="form__explain">{explain}</p>
           <button id={title} className={classNames} onClick={(e) => {e.preventDefault(); setShowChildren(!showChildren);handleClick()}}>{btnLabel}</button>
           {/* <Btn

@@ -105,7 +105,7 @@ body,
 .popup-content,
 .filters__wrapper
 {
-  height: calc(var(--vh) - $header-height-mobile) !important;
+  height: calc(var(--vh) ) !important;
   /* Add other styles as needed */
 }
 
@@ -155,6 +155,8 @@ button {
 }
 a {
   color: $color-corporative;  
+  word-break: break-all;
+
   &:hover {
 
     color: $color-gray;
@@ -177,7 +179,7 @@ a {
   .feed-section--activity-content,
   .feed__container
   {
-    height: calc(var(--vh) - 115px) !important;
+    height: calc(var(--vh) - 134px) !important;
     /* Add other styles as needed */
   }
 
