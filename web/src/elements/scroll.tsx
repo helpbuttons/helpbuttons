@@ -19,7 +19,7 @@ export const useScrollHeight = (size) => {
 };
 
 export const useScrollHeightAndWidth = (size) => {
-  let [sliceSize, setSliceSize] = useState(5);
+  let [sliceSize, setSliceSize] = useState(6);
 
   const handleScrollHeight = (e) => {
     const edgeHeight =
