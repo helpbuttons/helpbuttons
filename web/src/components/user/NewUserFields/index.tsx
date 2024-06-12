@@ -1,5 +1,5 @@
 import Accordion from 'elements/Accordion';
-import {FieldImageUpload} from 'elements/Fields/FieldImageUpload';
+import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import FieldInterets from 'elements/Fields/FieldInterests';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldPassword from 'elements/Fields/FieldPassword';
@@ -20,30 +20,43 @@ export default function NewUserFields({
   setValue,
   watch,
 }) {
-  const [hostname, setHostname] = useState('')
+  const [hostname, setHostname] = useState('');
   const selectedNetwork: Network = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
   useEffect(() => {
-    if(window){
-      setHostname(() => getHostname())
+    if (window) {
+      setHostname(() => getHostname());
     }
-  }, [])
+  }, []);
 
   const router = useRouter();
   const params: URLSearchParams = new URLSearchParams(router.query);
   useEffect(() => {
-    if(router?.query)
-    {
-      const follow = params.get('follow')
-      if (follow)
-      {
-        setValue('tags',[ params.get('follow')])
+    if (router?.query) {
+      const follow = params.get('follow');
+      if (follow) {
+        setValue('tags', [params.get('follow')]);
       }
-      
     }
-  }, [router])
+  }, [router]);
+  const name = watch('name');
+  useEffect(() => {
+    const nameToUsername = (name) => {
+      let cleanName = name.toLowerCase().replace(/\s+/g, '_');
+
+      if (!cleanName.match(/^[a-z]/i)) {
+        cleanName =
+          cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+      }
+
+      return cleanName;
+    };
+    if (name) {
+      setValue('username', nameToUsername(name));
+    }
+  }, [name]);
   return (
     <>
       <FieldText
@@ -56,10 +69,19 @@ export default function NewUserFields({
         {...register('email', { required: true })}
       ></FieldText>
       <FieldText
+        name="name"
+        label={t('user.name')}
+        explain={t('user.nameExplain')}
+        classNameInput="squared"
+        placeholder={t('user.namePlaceHolder')}
+        validationError={errors.name}
+        {...register('name', { required: true })}
+      ></FieldText>
+      <FieldText
         name="username"
-        label={`${t('user.username')} ${watch('username')}@${
-          hostname
-        }`}
+        label={`${t('user.username')} ${watch(
+          'username',
+        )}@${hostname}`}
         explain={t('user.usernameCreateExplain')}
         classNameInput="squared"
         placeholder={t('user.usernamePlaceHolder')}
@@ -75,21 +97,22 @@ export default function NewUserFields({
         validationError={errors.password}
         {...register('password', { required: true, minLength: 8 })}
       ></FieldPassword>
-      {selectedNetwork && 
+      {selectedNetwork && (
         <FieldInterets
-            label={t('user.tags')}
-            explain={t('user.tagsExplain')}
-            placeholder={t('common.add')}
-            validationError={errors.tags}
-            setInterests={(tags) => {
-              setValue('tags', tags);
-            }}
-            interests={watch('tags')}
-            defaultSuggestedTags={selectedNetwork.tags}
-            defaultTrendingTags={selectedNetwork.topTags.map((tag) => tag.tag)}
-          />
-        
-      }
+          label={t('user.tags')}
+          explain={t('user.tagsExplain')}
+          placeholder={t('common.add')}
+          validationError={errors.tags}
+          setInterests={(tags) => {
+            setValue('tags', tags);
+          }}
+          interests={watch('tags')}
+          defaultSuggestedTags={selectedNetwork.tags}
+          defaultTrendingTags={selectedNetwork.topTags.map(
+            (tag) => tag.tag,
+          )}
+        />
+      )}
       {/* <FieldPassword
         name="password_confirm"
         label={t('user.passwordConfirmation')}
@@ -101,7 +124,7 @@ export default function NewUserFields({
           minLength: 8,
         })}
       ></FieldPassword> */}
- 
+
       {/* <Accordion title={t('user.signupOptions')}>
         <FieldLanguagePick onChange={(value) => setValue('locale', value)} explain={t('user.pickLanguageExplain')} defaultValue={getLocale()}/>
         <FieldImageUpload

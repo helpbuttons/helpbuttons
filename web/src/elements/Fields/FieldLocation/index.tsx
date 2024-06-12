@@ -63,11 +63,8 @@ export default function FieldLocation({
         updateAddress(place.formatted);
       }
     } else {
-      console.log('requesting...')
       requestAddressForMarkerPosition(latLng, (place) => {
         if (hideAddress) {
-          console.log('set city')
-          console.log(place)
           updateAddress(place.formatted_city);
         } else {
           updateAddress(place.formatted);
