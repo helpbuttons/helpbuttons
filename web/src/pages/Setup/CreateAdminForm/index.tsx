@@ -94,10 +94,10 @@ function CreateAdminForm() {
             username: data.username,
             email: data.email,
             password: data.password,
-            name: '',
             avatar: data.avatar,
             locale: data.locale,
-            inviteCode: ''
+            inviteCode: '',
+            name: data.name,
           },
           () => {
             let url = `${SetupSteps.FIRST_OPEN}`;
