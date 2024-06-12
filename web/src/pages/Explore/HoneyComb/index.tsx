@@ -180,7 +180,6 @@ function HoneyComb({ selectedNetwork }) {
           <div
             className={
               'index__content-bottom ' +
-              (showMap ? '' : 'index__content-bottom') +
               (showLeftColumn ? '' : 'index__content-bottom--hide')
             }
           >
