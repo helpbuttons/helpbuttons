@@ -183,5 +183,13 @@ a {
     /* Add other styles as needed */
   }
 
+  .list__content {
+
+    height: calc(var(--vh) - 194px) !important;
+
+  }
+
+
+
 
 }
