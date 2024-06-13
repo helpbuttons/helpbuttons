@@ -199,6 +199,16 @@ $feed-new-message-radius: $border-radius-circle;
 
 @media #{$breakpoints-xlarge} {
 
+  .feed-element{
+
+    .card-notification__content {
+
+      padding:  $padding-huge;
+      padding-top: $padding-small;
+
+    }
+  }
+
   .feed__container {
 
     border-right: $border-style-basic;
