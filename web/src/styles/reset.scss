@@ -183,6 +183,11 @@ a {
   }
 }
 
+.list__content {
+
+  height: calc(var(--vh) - 120px) !important;
+
+}
 
 @media #{$breakpoints-xlarge} {
 
@@ -194,7 +199,7 @@ a {
   .popup,
   .popup__content,
   .popup--button-file,
-  // .index__explore-container,
+  .index__explore-container,
   .feed-section--activity-content,
   .feed__container
   {

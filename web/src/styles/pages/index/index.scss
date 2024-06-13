@@ -56,6 +56,12 @@ $index-content-left--distance: 60vw;
 
 }
 
+.index__content-bottom--mid-screen {
+
+  height: calc(420px + 200px) ;
+
+}
+
 .index__content-bottom--hide {
 
   margin-bottom: calc($list-container-hide-height);

@@ -24,6 +24,7 @@ export class GeoService {
     try {
       return this.komootReverse(lat, lng);
     } catch (err) {
+      console.log(err)
       return [];
     }
   }
@@ -96,7 +97,7 @@ export class GeoService {
         {
           return this.komootResponseToPlace(result.data.features[0])
         }
-        return false
+        return {formatted: 'Unknown place', formatted_city: 'Unknown place'}
       })
       .catch((err) => {
         console.log(url)

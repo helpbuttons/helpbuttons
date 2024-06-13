@@ -72,8 +72,8 @@ export function convertHexesToFeatures(
   });
 }
 
-export function latLngToGeoJson(lat, lng) {
-  const hex = latLngToCell(lat, lng, maxResolution);
+export function latLngToGeoJson(lat, lng, resolution = maxResolution) {
+  const hex = latLngToCell(lat, lng, resolution);
   return featuresToGeoJson([h3SetToFeature([hex])]);
 }
 export function getDegreesBleed(
@@ -101,7 +101,7 @@ export function getDegreesBleed(
 }
 
 export function getZoomResolution(zoom) {
-  switch (zoom) {
+  switch (Math.floor(zoom)) {
     case 4:
       return 2;
     case 5:

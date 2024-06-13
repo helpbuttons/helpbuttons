@@ -290,7 +290,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
     <>
       <CardButtonSubmenu button={button} />
       <ExpiringAlert button={button} isOwner={isButtonOwner(loggedInUser, button)}/>
-      <div className="card-button__content">
+      <div className="card-button__content card-button__full-content">
         <div className="card-button__header">
 
           <div className="card-button__info">

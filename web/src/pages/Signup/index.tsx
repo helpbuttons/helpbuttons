@@ -62,10 +62,10 @@ export default function Signup() {
       store.emit(
         new SignupUser(
           {
+            name: data.name,
             username: data.username,
             email: data.email.toLowerCase(),
             password: data.password,
-            name: '',
             avatar: null,
             locale: getLocale(),
             inviteCode: data.inviteCode,
