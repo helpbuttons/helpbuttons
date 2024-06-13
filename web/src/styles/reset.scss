@@ -100,7 +100,9 @@ body,
   /* Add other styles as needed */
 }
 
-.popup__content{
+.popup__content,
+.popup--button-file
+{
   
   height: var(--vh) !important;
 
@@ -109,7 +111,7 @@ body,
 .list__container--full-screen,
 .list__content--full-screen{
 
-  height: calc(var(--vh) - 110px ) !important; //header + filters bar
+  height: calc(var(--vh) - 160px ) !important; //header + filters bar
 
 }
 
