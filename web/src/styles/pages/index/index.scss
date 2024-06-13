@@ -44,7 +44,16 @@ $index-content-left--distance: 60vw;
 
 .index__content-bottom {
 
+  transition: height 0.5s linear; /* Specify the transition property and duration */
   transition: $transition-default-slow;
+  height: 60px;
+  background-color: rgb(178, 199, 212);
+
+}
+
+.index__content-bottom--mid-screen {
+
+  height: calc(420px + 200px) ;
 
 }
 
@@ -52,6 +61,12 @@ $index-content-left--distance: 60vw;
 
   margin-bottom: calc($list-container-hide-height);
   
+}
+
+.index__content-bottom--noscroll {
+
+  overflow: hidden;
+
 }
 
 @media (hover: none) {
