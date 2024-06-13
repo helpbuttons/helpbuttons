@@ -186,7 +186,7 @@ function HoneyComb({ selectedNetwork }) {
               'index__content-bottom ' +
               (showMap ? '' : 'index__content-bottom') +
               (isListOpen ? ' index__content-bottom--mid-screen' : '') +
-              (showLeftColumn ? '' : 'index__content-bottom--hide') +
+              (showLeftColumn ? '' : ' index__content-bottom--hide') +
               (currentButton ? ' index__content-bottom--noscroll' : '')
             }
           >

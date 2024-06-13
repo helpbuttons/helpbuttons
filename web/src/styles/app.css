@@ -236,7 +236,6 @@ body,
 .index__container,
 .homeinfo__content,
 .homeinfo__card,
-.list__container--full-screen,
 .popup,
 .index__content,
 .feed__container,
@@ -244,6 +243,20 @@ body,
 .index__explore-container {
   height: var(--vh) !important;
   /* Add other styles as needed */
+}
+
+.popup__content {
+  height: var(--vh) !important;
+}
+
+.list__container--full-screen,
+.list__content--full-screen {
+  height: calc(var(--vh) - 110px) !important;
+}
+
+.list__container--mid-screen,
+.list__content--mid-screen {
+  height: calc(var(--vh) - 190px) !important;
 }
 
 .popup,
@@ -303,16 +316,13 @@ a:hover {
   color: #828282;
 }
 
-.list__content {
-  height: calc(var(--vh) - 120px) !important;
-}
-
 @media only screen and (min-width: 1280px) {
   .homeinfo__content,
   .homeinfo__container,
   .homeinfo__card,
+  .list__container--full-screen,
   .popup,
-  .popup-content,
+  .popup__content,
   .popup--button-file,
   .index__explore-container,
   .feed-section--activity-content,
@@ -6459,7 +6469,7 @@ hr {
   background: transparent !important;
   padding: 0 !important;
   margin: 0 !important;
-  bottom: 130px !important;
+  bottom: 60px !important;
   right: 10px !important;
   font-size: 7px !important;
   text-orientation: mixed !important;
@@ -6542,6 +6552,9 @@ hr {
   }
   .pigeon-center-buttons svg {
     padding: 10px;
+  }
+  .pigeon-attribution {
+    bottom: 0 !important;
   }
   .pigeon-center-view {
     height: 40px;
@@ -8013,11 +8026,17 @@ body {
 }
 
 .index__content-bottom {
+  transition: height 0.5s linear; /* Specify the transition property and duration */
   transition: all 1s;
+  height: 60px;
 }
 
-.index__content-bottom--hide {
-  margin-bottom: -250px;
+.index__content-bottom--mid-screen {
+  height: 520px;
+}
+
+.index__content-bottom--noscroll {
+  overflow: hidden;
 }
 
 @media only screen and (min-width: 1280px) {

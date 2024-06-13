@@ -116,7 +116,7 @@ body,
 .list__container--mid-screen,
 .list__content--mid-screen{
 
-  height: calc(var(--vh) - 110px ) !important; //header + filters bar
+  height: calc(var(--vh) - 190px ) !important; //header + filters bar
 
 }
 
@@ -183,11 +183,11 @@ a {
   }
 }
 
-.list__content {
+// .list__content {
 
-  height: calc(var(--vh) - 120px) !important;
+//   height: calc(var(--vh) - 194px) !important;
 
-}
+// }
 
 @media #{$breakpoints-xlarge} {
 
