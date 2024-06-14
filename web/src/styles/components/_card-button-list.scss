@@ -231,15 +231,19 @@ $card-button-list-border-height: $border-general-height;
   margin-bottom: 0;
   font-weight: $font-weight-bold;
   color: $color-black;
+  display: -webkit-box;
   font-size: $font-size-title;
   margin: $padding-small 0;
   display: flex;
   flex-direction: row;
+  overflow: hidden;
   align-items:flex-start;
+  word-break: break-word;
+  -webkit-line-clamp: 2;
   word-wrap: break-word;
-  height: 1.95em;
-  max-height: 1.95em;
-  line-height: 0.96em;
+  height: 2.1em;
+  max-height: 2.2em;
+  line-height: 1em;
   text-overflow: ellipsis;
 
 }
