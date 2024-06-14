@@ -4065,6 +4065,7 @@ li, ol, ul, h2 {
   margin-bottom: 0;
   font-weight: 600;
   color: #0E0E0E;
+  display: -webkit-box;
   font-size: 22px;
   margin: 5px 0;
   display: flex;
