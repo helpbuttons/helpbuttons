@@ -86,6 +86,7 @@ function HoneyComb({ selectedNetwork }) {
   );
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
   const [showMap, toggleShowMap] = useToggle(true);
+  const [isListOpen, setListOpen] = useState<boolean>(true);
 
   useExploreSettings({
     exploreSettings,
@@ -103,6 +104,7 @@ function HoneyComb({ selectedNetwork }) {
     cachedHexagons: exploreMapState.cachedHexagons,
     buttonTypes: selectedNetwork?.buttonTemplates,
   });
+
 
   return (
     <>
@@ -135,6 +137,8 @@ function HoneyComb({ selectedNetwork }) {
               showLeftColumn={showLeftColumn}
               onLeftColumnToggle={toggleShowLeftColumn}
               showMap={true}
+              isListOpen={isListOpen}
+              setListOpen={setListOpen}
             />
           </div>
           <HexagonExploreMap
@@ -180,13 +184,18 @@ function HoneyComb({ selectedNetwork }) {
           <div
             className={
               'index__content-bottom ' +
-              (showLeftColumn ? '' : 'index__content-bottom--hide')
+              (showMap ? '' : 'index__content-bottom') +
+              (isListOpen ? ' index__content-bottom--mid-screen' : '') +
+              (showLeftColumn ? '' : ' index__content-bottom--hide') +
+              (currentButton ? ' index__content-bottom--noscroll' : '')
             }
           >
             <List
               buttons={exploreMapState.listButtons}
               showLeftColumn={showLeftColumn}
               showMap={showMap}
+              isListOpen={isListOpen}
+              setListOpen={setListOpen}
               toggleShowMap={toggleShowMap}
               onLeftColumnToggle={toggleShowLeftColumn}
             />

@@ -24,6 +24,8 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 .list__container--full-screen {
 
+  height: calc(var(--vh) - 194px) !important;
+
   // top: 100px;
   // padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
 
@@ -280,7 +282,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     display: block;
     overflow: hidden;
     position: relative;
-    overflow: auto;
+    // overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
     border-right: $border-style-basic;

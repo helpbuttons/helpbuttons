@@ -91,7 +91,6 @@ body,
 .index__container,
 .homeinfo__content,
 .homeinfo__card,
-.list__container--full-screen,
 .popup,
 .index__content,
 .feed__container,
@@ -99,6 +98,28 @@ body,
 .index__explore-container {
   height: var(--vh) !important;
   /* Add other styles as needed */
+}
+
+.popup__content,
+.popup--button-file
+{
+  
+  height: var(--vh) !important;
+
+}
+
+.list__container--full-screen,
+.list__content--full-screen{
+
+  height: calc(var(--vh) - 160px ) !important; //header + filters bar
+
+}
+
+.list__container--mid-screen,
+.list__content--mid-screen{
+
+  height: calc(var(--vh) - 190px ) !important; //header + filters bar
+
 }
 
 .popup,
@@ -164,6 +185,11 @@ a {
   }
 }
 
+// .list__content {
+
+//   height: calc(var(--vh) - 194px) !important;
+
+// }
 
 @media #{$breakpoints-xlarge} {
 
@@ -173,14 +199,20 @@ a {
   .homeinfo__card,
   .list__container--full-screen,
   .popup,
-  .popup-content,
+  .popup__content,
   .popup--button-file,
-  // .index__explore-container,
+  .index__explore-container,
   .feed-section--activity-content,
   .feed__container
   {
     height: calc(var(--vh) - 134px) !important;
     /* Add other styles as needed */
+  }
+
+  .list__content {
+
+    height: calc(var(--vh) - 194px) !important;
+
   }
 
 

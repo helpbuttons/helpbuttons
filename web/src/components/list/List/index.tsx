@@ -33,6 +33,8 @@ function List({
   buttons,
   showLeftColumn,
   showMap,
+  isListOpen,
+  setListOpen,
   toggleShowMap = (e) => {},
 }) {
   const filters = useStore(
@@ -111,7 +113,7 @@ function List({
 
   const [isListFullScreen, setListFullScreen] =
     useState<boolean>(false);
-  const [isListOpen, setListOpen] = useState<boolean>(true);
+  // const [isListOpen, setListOpen] = useState<boolean>(true);
 
   const toggleListOpen = (value1, value2) => {
     setListOpen(value1);

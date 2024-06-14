@@ -236,7 +236,6 @@ body,
 .index__container,
 .homeinfo__content,
 .homeinfo__card,
-.list__container--full-screen,
 .popup,
 .index__content,
 .feed__container,
@@ -244,6 +243,20 @@ body,
 .index__explore-container {
   height: var(--vh) !important;
   /* Add other styles as needed */
+}
+
+.popup__content {
+  height: var(--vh) !important;
+}
+
+.list__container--full-screen,
+.list__content--full-screen {
+  height: calc(var(--vh) - 110px) !important;
+}
+
+.list__container--mid-screen,
+.list__content--mid-screen {
+  height: calc(var(--vh) - 190px) !important;
 }
 
 .popup,
@@ -309,12 +322,16 @@ a:hover {
   .homeinfo__card,
   .list__container--full-screen,
   .popup,
-  .popup-content,
+  .popup__content,
   .popup--button-file,
+  .index__explore-container,
   .feed-section--activity-content,
   .feed__container {
     height: calc(var(--vh) - 134px) !important;
     /* Add other styles as needed */
+  }
+  .list__content {
+    height: calc(var(--vh) - 194px) !important;
   }
 }
 .label {
@@ -5135,7 +5152,6 @@ hr {
   display: flex;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
   line-clamp: 2;
@@ -5232,7 +5248,6 @@ hr {
 .card-button__actions {
   padding: 15px;
   display: flex;
-  overflow: hidden;
   flex-direction: column;
   align-items: center;
   vertical-align: baseline;
@@ -5630,7 +5645,7 @@ hr {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   word-wrap: break-word;
-  line-height: 1.1em;
+  line-height: 1.4em;
 }
 
 .card-button__city {
@@ -5723,6 +5738,7 @@ hr {
 .card-button__locDate {
   display: flex;
   justify-content: space-between;
+  overflow: visible;
   gap: 7px;
   margin-bottom: 20px;
 }
@@ -5732,6 +5748,19 @@ hr {
   margin-bottom: 0;
 }
 
+@media only screen and (min-width: 1280px) {
+  .card-button__full-content,
+  .card-button__author,
+  .card-button__actions {
+    padding: 30px;
+  }
+  .card-button__full-content {
+    padding-bottom: 5px;
+  }
+  .card-button__title {
+    padding-top: 15px;
+  }
+}
 .card-notification {
   background: #fff;
   border: 1px solid #f0f0f0;
@@ -6440,9 +6469,9 @@ hr {
   background: transparent !important;
   padding: 0 !important;
   margin: 0 !important;
-  bottom: 140px !important;
+  bottom: 60px !important;
+  right: 10px !important;
   font-size: 7px !important;
-  writing-mode: vertical-rl !important;
   text-orientation: mixed !important;
 }
 
@@ -6523,6 +6552,9 @@ hr {
   }
   .pigeon-center-buttons svg {
     padding: 10px;
+  }
+  .pigeon-attribution {
+    bottom: 0 !important;
   }
   .pigeon-center-view {
     height: 40px;
@@ -6747,6 +6779,10 @@ hr {
   }
 }
 @media only screen and (min-width: 1280px) {
+  .feed-element .card-notification__content {
+    padding: 30px;
+    padding-top: 5px;
+  }
   .feed__container {
     border-right: 1px solid #D4D4D4;
     border-left: 1px solid #D4D4D4;
@@ -7409,6 +7445,10 @@ hr {
   }
 }
 @media only screen and (min-width: 1280px) {
+  .feed-element .card-notification__content {
+    padding: 30px;
+    padding-top: 5px;
+  }
   .feed__container {
     border-right: 1px solid #D4D4D4;
     border-left: 1px solid #D4D4D4;
@@ -7422,6 +7462,10 @@ hr {
   height: max-content;
   position: absolute;
   z-index: 200;
+}
+
+.list__container--full-screen {
+  height: calc(var(--vh) - 194px) !important;
 }
 
 .list__show-map-button {
@@ -7579,7 +7623,6 @@ hr {
     display: block;
     overflow: hidden;
     position: relative;
-    overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
     border-right: 1px solid #D4D4D4;
@@ -7983,11 +8026,17 @@ body {
 }
 
 .index__content-bottom {
+  transition: height 0.5s linear; /* Specify the transition property and duration */
   transition: all 1s;
+  height: 60px;
 }
 
-.index__content-bottom--hide {
-  margin-bottom: -250px;
+.index__content-bottom--mid-screen {
+  height: 520px;
+}
+
+.index__content-bottom--noscroll {
+  overflow: hidden;
 }
 
 @media only screen and (min-width: 1280px) {

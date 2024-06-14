@@ -115,7 +115,6 @@ $map-btns-size-mobile: 30px;
     left: -0.8rem;
     position: relative;
 
-
 }
 
 .pigeon-map__emoji{
@@ -134,10 +133,10 @@ $map-btns-size-mobile: 30px;
     // flex-direction: column !important;
     padding: 0 !important;
     margin: 0 !important;
-    bottom: 140px !important;
-    // right: -100px;
+    bottom: 60px !important;
+    right: 10px !important;
     font-size: 7px !important;
-    writing-mode: vertical-rl !important;
+    // writing-mode: vertical-rl !important;
     text-orientation: mixed !important;
 
 }
@@ -245,6 +244,12 @@ $map-btns-size-mobile: 30px;
         }
         
 
+    }
+
+    .pigeon-attribution {
+    
+        bottom: 0 !important;
+    
     }
 
     .pigeon-center-view {
