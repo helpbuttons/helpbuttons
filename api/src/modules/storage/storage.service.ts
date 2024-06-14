@@ -37,10 +37,10 @@ export class StorageService {
     }`;
     let buffer = Buffer.from(data, 'base64');
 
-    const fileName = `${uploadDir}${fileImageName}`
+    const pathfilename = `${uploadDir}${fileImageName}`
     return sharp(buffer)
     .resize(1024)
-    .toFile(fileName)
+    .toFile(pathfilename)
     .then((result :string) => {
       const fileName = `${getFilesRoute}${fileImageName}`;
       return {
@@ -67,4 +67,13 @@ export class StorageService {
     })
     
   }
+
+  async delete(filename) {
+    return this.imageFilesRepository.delete({name: filename}).then(async (data) => {
+      const fs = require('fs');
+      return await fs.unlinkSync(`${uploadDir}${filename}`.replace(getFilesRoute, ''))
+    })
+    
+  }
+
 }
