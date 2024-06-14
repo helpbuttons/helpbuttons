@@ -245,13 +245,14 @@ body,
   /* Add other styles as needed */
 }
 
-.popup__content {
+.popup__content,
+.popup--button-file {
   height: var(--vh) !important;
 }
 
 .list__container--full-screen,
 .list__content--full-screen {
-  height: calc(var(--vh) - 110px) !important;
+  height: calc(var(--vh) - 160px) !important;
 }
 
 .list__container--mid-screen,
@@ -2365,7 +2366,6 @@ li, ol, ul, h2 {
 
 .card-alert {
   padding: 15px;
-  margin: 15px 0;
   width: 100%;
   height: auto;
   justify-content: space-between;
@@ -4065,15 +4065,19 @@ li, ol, ul, h2 {
   margin-bottom: 0;
   font-weight: 600;
   color: #0E0E0E;
+  display: -webkit-box;
   font-size: 22px;
   margin: 5px 0;
   display: flex;
   flex-direction: row;
+  overflow: hidden;
   align-items: flex-start;
+  word-break: break-word;
+  -webkit-line-clamp: 2;
   word-wrap: break-word;
-  height: 1.95em;
-  max-height: 1.95em;
-  line-height: 0.96em;
+  height: 2.1em;
+  max-height: 2.2em;
+  line-height: 1em;
   text-overflow: ellipsis;
 }
 
@@ -4675,7 +4679,7 @@ li, ol, ul, h2 {
   align-items: center;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
   margin: 0;
@@ -8032,7 +8036,7 @@ body {
 }
 
 .index__content-bottom--mid-screen {
-  height: 520px;
+  height: 440px;
 }
 
 .index__content-bottom--noscroll {

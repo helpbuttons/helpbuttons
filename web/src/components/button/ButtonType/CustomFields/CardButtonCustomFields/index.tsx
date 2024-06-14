@@ -19,18 +19,7 @@ export function CardButtonCustomFields({ customFields, button }) {
       let field = <>{JSON.stringify(fieldProps)}</>;
 
 
-      if (type == 'event') {
-        field = (
-            <ShowDate
-              eventStart={button.eventStart}
-              eventEnd={button.eventEnd}
-              eventType={button.eventType}
-              title={button.title}
-              eventData={button.eventData}
-              hideRecurrentDates={true}
-            />
-        );
-      }
+
 
       if (type == 'price') {
         
@@ -57,8 +46,19 @@ export function CardButtonCustomFields({ customFields, button }) {
         }
       }
 
+      if (type == 'event') {
+        field = (
+            <ShowDate
+              eventStart={button.eventStart}
+              eventEnd={button.eventEnd}
+              eventType={button.eventType}
+              title={button.title}
+              eventData={button.eventData}
+              hideRecurrentDates={true}
+            />
+        );
+      }
 
-     
       return <div className='card-button__custom-field' key={key}>{field}</div>;
     });
   };
