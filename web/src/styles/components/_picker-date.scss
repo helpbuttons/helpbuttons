@@ -98,6 +98,32 @@ $picker-date-height: 40px;
 }
 
 
+//REACT CALENDAR CUSTOM
+
+.react-calendar {
+
+  width: 100% !important;
+  border-radius: $border-radius-semicircle;
+  padding: $padding-big;
+  border-color: $color-gray-border !important;
+
+
+}
+
+.react-calendar__tile {
+
+  height: 50px;
+  border-radius: $border-radius-circle;
+  margin: $margin-medium;
+  padding: $padding-big;
+
+}
+
+.react-calendar__tile--active {
+
+  background-color: $color-secondary !important;
+
+}
 
 
 .form__weekdays-list {

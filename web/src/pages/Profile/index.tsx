@@ -1,13 +1,10 @@
 //Users buttons an profile info URL
-import CardProfile, {
-  LinkAdminButton,
-} from 'components/user/CardProfile';
+import CardProfile from 'components/user/CardProfile';
 
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import router, { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { FindAdminButton, Logout } from 'state/Users';
+import { Logout } from 'state/Users';
 import Link from 'next/link';
 import {
   IoAlarm,
@@ -26,27 +23,13 @@ import { LoadabledComponent } from 'components/loading';
 import Popup from 'components/popup/Popup';
 import { getLocale } from 'shared/sys.helper';
 import { Network } from 'shared/entities/network.entity';
+import Accordion from 'elements/Accordion';
 
 export default function Profile() {
   const loggedInUser = useRef(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
-  const [adminButtonId, setAdminButtonId] = useState(null);
-
-  useEffect(() => {
-    if (loggedInUser) {
-      if (loggedInUser.role == Role.admin) {
-        store.emit(
-          new FindAdminButton((buttonData) => {
-            if (buttonData?.id) {
-              setAdminButtonId(() => buttonData.id);
-            }
-          }),
-        );
-      }
-    }
-  }, [loggedInUser]);
 
   const { asPath } = useRouter();
   const selectedNetwork: Network = useRef(
@@ -73,54 +56,52 @@ export default function Profile() {
           <Popup linkFwd="/Explore" title={t('user.profileView')}>
             <LoadabledComponent loading={!loggedInUser}>
               <CardProfile user={loggedInUser} />
-              {(loggedInUser && !loggedInUser.phone && !adminButtonId && loggedInUser?.role == Role.admin) && 
+              {(loggedInUser && !loggedInUser.phone && loggedInUser?.role == Role.admin) && 
                <span style={{"color": "red"}}>{t('user.addSupport')}</span>
               }
-              {loggedInUser?.role == Role.admin && adminButtonId && (
-                <LinkAdminButton adminButtonId={adminButtonId} />
-              )}
-              {loggedInUser?.username == loggedInUser?.username && (
-                <div className="card-profile__actions">
-                  <Link href="/ProfileEdit">
-                    <Btn
-                      iconLeft={IconType.svg}
-                      iconLink={<IoHammerOutline />}
-                      caption={t('user.editProfile')}
-                    />
-                  </Link>
-                  {selectedNetwork?.inviteOnly && 
-                    <Link href="/Profile/Invites">
+                {loggedInUser?.username == loggedInUser?.username && (
+                  <div className="card-profile__actions">
+                    <Link href="/ProfileEdit">
                       <Btn
                         iconLeft={IconType.svg}
-                        iconLink={<IoPersonAddOutline />}
-                        caption={t('invite.title')}
+                        iconLink={<IoHammerOutline />}
+                        caption={t('user.editProfile')}
                       />
                     </Link>
-                  }
+                    {selectedNetwork?.inviteOnly && 
+                      <Link href="/Profile/Invites">
+                        <Btn
+                          iconLeft={IconType.svg}
+                          iconLink={<IoPersonAddOutline />}
+                          caption={t('invite.title')}
+                        />
+                      </Link>
+                    }
 
-                  {isAdmin && (
-                    <AdminOptions adminButtonId={adminButtonId} />
-                  )}
-                  
-                  <Link href="/HomeInfo">
-                    <div onClick={logout} className="btn-with-icon">
-                      <div className="btn-with-icon__icon">
-                        <IoLogOutOutline />
+                    {isAdmin && (
+                      <AdminOptions/>
+                    )}
+                    
+                    <Link href="/HomeInfo">
+                      <div onClick={logout} className="btn-with-icon">
+                        <div className="btn-with-icon__icon">
+                          <IoLogOutOutline />
+                        </div>
+                        <span className="btn-with-icon__text">
+                          {t('user.logout')}
+                        </span>
                       </div>
-                      <span className="btn-with-icon__text">
-                        {t('user.logout')}
-                      </span>
-                    </div>
-                  </Link>
-                </div>
-              )}
+                    </Link>
+                  </div>
+                )}
+              
             </LoadabledComponent>
           </Popup>
     </>
   );
 }
 
-function AdminOptions({ adminButtonId }) {
+function AdminOptions() {
   return (
     <>
       <div>
@@ -141,17 +122,6 @@ function AdminOptions({ adminButtonId }) {
           />
         </Link>
       </div>
-      {!adminButtonId && (
-        <div>
-          <Link href="/ButtonNew">
-            <Btn
-              iconLeft={IconType.svg}
-              iconLink={<IoHandLeftOutline />}
-              caption={t('configuration.createSupportButton')}
-            />
-          </Link>
-        </div>
-      )}
     </>
   );
 }

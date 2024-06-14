@@ -6,7 +6,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
 import { useState, forwardRef, useEffect } from 'react';
-import { CircleColorPick, FieldColorPick } from 'elements/Fields/FieldColorPick';
+import { FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { AddCustomFields } from '../CustomFields/AddCustomFields';
@@ -123,18 +123,17 @@ const FieldButtonTemplates = forwardRef(
                     <EmojiPicker
                      updateEmoji={(newEmoji) => setEmoji(() => newEmoji)} 
                      pickerEmoji={emoji}
-                     label={t('configuration.buttonTemplateName')}
-                     
+                     label={t('configuration.buttonTemplateEmoji')}
                      />
-                    <CircleColorPick
+
+                    <FieldColorPick
                       name="buttonTemplateColor"
-                      label={t('configuration.buttonTemplateName')}
                       classNameInput="squared"
                       validationError={errors.buttonTemplateColor}
                       setValue={(name, value) => setEditFieldCssColor(value)}
-                      actionName={t('button.pickButtonTemplateColor')}
+                      label={t('configuration.buttonTemplateColor')}
+                      actionName={t('configuration.buttonTemplateColor')}
                       value={editFieldCssColor}
-                      hideBoilerPlate={true}
                     />
                     <Btn
                       btnType={BtnType.corporative}
@@ -190,14 +189,19 @@ const FieldButtonTemplates = forwardRef(
               className="field-text"
               onChange={(e) => setText(() => e.target.value)}
             />
+            <EmojiPicker
+              updateEmoji={(newEmoji) => setEmoji(() => newEmoji)} 
+              pickerEmoji={emoji}
+              label={t('configuration.buttonTemplateEmoji')}
+            />
             <FieldColorPick
                   name="buttonTemplateColor"
                   classNameInput="squared"
+                  label={t('configuration.buttonTemplateColor')}
                   validationError={errors.buttonTemplateColor}
                   setValue={(name, value) => setColor(value)}
                   actionName={t('button.pickButtonTemplateColor')}
                   value={color}
-                  hideBoilerPlate={true}
               />
               <label className="form__label">{t('configuration.customFields')}:</label>
               <p className="form__explain">{t('configuration.customFieldsExplain')}</p>

@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '@src/shared/decorator/current-user';
-import { OnlyRegistered } from '@src/shared/decorator/roles.decorator';
+import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 import { UserUpdateDto } from '../user/user.dto';
 import { User } from '../user/user.entity';
@@ -25,6 +25,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @AllowGuest()
   @Post('signup')
   async signup(@Body() signupUserDto: SignupRequestDto) {
     return this.authService.signup(signupUserDto).then((accessToken) => {
@@ -35,11 +36,13 @@ export class AuthController {
     });
   }
 
+  @AllowGuest()
   @Get('requestNewLoginToken/:email')
   requestNewLoginToken(@Param('email') email: string) {
     return this.authService.requestNewLoginToken(email);
   }
 
+  @AllowGuest()
   @Get('loginToken/:verificationToken')
   loginToken(@Param('verificationToken') verificationToken: string) {
     return this.authService.loginToken(verificationToken);

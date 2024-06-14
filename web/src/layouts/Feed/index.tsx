@@ -67,26 +67,31 @@ export default function Feed({ button }: { button: Button }) {
 
   return (
     <div className="feed-container">
-      
-      {(loggedInUser && isButtonOwner) && (
-        <ComposePost
-          referer={{ button: button.id }}
-          onCancel={() => {}}
-          onCreate={() => {
-            reloadPosts();
-          }}
-        />
-      )}
-      
-      {(!isButtonOwner && loggedInUser) && (      
-        <CardButtonHeadActions button={button} action={() => toggleShowReplyFirstPost(true)}/>         
-      )}
-      {(!isButtonOwner && !loggedInUser) && (      
-        <CardButtonHeadActions button={button} action={() => router.push({
-          pathname: '/Login',
-          query: { returnUrl: getReturnUrl() },
-        })}/>
-      )}
+      <div className="card-button__actions">
+        <>
+          {(loggedInUser && isButtonOwner) && (
+            <>
+              <CardButtonHeadActions button={button} action={null}/>
+              <ComposePost
+                referer={{ button: button.id }}
+                onCancel={() => {}}
+                onCreate={() => {
+                  reloadPosts();
+                }}
+              />
+            </>
+          )}
+          {(!isButtonOwner && loggedInUser) && (      
+            <CardButtonHeadActions button={button} action={() => toggleShowReplyFirstPost(true)}/>         
+          )}
+          {(!isButtonOwner && !loggedInUser) && (      
+            <CardButtonHeadActions button={button} action={() => router.push({
+              pathname: '/Login',
+              query: { returnUrl: getReturnUrl() },
+            })}/>
+          )}
+       </>
+      </div>
       <div className="feed-line"></div>
       <div className="feed-section">
         {posts &&
@@ -212,22 +217,6 @@ export function FeedElement({
                         disabled={isLast}
                       />
               )}
-              {!loggedInUser && 
-                <Btn
-                submit={false}
-                btnType={BtnType.smallLink}
-                caption={t('comment.delete')}
-                contentAlignment={ContentAlignment.right}
-                onClick={() =>
-                  {
-                    router.push({
-                      pathname: '/Login',
-                      query: { returnUrl: getReturnUrl() },
-                    });
-                  }
-                }
-              />
-              }
           </div>
           {loggedInUser && showComposePostReply?.post == post.id && (
             <Compose
@@ -271,7 +260,7 @@ export function ComposePost({
 
         }
         {!show &&
-            <div className="card-button__actions">
+            <>
 
                 <Btn
                   submit={false}
@@ -284,7 +273,7 @@ export function ComposePost({
                     toggleShow(true);
                   }}
                 />
-            </div>
+            </>
           }
     </>
     

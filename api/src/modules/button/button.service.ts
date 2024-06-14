@@ -183,7 +183,7 @@ export class ButtonService {
     return await button;
   }
 
-  async findById(id: string, includeExpired: boolean = false) {
+  async findById(id: string, includeExpired: boolean = false): Promise<Button> {
     let button: Button = await this.buttonRepository.findOne({
       where: { id, ...this.expiredBlockedConditions(includeExpired) },
       relations: ['owner'],
@@ -277,7 +277,7 @@ export class ButtonService {
     })
   }
 
-  async findh3(resolution, hexagons) {
+  async findh3(resolution, hexagons): Promise<Button[]> {
     try {
       if (hexagons && hexagons.length > 1000) {
         throw new HttpException(
@@ -313,6 +313,9 @@ export class ButtonService {
         .then((btns) => {
           return btns.filter((btn) => !btn.expired)
         })
+        .then((btns) => {
+          return btns.map((btn) => {return {...btn, hasPhone: btn.owner.phone ? true : false}})
+        })
         // return Promise.all(btns)
       });
     } catch (err) {
@@ -347,7 +350,7 @@ export class ButtonService {
     });
   }
 
-  async findAdminButton() {
+  async findAdminButton() : Promise<Button>{
     let button: Button = await this.buttonRepository.findOne({
       where: { owner: { role: Role.admin }, deleted: false },
       relations: ['owner'],
@@ -361,7 +364,7 @@ export class ButtonService {
         HttpStatus.NOT_FOUND,
       );
     }
-    return { ...button };
+    return button;
   }
 
   async findByOwner(ownerId: string) {

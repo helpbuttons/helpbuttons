@@ -13,16 +13,21 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   flex-direction: column;
   width: 100%;
   height: max-content;
-  position: relative;
-  z-index: $z-index-01;
-  transition: $transition-default-slow;
-  padding-bottom: calc($footer-height-mobile + 5px);
+  position: absolute;
+  z-index: $z-index-02;
+  // transition: top 0.1s ease-out; /* Adjust transition duration and easing as needed */
+
+  // transition: $transition-default-slow;
+  // padding-bottom: calc($footer-height-mobile + 5px);
 
 }
 
 .list__container--full-screen {
 
-  padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
+  height: calc(var(--vh) - 194px) !important;
+
+  // top: 100px;
+  // padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
 
 }
 
@@ -127,7 +132,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 100%;
+  // height: 100%;
   width: 100%;
   margin: auto;
   align-items: center;
@@ -163,9 +168,29 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   height: auto;
   border-bottom: $border-style-basic;
   justify-content: space-between;
-  padding: $padding-small $padding-xsmall;
+  padding: $padding-small $padding-big;
   gap: $padding-small;
   position: relative;
+  bottom: auto;
+  left: auto;
+  min-height: 60px;
+  border-radius: $border-radius-semicircle $border-radius-semicircle 0 0 ;
+  box-shadow: $box-shadow-divs;
+
+
+}
+
+
+
+//class for the select order tab when the map is hidden. Impose state
+.list__order--full-screen {
+
+  position: relative;
+  bottom: auto;
+  left: auto;
+  border-radius: 0;
+  box-shadow: none;
+
 
 }
 
@@ -192,15 +217,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
-//class for the select order tab when the map is hidden. Impose state
-.list__order--full-screen {
 
-  position: relative;
-  bottom: auto;
-  left: auto;
-  border-radius: 0;
-
-}
 
 
 @media #{$breakpoints-medium} {
@@ -265,7 +282,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     display: block;
     overflow: hidden;
     position: relative;
-    overflow: auto;
+    // overflow: auto;
     bottom: 0;
     flex-flow: row-reverse;
     border-right: $border-style-basic;

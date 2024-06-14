@@ -30,9 +30,9 @@ export function NetworkMapConfigure({
         setBrowseType={setBrowseType}
       /> */}
       <div className='form__field'>
-         <div className='form__explain'>
+         <p className='form__explain'>
            {t('configuration.centerOfMap')}
-        </div>
+        </p>
       </div>
 
       {(mapSettings.browseType != BrowseType.LIST) && 

@@ -13,6 +13,7 @@
     border-radius: 10px;
     width: 5px;
     background: $color-corporative;
+    border: $border-style-basic;
     background-size: 8px 8px;
     background-repeat:no-repeat;
     background-position:center;
@@ -45,7 +46,7 @@
     display: none;
   }
 
-  .info-overlay__container::-webkit-scrollbar {
+  .homeinfo__container::-webkit-scrollbar {
     // display: none;
     // -ms-overflow-style: none;  /* IE and Edge */
     // scrollbar-width: none;  

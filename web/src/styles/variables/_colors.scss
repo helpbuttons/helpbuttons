@@ -13,12 +13,12 @@
 $color-white: #fff;
 $color-black: #0E0E0E;
 $color-gray:  #828282;
-$color-gray-transparent: rgba(0,0,0,.4);
+$color-gray-transparent: rgba(0,0,0,0.12);
 $color-white-transparent: rgba(255, 255, 255, 0.7);
 $color-gray-btn: #3f3f3f;
 $color-transparent: #3f3b33ad;
 $color-ligth-gray: #f0f0f0;
-$color-med-gray: #d0d0d0;
+$color-med-gray: #8da0a0;
 $color-dark-gray: #2E2E2E;
 
 $color-gray-border: #D4D4D4;
@@ -26,6 +26,7 @@ $color-gray-border: #D4D4D4;
 // corporative
 
 $color-corporative: var(--network-background-color); // yellow
+$color-secondary:  var(--network-text-color);
 $color-red: #EA5648;
 $color-green: #19AF96;
 $color-blue: #18AAD2;

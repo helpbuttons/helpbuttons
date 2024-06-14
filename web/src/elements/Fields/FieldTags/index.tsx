@@ -61,8 +61,8 @@ export default function FieldTags({
     setTags
   })
   return (
-    <div className="tag__field">
-      {label && <div className="form__label">{label}</div>}
+    <div className="tag__field form__field">
+      {label && <label className="form__label">{label}</label>}
       {explain && <div className="form__explain">{explain}</div>}
       <input
         name={name}
@@ -77,7 +77,7 @@ export default function FieldTags({
         onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
       />
       <TagList tags={tags} remove={remove}/>
-      <div className="info-overlay__hashtags">
+      <div className="homeinfo__hashtags">
         {defaultSuggestedTags.map((tag, idx) => {
           return <div className="hashtag" key={idx} onClick={() => addTag(tag.tag)}>{tag.tag}</div>
         })}

@@ -452,6 +452,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/nunito/-/nunito-4.5.12.tgz#3d34ede8677a57e1d25e9b30d9e57d620592ca3d"
   integrity sha512-Li90TCJha1E+nBgP51GjcIGV6LxyQi7QisW8KZ4kpz5mpnQc1HmsJWVr9fyTMItUF/OuZUOfEazenXjaY6qRpQ==
 
+"@fontsource/quicksand@^5.0.18":
+  version "5.0.18"
+  resolved "https://registry.yarnpkg.com/@fontsource/quicksand/-/quicksand-5.0.18.tgz#dacd5a77b2db5c6f8cdabe41f1baf397dce97548"
+  integrity sha512-Dvv89zZG0vjZzmYwkUJTbFNV/uhNikqB9Qgl4KMtFw/gTaS5nA7vLIOjfEz/gjWlKPsYnuSIvVArLR0/xptxlA==
+
 "@hookform/resolvers@^2.8.1":
   version "2.9.3"
   resolved "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-2.9.3.tgz"

@@ -290,7 +290,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
     <>
       <CardButtonSubmenu button={button} />
       <ExpiringAlert button={button} isOwner={isButtonOwner(loggedInUser, button)}/>
-      <div className="card-button__content">
+      <div className="card-button__content card-button__full-content">
         <div className="card-button__header">
 
           <div className="card-button__info">
@@ -382,7 +382,7 @@ function ExpiringAlert({button, isOwner = false} : {button: Button, isOwner: boo
   
   if(isEventAndIsExpired(button))
   { 
-    return <FixedAlert alertType={AlertType.Success} message={`${t('button.endDatesExpired')}`}/>
+    return <FixedAlert alertType={AlertType.Info} message={`${t('button.endDatesExpired')}`}/>
   }
   return <FixedAlert alertType={AlertType.Success} message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id}">${t('button.renewLink')}</a>`}/>
 }
@@ -454,16 +454,18 @@ function ShowPhone({ button }) {
 export function CardButtonHeadActions({ button, action }) {
   
   return (
-    <div className="card-button__actions">
+    <>
       <ShowPhone button={button} />
-      <Btn
-          btnType={BtnType.corporative}
-          contentAlignment={ContentAlignment.center}
-          iconLeft={IconType.circle}
-          iconLink={<IoMailOutline />}
-          submit={true}
-          onClick={action}
-      />
+      {action && 
+        <Btn
+            btnType={BtnType.corporative}
+            contentAlignment={ContentAlignment.center}
+            iconLeft={IconType.circle}
+            iconLink={<IoMailOutline />}
+            submit={true}
+            onClick={action}
+        />
+      }
       {button.hearts && (
         <span className="btn-circle__icon">
           <IoHeartOutline />
@@ -477,7 +479,7 @@ export function CardButtonHeadActions({ button, action }) {
           {button.createdButtonsCount}
         </span>
       )}
-    </div>
+    </>
   );
 }
 export function CardButtonImages({ button }) {
@@ -501,12 +503,20 @@ export function CardButtonImages({ button }) {
         <div className="card-button__picture">
           {button.images.length > 1 && (
             <div className="card-button__picture-nav">
-              <div className="arrow btn-circle__icon" onClick={prev}>
-                <IoChevronBackOutline />
-              </div>
-              <div className="arrow btn-circle__icon" onClick={next}>
-                <IoChevronForwardOutline />
-              </div>
+              <Btn
+                btnType={BtnType.smallCircle}
+                iconLink={<IoChevronBackOutline />}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => prev()}
+              />
+              <Btn
+                btnType={BtnType.smallCircle}
+                iconLink={<IoChevronForwardOutline />}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => next()}
+              />
             </div>
           )}
           {images.map((image, idx) => (

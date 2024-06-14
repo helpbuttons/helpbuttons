@@ -2,7 +2,9 @@ For developers, open [CONTRIBUTING.md](/CONTRIBUTING.md)
 
 ![HB cover](/web/public/assets/images/hb_landscape_02_small.jpg?raw=true "hb cover")
 
-Build your own collaboration app tools with with Helpbuttons. Cooperate in the topic you want and generate a connected community in the area/collective you want. Share, help and get recognition for your action in a simple way. We need people. If you believe in social collaboration beyond consumption. 
+Build your own collaboration app with Helpbuttons. Cooperate in the topic you want and generate a connected community in the area/collective you want. Make your own whatever-sharing tool in seconds. Share, help and get recognition for your action in a simple way. Join us if you believe that easy social connection is key for a better society.
+
+We're currently testing real life examples that you can check in our website. Specially we're aiming to maximize accesibility and develop modules that allow more use cases. Check those tags if you want to help us in those fields.
 
 You can install your own tool in your server with this repo or ask us for help and host it at <a rel="me" href="https://helpbuttons.org">helputtons.org</a>
 

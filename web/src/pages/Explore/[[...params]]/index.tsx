@@ -1,5 +1,5 @@
 import { NextPageContext } from 'next';
-import HoneyComb from './HoneyComb';
+import HoneyComb from '../HoneyComb';
 import { ServerPropsService } from 'services/ServerProps';
 import { ClienteSideRendering } from 'pages/_app';
 import { Button } from 'shared/entities/button.entity';
@@ -11,10 +11,11 @@ export default function Explore({
   selectedNetwork,
   config,
 }) {
+
   return (
     <>
       <ClienteSideRendering>
-        <HoneyComb selectedNetwork={selectedNetwork} />
+       <HoneyComb selectedNetwork={selectedNetwork} />
       </ClienteSideRendering>
     </>
   );

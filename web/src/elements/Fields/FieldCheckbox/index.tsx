@@ -22,7 +22,7 @@ export const FieldCheckbox = React.forwardRef(({
     }
     return (
     <div className="form__field">
-    <p className="form__label">{label}</p>
+    <label className="form__label">{label}</label>
     <p className="form__explain">{explain}</p>
 
     <div className="checkbox">

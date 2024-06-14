@@ -31,8 +31,8 @@ export const FieldImageUpload = React.forwardRef(({ name, text, label, explain, 
   return (
     <>
       <div className="form__field">
-        <div className='form__label'>{label}</div>
-        <div className='form__explain'>{explain}</div>
+        <label className='form__label'>{label}</label>
+        <p className='form__explain'>{explain}</p>
         <ImageUploading
           value={image}
           onChange={onChange}

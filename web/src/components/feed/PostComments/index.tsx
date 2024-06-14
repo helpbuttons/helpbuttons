@@ -138,10 +138,7 @@ export function PostComment({
           </>
         )}
 
-        {loggedInUser &&
-          (loggedInUser.id == comment.author.id ||
-            isButtonOwner ||
-            isAdmin(loggedInUser)) && (
+        {loggedInUser && (loggedInUser.id == comment.author.id || isButtonOwner || isAdmin(loggedInUser)) && (
             <Btn
               submit={true}
               btnType={BtnType.smallLink}

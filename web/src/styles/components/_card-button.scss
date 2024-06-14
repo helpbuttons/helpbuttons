@@ -31,7 +31,7 @@ $card-button-border-height: $border-general-height;
   display: flex;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  // overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
 
@@ -84,6 +84,8 @@ $card-button-border-height: $border-general-height;
 .card-button__author {
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
+  gap: $padding-big;
   padding:  $padding-medium $padding-big;
   justify-content: space-between;
   border-top: 1px $color-ligth-gray solid;
@@ -111,6 +113,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__avatar {
   // flex: 0 1 12%;
+
   & > button {
     border: none;
     background: none;
@@ -152,7 +155,6 @@ $card-button-border-height: $border-general-height;
 .card-button__actions {
   padding: $padding-big;
   display: flex;
-  overflow: hidden;
   flex-direction: column;
   align-items: center;
   vertical-align: baseline;
@@ -169,6 +171,12 @@ $card-button-border-height: $border-general-height;
     margin-left: 0;
 
   }
+}
+
+.card-button__actions--mid {
+
+  border: 0;
+
 }
 
 .card-button__phone-section{
@@ -487,6 +495,7 @@ $card-button-border-height: $border-general-height;
 .card-button__picture-nav .arrow {
 
   @extend .btn-circle--small !optional;
+  padding: 0;
 
 }
 
@@ -629,7 +638,7 @@ $card-button-border-height: $border-general-height;
   text-overflow: ellipsis;
   word-wrap: break-word;
   // height: 2.6em;
-  line-height: 1.1em;
+  line-height: 1.4em;
 }
 
 .card-button__city {
@@ -724,8 +733,10 @@ $card-button-border-height: $border-general-height;
 .card-button__locDate {
   display: flex;
   justify-content: space-between;
+  overflow: visible;
   gap: $margin-xsmall;
   margin-bottom: $margin-small;
+
 }
 
 
@@ -734,3 +745,27 @@ $card-button-border-height: $border-general-height;
   margin-bottom: 0;
 }
 
+@media #{$breakpoints-xlarge} {
+
+  .card-button__full-content,
+  .card-button__author,
+  .card-button__actions {
+
+    padding: $padding-huge;
+
+  }
+
+  .card-button__full-content {
+
+    padding-bottom: $padding-small;
+
+  }
+
+
+  .card-button__title {
+
+    padding-top: $padding-big;
+
+  }
+
+}

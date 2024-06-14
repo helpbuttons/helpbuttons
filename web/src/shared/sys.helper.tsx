@@ -134,3 +134,12 @@ export const getUrlParams = (path, router) => {
 export const getReturnUrl = () => {
   return document.location.pathname + document.location.search 
 }
+
+export const findError = (errorsToFind, errors) => {
+  if (Object.keys(errors).length < 1) {
+    return false;
+  }
+  return errorsToFind.reduce((acc, currentField) => {
+    return acc ? acc : errors[currentField]
+  }, false)
+}

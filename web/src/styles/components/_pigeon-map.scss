@@ -22,10 +22,7 @@ $map-btns-size-mobile: 30px;
         }
     }
 
-    
-
 }
-
 
 .pigeon-center-buttons {
 
@@ -34,7 +31,7 @@ $map-btns-size-mobile: 30px;
     top: 130px !important;
     display: block;
     left: auto !important;
-    z-index: $z-index-03;
+    z-index: $z-index-02;
 
     &:hover {
         cursor: pointer;
@@ -118,7 +115,6 @@ $map-btns-size-mobile: 30px;
     left: -0.8rem;
     position: relative;
 
-
 }
 
 .pigeon-map__emoji{
@@ -137,10 +133,11 @@ $map-btns-size-mobile: 30px;
     // flex-direction: column !important;
     padding: 0 !important;
     margin: 0 !important;
-    font-size: 6px !important;
-    writing-mode: vertical-rl !important;
+    bottom: 60px !important;
+    right: 10px !important;
+    font-size: 7px !important;
+    // writing-mode: vertical-rl !important;
     text-orientation: mixed !important;
-
 
 }
 
@@ -200,9 +197,11 @@ $map-btns-size-mobile: 30px;
 .pigeon-map__hex-info--icon {
 
     @extend .btn-filter__icon;
+    background: none;
     width: 12px;
     height: 12px;
     margin-right: 6px;
+    // display: none;
 
 }
 
@@ -245,6 +244,12 @@ $map-btns-size-mobile: 30px;
         }
         
 
+    }
+
+    .pigeon-attribution {
+    
+        bottom: 0 !important;
+    
     }
 
     .pigeon-center-view {

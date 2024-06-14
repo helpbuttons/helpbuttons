@@ -21,6 +21,7 @@
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
     "popularHashtags": "Which topics are covered?",
+    "popularHashtagsExplain": "These are the topics created till now. Make your _helpbutton_ to add new topics.",
     "recommendedHashtags": "Which topics are recomended by the admins?",
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
@@ -63,6 +64,7 @@
     "map": "Map"
   },
   "buttonFilters": {
+    "filters":"Search filters",
     "searchBarTop": "{1} _helpbuttons_ found {0}",
     "selectedArea": "in the selected area",
     "queryLabel": "What do you search",
@@ -73,8 +75,8 @@
     "whereExplain": "Search the place you want or click the icon to check your location.",
     "distance": "Search Distance",
     "allButtonTypes": "All types",
-    "types": "_helpbuttons_ types",
-    "typesExplain": "Filter _helpbuttons_ by type",
+    "types": "Filter by _helpbuttons_ types",
+    "typesExplain": "Show only the _helpbuttons_ you select",
     "tagsExplain": "Network main tags",
     "price": "Price",
     "minPricePlaceholder": "From",
@@ -91,7 +93,9 @@
     "orderByExplain": "Choose the order in which _helpbuttons_ will appear in the list",
     "followTagSucess": "{0} has been added to your interests",
     "filteredSearch":"in filtered search by:",
-    "focusedArea":"in framed area"
+    "focusedArea":"in framed area",
+    "locationLimited": "Limited to {0}, {1}km",
+    "pickLocationLimits": "Choose a location"
   },
   "setup": {
     "hostname": "Hostname",
@@ -107,7 +111,7 @@
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
     "configureInstanceTitle": "Setup the last details of your network",
-    "test": "",
+    "test": "test",
     "needLogo": "Before selecting a place for your network, please upload a logo",
     "needPlace": "Please select the area of your network"
   },
@@ -173,7 +177,8 @@
     "imagesLabel": "Upload the images you want",
     "imagesExplain": "Images will be displayed in a carrousel in your _helpbutton_ page",
     "imagesText": "Upload Image",
-    "whereLabel": "Where ?",
+    "whereLabel": "Choose place",
+    "whereExplain": "Pick a location for your _helpbutton_",
     "changePlaceLabel": "Choose place",
     "whenLabel": "When ?",
     "invalidDates":"Invalid Dates",
@@ -251,6 +256,7 @@
     "description": "Description",
     "descriptExplain": "Short description of waht you do or what you are",
     "loginLink": "I have an account",
+    "showPassword": "Show Password",
     "loginWEmail": "Login with password",
     "register": "REGISTER",
     "sendLoginToken": "Send login email",
@@ -274,7 +280,7 @@
     "tagsExplain":"Select or write words that you are interested in and you will receive notifications of the _helpbuttons_ created. Write and press enter or separate by commas to add a word.",
     "tagsSignupExplain":"Optionally, select and write words that you are interested in and you will receive notifications of the _helpbuttons_ created with those topics. Write and press enter or separate by commas to add a word.",
     "distance":"Maximum distance of notification",
-    "distanceExplain":"_helpbuttons_ created farer from this radius won't be notified",
+    "distanceExplain":"_helpbuttons_ created farer from this radius won't be notified. 0 means no limit.",
     "location":"Your base location",
     "locationExplain":"Specify a base location for notifications",
     "personalData":"Your user data",
@@ -283,10 +289,10 @@
     "phoneExplain":"Add your phone if you want people to contact you through it",
     "phonePlaceHolder":"i.e. 34699000000",
     "signupOptions":"Extra options",
-    "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
     "adminPhonePublish": "Publish my phone in the home page",
-    "showWhatsapp": "Mostrar Whatsapp",
-    "addSupport": "You're admin, add a phone or _helpbutton_ of contact so people can reach you"
+    "showWhatsapp": "Show Whatsapp",
+    "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
+    "addSupport": "You're admin, add a phone of contact so people can reach you"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -344,6 +350,7 @@
     "send":"Send"
   },
   "configuration": {
+    "config": "Advanced options",
     "title": "Network and Administrator settings",
     "description": "Here you can modify different settings of your network. If it's your first time, you need to add at least a name, description, avatar image, background image and location to complete the setup.",
     "namePlaceHolder": "Network of permaculture farmers from Vilanova",
