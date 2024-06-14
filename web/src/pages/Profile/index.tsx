@@ -14,6 +14,7 @@ import {
   IoHandLeftOutline,
   IoLogOutOutline,
   IoPersonAddOutline,
+  IoTrashBinOutline,
 } from 'react-icons/io5';
 import Btn, { IconType } from 'elements/Btn';
 import { UserService } from 'services/Users';
@@ -82,6 +83,14 @@ export default function Profile() {
                       <AdminOptions/>
                     )}
                     
+                    <Link href="/ProfileDelete">
+                      <Btn
+                        iconLeft={IconType.svg}
+                        iconLink={<IoTrashBinOutline />}
+                        caption={t('user.deleteProfile')}
+                      />
+                    </Link>
+
                     <Link href="/HomeInfo">
                       <div onClick={logout} className="btn-with-icon">
                         <div className="btn-with-icon__icon">

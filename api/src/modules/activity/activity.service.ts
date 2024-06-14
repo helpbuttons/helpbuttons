@@ -301,4 +301,10 @@ export class ActivityService {
     };
     return this.activityRepository.insert([activity]);
   }
+
+  public deleteme(authorId: string)
+  {
+    return this.activityRepository
+        .delete({owner: {id: authorId}})
+  }
 }

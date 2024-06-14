@@ -267,6 +267,23 @@ export class ButtonService {
       button.image = button.images[0];
     }
 
+    this.buttonRepository
+      .findOne({ where: { id: id } })
+      .then((storeButton) => {
+        if (button.images.length < 0) {
+          this.storageService.deleteMany(storeButton.images);
+        } else {
+          var _ = require('lodash/array');
+          const deleteImages = _.difference(
+            storeButton.images,
+            button.images,
+          );
+          if (deleteImages.length > 0) {
+            this.storageService.deleteMany(deleteImages);
+          }
+        }
+      });
+
     return this.isEventExpired(button)
     .then((isExpired) => {
       if(isExpired)
@@ -531,5 +548,16 @@ export class ButtonService {
 
   setExpired(buttonId: string) {
     return this.buttonRepository.update(buttonId, { expired: true });
+  }
+
+  public deleteme(ownerId: string)
+  {
+    return this.buttonRepository.find({where: {owner: {id: ownerId}}}).then((buttonsOwned) => {
+      return buttonsOwned.map((buttonOwned) => this.storageService.deleteMany(buttonOwned.images))
+    })
+    .then(() => {
+      return this.buttonRepository
+      .delete({owner: {id: ownerId}})
+    })
   }
 }

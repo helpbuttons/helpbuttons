@@ -67,13 +67,27 @@ export class StorageService {
     })
     
   }
-
-  async delete(filename) {
-    return this.imageFilesRepository.delete({name: filename}).then(async (data) => {
-      const fs = require('fs');
-      return await fs.unlinkSync(`${uploadDir}${filename}`.replace(getFilesRoute, ''))
-    })
-    
+  
+  async delete(filename: string) {
+    return this.imageFilesRepository
+      .delete({ name: filename })
+      .then(async (data) => {
+        try {
+          const fs = require('fs');
+          console.log(`deleting ${uploadDir}${filename}`);
+          return await fs.unlinkSync(
+            `${uploadDir}${filename}`.replace(getFilesRoute, ''),
+          );
+        } catch (err) {
+          console.log('could not delete ' + filename);
+          console.log(err);
+        }
+      });
   }
 
+  async deleteMany(filenames: string[]) {
+    if (filenames.length > 0) {
+      return filenames.map((filename) => this.delete(filename));
+    }
+  }
 }
