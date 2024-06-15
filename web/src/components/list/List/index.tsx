@@ -147,7 +147,7 @@ function List({
           {!showAdvancedFilters && (
             <DraggableList
               className={'list__container '}
-              onScroll={handleScrollHeight}
+              // onScroll={handleScrollHeight}
               initialPos={{
                 x: 0,
                 y: window.innerHeight - 110,
@@ -203,7 +203,7 @@ function List({
               </div>
               <div
                 className={
-                  'list__content list__content--full-screen '
+                  'list__content list__content--full-screen' 
                 }
                 onScroll={handleScrollWidth}
               >
@@ -225,7 +225,7 @@ function List({
               'list__container ' +
               (showMap ? '' : ' list__container--full-screen')
             }
-            onScroll={handleScrollHeight}
+            // onScroll={handleScrollHeight}
           >
             <div
               className={
