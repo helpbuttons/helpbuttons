@@ -243,6 +243,10 @@ export class AuthService {
         newUser.avatar = await this.storageService.newImage64(
           data.avatar,
         );
+        if(currentUser.avatar != newUser.avatar)
+        {
+          this.storageService.delete(currentUser.avatar)
+        }
       } catch (err) {
         console.log(`avatar: ${err.message}`);
       }

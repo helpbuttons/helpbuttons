@@ -128,4 +128,9 @@ export class PostService {
       user,
     )
   }
+
+  public deleteme(authorId: string)
+  {
+    return this.postRepository.delete({author: {id: authorId}})
+  }
 }

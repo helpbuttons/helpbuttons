@@ -237,6 +237,7 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
   public watch(state: GlobalState) {
     return ButtonService.update(this.buttonId, this.button).pipe(
       tap((data) => {
+        store.emit(new updateCurrentButton(data[0]))
         this.onSuccess(data[0]);
       }),
       catchError((error) => handleError(this.onError, error)),

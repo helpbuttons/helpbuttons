@@ -32,6 +32,7 @@ import { BullModule } from '@nestjs/bull';
 import { CommandModule } from 'nestjs-command';
 import { ButtonCron } from '@src/modules/button/button.cron';
 import { SetupModule } from '@src/modules/setup/setup.module';
+import { DeletemeModule } from '@src/modules/deleteme/deleteme.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -73,7 +74,8 @@ import { SetupModule } from '@src/modules/setup/setup.module';
         backoff: 1000*10,
       }
     }),
-    SetupModule
+    SetupModule,
+    DeletemeModule
   ],
   controllers: [AppController],
   providers: [

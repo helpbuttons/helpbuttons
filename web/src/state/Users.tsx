@@ -161,6 +161,15 @@ export class Logout implements UpdateEvent {
   }
 }
 
+export class DeleteProfile implements WatchEvent {
+  public constructor()  {}
+  public watch(state: GlobalState) {
+      return UserService.deleteme().pipe(
+        map(() => store.emit(new Logout()))
+      )
+      
+  }
+}
 
 export class UpdateProfile implements WatchEvent {
   public constructor(

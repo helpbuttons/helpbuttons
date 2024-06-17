@@ -7,10 +7,11 @@ import { User } from './user.entity';
 import { MailModule } from '../mail/mail.module';
 import { InviteModule } from '../invite/invite.module';
 import { TagModule } from '../tag/tag.module';
+import { StorageModule } from '../storage/storage.module';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), MailModule, InviteModule, TagModule],
+  imports: [TypeOrmModule.forFeature([User]), MailModule, InviteModule, TagModule, StorageModule],
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService],
