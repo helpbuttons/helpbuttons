@@ -228,7 +228,9 @@
     "adminPhonePublishExplain": "Eres administrador de la red, ¿quieres que tu teléfono este disponible en la página principal? Puedes indicar también si quieres que te puedan contactar por Whatsapp.",
     "adminPhonePublish": "Publicar mi teléfono en la página de inicio",
     "showWhatsapp": "Mostrar Whatsapp",
-    "addSupport": "Eres administrador, añade tu teléfono para que puedan contactarte más fácilmente"
+    "addSupport": "Eres administrador, añade tu teléfono para que puedan contactarte más fácilmente",
+    "deleteProfile": "Borrar my perfil",
+    "confirmDeleting": "¡Confirma que deseas eliminar todos tus datos!"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",

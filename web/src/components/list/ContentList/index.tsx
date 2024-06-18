@@ -1,5 +1,9 @@
 ///button marker over the map
-import React from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import router from 'next/router';
 
@@ -14,6 +18,34 @@ export default function ContentList({
   linkToPopup = true,
   ...props
 }) {
+  const containerRef = useRef(null)
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [buttonsSlice, setButtonsSlice] = useState(2)
+
+  const callbackFunction = (entries) => {
+    const [ entry ] = entries
+    setIsVisible(() => entry.isIntersecting)
+
+    if(isVisible  && buttonsSlice < buttons.length)
+    {
+      setButtonsSlice(() => buttonsSlice + 2)
+    }
+  }
+  const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 1.0
+  }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(callbackFunction, options)
+    if (containerRef.current) observer.observe(containerRef.current)
+    
+    return () => {
+      if(containerRef.current) observer.unobserve(containerRef.current)
+    }
+  }, [containerRef, options])
+
   if (buttons.length < 1) {
     return (
       <>
@@ -33,8 +65,18 @@ export default function ContentList({
       </>
     );
   }
-  return buttons.map((btn, i) => (
-    // <>{JSON.stringify(buttonTypes)}</>
-    <CardButtonList key={i} button={btn} buttonTypes={buttonTypes} showMap={showMap} linkToPopup={linkToPopup}/>
-  ));
+
+  return (
+    <>{buttons.slice(0,buttonsSlice).map((btn, i) => (
+        <CardButtonList
+          button={btn}
+          key={i}
+          buttonTypes={buttonTypes}
+          showMap={showMap}
+          linkToPopup={linkToPopup}
+        />
+      ))}
+     <div ref={containerRef}></div>
+    </>
+  );
 }

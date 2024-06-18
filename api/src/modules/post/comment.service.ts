@@ -62,4 +62,12 @@ export class CommentService {
       })
     }) 
   }
+
+  public deleteme(authorId: string)
+  {
+    return this.commentRepository.find({where: {post: {author: {id: authorId}}}}).then((comments) => 
+    {
+      return this.commentRepository.remove(comments)
+    })
+  }
 }

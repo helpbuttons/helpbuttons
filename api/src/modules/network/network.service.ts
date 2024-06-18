@@ -234,6 +234,9 @@ export class NetworkService {
             network.logo = await this.storageService.newImage64(
               updateDto.logo,
             );
+            if(defaultNetwork.logo != network.logo){
+              await this.storageService.delete(defaultNetwork.logo)
+            }
           } catch (err) {
             throw new ValidationException({ logo: err.message });
           }
@@ -244,6 +247,9 @@ export class NetworkService {
             network.jumbo = await this.storageService.newImage64(
               updateDto.jumbo,
             );
+            if(defaultNetwork.jumbo != network.jumbo){
+              await this.storageService.delete(defaultNetwork.jumbo)
+            }
           } catch (err) {
             throw new ValidationException({ jumbo: err.message });
           }

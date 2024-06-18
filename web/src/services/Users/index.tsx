@@ -106,4 +106,8 @@ export class UserService {
   public static getPhone(userId : string): Observable<any> {
     return httpService.get<any>(`users/getPhone/${userId}`);
   }
+
+  public static deleteme(): Observable<any>{
+    return httpService.get<any>(`users/deleteme`)
+  }
 }

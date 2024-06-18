@@ -17,7 +17,6 @@ import {
   UpdateExploreViewMode,
   UpdateFilters,
 } from 'state/Explore';
-import { useScrollHeightAndWidth } from 'elements/scroll';
 import Btn, {
   BtnType,
   ContentAlignment,
@@ -60,13 +59,6 @@ function List({
 
   const showMapIcon = showMap ? <IoClose /> : <IoMapOutline />;
 
-  const handleChangeShowMap = (event) => {
-    toggleShowMap(event.target.value);
-    setListOpen(false);
-    onLeftColumnToggle(false);
-    setListFullScreen(false);
-  };
-
   const updatesOrderByFilters = (value) => {
     const newFilters = { ...filters, orderBy: value };
     store.emit(new UpdateFilters(newFilters));
@@ -107,10 +99,6 @@ function List({
     }
   }, [hexagonClicked]);
 
-  const leftColumnToggle = (event, value) => {
-    onLeftColumnToggle(event.target.value);
-  };
-
   const [isListFullScreen, setListFullScreen] =
     useState<boolean>(false);
   // const [isListOpen, setListOpen] = useState<boolean>(true);
@@ -121,9 +109,6 @@ function List({
   };
 
   const buttonTypes = useButtonTypes();
-
-  const { sliceSize, handleScrollHeight, handleScrollWidth } =
-    useScrollHeightAndWidth(buttons.length);
 
   let dropdownExploreViewOptions = [
     {
@@ -147,7 +132,6 @@ function List({
           {!showAdvancedFilters && (
             <DraggableList
               className={'list__container '}
-              // onScroll={handleScrollHeight}
               initialPos={{
                 x: 0,
                 y: window.innerHeight - 110,
@@ -157,8 +141,6 @@ function List({
               isListFullScreen={isListFullScreen}
               setListOpen={setListOpen}
             >
-              {/* <div className={ 'list__container ' + (showMap ? '' : ' list__container--full-screen')} onScroll={handleScrollHeight}> */}
-
               <div
                 className={
                   'list__order  ' +
@@ -168,16 +150,6 @@ function List({
                 }
               >
                 <div className="drag-tab__line"></div>
-
-                {/* {showLeftColumn &&
-                    <AdvancedFiltersSortDropDown
-                      className={'dropdown__dropdown-trigger--list'}
-                      orderBy={filters.orderBy}
-                      setOrderBy={(value) => updatesOrderByFilters(value)}
-                      buttonTypes={buttonTypes}
-                      selectedButtonTypes={filters.helpButtonTypes}
-                    />
-                  } */}
                 {isListOpen && (
                   <AdvancedFiltersSortDropDown
                     className={'dropdown__dropdown-trigger--list'}
@@ -192,8 +164,6 @@ function List({
                 {isListFullScreen && (
                   <Btn
                     btnType={BtnType.smallLink}
-                    // extraClass='dropdown__dropdown-trigger--list'
-                    // iconLeft={IconType.svg}
                     iconLink={<IoMap />}
                     contentAlignment={ContentAlignment.left}
                     caption={t('explore.showMap')}
@@ -205,11 +175,10 @@ function List({
                 className={
                   'list__content list__content--full-screen' 
                 }
-                onScroll={handleScrollWidth}
               >
                 {buttonTypes?.length > 0 && (
                   <ContentList
-                    buttons={buttons.slice(0, sliceSize)}
+                    buttons={buttons}
                     buttonTypes={buttonTypes}
                     showMap={showMap}
                   />
@@ -225,7 +194,6 @@ function List({
               'list__container ' +
               (showMap ? '' : ' list__container--full-screen')
             }
-            // onScroll={handleScrollHeight}
           >
             <div
               className={
@@ -290,11 +258,10 @@ function List({
                   ? 'list__content--mid-screen'
                   : 'list__content--full-screen')
               }
-              onScroll={handleScrollWidth}
             >
               {buttonTypes?.length > 0 && (
                 <ContentList
-                  buttons={buttons.slice(0, sliceSize)}
+                  buttons={buttons}
                   buttonTypes={buttonTypes}
                   showMap={showMap}
                 />
