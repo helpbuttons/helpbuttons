@@ -3,7 +3,6 @@ import FieldDate from 'elements/Fields/FieldDate';
 import FieldNumber from 'elements/Fields/FieldNumber';
 import t from 'i18n';
 import React from 'react';
-import { getSymbol } from 'shared/currency.utils';
 
 export default function FieldCustomFields({
   customFields,
@@ -27,7 +26,7 @@ export default function FieldCustomFields({
                 name={'price'}
                 label={t(
                   'customFields.priceLabel',
-                  [getSymbol(currency)]
+                  [currency]
                 )}
                 watch={watch}
                 setValue={setValue}

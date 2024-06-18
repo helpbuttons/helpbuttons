@@ -23,7 +23,6 @@ import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
 import { DropdownField } from 'elements/Dropdown/Dropdown';
-import { availableCurrencies } from 'shared/currency.utils';
 import { alertService } from 'services/Alert';
 
 export default NetworkForm;
@@ -234,14 +233,13 @@ function NetworkForm({
             />
     
             {showCurrencyDropDown && 
-              <DropdownField
-                options={availableCurrencies}
-                defaultSelected={watch('currency')}
-                onChange={(value) => {
-                  setValue('currency', value)
-                }}
-                label={t('configuration.currencyLabel')}
-              />
+                <FieldText
+                  name="nomeclaturePlural"
+                  label={t('configuration.currencyLabel')}
+                  classNameInput="squared"
+                  validationError={errors.currency}
+                  {...register('currency')}
+                />
             }
             <FieldAreaMap
               label={t('configuration.locationLabel')}
