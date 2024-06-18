@@ -132,7 +132,6 @@ function List({
           {!showAdvancedFilters && (
             <DraggableList
               className={'list__container '}
-              onScroll={() => {}}
               initialPos={{
                 x: 0,
                 y: window.innerHeight - 110,
@@ -174,7 +173,7 @@ function List({
               </div>
               <div
                 className={
-                  'list__content list__content--full-screen '
+                  'list__content list__content--full-screen' 
                 }
               >
                 {buttonTypes?.length > 0 && (

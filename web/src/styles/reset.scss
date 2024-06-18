@@ -111,7 +111,7 @@ body,
 .list__container--full-screen,
 .list__content--full-screen{
 
-  height: calc(var(--vh) - 160px ) !important; //header + filters bar
+  height: calc(var(--vh) - 120px ) !important; //header + filters bar
 
 }
 
@@ -163,17 +163,17 @@ q {
   quotes: "" "";
 }
 
-textarea {
-  font-family: $font-family-first;
-}
+// textarea {
+//   font-family: $font-family-first;
+// }
 
-input {
-  font-family: $font-family-first;
-}
+// input {
+//   font-family: $font-family-first;
+// }
 
-button {
-  font-family: $font-family-first;
-}
+// button {
+//   font-family: $font-family-first;
+// }
 a {
   color: $color-corporative;  
   word-break: break-all;
