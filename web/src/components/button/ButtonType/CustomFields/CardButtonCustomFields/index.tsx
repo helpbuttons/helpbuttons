@@ -17,10 +17,6 @@ export function CardButtonCustomFields({ customFields, button }) {
     return reversedCustomFields.map((fieldProps, key) => {
       const type = fieldProps.type;
       let field = <>{JSON.stringify(fieldProps)}</>;
-
-
-
-
       if (type == 'price') {
         
         if(button.price < 0)
