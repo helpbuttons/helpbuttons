@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import { UpdateButtonDto } from 'shared/dtos/button.dto';
 import t from 'i18n';
 import { useRouter } from 'next/router';
+import { ErrorName } from 'shared/types/error.list';
 
 export default function ButtonEdit() {
   const selectedNetwork = useRef(
@@ -61,8 +62,17 @@ export default function ButtonEdit() {
     router.push(`/Explore?lat=${data.lat}&lng=${data.lng}&btn=${data.id}`);
   };
 
-  const onError = (errorMessage) => {
-    alertService.error(errorMessage.caption);
+  const onError = (err) => {
+    if (err.errorName == ErrorName.invalidDates) {
+      alertService.error(t('button.invalidDates'));
+    } else if (err.errorName == ErrorName.InvalidMimetype) {
+      alertService.error(t('validation.invalidMimeType'));
+    } else if (err.caption) {
+      alertService.error(err.caption);
+    } else {
+      console.error(JSON.stringify(err));
+    }
+
     setIsSubmitting(() => false);
   };
   useEffect(() => {

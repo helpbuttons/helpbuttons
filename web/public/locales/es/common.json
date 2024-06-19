@@ -354,7 +354,7 @@
     "error": "Revise los campos, hay errores en el formulario",
     "ownership": "No eres el dueño/a",
     "currentPass": "La contraseña que escribiste no es correcta",
-    "supportFiles": "Tipo de archivo no válido, usa jpeg o png",
+    "invalidMimeType": "Tipo de archivo no válido, usa jpeg o png",
     "internalServer": "Error interno de servidor",
     "emailRegistered": "Email ya registrado",
     "userRegistered": "Nombre ya registrado",

@@ -248,7 +248,7 @@ export class AuthService {
           this.storageService.delete(currentUser.avatar)
         }
       } catch (err) {
-        console.log(`avatar: ${err.message}`);
+        throw new CustomHttpException(ErrorName.InvalidMimetype);
       }
     }else if(data.avatar){
       newUser.avatar = data.avatar;

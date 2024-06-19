@@ -160,9 +160,7 @@ export class ButtonService {
                     button.images.push(newImage);
                   }
                 } catch (err) {
-                  throw new ValidationException({
-                    images: err.message,
-                  });
+                  throw new CustomHttpException(ErrorName.InvalidMimetype);
                 }
               } else if (isImageUrl(image)) {
                 button.images.push(image);
@@ -252,7 +250,7 @@ export class ButtonService {
                 button.images.push(newImage);
               }
             } catch (err) {
-              throw new ValidationException({ images: err.message });
+              throw new CustomHttpException(ErrorName.InvalidMimetype);
             }
           } else if (isImageUrl(image)) {
             button.images.push(image);

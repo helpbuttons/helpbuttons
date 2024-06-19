@@ -98,6 +98,8 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
       });
     }else if(err.errorName == ErrorName.invalidDates){
       alertService.error(t('button.invalidDates'))
+    }else if(err.errorName == ErrorName.InvalidMimetype){
+      alertService.error(t('validation.invalidMimeType'))
     }else{
       console.error(JSON.stringify(err))
     }

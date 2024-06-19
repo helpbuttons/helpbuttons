@@ -35,9 +35,10 @@ export default function FieldImageUploads({
     setValue(imageListData);
   };
   const onRemoveImage = (index) => {
-    images.splice(index, 1);
-    setImages(() => images);
-    updateValues(images);
+    let z = JSON.parse(JSON.stringify(images));
+    z.splice(index, 1);
+    setImages(() => z);
+    updateValues(z);
   };
 
   return (
