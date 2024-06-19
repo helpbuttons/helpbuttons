@@ -55,7 +55,7 @@ import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
   @AllowGuest()
   @Get('logo/:resolution')
   async logo(@Param('resolution') resolution : number, @Res() res) {
-    if([16, 32, 48, 72, 96, 144, 168, 192].indexOf(resolution) > -1)
+    if([16, 32, 48, 72, 96, 144, 168, 180, 192].indexOf(resolution) > -1)
     {
       return this.networkService.getLogo(res,resolution)
     }
