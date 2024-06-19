@@ -2,7 +2,7 @@
 
 import Head from 'next/head';
 
-export default function SEO({title, description, image, pageurl, siteTitle}) {
+export default function SEO({title, description, image, pageurl, siteTitle, color, apiUrl}) {
  return (
           <Head>
             <title>{title}</title>
@@ -32,6 +32,16 @@ export default function SEO({title, description, image, pageurl, siteTitle}) {
               content={description}
             />
             <meta property="og:site_name" content={siteTitle} />
+            
+            <link rel="icon" type="image/png" sizes="32x32" href={`${apiUrl}/networks/logo/32`}/>
+            <link rel="icon" type="image/png" sizes="16x16" href={`${apiUrl}/networks/logo/16`}/>
+            <link rel="manifest" href={`${apiUrl}/networks/manifest.json`}/>
+            <link rel="mask-icon" href={`${apiUrl}/networks/logo/32`} color={color}/>
+            <meta name="msapplication-TileColor" content={color}/>
+            <meta name="theme-color" content={color}/>
+
+
+            <link rel="apple-touch-icon" sizes="180x180" href={`${apiUrl}/networks/logo/180`}/>
           </Head>
   );
 }

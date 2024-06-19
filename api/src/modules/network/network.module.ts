@@ -15,6 +15,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     TagModule,
     StorageModule,
     CacheModule.register(),
+    StorageModule,
     forwardRef(() => UserModule)
   ],
   controllers: [

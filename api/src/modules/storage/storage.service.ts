@@ -68,6 +68,11 @@ export class StorageService {
     
   }
   
+  async createImage(imageFileName, imageOutputFileName, size)
+  {
+    return await sharp(imageFileName).resize(size, size).toFile(imageOutputFileName);
+  }
+
   async delete(filename: string) {
     return this.imageFilesRepository
       .delete({ name: filename })

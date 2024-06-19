@@ -95,5 +95,7 @@ export function getMetadata(subtitle, selectedNetwork, baseUrl, uri) {
     image: imageUrl,
     siteTitle: selectedNetwork.name,
     pageurl: `${baseUrl}${uri}`,
+    color: selectedNetwork.backgroundColor,
+    apiUrl: process.env.API_URL
   };
 }
