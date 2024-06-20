@@ -13,8 +13,6 @@
 @import "variables/btn-animation";
 @import "variables/grid";
 
-
-
 //////////////// ELEMENTS
 
 @import "elements/label";
@@ -115,9 +113,6 @@ html, body {
 
 }
 
-.notifications-index {
-  z-index: 15000 !important;
-}
 
 .disabled {
   pointer-events: none;

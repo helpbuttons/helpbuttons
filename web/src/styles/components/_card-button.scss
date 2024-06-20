@@ -119,6 +119,18 @@ $card-button-border-height: $border-general-height;
     background: none;
     padding: 0;
   }
+
+  & a {
+
+    color: $color-dark-gray;
+    margin: auto;
+    height: inherit;
+    width: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
 }
 
 .card-button__info {

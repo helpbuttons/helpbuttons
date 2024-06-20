@@ -5027,6 +5027,15 @@ hr {
   background: none;
   padding: 0;
 }
+.card-button__avatar a {
+  color: #2E2E2E;
+  margin: auto;
+  height: inherit;
+  width: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .card-button__info {
   flex: 100%;
@@ -8531,6 +8540,9 @@ tbody,
 tfoot,
 thead,
 tr,
+textarea,
+input,
+button,
 select,
 th,
 td {
@@ -8661,10 +8673,6 @@ html, body {
   background-color: #2E2E2E;
   height: 100vh;
   background: repeating-linear-gradient(45deg, #f0f0f0 0px, #f0f0f0 1px, #f0f0f0 2px, #f0f0f0 20px);
-}
-
-.notifications-index {
-  z-index: 15000 !important;
 }
 
 .disabled {

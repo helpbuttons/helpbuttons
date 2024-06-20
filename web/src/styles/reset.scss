@@ -54,6 +54,9 @@ tbody,
 tfoot,
 thead,
 tr,
+textarea,
+input,
+button,
 select,
 th,
 td {
@@ -64,7 +67,7 @@ td {
   font-weight: inherit;
   font-style: inherit;
   font-size: 100%;
-  font-family: $font-family-first;
+  font-family: 'quicksand', sans-serif;
   text-decoration: none;
   vertical-align: baseline;
   box-sizing: border-box;
@@ -78,11 +81,11 @@ td {
   --vh: 1vh; /* Define a CSS variable for viewport height */
 }
 body {
+  
   line-height: $text-line-height-small;
   color: $color-black;
   background: $color-ligth-gray;
   // height: 100vh;
-
 }
 /* Apply the calculated viewport height to html, body, and #__next elements */
 html,
@@ -174,6 +177,7 @@ q {
 // button {
 //   font-family: $font-family-first;
 // }
+
 a {
   color: $color-corporative;  
   word-break: break-all;
