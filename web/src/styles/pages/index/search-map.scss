@@ -71,6 +71,12 @@ $search-map-height: 0; // Altura del header
     & a {
 
       color: $color-dark-gray;
+      margin: auto;
+      height: inherit;
+      width: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   
   }

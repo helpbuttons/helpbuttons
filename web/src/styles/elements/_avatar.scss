@@ -7,6 +7,8 @@ $avatar-medium-max-width: 50px;
 
   overflow: hidden;
   position: relative;
+  justify-content: center;
+  align-items: center
 
 }
 
@@ -21,7 +23,6 @@ $avatar-medium-max-width: 50px;
   min-height: $avatar-big-max-width;
   min-width: $avatar-big-max-width;
   display: flex;
-  justify-content: center;
 
 }
 
@@ -37,7 +38,6 @@ $avatar-medium-max-width: 50px;
   min-width: $avatar-medium-max-width;
   display: flex;
 
-  justify-content: center;
 
 
 }
@@ -49,7 +49,7 @@ $avatar-medium-max-width: 50px;
   border-style: solid;
   object-fit: cover;
   overflow: hidden;
-  justify-content: center;
+
   top: 0;
   border-width: 2px;
 
@@ -66,7 +66,7 @@ $avatar-medium-max-width: 50px;
   width: $avatar-small-max-width;
   min-height: $avatar-small-max-width;
   min-width: $avatar-small-max-width;
-  justify-content: center;
+
   display: flex;
 
 }

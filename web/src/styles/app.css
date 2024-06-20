@@ -230,6 +230,8 @@
 .avatar, .avatar-small, .avatar-medium, .avatar-medium--home, .avatar-big {
   overflow: hidden;
   position: relative;
+  justify-content: center;
+  align-items: center;
 }
 
 .avatar-big {
@@ -241,7 +243,6 @@
   min-height: 68px;
   min-width: 68px;
   display: flex;
-  justify-content: center;
 }
 
 .avatar-medium, .avatar-medium--home {
@@ -253,7 +254,6 @@
   min-height: 50px;
   min-width: 50px;
   display: flex;
-  justify-content: center;
 }
 
 .avatar-medium--home {
@@ -262,7 +262,6 @@
   -o-object-fit: cover;
      object-fit: cover;
   overflow: hidden;
-  justify-content: center;
   top: 0;
   border-width: 2px;
 }
@@ -276,7 +275,6 @@
   width: 30px;
   min-height: 30px;
   min-width: 30px;
-  justify-content: center;
   display: flex;
 }
 
@@ -7976,6 +7974,12 @@ body {
   }
   .search-map__network-title a {
     color: #2E2E2E;
+    margin: auto;
+    height: inherit;
+    width: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .search-map__name {
     display: flex;
