@@ -274,7 +274,7 @@ $card-button-border-height: $border-general-height;
   font-size: $font-size-general;
   font-weight: bold;
   text-transform: capitalize;
-  line-height: 1;
+  line-height: $text-line-height-small;
   color:  var(--button-color);
   display: -webkit-box;
   -webkit-line-clamp: 1;

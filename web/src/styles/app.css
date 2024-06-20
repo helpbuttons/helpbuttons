@@ -5147,7 +5147,7 @@ hr {
   font-size: 16px;
   font-weight: bold;
   text-transform: capitalize;
-  line-height: 1;
+  line-height: 1.5rem;
   color: var(--button-color);
   display: -webkit-box;
   -webkit-line-clamp: 1;
