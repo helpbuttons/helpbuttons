@@ -230,7 +230,8 @@
     "showWhatsapp": "Mostrar Whatsapp",
     "addSupport": "Eres administrador, añade tu teléfono para que puedan contactarte más fácilmente",
     "deleteProfile": "Borrar my perfil",
-    "confirmDeleting": "¡Confirma que deseas eliminar todos tus datos!"
+    "confirmDeleting": "¡Confirma que deseas eliminar todos tus datos!",
+    "securityAndPrivacy": "Seguridad y privacidad"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",

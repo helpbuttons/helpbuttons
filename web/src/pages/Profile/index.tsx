@@ -77,15 +77,6 @@ export default function Profile() {
                     {isAdmin && (
                       <AdminOptions/>
                     )}
-                    {!isAdmin && 
-                      <Link href="/ProfileDelete">
-                        <Btn
-                          iconLeft={IconType.svg}
-                          iconLink={<IoTrashBinOutline />}
-                          caption={t('user.deleteProfile')}
-                        />
-                      </Link>
-                    }
                     <Link href="/HomeInfo">
                       <div onClick={logout} className="btn-with-icon">
                         <div className="btn-with-icon__icon">
