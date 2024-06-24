@@ -18,6 +18,7 @@
     "loading": "cargando",
     "goToExplore": "Explorar _helpbuttons_",
     "goToCreate": "Crea tu _helpbutton_",
+    "activity":"Actividad reciente",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
     "stats": "¿Qué hay en esta red?",
     "users": "{0} usuarios en esta Red",
