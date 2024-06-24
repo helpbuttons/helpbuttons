@@ -325,7 +325,7 @@ export default function ProfileEdit() {
                           })}
                         ></FieldPassword>
 
-                      {loggedInUser?.role == Role.admin && 
+                      {loggedInUser.role != Role.admin && 
                         <Link href="/ProfileDelete">
                           <Btn
                             iconLeft={IconType.svg}
