@@ -6290,7 +6290,7 @@ hr {
   background: transparent !important;
   padding: 0 !important;
   margin: 0 !important;
-  bottom: 60px !important;
+  bottom: 0px !important;
   right: 10px !important;
   font-size: 7px !important;
   text-orientation: mixed !important;
@@ -8563,6 +8563,8 @@ td {
   vertical-align: baseline;
   box-sizing: border-box;
   word-wrap: break-word;
+  -webkit-hyphens: auto;
+          hyphens: auto;
 }
 
 /* remember to define focus styles! */
