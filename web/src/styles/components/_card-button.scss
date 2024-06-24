@@ -232,6 +232,8 @@ $card-button-border-height: $border-general-height;
   margin-top: $margin-xsmall;
   text-indent: -9999999px;
   width: 18px;
+  display: flex;
+  gap: 10px;
 
   svg {
 
@@ -763,6 +765,12 @@ $card-button-border-height: $border-general-height;
   .card-button__actions {
 
     padding: $padding-huge;
+
+  }
+
+  .card-button__submenu {
+
+    padding: $padding-medium;
 
   }
 

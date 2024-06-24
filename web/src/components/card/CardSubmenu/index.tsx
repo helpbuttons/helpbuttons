@@ -1,24 +1,34 @@
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import t from 'i18n';
 import { useState } from 'react';
-import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
+import { IoEllipsisHorizontalSharp, IoMail, IoMailOpenOutline, IoSendOutline } from 'react-icons/io5';
 
 export function CardSubmenu({ children }) {
   const [showSubmenu, setShowSubmenu] = useState(false);  
   return (
     <div>
       <div
-        onClick={() => {
-          setShowSubmenu(!showSubmenu);
-        }}
+
         className="card-button__edit-icon card-button__submenu"
       >
+         <Btn
+          btnType={BtnType.filterCorp}
+          contentAlignment={ContentAlignment.left}
+          iconRight={IconType.circle}
+          caption={t('button.send')}
+          iconLink={<IoMailOpenOutline />}
+          
+        />
         <Btn
-          btnType={BtnType.smallCircle}
+          btnType={BtnType.filterCorp}
           contentAlignment={ContentAlignment.center}
           iconRight={IconType.circle}
           iconLink={<IoEllipsisHorizontalSharp />}
-          submit={true}
+          onClick={() => {
+            setShowSubmenu(!showSubmenu);
+          }}
         />
+
       </div>
       {showSubmenu && (
         <div className="card-button__dropdown-container">

@@ -5116,6 +5116,8 @@ hr {
   margin-top: 7px;
   text-indent: -9999999px;
   width: 18px;
+  display: flex;
+  gap: 10px;
 }
 .card-button__submenu-show {
   background: var(--network-background-color);
@@ -5569,6 +5571,9 @@ hr {
   .card-button__author,
   .card-button__actions {
     padding: 30px;
+  }
+  .card-button__submenu {
+    padding: 10px;
   }
   .card-button__full-content {
     padding-bottom: 5px;

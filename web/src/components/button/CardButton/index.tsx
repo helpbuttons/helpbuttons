@@ -598,6 +598,7 @@ export function CardButtonOptions() {
         <div className="card-button__edit-icon card-button__submenu">
           <IoEllipsisHorizontalSharp />
         </div>
+
       </div>
 
       <div className="card-button__dropdown-container">
