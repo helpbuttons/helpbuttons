@@ -205,18 +205,13 @@ export class ButtonService {
 
     let location = {};
     let hexagon = {};
-    if (updateDto.latitude > 0 && updateDto.longitude > 0) {
-      location = {
-        location: () =>
-          `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
-      };
-      hexagon = {
-        hexagon: () =>
-          `h3_lat_lng_to_cell(POINT(${updateDto.longitude}, ${updateDto.latitude}), ${maxResolution})`,
-      };
-    } else {
-      delete updateDto.latitude;
-      delete updateDto.longitude;
+    location = {
+      location: () =>
+        `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
+    };
+    hexagon = {
+      hexagon: () =>
+        `h3_lat_lng_to_cell(POINT(${updateDto.longitude}, ${updateDto.latitude}), ${maxResolution})`,
     }
 
     let hasPhone = false;
