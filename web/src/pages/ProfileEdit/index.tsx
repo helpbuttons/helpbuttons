@@ -13,6 +13,7 @@ import Popup from 'components/popup/Popup';
 import Btn, {
   ContentAlignment,
   BtnType,
+  IconType,
 } from 'elements/Btn';
 import Form from 'elements/Form';
 
@@ -36,6 +37,7 @@ import FieldTags from 'elements/Fields/FieldTags';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { Role } from 'shared/types/roles';
+import { IoTrashBinOutline } from 'react-icons/io5';
 
 export default function ProfileEdit() {
   const {
@@ -298,7 +300,7 @@ export default function ProfileEdit() {
                 )}
                  
                 <Accordion 
-                  title={!setNewPassword ?  t('user.setNewPassword') : t('user.dontChangePassword') }
+                  title={t('user.securityAndPrivacy') }
                   handleClick={() => setSetNewPassword(() => !setNewPassword)}
                 >
 
@@ -323,6 +325,15 @@ export default function ProfileEdit() {
                           })}
                         ></FieldPassword>
 
+                      {loggedInUser.role != Role.admin && 
+                        <Link href="/ProfileDelete">
+                          <Btn
+                            iconLeft={IconType.svg}
+                            iconLink={<IoTrashBinOutline />}
+                            caption={t('user.deleteProfile')}
+                          />
+                        </Link>
+                      }
                   </Accordion>
 
                       <div className="publish__submit">

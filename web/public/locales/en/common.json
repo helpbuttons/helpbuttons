@@ -295,7 +295,8 @@
     "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
     "addSupport": "You're admin, add a phone of contact so people can reach you",
     "deleteProfile": "Delete my account",
-    "confirmDeleting": "Confirm that you want to delete all your data!"
+    "confirmDeleting": "Confirm that you want to delete all your data!",
+    "securityAndPrivacy": "Security and privacy"
   },
   "picker": {
     "headerText": "Choose a location"

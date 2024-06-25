@@ -16,7 +16,7 @@ export default function ProfileDelete() {
   );
 
   return (
-    <Popup linkFwd="/" title={t('user.profileView')}>
+    <Popup linkFwd="/ProfileEdit" title={t('user.profileView')}>
       <div className="card-profile__actions">
         <Link
           onClick={() => {

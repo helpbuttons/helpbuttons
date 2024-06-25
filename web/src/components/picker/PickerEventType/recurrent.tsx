@@ -223,6 +223,8 @@ const recurrentMonthlyToText = (rrule, hideRecurrentDate) => {
 }
 
 const recurrentWeeklyToText = (rrule, hideRecurrentDates) => {
+  const startDate = new Date(rrule.dtstart);
+  const endDate = new Date(rrule.until);
   if (hideRecurrentDates) {
     return (
       <>
@@ -230,7 +232,8 @@ const recurrentWeeklyToText = (rrule, hideRecurrentDates) => {
         {rrule.byweekday
           .map((weekday) => WeekDay(weekday))
           .join(', ')
-          .toString()}
+          .toString()} {' '}
+        {t('dates.at')} {readableTime(startDate)} {t('dates.until')} {readableTime(endDate)}
       </>
     );
   }
