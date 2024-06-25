@@ -295,6 +295,8 @@
   color: #828282;
   background-color: transparent;
   word-break: keep-all;
+  -webkit-hyphens: none;
+          hyphens: none;
 }
 .hashtag--yellow {
   background-color: var(--network-background-color);
@@ -4519,7 +4521,7 @@ li, ol, ul, h2 {
   align-self: center;
   justify-content: center;
 }
-.homeinfo__network-title-text ::first-letter {
+.homeinfo__network-title-text:first-letter {
   text-transform: uppercase;
 }
 
@@ -5203,7 +5205,7 @@ hr {
   font-weight: 600;
   color: #0E0E0E;
   font-size: 22px;
-  padding: 5px 0;
+  padding: 15px 0;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -5359,8 +5361,8 @@ hr {
   display: block;
   position: absolute;
   z-index: 100;
-  right: 0;
-  top: 2rem;
+  right: 1px;
+  top: 3rem;
 }
 
 .card-button__dropdown-content {
@@ -5571,6 +5573,10 @@ hr {
   .card-button__author,
   .card-button__actions {
     padding: 30px;
+  }
+  .card-button__dropdown-container {
+    right: 1px;
+    top: 4rem;
   }
   .card-button__submenu {
     padding: 10px;
@@ -8565,6 +8571,70 @@ td {
   word-wrap: break-word;
   -webkit-hyphens: auto;
           hyphens: auto;
+}
+html:first-letter,
+body:first-letter,
+div:first-letter,
+span:first-letter,
+applet:first-letter,
+object:first-letter,
+iframe:first-letter,
+h1:first-letter,
+h2:first-letter,
+h3:first-letter,
+h4:first-letter,
+h5:first-letter,
+h6:first-letter,
+p:first-letter,
+blockquote:first-letter,
+pre:first-letter,
+a:first-letter,
+abbr:first-letter,
+acronym:first-letter,
+address:first-letter,
+big:first-letter,
+cite:first-letter,
+code:first-letter,
+del:first-letter,
+dfn:first-letter,
+em:first-letter,
+font:first-letter,
+img:first-letter,
+ins:first-letter,
+kbd:first-letter,
+q:first-letter,
+s:first-letter,
+samp:first-letter,
+small:first-letter,
+strike:first-letter,
+strong:first-letter,
+sub:first-letter,
+sup:first-letter,
+tt:first-letter,
+var:first-letter,
+dl:first-letter,
+dt:first-letter,
+dd:first-letter,
+ol:first-letter,
+ul:first-letter,
+li:first-letter,
+fieldset:first-letter,
+form:first-letter,
+label:first-letter,
+legend:first-letter,
+table:first-letter,
+caption:first-letter,
+tbody:first-letter,
+tfoot:first-letter,
+thead:first-letter,
+tr:first-letter,
+textarea:first-letter,
+input:first-letter,
+button:first-letter,
+select:first-letter,
+th:first-letter,
+td:first-letter {
+  text-transform: uppercase !important;
 }
 
 /* remember to define focus styles! */

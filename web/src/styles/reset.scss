@@ -73,6 +73,11 @@ td {
   box-sizing: border-box;
   word-wrap: break-word;
   hyphens: auto;
+
+  &:first-letter {
+    text-transform:uppercase !important;
+  }
+
 }
 /* remember to define focus styles! */
 :focus {

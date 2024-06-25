@@ -34,6 +34,7 @@ $hashtag-color-l-gray: $color-med-gray;
   color: $hashtag-color-gray;
   background-color: transparent;
   word-break: keep-all;
+  hyphens: none;
 
   &--yellow {
     background-color: $hashtag-color-corporative;
