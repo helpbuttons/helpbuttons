@@ -31,7 +31,7 @@ import {
   IoSend,
   IoSendOutline,
 } from 'react-icons/io5';
-import { ServerPropsService } from 'services/ServerProps';
+import { ServerPropsService, setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
 import {  useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
@@ -44,6 +44,7 @@ import { LinkAdminProfile } from 'components/user/LinkAdminProfile';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
+import { setSSRLocale } from 'shared/sys.helper';
 
 
 export default function HomeInfo({
@@ -345,17 +346,6 @@ function SupportBanner({ scrollToContact }) {
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
-  try {
-    const serverProps = await ServerPropsService.general('Home', ctx);
-    return { props: serverProps };
-  } catch (err) {
-    return {
-      props: {
-        metadata: null,
-        selectedNetwork: null,
-        config: null,
-        noconfig: true,
-      },
-    };
-  }
+  setSSRLocale(ctx.locale);
+  return setMetadata(t('menu.home'), ctx)
 };

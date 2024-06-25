@@ -103,7 +103,7 @@ export default function p({ metadata, userProfile }) {
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const serverProps = await ServerPropsService.general(
-    'New Button',
+    ctx.params.username,
     ctx,
   );
   const profileUrl = `${process.env.API_URL}/users/find/${ctx.params.username}`;
@@ -118,7 +118,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     ...serverProps,
     metadata: {
       ...serverProps.metadata,
-      title: `${currentUserData.username} - ${serverProps.selectedNetwork.name}`,
+      title: `${serverProps.selectedNetwork.name} - ${currentUserData.username}`,
       description: currentUserData.description,
       image: `${makeImageUrl(
         currentUserData.avatar

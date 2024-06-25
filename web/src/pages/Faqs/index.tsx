@@ -1,15 +1,8 @@
-//QUESTIONS AND INFO
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
-import { ServerPropsService } from 'services/ServerProps';
-
-
-import NavHeader from '../../components/nav/NavHeader'
-
-import Directory from '../../elements/Directory'
+import { setMetadata } from 'services/ServerProps';
 import Accordion from '../../elements/Accordion'
 import Popup from 'components/popup/Popup'
 import t from 'i18n';
+import { NextPageContext } from 'next';
 
 export default function Faqs({
   metadata,
@@ -17,11 +10,6 @@ export default function Faqs({
   config,
 })
 {
-
-  const currentUser = useStore(
-    store,
-    (state: GlobalState) => state.loggedInUser,
-  );
 
   return (
 
@@ -73,15 +61,5 @@ export default function Faqs({
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
-  try {
-    const serverProps = await ServerPropsService.general('Home', ctx);
-    return { props: serverProps };
-  } catch (err) {
-    console.log(err);
-    return {
-      props: {
-        selectedNetwork: null,
-      },
-    };
-  }
+  return setMetadata('F.A.Q.', ctx)
 };

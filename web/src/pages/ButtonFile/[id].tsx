@@ -12,6 +12,7 @@ import { updateCurrentButton } from 'state/Explore';
 import { GlobalState, store } from 'pages';
 import { useStore } from 'store/Store';
 import { ButtonShow } from 'components/button/ButtonShow';
+import t from 'i18n';
 export default function ButtonFile({
   metadata,
   currentButtonServer,
@@ -21,33 +22,29 @@ export default function ButtonFile({
     store,
     (state: GlobalState) => state.explore.currentButton,
   );
-
+  
+  const [buttonNotFound, setButtonNotFound] = useState(null)
   useEffect(() => {
     if (!currentButtonServer) {
-      console.log(currentButtonServer);
-      Router.push('/Error');
+      setButtonNotFound(() => true)
     } else {
       store.emit(new updateCurrentButton(currentButtonServer));
     }
   }, [currentButtonServer]);
 
   return (
-    <>
-      {currentButton && (
-        <Popup
-          sectionClass=""
-          linkBack={() => router.back()}
-        >
-          {buttonTypes?.length > 0 && (
-            <ButtonShow
-              currentButton={currentButton}
-              buttonTypes={buttonTypes}
-            />
-          )}
-
-        </Popup>
-      )}
-    </>
+      <Popup        
+        sectionClass=""
+        title={buttonNotFound ? t('button.notFound'): ''}
+        linkBack={() => router.back()}
+      >
+        {(currentButton && buttonTypes?.length > 0 )&& (
+          <ButtonShow
+            currentButton={currentButton}
+            buttonTypes={buttonTypes}
+          />
+        )}
+      </Popup>
   );
 }
 
