@@ -214,7 +214,8 @@
     "endDatesExpired": "The end date of this _helpbutton_ is in the past, so it has been set as expired, and won't show on the public list",
     "renewLink": "Renew your _helpbutton_",
     "createUpdate":"Publish Update",
-    "authorTitle":"Author:"
+    "authorTitle":"Author:",
+    "notFound": "Can't find your button, maybe it was deleted?"
   },
   "user": {
     "login":"Write your credentials",
