@@ -5119,7 +5119,7 @@ hr {
   text-indent: -9999999px;
   width: 18px;
   display: flex;
-  gap: 10px;
+  gap: 1px;
 }
 .card-button__submenu-show {
   background: var(--network-background-color);
@@ -5580,6 +5580,7 @@ hr {
   }
   .card-button__submenu {
     padding: 10px;
+    gap: 5px;
   }
   .card-button__full-content {
     padding-bottom: 5px;

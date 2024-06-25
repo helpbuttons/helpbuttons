@@ -1,7 +1,7 @@
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import t from 'i18n';
 import { useState } from 'react';
-import { IoEllipsisHorizontalSharp, IoMail, IoMailOpenOutline, IoSendOutline } from 'react-icons/io5';
+import { IoCallOutline, IoEllipsisHorizontalSharp, IoMail, IoMailOpenOutline, IoSendOutline } from 'react-icons/io5';
 
 export function CardSubmenu({ children }) {
   const [showSubmenu, setShowSubmenu] = useState(false);  
@@ -15,8 +15,14 @@ export function CardSubmenu({ children }) {
           btnType={BtnType.filterCorp}
           contentAlignment={ContentAlignment.left}
           iconRight={IconType.circle}
-          caption={t('button.send')}
           iconLink={<IoMailOpenOutline />}
+          
+        />
+        <Btn
+          btnType={BtnType.filterCorp}
+          contentAlignment={ContentAlignment.left}
+          iconRight={IconType.circle}
+          iconLink={<IoCallOutline />}
           
         />
         <Btn
