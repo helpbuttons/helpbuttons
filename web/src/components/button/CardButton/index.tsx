@@ -107,7 +107,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
 
         <div className="card-button__info">
           <div className="card-button__status">
-            <div className="card-button__emoji">{buttonType.icon}</div>
+            {buttonType.icon && <div className="card-button__emoji">{buttonType.icon}</div>}
             <span
               className="card-button"
               style={buttonColorStyle(buttonType.cssColor)}
@@ -295,7 +295,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
 
           <div className="card-button__info">
             <div className="card-button__status">
-              <div className="card-button__emoji">{icon}</div>
+              {icon && <div className="card-button__emoji">{icon}</div>}
               <span
                 className="card-button__status"
                 style={buttonColorStyle(cssColor)}
@@ -598,6 +598,7 @@ export function CardButtonOptions() {
         <div className="card-button__edit-icon card-button__submenu">
           <IoEllipsisHorizontalSharp />
         </div>
+
       </div>
 
       <div className="card-button__dropdown-container">

@@ -176,7 +176,7 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
           align-self: center;
           justify-content: center;
 
-          ::first-letter {
+          &:first-letter {
 
             text-transform: uppercase;
 
