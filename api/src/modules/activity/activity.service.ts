@@ -6,7 +6,7 @@ import {
 } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { ActivityEventName } from '@src/shared/types/activity.list';
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager, In, Repository } from 'typeorm';
 import { Activity } from './activity.entity';
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
@@ -306,5 +306,10 @@ export class ActivityService {
   {
     return this.activityRepository
         .delete({owner: {id: authorId}})
+  }
+
+  public findNetworkActivity()
+  {
+    return this.activityRepository.find({take: 5, order: { created_at: 'DESC' }, where: {eventName: In([ActivityEventName.NewButton, ActivityEventName.NewPost])}})
   }
 }
