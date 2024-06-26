@@ -36,7 +36,8 @@
     "createNetwork": "You can contact with the team if you need help making your own network",
     "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:",
     "networkIsPrivate": "Private network",
-    "callToAdmin": "Hi! Contact an assitant if you need help registering or publishing"
+    "callToAdmin": "Hi! Contact an assitant if you need help registering or publishing",
+    "latestActivity": "Latest activities"
   },
   "feed": {
     "write": "Write message",

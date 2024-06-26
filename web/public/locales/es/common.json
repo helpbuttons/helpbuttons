@@ -39,7 +39,8 @@
     "callToAdmin": "Pulsa aquí si necesitas ayuda de alguien para entrar o publicar",
     "networkIsPrivate": "Red privada",
     "needLogo": "Antes de seleccionar un lugar, por favor añade tu logo",
-    "needPlace": "Por favor, selecciona en qué zona se situa tu Red"
+    "needPlace": "Por favor, selecciona en qué zona se situa tu Red",
+    "latestActivity": "Últimas actividads"
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -136,6 +137,7 @@
     "newpost": "@{0} publicó en '{1}'",
     "newbuttoninterest": "Un nuevo _helpbutton_ fue publicado sobre un tema que sigues {0}",
     "newbutton": "Tu _helpbutton_ fue publicado en '{0}'",
+    "newbuttonHomeInfo": "A _helpbutton_ fue publicado en '{0}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
     "markedAllAsRead": "Marcado como leído",
     "newcommentSubject": "Alguien ha comentado en tu _helpbutton_",
