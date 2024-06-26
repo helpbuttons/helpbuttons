@@ -182,7 +182,7 @@
     "newPassword": "Escribe tu nueva contraseña",
     "passwordPlaceHolder": "Escribe tu contraseña",
     "logout": "Cierra tu sesión",
-    "register": "REGISTRARSE",
+    "register": "Registrarse",
     "newLoginTokenSent": "Si tienes una cuenta, recibirás un correo con una dirección en la que pulsar para entrar.",
     "sendLoginToken": "Mandar enlace de Inicio de Sesión",
     "loginLink": "Tengo cuenta",
@@ -337,7 +337,8 @@
     "endDatesExpired": "La fecha de finalización de este _helpbutton_ ya pasó, por lo que se estableció como vencida y no se mostrará en la lista pública.",
     "renewLink": "Renovar tu _helpbutton_",
     "createUpdate": "Publicar Novedad",
-    "authorTitle": "Autor:"
+    "authorTitle": "Autor:",
+    "notFound": "No puedo encontrar tu button, talvez fue borrado?"
   },
   "calendarOnce": {
     "label": "Una vez",

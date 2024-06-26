@@ -27,7 +27,7 @@ function NavBottom({loggedInUser, pageName}) {
   // const path = router.asPath.split('?')[0];
   // const pageName = path.split('/')[1];
   const isCurrent = (menuName) => {
-    if (pageName.startsWith(menuName)) {
+    if (pageName && pageName.startsWith(menuName)) {
       return 'nav-bottom__link--current';
     }
     return '';
@@ -49,7 +49,7 @@ function NavBottom({loggedInUser, pageName}) {
 
           <NavLink
             onClick={(e) => {
-              (pageName == 'Explore'? store.emit(new RecenterExplore()) : 'lala')}}
+              (pageName == 'Explore'? store.emit(new RecenterExplore()) : '')}}
             href={"/Explore"}
             className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
               'Explore',

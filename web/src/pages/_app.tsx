@@ -213,7 +213,7 @@ function MyApp({ Component, pageProps }) {
   const pageName = path.split('/')[1];
 
   useEffect(() => {
-    if (selectedNetwork && !loggedInUser) {
+    if (selectedNetwork) {
       updateNomeclature(
         selectedNetwork.nomeclature,
         selectedNetwork.nomeclaturePlural,

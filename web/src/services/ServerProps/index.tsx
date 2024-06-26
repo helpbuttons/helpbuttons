@@ -67,7 +67,7 @@ export class ServerPropsService {
       return catchMetadata
     }
     setSSRLocale(networkConfigData.locale);
-
+    
     return {
       metadata: getMetadata(
         subtitle,
@@ -98,4 +98,20 @@ export function getMetadata(subtitle, selectedNetwork, webUrl, uri) {
     color: selectedNetwork.backgroundColor,
     webUrl: webUrl
   };
+}
+
+export async function setMetadata(subtitle, ctx){
+  try {
+    const serverProps = await ServerPropsService.general(subtitle, ctx);
+    return { props: serverProps };
+  } catch (err) {
+    return {
+      props: {
+        metadata: null,
+        selectedNetwork: null,
+        config: null,
+        noconfig: true,
+      },
+    };
+  }
 }

@@ -353,7 +353,7 @@ export class NetworkService {
   
   manifest() {
     return this.findDefaultNetwork().then(network => {
-      const apiUrl = `${configs().WEB_URL}/api`
+      const apiUrl = `${configs().WEB_URL}/api/networks`
       return {
         name: network.name,
         short_name: network.name,
