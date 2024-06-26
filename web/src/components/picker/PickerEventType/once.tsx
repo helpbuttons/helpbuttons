@@ -1,8 +1,7 @@
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import t from 'i18n';
 import { TimePick } from './timepick';
 import { readableTime } from 'shared/date.utils';
+import CalendarHb from 'components/calendar';
 
 export default function PickerEventTypeOnceForm({
   eventStart,
@@ -36,7 +35,7 @@ export default function PickerEventTypeOnceForm({
   return (
     <>
       <div className="picker__row">
-        <Calendar
+        <CalendarHb
           onChange={(newDate) => {
             setStartDate(newDate);
           }}

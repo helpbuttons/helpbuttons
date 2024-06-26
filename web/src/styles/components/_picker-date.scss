@@ -89,6 +89,11 @@ $picker-date-height: 40px;
   font-weight: bold;
 }
 
+.react-calendar_day_has_event{
+  border-bottom: 1px solid yellow !important;
+}
+
+
 .picker-date__recurrent .react-calendar{
   margin:auto;
 }
