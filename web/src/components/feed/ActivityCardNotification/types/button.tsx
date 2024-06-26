@@ -130,4 +130,13 @@ export function ActivityCardExpiredButton({ button, isRead, date }) {
 
 // functions to support depecrated activities
 
-export const getButtonActivity = (rawData) => { return rawData.button ? rawData.button : rawData }
+export const getButtonActivity = (rawData) => {
+  function parse(rawData) {
+    try {
+      return JSON.parse(rawData).button;
+    } catch (err) {console.log('failed to parse'); console.log(err)}
+  };
+  return rawData.button
+    ? rawData.button
+    : parse(rawData)
+};

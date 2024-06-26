@@ -33,7 +33,7 @@ import {
 } from 'react-icons/io5';
 import { ServerPropsService, setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
-import {  useRef, useState } from 'react';
+import {  useEffect, useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { UpdateFiltersToFilterTag } from 'state/Explore';
@@ -45,6 +45,8 @@ import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { setSSRLocale } from 'shared/sys.helper';
+import { ActivitiesList } from 'layouts/Activity';
+import { FindLatestNetworkActivity } from 'state/Networks';
 
 
 export default function HomeInfo({
@@ -73,7 +75,14 @@ export default function HomeInfo({
   {
     return (<Alert>Error getting backend</Alert>)
   }
-  
+
+  const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    store.emit(new FindLatestNetworkActivity((latestActivities) => { 
+      setActivities(() => latestActivities)
+    }))
+  }, [])
   return (
     <>
         <ShowMobileOnly>
@@ -159,6 +168,19 @@ export default function HomeInfo({
 
                     <div className="homeinfo__description">
                       <TextFormatted text={selectedNetwork.description}/>
+                    </div>
+                  </div>
+
+                  <div className="homeinfo-card">
+                    <div className="homeinfo-card__header">
+                      <h3 className="homeinfo-card__header-title">
+                          {t('homeinfo.latestActivity')}
+                      </h3>
+                    </div>
+                    <hr></hr>
+
+                    <div className="homeinfo__description">
+                      <ActivitiesList activities={activities}/>
                     </div>
                   </div>
 
