@@ -4,6 +4,7 @@
 @import "~@fontsource/quicksand/300.css";
 @import "~@fontsource/quicksand/500.css";
 @import "~@fontsource/quicksand/600.css";
+@import "~@fontsource/quicksand/700.css";
 .spinner {
   animation: spin 2s infinite linear;
 }
@@ -5688,13 +5689,14 @@ hr {
 .card-notification__header {
   color: #828282;
   display: flex;
-  font-size: 16px;
+  font-size: 14px;
   flex-flow: row nowrap;
+  word-break: keep-all;
   justify-content: space-between;
 }
 
 .card-notification__info {
-  flex: 0 1 70%;
+  flex: 0 1 50%;
 }
 
 .card-notification__date {
@@ -5775,10 +5777,14 @@ hr {
 }
 
 .card-notification__title {
-  color: #828282;
+  color: #2E2E2E;
   font-size: 16px;
   padding: 0;
   text-align: left;
+  font-weight: 800;
+  -webkit-hyphens: auto;
+          hyphens: auto;
+  word-break: keep-all;
 }
 
 .card-notification__name {
@@ -7948,6 +7954,7 @@ body {
   max-width: 80vw;
   left: 10px;
   top: 10px;
+  z-index: 100;
 }
 
 .search-map__sign {
@@ -8572,6 +8579,7 @@ td {
   vertical-align: baseline;
   box-sizing: border-box;
   word-wrap: break-word;
+  word-break: keep-all;
   -webkit-hyphens: auto;
           hyphens: auto;
 }
