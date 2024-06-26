@@ -22,6 +22,7 @@ export function EmojiPicker({updateEmoji, pickerEmoji, label, explain})
         <PickerField       
         label={label} 
         explain={explain} 
+        btnType={BtnType.circle}
         btnLabel={pickerEmoji ? pickerEmoji : emoji} 
         showPopup={showPopup} 
         openPopup={openPopup} 

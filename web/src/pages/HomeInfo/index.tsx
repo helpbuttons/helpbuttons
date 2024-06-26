@@ -44,6 +44,8 @@ import { LinkAdminProfile } from 'components/user/LinkAdminProfile';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
+import Feed from 'layouts/Feed';
+import ActivityLayout from 'layouts/Activity';
 import { setSSRLocale } from 'shared/sys.helper';
 
 
@@ -159,6 +161,19 @@ export default function HomeInfo({
 
                     <div className="homeinfo__description">
                       <TextFormatted text={selectedNetwork.description}/>
+                    </div>
+                  </div>
+
+                  <div className="homeinfo-card">
+                    <div className="homeinfo-card__header">
+                      <h3 className="homeinfo-card__header-title">
+                          {t('homeinfo.activity')}
+                      </h3>
+                    </div>
+                    <hr></hr>
+
+                    <div className="homeinfo__description">
+                      <ActivityLayout allActivities={undefined} loggedInUser={undefined}/>
                     </div>
                   </div>
 

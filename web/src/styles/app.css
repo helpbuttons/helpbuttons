@@ -4,6 +4,7 @@
 @import "~@fontsource/quicksand/300.css";
 @import "~@fontsource/quicksand/500.css";
 @import "~@fontsource/quicksand/600.css";
+@import "~@fontsource/quicksand/700.css";
 .spinner {
   animation: spin 2s infinite linear;
 }
@@ -295,6 +296,8 @@
   color: #828282;
   background-color: transparent;
   word-break: keep-all;
+  -webkit-hyphens: none;
+          hyphens: none;
 }
 .hashtag--yellow {
   background-color: var(--network-background-color);
@@ -1138,6 +1141,9 @@
   height: auto;
   display: block;
   margin: 7px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .form__image-upload-preview--image {
@@ -1354,7 +1360,6 @@
 .btn-circle, .btn-circle--small, .card-button__picture-nav .arrow, .card-button-list__nav .arrow, .card-button-map__nav .arrow, .btn-circle--big-icon, .form__image-upload--remove-icon {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
   align-items: center;
   position: relative;
   border-radius: 50%;
@@ -2446,6 +2451,14 @@ li, ol, ul, h2 {
   background: #828282;
   border-radius: 24px;
   color: #fff;
+  display: block;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: normal;
+  word-break: keep-all;
+  -webkit-hyphens: auto;
+          hyphens: auto;
   font-size: 16px;
   font-weight: 600;
   padding: 5px 10px;
@@ -4519,7 +4532,7 @@ li, ol, ul, h2 {
   align-self: center;
   justify-content: center;
 }
-.homeinfo__network-title-text ::first-letter {
+.homeinfo__network-title-text:first-letter {
   text-transform: uppercase;
 }
 
@@ -5116,6 +5129,8 @@ hr {
   margin-top: 7px;
   text-indent: -9999999px;
   width: 18px;
+  display: flex;
+  gap: 1px;
 }
 .card-button__submenu-show {
   background: var(--network-background-color);
@@ -5147,7 +5162,7 @@ hr {
   font-size: 16px;
   font-weight: bold;
   text-transform: capitalize;
-  line-height: 1;
+  line-height: 1.5rem;
   color: var(--button-color);
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -5201,7 +5216,7 @@ hr {
   font-weight: 600;
   color: #0E0E0E;
   font-size: 22px;
-  padding: 5px 0;
+  padding: 15px 0;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -5357,8 +5372,8 @@ hr {
   display: block;
   position: absolute;
   z-index: 100;
-  right: 0;
-  top: 2rem;
+  right: 1px;
+  top: 3rem;
 }
 
 .card-button__dropdown-content {
@@ -5570,6 +5585,14 @@ hr {
   .card-button__actions {
     padding: 30px;
   }
+  .card-button__dropdown-container {
+    right: 1px;
+    top: 4rem;
+  }
+  .card-button__submenu {
+    padding: 10px;
+    gap: 5px;
+  }
   .card-button__full-content {
     padding-bottom: 5px;
   }
@@ -5676,13 +5699,14 @@ hr {
 .card-notification__header {
   color: #828282;
   display: flex;
-  font-size: 16px;
+  font-size: 14px;
   flex-flow: row nowrap;
+  word-break: keep-all;
   justify-content: space-between;
 }
 
 .card-notification__info {
-  flex: 0 1 70%;
+  flex: 0 1 50%;
 }
 
 .card-notification__date {
@@ -5763,10 +5787,14 @@ hr {
 }
 
 .card-notification__title {
-  color: #828282;
+  color: #2E2E2E;
   font-size: 16px;
   padding: 0;
   text-align: left;
+  font-weight: 800;
+  -webkit-hyphens: auto;
+          hyphens: auto;
+  word-break: keep-all;
 }
 
 .card-notification__name {
@@ -6157,6 +6185,8 @@ hr {
   display: inline-block;
   width: 2em;
   height: 2em;
+  top: calc(50% - 1em);
+  left: calc(50% - 1em);
   border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 70%;
   border-top-color: var(--network-text-color);
@@ -6285,7 +6315,7 @@ hr {
   background: transparent !important;
   padding: 0 !important;
   margin: 0 !important;
-  bottom: 60px !important;
+  bottom: 0px !important;
   right: 10px !important;
   font-size: 7px !important;
   text-orientation: mixed !important;
@@ -7934,6 +7964,7 @@ body {
   max-width: 80vw;
   left: 10px;
   top: 10px;
+  z-index: 100;
 }
 
 .search-map__sign {
@@ -8054,6 +8085,9 @@ body {
 }
 .login__form .form__btn-wrapper {
   width: 100%;
+}
+.login__form .from__btn-register button {
+  text-transform: uppercase;
 }
 
 .signup__container {
@@ -8558,6 +8592,73 @@ td {
   vertical-align: baseline;
   box-sizing: border-box;
   word-wrap: break-word;
+  word-break: keep-all;
+  -webkit-hyphens: auto;
+          hyphens: auto;
+}
+html:first-letter,
+body:first-letter,
+div:first-letter,
+span:first-letter,
+applet:first-letter,
+object:first-letter,
+iframe:first-letter,
+h1:first-letter,
+h2:first-letter,
+h3:first-letter,
+h4:first-letter,
+h5:first-letter,
+h6:first-letter,
+p:first-letter,
+blockquote:first-letter,
+pre:first-letter,
+a:first-letter,
+abbr:first-letter,
+acronym:first-letter,
+address:first-letter,
+big:first-letter,
+cite:first-letter,
+code:first-letter,
+del:first-letter,
+dfn:first-letter,
+em:first-letter,
+font:first-letter,
+img:first-letter,
+ins:first-letter,
+kbd:first-letter,
+q:first-letter,
+s:first-letter,
+samp:first-letter,
+small:first-letter,
+strike:first-letter,
+strong:first-letter,
+sub:first-letter,
+sup:first-letter,
+tt:first-letter,
+var:first-letter,
+dl:first-letter,
+dt:first-letter,
+dd:first-letter,
+ol:first-letter,
+ul:first-letter,
+li:first-letter,
+fieldset:first-letter,
+form:first-letter,
+label:first-letter,
+legend:first-letter,
+table:first-letter,
+caption:first-letter,
+tbody:first-letter,
+tfoot:first-letter,
+thead:first-letter,
+tr:first-letter,
+textarea:first-letter,
+input:first-letter,
+button:first-letter,
+select:first-letter,
+th:first-letter,
+td:first-letter {
+  text-transform: uppercase !important;
 }
 
 /* remember to define focus styles! */
