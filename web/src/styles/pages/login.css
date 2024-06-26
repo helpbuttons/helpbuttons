@@ -24,4 +24,7 @@
 }
 .login__form .form__btn-wrapper {
   width: 100%;
+}
+.login__form .from__btn-register button {
+  text-transform: uppercase;
 }/*# sourceMappingURL=login.css.map */
