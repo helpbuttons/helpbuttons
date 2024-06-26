@@ -310,6 +310,7 @@ export class ActivityService {
 
   public findNetworkActivity()
   {
-    return this.activityRepository.find({take: 5, order: { created_at: 'DESC' }, where: {eventName: In([ActivityEventName.NewButton, ActivityEventName.NewPost])}})
+    const typesOfActivityToShow = [ActivityEventName.NewButton, ActivityEventName.NewPost];
+    return this.activityRepository.find({take: 5, order: { created_at: 'DESC' }, where: {eventName: In(typesOfActivityToShow)}})
   }
 }
