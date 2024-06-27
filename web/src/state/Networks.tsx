@@ -175,3 +175,16 @@ export class CreateNetwork implements WatchEvent {
       );
     }
   }
+
+
+  export class FindLatestNetworkActivity implements WatchEvent {
+    public constructor( private onSuccess
+    ) {}
+    public watch(state: GlobalState) {
+      return NetworkService.activity().pipe(
+        map((activities) => {
+          this.onSuccess(activities)
+        }))
+      }
+    }
+    

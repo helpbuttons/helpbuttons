@@ -5,10 +5,21 @@ import {
 import { NotificationCard } from '..';
 import t from 'i18n';
 import { readableDate } from 'shared/date.utils';
+import { useStore } from 'store/Store';
+import { GlobalState, store } from 'pages';
 
 export default function ActivityCardNewButton({ button, isRead }) {
   const notifIcon = <IoAddCircleOutline />;
 
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+  let title = t('activities.newbutton', [button.address], true);
+  if (loggedInUser.id != button.owner.id) {
+    title = t('activities.newbuttonHomeInfo', [button.address], true);
+  }
   return (
     <NotificationCard
       type={t('activities.newbuttonType')}
@@ -16,7 +27,7 @@ export default function ActivityCardNewButton({ button, isRead }) {
       notifIcon={notifIcon}
       date={button.created_at}
       buttonId={button.id}
-      title={t('activities.newbutton', [button.address], true)}
+      title={title}
       message={button.title}
       read={isRead}
     />
@@ -130,4 +141,13 @@ export function ActivityCardExpiredButton({ button, isRead, date }) {
 
 // functions to support depecrated activities
 
-export const getButtonActivity = (rawData) => { return rawData.button ? rawData.button : rawData }
+export const getButtonActivity = (rawData) => {
+  function parse(rawData) {
+    try {
+      return JSON.parse(rawData).button;
+    } catch (err) {console.log('failed to parse'); console.log(err)}
+  };
+  return rawData.button
+    ? rawData.button
+    : parse(rawData)
+};

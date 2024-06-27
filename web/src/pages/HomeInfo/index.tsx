@@ -33,7 +33,7 @@ import {
 } from 'react-icons/io5';
 import { ServerPropsService, setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
-import {  useRef, useState } from 'react';
+import {  useEffect, useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { UpdateFiltersToFilterTag } from 'state/Explore';
@@ -47,6 +47,8 @@ import getConfig from 'next/config';
 import Feed from 'layouts/Feed';
 import ActivityLayout from 'layouts/Activity';
 import { setSSRLocale } from 'shared/sys.helper';
+import { ActivitiesList } from 'layouts/Activity';
+import { FindLatestNetworkActivity } from 'state/Networks';
 
 
 export default function HomeInfo({
@@ -75,7 +77,14 @@ export default function HomeInfo({
   {
     return (<Alert>Error getting backend</Alert>)
   }
-  
+
+  const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    store.emit(new FindLatestNetworkActivity((latestActivities) => { 
+      setActivities(() => latestActivities)
+    }))
+  }, [])
   return (
     <>
         <ShowMobileOnly>
@@ -173,7 +182,7 @@ export default function HomeInfo({
                     <hr></hr>
 
                     <div className="homeinfo__description">
-                      <ActivityLayout allActivities={undefined} loggedInUser={undefined}/>
+                      <ActivitiesList activities={activities}/>
                     </div>
                   </div>
 
