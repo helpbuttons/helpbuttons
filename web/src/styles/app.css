@@ -2844,6 +2844,10 @@ li, ol, ul, h2 {
   font-weight: bold;
 }
 
+.react-calendar_day_has_event {
+  border: 1px dashed var(--network-text-color) !important;
+}
+
 .picker-date__recurrent .react-calendar {
   margin: auto;
 }
@@ -8744,7 +8748,7 @@ q {
 }
 
 a {
-  color: var(--network-background-color);
+  color: var(--network-text-color);
   word-break: break-all;
 }
 a:hover {
