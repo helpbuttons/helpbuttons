@@ -1,13 +1,13 @@
 import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
 import _ from 'lodash';
-import Calendar from 'react-calendar';
 import { Button } from 'shared/entities/button.entity';
 import 'react-calendar/dist/Calendar.css';
 import { readableShortDate } from 'shared/date.utils';
 import { formatCurrency } from 'shared/currency.utils';
 import { useEffect, useState } from 'react';
 import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
+import CalendarHb from 'components/calendar';
 
 export function AdvancedFiltersCustomFields({
   buttonTypes,
@@ -56,7 +56,7 @@ export function AdvancedFiltersCustomFields({
           <div className="form__field">
               <label className="form__label">{t('buttonFilters.whenLabel')}</label>
               <p className="form__explain">{t('buttonFilters.whenExplain')}</p>
-           <Calendar
+           <CalendarHb
                 onChange={(newDates) => {
                   setValue('dateRange', newDates);
                 }}

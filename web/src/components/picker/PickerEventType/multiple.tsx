@@ -1,9 +1,7 @@
-import Calendar from 'react-calendar';
-
-import 'react-calendar/dist/Calendar.css';
 import t from 'i18n';
 import { readableTime } from 'shared/date.utils';
 import { TimePick } from './timepick';
+import CalendarHb from 'components/calendar';
 
 export default function PickerEventTypeMultipleForm({
   eventStart,
@@ -37,7 +35,7 @@ export default function PickerEventTypeMultipleForm({
         <div className="picker__section">
           <div className="picker__section__pick">
             <div className="picker__row">
-              <Calendar
+              <CalendarHb
                 onChange={(newDates) => {
                   setDates(newDates);
                 }}

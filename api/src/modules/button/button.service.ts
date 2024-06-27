@@ -11,7 +11,7 @@ import {
   InjectRepository,
 } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { Repository, In, EntityManager, Not } from 'typeorm';
+import { Repository, In, EntityManager, Not, Between } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { Button } from './button.entity';
@@ -552,5 +552,24 @@ export class ButtonService {
       return this.buttonRepository
       .delete({owner: {id: ownerId}})
     })
+  }
+
+  public monthCalendar(month: number, year: number) {
+    return this.buttonRepository.find({
+      where: [
+        {
+          eventEnd: Between(
+            new Date(year, month, 1),
+            new Date(year, month, 31),
+          ),
+        },
+        {
+          eventStart: Between(
+            new Date(year, month, 1),
+            new Date(year, month, 31),
+          ),
+        },
+      ],
+    });
   }
 }
