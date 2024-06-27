@@ -1141,6 +1141,9 @@
   height: auto;
   display: block;
   margin: 7px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .form__image-upload-preview--image {

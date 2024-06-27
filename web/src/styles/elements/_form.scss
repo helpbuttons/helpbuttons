@@ -526,12 +526,17 @@ width: 100%;
 
 }
 
+
+
 .form__image-upload-preview--wrap {
 
   position: relative;
   height: auto;
   display: block;
   margin: $margin-xsmall 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $padding-big;
 
 }
 

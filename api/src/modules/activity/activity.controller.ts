@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '@src/shared/decorator/current-user';
-import { OnlyRegistered } from '@src/shared/decorator/roles.decorator';
+import { AllowGuest, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
 import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 import { ErrorName } from '@src/shared/types/error.list';
 import { ButtonService } from '../button/button.service';
@@ -43,6 +43,12 @@ export class ActivityController {
   @Post('markAllAsRead')
   async markAllAsRead(@CurrentUser() user: User) {
     return await this.activityService.markAllAsRead(user.id);
+  }
+
+  @AllowGuest()
+  @Get('network')
+  async findNetworkActivity(){
+    return await this.activityService.findNetworkActivity()
   }
 
   // @Get('triggerNotifications')

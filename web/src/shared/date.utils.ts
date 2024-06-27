@@ -36,6 +36,11 @@ export function readableTimeLeftToDate(date: Date) {
       }
   };
 
+  if(!date)
+  {
+    console.log('could not compute date')
+    return '';
+  }
   return getRelativeTime(new Date(date));
 }
 

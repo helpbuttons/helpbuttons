@@ -23,4 +23,8 @@ export class NetworkService {
   public static update(data: UpdateNetworkDto): Observable<any>{
     return httpService.post("networks/update", data)
   }
+
+  public static activity(): Observable<any>{
+    return httpService.get("activity/network")
+  }
 }
