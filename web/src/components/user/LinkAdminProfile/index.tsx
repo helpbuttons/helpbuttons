@@ -44,7 +44,7 @@ function ShowPhone({ user }) {
         new GetAdminPhone(
           user.id,
           (phone) => {
-            setPhone(phone);
+            setPhone(() => phone);
           },
           () => {},
         ),

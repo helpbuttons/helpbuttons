@@ -72,6 +72,13 @@ td {
   vertical-align: baseline;
   box-sizing: border-box;
   word-wrap: break-word;
+  word-break: keep-all;
+  hyphens: auto;
+
+  &:first-letter {
+    text-transform:uppercase !important;
+  }
+
 }
 /* remember to define focus styles! */
 :focus {

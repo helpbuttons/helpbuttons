@@ -124,13 +124,14 @@ $card-notification-delete-size: 100px;
 .card-notification__header {
   color: $color-gray;
   display: flex;
-  font-size: $font-size-general;
+  font-size: $font-size-small;
   flex-flow: row nowrap;
+  word-break: keep-all;
   justify-content: space-between;
 }
 
 .card-notification__info {
-  flex: 0 1 70%;
+  flex: 0 1 50%;
 }
 
 .card-notification__date {
@@ -236,10 +237,13 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification__title {
-  color: $color-gray;
+  color: $color-dark-gray;
   font-size: $font-size-general;
   padding: 0;
   text-align: left;
+  font-weight: $font-weight-bolder;
+  hyphens: auto;
+  word-break: keep-all;
 }
 
 .card-notification__name {

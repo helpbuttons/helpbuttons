@@ -8,25 +8,12 @@ export default function PickerField({
   btnLabel,
   explain = '',
   children,
-  btnType,
+  btnType = BtnType.splitIcon,
   showPopup,
   headerText = '',
   openPopup,
   closePopup
 }) {
-
-  btnType = () => {
-
-    if (btnType)
-      {
-        return ;
-      }
-    else
-      {
-        return ;
-      }
-
-  }
 
   return (
     <>
