@@ -1,10 +1,23 @@
 import { IoChatbubbleOutline, IoPersonOutline } from 'react-icons/io5';
 import { NotificationCard } from '..';
 import t from 'i18n';
+import { GlobalState, store } from 'pages';
+import { useStore } from 'store/Store';
 
 export default function ActivityCardNewPost({ post, isRead, button }) {
   const notifIcon = <IoPersonOutline />;
 
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+  let title = t(
+    'activities.newpost',
+    [post.author.username, button.title],
+    true,
+  )
+  
   return (
     <NotificationCard
       type={t('activities.creatorUpdate')}
@@ -12,11 +25,7 @@ export default function ActivityCardNewPost({ post, isRead, button }) {
       image={button.image}
       date={post.created_at}
       buttonId={button.id}
-      title={t(
-        'activities.newpost',
-        [post.author.username, button.title],
-        true,
-      )}
+      title={title}
       message={post.message}
       read={isRead}
     />
