@@ -864,7 +864,7 @@
 }
 
 .form__field, .homeinfo__nets, .homeinfo__content, .form__image-upload-wrapper {
-  max-width: 700px;
+  max-width: 100%;
   font-size: 18px;
   margin-bottom: 30px;
 }
@@ -1357,7 +1357,6 @@
 .btn-circle, .btn-circle--small, .card-button__picture-nav .arrow, .card-button-list__nav .arrow, .card-button-map__nav .arrow, .btn-circle--big-icon, .form__image-upload--remove-icon {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
   align-items: center;
   position: relative;
   border-radius: 50%;
@@ -2449,6 +2448,14 @@ li, ol, ul, h2 {
   background: #828282;
   border-radius: 24px;
   color: #fff;
+  display: block;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: normal;
+  word-break: keep-all;
+  -webkit-hyphens: auto;
+          hyphens: auto;
   font-size: 16px;
   font-weight: 600;
   padding: 5px 10px;
@@ -7599,7 +7606,6 @@ body {
   border-radius: 0 0 24px 24px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .popup__section {
@@ -8075,6 +8081,9 @@ body {
 }
 .login__form .form__btn-wrapper {
   width: 100%;
+}
+.login__form .from__btn-register button {
+  text-transform: uppercase;
 }
 
 .signup__container {
