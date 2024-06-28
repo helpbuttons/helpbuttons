@@ -12,10 +12,11 @@ import { CreateNewPost } from 'state/Posts';
 import { readableDate } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
-import { ServerPropsService } from 'services/ServerProps';
+import { setMetadata, setMetadatai18n } from 'services/ServerProps';
 import { useStore } from 'store/Store';
 import { latLngToCell } from 'h3-js';
 import { maxResolution } from 'shared/types/honeycomb.const';
+import { setSSRLocale } from 'shared/sys.helper';
 
 export default function ButtonNew({metadata,selectedNetwork,config}) {
   const defaultValues = {
@@ -98,6 +99,8 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
       });
     }else if(err.errorName == ErrorName.invalidDates){
       alertService.error(t('button.invalidDates'))
+    }else if(err.errorName == ErrorName.InvalidMimetype){
+      alertService.error(t('validation.invalidMimeType'))
     }else{
       console.error(JSON.stringify(err))
     }
@@ -128,20 +131,8 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
-  try {
-    const serverProps = await ServerPropsService.general('Home', ctx);
-    return { props: serverProps };
-  } catch (err) {
-    console.log(err);
-    return {
-      props: {
-        metadata: null,
-        selectedNetwork: null,
-        config: null,
-        noconfig: true,
-      },
-    };
-  }
+  setSSRLocale(ctx.locale);
+  return setMetadata(t('menu.create'), ctx)
 };
 
 

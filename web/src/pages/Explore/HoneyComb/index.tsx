@@ -621,10 +621,6 @@ function useHexagonMap({
       bounds,
       getZoomResolution(zoomFloor),
     );
-    if (hexagonsForBounds.length > 1000) {
-      console.error('too many hexes.. canceling..');
-      return;
-    }
     setHexagonsToFetch(() => {
       return {
         resolution: getZoomResolution(zoomFloor),

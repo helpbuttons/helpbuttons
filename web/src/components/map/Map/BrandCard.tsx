@@ -17,14 +17,11 @@ export default function BrandCard({}) {
     <>
         <div className="search-map__network-title">
               <ShowDesktopOnly>
-
                 <div className="avatar-medium--home">
                   <Link href="/HomeInfo">
                     <NetworkLogo network={selectedNetwork} />
                   </Link>  
-
                 </div>
-
               </ShowDesktopOnly>
 
               <div className='search-map__name'>

@@ -34,6 +34,8 @@ import {
 import { updateNomeclature } from '@src/shared/helpers/i18n.helper';
 import { getConfig } from '@src/shared/helpers/config.helper';
 import { SetupDtoOut } from '../setup/setup.entity';
+import configs from '@src/config/configuration';
+import { uploadDir } from '../storage/storage.utils';
 
 @Injectable()
 export class NetworkService {
@@ -234,6 +236,9 @@ export class NetworkService {
             network.logo = await this.storageService.newImage64(
               updateDto.logo,
             );
+            if(defaultNetwork.logo != network.logo){
+              await this.storageService.delete(defaultNetwork.logo)
+            }
           } catch (err) {
             throw new ValidationException({ logo: err.message });
           }
@@ -244,6 +249,9 @@ export class NetworkService {
             network.jumbo = await this.storageService.newImage64(
               updateDto.jumbo,
             );
+            if(defaultNetwork.jumbo != network.jumbo){
+              await this.storageService.delete(defaultNetwork.jumbo)
+            }
           } catch (err) {
             throw new ValidationException({ jumbo: err.message });
           }
@@ -322,5 +330,71 @@ export class NetworkService {
             return buttonTemplateEvent.name;
           });
       })
+  }
+
+  async getLogo(res, resolution :number)
+  {
+    return await this.findDefaultNetwork().then(async (network) => {
+      const fs = require('fs');
+      const logo = network.logo.replace('/files/get/', '');
+      const logoResized = `logo_${resolution}_${logo}`;
+      if (!fs.existsSync(`${uploadDir}${logoResized}`)) {
+        await this.storageService.createImage(
+          `${uploadDir}${logo}`,
+          `${uploadDir}${logoResized}`,
+          resolution,
+        );
+        return await res.sendFile(`${logoResized}`, { root: uploadDir });
+      }
+      return await res.sendFile(logoResized, { root: uploadDir });
+    })
+    
+  }
+  
+  manifest() {
+    return this.findDefaultNetwork().then(network => {
+      const apiUrl = `${configs().WEB_URL}/api/networks`
+      return {
+        name: network.name,
+        short_name: network.name,
+        start_url: '.',
+        display: 'standalone',
+        background_color: network.backgroundColor,
+        description: network.description,
+        icons: [
+          {
+            src:  `${apiUrl}/logo/48`,
+            sizes: '48x48',
+            type: 'image/png',
+          },
+          {
+            src: `${apiUrl}/logo/72`,
+            sizes: '72x72',
+            type: 'image/png',
+          },
+          {
+            src: `${apiUrl}/logo/96`,
+            sizes: '96x96',
+            type: 'image/png',
+          },
+          {
+            src: `${apiUrl}/logo/144`,
+            sizes: '144x144',
+            type: 'image/png',
+          },
+          {
+            src: `${apiUrl}/logo/168`,
+            sizes: '168x168',
+            type: 'image/png',
+          },
+          {
+            src: `${apiUrl}/logo/192`,
+            sizes: '192x192',
+            type: 'image/png',
+          },
+        ],
+      };
+    })
+    
   }
 }

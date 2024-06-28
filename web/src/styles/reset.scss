@@ -54,6 +54,9 @@ tbody,
 tfoot,
 thead,
 tr,
+textarea,
+input,
+button,
 select,
 th,
 td {
@@ -64,11 +67,18 @@ td {
   font-weight: inherit;
   font-style: inherit;
   font-size: 100%;
-  font-family: $font-family-first;
+  font-family: 'quicksand', sans-serif;
   text-decoration: none;
   vertical-align: baseline;
   box-sizing: border-box;
   word-wrap: break-word;
+  word-break: keep-all;
+  hyphens: auto;
+
+  &:first-letter {
+    text-transform:uppercase !important;
+  }
+
 }
 /* remember to define focus styles! */
 :focus {
@@ -78,11 +88,11 @@ td {
   --vh: 1vh; /* Define a CSS variable for viewport height */
 }
 body {
+  
   line-height: $text-line-height-small;
   color: $color-black;
   background: $color-ligth-gray;
   // height: 100vh;
-
 }
 /* Apply the calculated viewport height to html, body, and #__next elements */
 html,
@@ -111,7 +121,7 @@ body,
 .list__container--full-screen,
 .list__content--full-screen{
 
-  height: calc(var(--vh) - 160px ) !important; //header + filters bar
+  height: calc(var(--vh) - 120px ) !important; //header + filters bar
 
 }
 
@@ -163,17 +173,18 @@ q {
   quotes: "" "";
 }
 
-textarea {
-  font-family: $font-family-first;
-}
+// textarea {
+//   font-family: $font-family-first;
+// }
 
-input {
-  font-family: $font-family-first;
-}
+// input {
+//   font-family: $font-family-first;
+// }
 
-button {
-  font-family: $font-family-first;
-}
+// button {
+//   font-family: $font-family-first;
+// }
+
 a {
   color: $color-corporative;  
   word-break: break-all;

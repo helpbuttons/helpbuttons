@@ -17,6 +17,7 @@
     "loading": "...",
     "goToExplore": "Explore the _helpbuttons_",
     "goToCreate": "Publish",
+    "activity":"Recent Activity",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
     "faqsSubtitle": "Read more about this app",
@@ -36,7 +37,8 @@
     "createNetwork": "You can contact with the team if you need help making your own network",
     "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:",
     "networkIsPrivate": "Private network",
-    "callToAdmin": "Hi! Contact an assitant if you need help registering or publishing"
+    "callToAdmin": "Hi! Contact an assitant if you need help registering or publishing",
+    "latestActivity": "Latest activities"
   },
   "feed": {
     "write": "Write message",
@@ -122,6 +124,7 @@
     "my": "My activity",
     "interests": "My interests activity",
     "newbutton": "Your _helpbutton_ was published in '{0}'",
+    "newbuttonHomeInfo": "A _helpbutton_ was published in '{0}'",
     "newbuttoninterest": "A new  _helpbutton_ was published for an interest you follow {0}",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
@@ -214,7 +217,8 @@
     "endDatesExpired": "The end date of this _helpbutton_ is in the past, so it has been set as expired, and won't show on the public list",
     "renewLink": "Renew your _helpbutton_",
     "createUpdate":"Publish Update",
-    "authorTitle":"Author:"
+    "authorTitle":"Author:",
+    "notFound": "Can't find your button, maybe it was deleted?"
   },
   "user": {
     "login":"Write your credentials",
@@ -258,7 +262,7 @@
     "loginLink": "I have an account",
     "showPassword": "Show Password",
     "loginWEmail": "Login with password",
-    "register": "REGISTER",
+    "register": "Register",
     "sendLoginToken": "Send login email",
     "loginClick": "I don't remember my password",
     "created_date": "User since",
@@ -292,7 +296,10 @@
     "adminPhonePublish": "Publish my phone in the home page",
     "showWhatsapp": "Show Whatsapp",
     "adminPhonePublishExplain": "You are a network administrator, do you want your phone to be available on the main page?",
-    "addSupport": "You're admin, add a phone of contact so people can reach you"
+    "addSupport": "You're admin, add a phone of contact so people can reach you",
+    "deleteProfile": "Delete my account",
+    "confirmDeleting": "Confirm that you want to delete all your data!",
+    "securityAndPrivacy": "Security and privacy"
   },
   "picker": {
     "headerText": "Choose a location"

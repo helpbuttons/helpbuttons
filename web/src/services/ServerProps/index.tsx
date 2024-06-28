@@ -67,12 +67,12 @@ export class ServerPropsService {
       return catchMetadata
     }
     setSSRLocale(networkConfigData.locale);
-
+    
     return {
       metadata: getMetadata(
         subtitle,
         networkConfigData,
-        configData.hostName,
+        process.env.WEB_URL,
         ctx.resolvedUrl,
       ),
       selectedNetwork: networkConfigData,
@@ -81,7 +81,7 @@ export class ServerPropsService {
   }
 }
 
-export function getMetadata(subtitle, selectedNetwork, baseUrl, uri) {
+export function getMetadata(subtitle, selectedNetwork, webUrl, uri) {
   const title = subtitle
     ? `${selectedNetwork.name} - ${subtitle}`
     : selectedNetwork.name;
@@ -92,8 +92,26 @@ export function getMetadata(subtitle, selectedNetwork, baseUrl, uri) {
     title: title,
     description:
       selectedNetwork.description + ' made with Helpbuttons.org',
-    image: imageUrl,
+    image: `${webUrl}${imageUrl}`,
     siteTitle: selectedNetwork.name,
-    pageurl: `${baseUrl}${uri}`,
+    pageurl: `${webUrl}${uri}`,
+    color: selectedNetwork.backgroundColor,
+    webUrl: webUrl
   };
+}
+
+export async function setMetadata(subtitle, ctx){
+  try {
+    const serverProps = await ServerPropsService.general(subtitle, ctx);
+    return { props: serverProps };
+  } catch (err) {
+    return {
+      props: {
+        metadata: null,
+        selectedNetwork: null,
+        config: null,
+        noconfig: true,
+      },
+    };
+  }
 }

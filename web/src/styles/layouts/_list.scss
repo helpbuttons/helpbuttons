@@ -15,6 +15,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   height: max-content;
   position: absolute;
   z-index: $z-index-02;
+  // height: var(--vh)!important;
   // transition: top 0.1s ease-out; /* Adjust transition duration and easing as needed */
 
   // transition: $transition-default-slow;
@@ -24,7 +25,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 .list__container--full-screen {
 
-  height: calc(var(--vh) - 194px) !important;
+  // height: calc(var(--vh) - 194px) !important;
 
   // top: 100px;
   // padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
@@ -110,9 +111,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 100vh;
   padding-bottom: calc($footer-height-mobile + $margin-medium);
-  min-height: none;
 
 
   .list__element {
@@ -212,7 +211,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 @media (hover: none) {
 
   .list__container  {
-    padding-bottom: calc($footer-height-mobile - 15px);
+    // padding-bottom: calc($footer-height-mobile - 15px);
   }
 
 }

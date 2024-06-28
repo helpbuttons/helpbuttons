@@ -8,7 +8,7 @@ import t from 'i18n';
 import { NetworkMapConfigure } from 'components/map/Map/NetworkMapConfigure';
 import { BrowseType, HbMapTiles } from 'components/map/Map/Map.consts';
 import circleToPolygon from 'circle-to-polygon';
-import { getBoundsHexFeatures } from 'shared/honeycomb.utils';
+import { getBoundsHexFeatures, roundCoords } from 'shared/honeycomb.utils';
 import PickerField from 'components/picker/PickerField';
 
 export default function FieldAreaMap({
@@ -93,9 +93,9 @@ export function FieldAreaMapSettings({
     setMapSettings((prevSettings) => {
       if(prevSettings.browseType == BrowseType.HONEYCOMB)
       {
-        return {...prevSettings, center, zoom, slider: getSliderSettings(zoom, bounds), geometry: circleToPolygon([center[1],center[0]], prevSettings.radius), bounds: bounds, honeyCombFeatures: getBoundsHexFeatures(bounds,zoom)}
+        return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleToPolygon(roundCoords([center[1],center[0]]), prevSettings.radius), bounds: bounds, honeyCombFeatures: getBoundsHexFeatures(bounds,zoom)}
       }
-      return {...prevSettings, center, zoom, slider: getSliderSettings(zoom, bounds), geometry: circleToPolygon([center[1],center[0]], prevSettings.radius), bounds: bounds}
+      return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleToPolygon(roundCoords([center[1],center[0]]), prevSettings.radius), bounds: bounds}
     })
   }
 

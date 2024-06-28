@@ -3,10 +3,11 @@ import {
     Get,
     Post,
     Body,
+    Param,
+    Res,
   } from '@nestjs/common';
   import { ApiTags } from '@nestjs/swagger';
-import { AllowedRoles, AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
-import { Role } from '@src/shared/types/roles';
+import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
   
   import { CreateNetworkDto, UpdateNetworkDto } from './network.dto';
   import { NetworkService } from './network.service';
@@ -44,5 +45,20 @@ import { Role } from '@src/shared/types/roles';
     async config() {
       return await this.networkService.getConfig()
     }
-  
+
+  @AllowGuest()
+  @Get('manifest.json')
+  async manifest() {
+    return await this.networkService.manifest();
   }
+
+  @AllowGuest()
+  @Get('logo/:resolution')
+  async logo(@Param('resolution') resolution : number, @Res() res) {
+    if([16, 32, 48, 72, 96, 144, 168, 180, 192].indexOf(resolution) > -1)
+    {
+      return this.networkService.getLogo(res,resolution)
+    }
+    throw Error('resolution not allowed')
+  }
+}

@@ -14,6 +14,7 @@ import {
   IoHandLeftOutline,
   IoLogOutOutline,
   IoPersonAddOutline,
+  IoTrashBinOutline,
 } from 'react-icons/io5';
 import Btn, { IconType } from 'elements/Btn';
 import { UserService } from 'services/Users';
@@ -44,11 +45,6 @@ export default function Profile() {
       });
     }
   }
-
-  const removeProfile = () => {
-    console.log('remove myself!');
-  };
-
   const isAdmin = loggedInUser?.role == Role.admin;
 
   return (
@@ -81,7 +77,6 @@ export default function Profile() {
                     {isAdmin && (
                       <AdminOptions/>
                     )}
-                    
                     <Link href="/HomeInfo">
                       <div onClick={logout} className="btn-with-icon">
                         <div className="btn-with-icon__icon">

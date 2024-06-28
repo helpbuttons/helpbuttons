@@ -10,14 +10,13 @@ import { Role } from 'shared/types/roles';
 import { useRouter } from 'next/router';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
-import ContentList from 'components/list/ContentList';
 import { useButtonTypes } from 'shared/buttonTypes';
-import { useScrollHeight } from 'elements/scroll';
 import { NextPageContext } from 'next';
 import { ServerPropsService } from 'services/ServerProps';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { makeImageUrl } from 'shared/sys.helper';
 import CardProfile from 'components/user/CardProfile';
+import ContentList from 'components/list/ContentList';
 
 export default function p({ metadata, userProfile }) {
   const [userButtons, setUserButtons] = useState(null);
@@ -70,16 +69,12 @@ export default function p({ metadata, userProfile }) {
 
   const buttonTypes = useButtonTypes();
 
-  const { sliceSize, handleScrollHeight } = useScrollHeight(
-    userButtons?.length,
-  );
-
   return (
     <>
       <Popup
         linkFwd="/Explore"
         title={t('user.otherProfileView')}
-        onScroll={handleScrollHeight}
+        onScroll={() => {}}
       >
         {userProfile && (
           <CardProfile
@@ -95,7 +90,7 @@ export default function p({ metadata, userProfile }) {
           userButtons?.length > 0 && (
             <div className="card-profile__button-list">
               <ContentList
-                buttons={userButtons.slice(0, sliceSize)}
+                buttons={userButtons}
                 buttonTypes={buttonTypes}
                 linkToPopup={false}
               />
@@ -108,7 +103,7 @@ export default function p({ metadata, userProfile }) {
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   const serverProps = await ServerPropsService.general(
-    'New Button',
+    ctx.params.username,
     ctx,
   );
   const profileUrl = `${process.env.API_URL}/users/find/${ctx.params.username}`;
@@ -123,7 +118,7 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
     ...serverProps,
     metadata: {
       ...serverProps.metadata,
-      title: `${currentUserData.username} - ${serverProps.selectedNetwork.name}`,
+      title: `${serverProps.selectedNetwork.name} - ${currentUserData.username}`,
       description: currentUserData.description,
       image: `${makeImageUrl(
         currentUserData.avatar

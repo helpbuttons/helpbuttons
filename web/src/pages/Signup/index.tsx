@@ -28,6 +28,8 @@ import { getLocale } from 'shared/sys.helper';
 import { useStore } from 'store/Store';
 import FieldText from 'elements/Fields/FieldText';
 import { Network } from 'shared/entities/network.entity';
+import { NextPageContext } from 'next';
+import { setMetadata } from 'services/ServerProps';
 
 export default function Signup() {
   const {
@@ -122,13 +124,15 @@ export default function Signup() {
             />
           </div>
           <div className="form__btn-wrapper">
-            <Btn
-              submit={true}
-              btnType={BtnType.submit}
-              caption={t('user.register')}
-              contentAlignment={ContentAlignment.center}
-              isSubmitting={isSubmitting}
-            />
+            <div className="from__btn-register">
+              <Btn
+                submit={true}
+                btnType={BtnType.submit}
+                caption={t('user.register')}
+                contentAlignment={ContentAlignment.center}
+                isSubmitting={isSubmitting}
+              />
+            </div>
             <div className="popup__link">
               <Link href={`/Login?${params.toString()}`}>
                 {t('user.loginLink')}
@@ -140,3 +144,8 @@ export default function Signup() {
     </Popup>
   );
 }
+
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  return setMetadata(t('user.register'), ctx)
+};

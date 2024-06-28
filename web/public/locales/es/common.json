@@ -18,12 +18,13 @@
     "loading": "cargando",
     "goToExplore": "Explorar _helpbuttons_",
     "goToCreate": "Crea tu _helpbutton_",
+    "activity":"Actividad reciente",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
     "stats": "¿Qué hay en esta red?",
     "users": "{0} usuarios en esta Red",
     "actions": "¿Qué puedes hacer?",
     "popularHashtags": "¿Qué temas se tratan?",
-    "popularHashtagsExplain": "Estos son los temas creados hasta la fecha. Puedes añadir temas nuevos creando tu _helpbutton_. También puedes recibir alertas sobre ellos añadiéndolos en la sección 'Mis Intereses' de tu Perfil.",
+    "popularHashtagsExplain": "Estos son los temas creados hasta la fecha. Puedes añadir temas nuevos creando tu _helpbutton_. Si te unes, también puedes recibir alertas sobre ellos añadiéndolos en la sección 'Mis Intereses' de tu Perfil.",
     "recommendedHashtags": "Temas recomendados por los administradores",
     "profileSubtitle": "Comprueba tu perfil",
     "createSubtitle": "Crea tu _helpbutton_ y colabora",
@@ -39,7 +40,8 @@
     "callToAdmin": "Pulsa aquí si necesitas ayuda de alguien para entrar o publicar",
     "networkIsPrivate": "Red privada",
     "needLogo": "Antes de seleccionar un lugar, por favor añade tu logo",
-    "needPlace": "Por favor, selecciona en qué zona se situa tu Red"
+    "needPlace": "Por favor, selecciona en qué zona se situa tu Red",
+    "latestActivity": "Últimas actividads"
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -136,6 +138,7 @@
     "newpost": "@{0} publicó en '{1}'",
     "newbuttoninterest": "Un nuevo _helpbutton_ fue publicado sobre un tema que sigues {0}",
     "newbutton": "Tu _helpbutton_ fue publicado en '{0}'",
+    "newbuttonHomeInfo": "A _helpbutton_ fue publicado en '{0}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
     "markedAllAsRead": "Marcado como leído",
     "newcommentSubject": "Alguien ha comentado en tu _helpbutton_",
@@ -181,7 +184,7 @@
     "newPassword": "Escribe tu nueva contraseña",
     "passwordPlaceHolder": "Escribe tu contraseña",
     "logout": "Cierra tu sesión",
-    "register": "REGISTRARSE",
+    "register": "Registrarse",
     "newLoginTokenSent": "Si tienes una cuenta, recibirás un correo con una dirección en la que pulsar para entrar.",
     "sendLoginToken": "Mandar enlace de Inicio de Sesión",
     "loginLink": "Tengo cuenta",
@@ -228,7 +231,10 @@
     "adminPhonePublishExplain": "Eres administrador de la red, ¿quieres que tu teléfono este disponible en la página principal? Puedes indicar también si quieres que te puedan contactar por Whatsapp.",
     "adminPhonePublish": "Publicar mi teléfono en la página de inicio",
     "showWhatsapp": "Mostrar Whatsapp",
-    "addSupport": "Eres administrador, añade tu teléfono para que puedan contactarte más fácilmente"
+    "addSupport": "Eres administrador, añade tu teléfono para que puedan contactarte más fácilmente",
+    "deleteProfile": "Borrar my perfil",
+    "confirmDeleting": "¡Confirma que deseas eliminar todos tus datos!",
+    "securityAndPrivacy": "Seguridad y privacidad"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -333,7 +339,8 @@
     "endDatesExpired": "La fecha de finalización de este _helpbutton_ ya pasó, por lo que se estableció como vencida y no se mostrará en la lista pública.",
     "renewLink": "Renovar tu _helpbutton_",
     "createUpdate": "Publicar Novedad",
-    "authorTitle": "Autor:"
+    "authorTitle": "Autor:",
+    "notFound": "No puedo encontrar tu button, talvez fue borrado?"
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -352,7 +359,7 @@
     "error": "Revise los campos, hay errores en el formulario",
     "ownership": "No eres el dueño/a",
     "currentPass": "La contraseña que escribiste no es correcta",
-    "supportFiles": "Tipo de archivo no válido, usa jpeg o png",
+    "invalidMimeType": "Tipo de archivo no válido, usa jpeg o png",
     "internalServer": "Error interno de servidor",
     "emailRegistered": "Email ya registrado",
     "userRegistered": "Nombre ya registrado",

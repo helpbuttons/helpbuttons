@@ -1,8 +1,8 @@
 import { DropdownField } from 'elements/Dropdown/Dropdown';
 import { useEffect, useState } from 'react';
-import Calendar from 'react-calendar';
 import { RRule } from 'rrule';
 import {
+  checkIfDateIsInRecurrentRule,
   readableDayOfLongWeek,
   readableMonth,
   readableShortDate,
@@ -11,6 +11,7 @@ import {
 import t from 'i18n';
 import { TimePick } from './timepick';
 import WeekDayPicker from './weekDayPicker';
+import CalendarHb from 'components/calendar';
 
 const convertWeekDay = (date) => {
   const weekday = date.getDay() - 1;
@@ -66,7 +67,6 @@ export default function PickerEventTypeRecurrentForm({
   useEffect(() => {
     if(rrule)
     {
-      console.log(rrule)
       setRecrule(() => new RRule(rrule));
     }
   }, [rrule])
@@ -108,7 +108,7 @@ export default function PickerEventTypeRecurrentForm({
            <div className="form__field">
 
             <div className="picker-date__recurrent_weekly">
-              <Calendar
+              <CalendarHb
                 onChange={(newDates) => {
                   setStartDate(() => newDates[0]);
                   setEndDate(() => newDates[1]);
@@ -117,15 +117,8 @@ export default function PickerEventTypeRecurrentForm({
                 selectRange
                 minDate={new Date()}
                 tileClassName={({ date, view }) => {
-                  if (
-                    recrule
-                      ?.all()
-                      .find(
-                        (dateRule) =>
-                          date.toDateString() ==
-                          dateRule.toDateString(),
-                      )
-                  ) {
+                  if(checkIfDateIsInRecurrentRule(recrule, date))
+                  {
                     return 'react-calendar__selected';
                   }
                 }}
@@ -146,7 +139,7 @@ export default function PickerEventTypeRecurrentForm({
         {periodicity == RRule.MONTHLY && (
           <>
             <div className="picker__row">
-              <Calendar
+              <CalendarHb
                 onChange={(newDates) => {
                   setStartDate(() => newDates[0]);
                   setEndDate(() => newDates[1]);
@@ -223,6 +216,8 @@ const recurrentMonthlyToText = (rrule, hideRecurrentDate) => {
 }
 
 const recurrentWeeklyToText = (rrule, hideRecurrentDates) => {
+  const startDate = new Date(rrule.dtstart);
+  const endDate = new Date(rrule.until);
   if (hideRecurrentDates) {
     return (
       <>
@@ -230,7 +225,8 @@ const recurrentWeeklyToText = (rrule, hideRecurrentDates) => {
         {rrule.byweekday
           .map((weekday) => WeekDay(weekday))
           .join(', ')
-          .toString()}
+          .toString()} {' '}
+        {t('dates.at')} {readableTime(startDate)} {t('dates.until')} {readableTime(endDate)}
       </>
     );
   }
@@ -277,4 +273,16 @@ export const loadRrules = (obj) => {
       }
     }
   }
+}
+
+export function dbToRRule(eventData) {
+  if(!eventData)
+  {
+    return null;
+  }
+  const data = JSON.parse(eventData);
+  data.dtstart = new Date(data.dtstart);
+  data.until = new Date(data.until);
+
+  return new RRule(data);
 }

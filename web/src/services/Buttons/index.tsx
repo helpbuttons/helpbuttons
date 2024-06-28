@@ -70,4 +70,8 @@ export class ButtonService {
   public static renew(id: any): Observable<any> {
     return httpService.get<any>(`buttons/renew/${id}`);
   }
+
+  public static monthCalendar(month: number, year: number): Observable<any> {
+    return httpService.get<any>(`buttons/monthCalendar/${month}/${year}`);
+  }
 }

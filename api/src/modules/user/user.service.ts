@@ -14,6 +14,7 @@ import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import { TagService } from '../tag/tag.service';
 import { publicNanoidGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { plainToClass } from 'class-transformer';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable()
 export class UserService {
@@ -23,6 +24,7 @@ export class UserService {
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
     private readonly tagService: TagService,
+    private readonly storageService: StorageService,
   ) {}
 
   async createUser(user: User) {
@@ -213,5 +215,16 @@ export class UserService {
       }
       return ''
     });
+  }
+
+  public deleteme(currentUser: User)
+  {
+    if(currentUser.avatar)
+    {
+      this.storageService.delete(currentUser.avatar)
+    }
+
+    return this.userRepository
+        .delete({id: currentUser.id})
   }
 }

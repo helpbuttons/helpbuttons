@@ -36,6 +36,11 @@ export function readableTimeLeftToDate(date: Date) {
       }
   };
 
+  if(!date)
+  {
+    console.log('could not compute date')
+    return '';
+  }
   return getRelativeTime(new Date(date));
 }
 
@@ -120,4 +125,32 @@ export function readableDayOfLongWeek(date: Date) {
   return date.toLocaleDateString(getLocale(), {
     weekday: 'long',
   });
+}
+
+export function checkIfDateIsInRecurrentRule(recrule, date) {
+  if(!recrule)
+  {
+    return false;
+  }
+  if (
+    recrule
+      ?.all()
+      .find(
+        (dateRule) => date.toDateString() == dateRule.toDateString(),
+      )
+  ) {
+    return true;
+  }
+  return false;
+}
+
+export function checkIfDateHitsEvent(dateStart, dateEnd, recrule, date) {
+  if (recrule) {
+    return checkIfDateIsInRecurrentRule(recrule, date);
+  }
+
+  if(dateStart >= date && dateEnd <= date){
+    return true;
+  }
+  return false;
 }

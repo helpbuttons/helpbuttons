@@ -35,9 +35,10 @@ export default function FieldImageUploads({
     setValue(imageListData);
   };
   const onRemoveImage = (index) => {
-    images.splice(index, 1);
-    setImages(() => images);
-    updateValues(images);
+    let z = JSON.parse(JSON.stringify(images));
+    z.splice(index, 1);
+    setImages(() => z);
+    updateValues(z);
   };
 
   return (
@@ -57,7 +58,7 @@ export default function FieldImageUploads({
           {(
             { imageList, onImageUpload, onImageRemove }, // write your building UI
           ) => (
-            <div className="upload__image-wrapper">
+            <div className="form__image-upload__image-wrapper">
               <label
                 htmlFor="files"
                 className="btn"
@@ -69,36 +70,34 @@ export default function FieldImageUploads({
                 {text}
               </label>
               {imageList.length > 0 && (
-                <ul>
-                  {imageList.map((item, index) => (
-                    <div key={index} className="form__image-upload-preview--wrap">
-                      <div className="form__image-upload-preview--file">
-                        <div className="form__image-upload-preview--image">
-                          <ImageContainer
-                            src={item.data_url ? item.data_url : item}
-                            imageType={ImageType.preview}
-                            alt="..."
-                            width={width}
-                            height={height}
+                  <ul className="form__image-upload-preview--wrap">
+                    {imageList.map((item, index) => (
+                        <div key={index} className="form__image-upload-preview--file">
+                          <div className="form__image-upload-preview--image">
+                            <ImageContainer
+                              src={item.data_url ? item.data_url : item}
+                              imageType={ImageType.preview}
+                              alt="..."
+                              width={width}
+                              height={height}
+                            />
+                          </div>
+
+                          <Btn
+                            btnType={BtnType.circle}
+                            iconLink={<IoClose />}
+                            iconLeft={IconType.svg}
+                            extraClass={
+                              'form__image-upload--remove-icon'
+                            }
+                            onClick={(e) => {
+                              e.preventDefault();
+                              onRemoveImage(index);
+                            }}
                           />
                         </div>
-
-                        <Btn
-                          btnType={BtnType.circle}
-                          iconLink={<IoClose />}
-                          iconLeft={IconType.svg}
-                          extraClass={
-                            'form__image-upload--remove-icon'
-                          }
-                          onClick={(e) => {
-                            e.preventDefault();
-                            onRemoveImage(index);
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </ul>
+                    ))}
+                  </ul>
               )}
             </div>
           )}

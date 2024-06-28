@@ -11,7 +11,7 @@ import {
   InjectRepository,
 } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { Repository, In, EntityManager, Not } from 'typeorm';
+import { Repository, In, EntityManager, Not, Between } from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { Button } from './button.entity';
@@ -160,9 +160,7 @@ export class ButtonService {
                     button.images.push(newImage);
                   }
                 } catch (err) {
-                  throw new ValidationException({
-                    images: err.message,
-                  });
+                  throw new CustomHttpException(ErrorName.InvalidMimetype);
                 }
               } else if (isImageUrl(image)) {
                 button.images.push(image);
@@ -207,18 +205,13 @@ export class ButtonService {
 
     let location = {};
     let hexagon = {};
-    if (updateDto.latitude > 0 && updateDto.longitude > 0) {
-      location = {
-        location: () =>
-          `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
-      };
-      hexagon = {
-        hexagon: () =>
-          `h3_lat_lng_to_cell(POINT(${updateDto.longitude}, ${updateDto.latitude}), ${maxResolution})`,
-      };
-    } else {
-      delete updateDto.latitude;
-      delete updateDto.longitude;
+    location = {
+      location: () =>
+        `ST_MakePoint(${updateDto.latitude}, ${updateDto.longitude})`,
+    };
+    hexagon = {
+      hexagon: () =>
+        `h3_lat_lng_to_cell(POINT(${updateDto.longitude}, ${updateDto.latitude}), ${maxResolution})`,
     }
 
     let hasPhone = false;
@@ -252,7 +245,7 @@ export class ButtonService {
                 button.images.push(newImage);
               }
             } catch (err) {
-              throw new ValidationException({ images: err.message });
+              throw new CustomHttpException(ErrorName.InvalidMimetype);
             }
           } else if (isImageUrl(image)) {
             button.images.push(image);
@@ -266,6 +259,23 @@ export class ButtonService {
     if (button.images.length > 0) {
       button.image = button.images[0];
     }
+
+    this.buttonRepository
+      .findOne({ where: { id: id } })
+      .then((storeButton) => {
+        if (button.images.length < 0) {
+          this.storageService.deleteMany(storeButton.images);
+        } else {
+          var _ = require('lodash/array');
+          const deleteImages = _.difference(
+            storeButton.images,
+            button.images,
+          );
+          if (deleteImages.length > 0) {
+            this.storageService.deleteMany(deleteImages);
+          }
+        }
+      });
 
     return this.isEventExpired(button)
     .then((isExpired) => {
@@ -531,5 +541,35 @@ export class ButtonService {
 
   setExpired(buttonId: string) {
     return this.buttonRepository.update(buttonId, { expired: true });
+  }
+
+  public deleteme(ownerId: string)
+  {
+    return this.buttonRepository.find({where: {owner: {id: ownerId}}}).then((buttonsOwned) => {
+      return buttonsOwned.map((buttonOwned) => this.storageService.deleteMany(buttonOwned.images))
+    })
+    .then(() => {
+      return this.buttonRepository
+      .delete({owner: {id: ownerId}})
+    })
+  }
+
+  public monthCalendar(month: number, year: number) {
+    return this.buttonRepository.find({
+      where: [
+        {
+          eventEnd: Between(
+            new Date(year, month, 1),
+            new Date(year, month, 31),
+          ),
+        },
+        {
+          eventStart: Between(
+            new Date(year, month, 1),
+            new Date(year, month, 31),
+          ),
+        },
+      ],
+    });
   }
 }

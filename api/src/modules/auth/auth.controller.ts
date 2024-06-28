@@ -39,7 +39,7 @@ export class AuthController {
   @AllowGuest()
   @Get('requestNewLoginToken/:email')
   requestNewLoginToken(@Param('email') email: string) {
-    return this.authService.requestNewLoginToken(email);
+    return this.authService.requestNewLoginToken(email.toLocaleLowerCase());
   }
 
   @AllowGuest()

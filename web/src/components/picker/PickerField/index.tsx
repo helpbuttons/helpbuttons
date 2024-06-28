@@ -8,11 +8,13 @@ export default function PickerField({
   btnLabel,
   explain = '',
   children,
+  btnType = BtnType.splitIcon,
   showPopup,
   headerText = '',
   openPopup,
   closePopup
 }) {
+
   return (
     <>
       <div className="form__field">
@@ -24,7 +26,7 @@ export default function PickerField({
         <p className="form__explain">{explain}</p>
         <FieldError validationError={validationError} />
         <Btn
-              btnType={BtnType.splitIcon}
+              btnType={btnType}
               caption={btnLabel}
               contentAlignment={ContentAlignment.left}
               onClick={() => openPopup()}

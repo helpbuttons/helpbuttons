@@ -13,7 +13,12 @@ module.exports = {
       return [{
         source: '/api/:path*',
         destination: `${process.env.API_URL}/:path*`
-      }]
+      },
+      {
+        source: '/manifest.json',
+        destination: `${process.env.API_URL}/networks/manifest.json`
+      }
+      ]
     },
     async redirects() {
       return [

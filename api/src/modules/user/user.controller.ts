@@ -80,6 +80,7 @@ export class UserController {
   @AllowGuest()
   @Get('/getPhone/:userId')
   async getPhone(@Param('userId') userId: string) {
-    return await this.userService.getPhone(userId)
+    const phone = await this.userService.getPhone(userId)
+    return JSON.stringify(phone)
   }
 }

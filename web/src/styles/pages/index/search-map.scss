@@ -11,6 +11,7 @@ $search-map-height: 0; // Altura del header
   max-width: 80vw;
   left: 10px;
   top: 10px;
+  z-index: $z-index-01;
 
 }
 
@@ -71,6 +72,12 @@ $search-map-height: 0; // Altura del header
     & a {
 
       color: $color-dark-gray;
+      margin: auto;
+      height: inherit;
+      width: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   
   }

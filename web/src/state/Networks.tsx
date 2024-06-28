@@ -11,6 +11,7 @@ import { GlobalState, store } from 'pages';
 import { CreateNetworkDto } from 'shared/dtos/network.dto';
 import { Network } from 'shared/entities/network.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
+import { UpdateExploreSettings } from './Explore';
 
 export interface NetworksState {
   // networks: Network[];
@@ -105,6 +106,8 @@ export class SelectedNetworkFetched implements UpdateEvent {
     return produce(state, (newState) => {
       newState.networks.selectedNetwork = this.network
       newState.networks.selectedNetworkLoading = false;
+      
+      store.emit(new UpdateExploreSettings({center: [this.network.exploreSettings.latitude, this.network.exploreSettings.longitude], zoom: this.network.exploreSettings.zoom}))
     });
   }
 }
@@ -172,3 +175,16 @@ export class CreateNetwork implements WatchEvent {
       );
     }
   }
+
+
+  export class FindLatestNetworkActivity implements WatchEvent {
+    public constructor( private onSuccess
+    ) {}
+    public watch(state: GlobalState) {
+      return NetworkService.activity().pipe(
+        map((activities) => {
+          this.onSuccess(activities)
+        }))
+      }
+    }
+    

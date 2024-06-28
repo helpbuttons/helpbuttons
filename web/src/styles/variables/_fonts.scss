@@ -4,17 +4,19 @@
 @import "~@fontsource/quicksand/300.css";
 @import "~@fontsource/quicksand/500.css";
 @import "~@fontsource/quicksand/600.css";
+@import "~@fontsource/quicksand/700.css";
 
 
 $line-height-regular: 1.1rem;
 // $font-family-first: 'Nunito', sans-serif;;
-$font-family-first: 'quicksand', sans-serif;;
+$font-family-first: 'quicksand', sans-serif;
 
 $font-family-second: 'Worksans', sans-serif;
 
 $font-weight-light: 500;
 $font-weight-regular: 500;
 $font-weight-bold: 600;
+$font-weight-bolder: 800;
 
 $font-size-xsmall: 10px;
 $font-size-small: 14px;
