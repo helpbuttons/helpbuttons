@@ -19,6 +19,11 @@ export default function ActivityCardNotification({ activity, buttonTypes }) {
     switch (activity.eventName) {
       case ActivityEventName.NewButton: {
         const button = getButtonActivity(activity.data)
+        if(!button || !button.owner.id)
+        {
+          console.log("button.owner.id not found " + JSON.stringify(button, null, 2))
+          return false;
+        }
         return (
           <ActivityCardNewButton
             button={button}
@@ -30,6 +35,11 @@ export default function ActivityCardNotification({ activity, buttonTypes }) {
         const post = getPostActivity(activity.data)
         const button = post.button
 
+        if(! post.author.id || !post.button)
+        {
+          console.log("post.author.id not found " + JSON.stringify(activity.data))
+          return false;
+        }
         return (
           <ActivityCardNewPost
             post={post}
