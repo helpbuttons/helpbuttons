@@ -230,10 +230,8 @@ function useExploreSettings({
       ? newSearchParams
       : new URLSearchParams(window.location.search);
 
-    let zoom = selectedNetwork.exploreSettings.zoom;
-    let lat = selectedNetwork.exploreSettings.center[0];
-    let lng = selectedNetwork.exploreSettings.center[1];
 
+    let [zoom, lat, lng] = [null, null, null]
     try {
       [zoom, lat, lng] = Array.from(router.query.params);
     } catch (err) {}
@@ -341,7 +339,7 @@ function useExploreSettings({
       }
 
       const urlParams = new URLSearchParams(obj);
-      const newUrl = `/Explore/${exploreSettings.zoom}/${
+      const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${
         exploreSettings.center[0]
       }/${exploreSettings.center[1]}/?${urlParams.toString()}`;
 
