@@ -17,7 +17,7 @@ export default function ActivityCardNewButton({ button, isRead }) {
     false,
   );
   let title = t('activities.newbutton', [button.address], true);
-  if (loggedInUser.id != button.owner.id) {
+  if (!loggedInUser && loggedInUser.id != button.owner.id) {
     title = t('activities.newbuttonHomeInfo', [button.address], true);
   }
   return (
@@ -144,10 +144,28 @@ export function ActivityCardExpiredButton({ button, isRead, date }) {
 export const getButtonActivity = (rawData) => {
   function parse(rawData) {
     try {
-      return JSON.parse(rawData).button;
-    } catch (err) {console.log('failed to parse'); console.log(err)}
+      const obj = JSON.parse(rawData);
+      if(obj.button)
+      {
+        return obj.button
+      }
+      if(obj?.owner.id){
+        return obj;
+      }
+      console.log('error loading button from activity' + JSON.stringify(rawData, null, 2))
+    } catch (err) {
+      // console.log('failed to parse'); console.log(err)
+      console.log('error loading button from activity' + JSON.stringify(rawData, null, 2))
+    }
   };
-  return rawData.button
-    ? rawData.button
-    : parse(rawData)
+  if(rawData.button)
+  {
+    return rawData.button
+  }
+
+  if(rawData.owner && rawData.owner.id)
+  {
+    return rawData;
+  }
+  return parse(rawData)
 };
