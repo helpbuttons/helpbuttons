@@ -145,6 +145,114 @@ export default function Signup() {
   );
 }
 
+export function InsertedSignUpForm() {
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    watch,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: {
+      username: '',
+      password: '',
+      password_confirm: '',
+      email: '',
+      locale: 'en',
+      inviteCode: '',
+      tags: []
+    },
+  });
+  const router = useRouter();
+
+  const selectedNetwork: Network = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+  
+  const onSubmit = (data) => {
+    
+    // if (passwordsMatch(data, setError)) {
+      store.emit(
+        new SignupUser(
+          {
+            name: data.name,
+            username: data.username,
+            email: data.email.toLowerCase(),
+            password: data.password,
+            avatar: null,
+            locale: getLocale(),
+            inviteCode: data.inviteCode,
+            tags: data.tags
+          },
+          onSuccess,
+          onError,
+        ),
+      );
+    // }
+  };
+
+  const onSuccess = (userData) => {
+    const returnUrl: string = router.query.returnUrl
+      ? router.query.returnUrl.toString()
+      : '/Explore';
+    router.push(returnUrl, null, { locale: userData.locale })
+  };
+
+  const onError = (error) => {
+    setValidationErrors(error?.validationErrors, setError);
+    console.log(error);
+    alertService.error(error.caption);
+  };
+
+  const inviteCode = watch('inviteCode')
+
+  const params: URLSearchParams = new URLSearchParams(router.query);
+  useEffect(() => {
+    if(router?.query)
+    {
+      setValue('inviteCode', params.get('inviteCode'))
+    }
+  }, [router])
+
+  return (
+      <>
+      <div className="form__section-title">{t('user.insertedSignUpTitle')}{' '}       
+       <Link href={`/Login?${params.toString()}`}>
+          {t('user.loginLink')}
+        </Link>
+      </div>    
+      <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
+        <div className="login__form">
+          <div className="form__inputs-wrapper">
+            <NewUserFields
+              control={control}
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              watch={watch}
+            />
+          </div>
+          {/* <div className="form__btn-wrapper">
+            <div className="from__btn-register">
+              <Btn
+                submit={true}
+                btnType={BtnType.submit}
+                caption={t('user.register')}
+                contentAlignment={ContentAlignment.center}
+                isSubmitting={isSubmitting}
+              />
+            </div>
+          </div> */}
+        </div>
+      </Form>
+      </>
+  );
+
+}
+
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   return setMetadata(t('user.register'), ctx)
