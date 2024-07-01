@@ -110,7 +110,7 @@ export default function Btn({
 
     switch (btnType) {
         case BtnType.corporative:
-            classNames.push("btn btn--corporative");
+            classNames.push("btn ");
             break;
         case BtnType.submit:
             classNames.push("btn btn--black");

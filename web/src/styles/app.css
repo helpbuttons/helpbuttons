@@ -7604,7 +7604,7 @@ body {
 .popup__content {
   width: 100%;
   height: auto;
-  overflow-y: auto;
+  overflow-y: visible;
   overflow-x: hidden;
   border-radius: 0 0 24px 24px;
   display: flex;
@@ -8378,6 +8378,16 @@ body {
   width: 100%;
 }
 
+.button-file__message-section {
+  border-top: 1px #f0f0f0 dashed;
+  background-color: #f0f0f0;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 400;
+}
+
 .button-file__action-section--field {
   background-color: #f0f0f0;
   border-radius: 0 0 8px 8px;
@@ -8402,6 +8412,11 @@ body {
     overflow-y: auto;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+@media only screen and (min-width: 1280px) {
+  .button-file__message-section {
+    position: relative;
   }
 }
 .error__message {
@@ -8687,6 +8702,7 @@ body,
 .homeinfo__content,
 .homeinfo__card,
 .popup,
+.popup__content,
 .index__content,
 .feed__container,
 .feed-section--activity,
