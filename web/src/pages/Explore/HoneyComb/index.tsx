@@ -16,6 +16,7 @@ import {
   updateCurrentButton,
   FindButton,
   UpdateFilters,
+  RecenterExplore,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import { useStore } from 'store/Store';
@@ -59,6 +60,7 @@ import {
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { alertService } from 'services/Alert';
 import { ButtonShow } from 'components/button/ButtonShow';
+import { maxZoom } from 'components/map/Map/Map.consts';
 
 const defaultZoomPlace = 13;
 
@@ -217,24 +219,21 @@ function useExploreSettings({
   filters,
 }) {
   const handleBackButton = () => {
-    handleUrl(null, selectedNetwork);
+    handleUrl();
   };
 
   useBackButton(handleBackButton);
 
-  const handleUrl = (
-    newSearchParams = null,
-    selectedNetwork = null,
-  ) => {
-    const params = newSearchParams
-      ? newSearchParams
-      : new URLSearchParams(window.location.search);
+  const handleUrl = () => {
+    const params = new URLSearchParams(window.location.search);
 
 
     let [zoom, lat, lng] = [null, null, null]
     try {
       [zoom, lat, lng] = Array.from(router.query.params);
-    } catch (err) {}
+    } catch (err) {
+      store.emit( new RecenterExplore());
+    }
     const btnId = params.get('btn');
     const hex = params.get('hex');
 
@@ -279,17 +278,6 @@ function useExploreSettings({
       store.emit(new UpdateFilters({ ...filters, ...newFilters }));
     }
 
-    if (lat && lng) {
-      let newUpdateSettings: Partial<ExploreSettings> = {
-        center: [lat, lng],
-      };
-      if (Number.isInteger(zoom)) {
-        newUpdateSettings = { ...newUpdateSettings, zoom: zoom };
-      }
-
-      newUpdateSettings = { ...newUpdateSettings, urlUpdated: true };
-      store.emit(new UpdateExploreSettings(newUpdateSettings));
-    }
     if (btnId) {
       store.emit(
         new FindButton(
@@ -302,15 +290,24 @@ function useExploreSettings({
           },
         ),
       );
-    } else {
-      store.emit(new updateCurrentButton(null));
     }
+    if (lat && lng) {
+      let newUpdateSettings: Partial<ExploreSettings> = {
+        center: [lat, lng],
+      };
+      if (Number(zoom) > 0 && Number(zoom) < maxZoom) {
+        newUpdateSettings = { ...newUpdateSettings, zoom: Number(zoom) };
+      }
+
+      newUpdateSettings = { ...newUpdateSettings, urlUpdated: true };
+      store.emit(new UpdateExploreSettings(newUpdateSettings));
+    }
+    
   };
   useEffect(() => {
     if (selectedNetwork && exploreSettings) {
-      if (exploreSettings?.center == null) {
-        handleUrl(null, selectedNetwork);
-      }
+      handleUrl()
+
     }
   }, [selectedNetwork]);
 
