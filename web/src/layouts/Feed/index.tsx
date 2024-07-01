@@ -230,9 +230,9 @@ export function FeedElement({
               }}
             />
           )}
-          {!loggedInUser && 
+          {/* {!loggedInUser && 
             <LoginOrSignup/>
-          }
+          } */}
         </>
         <PostComments
           comments={post.comments}

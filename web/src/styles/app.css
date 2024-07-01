@@ -2187,13 +2187,13 @@ li, ol, ul, h2 {
   top: auto;
   bottom: 0;
   z-index: 600;
-  padding: 15px;
   min-width: 150px;
   width: 100vw;
   position: fixed;
   float: left;
   left: 0;
-  margin-bottom: 50px;
+  padding: 0 15px;
+  margin-bottom: 65px;
 }
 
 .card-alert--success {
@@ -8375,6 +8375,7 @@ body {
 .button-file__action-section {
   border-top: 1px #f0f0f0 dashed;
   background-color: #f0f0f0;
+  width: 100%;
 }
 
 .button-file__action-section--field {
@@ -8593,8 +8594,6 @@ td {
   word-wrap: break-word;
   word-break: keep-all;
   hyphens: auto;
-  -webkit-hyphens: auto;
-  text-align: justify;
   -webkit-hyphens: auto;
   -webkit-hyphenate-limit-after: 1;
   -webkit-hyphenate-limit-before: 3;
