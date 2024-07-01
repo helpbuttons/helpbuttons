@@ -16,12 +16,11 @@ import {
   defaultFilters,
 } from 'components/search/AdvancedFilters/filters.type';
 import { Bounds } from 'pigeon-maps';
-import { cellToZoom, roundCoords } from 'shared/honeycomb.utils';
+import { cellToZoom, getZoomResolution, roundCoords } from 'shared/honeycomb.utils';
 import { cellToParent, getResolution } from 'h3-js';
 import { of } from 'rxjs';
-import { maxZoom } from 'components/map/Map/Map.consts';
-import { UpdateZoom } from './Map';
 import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
+import { maxZoom } from 'components/map/Map/Map.consts';
 
 
 export enum ExploreViewMode {
@@ -252,20 +251,23 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
     });
   }
 }
-export class updateCurrentButton implements WatchEvent, UpdateEvent {
+export class updateCurrentButton implements UpdateEvent {
   public constructor(private button: Button) {}
-  public watch(state: GlobalState) {
-    if(this.button && !this.button.hideAddress)
-    {
-      store.emit(new UpdateExploreSettings({center: [this.button.latitude, this.button.longitude], zoom: maxZoom}))
-    }else if(!this.button && state.explore.settings.zoom == maxZoom)
-    {
-      store.emit(new UpdateExploreSettings({center: state.explore.settings.prevCenter, zoom: state.explore.settings.prevZoom}))
-    }
-  }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
+      if(this.button)
+    {
+      newState.explore.settings.prevCenter = state.explore.settings.center
+      newState.explore.settings.prevZoom = state.explore.settings.zoom
+      
+      newState.explore.settings.center = roundCoords([this.button.latitude, this.button.longitude])
+      newState.explore.settings.zoom = maxZoom
+
+    }else if(!this.button){
+      newState.explore.settings.center = state.explore.settings.prevCenter
+      newState.explore.settings.zoom = state.explore.settings.prevZoom
+    }
     });
   }
 }
@@ -289,8 +291,7 @@ export class ResetFilters implements UpdateEvent {
   public constructor() {}
 
   public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.map.filters = defaultFilters;
+    return produce(state, (newState) => {      newState.explore.map.filters = defaultFilters;
     });
   }
 }
@@ -516,8 +517,12 @@ export class UpdateExploreSettings implements UpdateEvent {
     private newExploreSettings: Partial<ExploreSettings>,
   ) {}
   public watch(state: GlobalState) {
-      if (this.newExploreSettings.zoom) {
-        store.emit(new UpdateZoom(this.newExploreSettings.zoom))
+      if (this.newExploreSettings?.zoom &&
+        getResolution(state.explore.settings.hexagonClicked) !=
+          getZoomResolution(Math.floor(this.newExploreSettings.zoom))
+      ) {
+        
+        store.emit(new UpdateHexagonClicked(null))
       }
       return of(undefined)
   }
@@ -526,21 +531,28 @@ export class UpdateExploreSettings implements UpdateEvent {
 
     return produce(state, (newState) => {
       const prevSettings = state.explore.settings;
-      const newExploreSettings = {
-        ...prevSettings,
-        ...this.newExploreSettings,
-        center: roundCoords(this.newExploreSettings.center),
+
+      let newExploreSettings = {
         loading: false,
-        prevCenter: state.explore.settings.center,
-        zoom: Math.floor(state.explore.settings.zoom),
-        urlUpdated: this.newExploreSettings.urlUpdated ? this.newExploreSettings.urlUpdated : false
       };
       
+      if (this.newExploreSettings.center)
+      {
+        newExploreSettings = {center: roundCoords(this.newExploreSettings.center), ...newExploreSettings}
+      }
+
+
+      newExploreSettings = {zoom: this.newExploreSettings.zoom, ...newExploreSettings}
+        
+      if (!state.explore.currentButton)
+      {
+        newExploreSettings = {prevZoom: state.explore.settings.zoom, prevCenter: state.explore.settings.center, ...newExploreSettings}
+      }
       if(prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center))
       {
         newState.explore.map.showInstructions = false;
       }
-      newState.explore.settings = newExploreSettings;
+      newState.explore.settings = {...state.explore.settings,...newExploreSettings};
     });
   }
 }
@@ -608,7 +620,7 @@ export class RecenterExplore implements WatchEvent {
   public constructor(private value?) {}  
   public watch( state: GlobalState)
   {
-    if(state?.networks.selectedNetwork.exploreSettings)
+    if(state?.networks?.selectedNetwork?.exploreSettings)
     {
       store.emit(new UpdateExploreSettings({zoom: state.networks.selectedNetwork.exploreSettings.zoom,center: state.networks.selectedNetwork.exploreSettings.center }))
     }

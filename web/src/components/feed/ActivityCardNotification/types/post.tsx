@@ -14,7 +14,7 @@ export default function ActivityCardNewPost({ post, isRead, button }) {
   );
   let title = t(
     'activities.newpost',
-    [post.author.username, button.title],
+    [post.author.name, button.title],
     true,
   )
   
