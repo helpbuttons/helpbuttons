@@ -527,12 +527,12 @@ export class UpdateExploreSettings implements UpdateEvent {
     return produce(state, (newState) => {
       const prevSettings = state.explore.settings;
       const newExploreSettings = {
-        ...prevSettings,
+        // ...prevSettings,
         ...this.newExploreSettings,
         center: roundCoords(this.newExploreSettings.center),
         loading: false,
         prevCenter: state.explore.settings.center,
-        zoom: Math.floor(state.explore.settings.zoom),
+        // zoom: Math.floor(state.explore.settings.zoom),
         urlUpdated: this.newExploreSettings.urlUpdated ? this.newExploreSettings.urlUpdated : false
       };
       
