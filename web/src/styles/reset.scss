@@ -74,6 +74,10 @@ td {
   word-wrap: break-word;
   word-break: keep-all;
   hyphens: auto;
+  -webkit-hyphens:auto;
+  -webkit-hyphenate-limit-after:1;
+  -webkit-hyphenate-limit-before:3;
+  -moz-hyphens:auto;
 
   &:first-letter {
     text-transform:uppercase !important;

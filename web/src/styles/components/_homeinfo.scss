@@ -117,7 +117,6 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   justify-content: center;
   align-items: center;
   border-radius: $border-radius-basic;
-  min-width: 300px;
   width: auto;
   background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(5px);
@@ -130,6 +129,7 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   font-size: $font-size-huge;
   line-height: $font-size-huge;
   word-wrap: break-word;
+  word-break: break-all;
   display: flex;
   border-radius: $border-radius-basic;
   // background-color: $color-dark-gray;

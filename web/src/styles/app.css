@@ -4517,7 +4517,6 @@ li, ol, ul, h2 {
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  min-width: 300px;
   width: auto;
   background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(5px);
@@ -4528,6 +4527,7 @@ li, ol, ul, h2 {
   font-size: 29px;
   line-height: 29px;
   word-wrap: break-word;
+  word-break: break-all;
   display: flex;
   border-radius: 8px;
   padding: 15px;
@@ -5707,10 +5707,6 @@ hr {
   flex-flow: row nowrap;
   word-break: keep-all;
   justify-content: space-between;
-}
-
-.card-notification__info {
-  flex: 0 1 50%;
 }
 
 .card-notification__date {
@@ -8596,8 +8592,13 @@ td {
   box-sizing: border-box;
   word-wrap: break-word;
   word-break: keep-all;
+  hyphens: auto;
   -webkit-hyphens: auto;
-          hyphens: auto;
+  text-align: justify;
+  -webkit-hyphens: auto;
+  -webkit-hyphenate-limit-after: 1;
+  -webkit-hyphenate-limit-before: 3;
+  -moz-hyphens: auto;
 }
 html:first-letter,
 body:first-letter,
