@@ -98,6 +98,7 @@ export function PostComment({
     }
   };
   return (
+    <>
     <div
       className={
         'card-notification--comment ' +
@@ -150,7 +151,9 @@ export function PostComment({
             />
           )}
       </div>
-      {showComposeComment != ComposeCommentState.HIDE && (
+   
+    </div>
+    {showComposeComment != ComposeCommentState.HIDE && (
         <Compose
           referer={{
             post: post.id,
@@ -172,7 +175,7 @@ export function PostComment({
             toggleShowComposeComment(ComposeCommentState.HIDE);
           }}
         />
-      )}
+    )}
 
       {replies.length > 0 && (
         <>
@@ -192,7 +195,7 @@ export function PostComment({
           })}
         </>
       )}
-    </div>
+      </>
   );
 }
 export function Comment({ comment }) {

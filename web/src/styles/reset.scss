@@ -83,7 +83,10 @@ td {
     text-transform:uppercase !important;
   }
 
+
 }
+
+
 /* remember to define focus styles! */
 :focus {
   outline: 0;
@@ -106,6 +109,7 @@ body,
 .homeinfo__content,
 .homeinfo__card,
 .popup,
+.popup__content,
 .index__content,
 .feed__container,
 .feed-section--activity,

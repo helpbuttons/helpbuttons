@@ -147,16 +147,16 @@ export default function AdvancedFilters({
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="filters__content">
-                    <AdvancedFiltersSortDropDown
-                      className={'dropdown__dropdown-trigger'}
-                      label={t('buttonFilters.orderBy')}
-                      explain={t('buttonFilters.orderByExplain')}
-                      orderBy={watch('orderBy')}
-                      isForm={true}
-                      setOrderBy={(value) => setValue('orderBy',value)}
-                      buttonTypes={buttonTypes}
-                      selectedButtonTypes={watch('helpButtonTypes')}
-                    />
+                    <FieldText
+                      name="query"
+                      label={t('buttonFilters.queryLabel')}
+                      placeholder={t('buttonFilters.queryPlaceHolder')}
+                      explain={t('buttonFilters.queryExplain')}
+                      {...register('query')}
+                    >
+                      <TagFollow tags={tags}/>
+                    </FieldText>
+
                     <FieldMultiSelect
                       label={t('buttonFilters.types')}
                       validationError={null}
@@ -189,16 +189,18 @@ export default function AdvancedFilters({
                         );
                       })}
                     </FieldMultiSelect>
+                    <AdvancedFiltersSortDropDown
+                      className={'dropdown__dropdown-trigger'}
+                      label={t('buttonFilters.orderBy')}
+                      explain={t('buttonFilters.orderByExplain')}
+                      orderBy={watch('orderBy')}
+                      isForm={true}
+                      setOrderBy={(value) => setValue('orderBy',value)}
+                      buttonTypes={buttonTypes}
+                      selectedButtonTypes={watch('helpButtonTypes')}
+                    />
                     <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
-                    <FieldText
-                      name="query"
-                      label={t('buttonFilters.queryLabel')}
-                      placeholder={t('buttonFilters.queryPlaceHolder')}
-                      explain={t('buttonFilters.queryExplain')}
-                      {...register('query')}
-                    >
-                      <TagFollow tags={tags}/>
-                    </FieldText>
+
                     <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
 
                   </div>

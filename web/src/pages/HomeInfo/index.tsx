@@ -94,7 +94,7 @@ export default function HomeInfo({
           </div>
         </ShowMobileOnly>
 
-      <SupportBanner scrollToContact={scrollToContact}/>
+      {!currentUser && <SupportBanner scrollToContact={scrollToContact}/>}
       <div className='homeinfo__container'>
           <div className="homeinfo__content">                
 

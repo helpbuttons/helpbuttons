@@ -1602,49 +1602,51 @@
   fill: #828282;
 }
 
-.btn:hover, .homeinfo-card__section a:hover, .accordion:hover,
-.btn-circle:hover,
-.form__image-upload--remove-icon:hover,
-.btn-circle--small:hover,
-.card-button__picture-nav .arrow:hover,
-.card-button-list__nav .arrow:hover,
-.card-button-map__nav .arrow:hover,
-.btn-circle--big-icon:hover,
-.btn-with-icon:hover,
-.checkbox__content:hover,
-.radio__content:hover,
-.btn-filter:hover,
-.dropdown-select__trigger--filter:hover,
-.dropdown__filter:hover,
-.checkbox-filter__content:hover,
-.radio-filter__content:hover,
-.btn-filter-with-icon:hover,
-.btn-filter-with-emoji:hover {
-  border-color: #828282;
-  color: #fff;
-  cursor: pointer;
-  background-color: #828282;
-}
-.btn:hover svg, .homeinfo-card__section a:hover svg, .accordion:hover svg,
-.btn-circle:hover svg,
-.form__image-upload--remove-icon:hover svg,
-.btn-circle--small:hover svg,
-.card-button__picture-nav .arrow:hover svg,
-.card-button-list__nav .arrow:hover svg,
-.card-button-map__nav .arrow:hover svg,
-.btn-circle--big-icon:hover svg,
-.btn-with-icon:hover svg,
-.checkbox__content:hover svg,
-.radio__content:hover svg,
-.btn-filter:hover svg,
-.dropdown-select__trigger--filter:hover svg,
-.dropdown__filter:hover svg,
-.checkbox-filter__content:hover svg,
-.radio-filter__content:hover svg,
-.btn-filter-with-icon:hover svg,
-.btn-filter-with-emoji:hover svg {
-  color: #fff;
-  fill: #fff;
+@media (hover: hover) {
+  .btn:hover, .homeinfo-card__section a:hover, .accordion:hover,
+  .btn-circle:hover,
+  .form__image-upload--remove-icon:hover,
+  .btn-circle--small:hover,
+  .card-button__picture-nav .arrow:hover,
+  .card-button-list__nav .arrow:hover,
+  .card-button-map__nav .arrow:hover,
+  .btn-circle--big-icon:hover,
+  .btn-with-icon:hover,
+  .checkbox__content:hover,
+  .radio__content:hover,
+  .btn-filter:hover,
+  .dropdown-select__trigger--filter:hover,
+  .dropdown__filter:hover,
+  .checkbox-filter__content:hover,
+  .radio-filter__content:hover,
+  .btn-filter-with-icon:hover,
+  .btn-filter-with-emoji:hover {
+    border-color: #828282;
+    color: #fff;
+    cursor: pointer;
+    background-color: #828282;
+  }
+  .btn:hover svg, .homeinfo-card__section a:hover svg, .accordion:hover svg,
+  .btn-circle:hover svg,
+  .form__image-upload--remove-icon:hover svg,
+  .btn-circle--small:hover svg,
+  .card-button__picture-nav .arrow:hover svg,
+  .card-button-list__nav .arrow:hover svg,
+  .card-button-map__nav .arrow:hover svg,
+  .btn-circle--big-icon:hover svg,
+  .btn-with-icon:hover svg,
+  .checkbox__content:hover svg,
+  .radio__content:hover svg,
+  .btn-filter:hover svg,
+  .dropdown-select__trigger--filter:hover svg,
+  .dropdown__filter:hover svg,
+  .checkbox-filter__content:hover svg,
+  .radio-filter__content:hover svg,
+  .btn-filter-with-icon:hover svg,
+  .btn-filter-with-emoji:hover svg {
+    color: #fff;
+    fill: #fff;
+  }
 }
 .btn:focus, .homeinfo-card__section a:focus, .accordion:focus,
 .btn-circle:focus,
@@ -2187,13 +2189,13 @@ li, ol, ul, h2 {
   top: auto;
   bottom: 0;
   z-index: 600;
-  padding: 15px;
   min-width: 150px;
   width: 100vw;
   position: fixed;
   float: left;
   left: 0;
-  margin-bottom: 50px;
+  padding: 0 15px;
+  margin-bottom: 65px;
 }
 
 .card-alert--success {
@@ -7604,7 +7606,7 @@ body {
 .popup__content {
   width: 100%;
   height: auto;
-  overflow-y: auto;
+  overflow-y: visible;
   overflow-x: hidden;
   border-radius: 0 0 24px 24px;
   display: flex;
@@ -8375,6 +8377,17 @@ body {
 .button-file__action-section {
   border-top: 1px #f0f0f0 dashed;
   background-color: #f0f0f0;
+  width: 100%;
+}
+
+.button-file__message-section {
+  border-top: 1px #f0f0f0 dashed;
+  background-color: #f0f0f0;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 400;
 }
 
 .button-file__action-section--field {
@@ -8401,6 +8414,11 @@ body {
     overflow-y: auto;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+@media only screen and (min-width: 1280px) {
+  .button-file__message-section {
+    position: relative;
   }
 }
 .error__message {
@@ -8594,8 +8612,6 @@ td {
   word-break: keep-all;
   hyphens: auto;
   -webkit-hyphens: auto;
-  text-align: justify;
-  -webkit-hyphens: auto;
   -webkit-hyphenate-limit-after: 1;
   -webkit-hyphenate-limit-before: 3;
   -moz-hyphens: auto;
@@ -8688,6 +8704,7 @@ body,
 .homeinfo__content,
 .homeinfo__card,
 .popup,
+.popup__content,
 .index__content,
 .feed__container,
 .feed-section--activity,

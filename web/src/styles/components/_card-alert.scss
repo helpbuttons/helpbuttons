@@ -30,13 +30,13 @@ $card-alert-icon-size: 30px;
   top: auto;
   bottom: 0;
   z-index: $z-index-06;
-  padding: $padding-big;
   min-width: 150px;
   width: 100vw;
   position: fixed;
   float: left;
   left: 0;
-  margin-bottom: $footer-height-mobile;
+  padding: 0 $card-alert-padding;
+  margin-bottom: calc($footer-height-mobile + $padding-big);
 }
 
 .card-alert--success {
