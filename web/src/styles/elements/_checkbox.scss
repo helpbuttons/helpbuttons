@@ -127,7 +127,7 @@ $checkbox-color-gray-border: $color-gray-border;
 .checkbox__content:hover {
   cursor: pointer;
   background: $checkbox-color-hover;
-  color: $checkbox-color-text-hover !important;
+  color: $checkbox-color-text-hover;
 
   & svg {
     fill: $checkbox-color-text-hover;

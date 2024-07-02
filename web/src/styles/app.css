@@ -460,7 +460,7 @@
 .checkbox__content:hover {
   cursor: pointer;
   background: #828282;
-  color: #fff !important;
+  color: #fff;
 }
 .checkbox__content:hover svg {
   fill: #fff;
@@ -1602,51 +1602,49 @@
   fill: #828282;
 }
 
-@media (hover: hover) {
-  .btn:hover, .homeinfo-card__section a:hover, .accordion:hover,
-  .btn-circle:hover,
-  .form__image-upload--remove-icon:hover,
-  .btn-circle--small:hover,
-  .card-button__picture-nav .arrow:hover,
-  .card-button-list__nav .arrow:hover,
-  .card-button-map__nav .arrow:hover,
-  .btn-circle--big-icon:hover,
-  .btn-with-icon:hover,
-  .checkbox__content:hover,
-  .radio__content:hover,
-  .btn-filter:hover,
-  .dropdown-select__trigger--filter:hover,
-  .dropdown__filter:hover,
-  .checkbox-filter__content:hover,
-  .radio-filter__content:hover,
-  .btn-filter-with-icon:hover,
-  .btn-filter-with-emoji:hover {
-    border-color: #828282;
-    color: #fff;
-    cursor: pointer;
-    background-color: #828282;
-  }
-  .btn:hover svg, .homeinfo-card__section a:hover svg, .accordion:hover svg,
-  .btn-circle:hover svg,
-  .form__image-upload--remove-icon:hover svg,
-  .btn-circle--small:hover svg,
-  .card-button__picture-nav .arrow:hover svg,
-  .card-button-list__nav .arrow:hover svg,
-  .card-button-map__nav .arrow:hover svg,
-  .btn-circle--big-icon:hover svg,
-  .btn-with-icon:hover svg,
-  .checkbox__content:hover svg,
-  .radio__content:hover svg,
-  .btn-filter:hover svg,
-  .dropdown-select__trigger--filter:hover svg,
-  .dropdown__filter:hover svg,
-  .checkbox-filter__content:hover svg,
-  .radio-filter__content:hover svg,
-  .btn-filter-with-icon:hover svg,
-  .btn-filter-with-emoji:hover svg {
-    color: #fff;
-    fill: #fff;
-  }
+.btn:hover, .homeinfo-card__section a:hover, .accordion:hover,
+.btn-circle:hover,
+.form__image-upload--remove-icon:hover,
+.btn-circle--small:hover,
+.card-button__picture-nav .arrow:hover,
+.card-button-list__nav .arrow:hover,
+.card-button-map__nav .arrow:hover,
+.btn-circle--big-icon:hover,
+.btn-with-icon:hover,
+.checkbox__content:hover,
+.radio__content:hover,
+.btn-filter:hover,
+.dropdown-select__trigger--filter:hover,
+.dropdown__filter:hover,
+.checkbox-filter__content:hover,
+.radio-filter__content:hover,
+.btn-filter-with-icon:hover,
+.btn-filter-with-emoji:hover {
+  border-color: #828282;
+  color: #fff;
+  cursor: pointer;
+  background-color: #828282;
+}
+.btn:hover svg, .homeinfo-card__section a:hover svg, .accordion:hover svg,
+.btn-circle:hover svg,
+.form__image-upload--remove-icon:hover svg,
+.btn-circle--small:hover svg,
+.card-button__picture-nav .arrow:hover svg,
+.card-button-list__nav .arrow:hover svg,
+.card-button-map__nav .arrow:hover svg,
+.btn-circle--big-icon:hover svg,
+.btn-with-icon:hover svg,
+.checkbox__content:hover svg,
+.radio__content:hover svg,
+.btn-filter:hover svg,
+.dropdown-select__trigger--filter:hover svg,
+.dropdown__filter:hover svg,
+.checkbox-filter__content:hover svg,
+.radio-filter__content:hover svg,
+.btn-filter-with-icon:hover svg,
+.btn-filter-with-emoji:hover svg {
+  color: #fff;
+  fill: #fff;
 }
 .btn:focus, .homeinfo-card__section a:focus, .accordion:focus,
 .btn-circle:focus,
@@ -1666,7 +1664,7 @@
 .radio-filter__content:focus,
 .btn-filter-with-icon:focus,
 .btn-filter-with-emoji:focus {
-  background-color: #828282;
+  background-color: #0E0E0E;
   color: #fff;
   border-color: #828282;
 }
@@ -1735,6 +1733,95 @@
   fill: #fff;
 }
 
+@media (hover: none) {
+  .btn:hover, .homeinfo-card__section a:hover, .accordion:hover,
+  .btn-circle:hover,
+  .form__image-upload--remove-icon:hover,
+  .btn-circle--small:hover,
+  .card-button__picture-nav .arrow:hover,
+  .card-button-list__nav .arrow:hover,
+  .card-button-map__nav .arrow:hover,
+  .btn-circle--big-icon:hover,
+  .btn-with-icon:hover,
+  .checkbox__content:hover,
+  .radio__content:hover,
+  .btn-filter:hover,
+  .dropdown-select__trigger--filter:hover,
+  .dropdown__filter:hover,
+  .checkbox-filter__content:hover,
+  .radio-filter__content:hover,
+  .btn-filter-with-icon:hover,
+  .btn-filter-with-emoji:hover {
+    border-color: #828282;
+    color: #0E0E0E;
+    cursor: pointer;
+    background-color: #fff;
+  }
+  .btn:hover svg, .homeinfo-card__section a:hover svg, .accordion:hover svg,
+  .btn-circle:hover svg,
+  .form__image-upload--remove-icon:hover svg,
+  .btn-circle--small:hover svg,
+  .card-button__picture-nav .arrow:hover svg,
+  .card-button-list__nav .arrow:hover svg,
+  .card-button-map__nav .arrow:hover svg,
+  .btn-circle--big-icon:hover svg,
+  .btn-with-icon:hover svg,
+  .checkbox__content:hover svg,
+  .radio__content:hover svg,
+  .btn-filter:hover svg,
+  .dropdown-select__trigger--filter:hover svg,
+  .dropdown__filter:hover svg,
+  .checkbox-filter__content:hover svg,
+  .radio-filter__content:hover svg,
+  .btn-filter-with-icon:hover svg,
+  .btn-filter-with-emoji:hover svg {
+    color: #0E0E0E;
+    fill: #0E0E0E;
+  }
+  .btn:focus, .homeinfo-card__section a:focus, .accordion:focus,
+  .btn-circle:focus,
+  .form__image-upload--remove-icon:focus,
+  .btn-circle--small:focus,
+  .card-button__picture-nav .arrow:focus,
+  .card-button-list__nav .arrow:focus,
+  .card-button-map__nav .arrow:focus,
+  .btn-circle--big-icon:focus,
+  .btn-with-icon:focus,
+  .checkbox__content:focus,
+  .radio__content:focus,
+  .btn-filter:focus,
+  .dropdown-select__trigger--filter:focus,
+  .dropdown__filter:focus,
+  .checkbox-filter__content:focus,
+  .radio-filter__content:focus,
+  .btn-filter-with-icon:focus,
+  .btn-filter-with-emoji:focus {
+    background-color: #fff;
+    color: #0E0E0E;
+    border-color: #828282;
+  }
+  .btn:focus svg, .homeinfo-card__section a:focus svg, .accordion:focus svg,
+  .btn-circle:focus svg,
+  .form__image-upload--remove-icon:focus svg,
+  .btn-circle--small:focus svg,
+  .card-button__picture-nav .arrow:focus svg,
+  .card-button-list__nav .arrow:focus svg,
+  .card-button-map__nav .arrow:focus svg,
+  .btn-circle--big-icon:focus svg,
+  .btn-with-icon:focus svg,
+  .checkbox__content:focus svg,
+  .radio__content:focus svg,
+  .btn-filter:focus svg,
+  .dropdown-select__trigger--filter:focus svg,
+  .dropdown__filter:focus svg,
+  .checkbox-filter__content:focus svg,
+  .radio-filter__content:focus svg,
+  .btn-filter-with-icon:focus svg,
+  .btn-filter-with-emoji:focus svg {
+    color: #0E0E0E;
+    fill: #0E0E0E;
+  }
+}
 .btn--black {
   background: #0E0E0E;
   color: #fff;
