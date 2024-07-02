@@ -72,7 +72,6 @@ export default function Feed({ button }: { button: Button }) {
         <>
           {(loggedInUser && isButtonOwner) && (
             <>
-              <CardButtonHeadActions button={button} action={null}/>
               <ComposePost
                 referer={{ button: button.id }}
                 onCancel={() => {}}
