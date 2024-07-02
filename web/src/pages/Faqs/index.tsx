@@ -36,6 +36,10 @@ export default function Faqs({
           {t('faqs.communityDescription')}
         </Accordion>
 
+        <Accordion title={t('faqs.networkEthics', [selectedNetwork.name])}>
+          {t('faqs.networksEthicsDescription', [selectedNetwork.name])}
+        </Accordion>
+
         <Accordion title={t('faqs.ethicsQuestion')}>
           {t('faqs.ethicsDescription')}
         </Accordion>
