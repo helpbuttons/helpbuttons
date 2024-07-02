@@ -66,8 +66,8 @@ $btn-font-size-medium: $font-size-medium;
 
   // }
 
-}
 
+}
 
 //BOTONES sencillos de filtro redondos con fondo blanco que sirve de base a hashtags y checkbox,
 //TIENEN version con icon a la izquierda y versión con cruz para borrar
@@ -426,17 +426,22 @@ $btn-font-size-medium: $font-size-medium;
 .btn-filter
 {
 
-  &:hover {
 
-    border-color:  $color-gray;
-    color: $color-white;
-    cursor: pointer;
-    background-color: $color-gray;
+  @media (hover: hover) {
+  
+    &:hover {
 
-
-    & svg {
+      border-color:  $color-gray;
       color: $color-white;
-      fill: $color-white;
+      cursor: pointer;
+      background-color: $color-gray;
+
+
+      & svg {
+        color: $color-white;
+        fill: $color-white;
+      }
+
     }
 
   }

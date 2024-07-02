@@ -1602,49 +1602,51 @@
   fill: #828282;
 }
 
-.btn:hover, .homeinfo-card__section a:hover, .accordion:hover,
-.btn-circle:hover,
-.form__image-upload--remove-icon:hover,
-.btn-circle--small:hover,
-.card-button__picture-nav .arrow:hover,
-.card-button-list__nav .arrow:hover,
-.card-button-map__nav .arrow:hover,
-.btn-circle--big-icon:hover,
-.btn-with-icon:hover,
-.checkbox__content:hover,
-.radio__content:hover,
-.btn-filter:hover,
-.dropdown-select__trigger--filter:hover,
-.dropdown__filter:hover,
-.checkbox-filter__content:hover,
-.radio-filter__content:hover,
-.btn-filter-with-icon:hover,
-.btn-filter-with-emoji:hover {
-  border-color: #828282;
-  color: #fff;
-  cursor: pointer;
-  background-color: #828282;
-}
-.btn:hover svg, .homeinfo-card__section a:hover svg, .accordion:hover svg,
-.btn-circle:hover svg,
-.form__image-upload--remove-icon:hover svg,
-.btn-circle--small:hover svg,
-.card-button__picture-nav .arrow:hover svg,
-.card-button-list__nav .arrow:hover svg,
-.card-button-map__nav .arrow:hover svg,
-.btn-circle--big-icon:hover svg,
-.btn-with-icon:hover svg,
-.checkbox__content:hover svg,
-.radio__content:hover svg,
-.btn-filter:hover svg,
-.dropdown-select__trigger--filter:hover svg,
-.dropdown__filter:hover svg,
-.checkbox-filter__content:hover svg,
-.radio-filter__content:hover svg,
-.btn-filter-with-icon:hover svg,
-.btn-filter-with-emoji:hover svg {
-  color: #fff;
-  fill: #fff;
+@media (hover: hover) {
+  .btn:hover, .homeinfo-card__section a:hover, .accordion:hover,
+  .btn-circle:hover,
+  .form__image-upload--remove-icon:hover,
+  .btn-circle--small:hover,
+  .card-button__picture-nav .arrow:hover,
+  .card-button-list__nav .arrow:hover,
+  .card-button-map__nav .arrow:hover,
+  .btn-circle--big-icon:hover,
+  .btn-with-icon:hover,
+  .checkbox__content:hover,
+  .radio__content:hover,
+  .btn-filter:hover,
+  .dropdown-select__trigger--filter:hover,
+  .dropdown__filter:hover,
+  .checkbox-filter__content:hover,
+  .radio-filter__content:hover,
+  .btn-filter-with-icon:hover,
+  .btn-filter-with-emoji:hover {
+    border-color: #828282;
+    color: #fff;
+    cursor: pointer;
+    background-color: #828282;
+  }
+  .btn:hover svg, .homeinfo-card__section a:hover svg, .accordion:hover svg,
+  .btn-circle:hover svg,
+  .form__image-upload--remove-icon:hover svg,
+  .btn-circle--small:hover svg,
+  .card-button__picture-nav .arrow:hover svg,
+  .card-button-list__nav .arrow:hover svg,
+  .card-button-map__nav .arrow:hover svg,
+  .btn-circle--big-icon:hover svg,
+  .btn-with-icon:hover svg,
+  .checkbox__content:hover svg,
+  .radio__content:hover svg,
+  .btn-filter:hover svg,
+  .dropdown-select__trigger--filter:hover svg,
+  .dropdown__filter:hover svg,
+  .checkbox-filter__content:hover svg,
+  .radio-filter__content:hover svg,
+  .btn-filter-with-icon:hover svg,
+  .btn-filter-with-emoji:hover svg {
+    color: #fff;
+    fill: #fff;
+  }
 }
 .btn:focus, .homeinfo-card__section a:focus, .accordion:focus,
 .btn-circle:focus,
