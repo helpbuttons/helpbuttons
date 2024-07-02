@@ -17,7 +17,7 @@ export default function ActivityCardNewButton({ button, isRead }) {
     false,
   );
   let title = t('activities.newbutton', [button.address], true);
-  if (!loggedInUser && loggedInUser.id != button.owner.id) {
+  if (!loggedInUser || loggedInUser.id != button.owner.id) {
     title = t('activities.newbuttonHomeInfo', [button.address], true);
   }
   return (

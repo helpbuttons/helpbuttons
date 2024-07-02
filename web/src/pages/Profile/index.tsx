@@ -43,6 +43,8 @@ export default function Profile() {
       router.push({ pathname: '/HomeInfo'}, asPath, {
         locale: selectedNetwork.locale,
       });
+    }else{
+          router.push({ pathname: '/HomeInfo'})
     }
   }
   const isAdmin = loggedInUser?.role == Role.admin;
