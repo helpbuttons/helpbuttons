@@ -2,6 +2,7 @@ import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import t from 'i18n';
+import { InsertedSignUpForm } from 'pages/Signup';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoMailOutline, IoPaperPlaneOutline } from 'react-icons/io5';
@@ -77,21 +78,18 @@ export default function MessageNew({
               <div className="form__input-subtitle-side">
                 <label className="form__input-subtitle--error">
                   {t('comment.private')}
-
                 </label>
-
               </div>
             )}
           </div>
-            <Btn
-                submit={true}
-                btnType={BtnType.filterCorp}
-                caption={t("comment.send")}
-                iconLink={<IoPaperPlaneOutline />}
-                iconLeft={IconType.svg}
-                contentAlignment={ContentAlignment.center}
-              />
-          
+          <Btn
+              submit={true}
+              btnType={BtnType.corporative}
+              caption={t("comment.send")}
+              iconLink={<IoPaperPlaneOutline />}
+              iconLeft={IconType.svg}
+              contentAlignment={ContentAlignment.center}
+            />
         </Form>
       </div>
     </>

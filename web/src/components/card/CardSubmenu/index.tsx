@@ -11,7 +11,7 @@ export function CardSubmenu({ children }) {
 
         className="card-button__edit-icon card-button__submenu"
       >
-         <Btn
+         {/* <Btn
           btnType={BtnType.filterCorp}
           contentAlignment={ContentAlignment.left}
           iconRight={IconType.circle}
@@ -24,7 +24,7 @@ export function CardSubmenu({ children }) {
           iconRight={IconType.circle}
           iconLink={<IoCallOutline />}
           
-        />
+        /> */}
         <Btn
           btnType={BtnType.filterCorp}
           contentAlignment={ContentAlignment.center}

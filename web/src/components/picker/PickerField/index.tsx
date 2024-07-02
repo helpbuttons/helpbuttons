@@ -8,6 +8,7 @@ export default function PickerField({
   btnLabel,
   explain = '',
   children,
+  contentAligment = ContentAlignment.left,
   btnType = BtnType.splitIcon,
   showPopup,
   headerText = '',
@@ -28,7 +29,7 @@ export default function PickerField({
         <Btn
               btnType={btnType}
               caption={btnLabel}
-              contentAlignment={ContentAlignment.left}
+              contentAlignment={contentAligment}
               onClick={() => openPopup()}
           />
       </div>

@@ -74,12 +74,19 @@ td {
   word-wrap: break-word;
   word-break: keep-all;
   hyphens: auto;
+  -webkit-hyphens:auto;
+  -webkit-hyphenate-limit-after:1;
+  -webkit-hyphenate-limit-before:3;
+  -moz-hyphens:auto;
 
   &:first-letter {
     text-transform:uppercase !important;
   }
 
+
 }
+
+
 /* remember to define focus styles! */
 :focus {
   outline: 0;
@@ -102,6 +109,7 @@ body,
 .homeinfo__content,
 .homeinfo__card,
 .popup,
+.popup__content,
 .index__content,
 .feed__container,
 .feed-section--activity,
@@ -186,7 +194,7 @@ q {
 // }
 
 a {
-  color: $color-corporative;  
+  color: $color-secondary;  
   word-break: break-all;
 
   &:hover {
