@@ -157,7 +157,7 @@ export class NetworkService {
       .then((network) => {
         return this.entityManager
           .query(
-            `select tag,count(tag) as count from (select unnest(tags) as tag from button where expired = false AND deleted = FALSE) as tags group by tag order by count desc limit 10`,
+            `select tag,count(tag) as count from (select unnest(tags) as tag from button where expired = false AND deleted = FALSE) as tags group by tag order by count desc limit 30`,
           )
           .then((topTags) => {
             return { ...network, topTags: topTags };
