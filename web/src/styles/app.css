@@ -7517,6 +7517,8 @@ body {
 }
 
 .popup--button-file {
+  border-right: 1px solid #D4D4D4;
+  float: left;
   overflow-x: hidden;
   width: 100vw;
   background: #fff;
@@ -7812,6 +7814,9 @@ body {
     margin-bottom: 0 !important;
     border-radius: 0;
   }
+  .popup--button-file {
+    max-width: 60vw;
+  }
 }
 .repository {
   overflow: scroll;
@@ -7857,7 +7862,7 @@ body {
   width: 100%;
 }
 
-.index__content-left, .popup--button-file {
+.index__content-left {
   transition: all 1s;
 }
 
@@ -7881,7 +7886,7 @@ body {
     display: flex;
     flex-direction: row;
   }
-  .index__content-left, .popup--button-file {
+  .index__content-left {
     border-right: 1px solid #D4D4D4;
     flex-direction: column;
     width: 60vw;
@@ -7897,7 +7902,7 @@ body {
   }
 }
 @media only screen and (min-width: 1440px) {
-  .index__content-left, .popup--button-file {
+  .index__content-left {
     width: 60vw;
   }
   .index__content-left--hide {

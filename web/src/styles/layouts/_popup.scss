@@ -36,8 +36,9 @@ body {
 }
 
 .popup--button-file {
-  @extend .index__content-left;
 
+  border-right: $border-style-basic;
+  float: left;
   // Scroll popup content
   overflow-x: hidden;
   width: 100vw;
@@ -455,5 +456,11 @@ body {
     border-radius: 0;
    
   }
+
+  .popup--button-file {
+
+    max-width: $list-width-desktop;
+
+  }  
 
 }
