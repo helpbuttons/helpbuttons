@@ -113,13 +113,6 @@ export const uniqueArray = (a) =>
     JSON.parse(s),
   );
 
-export const readableDistance = (distance: number) => {
-  if (distance < 5000) {
-    return distance + 'm';
-  }
-  return Math.round(distance / 1000) + 'km';
-};
-
 export const getUrlParams = (path, router) => {
   const findHash = path.indexOf('?');
   if (findHash) {
@@ -142,4 +135,12 @@ export const findError = (errorsToFind, errors) => {
   return errorsToFind.reduce((acc, currentField) => {
     return acc ? acc : errors[currentField]
   }, false)
+}
+
+export function readableDistance(distanceInMeters){
+  if(distanceInMeters < 1001)
+  {
+    return  `${distanceInMeters} m`
+  }
+  return  `${(distanceInMeters/1000).toFixed(2)} km`
 }

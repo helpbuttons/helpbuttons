@@ -8,6 +8,7 @@ import { useButtonTypes } from 'shared/buttonTypes';
 import { customFieldsFiltersText } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
+import { readableDistance } from 'shared/sys.helper';
 
 ///search button in explore and home
 export function HeaderSearch({ results, toggleAdvancedFilters}) {
@@ -82,7 +83,7 @@ function SearchText({ count, where , filtering=false}) {
     {
       return t('buttonFilters.selectedArea');
     }else if (where.address && where.radius) {
-      return `${t('common.in')} ${where.address} · ${where.radius}km`;
+      return `${t('common.in')} ${where.address} · ${readableDistance(where.radius)}`;
     }else if (filtering) {
       return `${t('buttonFilters.filteredSearch')}`;
     }else if(selectedNetwork?.buttonCount != count){

@@ -510,7 +510,7 @@ function useHexagonMap({
         return isPointWithinRadius(
           { latitude: button.latitude, longitude: button.longitude },
           { latitude: where.center[0], longitude: where.center[1] },
-          where.radius * 1000,
+          where.radius *1,
         );
       }
       return true;

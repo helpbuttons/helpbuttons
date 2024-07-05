@@ -14,7 +14,7 @@ import router from 'next/router';
 import { useStore } from 'store/Store';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
-import { uniqueArray } from 'shared/sys.helper';
+import { readableDistance, uniqueArray } from 'shared/sys.helper';
 import MultiSelectOption from 'elements/MultiSelectOption';
 import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
@@ -232,7 +232,7 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
       label={t("buttonFilters.where")} 
       explain={t("buttonFilters.whereExplain")} 
       title={t("buttonFilters.where")} 
-      btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))} 
+      btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, readableDistance(radius)])}</> : t('buttonFilters.pickLocationLimits'))} 
       showPopup={showPopup} 
       openPopup={openPopup} 
       closePopup={closePopup}
@@ -257,12 +257,13 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
             {center && (
               <div className="form__field">
                 <label className="form__label">
-                  {t('buttonFilters.distance')} ({radius} km)
+                  {t('buttonFilters.distance')} -&nbsp;
+                  {readableDistance(radius)}
                 </label>
                 <div style={{ padding: '1rem' }}>
                   <Slider
-                    min={1}
-                    max={300}
+                    min={100}
+                    max={300000}
                     onChange={(radiusValue) =>
                       setRadius(radiusValue)
                     }

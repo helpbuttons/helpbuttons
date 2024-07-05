@@ -289,7 +289,7 @@
     "byEventDate": "Por inicio del evento",
     "followTagSucess": "{0} fue añadido a tus temas de interés. Para ver tus temas de interés ve a Mi Perfil.",
     "focusedArea": "en la zona",
-    "locationLimited": "Limitado a {0}, {1}km",
+    "locationLimited": "Limitado a {0}, {1}",
     "pickLocationLimits": "Elige una localización"
   },
   "button": {

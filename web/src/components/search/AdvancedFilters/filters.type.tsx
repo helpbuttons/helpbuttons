@@ -11,7 +11,7 @@ export interface ButtonFilters {
   export const defaultFilters: ButtonFilters = {
     helpButtonTypes: [],
     query: '',
-    where: { address: '', center: null, radius: 10 },
+    where: { address: '', center: null, radius: 100 },
     orderBy: 'date'
     // tags: []
   };

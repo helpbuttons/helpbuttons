@@ -96,7 +96,7 @@
     "followTagSucess": "{0} has been added to your interests",
     "filteredSearch":"in filtered search by:",
     "focusedArea":"in framed area",
-    "locationLimited": "Limited to {0}, {1}km",
+    "locationLimited": "Limited to {0}, {1}",
     "pickLocationLimits": "Choose a location"
   },
   "setup": {
