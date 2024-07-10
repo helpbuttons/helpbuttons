@@ -49,6 +49,7 @@ import ActivityLayout from 'layouts/Activity';
 import { setSSRLocale } from 'shared/sys.helper';
 import { ActivitiesList } from 'layouts/Activity';
 import { FindLatestNetworkActivity } from 'state/Networks';
+import { InstallButton } from 'components/install';
 
 
 export default function HomeInfo({
@@ -145,6 +146,8 @@ export default function HomeInfo({
                         caption={t('homeinfo.goToExplore')}
                         onClick={()=>router.push('Explore')}
                       />
+
+                      <InstallButton/>
 
                       <Btn
                         btnType={BtnType.corporative}

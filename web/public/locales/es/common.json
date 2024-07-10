@@ -41,7 +41,8 @@
     "networkIsPrivate": "Red privada",
     "needLogo": "Antes de seleccionar un lugar, por favor añade tu logo",
     "needPlace": "Por favor, selecciona en qué zona se situa tu Red",
-    "latestActivity": "Últimas actividads"
+    "latestActivity": "Últimas actividads",
+    "installButton": "Instalar"
   },
   "feed": {
     "write": "Escribir mensaje",
