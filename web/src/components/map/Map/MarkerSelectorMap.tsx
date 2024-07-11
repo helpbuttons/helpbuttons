@@ -9,22 +9,38 @@ import { MarkerButtonIcon } from './MarkerButton';
 import { cellToLatLng, latLngToCell } from 'h3-js';
 import { maxResolution } from 'shared/types/honeycomb.const';
 
-export default function MarkerSelectorMap({
+
+export function MarkerEditorMap(props) {
+  
+  return <MarkerViewMap {...props} editPosition={true}/>
+}
+
+export default function MarkerViewMap({
   markerPosition,
   defaultZoom,
   markerColor,
   markerImage,
   markerCaption,
   showHexagon = false,
+  editPosition = false,
   onMapClick = (latLng) => {},
 }) {
   const [newMarkerPosition, setNewMarkerPosition] = useState<Point>(markerPosition);
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
     useState(null);
   const [zoom, setZoom] = useState(defaultZoom);
+  const [mapCenter, setMapCenter] = useState(markerPosition)
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     // setMarkerPosition(center);
-    // dont do it.. or else coordinates get updated twice.
+    if(editPosition)
+    {
+      setMapCenter(() => center);
+      // setNewMarkerPosition(() => center); // this is needed for fieldlocation! on the button form to center the icon  
+    }
+    // else{
+    //   setNewMarkerPosition(() => center);
+    // }
+    // // dont do it.. or else coordinates get updated twice.
     setZoom(() => zoom);
   };
 
@@ -66,7 +82,7 @@ export default function MarkerSelectorMap({
     <>
       <div className="picker__map">
         <HbMapUncontrolled
-          mapCenter={markerPosition}
+          mapCenter={mapCenter}
           mapZoom={zoom}
           onBoundsChanged={onBoundsChanged}
           handleMapClick={handleMapClicked}
