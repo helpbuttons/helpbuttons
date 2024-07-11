@@ -1,12 +1,12 @@
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
-import t from 'i18n';
-import { useState } from 'react';
-import { IoCallOutline, IoEllipsisHorizontalSharp, IoMail, IoMailOpenOutline, IoSendOutline } from 'react-icons/io5';
+import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
+import useComponentVisible from 'shared/custom.hooks';
+
 
 export function CardSubmenu({ children }) {
-  const [showSubmenu, setShowSubmenu] = useState(false);  
+  const { ref, showSubmenu, setShowSubmenu } = useComponentVisible(true);
   return (
-    <div>
+    <div ref={ref}>
       <div
 
         className="card-button__edit-icon card-button__submenu"
