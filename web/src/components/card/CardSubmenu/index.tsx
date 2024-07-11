@@ -4,7 +4,7 @@ import useComponentVisible from 'shared/custom.hooks';
 
 
 export function CardSubmenu({ children }) {
-  const { ref, showSubmenu, setShowSubmenu } = useComponentVisible(true);
+  const { ref, showSubmenu, setShowSubmenu } = useComponentVisible(false);
   return (
     <div ref={ref}>
       <div
