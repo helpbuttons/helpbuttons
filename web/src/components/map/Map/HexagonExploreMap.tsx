@@ -269,14 +269,11 @@ export default function HexagonExploreMap({
                   </div>
                 </Overlay>
               )}
-            {exploreSettings.zoom == maxZoom &&
-              boundsFilteredButtons.map((button, idx) => {
+            {exploreSettings.zoom == maxZoom && 
+              boundsFilteredButtons.filter(button => { return button.hideAddress ? false : button}).map((button, idx) => {
                 const btnType = buttonTypes.find((type) => {
                   return type.name == button.type;
                 });
-                if(button.hideAddress || !btnType) {
-                  return (<></>)
-                }
                 return (
                   <MarkerButton
                     key={idx}

@@ -37,7 +37,6 @@ import {
 } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { TextFormatted, formatMessage } from 'elements/Message';
-import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
 import {
   CardSubmenu,
@@ -53,6 +52,7 @@ import Btn, {
 import { FixedAlert } from 'components/overlay/Alert';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
+import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -357,7 +357,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
           </div>
         </div>
         {!button.hideAddress && showMap && (
-          <MarkerSelectorMap
+          <MarkerViewMap
             markerPosition={[button.latitude, button.longitude]}
             defaultZoom={maxZoom}
             markerColor={cssColor}
