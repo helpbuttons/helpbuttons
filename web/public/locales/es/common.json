@@ -113,7 +113,7 @@
     "buttonTemplateColor": "Color de tipo",
     "buttonTemplateEmoji": "Icono de tipo",
     "buttonTemplateFormTitle": "Completa los campos para crear un nuevo tipo de _helpbutton_",
-    "buttonTemplateLabel": "Elige tus tipos de botón",
+    "buttonTemplateLabel": "Elige tus tipos de _helpbutton_",
     "createButtonTypePlaceholder": "Escribe el nombre de tu nuevo tipo de _helpbutton_",
     "nomeclaturePluralPlaceHolder": "Escribe aquí el nuevo nombre en plural. Por ejemplo, 'publicaciones'",
     "templateMissingFields": "Escoge un nombre y un color para crear tu tipo de _helpbutton_",
@@ -126,7 +126,7 @@
     "customFieldsExplain": "Estos son campos extra que puedes añadir a tus _helpbuttons_ para adaptarse a las diferentes tareas. Añade una fecha si quieres qu sirvan para gestionar eventos, o un precio si quieres que los usuarios vendan productos.",
     "priceFieldAddLabel": "Muestra un precio en tu tipo de _helpbutton_ para que los usuarios puedan comprar o vender",
     "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
-    "addType": "+ Crear tipo de _helpbutton_ con los campos superiores",
+    "addType": "Crear tipo de _helpbutton_ con los campos superiores",
     "currencyLabel": "Divisa"
   },
   "activities": {

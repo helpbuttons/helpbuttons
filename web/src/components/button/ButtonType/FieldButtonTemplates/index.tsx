@@ -4,7 +4,7 @@ import { ContentAlignment } from 'elements/ImageWrapper';
 import t from 'i18n';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
+import { IoAdd, IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
 import { useState, forwardRef, useEffect } from 'react';
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
@@ -212,6 +212,8 @@ const FieldButtonTemplates = forwardRef(
                 caption={t('configuration.addType')}
                 onClick={() => onAddNewButtonTemplate()}
                 btnType={BtnType.corporative}
+                iconLeft={IconType.svg}
+                iconLink={<IoAdd/>}
               />
           </div>
       </>

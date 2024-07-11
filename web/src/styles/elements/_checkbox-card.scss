@@ -1,0 +1,210 @@
+$checkbox-card-content-border: $border-lines-width;
+$checkbox-card-card-filter-padding: 3rem;
+$checkbox-card-height: 100px;
+$checkbox-card-medium-height: 100px;
+$checkbox-card-border-radius: $border-radius-basic;
+$checkbox-card-color: $color-white;
+$checkbox-card-color-text: $color-black;
+$checkbox-card-color-text-hover: $color-white;
+$checkbox-card-color-hover: $color-gray;
+$checkbox-card-color-text-checked: $color-white;
+$checkbox-card-color-checked: $color-black;
+$checkbox-card-color-gray-border: $color-gray-border;
+
+.checkbox-card {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.checkbox-card__label {
+  display: block;
+  width: 100%;
+}
+
+.checkbox-card__filter-label {
+  display: block;
+  width: auto;
+}
+
+.checkbox-card__netIcon {
+  width: fit-content;
+
+  &_icon {
+    height: fit-content !important;
+    width: fit-content !important;
+  }
+}
+
+//envelope class for checkbox-cardes
+.checkbox-card__container {
+  width: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  height: $checkbox-card-height;
+  display: flex;
+  flex: 0 0 auto;
+
+  // flex: 1;
+  &:focus {
+    outline: none;
+  }
+}
+
+//class that includes checkbox-card STYLED content
+.checkbox-card__content {
+
+  // @extend .btn-with-icon;
+
+  background: $checkbox-card-color;
+  border: $checkbox-card-content-border solid $color-gray-border;
+  display: flex;
+  font-size: $font-size-medium;
+  position: relative;
+  height: auto;
+  transition: background 0.2s;
+  width: auto;
+  color: $checkbox-card-color-text;
+  min-width: 150px;
+  border-radius: $checkbox-card-border-radius;
+  box-sizing: border-box;
+  padding: 20px;
+
+}
+
+.checkbox-card__content--bordered {
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+}
+
+.checkbox-card__content--disabled {
+  //revise
+  background: $color-ligth-gray;
+}
+
+
+//checkbox-card FOR FILTERS - SMALL checkbox-cardES IN MENUS AND HEADER - EXTENDED FROM btn-FILTER
+
+.checkbox-card-filter__container {
+  width: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex: 0 0 auto;
+
+  // flex: 1;
+  &:focus {
+    outline: none;
+  }
+}
+
+.checkbox-card-filter__content {
+  @extend .btn-filter;
+
+  color: $checkbox-card-color-text;
+  transition: background 0.2s;
+
+  &--bordered {
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+  }
+}
+
+.checkbox-card-filter__content:hover {
+  cursor: pointer;
+}
+
+///-- RREST OF checkbox-card
+
+
+.checkbox-card__content:hover {
+  cursor: pointer;
+  background: $checkbox-card-color-hover;
+  color: $checkbox-card-color-text-hover;
+
+  & svg {
+    fill: $checkbox-card-color-text-hover;
+  }
+}
+
+.checkbox-card__icon {
+  @extend .btn-filter__icon;
+
+}
+
+.checkbox-card__image {
+
+  width: 60px;
+  height: 60px;
+  margin-right: $margin-small;
+
+  & svg {
+
+    width: 60px;
+    height: 60px;  
+
+  }
+
+}
+
+.checkbox-card__text {
+  @extend .btn-with-icon__text;
+  margin-bottom: 0;
+}
+
+///CLASS FOR checkbox-card ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
+
+.checkbox-card__checkbox {
+  display: none;
+
+  &:checked + .checkbox-card__content {
+    background: $checkbox-card-color-checked;
+    background-size: 40px;
+    color: $checkbox-card-color-text-checked;
+    min-width: 150px;
+
+    & svg {
+      fill: $checkbox-card-color-text-hover;
+    }
+  }
+
+  &:checked + .checkbox-card__content::before {
+    background-size: 80%;
+  }
+}
+
+///CLASS FOR checkbox-card-FILTER ITSELF AND MODIFIED INNER CONTENT FOR DIFFERENT STATES
+
+.checkbox-card-filter__checkbox {
+  display: none;
+
+  &:checked + .checkbox-card-filter__content {
+    background: $checkbox-card-color-checked;
+    color: $checkbox-card-color-text-checked;
+
+    .icon {
+      fill: $checkbox-card-color-text-checked;
+    }
+  }
+
+  &:checked + .profile-buttons__checkbox-card {
+    background: $checkbox-card-color-checked;
+    color: $checkbox-card-color-text-checked;
+  }
+
+  &:checked + .checkbox-card__content::before {
+    background: transparent;
+  }
+}
+
+@media #{$breakpoints-xxlarge} {
+
+}
