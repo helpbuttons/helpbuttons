@@ -92,9 +92,7 @@ export default function DropDownSearchLocation({
       <label className="form__label">
         {label}
         {address && center && (
-          <>
-            ({address} - {roundCoords(center).toString()})
-          </>
+          <>{label ? ` ( ${address} [${roundCoords(center).toString()}] )` : address}</>
         )}
       </label>
       {explain && <div className="form__explain">{explain}</div>}
@@ -107,6 +105,7 @@ export default function DropDownSearchLocation({
           noOptionsMessage={() => placeholder}
           cacheOptions={false}
           loadOptions={loadSuggestions}
+          value={address}
         />
         {!loadingNewAddress && (
           <Btn

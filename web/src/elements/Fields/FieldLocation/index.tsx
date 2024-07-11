@@ -5,7 +5,6 @@ import { MarkerEditorMap } from 'components/map/Map/MarkerSelectorMap';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { ReverseGeo } from 'state/Explore';
@@ -125,11 +124,6 @@ export default function FieldLocation({
         openPopup={openPopup}
         closePopup={closePopup}
       >
-        {markerAddress}
-        <DropDownSearchLocation
-          placeholder={t('homeinfo.searchlocation')}
-          handleSelectedPlace={handleSelectedPlace}
-        />
         <MarkerEditorMap
           onMapClick={onMapClick}
           defaultZoom={selectedNetwork.exploreSettings.zoom}
@@ -138,6 +132,8 @@ export default function FieldLocation({
           markerCaption={markerCaption}
           markerImage={markerImage}
           showHexagon={hideAddress}
+          handleSelectedPlace={handleSelectedPlace}
+          markerAddress={markerAddress}
         />
         <FieldCheckbox
           name="hideAddress"

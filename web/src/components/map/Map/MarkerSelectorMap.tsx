@@ -8,11 +8,21 @@ import {
 import { MarkerButtonIcon } from './MarkerButton';
 import { cellToLatLng, latLngToCell } from 'h3-js';
 import { maxResolution } from 'shared/types/honeycomb.const';
+import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import t from 'i18n';
 
 
 export function MarkerEditorMap(props) {
   
-  return <MarkerViewMap {...props} editPosition={true}/>
+  return <>
+          <DropDownSearchLocation
+            placeholder={t('homeinfo.searchlocation')}
+            handleSelectedPlace={props.handleSelectedPlace}
+            address={props.markerAddress}
+          />
+        <MarkerViewMap {...props} editPosition={true}/>
+  </>
+  
 }
 
 export default function MarkerViewMap({
@@ -35,15 +45,16 @@ export default function MarkerViewMap({
     if(editPosition)
     {
       setMapCenter(() => center);
-      // setNewMarkerPosition(() => center); // this is needed for fieldlocation! on the button form to center the icon  
     }
-    // else{
-    //   setNewMarkerPosition(() => center);
-    // }
-    // // dont do it.. or else coordinates get updated twice.
     setZoom(() => zoom);
   };
 
+  useEffect(() => {
+    if(editPosition)
+    {
+      setMapCenter(() => markerPosition);
+    }
+  }, [markerPosition])
   const getHexagonCenter = (latLng, zoom) => {
     const cell = latLngToCell(
       latLng[0],
