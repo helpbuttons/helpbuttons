@@ -431,7 +431,7 @@ function ShowPhone({ button }) {
   };
   return (
     <>
-      {button.hasPhone && (
+      {button?.owner?.publishPhone && (
         <>
           {!showPhone && (
             <Btn

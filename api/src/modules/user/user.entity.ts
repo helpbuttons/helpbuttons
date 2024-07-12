@@ -115,6 +115,7 @@ export class User extends BaseEntity {
   @Column('text', {nullable: true})
   phone?: string;
 
+  @Expose()
   @Column({default: false})
   publishPhone?: boolean;
 }
