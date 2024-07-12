@@ -1,7 +1,7 @@
 import FieldError from "../FieldError";
 import { useTagsList } from "../FieldTags";
 
-export default function FieldInterets({
+export default function FieldInterests({
   label,
   validationError,
   interests = [],

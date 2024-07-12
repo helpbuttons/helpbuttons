@@ -1,6 +1,6 @@
 import Accordion from 'elements/Accordion';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
-import FieldInterets from 'elements/Fields/FieldInterests';
+import FieldInterests from 'elements/Fields/FieldInterests';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldTags from 'elements/Fields/FieldTags';
@@ -98,7 +98,7 @@ export default function NewUserFields({
         {...register('password', { required: true, minLength: 8 })}
       ></FieldPassword>
       {selectedNetwork && (
-        <FieldInterets
+        <FieldInterests
           label={t('user.tags')}
           explain={t('user.tagsExplain')}
           placeholder={t('common.add')}
