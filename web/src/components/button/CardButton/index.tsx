@@ -58,7 +58,7 @@ const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
 };
 
-export default function CardButton({ button, buttonTypes }) {
+export default function CardButton({ button, buttonTypes, onScollToCompose = () => {}}) {
   const buttonType = buttonTypes.find(
     (buttonType) => buttonType.name == button.type,
   );
@@ -76,6 +76,7 @@ export default function CardButton({ button, buttonTypes }) {
             <CardButtonHeadBig
               button={button}
               buttonTypes={buttonTypes}
+              onScollToCompose={onScollToCompose}
             />
           </div>
           <CardButtonImages button={button} />
@@ -271,7 +272,7 @@ function CardButtonSubmenu({ button }) {
     </CardSubmenu>
   );
 }
-export function CardButtonHeadBig({ button, buttonTypes }) {
+export function CardButtonHeadBig({ button, buttonTypes, onScollToCompose }) {
   const { cssColor, caption, customFields, icon } = buttonTypes.find(
     (buttonType) => {
       return buttonType.name === button.type;
@@ -289,6 +290,17 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
   return (
     <>
       <CardButtonSubmenu button={button} />
+      <Btn
+          btnType={BtnType.filterCorp}
+          contentAlignment={ContentAlignment.center}
+          iconRight={IconType.circle}
+          iconLink={<IoMailOutline />}
+          onClick={() => {
+            console.log('scrolling...')
+            onScollToCompose()
+          }}
+      />
+      <ShowPhone button={button} />
       <ExpiringAlert button={button} isOwner={isButtonOwner(loggedInUser, button)}/>
       <div className="card-button__content card-button__full-content">
         <div className="card-button__header">
@@ -423,17 +435,17 @@ function ShowPhone({ button }) {
         <>
           {!showPhone && (
             <Btn
-              btnType={BtnType.corporative}
-              contentAlignment={ContentAlignment.center}
-              caption={t('button.showPhone')}
-              iconLeft={IconType.circle}
-              onClick={() => onShowPhoneClick()}
-            />
+            btnType={BtnType.filterCorp}
+            contentAlignment={ContentAlignment.center}
+            iconLeft={IconType.circle}
+            iconLink={<IoCallOutline />}
+            onClick={() => onShowPhoneClick()}
+          />
           )}
           {showPhone && (
-            <div className='card-button__phone-section'>
+            <div>
               <Btn
-                btnType={BtnType.corporative}
+                btnType={BtnType.filterCorp}
                 contentAlignment={ContentAlignment.center}
                 iconLeft={IconType.circle}
                 iconLink={<IoCallOutline />}
@@ -451,12 +463,11 @@ function ShowPhone({ button }) {
   );
 }
 
-export function CardButtonHeadActions({ button, action }) {
+export function CardButtonHeadActions({ button, action, isButtonOwner }) {
   
   return (
     <>
-      <ShowPhone button={button} />
-      {action && 
+      {(action  && !isButtonOwner) && 
         <Btn
             btnType={BtnType.corporative}
             contentAlignment={ContentAlignment.center}
@@ -466,7 +477,7 @@ export function CardButtonHeadActions({ button, action }) {
             onClick={action}
         />
       }
-      {button.hearts && (
+      {(button.hearts && !isButtonOwner) && (
         <span className="btn-circle__icon">
           <IoHeartOutline />
           {button.hearts}

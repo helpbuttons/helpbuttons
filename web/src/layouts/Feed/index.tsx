@@ -16,7 +16,7 @@ import {
 } from 'react-icons/io5';
 
 import { GlobalState, store } from 'pages';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
 import {
@@ -36,7 +36,7 @@ import LoginOrSignup from 'components/authorization';
 import router from 'next/router';
 import { getReturnUrl } from 'shared/sys.helper';
 
-export default function Feed({ button }: { button: Button }) {
+export default function Feed({ button, show, toggleShow }: { button: Button, show: any, toggleShow: any }) {
   const [posts, setPosts] = useState(null);
   const [showReplyFirstPost, toggleShowReplyFirstPost] = useToggle(false);
 
@@ -65,7 +65,7 @@ export default function Feed({ button }: { button: Button }) {
 
   const isButtonOwner = loggedInUser?.id == button.owner.id;
   const buttonOwnerId = button.owner.id;
-
+  
   return (
     <div className="feed-container">
       <div className="card-button__actions">
@@ -78,14 +78,16 @@ export default function Feed({ button }: { button: Button }) {
                 onCreate={() => {
                   reloadPosts();
                 }}
+                show={show}
+                toggleShow={toggleShow}
               />
             </>
           )}
-          {(!isButtonOwner && loggedInUser) && (      
-            <CardButtonHeadActions button={button} action={() => toggleShowReplyFirstPost(true)}/>         
+          {(loggedInUser) && (      
+            <CardButtonHeadActions button={button} isButtonOwner={isButtonOwner} action={() => toggleShowReplyFirstPost(true)}/>         
           )}
-          {(!isButtonOwner && !loggedInUser) && (      
-            <CardButtonHeadActions button={button} action={() => router.push({
+          {(!loggedInUser) && (      
+            <CardButtonHeadActions button={button} isButtonOwner={isButtonOwner} action={() => router.push({
               pathname: '/Login',
               query: { returnUrl: getReturnUrl() },
             })}/>
@@ -250,14 +252,23 @@ export function ComposePost({
   referer,
   onCreate,
   onCancel,
+  show,
+  toggleShow,
 }) {
-  const [show, toggleShow]= useToggle(false);
+  const refCompose = useRef();
+
+  useEffect(() => {
+    if(show && refCompose?.current)
+    {
+      refCompose.current.scrollIntoView()
+    }
+  }, [show])
   return (  
     <>
+    <div ref={refCompose}>
         {show &&
-
-        <Compose referer={referer} onCreate={onCreate} onCancel={onCancel}/> 
-
+        
+          <Compose referer={referer} onCreate={onCreate} onCancel={onCancel}/> 
         }
         {!show &&
             <>
@@ -275,6 +286,7 @@ export function ComposePost({
                 />
             </>
           }
+      </div>
     </>
     
   )
