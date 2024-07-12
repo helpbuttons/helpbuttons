@@ -1,7 +1,7 @@
 import '../styles/app.scss';
 import Head from 'next/head';
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
 import { UserService } from 'services/Users';
@@ -25,6 +25,7 @@ import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import SEO from 'components/seo';
+import Loading from 'components/loading';
 
 export default appWithTranslation(MyApp);
 
@@ -250,6 +251,16 @@ function MyApp({ Component, pageProps }) {
     
   }, [searchParams]);
 
+  const [loading, setLoading] = useState<boolean>(true);
+
+  Router.events.on('routeChangeStart', (url) => {
+    setLoading(true);
+  });
+
+  Router.events.on('routeChangeComplete', (url) => {
+    setLoading(false);
+  });
+
   return (
     <>
       <Head>
@@ -275,6 +286,7 @@ function MyApp({ Component, pageProps }) {
               <ShowDesktopOnly>
                 <NavHeader pageName={pageName} selectedNetwork={selectedNetwork}/>
               </ShowDesktopOnly>
+              {loading &&  <Loading/> }
               <Component {...pageProps} />
               <ShowMobileOnly>
                 <NavBottom  pageName={pageName} loggedInUser={loggedInUser} />
