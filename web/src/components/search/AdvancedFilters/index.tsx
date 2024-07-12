@@ -24,6 +24,8 @@ import { FollowTag } from 'state/Users';
 import FieldAccordion from 'elements/Fields/FieldAccordion';
 import Popup from 'components/popup/Popup';
 import PickerField from 'components/picker/PickerField';
+import FieldInterests from 'elements/Fields/FieldInterests';
+import { Network } from 'shared/entities/network.entity';
 
 
 export default function AdvancedFilters({
@@ -47,6 +49,11 @@ export default function AdvancedFilters({
     false
   );
   
+  const selectedNetwork: Network = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
   const buttonTypes = useButtonTypes();
 
   const {
@@ -131,7 +138,7 @@ export default function AdvancedFilters({
   
   return (
     <>
-      {showAdvancedFilters && (
+      {(selectedNetwork && showAdvancedFilters) && (
         <>
           <div className='filters__wrapper'>
             <Popup         
@@ -154,8 +161,24 @@ export default function AdvancedFilters({
                       explain={t('buttonFilters.queryExplain')}
                       {...register('query')}
                     >
+                      {/* <TagList tags={tags} remove={(tag) => console.log('remove tag ' + tag)}/> */}
                       <TagFollow tags={tags}/>
                     </FieldText>
+
+                    {/* <FieldInterests
+                      label={t('user.tags')}
+                      explain={t('user.tagsExplain')}
+                      placeholder={t('common.add')}
+                      validationError={errors.tags}
+                      setInterests={(tags) => {
+                        setValue('tags', tags);
+                      }}
+                      interests={watch('tags')}
+                      defaultSuggestedTags={selectedNetwork.tags}
+                      defaultTrendingTags={selectedNetwork.topTags.map(
+                        (tag) => tag.tag,
+                      )}
+                    /> */}
 
                     <FieldMultiSelect
                       label={t('buttonFilters.types')}
@@ -225,7 +248,32 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
 
   const closePopup = () => setShowPopup(() => false)
   const openPopup = () => setShowPopup(() => true)
+
+  const marks = [100, 1000, 5000, 25000, 100000,300000 ]
+  const calcRadiusFromSlider = (value) => {
+    const mark = Math.ceil(value / 100)
+    const min = marks[mark-1]
+    const max = marks[mark]
+    return min + ((max-min) / 100)* (value - (mark - 1) * 100);
+  }
+
+  const calcSliderFromRadius = (value) => {
+    let markIndex = 0;
   
+    for (let i = 0; i < marks.length - 1; i++) {
+      if (value >= marks[i] && value <= marks[i + 1]) {
+        markIndex = i;
+        break;
+      }
+    }
+  
+    const min = marks[markIndex];
+    const max = marks[markIndex + 1];
+
+    const sliderValue = (markIndex * 100) + ((value - min) / (max - min)) * 100;
+    return sliderValue;
+  };
+
   // <PickerField label={t("buttonFilters.where")} explain={t("buttonFilters.whereExplain")} title={t("buttonFilters.where")} btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
   return (
     <PickerField 
@@ -262,12 +310,13 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
                 </label>
                 <div style={{ padding: '1rem' }}>
                   <Slider
-                    min={100}
-                    max={300000}
-                    onChange={(radiusValue) =>
-                      setRadius(radiusValue)
+                    min={1}
+                    max={(marks.length - 1)*100}
+                    onChange={(radiusValue) =>{
+                      setRadius(calcRadiusFromSlider(radiusValue))
                     }
-                    defaultValue={radius}
+                    }
+                    defaultValue={calcSliderFromRadius(radius)}
                   />
                 </div>
               </div>
