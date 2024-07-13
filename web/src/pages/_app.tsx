@@ -251,7 +251,7 @@ function MyApp({ Component, pageProps }) {
     
   }, [searchParams]);
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   Router.events.on('routeChangeStart', (url) => {
     setLoading(true);
