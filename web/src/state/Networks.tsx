@@ -12,6 +12,8 @@ import { CreateNetworkDto } from 'shared/dtos/network.dto';
 import { Network } from 'shared/entities/network.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateExploreSettings } from './Explore';
+import { useStore } from 'store/Store';
+import { useEffect, useRef } from 'react';
 
 export interface NetworksState {
   // networks: Network[];
@@ -30,6 +32,23 @@ export const networksInitial = {
   // },
   selectedNetworkLoading: false,
 };
+
+export const useSelectedNetwork = (_selectedNetwork = null) : Network => {
+  const loadingNetwork = useRef(false)
+  useEffect(() => {
+
+    if(!_selectedNetwork && !loadingNetwork.current)
+    {
+      loadingNetwork.current = true;
+      store.emit(new FetchDefaultNetwork(() => console.log('good!'), () => console.log('failed!')))
+    }
+  }, [_selectedNetwork])
+  
+  return useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+}
 
 export class setNetwork implements UpdateEvent {
   public constructor(private network) {}
@@ -74,6 +93,7 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
       // With no Id, find the default network
 
       map((network) => {
+        console.log('fetched network')
         store.emit(new SelectedNetworkFetched(network));
         if (network && this.onSuccess) {
           this.onSuccess(network);

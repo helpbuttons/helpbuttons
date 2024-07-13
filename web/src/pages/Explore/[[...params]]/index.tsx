@@ -5,17 +5,23 @@ import { ClienteSideRendering } from 'pages/_app';
 import { Button } from 'shared/entities/button.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { makeImageUrl } from 'shared/sys.helper';
+import { LoadabledComponent } from 'components/loading';
+import { useEffect } from 'react';
+import { useSelectedNetwork } from 'state/Networks';
 
 export default function Explore({
   metadata,
-  selectedNetwork,
+  _selectedNetwork,
   config,
 }) {
-
+  const selectedNetwork = useSelectedNetwork(_selectedNetwork)
+  
   return (
     <>
       <ClienteSideRendering>
-       <HoneyComb selectedNetwork={selectedNetwork} />
+        <LoadabledComponent loading={!selectedNetwork}>
+          <HoneyComb selectedNetwork={selectedNetwork} />
+        </LoadabledComponent>
       </ClienteSideRendering>
     </>
   );

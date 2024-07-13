@@ -48,15 +48,17 @@ import Feed from 'layouts/Feed';
 import ActivityLayout from 'layouts/Activity';
 import { setSSRLocale } from 'shared/sys.helper';
 import { ActivitiesList } from 'layouts/Activity';
-import { FindLatestNetworkActivity } from 'state/Networks';
+import { FindLatestNetworkActivity, useSelectedNetwork } from 'state/Networks';
 import { InstallButton } from 'components/install';
 
 
 export default function HomeInfo({
   metadata,
-  selectedNetwork,
+  _selectedNetwork,
   config,
 }) {
+  const selectedNetwork = useSelectedNetwork(_selectedNetwork)
+  
   const filterTag = (tag) => {
     store.emit(new UpdateFiltersToFilterTag(tag));
     router.push('/Explore')
@@ -87,15 +89,16 @@ export default function HomeInfo({
     }))
   }, [])
   return (
-    <>
+    <>{selectedNetwork && 
         <ShowMobileOnly>
           <div className="homeinfo__search-section">
             <NavHeader selectedNetwork={selectedNetwork} pageName={'HomeInfo'}/>
             <AdvancedFilters isHome={true}/>
           </div>
         </ShowMobileOnly>
-
+      }
       {!currentUser && <SupportBanner scrollToContact={scrollToContact}/>}
+      {selectedNetwork && 
       <div className='homeinfo__container'>
           <div className="homeinfo__content">                
 
@@ -332,6 +335,7 @@ export default function HomeInfo({
                 </div>
         </div>
       </div>
+      }
     </>
   );
 }

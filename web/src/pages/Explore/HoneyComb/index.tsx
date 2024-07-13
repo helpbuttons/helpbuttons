@@ -107,7 +107,6 @@ function HoneyComb({ selectedNetwork }) {
     buttonTypes: selectedNetwork?.buttonTemplates,
   });
 
-
   return (
     <>
       <ShowDesktopOnly>

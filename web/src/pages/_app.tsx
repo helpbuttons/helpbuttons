@@ -7,7 +7,7 @@ import Alert from 'components/overlay/Alert';
 import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
-import { FetchDefaultNetwork } from 'state/Networks';
+import { FetchDefaultNetwork, useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Users';
 
 import { useStore } from 'store/Store';
@@ -25,7 +25,7 @@ import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import SEO from 'components/seo';
-import Loading from 'components/loading';
+import Loading, { LoadabledComponent } from 'components/loading';
 
 export default appWithTranslation(MyApp);
 
@@ -52,10 +52,7 @@ function MyApp({ Component, pageProps }) {
     (state: GlobalState) => state.loggedInUser,
   );
 
-  const selectedNetwork = useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
+  const selectedNetwork = useSelectedNetwork()
 
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
@@ -281,18 +278,15 @@ function MyApp({ Component, pageProps }) {
       >
         <Alert />
         <div className="index__content">
-          {selectedNetwork && (
-            <>
-              <ShowDesktopOnly>
-                <NavHeader pageName={pageName} selectedNetwork={selectedNetwork}/>
-              </ShowDesktopOnly>
-              {loading &&  <Loading/> }
-              <Component {...pageProps} />
-              <ShowMobileOnly>
-                <NavBottom  pageName={pageName} loggedInUser={loggedInUser} />
-              </ShowMobileOnly>
-            </>
-          )}
+            <ShowDesktopOnly>
+              <NavHeader pageName={pageName} selectedNetwork={selectedNetwork}/>
+            </ShowDesktopOnly>
+              <LoadabledComponent loading={!selectedNetwork || loading}>
+                <Component {...pageProps} />
+              </LoadabledComponent>
+            <ShowMobileOnly>
+              <NavBottom  pageName={pageName} loggedInUser={loggedInUser} />
+            </ShowMobileOnly>
           {(!selectedNetwork && isSetup) && <Component {...pageProps} />}
         </div>
       </div>
