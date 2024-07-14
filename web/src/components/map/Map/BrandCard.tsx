@@ -15,6 +15,7 @@ export default function BrandCard({}) {
 
   return (
     <>
+    {selectedNetwork && 
         <div className="search-map__network-title">
               <ShowDesktopOnly>
                 <div className="avatar-medium--home">
@@ -34,6 +35,7 @@ export default function BrandCard({}) {
                 </div>
               </div>
         </div>
+      }
     </>
   );
 }

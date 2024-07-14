@@ -8,17 +8,24 @@ import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { useToggle } from 'shared/custom.hooks';
 import { Network } from 'shared/entities/network.entity';
+import { Role } from 'shared/types/roles';
 import { UpdateExploreSettings } from 'state/Explore';
 import { FetchDefaultNetwork, UpdateNetwork, UpdateNetworkBackgroundColor, UpdateNetworkTextColor } from 'state/Networks';
-import { useRef } from 'store/Store';
+import { useStore } from 'store/Store';
 
 export default Configuration;
 
 function Configuration() {
-  const selectedNetwork: Network = useRef(
+  const selectedNetwork: Network = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+
   const [loadingNetwork, setLoadingNetwork] = useToggle(true)
   const {
     handleSubmit,
@@ -106,7 +113,7 @@ function Configuration() {
   };
   return (
     <>
-      {selectedNetwork && (
+      {(selectedNetwork && loggedInUser && loggedInUser.role == Role.admin) && (
         <Popup title={t('configuration.title')} linkBack="/Profile">
             <NetworkForm
               handleSubmit={handleSubmit}

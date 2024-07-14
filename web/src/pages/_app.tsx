@@ -285,7 +285,9 @@ function MyApp({ Component, pageProps }) {
                 <Component {...pageProps} />
               </LoadabledComponent>
             <ShowMobileOnly>
-              <NavBottom  pageName={pageName} loggedInUser={loggedInUser} />
+              <ClienteSideRendering>
+                <NavBottom  pageName={pageName} loggedInUser={loggedInUser} />
+              </ClienteSideRendering>
             </ShowMobileOnly>
           {(!selectedNetwork && isSetup) && <Component {...pageProps} />}
         </div>

@@ -110,6 +110,9 @@ function SearchInfo({ filters, what }) {
     false,
   );
 
+  if(!selectedNetwork)
+    return ''
+    
   const helpButtonTypes = selectedNetwork.buttonTemplates;
   const types = (buttonTypes) => {
     if (buttonTypes.length < 1) {
