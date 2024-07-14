@@ -48,17 +48,23 @@ import Feed from 'layouts/Feed';
 import ActivityLayout from 'layouts/Activity';
 import { setSSRLocale } from 'shared/sys.helper';
 import { ActivitiesList } from 'layouts/Activity';
-import { FindLatestNetworkActivity, useSelectedNetwork } from 'state/Networks';
+import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 
 
 export default function HomeInfo({
   metadata,
-  _selectedNetwork,
-  config,
 }) {
-  const selectedNetwork = useSelectedNetwork(_selectedNetwork)
-  
+  const selectedNetwork = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
+  const config = useStore(
+    store,
+    (state: GlobalState) => state.config,
+  );
+
   const filterTag = (tag) => {
     store.emit(new UpdateFiltersToFilterTag(tag));
     router.push('/Explore')
@@ -76,11 +82,6 @@ export default function HomeInfo({
     useState(null);
 
   const scrollToContact = useRef();
-  if(!config)
-  {
-    return (<Alert>Error getting backend</Alert>)
-  }
-
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
@@ -89,7 +90,8 @@ export default function HomeInfo({
     }))
   }, [])
   return (
-    <>{selectedNetwork && 
+    <>
+    {selectedNetwork && 
         <ShowMobileOnly>
           <div className="homeinfo__search-section">
             <NavHeader selectedNetwork={selectedNetwork} pageName={'HomeInfo'}/>

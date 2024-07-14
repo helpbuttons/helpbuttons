@@ -12,18 +12,19 @@ import { CreateNewPost } from 'state/Posts';
 import { readableDate } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
-import { setMetadata, setMetadatai18n } from 'services/ServerProps';
+import { setMetadata } from 'services/ServerProps';
 import { useStore } from 'store/Store';
 import { latLngToCell } from 'h3-js';
 import { maxResolution } from 'shared/types/honeycomb.const';
 import { setSSRLocale } from 'shared/sys.helper';
 
-export default function ButtonNew({metadata,selectedNetwork,config}) {
+export default function ButtonNew({metadata, _selectedNetwork}) {
+
   const defaultValues = {
     image: null,
     description: '',
-    latitude: selectedNetwork.exploreSettings.center[0],
-    longitude: selectedNetwork.exploreSettings.center[1],
+    latitude: _selectedNetwork.exploreSettings.center[0],
+    longitude: _selectedNetwork.exploreSettings.center[1],
     type: '',
     tags: [],
     title: '',
@@ -57,7 +58,7 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
     store.emit(
       new CreateButton(
         data,
-        selectedNetwork.id,
+        _selectedNetwork.id,
         onSuccess,
         onError,
       ),

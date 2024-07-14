@@ -7,7 +7,7 @@ import Alert from 'components/overlay/Alert';
 import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
-import { FetchDefaultNetwork, useSelectedNetwork } from 'state/Networks';
+import { useConfig, useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Users';
 
 import { useStore } from 'store/Store';
@@ -41,61 +41,72 @@ function MyApp({ Component, pageProps }) {
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
 
-  const config = useStore(
-    store,
-    (state: GlobalState) => state.config,
-  );
   const path = router.asPath.split('?')[0];
 
   const loggedInUser = useStore(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
+  const onFetchingNetworkError = (error) => {
+    if (error === 'network-not-found') {
+      console.error('network not found');
+      console.error(error);
 
-  const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork)
+      if (loggedInUser && config && config.userCount > 0 && path != SetupSteps.FIRST_OPEN && path != SetupSteps.NETWORK_CREATION){
+        console.log('pushing to first open')
+        router.push(SetupSteps.FIRST_OPEN)
+      }
+    }
+  }
+
+  const onFetchingConfigError = (error) => {
+    console.log(error)
+    console.log('fetching config error...')
+    if (error == 'not-found' || error == 'nosysadminconfig') {
+      console.error(error);
+      console.log('pushing sysadmin config')
+      router.push(SetupSteps.SYSADMIN_CONFIG);
+    }
+
+    if (error == 'nobackend') {
+      alertService.error(
+        `Error: Backend not found, something went terribly wrong.`,
+      );
+      router.push('/Error');
+    }
+    console.log(error);
+    return;
+  }
+
+  const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork, onFetchingNetworkError)
+  const config = useConfig(pageProps._config, onFetchingConfigError)
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
     SetupSteps.FIRST_OPEN,
     SetupSteps.NETWORK_CREATION,
     SetupSteps.SYSADMIN_CONFIG,
   ];
-  const loadingConfig = useRef(false);
   useEffect(() => {
     if (setupPaths.includes(path)) {
       setIsSetup(true);
     }
 
-    if (!config && !loadingConfig.current) {
-      loadingConfig.current = true;
-      store.emit(
-        new GetConfig(
-          (config) => {
-            console.log(`got config`);
-          },
-          (error) => {
-            if (
-              SetupSteps.SYSADMIN_CONFIG.toString() == path ||
-              SetupSteps.CREATE_ADMIN_FORM.toString() == path
-            ) {
-              return;
-            }
-            if (error == 'not-found' || error == 'nosysadminconfig') {
-              console.error(error);
-              router.push(SetupSteps.SYSADMIN_CONFIG);
-            }
-
-            if (error == 'nobackend') {
-              alertService.error(
-                `Error: Backend not found, something went terribly wrong.`,
-              );
-              router.push('/Error');
-            }
-            console.log(error);
-            return;
-          },
-        ),
-      );
+    if (
+      config && (config.databaseNumberMigrations < 1 ||
+        config.userCount < 1) &&
+      SetupSteps.CREATE_ADMIN_FORM != path
+    ) {
+      
+      console.log('pushing to create admin form...')
+      router.push(SetupSteps.CREATE_ADMIN_FORM);
+    }else
+    if (
+      SetupSteps.SYSADMIN_CONFIG.toString() == path ||
+      SetupSteps.CREATE_ADMIN_FORM.toString() == path
+    ) {
+      return;
     }
+
     if (
       !authorized &&
       config &&
@@ -142,45 +153,6 @@ function MyApp({ Component, pageProps }) {
         ) {
           setAuthorized(isRoleAllowed(Role.guest, path));
         }
-      }
-    }
-
-    function fetchDefaultNetwork(configuration) {
-      if (configuration && !selectedNetwork && !isLoadingNetwork) {
-        setIsLoadingNetwork(true);
-        store.emit(
-          new FetchDefaultNetwork(
-            () => {
-              console.log('all is ready!');
-            },
-            (error) => {
-              if (error === 'network-not-found') {
-                if (
-                  (configuration.databaseNumberMigrations < 1 ||
-                    configuration.userCount < 1) &&
-                  SetupSteps.CREATE_ADMIN_FORM != path
-                ) {
-                  router.push(SetupSteps.CREATE_ADMIN_FORM);
-                } else if (
-                  loggedInUser &&
-                  (SetupSteps.NETWORK_CREATION == path ||
-                    SetupSteps.FIRST_OPEN == path)
-                ) {
-                  router.push({
-                    pathname: '/Login',
-                    query: { returnUrl: path },
-                  });
-                } else {
-                  console.error('network not found');
-                  console.error(error);
-                  router.push({
-                    pathname: SetupSteps.FIRST_OPEN,
-                  });
-                }
-              }
-            },
-          ),
-        );
       }
     }
   }, [path, config, loggedInUser]);
@@ -282,7 +254,9 @@ function MyApp({ Component, pageProps }) {
               </LoadabledComponent>
             <ShowMobileOnly>
               <ClienteSideRendering>
+                {!isSetup && 
                 <NavBottom  pageName={pageName} loggedInUser={loggedInUser} />
+                }
               </ClienteSideRendering>
             </ShowMobileOnly>
           {(!selectedNetwork && isSetup) && <Component {...pageProps} />}

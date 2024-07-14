@@ -14,6 +14,9 @@ import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateExploreSettings } from './Explore';
 import { useStore } from 'store/Store';
 import { useEffect, useRef } from 'react';
+import { SetupSteps } from 'shared/setupSteps';
+import { ConfigFound, GetConfig } from './Setup';
+// import router from 'next/router';
 
 export interface NetworksState {
   // networks: Network[];
@@ -22,26 +25,52 @@ export interface NetworksState {
 } 
 
 export const networksInitial = {
-  // selectedNetwork: {
-  //   name: '...',
-  //   description: '',
-  //   buttonTemplates: [],
-  //   topTags: [],
-  //   backgroundColor: 'grey',
-  //   textColor: 'pink'
-  // },
+  selectedNetwork: {
+    name: '...',
+    description: '',
+    buttonTemplates: [],
+    topTags: [],
+    backgroundColor: 'grey',
+    textColor: 'pink',
+    init: true
+  },
   selectedNetworkLoading: false,
 };
 
-export const useSelectedNetwork = (_selectedNetwork = null) : Network => {
+export const useConfig = (_config, onError) => {
   useEffect(() => {
+    if(!_config )
+    {
+      store.emit(new GetConfig(() => console.log('got config!'), onError))
+    }else{
+      store.emit(new ConfigFound(_config))
+    }
+  }, [_config])
+  return useStore(
+    store,
+    (state: GlobalState) => state.config,
+  );
+}
+export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) => console.log(error)) : Network => {
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+  const config = useStore(
+    store,
+    (state: GlobalState) => state.config,
+  );
+
+  useEffect(() => {
+    
     if(!_selectedNetwork )
     {
-      store.emit(new FetchDefaultNetwork(() => console.log('fetched network!!'), () => console.log('failed!')))
+      store.emit(new FetchDefaultNetwork(() => console.log('fetched network!!'), onError))
     }else{
       store.emit(new SelectedNetworkFetched(_selectedNetwork))
     }
-  }, [_selectedNetwork])
+  }, [_selectedNetwork, loggedInUser])
   
   return useStore(
     store,
@@ -88,13 +117,10 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
   }
 
   public watch(state: GlobalState) {
-    if(state.networks.selectedNetwork)
+    if(state.networks.selectedNetwork && !state.networks.selectedNetwork.init)
     {
-      console.log('already loadingd')
       return of(state.networks.selectedNetwork)
     }
-    console.log('fetching..... ')
-
     return NetworkService.findById().pipe(
       // With no Id, find the default network
 

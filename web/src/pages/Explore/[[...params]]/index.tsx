@@ -6,21 +6,18 @@ import { Button } from 'shared/entities/button.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { makeImageUrl } from 'shared/sys.helper';
 import { LoadabledComponent } from 'components/loading';
-import { useEffect } from 'react';
-import { useSelectedNetwork } from 'state/Networks';
 
 export default function Explore({
   metadata,
   _selectedNetwork,
-  config,
+  _config,
 }) {
-  const selectedNetwork = useSelectedNetwork(_selectedNetwork)
-  
+
   return (
     <>
       <ClienteSideRendering>
-        <LoadabledComponent loading={!selectedNetwork}>
-          <HoneyComb selectedNetwork={selectedNetwork} />
+        <LoadabledComponent loading={!_selectedNetwork}>
+          <HoneyComb selectedNetwork={_selectedNetwork} />
         </LoadabledComponent>
       </ClienteSideRendering>
     </>

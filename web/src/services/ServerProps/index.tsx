@@ -15,14 +15,7 @@ export class ServerPropsService {
         siteTitle: '...',
         pageurl: `${ctx.uri}`,
       },
-      selectedNetwork: {
-        backgroundColor: '#FFDD02',
-        textColor: 'black',
-        nomeclature: 'helpbutton',
-        nomeclaturePlural: 'helpbuttons',
-        config: {},
-        locale: 'en'
-      },
+      _selectedNetwork: null,
     };
 
     let configData = { hostName: 'error' };
@@ -54,7 +47,7 @@ export class ServerPropsService {
       const errorMsg = 'error getting network configuration';
       // console.log(errorMsg);
       logError(errorMsg, error)
-      return catchMetadata
+      return {...catchMetadata, error: {message: errorMsg, ...error}}
       // throw new Error(errorMsg);
     }
     if (
@@ -64,7 +57,7 @@ export class ServerPropsService {
       const errorMsg = 'error getting network configuration 2';
       logError(errorMsg, networkConfigData)
 
-      return catchMetadata
+      return {...catchMetadata, error: {message: errorMsg, statusCode: networkConfigData?.statusCode}}
     }
     setSSRLocale(networkConfigData.locale);
     
@@ -75,8 +68,8 @@ export class ServerPropsService {
         process.env.WEB_URL,
         ctx.resolvedUrl,
       ),
-      selectedNetwork: networkConfigData,
-      config: configData,
+      _selectedNetwork: networkConfigData,
+      _config: configData,
     };
   }
 }
@@ -108,7 +101,7 @@ export async function setMetadata(subtitle, ctx){
     return {
       props: {
         metadata: null,
-        selectedNetwork: null,
+        _selectedNetwork: null,
         config: null,
         noconfig: true,
       },

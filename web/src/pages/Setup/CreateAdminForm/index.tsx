@@ -10,12 +10,13 @@ import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { CreateAdmin, GetConfig } from 'state/Setup';
-import { useRef } from 'store/Store';
+import { useStore } from 'store/Store';
 import { SetupSteps } from '../../../shared/setupSteps';
 import t from 'i18n';
 import { useEffect, useState } from 'react';
 import { getLocale } from 'shared/sys.helper';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
+import { Role } from 'shared/types/roles';
 
 export default CreateAdminForm;
 
@@ -39,11 +40,24 @@ function CreateAdminForm() {
     },
   });
 
-  const config: SetupDtoOut = useRef(
+  const config: SetupDtoOut = useStore(
     store,
     (state: GlobalState) => state.config,
   );
 
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
+  );
+
+  useEffect(() => {
+    if(loggedInUser && loggedInUser.Role == Role.admin)
+    {
+      router.push(SetupSteps.FIRST_OPEN)
+    }
+    // console.log(loggedInUser)
+  }, [loggedInUser])
   const getConfig = () => {
     store.emit(
       new GetConfig(
@@ -100,12 +114,12 @@ function CreateAdminForm() {
             name: data.name,
           },
           () => {
-            let url = `${SetupSteps.FIRST_OPEN}`;
-            if(getLocale() !=  data.locale )
-            {
-              url = `/${data.locale}/${SetupSteps.FIRST_OPEN}`
-            }
-            router.push(url)
+            // let url = `${SetupSteps.FIRST_OPEN}`;
+            // if(getLocale() !=  data.locale )
+            // { // force locale of registered admin!
+            //   url = `${data.locale}/${SetupSteps.FIRST_OPEN}`
+            // }
+            router.push(SetupSteps.FIRST_OPEN)
           },
           (err) => {
             if (err?.statusCode === HttpStatus.CONFLICT) {
