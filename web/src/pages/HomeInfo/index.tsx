@@ -204,7 +204,7 @@ export default function HomeInfo({
                     <div className="homeinfo__description">
                           {t('homeinfo.adminInstructions')}
                         <div className="homeinfo__users">
-                          {selectedNetwork.administrators.map((user, idx) => {
+                          {selectedNetwork?.administrators.map((user, idx) => {
                               return (
                                 <LinkAdminProfile user={user} key={idx}/>
                               )
