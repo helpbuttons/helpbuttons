@@ -34,13 +34,12 @@ export const networksInitial = {
 };
 
 export const useSelectedNetwork = (_selectedNetwork = null) : Network => {
-  const loadingNetwork = useRef(false)
   useEffect(() => {
-
-    if(!_selectedNetwork && !loadingNetwork.current)
+    if(!_selectedNetwork )
     {
-      loadingNetwork.current = true;
-      store.emit(new FetchDefaultNetwork(() => console.log('good!'), () => console.log('failed!')))
+      store.emit(new FetchDefaultNetwork(() => console.log('fetched network!!'), () => console.log('failed!')))
+    }else{
+      store.emit(new SelectedNetworkFetched(_selectedNetwork))
     }
   }, [_selectedNetwork])
   
@@ -89,11 +88,17 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
   }
 
   public watch(state: GlobalState) {
+    if(state.networks.selectedNetwork)
+    {
+      console.log('already loadingd')
+      return of(state.networks.selectedNetwork)
+    }
+    console.log('fetching..... ')
+
     return NetworkService.findById().pipe(
       // With no Id, find the default network
 
       map((network) => {
-        console.log('fetched network')
         store.emit(new SelectedNetworkFetched(network));
         if (network && this.onSuccess) {
           this.onSuccess(network);

@@ -52,8 +52,7 @@ function MyApp({ Component, pageProps }) {
     (state: GlobalState) => state.loggedInUser,
   );
 
-  const selectedNetwork = useSelectedNetwork()
-
+  const selectedNetwork = useSelectedNetwork(pageProps._selectedNetwork)
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
     SetupSteps.FIRST_OPEN,
@@ -72,9 +71,6 @@ function MyApp({ Component, pageProps }) {
         new GetConfig(
           (config) => {
             console.log(`got config`);
-            if (!setupPaths.includes(path)) {
-              fetchDefaultNetwork(config);
-            }
           },
           (error) => {
             if (
