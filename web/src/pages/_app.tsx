@@ -96,8 +96,6 @@ function MyApp({ Component, pageProps }) {
         config.userCount < 1) &&
       SetupSteps.CREATE_ADMIN_FORM != path
     ) {
-      
-      console.log('pushing to create admin form...')
       router.push(SetupSteps.CREATE_ADMIN_FORM);
     }else
     if (
@@ -233,7 +231,8 @@ function MyApp({ Component, pageProps }) {
         {/* <meta name="commit" content={version.git} /> */}
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
-      {pageProps.metadata && <SEO {...pageProps.metadata}/>} 
+      {pageProps.metadata ? <SEO {...pageProps.metadata}/> : <Head>
+            <title>{selectedNetwork?.name}</title></Head>} 
       <div
         className={`${user ? '' : 'index__container'}`}
         style={ selectedNetwork ? {

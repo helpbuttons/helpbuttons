@@ -47,7 +47,7 @@ function Configuration() {
   const { pathname, asPath, query } = useRouter()
 
   useEffect(() => {
-    if(selectedNetwork && loadingNetwork){
+    if(selectedNetwork && !selectedNetwork?.init && loadingNetwork){
       setLoadingNetwork(false)
       reset(selectedNetwork);
     }
@@ -70,20 +70,18 @@ function Configuration() {
       nomeclature: data.nomeclature,
       nomeclaturePlural: data.nomeclaturePlural
     },
-      () => {
-        const onComplete = (network) => {
-          store.emit(new UpdateExploreSettings(data.exploreSettings))
-          alertService.info(t('common.saveSuccess', ['Configuration']))
-          if(data.locale != 'en')
-          {
-            router.push(`/${data.locale}/HomeInfo`)
-          }else{
-            router.push({ pathname: '/HomeInfo' }, asPath, { locale: 'en' });
-          }
-
+    (network) => {
+        store.emit(new UpdateExploreSettings(data.exploreSettings))
+        alertService.info(t('common.saveSuccess', ['Configuration']))
+        if(data.locale != 'en')
+        {
+          router.push(`/${data.locale}/HomeInfo`)
+        }else{
+          router.push({ pathname: '/HomeInfo' }, asPath, { locale: 'en' });
         }
-        store.emit(new FetchDefaultNetwork(onComplete, (error) => {console.log(error)}));
-    }, 
+        store.emit(new FetchDefaultNetwork(() => {}, (error) => {console.log(error)}));
+
+    },
     (err) => {
 
       if(err?.message.indexOf('validation-error') === 0)

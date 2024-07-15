@@ -204,7 +204,7 @@ export default function HomeInfo({
                     <div className="homeinfo__description">
                           {t('homeinfo.adminInstructions')}
                         <div className="homeinfo__users">
-                          {selectedNetwork?.administrators.map((user, idx) => {
+                          {(selectedNetwork && selectedNetwork.administrators) && selectedNetwork.administrators.map((user, idx) => {
                               return (
                                 <LinkAdminProfile user={user} key={idx}/>
                               )
@@ -223,8 +223,8 @@ export default function HomeInfo({
                     <hr></hr>
                     <div className="homeinfo__description">
                       {t('homeinfo.buttons', [
-                        selectedNetwork.buttonCount,
-                        config.userCount.toString(),
+                        selectedNetwork?.buttonCount,
+                        config?.userCount.toString(),
                       ])}
                       <div className="homeinfo__hashtags">
                         <ListButtonTypes selectedNetwork={selectedNetwork} pageName={'HomeInfo'}/>
@@ -252,7 +252,7 @@ export default function HomeInfo({
                   </div>
 
                   {/* HASHTAGS CARD OF NETWORK CONFIGURATION  */}
-                  {selectedNetwork.tags.count >= 0  &&    
+                  {selectedNetwork?.tags && selectedNetwork?.tags.count >= 0  &&    
                   
                     <div className="homeinfo-card">
                       <div className="homeinfo-card__header">
