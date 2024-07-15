@@ -1,4 +1,5 @@
 import Accordion from 'elements/Accordion';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import FieldInterests from 'elements/Fields/FieldInterests';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
@@ -6,6 +7,7 @@ import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
@@ -124,7 +126,26 @@ export default function NewUserFields({
           minLength: 8,
         })}
       ></FieldPassword> */}
-
+      {t('user.acceptPrivacyPolicy')}<Link href="/Faqs">{t('user.privacyPolicyLink')}</Link>
+      <FieldCheckbox
+        name="acceptPrivacyPolicy"
+        // defaultValue={watch('acceptPrivacyPolicy')}
+        text={t('user.pressToAccept') }
+        textOn={t('user.iAccept')}
+        onChanged={(value) => {
+          console.log(value)
+          if(value)
+          {
+            setValue('acceptPrivacyPolicy', 'yes')
+          }else{
+            setValue('acceptPrivacyPolicy', 'no')
+          }
+        }
+        }
+        validationError={errors.acceptPrivacyPolicy ? {message: t('user.pleaseAcceptPrivacy')} : null}
+        {...register('acceptPrivacyPolicy')}
+      />
+      
       {/* <Accordion title={t('user.signupOptions')}>
         <FieldLanguagePick onChange={(value) => setValue('locale', value)} explain={t('user.pickLanguageExplain')} defaultValue={getLocale()}/>
         <FieldImageUpload

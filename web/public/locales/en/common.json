@@ -301,7 +301,12 @@
     "deleteProfile": "Delete my account",
     "confirmDeleting": "Confirm that you want to delete all your data!",
     "securityAndPrivacy": "Security and privacy",
-    "insertedSignUpTitle": "Add your data or press if"
+    "insertedSignUpTitle": "Add your data or press if",
+    "acceptPrivacyPolicy": "I have read and agree to the ",
+    "privacyPolicyLink": "privacy policy",
+    "pressToAccept": "Click here to accept",
+    "iAccept": "I accept",
+    "pleaseAcceptPrivacy": "Please accept our privacy policy"
   },
   "picker": {
     "headerText": "Choose a location"

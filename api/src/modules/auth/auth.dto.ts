@@ -7,7 +7,8 @@ import {
   Matches,
   MinLength,
   IsOptional,
-  IsArray
+  IsArray,
+  IsIn
 } from 'class-validator';
 
 const specialCharRegex = /(?=.*[!@#$%^&*()_\-+=].*[!@#$%^&*()_\-+=])/;
@@ -90,21 +91,24 @@ export class SignupRequestDto {
   // @IsString({ each: true })
   // interests: [string];
 
-  avatar: string;
+  avatar?: string;
 
   @IsNotEmpty()
   @IsString()
   locale: string;
 
-  inviteCode: string;
+  inviteCode?: string;
 
-  @ApiProperty({
+    @ApiProperty({
     type: [String],
     required: false,
   })
   @IsOptional()
   @IsArray({})
-  tags: string[];
+  tags?: string[];
+
+  @IsIn(['yes'])
+  acceptPrivacyPolicy
 }
 
 export class LoginRequestDto {

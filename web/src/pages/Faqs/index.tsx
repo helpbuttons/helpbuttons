@@ -3,25 +3,33 @@ import Accordion from '../../elements/Accordion'
 import Popup from 'components/popup/Popup'
 import t from 'i18n';
 import { NextPageContext } from 'next';
+import { useSearchParams } from 'next/navigation';
+import router, { Router } from 'next/router';
 
 export default function Faqs({
   metadata,
-  selectedNetwork,
+  _selectedNetwork,
   config,
 })
 {
+  const searchParams = useSearchParams();
+  const chapter = searchParams.get('chapter');
 
   return (
 
     <>
-      <Popup title={t('faqs.title')} linkFwd="/Explore">
+      <Popup title={t('faqs.title')} linkBack={() => router.back()}>
 
-        <Accordion title={t('faqs.networkQuestion', [selectedNetwork.name])}>
-          <span className="highlight">{selectedNetwork.description}</span>.
+        <Accordion title={t('faqs.networkQuestion', [_selectedNetwork.name])}>
+          <span className="highlight">{_selectedNetwork.description}</span>.
         </Accordion>
 
         <Accordion title={t('faqs.helpbuttonsQuestion')}>
         <span className="highlight">{t('faqs.helpbuttonsHighlight')}</span> {t('faqs.helpbuttonsDescription')}
+        </Accordion>
+
+        <Accordion title={t('faqs.privacyQuestion')} collapsed={chapter == 'privacyPolicy'}>
+          {t('faqs.privacyDescription')}
         </Accordion>
 
         <Accordion title={t('faqs.forQuestion')}>
@@ -36,16 +44,12 @@ export default function Faqs({
           {t('faqs.communityDescription')}
         </Accordion>
 
-        <Accordion title={t('faqs.networkEthics', [selectedNetwork.name])}>
-          {t('faqs.networksEthicsDescription', [selectedNetwork.name])}
+        <Accordion title={t('faqs.networkEthics', [_selectedNetwork.name])}>
+          {t('faqs.networksEthicsDescription', [_selectedNetwork.name])}
         </Accordion>
 
         <Accordion title={t('faqs.ethicsQuestion')}>
           {t('faqs.ethicsDescription')}
-        </Accordion>
-
-        <Accordion title={t('faqs.privacyQuestion')}>
-          {t('faqs.privacyDescription')}
         </Accordion>
 
         <Accordion title={t('faqs.securityQuestion')}>

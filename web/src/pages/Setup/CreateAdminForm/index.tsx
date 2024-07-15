@@ -37,6 +37,7 @@ function CreateAdminForm() {
       email: '',
       name: '',
       locale: 'en',
+      acceptPrivacyPolicy: 'no'
     },
   });
 
@@ -112,6 +113,7 @@ function CreateAdminForm() {
             locale: data.locale,
             inviteCode: '',
             name: data.name,
+            acceptPrivacyPolicy: data.acceptPrivacyPolicy
           },
           () => {
             // let url = `${SetupSteps.FIRST_OPEN}`;

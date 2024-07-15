@@ -1,6 +1,8 @@
 import CheckBox from "elements/MultiSelectOption";
 import React, { useEffect, useState } from "react";
 import { IoCheckmark } from "react-icons/io5";
+import FieldError from "../FieldError";
+import t from "i18n";
 
 
 export const FieldCheckbox = React.forwardRef(({
@@ -8,8 +10,10 @@ export const FieldCheckbox = React.forwardRef(({
     name,
     explain,
     text,
-    onChanged = () => {},
+    onChanged = (value) => {console.log(value)},
     defaultValue = false,
+    textOn = null,
+    validationError = false,
   }, ref) => {
     const [checked, setChecked] = useState(defaultValue)
 
@@ -40,10 +44,11 @@ export const FieldCheckbox = React.forwardRef(({
           >
               <div className="btn-filter__icon">{checked && <IoCheckmark/>}</div>
                 <div className="btn-with-icon__text">
-                    {text}
+                    {(textOn && checked) ? textOn : text}
                 </div>
            </div>
         </label>
+        <FieldError validationError={validationError} />
       </div> 
       </div>
       )

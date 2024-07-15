@@ -237,7 +237,12 @@
     "deleteProfile": "Borrar my perfil",
     "confirmDeleting": "¡Confirma que deseas eliminar todos tus datos!",
     "securityAndPrivacy": "Seguridad y privacidad",
-    "insertedSignUpTitle": "Añade tus datos de contacto o pulsa si"
+    "insertedSignUpTitle": "Añade tus datos de contacto o pulsa si",
+    "acceptPrivacyPolicy": "He leído y acepto la ",
+    "privacyPolicyLink": "política de privacidad",
+    "pressToAccept": "Haga clic aquí para aceptar",
+    "iAccept": "Acepto",
+    "pleaseAcceptPrivacy": "Por favor acepte nuestra política de privacidad"
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
