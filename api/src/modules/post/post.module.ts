@@ -13,7 +13,8 @@ import { PostService } from './post.service';
   imports: [
     TypeOrmModule.forFeature([Comment, Post]),
     UserModule,
-    forwardRef(() => ButtonModule)
+    forwardRef(() => ButtonModule),
+    UserModule
   ],
   controllers: [
     PostController
