@@ -150,11 +150,16 @@ export class PostController {
 
     @AllowGuest()
     @Get('findByButtonId/:buttonId')
-    async findByButtonId(
+    findByButtonId(
       @Param('buttonId') buttonId: string,
       @CurrentUser() currentUser: User,
     )
     {
-      return await this.postService.findByButtonId(buttonId, currentUser)
+
+      const res = this.postService.findByButtonId(buttonId, currentUser)
+      
+      return res.then((resultado) => {
+        return resultado
+      });
     }
   }

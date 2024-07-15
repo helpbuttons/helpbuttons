@@ -20,12 +20,13 @@ import {
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
-import { formatMessage, mentionsOfMessage } from 'elements/Message';
+import { formatMessage } from 'elements/Message';
 import { uniqueArray } from 'shared/sys.helper';
 import { Compose } from 'layouts/Feed';
 import { useState } from 'react';
 import { useToggle } from 'shared/custom.hooks';
 import t from 'i18n';
+import { mentionsOfMessage } from 'shared/types/message.helper';
 
 export default function PostComments({
   comments,
@@ -208,13 +209,13 @@ export function Comment({ comment }) {
               <span className="message__name">
                 {comment.author.name}
               </span>{' '}
-              @{comment.author.username}
+              {/* @{comment.author.username} */}
             </p>
           </div>
         </div>
 
         <div className="message__content">
-          {formatMessage(comment.message)}
+          {formatMessage(comment.message, comment.mentions)}
         </div>
 
         <div className="message__hour">

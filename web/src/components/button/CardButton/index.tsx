@@ -577,7 +577,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
                   {button.owner.name}{' '}
                   <span className="card-button__username">
                     {' '}
-                    @{button.owner.username}
+                    {/* @{button.owner.username} */}
                   </span>
 
               </div>
