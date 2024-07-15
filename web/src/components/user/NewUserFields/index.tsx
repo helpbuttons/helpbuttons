@@ -77,7 +77,7 @@ export default function NewUserFields({
         validationError={errors.name}
         {...register('name', { required: true })}
       ></FieldText>
-      {/* <FieldText
+      <FieldText
         name="username"
         label={`${t('user.username')} ${watch(
           'username',
@@ -87,7 +87,7 @@ export default function NewUserFields({
         placeholder={t('user.usernamePlaceHolder')}
         validationError={errors.username}
         {...register('username', { required: true })}
-      ></FieldText> */}
+      ></FieldText>
       <FieldPassword
         name="password"
         explain={t('user.passwordExplain')}
