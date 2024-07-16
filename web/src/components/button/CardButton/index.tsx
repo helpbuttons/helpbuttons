@@ -290,7 +290,7 @@ export function CardButtonHeadBig({ button, buttonTypes, onScollToCompose }) {
   return (
     <>
       <CardButtonSubmenu button={button} />
-      <Btn
+      {/* <Btn
           btnType={BtnType.filterCorp}
           contentAlignment={ContentAlignment.center}
           iconRight={IconType.circle}
@@ -300,7 +300,7 @@ export function CardButtonHeadBig({ button, buttonTypes, onScollToCompose }) {
             onScollToCompose()
           }}
       />
-      <ShowPhone button={button} />
+      <ShowPhone button={button} /> */}
       <ExpiringAlert button={button} isOwner={isButtonOwner(loggedInUser, button)}/>
       <div className="card-button__content card-button__full-content">
         <div className="card-button__header">

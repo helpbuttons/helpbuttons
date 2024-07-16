@@ -126,7 +126,7 @@
     "interests": "My interests activity",
     "newbutton": "Your _helpbutton_ was published in '{0}'",
     "newbuttonHomeInfo": "A _helpbutton_ was published in '{0}'",
-    "newbuttoninterest": "A new  _helpbutton_ was published for an interest you follow {0}",
+    "newbuttoninterest": "There are _helpbuttons_ about topics that you follow {0}",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
     "newprivatecommentType": "Private message",
