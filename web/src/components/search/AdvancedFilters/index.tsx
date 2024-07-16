@@ -21,11 +21,10 @@ import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { alertService } from 'services/Alert';
 import { FollowTag } from 'state/Users';
-import FieldAccordion from 'elements/Fields/FieldAccordion';
 import Popup from 'components/popup/Popup';
 import PickerField from 'components/picker/PickerField';
-import FieldInterests from 'elements/Fields/FieldInterests';
 import { Network } from 'shared/entities/network.entity';
+import { SuggestedTags, TagList, useTagsList } from 'elements/Fields/FieldTags';
 
 
 export default function AdvancedFilters({
@@ -34,12 +33,6 @@ export default function AdvancedFilters({
   const filters = useStore(
     store,
     (state: GlobalState) => state.explore.map.filters,
-    false
-  );
-
-  const queryFoundTags = useStore(
-    store,
-    (state: GlobalState) => state.explore.map.queryFoundTags,
     false
   );
 
@@ -87,7 +80,7 @@ export default function AdvancedFilters({
   const center = watch('where.center');
   const radius = watch('where.radius');
   const helpButtonTypes = watch('helpButtonTypes');
-  const [tags, setTags] = useState([])
+  const tags = watch('tags')
   const query = watch('query');
 
   const handleSelectedPlace = (place) => {
@@ -116,12 +109,6 @@ export default function AdvancedFilters({
   };
 
   useEffect(() => {
-    if(queryFoundTags)
-    {
-      setTags(() => queryFoundTags)
-    }
-  }, [queryFoundTags])
-  useEffect(() => {
     reset(filters)
   }, [filters])
 
@@ -135,7 +122,12 @@ export default function AdvancedFilters({
     }
     
   }, [])
-  
+  const {onInputChange, inputKeyDown, input, remove, addTag} = useTagsList({
+    tags,
+    setTags : (tags) => {
+      setValue('tags', tags)
+    }
+  })
   return (
     <>
       {(selectedNetwork && showAdvancedFilters) && (
@@ -161,25 +153,10 @@ export default function AdvancedFilters({
                       explain={t('buttonFilters.queryExplain')}
                       {...register('query')}
                     >
-                      {/* <TagList tags={tags} remove={(tag) => console.log('remove tag ' + tag)}/> */}
+                      <TagList tags={tags} remove={remove}/>
                       <TagFollow tags={tags}/>
+                      <SuggestedTags defaultSuggestedTags={selectedNetwork.topTags.slice(0,5)} tags={tags} addTag={addTag}/>
                     </FieldText>
-
-                    {/* <FieldInterests
-                      label={t('user.tags')}
-                      explain={t('user.tagsExplain')}
-                      placeholder={t('common.add')}
-                      validationError={errors.tags}
-                      setInterests={(tags) => {
-                        setValue('tags', tags);
-                      }}
-                      interests={watch('tags')}
-                      defaultSuggestedTags={selectedNetwork.tags}
-                      defaultTrendingTags={selectedNetwork.topTags.map(
-                        (tag) => tag.tag,
-                      )}
-                    /> */}
-
                     <FieldMultiSelect
                       label={t('buttonFilters.types')}
                       validationError={null}
@@ -390,10 +367,10 @@ function TagFollow({tags}) {
 
   return (
     <>
-
-        {tags.map((tag) => {
+        {tags.map((tag, idx) => {
           return ( 
                   <Btn
+                      key={idx}
                       btnType={BtnType.submit}
                       contentAlignment={ContentAlignment.center}
                       caption={`${t('buttonFilters.followTag')} '${tag}'`}

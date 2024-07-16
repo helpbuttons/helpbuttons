@@ -1,8 +1,4 @@
-import Accordion from 'elements/Accordion';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
-import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
-import FieldInterests from 'elements/Fields/FieldInterests';
-import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
@@ -59,6 +55,7 @@ export default function NewUserFields({
       setValue('username', nameToUsername(name));
     }
   }, [name]);
+
   return (
     <>
       <FieldText
@@ -100,20 +97,17 @@ export default function NewUserFields({
         {...register('password', { required: true, minLength: 8 })}
       ></FieldPassword>
       {selectedNetwork && (
-        <FieldInterests
-          label={t('user.tags')}
-          explain={t('user.tagsExplain')}
-          placeholder={t('common.add')}
-          validationError={errors.tags}
-          setInterests={(tags) => {
-            setValue('tags', tags);
-          }}
-          interests={watch('tags')}
-          defaultSuggestedTags={selectedNetwork.tags}
-          defaultTrendingTags={selectedNetwork.topTags.map(
-            (tag) => tag.tag,
-          )}
-        />
+          <FieldTags
+            label={t('user.tags')}
+            explain={t('user.tagsExplain')}
+            placeholder={t('common.add')}
+            validationError={errors.tags}
+            setTags={(tags) => {
+              setValue('tags', tags);
+            }}
+            tags={watch('tags')}
+            defaultSuggestedTags={selectedNetwork.topTags}
+          />
       )}
       {/* <FieldPassword
         name="password_confirm"

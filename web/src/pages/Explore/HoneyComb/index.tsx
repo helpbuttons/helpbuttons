@@ -240,6 +240,9 @@ function useExploreSettings({
     if (params.has('q')) {
       newFilters = { ...newFilters, query: params.get('q') };
     }
+    if (params.has('tags')) {
+      newFilters = { ...newFilters, tags: params.get('tags').split(',')};
+    }
     if (params.has('orderBy')) {
       newFilters = { ...newFilters, orderBy: params.get('orderBy') };
     }
@@ -328,6 +331,10 @@ function useExploreSettings({
 
       if (filters.query.length > 0) {
         obj = { ...obj, q: filters.query };
+      }
+
+      if (filters.tags.length > 0) {
+        obj = { ...obj, tags: filters.tags };
       }
 
       if (filters.orderBy != 'date') {
@@ -528,18 +535,6 @@ function useHexagonMap({
       return false;
     };
 
-    const findMoreTags = (button: Button, queryTags) => {
-      const tagsFound = _.intersection(queryTags, button.tags);
-      if (tagsFound.length > 0) {
-        foundTags.current = _.union(foundTags.current, tagsFound);
-      }
-    };
-
-    let queryTags = filters.query
-      .split(' ')
-      .filter((value) => value.length > 0);
-    foundTags.current = [];
-
     const res = cachedHexagons.reduce(
       ({ filteredButtons, filteredHexagons }, hexagonCached) => {
         const moreButtons = hexagonCached.buttons.filter(
@@ -549,17 +544,10 @@ function useHexagonMap({
             ) {
               return false;
             }
-
-            findMoreTags(button, queryTags);
-            if (!applyTagFilters(button, foundTags.current)) {
+            if (!applyTagFilters(button, filters.tags)) {
               return false;
             }
-
-            // remove tags from query string, so it won't fail to search string
             let query = filters.query;
-            foundTags.current.forEach(
-              (tag) => (query = query.replace(tag, '')),
-            );
             if (!applyQueryFilter(button, query)) {
               return false;
             }
@@ -587,7 +575,6 @@ function useHexagonMap({
       { filteredButtons: [], filteredHexagons: [] },
     );
 
-    store.emit(new UpdateQueryFoundTags(foundTags.current));
     return {
       filteredButtons: res.filteredButtons,
       filteredHexagons: recalculateDensityMap(res.filteredHexagons),

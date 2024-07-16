@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FieldError from '../FieldError';
 import { IoClose } from 'react-icons/io5';
 import { tagify } from 'shared/sys.helper';
+import _ from 'lodash';
 
 
 export function useTagsList({tags, setTags})
@@ -60,6 +61,7 @@ export default function FieldTags({
     tags,
     setTags
   })
+  
   return (
     <div className="tag__field form__field">
       {label && <label className="form__label">{label}</label>}
@@ -77,16 +79,20 @@ export default function FieldTags({
         onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
       />
       <TagList tags={tags} remove={remove}/>
-      <div className="homeinfo__hashtags">
-        {defaultSuggestedTags.map((tag, idx) => {
-          return <div className="hashtag" key={idx} onClick={() => addTag(tag.tag)}>{tag.tag}</div>
-        })}
-      </div>
+      <SuggestedTags defaultSuggestedTags={defaultSuggestedTags} tags={tags} addTag={addTag}/>
       <FieldError validationError={validationError} />
     </div>
   );
 }
 
+export function SuggestedTags({defaultSuggestedTags, tags, addTag}) {
+  return (
+  <div className="homeinfo__hashtags">
+        {defaultSuggestedTags.filter((suggestedTag) => !tags.find((tag) => tag == suggestedTag.tag)).map((tag, idx) => {
+          return <div className="hashtag" key={idx} onClick={() => addTag(tag.tag)}>{tag.tag}</div>
+        })}
+      </div>);
+}
 export function TagList({tags, remove = null})
 {
   return (<div className="form__tags-list">
