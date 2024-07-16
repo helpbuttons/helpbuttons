@@ -24,7 +24,7 @@ import { FollowTag } from 'state/Users';
 import Popup from 'components/popup/Popup';
 import PickerField from 'components/picker/PickerField';
 import { Network } from 'shared/entities/network.entity';
-import { SuggestedTags, TagList, useTagsList } from 'elements/Fields/FieldTags';
+import { AllSuggestedTags, TagList, useTagsList } from 'elements/Fields/FieldTags';
 
 
 export default function AdvancedFilters({
@@ -155,7 +155,7 @@ export default function AdvancedFilters({
                     >
                       <TagList tags={tags} remove={remove}/>
                       <TagFollow tags={tags}/>
-                      <SuggestedTags defaultSuggestedTags={selectedNetwork.topTags.slice(0,5)} tags={tags} addTag={addTag}/>
+                      <AllSuggestedTags word={query.substring(query.lastIndexOf(" ")+1)} maxTags={5} tags={tags} addTag={addTag}/>
                     </FieldText>
                     <FieldMultiSelect
                       label={t('buttonFilters.types')}

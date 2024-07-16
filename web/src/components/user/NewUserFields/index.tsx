@@ -106,7 +106,7 @@ export default function NewUserFields({
               setValue('tags', tags);
             }}
             tags={watch('tags')}
-            defaultSuggestedTags={selectedNetwork.topTags}
+            maxTags={30}
           />
       )}
       {/* <FieldPassword

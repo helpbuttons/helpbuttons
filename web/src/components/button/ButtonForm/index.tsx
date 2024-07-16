@@ -152,7 +152,7 @@ export default function ButtonForm({
                 setValue('tags', tags);
               }}
               tags={watch('tags')}
-              defaultSuggestedTags={selectedNetwork.topTags.slice(0,5)}
+              maxTags={5}
             />
             <FieldImageUploads 
             defaultImages={watch('images')}

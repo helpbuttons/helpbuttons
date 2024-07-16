@@ -265,6 +265,7 @@ function NetworkForm({
                 setValue('tags', tags);
               }}
               tags={watch('tags')}
+              maxTags={30}
             />
 
           </Accordion>
@@ -274,30 +275,7 @@ function NetworkForm({
             {t('configuration.moderateNetwork')}
           </div>
 
-
-          
-          <FieldTags
-            label={t('configuration.blocked')}
-            explain={t('configuration.blockedExplain')}
-            placeholder={t('common.add')}
-            validationError={errors.tags}
-            setTagnetworkfors={(tags) => {
-              setValue('tags', tags);
-            }}
-            tags={watch('tags')}
-          />
-
-          <FieldTags
-            label={t('configuration.adminUsers')}
-            explain={t('configuration.adminUsersExplain')}
-            placeholder={t('common.add')}
-            validationError={errors.tags}
-            setTags={(tags) => {
-              setValue('tags', tags);
-            }}
-            tags={watch('tags')}
-          />
-          */}
+            */}
           <div className="publish__submit">
             <Btn
               btnType={BtnType.submit}
