@@ -282,7 +282,7 @@
 .hashtag, .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .tags__list-interest__selected, .form__input-tags li {
   display: flex;
   vertical-align: middle;
-  align-items: baseline;
+  align-items: center;
   width: -moz-fit-content;
   width: fit-content;
   border-radius: 24px;
@@ -328,10 +328,7 @@
   color: #fff;
 }
 .hashtag svg, .form__tags-list .tags__list .tags__list-interest svg, .form__tags-list .tags__list .tags__list-interest__selected svg, .form__input-tags li svg {
-  height: 10px;
-  width: 10px;
-  background-color: #828282;
-  padding: 4px;
+  background-color: transparent;
 }
 
 .hashtag--with-icon {
@@ -1006,20 +1003,25 @@
   color: white;
 }
 .form__tags-list .tags__list .tags__list-tag {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #D4D4D4;
-  margin-right: 7px;
-  padding: 0 0 0 10px;
-  border-radius: 34px;
+  background-color: #828282;
+  color: white;
+}
+.form__tags-list .tags__list .tags__list-tag svg {
+  fill: #fff;
 }
 .form__tags-list .tags__list .tags__list-tag .tag__btn {
+  background-color: #2E2E2E;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  background-color: transparent;
-  border: none;
+  margin-left: 5px;
+  border-radius: 34px;
+}
+.form__tags-list .tags__list .tags__list-tag .tag__btn :hover {
+  cursor: pointer;
+}
+.form__tags-list .tags__list .tags__list-tag .tag__btn :hover svg {
+  fill: #fff;
+}
+.form__tags-list .tags__list .tags__list-tag .tag__btn svg :hover {
   cursor: pointer;
 }
 
@@ -8015,22 +8017,6 @@ body {
   align-items: center;
   flex-wrap: wrap;
   max-width: 100%;
-}
-.publish_btn .card-button-list__tags .tags__list .tags__list-tag {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #D4D4D4;
-  margin: 5px;
-  padding: 0px 10px;
-  border-radius: 34px;
-}
-.publish_btn .card-button-list__tags .tags__list .tags__list-tag .tag__btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-  border: none;
 }
 
 .publish__submit {

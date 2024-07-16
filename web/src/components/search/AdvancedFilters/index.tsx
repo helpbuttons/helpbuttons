@@ -154,8 +154,8 @@ export default function AdvancedFilters({
                       {...register('query')}
                     >
                       <TagList tags={tags} remove={remove}/>
-                      <TagFollow tags={tags}/>
                       <AllSuggestedTags word={query.substring(query.lastIndexOf(" ")+1)} maxTags={5} tags={tags} addTag={(tag) => {addTag(tag); setValue('query',updateQueryWhenTagAdded(query, tag))}}/>
+                      <TagFollow tags={tags}/>
                     </FieldText>
                     <FieldMultiSelect
                       label={t('buttonFilters.types')}

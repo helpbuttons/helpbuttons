@@ -126,7 +126,7 @@ export function TagList({ tags, remove = null }) {
       <ul className="tags__list">
         {tags.length > 0 &&
           tags.map((item, index) => (
-            <li key={`${index}`} className="tags__list-tag">
+            <li key={`${index}`} className="hashtag tags__list-tag">
               {item}
               {remove && (
                 <button
