@@ -24,6 +24,7 @@ export function useTagsList({ tags, setTags }) {
     ) {
       return;
     }
+    setInput(() => input.substring(0,input.lastIndexOf(" ")+1))
     setTags([...tags, tagify(newTag)]);
   };
 
@@ -141,6 +142,15 @@ export function TagList({ tags, remove = null }) {
       </ul>
     </div>
   );
+}
+
+export const updateQueryWhenTagAdded = (query, tag) => {
+  const lastWord = query.substring(query.lastIndexOf(" ")+1)
+  if(tag.search(lastWord) > -1)
+  {
+    return query.substring(0,query.lastIndexOf(" ")+1)
+  }
+  return query;
 }
 
 export function AllSuggestedTags({ word, maxTags, tags, addTag }) {

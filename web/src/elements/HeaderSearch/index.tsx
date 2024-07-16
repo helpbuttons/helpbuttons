@@ -40,7 +40,8 @@ export function HeaderSearch({ results, toggleAdvancedFilters}) {
             />
             
             <SearchInfo
-              what={exploreMapState.filters.query}
+              query={exploreMapState.filters.query}
+              tags={exploreMapState.filters.tags}
               filters={exploreMapState.filters}
             />
             <div className="header-search__icons">
@@ -103,7 +104,7 @@ function SearchText({ count, where , filtering=false}) {
   );
 }
 
-function SearchInfo({ filters, what }) {
+function SearchInfo({ filters, query, tags }) {
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -134,10 +135,12 @@ function SearchInfo({ filters, what }) {
 
     return what + ' · ';
   };
-  
+  const whichTags = (tags) => {
+    return (tags ? ' · ' : '' )+ tags.join(' · ')
+  }
   return (
     <div className="header-search__info">
-      {whatText(what)} {types(filters.helpButtonTypes)} {customFieldsFiltersText(filters, selectedNetwork.currency)}
+      {whatText(query)} {types(filters.helpButtonTypes)} {whichTags(tags)} {customFieldsFiltersText(filters, selectedNetwork.currency)}
     </div>
   );
 }
