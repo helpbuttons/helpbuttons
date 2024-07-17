@@ -1,5 +1,7 @@
+import { Button } from 'shared/entities/button.entity';
 import { logError } from 'shared/log';
 import { makeImageUrl, setSSRLocale } from 'shared/sys.helper';
+import { HttpStatus } from 'shared/types/http-status.enum';
 
 export class ServerPropsService {
   public static async general(subtitle, ctx) {
@@ -27,16 +29,16 @@ export class ServerPropsService {
     } catch (error) {
       const errorMsg = 'error getting config ' + configURL;
       // console.log(errorMsg);
-      logError(errorMsg, error)
+      logError(errorMsg, error);
       // throw new Error(errorMsg);
-      return catchMetadata
+      return catchMetadata;
     }
 
     let networkConfigData = {
       name: 'error',
       description: 'error',
       logo: 'error',
-      locale: 'en'
+      locale: 'en',
     };
     try {
       const networkConfigRes = await fetch(networkConfigURL, {
@@ -46,8 +48,11 @@ export class ServerPropsService {
     } catch (error) {
       const errorMsg = 'error getting network configuration';
       // console.log(errorMsg);
-      logError(errorMsg, error)
-      return {...catchMetadata, error: {message: errorMsg, ...error}}
+      logError(errorMsg, error);
+      return {
+        ...catchMetadata,
+        error: { message: errorMsg, ...error },
+      };
       // throw new Error(errorMsg);
     }
     if (
@@ -55,13 +60,19 @@ export class ServerPropsService {
       networkConfigData?.statusCode == 404
     ) {
       const errorMsg = 'error getting network configuration 2';
-      logError(errorMsg, networkConfigData)
+      logError(errorMsg, networkConfigData);
 
-      return {...catchMetadata, error: {message: errorMsg, statusCode: networkConfigData?.statusCode}}
+      return {
+        ...catchMetadata,
+        error: {
+          message: errorMsg,
+          statusCode: networkConfigData?.statusCode,
+        },
+      };
     }
     setSSRLocale(networkConfigData.locale);
-    
-    return {
+
+    let serverProps = {
       metadata: getMetadata(
         subtitle,
         networkConfigData,
@@ -71,6 +82,57 @@ export class ServerPropsService {
       _selectedNetwork: networkConfigData,
       _config: configData,
     };
+
+    if (ctx.query?.btn) {
+      const btnId = ctx.query.btn;
+      const buttonUrl = `${process.env.API_URL}/buttons/findById/${btnId}`;
+      const currentButtonFetch = await fetch(buttonUrl, {
+        next: { revalidate: 10 },
+      });
+      const currentButtonData: Button =
+        await currentButtonFetch.json();
+      let currentButton = await currentButtonData;
+      if (currentButtonData?.statusCode == HttpStatus.NOT_FOUND) {
+        return serverProps;
+      }
+
+      return {
+        ...serverProps,
+        metadata: {
+          ...serverProps.metadata,
+          title: currentButtonData.title,
+          description: currentButtonData.description,
+          image: `${makeImageUrl(currentButtonData.image)}`,
+        },
+      };
+    }
+
+  if (ctx.query?.username) {
+      const profileUrl = `${process.env.API_URL}/users/find/${ctx.params.username}`;
+      const userProfileFetch = await fetch(profileUrl, {
+        next: { revalidate: 10 },
+      });
+      const currentUserData = await userProfileFetch.json();
+
+      if (currentUserData?.statusCode == HttpStatus.NOT_FOUND) {
+        return { ...serverProps };
+      }
+
+      const k = {
+        ...serverProps,
+        metadata: {
+          ...serverProps.metadata,
+          title: `${serverProps._selectedNetwork.name} - ${currentUserData.username}`,
+          description: currentUserData.description,
+          image: `${makeImageUrl(
+            currentUserData.avatar
+          )}`,
+        },
+        userProfile: currentUserData,
+      }
+      return k
+    }
+    return serverProps;
   }
 }
 
@@ -78,9 +140,7 @@ export function getMetadata(subtitle, selectedNetwork, webUrl, uri) {
   const title = subtitle
     ? `${selectedNetwork.name} - ${subtitle}`
     : selectedNetwork.name;
-  const imageUrl = makeImageUrl(
-    selectedNetwork.logo
-  );
+  const imageUrl = makeImageUrl(selectedNetwork.logo);
   return {
     title: title,
     description:
@@ -89,15 +149,27 @@ export function getMetadata(subtitle, selectedNetwork, webUrl, uri) {
     siteTitle: selectedNetwork.name,
     pageurl: `${webUrl}${uri}`,
     color: selectedNetwork.backgroundColor,
-    webUrl: webUrl
+    webUrl: webUrl,
   };
 }
 
-export async function setMetadata(subtitle, ctx){
+export async function setMetadata(subtitle, ctx) {
+  setSSRLocale(ctx.locale);
+  const isServerReq = (req) => !req.url.startsWith('/_next');
   try {
-    const serverProps = await ServerPropsService.general(subtitle, ctx);
+    const serverProps = (isServerReq(ctx.req) || ctx.params.username)
+      ? await ServerPropsService.general(subtitle, ctx)
+      : {
+          props: {
+            metadata: null,
+            _selectedNetwork: null,
+            config: null,
+            noconfig: true,
+          },
+        };
     return { props: serverProps };
   } catch (err) {
+    console.log(err)
     return {
       props: {
         metadata: null,

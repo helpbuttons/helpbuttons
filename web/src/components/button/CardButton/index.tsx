@@ -67,7 +67,7 @@ export default function CardButton({ button, buttonTypes, onScollToCompose = () 
     <>
       {button && (
         <>
-          <CardButtonOptions />
+          {/* <CardButtonOptions /> */}
 
           <div
             className="card-button card-button__file"
@@ -212,7 +212,7 @@ function CardButtonSubmenu({ button }) {
   useEffect(() => {
     if (config) {
       setLinkButton(() => {
-        const shareLink = getShareLink(`/ButtonFile/${button.id}`);
+        const shareLink = getShareLink(`/Explore/?btn=${button.id}`);
         return shareLink;
       });
     }
@@ -284,9 +284,7 @@ export function CardButtonHeadBig({ button, buttonTypes, onScollToCompose }) {
     false,
   );
   const [showMap, setShowMap] = useState(false);
-  const profileHref = isButtonOwner(loggedInUser, button)
-    ? `/Profile/`
-    : `/p/${button.owner.username}`;
+
   return (
     <>
       <CardButtonSubmenu button={button} />

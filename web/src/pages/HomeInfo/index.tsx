@@ -51,7 +51,6 @@ import { ActivitiesList } from 'layouts/Activity';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 
-
 export default function HomeInfo({
   metadata,
 }) {

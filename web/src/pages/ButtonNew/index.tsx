@@ -16,15 +16,25 @@ import { setMetadata } from 'services/ServerProps';
 import { useStore } from 'store/Store';
 import { latLngToCell } from 'h3-js';
 import { maxResolution } from 'shared/types/honeycomb.const';
-import { setSSRLocale } from 'shared/sys.helper';
+import { LoadabledComponent } from 'components/loading';
 
-export default function ButtonNew({metadata, _selectedNetwork}) {
-
+export default function ButtonNew({ metadata }) {
+  const selectedNetwork = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+  return (
+    <LoadabledComponent loading={!selectedNetwork}>
+      <ButtonNewForm selectedNetwork={selectedNetwork} />
+    </LoadabledComponent>
+  );
+}
+function ButtonNewForm({ selectedNetwork }) {
   const defaultValues = {
     image: null,
     description: '',
-    latitude: _selectedNetwork.exploreSettings.center[0],
-    longitude: _selectedNetwork.exploreSettings.center[1],
+    latitude: selectedNetwork.exploreSettings.center[0],
+    longitude: selectedNetwork.exploreSettings.center[1],
     type: '',
     tags: [],
     title: '',
@@ -58,7 +68,7 @@ export default function ButtonNew({metadata, _selectedNetwork}) {
     store.emit(
       new CreateButton(
         data,
-        _selectedNetwork.id,
+        selectedNetwork.id,
         onSuccess,
         onError,
       ),
@@ -131,11 +141,6 @@ export default function ButtonNew({metadata, _selectedNetwork}) {
   );
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  setSSRLocale(ctx.locale);
-  return setMetadata(t('menu.create'), ctx)
-};
-
 
 function useButtonDraft({watch, getValues, reset, defaultValues}) {
   const buttonDraft = useStore(
@@ -176,3 +181,7 @@ function useButtonDraft({watch, getValues, reset, defaultValues}) {
 
   return {loadedDraft}
 }
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  return setMetadata(t('menu.create'), ctx)
+};

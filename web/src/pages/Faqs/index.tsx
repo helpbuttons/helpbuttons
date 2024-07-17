@@ -5,13 +5,18 @@ import t from 'i18n';
 import { NextPageContext } from 'next';
 import { useSearchParams } from 'next/navigation';
 import router, { Router } from 'next/router';
+import { useStore } from 'store/Store';
+import { GlobalState, store } from 'pages';
+import { LoadabledComponent } from 'components/loading';
 
 export default function Faqs({
   metadata,
-  _selectedNetwork,
-  config,
 })
 {
+  const selectedNetwork = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
   const searchParams = useSearchParams();
   const chapter = searchParams.get('chapter');
 
@@ -20,8 +25,8 @@ export default function Faqs({
     <>
       <Popup title={t('faqs.title')} linkBack={() => router.back()}>
 
-        <Accordion title={t('faqs.networkQuestion', [_selectedNetwork.name])}>
-          <span className="highlight">{_selectedNetwork.description}</span>.
+        <Accordion title={t('faqs.networkQuestion', [selectedNetwork?.name])}>
+          <span className="highlight">{selectedNetwork?.description}</span>.
         </Accordion>
 
         <Accordion title={t('faqs.helpbuttonsQuestion')}>
@@ -44,8 +49,8 @@ export default function Faqs({
           {t('faqs.communityDescription')}
         </Accordion>
 
-        <Accordion title={t('faqs.networkEthics', [_selectedNetwork.name])}>
-          {t('faqs.networksEthicsDescription', [_selectedNetwork.name])}
+        <Accordion title={t('faqs.networkEthics', [selectedNetwork?.name])}>
+          {t('faqs.networksEthicsDescription', [selectedNetwork?.name])}
         </Accordion>
 
         <Accordion title={t('faqs.ethicsQuestion')}>
@@ -61,10 +66,7 @@ export default function Faqs({
         </Accordion>
 
       </Popup>
-
     </>
-
-
   );
 }
 

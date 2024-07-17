@@ -12,13 +12,12 @@ import Popup from 'components/popup/Popup';
 import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { NextPageContext } from 'next';
-import { ServerPropsService } from 'services/ServerProps';
-import { HttpStatus } from 'shared/types/http-status.enum';
-import { makeImageUrl } from 'shared/sys.helper';
+import { setMetadata } from 'services/ServerProps';
 import CardProfile from 'components/user/CardProfile';
 import ContentList from 'components/list/ContentList';
 
-export default function p({ metadata, userProfile }) {
+export default function p(props) {
+  const {userProfile} = props
   const [userButtons, setUserButtons] = useState(null);
   const [extraFields, setExtraFields] = useState([]);
   const knownUsers = useRef(
@@ -85,7 +84,7 @@ export default function p({ metadata, userProfile }) {
         {loggedInUser?.role == Role.admin && (
           <>Email: {extraFields.email}</>
         )}
-        {userProfile.showButtons &&
+        {userProfile?.showButtons &&
           userButtons &&
           userButtons?.length > 0 && (
             <div className="card-profile__button-list">
@@ -102,34 +101,5 @@ export default function p({ metadata, userProfile }) {
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
-  const serverProps = await ServerPropsService.general(
-    ctx.params.username,
-    ctx,
-  );
-  const profileUrl = `${process.env.API_URL}/users/find/${ctx.params.username}`;
-  const userProfileFetch = await fetch(profileUrl, {
-    next: { revalidate: 10 },
-  });
-  const currentUserData = await userProfileFetch.json();
-  if (currentUserData?.statusCode == HttpStatus.NOT_FOUND) {
-    return { props: serverProps };
-  }
-  const serverPropsModified = {
-    ...serverProps,
-    metadata: {
-      ...serverProps.metadata,
-      title: `${serverProps.selectedNetwork.name} - ${currentUserData.username}`,
-      description: currentUserData.description,
-      image: `${makeImageUrl(
-        currentUserData.avatar
-      )}`,
-    },
-  };
-
-  return {
-    props: {
-      ...serverPropsModified,
-      userProfile: await currentUserData,
-    },
-  };
+  return setMetadata(t('menu.profile'), ctx)
 };
