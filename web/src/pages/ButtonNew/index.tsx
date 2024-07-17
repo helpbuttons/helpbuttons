@@ -16,7 +16,7 @@ import { setMetadata } from 'services/ServerProps';
 import { useStore } from 'store/Store';
 import { latLngToCell } from 'h3-js';
 import { maxResolution } from 'shared/types/honeycomb.const';
-import { LoadabledComponent } from 'components/loading';
+import Loading, { LoadabledComponent } from 'components/loading';
 
 export default function ButtonNew({ metadata }) {
   const selectedNetwork = useStore(
@@ -24,9 +24,12 @@ export default function ButtonNew({ metadata }) {
     (state: GlobalState) => state.networks.selectedNetwork,
   );
   return (
-    <LoadabledComponent loading={!selectedNetwork}>
+    <>
+    {selectedNetwork ? 
       <ButtonNewForm selectedNetwork={selectedNetwork} />
-    </LoadabledComponent>
+     : <Loading/>
+    }
+    </>
   );
 }
 function ButtonNewForm({ selectedNetwork }) {

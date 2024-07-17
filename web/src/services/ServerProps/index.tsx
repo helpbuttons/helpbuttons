@@ -157,7 +157,7 @@ export async function setMetadata(subtitle, ctx) {
   setSSRLocale(ctx.locale);
   const isServerReq = (req) => !req.url.startsWith('/_next');
   try {
-    const serverProps = (isServerReq(ctx.req) || ctx.params.username)
+    const serverProps = (isServerReq(ctx.req) || ctx.params?.username)
       ? await ServerPropsService.general(subtitle, ctx)
       : {
           props: {
