@@ -56,7 +56,6 @@ export const useConfig = (_config, onError) => {
 export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) => console.log(error)) : Network => {
   const fetchingNetwork = useRef(false)
   useEffect(() => {
-    
     if(!_selectedNetwork && !fetchingNetwork.current)
     {
       fetchingNetwork.current = true
@@ -65,7 +64,9 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) =>
       store.emit(new SelectedNetworkFetched(_selectedNetwork))
     }
   }, [_selectedNetwork])
-  
+  useEffect(() => {
+    fetchingNetwork.current = false;
+  }, [])
   return useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,

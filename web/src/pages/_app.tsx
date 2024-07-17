@@ -113,7 +113,7 @@ function MyApp({ Component, pageProps }) {
     ) {
       setAuthorized(true);
     }
-    if (!authorized) {
+    // if (!authorized) {
       if (UserService.isLoggedIn()) {
         // check if local storage has a token
         if (!loggedInUser) {
@@ -152,10 +152,8 @@ function MyApp({ Component, pageProps }) {
           setAuthorized(isRoleAllowed(Role.guest, path));
         }
       }
-    }
+    // }
   }, [path, config, loggedInUser]);
-
-  useActivitesPool(loggedInUser);
 
   useEffect(() => {
     // Function to adjust the height of the index__container based on the actual viewport height
