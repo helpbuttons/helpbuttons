@@ -98,6 +98,10 @@ export class UserService {
     return httpService.post<any>(`users/followTag/${tag}`);
   }
 
+  public static followTags(tags : string): Observable<any> {
+    return httpService.post<any>(`users/followTags/${tags}`);
+  }
+
   public static findExtra(userId: string)
   {
     return httpService.get<User>(`users/findExtra/${userId}`);

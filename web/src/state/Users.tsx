@@ -363,6 +363,35 @@ export class FollowTag implements WatchEvent, UpdateEvent {
   }
 }
 
+export class FollowTags implements WatchEvent {
+  public constructor(
+    private tags,
+    private onSuccess = () => {},
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.followTags(this.tags).pipe(
+      map((userTags) => {
+        this.onSuccess();
+        store.emit(new FollowedTags(userTags))
+      }),
+      catchError((error) => {this.onSuccess(); return  of(undefined)})
+    )
+  }
+}
+export class FollowedTags implements  UpdateEvent {
+  public constructor(
+    private tags
+  ) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.loggedInUser.tags = this.tags;
+    });
+  }
+  
+}
+
+
 export function isAdmin(loggedInUser)
 {
   if(loggedInUser?.role == 'administrator')

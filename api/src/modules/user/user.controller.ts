@@ -73,8 +73,14 @@ export class UserController {
 
   @OnlyRegistered()
   @Post('followTag/:tag')
-  async follow(@Param('tag') tag: string, @CurrentUser() user: User) {
-    return await this.userService.addTag(tag, user);
+  follow(@Param('tag') tag: string, @CurrentUser() user: User) {
+    return this.userService.addTag(tag, user);
+  }
+
+  @OnlyRegistered()
+  @Post('followTags/:tags')
+  followTags(@Param('tags') tags: string, @CurrentUser() user: User) {
+    return this.userService.addTags(tags, user);
   }
 
   @AllowGuest()

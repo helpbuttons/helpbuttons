@@ -20,11 +20,12 @@ import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'component
 import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { alertService } from 'services/Alert';
-import { FollowTag } from 'state/Users';
+import { FollowTag, FollowTags } from 'state/Users';
 import Popup from 'components/popup/Popup';
 import PickerField from 'components/picker/PickerField';
 import { Network } from 'shared/entities/network.entity';
 import { AllSuggestedTags, TagList, updateQueryWhenTagAdded, useTagsList } from 'elements/Fields/FieldTags';
+import _ from 'lodash';
 
 
 export default function AdvancedFilters({
@@ -365,19 +366,33 @@ function TagFollow({tags}) {
     store.emit(new FollowTag(tag, () => {alertService.success(t('buttonFilters.followTagSucess', [tag]))}));
   }
 
+  const followTags = (tags) => {
+    if (!loggedInUser) {
+      router.push(`/Signup?follow=${tags}`)
+      return;
+    }
+    store.emit(new FollowTags(tags, () => {alertService.success(t('buttonFilters.followTagsSucess', [tags]))}));
+  }
+
+  const [tagsToFollow, setTagsToFollow] = useState(tags)
+  useEffect(() => {
+    if(loggedInUser)
+    {
+      setTagsToFollow(() => 
+        _.difference(tags, loggedInUser.tags)
+      )
+    }
+  }, [loggedInUser, tags])
   return (
     <>
-        {tags.map((tag, idx) => {
-          return ( 
-                  <Btn
-                      key={idx}
-                      btnType={BtnType.submit}
-                      contentAlignment={ContentAlignment.center}
-                      caption={`${t('buttonFilters.followTag')} '${tag}'`}
-                      onClick={() => { followTag(tag) }}
-                    />
-                  )
-        })}
+      {(tagsToFollow && tagsToFollow.length > 0) && 
+        <Btn
+            btnType={BtnType.submit}
+            contentAlignment={ContentAlignment.center}
+            caption={`${t('buttonFilters.followTag')} '${tagsToFollow.join(', ')}'`}
+            onClick={() => { followTags(tagsToFollow) }}
+          />
+      }
     </>
   )
 }

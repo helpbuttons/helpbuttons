@@ -201,6 +201,18 @@ export class UserService {
       tags: this.tagService.formatTags(tags),
     });
   }
+
+  addTags(tags, user: User) {
+    const _ = require('lodash/array');
+
+    let newTags = [...tags.split(','), ...user.tags]
+    newTags = _.uniq(newTags)
+
+    return this.userRepository.update(user.id, {
+      tags: this.tagService.formatTags(newTags),
+    }).then(() => newTags);
+  }
+
   createNewLoginToken(userId) {
     const verificationToken = publicNanoidGenerator();
     return this.userRepository
