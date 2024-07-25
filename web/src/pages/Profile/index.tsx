@@ -46,7 +46,6 @@ export default function Profile() {
           router.push({ pathname: '/HomeInfo'})
     }
   }
-  const isAdmin = loggedInUser?.role == Role.admin;
 
   return (
     <>
@@ -74,10 +73,9 @@ export default function Profile() {
                         />
                       </Link>
                     }
-
-                    {isAdmin && (
+                    {loggedInUser?.role == Role.admin && 
                       <AdminOptions/>
-                    )}
+                    }
                     <Link href="/HomeInfo">
                       <div onClick={logout} className="btn-with-icon">
                         <div className="btn-with-icon__icon">
