@@ -29,10 +29,6 @@ export default function Moderation() {
         title={t('configuration.moderationList')}
         linkBack="/Profile"
       >
-        {/* <Form
-          classNameExtra="configuration"
-          onSubmit={handleSubmit(onSubmit, onError)}
-        > */}
         <div className="form__inputs-wrapper">
           <div className="form__field">
             <p className="form__explain">{t('moderation.description')}</p>
@@ -42,44 +38,14 @@ export default function Moderation() {
           </div>
 
           <Accordion
-            // collapsed={hasErrors('defineNetwork')}
             title={t('moderation..users')}
           >
             <ModerationUsersList />
           </Accordion>
           <Accordion
-            // collapsed={hasErrors('defineNetwork')}
             title={t('moderation.buttons')}
           ></Accordion>
-          {/* <Accordion
-            // collapsed={hasErrors('defineNetwork')}
-            title={t('configuration.defineNetwork')}
-          >
-            <h2>Administrators</h2>
-            {moderationList != null &&
-              moderationList.administrators.map((user) => {
-                return (
-                  <LinkProfile
-                    username={user.username}
-                    avatar={user.avatar}
-                    name={user.name}
-                  ></LinkProfile>
-                );
-              })}
-            <h2>Blocked</h2>
-            {moderationList != null &&
-              moderationList.blocked.map((user) => {
-                return (
-                  <LinkProfile
-                    username={user.username}
-                    avatar={user.avatar}
-                    name={user.name}
-                  ></LinkProfile>
-                );
-              })}
-          </Accordion> */}
         </div>
-        {/* </Form> */}
       </Popup>
     </>
   );
@@ -127,9 +93,9 @@ function ModerationUsersList() {
             > */}
               <FieldText
                       name="query"
-                      label={t('moderation.userSearchLabel')}
-                      placeholder={t('moderation.userSearchPlaceHolder')}
-                      explain={t('moderation.userSearchExplain')}
+                      // label={t('moderation.userSearchLabel')}
+                      placeholder={t('common.search')}
+                      // explain={t('moderation.userSearchExplain')}
                       {...register('query')}
                     />
       <table>

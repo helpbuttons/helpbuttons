@@ -18,7 +18,7 @@
     "loading": "cargando",
     "goToExplore": "Explorar _helpbuttons_",
     "goToCreate": "Crea tu _helpbutton_",
-    "activity":"Actividad reciente",
+    "activity": "Actividad reciente",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
     "stats": "¿Qué hay en esta red?",
     "users": "{0} usuarios en esta Red",
@@ -101,7 +101,7 @@
     "nomeclatureLabel": "Renombrar _helpbuttons_",
     "nomeclatureExplain": "Este nombre se mostrará en vez de _helpbuttons_. Escribe el singular y el plural.",
     "nomeclaturePlaceHolder": "Escribe un nuevo nombre",
-    "buttonTemplateFormListTitle":"Lista de tipos _helpbuttons_",
+    "buttonTemplateFormListTitle": "Lista de tipos _helpbuttons_",
     "buttonTemplateExplain": "Aquí puedes elegir los tipos de _helpbuttons_ que va a tener tu red y los campos que incluyan. Intenta que sean pocos tipos y generales como 'Ofrecer' o 'Necesitar'. Si quieres ser más específico/a pùedes usar etiquetas para categorizar más adelante.",
     "moderateNetwork": "Modera tu Red",
     "blockedExplain": "Bloqueados",
@@ -128,7 +128,8 @@
     "priceFieldAddLabel": "Muestra un precio en tu tipo de _helpbutton_ para que los usuarios puedan comprar o vender",
     "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
     "addType": "+ Crear tipo de _helpbutton_ con los campos superiores",
-    "currencyLabel": "Divisa"
+    "currencyLabel": "Divisa",
+    "setType": ""
   },
   "activities": {
     "allNotifications": "Todas las actualizaciones",
@@ -210,10 +211,6 @@
     "textReceiveNotifications": "Recibir notificaciones por email",
     "receiveNotifications": "Notificaciones por email",
     "receiveNotificationsExplain": "Selecciona si quieres recibir notificaciones por email cuando algún usuario te escriba algún mensaje o se publique algo sobre _helpbuttons_ o temas que sigues",
-    "revoke": "Revocar derechos de administrador",
-    "unblock": "Desbloquear",
-    "block": "Bloquear",
-    "promote": "Promocionar a administrador",
     "unsubscribed": "No vas a recibir mas este tipo de emails",
     "showButtonsProfileLabel": "Contenido en tu página de perfil",
     "showButtonsProfileExplain": "Marca esta opción si quieres mostrar una lista pública de tus _helpbuttons_ en tu página de perfil",
@@ -242,7 +239,9 @@
     "privacyPolicyLink": "política de privacidad",
     "pressToAccept": "Haga clic aquí para aceptar",
     "iAccept": "Acepto",
-    "pleaseAcceptPrivacy": "Por favor acepte nuestra política de privacidad"
+    "pleaseAcceptPrivacy": "Por favor acepte nuestra política de privacidad",
+    "loginError": "",
+    "errorRequestNewLoginToken": ""
   },
   "configure": {
     "browsePins": "Mapa con pins de ubicación",
@@ -262,7 +261,8 @@
     "displayInstructions": "Pulsa un hexágono para obtener información sobre _helpbuttons_ en esa zona",
     "both": "Mapa & Lista",
     "list": "Lista",
-    "map": "Mapa"
+    "map": "Mapa",
+    "showList": ""
   },
   "buttonFilters": {
     "filters": "Búsqueda y filtros",
@@ -348,7 +348,8 @@
     "renewLink": "Renovar tu _helpbutton_",
     "createUpdate": "Publicar Novedad",
     "authorTitle": "Autor:",
-    "notFound": "No puedo encontrar tu button, talvez fue borrado?"
+    "notFound": "No puedo encontrar tu button, talvez fue borrado?",
+    "invalidDates": ""
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -391,7 +392,11 @@
     "postgresDb": "Nombre de la base de datos de Postgresql",
     "postgresUser": "Usuario de Postgresql",
     "configureInstanceDescription": "Asistente para configurar tu Red",
-    "configureInstanceTitle": "Configura los últimos detalles de tu Red"
+    "configureInstanceTitle": "Configura los últimos detalles de tu Red",
+    "smtpHost": "",
+    "smtpUser": "",
+    "from": "",
+    "connect": ""
   },
   "post": {
     "placeholderWrite": "Escribe una nueva actualización en tu _helpbutton_",
@@ -410,7 +415,8 @@
     "delete": "Borrar",
     "sendPublic": "Responder",
     "sendPrivate": "Responder en privado",
-    "send": "Enviar"
+    "send": "Enviar",
+    "posted": ""
   },
   "picker": {
     "headerText": "Elige una localización"
@@ -499,5 +505,18 @@
   "error": {
     "error": "Algo fue mal",
     "notFoundMessage": "Página no encontrada o borrada"
+  },
+  "moderation": {
+    "title": "Moderacion",
+    "buttons": "Aqui puedes revisar los usuarios de tu red, y los butones por aprobar",
+    "name": "Nombre",
+    "verified": "Verificado",
+    "revoke": "Revocar derechos de administrador",
+    "promote": "Promocionar a administrador",
+    "activate": "Ativar",
+    "deactivate": "Deativar",
+    "remove": "Borrar",
+    "actions": "Acciones",
+    "role": "Role"
   }
 }
