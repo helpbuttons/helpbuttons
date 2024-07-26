@@ -82,14 +82,12 @@ function ModerationUsersList() {
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    if (users === null || page > 0) {
-      store.emit(
-        new ModerationList(page,(usersList) =>
-          setUsers(usersList),
-        ),
-      );
-    }
-  }, [users,page]);
+    store.emit(
+      new ModerationList(page,(usersList) =>
+        setUsers(usersList),
+      ),
+    );
+  }, [page]);
   return (
     <>
       {users?.length > 0 ? (<>
@@ -156,7 +154,8 @@ function ModerationUsersList() {
         </tbody>
       </table>
       </>) : t('moderation.emptyUsersList')}
-      {page > 0 &&
+      <Pagination page={page} setPage={setPage} array={users}/>
+      {/* {page > 0 &&
         <BtnAction
         icon={<IoArrowBack/>}
         onClick={() => setPage((prevPage) => prevPage-1)}
@@ -167,12 +166,30 @@ function ModerationUsersList() {
           icon={<IoArrowForward/>}
           onClick={() => setPage((prevPage) => prevPage+1)}
         />
-      </>}
+      </>} */}
       
     </>
   );
 }
 
+function Pagination({page, setPage, array})
+{
+  return (<>
+    {page > 0 &&
+      <BtnAction
+      icon={<IoArrowBack/>}
+      onClick={() => setPage((prevPage) => prevPage-1)}
+      />
+    }
+    {(array && array.length > 0 ) &&
+      <BtnAction
+        icon={<IoArrowForward/>}
+        onClick={() => setPage((prevPage) => prevPage+1)}
+      />
+    }
+    </>
+  )
+}
 function ModerationHelpButtonsList() {
   const {
     handleSubmit,
@@ -242,9 +259,8 @@ function ModerationHelpButtonsList() {
           </table>
         </>
       ) : t('moderation.emptyButtonList')}
-      {/* </div> */}
-      {/* ))} */}
-      {/* </div> */}
+      <Pagination page={page} setPage={setPage} array={users}/>
+
     </>
   );
 }

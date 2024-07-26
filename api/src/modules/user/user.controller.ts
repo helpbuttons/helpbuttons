@@ -5,7 +5,7 @@ import { AllowGuest, OnlyAdmin, OnlyRegistered } from '@src/shared/decorator/rol
 import { Role } from '@src/shared/types/roles';
 import { Auth } from '@src/shared/decorator/auth.decorator';
 import { CurrentUser } from '@src/shared/decorator/current-user';
-import { User, UserExtended } from './user.entity';
+import { User, UserExtended, UserForModeration } from './user.entity';
 import { InviteService } from '../invite/invite.service';
 import { InviteCreateDto } from '../invite/invite.dto';
 import { plainToClass } from 'class-transformer';
@@ -62,7 +62,9 @@ export class UserController {
   moderationList(@Param('page') page: number)
   {
     return this.userService.moderationList(page)
-    .then((users) => Promise.all(users.map((user) => plainToClass(UserExtended, user, { excludeExtraneousValues: false }))))
+    // .then((u) => {console.log(u);return u})
+    // .then((users) => Promise.all(users.map((user) => plainToClass(UserForModeration, user, { excludeExtraneousValues: false }))))
+    // .then((u) => {console.log(u);return u})
   }
 
   @AllowGuest()

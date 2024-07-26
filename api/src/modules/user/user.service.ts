@@ -164,15 +164,7 @@ export class UserService {
   }
 
   moderationList(page: number) {
-    console.log(page)
-    return this.userRepository.find({take: 10, skip: page * 10}).then((users) => {console.log(users) ; return users;})
-        //   where: { role: Role.blocked },
-        // }),
-      // administrators: await this.findAdministrators(),
-      // blocked: await this.userRepository.find({
-      //   where: { role: Role.blocked },
-      // }),
-    // };
+    return this.userRepository.find({take: 10, skip: page * 10, order: { name: 'DESC' }})
   }
 
   async unsubscribe(email) {
