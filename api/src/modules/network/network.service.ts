@@ -68,6 +68,7 @@ export class NetworkService {
       currency: createDto.currency,
       nomeclature: createDto.nomeclature,
       nomeclaturePlural: createDto.nomeclaturePlural,
+      requireApproval: createDto.requireApproval
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -217,6 +218,7 @@ export class NetworkService {
       currency: updateDto.currency,
       nomeclature: updateDto.nomeclature,
       nomeclaturePlural: updateDto.nomeclaturePlural,
+      requireApproval: updateDto.requireApproval
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {

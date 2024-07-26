@@ -68,7 +68,8 @@ function Configuration() {
       locale: data.locale,
       currency: data.currency,
       nomeclature: data.nomeclature,
-      nomeclaturePlural: data.nomeclaturePlural
+      nomeclaturePlural: data.nomeclaturePlural,
+      requireApproval: data.requireApproval
     },
     (network) => {
         store.emit(new UpdateExploreSettings(data.exploreSettings))

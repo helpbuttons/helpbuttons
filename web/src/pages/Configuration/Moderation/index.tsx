@@ -17,6 +17,7 @@ import {
   IoCheckmarkCircleOutline,
 } from 'react-icons/io5';
 import { alertService } from 'services/Alert';
+import { readableTimeLeftToDate } from 'shared/date.utils';
 import { Role } from 'shared/types/roles';
 import { ButtonApprove, ButtonModerationList } from 'state/Button';
 import { ModerationList, UpdateRole } from 'state/Users';
@@ -232,6 +233,7 @@ function ModerationHelpButtonsList() {
           <table>
             <thead>
               <tr>
+                <th>{t('moderation.created_at')}</th>
                 <th>{t('moderation.title')}</th>
                 <th>{t('moderation.type')}</th>
                 <th>{t('moderation.tags')}</th>
@@ -242,6 +244,7 @@ function ModerationHelpButtonsList() {
             <tbody>
               {buttons.map((button, idx) => (
                 <tr>
+                  <td>{readableTimeLeftToDate(button.created_at)}</td>
                   <td>{button.title}</td>
                   <td>{button.type}</td>
                   <td>#{button.tags.join(' #')}</td>

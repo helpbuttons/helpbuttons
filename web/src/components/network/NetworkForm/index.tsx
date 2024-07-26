@@ -125,6 +125,14 @@ function NetworkForm({
                     onChanged={(value) => setValue('inviteOnly', value)}
             />
 
+            <FieldCheckbox
+                    name='requireApproval'
+                    label={t('moderation.requireApprovalLabel')}
+                    explain={t('moderation.requireApprovalExplain')}
+                    defaultValue={watch('requireApproval')}
+                    text={t('moderation.requireApproval')}
+                    onChanged={(value) => setValue('requireApproval', value)}
+            />
             <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
 
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}

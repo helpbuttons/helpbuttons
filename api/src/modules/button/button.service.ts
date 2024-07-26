@@ -102,6 +102,11 @@ export class ButtonService {
         }
       }
     }
+    let awaitingApproval = false;
+    if(network.requireApproval && user.role != Role.admin)
+    {
+      awaitingApproval = true;
+    }
     const button = {
       id: dbIdGenerator(),
       type: createDto.type,
@@ -129,6 +134,7 @@ export class ButtonService {
       eventType: createDto.eventType,
       hasPhone,
       eventData: createDto.eventData,
+      awaitingApproval
     };
     
     await getManager().transaction(
@@ -574,7 +580,7 @@ export class ButtonService {
   }
 
   moderationList( user: User, page: number) {
-    return this.buttonRepository.find({take: 10, skip: page * 10, order: { title: 'ASC' }, where: {awaitingApproval: true, ...this.expiredBlockedConditions(false) }})
+    return this.buttonRepository.find({take: 10, skip: page * 10, order: { created_at: 'DESC' }, where: {awaitingApproval: true, ...this.expiredBlockedConditions(false) }})
   }
 
   approve(buttonId: string) {

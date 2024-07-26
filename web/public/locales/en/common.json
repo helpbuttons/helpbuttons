@@ -516,6 +516,9 @@
     "confirm": "Confirm",
     "preview": "Preview",
     "emptyButtonList": "No _helpbuttons_ to be approved",
-    "emptyUsersList": "No users"
+    "emptyUsersList": "No users",
+    "requireApproval": "Only allow publishing with moderation",
+    "requireApprovalLabel": "Network moderation",
+    "requireApprovalExplain": "If you enable this, all _helpbuttons_ created (if not by an admin) won't be published on the map, before an administrator approves it"
   }
 }
