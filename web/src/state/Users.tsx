@@ -286,11 +286,12 @@ export class UpdateRole implements WatchEvent {
 
 export class ModerationList implements WatchEvent {
   public constructor(
+    private page: number = 0,
     private onSuccess = undefined,
   ) {}
 
   public watch(state: GlobalState) {
-    return UserService.moderationList().pipe(
+    return UserService.moderationList(this.page).pipe(
       map((moderationList) => { 
         this.onSuccess(moderationList);
       }),

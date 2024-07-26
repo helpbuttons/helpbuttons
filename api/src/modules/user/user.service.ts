@@ -163,13 +163,16 @@ export class UserService {
     return this.userRepository.update(userId, { role: newRole });
   }
 
-  async moderationList() {
-    return {
-      administrators: await this.findAdministrators(),
-      blocked: await this.userRepository.find({
-        where: { role: Role.blocked },
-      }),
-    };
+  moderationList(page: number) {
+    console.log(page)
+    return this.userRepository.find({take: 10, skip: page * 10}).then((users) => {console.log(users) ; return users;})
+        //   where: { role: Role.blocked },
+        // }),
+      // administrators: await this.findAdministrators(),
+      // blocked: await this.userRepository.find({
+      //   where: { role: Role.blocked },
+      // }),
+    // };
   }
 
   async unsubscribe(email) {

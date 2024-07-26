@@ -500,8 +500,7 @@
   },
   "moderation": {
     "title": "Moderation",
-    "buttons": "Here you can review the users of your network, and the buttons!",
-    "name": "Name",
+    "description": "Here you can review the users of your network, and the buttons!",
     "verified": "Verified",
     "revoke": "Revoke administrator rights",
     "activate": "Activate",
@@ -509,6 +508,14 @@
     "promote": "Promote to administrator",
     "remove": "Delete",
     "actions": "Actions",
-    "role": "Role"
+    "role": "Role",
+    "usersList": "Users",
+    "buttonsList": "_helpbuttons_ approval list",
+    "type": "Type",
+    "place": "Place",
+    "confirm": "Confirm",
+    "preview": "Preview",
+    "emptyButtonList": "No _helpbuttons_ to be approved",
+    "emptyUsersList": "No users"
   }
 }

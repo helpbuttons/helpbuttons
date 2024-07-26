@@ -192,7 +192,6 @@ export function BtnAction({ icon, onClick }) {
       iconLeft={IconType.circle}
       contentAlignment={ContentAlignment.center}
       onClick={onClick}
-      caption="sick"
     />
   );
 }

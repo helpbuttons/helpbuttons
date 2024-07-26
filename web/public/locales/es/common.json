@@ -517,6 +517,7 @@
     "deactivate": "Deativar",
     "remove": "Borrar",
     "actions": "Acciones",
-    "role": "Role"
+    "role": "Role",
+    "users": "Users"
   }
 }
