@@ -16,6 +16,7 @@ import {
   IoCheckmarkCircleOutline,
 } from 'react-icons/io5';
 import { alertService } from 'services/Alert';
+import { Role } from 'shared/types/roles';
 import { ModerationList, UpdateRole } from 'state/Users';
 
 export default function Moderation() {
@@ -121,24 +122,34 @@ function ModerationUsersList() {
                   )}
                 </td>
                 <td>
+                  {user.role != Role.admin ? 
                   <BtnCaption
                     color={'green'}
                     caption={t('moderation.promote')}
                     icon={null}
-                    onClick={() => console.log('promote user')}
+                    onClick={() => updateRole(user.id, Role.admin)}
                   />
+                  :
                   <BtnCaption
+                    color={'orange'}
+                    caption={t('moderation.revoke')}
+                    icon={null}
+                    onClick={() =>  updateRole(user.id, Role.registered)}
+                  />
+                  }
+                  
+                  {/* <BtnCaption
                     color={'orange'}
                     caption={t('moderation.deactivate')}
                     icon={null}
                     onClick={() => console.log('deactive user')}
-                  />
-                  <BtnCaption
+                  /> */}
+                  {/* <BtnCaption
                     color={'red'}
                     caption={t('moderation.remove')}
                     icon={null}
                     onClick={() => console.log('remove user')}
-                  />
+                  /> */}
                 </td>
               </tr>
             ))}
