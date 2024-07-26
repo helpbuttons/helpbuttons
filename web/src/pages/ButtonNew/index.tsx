@@ -78,10 +78,6 @@ function ButtonNewForm({ selectedNetwork }) {
     );
   };
 
-  const jumpToExploreButton = (buttonData) => {
-    const cell = latLngToCell(buttonData.latitude, buttonData.longitude, maxResolution)
-    router.push(`/Explore?lat=${buttonData.latitude}&lng=${buttonData.longitude}&hex=${cell}`);
-  }
   const onSuccess = (buttonData : Button) => {
     store.emit(new SaveButtonDraft(defaultValues));
     store.emit(
@@ -91,14 +87,19 @@ function ButtonNewForm({ selectedNetwork }) {
           message: t('button.firstPost', [readableDate(buttonData.created_at)], true)
         },
         (data) => {
-          alertService.success(t('button.created'))
-          store.emit(new UpdateCachedHexagons([]))
-          jumpToExploreButton(buttonData)
+          if(buttonData.awaitingApproval)
+          {
+            setIsSubmitting(() => false)
+            router.push(`/ButtonFile/${buttonData.id}`);
+          }else{
+            alertService.success(t('button.created'))
+            store.emit(new UpdateCachedHexagons([]))
+            router.push(`/ButtonFile/${buttonData.id}`);
+          }
         },
         (errorMessage) => {
           alertService.error(t('button.errorCreated'))
           console.error(errorMessage)
-          // jumpToExploreButton(buttonData)
         },
       ),
     );    

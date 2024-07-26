@@ -62,13 +62,13 @@ export class ButtonController {
       fileFilter: imageFileFilter,
     }),
   )
-  async create(
+  create(
     @Query('networkId') networkId: string,
     @UploadedFiles() images,
     @Body() createDto: CreateButtonDto,
     @CurrentUser() user: User,
   ) {
-    return await this.buttonService.create(
+    return this.buttonService.create(
       createDto,
       networkId,
       images,

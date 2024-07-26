@@ -300,6 +300,9 @@ export function CardButtonHeadBig({ button, buttonTypes, onScollToCompose }) {
       />
       <ShowPhone button={button} /> */}
       <ExpiringAlert button={button} isOwner={isButtonOwner(loggedInUser, button)}/>
+      {button.awaitingApproval && 
+        <FixedAlert alertType={AlertType.Info} message={t('moderation.awaitingApproval')}/>
+      }
       <div className="card-button__content card-button__full-content">
         <div className="card-button__header">
 
