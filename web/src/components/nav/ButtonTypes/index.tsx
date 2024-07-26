@@ -1,7 +1,7 @@
-import Btn, { BtnType, IconType } from "elements/Btn";
+import Btn, { BtnCaption } from "elements/Btn";
 import router from "next/router";
 import { GlobalState, store } from "pages";
-import { buttonColorStyle, useButtonTypes } from "shared/buttonTypes";
+import { useButtonTypes } from "shared/buttonTypes";
 import { ToggleAdvancedFilters, UpdateFiltersToFilterButtonType, updateCurrentButton } from "state/Explore";
 import { useStore } from "store/Store";
 
@@ -43,15 +43,8 @@ export function ListButtonTypes({ selectedNetwork, pageName }) {
             <div
               className="hashtags__list-item"
               key={idx}
-              style={buttonColorStyle(buttonType.cssColor)}
             >
-              <Btn
-                btnType={BtnType.filterEmoji}
-                iconLeft={IconType.svg}
-                iconLink={buttonType?.icon}
-                caption={buttoTypeCountText}
-                onClick={() => filterButtonType(buttonType.name)}
-              />
+              <BtnCaption caption={buttoTypeCountText} icon={buttonType?.icon} color={buttonType.cssColor} onClick={() => filterButtonType(buttonType.name)}/>
             </div>
           );
         })}
