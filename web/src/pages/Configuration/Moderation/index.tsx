@@ -108,7 +108,7 @@ function ModerationUsersList() {
         </thead>
         <tbody>
             {users.map((user, idx) => (
-              <tr>
+              <tr key={idx}>
                 <td>{user.email}</td>
                 <td>{user.name}</td>
                 <td>{user.role}</td>
