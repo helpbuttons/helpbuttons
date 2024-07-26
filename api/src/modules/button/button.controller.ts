@@ -27,6 +27,7 @@ import { CurrentUser } from '@src/shared/decorator/current-user';
 import { User } from '../user/user.entity';
 import {
   AllowGuest,
+  OnlyAdmin,
   OnlyRegistered,
 } from '@src/shared/decorator/roles.decorator';
 import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator';
@@ -214,5 +215,19 @@ export class ButtonController {
   @Get('monthCalendar/:month/:year')
   async monthCalendar(@Param('month') month: number,@Param('year') year: number) {
     return await this.buttonService.monthCalendar((month-1), year)
+  }
+
+  @OnlyAdmin()
+  @Get('moderationList/:page')
+  moderationList(@Param('page') page: number, @CurrentUser() user: User)
+  {
+    return this.buttonService.moderationList(user, page)
+  }
+
+  @OnlyAdmin()
+  @Get('approve/:buttonId')
+  approve(@Param('buttonId') buttonId: string)
+  {
+    return this.buttonService.approve(buttonId)
   }
 }

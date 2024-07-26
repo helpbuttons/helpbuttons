@@ -71,7 +71,7 @@ export default function p(props) {
   return (
     <>
       <Popup
-        linkFwd="/Explore"
+        linkBack={() => router.back()}
         title={t('user.otherProfileView')}
         onScroll={() => {}}
       >

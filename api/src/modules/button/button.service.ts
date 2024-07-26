@@ -299,7 +299,7 @@ export class ButtonService {
         .createQueryBuilder('button')
         .select('id')
         .where(
-          `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false AND expired = false`,
+          `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false AND expired = false AND "awaitingApproval" = false`,
           { hexagons: hexagons },
         )
         .limit(1000)
@@ -571,5 +571,13 @@ export class ButtonService {
         },
       ],
     });
+  }
+
+  moderationList( user: User, page: number) {
+    return this.buttonRepository.find({take: 10, skip: page * 10, order: { title: 'ASC' }, where: {awaitingApproval: true, ...this.expiredBlockedConditions(false) }})
+  }
+
+  approve(buttonId: string) {
+    return this.buttonRepository.save({id: buttonId, awaitingApproval: false})
   }
 }

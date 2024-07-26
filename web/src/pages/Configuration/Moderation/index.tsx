@@ -5,6 +5,7 @@ import {
   BtnCaption,
 } from 'elements/Btn';
 import t from 'i18n';
+import Link from 'next/link';
 import router from 'next/router';
 import { store } from 'pages';
 import { useEffect, useState } from 'react';
@@ -17,6 +18,7 @@ import {
 } from 'react-icons/io5';
 import { alertService } from 'services/Alert';
 import { Role } from 'shared/types/roles';
+import { ButtonApprove, ButtonModerationList } from 'state/Button';
 import { ModerationList, UpdateRole } from 'state/Users';
 
 export default function Moderation() {
@@ -37,8 +39,7 @@ export default function Moderation() {
             </p>
           </div>
 
-          <Accordion title={t('moderation.usersList')}             collapsed={true}
->
+          <Accordion title={t('moderation.usersList')}>
             <ModerationUsersList />
           </Accordion>
           <Accordion
@@ -69,7 +70,6 @@ function ModerationUsersList() {
         newRole,
         () => {
           alertService.info(t('common.done'));
-          router.reload()
         },
         () => {
           alertService.error(t('common.error'));
@@ -109,8 +109,8 @@ function ModerationUsersList() {
         <tbody>
             {users.map((user, idx) => (
               <tr key={idx}>
-                <td>{user.email}</td>
-                <td>{user.name}</td>
+                <td><Link href={`/p/${user.username}`}>{user.email}</Link></td>
+                <td><Link href={`/p/${user.username}`}>{user.name}</Link></td>
                 <td>{user.role}</td>
                 <td>
                   {user.verified ? (
@@ -120,28 +120,38 @@ function ModerationUsersList() {
                   )}
                 </td>
                 <td>
-                  {user.role != Role.admin ? 
-                  <BtnCaption
-                    color={'green'}
-                    caption={t('moderation.promote')}
-                    icon={null}
-                    onClick={() => updateRole(user.id, Role.admin)}
-                  />
-                  :
-                  <BtnCaption
-                    color={'orange'}
-                    caption={t('moderation.revoke')}
-                    icon={null}
-                    onClick={() =>  updateRole(user.id, Role.registered)}
-                  />
+                  {user.role == Role.registered &&
+                    <BtnCaption
+                      color={'green'}
+                      caption={t('moderation.promote')}
+                      icon={null}
+                      onClick={() => updateRole(user.id, Role.admin)}
+                    />
                   }
-                  
-                  {/* <BtnCaption
-                    color={'orange'}
-                    caption={t('moderation.deactivate')}
-                    icon={null}
-                    onClick={() => console.log('deactive user')}
-                  /> */}
+                  {user.role == Role.admin && 
+                    <BtnCaption
+                      color={'red'}
+                      caption={t('moderation.revoke')}
+                      icon={null}
+                      onClick={() =>  updateRole(user.id, Role.registered)}
+                    />
+                  }
+                  {user.role == Role.registered &&
+                    <BtnCaption
+                      color={'orange'}
+                      caption={t('moderation.deactivate')}
+                      icon={null}
+                      onClick={() => updateRole(user.id, Role.blocked)}
+                    />
+                  }
+                  {user.role == Role.blocked &&
+                    <BtnCaption
+                      color={'green'}
+                      caption={t('moderation.activate')}
+                      icon={null}
+                      onClick={() => updateRole(user.id, Role.registered)}
+                    />
+                  }
                   {/* <BtnCaption
                     color={'red'}
                     caption={t('moderation.remove')}
@@ -155,18 +165,6 @@ function ModerationUsersList() {
       </table>
       </>) : t('moderation.emptyUsersList')}
       <Pagination page={page} setPage={setPage} array={users} take={10}/>
-      {/* {page > 0 &&
-        <BtnAction
-        icon={<IoArrowBack/>}
-        onClick={() => setPage((prevPage) => prevPage-1)}
-        />
-      }
-      {(users.length > 0 ) && <>
-        <BtnAction
-          icon={<IoArrowForward/>}
-          onClick={() => setPage((prevPage) => prevPage+1)}
-        />
-      </>} */}
       
     </>
   );
@@ -200,7 +198,28 @@ function ModerationHelpButtonsList() {
     reset,
   } = useForm();
 
-  const buttons = [];
+
+  const [buttons, setButtons] = useState(null);
+  const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    store.emit(
+      new ButtonModerationList(page,(buttonsList) =>
+        setButtons(buttonsList),
+      ),
+    );
+  }, [page]);
+
+  const approveButton = (buttonId) => {
+      store.emit(
+        new ButtonApprove(buttonId,() =>
+        {
+          alertService.info('button approved');
+          setButtons((prevButtons) => prevButtons.filter((button) => button.id != buttonId))
+        })
+      );
+    }
+  
   return (
     <>
       {buttons?.length > 0 ? (
@@ -225,33 +244,39 @@ function ModerationHelpButtonsList() {
                 <tr>
                   <td>{button.title}</td>
                   <td>{button.type}</td>
-                  <td>{JSON.stringify(button.tags)}</td>
+                  <td>#{button.tags.join(' #')}</td>
                   <td>{button.address}</td>
                   <td>
-                    <BtnCaption
-                      color={'green'}
-                      caption={t('moderation.confirm')}
-                      icon={null}
-                      onClick={() => console.log('confirm button')}
-                    />
-                    <BtnCaption
-                      color={'green'}
-                      caption={t('moderation.preview')}
-                      icon={null}
-                      onClick={() => console.log('preview button')}
-                    />
-                    <BtnCaption
-                      color={'orange'}
-                      caption={t('button.edit')}
-                      icon={null}
-                      onClick={() => console.log('edit button')}
-                    />
-                    <BtnCaption
+                    {button.awaitingApproval == true && 
+                      <BtnCaption
+                        color={'green'}
+                        caption={t('moderation.confirm')}
+                        icon={null}
+                        onClick={() => approveButton(button.id)}
+                      />
+                    }
+                    <Link href={`/ButtonFile/${button.id}`}>
+                      <BtnCaption
+                        color={'green'}
+                        caption={t('moderation.preview')}
+                        icon={null}
+                        onClick={() => {}}
+                      />
+                    </Link>
+                    <Link href={`/ButtonEdit/${button.id}`}>
+                      <BtnCaption
+                        color={'orange'}
+                        caption={t('button.edit')}
+                        icon={null}
+                        onClick={() => console.log('edit button')}
+                      />
+                    </Link>
+                    {/* <BtnCaption
                       color={'red'}
                       caption={t('moderation.remove')}
                       icon={null}
                       onClick={() => console.log('remove button')}
-                    />
+                    /> */}
                   </td>
                 </tr>
               ))}
@@ -259,7 +284,7 @@ function ModerationHelpButtonsList() {
           </table>
         </>
       ) : t('moderation.emptyButtonList')}
-      <Pagination page={page} setPage={setPage} array={users}/>
+      <Pagination page={page} setPage={setPage} array={buttons} take={10}/>
 
     </>
   );

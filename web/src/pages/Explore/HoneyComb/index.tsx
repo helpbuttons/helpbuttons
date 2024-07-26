@@ -288,7 +288,8 @@ function useExploreSettings({
             store.emit(new updateCurrentButton(buttonFetched));
           },
           (errorMessage) => {
-            alertService.error(errorMessage.caption);
+            console.log(errorMessage)
+            alertService.error(`Error fetching button`);
           },
         ),
       );
@@ -309,7 +310,6 @@ function useExploreSettings({
   useEffect(() => {
     if (selectedNetwork && exploreSettings) {
       handleUrl()
-
     }
   }, [selectedNetwork]);
 

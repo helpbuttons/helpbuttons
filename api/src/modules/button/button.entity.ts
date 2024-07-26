@@ -135,4 +135,7 @@ export class Button extends BaseEntity {
 
   @Column({default: false})
   expired?: boolean;
+
+  @Column({default: false})
+  awaitingApproval: boolean;
 }
