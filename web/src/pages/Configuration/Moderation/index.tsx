@@ -154,7 +154,7 @@ function ModerationUsersList() {
         </tbody>
       </table>
       </>) : t('moderation.emptyUsersList')}
-      <Pagination page={page} setPage={setPage} array={users}/>
+      <Pagination page={page} setPage={setPage} array={users} take={10}/>
       {/* {page > 0 &&
         <BtnAction
         icon={<IoArrowBack/>}
@@ -172,7 +172,7 @@ function ModerationUsersList() {
   );
 }
 
-function Pagination({page, setPage, array})
+function Pagination({page, setPage, array, take})
 {
   return (<>
     {page > 0 &&
@@ -181,7 +181,7 @@ function Pagination({page, setPage, array})
       onClick={() => setPage((prevPage) => prevPage-1)}
       />
     }
-    {(array && array.length > 0 ) &&
+    {(array && array.length > 0 && array.length == take) &&
       <BtnAction
         icon={<IoArrowForward/>}
         onClick={() => setPage((prevPage) => prevPage+1)}

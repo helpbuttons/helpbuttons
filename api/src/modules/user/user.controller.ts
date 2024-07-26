@@ -58,12 +58,9 @@ export class UserController {
 
   @OnlyAdmin()
   @Get('moderationList/:page')
-  moderationList(@Param('page') page: number)
+  moderationList(@Param('page') page: number, @CurrentUser() user: User)
   {
-    return this.userService.moderationList(page)
-    // .then((u) => {console.log(u);return u})
-    // .then((users) => Promise.all(users.map((user) => plainToClass(UserForModeration, user, { excludeExtraneousValues: false }))))
-    // .then((u) => {console.log(u);return u})
+    return this.userService.moderationList(user, page)
   }
 
   @AllowGuest()

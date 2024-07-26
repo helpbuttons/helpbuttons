@@ -8,7 +8,7 @@ import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { EntityManager, In, Repository } from 'typeorm';
+import { EntityManager, In, Not, Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import { TagService } from '../tag/tag.service';
@@ -163,8 +163,8 @@ export class UserService {
     return this.userRepository.update(userId, { role: newRole });
   }
 
-  moderationList(page: number) {
-    return this.userRepository.find({take: 10, skip: page * 10, order: { name: 'DESC' }})
+  moderationList( user: User, page: number) {
+    return this.userRepository.find({take: 10, skip: page * 10, order: { name: 'ASC' }, where: {id: Not(user.id)}})
   }
 
   async unsubscribe(email) {
