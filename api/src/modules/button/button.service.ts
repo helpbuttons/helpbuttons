@@ -580,7 +580,7 @@ export class ButtonService {
   }
 
   moderationList( user: User, page: number) {
-    return this.buttonRepository.find({take: 10, skip: page * 10, order: { created_at: 'DESC' }, where: {awaitingApproval: true, ...this.expiredBlockedConditions(false) }})
+    return this.buttonRepository.find({take: 10, skip: page * 10, order: { created_at: 'DESC' }, where: {awaitingApproval: true, ...this.expiredBlockedConditions() }})
   }
 
   approve(buttonId: string) {

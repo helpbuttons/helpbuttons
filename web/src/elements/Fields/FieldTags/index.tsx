@@ -5,6 +5,8 @@ import { tagify } from 'shared/sys.helper';
 import _ from 'lodash';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
+import { UpdateFiltersToFilterTag, updateCurrentButton } from 'state/Explore';
+import router from 'next/router';
 
 export function useTagsList({ tags, setTags }) {
   const onInputChange = (e) => {
@@ -222,5 +224,32 @@ export function AllSuggestedTags({ word, maxTags, tags, addTag }) {
           );
         })}
     </div>
+  );
+}
+
+
+export function TagsNav({ tags }) {
+  const filterTag = (tag) => {
+    store.emit(new UpdateFiltersToFilterTag(tag));
+  };
+
+  return (
+    <>
+      {tags.map((tag, idx) => {
+        return (
+          <div
+            className="hashtag"
+            key={idx}
+            onClick={() => {
+              filterTag(tag);
+              store.emit(new updateCurrentButton(null));
+              router.push('/Explore');
+            }}
+          >
+            {tag}
+          </div>
+        );
+      })}
+    </>
   );
 }

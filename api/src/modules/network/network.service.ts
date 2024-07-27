@@ -132,7 +132,7 @@ export class NetworkService {
       })
       .then((defaultNetwork) => {
         return this.entityManager
-          .query(`select * from network_button_types`)
+          .query(`select type,count(button.id) from button LEFT JOIN public.user on "ownerId" = public.user.id where public.user.role <> 'blocked' AND button.expired = false AND button."awaitingApproval" = false AND deleted = false group by type;`)
           .then((networkByButtonTypes) => {
             updateNomeclature(
               defaultNetwork.nomeclature,

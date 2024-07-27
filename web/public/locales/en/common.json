@@ -499,7 +499,6 @@
     "notFoundMessage": "Page not found"
   },
   "moderation": {
-    "title": "Moderation",
     "description": "Here you can review the users of your network, and the buttons!",
     "verified": "Verified",
     "revoke": "Revoke administrator rights",
@@ -511,14 +510,20 @@
     "role": "Role",
     "usersList": "Users",
     "buttonsList": "_helpbuttons_ approval list",
-    "type": "Type",
-    "place": "Place",
     "confirm": "Confirm",
     "preview": "Preview",
     "emptyButtonList": "No _helpbuttons_ to be approved",
     "emptyUsersList": "No users",
     "requireApproval": "Only allow publishing with moderation",
     "requireApprovalLabel": "Network moderation",
-    "requireApprovalExplain": "If you enable this, all _helpbuttons_ created (if not by an admin) won't be published on the map, before an administrator approves it"
+    "requireApprovalExplain": "If you enable this, all _helpbuttons_ created (if not by an admin) won't be published on the map, before an administrator approves it",
+    "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an administrator to approve it"
+  },
+  "roles":
+  {
+    "blocked": "deactivated",
+    "admin": "administrator",
+    "registered": "registered",
+    "guest": "guest"
   }
 }

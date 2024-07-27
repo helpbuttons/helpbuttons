@@ -2,6 +2,7 @@ import { BtnCaption } from 'elements/Btn';
 import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
+import { useButtonTypes } from 'shared/buttonTypes';
 import {
   ToggleAdvancedFilters,
   UpdateFiltersToFilterButtonType,
@@ -46,14 +47,7 @@ export function ListButtonTypes({ selectedNetwork, pageName }) {
 }
 
 export function ButtonTypesNav({ buttonTypes, pageName = '' }) {
-  const filterButtonType = (buttonType) => {
-    store.emit(new ToggleAdvancedFilters(false));
-    store.emit(new UpdateFiltersToFilterButtonType(buttonType));
-    store.emit(new updateCurrentButton(null));
-    if (pageName != 'Explore') {
-      router.push('/Explore');
-    }
-  };
+
   return (
     <>
       {buttonTypes &&
@@ -64,15 +58,48 @@ export function ButtonTypesNav({ buttonTypes, pageName = '' }) {
             buttonType.caption;
           return (
             <div className="hashtags__list-item" key={idx}>
-              <BtnCaption
-                caption={buttoTypeCountText}
-                icon={buttonType?.icon}
-                color={buttonType.cssColor}
-                onClick={() => filterButtonType(buttonType.name)}
+              <BtnButtonType
+                buttonTypeName={buttonType.name}
+                preCaption={
+                  (buttonType?.count
+                    ? buttonType?.count
+                    : 0
+                  ).toString() + ' '
+                }
+                pageName={pageName}
               />
             </div>
           );
         })}
+    </>
+  );
+}
+
+export function BtnButtonType({ buttonTypeName, preCaption = '', pageName = ''}) {
+  const filterButtonType = (buttonType) => {
+    store.emit(new ToggleAdvancedFilters(false));
+    store.emit(new UpdateFiltersToFilterButtonType(buttonType));
+    store.emit(new updateCurrentButton(null));
+    if (pageName != 'Explore') {
+      router.push('/Explore');
+    }
+  };
+  const buttonTypes = useButtonTypes();
+  const buttonType = buttonTypes.find(
+    (_buttonType) => _buttonType.name == buttonTypeName,
+  );
+  return (
+    <>
+      {buttonType && (
+        <BtnCaption
+          caption={preCaption + buttonType.caption}
+          icon={buttonType?.icon}
+          color={buttonType.cssColor}
+          onClick={() =>
+            filterButtonType(buttonType.name)
+          }
+        />
+      )}
     </>
   );
 }

@@ -1,9 +1,11 @@
+import { BtnButtonType } from 'components/nav/ButtonTypes';
 import Popup from 'components/popup/Popup';
 import Accordion from 'elements/Accordion';
 import {
   BtnAction,
   BtnCaption,
 } from 'elements/Btn';
+import { TagsNav } from 'elements/Fields/FieldTags';
 import t from 'i18n';
 import Link from 'next/link';
 import router from 'next/router';
@@ -112,7 +114,7 @@ function ModerationUsersList() {
               <tr key={idx}>
                 <td><Link href={`/p/${user.username}`}>{user.email}</Link></td>
                 <td><Link href={`/p/${user.username}`}>{user.name}</Link></td>
-                <td>{user.role}</td>
+                <td>{t(`role.${user.role}`)}</td>
                 <td>
                   {user.verified ? (
                     <IoCheckmarkCircleOutline />
@@ -234,10 +236,10 @@ function ModerationHelpButtonsList() {
             <thead>
               <tr>
                 <th>{t('moderation.created_at')}</th>
-                <th>{t('moderation.title')}</th>
-                <th>{t('moderation.type')}</th>
-                <th>{t('moderation.tags')}</th>
-                <th>{t('moderation.place')}</th>
+                <th>{t('button.titleLabel')}</th>
+                <th>{t('button.typeLabel')}</th>
+                <th>{t('button.tagsLabel')}</th>
+                <th>{t('button.whereLabel')}</th>
                 <th>{t('moderation.actions')}</th>
               </tr>
             </thead>
@@ -246,8 +248,10 @@ function ModerationHelpButtonsList() {
                 <tr>
                   <td>{readableTimeLeftToDate(button.created_at)}</td>
                   <td>{button.title}</td>
-                  <td>{button.type}</td>
-                  <td>#{button.tags.join(' #')}</td>
+                  <td>
+                    <BtnButtonType buttonTypeName={button.type}/>
+                  </td>
+                  <td><TagsNav tags={button.tags}/></td>
                   <td>{button.address}</td>
                   <td>
                     {button.awaitingApproval == true && 

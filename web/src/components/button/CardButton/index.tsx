@@ -53,6 +53,7 @@ import { FixedAlert } from 'components/overlay/Alert';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
+import { TagsNav } from 'elements/Fields/FieldTags';
 
 const filterTag = (tag) => {
   store.emit(new UpdateFiltersToFilterTag(tag));
@@ -330,23 +331,8 @@ export function CardButtonHeadBig({ button, buttonTypes, onScollToCompose }) {
         <div className="card-button__paragraph">
           <TextFormatted text={button.description}/>
         </div>
-
         <div className="card-button__hashtags">
-          {button.tags.map((tag, idx) => {
-            return (
-              <div
-                className="hashtag"
-                key={idx}
-                onClick={() => {
-                  filterTag(tag);
-                  store.emit(new updateCurrentButton(null));
-                  router.push('/Explore');
-                }}
-              >
-                {tag}
-              </div>
-            );
-          })}
+          <TagsNav tags={button.tags}/>
         </div>
         {customFields && customFields.length > 0 && (
           <>

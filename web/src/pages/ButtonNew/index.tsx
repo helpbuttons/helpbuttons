@@ -22,6 +22,7 @@ export default function ButtonNew({ metadata }) {
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
+    null
   );
   return (
     <>
