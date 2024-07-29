@@ -127,7 +127,6 @@ export default function NewUserFields({
         text={t('user.pressToAccept') }
         textOn={t('user.iAccept')}
         onChanged={(value) => {
-          console.log(value)
           if(value)
           {
             setValue('acceptPrivacyPolicy', 'yes')

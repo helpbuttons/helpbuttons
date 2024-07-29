@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { getLocale } from 'shared/sys.helper';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { Role } from 'shared/types/roles';
+import { setValidationErrors } from 'state/helper';
 
 export default CreateAdminForm;
 
@@ -52,13 +53,6 @@ function CreateAdminForm() {
     false,
   );
 
-  useEffect(() => {
-    if(loggedInUser && loggedInUser.Role == Role.admin)
-    {
-      router.push(SetupSteps.FIRST_OPEN)
-    }
-    // console.log(loggedInUser)
-  }, [loggedInUser])
   const getConfig = () => {
     store.emit(
       new GetConfig(
@@ -119,23 +113,25 @@ function CreateAdminForm() {
             // let url = `${SetupSteps.FIRST_OPEN}`;
             // if(getLocale() !=  data.locale )
             // { // force locale of registered admin!
-            //   url = `${data.locale}/${SetupSteps.FIRST_OPEN}`
+            //   url = `/${data.locale}${SetupSteps.FIRST_OPEN}`
             // }
-            router.push(SetupSteps.FIRST_OPEN)
+            // router.push(url)
           },
-          (err) => {
-            if (err?.statusCode === HttpStatus.CONFLICT) {
+          (error) => {
+            if (error?.statusCode === HttpStatus.CONFLICT) {
               alertService.warn(
                 `You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`,
               );
+            }else if(error?.validationErrors)
+            {
+              setValidationErrors(error?.validationErrors, setError);
             }
-            console.log(JSON.stringify(err));
+            console.log(error);
           },
         ),
       );
     // }
   };
-
   return (
     <>
       <Popup

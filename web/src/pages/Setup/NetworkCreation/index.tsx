@@ -42,7 +42,8 @@ function NetworkCreation() {
       currency: 'EUR',
       locale: 'en',
       nomeclature: 'Helpbutton',
-      nomeclaturePlural: 'Helpbuttons'
+      nomeclaturePlural: 'Helpbuttons',
+      requireApproval: false
     },
   });
 
@@ -70,7 +71,8 @@ function NetworkCreation() {
           currency: data.currency,
           nomeclature: data.nomeclature,
           nomeclaturePlural: data.nomeclaturePlural,
-          locale: data.locale
+          locale: data.locale,
+          requireApproval: data.requireApproval
         },
         () => {
           const onComplete = () => {

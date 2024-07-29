@@ -49,7 +49,6 @@ function MyApp({ Component, pageProps }) {
   );
   const onFetchingNetworkError = (error) => {
     if (error === 'network-not-found') {
-      console.error('network not found');
       console.error(error);
 
       if (loggedInUser && config && config.userCount > 0 && path != SetupSteps.FIRST_OPEN && path != SetupSteps.NETWORK_CREATION){
@@ -97,7 +96,10 @@ function MyApp({ Component, pageProps }) {
       SetupSteps.CREATE_ADMIN_FORM != path
     ) {
       router.push(SetupSteps.CREATE_ADMIN_FORM);
-    }else
+    }else if(SetupSteps.CREATE_ADMIN_FORM == path && loggedInUser && loggedInUser.role == Role.admin)
+    {
+      router.push(SetupSteps.FIRST_OPEN)
+    }
     if (
       SetupSteps.SYSADMIN_CONFIG.toString() == path ||
       SetupSteps.CREATE_ADMIN_FORM.toString() == path
@@ -222,6 +224,11 @@ function MyApp({ Component, pageProps }) {
     setLoading(false);
   });
 
+  if(isSetup)
+  {
+    return  (<Component {...pageProps} />);
+
+  }
   return (
     <>
       <Head>
@@ -244,19 +251,16 @@ function MyApp({ Component, pageProps }) {
         <Alert />
         <div className="index__content">
             <ShowDesktopOnly>
-              <NavHeader pageName={pageName} selectedNetwork={selectedNetwork}/>
+                <NavHeader pageName={pageName} selectedNetwork={selectedNetwork}/>
             </ShowDesktopOnly>
               <LoadabledComponent loading={!selectedNetwork || loading}>
                 <Component {...pageProps} />
               </LoadabledComponent>
             <ShowMobileOnly>
               <ClienteSideRendering>
-                {!isSetup && 
                 <NavBottom  pageName={pageName} loggedInUser={loggedInUser} />
-                }
               </ClienteSideRendering>
             </ShowMobileOnly>
-          {(!selectedNetwork && isSetup) && <Component {...pageProps} />}
         </div>
       </div>
     </>
