@@ -87,13 +87,15 @@ function MyApp({ Component, pageProps }) {
   ];
   useEffect(() => {
     if (setupPaths.includes(path)) {
-      setIsSetup(true);
+      setIsSetup(() => true);
+    }else{
+      setIsSetup(() => false);
     }
 
     if (
       config && (config.databaseNumberMigrations < 1 ||
         config.userCount < 1) &&
-      SetupSteps.CREATE_ADMIN_FORM != path
+      SetupSteps.CREATE_ADMIN_FORM != path && !loggedInUser
     ) {
       router.push(SetupSteps.CREATE_ADMIN_FORM);
     }else if(SetupSteps.CREATE_ADMIN_FORM == path && loggedInUser && loggedInUser.role == Role.admin)

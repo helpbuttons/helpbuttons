@@ -65,8 +65,6 @@ function NetworkForm({
   }
   }, [buttonTemplates])
 
-  const onError = (errors, e) => {console.log(errors);alertService.error(t('validation.error'))}
-
   const accordionChapters = [
     { name: 'defineNetwork', fields: ['name', 'description'] },
     { name: 'appearance', fields: ['logo', 'jumbo'] },
@@ -85,7 +83,7 @@ function NetworkForm({
     <>
       <Form
         classNameExtra="configuration"
-        onSubmit={handleSubmit(onSubmit, onError)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="form__inputs-wrapper">
           <div className="form__field">
