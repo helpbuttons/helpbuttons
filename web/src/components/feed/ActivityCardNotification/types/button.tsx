@@ -16,9 +16,9 @@ export default function ActivityCardNewButton({ button, isRead }) {
     (state: GlobalState) => state.loggedInUser,
     false,
   );
-  let title = t('activities.newbutton', [button.address], true);
-  if (!loggedInUser || loggedInUser.id != button.owner.id) {
-    title = t('activities.newbuttonHomeInfo', [button.address], true);
+  let title = t('activitiesWithSubject.newbutton', [button.owner.name, button.address], true);
+  if (loggedInUser && loggedInUser.id == button.owner.id) {
+    title = t('activities.newbutton', [button.address], true);
   }
   return (
     <NotificationCard

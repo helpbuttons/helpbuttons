@@ -12,40 +12,25 @@ import NetworkLogo from 'components/network/Components';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import NavLink from 'elements/Navlink';
 import {
-  IoAdd,
   IoAddCircle,
   IoAddOutline,
   IoCall,
-  IoCallOutline,
   IoClose,
-  IoCloseOutline,
   IoGlobeOutline,
   IoHelpOutline,
   IoLogInOutline,
-  IoLogoWhatsapp,
-  IoMagnet,
-  IoMail,
-  IoMailOutline,
   IoMapOutline,
-  IoSearch,
-  IoSend,
-  IoSendOutline,
 } from 'react-icons/io5';
-import { ServerPropsService, setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
 import {  useEffect, useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
-import { UpdateFiltersToFilterTag } from 'state/Explore';
-import Alert from 'components/overlay/Alert';
-import { TextFormatted, formatMessage } from 'elements/Message';
-import { LinkProfile } from 'components/user/LinkProfile';
+import { TextFormatted } from 'elements/Message';
 import { LinkAdminProfile } from 'components/user/LinkAdminProfile';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
-import Feed from 'layouts/Feed';
-import ActivityLayout from 'layouts/Activity';
 import { setSSRLocale } from 'shared/sys.helper';
 import { ActivitiesList } from 'layouts/Activity';
 import { FindLatestNetworkActivity } from 'state/Networks';

@@ -138,10 +138,9 @@
     "my": "Mi actividad",
     "interests": "Actividad en mis suscripciones",
     "newcomment": "@{0} respondió en '{1}'",
-    "newpost": "{0} publicó en '{1}'",
+    "newpost": "Has publicado en '{1}'",
     "newbuttoninterest": "Hay _helpbuttons_ sobre temas que sigues: {0}",
     "newbutton": "Tu _helpbutton_ fue publicado en '{0}'",
-    "newbuttonHomeInfo": "A _helpbutton_ fue publicado en '{0}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
     "markedAllAsRead": "Marcado como leído",
     "newcommentSubject": "Alguien ha comentado en tu _helpbutton_",
@@ -158,6 +157,11 @@
     "myhelpbuttons": "Mis _helpbuttons_",
     "expiredEventType": "_helpbutton_ terminó",
     "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública."
+  },
+  "activitiesWithSubject":
+  {
+    "newbutton": "{0} publicó un _helpbutton_ en  {1}",
+    "newpost": "{0} publicó en {1}"
   },
   "user": {
     "login": "Escribe tus datos si tienes cuenta",

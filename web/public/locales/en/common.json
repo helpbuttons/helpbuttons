@@ -129,7 +129,6 @@
     "my": "My activity",
     "interests": "My interests activity",
     "newbutton": "Your _helpbutton_ was published in '{0}'",
-    "newbuttonHomeInfo": "A _helpbutton_ was published in '{0}'",
     "newbuttoninterest": "There are _helpbuttons_ about topics that you follow {0}",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
@@ -139,7 +138,7 @@
     "deletedType": "_helpbutton_ deleted",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
-    "newpost": "{0} posted in '{1}':",
+    "newpost": "You posted in '{1}'",
     "newcomment": "@{0} replied in '{1}'",
     "newcommentSubject": "Someone commented on your _helpbutton_",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
@@ -149,6 +148,11 @@
     "deletebutton": "{0} was deleted",
     "expiredEventType": "_helpbutton_ ended",
     "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list."
+  },
+  "activitiesWithSubject":
+  {
+    "newbutton": "{0} published a new _helpbutton_ in {1}",
+    "newpost": "{0} published a new post in {1}"
   },
   "common": {
     "notfound": "No {0} found. Sorry. 🤔",
