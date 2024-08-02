@@ -138,7 +138,7 @@
     "deletedType": "_helpbutton_ deleted",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
-    "newpost": "You posted in '{1}'",
+    "newpost": "You posted in '{0}'",
     "newcomment": "@{0} replied in '{1}'",
     "newcommentSubject": "Someone commented on your _helpbutton_",
     "newfollow": "{0} is now following your _helpbutton_ {1}",

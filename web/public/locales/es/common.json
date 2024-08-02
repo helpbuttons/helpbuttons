@@ -138,7 +138,7 @@
     "my": "Mi actividad",
     "interests": "Actividad en mis suscripciones",
     "newcomment": "@{0} respondió en '{1}'",
-    "newpost": "Has publicado en '{1}'",
+    "newpost": "Has publicado en '{0}'",
     "newbuttoninterest": "Hay _helpbuttons_ sobre temas que sigues: {0}",
     "newbutton": "Tu _helpbutton_ fue publicado en '{0}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
