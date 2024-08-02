@@ -2,9 +2,8 @@ import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import t from 'i18n';
 import { useForm } from 'react-hook-form';
 
-export function AddCustomFields({ setCustomFields }) {
+export function AddCustomFields({ customFields, setCustomFields }) {
   const { watch, register } = useForm({});
-  
   const updateCustomField = (fieldType,value) => {
     if (value) {
       setCustomFields((prevCustomFields) => {

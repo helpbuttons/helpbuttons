@@ -497,9 +497,6 @@ export function CardButtonImages({ button }) {
   };
   
   const [isLightBoxOpen, setLightBoxOpen] = useState(false)
-  useEffect(() => {
-    console.log('light box value: ' + isLightBoxOpen)
-  }, [isLightBoxOpen])
   return (
     <>
       {button.images && (
