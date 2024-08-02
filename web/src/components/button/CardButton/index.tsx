@@ -13,6 +13,7 @@ import {
   IoCreate,
   IoCreateOutline,
   IoMail,
+  IoCloseCircleOutline,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -494,11 +495,24 @@ export function CardButtonImages({ button }) {
       (currentIndex - 1 + images.length) % images.length,
     );
   };
-
+  
+  const [isLightBoxOpen, setLightBoxOpen] = useState(false)
+  useEffect(() => {
+    console.log('light box value: ' + isLightBoxOpen)
+  }, [isLightBoxOpen])
   return (
     <>
       {button.images && (
-        <div className="card-button__picture">
+        <div onClick={() => {!isLightBoxOpen ? setLightBoxOpen(() => true) : '' }} className={`card-button__picture ${isLightBoxOpen ? 'card-button__picture-lightbox': ''}`}>
+          {isLightBoxOpen && 
+          <Btn
+                btnType={BtnType.smallCircle}
+                iconLink={<IoCloseCircleOutline />}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => setLightBoxOpen(() => false)}
+            />
+          }
           {button.images.length > 1 && (
             <div className="card-button__picture-nav">
               <Btn

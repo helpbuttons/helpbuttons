@@ -501,6 +501,7 @@ $card-button-border-height: $border-general-height;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
   // display: none; //revise if image navigation
 
 }
@@ -795,4 +796,7 @@ $card-button-border-height: $border-general-height;
 
   }
 
+}
+.card-button__picture-lightbox{
+  background-color: pink;
 }
