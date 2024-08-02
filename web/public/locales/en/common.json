@@ -398,7 +398,7 @@
     "buttonTemplateName": "Type Name",
     "buttonTemplateFormTitle": "Complete fields to create a new _helpbutton_ type",
     "buttonTemplateFormListTitle": "_helpbuttons_ types list",
-    "buttonTemplateLabel": "Create your _helpbutton_ types",
+    "buttonTemplateLabel": "Add a new _helpbutton_ type",
     "buttonTemplateExplain": "These are the main types of _helpbuttons_ that you added, so the users can create them in your Network. Add a name and choose your color to differenciate them.",
     "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here",
     "createButtonTypePlaceholder": "Write your _helpbutton_ type name here",

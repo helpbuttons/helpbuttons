@@ -5,13 +5,14 @@ import t from 'i18n';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
-import { useState, forwardRef, useEffect } from 'react';
+import { useState, forwardRef, useEffect, useRef } from 'react';
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { AddCustomFields } from '../CustomFields/AddCustomFields';
 import { EmojiPicker } from 'components/emoji';
 import { Picker } from 'components/picker/Picker';
+import PickerField from 'components/picker/PickerField';
 
 
 const FieldButtonTemplates = forwardRef(
@@ -160,13 +161,8 @@ const FieldButtonTemplates = forwardRef(
               </div>
             ))}
         </div>
-        <div className="form__field">
-          <div className="form__section-title">{label}</div>
-          <p className="form__explain">{explain}</p>
-        </div>
-        <div className="form__input--button-type-field">
-            <ButtonTemplateForm append={append}/>
-        </div>
+        <ButtonTemplateForm label={label} explain={explain} append={append}/>
+        
       </>
     );
   },
@@ -175,14 +171,8 @@ const FieldButtonTemplates = forwardRef(
 export default FieldButtonTemplates;
 
 
-function ButtonTemplateForm({append }) {
-  const {    
-    register,
-    setValue,
-    watch,
-    getValues,
-    reset,
-  } = useForm({
+function ButtonTemplateForm({ label, explain, append }) {
+  const { register, setValue, watch, getValues, reset } = useForm({
     defaultValues: {
       emoji: '😀',
       color: '#000',
@@ -191,67 +181,83 @@ function ButtonTemplateForm({append }) {
     },
   });
 
-  const onAddNewButtonTemplate = ({text, color, customFields, emoji}) => {
+  const onAddNewButtonTemplate = ({
+    text,
+    color,
+    customFields,
+    emoji,
+  }) => {
     if (text && color) {
       append({
         caption: text,
         name: tagify(text),
         cssColor: color,
         customFields: customFields,
-        icon: emoji
+        icon: emoji,
       });
       alertService.warn(
         t('configuration.templateNewButtonTemplate', [text, emoji]),
       );
-      reset()
+      closePopup()
+      reset();
     } else {
-      alertService.warn(
-        t('configuration.templateMissingFields'),
-      );
+      alertService.warn(t('configuration.templateMissingFields'));
     }
   };
-
-  const [customFields, setCustomFields] = useState([])
+  const [showForm, setShowForm] = useState(false)
+  const [customFields, setCustomFields] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const closePopup = () => setShowPopup(() => false);
+  const openPopup = () => setShowPopup(() => true);
 
   return (
-    <>
-      <FieldText
-        name={t('configuration.buttonTemplateName')}
-        label={t('configuration.buttonTemplateName')}
-        placeholder={t('configuration.createButtonTypePlaceholder')}
-        className="field-text"
-        // onChange={(e) => setValue('text', e.target.value)}
-        {...register('text')}
-      />
-      <EmojiPicker
-        updateEmoji={(newEmoji) => setValue('emoji', newEmoji)}
-        pickerEmoji={watch('emoji')}
-        label={t('configuration.buttonTemplateEmoji')}
-      />
-      <FieldColorPick
-        name="buttonTemplateColor"
-        classNameInput="squared"
-        label={t('configuration.buttonTemplateColor')}
-        // validationError={errors.color}
-        setValue={(name, value) => setValue('color', value)}
-        actionName={t('button.pickButtonTemplateColor')}
-        value={watch('color')}
-      />
-      <label className="form__label">
-        {t('configuration.customFields')}:
-      </label>
-      <p className="form__explain">
-        {t('configuration.customFieldsExplain')}
-      </p>
-      <AddCustomFields
-        customFields={customFields}
-        setCustomFields={setCustomFields}
-      />
-      <Btn
-        caption={t('configuration.addType')}
-        onClick={() => onAddNewButtonTemplate(getValues())}
-        btnType={BtnType.corporative}
-      />
-    </>
+      <PickerField label={''} explain={''} btnLabel={label} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
+        {/* headerText={t('configuration.setType')} */}
+        <>
+        {/* <div className="form__input--button-type-field"></div> */}
+        <div className="form__field">
+          <div className="form__section-title">{label}</div>
+          <p className="form__explain">{explain}</p>
+        </div>
+        <FieldText
+          name={t('configuration.buttonTemplateName')}
+          label={t('configuration.buttonTemplateName')}
+          placeholder={t('configuration.createButtonTypePlaceholder')}
+          className="field-text"
+          // onChange={(e) => setValue('text', e.target.value)}
+          {...register('text')}
+        />
+        <EmojiPicker
+          updateEmoji={(newEmoji) => setValue('emoji', newEmoji)}
+          pickerEmoji={watch('emoji')}
+          label={t('configuration.buttonTemplateEmoji')}
+        />
+        <FieldColorPick
+          name="buttonTemplateColor"
+          classNameInput="squared"
+          label={t('configuration.buttonTemplateColor')}
+          // validationError={errors.color}
+          setValue={(name, value) => setValue('color', value)}
+          actionName={t('button.pickButtonTemplateColor')}
+          value={watch('color')}
+        />
+        <label className="form__label">
+          {t('configuration.customFields')}:
+        </label>
+        <p className="form__explain">
+          {t('configuration.customFieldsExplain')}
+        </p>
+        <AddCustomFields
+          customFields={customFields}
+          setCustomFields={setCustomFields}
+        />
+        <Btn
+          caption={t('configuration.addType')}
+          onClick={() => onAddNewButtonTemplate(getValues())}
+          btnType={BtnType.corporative}
+        />
+        </>
+      </PickerField>
+      
   );
 }
