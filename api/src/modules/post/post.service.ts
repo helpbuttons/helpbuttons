@@ -12,6 +12,7 @@ import translate, {
 } from '@src/shared/helpers/i18n.helper';
 import { mentionsOfMessage } from '@src/shared/types/message.helper';
 import { UserService } from '../user/user.service';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable()
 export class PostService {
@@ -22,10 +23,14 @@ export class PostService {
     private buttonService: ButtonService,
     @Inject(UserService)
     private userService: UserService,
+    @Inject(StorageService)
+    private storageService: StorageService,
   ) {}
 
-  new(message: string, buttonId: string, author: User) {
-    return this.buttonService
+  new(message: string, images: string[], buttonId: string, author: User) {
+    return this.storageService.storageMultipleImages(images)
+    .then((imagesStored ) => {
+      return this.buttonService
       .findById(buttonId, true)
       .then((button) => {
         const post = {
@@ -33,11 +38,14 @@ export class PostService {
           message,
           button,
           author,
+          images: imagesStored
         };
         return this.postRepository
           .insert([post])
           .then((result) => post);
       });
+    })
+    
   }
 
   findById(id: string) {
@@ -149,6 +157,7 @@ export class PostService {
       translate(user.locale, 'post.renewPost', [
         readableDate(user.locale),
       ]),
+      [],
       button.id,
       user,
     );

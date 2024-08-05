@@ -1,3 +1,4 @@
+import { ImageGallery } from 'elements/ImageGallery';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { formatMessage } from 'elements/Message';
 import { readableTimeLeftToDate } from 'shared/date.utils';
@@ -33,6 +34,7 @@ export default function PostMessage({ post }) {
           <div className="card-notification__paragraph">
             {formatMessage(post.message)}
           </div>
+          <ImageGallery images={post?.images.map((image) => {return {src: image, alt: post.message} })} />
         </div>
       </div>
     </>

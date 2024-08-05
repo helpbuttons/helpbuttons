@@ -18,6 +18,9 @@ export default function FieldImageUploads({
 }) {
   const [images, setImages] = useState(defaultImages);
 
+  useEffect(() => {
+    setImages(() => defaultImages)
+  }, [defaultImages])
   const onChange = (imageList, addUpdateIndex) => {
     if (imageList.length > 0) {
       setImages(() => imageList);

@@ -27,6 +27,7 @@ import { useState } from 'react';
 import { useToggle } from 'shared/custom.hooks';
 import t from 'i18n';
 import { mentionsOfMessage } from 'shared/types/message.helper';
+import { ImageGallery } from 'elements/ImageGallery';
 
 export default function PostComments({
   comments,
@@ -232,6 +233,7 @@ export function Comment({ comment }) {
             alt="Avatar"
           />
         </div>
+        <ImageGallery images={comment?.images?.map((image) => {return {src: image, alt: comment.message} })} />
       </div>
     </>
   );

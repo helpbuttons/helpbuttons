@@ -1,19 +1,11 @@
 //Main card of the Button that is used inside ButtonFile component and in ButtonNewPublish for the preview. It has all the Data that a button has andd displays it according to the main buttonTemplate and network that buttton selected.
 import {
-  IoChevronForwardOutline,
-  IoChevronBackOutline,
   IoHeartOutline,
   IoAddCircleOutline,
   IoEllipsisHorizontalSharp,
-  IoHeartSharp,
   IoMailOutline,
-  IoChatbubbleEllipsesSharp,
   IoCallOutline,
   IoHeart,
-  IoCreate,
-  IoCreateOutline,
-  IoMail,
-  IoCloseCircleOutline,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -34,7 +26,6 @@ import Link from 'next/link';
 import {
   GetPhone,
   UpdateFiltersToFilterTag,
-  updateCurrentButton,
 } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { TextFormatted, formatMessage } from 'elements/Message';
@@ -55,10 +46,7 @@ import { maxZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
-
-const filterTag = (tag) => {
-  store.emit(new UpdateFiltersToFilterTag(tag));
-};
+import { ImageGallery } from 'elements/ImageGallery';
 
 export default function CardButton({ button, buttonTypes, onScollToCompose = () => {}}) {
   const buttonType = buttonTypes.find(
@@ -81,7 +69,7 @@ export default function CardButton({ button, buttonTypes, onScollToCompose = () 
               onScollToCompose={onScollToCompose}
             />
           </div>
-          <CardButtonImages button={button} />
+          <ImageGallery images={button?.images.map((image) => {return {src: image, alt: button.description} })} />
 
           <CardButtonAuthorSection 
           button={button}
@@ -481,73 +469,6 @@ export function CardButtonHeadActions({ button, action, isButtonOwner }) {
     </>
   );
 }
-export function CardButtonImages({ button }) {
-  const images = button.images;
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const next = () => {
-    setCurrentIndex((currentIndex + 1) % images.length);
-  };
-
-  const prev = () => {
-    setCurrentIndex(
-      (currentIndex - 1 + images.length) % images.length,
-    );
-  };
-  
-  const [isLightBoxOpen, setLightBoxOpen] = useState(false)
-  return (
-    <>
-      {button.images && (
-        <div onClick={() => {!isLightBoxOpen ? setLightBoxOpen(() => true) : '' }} className={`card-button__picture ${isLightBoxOpen ? 'card-button__picture-lightbox': ''}`}>
-          {isLightBoxOpen && 
-          <Btn
-                btnType={BtnType.smallCircle}
-                iconLink={<IoCloseCircleOutline />}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => setLightBoxOpen(() => false)}
-            />
-          }
-          {button.images.length > 1 && (
-            <div className="card-button__picture-nav">
-              <Btn
-                btnType={BtnType.smallCircle}
-                iconLink={<IoChevronBackOutline />}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => prev()}
-              />
-              <Btn
-                btnType={BtnType.smallCircle}
-                iconLink={<IoChevronForwardOutline />}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => next()}
-              />
-            </div>
-          )}
-          {images.map((image, idx) => (
-            <div
-              key={idx}
-              className={
-                images[currentIndex] === image ? 'show' : 'hide'
-              }
-            >
-              <ImageWrapper
-                imageType={ImageType.buttonCard}
-                src={image}
-                alt={button.description}
-              />
-            </div>
-          ))}
-        </div>
-      )}
-    </>
-  );
-}
-
 
 export function CardButtonAuthorSection({ button, buttonTypes }) {
   const { cssColor, caption, customFields } = buttonTypes.find(

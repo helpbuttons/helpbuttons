@@ -31,4 +31,7 @@ export class Comment extends BaseEntity {
 
   @Column({default: null})
   commentParentId?: string;
+
+  @Column('text', { array: true, nullable: true })
+  images: string[];
 }

@@ -28,7 +28,7 @@ export class PostController {
     @OnlyRegistered()
     @Post('new/:buttonId')
     async new(
-      @Body() message: MessageDto,
+      @Body() data: MessageDto,
       @Param('buttonId') buttonId: string,
       @CurrentUser() user: User,
     ){
@@ -37,7 +37,7 @@ export class PostController {
           if(!isOwner){
             throw new CustomHttpException(ErrorName.NoOwnerShip)
           }
-          return this.postService.new(message.message, buttonId, user).then((post) => {
+          return this.postService.new(data.message, data.images, buttonId, user).then((post) => {
               notifyUser(this.eventEmitter,ActivityEventName.NewPost,{post})
           })
         }
@@ -47,12 +47,12 @@ export class PostController {
     @OnlyRegistered()
     @Post('new/comment/:privacy/:postId')
     async newComment(
-      @Body() message: MessageDto,
+      @Body() data: MessageDto,
       @Param('privacy') privacy: CommentPrivacyOptions,
       @Param('postId') postId: string,
       @CurrentUser() user: User,
     ){
-      return await this.commentService.new(message.message, postId, user, privacy).then((comment) => {
+      return await this.commentService.new(data.message,data.images, postId, user, privacy).then((comment) => {
         notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, {comment})
       return comment;  
       })
@@ -62,13 +62,13 @@ export class PostController {
     @OnlyRegistered()
     @Post('new/comment/:privacy/:postId/:commentParentId')
     async newCommentReply(
-      @Body() message: MessageDto,
+      @Body() data: MessageDto,
       @Param('privacy') privacy: CommentPrivacyOptions,
       @Param('postId') postId: string,
       @Param('commentParentId') commentParentId: string,
       @CurrentUser() user: User,
     ){
-      return await this.commentService.newReply(message.message, postId, commentParentId, user, privacy).then((comment) => {
+      return await this.commentService.newReply(data.message,data.images, postId, commentParentId, user, privacy).then((comment) => {
         notifyUser(this.eventEmitter,ActivityEventName.NewPostComment, {comment})
       return comment;  
       })

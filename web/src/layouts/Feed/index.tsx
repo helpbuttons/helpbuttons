@@ -318,11 +318,11 @@ export function Compose({
             />
           </div> */}
           <MessageNew
-          onCreate={(message) => {
+          onCreate={(message, images) => {
             store.emit(
               new CreateNewPost(
                 referer.button,
-                { message: message },
+                { message, images },
                 () => {
                   alertService.info(
                     t('common.saveSuccess', ['post']),
@@ -358,7 +358,7 @@ export function Compose({
         <MessageNew
           isComment={true}
           privateMessage={referer?.privateMessage}
-          onCreate={(message) => {
+          onCreate={(message, images) => {
             let privacy = CommentPrivacyOptions.PUBLIC;
             if (referer?.privateMessage) {
               privacy = CommentPrivacyOptions.PRIVATE;
@@ -368,7 +368,7 @@ export function Compose({
                 referer.post,
                 referer.comment,
                 privacy,
-                { message: message },
+                { message, images },
                 () => {
                   alertService.info(t('comment.posted'));
                   onCreate();
@@ -404,7 +404,7 @@ export function Compose({
         <MessageNew
           isComment={true}
           privateMessage={referer?.privateMessage}
-          onCreate={(message) => {
+          onCreate={(message, images) => {
             let privacy = CommentPrivacyOptions.PUBLIC;
             if (referer?.privateMessage) {
               privacy = CommentPrivacyOptions.PRIVATE;
@@ -413,7 +413,7 @@ export function Compose({
               new CreateNewPostComment(
                 referer.post,
                 privacy,
-                { message: message },
+                { message, images },
                 () => {
                   alertService.info(t('comment.posted'));
                   onCreate();

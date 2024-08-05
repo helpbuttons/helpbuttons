@@ -155,28 +155,7 @@ export class ButtonService {
             });
         }
 
-        if (createDto.images?.length > 0) {
-          await Promise.all(
-            createDto.images.map(async (image) => {
-              if (isImageData(image)) {
-                try {
-                  const newImage =
-                    await this.storageService.newImage64(image);
-                  if (newImage) {
-                    button.images.push(newImage);
-                  }
-                } catch (err) {
-                  throw new CustomHttpException(ErrorName.InvalidMimetype);
-                }
-              } else if (isImageUrl(image)) {
-                button.images.push(image);
-              } else {
-                console.error('no image data, or image url?');
-                console.log(image);
-              }
-            }),
-          );
-        }
+        button.images = await this.storageService.storageMultipleImages(createDto.images)
         if (button.images.length > 0) {
           button.image = button.images[0];
         }
