@@ -800,3 +800,15 @@ $card-button-border-height: $border-general-height;
 .card-button__picture-lightbox{
   background-color: pink;
 }
+
+.card-button__gallery-zoom
+{
+  position: absolute;
+  z-index: $z-index-03;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  background-color: $color-gray-transparent;
+}

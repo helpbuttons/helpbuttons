@@ -22,7 +22,7 @@ export function ImageGallery({ images }) {
     return (
       <>
         {showSingleImage && 
-            <>
+            <div className="card-button__gallery-zoom">
             <Btn
               btnType={BtnType.smallCircle}
               iconLink={<IoCloseCircleOutline />}
@@ -35,9 +35,8 @@ export function ImageGallery({ images }) {
               src={images[currentIndex].src}
               alt={images[currentIndex].alt}
             />
-            </>
+            </div>
         }
-        <div onClick={() => {setShowSingleImage(() => true) }} className="card-button__picture">
         {(!showSingleImage && images )&& (
             <div className="card-button__picture">
             {images.length > 1 && (
@@ -60,6 +59,7 @@ export function ImageGallery({ images }) {
             )}
             {images.map((image, idx) => (
               <div
+                onClick={() => {setShowSingleImage(() => true) }}
                 key={idx}
                 className={
                   images[currentIndex] === image ? 'show' : 'hide'
@@ -73,7 +73,7 @@ export function ImageGallery({ images }) {
               </div>
             ))}
           </div>
-        )}</div>
+        )}
       </>
     );
   }
