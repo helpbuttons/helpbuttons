@@ -35,6 +35,6 @@ export class Post extends BaseEntity {
   deleted: boolean;
 
   @Expose()
-  @Column('text', { array: true, nullable: true })
+  @Column('text', { array: true, default: [] })
   images: string[];
 }
