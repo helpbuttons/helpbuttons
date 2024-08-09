@@ -8,6 +8,7 @@ import { formatCurrency } from 'shared/currency.utils';
 import { useEffect, useState } from 'react';
 import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
 import CalendarHb from 'components/calendar';
+import { dbToRRule } from 'components/picker/PickerEventType/recurrent';
 
 export function AdvancedFiltersCustomFields({
   buttonTypes,
@@ -223,7 +224,21 @@ export const orderByPrice = (buttons) => {
 }
 
 export const orderByEventDate = (buttons) => {
-  return buttons.filter((button) => button.eventStart).sort((buttonA, buttonB) => new Date(buttonA.eventStart) - new Date(buttonB.eventStart))
+  const eventButtons = buttons.map((button => {
+    let eventStart = button.eventStart
+    if(button.eventData)
+    {
+      const rrule = dbToRRule(button.eventData)
+      eventStart = rrule.all().find((date) => {
+        if(date > new Date())
+        {
+          return date
+        }
+      })
+    }
+    return {...button, eventStart: eventStart}
+  }))
+  return eventButtons.filter((button) => button.eventStart).sort((buttonA, buttonB) => new Date(buttonA.eventStart) - new Date(buttonB.eventStart))
 }
 
 const getCustomFields = (buttonTypes, selectedButtonTypes) => {

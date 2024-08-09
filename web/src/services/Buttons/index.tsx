@@ -74,4 +74,13 @@ export class ButtonService {
   public static monthCalendar(month: number, year: number): Observable<any> {
     return httpService.get<any>(`buttons/monthCalendar/${month}/${year}`);
   }
+
+  public static moderationList(page): Observable<any> {
+    return httpService.get<any>(`buttons/moderationList/${page}`);
+  }
+
+  public static approve(buttonId): Observable<any> {
+    return httpService.get<any>(`buttons/approve/${buttonId}`);
+  }
+
 }

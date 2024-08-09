@@ -10,12 +10,14 @@ import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { CreateAdmin, GetConfig } from 'state/Setup';
-import { useRef } from 'store/Store';
+import { useStore } from 'store/Store';
 import { SetupSteps } from '../../../shared/setupSteps';
 import t from 'i18n';
 import { useEffect, useState } from 'react';
 import { getLocale } from 'shared/sys.helper';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
+import { Role } from 'shared/types/roles';
+import { setValidationErrors } from 'state/helper';
 
 export default CreateAdminForm;
 
@@ -36,12 +38,19 @@ function CreateAdminForm() {
       email: '',
       name: '',
       locale: 'en',
+      acceptPrivacyPolicy: 'no'
     },
   });
 
-  const config: SetupDtoOut = useRef(
+  const config: SetupDtoOut = useStore(
     store,
     (state: GlobalState) => state.config,
+  );
+
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+    false,
   );
 
   const getConfig = () => {
@@ -98,28 +107,31 @@ function CreateAdminForm() {
             locale: data.locale,
             inviteCode: '',
             name: data.name,
+            acceptPrivacyPolicy: data.acceptPrivacyPolicy
           },
           () => {
-            let url = `${SetupSteps.FIRST_OPEN}`;
-            if(getLocale() !=  data.locale )
-            {
-              url = `/${data.locale}/${SetupSteps.FIRST_OPEN}`
-            }
-            router.push(url)
+            // let url = `${SetupSteps.FIRST_OPEN}`;
+            // if(getLocale() !=  data.locale )
+            // { // force locale of registered admin!
+            //   url = `/${data.locale}${SetupSteps.FIRST_OPEN}`
+            // }
+            // router.push(url)
           },
-          (err) => {
-            if (err?.statusCode === HttpStatus.CONFLICT) {
+          (error) => {
+            if (error?.statusCode === HttpStatus.CONFLICT) {
               alertService.warn(
                 `You already created an admin account, do you want to <a href="/Login">login</a>? Or you want to <a href="${SetupSteps.FIRST_OPEN}">configure your network</a>?`,
               );
+            }else if(error?.validationErrors)
+            {
+              setValidationErrors(error?.validationErrors, setError);
             }
-            console.log(JSON.stringify(err));
+            console.log(error);
           },
         ),
       );
     // }
   };
-
   return (
     <>
       <Popup

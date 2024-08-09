@@ -12,6 +12,11 @@ import { CreateNetworkDto } from 'shared/dtos/network.dto';
 import { Network } from 'shared/entities/network.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateExploreSettings } from './Explore';
+import { useStore } from 'store/Store';
+import { useEffect, useRef } from 'react';
+import { SetupSteps } from 'shared/setupSteps';
+import { ConfigFound, GetConfig } from './Setup';
+// import router from 'next/router';
 
 export interface NetworksState {
   // networks: Network[];
@@ -20,16 +25,53 @@ export interface NetworksState {
 } 
 
 export const networksInitial = {
-  // selectedNetwork: {
-  //   name: '...',
-  //   description: '',
-  //   buttonTemplates: [],
-  //   topTags: [],
-  //   backgroundColor: 'grey',
-  //   textColor: 'pink'
-  // },
+  selectedNetwork: {
+    name: '...',
+    description: '',
+    buttonTemplates: [],
+    topTags: [],
+    backgroundColor: 'grey',
+    textColor: 'pink',
+    init: true
+  },
   selectedNetworkLoading: false,
 };
+
+export const useConfig = (_config, onError) => {
+  const fetchingConfig = useRef(false)
+  useEffect(() => {
+    if(!_config && !fetchingConfig.current)
+    {
+      fetchingConfig.current = true
+      store.emit(new GetConfig(() => console.log('got config!'), onError))
+    }else{
+      store.emit(new ConfigFound(_config))
+    }
+  }, [_config])
+  return useStore(
+    store,
+    (state: GlobalState) => state.config,
+  );;
+}
+export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) => console.log(error)) : Network => {
+  const fetchingNetwork = useRef(false)
+  useEffect(() => {
+    if(!_selectedNetwork && !fetchingNetwork.current)
+    {
+      fetchingNetwork.current = true
+      store.emit(new FetchDefaultNetwork(() => console.log('fetched network!!'), onError))
+    }else if(_selectedNetwork){
+      store.emit(new SelectedNetworkFetched(_selectedNetwork))
+    }
+  }, [_selectedNetwork])
+  useEffect(() => {
+    fetchingNetwork.current = false;
+  }, [])
+  return useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+}
 
 export class setNetwork implements UpdateEvent {
   public constructor(private network) {}

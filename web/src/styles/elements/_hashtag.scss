@@ -19,7 +19,7 @@ $hashtag-color-l-gray: $color-med-gray;
 
   display: flex;
   vertical-align: middle;
-  align-items: baseline;
+  align-items: center;
   width: fit-content;
   border-radius: $border-radius-semicircle;
   padding: 0.1rem $padding-medium 0.1rem $padding-medium;
@@ -68,11 +68,11 @@ $hashtag-color-l-gray: $color-med-gray;
   }
 
   & svg {
-    height: 10px;
-    width: 10px;
+    // height: 10px;
+    // width: 10px;
 
-    background-color: $hashtag-color-gray;
-    padding: $hashtag-padding-xsmall;
+    background-color: transparent;
+    // padding: $hashtag-padding-xsmall;
     // border-radius: $hashtag-border-radius;
   }
 }

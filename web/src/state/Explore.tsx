@@ -21,6 +21,7 @@ import { cellToParent, getResolution } from 'h3-js';
 import { of } from 'rxjs';
 import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
 import { maxZoom } from 'components/map/Map/Map.consts';
+import _ from 'lodash';
 
 
 export enum ExploreViewMode {
@@ -65,7 +66,6 @@ export const exploreSettingsDefault: ExploreSettings = {
 export interface ExploreMapState {
   filters: ButtonFilters;
   buttonTypeClicked: boolean; // this is used to jump to center of network if no buttons are found
-  queryFoundTags: string[];
   listButtons: Button[]; // if hexagon clicked, can be different from boundsButtons
   boundsFilteredButtons: Button[];
   cachedHexagons: any[];
@@ -73,13 +73,13 @@ export interface ExploreMapState {
   initialized: boolean;
   showAdvancedFilters: boolean;
   showInstructions: boolean;
+  allTags: string[]
 }
 export const exploreInitial = {
   draftButton: null,
   currentButton: null,
   map: {
     filters: defaultFilters,
-    queryFoundTags: [],
     listButtons: [], // if hexagon clicked, can be different from boundsButtons
     boundsFilteredButtons: [],
     cachedHexagons: [],
@@ -87,6 +87,7 @@ export const exploreInitial = {
     initialized: false,
     showAdvancedFilters: false,
     showInstructions: true,
+    allTags: []
   },
   settings: exploreSettingsDefault,
 };
@@ -101,7 +102,10 @@ export class FindButtons implements WatchEvent, UpdateEvent {
 
   public watch(state: GlobalState) {
     return ButtonService.find(this.resolution, this.hexagons).pipe(
-      map((buttons) => this.onSuccess(buttons)),
+      map((buttons) => {
+        store.emit(new UpdateTagsList(buttons))
+        return this.onSuccess(buttons)
+      }),
       catchError((error) => handleError(this.onError, error)),
     );
   }
@@ -112,6 +116,17 @@ export class FindButtons implements WatchEvent, UpdateEvent {
   }
 }
 
+export class UpdateTagsList implements UpdateEvent{
+  public constructor(
+    private buttons: Button[]
+  ) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      const allTags = this.buttons.map((button) => button.tags)
+      newState.explore.map.allTags = _.uniq([..._.flattenDeep(allTags),... state.explore.map.allTags])
+    });
+  }
+}
 export class ReverseGeo implements WatchEvent {
   public constructor(
     private lat: number,
@@ -261,8 +276,13 @@ export class updateCurrentButton implements UpdateEvent {
       newState.explore.settings.prevCenter = state.explore.settings.center
       newState.explore.settings.prevZoom = state.explore.settings.zoom
       
+      if(this.button.hideAddress)
+      {
+        newState.explore.settings.hexagonClicked = this.button.hexagon
+      }
+      
       newState.explore.settings.center = roundCoords([this.button.latitude, this.button.longitude])
-      newState.explore.settings.zoom = maxZoom
+      newState.explore.settings.zoom = maxZoom-1
 
     }else if(!this.button){
       newState.explore.settings.center = state.explore.settings.prevCenter
@@ -282,7 +302,23 @@ export class UpdateFilters implements UpdateEvent {
         newState.explore.settings.zoom = newZoom 
         newState.explore.settings.center = this.filters.where.center
       }
-      newState.explore.map.filters = this.filters;
+      let newFilters = this.filters;
+      const words = this.filters.query.split(' ')
+      const tagsFound = words.map((word) => {
+        return state.explore.map.allTags.find((tag) => tag == word)
+      }).filter((tag) => tag)
+
+      const newQuery = words.map((word) => {
+        if(state.explore.map.allTags.find((tag) => tag == word))
+        {
+          return ''
+        }
+        return word
+      }).join(' ')
+
+      newFilters.tags = _.uniq([...tagsFound, ...this.filters.tags])
+      newFilters.query = newQuery
+      newState.explore.map.filters = newFilters;
     });
   }
 }
@@ -331,21 +367,12 @@ export class UpdateFiltersToFilterTag implements UpdateEvent {
       // use query to filter tag...
       newState.explore.map.filters = {
         ...defaultFilters,
-        query: this.tag,
+        tags:  [this.tag]
       };
     });
   }
 }
 
-export class UpdateQueryFoundTags implements UpdateEvent {
-  public constructor(private tags: string[]) {}
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.map.queryFoundTags = this.tags;
-    });
-  }
-}
 export class UpdateFiltersToFilterButtonType implements UpdateEvent {
   public constructor(private buttonType: string) {}
 

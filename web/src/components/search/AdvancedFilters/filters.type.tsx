@@ -5,13 +5,13 @@ export interface ButtonFilters {
     query: string;
     where: { address: string; center: Point; radius: number };
     orderBy: string;
-    // tags: string[]
+    tags: string[]
   }
   
   export const defaultFilters: ButtonFilters = {
     helpButtonTypes: [],
     query: '',
-    where: { address: '', center: null, radius: 10 },
-    orderBy: 'date'
-    // tags: []
+    where: { address: '', center: null, radius: 100 },
+    orderBy: 'date',
+    tags: []
   };

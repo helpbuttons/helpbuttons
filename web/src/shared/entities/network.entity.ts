@@ -70,4 +70,7 @@ export class Network extends BaseEntity {
 
   @Column({default: 'EUR'})
   currency: string;
+
+  @Column({default: false})
+  requireApproval: boolean;
 }

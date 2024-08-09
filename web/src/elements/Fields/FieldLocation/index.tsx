@@ -1,11 +1,10 @@
 //this is the component integrated in buttonNewPublish to display the location. It shows the current location and has a button to change the location that displays a picker with the differents location options for the network
 import React, { useEffect, useState } from 'react';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
+import { MarkerEditorMap } from 'components/map/Map/MarkerSelectorMap';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { ReverseGeo } from 'state/Explore';
@@ -125,12 +124,7 @@ export default function FieldLocation({
         openPopup={openPopup}
         closePopup={closePopup}
       >
-        {markerAddress}
-        <DropDownSearchLocation
-          placeholder={t('homeinfo.searchlocation')}
-          handleSelectedPlace={handleSelectedPlace}
-        />
-        <MarkerSelectorMap
+        <MarkerEditorMap
           onMapClick={onMapClick}
           defaultZoom={selectedNetwork.exploreSettings.zoom}
           markerColor={markerColor ? markerColor : 'pink'}
@@ -138,6 +132,8 @@ export default function FieldLocation({
           markerCaption={markerCaption}
           markerImage={markerImage}
           showHexagon={hideAddress}
+          handleSelectedPlace={handleSelectedPlace}
+          markerAddress={markerAddress}
         />
         <FieldCheckbox
           name="hideAddress"

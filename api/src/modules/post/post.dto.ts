@@ -7,4 +7,6 @@ export class MessageDto {
     message: 'message is too long',
   })
   message: string;
+
+  images?: string[];
 }

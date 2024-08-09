@@ -31,4 +31,37 @@ export class FindMonthCalendar implements WatchEvent {
       }),
     );
   }
+  
+}
+
+export class ButtonModerationList implements WatchEvent {
+  public constructor(
+    private page: number = 0,
+    private onSuccess = undefined,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return ButtonService.moderationList(this.page).pipe(
+      map((moderationList) => { 
+        this.onSuccess(moderationList);
+      }),
+      catchError((error) => {this.onSuccess([]); return  of(undefined)})
+    )
+  }
+}
+
+export class ButtonApprove implements WatchEvent {
+  public constructor(
+    private buttonId: string,
+    private onSuccess = undefined,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return ButtonService.approve(this.buttonId).pipe(
+      map(() => { 
+        this.onSuccess();
+      }),
+      catchError((error) => {return  of(undefined)})
+    )
+  }
 }

@@ -110,14 +110,6 @@ function ProfileAdminOptions({ user }) {
   };
 
   const getOptions = (user) => {
-    const blockUser = (
-      <CardSubmenuOption
-        onClick={() => {
-          updateRole(user.id, Role.blocked);
-        }}
-        label={t('user.block')}
-      />
-    );
     switch (user.role) {
       case Role.admin:
         return (
@@ -126,9 +118,8 @@ function ProfileAdminOptions({ user }) {
               onClick={() => {
                 updateRole(user.id, Role.registered);
               }}
-              label={t('user.revoke')}
+              label={t('moderation.revoke')}
             />
-            {blockUser}
           </>
         );
       case Role.registered:
@@ -138,9 +129,14 @@ function ProfileAdminOptions({ user }) {
               onClick={() => {
                 updateRole(user.id, Role.admin);
               }}
-              label={t('user.promote')}
+              label={t('moderation.promote')}
             />
-            {blockUser}
+            <CardSubmenuOption
+              onClick={() => {
+                updateRole(user.id, Role.blocked);
+              }}
+              label={t('moderation.deactivate')}
+            />
           </>
         );
       case Role.blocked:
@@ -149,7 +145,7 @@ function ProfileAdminOptions({ user }) {
             onClick={() => {
               updateRole(user.id, Role.registered);
             }}
-            label={t('user.unblock')}
+            label={t('moderation.activate')}
           />
         );
     }

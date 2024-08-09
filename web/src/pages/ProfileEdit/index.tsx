@@ -288,6 +288,7 @@ export default function ProfileEdit() {
                     setValue('tags', tags);
                   }}
                   tags={watch('tags')}
+                  maxTags={10}
                 />
                 
                 </Accordion>

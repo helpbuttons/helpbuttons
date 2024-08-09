@@ -183,3 +183,33 @@ export default function Btn({
         </button>
     );
 }
+
+export function BtnAction({ icon, onClick }) {
+  return (
+    <Btn
+      btnType={BtnType.iconActions}
+      iconLink={icon}
+      iconLeft={IconType.circle}
+      contentAlignment={ContentAlignment.center}
+      onClick={onClick}
+    />
+  );
+}
+
+export function BtnCaption({ caption, icon, onClick, color }) {
+  const cssColor = (cssColor: string) => {
+    return { '--button-color': cssColor } as React.CSSProperties;
+  };
+
+  return (
+    <span style={cssColor(color)}>
+      <Btn
+        btnType={BtnType.filterEmoji}
+        iconLeft={IconType.svg}
+        iconLink={icon}
+        caption={caption}
+        onClick={onClick}
+      />
+    </span>
+  );
+}

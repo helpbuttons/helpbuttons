@@ -8,7 +8,7 @@ import {
   InjectEntityManager,
   InjectRepository,
 } from '@nestjs/typeorm';
-import { EntityManager, In, Repository } from 'typeorm';
+import { EntityManager, In, Not, Repository } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { removeUndefined } from '@src/shared/helpers/removeUndefined';
 import { TagService } from '../tag/tag.service';
@@ -27,25 +27,31 @@ export class UserService {
     private readonly storageService: StorageService,
   ) {}
 
-  async createUser(user: User) {
+  createUser(user: User) {
     return this.userRepository.insert([user]);
   }
 
-  async isEmailExists(email: string) {
-    const user = await this.userRepository.findOne({
+  isEmailExists(email: string) {
+    return this.userRepository.findOne({
       where: {
         email: email,
       },
+    }).catch(() => false)
+  }
+
+  findById(id: string, includeCounts = false) {
+    return this.userRepository.findOne({ where: { id } })
+    .then((user) => {
+      if (includeCounts) {
+        return this.findCounts(user)
+      }
+      return user;
     });
-    return user ? true : false;
+
   }
 
-  async findById(id: string) {
-    return await this.userRepository.findOne({ where: { id } });
-  }
-
-  async userCount() {
-    return await this.userRepository.count();
+  userCount() {
+    return this.userRepository.count();
   }
 
   findAdministrators() {
@@ -65,43 +71,49 @@ export class UserService {
       );
   }
 
-  async findOneByEmail(email: string) {
-    return await this.userRepository.findOne({
+  findOneByEmail(email: string) {
+    return this.userRepository.findOne({
       where: { email: `${email}` },
     });
   }
 
-  async findByUsername(username: string, includeCounts = false) {
-    return await this.userRepository
+  findCounts(user){
+    return Promise.all([
+      this.entityManager.query(
+        `select sum(cardinality("followedBy")) as "followsCount" from button where "ownerId"= '${user.id}' `
+      ),
+      this.entityManager.query(
+        `select count(button.id) as "buttonsCount" from button where "ownerId" = '${user.id}'`
+      ),
+      this.entityManager.query(
+        `select count(post.id) as "postsCount" from post where "authorId" = '${user.id}'`
+      ),
+      this.entityManager.query(
+        `select count(comment.id) as "commentsCount" from comment where "authorId" = '${user.id}'`
+      ),
+    ]).then(([followsCount, buttonCount, postCount, commentCount]) => {
+      return {
+        ...user,
+        followsCount: followsCount[0].followsCount,
+        commentCount: parseInt(commentCount[0].commentsCount) + parseInt(postCount[0].postsCount),
+        buttonCount: buttonCount[0].buttonsCount,
+      };
+    });
+  }
+  findByUsername(username: string, includeCounts = false) {
+    return this.userRepository
       .findOne({
         where: { username: `${username}` },
       })
-      .then(async (user) => {
+      .then((user) => {
         if (includeCounts) {
-          const followsCount = await this.entityManager.query(
-            `select sum(cardinality("followedBy")) as "followsCount" from button where "ownerId"= '${user.id}' `
-          );
-          const buttonCount = await this.entityManager.query(
-            `select count(button.id) as "buttonsCount" from button where "ownerId" = '${user.id}'`,
-          );
-          const postCount = await this.entityManager.query(
-            `select count(post.id) as "postsCount" from post where "authorId" = '${user.id}'`,
-          );
-          const commentCount = await this.entityManager.query(
-            `select count(comment.id) as "commentsCount" from comment where "authorId" = '${user.id}'`,
-          );
-          return {
-            ...user,
-            followsCount: followsCount[0].followsCount,
-            commentCount: parseInt(commentCount[0].commentsCount) + parseInt(postCount[0].postsCount),
-            buttonCount: buttonCount[0].buttonsCount,
-          };
+          return this.findCounts(user)
         }
         return user;
       });
   }
 
-  async update(userId: string, newUser) {
+  update(userId: string, newUser) {
     let center = null;
     if (newUser.center?.coordinates) {
       const center = `ST_Point(${newUser.center.coordinates[1]}, ${newUser.center.coordinates[0]}, 4326) ::geography`;
@@ -151,13 +163,8 @@ export class UserService {
     return this.userRepository.update(userId, { role: newRole });
   }
 
-  async moderationList() {
-    return {
-      administrators: await this.findAdministrators(),
-      blocked: await this.userRepository.find({
-        where: { role: Role.blocked },
-      }),
-    };
+  moderationList( user: User, page: number) {
+    return this.userRepository.find({take: 10, skip: page * 10, order: { name: 'ASC' }, where: {id: Not(user.id)}})
   }
 
   async unsubscribe(email) {
@@ -189,6 +196,18 @@ export class UserService {
       tags: this.tagService.formatTags(tags),
     });
   }
+
+  addTags(tags, user: User) {
+    const _ = require('lodash/array');
+
+    let newTags = [...tags.split(','), ...user.tags]
+    newTags = _.uniq(newTags)
+
+    return this.userRepository.update(user.id, {
+      tags: this.tagService.formatTags(newTags),
+    }).then(() => newTags);
+  }
+
   createNewLoginToken(userId) {
     const verificationToken = publicNanoidGenerator();
     return this.userRepository

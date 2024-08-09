@@ -102,6 +102,11 @@ export class ButtonService {
         }
       }
     }
+    let awaitingApproval = false;
+    if(network.requireApproval && user.role != Role.admin)
+    {
+      awaitingApproval = true;
+    }
     const button = {
       id: dbIdGenerator(),
       type: createDto.type,
@@ -129,6 +134,7 @@ export class ButtonService {
       eventType: createDto.eventType,
       hasPhone,
       eventData: createDto.eventData,
+      awaitingApproval
     };
     
     await getManager().transaction(
@@ -149,28 +155,7 @@ export class ButtonService {
             });
         }
 
-        if (createDto.images?.length > 0) {
-          await Promise.all(
-            createDto.images.map(async (image) => {
-              if (isImageData(image)) {
-                try {
-                  const newImage =
-                    await this.storageService.newImage64(image);
-                  if (newImage) {
-                    button.images.push(newImage);
-                  }
-                } catch (err) {
-                  throw new CustomHttpException(ErrorName.InvalidMimetype);
-                }
-              } else if (isImageUrl(image)) {
-                button.images.push(image);
-              } else {
-                console.error('no image data, or image url?');
-                console.log(image);
-              }
-            }),
-          );
-        }
+        button.images = await this.storageService.storageMultipleImages(createDto.images)
         if (button.images.length > 0) {
           button.image = button.images[0];
         }
@@ -299,7 +284,7 @@ export class ButtonService {
         .createQueryBuilder('button')
         .select('id')
         .where(
-          `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false AND expired = false`,
+          `h3_cell_to_parent(cast (button.hexagon as h3index),${resolution}) IN(:...hexagons) AND deleted = false AND expired = false AND "awaitingApproval" = false`,
           { hexagons: hexagons },
         )
         .limit(1000)
@@ -571,5 +556,13 @@ export class ButtonService {
         },
       ],
     });
+  }
+
+  moderationList( user: User, page: number) {
+    return this.buttonRepository.find({take: 10, skip: page * 10, order: { created_at: 'DESC' }, where: {awaitingApproval: true, ...this.expiredBlockedConditions() }})
+  }
+
+  approve(buttonId: string) {
+    return this.buttonRepository.save({id: buttonId, awaitingApproval: false})
   }
 }

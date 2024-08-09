@@ -1,11 +1,9 @@
-import Accordion from 'elements/Accordion';
-import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
-import FieldInterets from 'elements/Fields/FieldInterests';
-import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import FieldPassword from 'elements/Fields/FieldPassword';
 import FieldTags from 'elements/Fields/FieldTags';
 import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
@@ -57,6 +55,7 @@ export default function NewUserFields({
       setValue('username', nameToUsername(name));
     }
   }, [name]);
+
   return (
     <>
       <FieldText
@@ -77,7 +76,7 @@ export default function NewUserFields({
         validationError={errors.name}
         {...register('name', { required: true })}
       ></FieldText>
-      {/* <FieldText
+      <FieldText
         name="username"
         label={`${t('user.username')} ${watch(
           'username',
@@ -87,7 +86,7 @@ export default function NewUserFields({
         placeholder={t('user.usernamePlaceHolder')}
         validationError={errors.username}
         {...register('username', { required: true })}
-      ></FieldText> */}
+      ></FieldText>
       <FieldPassword
         name="password"
         explain={t('user.passwordExplain')}
@@ -98,20 +97,17 @@ export default function NewUserFields({
         {...register('password', { required: true, minLength: 8 })}
       ></FieldPassword>
       {selectedNetwork && (
-        <FieldInterets
-          label={t('user.tags')}
-          explain={t('user.tagsExplain')}
-          placeholder={t('common.add')}
-          validationError={errors.tags}
-          setInterests={(tags) => {
-            setValue('tags', tags);
-          }}
-          interests={watch('tags')}
-          defaultSuggestedTags={selectedNetwork.tags}
-          defaultTrendingTags={selectedNetwork.topTags.map(
-            (tag) => tag.tag,
-          )}
-        />
+          <FieldTags
+            label={t('user.tags')}
+            explain={t('user.tagsExplain')}
+            placeholder={t('common.add')}
+            validationError={errors.tags}
+            setTags={(tags) => {
+              setValue('tags', tags);
+            }}
+            tags={watch('tags')}
+            maxTags={30}
+          />
       )}
       {/* <FieldPassword
         name="password_confirm"
@@ -124,7 +120,25 @@ export default function NewUserFields({
           minLength: 8,
         })}
       ></FieldPassword> */}
-
+      {t('user.acceptPrivacyPolicy')}<Link href="/Faqs">{t('user.privacyPolicyLink')}</Link>
+      <FieldCheckbox
+        name="acceptPrivacyPolicy"
+        // defaultValue={watch('acceptPrivacyPolicy')}
+        text={t('user.pressToAccept') }
+        textOn={t('user.iAccept')}
+        onChanged={(value) => {
+          if(value)
+          {
+            setValue('acceptPrivacyPolicy', 'yes')
+          }else{
+            setValue('acceptPrivacyPolicy', 'no')
+          }
+        }
+        }
+        validationError={errors.acceptPrivacyPolicy ? {message: t('user.pleaseAcceptPrivacy')} : null}
+        {...register('acceptPrivacyPolicy')}
+      />
+      
       {/* <Accordion title={t('user.signupOptions')}>
         <FieldLanguagePick onChange={(value) => setValue('locale', value)} explain={t('user.pickLanguageExplain')} defaultValue={getLocale()}/>
         <FieldImageUpload

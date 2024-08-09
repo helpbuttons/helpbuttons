@@ -1,7 +1,7 @@
 //Users buttons an profile info URL
 import CardProfile from 'components/user/CardProfile';
 
-import { useRef } from 'store/Store';
+import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import router, { useRouter } from 'next/router';
 import { Logout } from 'state/Users';
@@ -24,16 +24,15 @@ import { LoadabledComponent } from 'components/loading';
 import Popup from 'components/popup/Popup';
 import { getLocale } from 'shared/sys.helper';
 import { Network } from 'shared/entities/network.entity';
-import Accordion from 'elements/Accordion';
 
 export default function Profile() {
-  const loggedInUser = useRef(
+  const loggedInUser = useStore(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
 
   const { asPath } = useRouter();
-  const selectedNetwork: Network = useRef(
+  const selectedNetwork: Network = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
@@ -43,9 +42,10 @@ export default function Profile() {
       router.push({ pathname: '/HomeInfo'}, asPath, {
         locale: selectedNetwork.locale,
       });
+    }else{
+          router.push({ pathname: '/HomeInfo'})
     }
   }
-  const isAdmin = loggedInUser?.role == Role.admin;
 
   return (
     <>
@@ -73,10 +73,9 @@ export default function Profile() {
                         />
                       </Link>
                     }
-
-                    {isAdmin && (
+                    {loggedInUser?.role == Role.admin && 
                       <AdminOptions/>
-                    )}
+                    }
                     <Link href="/HomeInfo">
                       <div onClick={logout} className="btn-with-icon">
                         <div className="btn-with-icon__icon">

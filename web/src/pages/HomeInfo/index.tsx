@@ -12,54 +12,43 @@ import NetworkLogo from 'components/network/Components';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import NavLink from 'elements/Navlink';
 import {
-  IoAdd,
   IoAddCircle,
   IoAddOutline,
   IoCall,
-  IoCallOutline,
   IoClose,
-  IoCloseOutline,
   IoGlobeOutline,
   IoHelpOutline,
   IoLogInOutline,
-  IoLogoWhatsapp,
-  IoMagnet,
-  IoMail,
-  IoMailOutline,
   IoMapOutline,
-  IoSearch,
-  IoSend,
-  IoSendOutline,
 } from 'react-icons/io5';
-import { ServerPropsService, setMetadata } from 'services/ServerProps';
+import { setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
 import {  useEffect, useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
-import { UpdateFiltersToFilterTag } from 'state/Explore';
-import Alert from 'components/overlay/Alert';
-import { TextFormatted, formatMessage } from 'elements/Message';
-import { LinkProfile } from 'components/user/LinkProfile';
+import { TextFormatted } from 'elements/Message';
 import { LinkAdminProfile } from 'components/user/LinkAdminProfile';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
-import Feed from 'layouts/Feed';
-import ActivityLayout from 'layouts/Activity';
 import { setSSRLocale } from 'shared/sys.helper';
 import { ActivitiesList } from 'layouts/Activity';
 import { FindLatestNetworkActivity } from 'state/Networks';
-
+import { InstallButton } from 'components/install';
+import { TagsNav } from 'elements/Fields/FieldTags';
 
 export default function HomeInfo({
   metadata,
-  selectedNetwork,
-  config,
 }) {
-  const filterTag = (tag) => {
-    store.emit(new UpdateFiltersToFilterTag(tag));
-    router.push('/Explore')
-  };
+  const selectedNetwork = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
+  const config = useStore(
+    store,
+    (state: GlobalState) => state.config,
+  );
   
   const { publicRuntimeConfig } = getConfig()
   const apiUrl = publicRuntimeConfig.apiUrl;
@@ -73,11 +62,6 @@ export default function HomeInfo({
     useState(null);
 
   const scrollToContact = useRef();
-  if(!config)
-  {
-    return (<Alert>Error getting backend</Alert>)
-  }
-
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
@@ -87,14 +71,16 @@ export default function HomeInfo({
   }, [])
   return (
     <>
+    {selectedNetwork && 
         <ShowMobileOnly>
           <div className="homeinfo__search-section">
             <NavHeader selectedNetwork={selectedNetwork} pageName={'HomeInfo'}/>
             <AdvancedFilters isHome={true}/>
           </div>
         </ShowMobileOnly>
-
+      }
       {!currentUser && <SupportBanner scrollToContact={scrollToContact}/>}
+      {selectedNetwork && 
       <div className='homeinfo__container'>
           <div className="homeinfo__content">                
 
@@ -146,6 +132,8 @@ export default function HomeInfo({
                         onClick={()=>router.push('Explore')}
                       />
 
+                      <InstallButton/>
+
                       <Btn
                         btnType={BtnType.corporative}
                         contentAlignment={ContentAlignment.center}
@@ -196,7 +184,7 @@ export default function HomeInfo({
                     <div className="homeinfo__description">
                           {t('homeinfo.adminInstructions')}
                         <div className="homeinfo__users">
-                          {selectedNetwork.administrators.map((user, idx) => {
+                          {(selectedNetwork && selectedNetwork.administrators) && selectedNetwork.administrators.map((user, idx) => {
                               return (
                                 <LinkAdminProfile user={user} key={idx}/>
                               )
@@ -215,8 +203,8 @@ export default function HomeInfo({
                     <hr></hr>
                     <div className="homeinfo__description">
                       {t('homeinfo.buttons', [
-                        selectedNetwork.buttonCount,
-                        config.userCount.toString(),
+                        selectedNetwork?.buttonCount,
+                        config?.userCount.toString(),
                       ])}
                       <div className="homeinfo__hashtags">
                         <ListButtonTypes selectedNetwork={selectedNetwork} pageName={'HomeInfo'}/>
@@ -237,14 +225,12 @@ export default function HomeInfo({
                       {t('homeinfo.popularHashtagsExplain')}
                     </div>
                     <div className="homeinfo__hashtags">
-                    {selectedNetwork.topTags.map((tag, idx) => {
-                        return <div className="hashtag" key={idx} onClick={() => filterTag(tag.tag)}>{tag.tag}</div>;
-                      })}
+                      <TagsNav tags={selectedNetwork.topTags.map((tag) => tag.tag)}/>
                     </div>
                   </div>
 
                   {/* HASHTAGS CARD OF NETWORK CONFIGURATION  */}
-                  {selectedNetwork.tags.count >= 0  &&    
+                  {selectedNetwork?.tags && selectedNetwork?.tags.length >= 0  &&    
                   
                     <div className="homeinfo-card">
                       <div className="homeinfo-card__header">
@@ -254,9 +240,7 @@ export default function HomeInfo({
                       </div>
                       <hr></hr>
                       <div className="homeinfo__hashtags">
-                      {selectedNetwork.tags.map((tag, idx) => {
-                          return <div className="hashtag" key={idx} onClick={() => filterTag(tag)}>{tag}</div>;
-                        })}
+                        <TagsNav tags={selectedNetwork.tags}/>
                       </div>
                     </div>
                   }
@@ -329,6 +313,7 @@ export default function HomeInfo({
                 </div>
         </div>
       </div>
+      }
     </>
   );
 }

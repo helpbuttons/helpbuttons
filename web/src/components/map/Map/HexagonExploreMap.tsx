@@ -32,6 +32,8 @@ export default function HexagonExploreMap({
   const maxButtonsHexagon = useRef(1)
   const [isRedrawingMap, setIsRedrawingMap] = useState(true)
 
+  const showMarkersZoom = maxZoom - 2;
+
   const hexagonClicked = useStore(
     store,
     (state: GlobalState) => state.explore.settings.hexagonClicked
@@ -139,7 +141,7 @@ export default function HexagonExploreMap({
                           opacity: 0.1,
                         };
                       }
-                      if (exploreSettings.zoom == maxZoom ) {
+                      if (exploreSettings.zoom >= showMarkersZoom ) {
                         return {
                           fill: 'transparent',
                           strokeWidth: '5',
@@ -186,7 +188,7 @@ export default function HexagonExploreMap({
         show count of buttons per hexagon
         */}
             {!isRedrawingMap &&
-              !(exploreSettings.zoom == maxZoom) &&
+              !(exploreSettings.zoom >= showMarkersZoom) &&
               geoJsonFeatures.map((hexagonFeature) => {
                 if (hexagonFeature.properties.count > 0) {
                   return (
@@ -222,7 +224,7 @@ export default function HexagonExploreMap({
             {/* draw clicked hexagon */}
             {!isRedrawingMap &&
               hexagonClickedFeatures &&
-              !(exploreSettings.zoom == maxZoom) && (
+              !(exploreSettings.zoom >= showMarkersZoom) && (
                 <Overlay
                   anchor={hexagonClickedFeatures.properties.center}
                   offset={[20, 0]}
@@ -269,14 +271,11 @@ export default function HexagonExploreMap({
                   </div>
                 </Overlay>
               )}
-            {exploreSettings.zoom == maxZoom &&
-              boundsFilteredButtons.map((button, idx) => {
+            {exploreSettings.zoom >= showMarkersZoom && 
+              boundsFilteredButtons.filter(button => { return button.hideAddress ? false : button}).map((button, idx) => {
                 const btnType = buttonTypes.find((type) => {
                   return type.name == button.type;
                 });
-                if(button.hideAddress || !btnType) {
-                  return (<></>)
-                }
                 return (
                   <MarkerButton
                     key={idx}

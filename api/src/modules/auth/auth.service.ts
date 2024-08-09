@@ -217,8 +217,8 @@ export class AuthService {
     };
     return accesstoken;
   }
-  async getCurrentUser(userId) {
-    return this.userService.findById(userId);
+  getCurrentUser(userId) {
+    return this.userService.findById(userId, true);
   }
 
   async update(data: UserUpdateDto, currentUser) {

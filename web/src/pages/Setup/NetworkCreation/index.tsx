@@ -3,7 +3,6 @@ import Popup from 'components/popup/Popup';
 import t from 'i18n';
 import router from 'next/router';
 import { GlobalState, store } from 'pages';
-import Configuration from 'pages/Configuration';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
@@ -43,7 +42,8 @@ function NetworkCreation() {
       currency: 'EUR',
       locale: 'en',
       nomeclature: 'Helpbutton',
-      nomeclaturePlural: 'Helpbuttons'
+      nomeclaturePlural: 'Helpbuttons',
+      requireApproval: false
     },
   });
 
@@ -71,7 +71,8 @@ function NetworkCreation() {
           currency: data.currency,
           nomeclature: data.nomeclature,
           nomeclaturePlural: data.nomeclaturePlural,
-          locale: data.locale
+          locale: data.locale,
+          requireApproval: data.requireApproval
         },
         () => {
           const onComplete = () => {

@@ -1,4 +1,5 @@
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import t from 'i18n';
@@ -21,11 +22,12 @@ export default function MessageNew({
     watch,
     setFocus,
     formState: { errors, isSubmitting },
-  } = useForm({ defaultValues: { message: '' } });
+  } = useForm({ defaultValues: { message: '', images: [] } });
 
   const onSubmitLocal = (data) => {
     setValue('message', '');
-    onCreate(data.message);
+    setValue('images', []);
+    onCreate(data.message, data.images);
   };
 
   useEffect(() => {
@@ -81,6 +83,14 @@ export default function MessageNew({
                 </label>
               </div>
             )}
+            <FieldImageUploads 
+              defaultImages={watch('images')}
+              name='images'
+              text={t('button.imagesText')} 
+              maxNumber={5}
+              setValue={(images) => setValue('images', images)}
+              validationError={null}
+            />
           </div>
           <Btn
               submit={true}

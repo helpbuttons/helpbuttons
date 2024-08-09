@@ -152,6 +152,7 @@ export default function ButtonForm({
                 setValue('tags', tags);
               }}
               tags={watch('tags')}
+              maxTags={5}
             />
             <FieldImageUploads 
             defaultImages={watch('images')}

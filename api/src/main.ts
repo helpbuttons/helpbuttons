@@ -16,7 +16,41 @@ import {
 import configs from './config/configuration';
 import { GlobalVarHelper } from './shared/helpers/global-var.helper';
 import { checkDatabase } from './shared/helpers/config.helper';
+import { CallHandler, ExecutionContext, Injectable, PlainLiteralObject } from '@nestjs/common';
+import { map, Observable } from 'rxjs';
+import { Role } from './shared/types/roles';
+  
+@Injectable()
+export class RolesSerializerInterceptor extends ClassSerializerInterceptor {
 
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler
+  ): Observable<any> {
+    const userRole  = context.switchToHttp().getRequest().user?.role ?? Role.guest;
+    let requiredRoles = this.reflector.getAllAndOverride(
+      'roles',
+      [context.getHandler(), context.getClass()],
+    );
+    const contextOptions = this.getContextOptions(context);
+    const options = {
+      ...this.defaultOptions,
+      ...contextOptions,
+    };
+    if(userRole == Role.admin)
+    {
+      return next
+      .handle()
+    }
+    return next
+      .handle()
+      .pipe(
+        map((res: PlainLiteralObject | PlainLiteralObject[]) =>
+          this.serialize(res, options)
+        )
+      );
+  }
+}
 export const bootstrap = async () => {
   /**
    * README: Calling initializeTransactionalContext and or patchTypeORMRepositoryWithBaseRepository must happen BEFORE any application context is initialized!
@@ -35,7 +69,7 @@ export const bootstrap = async () => {
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(
+  app.useGlobalInterceptors(new RolesSerializerInterceptor(
     app.get(Reflector))
   );
   app.useGlobalFilters(new HttpExceptionFilter());

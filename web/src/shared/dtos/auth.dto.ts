@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -6,7 +7,8 @@ import {
   Matches,
   MinLength,
   IsOptional,
-  IsArray
+  IsArray,
+  IsIn
 } from 'class-validator';
 
 const specialCharRegex = /(?=.*[!@#$%^&*()_\-+=].*[!@#$%^&*()_\-+=])/;
@@ -34,6 +36,7 @@ export class SignupRequestDto {
     format: 'email',
   })
   @IsEmail()
+  @Transform((email) => email.value.toLowerCase())
   email: string;
 
   @ApiProperty({
@@ -88,21 +91,16 @@ export class SignupRequestDto {
   // @IsString({ each: true })
   // interests: [string];
 
-  avatar: string;
+  avatar?: string;
 
   @IsNotEmpty()
   @IsString()
   locale: string;
 
-  inviteCode: string;
+  inviteCode?: string;
 
-  @ApiProperty({
-    type: [String],
-    required: false,
-  })
-  @IsOptional()
-  @IsArray({})
-  tags: string[];
+  @IsIn(['yes'])
+  acceptPrivacyPolicy
 }
 
 export class LoginRequestDto {
@@ -116,6 +114,7 @@ export class LoginRequestDto {
     format: 'email',
   })
   @IsEmail()
+  @Transform((email) => email.value.toLowerCase())
   email: string;
 
   @ApiProperty({

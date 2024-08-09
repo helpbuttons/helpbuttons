@@ -21,9 +21,9 @@ export function LinkProfile({ username, avatar, name, extra = <></>}) {
             <div className="card-button__name">
               <Link href={`/p/${username}`}>
                 {name}{' '}
-                <span className="card-button__username">
+                {/* <span className="card-button__username">
                   @{username}
-                </span>
+                </span> */}
               </Link>
             </div>
             {extra}

@@ -2,7 +2,7 @@ import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import FieldDate from 'elements/Fields/FieldDate';
 import FieldNumber from 'elements/Fields/FieldNumber';
 import t from 'i18n';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export default function FieldCustomFields({
   customFields,
@@ -13,13 +13,50 @@ export default function FieldCustomFields({
   errors,
   currency,
 }) {
+  
   const renderFields = () => {
     return customFields.map((fieldProps, key) => {
       const type = fieldProps.type;
       let field = <>{JSON.stringify(fieldProps)}</>;
       if (type == 'price') {
-        const price = watch('price');
+        field = <FieldPrice price={watch('price')} currency={currency} watch={watch} setValue={setValue} setFocus={setFocus} errors={errors} register={register}/>
+        
+      }
+      if (type == 'event') {
         field = (
+          <>
+            <FieldDate
+              eventType={watch('eventType')}
+              setEventType={(value) => setValue('eventType', value)}
+              eventStart={watch('eventStart')}
+              eventEnd={watch('eventEnd')}
+              eventData={watch('eventData')}
+              setEventData={(value) => setValue('eventData', value)}
+              setEventStart={(value) => setValue('eventStart', value)}
+              setEventEnd={(value) => {
+                setValue('eventEnd', value);
+              }}
+              title={t('button.whenLabel')}
+              register={register}
+            />
+          </>
+        );
+      }
+      return <div key={key}>{field}</div>;
+    });
+  };
+
+  return <>{renderFields()}</>;
+}
+
+function FieldPrice({price, currency, watch, setValue, setFocus, errors, register}) {
+  useEffect(() => {
+    if(price !== 0 && !price)
+    {
+      setValue('price', 0)
+    }
+  }, [])
+  return (
           <>
             {price != -1 && (
               <FieldNumber
@@ -49,30 +86,4 @@ export default function FieldCustomFields({
             />
           </>
         );
-      }
-      if (type == 'event') {
-        field = (
-          <>
-            <FieldDate
-              eventType={watch('eventType')}
-              setEventType={(value) => setValue('eventType', value)}
-              eventStart={watch('eventStart')}
-              eventEnd={watch('eventEnd')}
-              eventData={watch('eventData')}
-              setEventData={(value) => setValue('eventData', value)}
-              setEventStart={(value) => setValue('eventStart', value)}
-              setEventEnd={(value) => {
-                setValue('eventEnd', value);
-              }}
-              title={t('button.whenLabel')}
-              register={register}
-            />
-          </>
-        );
-      }
-      return <div key={key}>{field}</div>;
-    });
-  };
-
-  return <>{renderFields()}</>;
 }

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
-const userPattern = /@[\w]+/gi;
+import { userPattern } from 'shared/types/message.helper';
+
 
 export function TextFormatted ({text}) {
 
@@ -11,9 +12,9 @@ export function TextFormatted ({text}) {
 
 }
 
-export function formatMessage(text) {
+export function formatMessage(text, mentions = []) {
   const aRef = useRef();
-  const content = linkify(text);
+  const content = linkify(text, mentions);
 
   useEffect(() => {
     if (aRef == null) return;
@@ -22,28 +23,20 @@ export function formatMessage(text) {
   return <div ref={aRef} />;
 }
 
-function linkify(text) {
+function linkify(text, mentions) {
   var urlPattern =
     /(?:https?:)?\/\/(?:(?:[\w-]+\.)+[\w/#@~.-]*)(?:\?(?:[\w&=.!,;$#%-]+)?)?/gi;
 
   
-  text = text.replace(userPattern, function (user) {
+  text = text.replace(userPattern, function (atUsername) {
+    const username = atUsername.substring(1)
+    const user = mentions.find((mentionUser) => mentionUser.username == username)
+    const name = user ? user.name :  atUsername
     return (
-      '<a href="/p/' + user.substring(1) + '">' + user + '</a>'
+      `<a href="/p/${username}">${name}</a>`
     );
   });
   return (text || '').replace(urlPattern, function (url) {
     return '<a href="' + url + '">' + url + '</a>';
   });
-}
-
-export function mentionsOfMessage(message, username) {
-  const matches = message.match(userPattern)
-  if(!matches)
-  {
-    return []
-  }
-
-  const usersNames = matches.map((user) => user.substring(1))
-  return usersNames.filter((usernm) => usernm != username )
 }

@@ -13,11 +13,15 @@ export default function ActivityCardNewPost({ post, isRead, button }) {
     false,
   );
   let title = t(
-    'activities.newpost',
+    'activitiesWithSubject.newpost',
     [post.author.name, button.title],
     true,
   )
   
+  if (loggedInUser && loggedInUser.id == button.owner.id) {
+    title = t('activities.newpost', [button.title], true);
+  }
+
   return (
     <NotificationCard
       type={t('activities.creatorUpdate')}

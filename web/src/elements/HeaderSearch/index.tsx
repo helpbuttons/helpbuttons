@@ -8,6 +8,7 @@ import { useButtonTypes } from 'shared/buttonTypes';
 import { customFieldsFiltersText } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
+import { readableDistance } from 'shared/sys.helper';
 
 ///search button in explore and home
 export function HeaderSearch({ results, toggleAdvancedFilters}) {
@@ -39,7 +40,8 @@ export function HeaderSearch({ results, toggleAdvancedFilters}) {
             />
             
             <SearchInfo
-              what={exploreMapState.filters.query}
+              query={exploreMapState.filters.query}
+              tags={exploreMapState.filters.tags}
               filters={exploreMapState.filters}
             />
             <div className="header-search__icons">
@@ -82,7 +84,7 @@ function SearchText({ count, where , filtering=false}) {
     {
       return t('buttonFilters.selectedArea');
     }else if (where.address && where.radius) {
-      return `${t('common.in')} ${where.address} · ${where.radius}km`;
+      return `${t('common.in')} ${where.address} · ${readableDistance(where.radius)}`;
     }else if (filtering) {
       return `${t('buttonFilters.filteredSearch')}`;
     }else if(selectedNetwork?.buttonCount != count){
@@ -102,13 +104,16 @@ function SearchText({ count, where , filtering=false}) {
   );
 }
 
-function SearchInfo({ filters, what }) {
+function SearchInfo({ filters, query, tags }) {
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
     false,
   );
 
+  if(!selectedNetwork)
+    return ''
+    
   const helpButtonTypes = selectedNetwork.buttonTemplates;
   const types = (buttonTypes) => {
     if (buttonTypes.length < 1) {
@@ -130,10 +135,12 @@ function SearchInfo({ filters, what }) {
 
     return what + ' · ';
   };
-  
+  const whichTags = (tags) => {
+    return (tags ? ' · ' : '' )+ tags.join(' · ')
+  }
   return (
     <div className="header-search__info">
-      {whatText(what)} {types(filters.helpButtonTypes)} {customFieldsFiltersText(filters, selectedNetwork.currency)}
+      {whatText(query)} {types(filters.helpButtonTypes)} {whichTags(tags)} {customFieldsFiltersText(filters, selectedNetwork.currency)}
     </div>
   );
 }

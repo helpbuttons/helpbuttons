@@ -82,8 +82,12 @@ export class UserService {
     return httpService.post<any>(`users/updateRole/${userId}/${newRole}`);
   }
 
-  public static moderationList(): Observable<any> {
-    return httpService.get<any>(`users/moderationList`);
+  public static moderationList(page): Observable<any> {
+    return httpService.get<any>(`users/moderationList/${page}`);
+  }
+
+  public static users(): Observable<any> {
+    return httpService.get<any>(`users`);
   }
 
   public static unsubscribe(email : string): Observable<any> {
@@ -96,6 +100,10 @@ export class UserService {
 
   public static followTag(tag : string): Observable<any> {
     return httpService.post<any>(`users/followTag/${tag}`);
+  }
+
+  public static followTags(tags : string): Observable<any> {
+    return httpService.post<any>(`users/followTags/${tags}`);
   }
 
   public static findExtra(userId: string)

@@ -89,3 +89,23 @@ export const useBackButton = (callback) => {
     };
   }, [handleBackButton]);
 };
+
+export default function useComponentVisible(initialIsVisible) {
+  const [showSubmenu, setShowSubmenu] = useState(initialIsVisible);
+  const ref = useRef(null);
+
+  const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setShowSubmenu(false);
+      }
+  };
+
+  useEffect(() => {
+      document.addEventListener('click', handleClickOutside, true);
+      return () => {
+          document.removeEventListener('click', handleClickOutside, true);
+      };
+  }, []);
+
+  return { ref, showSubmenu, setShowSubmenu };
+}

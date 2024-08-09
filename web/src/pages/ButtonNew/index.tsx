@@ -12,13 +12,28 @@ import { CreateNewPost } from 'state/Posts';
 import { readableDate } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
-import { setMetadata, setMetadatai18n } from 'services/ServerProps';
+import { setMetadata } from 'services/ServerProps';
 import { useStore } from 'store/Store';
 import { latLngToCell } from 'h3-js';
 import { maxResolution } from 'shared/types/honeycomb.const';
-import { setSSRLocale } from 'shared/sys.helper';
+import Loading, { LoadabledComponent } from 'components/loading';
 
-export default function ButtonNew({metadata,selectedNetwork,config}) {
+export default function ButtonNew({ metadata }) {
+  const selectedNetwork = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+    null
+  );
+  return (
+    <>
+    {selectedNetwork ? 
+      <ButtonNewForm selectedNetwork={selectedNetwork} />
+     : <Loading/>
+    }
+    </>
+  );
+}
+function ButtonNewForm({ selectedNetwork }) {
   const defaultValues = {
     image: null,
     description: '',
@@ -64,10 +79,6 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
     );
   };
 
-  const jumpToExploreButton = (buttonData) => {
-    const cell = latLngToCell(buttonData.latitude, buttonData.longitude, maxResolution)
-    router.push(`/Explore?lat=${buttonData.latitude}&lng=${buttonData.longitude}&hex=${cell}`);
-  }
   const onSuccess = (buttonData : Button) => {
     store.emit(new SaveButtonDraft(defaultValues));
     store.emit(
@@ -77,14 +88,19 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
           message: t('button.firstPost', [readableDate(buttonData.created_at)], true)
         },
         (data) => {
-          alertService.success(t('button.created'))
-          store.emit(new UpdateCachedHexagons([]))
-          jumpToExploreButton(buttonData)
+          if(buttonData.awaitingApproval)
+          {
+            setIsSubmitting(() => false)
+            router.push(`/ButtonFile/${buttonData.id}`);
+          }else{
+            alertService.success(t('button.created'))
+            store.emit(new UpdateCachedHexagons([]))
+            router.push(`/ButtonFile/${buttonData.id}`);
+          }
         },
         (errorMessage) => {
           alertService.error(t('button.errorCreated'))
           console.error(errorMessage)
-          // jumpToExploreButton(buttonData)
         },
       ),
     );    
@@ -130,11 +146,6 @@ export default function ButtonNew({metadata,selectedNetwork,config}) {
   );
 }
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  setSSRLocale(ctx.locale);
-  return setMetadata(t('menu.create'), ctx)
-};
-
 
 function useButtonDraft({watch, getValues, reset, defaultValues}) {
   const buttonDraft = useStore(
@@ -175,3 +186,7 @@ function useButtonDraft({watch, getValues, reset, defaultValues}) {
 
   return {loadedDraft}
 }
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  return setMetadata(t('menu.create'), ctx)
+};
