@@ -222,7 +222,9 @@ function NetworkForm({
 
           </Accordion>
 
-          <Accordion collapsed={hasErrors('configuration')} title={t('configuration.configureNetwork')}>
+          <Accordion collapsed={true} 
+          // collapsed={hasErrors('configuration')} title={t('configuration.configureNetwork')}
+          >
 
             {/* BUTTON TYPES */}
           
@@ -250,16 +252,16 @@ function NetworkForm({
             <FieldAreaMap
               label={t('configuration.locationLabel')}
               explain={t('configuration.locationExplain')}
-              marker={{
-                caption: watch('name'),
-                image: watch('logo'),
-              }}
+              // marker={{
+              //   caption: watch('name'),
+              //   image: watch('logo'),
+              // }}
               validationError={errors.exploreSettings}
               onChange={(exploreSettings) => {
                 setValue('exploreSettings', exploreSettings);
               }}
               value={watch('exploreSettings')}
-              markerColor={watch('backgroundColor')}
+              // markerColor={watch('backgroundColor')}
             />
 
             <FieldTags
