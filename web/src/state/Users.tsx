@@ -8,7 +8,7 @@ import { IUser } from 'services/Users/types';
 import { UserService } from 'services/Users';
 
 import { HttpService, isHttpError } from 'services/HttpService';
-import { SignupRequestDto } from 'shared/dtos/auth.dto';
+import { SignupQRRequestDto, SignupRequestDto } from 'shared/dtos/auth.dto';
 import { GlobalState, store } from 'pages';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { handleError } from './helper';
@@ -414,6 +414,25 @@ export class GetAdminPhone implements WatchEvent {
         this.onSuccess(data);
       }),
       catchError((error) => handleError(this.onError, error)),
+    );
+  }
+}
+
+export class SignupQR implements WatchEvent {
+  public constructor(
+    private signupQRRequestDto: SignupQRRequestDto,
+    private onSuccess,
+    private onError,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.signupQR(this.signupQRRequestDto).pipe(
+      map((token) => {
+        if (token) {
+          return new FetchUserData(this.onSuccess, this.onError);
+        }
+      }),
+      catchError((error) => handleError(this.onError,error))
     );
   }
 }

@@ -115,21 +115,21 @@ function NetworkForm({
               {...register('description', { required: true })}
             />
             <FieldCheckbox
-                    name='inviteOnly'
-                    label={t('invite.inviteOnlyLabel')}
-                    explain={t('invite.inviteOnlyExplain')}
-                    defaultValue={watch('inviteOnly')}
-                    text={t('invite.inviteOnly')}
-                    onChanged={(value) => setValue('inviteOnly', value)}
+              name='inviteOnly'
+              label={t('invite.inviteOnlyLabel')}
+              explain={t('invite.inviteOnlyExplain')}
+              defaultValue={watch('inviteOnly')}
+              text={t('invite.inviteOnly')}
+              onChanged={(value) => setValue('inviteOnly', value)}
             />
 
             <FieldCheckbox
-                    name='requireApproval'
-                    label={t('moderation.requireApprovalLabel')}
-                    explain={t('moderation.requireApprovalExplain')}
-                    defaultValue={watch('requireApproval')}
-                    text={t('moderation.requireApproval')}
-                    onChanged={(value) => setValue('requireApproval', value)}
+              name='requireApproval'
+              label={t('moderation.requireApprovalLabel')}
+              explain={t('moderation.requireApprovalExplain')}
+              defaultValue={watch('requireApproval')}
+              text={t('moderation.requireApproval')}
+              onChanged={(value) => setValue('requireApproval', value)}
             />
             <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
 

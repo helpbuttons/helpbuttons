@@ -7,14 +7,11 @@ import router, { useRouter } from 'next/router';
 import { Logout } from 'state/Users';
 import Link from 'next/link';
 import {
-  IoAlarm,
   IoBuildOutline,
   IoCreateOutline,
   IoHammerOutline,
-  IoHandLeftOutline,
   IoLogOutOutline,
-  IoPersonAddOutline,
-  IoTrashBinOutline,
+  IoQrCodeOutline,
 } from 'react-icons/io5';
 import Btn, { IconType } from 'elements/Btn';
 import { UserService } from 'services/Users';
@@ -64,15 +61,15 @@ export default function Profile() {
                         caption={t('user.editProfile')}
                       />
                     </Link>
-                    {selectedNetwork?.inviteOnly && 
+                    {/* {selectedNetwork?.inviteOnly &&  */}
                       <Link href="/Profile/Invites">
                         <Btn
                           iconLeft={IconType.svg}
-                          iconLink={<IoPersonAddOutline />}
+                          iconLink={<IoQrCodeOutline/>}
                           caption={t('invite.title')}
                         />
                       </Link>
-                    }
+                    {/* } */}
                     {loggedInUser?.role == Role.admin && 
                       <AdminOptions/>
                     }

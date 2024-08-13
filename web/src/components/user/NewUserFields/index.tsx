@@ -17,6 +17,7 @@ export default function NewUserFields({
   control,
   setValue,
   watch,
+  short = false,
 }) {
   const [hostname, setHostname] = useState('');
   const selectedNetwork: Network = useStore(
@@ -58,15 +59,17 @@ export default function NewUserFields({
 
   return (
     <>
-      <FieldText
-        name="email"
-        label={t('user.email')}
-        explain={t('user.emailExplain')}
-        classNameInput="squared"
-        placeholder={t('user.emailPlaceHolder')}
-        validationError={errors.email}
-        {...register('email', { required: true })}
-      ></FieldText>
+      {!short && 
+        <FieldText
+          name="email"
+          label={t('user.email')}
+          explain={t('user.emailExplain')}
+          classNameInput="squared"
+          placeholder={t('user.emailPlaceHolder')}
+          validationError={errors.email}
+          {...register('email', { required: true })}
+        ></FieldText>
+      }
       <FieldText
         name="name"
         label={t('user.name')}
@@ -76,18 +79,21 @@ export default function NewUserFields({
         validationError={errors.name}
         {...register('name', { required: true })}
       ></FieldText>
-      <FieldText
-        name="username"
-        label={`${t('user.username')} ${watch(
-          'username',
-        )}@${hostname}`}
-        explain={t('user.usernameCreateExplain')}
-        classNameInput="squared"
-        placeholder={t('user.usernamePlaceHolder')}
-        validationError={errors.username}
-        {...register('username', { required: true })}
-      ></FieldText>
-      <FieldPassword
+      {!short &&
+        <FieldText
+          name="username"
+          label={`${t('user.username')} ${watch(
+            'username',
+          )}@${hostname}`}
+          explain={t('user.usernameCreateExplain')}
+          classNameInput="squared"
+          placeholder={t('user.usernamePlaceHolder')}
+          validationError={errors.username}
+          {...register('username', { required: true })}
+        ></FieldText>
+      }
+      {!short &&
+        <FieldPassword
         name="password"
         explain={t('user.passwordExplain')}
         label={t('user.password')}
@@ -96,6 +102,8 @@ export default function NewUserFields({
         validationError={errors.password}
         {...register('password', { required: true, minLength: 8 })}
       ></FieldPassword>
+      }
+      
       {selectedNetwork && (
           <FieldTags
             label={t('user.tags')}

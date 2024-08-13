@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { SignupRequestDto } from './auth.dto';
+import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
 import { UserService } from '../user/user.service';
 import {
   dbIdGenerator,
@@ -40,6 +40,29 @@ export class AuthService {
     private readonly inviteService: InviteService,
   ) {}
 
+  async signupQR(signupQRUserDto: SignupQRRequestDto) {
+    console.log(signupQRUserDto)
+    return this.inviteService.isInviteCodeValid(signupQRUserDto.qrCode)
+    .then((validInviteCode) => {
+      if(!validInviteCode)
+      {
+        throw new CustomHttpException(ErrorName.InvalidQrCode)
+      }
+      return {
+        username: signupQRUserDto.username,
+        email: signupQRUserDto.qrCode,
+        name: signupQRUserDto.name,
+        password: signupQRUserDto.qrCode,
+        locale: signupQRUserDto.locale,
+        acceptPrivacyPolicy: signupQRUserDto.acceptPrivacyPolicy
+      }
+    })
+    .then((signupUserDto: SignupRequestDto) => {
+      return this.signup(signupUserDto)
+    })
+    
+    
+  }
   async signup(signupUserDto: SignupRequestDto) {
     const verificationToken = publicNanoidGenerator();
     let emailVerified = false;

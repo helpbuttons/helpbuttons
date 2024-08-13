@@ -476,11 +476,13 @@
     "inviteOnlyNetwork": "Sólo puedes registrarte en esta red con una invitación.",
     "generate": "Crear nuevo link de invitación",
     "copied": "Link de invitación copiado {0}",
-    "title": "Invitaciones",
+    "title": "Invitaciones QR",
     "description": "Invita a personas, administra y comparte enlaces con otras personas para permitirles acceder a tu red",
     "inviteOnlyLabel": "Privacidad de la red",
-    "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con invitación.",
-    "inviteOnly": "Sólo permitir el registro con una invitación"
+    "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con un código QR.",
+    "inviteOnly": "Sólo permitir el registro con un código QR",
+    "generateQr": "QR",
+    "registered": "QR usado"
   },
   "customFields": {
     "priceLabel": "Precio ({0})",

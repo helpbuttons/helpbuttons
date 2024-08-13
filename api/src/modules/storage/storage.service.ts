@@ -103,7 +103,6 @@ export class StorageService {
   }
 
   storageMultipleImages(images) {
-    console.log('there are images: ' + images.length)
     if (images?.length > 0) {
       return Promise.all(
         images

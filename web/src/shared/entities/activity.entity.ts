@@ -24,4 +24,8 @@ export class Activity extends BaseEntity {
     default: false,
   })
   read: boolean
+
+  @Column({default: false})
+  homeinfo: boolean;
+  
 }

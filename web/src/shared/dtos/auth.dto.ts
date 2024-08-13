@@ -99,6 +99,50 @@ export class SignupRequestDto {
 
   inviteCode?: string;
 
+    @ApiProperty({
+    type: [String],
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({})
+  tags?: string[];
+
+  @IsIn(['yes'])
+  acceptPrivacyPolicy
+}
+
+
+export class SignupQRRequestDto {
+  @ApiProperty({
+    default: '',
+    type: String,
+    required: true,
+  })
+  @IsString()
+  username: string;
+
+  @ApiProperty({
+    default: '',
+    type: String,
+    nullable: true,
+  })
+  @IsString()
+  name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  locale: string;
+
+  qrCode: string;
+
+    @ApiProperty({
+    type: [String],
+    required: false,
+  })
+  @IsOptional()
+  @IsArray({})
+  tags?: string[];
+
   @IsIn(['yes'])
   acceptPrivacyPolicy
 }

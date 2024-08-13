@@ -466,13 +466,15 @@
     "maximumUsageTimes": "Number of usages",
     "nolimit": "Without limit",
     "inviteOnlyNetwork": "You can only signup in this network with an invitation",
-    "generate": "Generate new invitation link",
+    "generate": "Generate new invitation",
     "copied": "Invitation link copied to clipboard {0}",
-    "title": "Invites",
+    "title": "QR invites",
     "description": "Invite people, manage and share links with other people to allow them to access your network",
-    "inviteOnlyLabel": "Network privacy",
-    "inviteOnlyExplain": "If you enable this, users will only be able to register and publish with invitation. They will still see the _helpbuttons_.",
-    "inviteOnly": "Only allow signup with an invitation"
+    "inviteOnlyLabel":"Network privacy",
+    "inviteOnlyExplain":"If you enable this, users will only be able to register and publish if they use a QR code. They will still see the _helpbuttons_.",
+    "inviteOnly": "Only allow signup with an QR code",
+    "generateQr": "Get QR",
+    "registered": "Qr code already registered"
   },
   "customFields": {
     "priceLabel": "Price ({0})",
