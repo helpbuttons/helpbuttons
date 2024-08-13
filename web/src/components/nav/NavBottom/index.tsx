@@ -10,6 +10,7 @@ import t from 'i18n';
 import { GlobalState, store } from 'pages';
 import { useStore } from 'store/Store';
 import { RecenterExplore } from 'state/Explore';
+import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
 
 export default NavBottom;
 
@@ -76,8 +77,9 @@ function NavBottom({loggedInUser, pageName}) {
           </NavLink>
 
           {!loggedInUser && (
-            <NavLink
-              href="/Signup"
+            <div
+              // href="/Signup"
+              onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.SIGNUP))}
               className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
                 'Signup',
               )}`}
@@ -86,7 +88,7 @@ function NavBottom({loggedInUser, pageName}) {
                 <IoPersonAddOutline />
               </div>
               <div className="nav-bottom__text">{t('menu.signup')}</div>
-            </NavLink>
+            </div>
           )}
 
           {loggedInUser && (
@@ -128,8 +130,8 @@ function NavBottom({loggedInUser, pageName}) {
           )}
 
           {!loggedInUser && (
-            <NavLink
-              href="/Login"
+            <div
+              onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))}
               className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
                 'Login',
               )}`}
@@ -140,7 +142,7 @@ function NavBottom({loggedInUser, pageName}) {
               <div className="nav-bottom__text">
                 {t('menu.login')}
               </div>
-            </NavLink>
+            </div>
           )}
         </nav>
     </>

@@ -17,6 +17,7 @@ import { useStore } from 'store/Store';
 import { latLngToCell } from 'h3-js';
 import { maxResolution } from 'shared/types/honeycomb.const';
 import Loading, { LoadabledComponent } from 'components/loading';
+import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
 
 export default function ButtonNew({ metadata }) {
   const selectedNetwork = useStore(
@@ -109,10 +110,11 @@ function ButtonNewForm({ selectedNetwork }) {
     if (err.errorName == ErrorName.NeedToBeRegistered) {
       store.emit(new SaveButtonDraft(getValues()));
       alertService.error(err.caption);
-      Router.push({
-        pathname: '/Login',
-        query: { returnUrl: 'ButtonNew' },
-      });
+      store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))
+      // Router.push({
+      //   pathname: '/Login',
+      //   query: { returnUrl: 'ButtonNew' },
+      // });
     }else if(err.errorName == ErrorName.invalidDates){
       alertService.error(t('button.invalidDates'))
     }else if(err.errorName == ErrorName.InvalidMimetype){

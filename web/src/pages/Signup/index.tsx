@@ -30,6 +30,7 @@ import FieldText from 'elements/Fields/FieldText';
 import { Network } from 'shared/entities/network.entity';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
+import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
 
 export default function Signup() {
   const {
@@ -78,14 +79,11 @@ export default function Signup() {
           onError,
         ),
       );
-    // }
+    
   };
 
   const onSuccess = (userData) => {
-    const returnUrl: string = router.query.returnUrl
-      ? router.query.returnUrl.toString()
-      : '/Explore';
-    router.push(returnUrl, null, { locale: userData.locale })
+    store.emit(new SetEnteringMode(EnteringPickerMode.HIDE))
   };
 
   const onError = (error) => {
@@ -105,14 +103,10 @@ export default function Signup() {
   }, [router])
 
   if(selectedNetwork?.inviteOnly && !inviteCode) {
-    return (
-      <Popup title="Signup" linkFwd="/HomeInfo">
-        {t('invite.inviteOnlyNetwork')}
-      </Popup>
+    return (<>{t('invite.inviteOnlyNetwork')}</>
     )
   }
   return (
-    <Popup title={t('user.signup')} linkFwd="/HomeInfo">
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
         <div className="login__form">
           <div className="form__inputs-wrapper">
@@ -135,14 +129,13 @@ export default function Signup() {
               />
             </div>
             <div className="popup__link">
-              <Link href={`/Login?${params.toString()}`}>
+              <div onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))} className={`nav-bottom__link`}>
                 {t('user.loginLink')}
-              </Link>
+              </div>
             </div>
           </div>
         </div>
       </Form>
-    </Popup>
   );
 }
 

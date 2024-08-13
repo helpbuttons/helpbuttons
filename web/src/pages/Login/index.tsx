@@ -9,9 +9,7 @@ export default Login;
 
 function Login() {
     return (
-        <Popup title={t("user.login")} linkBack={() => router.back()}>
-           <LoginForm/>
-        </Popup>
+        <LoginForm/>
     );
 }
 

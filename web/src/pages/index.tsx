@@ -12,6 +12,7 @@ import { SetupDtoOut } from "services/Setup/config.type";
 import { User } from "shared/entities/user.entity";
 import { Activity } from "shared/entities/activity.entity";
 import { Invite } from "shared/entities/invite.entity";
+import { HomeInfoState, homeInfoStateInitial } from "state/HomeInfo";
 export const metadata: Metadata = {
   title: 'Home',
   description: 'Welcome to Next.js',
@@ -29,7 +30,8 @@ export interface GlobalState {
   showFilters: boolean;
   unreadActivities: number;
   draftNewCommentPost: any;
-  invites: Invite[]
+  invites: Invite[],
+  homeInfo: HomeInfoState,
 }
 
 export const store = new Store<GlobalState>({
@@ -43,7 +45,8 @@ export const store = new Store<GlobalState>({
   showFilters: false,
   unreadActivities: 0,
   draftNewCommentPost: null,
-  invites: []
+  invites: [],
+  homeInfo: homeInfoStateInitial
 });
 
 
