@@ -12,6 +12,7 @@ export enum ImageType {
   cardList,
   cardListVertical,
   buttonCard,
+  buttonCardZoom,
   avatarBig,
   avatarMed,
   preview,
@@ -122,6 +123,17 @@ export default function ImageWrapper({
         alt={alt}
         height={300}
         width={300}
+      />
+    );
+  }
+  if (imageType == ImageType.buttonCardZoom) {
+    return (
+      <HbImage
+        style={{ objectFit: 'cover', objectPosition: 'center' }}
+        src={makeImageUrl(src)}
+        alt={alt}
+        fill={true}
+        
       />
     );
   }

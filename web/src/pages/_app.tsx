@@ -328,12 +328,14 @@ function EnterPicker() {
       {mode == EnteringPickerMode.LOGIN && (
         <Picker
           closeAction={closePopup}
+          headerText={t('user.login')}
         >
           <Login/>
         </Picker>
       )}
       {mode == EnteringPickerMode.SIGNUP && (
         <Picker
+          headerText={t('user.signup')}
           closeAction={closePopup}
         >
           <Signup/>
