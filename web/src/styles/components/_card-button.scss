@@ -430,8 +430,6 @@ $card-button-border-height: $border-general-height;
 }
 
 
-
-
 .card-button__paragraph:first-letter {
   text-transform: uppercase;
 }
@@ -479,6 +477,7 @@ $card-button-border-height: $border-general-height;
     max-height: 400px;
     width: auto;
     object-fit: contain !important;
+    pointer-events: auto;
 
     &:hover{
       cursor: pointer;
@@ -491,6 +490,8 @@ $card-button-border-height: $border-general-height;
   }
   .show{
     display:block;
+    margin: auto;
+    width: fit-content;
   }
 }
 
@@ -507,6 +508,8 @@ $card-button-border-height: $border-general-height;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  background: transparent;
+  pointer-events: none;
   // display: none; //revise if image navigation
 
 }
@@ -514,6 +517,7 @@ $card-button-border-height: $border-general-height;
 .card-button__picture-nav .arrow {
 
   @extend .btn-circle--small !optional;
+  pointer-events: auto;
   padding: 0;
 
 }
@@ -841,6 +845,7 @@ $card-button-border-height: $border-general-height;
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
 
   img {
     max-width: 100%;
@@ -848,6 +853,9 @@ $card-button-border-height: $border-general-height;
     width: auto;
     height: auto;
     object-fit: contain !important;
+    pointer-events: auto;
+    z-index: $z-index-02;
+
   }
 
 }

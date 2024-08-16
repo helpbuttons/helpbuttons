@@ -5430,6 +5430,7 @@ hr {
   width: auto;
   -o-object-fit: contain !important;
      object-fit: contain !important;
+  pointer-events: auto;
 }
 .card-button__picture img:hover {
   cursor: pointer;
@@ -5439,6 +5440,9 @@ hr {
 }
 .card-button__picture .show {
   display: block;
+  margin: auto;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .card-button__picture-nav {
@@ -5452,9 +5456,12 @@ hr {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  background: transparent;
+  pointer-events: none;
 }
 
 .card-button__picture-nav .arrow {
+  pointer-events: auto;
   padding: 0;
 }
 
@@ -5736,6 +5743,7 @@ hr {
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
 }
 .card-button__image-wrapper img {
   max-width: 100%;
@@ -5744,6 +5752,8 @@ hr {
   height: auto;
   -o-object-fit: contain !important;
      object-fit: contain !important;
+  pointer-events: auto;
+  z-index: 200;
 }
 
 .card-notification {
@@ -8094,7 +8104,6 @@ body {
   max-width: 80vw;
   left: 10px;
   top: 10px;
-  z-index: 100;
 }
 
 .search-map__sign {
