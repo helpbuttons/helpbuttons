@@ -50,6 +50,7 @@ export function ImageGallery({ images }) {
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.center}
                   onClick={() => prev()}
+                  extraClass="arrow"
                 />
                 <Btn
                   btnType={BtnType.smallCircle}
@@ -57,6 +58,7 @@ export function ImageGallery({ images }) {
                   iconLeft={IconType.circle}
                   contentAlignment={ContentAlignment.center}
                   onClick={() => next()}
+                  extraClass="arrow"
                 />
               </div>
             )}
