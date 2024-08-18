@@ -5,13 +5,14 @@ import t from 'i18n';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
-import { useState, forwardRef, useEffect } from 'react';
+import { useState, forwardRef, useEffect, useRef } from 'react';
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { AddCustomFields } from '../CustomFields/AddCustomFields';
 import { EmojiPicker } from 'components/emoji';
 import { Picker } from 'components/picker/Picker';
+import PickerField from 'components/picker/PickerField';
 
 
 const FieldButtonTemplates = forwardRef(
@@ -30,43 +31,28 @@ const FieldButtonTemplates = forwardRef(
       watch,
       control,
       register,
+      setValue
     },
     ref,
   ) => {
-    const [color, setColor] = useState('#000');
-    const [text, setText] = useState();
+
 
     const { remove, append, update } = useFieldArray({
       name,
       control,
     });
 
-    const [customFields, setCustomFields] = useState([]);
     const [editFieldIdx, setEditFieldIdx] = useState(null)
     const [editFieldCaption, setEditFieldCaption] = useState(null)
     const [editFieldCssColor, setEditFieldCssColor] = useState(null)
+    const [editFieldEmoji, setEditFieldEmoji] = useState('😀')
 
     let closeMenu = () => {
       setEditFieldIdx(false);
     };
 
-    const [emoji, setEmoji] = useState('😀')
+   
     const watchValue = watch(name);
-    const onAddNewButtonTemplate = () => {
-      if (text && color) {
-        append({
-          caption: text,
-          name: tagify(text),
-          cssColor: color,
-          customFields: customFields,
-          icon: emoji
-        });
-      } else {
-        alertService.warn(
-          t('configuration.templateMissingFields'),
-        );
-      }
-    };
 
     const edit = (value, idx) => {
       setEditFieldIdx(() => idx)
@@ -74,16 +60,16 @@ const FieldButtonTemplates = forwardRef(
       setEditFieldCaption(() => value.caption)
       if(value.icon)
       {
-        setEmoji(() => value.icon)
+        setEditFieldEmoji(() => value.icon)
       }else{
-        setEmoji(() => '😀')
+        setEditFieldEmoji(() => '😀')
       }
     }
 
     const saveEdit = (value) => {
       update(editFieldIdx, {
         ...value, 
-        icon: emoji,
+        icon: editFieldEmoji,
         cssColor: editFieldCssColor, 
         caption: editFieldCaption
       })
@@ -121,8 +107,8 @@ const FieldButtonTemplates = forwardRef(
                       defaultValue={editFieldCaption}
                     />
                     <EmojiPicker
-                     updateEmoji={(newEmoji) => setEmoji(() => newEmoji)} 
-                     pickerEmoji={emoji}
+                     updateEmoji={(newEmoji) => setEditFieldEmoji(() => newEmoji)} 
+                     pickerEmoji={editFieldEmoji}
                      label={t('configuration.buttonTemplateEmoji')}
                      />
 
@@ -175,48 +161,103 @@ const FieldButtonTemplates = forwardRef(
               </div>
             ))}
         </div>
-        <div className="form__field">
-          <div className="form__section-title">{label}</div>
-          <p className="form__explain">{explain}</p>
-        </div>
-        <div className="form__input--button-type-field">
-            <FieldText
-              name={t('configuration.buttonTemplateName')}
-              label={t('configuration.buttonTemplateName')}
-              placeholder={t(
-                'configuration.createButtonTypePlaceholder',
-              )}
-              className="field-text"
-              onChange={(e) => setText(() => e.target.value)}
-            />
-            <EmojiPicker
-              updateEmoji={(newEmoji) => setEmoji(() => newEmoji)} 
-              pickerEmoji={emoji}
-              label={t('configuration.buttonTemplateEmoji')}
-            />
-            <FieldColorPick
-                  name="buttonTemplateColor"
-                  classNameInput="squared"
-                  label={t('configuration.buttonTemplateColor')}
-                  validationError={errors.buttonTemplateColor}
-                  setValue={(name, value) => setColor(value)}
-                  actionName={t('button.pickButtonTemplateColor')}
-                  value={color}
-              />
-              <label className="form__label">{t('configuration.customFields')}:</label>
-              <p className="form__explain">{t('configuration.customFieldsExplain')}</p>
-              <AddCustomFields
-                setCustomFields={setCustomFields}
-              />
-              <Btn
-                caption={t('configuration.addType')}
-                onClick={() => onAddNewButtonTemplate()}
-                btnType={BtnType.corporative}
-              />
-          </div>
+        <ButtonTemplateForm label={label} explain={explain} append={append}/>
+        
       </>
     );
   },
 );
 
 export default FieldButtonTemplates;
+
+
+function ButtonTemplateForm({ label, explain, append }) {
+  const { register, setValue, watch, getValues, reset } = useForm({
+    defaultValues: {
+      emoji: '😀',
+      color: '#000',
+      text: '',
+      customFields: [],
+    },
+  });
+
+  const onAddNewButtonTemplate = ({
+    text,
+    color,
+    customFields,
+    emoji,
+  }) => {
+    if (text && color) {
+      append({
+        caption: text,
+        name: tagify(text),
+        cssColor: color,
+        customFields: customFields,
+        icon: emoji,
+      });
+      alertService.warn(
+        t('configuration.templateNewButtonTemplate', [text, emoji]),
+      );
+      closePopup()
+      reset();
+    } else {
+      alertService.warn(t('configuration.templateMissingFields'));
+    }
+  };
+  const [showForm, setShowForm] = useState(false)
+  const [customFields, setCustomFields] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const closePopup = () => setShowPopup(() => false);
+  const openPopup = () => setShowPopup(() => true);
+
+  return (
+      <PickerField label={''} explain={''} btnLabel={label} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
+        {/* headerText={t('configuration.setType')} */}
+        <>
+        {/* <div className="form__input--button-type-field"></div> */}
+        <div className="form__field">
+          <div className="form__section-title">{label}</div>
+          <p className="form__explain">{explain}</p>
+        </div>
+        <FieldText
+          name={t('configuration.buttonTemplateName')}
+          label={t('configuration.buttonTemplateName')}
+          placeholder={t('configuration.createButtonTypePlaceholder')}
+          className="field-text"
+          // onChange={(e) => setValue('text', e.target.value)}
+          {...register('text')}
+        />
+        <EmojiPicker
+          updateEmoji={(newEmoji) => setValue('emoji', newEmoji)}
+          pickerEmoji={watch('emoji')}
+          label={t('configuration.buttonTemplateEmoji')}
+        />
+        <FieldColorPick
+          name="buttonTemplateColor"
+          classNameInput="squared"
+          label={t('configuration.buttonTemplateColor')}
+          // validationError={errors.color}
+          setValue={(name, value) => setValue('color', value)}
+          actionName={t('button.pickButtonTemplateColor')}
+          value={watch('color')}
+        />
+        <label className="form__label">
+          {t('configuration.customFields')}:
+        </label>
+        <p className="form__explain">
+          {t('configuration.customFieldsExplain')}
+        </p>
+        <AddCustomFields
+          customFields={customFields}
+          setCustomFields={setCustomFields}
+        />
+        <Btn
+          caption={t('configuration.addType')}
+          onClick={() => onAddNewButtonTemplate(getValues())}
+          btnType={BtnType.corporative}
+        />
+        </>
+      </PickerField>
+      
+  );
+}

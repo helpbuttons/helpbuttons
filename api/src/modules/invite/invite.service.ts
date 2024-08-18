@@ -59,7 +59,7 @@ export class InviteService {
       return false;
     }
 
-    if(new Date(invite.expiration) < new Date())
+    if(invite.expiration && new Date(invite.expiration) < new Date())
     {
       return false;
     }

@@ -65,8 +65,6 @@ function NetworkForm({
   }
   }, [buttonTemplates])
 
-  const onError = (errors, e) => {console.log(errors);alertService.error(t('validation.error'))}
-
   const accordionChapters = [
     { name: 'defineNetwork', fields: ['name', 'description'] },
     { name: 'appearance', fields: ['logo', 'jumbo'] },
@@ -85,7 +83,7 @@ function NetworkForm({
     <>
       <Form
         classNameExtra="configuration"
-        onSubmit={handleSubmit(onSubmit, onError)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="form__inputs-wrapper">
           <div className="form__field">
@@ -117,14 +115,22 @@ function NetworkForm({
               {...register('description', { required: true })}
             />
             <FieldCheckbox
-                    name='inviteOnly'
-                    label={t('invite.inviteOnlyLabel')}
-                    explain={t('invite.inviteOnlyExplain')}
-                    defaultValue={watch('inviteOnly')}
-                    text={t('invite.inviteOnly')}
-                    onChanged={(value) => setValue('inviteOnly', value)}
+              name='inviteOnly'
+              label={t('invite.inviteOnlyLabel')}
+              explain={t('invite.inviteOnlyExplain')}
+              defaultValue={watch('inviteOnly')}
+              text={t('invite.inviteOnly')}
+              onChanged={(value) => setValue('inviteOnly', value)}
             />
 
+            <FieldCheckbox
+              name='requireApproval'
+              label={t('moderation.requireApprovalLabel')}
+              explain={t('moderation.requireApprovalExplain')}
+              defaultValue={watch('requireApproval')}
+              text={t('moderation.requireApproval')}
+              onChanged={(value) => setValue('requireApproval', value)}
+            />
             <FieldLanguagePick onChange={(value) => setValue('locale',value)} defaultValue={watch('locale')}/>
 
             {/* https://github.com/helpbuttons/helpbuttons/issues/290 */}
@@ -265,6 +271,7 @@ function NetworkForm({
                 setValue('tags', tags);
               }}
               tags={watch('tags')}
+              maxTags={30}
             />
 
           </Accordion>
@@ -274,30 +281,7 @@ function NetworkForm({
             {t('configuration.moderateNetwork')}
           </div>
 
-
-          
-          <FieldTags
-            label={t('configuration.blocked')}
-            explain={t('configuration.blockedExplain')}
-            placeholder={t('common.add')}
-            validationError={errors.tags}
-            setTagnetworkfors={(tags) => {
-              setValue('tags', tags);
-            }}
-            tags={watch('tags')}
-          />
-
-          <FieldTags
-            label={t('configuration.adminUsers')}
-            explain={t('configuration.adminUsersExplain')}
-            placeholder={t('common.add')}
-            validationError={errors.tags}
-            setTags={(tags) => {
-              setValue('tags', tags);
-            }}
-            tags={watch('tags')}
-          />
-          */}
+            */}
           <div className="publish__submit">
             <Btn
               btnType={BtnType.submit}

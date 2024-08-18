@@ -33,27 +33,6 @@
             flex-wrap: wrap;
             max-width: 100%;
     
-            .tags__list-tag {
-    
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border: 1px solid $color-gray-border;
-                margin: 5px;
-                padding: 0px 10px;
-                border-radius: $border-radius-circle;
-
-                .tag__btn {
-
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: transparent;
-                    border: none;
-
-                }
-
-            }
 
         }
 

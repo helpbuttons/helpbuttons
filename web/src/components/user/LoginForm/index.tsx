@@ -15,6 +15,7 @@ import { Link } from 'elements/Link';
 import { useRouter } from 'next/router';
 import t from 'i18n';
 import { alertService } from 'services/Alert';
+import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
 
 export default function LoginForm() {
   const {
@@ -33,11 +34,7 @@ export default function LoginForm() {
 
   const onSuccess = (userData) => {
     alertService.success(t('user.loginSucess'))
-    let returnUrl: string = `/Explore`;
-    if (router?.query?.returnUrl) {
-      returnUrl = router.query.returnUrl.toString();
-    }
-    router.push(returnUrl)
+    store.emit(new SetEnteringMode(EnteringPickerMode.HIDE))
   };
 
   const onError = (err) => {
@@ -82,14 +79,17 @@ export default function LoginForm() {
             isSubmitting={isSubmitting}
           />
           <div className="popup__link">
-            <Link href={`/LoginClick?${params.toString()}`}>
+            <div
+              onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.REQUEST_LINK))}
+              className={`nav-bottom__link`}
+            >
               {t('user.loginClick')}
-            </Link>
+            </div>
           </div>
           <div className="popup__link">
-            <Link href={`/Signup?${params.toString()}`}>
+            <div onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.SIGNUP))} className={`nav-bottom__link`}>
               {t('user.noAccount')}
-            </Link>
+            </div>
           </div>
         </div>
       </div>

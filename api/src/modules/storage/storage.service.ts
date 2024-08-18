@@ -11,6 +11,8 @@ import { ImageFile } from './image-file.entity';
 import { getFilesRoute, uploadDir } from './storage.utils';
 import { ErrorName } from '@src/shared/types/error.list';
 import * as sharp from 'sharp';
+import { isImageData } from '@src/shared/helpers/imageIsFile';
+import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-exception.middleware';
 
 @Injectable()
 export class StorageService {
@@ -19,14 +21,15 @@ export class StorageService {
     private readonly imageFilesRepository: Repository<ImageFile>,
   ) {}
 
-
-  async newImage64(data64) : Promise<string | void> {
+  async newImage64(data64): Promise<string | void> {
     const fs = require('fs');
     let [garbage, mimetype, data, fail] = data64
       .toString()
       .match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
     if (
-      !(['image/jpeg', 'image/png', 'image/jpg', 'image/gif'].includes(mimetype))
+      !['image/jpeg', 'image/png', 'image/jpg', 'image/gif'].includes(
+        mimetype,
+      )
     ) {
       console.log('image mimetype not allowed :: ', mimetype);
       throw ErrorName.InvalidMimetype;
@@ -37,40 +40,43 @@ export class StorageService {
     }`;
     let buffer = Buffer.from(data, 'base64');
 
-    const pathfilename = `${uploadDir}${fileImageName}`
+    const pathfilename = `${uploadDir}${fileImageName}`;
     return sharp(buffer)
-    .resize(1024)
-    .toFile(pathfilename)
-    .then((result :string) => {
-      const fileName = `${getFilesRoute}${fileImageName}`;
-      return {
-        id: dbIdGenerator(),
-        name: fileName,
-        mimetype: mimetype,
-        originalname: 'unknown',
-      }
-    })
-    .then((fileImage ) => {
-      this.imageFilesRepository.insert([fileImage]);
-      console.log('file creating: ' + fileImage.name)
-      return fileImage.name;
-    })
-    .catch((err) => {
-      if (err?.code == 'ENOENT') {
-        console.log(
-          'Could not upload file, do you configured an upload directory?',
-        );
-        throw new HttpException('Need to configure upload directory?', HttpStatus.PRECONDITION_REQUIRED)
-      }else{
-        console.log(err)
-      }
-    })
-    
+      .resize(1024)
+      .toFile(pathfilename)
+      .then((result: string) => {
+        const fileName = `${getFilesRoute}${fileImageName}`;
+        return {
+          id: dbIdGenerator(),
+          name: fileName,
+          mimetype: mimetype,
+          originalname: 'unknown',
+        };
+      })
+      .then((fileImage) => {
+        this.imageFilesRepository.insert([fileImage]);
+        console.log('file creating: ' + fileImage.name);
+        return fileImage.name;
+      })
+      .catch((err) => {
+        if (err?.code == 'ENOENT') {
+          console.log(
+            'Could not upload file, do you configured an upload directory?',
+          );
+          throw new HttpException(
+            'Need to configure upload directory?',
+            HttpStatus.PRECONDITION_REQUIRED,
+          );
+        } else {
+          console.log(err);
+        }
+      });
   }
-  
-  async createImage(imageFileName, imageOutputFileName, size)
-  {
-    return await sharp(imageFileName).resize(size, size).toFile(imageOutputFileName);
+
+  async createImage(imageFileName, imageOutputFileName, size) {
+    return await sharp(imageFileName)
+      .resize(size, size)
+      .toFile(imageOutputFileName);
   }
 
   async delete(filename: string) {
@@ -94,5 +100,25 @@ export class StorageService {
     if (filenames.length > 0) {
       return filenames.map((filename) => this.delete(filename));
     }
+  }
+
+  storageMultipleImages(images) {
+    if (images?.length > 0) {
+      return Promise.all(
+        images
+          .filter((image) => isImageData(image))
+          .map(async (image) => {
+            console.log('storing image....')
+            try {
+              return this.newImage64(image);
+            } catch (err) {
+              throw new CustomHttpException(
+                ErrorName.InvalidMimetype,
+              );
+            }
+          }),
+      );
+    }
+    return Promise.resolve([]);
   }
 }

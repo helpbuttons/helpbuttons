@@ -77,7 +77,6 @@ export class CreateButtonDto implements Partial<Button> {
   })
   address: string;
 
-  @IsNotEmpty()
   hideAddress: boolean;
 
   price?: number;

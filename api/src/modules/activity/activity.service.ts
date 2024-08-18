@@ -8,11 +8,15 @@ import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { EntityManager, In, Repository } from 'typeorm';
 import { Activity } from './activity.entity';
+
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { ButtonService } from '../button/button.service';
+import { transformToMessage } from './activity.transform';
+import { NetworkService } from '../network/network.service';
+import { ActivityDtoOut } from './activity.dto';
 
 @Injectable()
 export class ActivityService {
@@ -24,13 +28,14 @@ export class ActivityService {
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
     private readonly buttonService: ButtonService,
+    private readonly networkService: NetworkService,
   ) {}
 
   @OnEvent(ActivityEventName.NewPost)
   async onNewPost(payload: any) {
     const button_ = payload.data.post.button;
     // check users following the button of this post, and add a new actitivy to the daily outbox
-    this.buttonService.findById(button_.id).then(async (button) => {
+    return this.buttonService.findById(button_.id).then(async (button) => {
       const usersFollowing =
       await this.userService.findAllByIdsToBeNotified(
         button.followedBy,
@@ -44,7 +49,10 @@ export class ActivityService {
       );
 
       // notify button owner
-      await this.newActivity(button.owner, payload, false);
+      return this.newActivity(button.owner, payload, false);
+    })
+    .then(() => {
+      return this.newNetworkActivity(payload)
     })
     
      
@@ -103,7 +111,7 @@ export class ActivityService {
   async onNewButton(payload: any) {
     const button_ = payload.data.button;
     // check users following the button of this post, and add a new actitivy to the daily outbox
-    this.buttonService.findById(button_.id).then(async (button) => {
+    return this.buttonService.findById(button_.id).then(async (button) => {
       // calculate users to be notified:
       // - check users with this interests/tags
       // - if radius = 0, include user, else check if user is in radius.!
@@ -149,7 +157,9 @@ export class ActivityService {
         );
       }
       
-      await this.newActivity(button.owner, payload, false);
+      return this.newActivity(button.owner, payload, false);
+    }).then(() => {
+      return this.newNetworkActivity(payload)
     })
   }
 
@@ -241,17 +251,22 @@ export class ActivityService {
     this.newActivity(button.owner, payload, false);
   }
 
-  findByUserId(userId: string) {
-    return this.activityRepository.find({
-      where: { owner: { id: userId } },
-      relations: ['owner'],
-      order: { created_at: 'DESC' },
-    }).then((activities) => {
-      return activities.map((activity) => 
-      {
-        return activity
-      })
-    });
+  findByUserId(userId: string, locale: string) : Promise<ActivityDtoOut[]> {
+    
+    return this.networkService.findButtonTypes()
+    .then((buttonTypes) => {
+      return this.activityRepository.find({
+        where: { owner: { id: userId } },
+        relations: ['owner'],
+        order: { created_at: 'DESC' },
+      }).then((activities) => {
+        return activities.map((activity): ActivityDtoOut => 
+        {
+          return transformToMessage(activity, userId, buttonTypes, locale)
+        })
+      });
+    })
+    
   }
 
   markAllAsRead(userId: string) {
@@ -302,6 +317,18 @@ export class ActivityService {
     return this.activityRepository.insert([activity]);
   }
 
+  newNetworkActivity(payload) {
+    
+    const activity = {
+      id: dbIdGenerator(),
+      eventName: payload.activityEventName,
+      data: JSON.stringify(payload.data),
+      homeinfo: true
+    };
+    return this.activityRepository.insert([activity]);
+  }
+
+
   public deleteme(authorId: string)
   {
     return this.activityRepository
@@ -310,7 +337,6 @@ export class ActivityService {
 
   public findNetworkActivity()
   {
-    const typesOfActivityToShow = [ActivityEventName.NewButton, ActivityEventName.NewPost];
-    return this.activityRepository.find({take: 5, order: { created_at: 'DESC' }, where: {eventName: In(typesOfActivityToShow)}})
+    return this.activityRepository.find({take: 5, order: { created_at: 'DESC' }, where: {homeinfo: true}})
   }
 }

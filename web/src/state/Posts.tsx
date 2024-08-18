@@ -10,12 +10,12 @@ import { produce } from 'immer';
 export class CreateNewPost implements WatchEvent {
   public constructor(
     private buttonId: string,
-    private message: MessageDto,
+    private data: MessageDto,
     private onSuccess,
     private onError,
   ) {}
   public watch(state: GlobalState) {
-    return PostService.new(this.buttonId, this.message).pipe(
+    return PostService.new(this.buttonId, this.data).pipe(
       map((data) => this.onSuccess(data)),
       catchError((error) => handleError(this.onError, error)),
     );

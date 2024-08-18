@@ -8,26 +8,53 @@ import {
 import { MarkerButtonIcon } from './MarkerButton';
 import { cellToLatLng, latLngToCell } from 'h3-js';
 import { maxResolution } from 'shared/types/honeycomb.const';
+import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import t from 'i18n';
 
-export default function MarkerSelectorMap({
+
+export function MarkerEditorMap(props) {
+  
+  return <>
+          <DropDownSearchLocation
+            placeholder={t('homeinfo.searchlocation')}
+            handleSelectedPlace={props.handleSelectedPlace}
+            address={props.markerAddress}
+          />
+        <MarkerViewMap {...props} editPosition={true}/>
+  </>
+  
+}
+
+export default function MarkerViewMap({
   markerPosition,
   defaultZoom,
   markerColor,
   markerImage,
   markerCaption,
   showHexagon = false,
+  editPosition = false,
   onMapClick = (latLng) => {},
 }) {
   const [newMarkerPosition, setNewMarkerPosition] = useState<Point>(markerPosition);
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
     useState(null);
   const [zoom, setZoom] = useState(defaultZoom);
+  const [mapCenter, setMapCenter] = useState(markerPosition)
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     // setMarkerPosition(center);
-    // dont do it.. or else coordinates get updated twice.
+    if(editPosition)
+    {
+      setMapCenter(() => center);
+    }
     setZoom(() => zoom);
   };
 
+  useEffect(() => {
+    if(editPosition)
+    {
+      setMapCenter(() => markerPosition);
+    }
+  }, [markerPosition])
   const getHexagonCenter = (latLng, zoom) => {
     const cell = latLngToCell(
       latLng[0],
@@ -66,7 +93,7 @@ export default function MarkerSelectorMap({
     <>
       <div className="picker__map">
         <HbMapUncontrolled
-          mapCenter={markerPosition}
+          mapCenter={mapCenter}
           mapZoom={zoom}
           onBoundsChanged={onBoundsChanged}
           handleMapClick={handleMapClicked}

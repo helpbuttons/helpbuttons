@@ -14,16 +14,18 @@ import router from 'next/router';
 import { useStore } from 'store/Store';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
-import { uniqueArray } from 'shared/sys.helper';
+import { readableDistance, uniqueArray } from 'shared/sys.helper';
 import MultiSelectOption from 'elements/MultiSelectOption';
 import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { alertService } from 'services/Alert';
-import { FollowTag } from 'state/Users';
-import FieldAccordion from 'elements/Fields/FieldAccordion';
+import { FollowTag, FollowTags } from 'state/Users';
 import Popup from 'components/popup/Popup';
 import PickerField from 'components/picker/PickerField';
+import { Network } from 'shared/entities/network.entity';
+import { AllSuggestedTags, TagList, updateQueryWhenTagAdded, useTagsList } from 'elements/Fields/FieldTags';
+import _ from 'lodash';
 
 
 export default function AdvancedFilters({
@@ -35,18 +37,17 @@ export default function AdvancedFilters({
     false
   );
 
-  const queryFoundTags = useStore(
-    store,
-    (state: GlobalState) => state.explore.map.queryFoundTags,
-    false
-  );
-
   const showAdvancedFilters = useStore(
     store,
     (state: GlobalState) => state.explore.map.showAdvancedFilters,
     false
   );
   
+  const selectedNetwork: Network = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+
   const buttonTypes = useButtonTypes();
 
   const {
@@ -80,7 +81,7 @@ export default function AdvancedFilters({
   const center = watch('where.center');
   const radius = watch('where.radius');
   const helpButtonTypes = watch('helpButtonTypes');
-  const [tags, setTags] = useState([])
+  const tags = watch('tags')
   const query = watch('query');
 
   const handleSelectedPlace = (place) => {
@@ -109,12 +110,6 @@ export default function AdvancedFilters({
   };
 
   useEffect(() => {
-    if(queryFoundTags)
-    {
-      setTags(() => queryFoundTags)
-    }
-  }, [queryFoundTags])
-  useEffect(() => {
     reset(filters)
   }, [filters])
 
@@ -128,10 +123,15 @@ export default function AdvancedFilters({
     }
     
   }, [])
-  
+  const {onInputChange, inputKeyDown, input, remove, addTag} = useTagsList({
+    tags,
+    setTags : (tags) => {
+      setValue('tags', tags)
+    }
+  })
   return (
     <>
-      {showAdvancedFilters && (
+      {(selectedNetwork && showAdvancedFilters) && (
         <>
           <div className='filters__wrapper'>
             <Popup         
@@ -154,9 +154,10 @@ export default function AdvancedFilters({
                       explain={t('buttonFilters.queryExplain')}
                       {...register('query')}
                     >
+                      <TagList tags={tags} remove={remove}/>
+                      <AllSuggestedTags word={query.substring(query.lastIndexOf(" ")+1)} maxTags={5} tags={tags} addTag={(tag) => {addTag(tag); setValue('query',updateQueryWhenTagAdded(query, tag))}}/>
                       <TagFollow tags={tags}/>
                     </FieldText>
-
                     <FieldMultiSelect
                       label={t('buttonFilters.types')}
                       validationError={null}
@@ -225,14 +226,39 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
 
   const closePopup = () => setShowPopup(() => false)
   const openPopup = () => setShowPopup(() => true)
+
+  const marks = [100, 1000, 5000, 25000, 100000,300000 ]
+  const calcRadiusFromSlider = (value) => {
+    const mark = Math.ceil(value / 100)
+    const min = marks[mark-1]
+    const max = marks[mark]
+    return min + ((max-min) / 100)* (value - (mark - 1) * 100);
+  }
+
+  const calcSliderFromRadius = (value) => {
+    let markIndex = 0;
   
+    for (let i = 0; i < marks.length - 1; i++) {
+      if (value >= marks[i] && value <= marks[i + 1]) {
+        markIndex = i;
+        break;
+      }
+    }
+  
+    const min = marks[markIndex];
+    const max = marks[markIndex + 1];
+
+    const sliderValue = (markIndex * 100) + ((value - min) / (max - min)) * 100;
+    return sliderValue;
+  };
+
   // <PickerField label={t("buttonFilters.where")} explain={t("buttonFilters.whereExplain")} title={t("buttonFilters.where")} btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
   return (
     <PickerField 
       label={t("buttonFilters.where")} 
       explain={t("buttonFilters.whereExplain")} 
       title={t("buttonFilters.where")} 
-      btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))} 
+      btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, readableDistance(radius)])}</> : t('buttonFilters.pickLocationLimits'))} 
       showPopup={showPopup} 
       openPopup={openPopup} 
       closePopup={closePopup}
@@ -257,16 +283,18 @@ export function FilterByLocationRadius({handleSelectedPlace, address, center, ra
             {center && (
               <div className="form__field">
                 <label className="form__label">
-                  {t('buttonFilters.distance')} ({radius} km)
+                  {t('buttonFilters.distance')} -&nbsp;
+                  {readableDistance(radius)}
                 </label>
                 <div style={{ padding: '1rem' }}>
                   <Slider
                     min={1}
-                    max={300}
-                    onChange={(radiusValue) =>
-                      setRadius(radiusValue)
+                    max={(marks.length - 1)*100}
+                    onChange={(radiusValue) =>{
+                      setRadius(calcRadiusFromSlider(radiusValue))
                     }
-                    defaultValue={radius}
+                    }
+                    defaultValue={calcSliderFromRadius(radius)}
                   />
                 </div>
               </div>
@@ -338,19 +366,33 @@ function TagFollow({tags}) {
     store.emit(new FollowTag(tag, () => {alertService.success(t('buttonFilters.followTagSucess', [tag]))}));
   }
 
+  const followTags = (tags) => {
+    if (!loggedInUser) {
+      router.push(`/Signup?follow=${tags}`)
+      return;
+    }
+    store.emit(new FollowTags(tags, () => {alertService.success(t('buttonFilters.followTagsSucess', [tags]))}));
+  }
+
+  const [tagsToFollow, setTagsToFollow] = useState(tags)
+  useEffect(() => {
+    if(loggedInUser)
+    {
+      setTagsToFollow(() => 
+        _.difference(tags, loggedInUser.tags)
+      )
+    }
+  }, [loggedInUser, tags])
   return (
     <>
-
-        {tags.map((tag) => {
-          return ( 
-                  <Btn
-                      btnType={BtnType.submit}
-                      contentAlignment={ContentAlignment.center}
-                      caption={`${t('buttonFilters.followTag')} '${tag}'`}
-                      onClick={() => { followTag(tag) }}
-                    />
-                  )
-        })}
+      {(tagsToFollow && tagsToFollow.length > 0) && 
+        <Btn
+            btnType={BtnType.submit}
+            contentAlignment={ContentAlignment.center}
+            caption={`${t('buttonFilters.followTag')} '${tagsToFollow.join(', ')}'`}
+            onClick={() => { followTags(tagsToFollow) }}
+          />
+      }
     </>
   )
 }

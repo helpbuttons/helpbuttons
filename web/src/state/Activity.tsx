@@ -2,11 +2,23 @@ import produce from 'immer';
 import { GlobalState, store } from 'pages';
 import { catchError, map } from 'rxjs';
 import { ActivityService } from 'services/Activity';
-import { Activity } from 'shared/entities/activity.entity';
+import { Activity, ActivityDtoOut } from 'shared/entities/activity.entity';
 import { ActivityEventName } from 'shared/types/activity.list';
 import { UpdateEvent, WatchEvent } from 'store/Event';
-import { handleError } from './helper';
 import { of } from 'rxjs';
+import { useStore } from 'store/Store';
+import { useCallback, useEffect, useState } from 'react';
+import { useInterval } from 'shared/custom.hooks';
+
+export interface ActivitiesState {
+  activities: ActivityDtoOut[];
+  notificationsPermissionGranted: boolean;
+}
+
+export const activitiesInitialState: ActivitiesState = {
+  activities: [],
+  notificationsPermissionGranted: false,
+};
 
 export class FindActivities implements WatchEvent {
   public constructor() {}
@@ -17,17 +29,7 @@ export class FindActivities implements WatchEvent {
       return of(undefined)
     }
     return ActivityService.find().pipe(
-      map((activities: Activity[]) => {
-        activities.map((activity) => {
-          switch (activity.eventName) {
-            case ActivityEventName.NewButton:
-              {
-                activity.data = JSON.parse(activity.data);
-              }
-              break;
-          }
-          return activity;
-        });
+      map((activities: ActivityDtoOut[]) => {
         store.emit(new ActivitiesFound(activities));
       }),
       catchError((error) => {
@@ -38,12 +40,11 @@ export class FindActivities implements WatchEvent {
   }
 }
 export class ActivitiesFound implements UpdateEvent {
-  public constructor(private activities: Activity[]) {}
+  public constructor(private activities: ActivityDtoOut[]) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.activities = this.activities;
-      newState.unreadActivities = unreadActivities(this.activities)
+      newState.activitesState.activities = this.activities;
     });
   }
 }
@@ -52,8 +53,7 @@ export class ActivityMarkAllAsRead implements WatchEvent,UpdateEvent {
   public constructor() {}
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.activities = state.activities;
-      newState.unreadActivities = 0
+      newState.activitesState.activities = state.activitesState.activities.map((activity) => { return {...activity, unread: false}});
     });
   }
   public watch(state: GlobalState) {
@@ -70,9 +70,45 @@ export const unreadActivities = (activities) => {
   }, 0);
 };
 
-export const refeshActivities = () => {
-  store.emit(
-    new FindActivities(),
-  );
+
+export const activityTo = (activity: Activity) => {
+  console.log(activity)
+  switch(activity.eventName)
+  {
+    case '':
+      return {type:'this', message: 'oloooow'}
+
+  }
+  return {type:activity.eventName, message: 'tralalla'}
 }
-  
+
+export const useActivities = () => {
+  const activities = useStore(
+    store,
+    (state: GlobalState) => state.activitesState.activities,
+  );
+  const loggedInUser = useStore(
+    store,
+    (state: GlobalState) => state.loggedInUser,
+  );
+  const [countUnreadActivities, setCountUnreadActivities] = useState(0);
+
+  useEffect(() => {
+    if(loggedInUser){
+      store.emit(new FindActivities())
+    }
+  }, [loggedInUser])
+  useEffect(() => {
+    if(activities)
+    {
+      setCountUnreadActivities(() => {
+        return unreadActivities(activities)
+      })
+    }
+  }, [activities])
+
+  const increment = useCallback(() => { store.emit(new FindActivities()) }, []);
+  useInterval(increment, 20000, { paused: !loggedInUser });
+
+  return {activities, unreadActivities: countUnreadActivities}
+}

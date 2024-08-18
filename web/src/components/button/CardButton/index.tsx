@@ -1,18 +1,11 @@
 //Main card of the Button that is used inside ButtonFile component and in ButtonNewPublish for the preview. It has all the Data that a button has andd displays it according to the main buttonTemplate and network that buttton selected.
 import {
-  IoChevronForwardOutline,
-  IoChevronBackOutline,
   IoHeartOutline,
   IoAddCircleOutline,
   IoEllipsisHorizontalSharp,
-  IoHeartSharp,
   IoMailOutline,
-  IoChatbubbleEllipsesSharp,
   IoCallOutline,
   IoHeart,
-  IoCreate,
-  IoCreateOutline,
-  IoMail,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -33,11 +26,9 @@ import Link from 'next/link';
 import {
   GetPhone,
   UpdateFiltersToFilterTag,
-  updateCurrentButton,
 } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { TextFormatted, formatMessage } from 'elements/Message';
-import MarkerSelectorMap from 'components/map/Map/MarkerSelectorMap';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
 import {
   CardSubmenu,
@@ -53,12 +44,11 @@ import Btn, {
 import { FixedAlert } from 'components/overlay/Alert';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import { Button } from 'shared/entities/button.entity';
+import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
+import { TagsNav } from 'elements/Fields/FieldTags';
+import { ImageGallery } from 'elements/ImageGallery';
 
-const filterTag = (tag) => {
-  store.emit(new UpdateFiltersToFilterTag(tag));
-};
-
-export default function CardButton({ button, buttonTypes }) {
+export default function CardButton({ button, buttonTypes, onScollToCompose = () => {}}) {
   const buttonType = buttonTypes.find(
     (buttonType) => buttonType.name == button.type,
   );
@@ -67,7 +57,7 @@ export default function CardButton({ button, buttonTypes }) {
     <>
       {button && (
         <>
-          <CardButtonOptions />
+          {/* <CardButtonOptions /> */}
 
           <div
             className="card-button card-button__file"
@@ -76,9 +66,10 @@ export default function CardButton({ button, buttonTypes }) {
             <CardButtonHeadBig
               button={button}
               buttonTypes={buttonTypes}
+              onScollToCompose={onScollToCompose}
             />
           </div>
-          <CardButtonImages button={button} />
+          <ImageGallery images={button?.images.map((image) => {return {src: image, alt: button.description} })} />
 
           <CardButtonAuthorSection 
           button={button}
@@ -211,7 +202,7 @@ function CardButtonSubmenu({ button }) {
   useEffect(() => {
     if (config) {
       setLinkButton(() => {
-        const shareLink = getShareLink(`/ButtonFile/${button.id}`);
+        const shareLink = getShareLink(`/Explore/?btn=${button.id}`);
         return shareLink;
       });
     }
@@ -271,7 +262,7 @@ function CardButtonSubmenu({ button }) {
     </CardSubmenu>
   );
 }
-export function CardButtonHeadBig({ button, buttonTypes }) {
+export function CardButtonHeadBig({ button, buttonTypes, onScollToCompose }) {
   const { cssColor, caption, customFields, icon } = buttonTypes.find(
     (buttonType) => {
       return buttonType.name === button.type;
@@ -283,13 +274,25 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
     false,
   );
   const [showMap, setShowMap] = useState(false);
-  const profileHref = isButtonOwner(loggedInUser, button)
-    ? `/Profile/`
-    : `/p/${button.owner.username}`;
+
   return (
     <>
       <CardButtonSubmenu button={button} />
+      {/* <Btn
+          btnType={BtnType.filterCorp}
+          contentAlignment={ContentAlignment.center}
+          iconRight={IconType.circle}
+          iconLink={<IoMailOutline />}
+          onClick={() => {
+            console.log('scrolling...')
+            onScollToCompose()
+          }}
+      />
+      <ShowPhone button={button} /> */}
       <ExpiringAlert button={button} isOwner={isButtonOwner(loggedInUser, button)}/>
+      {button.awaitingApproval && 
+        <FixedAlert alertType={AlertType.Info} message={t('moderation.awaitingApproval')}/>
+      }
       <div className="card-button__content card-button__full-content">
         <div className="card-button__header">
 
@@ -317,23 +320,8 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         <div className="card-button__paragraph">
           <TextFormatted text={button.description}/>
         </div>
-
         <div className="card-button__hashtags">
-          {button.tags.map((tag, idx) => {
-            return (
-              <div
-                className="hashtag"
-                key={idx}
-                onClick={() => {
-                  filterTag(tag);
-                  store.emit(new updateCurrentButton(null));
-                  router.push('/Explore');
-                }}
-              >
-                {tag}
-              </div>
-            );
-          })}
+          <TagsNav tags={button.tags}/>
         </div>
         {customFields && customFields.length > 0 && (
           <>
@@ -357,7 +345,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
           </div>
         </div>
         {!button.hideAddress && showMap && (
-          <MarkerSelectorMap
+          <MarkerViewMap
             markerPosition={[button.latitude, button.longitude]}
             defaultZoom={maxZoom}
             markerColor={cssColor}
@@ -419,21 +407,21 @@ function ShowPhone({ button }) {
   };
   return (
     <>
-      {button.hasPhone && (
+      {button?.owner?.publishPhone && (
         <>
           {!showPhone && (
             <Btn
-              btnType={BtnType.corporative}
-              contentAlignment={ContentAlignment.center}
-              caption={t('button.showPhone')}
-              iconLeft={IconType.circle}
-              onClick={() => onShowPhoneClick()}
-            />
+            btnType={BtnType.filterCorp}
+            contentAlignment={ContentAlignment.center}
+            iconLeft={IconType.circle}
+            iconLink={<IoCallOutline />}
+            onClick={() => onShowPhoneClick()}
+          />
           )}
           {showPhone && (
-            <div className='card-button__phone-section'>
+            <div>
               <Btn
-                btnType={BtnType.corporative}
+                btnType={BtnType.filterCorp}
                 contentAlignment={ContentAlignment.center}
                 iconLeft={IconType.circle}
                 iconLink={<IoCallOutline />}
@@ -451,12 +439,11 @@ function ShowPhone({ button }) {
   );
 }
 
-export function CardButtonHeadActions({ button, action }) {
+export function CardButtonHeadActions({ button, action, isButtonOwner }) {
   
   return (
     <>
-      <ShowPhone button={button} />
-      {action && 
+      {(action  && !isButtonOwner) && 
         <Btn
             btnType={BtnType.corporative}
             contentAlignment={ContentAlignment.center}
@@ -466,7 +453,7 @@ export function CardButtonHeadActions({ button, action }) {
             onClick={action}
         />
       }
-      {button.hearts && (
+      {(button.hearts && !isButtonOwner) && (
         <span className="btn-circle__icon">
           <IoHeartOutline />
           {button.hearts}
@@ -482,63 +469,6 @@ export function CardButtonHeadActions({ button, action }) {
     </>
   );
 }
-export function CardButtonImages({ button }) {
-  const images = button.images;
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const next = () => {
-    setCurrentIndex((currentIndex + 1) % images.length);
-  };
-
-  const prev = () => {
-    setCurrentIndex(
-      (currentIndex - 1 + images.length) % images.length,
-    );
-  };
-
-  return (
-    <>
-      {button.images && (
-        <div className="card-button__picture">
-          {button.images.length > 1 && (
-            <div className="card-button__picture-nav">
-              <Btn
-                btnType={BtnType.smallCircle}
-                iconLink={<IoChevronBackOutline />}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => prev()}
-              />
-              <Btn
-                btnType={BtnType.smallCircle}
-                iconLink={<IoChevronForwardOutline />}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => next()}
-              />
-            </div>
-          )}
-          {images.map((image, idx) => (
-            <div
-              key={idx}
-              className={
-                images[currentIndex] === image ? 'show' : 'hide'
-              }
-            >
-              <ImageWrapper
-                imageType={ImageType.buttonCard}
-                src={image}
-                alt={button.description}
-              />
-            </div>
-          ))}
-        </div>
-      )}
-    </>
-  );
-}
-
 
 export function CardButtonAuthorSection({ button, buttonTypes }) {
   const { cssColor, caption, customFields } = buttonTypes.find(
@@ -566,7 +496,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
                   {button.owner.name}{' '}
                   <span className="card-button__username">
                     {' '}
-                    @{button.owner.username}
+                    {/* @{button.owner.username} */}
                   </span>
 
               </div>

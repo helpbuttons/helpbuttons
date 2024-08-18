@@ -81,6 +81,7 @@ export class Button extends BaseEntity {
   @Column('boolean', {default: false})
   deleted: boolean;
 
+  @Expose()
   @Column('boolean', {default: false})
   hideAddress: boolean;
 
@@ -134,4 +135,8 @@ export class Button extends BaseEntity {
 
   @Column({default: false})
   expired?: boolean;
+
+  @Expose()
+  @Column({default: false})
+  awaitingApproval: boolean;
 }

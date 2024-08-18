@@ -10,7 +10,7 @@
     "svgr": "svgr icons -d elements/icons --icon",
     "connect-api": "cp ../api/src/**/**/*.dto.ts src/shared/dtos && cp ../api/src/**/**/*.entity.ts src/shared/entities && cp -r ../api/src/shared/types/ src/shared/",
     "hb": "tsx hb.ts",
-    "update-translations": "cd src-translations && node updateTranslationStrings.js"
+    "update-translations": "cd scripts && node updateTranslationStrings.js"
   },
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
@@ -42,6 +42,7 @@
     "opencage-api-client": "^1.0.0",
     "path-to-regexp": "^6.2.1",
     "pigeon-maps": "^0.21.3",
+    "qrcode": "^1.5.4",
     "rc-slider": "^10.1.1",
     "react": "18.2.0",
     "react-calendar": "^4.0.0",

@@ -8,7 +8,7 @@ import { IUser } from 'services/Users/types';
 import { UserService } from 'services/Users';
 
 import { HttpService, isHttpError } from 'services/HttpService';
-import { SignupRequestDto } from 'shared/dtos/auth.dto';
+import { SignupQRRequestDto, SignupRequestDto } from 'shared/dtos/auth.dto';
 import { GlobalState, store } from 'pages';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { handleError } from './helper';
@@ -286,11 +286,12 @@ export class UpdateRole implements WatchEvent {
 
 export class ModerationList implements WatchEvent {
   public constructor(
+    private page: number = 0,
     private onSuccess = undefined,
   ) {}
 
   public watch(state: GlobalState) {
-    return UserService.moderationList().pipe(
+    return UserService.moderationList(this.page).pipe(
       map((moderationList) => { 
         this.onSuccess(moderationList);
       }),
@@ -363,6 +364,35 @@ export class FollowTag implements WatchEvent, UpdateEvent {
   }
 }
 
+export class FollowTags implements WatchEvent {
+  public constructor(
+    private tags,
+    private onSuccess = () => {},
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.followTags(this.tags).pipe(
+      map((userTags) => {
+        this.onSuccess();
+        store.emit(new FollowedTags(userTags))
+      }),
+      catchError((error) => {this.onSuccess(); return  of(undefined)})
+    )
+  }
+}
+export class FollowedTags implements  UpdateEvent {
+  public constructor(
+    private tags
+  ) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.loggedInUser.tags = this.tags;
+    });
+  }
+  
+}
+
+
 export function isAdmin(loggedInUser)
 {
   if(loggedInUser?.role == 'administrator')
@@ -384,6 +414,25 @@ export class GetAdminPhone implements WatchEvent {
         this.onSuccess(data);
       }),
       catchError((error) => handleError(this.onError, error)),
+    );
+  }
+}
+
+export class SignupQR implements WatchEvent {
+  public constructor(
+    private signupQRRequestDto: SignupQRRequestDto,
+    private onSuccess,
+    private onError,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.signupQR(this.signupQRRequestDto).pipe(
+      map((token) => {
+        if (token) {
+          return new FetchUserData(this.onSuccess, this.onError);
+        }
+      }),
+      catchError((error) => handleError(this.onError,error))
     );
   }
 }

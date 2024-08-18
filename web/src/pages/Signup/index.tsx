@@ -30,6 +30,7 @@ import FieldText from 'elements/Fields/FieldText';
 import { Network } from 'shared/entities/network.entity';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
+import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
 
 export default function Signup() {
   const {
@@ -48,7 +49,8 @@ export default function Signup() {
       email: '',
       locale: 'en',
       inviteCode: '',
-      tags: []
+      tags: [],
+      acceptPrivacyPolicy: 'no'
     },
   });
   const router = useRouter();
@@ -71,20 +73,17 @@ export default function Signup() {
             avatar: null,
             locale: getLocale(),
             inviteCode: data.inviteCode,
-            tags: data.tags
+            acceptPrivacyPolicy: data.acceptPrivacyPolicy
           },
           onSuccess,
           onError,
         ),
       );
-    // }
+    
   };
 
   const onSuccess = (userData) => {
-    const returnUrl: string = router.query.returnUrl
-      ? router.query.returnUrl.toString()
-      : '/Explore';
-    router.push(returnUrl, null, { locale: userData.locale })
+    store.emit(new SetEnteringMode(EnteringPickerMode.HIDE))
   };
 
   const onError = (error) => {
@@ -104,14 +103,10 @@ export default function Signup() {
   }, [router])
 
   if(selectedNetwork?.inviteOnly && !inviteCode) {
-    return (
-      <Popup title="Signup" linkFwd="/HomeInfo">
-        {t('invite.inviteOnlyNetwork')}
-      </Popup>
+    return (<>{t('invite.inviteOnlyNetwork')}</>
     )
   }
   return (
-    <Popup title={t('user.signup')} linkFwd="/HomeInfo">
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
         <div className="login__form">
           <div className="form__inputs-wrapper">
@@ -134,125 +129,15 @@ export default function Signup() {
               />
             </div>
             <div className="popup__link">
-              <Link href={`/Login?${params.toString()}`}>
+              <div onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))} className={`nav-bottom__link`}>
                 {t('user.loginLink')}
-              </Link>
+              </div>
             </div>
           </div>
         </div>
       </Form>
-    </Popup>
   );
 }
-
-export function InsertedSignUpForm() {
-  const {
-    register,
-    handleSubmit,
-    control,
-    setValue,
-    watch,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    defaultValues: {
-      username: '',
-      password: '',
-      password_confirm: '',
-      email: '',
-      locale: 'en',
-      inviteCode: '',
-      tags: []
-    },
-  });
-  const router = useRouter();
-
-  const selectedNetwork: Network = useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
-  
-  const onSubmit = (data) => {
-    
-    // if (passwordsMatch(data, setError)) {
-      store.emit(
-        new SignupUser(
-          {
-            name: data.name,
-            username: data.username,
-            email: data.email.toLowerCase(),
-            password: data.password,
-            avatar: null,
-            locale: getLocale(),
-            inviteCode: data.inviteCode,
-            tags: data.tags
-          },
-          onSuccess,
-          onError,
-        ),
-      );
-    // }
-  };
-
-  const onSuccess = (userData) => {
-    const returnUrl: string = router.query.returnUrl
-      ? router.query.returnUrl.toString()
-      : '/Explore';
-    router.push(returnUrl, null, { locale: userData.locale })
-  };
-
-  const onError = (error) => {
-    setValidationErrors(error?.validationErrors, setError);
-    console.log(error);
-    alertService.error(error.caption);
-  };
-
-  const inviteCode = watch('inviteCode')
-
-  const params: URLSearchParams = new URLSearchParams(router.query);
-  useEffect(() => {
-    if(router?.query)
-    {
-      setValue('inviteCode', params.get('inviteCode'))
-    }
-  }, [router])
-
-  return (
-      <>
-      <div className="form__section-title">{t('user.insertedSignUpTitle')}{' '}       
-       <Link href={`/Login?${params.toString()}`}>
-          {t('user.loginLink')}
-        </Link>
-      </div>    
-      <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
-        <div className="login__form">
-          <div className="form__inputs-wrapper">
-            <NewUserFields
-              control={control}
-              register={register}
-              errors={errors}
-              setValue={setValue}
-              watch={watch}
-            />
-          </div>
-          {/* <div className="form__btn-wrapper">
-            <div className="from__btn-register">
-              <Btn
-                submit={true}
-                btnType={BtnType.submit}
-                caption={t('user.register')}
-                contentAlignment={ContentAlignment.center}
-                isSubmitting={isSubmitting}
-              />
-            </div>
-          </div> */}
-        </div>
-      </Form>
-      </>
-  );
-
-}
-
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
   return setMetadata(t('user.register'), ctx)

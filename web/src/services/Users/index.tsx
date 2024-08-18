@@ -6,7 +6,7 @@ import getConfig from 'next/config';
 import { IUser, ICurrentUser } from "./network.type";
 import { httpService } from "services/HttpService";
 import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
-import { SignupRequestDto } from 'shared/dtos/auth.dto';
+import { SignupQRRequestDto, SignupRequestDto } from 'shared/dtos/auth.dto';
 import { User } from 'shared/entities/user.entity';
 import { Logout } from 'state/Users';
 import { store } from 'pages';
@@ -23,6 +23,12 @@ export class UserService {
   //Signup in the new user
   public static signup(signupRequestDto : SignupRequestDto): Observable<any> {
     return httpService.post<ICurrentUser>("users/signup", signupRequestDto).pipe(
+      tap((response) => httpService.setAccessToken(response?.token))
+    );
+  }
+
+  public static signupQR(signupRequestDto : SignupQRRequestDto): Observable<any> {
+    return httpService.post<ICurrentUser>("users/signupQR", signupRequestDto).pipe(
       tap((response) => httpService.setAccessToken(response?.token))
     );
   }
@@ -82,8 +88,12 @@ export class UserService {
     return httpService.post<any>(`users/updateRole/${userId}/${newRole}`);
   }
 
-  public static moderationList(): Observable<any> {
-    return httpService.get<any>(`users/moderationList`);
+  public static moderationList(page): Observable<any> {
+    return httpService.get<any>(`users/moderationList/${page}`);
+  }
+
+  public static users(): Observable<any> {
+    return httpService.get<any>(`users`);
   }
 
   public static unsubscribe(email : string): Observable<any> {
@@ -96,6 +106,10 @@ export class UserService {
 
   public static followTag(tag : string): Observable<any> {
     return httpService.post<any>(`users/followTag/${tag}`);
+  }
+
+  public static followTags(tags : string): Observable<any> {
+    return httpService.post<any>(`users/followTags/${tags}`);
   }
 
   public static findExtra(userId: string)

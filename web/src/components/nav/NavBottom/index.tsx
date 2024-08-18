@@ -7,28 +7,19 @@ import { IoLogInOutline } from 'react-icons/io5';
 import { IoGlobeOutline } from 'react-icons/io5';
 import { IoHomeOutline } from 'react-icons/io5';
 import t from 'i18n';
-import { GlobalState, store } from 'pages';
-import { useStore } from 'store/Store';
+import {  store } from 'pages';
 import { RecenterExplore } from 'state/Explore';
+import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
+import { useActivities } from 'state/Activity';
 
 export default NavBottom;
 
 function NavBottom({loggedInUser, pageName}) {
-  const activities = useStore(
-    store,
-    (state: GlobalState) => state.activities,
-  );
-  const unreadActivities = useStore(
-    store,
-    (state: GlobalState) => state.unreadActivities,
-  );
+  const {unreadActivities, activities} = useActivities()
 
-  // const router = useRouter();
-  // const path = router.asPath.split('?')[0];
-  // const pageName = path.split('/')[1];
   const isCurrent = (menuName) => {
     if (pageName && pageName.startsWith(menuName)) {
-      return 'nav-bottom__link--current';
+      return 'nav-bottom__link--current' ;
     }
     return '';
   };
@@ -76,8 +67,9 @@ function NavBottom({loggedInUser, pageName}) {
           </NavLink>
 
           {!loggedInUser && (
-            <NavLink
-              href="/Signup"
+            <div
+              // href="/Signup"
+              onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.SIGNUP))}
               className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
                 'Signup',
               )}`}
@@ -86,7 +78,7 @@ function NavBottom({loggedInUser, pageName}) {
                 <IoPersonAddOutline />
               </div>
               <div className="nav-bottom__text">{t('menu.signup')}</div>
-            </NavLink>
+            </div>
           )}
 
           {loggedInUser && (
@@ -128,8 +120,8 @@ function NavBottom({loggedInUser, pageName}) {
           )}
 
           {!loggedInUser && (
-            <NavLink
-              href="/Login"
+            <div
+              onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))}
               className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
                 'Login',
               )}`}
@@ -140,7 +132,7 @@ function NavBottom({loggedInUser, pageName}) {
               <div className="nav-bottom__text">
                 {t('menu.login')}
               </div>
-            </NavLink>
+            </div>
           )}
         </nav>
     </>

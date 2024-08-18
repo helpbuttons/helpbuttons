@@ -1,101 +1,96 @@
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import {
-  readableDate,
   readableTimeLeftToDate,
 } from 'shared/date.utils';
 import { ActivityEventName } from 'shared/types/activity.list';
 import {
+  IoAddCircleOutline,
+  IoChatbubbleOutline,
   IoNotificationsOutline,
+  IoPersonOutline,
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
-import ActivityCardNewButton, { ActivityCardDeleteButton, ActivityCardExpiredButton, ActivityCardNewFollowedButton, ActivityCardNewFollowingButton, getButtonActivity } from './types/button';
-import ActivityCardNewPost, { ActivityCardNewPostComment, getCommentActivity, getPostActivity } from './types/post';
+import t from 'i18n';
 
-export default function ActivityCardNotification({ activity, buttonTypes }) {
+export default function ActivityCardNotification({ activity }) {
   return (
     <div>
   {(() => {
     switch (activity.eventName) {
       case ActivityEventName.NewButton: {
-        const button = getButtonActivity(activity.data)
-        if(!button || !button.owner.id)
-        {
-          console.log("button.owner.id not found " + JSON.stringify(button, null, 2))
-          return false;
-        }
         return (
-          <ActivityCardNewButton
-            button={button}
-            isRead={activity.read}
-          />
-        );
-      }
-      case ActivityEventName.NewPost: {
-        const post = getPostActivity(activity.data)
-        const button = post.button
-
-        if(! post.author.id || !post.button)
-        {
-          console.log("post.author.id not found " + JSON.stringify(activity.data))
-          return false;
-        }
-        return (
-          <ActivityCardNewPost
-            post={post}
-            button={button}
-            isRead={activity.read}
-          />
-        );
-      }
-      case ActivityEventName.NewPostComment: {
-        const comment = getCommentActivity(activity.data)
-        const button = comment.button 
-        return (
-          <ActivityCardNewPostComment
-            comment={comment}
-            button={button}
-            isRead={activity.read}
-          />
-        );
-      }
-      case ActivityEventName.NewFollowingButton: {
-        const { button, user } = JSON.parse(activity.data);
-        return (
-          <ActivityCardNewFollowingButton
-            button={button}
-            follower={user}
-            isRead={activity.read}
-            date={activity.created_at}
-            buttonTypes={buttonTypes}
-          />
+        <NotificationCardCustomIcon
+          icon={<IoAddCircleOutline />}
+          badgeTitle={t('activities.newbuttonType')}
+          activity={activity}
+        />
         )
+      }
+      
+      case ActivityEventName.NewPost: {
+        return (
+          <NotificationCardCustomIcon
+            icon={<IoPersonOutline />}
+            badgeTitle={t('activities.creatorUpdate')}
+            activity={activity}
+          />
+          )
+      }
+
+      
+      case ActivityEventName.NewPostComment: {
+        let  badgeTitle = t('activities.newcommentType');
+        if (activity.isPrivate) {
+          badgeTitle = t('activities.newprivatecommentType');
+        }
+
+        return (
+          <NotificationCardCustomIcon
+            icon={<IoChatbubbleOutline />}
+            badgeTitle={badgeTitle}
+            activity={activity}
+          />
+          )
+      }
+      
+      case ActivityEventName.NewFollowingButton: {
+        return (
+          <NotificationCardCustomIcon
+            icon={<IoChatbubbleOutline />}
+            badgeTitle={t('activities.newfollowType')}
+            activity={activity}
+          />
+          )
       }
       case ActivityEventName.NewFollowedButton: {
-        const { button, user } = JSON.parse(activity.data);
         return (
-          <ActivityCardNewFollowedButton
-            button={button}
-            followed={user}
-            isRead={activity.read}
-            date={activity.created_at}
-            buttonTypes={buttonTypes}
+          <NotificationCardCustomIcon
+            icon={<IoChatbubbleOutline />}
+            badgeTitle={t('activities.newfollowType')}
+            activity={activity}
           />
-        )
+          )
       }
+      
       case ActivityEventName.ExpiredButton: {
-        const {button} = JSON.parse(activity.data)
         return (
-          <ActivityCardExpiredButton
-            button={button}
-            isRead={activity.read}
-            date={activity.created_at}
+          <NotificationCardCustomIcon
+            icon={<IoChatbubbleOutline />}
+            badgeTitle={t('activities.expiredEventType')}
+            activity={activity}
           />
-        );
+          )
       }
+      
       case ActivityEventName.DeleteButton: {
-        const {button} = JSON.parse(activity.data)
-        return <ActivityCardDeleteButton button={button} isRead={activity.read} date={activity.created_at}/>
+        return (
+          <NotificationCardCustomIcon
+            icon={<IoAddCircleOutline />}
+            badgeTitle={t('activities.deletedType')}
+            activity={activity}
+          />
+          )
       }
       
       
@@ -120,6 +115,27 @@ export default function ActivityCardNotification({ activity, buttonTypes }) {
   </div>
     )
 }
+
+
+export function NotificationCardCustomIcon({
+  activity,
+  icon,
+  badgeTitle
+}) {
+  return (
+    <NotificationCard
+          type={badgeTitle}
+          image={activity.image}
+          notifIcon={icon}
+          date={activity.createdAt}
+          buttonId={activity.referenceId}
+          title={activity.title}
+          message={activity.message}
+          read={activity.read}
+        />
+  )
+  }
+
 
 export function NotificationCard({
   type,

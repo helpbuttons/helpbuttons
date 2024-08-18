@@ -68,6 +68,7 @@ export class NetworkService {
       currency: createDto.currency,
       nomeclature: createDto.nomeclature,
       nomeclaturePlural: createDto.nomeclaturePlural,
+      requireApproval: createDto.requireApproval
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -131,7 +132,7 @@ export class NetworkService {
       })
       .then((defaultNetwork) => {
         return this.entityManager
-          .query(`select * from network_button_types`)
+          .query(`select type,count(button.id) from button LEFT JOIN public.user on "ownerId" = public.user.id where public.user.role <> 'blocked' AND button.expired = false AND button."awaitingApproval" = false AND deleted = false group by type;`)
           .then((networkByButtonTypes) => {
             updateNomeclature(
               defaultNetwork.nomeclature,
@@ -157,7 +158,7 @@ export class NetworkService {
       .then((network) => {
         return this.entityManager
           .query(
-            `select tag,count(tag) as count from (select unnest(tags) as tag from button where expired = false AND deleted = FALSE) as tags group by tag order by count desc limit 10`,
+            `select tag,count(tag) as count from (select unnest(tags) as tag from button where expired = false AND deleted = FALSE) as tags group by tag order by count desc limit 30`,
           )
           .then((topTags) => {
             return { ...network, topTags: topTags };
@@ -217,6 +218,7 @@ export class NetworkService {
       currency: updateDto.currency,
       nomeclature: updateDto.nomeclature,
       nomeclaturePlural: updateDto.nomeclaturePlural,
+      requireApproval: updateDto.requireApproval
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -397,4 +399,12 @@ export class NetworkService {
     })
     
   }
+
+  public findButtonTypes(){
+    return this.findDefaultNetwork()
+    .then((network) => {
+      return network.buttonTemplates
+    })
+  }
 }
+

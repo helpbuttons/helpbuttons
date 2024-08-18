@@ -1,37 +1,43 @@
 import '../styles/app.scss';
 import Head from 'next/head';
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
 import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
-import { FetchDefaultNetwork } from 'state/Networks';
+import { useConfig, useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Users';
 
 import { useStore } from 'store/Store';
-import { GetConfig } from 'state/Setup';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
 
 import { Role } from 'shared/types/roles';
-import { getLocale, isRoleAllowed, setSSRLocale } from 'shared/sys.helper';
+import {
+  getLocale,
+  isRoleAllowed,
+  setSSRLocale,
+} from 'shared/sys.helper';
 // import { version } from 'shared/commit';
-import { refeshActivities } from 'state/Activity';
 import t, { updateNomeclature } from 'i18n';
-import { useInterval } from 'shared/custom.hooks';
 import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import SEO from 'components/seo';
+import { LoadabledComponent } from 'components/loading';
+import { Picker } from 'components/picker/Picker';
+import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
+import Signup from './Signup';
+import Login from './Login';
+import LoginClick from './LoginClick';
+import { Activity, ActivityDtoOut } from 'shared/entities/activity.entity';
+import { activityToMessage } from 'state/Activity';
 
 export default appWithTranslation(MyApp);
 
-const useActivitesPool = (loggedInUser) => {
-  const increment = useCallback(() => refeshActivities(), []);
-  useInterval(increment, 20000, { paused: !loggedInUser });
-};
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
@@ -40,68 +46,87 @@ function MyApp({ Component, pageProps }) {
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
 
-  const config = useStore(
-    store,
-    (state: GlobalState) => state.config,
-  );
   const path = router.asPath.split('?')[0];
 
   const loggedInUser = useStore(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
+  const onFetchingNetworkError = (error) => {
+    if (error === 'network-not-found') {
+      console.error(error);
 
-  const selectedNetwork = useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
+      if (
+        loggedInUser &&
+        config &&
+        config.userCount > 0 &&
+        path != SetupSteps.FIRST_OPEN &&
+        path != SetupSteps.NETWORK_CREATION
+      ) {
+        console.log('pushing to first open');
+        router.push(SetupSteps.FIRST_OPEN);
+      }
+    }
+  };
+
+  const onFetchingConfigError = (error) => {
+    console.log(error);
+    console.log('fetching config error...');
+    if (error == 'not-found' || error == 'nosysadminconfig') {
+      console.error(error);
+      console.log('pushing sysadmin config');
+      router.push(SetupSteps.SYSADMIN_CONFIG);
+    }
+
+    if (error == 'nobackend') {
+      alertService.error(
+        `Error: Backend not found, something went terribly wrong.`,
+      );
+      router.push('/Error');
+    }
+    console.log(error);
+    return;
+  };
+
+  const selectedNetwork = useSelectedNetwork(
+    pageProps._selectedNetwork,
+    onFetchingNetworkError,
   );
-
+  const config = useConfig(pageProps._config, onFetchingConfigError);
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
     SetupSteps.FIRST_OPEN,
     SetupSteps.NETWORK_CREATION,
     SetupSteps.SYSADMIN_CONFIG,
   ];
-  const loadingConfig = useRef(false);
   useEffect(() => {
     if (setupPaths.includes(path)) {
-      setIsSetup(true);
+      setIsSetup(() => true);
+    } else {
+      setIsSetup(() => false);
     }
 
-    if (!config && !loadingConfig.current) {
-      loadingConfig.current = true;
-      store.emit(
-        new GetConfig(
-          (config) => {
-            console.log(`got config`);
-            if (!setupPaths.includes(path)) {
-              fetchDefaultNetwork(config);
-            }
-          },
-          (error) => {
-            if (
-              SetupSteps.SYSADMIN_CONFIG.toString() == path ||
-              SetupSteps.CREATE_ADMIN_FORM.toString() == path
-            ) {
-              return;
-            }
-            if (error == 'not-found' || error == 'nosysadminconfig') {
-              console.error(error);
-              router.push(SetupSteps.SYSADMIN_CONFIG);
-            }
-
-            if (error == 'nobackend') {
-              alertService.error(
-                `Error: Backend not found, something went terribly wrong.`,
-              );
-              router.push('/Error');
-            }
-            console.log(error);
-            return;
-          },
-        ),
-      );
+    if (
+      config &&
+      (config.databaseNumberMigrations < 1 || config.userCount < 1) &&
+      SetupSteps.CREATE_ADMIN_FORM != path &&
+      !loggedInUser
+    ) {
+      router.push(SetupSteps.CREATE_ADMIN_FORM);
+    } else if (
+      SetupSteps.CREATE_ADMIN_FORM == path &&
+      loggedInUser &&
+      loggedInUser.role == Role.admin
+    ) {
+      router.push(SetupSteps.FIRST_OPEN);
     }
+    if (
+      SetupSteps.SYSADMIN_CONFIG.toString() == path ||
+      SetupSteps.CREATE_ADMIN_FORM.toString() == path
+    ) {
+      return;
+    }
+
     if (
       !authorized &&
       config &&
@@ -110,88 +135,47 @@ function MyApp({ Component, pageProps }) {
     ) {
       setAuthorized(true);
     }
-    if (!authorized) {
-      if (UserService.isLoggedIn()) {
-        // check if local storage has a token
-        if (!loggedInUser) {
-          if (!isLoadingUser) {
-            store.emit(
-              new FetchUserData(
-                () => {
-                  setIsLoadingUser(false);
-                },
-                (error) => {
-                  // if local storage has a token, and fails to fetchUserData then delete storage token
-                  UserService.logout();
-                  setIsLoadingUser(false);
-                },
-              ),
-            );
-          }
-          setIsLoadingUser(true);
-        } else {
-          setAuthorized(isRoleAllowed(loggedInUser.role, path));
+    // if (!authorized) {
+    if (UserService.isLoggedIn()) {
+      // check if local storage has a token
+      if (!loggedInUser) {
+        if (!isLoadingUser) {
+          store.emit(
+            new FetchUserData(
+              () => {
+                setIsLoadingUser(false);
+              },
+              (error) => {
+                // if local storage has a token, and fails to fetchUserData then delete storage token
+                UserService.logout();
+                setIsLoadingUser(false);
+              },
+            ),
+          );
         }
+        setIsLoadingUser(true);
       } else {
-        if (config) {
-          if (
-            config.userCount < 1 &&
-            path == SetupSteps.CREATE_ADMIN_FORM
-          ) {
-            setAuthorized(true);
-          } else {
-            setAuthorized(isRoleAllowed(Role.guest, path));
-          }
-        } else if (
-          path != SetupSteps.CREATE_ADMIN_FORM &&
-          path != SetupSteps.SYSADMIN_CONFIG
+        setAuthorized(isRoleAllowed(loggedInUser.role, path));
+      }
+    } else {
+      if (config) {
+        if (
+          config.userCount < 1 &&
+          path == SetupSteps.CREATE_ADMIN_FORM
         ) {
+          setAuthorized(true);
+        } else {
           setAuthorized(isRoleAllowed(Role.guest, path));
         }
+      } else if (
+        path != SetupSteps.CREATE_ADMIN_FORM &&
+        path != SetupSteps.SYSADMIN_CONFIG
+      ) {
+        setAuthorized(isRoleAllowed(Role.guest, path));
       }
     }
-
-    function fetchDefaultNetwork(configuration) {
-      if (configuration && !selectedNetwork && !isLoadingNetwork) {
-        setIsLoadingNetwork(true);
-        store.emit(
-          new FetchDefaultNetwork(
-            () => {
-              console.log('all is ready!');
-            },
-            (error) => {
-              if (error === 'network-not-found') {
-                if (
-                  (configuration.databaseNumberMigrations < 1 ||
-                    configuration.userCount < 1) &&
-                  SetupSteps.CREATE_ADMIN_FORM != path
-                ) {
-                  router.push(SetupSteps.CREATE_ADMIN_FORM);
-                } else if (
-                  loggedInUser &&
-                  (SetupSteps.NETWORK_CREATION == path ||
-                    SetupSteps.FIRST_OPEN == path)
-                ) {
-                  router.push({
-                    pathname: '/Login',
-                    query: { returnUrl: path },
-                  });
-                } else {
-                  console.error('network not found');
-                  console.error(error);
-                  router.push({
-                    pathname: SetupSteps.FIRST_OPEN,
-                  });
-                }
-              }
-            },
-          ),
-        );
-      }
-    }
+    // }
   }, [path, config, loggedInUser]);
-
-  useActivitesPool(loggedInUser);
 
   useEffect(() => {
     // Function to adjust the height of the index__container based on the actual viewport height
@@ -218,24 +202,27 @@ function MyApp({ Component, pageProps }) {
         selectedNetwork.nomeclature,
         selectedNetwork.nomeclaturePlural,
       );
-      setSSRLocale(selectedNetwork.locale)
+      setSSRLocale(selectedNetwork.locale);
     }
   }, [selectedNetwork]);
 
   useEffect(() => {
-    if(loggedInUser)
-    {
+    if (loggedInUser) {
       if (getLocale() != loggedInUser.locale) {
-          setSSRLocale(loggedInUser.locale)
+        setSSRLocale(loggedInUser.locale);
       }
     }
-  }, [loggedInUser])
+  }, [loggedInUser]);
 
   const searchParams = useSearchParams();
   const triedToLogin = useRef(false);
   useEffect(() => {
     const loginToken = searchParams.get('loginToken');
-    if (!triedToLogin.current && loginToken && pageName != 'LoginClick') {
+    if (
+      !triedToLogin.current &&
+      loginToken &&
+      pageName != 'LoginClick'
+    ) {
       const onSuccess = () => {
         alertService.success(t('user.loginSucess'));
       };
@@ -244,12 +231,24 @@ function MyApp({ Component, pageProps }) {
         alertService.error(t('login.error'));
       };
       store.emit(new LoginToken(loginToken, onSuccess, onError));
-    }else if(loginToken){
+    } else if (loginToken) {
       triedToLogin.current = true;
     }
-    
   }, [searchParams]);
 
+  const [loading, setLoading] = useState<boolean>(false);
+
+  Router.events.on('routeChangeStart', (url) => {
+    setLoading(true);
+  });
+
+  Router.events.on('routeChangeComplete', (url) => {
+    setLoading(false);
+  });
+
+  if (isSetup) {
+    return <Component {...pageProps} />;
+  }
   return (
     <>
       <Head>
@@ -257,31 +256,51 @@ function MyApp({ Component, pageProps }) {
         {/* <meta name="commit" content={version.git} /> */}
         {/* eslint-disable-next-line @next/next/no-css-tags */}
       </Head>
-      {pageProps.metadata && <SEO {...pageProps.metadata}/>} 
+      {pageProps.metadata ? (
+        <SEO {...pageProps.metadata} />
+      ) : (
+        <Head>
+          <title>{selectedNetwork?.name}</title>
+        </Head>
+      )}
+      <ClienteSideRendering>
+        <DesktopNotifications/>
+      </ClienteSideRendering>
       <div
         className={`${user ? '' : 'index__container'}`}
-        style={ selectedNetwork ? {
-          '--network-background-color': selectedNetwork.backgroundColor,
-          '--network-text-color': selectedNetwork.textColor,
-        } as React.CSSProperties : {
-          '--network-background-color': 'grey',
-          '--network-text-color': 'pink',
-        } as React.CSSProperties}
+        style={
+          selectedNetwork
+            ? ({
+                '--network-background-color':
+                  selectedNetwork.backgroundColor,
+                '--network-text-color': selectedNetwork.textColor,
+              } as React.CSSProperties)
+            : ({
+                '--network-background-color': 'grey',
+                '--network-text-color': 'pink',
+              } as React.CSSProperties)
+        }
       >
         <Alert />
         <div className="index__content">
-          {selectedNetwork && (
-            <>
-              <ShowDesktopOnly>
-                <NavHeader pageName={pageName} selectedNetwork={selectedNetwork}/>
-              </ShowDesktopOnly>
-              <Component {...pageProps} />
-              <ShowMobileOnly>
-                <NavBottom  pageName={pageName} loggedInUser={loggedInUser} />
-              </ShowMobileOnly>
-            </>
-          )}
-          {(!selectedNetwork && isSetup) && <Component {...pageProps} />}
+          <ShowDesktopOnly>
+            <NavHeader
+              pageName={pageName}
+              selectedNetwork={selectedNetwork}
+            />
+          </ShowDesktopOnly>
+          <LoadabledComponent loading={!selectedNetwork || loading}>
+            <Component {...pageProps} />
+          </LoadabledComponent>
+          <ShowMobileOnly>
+            <ClienteSideRendering>
+              <NavBottom
+                pageName={pageName}
+                loggedInUser={loggedInUser}
+              />
+            </ClienteSideRendering>
+          </ShowMobileOnly>
+          <EnterPicker />
         </div>
       </div>
     </>
@@ -293,3 +312,87 @@ export const ClienteSideRendering = ({ children }) => {
   useEffect(() => setIsClient(true), []);
   return <>{isClient && children}</>;
 };
+
+function EnterPicker() {
+  const closePopup = () =>
+    store.emit(new SetEnteringMode(EnteringPickerMode.HIDE));
+  const mode: EnteringPickerMode = useStore(
+    store,
+    (state: GlobalState) => state.homeInfo.mode,
+  );
+  // const openPopup = () => );
+
+  return (
+    <>
+      {mode == EnteringPickerMode.LOGIN && (
+        <Picker
+          closeAction={closePopup}
+          headerText={t('user.login')}
+        >
+          <Login/>
+        </Picker>
+      )}
+      {mode == EnteringPickerMode.SIGNUP && (
+        <Picker
+          headerText={t('user.signup')}
+          closeAction={closePopup}
+        >
+          <Signup/>
+        </Picker>
+      )}
+      {mode == EnteringPickerMode.REQUEST_LINK && (
+        <Picker
+          closeAction={closePopup}
+        >
+          <LoginClick/>
+        </Picker>
+      )}
+    </>
+  );
+}
+
+function DesktopNotifications() {
+  const init = useRef(false)
+  const notifyDesktop = (message) => {
+    console.log('notifiyyy: ' + message)
+    new Notification(message)
+    
+  }
+  useEffect(() => {
+    if(!init.current)
+      {
+        init.current = true;
+        Notification.requestPermission().then(function (getperm) {
+        });
+    }
+  }, [])
+  const activities = useStore(
+    store,
+    (state: GlobalState) => state.activitesState.activities
+  );
+
+  const notificationsShown = useRef(false)
+  useEffect(() => {
+    
+    if(activities && activities.length > 0 && !notificationsShown.current){
+      notificationsShown.current = true;
+      
+      activities
+      .filter((activity) => !activity.read)
+      .slice(0,5)
+      .map((activity: ActivityDtoOut) => {
+        notifyDesktop(activity.title)
+      })
+    }
+      // .filter((activity) => !activity.unread)
+      // .slice(0,5)
+      
+      //   // const activityToMessage(activity)
+      //   // console.log()
+        
+      // })
+    // }
+  }, [activities])
+
+  return <></>;
+}

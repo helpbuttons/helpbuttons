@@ -27,6 +27,7 @@ import { CurrentUser } from '@src/shared/decorator/current-user';
 import { User } from '../user/user.entity';
 import {
   AllowGuest,
+  OnlyAdmin,
   OnlyRegistered,
 } from '@src/shared/decorator/roles.decorator';
 import { AllowIfNetworkIsPublic } from '@src/shared/decorator/privacy.decorator';
@@ -61,19 +62,23 @@ export class ButtonController {
       fileFilter: imageFileFilter,
     }),
   )
-  async create(
+  create(
     @Query('networkId') networkId: string,
     @UploadedFiles() images,
     @Body() createDto: CreateButtonDto,
     @CurrentUser() user: User,
   ) {
-    return await this.buttonService.create(
+    return this.buttonService.create(
       createDto,
       networkId,
       images,
       user,
     ).then((button) => {
-        notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})
+        if(button.awaitingApproval){
+          // notify admins that button is for approval
+        }else{
+          notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})  
+        }
         return button;
     });
   }
@@ -214,5 +219,21 @@ export class ButtonController {
   @Get('monthCalendar/:month/:year')
   async monthCalendar(@Param('month') month: number,@Param('year') year: number) {
     return await this.buttonService.monthCalendar((month-1), year)
+  }
+
+  @OnlyAdmin()
+  @Get('moderationList/:page')
+  moderationList(@Param('page') page: number, @CurrentUser() user: User)
+  {
+    return this.buttonService.moderationList(user, page)
+  }
+
+  @OnlyAdmin()
+  @Get('approve/:buttonId')
+  approve(@Param('buttonId') buttonId: string)
+  {
+    return this.buttonService.approve(buttonId).then((button) => {
+      notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})  
+    })
   }
 }

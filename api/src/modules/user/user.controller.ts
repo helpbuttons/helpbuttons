@@ -3,7 +3,6 @@ import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
 import { AllowGuest, OnlyAdmin, OnlyRegistered } from '@src/shared/decorator/roles.decorator';
 import { Role } from '@src/shared/types/roles';
-import { Auth } from '@src/shared/decorator/auth.decorator';
 import { CurrentUser } from '@src/shared/decorator/current-user';
 import { User, UserExtended } from './user.entity';
 import { InviteService } from '../invite/invite.service';
@@ -58,10 +57,10 @@ export class UserController {
   }
 
   @OnlyAdmin()
-  @Get('moderationList')
-  async moderationList()
+  @Get('moderationList/:page')
+  moderationList(@Param('page') page: number, @CurrentUser() user: User)
   {
-    return await this.userService.moderationList()
+    return this.userService.moderationList(user, page)
   }
 
   @AllowGuest()
@@ -73,8 +72,14 @@ export class UserController {
 
   @OnlyRegistered()
   @Post('followTag/:tag')
-  async follow(@Param('tag') tag: string, @CurrentUser() user: User) {
-    return await this.userService.addTag(tag, user);
+  follow(@Param('tag') tag: string, @CurrentUser() user: User) {
+    return this.userService.addTag(tag, user);
+  }
+
+  @OnlyRegistered()
+  @Post('followTags/:tags')
+  followTags(@Param('tags') tags: string, @CurrentUser() user: User) {
+    return this.userService.addTags(tags, user);
   }
 
   @AllowGuest()
