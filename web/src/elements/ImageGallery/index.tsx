@@ -24,7 +24,7 @@ export function ImageGallery({ images }) {
         {showSingleImage && 
             <div className="card-button__gallery-zoom">
             <Btn
-              btnType={BtnType.smallCircle}
+              btnType={BtnType.circle}
               iconLink={<IoClose />}
               iconLeft={IconType.circle}
               extraClass="card-button__gallery-zoom--close-btn"
