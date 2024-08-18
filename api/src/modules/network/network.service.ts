@@ -399,4 +399,12 @@ export class NetworkService {
     })
     
   }
+
+  public findButtonTypes(){
+    return this.findDefaultNetwork()
+    .then((network) => {
+      return network.buttonTemplates
+    })
+  }
 }
+

@@ -130,7 +130,8 @@
     "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
     "addType": "+ Crear tipo de _helpbutton_ con los campos superiores",
     "currencyLabel": "Divisa",
-    "setType": ""
+    "setType": "",
+    "buttonTemplatePlaceHolder": ""
   },
   "activities": {
     "allNotifications": "Todas las actualizaciones",
@@ -159,8 +160,7 @@
     "expiredEventType": "_helpbutton_ terminó",
     "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública."
   },
-  "activitiesWithSubject":
-  {
+  "activitiesWithSubject": {
     "newbutton": "{0} publicó un _helpbutton_ en  {1}",
     "newpost": "{0} publicó en {1}"
   },
@@ -354,7 +354,9 @@
     "createUpdate": "Publicar Novedad",
     "authorTitle": "Autor:",
     "notFound": "No puedo encontrar tu button, talvez fue borrado?",
-    "invalidDates": ""
+    "invalidDates": "",
+    "followErrorAlert": "",
+    "unfollowErrorAlert": ""
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -531,10 +533,12 @@
     "requireApprovalLabel": "Moderación de la red",
     "requireApprovalExplain": "Si habilitas esto, todos los _helpbuttons_ creados (si no son por un administrador) no se publicarán en el mapa, hasta que un administrador lo apruebe",
     "awaitingApproval": "_helpbutton_ ha sido añadido a la lista de moderación, por favor espera a que un administrador la apruebe",
-    "created_at": "Creado"
+    "created_at": "Creado",
+    "title": "",
+    "created": "",
+    "confirm": ""
   },
-  "role":
-  {
+  "role": {
     "blocked": "deativado",
     "admin": "administrador",
     "registered": "registrado",

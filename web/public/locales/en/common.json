@@ -149,8 +149,7 @@
     "expiredEventType": "_helpbutton_ ended",
     "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list."
   },
-  "activitiesWithSubject":
-  {
+  "activitiesWithSubject": {
     "newbutton": "{0} published a new _helpbutton_ in {1}",
     "newpost": "{0} published a new post in {1}"
   },
@@ -227,7 +226,9 @@
     "renewLink": "Renew your _helpbutton_",
     "createUpdate": "Publish Update",
     "authorTitle": "Author:",
-    "notFound": "Can't find your button, maybe it was deleted?"
+    "notFound": "Can't find your button, maybe it was deleted?",
+    "followErrorAlert": "",
+    "unfollowErrorAlert": ""
   },
   "user": {
     "login": "Write your credentials",
@@ -470,8 +471,8 @@
     "copied": "Invitation link copied to clipboard {0}",
     "title": "QR invites",
     "description": "Invite people, manage and share links with other people to allow them to access your network",
-    "inviteOnlyLabel":"Network privacy",
-    "inviteOnlyExplain":"If you enable this, users will only be able to register and publish if they use a QR code. They will still see the _helpbuttons_.",
+    "inviteOnlyLabel": "Network privacy",
+    "inviteOnlyExplain": "If you enable this, users will only be able to register and publish if they use a QR code. They will still see the _helpbuttons_.",
     "inviteOnly": "Only allow signup with an QR code",
     "generateQr": "Get QR",
     "registered": "Qr code already registered"
@@ -524,10 +525,11 @@
     "requireApproval": "Only allow publishing with moderation",
     "requireApprovalLabel": "Network moderation",
     "requireApprovalExplain": "If you enable this, all _helpbuttons_ created (if not by an admin) won't be published on the map, before an administrator approves it",
-    "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an administrator to approve it"
+    "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an administrator to approve it",
+    "title": "",
+    "created": ""
   },
-  "roles":
-  {
+  "roles": {
     "blocked": "deactivated",
     "admin": "administrator",
     "registered": "registered",

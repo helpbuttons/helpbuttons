@@ -7,27 +7,16 @@ import { useEffect, useState } from 'react';
 import { Dropdown } from 'elements/Dropdown/Dropdown';
 import { ActivityEventName } from 'shared/types/activity.list';
 import { Activity } from 'shared/entities/activity.entity';
-import { Comment } from 'shared/entities/comment.entity';
-import { useButtonTypes } from 'shared/buttonTypes';
-import { getButtonActivity } from 'components/feed/ActivityCardNotification/types/button';
-import {
-  getCommentActivity,
-  getPostActivity,
-} from 'components/feed/ActivityCardNotification/types/post';
-
-enum NotificationType {
-  All,
-  MyActivity,
-  Interests,
-  MyHelpbuttons,
-}
+import { ActivityDtoOut, NotificationType } from 'shared/dtos/activity.dto';
 
 export default function ActivityLayout({
   allActivities,
   loggedInUser,
 }) {
-  const [activities, setActivities] =
-    useState<Activity[]>(allActivities);
+  const [activities, setActivities] = useState<Activity[]>(allActivities);
+  useEffect(() => {
+    setActivities(() => allActivities)
+  }, [allActivities])
   const notificationTypeOptions = [
     {
       name: t('activities.allNotifications'),
@@ -49,30 +38,21 @@ export default function ActivityLayout({
 
   const onChange = (selectedActivityGroup: NotificationType) => {
     setActivities(() => {
+      // console.log(allActitvities)
+      // return allActivitiest
       if (selectedActivityGroup == NotificationType.All) {
         return allActivities;
       } else if (
         selectedActivityGroup == NotificationType.MyActivity
       ) {
-        return allActivities.filter((activity: Activity) => {
+        return allActivities
+        .filter((activity: ActivityDtoOut) => {
           switch (activity.eventName) {
-            case ActivityEventName.NewButton: {
-              const button = getButtonActivity(activity.data);
-              return button.owner.id == loggedInUser.id;
-            }
-            case ActivityEventName.NewPostComment: {
-              const comment: Comment = getCommentActivity(
-                activity.data,
-              );
-              return comment.author.id == loggedInUser.id;
-            }
-            case ActivityEventName.NewPost: {
-              const post = getPostActivity(activity.data);
-              return post.author.id == loggedInUser.id;
-            }
+            case ActivityEventName.NewButton:
+            case ActivityEventName.NewPostComment:
+            case ActivityEventName.NewPost: 
             case ActivityEventName.ExpiredButton: {
-              const button = getButtonActivity(activity.data);
-              return button.owner.id == loggedInUser.id;
+              return activity.isOwner;
             }
             case ActivityEventName.DeleteButton: {
               return true;
@@ -83,15 +63,13 @@ export default function ActivityLayout({
       } else if (
         selectedActivityGroup == NotificationType.MyHelpbuttons
       ) {
-        return allActivities.filter((activity: Activity) => {
+        return allActivities.filter((activity: ActivityDtoOut) => {
           switch (activity.eventName) {
             case ActivityEventName.NewButton: {
-              const button = getButtonActivity(activity.data);
-              return button.owner.id == loggedInUser.id;
+              return activity.isOwner
             }
             case ActivityEventName.DeleteButton: {
               return true;
-              // return true;
             }
             default:
               return false;
@@ -101,11 +79,10 @@ export default function ActivityLayout({
       } else if (
         selectedActivityGroup == NotificationType.Interests
       ) {
-        return allActivities.filter((activity: Activity) => {
+        return allActivities.filter((activity: ActivityDtoOut) => {
           switch (activity.eventName) {
             case ActivityEventName.NewButton: {
-              const button = getButtonActivity(activity.data);
-              return button.owner.id != loggedInUser.id;
+              return activity.isOwner
             }
             case ActivityEventName.NewFollowingButton:
             case ActivityEventName.NewFollowedButton:
@@ -137,7 +114,7 @@ export default function ActivityLayout({
 }
 
 export function ActivitiesList({ activities }) {
-  const buttonTypes = useButtonTypes();
+  // const buttonTypes = useButtonTypes();
 
   return (
     <>
@@ -147,7 +124,6 @@ export function ActivitiesList({ activities }) {
             <div className="feed-element" key={key}>
               <ActivityCardNotification
                 activity={activity}
-                buttonTypes={buttonTypes}
               />
             </div>
           );

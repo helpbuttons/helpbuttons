@@ -8,11 +8,15 @@ import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { EntityManager, In, Repository } from 'typeorm';
 import { Activity } from './activity.entity';
+
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { ButtonService } from '../button/button.service';
+import { transformToMessage } from './activity.transform';
+import { NetworkService } from '../network/network.service';
+import { ActivityDtoOut } from './activity.dto';
 
 @Injectable()
 export class ActivityService {
@@ -24,6 +28,7 @@ export class ActivityService {
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
     private readonly buttonService: ButtonService,
+    private readonly networkService: NetworkService,
   ) {}
 
   @OnEvent(ActivityEventName.NewPost)
@@ -246,17 +251,22 @@ export class ActivityService {
     this.newActivity(button.owner, payload, false);
   }
 
-  findByUserId(userId: string) {
-    return this.activityRepository.find({
-      where: { owner: { id: userId } },
-      relations: ['owner'],
-      order: { created_at: 'DESC' },
-    }).then((activities) => {
-      return activities.map((activity) => 
-      {
-        return activity
-      })
-    });
+  findByUserId(userId: string, locale: string) : Promise<ActivityDtoOut[]> {
+    
+    return this.networkService.findButtonTypes()
+    .then((buttonTypes) => {
+      return this.activityRepository.find({
+        where: { owner: { id: userId } },
+        relations: ['owner'],
+        order: { created_at: 'DESC' },
+      }).then((activities) => {
+        return activities.map((activity): ActivityDtoOut => 
+        {
+          return transformToMessage(activity, userId, buttonTypes, locale)
+        })
+      });
+    })
+    
   }
 
   markAllAsRead(userId: string) {

@@ -11,7 +11,6 @@ import { useConfig, useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Users';
 
 import { useStore } from 'store/Store';
-import { GetConfig } from 'state/Setup';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
 
@@ -22,26 +21,23 @@ import {
   setSSRLocale,
 } from 'shared/sys.helper';
 // import { version } from 'shared/commit';
-import { refeshActivities } from 'state/Activity';
 import t, { updateNomeclature } from 'i18n';
-import { useInterval } from 'shared/custom.hooks';
 import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import SEO from 'components/seo';
-import Loading, { LoadabledComponent } from 'components/loading';
+import { LoadabledComponent } from 'components/loading';
 import { Picker } from 'components/picker/Picker';
 import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
 import Signup from './Signup';
 import Login from './Login';
 import LoginClick from './LoginClick';
+import { Activity, ActivityDtoOut } from 'shared/entities/activity.entity';
+import { activityToMessage } from 'state/Activity';
 
 export default appWithTranslation(MyApp);
 
-const useActivitesPool = (loggedInUser) => {
-  const increment = useCallback(() => refeshActivities(), []);
-  useInterval(increment, 20000, { paused: !loggedInUser });
-};
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
@@ -267,6 +263,9 @@ function MyApp({ Component, pageProps }) {
           <title>{selectedNetwork?.name}</title>
         </Head>
       )}
+      <ClienteSideRendering>
+        <DesktopNotifications/>
+      </ClienteSideRendering>
       <div
         className={`${user ? '' : 'index__container'}`}
         style={
@@ -350,4 +349,50 @@ function EnterPicker() {
       )}
     </>
   );
+}
+
+function DesktopNotifications() {
+  const init = useRef(false)
+  const notifyDesktop = (message) => {
+    console.log('notifiyyy: ' + message)
+    new Notification(message)
+    
+  }
+  useEffect(() => {
+    if(!init.current)
+      {
+        init.current = true;
+        Notification.requestPermission().then(function (getperm) {
+        });
+    }
+  }, [])
+  const activities = useStore(
+    store,
+    (state: GlobalState) => state.activitesState.activities
+  );
+
+  const notificationsShown = useRef(false)
+  useEffect(() => {
+    
+    if(activities && activities.length > 0 && !notificationsShown.current){
+      notificationsShown.current = true;
+      
+      activities
+      .filter((activity) => !activity.read)
+      .slice(0,5)
+      .map((activity: ActivityDtoOut) => {
+        notifyDesktop(activity.title)
+      })
+    }
+      // .filter((activity) => !activity.unread)
+      // .slice(0,5)
+      
+      //   // const activityToMessage(activity)
+      //   // console.log()
+        
+      // })
+    // }
+  }, [activities])
+
+  return <></>;
 }

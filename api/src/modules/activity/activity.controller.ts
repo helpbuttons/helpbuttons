@@ -16,6 +16,7 @@ import { ButtonService } from '../button/button.service';
 import { User } from '../user/user.entity';
 import { ActivityService } from './activity.service';
 import { ActivityCron } from './activity.cron';
+import { ActivityDtoOut } from './activity.dto';
 
 @ApiTags('activity')
 @Controller('activity')
@@ -26,8 +27,8 @@ export class ActivityController {
 
   @OnlyRegistered()
   @Get('find')
-  async find(@CurrentUser() user: User) {
-    return await this.activityService.findByUserId(user.id);
+  async find(@CurrentUser() user: User) : Promise<ActivityDtoOut[]> {
+    return this.activityService.findByUserId(user.id, user.locale);
   }
 
   @OnlyRegistered()
