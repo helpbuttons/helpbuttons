@@ -189,7 +189,7 @@ $picker-comments-item-padding: 25px;
 
   width: 100%;
   height: 100%;
-  // position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   overflow: scroll;
@@ -200,7 +200,6 @@ $picker-comments-item-padding: 25px;
 .picker__close-overlay {
   width: 100%;
   height: 100%;
-  width: 100vw;
   position: fixed;
   top: 0;
   left: 0;

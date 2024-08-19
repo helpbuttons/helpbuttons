@@ -354,16 +354,14 @@ function EnterPicker() {
 function DesktopNotifications() {
   const init = useRef(false)
   const notifyDesktop = (message) => {
-    console.log('notifiyyy: ' + message)
-    new Notification(message)
-    
+    // new Notification(message)
   }
   useEffect(() => {
     if(!init.current)
       {
         init.current = true;
-        Notification.requestPermission().then(function (getperm) {
-        });
+        // Notification.requestPermission().then(function (getperm) {
+        // });
     }
   }, [])
   const activities = useStore(
