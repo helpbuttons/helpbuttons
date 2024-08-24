@@ -526,7 +526,10 @@
     "requireApprovalLabel": "Network moderation",
     "requireApprovalExplain": "If you enable this, all _helpbuttons_ created (if not by an admin) won't be published on the map, before an administrator approves it",
     "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an administrator to approve it",
-    "title": "",
+    "title": "Moderate content and users",
+    "adminCommunication": "Administrator communications",
+    "adminCommunicationLabel":"Administrator communications",
+    "adminCommunicationExplain":"Messages that you share here will be send to all admins or all users of the network",
     "created": ""
   },
   "roles": {
