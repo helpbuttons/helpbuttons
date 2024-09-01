@@ -441,6 +441,7 @@ body {
     margin: auto;
     max-width: $popup-max-width;
     pointer-events: auto;
+    padding-top: $padding-big;
   }
 
   .popup__header {

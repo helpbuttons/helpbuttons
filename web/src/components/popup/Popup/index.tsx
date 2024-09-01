@@ -24,27 +24,29 @@ export default function Popup({
       <div className="popup__content" onScroll={onScroll}>
         <div className={sectionClass}>{children}</div>
       </div>
-      <div className="popup__actions">
-        <div className={'popup__options-h'}>
-          {cancelAction && (
-            <Btn
-              btnType={BtnType.splitIcon}
-              caption={t('common.reset')}
-              contentAlignment={ContentAlignment.center}
-              onClick={(e) => cancelAction(e)}
-            />
-          )}
-          {approveAction && (
-            <Btn
-              submit={true}
-              btnType={BtnType.submit}
-              caption={t('common.search')}
-              contentAlignment={ContentAlignment.center}
-              onClick={() => approveAction()}
-            />
-          )}
+      { cancelAction || approveAction && 
+        <div className="popup__actions">
+          <div className={'popup__options-h'}>
+            {cancelAction && (
+              <Btn
+                btnType={BtnType.splitIcon}
+                caption={t('common.reset')}
+                contentAlignment={ContentAlignment.center}
+                onClick={(e) => cancelAction(e)}
+              />
+            )}
+            {approveAction && (
+              <Btn
+                submit={true}
+                btnType={BtnType.submit}
+                caption={t('common.search')}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => approveAction()}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      }
     </div>
   );
 }
