@@ -8,7 +8,7 @@
     "signup": "SignUp",
     "login": "Login",
     "home": "Home",
-    "donate": "Donate"
+    "donate": "Donate"    
   },
   "homeinfo": {
     "start": "Where do you start?",
@@ -424,9 +424,9 @@
     "moderationList": "Moderation",
     "createSupportButton": "Create your network's support button",
     "moderation": "Moderation",
-    "nomeclaturePluralPlaceHolder": ""
+    "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
-    "addType": "+ Create _helpbutton_ type with the above",
+    "addType": "+ Create _helpbutton_ type with the above"
   },
   "configure": {
     "browsePins": "",
