@@ -3,7 +3,7 @@ $info-nets-field-bottom: 90px;
 $info-nets-max-width: $grid-max-width--mobile;
 $info-image-height: 700px;
 $info-content-mobile-bottom-padding: calc( $footer-height-mobile*2 );
-$info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padding-small );
+$info-content-head-margin-mobile: 71px;
 
 .homeinfo__selected {
 
@@ -24,14 +24,14 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
 .homeinfo__container {
 
   // background-color: $color-white;
-  padding: $info-content-head-margin 0;
+  padding-top: $info-content-head-margin-mobile;
   width:100%;
   z-index: $z-index-02;
   box-sizing: border-box;
   background-repeat: no-repeat, repeat;
   background-position: center;
   background-size: cover;
-  overflow: hidden;
+  overflow: auto;
   // background-image:var(--network-jumbo)
 
 }
@@ -45,11 +45,11 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   min-width: fit-content;
   background-color: transparent;
   width: 100%;
-  height: 100vh;
+  height: auto;
   overflow: scroll;
   box-sizing: border-box;
   // margin-top: $margin-small;
-  margin-bottom: $info-content-mobile-bottom-padding;
+  // margin-bottom: $info-content-mobile-bottom-padding;
 
  }
 
@@ -163,7 +163,7 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   // max-width: $grid-max-width--mobile;
   overflow: auto; 
   min-height: 100px;
-  padding-bottom: $info-content-mobile-bottom-padding;
+  padding-bottom: $padding-big;
   justify-content:space-around;
   align-items: flex-start;
 
@@ -326,7 +326,6 @@ hr {
   .homeinfo__content {
 
     padding-bottom: 0px;
-    height: 100vh;
 
   } 
 

@@ -4707,14 +4707,14 @@ li, ol, ul, h2 {
 }
 
 .homeinfo__container {
-  padding: 85px 0;
+  padding-top: 71px;
   width: 100%;
   z-index: 200;
   box-sizing: border-box;
   background-repeat: no-repeat, repeat;
   background-position: center;
   background-size: cover;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .homeinfo__content {
@@ -4725,10 +4725,9 @@ li, ol, ul, h2 {
   min-width: fit-content;
   background-color: transparent;
   width: 100%;
-  height: 100vh;
+  height: auto;
   overflow: scroll;
   box-sizing: border-box;
-  margin-bottom: 140px;
 }
 
 .homeinfo-card {
@@ -4815,7 +4814,7 @@ li, ol, ul, h2 {
   color: #2E2E2E;
   overflow: auto;
   min-height: 100px;
-  padding-bottom: 140px;
+  padding-bottom: 15px;
   justify-content: space-around;
   align-items: flex-start;
 }
@@ -4922,7 +4921,6 @@ hr {
   }
   .homeinfo__content {
     padding-bottom: 0px;
-    height: 100vh;
   }
   .homeinfo__sections {
     padding-bottom: 0;
@@ -6182,7 +6180,6 @@ hr {
   display: flex;
   padding: 0 10px;
   padding-top: 15px;
-  padding-bottom: 70px;
   flex-direction: column;
   overflow: hidden;
   width: 100%;
@@ -7928,8 +7925,6 @@ body {
 
 .popup__content {
   width: 100%;
-  height: auto;
-  overflow-y: visible;
   overflow-x: hidden;
   border-radius: 0 0 24px 24px;
   display: flex;
@@ -7938,6 +7933,7 @@ body {
 
 .popup__section {
   padding: 1rem 1rem;
+  height: auto;
 }
 
 .popup__img svg {
@@ -8087,7 +8083,6 @@ body {
     margin: 0px auto;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: center;
     background: transparent;
     z-index: 300;
   }
@@ -8947,10 +8942,9 @@ html,
 body,
 #__next,
 .index__container,
-.homeinfo__content,
+.homeinfo__container,
 .homeinfo__card,
 .popup,
-.popup__content,
 .index__content,
 .feed__container,
 .feed-section--activity,
@@ -8959,7 +8953,14 @@ body,
   /* Add other styles as needed */
 }
 
-.popup__content,
+.homeinfo__container {
+  height: calc(var(--vh) - 71px) !important;
+}
+
+.popup__content {
+  height: calc(var(--vh) - 50px) !important;
+}
+
 .popup--button-file {
   height: var(--vh) !important;
 }
@@ -8975,7 +8976,6 @@ body,
 }
 
 .popup,
-.popup-content,
 .filters__wrapper {
   height: calc(var(--vh)) !important;
   /* Add other styles as needed */
@@ -9019,34 +9019,32 @@ a:hover {
   color: #828282;
 }
 
+.disabled {
+  pointer-events: none;
+  background-color: #fff;
+  color: #828282;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
 @media only screen and (min-width: 1280px) {
-  .homeinfo__content,
-  .homeinfo__container,
   .homeinfo__card,
   .list__container--full-screen,
   .popup--button-file,
   .index__explore-container,
   .feed-section--activity-content,
   .feed__container {
+    height: calc(var(--vh)) !important;
+  }
+  .popup__content {
+    height: calc(var(--vh) - 199px) !important;
+  }
+  .homeinfo__container {
     height: calc(var(--vh) - 134px) !important;
-    /* Add other styles as needed */
   }
   .list__content {
     height: calc(var(--vh) - 194px) !important;
   }
-}
-html, body {
-  background-color: #2E2E2E;
-  height: 100vh;
-  background: repeating-linear-gradient(45deg, #f0f0f0 0px, #f0f0f0 1px, #f0f0f0 2px, #f0f0f0 20px);
-}
-
-.disabled {
-  pointer-events: none;
-  background-color: #C8C8C8;
-  color: #858585;
-}
-
-.invisible {
-  visibility: hidden;
 }/*# sourceMappingURL=app.css.map */

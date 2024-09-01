@@ -24,7 +24,6 @@ export default function Popup({
       <div className="popup__content" onScroll={onScroll}>
         <div className={sectionClass}>{children}</div>
       </div>
-      { cancelAction || approveAction && 
         <div className="popup__actions">
           <div className={'popup__options-h'}>
             {cancelAction && (
@@ -46,7 +45,7 @@ export default function Popup({
             )}
           </div>
         </div>
-      }
+      
     </div>
   );
 }
