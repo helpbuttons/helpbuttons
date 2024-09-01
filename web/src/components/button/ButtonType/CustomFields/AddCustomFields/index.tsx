@@ -1,6 +1,8 @@
+import { FieldCheckCard } from 'elements/Fields/FieldCheckCard';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import t from 'i18n';
 import { useForm } from 'react-hook-form';
+import { IoAccessibility, IoCalendar, IoCash } from 'react-icons/io5';
 
 export function AddCustomFields({ customFields, setCustomFields }) {
   const { watch, register } = useForm({});
@@ -24,8 +26,18 @@ export function AddCustomFields({ customFields, setCustomFields }) {
 
   return (
     <>
-      <FieldCheckbox
+      <FieldCheckCard
+        name="priceField"
+        image={<IoCash/>}
+        explain={t('configuration.priceFieldAddLabel')}
+        defaultValue={watch('priceField')}
+        text={t('configuration.priceFieldAdd')}
+        onChanged={(value) => updateCustomField('price', value)}
+        {...register('priceField')}
+      />
+      <FieldCheckCard
         name="eventField"
+        image={<IoCalendar/>}
         explain={t('configuration.dateFieldAddLabel')}
         defaultValue={watch('eventField')}
         text={t('eventType.eventFieldAdd')}
