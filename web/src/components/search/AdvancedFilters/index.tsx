@@ -26,6 +26,7 @@ import PickerField from 'components/picker/PickerField';
 import { Network } from 'shared/entities/network.entity';
 import { AllSuggestedTags, TagList, updateQueryWhenTagAdded, useTagsList } from 'elements/Fields/FieldTags';
 import _ from 'lodash';
+import Accordion from 'elements/Accordion';
 
 
 export default function AdvancedFilters({
@@ -158,54 +159,56 @@ export default function AdvancedFilters({
                       <AllSuggestedTags word={query.substring(query.lastIndexOf(" ")+1)} maxTags={5} tags={tags} addTag={(tag) => {addTag(tag); setValue('query',updateQueryWhenTagAdded(query, tag))}}/>
                       <TagFollow tags={tags}/>
                     </FieldText>
-                    <FieldMultiSelect
-                      label={t('buttonFilters.types')}
-                      validationError={null}
-                      explain={t('buttonFilters.typesExplain')}
-                    > 
-                      {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType) => {
-                        return (
-                          <div
-                            key={buttonType.name}
-                            style={buttonColorStyle(buttonType.cssColor)}
-                          >
-                            <MultiSelectOption
-                              defaultValue={
-                                helpButtonTypes.indexOf(buttonType.name) > -1
-                              } 
-                              iconLink={buttonType.icon}
-                              color={buttonType.cssColor}
-                              icon='emoji'
-                              name={buttonType.name}
-                              handleChange={(name, newValue) => {
-                                setButtonTypeValue(name, newValue);
-                              }}
+                    <Accordion title={t('filters.byCategory')}>
+                      <FieldMultiSelect
+                        label={t('buttonFilters.types')}
+                        validationError={null}
+                        explain={t('buttonFilters.typesExplain')}
+                      > 
+                        {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType) => {
+                          return (
+                            <div
+                              key={buttonType.name}
+                              style={buttonColorStyle(buttonType.cssColor)}
                             >
-                              {/* <div className="btn-filter__icon"></div> */}
-                              <div className="btn-with-icon__text">
-                                {buttonType.caption}
-                              </div>
-                            </MultiSelectOption>
-                          </div>
-                        );
-                      })}
-                    </FieldMultiSelect>
-                    <AdvancedFiltersSortDropDown
-                      className={'dropdown__dropdown-trigger'}
-                      label={t('buttonFilters.orderBy')}
-                      explain={t('buttonFilters.orderByExplain')}
-                      orderBy={watch('orderBy')}
-                      isForm={true}
-                      setOrderBy={(value) => setValue('orderBy',value)}
-                      buttonTypes={buttonTypes}
-                      selectedButtonTypes={watch('helpButtonTypes')}
-                    />
-                    <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
+                              <MultiSelectOption
+                                defaultValue={
+                                  helpButtonTypes.indexOf(buttonType.name) > -1
+                                } 
+                                iconLink={buttonType.icon}
+                                color={buttonType.cssColor}
+                                icon='emoji'
+                                name={buttonType.name}
+                                handleChange={(name, newValue) => {
+                                  setButtonTypeValue(name, newValue);
+                                }}
+                              >
+                                {/* <div className="btn-filter__icon"></div> */}
+                                <div className="btn-with-icon__text">
+                                  {buttonType.caption}
+                                </div>
+                              </MultiSelectOption>
+                            </div>
+                          );
+                        })}
+                      </FieldMultiSelect>
+                      </Accordion>
+                      <Accordion title={t('filters.byCategory')}>
+                        <AdvancedFiltersSortDropDown
+                          className={'dropdown__dropdown-trigger'}
+                          label={t('buttonFilters.orderBy')}
+                          explain={t('buttonFilters.orderByExplain')}
+                          orderBy={watch('orderBy')}
+                          isForm={true}
+                          setOrderBy={(value) => setValue('orderBy',value)}
+                          buttonTypes={buttonTypes}
+                          selectedButtonTypes={watch('helpButtonTypes')}
+                        />
+                        <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
 
-                    <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
-
-                  </div>
-                
+                        <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
+                      </Accordion>
+                    </div>
               </Form>
             </Popup>
           </div>

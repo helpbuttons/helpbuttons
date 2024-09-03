@@ -2,7 +2,9 @@ For developers, open [CONTRIBUTING.md](/CONTRIBUTING.md)
 
 ![HB cover](/web/public/assets/images/hb_landscape_02_small.jpg?raw=true "hb cover")
 
-Build your own collaboration app with Helpbuttons. Cooperate in the topic you want and generate a connected community in the area/collective you want. Make your own whatever-sharing tool in seconds. Share, help and get recognition for your action in a simple way. Join us if you believe that easy social connection is key for a better society.
+¡Build your own collaboration app in seconds with Helpbuttons! 
+
+This software helps you to build collaborative tools for any activity, such as sharing transport or seizing food. It connects people with specific needs to create networks. Mutual support groups, neighborhood communities, schools, town halls or emergency teams would be great benefit from it.
 
 We're currently testing real life examples that you can check in our website. Specially we're aiming to maximize accesibility and develop modules that allow more use cases. Check those tags if you want to help us in those fields.
 
@@ -17,7 +19,7 @@ We accept donations:
 
 ![UX view](https://watchoutfreedom.com/wp-content/uploads/2024/03/Captura-de-Pantalla-2024-03-13-a-las-21.30.09-2048x1124.jpg "UX view")
 
-This software helps build collaborative tools for any activity, such as sharing transport or seizing food. It connects people with specific needs to create networks. Mutual support groups, neighborhood communities, schools, town halls or emergency teams would be great benefit from it.
+
 
 [<img src="https://static.fsf.org/nosvn/images/socials/mastodon.png" width="48">
 ](https://fosstodon.org/@helpbuttonsorg)
