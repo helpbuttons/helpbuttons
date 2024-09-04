@@ -342,7 +342,7 @@ export class ActivityService {
       return this.activityRepository.find({take: 5, order: { created_at: 'DESC' }, where: {homeinfo: true}}).then((activities) => {
         return activities.map((activity): ActivityDtoOut => 
         {
-          return transformToMessage(activity, -1, buttonTypes, locale)
+          return transformToMessage(activity, false, buttonTypes, locale)
         })
       })
     })
