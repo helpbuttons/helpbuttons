@@ -16,6 +16,7 @@ import { useStore } from 'store/Store';
 import { useEffect, useRef } from 'react';
 import { SetupSteps } from 'shared/setupSteps';
 import { ConfigFound, GetConfig } from './Setup';
+import { getLocale } from 'shared/sys.helper';
 // import router from 'next/router';
 
 export interface NetworksState {
@@ -222,7 +223,7 @@ export class CreateNetwork implements WatchEvent {
     public constructor( private onSuccess
     ) {}
     public watch(state: GlobalState) {
-      return NetworkService.activity().pipe(
+      return NetworkService.activity(getLocale()).pipe(
         map((activities) => {
           this.onSuccess(activities)
         }))

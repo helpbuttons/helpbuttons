@@ -264,9 +264,8 @@ export class ActivityService {
         {
           return transformToMessage(activity, userId, buttonTypes, locale)
         })
-      });
+      })
     })
-    
   }
 
   markAllAsRead(userId: string) {
@@ -335,8 +334,17 @@ export class ActivityService {
         .delete({owner: {id: authorId}})
   }
 
-  public findNetworkActivity()
+  public findNetworkActivity(locale)
   {
-    return this.activityRepository.find({take: 5, order: { created_at: 'DESC' }, where: {homeinfo: true}})
+    return this.networkService.findButtonTypes()
+    .then((buttonTypes) => {
+
+      return this.activityRepository.find({take: 5, order: { created_at: 'DESC' }, where: {homeinfo: true}}).then((activities) => {
+        return activities.map((activity): ActivityDtoOut => 
+        {
+          return transformToMessage(activity, -1, buttonTypes, locale)
+        })
+      })
+    })
   }
 }
