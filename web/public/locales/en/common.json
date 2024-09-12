@@ -88,6 +88,7 @@
     "whenExplain": "Filter events by date",
     "priceExplain": "Filter by price",
     "whereLabel": "Where ",
+    "byCategory": "By category",
     "byPrice": "By price",
     "byDate": "By creation date",
     "byProximity": "By proximity",

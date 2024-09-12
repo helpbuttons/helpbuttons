@@ -1120,6 +1120,10 @@
   position: absolute;
   z-index: 600;
 }
+.form__input--plugin #react-select-13-listbox {
+  z-index: 600;
+  position: absolute;
+}
 
 .form__input-tags ul {
   display: flex;
@@ -2320,14 +2324,13 @@ em-emoji-picker {
 
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
-  margin: 30px 0 0 0;
+  margin: 0 0 30px 0;
   cursor: pointer;
   transition: all 0.4s;
   text-overflow: ellipsis;
   overflow: hidden;
-  z-index: 100;
+  z-index: 10;
   white-space: nowrap;
-  display: block;
   left: 0;
   text-align: left;
 }
@@ -2342,11 +2345,10 @@ em-emoji-picker {
   padding: 30px;
   background-color: #f0f0f0;
   height: auto;
-  margin: -20px 0;
+  margin: -40px 0 20px 0;
   border-radius: 0 0 34px 34px;
   display: block;
   overflow: hidden;
-  z-index: 10;
   border: dashed #f0f0f0 1px;
 }
 

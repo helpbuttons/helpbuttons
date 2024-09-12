@@ -159,7 +159,7 @@ export default function AdvancedFilters({
                       <AllSuggestedTags word={query.substring(query.lastIndexOf(" ")+1)} maxTags={5} tags={tags} addTag={(tag) => {addTag(tag); setValue('query',updateQueryWhenTagAdded(query, tag))}}/>
                       <TagFollow tags={tags}/>
                     </FieldText>
-                    <Accordion title={t('filters.byCategory')}>
+                    <Accordion title={t('buttonFilters.byCategory')}>
                       <FieldMultiSelect
                         label={t('buttonFilters.types')}
                         validationError={null}
@@ -193,21 +193,19 @@ export default function AdvancedFilters({
                         })}
                       </FieldMultiSelect>
                       </Accordion>
-                      <Accordion title={t('filters.byCategory')}>
-                        <AdvancedFiltersSortDropDown
-                          className={'dropdown__dropdown-trigger'}
-                          label={t('buttonFilters.orderBy')}
-                          explain={t('buttonFilters.orderByExplain')}
-                          orderBy={watch('orderBy')}
-                          isForm={true}
-                          setOrderBy={(value) => setValue('orderBy',value)}
-                          buttonTypes={buttonTypes}
-                          selectedButtonTypes={watch('helpButtonTypes')}
-                        />
-                        <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
+                      <AdvancedFiltersSortDropDown
+                        className={'dropdown__dropdown-trigger'}
+                        label={t('buttonFilters.orderBy')}
+                        explain={t('buttonFilters.orderByExplain')}
+                        orderBy={watch('orderBy')}
+                        isForm={true}
+                        setOrderBy={(value) => setValue('orderBy',value)}
+                        buttonTypes={buttonTypes}
+                        selectedButtonTypes={watch('helpButtonTypes')}
+                      />
+                      <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
 
-                        <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
-                      </Accordion>
+                      <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
                     </div>
               </Form>
             </Popup>

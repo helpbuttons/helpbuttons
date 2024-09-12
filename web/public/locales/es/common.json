@@ -291,6 +291,7 @@
     "whereLabel": "Filtra por lugar",
     "whenLabel": "Filtra por fecha",
     "whenExplain": "Filtra los eventos por fecha",
+    "byCategory": "Por categoría",
     "byDate": "Últimos creados",
     "byPrice": "Por precio",
     "orderBy": "Ordenar por",
