@@ -8,7 +8,6 @@ import {
   UpdateBoundsFilteredButtons,
   UpdateCachedHexagons,
   UpdateExploreUpdating,
-  UpdateQueryFoundTags,
   UpdateExploreSettings,
   ExploreSettings,
   ClearCachedHexagons,
@@ -30,9 +29,6 @@ import {
   cellToZoom,
   convertBoundsToGeoJsonHexagons,
   getZoomResolution,
-  recalculateDensityMap,
-  roundCoord,
-  roundCoords,
 } from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import {
@@ -43,17 +39,13 @@ import {
 import AdvancedFilters, {
   ButtonsOrderBy,
 } from 'components/search/AdvancedFilters';
-import { Button } from 'shared/entities/button.entity';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
 import {
-  getLocale,
-  getUrlParams,
   uniqueArray,
 } from 'shared/sys.helper';
 import {
-  applyCustomFieldsFilters,
   orderByEventDate,
   orderByPrice,
 } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
@@ -61,6 +53,7 @@ import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { alertService } from 'services/Alert';
 import { ButtonShow } from 'components/button/ButtonShow';
 import { maxZoom } from 'components/map/Map/Map.consts';
+import { applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
 
 const defaultZoomPlace = 13;
 
@@ -466,9 +459,10 @@ function useHexagonMap({
         );
       },
     );
-    const { filteredButtons, filteredHexagons } = applyFilters(
+    const { filteredButtons, filteredHexagons } = applyFiltersHex(
       filters,
       boundsButtons,
+      buttonTypes
     );
 
     const orderedFilteredButtons = orderBy(
@@ -490,96 +484,6 @@ function useHexagonMap({
     updateDensityMap();
   }, [filters]);
 
-  const applyFilters = (filters, cachedHexagons) => {
-    const applyButtonTypesFilter = (button, buttonTypes) => {
-      if (buttonTypes.length == 0) {
-        return true;
-      }
-      if (buttonTypes.length > 0) {
-        return buttonTypes.indexOf(button.type) > -1;
-      }
-      return false;
-    };
-
-    const applyQueryFilter = (button, query) => {
-      if (query && query.length > 0) {
-        return (
-          button.title.indexOf(query) > -1 ||
-          button.description.indexOf(query) > -1
-        );
-      }
-      return true;
-    };
-
-    const applyWhereFilter = (button: Button, where) => {
-      if (where.center && where.radius) {
-        return isPointWithinRadius(
-          { latitude: button.latitude, longitude: button.longitude },
-          { latitude: where.center[0], longitude: where.center[1] },
-          where.radius *1,
-        );
-      }
-      return true;
-    };
-
-    const applyTagFilters = (button: Button, tags: string[]) => {
-      if (tags.length == 0) {
-        return true;
-      }
-      if (tags.length > 0) {
-        const tagsFound = _.intersection(tags, button.tags);
-        if (tagsFound.length > 0) {
-          return true;
-        }
-      }
-      return false;
-    };
-
-    const res = cachedHexagons.reduce(
-      ({ filteredButtons, filteredHexagons }, hexagonCached) => {
-        const moreButtons = hexagonCached.buttons.filter(
-          (button: Button) => {
-            if (
-              !applyButtonTypesFilter(button, filters.helpButtonTypes)
-            ) {
-              return false;
-            }
-            if (!applyTagFilters(button, filters.tags)) {
-              return false;
-            }
-            let query = filters.query;
-            if (!applyQueryFilter(button, query)) {
-              return false;
-            }
-            if (!applyWhereFilter(button, filters.where)) {
-              return false;
-            }
-            if (
-              !applyCustomFieldsFilters(button, filters, buttonTypes)
-            ) {
-              return false;
-            }
-            return true;
-          },
-        );
-
-        filteredHexagons.push({
-          ...hexagonCached,
-          buttons: moreButtons,
-        });
-        return {
-          filteredButtons: filteredButtons.concat(moreButtons),
-          filteredHexagons: filteredHexagons,
-        };
-      },
-      { filteredButtons: [], filteredHexagons: [] },
-    );
-
-    return {
-      filteredButtons: res.filteredButtons,
-      filteredHexagons: recalculateDensityMap(res.filteredHexagons),
-    };
-  };
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     if (bounds) {

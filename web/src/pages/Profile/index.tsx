@@ -9,6 +9,7 @@ import Link from 'next/link';
 import {
   IoBuildOutline,
   IoCreateOutline,
+  IoDocumentTextOutline,
   IoHammerOutline,
   IoLogOutOutline,
   IoQrCodeOutline,
@@ -70,6 +71,13 @@ export default function Profile() {
                         />
                       </Link>
                     {/* } */}
+                    <Link href="/Bulletin">
+                        <Btn
+                          iconLeft={IconType.svg}
+                          iconLink={<IoDocumentTextOutline/>}
+                          caption={t('bulletin.title')}
+                        />
+                    </Link>
                     {loggedInUser?.role == Role.admin && 
                       <AdminOptions/>
                     }

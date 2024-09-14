@@ -11,7 +11,14 @@ import {
   InjectRepository,
 } from '@nestjs/typeorm';
 import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
-import { Repository, In, EntityManager, Not, Between } from 'typeorm';
+import {
+  Repository,
+  In,
+  EntityManager,
+  Not,
+  Between,
+  LessThan,
+} from 'typeorm';
 import { TagService } from '../tag/tag.service';
 import { CreateButtonDto, UpdateButtonDto } from './button.dto';
 import { Button } from './button.entity';
@@ -103,8 +110,7 @@ export class ButtonService {
       }
     }
     let awaitingApproval = false;
-    if(network.requireApproval && user.role != Role.admin)
-    {
+    if (network.requireApproval && user.role != Role.admin) {
       awaitingApproval = true;
     }
     const button = {
@@ -134,9 +140,9 @@ export class ButtonService {
       eventType: createDto.eventType,
       hasPhone,
       eventData: createDto.eventData,
-      awaitingApproval
+      awaitingApproval,
     };
-    
+
     await getManager().transaction(
       async (transactionalEntityManager) => {
         if (Array.isArray(button.tags)) {
@@ -155,7 +161,10 @@ export class ButtonService {
             });
         }
 
-        button.images = await this.storageService.storageMultipleImages(createDto.images)
+        button.images =
+          await this.storageService.storageMultipleImages(
+            createDto.images,
+          );
         if (button.images.length > 0) {
           button.image = button.images[0];
         }
@@ -166,7 +175,10 @@ export class ButtonService {
     return await button;
   }
 
-  async findById(id: string, includeExpired: boolean = false): Promise<Button> {
+  async findById(
+    id: string,
+    includeExpired: boolean = false,
+  ): Promise<Button> {
     let button: Button = await this.buttonRepository.findOne({
       where: { id, ...this.expiredBlockedConditions(includeExpired) },
       relations: ['owner'],
@@ -197,13 +209,13 @@ export class ButtonService {
     hexagon = {
       hexagon: () =>
         `h3_lat_lng_to_cell(POINT(${updateDto.longitude}, ${updateDto.latitude}), ${maxResolution})`,
-    }
+    };
 
     let hasPhone = false;
     if (currentButton.owner.phone) {
       hasPhone = true;
     }
-    const button : Partial<Button> = {
+    const button: Partial<Button> = {
       ...updateDto,
       ...location,
       ...hexagon,
@@ -230,7 +242,9 @@ export class ButtonService {
                 button.images.push(newImage);
               }
             } catch (err) {
-              throw new CustomHttpException(ErrorName.InvalidMimetype);
+              throw new CustomHttpException(
+                ErrorName.InvalidMimetype,
+              );
             }
           } else if (isImageUrl(image)) {
             button.images.push(image);
@@ -262,14 +276,12 @@ export class ButtonService {
         }
       });
 
-    return this.isEventExpired(button)
-    .then((isExpired) => {
-      if(isExpired)
-      {
-        throw new CustomHttpException(ErrorName.expiredDates)
+    return this.isEventExpired(button).then((isExpired) => {
+      if (isExpired) {
+        throw new CustomHttpException(ErrorName.expiredDates);
       }
       return this.buttonRepository.save([button]);
-    })
+    });
   }
 
   async findh3(resolution, hexagons): Promise<Button[]> {
@@ -291,28 +303,36 @@ export class ButtonService {
         .execute();
       const buttonsIds = buttonsOnHexagons.map((button) => button.id);
 
-      return this.buttonRepository.find({
-        relations: ['feed', 'owner'],
-        where: {
-          id: In(buttonsIds),
-          ...this.expiredBlockedConditions(),
-        },
-        order: {
-          created_at: 'DESC',
-        },
-      })
-      .then((buttons) => {
-        return Promise.all(buttons.map(async (button) => {
-          return this.checkAndSetExpired(button)
-        }))
-        .then((btns) => {
-          return btns.filter((btn) => !btn.expired)
+      return this.buttonRepository
+        .find({
+          relations: ['feed', 'owner'],
+          where: {
+            id: In(buttonsIds),
+            ...this.expiredBlockedConditions(),
+          },
+          order: {
+            created_at: 'DESC',
+          },
         })
-        .then((btns) => {
-          return btns.map((btn) => {return {...btn, hasPhone: btn.owner.phone ? true : false}})
-        })
-        // return Promise.all(btns)
-      });
+        .then((buttons) => {
+          return Promise.all(
+            buttons.map(async (button) => {
+              return this.checkAndSetExpired(button);
+            }),
+          )
+            .then((btns) => {
+              return btns.filter((btn) => !btn.expired);
+            })
+            .then((btns) => {
+              return btns.map((btn) => {
+                return {
+                  ...btn,
+                  hasPhone: btn.owner.phone ? true : false,
+                };
+              });
+            });
+          // return Promise.all(btns)
+        });
     } catch (err) {
       console.log(err);
       return [];
@@ -345,7 +365,7 @@ export class ButtonService {
     });
   }
 
-  async findAdminButton() : Promise<Button>{
+  async findAdminButton(): Promise<Button> {
     let button: Button = await this.buttonRepository.findOne({
       where: { owner: { role: Role.admin }, deleted: false },
       relations: ['owner'],
@@ -435,13 +455,11 @@ export class ButtonService {
     return { expired: false, ...blocked };
   }
 
-
   @OnEvent(ActivityEventName.NewPost)
   async updateDate(payload: any) {
     const buttonId = payload.data.post.button.id;
     await this.updateModifiedDate(buttonId);
   }
-
 
   @OnEvent(ActivityEventName.NewPostComment)
   async autoFollowButton(payload: any) {
@@ -449,7 +467,7 @@ export class ButtonService {
       case ActivityEventName.NewPostComment:
         const buttonId = payload.data.comment.button.id;
         const userId = payload.data.comment.author.id;
-        this.follow(buttonId, userId); 
+        this.follow(buttonId, userId);
         break;
     }
     const buttonId = payload.data.comment.post.button.id;
@@ -457,17 +475,15 @@ export class ButtonService {
   }
 
   renew(button: Button, user: User) {
-    return this.isEventExpired(button)
-    .then(async (isExpired) => {
-      if(isExpired)
-      {
+    return this.isEventExpired(button).then(async (isExpired) => {
+      if (isExpired) {
         throw new CustomHttpException(ErrorName.expiredDates);
-      }else{
+      } else {
         return this.updateModifiedDate(button.id).then(() => {
           return button;
         });
       }
-    })
+    });
   }
 
   updateModifiedDate(buttonId: string) {
@@ -477,20 +493,21 @@ export class ButtonService {
   }
 
   checkAndSetExpired(button: Button) {
-    if(button.expired)
-    {
+    if (button.expired) {
       return Promise.resolve(button);
     }
-    return this.isEventExpired(button)
-    .then(async (isExpired) => {
-      if(isExpired)
-      {
-        await this.setExpired(button.id)
-        notifyUser(this.eventEmitter,ActivityEventName.ExpiredButton,{button})
-        return {...button, expired: true};
+    return this.isEventExpired(button).then(async (isExpired) => {
+      if (isExpired) {
+        await this.setExpired(button.id);
+        notifyUser(
+          this.eventEmitter,
+          ActivityEventName.ExpiredButton,
+          { button },
+        );
+        return { ...button, expired: true };
       }
-      return button
-    })
+      return button;
+    });
     // deactivating to expire buttons after 3 months...
     // https://github.com/helpbuttons/helpbuttons/issues/703
     /*.then(async (button) => {
@@ -508,35 +525,38 @@ export class ButtonService {
     });*/
   }
 
-  isEventExpired(button: Partial<Button>)
-  {
+  isEventExpired(button: Partial<Button>) {
     return this.networkService
-    .getButtonTypesWithEventField()
-    .then((btnTemplateEvents) => {
-      // if its a button type with an event field
-      if (btnTemplateEvents.indexOf(button.type) > -1) {
-        const now = new Date();
-        if (new Date(button.eventEnd) < now) {
-          return true;
+      .getButtonTypesWithEventField()
+      .then((btnTemplateEvents) => {
+        // if its a button type with an event field
+        if (btnTemplateEvents.indexOf(button.type) > -1) {
+          const now = new Date();
+          if (new Date(button.eventEnd) < now) {
+            return true;
+          }
         }
-      }
-      return false;
-    })
+        return false;
+      });
   }
 
   setExpired(buttonId: string) {
     return this.buttonRepository.update(buttonId, { expired: true });
   }
 
-  public deleteme(ownerId: string)
-  {
-    return this.buttonRepository.find({where: {owner: {id: ownerId}}}).then((buttonsOwned) => {
-      return buttonsOwned.map((buttonOwned) => this.storageService.deleteMany(buttonOwned.images))
-    })
-    .then(() => {
-      return this.buttonRepository
-      .delete({owner: {id: ownerId}})
-    })
+  public deleteme(ownerId: string) {
+    return this.buttonRepository
+      .find({ where: { owner: { id: ownerId } } })
+      .then((buttonsOwned) => {
+        return buttonsOwned.map((buttonOwned) =>
+          this.storageService.deleteMany(buttonOwned.images),
+        );
+      })
+      .then(() => {
+        return this.buttonRepository.delete({
+          owner: { id: ownerId },
+        });
+      });
   }
 
   public monthCalendar(month: number, year: number) {
@@ -558,11 +578,48 @@ export class ButtonService {
     });
   }
 
-  moderationList( user: User, page: number) {
-    return this.buttonRepository.find({take: 10, skip: page * 10, order: { created_at: 'DESC' }, where: {awaitingApproval: true, ...this.expiredBlockedConditions() }})
+  moderationList(user: User, page: number) {
+    return this.buttonRepository.find({
+      take: 10,
+      skip: page * 10,
+      order: { created_at: 'DESC' },
+      where: {
+        awaitingApproval: true,
+        ...this.expiredBlockedConditions(),
+      },
+    });
   }
 
   approve(buttonId: string) {
-    return this.buttonRepository.save({id: buttonId, awaitingApproval: false})
+    return this.buttonRepository.save({
+      id: buttonId,
+      awaitingApproval: false,
+    });
+  }
+
+  bulletin(page: number, take: number, days: number) {
+    const daysAgo = new Date();
+    daysAgo.setDate(daysAgo.getDate() - days);
+    return this.buttonRepository
+      .find({
+        where: {
+          updated_at: Between(daysAgo, new Date()),
+          ...this.expiredBlockedConditions(),
+        },
+        take: take,
+        skip: take * page,
+        order: {
+          created_at: 'DESC',
+        },
+      })
+      .then((buttons) => {
+        return Promise.all(
+          buttons.map(async (button) => {
+            return this.checkAndSetExpired(button);
+          }),
+        ).then((btns) => {
+          return btns.filter((btn) => !btn.expired);
+        });
+      });
   }
 }
