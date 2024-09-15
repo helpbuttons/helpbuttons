@@ -33,6 +33,7 @@ import {
 } from 'shared/date.utils';
 import { advancedSearchText } from 'elements/HeaderSearch';
 import { orderBy } from 'pages/Explore/HoneyComb';
+import { Network } from 'shared/entities/network.entity';
 
 export default function Bulletin() {
   const [bulletinButtons, setBulletinButtons] = useState([]);
@@ -44,56 +45,41 @@ export default function Bulletin() {
   const filters = useStore(
     store,
     (state: GlobalState) => state.explore.map.filters,
-    true,
   );
-  const selectedNetwork = useStore(
+  const selectedNetwork: Network = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
     true,
   );
 
   useEffect(() => {
-    setBulletinButtons(() => {
-      const { filteredButtons } = applyFilters(
-        filters,
-        fetchedButtons,
-        buttonTypes,
-      );
-
-      const orderedFilteredButtons = orderBy(
-        filteredButtons,
-        filters.orderBy,
-        selectedNetwork.exploreSettings.center,
-      );
-
-      store.emit(
-        new UpdateBoundsFilteredButtons(orderedFilteredButtons),
-      );
-      setFilterButtonCaption(() => {
-        return (
-          <>
-            {t('bulletin.found', [
-              filteredButtons.length.toString(),
-              readableDateTime(dateTime),
-            ])}
-            <br />
-            {filters && 
-              <>
-              {advancedSearchText(filters.query, buttonTypes, [], filters, selectedNetwork.currency)}
-              </>
-            }
-          </>
+    if (filters && selectedNetwork) {
+      setBulletinButtons(() => {
+        const { filteredButtons } = applyFilters(
+          filters,
+          fetchedButtons,
+          buttonTypes,
         );
+
+        const orderedFilteredButtons = orderBy(
+          filteredButtons,
+          filters.orderBy,
+          selectedNetwork?.exploreSettings?.center,
+        );
+
+        store.emit(
+          new UpdateBoundsFilteredButtons(orderedFilteredButtons),
+        );
+        return filteredButtons.map((btn) => {
+          return {
+            ...btn,
+            qrcode: QRCode.toDataURL(
+              getShareLink(`/ButtonFile/${btn.id}`),
+            ),
+          };
+        });
       });
-      return filteredButtons.map((btn) => {
-        return {
-          ...btn,
-          qrcode: QRCode.toDataURL(
-            getShareLink(`/ButtonFile/${btn.id}`),
-          ),
-        };
-      });
-    });
+    }
   }, [fetchedButtons, filters]);
 
   useEffect(() => {
@@ -102,13 +88,37 @@ export default function Bulletin() {
         setDays(() => filters.days);
       }
     }
+  }, [filters]);
+
+  useEffect(() => {
     setDateTime(() => {
       const daysAgo = new Date();
       daysAgo.setDate(daysAgo.getDate() - days);
       return daysAgo;
     });
-  }, [filters]);
-
+    setFilterButtonCaption(() => {
+      return (
+        <>
+          {t('bulletin.found', [
+            bulletinButtons.length.toString(),
+            readableDate(dateTime),
+          ])}
+          <br />
+          {filters && (
+            <>
+              {advancedSearchText(
+                filters.query,
+                buttonTypes,
+                [],
+                filters,
+                selectedNetwork.currency,
+              )}
+            </>
+          )}
+        </>
+      );
+    });
+  }, [filters, bulletinButtons, dateTime])
   useEffect(() => {
     if (buttonTypes.length > 0) {
       store.emit(
@@ -135,11 +145,13 @@ export default function Bulletin() {
       />
       <div>
         <AdvancedFilters showFilterByDays={true} target="/Bulettin" />
-        {buttonTypes.length > 0 && bulletinButtons.length > 0 && (
+        {selectedNetwork && (
           <PDFViewer style={{ width: '100%', height: '500px' }}>
             <BulletinPDF
               buttons={bulletinButtons}
               buttonTypes={buttonTypes}
+              selectedNetwork={selectedNetwork}
+              dateTime={dateTime}
             />
           </PDFViewer>
         )}
@@ -148,7 +160,12 @@ export default function Bulletin() {
   );
 }
 
-const BulletinPDF = ({ buttons, buttonTypes }) => {
+const BulletinPDF = ({
+  buttons,
+  buttonTypes,
+  selectedNetwork,
+  dateTime,
+}) => {
   const styles = StyleSheet.create({
     page: {
       padding: 20,
@@ -156,14 +173,28 @@ const BulletinPDF = ({ buttons, buttonTypes }) => {
     section: {
       textAlign: 'center',
     },
-    logo: {},
-    mainHeader: {},
+    networkLogo: {
+      maxHeight: '25px',
+    },
+    networkName: {
+      textAlign: 'center',
+    },
   });
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.mainHeader}>
+          <Image
+            style={styles.networkLogo}
+            src={makeImageUrl(selectedNetwork.image)}
+          />
+          <Text style={styles.networkName}>
+            {t('bulletin.pdfNetworkTitle', [
+              selectedNetwork.name,
+              readableDate(dateTime),
+            ])}
+          </Text>
           <ButtonRows buttons={buttons} buttonTypes={buttonTypes} />
         </View>
       </Page>

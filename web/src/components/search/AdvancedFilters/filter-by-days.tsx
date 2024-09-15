@@ -1,5 +1,7 @@
 import t from 'i18n';
 import Slider from 'rc-slider';
+import { useEffect, useState } from 'react';
+import { readableDate } from 'shared/date.utils';
 
 export function FilterByDays({
   days,
@@ -30,12 +32,21 @@ export function FilterByDays({
     const sliderValue = (markIndex * 100) + ((value - min) / (max - min)) * 100;
     return sliderValue;
   };
+  const [dateTime, setDateTime] = useState(null);
+  useEffect(() => {
+    if (days) {
+      setDateTime(() => {
+        const daysAgo = new Date();
+        daysAgo.setDate(daysAgo.getDate() - days);
+        return daysAgo;
+      });
+    }
+  }, [days]);
   return (
     <>
         <div className="form__field">
           <label className="form__label">
-            {t('buttonFilters.days')} -&nbsp;
-            {days}
+            {t('bulletin.since',[readableDate(dateTime)])}
           </label>
           <div style={{ padding: '1rem' }}>
             <Slider

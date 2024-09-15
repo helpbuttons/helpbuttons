@@ -150,6 +150,9 @@ export default function AdvancedFilters({
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="filters__content">
+                    {showFilterByDays && 
+                      <FilterByDays days={days} setDays={(value) => setValue('days', value)}/>
+                    }
                     <FieldText
                       name="query"
                       label={t('buttonFilters.queryLabel')}
@@ -207,9 +210,7 @@ export default function AdvancedFilters({
                     {!showFilterByDays && 
                       <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
                     }
-                    {showFilterByDays && 
-                      <FilterByDays days={days} setDays={(value) => setValue('days', value)}/>
-                    }
+                    
                   </div>
                 
               </Form>
