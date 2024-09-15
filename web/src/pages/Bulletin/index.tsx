@@ -17,28 +17,38 @@ import {
 } from '@react-pdf/renderer';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
 import { useButtonTypes } from 'shared/buttonTypes';
-import AdvancedFilters, { ButtonsOrderBy } from 'components/search/AdvancedFilters';
-import { ToggleAdvancedFilters, UpdateBoundsFilteredButtons, UpdateNavBarSearch } from 'state/Explore';
+import AdvancedFilters from 'components/search/AdvancedFilters';
+import {
+  ToggleAdvancedFilters,
+  UpdateBoundsFilteredButtons,
+} from 'state/Explore';
 import Btn, { IconType } from 'elements/Btn';
 import { IoSearch } from 'react-icons/io5';
 import { FindBulletinButtons } from 'state/Button';
 import { applyFilters } from 'components/search/AdvancedFilters/filters.type';
-import { readableDate, readableTime } from 'shared/date.utils';
+import {
+  readableDate,
+  readableDateTime,
+  readableTime,
+} from 'shared/date.utils';
+import { advancedSearchText } from 'elements/HeaderSearch';
+import { orderBy } from 'pages/Explore/HoneyComb';
 
 export default function Bulletin() {
-  const [bulletinButtons, setBulletinButtons] = useState([])
-  const [days, setDays] = useState(10)
+  const [bulletinButtons, setBulletinButtons] = useState([]);
+  const [days, setDays] = useState(10);
+  const [dateTime, setDateTime] = useState(null);
   const buttonTypes = useButtonTypes();
-  const [fetchedButtons, setFetchedButtons] = useState([])
+  const [fetchedButtons, setFetchedButtons] = useState([]);
 
-  const listButtons = useStore(
-    store,
-    (state: GlobalState) => state.explore.map.listButtons,
-    true,
-  );
   const filters = useStore(
     store,
     (state: GlobalState) => state.explore.map.filters,
+    true,
+  );
+  const selectedNetwork = useStore(
+    store,
+    (state: GlobalState) => state.networks.selectedNetwork,
     true,
   );
 
@@ -47,56 +57,85 @@ export default function Bulletin() {
       const { filteredButtons } = applyFilters(
         filters,
         fetchedButtons,
-        buttonTypes
+        buttonTypes,
       );
+
+      const orderedFilteredButtons = orderBy(
+        filteredButtons,
+        filters.orderBy,
+        selectedNetwork.exploreSettings.center,
+      );
+
       store.emit(
-        // new UpdateBoundsFilteredButtons(orderedFilteredButtons),
-        new UpdateBoundsFilteredButtons(filteredButtons),
+        new UpdateBoundsFilteredButtons(orderedFilteredButtons),
       );
+      setFilterButtonCaption(() => {
+        return (
+          <>
+            {t('bulletin.found', [
+              filteredButtons.length.toString(),
+              readableDateTime(dateTime),
+            ])}
+            <br />
+            {filters && 
+              <>
+              {advancedSearchText(filters.query, buttonTypes, [], filters, selectedNetwork.currency)}
+              </>
+            }
+          </>
+        );
+      });
       return filteredButtons.map((btn) => {
-        return {...btn, qrcode: QRCode.toDataURL(getShareLink(`/ButtonFile/${btn.id}`))}
-      })
-    })
-  }, [fetchedButtons, filters])
+        return {
+          ...btn,
+          qrcode: QRCode.toDataURL(
+            getShareLink(`/ButtonFile/${btn.id}`),
+          ),
+        };
+      });
+    });
+  }, [fetchedButtons, filters]);
 
   useEffect(() => {
-    if(filters && filters.days)
-    {
-      if(filters.days !== days)
-      {
-        setDays(() => filters.days)
+    if (filters && filters.days) {
+      if (filters.days !== days) {
+        setDays(() => filters.days);
       }
     }
-  }, [filters])
+    setDateTime(() => {
+      const daysAgo = new Date();
+      daysAgo.setDate(daysAgo.getDate() - days);
+      return daysAgo;
+    });
+  }, [filters]);
 
   useEffect(() => {
-    if(buttonTypes.length > 0)
-    {
+    if (buttonTypes.length > 0) {
       store.emit(
-        new FindBulletinButtons(
-          0,100, days,
-          (buttons) => setFetchedButtons(() => buttons)
-        )
+        new FindBulletinButtons(0, 100, days, (buttons) =>
+          setFetchedButtons(() => buttons),
+        ),
       );
-    }else{
-      console.log('button types is null...AAAGRH')
+    } else {
+      console.log('button types is null...AAAGRH');
     }
-  },[days, buttonTypes]);
-  
-  return (
+  }, [days, buttonTypes]);
 
+  const [filterButtonCaption, setFilterButtonCaption] = useState(
+    t('bulletin.filter', [days.toString()]),
+  );
+  return (
     <div>
-        <Btn
-          onClick={() => store.emit(new ToggleAdvancedFilters())}
-          iconLeft={IconType.svg}
-          iconLink={<IoSearch />}
-          caption={t('bulletin.filter')}
-        />
-        Filtering buttons created until {days} days ago.<br/>
-        {bulletinButtons.length} button(s) found.
+      {t('bulletin.explainBulletin')}
+      <Btn
+        onClick={() => store.emit(new ToggleAdvancedFilters())}
+        iconLeft={IconType.svg}
+        iconLink={<IoSearch />}
+        caption={filterButtonCaption}
+      />
       <div>
-        <AdvancedFilters showFilterByDays={true} target="/Bulettin"/>
-        {(buttonTypes.length > 0 && bulletinButtons.length > 0)&& (
+        <AdvancedFilters showFilterByDays={true} target="/Bulettin" />
+        {buttonTypes.length > 0 && bulletinButtons.length > 0 && (
           <PDFViewer style={{ width: '100%', height: '500px' }}>
             <BulletinPDF
               buttons={bulletinButtons}
@@ -117,20 +156,15 @@ const BulletinPDF = ({ buttons, buttonTypes }) => {
     section: {
       textAlign: 'center',
     },
-    logo: {
-    },
-    mainHeader: {
-    },
+    logo: {},
+    mainHeader: {},
   });
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.mainHeader}>
-          <ButtonRows
-            buttons={buttons}
-            buttonTypes={buttonTypes}
-          />
+          <ButtonRows buttons={buttons} buttonTypes={buttonTypes} />
         </View>
       </Page>
     </Document>
@@ -185,9 +219,7 @@ const ButtonRows = ({ buttons, buttonTypes }) => {
   ));
   return (
     <>
-      <View style={styles.tableContainer}>
-        {rows}
-      </View>
+      <View style={styles.tableContainer}>{rows}</View>
     </>
   );
 };
@@ -246,12 +278,12 @@ const ButtonRow = ({ button, buttonType }) => {
           <Text style={styles.row}>
             <Text style={styles.title}>{button.title} </Text>
             <Text style={styles.place}> {button.address}</Text>
-            <Text style={styles.date}>{readableDate(button.created_at)} - {readableTime(button.created_at)}</Text>
+            <Text style={styles.date}>
+              {readableDate(button.created_at)} -{' '}
+              {readableTime(button.created_at)}
+            </Text>
           </Text>
-          <Image
-            style={styles.qrcode}
-            src={button.qrcode}
-          />
+          <Image style={styles.qrcode} src={button.qrcode} />
         </>
       )}
     </>

@@ -19,6 +19,7 @@
     "@fontsource/quicksand": "^5.0.18",
     "@hookform/resolvers": "^2.8.1",
     "@nestjs/swagger": "^6.1.4",
+    "@react-pdf/renderer": "^3.4.4",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "circle-to-polygon": "^2.2.0",
     "class-validator": "^0.14.0",

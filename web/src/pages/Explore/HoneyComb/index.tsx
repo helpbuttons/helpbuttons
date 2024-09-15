@@ -558,7 +558,7 @@ export const orderByCreated = (buttons) => {
   });
 };
 
-const orderBy = (buttons, orderBy, center) => {
+export const orderBy = (buttons, orderBy, center) => {
   if (orderBy == ButtonsOrderBy.PROXIMITY) {
     return orderByClosestToCenter(center, buttons);
   }
