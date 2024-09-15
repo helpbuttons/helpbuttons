@@ -236,4 +236,11 @@ export class ButtonController {
       notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})  
     })
   }
+
+  @OnlyRegistered()
+  @Get('bulletin/:page/:take/:days')
+  bulletin(@Param('page') page: number, @Param('take') take: number, @Param('days') days: number)
+  {
+    return this.buttonService.bulletin(page, take, days)
+  }
 }

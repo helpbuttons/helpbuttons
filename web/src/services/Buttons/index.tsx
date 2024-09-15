@@ -83,4 +83,8 @@ export class ButtonService {
     return httpService.get<any>(`buttons/approve/${buttonId}`);
   }
 
+  public static bulletin(page, take, days): Observable<any> {
+    return httpService.get<any>(`buttons/bulletin/${page}/${take}/${days}`);
+  }
+
 }

@@ -14,6 +14,10 @@ export const useButtonTypes = () => {
   return selectedNetwork ? selectedNetwork.buttonTemplates : []
 }
 
+export const showButtonTypeCaption = (typeName) => {
+  const buttonTypes = useButtonTypes();
+  return buttonTypes.find((elem) => elem.name == typeName).caption
+}
 export const isButtonTypeEvent = (buttonType) => {
   const buttonTypes = useButtonTypes()
   if(!buttonTypes)

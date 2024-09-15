@@ -534,5 +534,12 @@
     "admin": "administrator",
     "registered": "registered",
     "guest": "guest"
+  },
+  "bulletin": {
+    "profileButton": "Create new bulletin",
+    "explainBulletin": "Here you can get a list of _helpbuttons_ in a pdf format, with QR codes. So you can spread the word in your own community.",
+    "found": "{0} _helpbuttons_ found. From today until {1}",
+    "pdfNetworkTitle": "{0} since {1}",
+    "since": "Since {0}"
   }
 }
