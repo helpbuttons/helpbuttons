@@ -3,7 +3,7 @@ import { isPointWithinRadius } from "geolib";
 import { Point } from "pigeon-maps";
 import { Button } from "shared/entities/button.entity";
 import { recalculateDensityMap } from "shared/honeycomb.utils";
-
+export const defaultDaysForBulletin = 30;
 export interface ButtonFilters {
     helpButtonTypes: string[];
     query: string;
@@ -19,7 +19,7 @@ export interface ButtonFilters {
     where: { address: null, center: null, radius: null },
     orderBy: 'date',
     tags: [],
-    days: 10,
+    days: defaultDaysForBulletin,
   };
   
   const applyButtonTypesFilter = (button, buttonTypes) => {

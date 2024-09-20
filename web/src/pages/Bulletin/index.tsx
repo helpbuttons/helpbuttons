@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { Button } from 'shared/entities/button.entity';
-import { PDFViewer } from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
 import QRCode from 'qrcode';
 
 import React from 'react';
@@ -21,27 +21,29 @@ import AdvancedFilters from 'components/search/AdvancedFilters';
 import {
   ToggleAdvancedFilters,
   UpdateBoundsFilteredButtons,
+  UpdateFilters,
 } from 'state/Explore';
 import Btn, { IconType } from 'elements/Btn';
 import { IoSearch } from 'react-icons/io5';
 import { FindBulletinButtons } from 'state/Button';
-import { applyFilters } from 'components/search/AdvancedFilters/filters.type';
 import {
-  readableDate,
-  readableDateTime,
-  readableTime,
-} from 'shared/date.utils';
+  applyFilters,
+  defaultDaysForBulletin,
+} from 'components/search/AdvancedFilters/filters.type';
+import { readableDate, readableTime } from 'shared/date.utils';
 import { advancedSearchText } from 'elements/HeaderSearch';
 import { orderBy } from 'pages/Explore/HoneyComb';
 import { Network } from 'shared/entities/network.entity';
+import Loading from 'components/loading';
+import { FilterByDays } from 'components/search/AdvancedFilters/filter-by-days';
 
 export default function Bulletin() {
-  const [bulletinButtons, setBulletinButtons] = useState([]);
-  const [days, setDays] = useState(10);
+  const [bulletinButtons, setBulletinButtons] = useState(null);
+  const [days, setDays] = useState(defaultDaysForBulletin);
   const [dateTime, setDateTime] = useState(null);
   const buttonTypes = useButtonTypes();
-  const [fetchedButtons, setFetchedButtons] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
   const filters = useStore(
     store,
     (state: GlobalState) => state.explore.map.filters,
@@ -51,56 +53,37 @@ export default function Bulletin() {
     (state: GlobalState) => state.networks.selectedNetwork,
     true,
   );
-
-  useEffect(() => {
-    if (filters && selectedNetwork) {
-      setBulletinButtons(() => {
-        const { filteredButtons } = applyFilters(
-          filters,
-          fetchedButtons,
-          buttonTypes,
-        );
-
-        const orderedFilteredButtons = orderBy(
-          filteredButtons,
-          filters.orderBy,
-          selectedNetwork?.exploreSettings?.center,
-        );
-
-        store.emit(
-          new UpdateBoundsFilteredButtons(orderedFilteredButtons),
-        );
-        return filteredButtons.map((btn) => {
-          return {
-            ...btn,
-            qrcode: QRCode.toDataURL(
-              getShareLink(`/ButtonFile/${btn.id}`),
-            ),
-          };
-        });
-      });
-    }
-  }, [fetchedButtons, filters]);
-
   useEffect(() => {
     if (filters && filters.days) {
       if (filters.days !== days) {
+        setIsLoading(() => true);
+        setPdfBlobUrl(() => null);
         setDays(() => filters.days);
       }
     }
   }, [filters]);
 
   useEffect(() => {
-    setDateTime(() => {
-      const daysAgo = new Date();
-      daysAgo.setDate(daysAgo.getDate() - days);
-      return daysAgo;
-    });
+    if (bulletinButtons) {
+      pdf(
+        <BulletinPDF
+          buttons={bulletinButtons}
+          buttonTypes={buttonTypes}
+          selectedNetwork={selectedNetwork}
+          dateTime={dateTime}
+        />,
+      )
+        .toBlob()
+        .then((blob) =>
+          setPdfBlobUrl(() => URL.createObjectURL(blob)),
+        );
+    }
+
     setFilterButtonCaption(() => {
       return (
         <>
           {t('bulletin.found', [
-            bulletinButtons.length.toString(),
+            bulletinButtons?.length.toString(),
             readableDate(dateTime),
           ])}
           <br />
@@ -118,22 +101,65 @@ export default function Bulletin() {
         </>
       );
     });
-  }, [filters, bulletinButtons, dateTime])
-  useEffect(() => {
-    if (buttonTypes.length > 0) {
-      store.emit(
-        new FindBulletinButtons(0, 100, days, (buttons) =>
-          setFetchedButtons(() => buttons),
-        ),
-      );
-    } else {
-      console.log('button types is null...AAAGRH');
-    }
-  }, [days, buttonTypes]);
+  }, [bulletinButtons]);
 
+  useEffect(() => {
+    const onButtonsFetched = (fetchedButtons) => {
+      console.log(fetchedButtons)
+      setBulletinButtons(() => {
+        const { filteredButtons } = applyFilters(
+          filters,
+          fetchedButtons,
+          buttonTypes,
+        );
+        const orderedFilteredButtons = orderBy(
+          filteredButtons,
+          filters.orderBy,
+          selectedNetwork?.exploreSettings?.center,
+        );
+        store.emit(
+          new UpdateBoundsFilteredButtons(orderedFilteredButtons),
+        );
+
+        return orderedFilteredButtons.map((btn) => {
+          return {
+            ...btn,
+            qrcode: QRCode.toDataURL(
+              getShareLink(`/ButtonFile/${btn.id}`),
+            ),
+          };
+        });
+      });
+      setIsLoading(() => false);
+    }
+    if (buttonTypes.length > 0 && filters?.days) {
+      setIsLoading(true);
+      setPdfBlobUrl(() => null);
+      setDateTime(() => {
+        const daysAgo = new Date();
+        daysAgo.setDate(daysAgo.getDate() - filters.days);
+        return daysAgo;
+      });
+      store.emit(
+        new FindBulletinButtons(0, 100, filters.days, (buttons) => {
+          onButtonsFetched(buttons);
+        }),
+      );
+    }
+
+    return () => {
+      if (pdfBlobUrl) {
+        URL.revokeObjectURL(pdfBlobUrl);
+      }
+    };
+  }, [filters?.days, buttonTypes]);
   const [filterButtonCaption, setFilterButtonCaption] = useState(
     t('bulletin.filter', [days.toString()]),
   );
+
+  const updateDays = (days) => {
+    store.emit(new UpdateFilters({ ...filters, days }));
+  };
   return (
     <div>
       {t('bulletin.explainBulletin')}
@@ -144,16 +170,30 @@ export default function Bulletin() {
         caption={filterButtonCaption}
       />
       <div>
-        <AdvancedFilters showFilterByDays={true} target="/Bulettin" />
-        {selectedNetwork && (
-          <PDFViewer style={{ width: '100%', height: '500px' }}>
-            <BulletinPDF
-              buttons={bulletinButtons}
-              buttonTypes={buttonTypes}
-              selectedNetwork={selectedNetwork}
-              dateTime={dateTime}
-            />
-          </PDFViewer>
+        <FilterByDays days={days} setDays={setDays} />
+        <Btn
+          onClick={() => {
+            updateDays(days);
+          }}
+          caption={t('bulletin.changeDays')}
+        />
+        <AdvancedFilters
+          showFilterByDays={true}
+          target="/Bulettin"
+          isHome={false}
+        />
+        {(isLoading || !pdfBlobUrl) && <Loading></Loading>}
+        {pdfBlobUrl && (
+          <iframe
+            src={pdfBlobUrl}
+            title="Generated PDF"
+            width="80%"
+            height="600px"
+            style={{ border: '1px solid #ccc' }}
+          />          
+        )}
+        {!(bulletinButtons?.length > 0) && (
+          <>{t('bulletin.noButtons')}</>
         )}
       </div>
     </div>
@@ -184,7 +224,7 @@ const BulletinPDF = ({
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View style={styles.mainHeader}>
+        <View>
           <Image
             style={styles.networkLogo}
             src={makeImageUrl(selectedNetwork.image)}
