@@ -39,6 +39,7 @@ import { FilterByDays } from 'components/search/AdvancedFilters/filter-by-days';
 
 export default function Bulletin() {
   const [bulletinButtons, setBulletinButtons] = useState(null);
+  const [fetchedButtons, setFetchedButtons] = useState(null);
   const [days, setDays] = useState(defaultDaysForBulletin);
   const [dateTime, setDateTime] = useState(null);
   const buttonTypes = useButtonTypes();
@@ -59,10 +60,16 @@ export default function Bulletin() {
         setIsLoading(() => true);
         setPdfBlobUrl(() => null);
         setDays(() => filters.days);
+      }else if(fetchedButtons){
+        
+        setIsLoading(() => true);
+        setPdfBlobUrl(() => null);
+        applyFiltersToBulletin(fetchedButtons)
       }
+      
     }
   }, [filters]);
-
+  
   useEffect(() => {
     if (bulletinButtons) {
       pdf(
@@ -75,8 +82,11 @@ export default function Bulletin() {
       )
         .toBlob()
         .then((blob) =>
-          setPdfBlobUrl(() => URL.createObjectURL(blob)),
+          setPdfBlobUrl(() => {
+            return URL.createObjectURL(blob);
+          }),
         );
+        
     }
 
     setFilterButtonCaption(() => {
@@ -102,44 +112,39 @@ export default function Bulletin() {
       );
     });
   }, [bulletinButtons]);
+  const applyFiltersToBulletin = (buttons) => {
+    setFetchedButtons(() => buttons)
+    setBulletinButtons(() => {
+      const { filteredButtons } = applyFilters(
+        filters,
+        buttons,
+        buttonTypes,
+      );
+      const orderedFilteredButtons = orderBy(
+        filteredButtons,
+        filters.orderBy,
+        selectedNetwork?.exploreSettings?.center,
+      );
+      store.emit(
+        new UpdateBoundsFilteredButtons(orderedFilteredButtons),
+      );
+      return orderedFilteredButtons.map((btn) => {
+        return {
+          ...btn,
+          qrcode: QRCode.toDataURL(
+            getShareLink(`/ButtonFile/${btn.id}`),
+          ),
+        };
+      });
+    });
+  }
 
   useEffect(() => {
     const onButtonsFetched = (fetchedButtons) => {
-      console.log(fetchedButtons)
-      setBulletinButtons(() => {
-        const { filteredButtons } = applyFilters(
-          filters,
-          fetchedButtons,
-          buttonTypes,
-        );
-        const orderedFilteredButtons = orderBy(
-          filteredButtons,
-          filters.orderBy,
-          selectedNetwork?.exploreSettings?.center,
-        );
-        store.emit(
-          new UpdateBoundsFilteredButtons(orderedFilteredButtons),
-        );
-
-        return orderedFilteredButtons.map((btn) => {
-          return {
-            ...btn,
-            qrcode: QRCode.toDataURL(
-              getShareLink(`/ButtonFile/${btn.id}`),
-            ),
-          };
-        });
-      });
+      applyFiltersToBulletin(fetchedButtons)
       setIsLoading(() => false);
     }
     if (buttonTypes.length > 0 && filters?.days) {
-      setIsLoading(true);
-      setPdfBlobUrl(() => null);
-      setDateTime(() => {
-        const daysAgo = new Date();
-        daysAgo.setDate(daysAgo.getDate() - filters.days);
-        return daysAgo;
-      });
       store.emit(
         new FindBulletinButtons(0, 100, filters.days, (buttons) => {
           onButtonsFetched(buttons);
@@ -147,12 +152,23 @@ export default function Bulletin() {
       );
     }
 
+    if( filters?.days)
+    {
+      setDateTime(() => {
+        const daysAgo = new Date();
+        daysAgo.setDate(daysAgo.getDate() - filters.days);
+        return daysAgo;
+      });
+    }
+    
+
     return () => {
       if (pdfBlobUrl) {
         URL.revokeObjectURL(pdfBlobUrl);
       }
     };
   }, [filters?.days, buttonTypes]);
+
   const [filterButtonCaption, setFilterButtonCaption] = useState(
     t('bulletin.filter', [days.toString()]),
   );
@@ -183,7 +199,7 @@ export default function Bulletin() {
           isHome={false}
         />
         {(isLoading || !pdfBlobUrl) && <Loading></Loading>}
-        {pdfBlobUrl && (
+        {(pdfBlobUrl && bulletinButtons?.length > 0) && (
           <iframe
             src={pdfBlobUrl}
             title="Generated PDF"
