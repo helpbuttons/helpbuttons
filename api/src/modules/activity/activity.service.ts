@@ -14,7 +14,7 @@ import { MailService } from '../mail/mail.service';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { ButtonService } from '../button/button.service';
-import { transformToMessage } from './activity.transform';
+import { getButtonActivity, getUserActivity, transformToMessage } from './activity.transform';
 import { NetworkService } from '../network/network.service';
 import { ActivityDtoOut } from './activity.dto';
 
@@ -164,10 +164,15 @@ export class ActivityService {
   }
 
   @OnEvent(ActivityEventName.DeleteButton)
-  async onDeleteButton(payload: any) {
-    const {user, button} = payload.data;
-    // notify button owner
-    await this.newActivity(button.owner, payload, false);
+  async onDeleteButton(payload: any) {    
+    const button = getButtonActivity(payload.data);
+    const user = getUserActivity(payload.data)
+    
+    return this.entityManager.query(`delete from activity WHERE (data->'button'->'id' @> '"${button.id}"' OR data->'post'->'button'->'id' @> '"${button.id}"' OR data->'comment'->'button'->'id' @> '"${button.id}"')`)
+    .then(() => {
+
+      return this.newActivity(button.owner, payload, false);
+    })
   }
   @OnEvent(ActivityEventName.RenewButton)
   async onRenewButton(payload: any) {
@@ -198,45 +203,9 @@ export class ActivityService {
   @OnEvent(ActivityEventName.ExpiredButton)
   async onExpiredButton(payload: any) {
     const {button} = payload.data;
+
+    // delete from home info
     await this.newActivity(button.owner, payload, false);
-    /*notifyOwnerExpiredButton(button: Partial<Button>, isEvent: boolean = false)
-    {
-      return this.userService
-              .findById(button.owner.id)
-              .then((user) => {
-                return this.userService
-                  .getUserLoginParams(user.id)
-                  .then((loginParams) => {
-                    let content_ = 'button.isExpiringMail'
-                    let subject_ = 'button.isExpiringMailSubject'
-                    if(isEvent)
-                    {
-                      content_ = 'button.isExpiringEventMail'
-                      subject_ = 'button.isExpiringEventMailSubject'
-                    }
-                    return this.mailService.sendWithLink({
-                      to: user.email,
-                      content: translate(
-                        user.locale,
-                        content_,
-                        [button.title],
-                      ),
-                      subject: translate(
-                        user.locale,
-                        subject_,
-                      ),
-                      link: getUrl(
-                        user.locale,
-                        `/ButtonRenew/${button.id}${loginParams}`,
-                      ),
-                      linkCaption: translate(
-                        user.locale,
-                        'email.buttonLinkCaption',
-                      ),
-                    });
-                  });
-              })
-    }*/
   }
 
   @OnEvent(ActivityEventName.NewFollowingButton)
