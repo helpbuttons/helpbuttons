@@ -249,6 +249,14 @@ function MyApp({ Component, pageProps }) {
   if (isSetup) {
     return <Component {...pageProps} />;
   }
+  if(pageName == 'Embbed')
+  {
+    return (
+      <LoadabledComponent loading={!selectedNetwork || loading}>
+            <Component {...pageProps} />
+          </LoadabledComponent>
+    )
+  }
   return (
     <>
       <Head>
