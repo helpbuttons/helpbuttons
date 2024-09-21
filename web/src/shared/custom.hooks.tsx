@@ -109,3 +109,12 @@ export default function useComponentVisible(initialIsVisible) {
 
   return { ref, showSubmenu, setShowSubmenu };
 }
+export const useShowPopup = () => {
+  const [popupShowState, setPopupState] =  useState(false)
+
+  const closePopup = () => setPopupState(() => false)
+  const openPopup = () => setPopupState(() => true)
+
+  return [popupShowState,openPopup, closePopup]
+}
+

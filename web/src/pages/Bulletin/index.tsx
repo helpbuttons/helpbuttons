@@ -146,7 +146,7 @@ export default function Bulletin() {
     }
     if (buttonTypes.length > 0 && filters?.days) {
       store.emit(
-        new FindBulletinButtons(0, 100, filters.days, (buttons) => {
+        new FindBulletinButtons(0, 200, filters.days, (buttons) => {
           onButtonsFetched(buttons);
         }),
       );

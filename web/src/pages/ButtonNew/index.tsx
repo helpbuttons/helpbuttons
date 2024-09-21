@@ -1,7 +1,6 @@
 import ButtonForm from 'components/button/ButtonForm';
 import { GlobalState, store } from 'pages';
 import { CreateButton, SaveButtonDraft, UpdateCachedHexagons } from 'state/Explore';
-import Router from 'next/router';
 import { alertService } from 'services/Alert';
 import { useForm } from 'react-hook-form';
 import router from 'next/router';
@@ -14,9 +13,7 @@ import { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
 import { useStore } from 'store/Store';
-import { latLngToCell } from 'h3-js';
-import { maxResolution } from 'shared/types/honeycomb.const';
-import Loading, { LoadabledComponent } from 'components/loading';
+import Loading from 'components/loading';
 import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
 
 export default function ButtonNew({ metadata }) {

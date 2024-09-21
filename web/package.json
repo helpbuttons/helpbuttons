@@ -33,6 +33,7 @@
     "geojson2h3": "^1.2.0",
     "geolib": "^3.3.3",
     "h3-js": "^4.1.0",
+    "html-entities": "^2.5.2",
     "http-proxy": "^1.18.1",
     "http-status": "^1.6.2",
     "immer": "^9.0.6",

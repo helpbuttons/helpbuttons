@@ -1,0 +1,24 @@
+    .__iframe__code-box {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      
+      .__iframe__code-box pre {
+        font-family: monospace;
+        font-size: 14px;
+        margin: 0;
+        padding: 0;
+        white-space: pre-wrap;       /* Since CSS 2.1 */
+        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+        white-space: -pre-wrap;      /* Opera 4-6 */
+        white-space: -o-pre-wrap;    /* Opera 7 */
+        // word-wrap: break-word;       /* Internet Explorer 5.5+ */
+      }
+      
+      .__iframe__code-box code {
+        font-family: monospace;
+        font-size: 14px;
+      }
+    

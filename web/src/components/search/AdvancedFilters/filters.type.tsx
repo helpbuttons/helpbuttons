@@ -4,6 +4,7 @@ import { Point } from "pigeon-maps";
 import { Button } from "shared/entities/button.entity";
 import { recalculateDensityMap } from "shared/honeycomb.utils";
 export const defaultDaysForBulletin = 30;
+export const defaultDaysForEmbbed = 30;
 export interface ButtonFilters {
     helpButtonTypes: string[];
     query: string;
