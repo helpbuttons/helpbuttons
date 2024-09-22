@@ -44,6 +44,12 @@
     "latestActivity": "Últimas actividads",
     "installButton": "Instalar"
   },
+  "share":{
+
+    "showSharePopup": "Comparte esta app",
+    "shareField": "Elige tu opción para compartir"
+
+  },
   "feed": {
     "write": "Escribir mensaje",
     "update": "Novedad del Autor",

@@ -41,6 +41,12 @@
     "latestActivity": "Latest activities",
     "installButton": "Install"
   },
+  "share":{
+
+    "showSharePopup": "Share this app",
+    "shareField": "Choose your share option"
+
+  },
   "feed": {
     "write": "Write message",
     "update": "Author Update",

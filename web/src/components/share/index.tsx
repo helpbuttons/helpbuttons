@@ -35,42 +35,55 @@ export function SharePopup({}) {
         <div>
           <PickerField
             btnLabel={t('share.showSharePopup')}
+            label={t('share.showSharePopup')}
+            headerText={t('share.showSharePopup')}
             showPopup={popupShowState}
             openPopup={openPopup}
             closePopup={closePopup}
           >
-            <DropdownField
-              options={[
-                {
-                  value: shareOptions.rss,
-                  name: 'Rss feed',
-                },
-                {
-                  value: shareOptions.ics,
-                  name: 'ICS/ICAL',
-                },
-                {
-                  value: shareOptions.iframe,
-                  name: 'embbedable',
-                },
-                {
-                  value: shareOptions.ap,
-                  name: 'Fediverse',
-                },
-              ]}
-              onChange={(value) => setShareOptionSelected(() => value)}
-              value={shareOptionSelected}
-            />
-            <FilterByNumber number={nrButtons} setNumber={setNrButtons} label={nrButtons} />
-            {shareOptionSelected}
-            <div className='_iframe__code'>
-              <div className="__iframe__code-box">
-                <pre>
-                  <code dangerouslySetInnerHTML={{__html: encode(iframeCode)}}>
-                  </code>
-                </pre>
+            <div className="form__field">
+              <div className="form__label">{t('share.shareTypeLabel')}</div>
+              <div className="form__explain">{t('share.shareTypeExplain')}</div>
+              <DropdownField
+                options={[
+                  {
+                    value: shareOptions.rss,
+                    name: 'Rss feed',
+                  },
+                  {
+                    value: shareOptions.ics,
+                    name: 'ICS/ICAL',
+                  },
+                  {
+                    value: shareOptions.iframe,
+                    name: 'embbedable',
+                  },
+                  {
+                    value: shareOptions.ap,
+                    name: 'Fediverse',
+                  },
+                ]}
+                
+                onChange={(value) => setShareOptionSelected(() => value)}
+                value={shareOptionSelected}
+              />
+            </div>
+
+            <div className="form__field">
+              <div className="form__label">{shareOptionSelected}</div>
+              <div className="form__explain">{t('share.shareExplain')}</div>
+        
+              <FilterByNumber number={nrButtons} setNumber={setNrButtons} label={nrButtons} />
+
+              <div className='_iframe__code'>
+                <div className="__iframe__code-box">
+                  <pre>
+                    <code dangerouslySetInnerHTML={{__html: encode(iframeCode)}}>
+                    </code>
+                  </pre>
+                </div>
+                <code dangerouslySetInnerHTML={{__html: iframeCode}}/>
               </div>
-              <code dangerouslySetInnerHTML={{__html: iframeCode}}/>
             </div>
           </PickerField>
         </div>
