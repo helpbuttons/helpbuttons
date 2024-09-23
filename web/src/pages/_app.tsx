@@ -360,13 +360,30 @@ function EnterPicker() {
 }
 
 function DesktopNotifications() {
+
+  
+  const isSupported = () =>
+  'Notification' in window &&
+  'serviceWorker' in navigator &&
+  'PushManager' in window
+
+  const [hasPermission, setHasPermission] = useState(false)
+
   const init = useRef(false)
   const notifyDesktop = (message) => {
-    new Notification(message)
+    if(hasPermission)
+    {
+      new Notification(message)
+    }
   }
+
   useEffect(() => {
-    console.log('request permission')
-    Notification.requestPermission().then(function (getperm) { console.log('Permission for notifications', getperm) });
+    if (isSupported()) {
+      Notification.requestPermission().then(function (getperm) { if(getperm == 'granted') { 
+        setHasPermission(() => true)
+      }
+       });
+    }
   }, [])
   const activities = useStore(
     store,
