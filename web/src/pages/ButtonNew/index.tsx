@@ -24,7 +24,7 @@ export default function ButtonNew({ metadata }) {
   );
   return (
     <>
-    {selectedNetwork ? 
+    {selectedNetwork.exploreSettings ? 
       <ButtonNewForm selectedNetwork={selectedNetwork} />
      : <Loading/>
     }

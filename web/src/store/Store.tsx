@@ -86,6 +86,7 @@ export function useStore(store: Store, selector: func, defaultNull = true) {
   return useRef(store, selector, defaultNull)
 }
 
+// (state: GlobalState) => state.activitesState.notificationsPermissionGranted
 export function useGlobalStore(localState)
 {
   return useStore(

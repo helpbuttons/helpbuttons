@@ -8,27 +8,27 @@ import t from "i18n";
 export function ShareEmbbedForm() {
 
 
-    const getIframe = (days) => {
+    const getIframe = () => {
       return `<iframe src="${getShareLink(
-        '/Embbed/' + days,
+        '/Embbed'
       )}" width="100%" height="100%"></iframe>`;
     };
   
-    const [nrButtons, setNrButtons] = useState(defaultDaysForEmbbed);
-    const [iframeCode, setIframeCode] = useState(getIframe(nrButtons));
+    // const [nrButtons, setNrButtons] = useState(defaultDaysForEmbbed);
+    const [iframeCode, setIframeCode] = useState(getIframe());
     useEffect(() => {
-      setIframeCode(() => getIframe(nrButtons));
-    }, [nrButtons]);
+      setIframeCode(() => getIframe());
+    }, []);
     return (
       <div className="form__field">
         <div className="form__label">Embbed</div>
         <div className="form__explain">{t('share.shareExplain')}</div>
-  
+{/*   
         <FilterByNumber
           number={nrButtons}
           setNumber={setNrButtons}
           label={nrButtons}
-        />
+        /> */}
   
         <div className="_iframe__code">
           <div className="__iframe__code-box">
