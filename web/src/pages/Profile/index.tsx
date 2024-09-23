@@ -71,13 +71,6 @@ export default function Profile() {
                         />
                       </Link>
                     {/* } */}
-                    <Link href="/Bulletin">
-                        <Btn
-                          iconLeft={IconType.svg}
-                          iconLink={<IoDocumentTextOutline/>}
-                          caption={t('bulletin.profileButton')}
-                        />
-                    </Link>
                     {loggedInUser?.role == Role.admin && 
                       <AdminOptions/>
                     }
