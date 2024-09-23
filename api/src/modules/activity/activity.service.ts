@@ -154,7 +154,10 @@ export class ActivityService {
                 return this.newActivity(user, payload, true);
               });
           }),
-        );
+        ).catch((err) => {
+          console.log(payload)
+          console.log(err)
+        });
       }
       
       return this.newActivity(button.owner, payload, false);
