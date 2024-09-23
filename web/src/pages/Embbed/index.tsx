@@ -1,9 +1,8 @@
 import CardButtonList from 'components/list/CardButtonList';
-import { initScriptLoader } from 'next/script';
 import {  store } from 'pages';
 import { useEffect, useRef, useState } from 'react';
 import { useButtonTypes } from 'shared/buttonTypes';
-import { FindBulletinButtons } from 'state/Button';
+import { FindEmbbedButtons } from 'state/Button';
 
 export default function Embbed() {
   const buttonTypes = useButtonTypes();
@@ -23,7 +22,7 @@ export default function Embbed() {
         return;
       }
       console.log('emitting..' , page, take)
-      store.emit(new FindBulletinButtons(page.current, take, 0, (buttons) => {
+      store.emit(new FindEmbbedButtons(page.current, take, 0, (buttons) => {
         setButtons((prevButtons) => [...prevButtons, ...buttons])
       }));
       page.current = page.current + 1

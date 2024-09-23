@@ -243,4 +243,11 @@ export class ButtonController {
   {
     return this.buttonService.bulletin(page, take, days)
   }
+
+  @AllowGuest()
+  @Get('embbed/:page/:take')
+  embbed(@Param('page') page: number, @Param('take') take: number)
+  {
+    return this.buttonService.embbed(page, take)
+  }
 }

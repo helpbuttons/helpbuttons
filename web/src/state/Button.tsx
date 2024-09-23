@@ -101,3 +101,25 @@ export class UpdateButtonList implements UpdateEvent {
     });
   }
 }
+
+
+export class FindEmbbedButtons implements WatchEvent {
+  public constructor(
+    private page: number,
+    private take: number,
+    private days: number,
+    private onSuccess = undefined,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return ButtonService.embbed(this.page, this.take).pipe(
+      map((buttons) => {
+        store.emit(new UpdateButtonList(buttons))
+        this.onSuccess(buttons);
+      }),
+      catchError((error) => {
+        return of(undefined);
+      }),
+    );
+  }
+}

@@ -612,14 +612,28 @@ export class ButtonService {
           created_at: 'DESC',
         },
       })
-      .then((buttons) => {
-        return Promise.all(
-          buttons.map(async (button) => {
-            return this.checkAndSetExpired(button);
-          }),
-        ).then((btns) => {
-          return btns.filter((btn) => !btn.expired);
-        });
-      });
+      .then((buttons) => this.filterExpired(buttons));
+  }
+
+  embbed(page: number, take: number) {
+    return this.buttonRepository
+      .find({
+        take: take,
+        skip: take * page,
+        order: {
+          created_at: 'DESC',
+        },
+      })
+      .then((buttons) => this.filterExpired(buttons));
+  }
+
+  filterExpired(buttons) {
+    return Promise.all(
+      buttons.map(async (button) => {
+        return this.checkAndSetExpired(button);
+      }),
+    ).then((btns) => {
+      return btns.filter((btn) => !btn.expired);
+    });
   }
 }
