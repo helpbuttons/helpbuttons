@@ -44,7 +44,10 @@
   "share":{
 
     "showSharePopup": "Share this app",
-    "shareField": "Choose your share option"
+    "shareField": "Choose your share option",
+    "shareTypeLabel": "Share ",
+    "shareTypeExplain": "Choose the type of share you want to do",
+    "shareExplain": "Select the amount of results you want to show and copy the code to your site"
 
   },
   "feed": {
@@ -545,7 +548,7 @@
     "profileButton": "Create new bulletin",
     "explainBulletin": "Here you can get a list of _helpbuttons_ in a pdf format, with QR codes. So you can spread the word in your own community.",
     "found": "{0} _helpbuttons_ found. From today until {1}",
-    "pdfNetworkTitle": "{0} since {1}",
+    "pdfDate": "since {0}",
     "since": "Since {0}"
   }
 }

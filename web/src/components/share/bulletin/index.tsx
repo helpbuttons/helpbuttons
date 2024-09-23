@@ -36,6 +36,7 @@ import { orderBy } from 'pages/Explore/HoneyComb';
 import { Network } from 'shared/entities/network.entity';
 import Loading from 'components/loading';
 import { FilterByDays } from 'components/search/AdvancedFilters/filter-by-days';
+import Popup from 'components/popup/Popup';
 
 export default function ShareBulletinForm() {
   const [bulletinButtons, setBulletinButtons] = useState(null);
@@ -177,7 +178,8 @@ export default function ShareBulletinForm() {
     store.emit(new UpdateFilters({ ...filters, days }));
   };
   return (
-    <div>
+    <>
+    <Popup>
       {t('bulletin.explainBulletin')}
       <Btn
         onClick={() => store.emit(new ToggleAdvancedFilters())}
@@ -193,11 +195,7 @@ export default function ShareBulletinForm() {
           }}
           caption={t('bulletin.changeDays')}
         />
-        <AdvancedFilters
-          showFilterByDays={true}
-          target="/Bulettin"
-          isHome={false}
-        />
+        
         {(isLoading || !pdfBlobUrl) && <Loading></Loading>}
         {(pdfBlobUrl && bulletinButtons?.length > 0) && (
           <iframe
@@ -212,7 +210,15 @@ export default function ShareBulletinForm() {
           <>{t('bulletin.noButtons')}</>
         )}
       </div>
-    </div>
+
+    </Popup>
+
+      <AdvancedFilters
+      showFilterByDays={true}
+      target="/Bulettin"
+      isHome={false}
+    />
+    </>
   );
 }
 
@@ -226,32 +232,47 @@ const BulletinPDF = ({
     page: {
       padding: 20,
     },
-    section: {
+    header: {
       textAlign: 'center',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent:'flex-start',
+      alignItems:'baseline',
+      gap:'10px',
     },
     networkLogo: {
       maxHeight: '25px',
+      maxWidth: '25px',
     },
     networkName: {
       textAlign: 'center',
+      fontWeight: 'bold',
+      fontSize:'25px',
+    },
+    date: {
+      fontWeight: 'thin',
     },
   });
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View>
+        <View style={styles.header}>
           <Image
             style={styles.networkLogo}
             src={makeImageUrl(selectedNetwork.image)}
           />
           <Text style={styles.networkName}>
-            {t('bulletin.pdfNetworkTitle', [
-              selectedNetwork.name,
+            {selectedNetwork.name}
+          </Text>
+          <Text style={styles.date}>
+            {t('bulletin.pdfDate', [
               readableDate(dateTime),
             ])}
           </Text>
-          <ButtonRows buttons={buttons} buttonTypes={buttonTypes} />
+        </View>
+        <View>
+        <ButtonRows buttons={buttons} buttonTypes={buttonTypes} />
         </View>
       </Page>
     </Document>
@@ -265,13 +286,15 @@ const ButtonRows = ({ buttons, buttonTypes }) => {
       flexDirection: 'row',
       borderTopColor: '#3778C2',
       borderTopWidth: 3,
-      alignItems: 'center',
-      height: 100,
+      alignItems: 'flex-start',
+      maxHeight: 300,
+      maxWidth: '100vw',
       fontStyle: 'bold',
     },
     tableContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
+      maxWidth:'100%',
       marginTop: 24,
     },
 
@@ -315,22 +338,25 @@ const ButtonRow = ({ button, buttonType }) => {
   const rowColor = buttonType.cssColor;
   const styles = StyleSheet.create({
     image: {
-      width: '20%',
+      maxWidth: 'auto',
+      maxHeight: 'auto',
     },
     button_type: {
-      width: '15%',
-      padding: 10,
+      width: 'auto',
       color: rowColor,
       fontWeight: 'bold',
     },
     title: {
       display: 'flex',
       flexDirection: 'row',
+      fontWeight: 'bold',
     },
     row: {
-      width: '45%',
+      width: 'auto',
       display: 'flex',
+      justifyContent:'flex-start',
       flexDirection: 'column',
+      gap: '5px',
     },
     description: {
       fontSize: 12,
@@ -338,40 +364,40 @@ const ButtonRow = ({ button, buttonType }) => {
       flexDirection: 'column',
     },
     place: {
-      fontSize: 8,
-      bottom: 0,
-      display: 'flex',
-      flexDirection: 'column',
+      fontSize: 12,
+  
     },
     qrcode: {
-      width: '20%',
+      margin: 'auto',
+      
     },
     date: {
-      fontSize: 10,
-      bottom: 0,
-      display: 'flex',
-      flexDirection: 'column',
+      fontSize: 12,
+  
     },
+ 
   });
   return (
     <>
       {buttonType && (
-        <>
-          <Image
-            style={styles.image}
-            src={makeImageUrl(button.image)}
-          />
+        <View style={{ width: '100%' , flexDirection: 'row', gap: '10px', marginBottom: '15px' }}>
+          <View style={{ width: '20%' }} >
+            <Image
+              style={styles.image}
+              src={makeImageUrl(button.image)}
+            />
+          </View>
           <Text style={styles.button_type}>{buttonType.caption}</Text>
-          <Text style={styles.row}>
+          <View style={styles.row}>
             <Text style={styles.title}>{button.title} </Text>
             <Text style={styles.place}> {button.address}</Text>
             <Text style={styles.date}>
               {readableDate(button.created_at)} -{' '}
               {readableTime(button.created_at)}
             </Text>
-          </Text>
+          </View>
           <Image style={styles.qrcode} src={button.qrcode} />
-        </>
+        </View>
       )}
     </>
   );

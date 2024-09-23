@@ -59,6 +59,7 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
   border-radius: $border-radius-basic;
   background-color: $color-white;
   padding: $padding-big;
+  position: relative;
   // margin: $margin-xsmall 0;
   margin: $margin-medium $margin-small;
   flex: 0.8 0 49%;
@@ -174,7 +175,7 @@ $info-content-head-margin: calc( $footer-height-mobile + $padding-medium + $padd
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 0;
   padding-bottom: $padding-small;
   width: 100%;

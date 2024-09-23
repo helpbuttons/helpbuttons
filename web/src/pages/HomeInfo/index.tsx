@@ -37,6 +37,7 @@ import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { SharePopup } from 'components/share';
 import { DesktopNotificationsButton } from 'pages/_app';
+import { CardSubmenu, CardSubmenuOption } from 'components/card/CardSubmenu';
 
 export default function HomeInfo({ metadata }) {
   const selectedNetwork = useStore(
@@ -167,6 +168,7 @@ export default function HomeInfo({ metadata }) {
               </div>
 
               <div className="homeinfo-card">
+              <HomeinfoShareOptions user={undefined}/>
                 <div className="homeinfo-card__header">
                   <h3 className="homeinfo-card__header-title">
                     {t('homeinfo.activity')}
@@ -373,3 +375,31 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
   setSSRLocale(ctx.locale);
   return setMetadata(t('menu.home'), ctx);
 };
+
+function HomeinfoShareOptions({ user }) {
+  
+
+  const getOptions = () => {
+    
+        return (
+          <>
+            <CardSubmenuOption
+              onClick={() => {
+                updateRole(user.id, Role.registered);
+              }}
+              label={t('share.share')}
+            />
+            <CardSubmenuOption
+              onClick={() => {
+                updateRole(user.id, Role.registered);
+              }}
+              label={t('share.embed')}
+            />
+          </>
+        );
+      
+    }
+  
+
+  return <CardSubmenu extraClass="">{getOptions()}</CardSubmenu>;
+}

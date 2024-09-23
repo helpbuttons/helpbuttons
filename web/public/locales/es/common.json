@@ -47,7 +47,10 @@
   "share":{
 
     "showSharePopup": "Comparte esta app",
-    "shareField": "Elige tu opción para compartir"
+    "shareField": "Elige tu opción para compartir",
+    "shareTypeLabel": "Tipo",
+    "shareTypeExplain": "Elige la manera en la que quieres compartir los resultados de tu red",
+    "shareExplain": "Elige el número de resultados que quieras mostrar y copia el código en tu web."
 
   },
   "feed": {

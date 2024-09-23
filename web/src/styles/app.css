@@ -4563,6 +4563,7 @@ li, ol, ul, h2 {
   border-radius: 8px;
   background-color: #fff;
   padding: 15px;
+  position: relative;
   margin: 25px 20px;
   flex: 0.8 0 49%;
   overflow: auto;
@@ -4651,7 +4652,7 @@ li, ol, ul, h2 {
 .homeinfo-card__header {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 0;
   padding-bottom: 5px;
   width: 100%;
@@ -6568,6 +6569,29 @@ hr {
     width: 40px !important;
   }
 }
+.__iframe__code-box {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.__iframe__code-box pre {
+  font-family: monospace;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap; /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+}
+
+.__iframe__code-box code {
+  font-family: monospace;
+  font-size: 14px;
+}
+
 .header-desktop {
   z-index: 200;
   position: relative;
