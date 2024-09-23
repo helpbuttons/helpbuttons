@@ -39,7 +39,12 @@
     "networkIsPrivate": "Private network",
     "callToAdmin": "Hi! Contact an assitant if you need help registering or publishing",
     "latestActivity": "Latest activities",
-    "installButton": "Install"
+    "installButton": "Install app",
+    "print": "Print activity",
+    "share": "Share options",
+    "notificationsPermission": "Allow notifications"
+    
+
   },
   "share":{
 

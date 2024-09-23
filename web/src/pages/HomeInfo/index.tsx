@@ -12,13 +12,21 @@ import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import NavLink from 'elements/Navlink';
 import {
   IoAddCircle,
+  IoAddCircleOutline,
   IoAddOutline,
   IoCall,
   IoClose,
+  IoDownload,
+  IoDownloadSharp,
   IoGlobeOutline,
   IoHelpOutline,
   IoLogInOutline,
   IoMapOutline,
+  IoNotifications,
+  IoNotificationsOutline,
+  IoPrint,
+  IoPrintOutline,
+  IoShare,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
@@ -137,9 +145,6 @@ export default function HomeInfo({ metadata }) {
                   caption={t('homeinfo.goToExplore')}
                   onClick={() => router.push('Explore')}
                 />
-                <DesktopNotificationsButton/>
-                <InstallButton />
-
                 <Btn
                   btnType={BtnType.corporative}
                   contentAlignment={ContentAlignment.center}
@@ -158,23 +163,62 @@ export default function HomeInfo({ metadata }) {
                   <h3 className="homeinfo-card__header-title">
                     {t('homeinfo.info')}
                   </h3>
+                  
                 </div>
                 <hr></hr>
 
                 <div className="homeinfo__description">
+                  {/* <DesktopNotificationsButton/>
+                  <InstallButton /> */}
+
                   <TextFormatted text={selectedNetwork.description} />
+
                 </div>
-                <SharePopup />
+
+                <div className="homeinfo-card__section">
+                  <Btn
+                    btnType={BtnType.filterCorp}
+                    iconLink={<IoDownload />}
+                    caption={t('homeinfo.installButton')}
+                    iconLeft={IconType.circle}
+                    contentAlignment={ContentAlignment.center}
+                    onClick={() => toggleshowContactDialog(false)}
+                  />
+                </div>
+                <div className="homeinfo-card__section">
+
+                  <Btn
+                    btnType={BtnType.filterCorp}
+                    iconLink={<IoNotificationsOutline />}
+                    caption={t('homeinfo.notificationsPermission')}
+                    iconLeft={IconType.circle}
+                    contentAlignment={ContentAlignment.center}
+                    onClick={() => toggleshowContactDialog(false)}
+                  />
+                </div>
+                
+                {/* <SharePopup /> */}
               </div>
 
               <div className="homeinfo-card">
-              <HomeinfoShareOptions user={undefined}/>
                 <div className="homeinfo-card__header">
                   <h3 className="homeinfo-card__header-title">
                     {t('homeinfo.activity')}
                   </h3>
+
+                  <Btn
+                    btnType={BtnType.filterCorp}
+                    iconLink={<IoShare />}
+                    caption={t('homeinfo.share')}
+                    iconLeft={IconType.circle}
+                    contentAlignment={ContentAlignment.center}
+                    onClick={() => toggleshowContactDialog(false)}
+                  />
+ 
                 </div>
+
                 <hr></hr>
+
 
                 <div className="homeinfo__description">
                   <ActivitiesList activities={activities} />

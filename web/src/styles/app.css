@@ -4652,7 +4652,7 @@ li, ol, ul, h2 {
 .homeinfo-card__header {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 0;
   padding-bottom: 5px;
   width: 100%;
