@@ -36,6 +36,7 @@ import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { SharePopup } from 'components/share';
+import { DesktopNotificationsButton } from 'pages/_app';
 
 export default function HomeInfo({ metadata }) {
   const selectedNetwork = useStore(
@@ -135,7 +136,7 @@ export default function HomeInfo({ metadata }) {
                   caption={t('homeinfo.goToExplore')}
                   onClick={() => router.push('Explore')}
                 />
-
+                <DesktopNotificationsButton/>
                 <InstallButton />
 
                 <Btn

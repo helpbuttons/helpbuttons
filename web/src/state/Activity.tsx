@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { useStore } from 'store/Store';
 import { useCallback, useEffect, useState } from 'react';
 import { useInterval } from 'shared/custom.hooks';
+import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 
 export interface ActivitiesState {
   activities: ActivityDtoOut[];
@@ -19,6 +20,23 @@ export const activitiesInitialState: ActivitiesState = {
   activities: [],
   notificationsPermissionGranted: false,
 };
+
+export class PermissionGranted implements UpdateEvent{
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      localStorageService.save(LocalStorageVars.HAS_PERMISSION_NOTIFICATIONS, true)
+      newState.activitesState.notificationsPermissionGranted = true;
+    });
+  }
+}
+export class PermissionRevoke implements UpdateEvent{
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      localStorageService.remove(LocalStorageVars.HAS_PERMISSION_NOTIFICATIONS)
+      newState.activitesState.notificationsPermissionGranted = false;
+    });
+  }
+}
 
 export class FindActivities implements WatchEvent {
   public constructor() {}

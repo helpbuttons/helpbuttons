@@ -10,7 +10,7 @@ import { GlobalState, store } from 'pages';
 import { useConfig, useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Users';
 
-import { useStore } from 'store/Store';
+import { useGlobalStore, useStore } from 'store/Store';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
 
@@ -32,11 +32,11 @@ import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
 import Signup from './Signup';
 import Login from './Login';
 import LoginClick from './LoginClick';
-import { Activity, ActivityDtoOut } from 'shared/entities/activity.entity';
-import { activityToMessage } from 'state/Activity';
+import { ActivityMarkAllAsRead, PermissionGranted, PermissionRevoke } from 'state/Activity';
+import { IoNotificationsOutline } from 'react-icons/io5';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 
 export default appWithTranslation(MyApp);
-
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -249,13 +249,12 @@ function MyApp({ Component, pageProps }) {
   if (isSetup) {
     return <Component {...pageProps} />;
   }
-  if(pageName == 'Embbed')
-  {
+  if (pageName == 'Embbed') {
     return (
       <LoadabledComponent loading={!selectedNetwork || loading}>
-            <Component {...pageProps} />
-          </LoadabledComponent>
-    )
+        <Component {...pageProps} />
+      </LoadabledComponent>
+    );
   }
   return (
     <>
@@ -272,7 +271,7 @@ function MyApp({ Component, pageProps }) {
         </Head>
       )}
       <ClienteSideRendering>
-        <DesktopNotifications/>
+        <DesktopNotifications />
       </ClienteSideRendering>
       <div
         className={`${user ? '' : 'index__container'}`}
@@ -333,11 +332,8 @@ function EnterPicker() {
   return (
     <>
       {mode == EnteringPickerMode.LOGIN && (
-        <Picker
-          closeAction={closePopup}
-          headerText={t('user.login')}
-        >
-          <Login/>
+        <Picker closeAction={closePopup} headerText={t('user.login')}>
+          <Login />
         </Picker>
       )}
       {mode == EnteringPickerMode.SIGNUP && (
@@ -345,73 +341,94 @@ function EnterPicker() {
           headerText={t('user.signup')}
           closeAction={closePopup}
         >
-          <Signup/>
+          <Signup />
         </Picker>
       )}
       {mode == EnteringPickerMode.REQUEST_LINK && (
-        <Picker
-          closeAction={closePopup}
-        >
-          <LoginClick/>
+        <Picker closeAction={closePopup}>
+          <LoginClick />
         </Picker>
       )}
     </>
   );
 }
 
-function DesktopNotifications() {
-
-  
-  const isSupported = () =>
-  'Notification' in window &&
-  'serviceWorker' in navigator &&
-  'PushManager' in window
-
-  const [hasPermission, setHasPermission] = useState(false)
-
-  const init = useRef(false)
-  const notifyDesktop = (message) => {
-    if(hasPermission)
-    {
-      new Notification(message)
-    }
-  }
-
-  useEffect(() => {
-    if (isSupported()) {
-      Notification.requestPermission().then(function (getperm) { if(getperm == 'granted') { 
-        setHasPermission(() => true)
-      }
-       });
-    }
-  }, [])
-  const activities = useStore(
-    store,
-    (state: GlobalState) => state.activitesState.activities
+export function DesktopNotificationsButton() {
+  const hasNotificationPermissions = useGlobalStore(
+    (state: GlobalState) =>
+      state.activitesState.notificationsPermissionGranted,
   );
 
-  const notificationsShown = useRef(false)
-  useEffect(() => {
-    
-    if(activities && activities.length > 0 && !notificationsShown.current){
-      notificationsShown.current = true;
-      
-      activities
-      .filter((activity) => !activity.read)
-      .slice(0,5)
-      .map((activity: ActivityDtoOut) => {
-        notifyDesktop(activity.title)
-      })
+  const requestPermission = () => {
+    const isSupported = () =>
+      'Notification' in window &&
+      'serviceWorker' in navigator &&
+      'PushManager' in window;
+
+    if (isSupported()) {
+      Notification.requestPermission().then(function (getperm) {
+        if (getperm == 'granted') {
+          console.log(getperm);
+          store.emit(new PermissionGranted());
+        } else {
+          store.emit(new PermissionRevoke());
+        }
+      });
     }
-      // .filter((activity) => !activity.unread)
-      // .slice(0,5)
-      
-      //   // const activityToMessage(activity)
-      //   // console.log()
-        
-      // })
-    // }
-  }, [activities])
+  };
+  return (
+    <>
+      {!hasNotificationPermissions && (
+        <Btn
+          btnType={BtnType.corporative}
+          contentAlignment={ContentAlignment.center}
+          iconLeft={IconType.svg}
+          iconLink={<IoNotificationsOutline />}
+          extraClass="homeinfo__network-title-card--buttons"
+          caption={t('homeinfo.notificationsPermission')}
+          onClick={requestPermission}
+        />
+      )}
+    </>
+  );
+}
+
+
+
+function DesktopNotifications() {
+
+  const hasNotificationPermissions = useGlobalStore((state: GlobalState) => state.activitesState.notificationsPermissionGranted)
+  
+  const activities = useStore(
+    store,
+    (state: GlobalState) => state.activitesState.activities,
+  );
+
+  const notificationsShown = useRef(false);
+  useEffect(() => {
+    if (
+      activities &&
+      activities.length > 0 &&
+      !notificationsShown.current
+    ) {
+      notificationsShown.current = true;
+
+      activities
+        .filter((activity) => !activity.read)
+        .slice(0, 5)
+        .map((activity: ActivityDtoOut) => {
+          alertService.info(activity.title);
+        });
+      // mark as read, if permissions to send notifications are given, dunno if best behavior.
+      if (hasNotificationPermissions) {
+        if(activities.filter((activity) => !activity.read).length > 0)
+        {
+          alertService.info(t('activities.markedAllAsRead'));
+          store.emit(new ActivityMarkAllAsRead());
+        }
+      }
+    }
+  }, [activities]);
 
   return <></>;
 }
