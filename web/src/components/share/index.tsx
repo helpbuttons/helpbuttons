@@ -1,5 +1,5 @@
 import PickerField from 'components/picker/PickerField';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useShowPopup } from 'shared/custom.hooks';
 import ShareBulletinForm from './bulletin';
 import t from 'i18n';
@@ -7,6 +7,8 @@ import { DropdownField } from 'elements/Dropdown/Dropdown';
 import { ShareEmbbedForm } from './embbed';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import { IoShare } from 'react-icons/io5';
+import { useGlobalStore } from 'store/Store';
+import { GlobalState } from 'pages';
 
 export function ShareButtonPopup({}) {
   enum shareOptions {
@@ -28,6 +30,36 @@ export function ShareButtonPopup({}) {
         return <ShareEmbbedForm/>;
     }
   }
+
+  const userLoggedIn = useGlobalStore((state: GlobalState) => state.loggedInUser)
+  const [options, setOptions] = useState([
+    // {
+    //   value: shareOptions.rss,
+    //   name: 'Rss feed',
+    // },
+    // {
+    //   value: shareOptions.ics,
+    //   name: 'ICS/ICAL',
+    // },
+    {
+      value: shareOptions.iframe,
+      name: 'embbedable',
+    },
+    // {
+    //   value: shareOptions.ap,
+    //   name: 'Fediverse',
+    // },
+  ])
+
+  useEffect(() => {
+    if(userLoggedIn)
+    {
+      setOptions((prevOptions) => [...prevOptions, {
+        value: shareOptions.bulletin,
+        name: 'bulletin',
+      }])
+    }
+  }, [userLoggedIn])
 
   
 
@@ -58,28 +90,7 @@ export function ShareButtonPopup({}) {
               {t('share.shareTypeExplain')}
             </div>
             <DropdownField
-              options={[
-                // {
-                //   value: shareOptions.rss,
-                //   name: 'Rss feed',
-                // },
-                // {
-                //   value: shareOptions.ics,
-                //   name: 'ICS/ICAL',
-                // },
-                {
-                  value: shareOptions.iframe,
-                  name: 'embbedable',
-                },
-                {
-                  value: shareOptions.bulletin,
-                  name: 'bulletin',
-                },
-                // {
-                //   value: shareOptions.ap,
-                //   name: 'Fediverse',
-                // },
-              ]}
+              options={options}
               onChange={(value) =>
                 setShareOptionSelected(() => value)
               }
