@@ -1,8 +1,6 @@
-import { FilterByNumber } from "components/search/AdvancedFilters/filter-by-number";
 import { useEffect, useState } from "react";
 import { getShareLink } from "shared/sys.helper";
 import { encode } from "html-entities";
-import { defaultDaysForEmbbed } from "components/search/AdvancedFilters/filters.type";
 import t from "i18n";
 
 export function ShareEmbbedForm() {
@@ -23,13 +21,6 @@ export function ShareEmbbedForm() {
       <div className="form__field">
         <div className="form__label">Embbed</div>
         <div className="form__explain">{t('share.shareExplain')}</div>
-{/*   
-        <FilterByNumber
-          number={nrButtons}
-          setNumber={setNrButtons}
-          label={nrButtons}
-        /> */}
-  
         <div className="_iframe__code">
           <div className="__iframe__code-box">
             <pre>

@@ -13,7 +13,13 @@ export default function PickerField({
   showPopup,
   headerText = '',
   openPopup,
-  closePopup
+  closePopup,
+  button = <Btn
+  btnType={btnType}
+  caption={btnLabel}
+  contentAlignment={contentAligment}
+  onClick={() => openPopup()}
+/>
 }) {
 
   return (
@@ -26,12 +32,7 @@ export default function PickerField({
         </label>
         <p className="form__explain">{explain}</p>
         <FieldError validationError={validationError} />
-        <Btn
-              btnType={btnType}
-              caption={btnLabel}
-              contentAlignment={contentAligment}
-              onClick={() => openPopup()}
-          />
+        {button}
       </div>
       {showPopup && 
           <Picker closeAction={closePopup} headerText={headerText}>

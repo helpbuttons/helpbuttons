@@ -5,8 +5,10 @@ import ShareBulletinForm from './bulletin';
 import t from 'i18n';
 import { DropdownField } from 'elements/Dropdown/Dropdown';
 import { ShareEmbbedForm } from './embbed';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import { IoShare } from 'react-icons/io5';
 
-export function SharePopup({}) {
+export function ShareButtonPopup({}) {
   enum shareOptions {
     rss = 'rss',
     ics = 'ics',
@@ -27,16 +29,26 @@ export function SharePopup({}) {
     }
   }
 
+  
+
   return (
     <>
       <div>
         <PickerField
           btnLabel={t('share.showSharePopup')}
-          label={t('share.showSharePopup')}
+          label={null}
           headerText={t('share.showSharePopup')}
           showPopup={popupShowState}
           openPopup={openPopup}
           closePopup={closePopup}
+          button={<Btn
+            btnType={BtnType.filterCorp}
+            iconLink={<IoShare />}
+            caption={t('homeinfo.share')}
+            iconLeft={IconType.circle}
+            contentAlignment={ContentAlignment.center}
+            onClick={() => openPopup()}
+          />}
         >
           <div className="form__field">
             <div className="form__label">

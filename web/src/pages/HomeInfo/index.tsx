@@ -12,20 +12,13 @@ import NavHeader from 'components/nav/NavHeader'; //just for mobile
 import NavLink from 'elements/Navlink';
 import {
   IoAddCircle,
-  IoAddCircleOutline,
   IoAddOutline,
   IoCall,
   IoClose,
-  IoDownload,
-  IoDownloadSharp,
   IoGlobeOutline,
   IoHelpOutline,
   IoLogInOutline,
   IoMapOutline,
-  IoNotifications,
-  IoNotificationsOutline,
-  IoPrint,
-  IoPrintOutline,
   IoShare,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
@@ -43,7 +36,7 @@ import { ActivitiesList } from 'layouts/Activity';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
-import { SharePopup } from 'components/share';
+import { ShareButtonPopup } from 'components/share';
 import { DesktopNotificationsButton } from 'pages/_app';
 import { CardSubmenu, CardSubmenuOption } from 'components/card/CardSubmenu';
 
@@ -176,28 +169,11 @@ export default function HomeInfo({ metadata }) {
                 </div>
 
                 <div className="homeinfo-card__section">
-                  <Btn
-                    btnType={BtnType.filterCorp}
-                    iconLink={<IoDownload />}
-                    caption={t('homeinfo.installButton')}
-                    iconLeft={IconType.circle}
-                    contentAlignment={ContentAlignment.center}
-                    onClick={() => toggleshowContactDialog(false)}
-                  />
+                  <InstallButton />
                 </div>
                 <div className="homeinfo-card__section">
-
-                  <Btn
-                    btnType={BtnType.filterCorp}
-                    iconLink={<IoNotificationsOutline />}
-                    caption={t('homeinfo.notificationsPermission')}
-                    iconLeft={IconType.circle}
-                    contentAlignment={ContentAlignment.center}
-                    onClick={() => toggleshowContactDialog(false)}
-                  />
+                  <DesktopNotificationsButton/>
                 </div>
-                
-                {/* <SharePopup /> */}
               </div>
 
               <div className="homeinfo-card">
@@ -205,21 +181,9 @@ export default function HomeInfo({ metadata }) {
                   <h3 className="homeinfo-card__header-title">
                     {t('homeinfo.activity')}
                   </h3>
-
-                  <Btn
-                    btnType={BtnType.filterCorp}
-                    iconLink={<IoShare />}
-                    caption={t('homeinfo.share')}
-                    iconLeft={IconType.circle}
-                    contentAlignment={ContentAlignment.center}
-                    onClick={() => toggleshowContactDialog(false)}
-                  />
- 
+                 <ShareButtonPopup />
                 </div>
-
                 <hr></hr>
-
-
                 <div className="homeinfo__description">
                   <ActivitiesList activities={activities} />
                 </div>

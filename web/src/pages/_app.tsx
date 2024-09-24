@@ -32,9 +32,17 @@ import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
 import Signup from './Signup';
 import Login from './Login';
 import LoginClick from './LoginClick';
-import { ActivityMarkAllAsRead, PermissionGranted, PermissionRevoke } from 'state/Activity';
+import {
+  ActivityMarkAllAsRead,
+  PermissionGranted,
+  PermissionRevoke,
+} from 'state/Activity';
 import { IoNotificationsOutline } from 'react-icons/io5';
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import Btn, {
+  BtnType,
+  ContentAlignment,
+  IconType,
+} from 'elements/Btn';
 
 export default appWithTranslation(MyApp);
 
@@ -380,12 +388,11 @@ export function DesktopNotificationsButton() {
     <>
       {!hasNotificationPermissions && (
         <Btn
-          btnType={BtnType.corporative}
-          contentAlignment={ContentAlignment.center}
-          iconLeft={IconType.svg}
+          btnType={BtnType.filterCorp}
           iconLink={<IoNotificationsOutline />}
-          extraClass="homeinfo__network-title-card--buttons"
           caption={t('homeinfo.notificationsPermission')}
+          iconLeft={IconType.circle}
+          contentAlignment={ContentAlignment.center}
           onClick={requestPermission}
         />
       )}
@@ -393,12 +400,12 @@ export function DesktopNotificationsButton() {
   );
 }
 
-
-
 function DesktopNotifications() {
+  const hasNotificationPermissions = useGlobalStore(
+    (state: GlobalState) =>
+      state.activitesState.notificationsPermissionGranted,
+  );
 
-  const hasNotificationPermissions = useGlobalStore((state: GlobalState) => state.activitesState.notificationsPermissionGranted)
-  
   const activities = useStore(
     store,
     (state: GlobalState) => state.activitesState.activities,
@@ -421,8 +428,9 @@ function DesktopNotifications() {
         });
       // mark as read, if permissions to send notifications are given, dunno if best behavior.
       if (hasNotificationPermissions) {
-        if(activities.filter((activity) => !activity.read).length > 0)
-        {
+        if (
+          activities.filter((activity) => !activity.read).length > 0
+        ) {
           alertService.info(t('activities.markedAllAsRead'));
           store.emit(new ActivityMarkAllAsRead());
         }

@@ -9,7 +9,7 @@ import { IoDownload } from 'react-icons/io5';
 
 export function InstallButton() {
   const [prompt, promptToInstall] = useAddToHomescreenPrompt();
-  const [isVisible, setVisibleState] = useState(false);
+  const [isVisible, setVisibleState] = useState(true);
 
   useEffect(() => {
     if (prompt) {
@@ -26,15 +26,13 @@ export function InstallButton() {
       {isVisible && (
         <div>
           <Btn
-            btnType={BtnType.corporative}
-            contentAlignment={ContentAlignment.center}
-            iconLeft={IconType.svg}
-            iconLink={<IoDownload />}
-            extraClass="homeinfo__network-title-card--buttons"
-            caption={t('homeinfo.installButton')}
-            onClick={promptToInstall}
-          />
-          {/* <button onClick={promptToInstall}>Add to homescreen</button> */}
+              btnType={BtnType.filterCorp}
+              iconLink={<IoDownload />}
+              caption={t('homeinfo.installButton')}
+              iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.center}
+              onClick={promptToInstall}
+            />
         </div>
       )}
     </>
