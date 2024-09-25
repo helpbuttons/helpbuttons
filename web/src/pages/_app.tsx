@@ -1,6 +1,6 @@
 import '../styles/app.scss';
 import Head from 'next/head';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Router, useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
@@ -27,11 +27,6 @@ import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import SEO from 'components/seo';
 import { LoadabledComponent } from 'components/loading';
-import { Picker } from 'components/picker/Picker';
-import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
-import Signup from './Signup';
-import Login from './Login';
-import LoginClick from './LoginClick';
 import {
   ActivityMarkAllAsRead,
   PermissionGranted,
@@ -43,6 +38,7 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
+import MainPopup from 'components/popup/Main/';
 
 export default appWithTranslation(MyApp);
 
@@ -315,7 +311,7 @@ function MyApp({ Component, pageProps }) {
               />
             </ClienteSideRendering>
           </ShowMobileOnly>
-          <EnterPicker />
+          <MainPopup />
         </div>
       </div>
     </>
@@ -328,38 +324,6 @@ export const ClienteSideRendering = ({ children }) => {
   return <>{isClient && children}</>;
 };
 
-function EnterPicker() {
-  const closePopup = () =>
-    store.emit(new SetEnteringMode(EnteringPickerMode.HIDE));
-  const mode: EnteringPickerMode = useStore(
-    store,
-    (state: GlobalState) => state.homeInfo.mode,
-  );
-  // const openPopup = () => );
-
-  return (
-    <>
-      {mode == EnteringPickerMode.LOGIN && (
-        <Picker closeAction={closePopup} headerText={t('user.login')}>
-          <Login />
-        </Picker>
-      )}
-      {mode == EnteringPickerMode.SIGNUP && (
-        <Picker
-          headerText={t('user.signup')}
-          closeAction={closePopup}
-        >
-          <Signup />
-        </Picker>
-      )}
-      {mode == EnteringPickerMode.REQUEST_LINK && (
-        <Picker closeAction={closePopup}>
-          <LoginClick />
-        </Picker>
-      )}
-    </>
-  );
-}
 
 export function DesktopNotificationsButton() {
   const hasNotificationPermissions = useGlobalStore(

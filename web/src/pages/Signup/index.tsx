@@ -30,7 +30,7 @@ import FieldText from 'elements/Fields/FieldText';
 import { Network } from 'shared/entities/network.entity';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
-import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function Signup() {
   const {
@@ -83,7 +83,7 @@ export default function Signup() {
   };
 
   const onSuccess = (userData) => {
-    store.emit(new SetEnteringMode(EnteringPickerMode.HIDE))
+    store.emit(new SetMainPopup(MainPopupPage.HIDE))
   };
 
   const onError = (error) => {
@@ -129,7 +129,7 @@ export default function Signup() {
               />
             </div>
             <div className="popup__link">
-              <div onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))} className={`nav-bottom__link`}>
+              <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
                 {t('user.loginLink')}
               </div>
             </div>

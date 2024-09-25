@@ -15,7 +15,7 @@ import { Link } from 'elements/Link';
 import { useRouter } from 'next/router';
 import t from 'i18n';
 import { alertService } from 'services/Alert';
-import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function LoginForm() {
   const {
@@ -34,7 +34,7 @@ export default function LoginForm() {
 
   const onSuccess = (userData) => {
     alertService.success(t('user.loginSucess'))
-    store.emit(new SetEnteringMode(EnteringPickerMode.HIDE))
+    store.emit(new SetMainPopup(MainPopupPage.HIDE))
   };
 
   const onError = (err) => {
@@ -80,14 +80,14 @@ export default function LoginForm() {
           />
           <div className="popup__link">
             <div
-              onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.REQUEST_LINK))}
+              onClick={() => store.emit(new SetMainPopup(MainPopupPage.REQUEST_LINK))}
               className={`nav-bottom__link`}
             >
               {t('user.loginClick')}
             </div>
           </div>
           <div className="popup__link">
-            <div onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.SIGNUP))} className={`nav-bottom__link`}>
+            <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
               {t('user.noAccount')}
             </div>
           </div>

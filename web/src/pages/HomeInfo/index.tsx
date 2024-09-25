@@ -36,9 +36,10 @@ import { ActivitiesList } from 'layouts/Activity';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
-import { ShareButtonPopup } from 'components/share';
+import { ShareButton} from 'components/share';
 import { DesktopNotificationsButton } from 'pages/_app';
 import { CardSubmenu, CardSubmenuOption } from 'components/card/CardSubmenu';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function HomeInfo({ metadata }) {
   const selectedNetwork = useStore(
@@ -181,7 +182,7 @@ export default function HomeInfo({ metadata }) {
                   <h3 className="homeinfo-card__header-title">
                     {t('homeinfo.activity')}
                   </h3>
-                 <ShareButtonPopup />
+                 <ShareButton onClick={() => store.emit(new SetMainPopup(MainPopupPage.SHARE))}/>
                 </div>
                 <hr></hr>
                 <div className="homeinfo__description">
