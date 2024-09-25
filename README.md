@@ -87,6 +87,7 @@ To learn more about nestjs, take a look at the following resources:
 
 - [Nestjs Documentation](https://docs.nestjs.com/) - learn about nestjs features.
 
+- checkout the list of available icons from [react-icons](https://react-icons.github.io/react-icons/icons/io5/)
 You can check out [the nestjs GitHub repository](https://github.com/nestjs/nest) - your feedback and contributions are welcome!
 
 

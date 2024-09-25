@@ -152,7 +152,7 @@ export default function FieldLocation({
   );
 }
 
-function LocationCoordinates({
+export function LocationCoordinates({
   latitude,
   longitude,
   address,

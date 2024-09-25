@@ -67,7 +67,7 @@ export function HbMapUncontrolled({
   mapCenter,
   mapZoom,
   onBoundsChanged = (objectRet) => {},
-  handleMapClick = () => {},
+  handleMapClick = ({latLng}) => {},
   width = 200,
   height = null,
   tileType = HbMapTiles.OSM,
