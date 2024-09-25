@@ -24,7 +24,7 @@ export class NetworkService {
     return httpService.post("networks/update", data)
   }
 
-  public static activity(): Observable<any>{
-    return httpService.get("activity/network")
+  public static activity(locale): Observable<any>{
+    return httpService.get("activity/network?lang="+locale)
   }
 }

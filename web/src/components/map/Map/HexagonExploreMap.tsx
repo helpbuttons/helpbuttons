@@ -85,7 +85,48 @@ export default function HexagonExploreMap({
       setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonHighlight))
     }
   }, [hexagonHighlight,hexagonClicked, geoJsonFeatures])
-  
+  const places = [
+        {
+          address: 'Eiffel Tower, Paris, France',
+          coords: {
+            lat: 48.8584,
+            lng: 2.2945,
+          },
+          id: '1',
+        },
+        {
+          address: 'Colosseum, Rome, Italy',
+          coords: {
+            lat: 41.8902,
+            lng: 12.4922,
+          },
+          id: '2',
+        },
+        {
+          address: 'Brandenburg Gate, Berlin, Germany',
+          coords: {
+            lat: 52.5163,
+            lng: 13.3777,
+          },
+          id: '3',
+        },
+        {
+          address: 'Buckingham Palace, London, UK',
+          coords: {
+            lat: 51.5014,
+            lng: -0.1419,
+          },
+          id: '4',
+        },
+        {
+          address: 'Sagrada Família, Barcelona, Spain',
+          coords: {
+            lat: 41.4036,
+            lng: 2.1744,
+          },
+          id: '5',
+        },
+      ];
   return (
     <>
       {(exploreSettings.center && selectedNetwork) && (
@@ -98,6 +139,9 @@ export default function HexagonExploreMap({
             handleClick={onMapClick}
           >
             <HbMapOverlay selectedNetwork={selectedNetwork} />
+            {places.map((place) => (<Overlay key={place.id} anchor={[place.coords.lat, place.coords.lng]}>{place.address}</Overlay>))}
+            {/* {places.map((place) => (<MarkerPlace key={place.id} anchor={[place.coords.lat, place.coords.lng]} address={place.address}/> */}
+            {/* </Overlay> */}
             <DisplayInstructions/>
               <GeoJson>
                 {/* DRAW HEXAGONS ON MAP */}

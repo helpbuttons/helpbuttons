@@ -1,8 +1,10 @@
-import { GlobalState } from 'pages';
+import { GlobalState, store } from 'pages';
 import { catchError, map, of } from 'rxjs';
 import { ButtonService } from 'services/Buttons';
-import { WatchEvent } from 'store/Event';
+import { UpdateEvent, WatchEvent } from 'store/Event';
 import { dbToRRule } from 'components/picker/PickerEventType/recurrent';
+import produce from 'immer';
+import { Button } from 'shared/entities/button.entity';
 
 export class FindMonthCalendar implements WatchEvent {
   public constructor(
@@ -31,7 +33,6 @@ export class FindMonthCalendar implements WatchEvent {
       }),
     );
   }
-  
 }
 
 export class ButtonModerationList implements WatchEvent {
@@ -42,11 +43,14 @@ export class ButtonModerationList implements WatchEvent {
 
   public watch(state: GlobalState) {
     return ButtonService.moderationList(this.page).pipe(
-      map((moderationList) => { 
+      map((moderationList) => {
         this.onSuccess(moderationList);
       }),
-      catchError((error) => {this.onSuccess([]); return  of(undefined)})
-    )
+      catchError((error) => {
+        this.onSuccess([]);
+        return of(undefined);
+      }),
+    );
   }
 }
 
@@ -58,10 +62,64 @@ export class ButtonApprove implements WatchEvent {
 
   public watch(state: GlobalState) {
     return ButtonService.approve(this.buttonId).pipe(
-      map(() => { 
+      map(() => {
         this.onSuccess();
       }),
-      catchError((error) => {return  of(undefined)})
-    )
+      catchError((error) => {
+        return of(undefined);
+      }),
+    );
+  }
+}
+
+export class FindBulletinButtons implements WatchEvent {
+  public constructor(
+    private page: number,
+    private take: number,
+    private days: number,
+    private onSuccess = undefined,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return ButtonService.bulletin(this.page, this.take, this.days).pipe(
+      map((buttons) => {
+        store.emit(new UpdateButtonList(buttons))
+        this.onSuccess(buttons);
+      }),
+      catchError((error) => {
+        return of(undefined);
+      }),
+    );
+  }
+}
+
+export class UpdateButtonList implements UpdateEvent {
+  public constructor(private buttons: Button[]) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.listButtons = this.buttons;
+    });
+  }
+}
+
+
+export class FindEmbbedButtons implements WatchEvent {
+  public constructor(
+    private page: number,
+    private take: number,
+    private days: number,
+    private onSuccess = undefined,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return ButtonService.embbed(this.page, this.take).pipe(
+      map((buttons) => {
+        store.emit(new UpdateButtonList(buttons))
+        this.onSuccess(buttons);
+      }),
+      catchError((error) => {
+        return of(undefined);
+      }),
+    );
   }
 }

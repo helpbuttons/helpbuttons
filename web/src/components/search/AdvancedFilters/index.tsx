@@ -2,7 +2,6 @@ import t from 'i18n';
 import React, { useEffect, useState } from 'react';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import FieldText from 'elements/Fields/FieldText';
-import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { defaultFilters } from './filters.type';
 import { useForm } from 'react-hook-form';
@@ -14,23 +13,25 @@ import router from 'next/router';
 import { useStore } from 'store/Store';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
-import { readableDistance, uniqueArray } from 'shared/sys.helper';
+import { uniqueArray } from 'shared/sys.helper';
 import MultiSelectOption from 'elements/MultiSelectOption';
 import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { alertService } from 'services/Alert';
 import { FollowTag, FollowTags } from 'state/Users';
 import Popup from 'components/popup/Popup';
-import PickerField from 'components/picker/PickerField';
 import { Network } from 'shared/entities/network.entity';
 import { AllSuggestedTags, TagList, updateQueryWhenTagAdded, useTagsList } from 'elements/Fields/FieldTags';
 import _ from 'lodash';
-import Accordion from 'elements/Accordion';
+import { FilterByLocationRadius } from './filter-by-location';
+import { FilterByDays } from './filter-by-days';
+
 
 
 export default function AdvancedFilters({
   isHome = false,
+  target = '/Explore',
+  showFilterByDays = false
 }) {
   const filters = useStore(
     store,
@@ -74,7 +75,7 @@ export default function AdvancedFilters({
     store.emit(new ToggleAdvancedFilters(false))
 
     if (isHome) {
-      router.push('/Explore');
+      router.push(target);
     }
   };
 
@@ -83,6 +84,7 @@ export default function AdvancedFilters({
   const radius = watch('where.radius');
   const helpButtonTypes = watch('helpButtonTypes');
   const tags = watch('tags')
+  const days = watch('days')
   const query = watch('query');
 
   const handleSelectedPlace = (place) => {
@@ -148,6 +150,9 @@ export default function AdvancedFilters({
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="filters__content">
+                    {showFilterByDays && 
+                      <FilterByDays days={days} setDays={(value) => setValue('days', value)}/>
+                    }
                     <FieldText
                       name="query"
                       label={t('buttonFilters.queryLabel')}
@@ -171,42 +176,34 @@ export default function AdvancedFilters({
                               key={buttonType.name}
                               style={buttonColorStyle(buttonType.cssColor)}
                             >
-                              <MultiSelectOption
-                                defaultValue={
-                                  helpButtonTypes.indexOf(buttonType.name) > -1
-                                } 
-                                iconLink={buttonType.icon}
-                                color={buttonType.cssColor}
-                                icon='emoji'
-                                name={buttonType.name}
-                                handleChange={(name, newValue) => {
-                                  setButtonTypeValue(name, newValue);
-                                }}
-                              >
-                                {/* <div className="btn-filter__icon"></div> */}
-                                <div className="btn-with-icon__text">
-                                  {buttonType.caption}
-                                </div>
-                              </MultiSelectOption>
-                            </div>
-                          );
-                        })}
-                      </FieldMultiSelect>
-                      </Accordion>
-                      <AdvancedFiltersSortDropDown
-                        className={'dropdown__dropdown-trigger'}
-                        label={t('buttonFilters.orderBy')}
-                        explain={t('buttonFilters.orderByExplain')}
-                        orderBy={watch('orderBy')}
-                        isForm={true}
-                        setOrderBy={(value) => setValue('orderBy',value)}
-                        buttonTypes={buttonTypes}
-                        selectedButtonTypes={watch('helpButtonTypes')}
-                      />
-                      <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
+                              {/* <div className="btn-filter__icon"></div> */}
+                              <div className="btn-with-icon__text">
+                                {buttonType.caption}
+                              </div>
+                            </MultiSelectOption>
+                          </div>
+                        );
+                      })}
+                    </FieldMultiSelect>
+                    </Accordion>
 
+                    <AdvancedFiltersSortDropDown
+                      className={'dropdown__dropdown-trigger'}
+                      label={t('buttonFilters.orderBy')}
+                      explain={t('buttonFilters.orderByExplain')}
+                      orderBy={watch('orderBy')}
+                      isForm={true}
+                      setOrderBy={(value) => setValue('orderBy',value)}
+                      buttonTypes={buttonTypes}
+                      selectedButtonTypes={watch('helpButtonTypes')}
+                    />
+                    <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
+                    {!showFilterByDays && 
                       <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
-                    </div>
+                    }
+                    
+                  </div>
+                
               </Form>
             </Popup>
           </div>
@@ -221,94 +218,6 @@ export default function AdvancedFilters({
 }
 
 
-export function FilterByLocationRadius({handleSelectedPlace, address, center, radius, setRadius})
-{
-  const [showPopup, setShowPopup] =  useState(false)
-
-  const closePopup = () => setShowPopup(() => false)
-  const openPopup = () => setShowPopup(() => true)
-
-  const marks = [100, 1000, 5000, 25000, 100000,300000 ]
-  const calcRadiusFromSlider = (value) => {
-    const mark = Math.ceil(value / 100)
-    const min = marks[mark-1]
-    const max = marks[mark]
-    return min + ((max-min) / 100)* (value - (mark - 1) * 100);
-  }
-
-  const calcSliderFromRadius = (value) => {
-    let markIndex = 0;
-  
-    for (let i = 0; i < marks.length - 1; i++) {
-      if (value >= marks[i] && value <= marks[i + 1]) {
-        markIndex = i;
-        break;
-      }
-    }
-  
-    const min = marks[markIndex];
-    const max = marks[markIndex + 1];
-
-    const sliderValue = (markIndex * 100) + ((value - min) / (max - min)) * 100;
-    return sliderValue;
-  };
-
-  // <PickerField label={t("buttonFilters.where")} explain={t("buttonFilters.whereExplain")} title={t("buttonFilters.where")} btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
-  return (
-    <PickerField 
-      label={t("buttonFilters.where")} 
-      explain={t("buttonFilters.whereExplain")} 
-      title={t("buttonFilters.where")} 
-      btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, readableDistance(radius)])}</> : t('buttonFilters.pickLocationLimits'))} 
-      showPopup={showPopup} 
-      openPopup={openPopup} 
-      closePopup={closePopup}
-    >
-
-    {/* <FieldAccordion 
-      collapsed={showPopup} 
-      btnLabel={(center ? <>{t('buttonFilters.locationLimited', [address, radius])}</> : t('buttonFilters.pickLocationLimits'))}
-      label={t("buttonFilters.where")}
-      explain={t("buttonFilters.whereExplain")}
-      title={t("buttonFilters.where")}
-      hideChildren={closePopup}
-    > */}
-     <DropDownSearchLocation
-              placeholder={t('homeinfo.searchlocation')}
-              handleSelectedPlace={handleSelectedPlace}
-              address={address}
-              // label={t('buttonFilters.where')}
-              center={center}
-            />
-            
-            {center && (
-              <div className="form__field">
-                <label className="form__label">
-                  {t('buttonFilters.distance')} -&nbsp;
-                  {readableDistance(radius)}
-                </label>
-                <div style={{ padding: '1rem' }}>
-                  <Slider
-                    min={1}
-                    max={(marks.length - 1)*100}
-                    onChange={(radiusValue) =>{
-                      setRadius(calcRadiusFromSlider(radiusValue))
-                    }
-                    }
-                    defaultValue={calcSliderFromRadius(radius)}
-                  />
-                </div>
-              </div>
-            )}
-                <Btn
-                btnType={BtnType.submit}
-                caption={t('common.save')}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => closePopup()}
-              />
-      </PickerField>
-  );
-}
 export function AdvancedFiltersSortDropDown({className, label = '', orderBy, setOrderBy, buttonTypes, selectedButtonTypes, isForm = false, explain = '' }) {
 
 //   -Order by creation date (default)

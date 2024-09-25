@@ -1,6 +1,6 @@
 import '../styles/app.scss';
 import Head from 'next/head';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Router, useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
@@ -10,7 +10,7 @@ import { GlobalState, store } from 'pages';
 import { useConfig, useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Users';
 
-import { useStore } from 'store/Store';
+import { useGlobalStore, useStore } from 'store/Store';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
 
@@ -27,16 +27,20 @@ import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import SEO from 'components/seo';
 import { LoadabledComponent } from 'components/loading';
-import { Picker } from 'components/picker/Picker';
-import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
-import Signup from './Signup';
-import Login from './Login';
-import LoginClick from './LoginClick';
-import { Activity, ActivityDtoOut } from 'shared/entities/activity.entity';
-import { activityToMessage } from 'state/Activity';
+import {
+  ActivityMarkAllAsRead,
+  PermissionGranted,
+  PermissionRevoke,
+} from 'state/Activity';
+import { IoNotificationsOutline } from 'react-icons/io5';
+import Btn, {
+  BtnType,
+  ContentAlignment,
+  IconType,
+} from 'elements/Btn';
+import MainPopup from 'components/popup/Main/';
 
 export default appWithTranslation(MyApp);
-
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -249,6 +253,13 @@ function MyApp({ Component, pageProps }) {
   if (isSetup) {
     return <Component {...pageProps} />;
   }
+  if (pageName == 'Embbed') {
+    return (
+      <LoadabledComponent loading={!selectedNetwork || loading}>
+        <Component {...pageProps} />
+      </LoadabledComponent>
+    );
+  }
   return (
     <>
       <Head>
@@ -264,7 +275,7 @@ function MyApp({ Component, pageProps }) {
         </Head>
       )}
       <ClienteSideRendering>
-        <DesktopNotifications/>
+        <DesktopNotifications />
       </ClienteSideRendering>
       <div
         className={`${user ? '' : 'index__container'}`}
@@ -300,7 +311,7 @@ function MyApp({ Component, pageProps }) {
               />
             </ClienteSideRendering>
           </ShowMobileOnly>
-          <EnterPicker />
+          <MainPopup />
         </div>
       </div>
     </>
@@ -313,84 +324,83 @@ export const ClienteSideRendering = ({ children }) => {
   return <>{isClient && children}</>;
 };
 
-function EnterPicker() {
-  const closePopup = () =>
-    store.emit(new SetEnteringMode(EnteringPickerMode.HIDE));
-  const mode: EnteringPickerMode = useStore(
-    store,
-    (state: GlobalState) => state.homeInfo.mode,
-  );
-  // const openPopup = () => );
 
+export function DesktopNotificationsButton() {
+  const hasNotificationPermissions = useGlobalStore(
+    (state: GlobalState) =>
+      state.activitesState.notificationsPermissionGranted,
+  );
+
+  const requestPermission = () => {
+    const isSupported = () =>
+      'Notification' in window &&
+      'serviceWorker' in navigator &&
+      'PushManager' in window;
+
+    if (isSupported()) {
+      Notification.requestPermission().then(function (getperm) {
+        if (getperm == 'granted') {
+          console.log(getperm);
+          store.emit(new PermissionGranted());
+        } else {
+          store.emit(new PermissionRevoke());
+        }
+      });
+    }
+  };
   return (
     <>
-      {mode == EnteringPickerMode.LOGIN && (
-        <Picker
-          closeAction={closePopup}
-          headerText={t('user.login')}
-        >
-          <Login/>
-        </Picker>
-      )}
-      {mode == EnteringPickerMode.SIGNUP && (
-        <Picker
-          headerText={t('user.signup')}
-          closeAction={closePopup}
-        >
-          <Signup/>
-        </Picker>
-      )}
-      {mode == EnteringPickerMode.REQUEST_LINK && (
-        <Picker
-          closeAction={closePopup}
-        >
-          <LoginClick/>
-        </Picker>
+      {!hasNotificationPermissions && (
+        <Btn
+          btnType={BtnType.filterCorp}
+          iconLink={<IoNotificationsOutline />}
+          caption={t('homeinfo.notificationsPermission')}
+          iconLeft={IconType.circle}
+          contentAlignment={ContentAlignment.center}
+          onClick={requestPermission}
+        />
       )}
     </>
   );
 }
 
 function DesktopNotifications() {
-  const init = useRef(false)
-  const notifyDesktop = (message) => {
-    // new Notification(message)
-  }
-  useEffect(() => {
-    if(!init.current)
-      {
-        init.current = true;
-        // Notification.requestPermission().then(function (getperm) {
-        // });
-    }
-  }, [])
-  const activities = useStore(
-    store,
-    (state: GlobalState) => state.activitesState.activities
+  const hasNotificationPermissions = useGlobalStore(
+    (state: GlobalState) =>
+      state.activitesState.notificationsPermissionGranted,
   );
 
-  const notificationsShown = useRef(false)
+  const activities = useStore(
+    store,
+    (state: GlobalState) => state.activitesState.activities,
+  );
+
+  const notificationsShown = useRef(false);
   useEffect(() => {
-    
-    if(activities && activities.length > 0 && !notificationsShown.current){
+    if (
+      activities &&
+      activities.length > 0 &&
+      !notificationsShown.current
+    ) {
       notificationsShown.current = true;
-      
+
       activities
-      .filter((activity) => !activity.read)
-      .slice(0,5)
-      .map((activity: ActivityDtoOut) => {
-        notifyDesktop(activity.title)
-      })
+        .filter((activity) => !activity.read)
+        .slice(0, 5)
+        .map((activity: ActivityDtoOut) => {
+          alertService.info(activity.title);
+        });
+      // mark as read, if permissions to send notifications are given, dunno if best behavior.
+      if (hasNotificationPermissions) {
+        if (
+          activities.filter((activity) => !activity.read).length > 0
+        ) {
+          alertService.info(t('activities.markedAllAsRead'));
+          store.emit(new ActivityMarkAllAsRead());
+        }
+      }
     }
-      // .filter((activity) => !activity.unread)
-      // .slice(0,5)
-      
-      //   // const activityToMessage(activity)
-      //   // console.log()
-        
-      // })
-    // }
-  }, [activities])
+  }, [activities]);
 
   return <></>;
 }

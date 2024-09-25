@@ -44,6 +44,15 @@
     "latestActivity": "Últimas actividads",
     "installButton": "Instalar"
   },
+  "share":{
+
+    "showSharePopup": "Comparte esta app",
+    "shareField": "Elige tu opción para compartir",
+    "shareTypeLabel": "Tipo",
+    "shareTypeExplain": "Elige la manera en la que quieres compartir los resultados de tu red",
+    "shareExplain": "Elige el número de resultados que quieras mostrar y copia el código en tu web."
+
+  },
   "feed": {
     "write": "Escribir mensaje",
     "update": "Novedad del Autor",
@@ -385,6 +394,13 @@
     "inviteOnly": "Acceso sólo con invitación",
     "address": "Error al obtener la dirección",
     "dates": "Fechas inválidas"
+  },
+  "invitation":{
+    "card": "Tarjeta anónima de indentificación individual",
+    "infoCard": "Escanea el código o introduce el nº para entrar.",
+    "name": "Esta tarjeta es única y personal, si la pierdes, perderás acceso a _helpbuttons_.",
+    "contact": "Si quieres que te la devuelvan en caso de pérdida, escribe un método de contacto. Úsala responsablemente.",
+    "infoQr": "Contacto:"
   },
   "setup": {
     "finish": "Finalizar configuración",

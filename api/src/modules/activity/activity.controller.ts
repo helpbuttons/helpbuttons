@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '@src/shared/decorator/current-user';
@@ -48,8 +49,8 @@ export class ActivityController {
 
   @AllowGuest()
   @Get('network')
-  async findNetworkActivity(){
-    return await this.activityService.findNetworkActivity()
+  async findNetworkActivity(@Query('lang') locale: string = 'en'){
+    return await this.activityService.findNetworkActivity(locale)
   }
 
   // @Get('triggerNotifications')
