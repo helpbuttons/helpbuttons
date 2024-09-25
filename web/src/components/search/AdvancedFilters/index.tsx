@@ -25,6 +25,7 @@ import { AllSuggestedTags, TagList, updateQueryWhenTagAdded, useTagsList } from 
 import _ from 'lodash';
 import { FilterByLocationRadius } from './filter-by-location';
 import { FilterByDays } from './filter-by-days';
+import Accordion from 'elements/Accordion';
 
 
 
@@ -172,19 +173,37 @@ export default function AdvancedFilters({
                       > 
                         {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType) => {
                           return (
-                            <div
-                              key={buttonType.name}
-                              style={buttonColorStyle(buttonType.cssColor)}
-                            >
-                              {/* <div className="btn-filter__icon"></div> */}
-                              <div className="btn-with-icon__text">
-                                {buttonType.caption}
-                              </div>
-                            </MultiSelectOption>
-                          </div>
+
+                            <MultiSelectOption
+                                defaultValue={
+                                  helpButtonTypes.indexOf(buttonType.name) > -1
+                                } 
+                                iconLink={buttonType.icon}
+                                color={buttonType.cssColor}
+                                icon='emoji'
+                                name={buttonType.name}
+                                handleChange={(name, newValue) => {
+                                  setButtonTypeValue(name, newValue);
+                                }}
+                              >
+                                {/* <div className="btn-filter__icon"></div> */}
+                                <div className="btn-with-icon__text">
+                                  {buttonType.caption}
+                                </div>
+                              </MultiSelectOption>
+
+                          //   <div
+                          //     key={buttonType.name}
+                          //     style={buttonColorStyle(buttonType.cssColor)}
+                          //   >
+                          //     {/* <div className="btn-filter__icon"></div> */}
+                          //     <div className="btn-with-icon__text">
+                          //       {buttonType.caption}
+                          //     </div>
+                          // </div>
                         );
                       })}
-                    </FieldMultiSelect>
+                      </FieldMultiSelect>
                     </Accordion>
 
                     <AdvancedFiltersSortDropDown
