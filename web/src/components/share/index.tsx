@@ -11,7 +11,7 @@ import { ButtonForPopup } from 'components/popup/ButtonToPopup';
 import Popup from 'components/popup/Popup';
 export function ShareButton({onClick})
 {
-  return <ButtonForPopup buttonIcon={<IoShare/>} buttonCaption={t('homeinfo.sharedd')} onClick={onClick}/>
+  return <ButtonForPopup buttonIcon={<IoShare/>} buttonCaption={t('homeinfo.share')} onClick={onClick}/>
 }
 export function ShareForm({}) {
   enum shareOptions {
