@@ -33,11 +33,19 @@ export function Dropdown({
     onChange(selectedIndex);
   };
 
-  const selectAttrs = {
+  let selectAttrs = {
+    className: className,
+    onChange: handleChange,
+    defaultValue: defaultSelected,
+  }
+  if(!defaultSelected)
+  {
+    selectAttrs = {
       className: className,
       onChange: handleChange,
-      value: value ? value : '',
+      value: value,
     }
+  }
   return (
     <>
       <select
