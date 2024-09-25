@@ -8,7 +8,7 @@ import { defaultButtonsForEmbbed } from "components/search/AdvancedFilters/filte
 export const getIframe = (nrButtons) => {
   return `<iframe src="${getShareLink(
     '/Embbed/'+nrButtons
-  )}" width="100%" height="100%"></iframe>`;
+  )}" width="100%" height="800px" overflow="scroll" frameborder="0"></iframe>`;
 };
 
 export function ShareEmbbedForm() {

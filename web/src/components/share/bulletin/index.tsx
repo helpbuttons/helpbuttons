@@ -192,6 +192,7 @@ const BulletinPDF = ({
   const styles = StyleSheet.create({
     page: {
       padding: 20,
+      height:'100%',
     },
     header: {
       textAlign: 'center',
@@ -213,6 +214,10 @@ const BulletinPDF = ({
     date: {
       fontWeight: 'thin',
     },
+    buttonDiv: {
+      height: '100%',
+      backgroundColor: 'red',
+    },
   });
 
   return (
@@ -230,7 +235,7 @@ const BulletinPDF = ({
             {t('bulletin.pdfDate', [readableDate(dateTime)])}
           </Text>
         </View>
-        <View>
+        <View style={styles.buttonDiv}>
           <ButtonRows buttons={buttons} buttonTypes={buttonTypes} />
         </View>
       </Page>
@@ -246,14 +251,18 @@ const ButtonRows = ({ buttons, buttonTypes }) => {
       borderTopColor: '#3778C2',
       borderTopWidth: 3,
       alignItems: 'flex-start',
-      maxHeight: 300,
+      // maxHeight: 300,
+      backgroundColor:'green',
+      height: 'auto',
       maxWidth: '100vw',
       fontStyle: 'bold',
     },
     tableContainer: {
-      flexDirection: 'row',
+      flexDirection: 'column',
       flexWrap: 'wrap',
       maxWidth: '100%',
+      height: 'auto',
+      backgroundColor:'yellow',
       marginTop: 24,
     },
 
@@ -262,7 +271,7 @@ const ButtonRows = ({ buttons, buttonTypes }) => {
       color: '#fff',
       borderBottomWidth: 1,
       alignItems: 'center',
-      height: 24,
+      height: 'auto',
       textAlign: 'center',
       fontStyle: 'bold',
       flexGrow: 1,
@@ -315,6 +324,7 @@ const ButtonRow = ({ button, buttonType }) => {
       display: 'flex',
       justifyContent: 'flex-start',
       flexDirection: 'column',
+      backgroundColor: rowColor,
       gap: '5px',
     },
     description: {
