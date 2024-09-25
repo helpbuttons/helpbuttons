@@ -8,6 +8,7 @@ import { User, UserExtended } from './user.entity';
 import { InviteService } from '../invite/invite.service';
 import { InviteCreateDto } from '../invite/invite.dto';
 import { plainToClass } from 'class-transformer';
+import { nomailString } from '../auth/auth.service';
 
 @ApiTags('User')
 @Controller('users')
@@ -20,7 +21,13 @@ export class UserController {
   @OnlyRegistered()
   @Get('whoAmI')
   whoAmI(@Request() req) {
-    return {...req.user, t: 'k'}
+    const user = req.user
+    let userClean = user;
+    if(user.email.endsWith(nomailString))
+    {
+      userClean = {...user, email: ''}
+    }
+    return {...userClean, t: 'k'}
   }
 
   @AllowGuest()
