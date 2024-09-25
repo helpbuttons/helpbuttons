@@ -38,7 +38,7 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import { MainPopup } from './popup';
+import MainPopup from 'components/popup/Main/';
 
 export default appWithTranslation(MyApp);
 

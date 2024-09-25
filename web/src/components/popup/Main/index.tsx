@@ -2,13 +2,13 @@ import { Picker } from "components/picker/Picker";
 import { GlobalState, store } from "pages";
 import { MainPopupPage, SetMainPopup } from "state/HomeInfo";
 import { useGlobalStore } from "store/Store";
-import Login from "./Login";
-import Signup from "./Signup";
-import LoginClick from "./LoginClick";
+import Login from "../../../pages/Login";
+import Signup from "../../../pages/Signup";
+import LoginClick from "../../../pages/LoginClick";
 import t from "i18n";
 import { ShareForm } from "components/share";
 
-export function MainPopup() {
+export default function MainPopup() {
     const closePopup = () =>
       store.emit(new SetMainPopup(MainPopupPage.HIDE));
     const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage) 
