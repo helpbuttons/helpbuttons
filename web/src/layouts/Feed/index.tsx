@@ -35,7 +35,7 @@ import { CardButtonHeadActions } from 'components/button/CardButton';
 import LoginOrSignup from 'components/authorization';
 import router from 'next/router';
 import { getReturnUrl } from 'shared/sys.helper';
-import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function Feed({ button, show, toggleShow }: { button: Button, show: any, toggleShow: any }) {
   const [posts, setPosts] = useState(null);
@@ -89,7 +89,7 @@ export default function Feed({ button, show, toggleShow }: { button: Button, sho
           )}
           {(!loggedInUser) && (      
             <CardButtonHeadActions button={button} isButtonOwner={isButtonOwner} action={
-            () => store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))
+              () => store.emit(new SetMainPopup(MainPopupPage.LOGIN))
               // () => router.push({
               // pathname: '/Login',
               // query: { returnUrl: getReturnUrl() },
