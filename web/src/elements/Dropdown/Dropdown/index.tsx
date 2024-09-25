@@ -36,7 +36,7 @@ export function Dropdown({
   const selectAttrs = {
       className: className,
       onChange: handleChange,
-      value: value,
+      value: value ? value : '',
     }
   return (
     <>

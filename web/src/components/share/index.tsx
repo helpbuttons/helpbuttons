@@ -5,10 +5,15 @@ import ShareBulletinForm from './bulletin';
 import t from 'i18n';
 import { DropdownField } from 'elements/Dropdown/Dropdown';
 import { ShareEmbbedForm } from './embbed';
-import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import Btn, {
+  BtnType,
+  ContentAlignment,
+  IconType,
+} from 'elements/Btn';
 import { IoShare } from 'react-icons/io5';
 import { useGlobalStore } from 'store/Store';
 import { GlobalState } from 'pages';
+import ShareInvitationsForm from './invitations';
 
 export function ShareButtonPopup({}) {
   enum shareOptions {
@@ -17,21 +22,26 @@ export function ShareButtonPopup({}) {
     iframe = 'iframe',
     ap = 'ap',
     bulletin = 'bulletin',
+    invitations = 'invitations',
   }
   const [popupShowState, openPopup, closePopup] = useShowPopup();
   const [shareOptionSelected, setShareOptionSelected] =
-  useState<shareOptions>(shareOptions.iframe);
+    useState<shareOptions>(shareOptions.iframe);
 
   const renderShareForm = () => {
     switch (shareOptionSelected) {
       case shareOptions.bulletin:
         return <ShareBulletinForm />;
       case shareOptions.iframe:
-        return <ShareEmbbedForm/>;
+        return <ShareEmbbedForm />;
+      case shareOptions.invitations:
+        return <ShareInvitationsForm />;
     }
-  }
+  };
 
-  const userLoggedIn = useGlobalStore((state: GlobalState) => state.loggedInUser)
+  const userLoggedIn = useGlobalStore(
+    (state: GlobalState) => state.loggedInUser,
+  );
   const [options, setOptions] = useState([
     // {
     //   value: shareOptions.rss,
@@ -49,19 +59,31 @@ export function ShareButtonPopup({}) {
     //   value: shareOptions.ap,
     //   name: 'Fediverse',
     // },
-  ])
+    {
+      value: shareOptions.invitations,
+      name: 'Invitations',
+    },
+  ]);
 
   useEffect(() => {
-    if(userLoggedIn)
-    {
-      setOptions((prevOptions) => [...prevOptions, {
-        value: shareOptions.bulletin,
-        name: 'bulletin',
-      }])
+    if (userLoggedIn) {
+      setOptions((prevOptions) => {
+        const bulletinOptionExists = prevOptions.find(
+          (opt) => opt.value == shareOptions.bulletin,
+        );
+        if (!bulletinOptionExists) {
+          return [
+            ...prevOptions,
+            {
+              value: shareOptions.bulletin,
+              name: 'bulletin',
+            },
+          ];
+        }
+        return prevOptions;
+      });
     }
-  }, [userLoggedIn])
-
-  
+  }, [userLoggedIn]);
 
   return (
     <>
@@ -73,14 +95,16 @@ export function ShareButtonPopup({}) {
           showPopup={popupShowState}
           openPopup={openPopup}
           closePopup={closePopup}
-          button={<Btn
-            btnType={BtnType.filterCorp}
-            iconLink={<IoShare />}
-            caption={t('homeinfo.share')}
-            iconLeft={IconType.circle}
-            contentAlignment={ContentAlignment.center}
-            onClick={() => openPopup()}
-          />}
+          button={
+            <Btn
+              btnType={BtnType.filterCorp}
+              iconLink={<IoShare />}
+              caption={t('homeinfo.share')}
+              iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.center}
+              onClick={() => openPopup()}
+            />
+          }
         >
           <div className="form__field">
             <div className="form__label">

@@ -1,4 +1,6 @@
 import CardButtonList from 'components/list/CardButtonList';
+import Loading from 'components/loading';
+import router from 'next/router';
 import {  store } from 'pages';
 import { useEffect, useRef, useState } from 'react';
 import { useButtonTypes } from 'shared/buttonTypes';
@@ -9,43 +11,43 @@ export default function Embbed() {
   const init = useRef(null)
   const containerRef = useRef(null)
   const page = useRef(0)
-  const take = 2;
+  const [take, setTake] = useState(null);
   const [buttons, setButtons] = useState([])
   const options = {
     root: null,
     rootMargin: "0px",
     threshold: 1.0
   }
-  const callbackFunction = (entries) => {
-    const [ entry ] = entries
+
+  useEffect(() => {
+    if(router?.query?.nr)
+    {
+      setTake(() => parseInt(router.query.nr as string))
+    }
+    
+  }, [router.query.nr])
+
+  const callbackFunction = () => {
       if((page.current*take) > buttons.length){
         return;
       }
-      console.log('emitting..' , page, take)
       store.emit(new FindEmbbedButtons(page.current, take, 0, (buttons) => {
-        setButtons((prevButtons) => [...prevButtons, ...buttons])
+        setButtons((prevButtons) => buttons)
       }));
       page.current = page.current + 1
 
   }
   useEffect(() => {
-    if(!init.current)
+    if(take)
     {
-      init.current = true;
-      callbackFunction([])
+      callbackFunction()
     }
-  }, []);
-  useEffect(() => {
-    const observer = new IntersectionObserver(callbackFunction, options)
-    if (containerRef.current) observer.observe(containerRef.current)
-    
-    return () => {
-      if(containerRef.current) observer.unobserve(containerRef.current)
-    }
-  }, [containerRef, options])
+  }, [take]);
 
   return (
     <>
+      {!buttonTypes || !buttonTypes.length && <Loading/>}
+      
       {buttonTypes?.length > 0 && (
           <>{buttons.map((btn, i) => (
               <CardButtonList
@@ -54,12 +56,11 @@ export default function Embbed() {
                 buttonTypes={buttonTypes}
                 showMap={false}
                 linkToPopup={false}
+                linkIframe={true}
               />
             ))}
-           <div ref={containerRef}></div>
           </>
       )}
     </>
   );
 }
-

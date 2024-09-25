@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { Button } from 'shared/entities/button.entity';
-import { pdf } from '@react-pdf/renderer';
 import QRCode from 'qrcode';
 
 import React from 'react';
@@ -37,6 +36,7 @@ import { Network } from 'shared/entities/network.entity';
 import Loading from 'components/loading';
 import { FilterByDays } from 'components/search/AdvancedFilters/filter-by-days';
 import Popup from 'components/popup/Popup';
+import { PdfIframe, usePdfGenerateBlob } from '../pdf';
 
 export default function ShareBulletinForm() {
   const [bulletinButtons, setBulletinButtons] = useState(null);
@@ -45,7 +45,6 @@ export default function ShareBulletinForm() {
   const [dateTime, setDateTime] = useState(null);
   const buttonTypes = useButtonTypes();
   const [isLoading, setIsLoading] = useState(true);
-  const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
   const filters = useStore(
     store,
     (state: GlobalState) => state.explore.map.filters,
@@ -59,37 +58,23 @@ export default function ShareBulletinForm() {
     if (filters && filters.days) {
       if (filters.days !== days) {
         setIsLoading(() => true);
-        setPdfBlobUrl(() => null);
+        // setPdfBlobUrl(() => null);
         setDays(() => filters.days);
-      }else if(fetchedButtons){
-        
+      } else if (fetchedButtons) {
         setIsLoading(() => true);
-        setPdfBlobUrl(() => null);
-        applyFiltersToBulletin(fetchedButtons)
+        // setPdfBlobUrl(() => null);
+        applyFiltersToBulletin(fetchedButtons);
       }
-      
     }
   }, [filters]);
-  
+
   useEffect(() => {
     if (bulletinButtons) {
-      pdf(
-        <BulletinPDF
-          buttons={bulletinButtons}
-          buttonTypes={buttonTypes}
-          selectedNetwork={selectedNetwork}
-          dateTime={dateTime}
-        />,
-      )
-        .toBlob()
-        .then((blob) =>
-          setPdfBlobUrl(() => {
-            return URL.createObjectURL(blob);
-          }),
-        );
-        
+      generatePdf()
+      .then(() => {
+        setIsLoading(() => false);
+      });
     }
-
     setFilterButtonCaption(() => {
       return (
         <>
@@ -114,7 +99,7 @@ export default function ShareBulletinForm() {
     });
   }, [bulletinButtons]);
   const applyFiltersToBulletin = (buttons) => {
-    setFetchedButtons(() => buttons)
+    setFetchedButtons(() => buttons);
     setBulletinButtons(() => {
       const { filteredButtons } = applyFilters(
         filters,
@@ -138,13 +123,13 @@ export default function ShareBulletinForm() {
         };
       });
     });
-  }
+  };
 
   useEffect(() => {
     const onButtonsFetched = (fetchedButtons) => {
-      applyFiltersToBulletin(fetchedButtons)
-      setIsLoading(() => false);
-    }
+      applyFiltersToBulletin(fetchedButtons);
+      
+    };
     if (buttonTypes.length > 0 && filters?.days) {
       store.emit(
         new FindBulletinButtons(0, 200, filters.days, (buttons) => {
@@ -153,21 +138,14 @@ export default function ShareBulletinForm() {
       );
     }
 
-    if( filters?.days)
-    {
+    if (filters?.days) {
       setDateTime(() => {
         const daysAgo = new Date();
         daysAgo.setDate(daysAgo.getDate() - filters.days);
         return daysAgo;
       });
     }
-    
 
-    return () => {
-      if (pdfBlobUrl) {
-        URL.revokeObjectURL(pdfBlobUrl);
-      }
-    };
   }, [filters?.days, buttonTypes]);
 
   const [filterButtonCaption, setFilterButtonCaption] = useState(
@@ -177,47 +155,56 @@ export default function ShareBulletinForm() {
   const updateDays = (days) => {
     store.emit(new UpdateFilters({ ...filters, days }));
   };
+
+  const [pdfBlobUrl, generatePdf] = usePdfGenerateBlob(
+    <BulletinPDF
+      buttons={bulletinButtons}
+      buttonTypes={buttonTypes}
+      selectedNetwork={selectedNetwork}
+      dateTime={dateTime}
+    />,
+  );
+
   return (
     <>
-    <Popup>
-      {t('bulletin.explainBulletin')}
-      <Btn
-        onClick={() => store.emit(new ToggleAdvancedFilters())}
-        iconLeft={IconType.svg}
-        iconLink={<IoSearch />}
-        caption={filterButtonCaption}
-      />
-      <div>
-        <FilterByDays days={days} setDays={setDays} />
+      <Popup>
+        {t('bulletin.explainBulletin')}
         <Btn
-          onClick={() => {
-            updateDays(days);
-          }}
-          caption={t('bulletin.changeDays')}
+          onClick={() => store.emit(new ToggleAdvancedFilters())}
+          iconLeft={IconType.svg}
+          iconLink={<IoSearch />}
+          caption={filterButtonCaption}
         />
-        
-        {(isLoading || !pdfBlobUrl) && <Loading></Loading>}
-        {(pdfBlobUrl && bulletinButtons?.length > 0) && (
-          <iframe
-            src={pdfBlobUrl}
-            title="Generated PDF"
-            width="80%"
-            height="600px"
-            style={{ border: '1px solid #ccc' }}
-          />          
-        )}
-        {!(bulletinButtons?.length > 0) && (
-          <>{t('bulletin.noButtons')}</>
-        )}
-      </div>
+        <div>
+          <FilterByDays days={days} setDays={setDays} />
+          <Btn
+            onClick={() => {
+              updateDays(days);
+            }}
+            caption={
+              <>
+              {isLoading && <Loading/>}
+              {!isLoading &&  t('bulletin.changeDays')}
+              </>
+              //
+            }
+          />
 
-    </Popup>
+          {}
+          <PdfIframe
+              blob={pdfBlobUrl}
+            />
+          {!(bulletinButtons?.length > 0) && (
+            <>{t('bulletin.noButtons')}</>
+          )}
+        </div>
+      </Popup>
 
       <AdvancedFilters
-      showFilterByDays={true}
-      target="/Bulettin"
-      isHome={false}
-    />
+        showFilterByDays={true}
+        target="/Bulettin"
+        isHome={false}
+      />
     </>
   );
 }
@@ -236,9 +223,9 @@ const BulletinPDF = ({
       textAlign: 'center',
       display: 'flex',
       flexDirection: 'row',
-      justifyContent:'flex-start',
-      alignItems:'baseline',
-      gap:'10px',
+      justifyContent: 'flex-start',
+      alignItems: 'baseline',
+      gap: '10px',
     },
     networkLogo: {
       maxHeight: '25px',
@@ -247,7 +234,7 @@ const BulletinPDF = ({
     networkName: {
       textAlign: 'center',
       fontWeight: 'bold',
-      fontSize:'25px',
+      fontSize: '25px',
     },
     date: {
       fontWeight: 'thin',
@@ -266,13 +253,11 @@ const BulletinPDF = ({
             {selectedNetwork.name}
           </Text>
           <Text style={styles.date}>
-            {t('bulletin.pdfDate', [
-              readableDate(dateTime),
-            ])}
+            {t('bulletin.pdfDate', [readableDate(dateTime)])}
           </Text>
         </View>
         <View>
-        <ButtonRows buttons={buttons} buttonTypes={buttonTypes} />
+          <ButtonRows buttons={buttons} buttonTypes={buttonTypes} />
         </View>
       </Page>
     </Document>
@@ -294,7 +279,7 @@ const ButtonRows = ({ buttons, buttonTypes }) => {
     tableContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      maxWidth:'100%',
+      maxWidth: '100%',
       marginTop: 24,
     },
 
@@ -354,7 +339,7 @@ const ButtonRow = ({ button, buttonType }) => {
     row: {
       width: 'auto',
       display: 'flex',
-      justifyContent:'flex-start',
+      justifyContent: 'flex-start',
       flexDirection: 'column',
       gap: '5px',
     },
@@ -365,23 +350,26 @@ const ButtonRow = ({ button, buttonType }) => {
     },
     place: {
       fontSize: 12,
-  
     },
     qrcode: {
       margin: 'auto',
-      
     },
     date: {
       fontSize: 12,
-  
     },
- 
   });
   return (
     <>
       {buttonType && (
-        <View style={{ width: '100%' , flexDirection: 'row', gap: '10px', marginBottom: '15px' }}>
-          <View style={{ width: '20%' }} >
+        <View
+          style={{
+            width: '100%',
+            flexDirection: 'row',
+            gap: '10px',
+            marginBottom: '15px',
+          }}
+        >
+          <View style={{ width: '20%' }}>
             <Image
               style={styles.image}
               src={makeImageUrl(button.image)}
