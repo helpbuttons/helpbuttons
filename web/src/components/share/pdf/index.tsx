@@ -20,7 +20,7 @@ export function usePdfGenerateBlob(pdfDocument) {
         });
       });
   };
-  return [pdfBlobUrl, generatePdf];
+  return [pdfBlobUrl, setPdfBlobUrl, generatePdf];
 }
 
 export const PdfIframe = ({ blob }) => {

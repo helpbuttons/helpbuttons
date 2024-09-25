@@ -54,15 +54,24 @@ export default function ShareBulletinForm() {
     (state: GlobalState) => state.networks.selectedNetwork,
     true,
   );
+  const [pdfBlobUrl, setPdfBlobUrl, generatePdf] = usePdfGenerateBlob(
+    <BulletinPDF
+      buttons={bulletinButtons}
+      buttonTypes={buttonTypes}
+      selectedNetwork={selectedNetwork}
+      dateTime={dateTime}
+    />,
+  );
+
   useEffect(() => {
     if (filters && filters.days) {
       if (filters.days !== days) {
         setIsLoading(() => true);
-        // setPdfBlobUrl(() => null);
+        setPdfBlobUrl(() => null);
         setDays(() => filters.days);
       } else if (fetchedButtons) {
         setIsLoading(() => true);
-        // setPdfBlobUrl(() => null);
+        setPdfBlobUrl(() => null);
         applyFiltersToBulletin(fetchedButtons);
       }
     }
@@ -156,14 +165,7 @@ export default function ShareBulletinForm() {
     store.emit(new UpdateFilters({ ...filters, days }));
   };
 
-  const [pdfBlobUrl, generatePdf] = usePdfGenerateBlob(
-    <BulletinPDF
-      buttons={bulletinButtons}
-      buttonTypes={buttonTypes}
-      selectedNetwork={selectedNetwork}
-      dateTime={dateTime}
-    />,
-  );
+  
 
   return (
     <>
