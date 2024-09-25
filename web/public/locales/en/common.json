@@ -52,7 +52,8 @@
     "shareField": "Choose your share option",
     "shareTypeLabel": "Share ",
     "shareTypeExplain": "Choose the type of share you want to do",
-    "shareExplain": "Select the amount of results you want to show and copy the code to your site"
+    "shareExplain": "Select the amount of results you want to show and copy the code to your site",
+    "explainInvitations": "Generate individual invitation cards for your community"
 
   },
   "feed": {
@@ -490,6 +491,13 @@
     "inviteOnly": "Only allow signup with an QR code",
     "generateQr": "Get QR",
     "registered": "Qr code already registered"
+  },
+  "invitation":{
+    "card": "Anonimous login individual card",
+    "infoCard": "Scan the code to enter.",
+    "name": "This card is unique and personal.",
+    "contact": "Write contact info if you want it to be returned in case of loss. Use it with responsibility.",
+    "infoQr": "Contact:"
   },
   "customFields": {
     "priceLabel": "Price ({0})",

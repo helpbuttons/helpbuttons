@@ -394,6 +394,13 @@
     "address": "Error al obtener la dirección",
     "dates": "Fechas inválidas"
   },
+  "invitation":{
+    "card": "Tarjeta anónima de indentificación individual",
+    "infoCard": "Enfoca este código con tu cámara o escribe el número para entrar.",
+    "name": "Esta tarjeta es única y personal, si la pierdes, perderás acceso a _helpbuttons_ que crees con ella.",
+    "contact": "Si quieres que te la devuelvan en caso de pérdida, escriben un método de contacto. Úsala responsablemente.",
+    "infoQr": "Contacto:"
+  },
   "setup": {
     "finish": "Finalizar configuración",
     "welcomeMessage": "BIENVENIDO/A A TU INSTANCIA DE HELPBUTTONS",
