@@ -14,7 +14,7 @@ import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
 import { useStore } from 'store/Store';
 import Loading from 'components/loading';
-import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function ButtonNew({ metadata }) {
   const selectedNetwork = useStore(
@@ -107,7 +107,7 @@ function ButtonNewForm({ selectedNetwork }) {
     if (err.errorName == ErrorName.NeedToBeRegistered) {
       store.emit(new SaveButtonDraft(getValues()));
       alertService.error(err.caption);
-      store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))
+      store.emit(new SetMainPopup(MainPopupPage.LOGIN))
       // Router.push({
       //   pathname: '/Login',
       //   query: { returnUrl: 'ButtonNew' },
