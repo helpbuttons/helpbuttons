@@ -8,7 +8,7 @@
     "signup": "SignUp",
     "login": "Login",
     "home": "Home",
-    "donate": "Donate"
+    "donate": "Donate"    
   },
   "homeinfo": {
     "start": "Where do you start?",
@@ -105,6 +105,7 @@
     "whenExplain": "Filter events by date",
     "priceExplain": "Filter by price",
     "whereLabel": "Where ",
+    "byCategory": "By category",
     "byPrice": "By price",
     "byDate": "By creation date",
     "byProximity": "By proximity",
@@ -441,9 +442,9 @@
     "moderationList": "Moderation",
     "createSupportButton": "Create your network's support button",
     "moderation": "Moderation",
-    "addType": "+ Create _helpbutton_ type with the above",
+    "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
-    "nomeclaturePluralPlaceHolder": ""
+    "addType": "+ Create _helpbutton_ type with the above"
   },
   "configure": {
     "browsePins": "",
@@ -550,7 +551,10 @@
     "requireApprovalLabel": "Network moderation",
     "requireApprovalExplain": "If you enable this, all _helpbuttons_ created (if not by an admin) won't be published on the map, before an administrator approves it",
     "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an administrator to approve it",
-    "title": "",
+    "title": "Moderate content and users",
+    "adminCommunication": "Administrator communications",
+    "adminCommunicationLabel":"Administrator communications",
+    "adminCommunicationExplain":"Messages that you share here will be send to all admins or all users of the network",
     "created": ""
   },
   "roles": {

@@ -25,6 +25,7 @@
 @import "elements/radio";
 @import "elements/checkbox-circle";
 @import "elements/scrollbar";
+@import "elements/checkbox-card";
 
 // elements (form)
 @import "elements/form";
@@ -94,33 +95,11 @@
 @import "pages/button-file";
 @import "pages/error";
 
-
 ////special element for variable rendering
 @import "elements/drag-tab";
 
+//reset all styles
 @import "reset";
 
 
-html, body {
-  background-color: $color-dark-gray;
-  height: 100vh;
-  background: repeating-linear-gradient(
-    45deg,
-    $color-ligth-gray 0px,
-    $color-ligth-gray 1px,
-    $color-ligth-gray 2px,
-    $color-ligth-gray 20px
-  );
 
-}
-
-
-.disabled {
-  pointer-events: none;
-  background-color: #C8C8C8;
-  color: #858585;
-}
-
-.invisible {
-  visibility: hidden;
-}

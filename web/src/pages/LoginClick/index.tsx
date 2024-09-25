@@ -51,7 +51,7 @@ export default function LoginClick() {
         <Form
           onSubmit={handleSubmit(onSubmit)}
           classNameExtra="login"
-        >
+        > 
           <div className="login__form">
             <div className="form__inputs-wrapper">
               <FieldText

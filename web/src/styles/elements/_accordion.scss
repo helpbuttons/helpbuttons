@@ -4,15 +4,15 @@
 
   @extend .btn;
 
-  margin: $margin-big 0 0 0;
+  margin: 0 0 $margin-big 0;
 
   cursor: pointer;
   transition: $transition-default;
   text-overflow: ellipsis;
   overflow: hidden;
-  z-index: $z-index-01;
+  z-index: $z-index-base;
   white-space: nowrap;
-  display: block;
+  // display: block;
   left: 0;
   text-align: left;
   
@@ -34,11 +34,10 @@
 
   background-color: $color-ligth-gray;
   height: auto;
-  margin: -20px 0;
+  margin: -40px 0 $margin-small 0;
   border-radius: 0  0 $border-radius-circle $border-radius-circle;
   display: block;
   overflow: hidden;
-  z-index: $z-index-base;
   border: dashed $color-ligth-gray 1px;
 
 }
