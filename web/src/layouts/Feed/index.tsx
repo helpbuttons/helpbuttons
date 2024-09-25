@@ -35,6 +35,7 @@ import { CardButtonHeadActions } from 'components/button/CardButton';
 import LoginOrSignup from 'components/authorization';
 import router from 'next/router';
 import { getReturnUrl } from 'shared/sys.helper';
+import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
 
 export default function Feed({ button, show, toggleShow }: { button: Button, show: any, toggleShow: any }) {
   const [posts, setPosts] = useState(null);
@@ -87,10 +88,13 @@ export default function Feed({ button, show, toggleShow }: { button: Button, sho
             <CardButtonHeadActions button={button} isButtonOwner={isButtonOwner} action={() => toggleShowReplyFirstPost(true)}/>         
           )}
           {(!loggedInUser) && (      
-            <CardButtonHeadActions button={button} isButtonOwner={isButtonOwner} action={() => router.push({
-              pathname: '/Login',
-              query: { returnUrl: getReturnUrl() },
-            })}/>
+            <CardButtonHeadActions button={button} isButtonOwner={isButtonOwner} action={
+            () => store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))
+              // () => router.push({
+              // pathname: '/Login',
+              // query: { returnUrl: getReturnUrl() },
+            // })
+          }/>
           )}
        </>
       </div>
@@ -265,7 +269,6 @@ export function ComposePost({
   }, [show])
   return (  
     <>
-    <div ref={refCompose}>
         {show &&
         
           <Compose referer={referer} onCreate={onCreate} onCancel={onCancel}/> 
@@ -286,7 +289,6 @@ export function ComposePost({
                 />
             </>
           }
-      </div>
     </>
     
   )
