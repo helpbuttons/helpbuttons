@@ -81,7 +81,6 @@ export default function ShareInvitationsForm() {
   }, [invitations])
   return (
     <>
-      <Popup>
         {t('share.explainInvitations')}
         <div>
         {invitations.length}
@@ -96,7 +95,6 @@ export default function ShareInvitationsForm() {
         {/* {JSON.stringify(invitations)} */}
         {loading && <Loading />}
         {!loading && <PdfIframe blob={pdfBlobUrl} />}
-      </Popup>
     </>
   );
 }

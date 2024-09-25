@@ -50,18 +50,14 @@ export function ShareForm({}) {
     // },
     {
       value: shareOptions.iframe,
-      name: 'embbedable',
+      name: t('share.optionIframe'),
     },
     // {
     //   value: shareOptions.ap,
     //   name: 'Fediverse',
     // },
-    {
-      value: shareOptions.invitations,
-      name: 'Invitations',
-    },
   ]);
-
+  
   useEffect(() => {
     if (userLoggedIn) {
       setOptions((prevOptions) => {
@@ -73,7 +69,11 @@ export function ShareForm({}) {
             ...prevOptions,
             {
               value: shareOptions.bulletin,
-              name: 'bulletin',
+              name: t('share.optionBulletin'),
+            },
+            {
+              value: shareOptions.invitations,
+              name: t('share.optionInvitations'),
             },
           ];
         }

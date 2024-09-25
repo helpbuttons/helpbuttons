@@ -169,30 +169,9 @@ export default function ShareBulletinForm() {
 
   return (
     <>
-      <Popup>
         {t('bulletin.explainBulletin')}
-        <Btn
-          onClick={() => store.emit(new ToggleAdvancedFilters())}
-          iconLeft={IconType.svg}
-          iconLink={<IoSearch />}
-          caption={filterButtonCaption}
-        />
         <div>
-          <FilterByDays days={days} setDays={setDays} />
-          <Btn
-            onClick={() => {
-              updateDays(days);
-            }}
-            caption={
-              <>
-              {isLoading && <Loading/>}
-              {!isLoading &&  t('bulletin.changeDays')}
-              </>
-              //
-            }
-          />
-
-          {}
+          <FilterByDays days={days} setDays={(days) => {setDays(days);  updateDays(days);}} />
           <PdfIframe
               blob={pdfBlobUrl}
             />
@@ -200,13 +179,6 @@ export default function ShareBulletinForm() {
             <>{t('bulletin.noButtons')}</>
           )}
         </div>
-      </Popup>
-
-      <AdvancedFilters
-        showFilterByDays={true}
-        target="/Bulettin"
-        isHome={false}
-      />
     </>
   );
 }

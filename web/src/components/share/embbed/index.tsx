@@ -3,7 +3,7 @@ import { getShareLink } from "shared/sys.helper";
 import { encode } from "html-entities";
 import t from "i18n";
 import { FilterByNumber } from "components/search/AdvancedFilters/filter-by-number";
-import { defaultDaysForEmbbed } from "components/search/AdvancedFilters/filters.type";
+import { defaultButtonsForEmbbed } from "components/search/AdvancedFilters/filters.type";
 
 export const getIframe = (nrButtons) => {
   return `<iframe src="${getShareLink(
@@ -13,7 +13,7 @@ export const getIframe = (nrButtons) => {
 
 export function ShareEmbbedForm() {
   
-    const [nrButtons, setNrButtons] = useState(defaultDaysForEmbbed);
+    const [nrButtons, setNrButtons] = useState(defaultButtonsForEmbbed);
     const [iframeCode, setIframeCode] = useState(getIframe(nrButtons));
     useEffect(() => {
       setIframeCode(() => getIframe(nrButtons));
