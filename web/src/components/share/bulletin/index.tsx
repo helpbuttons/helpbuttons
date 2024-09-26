@@ -368,13 +368,21 @@ const ButtonRow = ({ button, buttonType }) => {
       fontWeight: 'bold',
       fontSize: 16,
       marginBottom: 4,
+      textOverflow: 'ellipsis',
+      display: 'flex',
+      flexWrap: 'nowrap',
     },
     row: {
       flexDirection: 'column',
       justifyContent: 'center',
+      textOverflow: 'ellipsis',
+      maxWidth: '300px',
+      overflow: 'hidden',
+      overflowWrap: 'nowrap',
       flexGrow: 1,  // Ensures this section takes up available space
       flexBasis: 'auto',
       paddingRight: '10px',
+      maxHeight: '75px',
     },
     description: {
       fontSize: 12,

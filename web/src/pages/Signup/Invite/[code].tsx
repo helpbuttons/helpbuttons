@@ -62,9 +62,9 @@ export default function Invite() {
       store.emit(new LoginQR(code, null, onLoggingInSuccess, (err) => { 
         if(err == 'login-incorrect')
         {
+          setLoading(false)
           console.log('tryin to login, failed, its ok, qr code is not registered yet')
         }else{
-          setLoading(false)
           console.log(err)
         }
       }))

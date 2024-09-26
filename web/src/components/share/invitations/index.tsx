@@ -170,22 +170,38 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       boxSizing: 'border-box',
 
     },
+    // qrDiv: {
+    //   display: 'flex',
+    //   flexDirection: 'column',
+    //   position:'absolute',
+    //   height: 'auto',
+    //   right: '10px',
+    //   fontSize: '10px',
+    //   overflowY:'hidden',
+    //   width: '95px',
+    //   minHeight: '150px',
+    //   alignContent: 'flex-start',
+    //   justifyContent: 'center',
+    // },
     qrDiv: {
       display: 'flex',
       flexDirection: 'column',
-      position:'absolute',
+      position: 'absolute',
       height: 'auto',
       right: '10px',
       fontSize: '10px',
-      overflowY:'hidden',
+      // overflow: 'hidden',
       width: '95px',
       minHeight: '150px',
       alignContent: 'flex-start',
       justifyContent: 'center',
+      wordWrap: 'break-word',      // Ensure that words can break
+      overflowWrap: 'break-word',  // Handle breaking in most browsers
+
     },
     textDiv: {
       display: 'flex',
-      position:'absolute',
+      position:'relative',
       flexDirection: 'column',
       width: '160px',
       fontSize: '11px',
@@ -199,6 +215,19 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       marginTop: '20px',
       textAlign:'left',
       alignContent:'center',
+    },
+    qrCode: {
+      display: 'flex',
+      whiteSpace: 'normal',    
+      wordBreak: 'break-all',
+
+          // Allow text to wrap to the next line
+      // hyphens: 'auto',             // Add hyphenation to break long words
+      flexWrap: 'nowrap',
+      position: 'absolute',
+      width: '100%',
+      fontSize:'10px',
+      bottom:'10px',
     },
     networkTitle: {
       display: 'flex',
@@ -229,8 +258,8 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
         </View>
         <View style={styles.qrDiv}>
           <Image src={qrCodeImage} />
-          <Text>{qrCode}</Text>
         </View>
+        <Text style={styles.qrCode}>{qrCode}</Text>
       </View>
     </View>
   );
