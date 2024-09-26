@@ -396,10 +396,10 @@
     "dates": "Fechas inválidas"
   },
   "invitation":{
-    "card": "Tarjeta anónima de indentificación individual",
-    "infoCard": "Escanea el código o usa el nº para entrar",
+    "card": "Tarjeta anónima de id individual",
+    "infoCard": "Escanea el código para entrar.",
     "name": "Esta tarjeta es única y personal, no la pierdas.",
-    "contact": "Si quieres escribe un método de contacto. Úsala responsablemente.",
+    "contact": "Si quieres escribe un método de contacto.",
     "infoQr": "Contacto:"
   },
   "setup": {
