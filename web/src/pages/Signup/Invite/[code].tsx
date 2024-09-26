@@ -11,10 +11,10 @@ import { Network } from 'shared/entities/network.entity';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import t from 'i18n';
 import Popup from 'components/popup/Popup';
-import { Login, SignupQR } from 'state/Users';
+import { Login, LoginQR, SignupQR } from 'state/Users';
 import { alertService } from 'services/Alert';
-import Signup from '..';
 import { getLocale } from 'shared/sys.helper';
+import { LoadabledComponent } from 'components/loading';
 
 export default function Invite() {
   const router = useRouter();
@@ -38,6 +38,7 @@ export default function Invite() {
     },
   });
 
+  const [loading, setLoading] = useState(true)
   const selectedNetwork: Network = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -57,7 +58,16 @@ export default function Invite() {
       const onLoggingInSuccess = () => {
         router.push(`/HomeInfo`)
       }
-      store.emit(new Login(code, code, onLoggingInSuccess, () => {}))
+      // store.emit(new Login(code, code, onLoggingInSuccess, () => {}))
+      store.emit(new LoginQR(code, null, onLoggingInSuccess, (err) => { 
+        if(err == 'login-incorrect')
+        {
+          setLoading(false)
+          console.log('tryin to login, failed, its ok, qr code is not registered yet')
+        }else{
+          console.log(err)
+        }
+      }))
     }
   }, [code])
   
@@ -75,7 +85,7 @@ export default function Invite() {
             router.push(`/HomeInfo`)
           },
           () => {
-            console.log('error, registering qr code....')
+            alertService.error('Error, invitation code not valid')
           },
         ),
       );
@@ -85,6 +95,7 @@ export default function Invite() {
   return (
     <>
       <Popup>
+        <LoadabledComponent loading={loading}>
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
         <div className="login__form">
           <div className="form__inputs-wrapper">
@@ -110,6 +121,7 @@ export default function Invite() {
           </div>
         </div>
       </Form>
+      </LoadabledComponent>
       </Popup>
     </>
     

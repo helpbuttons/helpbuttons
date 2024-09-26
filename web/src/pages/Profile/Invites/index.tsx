@@ -176,7 +176,7 @@ function InvitationQrCode({ url }) {
 
   return (
     <>
-      {qrCodeData && <><img src={qrCodeData} /></>}
+      {qrCodeData && <>{invitationLink}<img src={qrCodeData} /></>}
       {!qrCodeData && (
         <Btn
           btnType={BtnType.filter}

@@ -2,12 +2,12 @@ import {
   Controller,
   Post,
   Body,
-  UseInterceptors,
   Get,
   Request,
   Param,
   UseGuards,
   HttpException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '@src/shared/decorator/current-user';
@@ -63,6 +63,19 @@ export class AuthController {
   @Post('login')
   async login(@Request() req) {
     return req.user;
+  }
+
+  @AllowGuest()
+  @Post('loginqr/:qrcode')
+  async loginqr(@Param('qrcode') qrcode: string) {
+    return this.authService.validateQrCode(qrcode)
+    .then((user) => {
+      if(!user)
+      {
+        throw new UnauthorizedException()
+      }
+      return this.authService.getAccessToken(user)
+    })
   }
 
   @OnlyRegistered()
