@@ -38,8 +38,8 @@ export default function MainPopup() {
             headerText={t('share.header')}
             closeAction={closePopup}
           >
-          <ShareForm/>
-        </Picker>
+            <ShareForm/>
+          </Picker>
         )}
       </>
     );

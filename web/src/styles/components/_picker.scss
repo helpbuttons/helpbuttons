@@ -1,6 +1,6 @@
 $picker-background: rgba(0,0,0,.2);
 $picker-header-height: 80px;
-$picker-max-width: 480px;
+$picker-max-width: 680px;
 $picker-border-radius: 25px;
 $picker-width: 240px;
 $picker-min-width: 240px;
@@ -326,6 +326,7 @@ $picker-comments-item-padding: 25px;
   .picker {
 
     height: auto;
+    max-width: $picker-max-width;
 
   }
 
@@ -337,7 +338,7 @@ $picker-comments-item-padding: 25px;
   }
 
   .picker--over {
-    max-width: 500px;
+    max-width: 700px;
     z-index: $z-index-05;
     max-height: 90%;
   }

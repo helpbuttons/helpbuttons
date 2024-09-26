@@ -31,7 +31,7 @@ export const PdfIframe = ({ blob }) => {
           <iframe
             src={blob}
             title="Generated PDF"
-            width="80%"
+            width="100%"
             height="600px"
             style={{ border: '1px solid #ccc' }}
           />

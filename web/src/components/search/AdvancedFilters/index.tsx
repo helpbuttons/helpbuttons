@@ -26,6 +26,7 @@ import _ from 'lodash';
 import { FilterByLocationRadius } from './filter-by-location';
 import { FilterByDays } from './filter-by-days';
 import Accordion from 'elements/Accordion';
+import { IoBook, IoList } from 'react-icons/io5';
 
 
 
@@ -165,7 +166,7 @@ export default function AdvancedFilters({
                       <AllSuggestedTags word={query.substring(query.lastIndexOf(" ")+1)} maxTags={5} tags={tags} addTag={(tag) => {addTag(tag); setValue('query',updateQueryWhenTagAdded(query, tag))}}/>
                       <TagFollow tags={tags}/>
                     </FieldText>
-                    <Accordion title={t('buttonFilters.byCategory')}>
+                    <Accordion icon={<IoList/>} title={t('buttonFilters.byCategory')}>
                       <FieldMultiSelect
                         label={t('buttonFilters.types')}
                         validationError={null}

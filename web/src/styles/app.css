@@ -3609,15 +3609,16 @@ li, ol, ul, h2 {
 @media only screen and (min-width: 991px) {
   .picker {
     height: auto;
+    max-width: 680px;
   }
   .picker__header,
   .picker__content {
     background: #fff;
-    max-width: 480px;
+    max-width: 680px;
     height: auto;
   }
   .picker--over {
-    max-width: 500px;
+    max-width: 700px;
     z-index: 500;
     max-height: 90%;
   }
@@ -6763,7 +6764,7 @@ hr {
   font-size: 14px;
 }
 
-.__iframe__code #__next {
+._iframe__code #__next {
   overflow: auto;
   display: none;
 }

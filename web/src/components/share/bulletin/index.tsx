@@ -215,8 +215,7 @@ const BulletinPDF = ({
       fontWeight: 'thin',
     },
     buttonDiv: {
-      height: '100%',
-      backgroundColor: 'red',
+      height: 'auto',
     },
   });
 
@@ -242,130 +241,184 @@ const BulletinPDF = ({
     </Document>
   );
 };
-const ButtonRows = ({ buttons, buttonTypes }) => {
-  const borderColor = '#3778C2';
 
+const ButtonRows = ({ buttons, buttonTypes }) => {
   const styles = StyleSheet.create({
     row: {
       flexDirection: 'row',
       borderTopColor: '#3778C2',
       borderTopWidth: 3,
-      alignItems: 'flex-start',
-      // maxHeight: 300,
-      backgroundColor:'green',
-      height: 'auto',
-      maxWidth: '100vw',
+      alignItems: 'center',
+      paddingVertical: 10,
+      width: '100%',
+      maxWidth: '100%',
       fontStyle: 'bold',
     },
     tableContainer: {
       flexDirection: 'column',
-      flexWrap: 'wrap',
-      maxWidth: '100%',
+      width: '100%',
       height: 'auto',
-      backgroundColor:'yellow',
       marginTop: 24,
     },
-
-    container: {
-      flexDirection: 'row',
-      color: '#fff',
-      borderBottomWidth: 1,
-      alignItems: 'center',
-      height: 'auto',
-      textAlign: 'center',
-      fontStyle: 'bold',
-      flexGrow: 1,
-    },
   });
-  const rows = buttons.map((button: Button) => (
-    <View
-      style={{
-        ...styles.row,
-        borderTopColor: buttonTypes.find(
-          (_buttonType) => _buttonType.name == button.type,
-        ).cssColor,
-      }}
-      key={button.id}
-    >
-      <ButtonRow
-        button={button}
-        buttonType={buttonTypes.find(
-          (_buttonType) => _buttonType.name == button.type,
-        )}
-      />
-    </View>
-  ));
-  return (
-    <>
-      <View style={styles.tableContainer}>{rows}</View>
-    </>
-  );
+
+  const rows = buttons.map((button) => {
+    const buttonType = buttonTypes.find(
+      (type) => type.name === button.type,
+    );
+
+    return (
+      <View
+        style={{
+          ...styles.row,
+          borderTopColor: buttonType?.cssColor || '#3778C2',
+        }}
+        key={button.id}
+      >
+        <ButtonRow button={button} buttonType={buttonType} />
+      </View>
+    );
+  });
+
+  return <View style={styles.tableContainer}>{rows}</View>;
 };
 
+// const ButtonRows = ({ buttons, buttonTypes }) => {
+//   const borderColor = '#3778C2';
+
+//   const styles = StyleSheet.create({
+//     row: {
+//       flexDirection: 'row',
+//       borderTopColor: '#3778C2',
+//       borderTopWidth: 3,
+//       boxsizing: 'border-box',
+//       alignItems: 'flex-start',
+//       backgroundColor:'green',
+//       height: '200px',
+//       width: '100%',
+//       maxWidth: '100%',
+//       fontStyle: 'bold',
+//     },
+//     tableContainer: {
+//       flexDirection: 'column',
+//       flexWrap: 'nowrap',
+//       maxWidth: '100%',
+//       height: '100%',
+//       backgroundColor:'yellow',
+//       marginTop: 24,
+//     },
+
+//     container: {
+//       flexDirection: 'row',
+//       color: '#fff',
+//       borderBottomWidth: 1,
+//       alignItems: 'center',
+//       height: '200px',
+//       marginBottom: 10,
+//       textAlign: 'center',
+//       fontStyle: 'bold',
+//       flexGrow: 1,
+//     },
+//   });
+//   const rows = buttons.map((button: Button) => (
+//     <View
+//       style={{
+//         ...styles.row,
+//         borderTopColor: buttonTypes.find(
+//           (_buttonType) => _buttonType.name == button.type,
+//         ).cssColor,
+//       }}
+//       key={button.id}
+//     >
+//       <ButtonRow
+//         button={button}
+//         buttonType={buttonTypes.find(
+//           (_buttonType) => _buttonType.name == button.type,
+//         )}
+//       />
+//     </View>
+//   ));
+//   return (
+//     <>
+//       <View style={styles.tableContainer}>{rows}</View>
+//     </>
+//   );
+// };
 const ButtonRow = ({ button, buttonType }) => {
   const rowColor = buttonType.cssColor;
   const styles = StyleSheet.create({
     image: {
-      maxWidth: 'auto',
-      maxHeight: 'auto',
+      width: '80px',
+      height: '80px',
+    },
+    imageWrapper: {
+      width: '80px',
+      height: '80px',
+      overflow: 'hidden',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: '10px',
     },
     button_type: {
-      width: 'auto',
       color: rowColor,
       fontWeight: 'bold',
+      fontSize: 10,
     },
     title: {
-      display: 'flex',
-      flexDirection: 'row',
       fontWeight: 'bold',
+      fontSize: 16,
+      marginBottom: 4,
     },
     row: {
-      width: 'auto',
-      display: 'flex',
-      justifyContent: 'flex-start',
       flexDirection: 'column',
-      backgroundColor: rowColor,
-      gap: '5px',
+      justifyContent: 'center',
+      flexGrow: 1,  // Ensures this section takes up available space
+      flexBasis: 'auto',
+      paddingRight: '10px',
     },
     description: {
       fontSize: 12,
-      display: 'flex',
-      flexDirection: 'column',
+      color: 'gray',
     },
     place: {
       fontSize: 12,
+      marginTop: 4,
     },
     qrcode: {
-      margin: 'auto',
+      width: '80px',
+      height: '80px',
+      marginLeft: '10px',
     },
     date: {
       fontSize: 12,
+      marginTop: 4,
+    },
+    container: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',  // Spreads elements evenly
+      borderBottomColor: '#3778C2',
+      borderBottomWidth: 1,
+      paddingVertical: 2,
+      paddingHorizontal: '10px',
+      width: '100%',  // Ensures container takes up full width
+      flexWrap: 'nowrap',  // Prevents wrapping
     },
   });
+
   return (
     <>
       {buttonType && (
-        <View
-          style={{
-            width: '100%',
-            flexDirection: 'row',
-            gap: '10px',
-            marginBottom: '15px',
-          }}
-        >
-          <View style={{ width: '20%' }}>
-            <Image
-              style={styles.image}
-              src={makeImageUrl(button.image)}
-            />
+        <View style={styles.container}>
+          <View style={styles.imageWrapper}>
+            <Image style={styles.image} src={makeImageUrl(button.image)} />
           </View>
-          <Text style={styles.button_type}>{buttonType.caption}</Text>
           <View style={styles.row}>
-            <Text style={styles.title}>{button.title} </Text>
-            <Text style={styles.place}> {button.address}</Text>
+            <Text style={styles.button_type}>{buttonType.caption}</Text>
+            <Text style={styles.title}>{button.title}</Text>
+            <Text style={styles.place}>{button.address}</Text>
             <Text style={styles.date}>
-              {readableDate(button.created_at)} -{' '}
-              {readableTime(button.created_at)}
+              {readableDate(button.created_at)} - {readableTime(button.created_at)}
             </Text>
           </View>
           <Image style={styles.qrcode} src={button.qrcode} />
@@ -374,3 +427,92 @@ const ButtonRow = ({ button, buttonType }) => {
     </>
   );
 };
+
+
+
+// const ButtonRow = ({ button, buttonType }) => {
+//   const rowColor = buttonType.cssColor;
+//   const styles = StyleSheet.create({
+//     image: {
+
+//       position:'relative',
+//       height: '100%',
+      
+//     },
+//     imageWrapper: {
+//       width: '80px',
+//       height: '80px',
+//       overflow: 'hidden',
+//       display: 'flex',
+//       justifyContent: 'center',
+//       alignContent:'center',
+//       position:'relative',
+//     },
+//     button_type: {
+//       width: 'auto',
+//       color: rowColor,
+//       fontWeight: 'bold',
+//     },
+//     title: {
+//       display: 'flex',
+//       flexDirection: 'row',
+//       fontWeight: 'bold',
+//     },
+//     row: {
+//       width: 'auto',
+//       display: 'flex',
+//       justifyContent: 'flex-start',
+//       flexDirection: 'column',
+//       backgroundColor: rowColor,
+//       gap: '5px',
+//     },
+//     description: {
+//       fontSize: 12,
+//       display: 'flex',
+//       flexDirection: 'column',
+//     },
+//     place: {
+//       fontSize: 12,
+//     },
+//     qrcode: {
+//       margin: 'auto',
+//     },
+//     date: {
+//       fontSize: 12,
+//     },
+//   });
+//   return (
+//     <>
+//       {buttonType && (
+//         <View
+//           style={{
+//             width: '100%',
+//             flexDirection: 'row',
+//             gap: '10px',
+//             maxHeight: '200px',
+//               height: '200px',
+//               overflow: 'hidden',
+//             marginBottom: '15px',
+//           }}
+//         >
+//           <View style={styles.imageWrappper}>
+//             <Image
+//               style={styles.image}
+//               src={makeImageUrl(button.image)}
+//             />
+//           </View>
+//           <Text style={styles.button_type}>{buttonType.caption}</Text>
+//           <View style={styles.row}>
+//             <Text style={styles.title}>{button.title} </Text>
+//             <Text style={styles.place}> {button.address}</Text>
+//             <Text style={styles.date}>
+//               {readableDate(button.created_at)} -{' '}
+//               {readableTime(button.created_at)}
+//             </Text>
+//           </View>
+//           <Image style={styles.qrcode} src={button.qrcode} />
+//         </View>
+//       )}
+//     </>
+//   );
+// };
