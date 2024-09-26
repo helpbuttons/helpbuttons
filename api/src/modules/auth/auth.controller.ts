@@ -19,7 +19,6 @@ import { User } from '../user/user.entity';
 import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { QrCodeAuthGuard } from './guards/qrcode-auth.guard';
 
 @ApiTags('User')
 @Controller('users')
@@ -66,7 +65,7 @@ export class AuthController {
     return req.user;
   }
 
-  @UseGuards(QrCodeAuthGuard)
+  @AllowGuest()
   @Post('loginqr/:qrcode')
   async loginqr(@Param('qrcode') qrcode: string) {
     return this.authService.validateQrCode(qrcode)
