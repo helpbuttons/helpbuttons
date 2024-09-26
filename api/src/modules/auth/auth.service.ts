@@ -71,7 +71,9 @@ export class AuthService {
       showButtons: false,
       tags: signupUserDto.tags,
       radius: 0,
+      qrcode: signupUserDto.qrcode
     };
+    
       return this.createUser(newUserDto, signupUserDto)
     })
     
@@ -322,26 +324,12 @@ export class AuthService {
   }
 
 
-  // async validateQrCode(
-  //   qrCode: string
-  // ): Promise<any> {
-  //   const user = await this.userService.u(email);
-  //   if (!user) {
-  //     return null;
-  //   }
+  validateQrCode(qrCode: string) {
+    return this.userService
+      .findQrCode(qrCode)
+      .then((user: User) => {
+        return user
+      });
+  }
 
-  //   const userCredential = await this.userCredentialService.findOne(
-  //     user.id,
-  //   );
-  //   if (!userCredential) {
-  //     return null;
-  //   }
-
-  //   if (!(await checkHash(plainPassword, userCredential.password))) {
-  //     return null;
-  //   }
-
-  //   return this.getAccessToken(user);
-  // }
-  
 }

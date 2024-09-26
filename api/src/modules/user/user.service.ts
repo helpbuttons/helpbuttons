@@ -246,4 +246,8 @@ export class UserService {
     return this.userRepository
         .delete({id: currentUser.id})
   }
+
+  public findQrCode(qrcode: string){
+    return this.userRepository.findOne({where:  {qrcode: qrcode}})
+  }
 }
