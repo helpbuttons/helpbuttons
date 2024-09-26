@@ -10,7 +10,7 @@ import { store } from 'pages';
 import { RequestNewLoginToken } from 'state/Users';
 import { alertService } from 'services/Alert';
 import { useRouter } from 'next/router';
-import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function LoginClick() {
   const {
@@ -27,11 +27,11 @@ export default function LoginClick() {
         data.email,
         () => {
           alertService.info(t('user.newLoginTokenSent'));
-          store.emit(new SetEnteringMode(EnteringPickerMode.HIDE))
+          store.emit(new SetMainPopup(MainPopupPage.HIDE))
         },
         () => {
           alertService.error(t('user.errorRequestNewLoginToken'));
-          store.emit(new SetEnteringMode(EnteringPickerMode.HIDE))
+          store.emit(new SetMainPopup(MainPopupPage.HIDE))
         },
       ),
     );
@@ -51,7 +51,7 @@ export default function LoginClick() {
         <Form
           onSubmit={handleSubmit(onSubmit)}
           classNameExtra="login"
-        >
+        > 
           <div className="login__form">
             <div className="form__inputs-wrapper">
               <FieldText
@@ -77,12 +77,12 @@ export default function LoginClick() {
                 isSubmitting={isSubmitting}
               />
               <div className="popup__link">
-                <div onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))} className={`nav-bottom__link`}>
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
                   {t('user.loginWEmail')}
                 </div>
               </div>
               <div className="popup__link">
-                <div onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.SIGNUP))} className={`nav-bottom__link`}>
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
                   {t('user.noAccount')}
                 </div>
               </div>

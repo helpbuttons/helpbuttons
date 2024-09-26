@@ -2,7 +2,6 @@ import { ActivityEventName } from '@src/shared/types/activity.list';
 import { Activity } from './activity.entity';
 import translate, { readableDate } from '@src/shared/helpers/i18n.helper';
 import { CommentPrivacyOptions } from '@src/shared/types/privacy.enum';
-import { NotificationType } from './activity.dto';
 
 export const transformToMessage = (
   activity: Activity,
@@ -101,7 +100,8 @@ export const transformToMessage = (
       };
     }
     case ActivityEventName.NewFollowingButton: {
-      const { button, user } = JSON.parse(activity.data);
+      const button = getButtonActivity(activity.data);
+      const user = getUserActivity(activity.data)
       return {
         ...activityOut,
         message: button.title,
@@ -114,7 +114,8 @@ export const transformToMessage = (
       };
     }
     case ActivityEventName.NewFollowedButton: {
-      const { button, user } = JSON.parse(activity.data);
+      const button = getButtonActivity(activity.data);
+      const user = getUserActivity(activity.data)
       return {
         ...activityOut,
         message: button.title,
@@ -133,7 +134,7 @@ export const transformToMessage = (
     }
     case ActivityEventName.ExpiredButton: {
         // TODO
-        const {button} = JSON.parse(activity.data)
+        const button = getButtonActivity(activity.data)
         const isOwner = button.owner.id == userId
         return {
             ...activityOut,
@@ -147,7 +148,7 @@ export const transformToMessage = (
           };
     }
     case ActivityEventName.DeleteButton: {
-        const {button} = JSON.parse(activity.data)
+        const button = getButtonActivity(activity.data)
         return {
             ...activityOut,
             message: 'massage',
@@ -166,44 +167,73 @@ export const transformToMessage = (
   }
 };
 
-const getPostActivity = (rawData) => {
-  const data = JSON.parse(rawData);
-  return data?.post ? data?.post : data;
+export const getPostActivity = (rawData) => {
+  try {
+    const data = JSON.parse(rawData);
+    return data?.post ? data?.post : data;
+  }catch(err)
+  {
+  }
+
+  try {
+    return rawData?.post ? rawData?.post : rawData;
+  }catch(err)
+  {
+    console.log(err)
+    console.log('could not parse and it isnt an object', rawData)
+  }
+  return {}
 };
 
-const getCommentActivity = (rawData) => {
-  const data = JSON.parse(rawData);
-  return data?.comment ? data?.comment : data;
+export const getCommentActivity = (rawData) => {
+  try {
+    const data = JSON.parse(rawData);
+    return data.comment;
+  }catch(err)
+  {
+  }
+
+  try {
+    return rawData.comment;
+  }catch(err)
+  {
+    console.log(err)
+    console.log('could not parse user and it isnt an object', rawData)
+  }
+  return {}
 };
 
-const getButtonActivity = (rawData) => {
-  function parse(rawData) {
-    try {
-      const obj = JSON.parse(rawData);
-      if (obj.button) {
-        return obj.button;
-      }
-      if (obj?.owner.id) {
-        return obj;
-      }
-      console.log(
-        'error loading button from activity' +
-          JSON.stringify(rawData, null, 2),
-      );
-    } catch (err) {
-      // console.log('failed to parse'); console.log(err)
-      console.log(
-        'error loading button from activity' +
-          JSON.stringify(rawData, null, 2),
-      );
-    }
-  }
-  if (rawData.button) {
-    return rawData.button;
+export const getUserActivity = (rawData) => {
+  try {
+    const data = JSON.parse(rawData);
+    return data.user;
+  }catch(err)
+  {
   }
 
-  if (rawData.owner && rawData.owner.id) {
-    return rawData;
+  try {
+    return rawData.user;
+  }catch(err)
+  {
+    console.log(err)
+    console.log('could not parse user and it isnt an object', rawData)
   }
-  return parse(rawData);
+  return {}
+}
+export const getButtonActivity = (rawData) => {
+  try {
+    const data = JSON.parse(rawData);
+    return data?.button ? data?.button : data;
+  }catch(err)
+  {
+  }
+
+  try {
+    return rawData?.button ? rawData?.button : rawData;
+  }catch(err)
+  {
+    console.log(err)
+    console.log('could not parse button and it isnt an object', rawData)
+  }
+  return {}
 };

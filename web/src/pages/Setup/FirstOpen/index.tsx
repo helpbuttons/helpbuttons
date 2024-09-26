@@ -40,11 +40,12 @@ function FirstOpen() {
       {loggedInUser?.role == Role.admin && (
         <Popup title={t('setup.welcomeMessage')}>
           <Form classNameExtra="create-admin">
-            <div className="form__btn-wrapper">
-              <div>
+            <div className='form__field'>
+              <div className='form__label'>
                 {t('setup.welcomeMessageLong')}
-                
               </div>
+            </div>
+            <div className="form__btn-wrapper">
               <Btn
                 submit={true}
                 btnType={BtnType.submit}

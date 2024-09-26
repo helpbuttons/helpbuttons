@@ -1,7 +1,6 @@
 import ButtonForm from 'components/button/ButtonForm';
 import { GlobalState, store } from 'pages';
 import { CreateButton, SaveButtonDraft, UpdateCachedHexagons } from 'state/Explore';
-import Router from 'next/router';
 import { alertService } from 'services/Alert';
 import { useForm } from 'react-hook-form';
 import router from 'next/router';
@@ -14,10 +13,8 @@ import { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
 import { useStore } from 'store/Store';
-import { latLngToCell } from 'h3-js';
-import { maxResolution } from 'shared/types/honeycomb.const';
-import Loading, { LoadabledComponent } from 'components/loading';
-import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
+import Loading from 'components/loading';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function ButtonNew({ metadata }) {
   const selectedNetwork = useStore(
@@ -27,7 +24,7 @@ export default function ButtonNew({ metadata }) {
   );
   return (
     <>
-    {selectedNetwork ? 
+    {selectedNetwork.exploreSettings ? 
       <ButtonNewForm selectedNetwork={selectedNetwork} />
      : <Loading/>
     }
@@ -110,7 +107,7 @@ function ButtonNewForm({ selectedNetwork }) {
     if (err.errorName == ErrorName.NeedToBeRegistered) {
       store.emit(new SaveButtonDraft(getValues()));
       alertService.error(err.caption);
-      store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))
+      store.emit(new SetMainPopup(MainPopupPage.LOGIN))
       // Router.push({
       //   pathname: '/Login',
       //   query: { returnUrl: 'ButtonNew' },

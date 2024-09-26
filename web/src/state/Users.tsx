@@ -249,12 +249,13 @@ export class SetInvites implements UpdateEvent {
 }
 
 export class CreateInvite implements WatchEvent {
-  public constructor(public data: InviteCreateDto) {}
+  public constructor(public data: InviteCreateDto, private onSuccess) {}
 
   public watch(state: GlobalState) {
     return UserService.createInvite(this.data).pipe(
       map((data) => {
         store.emit(new FindInvites());
+        this.onSuccess(data)
       }),
       catchError((error) => { return  of(undefined)})
     )

@@ -24,7 +24,7 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
   );
 
   const toggleAdvancedFilters = () => {
-    if(pageName == 'Explore')
+    if(['Explose','Bulletin'].indexOf(pageName) > 0)
     {
       store.emit(new ToggleAdvancedFilters())
     }else{
@@ -42,7 +42,7 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
           <div className="nav-header__content-message">
             <HeaderSearch
               results={{
-                count: (pageName != 'Explore' || !exploreMapState.listButtons)
+                count: ((['Explore','Bulletin'].indexOf(pageName) < 0) || !exploreMapState.listButtons)
                   ? selectedNetwork?.buttonCount
                   : exploreMapState.listButtons.length,
               }}

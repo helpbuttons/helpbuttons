@@ -84,7 +84,7 @@ export default function Invites() {
       expirationTimeInSeconds: parseInt(data.expirationTimeInSeconds),
       followMe: data.followMe,
     };
-    store.emit(new CreateInvite(invitation));
+    store.emit(new CreateInvite(invitation, () => {console.log('got new invitation')}));
   };
 
   const isExpired = (date: Date) => {
@@ -176,7 +176,7 @@ function InvitationQrCode({ url }) {
 
   return (
     <>
-      {qrCodeData && <><img src={qrCodeData} /></>}
+      {qrCodeData && <>{invitationLink}<img src={qrCodeData} /></>}
       {!qrCodeData && (
         <Btn
           btnType={BtnType.filter}

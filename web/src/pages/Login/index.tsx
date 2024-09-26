@@ -9,7 +9,8 @@ export default Login;
 
 function Login() {
     return (
-        <LoginForm/>
+
+            <LoginForm/>
     );
 }
 

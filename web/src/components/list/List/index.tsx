@@ -1,6 +1,6 @@
 //List of elements component that can be used in home, profile and other pages/layouts where we need to ddisplay buttons/networks/other elements
 //a foreach => buttons
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   IoClose,
   IoList,
@@ -20,10 +20,8 @@ import {
 import Btn, {
   BtnType,
   ContentAlignment,
-  IconType,
 } from 'elements/Btn';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
-import { Dropdown } from 'elements/Dropdown/Dropdown';
 import { useButtonTypes } from 'shared/buttonTypes';
 import DraggableList from '../DraggableList';
 

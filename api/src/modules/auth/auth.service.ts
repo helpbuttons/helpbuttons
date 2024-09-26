@@ -7,14 +7,9 @@ import {
   publicNanoidGenerator,
 } from '@src/shared/helpers/nanoid-generator.helper';
 import { UserCredentialService } from '../user-credential/user-credential.service';
-import { NodeEnv } from '@src/shared/types';
 import { MailService } from '../mail/mail.service';
-import { ExtractJwt } from 'passport-jwt';
-import { catchError } from 'rxjs';
 import { User } from '../user/user.entity';
 import { StorageService } from '../storage/storage.service';
-import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
-import { getManager } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { UserCredential } from '../user-credential/user-credential.entity';
 import {
@@ -27,7 +22,9 @@ import { ErrorName } from '@src/shared/types/error.list';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { NetworkService } from '../network/network.service';
 import { InviteService } from '../invite/invite.service';
-import { Exception } from 'handlebars';
+
+export const nomailString = '@nomail.com';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -41,7 +38,7 @@ export class AuthService {
   ) {}
 
   async signupQR(signupQRUserDto: SignupQRRequestDto) {
-    console.log(signupQRUserDto)
+    
     return this.inviteService.isInviteCodeValid(signupQRUserDto.qrCode)
     .then((validInviteCode) => {
       if(!validInviteCode)
@@ -50,15 +47,34 @@ export class AuthService {
       }
       return {
         username: signupQRUserDto.username,
-        email: signupQRUserDto.qrCode,
+        qrcode: signupQRUserDto.qrCode,
+        email: signupQRUserDto.qrCode + nomailString,
         name: signupQRUserDto.name,
-        password: signupQRUserDto.qrCode,
+        password: publicNanoidGenerator(),
         locale: signupQRUserDto.locale,
         acceptPrivacyPolicy: signupQRUserDto.acceptPrivacyPolicy
       }
     })
     .then((signupUserDto: SignupRequestDto) => {
-      return this.signup(signupUserDto)
+    const newUserDto = {
+      username: signupUserDto.username,
+      email: signupUserDto.email,
+      role: Role.registered,
+      name: signupUserDto.name,
+      verificationToken: publicNanoidGenerator(),
+      emailVerified: false,
+      id: dbIdGenerator(),
+      avatar: null,
+      description: '',
+      locale: signupUserDto.locale,
+      receiveNotifications: true,
+      showButtons: false,
+      tags: signupUserDto.tags,
+      radius: 0,
+      qrcode: signupUserDto.qrcode
+    };
+    
+      return this.createUser(newUserDto, signupUserDto)
     })
     
     
@@ -137,6 +153,11 @@ export class AuthService {
         throw new CustomHttpException(ErrorName.InvalidMimetype);
       }
     }
+    return this.createUser(newUserDto, signupUserDto)
+  }
+
+  private createUser (newUserDto, signupUserDto) {
+    console.log(newUserDto)
     return this.userService
       .createUser(newUserDto)
       .then((user) => {
@@ -146,8 +167,7 @@ export class AuthService {
         );
       })
       .then((user) => {
-        if (!newUserDto.emailVerified && userCount > 1) {
-          // only send login token if not creating admin
+        if (!newUserDto.emailVerified) {
           this.sendLoginToken(newUserDto, true);
         }
         return user;
@@ -303,5 +323,13 @@ export class AuthService {
       });
   }
 
-  
+
+  validateQrCode(qrCode: string) {
+    return this.userService
+      .findQrCode(qrCode)
+      .then((user: User) => {
+        return user
+      });
+  }
+
 }

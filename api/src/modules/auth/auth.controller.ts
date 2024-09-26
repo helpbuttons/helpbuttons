@@ -2,12 +2,12 @@ import {
   Controller,
   Post,
   Body,
-  UseInterceptors,
   Get,
   Request,
   Param,
   UseGuards,
   HttpException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '@src/shared/decorator/current-user';
@@ -19,6 +19,7 @@ import { User } from '../user/user.entity';
 import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { QrCodeAuthGuard } from './guards/qrcode-auth.guard';
 
 @ApiTags('User')
 @Controller('users')
@@ -63,6 +64,19 @@ export class AuthController {
   @Post('login')
   async login(@Request() req) {
     return req.user;
+  }
+
+  @UseGuards(QrCodeAuthGuard)
+  @Post('loginqr/:qrcode')
+  async loginqr(@Param('qrcode') qrcode: string) {
+    return this.authService.validateQrCode(qrcode)
+    .then((user) => {
+      if(!user)
+      {
+        throw new UnauthorizedException()
+      }
+      return this.authService.getAccessToken(user)
+    })
   }
 
   @OnlyRegistered()

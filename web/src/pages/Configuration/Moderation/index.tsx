@@ -1,3 +1,4 @@
+import MessageNew from 'components/feed/MessageNew';
 import { BtnButtonType } from 'components/nav/ButtonTypes';
 import Popup from 'components/popup/Popup';
 import Accordion from 'elements/Accordion';
@@ -49,6 +50,18 @@ export default function Moderation() {
             title={t('moderation.buttonsList')}
           >
             <ModerationHelpButtonsList />
+          </Accordion>
+          <Accordion
+            title={t('moderation.adminCommunication')}
+          >
+            <div className="form__inputs-wrapper">
+                <div className="form__field">
+                  <div className="form__label">{t('moderation.adminCommunicationLabel')}</div>
+                  <div className="form__explain">{t('moderation.adminCommunicationExplain')}</div>
+                  <MessageNew onCreate={undefined}/>
+                              
+                </div>
+            </div>
           </Accordion>
         </div>
       </Popup>

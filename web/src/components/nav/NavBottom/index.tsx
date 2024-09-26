@@ -9,7 +9,7 @@ import { IoHomeOutline } from 'react-icons/io5';
 import t from 'i18n';
 import {  store } from 'pages';
 import { RecenterExplore } from 'state/Explore';
-import { EnteringPickerMode, SetEnteringMode } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useActivities } from 'state/Activity';
 
 export default NavBottom;
@@ -69,7 +69,7 @@ function NavBottom({loggedInUser, pageName}) {
           {!loggedInUser && (
             <div
               // href="/Signup"
-              onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.SIGNUP))}
+              onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))}
               className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
                 'Signup',
               )}`}
@@ -121,7 +121,7 @@ function NavBottom({loggedInUser, pageName}) {
 
           {!loggedInUser && (
             <div
-              onClick={() => store.emit(new SetEnteringMode(EnteringPickerMode.LOGIN))}
+              onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))}
               className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
                 'Login',
               )}`}

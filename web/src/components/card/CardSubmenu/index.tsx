@@ -3,10 +3,10 @@ import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 import useComponentVisible from 'shared/custom.hooks';
 
 
-export function CardSubmenu({ children }) {
+export function CardSubmenu({ children, extraClass }) {
   const { ref, showSubmenu, setShowSubmenu } = useComponentVisible(false);
   return (
-    <div ref={ref}>
+    <div ref={ref} className={extraClass}>
       <div
 
         className="card-button__edit-icon card-button__submenu"

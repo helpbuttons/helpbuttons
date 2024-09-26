@@ -9,6 +9,7 @@ import Link from 'next/link';
 import {
   IoBuildOutline,
   IoCreateOutline,
+  IoDocumentTextOutline,
   IoHammerOutline,
   IoLogOutOutline,
   IoQrCodeOutline,
@@ -62,13 +63,13 @@ export default function Profile() {
                       />
                     </Link>
                     {/* {selectedNetwork?.inviteOnly &&  */}
-                      <Link href="/Profile/Invites">
+                      {/* <Link href="/Profile/Invites">
                         <Btn
                           iconLeft={IconType.svg}
                           iconLink={<IoQrCodeOutline/>}
                           caption={t('invite.title')}
                         />
-                      </Link>
+                      </Link> */}
                     {/* } */}
                     {loggedInUser?.role == Role.admin && 
                       <AdminOptions/>

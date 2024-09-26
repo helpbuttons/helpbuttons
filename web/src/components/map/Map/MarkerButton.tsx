@@ -99,22 +99,26 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
           className="marker-button marker-button-selector"
         >
           <div className="avatar-medium marker-button__image">
+          {props.image && 
             <ImageWrapper
               imageType={ImageType.avatarMed}
               src={props.image}
               alt={props.title}
             />
+          }
           </div>
 
           <span className="marker-button__arrow"></span>
-
-          <div className="marker-button__tags marker-button-selector-title">
-            <div className="marker-button__link-tag">
-              {props.title}
+          {props.title && 
+            <div className="marker-button__tags marker-button-selector-title">
+              <div className="marker-button__link-tag">
+                {props.title}
+              </div>
             </div>
-          </div>
+          }
         </figure>
       </div>
     </div>
   );
 }
+

@@ -93,26 +93,36 @@ body {
   line-height: $text-line-height-small;
   color: $color-black;
   background: $color-ligth-gray;
-  // height: 100vh;
+
 }
+
 /* Apply the calculated viewport height to html, body, and #__next elements */
 html,
 body,
 #__next,
 .index__container,
-.homeinfo__content,
+.homeinfo__container,
 .homeinfo__card,
 .popup,
-.popup__content,
 .index__content,
 .feed__container,
 .feed-section--activity,
 .index__explore-container {
+
   height: var(--vh) !important;
   /* Add other styles as needed */
 }
 
-.popup__content,
+.homeinfo__container {
+
+  height: calc(var(--vh) - 71px) !important;
+
+}
+
+.popup__content {
+  height: calc(var(--vh) - 50px) !important;
+}
+
 .popup--button-file
 {
   
@@ -135,7 +145,6 @@ body,
 }
 
 .popup,
-.popup-content,
 .filters__wrapper
 {
   height: calc(var(--vh) ) !important;
@@ -143,12 +152,7 @@ body,
 }
 
 
-html,
-body,
-#__next,
-#app {
-  // min-height: 100%;
-}
+
 ol,
 ul {
   list-style: none;
@@ -175,18 +179,6 @@ q {
   quotes: "" "";
 }
 
-// textarea {
-//   font-family: $font-family-first;
-// }
-
-// input {
-//   font-family: $font-family-first;
-// }
-
-// button {
-//   font-family: $font-family-first;
-// }
-
 a {
   color: $color-secondary;  
   word-break: break-all;
@@ -198,28 +190,37 @@ a {
   }
 }
 
-// .list__content {
+.disabled {
+  pointer-events: none;
+  background-color: $color-white;
+  color: $color-gray;
+}
 
-//   height: calc(var(--vh) - 194px) !important;
-
-// }
+.invisible {
+  visibility: hidden;
+}
 
 @media #{$breakpoints-xlarge} {
 
-  // .index__container,
-  .homeinfo__content,
-  .homeinfo__container,
+
   .homeinfo__card,
   .list__container--full-screen,
-  .popup,
-  .popup__content,
   .popup--button-file,
   .index__explore-container,
   .feed-section--activity-content,
   .feed__container
   {
+    height: calc(var(--vh)) !important;
+  }
+
+  .popup__content {
+    height: calc(var(--vh) - 199px) !important;
+  }
+
+  .homeinfo__container {
+
     height: calc(var(--vh) - 134px) !important;
-    /* Add other styles as needed */
+
   }
 
   .list__content {
