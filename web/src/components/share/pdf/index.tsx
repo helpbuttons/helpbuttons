@@ -33,6 +33,7 @@ export const PdfIframe = ({ blob }) => {
             title="Generated PDF"
             width="100%"
             height="600px"
+            min-height="600px"
             style={{ border: '1px solid #ccc' }}
           />
         </>
