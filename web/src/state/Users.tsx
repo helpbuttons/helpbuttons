@@ -59,6 +59,40 @@ export class Login implements WatchEvent {
   }
 }
 
+
+export class LoginQR implements WatchEvent {
+  public constructor(
+    private qrcode: string,
+    private password: string,
+    private onSuccess,
+    private onError,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.loginQr(this.qrcode, this.password).pipe(
+      map((userData) => {
+        if (userData) {
+          return new FetchUserData(this.onSuccess, this.onError);
+        }
+      }),
+      catchError((error) => {
+        let err = error.response;
+
+        if (
+          isHttpError(err) &&
+          err.statusCode === HttpStatus.UNAUTHORIZED
+        ) {
+          // Unauthorized
+          this.onError('login-incorrect');
+        } else {
+          throw err;
+        }
+        return of(undefined);
+      }),
+    );
+  }
+}
+
 export class SignupUser implements WatchEvent {
   public constructor(
     private signupRequestDto: SignupRequestDto,
