@@ -40,6 +40,12 @@ export class UserService {
     );
   }
 
+  public static loginQr(qrcode:string, password:string): Observable<ICurrentUser | undefined> {
+    return httpService.post<ICurrentUser>(`users/loginqr/${qrcode}`).pipe(
+      tap((user) => httpService.setAccessToken(user?.token))
+    );
+  }
+  
   public static isLoggedIn(): boolean {
     return httpService.isAuthenticated$.value;
   }

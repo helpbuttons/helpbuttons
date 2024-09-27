@@ -92,7 +92,6 @@ export default function ShareInvitationsForm() {
           iconLeft={IconType.svg}
           iconLink={<IoAdd />}
         />
-        {/* {JSON.stringify(invitations)} */}
         {loading && <Loading />}
         {!loading && <PdfIframe blob={pdfBlobUrl} />}
     </>
@@ -170,19 +169,6 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       boxSizing: 'border-box',
 
     },
-    // qrDiv: {
-    //   display: 'flex',
-    //   flexDirection: 'column',
-    //   position:'absolute',
-    //   height: 'auto',
-    //   right: '10px',
-    //   fontSize: '10px',
-    //   overflowY:'hidden',
-    //   width: '95px',
-    //   minHeight: '150px',
-    //   alignContent: 'flex-start',
-    //   justifyContent: 'center',
-    // },
     qrDiv: {
       display: 'flex',
       flexDirection: 'column',
