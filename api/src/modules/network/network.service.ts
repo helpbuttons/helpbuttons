@@ -63,7 +63,7 @@ export class NetworkService {
       exploreSettings: createDto.exploreSettings,
       backgroundColor: createDto.backgroundColor,
       textColor: createDto.textColor,
-      buttonTemplates: JSON.stringify(createDto.buttonTemplates),
+      buttonTemplates: createDto.buttonTemplates,
       locale: createDto.locale,
       currency: createDto.currency,
       nomeclature: createDto.nomeclature,
@@ -123,6 +123,7 @@ export class NetworkService {
       .find({ order: { created_at: 'ASC' } })
       .then((networks) => {
         if (networks.length < 1) {
+          console.log('no networks found?')
           throw new HttpException(
             'Default network not found',
             HttpStatus.NOT_FOUND,
@@ -141,19 +142,19 @@ export class NetworkService {
             return {
               ...defaultNetwork,
               buttonTypesCount: networkByButtonTypes,
-              exploreSettings: JSON.parse(
-                defaultNetwork.exploreSettings,
-              ),
+              exploreSettings: defaultNetwork.exploreSettings,
               buttonCount: networkByButtonTypes.reduce(
                 (totalCount, buttonType) =>
                   totalCount + parseInt(buttonType.count),
                 0,
               ),
-              buttonTemplates: JSON.parse(
-                defaultNetwork.buttonTemplates,
-              ),
+              buttonTemplates: defaultNetwork.buttonTemplates,
             };
           });
+      })
+      .then((network) => {
+              //@ts-ignore
+              return {...network, buttonTemplates: JSON.parse(network.buttonTemplates)}
       })
       .then((network) => {
         return this.entityManager
@@ -176,6 +177,7 @@ export class NetworkService {
         if (typeof error === typeof HttpException) {
           throw error;
         }
+        console.log('errror ' , error)
         throw new HttpException('🙆🏼‍♂️', HttpStatus.NOT_FOUND);
       });
   }
@@ -302,17 +304,10 @@ export class NetworkService {
     return [];
   }
 
-  async getButtonTemplates() {
-    return this.networkRepository
-      .find({ order: { created_at: 'ASC' } })
-      .then((networks) => {
-        return JSON.parse(networks[0].buttonTemplates);
-      });
-  }
 
   getButtonTypesWithEventField()
   {
-    return this.getButtonTemplates()
+    return this.findButtonTypes()
       .then((buttonTemplates) => {
         return buttonTemplates
           .filter((buttonTemplate) => {

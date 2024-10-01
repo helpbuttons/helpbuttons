@@ -37,9 +37,9 @@ import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ShareButton} from 'components/share';
-import { DesktopNotificationsButton } from 'pages/_app';
 import { CardSubmenu, CardSubmenuOption } from 'components/card/CardSubmenu';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { DesktopNotificationsButton } from 'components/notifications';
 
 export default function HomeInfo({ metadata }) {
   const selectedNetwork = useStore(
