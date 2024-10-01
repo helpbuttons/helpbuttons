@@ -109,7 +109,7 @@ export class ActivityService {
   }
   @OnEvent(ActivityEventName.NewButton)
   async onNewButton(payload: any) {
-    const button_ = payload.data.button;
+    const button_ = getButtonActivity(payload.data);
     // check users following the button of this post, and add a new actitivy to the daily outbox
     return this.buttonService.findById(button_.id).then(async (button) => {
       // calculate users to be notified:
