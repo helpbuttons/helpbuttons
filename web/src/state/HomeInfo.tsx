@@ -8,6 +8,7 @@ export enum MainPopupPage {
   LOGIN = 'login',
   REQUEST_LINK = 'requestLink',
   SHARE = 'share',
+  FAQS = 'faqs'
 }
 export interface HomeInfoState {
   mainPopupPage: MainPopupPage;

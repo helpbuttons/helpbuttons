@@ -8,7 +8,8 @@ import { useRouter } from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { Network } from 'shared/entities/network.entity';
-import { getHostname, getLocale } from 'shared/sys.helper';
+import { getHostname } from 'shared/sys.helper';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useStore } from 'store/Store';
 
 export default function NewUserFields({
@@ -103,6 +104,17 @@ export default function NewUserFields({
         {...register('password', { required: true, minLength: 8 })}
       ></FieldPassword>
       }
+       {/* {short &&
+        <FieldPassword
+        name="password"
+        explain={t('user.passwordExplain')}
+        label={t('user.password')}
+        classNameInput="squared"
+        placeholder={t('user.passwordPlaceHolder')}
+        validationError={errors.password}
+        {...register('password', { minLength: 8 })}
+      ></FieldPassword>
+      } */}
       
       {selectedNetwork && (
           <FieldTags
@@ -128,7 +140,7 @@ export default function NewUserFields({
           minLength: 8,
         })}
       ></FieldPassword> */}
-      {t('user.acceptPrivacyPolicy')}<Link href="/Faqs">{t('user.privacyPolicyLink')}</Link>
+      {t('user.acceptPrivacyPolicy')}<Link onClick={() => store.emit(new SetMainPopup(MainPopupPage.FAQS))} href="#">{t('user.privacyPolicyLink')}</Link>
       <FieldCheckbox
         name="acceptPrivacyPolicy"
         // defaultValue={watch('acceptPrivacyPolicy')}

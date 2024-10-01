@@ -7,6 +7,7 @@ import Signup from "../../../pages/Signup";
 import LoginClick from "../../../pages/LoginClick";
 import t from "i18n";
 import { ShareForm } from "components/share";
+import { FaqSections } from "pages/Faqs";
 
 export default function MainPopup() {
     const closePopup = () =>
@@ -39,6 +40,14 @@ export default function MainPopup() {
             closeAction={closePopup}
           >
             <ShareForm/>
+          </Picker>
+        )}
+        {popupPage == MainPopupPage.FAQS && (
+          <Picker
+            headerText={t('faqs.title')}
+            closeAction={closePopup}
+          >
+            <FaqSections/>
           </Picker>
         )}
       </>
