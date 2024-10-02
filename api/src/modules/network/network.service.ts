@@ -118,7 +118,7 @@ export class NetworkService {
   @UseInterceptors(CacheInterceptor)
   @CacheKey('defaultNetwork')
   @CacheTTL(30) // override TTL to 30 seconds
-  findDefaultNetwork(): Promise<NetworkDto> {
+  findDefaultNetwork(includeHidden = false): Promise<NetworkDto> {
     return this.networkRepository
       .find({ order: { created_at: 'ASC' } })
       .then((networks) => {
@@ -139,6 +139,19 @@ export class NetworkService {
               defaultNetwork.nomeclature,
               defaultNetwork.nomeclaturePlural,
             );
+            const buttonTemplates = (jsonblob) => {
+              if(includeHidden)
+              {
+                return JSON.parse(jsonblob)
+              }
+              try {
+              return JSON.parse(jsonblob).filter((temp) => !temp?.hide)
+             } catch (error) {
+               console.error("Error parsing JSON:", error);
+             }
+             return JSON.parse(jsonblob)
+            }
+            
             return {
               ...defaultNetwork,
               buttonTypesCount: networkByButtonTypes,
@@ -148,13 +161,9 @@ export class NetworkService {
                   totalCount + parseInt(buttonType.count),
                 0,
               ),
-              buttonTemplates: defaultNetwork.buttonTemplates,
+              buttonTemplates: buttonTemplates(defaultNetwork.buttonTemplates),
             };
           });
-      })
-      .then((network) => {
-              //@ts-ignore
-              return {...network, buttonTemplates: JSON.parse(network.buttonTemplates)}
       })
       .then((network) => {
         return this.entityManager
@@ -189,23 +198,9 @@ export class NetworkService {
   async update(updateDto: UpdateNetworkDto) {
     const defaultNetwork = await this.findDefaultNetwork();
 
-    const buttonsToDelete =
-      await this.buttonsToDeleteFromButtonTemplates(
-        defaultNetwork.buttonTemplates,
-        updateDto.buttonTemplates,
-      );
-    if (buttonsToDelete.length > 0) {
-      const message = buttonsToDelete.map(
-        (btnType) =>
-          `can't delete '${btnType.type}', there are already ${btnType.count} buttons with this template`,
-      );
-      throw new ValidationException({ buttonTemplates: message });
-    }
-
     const network = {
       id: defaultNetwork.id,
       description: updateDto.description,
-      // url: createDto.url,
       tags: this.tagService.formatTags(updateDto.tags),
       privacy: updateDto.privacy,
       logo: null,
@@ -260,7 +255,6 @@ export class NetworkService {
             throw new ValidationException({ jumbo: err.message });
           }
         }
-
         await this.networkRepository.update(
           defaultNetwork.id,
           removeUndefined(network),

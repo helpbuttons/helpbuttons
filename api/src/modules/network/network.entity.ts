@@ -12,6 +12,7 @@ export class ButtonTemplate {
   caption: string;
   cssColor: string;
   customFields: ButtonTemplateCustomFields[];
+  hide: boolean;
 }
 
 class ButtonTemplateCustomFields {
@@ -70,7 +71,7 @@ export class Network extends BaseEntity {
   @Column({default: 'helpButtons'})
   nomeclaturePlural: string;
 
-  @Column({type: 'jsonb'})
+  @Column({type: 'jsonb', array: false})
   buttonTemplates: ButtonTemplate[];
 
   @Column({default: false})

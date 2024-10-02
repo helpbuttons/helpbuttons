@@ -118,6 +118,9 @@ export class User extends BaseEntity {
   @Expose()
   @Column({default: false})
   publishPhone?: boolean;
+
+  @Column('text', {nullable: true})
+  qrcode?: string;
 }
 
 export interface UserRelations {

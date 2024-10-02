@@ -315,6 +315,14 @@ export class ButtonService {
           },
         })
         .then((buttons) => {
+          return this.networkService.findButtonTypes().then((buttonTypes) => {
+            return buttons.filter((button) => {
+              const buttonType = buttonTypes.find((type) => type.name == button.type)
+              return !buttonType?.hide
+            })
+          })
+        })
+        .then((buttons) => {
           return Promise.all(
             buttons.map(async (button) => {
               return this.checkAndSetExpired(button);

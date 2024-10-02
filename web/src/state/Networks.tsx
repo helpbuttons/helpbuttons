@@ -102,6 +102,39 @@ export class UpdateNetworkTextColor implements UpdateEvent {
   }
 }
 
+export class FetchNetworkConfiguration implements WatchEvent {
+  public constructor(private onSuccess, private onError) {}
+
+  public watch(state: GlobalState) {
+    return NetworkService.configuration().pipe(
+      // With no Id, find the default network
+
+      map((network) => {
+        // store.emit(new SelectedNetworkFetched(network));
+        if (network && this.onSuccess) {
+          this.onSuccess(network);
+        }
+      }),
+      catchError((error) => {
+        if (!error.response) {
+          this.onError('backend is not running')
+          return of(undefined)
+        }
+
+        const err = error.response;
+        if (
+          isHttpError(err) &&
+          err.statusCode === HttpStatus.NOT_FOUND
+        ) {
+          // do nothing, its ok! it will jump to the setup!
+          this.onError('network-not-found');
+        }
+        return of(undefined);
+      }),
+    );
+  }
+}
+
 
 export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
   public constructor(private onSuccess, private onError) {}

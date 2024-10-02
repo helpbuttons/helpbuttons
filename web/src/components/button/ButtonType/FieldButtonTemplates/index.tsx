@@ -4,7 +4,7 @@ import { ContentAlignment } from 'elements/ImageWrapper';
 import t from 'i18n';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
-import { IoAdd, IoPencilOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
+import { IoAdd, IoPencilOutline, IoPowerOutline, IoSaveOutline, IoTrashBinOutline } from 'react-icons/io5';
 import { useState, forwardRef, useEffect, useRef } from 'react';
 import { FieldColorPick } from 'elements/Fields/FieldColorPick';
 import { tagify } from 'shared/sys.helper';
@@ -46,6 +46,7 @@ const FieldButtonTemplates = forwardRef(
     const [editFieldCaption, setEditFieldCaption] = useState(null)
     const [editFieldCssColor, setEditFieldCssColor] = useState(null)
     const [editFieldEmoji, setEditFieldEmoji] = useState('😀')
+    const [hideField, setHideField] = useState(false)
 
     let closeMenu = () => {
       setEditFieldIdx(false);
@@ -54,10 +55,14 @@ const FieldButtonTemplates = forwardRef(
    
     const watchValue = watch(name);
 
+    useEffect(() => {
+      console.log(watchValue)
+    }, [watchValue])
     const edit = (value, idx) => {
       setEditFieldIdx(() => idx)
       setEditFieldCssColor(() => value.cssColor)
       setEditFieldCaption(() => value.caption)
+      setHideField(() => value.hide)
       if(value.icon)
       {
         setEditFieldEmoji(() => value.icon)
@@ -71,11 +76,21 @@ const FieldButtonTemplates = forwardRef(
         ...value, 
         icon: editFieldEmoji,
         cssColor: editFieldCssColor, 
-        caption: editFieldCaption
+        caption: editFieldCaption,
+        hide: hideField
       })
       setEditFieldIdx(() => null)
       setEditFieldCssColor(() => null)
       setEditFieldCaption(() => null)
+      setHideField(() => false)
+    }
+
+    const hideIdx = (id, values) => {
+      update(id, {...values, hide: true})
+    }
+
+    const showIdx = (id, values) => {
+      update(id, {...values, hide: false})
     }
 
     return (
@@ -133,6 +148,7 @@ const FieldButtonTemplates = forwardRef(
                 }
                 {editFieldIdx != idx && 
                   <>
+                  <HiddenTemplate value={val.hide}>
                     <Btn
                       btnType={BtnType.filterEmoji}
                       iconLeft={IconType.svg}
@@ -148,13 +164,29 @@ const FieldButtonTemplates = forwardRef(
                       contentAlignment={ContentAlignment.center}
                       onClick={() => edit(val, idx)}
                     />
-                    <Btn
-                      btnType={BtnType.iconActions}
-                      iconLink={<IoTrashBinOutline />}
-                      iconLeft={IconType.circle}
-                      contentAlignment={ContentAlignment.center}
-                      onClick={() => remove(idx)}
-                    />
+                    {!val.hide && 
+                      <Btn
+                        btnType={BtnType.iconActions}
+                        iconLink={<IoTrashBinOutline />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                        onClick={() => {
+                          hideIdx(idx, val)
+                      }}
+                      />
+                    }
+                    {val.hide && 
+                      <Btn
+                        btnType={BtnType.iconActions}
+                        iconLink={<IoPowerOutline />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                        onClick={() => {
+                          showIdx(idx, val)
+                      }}
+                      />
+                    }
+                    </HiddenTemplate>
                   </>
                 } 
                 
@@ -169,6 +201,13 @@ const FieldButtonTemplates = forwardRef(
 
 export default FieldButtonTemplates;
 
+function HiddenTemplate({value, children}){
+  if(value)
+  {
+    return <div style={{backgroundColor: 'lightred'}}>{children}</div>
+  }
+  return <>{children}</>
+}
 
 function ButtonTemplateForm({ label, explain, append }) {
   const { register, setValue, watch, getValues, reset } = useForm({

@@ -27,4 +27,8 @@ export class NetworkService {
   public static activity(locale): Observable<any>{
     return httpService.get("activity/network?lang="+locale)
   }
+
+  public static configuration() : Observable<any>{
+    return httpService.get<Network>("networks/configuration")
+  }
 }
