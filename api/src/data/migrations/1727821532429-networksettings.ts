@@ -6,7 +6,7 @@ export class Networksettings1727821532429 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`ALTER TABLE network ALTER "exploreSettings" TYPE JSONB USING "exploreSettings"::JSONB`);
         
-        await queryRunner.query(`ALTER TABLE network ADD COLUMN temp character varying(1024)`);
+        await queryRunner.query(`ALTER TABLE network ADD COLUMN temp character varying`);
         await queryRunner.query(`UPDATE network set temp = "buttonTemplates"`);
         await queryRunner.query(`ALTER TABLE network ALTER temp TYPE JSONB USING temp::JSONB`);
 
