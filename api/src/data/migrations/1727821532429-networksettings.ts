@@ -11,7 +11,7 @@ export class Networksettings1727821532429 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE network ALTER temp TYPE JSONB USING temp::JSONB`);
 
         await queryRunner.query(`ALTER TABLE network DROP COLUMN "buttonTemplates"`);
-        await queryRunner.query(`ALTER TABLE network ADD COLUMN "buttonTemplates" character JSONB`);
+        await queryRunner.query(`ALTER TABLE network ADD COLUMN "buttonTemplates" JSONB`);
         await queryRunner.query(`UPDATE network set "buttonTemplates" = temp`);
         await queryRunner.query(`UPDATE network DROP COLUMN temp`);
     }
