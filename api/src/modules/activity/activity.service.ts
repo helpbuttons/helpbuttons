@@ -109,7 +109,7 @@ export class ActivityService {
   }
   @OnEvent(ActivityEventName.NewButton)
   async onNewButton(payload: any) {
-    const button_ = payload.data.button;
+    const button_ = getButtonActivity(payload.data);
     // check users following the button of this post, and add a new actitivy to the daily outbox
     return this.buttonService.findById(button_.id).then(async (button) => {
       // calculate users to be notified:
@@ -234,7 +234,24 @@ export class ActivityService {
       }).then((activities) => {
         return activities.map((activity): ActivityDtoOut => 
         {
+          try{
           return transformToMessage(activity, userId, buttonTypes, locale)
+          }catch(error)
+          {
+            console.log(error);
+          }
+          return  {
+            id: activity.id,
+            eventName: activity.eventName,
+            read: activity.read,
+            createdAt: activity.created_at.toString(),
+            title: "ops.",
+            message: "ops.",
+            image: 'image',
+            referenceId: 'ddd',
+            isPrivate: false,
+            isOwner: false
+          };;
         })
       })
     })

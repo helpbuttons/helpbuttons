@@ -6,6 +6,18 @@ export enum PrivacyType {
   PUBLIC = 'public',
   PRIVATE = 'private',
 }
+export class ButtonTemplate {
+  name: string;
+  color: string;
+  caption: string;
+  cssColor: string;
+  customFields: ButtonTemplateCustomFields[];
+  hide: boolean;
+}
+
+class ButtonTemplateCustomFields {
+  type: string;
+}
 @Entity()
 export class Network extends BaseEntity {
   @Column({})
@@ -44,7 +56,7 @@ export class Network extends BaseEntity {
   @OneToMany(() => Button, (button) => button.network)
   buttons: Button[];
 
-  @Column()
+  @Column({type: 'jsonb'})
   exploreSettings: string;
 
   @Column({default: '#0E0E0E'})
@@ -59,8 +71,8 @@ export class Network extends BaseEntity {
   @Column({default: 'helpButtons'})
   nomeclaturePlural: string;
 
-  @Column()
-  buttonTemplates: string;
+  @Column({type: 'jsonb', array: false})
+  buttonTemplates: ButtonTemplate[];
 
   @Column({default: false})
   inviteOnly: boolean;

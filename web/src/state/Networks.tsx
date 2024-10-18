@@ -33,27 +33,10 @@ export const networksInitial = {
     topTags: [],
     backgroundColor: 'grey',
     textColor: 'pink',
-    init: true
   },
-  selectedNetworkLoading: false,
+  selectedNetworkLoading: true,
 };
 
-export const useConfig = (_config, onError) => {
-  const fetchingConfig = useRef(false)
-  useEffect(() => {
-    if(!_config && !fetchingConfig.current)
-    {
-      fetchingConfig.current = true
-      store.emit(new GetConfig(() => console.log('got config!'), onError))
-    }else{
-      store.emit(new ConfigFound(_config))
-    }
-  }, [_config])
-  return useStore(
-    store,
-    (state: GlobalState) => state.config,
-  );;
-}
 export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) => console.log(error)) : Network => {
   const fetchingNetwork = useRef(false)
   useEffect(() => {
@@ -65,9 +48,7 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) =>
       store.emit(new SelectedNetworkFetched(_selectedNetwork))
     }
   }, [_selectedNetwork])
-  useEffect(() => {
-    fetchingNetwork.current = false;
-  }, [])
+
   return useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -99,6 +80,39 @@ export class UpdateNetworkTextColor implements UpdateEvent {
     return produce(state, (newState) => {
       newState.networks.selectedNetwork.textColor = this.color;
     });
+  }
+}
+
+export class FetchNetworkConfiguration implements WatchEvent {
+  public constructor(private onSuccess, private onError) {}
+
+  public watch(state: GlobalState) {
+    return NetworkService.configuration().pipe(
+      // With no Id, find the default network
+
+      map((network) => {
+        // store.emit(new SelectedNetworkFetched(network));
+        if (network && this.onSuccess) {
+          this.onSuccess(network);
+        }
+      }),
+      catchError((error) => {
+        if (!error.response) {
+          this.onError('backend is not running')
+          return of(undefined)
+        }
+
+        const err = error.response;
+        if (
+          isHttpError(err) &&
+          err.statusCode === HttpStatus.NOT_FOUND
+        ) {
+          // do nothing, its ok! it will jump to the setup!
+          this.onError('network-not-found');
+        }
+        return of(undefined);
+      }),
+    );
   }
 }
 

@@ -9,21 +9,10 @@ import { IoDownload } from 'react-icons/io5';
 
 export function InstallButton() {
   const [prompt, promptToInstall] = useAddToHomescreenPrompt();
-  const [isVisible, setVisibleState] = useState(true);
-
-  useEffect(() => {
-    if (prompt) {
-      setVisibleState(true);
-    }
-  }, [prompt]);
-
-  if (!isVisible) {
-    return <div />;
-  }
 
   return (
     <>
-      {isVisible && (
+      {prompt && (
         <div>
           <Btn
               btnType={BtnType.filterCorp}
