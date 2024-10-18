@@ -139,17 +139,8 @@ export class NetworkService {
               defaultNetwork.nomeclature,
               defaultNetwork.nomeclaturePlural,
             );
-            const buttonTemplates = (jsonblob) => {
-              if(includeHidden)
-              {
-                return JSON.parse(jsonblob)
-              }
-              try {
-              return JSON.parse(jsonblob).filter((temp) => !temp?.hide)
-             } catch (error) {
-               console.error("Error parsing JSON:", error);
-             }
-             return JSON.parse(jsonblob)
+            const buttonTemplates = (templates) => {
+              return templates.filter((temp) => !temp?.hide)
             }
             
             return {
