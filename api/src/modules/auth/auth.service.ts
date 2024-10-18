@@ -74,10 +74,15 @@ export class AuthService {
       qrcode: signupUserDto.qrcode
     };
     
-      return this.createUser(newUserDto, signupUserDto)
-    })
-    
-    
+      return this.createUser(newUserDto, signupUserDto).then(
+          (user) => {
+            if (!newUserDto.emailVerified) {
+              this.sendLoginToken(newUserDto, true);
+            }
+            return user;
+          },
+        );
+      });
   }
   async signup(signupUserDto: SignupRequestDto) {
     const verificationToken = publicNanoidGenerator();
@@ -153,24 +158,22 @@ export class AuthService {
         throw new CustomHttpException(ErrorName.InvalidMimetype);
       }
     }
-    return this.createUser(newUserDto, signupUserDto)
+    return this.createUser(newUserDto, signupUserDto).
+    then((user) => {
+      if (!newUserDto.emailVerified && userCount > 1) {
+        this.sendLoginToken(newUserDto, true);
+      }
+      return user;
+    });
   }
 
   private createUser (newUserDto, signupUserDto) {
-    console.log(newUserDto)
-    return this.userService
-      .createUser(newUserDto)
+    return this.userService.createUser(newUserDto)
       .then((user) => {
         return this.createUserCredential(
           newUserDto.id,
           signupUserDto.password,
         );
-      })
-      .then((user) => {
-        if (!newUserDto.emailVerified) {
-          this.sendLoginToken(newUserDto, true);
-        }
-        return user;
       })
       .then((userCredentials) => {
         return this.getAccessToken(newUserDto);

@@ -125,7 +125,7 @@ export class NetworkService {
         if (networks.length < 1) {
           console.log('no networks found?')
           throw new HttpException(
-            'Default network not found',
+            {message: '🙆🏼‍♂️Default network not found'},
             HttpStatus.NOT_FOUND,
           );
         }
@@ -182,13 +182,6 @@ export class NetworkService {
             return { ...network, administrators };
           });
       })
-      .catch((error) => {
-        if (typeof error === typeof HttpException) {
-          throw error;
-        }
-        console.log('errror ' , error)
-        throw new HttpException('🙆🏼‍♂️', HttpStatus.NOT_FOUND);
-      });
   }
 
   async findOne(id: string): Promise<any> {
