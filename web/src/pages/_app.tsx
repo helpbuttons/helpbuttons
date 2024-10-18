@@ -7,10 +7,10 @@ import Alert from 'components/overlay/Alert';
 import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
-import { useConfig, useSelectedNetwork } from 'state/Networks';
+import { useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Users';
 
-import { useStore } from 'store/Store';
+import { useGlobalStore, useStore } from 'store/Store';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
 
@@ -26,40 +26,30 @@ import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import SEO from 'components/seo';
-import { LoadabledComponent } from 'components/loading';
+import Loading, { LoadabledComponent } from 'components/loading';
 import MainPopup from 'components/popup/Main/';
 import { DesktopNotifications } from 'components/notifications';
+import { useConfig } from 'state/Setup';
 
 export default appWithTranslation(MyApp);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const [user, setUser] = useState(null);
   const [authorized, setAuthorized] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
-  const [isLoadingNetwork, setIsLoadingNetwork] = useState(false);
-
+  const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
 
+  const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
+  state.networks.selectedNetworkLoading)
   const loggedInUser = useStore(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
   const onFetchingNetworkError = (error) => {
     if (error === 'network-not-found') {
-      console.error(error);
-
-      if (
-        loggedInUser &&
-        config &&
-        config.userCount > 0 &&
-        path != SetupSteps.FIRST_OPEN &&
-        path != SetupSteps.NETWORK_CREATION
-      ) {
-        console.log('pushing to first open');
-        router.push(SetupSteps.FIRST_OPEN);
-      }
+      setFetchingNetworkError(true)     
     }
   };
 
@@ -68,8 +58,7 @@ function MyApp({ Component, pageProps }) {
     console.log('fetching config error...');
     if (error == 'not-found' || error == 'nosysadminconfig') {
       console.error(error);
-      console.log('pushing sysadmin config');
-      router.push(SetupSteps.SYSADMIN_CONFIG);
+      console.log('config not found? contact your sysadmin');
     }
 
     if (error == 'nobackend') {
@@ -82,17 +71,29 @@ function MyApp({ Component, pageProps }) {
     return;
   };
 
+  const config = useConfig(pageProps._config, onFetchingConfigError);
   const selectedNetwork = useSelectedNetwork(
     pageProps._selectedNetwork,
     onFetchingNetworkError,
   );
-  const config = useConfig(pageProps._config, onFetchingConfigError);
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
     SetupSteps.FIRST_OPEN,
     SetupSteps.NETWORK_CREATION,
-    SetupSteps.SYSADMIN_CONFIG,
   ];
+  useEffect(() => {
+    if (
+      fetchingNetworkError &&
+      loggedInUser &&
+      config &&
+      config.userCount > 0 &&
+      path != SetupSteps.FIRST_OPEN &&
+      path != SetupSteps.NETWORK_CREATION
+    ) {
+      router.push(SetupSteps.FIRST_OPEN);
+    }
+  }, [fetchingNetworkError, loggedInUser])
+
   useEffect(() => {
     if (setupPaths.includes(path)) {
       setIsSetup(() => true);
@@ -102,7 +103,7 @@ function MyApp({ Component, pageProps }) {
 
     if (
       config &&
-      (config.databaseNumberMigrations < 1 || config.userCount < 1) &&
+      config.userCount < 1 &&
       SetupSteps.CREATE_ADMIN_FORM != path &&
       !loggedInUser
     ) {
@@ -114,10 +115,7 @@ function MyApp({ Component, pageProps }) {
     ) {
       router.push(SetupSteps.FIRST_OPEN);
     }
-    if (
-      SetupSteps.SYSADMIN_CONFIG.toString() == path ||
-      SetupSteps.CREATE_ADMIN_FORM.toString() == path
-    ) {
+    if (SetupSteps.CREATE_ADMIN_FORM.toString() == path) {
       return;
     }
 
@@ -161,10 +159,7 @@ function MyApp({ Component, pageProps }) {
         } else {
           setAuthorized(isRoleAllowed(Role.guest, path));
         }
-      } else if (
-        path != SetupSteps.CREATE_ADMIN_FORM &&
-        path != SetupSteps.SYSADMIN_CONFIG
-      ) {
+      } else if (path != SetupSteps.CREATE_ADMIN_FORM) {
         setAuthorized(isRoleAllowed(Role.guest, path));
       }
     }
@@ -242,70 +237,70 @@ function MyApp({ Component, pageProps }) {
 
   if (isSetup) {
     return <Component {...pageProps} />;
-  }
-  if (pageName == 'Embbed') {
+  } else if (pageName == 'Embbed') {
     return (
       <LoadabledComponent loading={!selectedNetwork || loading}>
         <Component {...pageProps} />
       </LoadabledComponent>
     );
-  }
-  return (
-    <>
-      <Head>
-        <title>Helpbuttons.org</title>
-        {/* <meta name="commit" content={version.git} /> */}
-        {/* eslint-disable-next-line @next/next/no-css-tags */}
-      </Head>
-      {pageProps.metadata ? (
-        <SEO {...pageProps.metadata} />
-      ) : (
+  } else if (!selectedNetworkLoading) {
+    return (
+      <>
         <Head>
-          <title>{selectedNetwork?.name}</title>
+          <title>Helpbuttons.org</title>
+          <meta name="commit" content={'todo'} />
         </Head>
-      )}
-      <ClienteSideRendering>
-        <DesktopNotifications />
-      </ClienteSideRendering>
-      <div
-        className={`${user ? '' : 'index__container'}`}
-        style={
-          selectedNetwork
-            ? ({
-                '--network-background-color':
-                  selectedNetwork.backgroundColor,
-                '--network-text-color': selectedNetwork.textColor,
-              } as React.CSSProperties)
-            : ({
-                '--network-background-color': 'grey',
-                '--network-text-color': 'pink',
-              } as React.CSSProperties)
-        }
-      >
-        <Alert />
-        <div className="index__content">
-          <ShowDesktopOnly>
-            <NavHeader
-              pageName={pageName}
-              selectedNetwork={selectedNetwork}
-            />
-          </ShowDesktopOnly>
-          <LoadabledComponent loading={!selectedNetwork || loading}>
-            <Component {...pageProps} />
-          </LoadabledComponent>
-          <ShowMobileOnly>
-            <ClienteSideRendering>
-              <NavBottom
+        {pageProps.metadata ? (
+          <SEO {...pageProps.metadata} />
+        ) : (
+          <Head>
+            <title>{selectedNetwork?.name}</title>
+          </Head>
+        )}
+        <ClienteSideRendering>
+          <DesktopNotifications />
+        </ClienteSideRendering>
+        <div
+          className="index__container"
+          style={
+            selectedNetwork
+              ? ({
+                  '--network-background-color':
+                    selectedNetwork.backgroundColor,
+                  '--network-text-color': selectedNetwork.textColor,
+                } as React.CSSProperties)
+              : ({
+                  '--network-background-color': 'grey',
+                  '--network-text-color': 'pink',
+                } as React.CSSProperties)
+          }
+        >
+          <Alert />
+
+          <div className="index__content">
+            <ShowDesktopOnly>
+              <NavHeader
                 pageName={pageName}
-                loggedInUser={loggedInUser}
+                selectedNetwork={selectedNetwork}
               />
-            </ClienteSideRendering>
-          </ShowMobileOnly>
-          <MainPopup />
+            </ShowDesktopOnly>
+            <Component {...pageProps} />
+            <ShowMobileOnly>
+              <ClienteSideRendering>
+                <NavBottom
+                  pageName={pageName}
+                  loggedInUser={loggedInUser}
+                />
+              </ClienteSideRendering>
+            </ShowMobileOnly>
+            <MainPopup />
+          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
+
+  return <Loading />;
 }
 
 export const ClienteSideRendering = ({ children }) => {
@@ -313,4 +308,3 @@ export const ClienteSideRendering = ({ children }) => {
   useEffect(() => setIsClient(true), []);
   return <>{isClient && children}</>;
 };
-

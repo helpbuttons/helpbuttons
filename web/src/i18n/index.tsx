@@ -39,8 +39,15 @@ export default function t(key: string, args: string[] = [], avoidHtmlParserUse =
 }
 
 export function updateNomeclature(singular, plural) {
-  nomeclature = singular;
-  nomeclaturePlural= plural;
+  if(singular)
+  {
+    nomeclature = singular
+  }
+  if(plural)
+  {
+    nomeclaturePlural = plural;
+  }
+  
 }
 function format(string, args) {
     return string.replace(/{(\d+)}/g, function(match, number) {

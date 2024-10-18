@@ -11,7 +11,7 @@ import FieldText from 'elements/Fields/FieldText';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 
-import t from 'i18n';
+import t, { updateNomeclature } from 'i18n';
 import { useRouter } from 'next/router';
 import { findError, getUrlOrigin } from 'shared/sys.helper';
 // name, description, logo, background image, button template, color pallete, colors
@@ -45,7 +45,15 @@ function NetworkForm({
   const router = useRouter();
 
   const buttonTemplates = watch('buttonTemplates');
-
+  const nomeclature = watch('nomeclature')
+  const nomeclaturePlural = watch('nomeclaturePlural')
+  useEffect(() => {
+    if(nomeclature && nomeclaturePlural)
+    {
+      updateNomeclature(nomeclature, nomeclaturePlural)
+    }
+  }, [nomeclature, nomeclaturePlural])
+  
   const [showCurrencyDropDown, setShowCurrencyDropDown] = useState(false)
   useEffect(() => {
     if(buttonTemplates)

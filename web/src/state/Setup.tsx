@@ -12,7 +12,26 @@ import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { FetchUserData } from './Users';
 import { alertService } from 'services/Alert';
+import { useEffect, useRef } from 'react';
+import { useStore } from 'store/Store';
 
+
+export const useConfig = (_config, onError) => {
+  const fetchingConfig = useRef(false)
+  useEffect(() => {
+    if(!_config && !fetchingConfig.current)
+    {
+      fetchingConfig.current = true
+      store.emit(new GetConfig(() => console.log('got config!'), onError))
+    }else{
+      store.emit(new ConfigFound(_config))
+    }
+  }, [_config])
+  return useStore(
+    store,
+    (state: GlobalState) => state.config,
+  );;
+}
 export class GetConfig implements WatchEvent {
   public constructor(private onSuccess, private onError) {}
 
