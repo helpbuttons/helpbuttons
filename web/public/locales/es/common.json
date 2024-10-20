@@ -14,6 +14,7 @@
     "selectedArea": "en el area seleccionada",
     "start": "¿Dónde quieres empezar?",
     "info": "¿De qué se trata?",
+    "seeMore": "Ver más",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
     "goToExplore": "Explorar _helpbuttons_",
@@ -47,11 +48,17 @@
   },
   "share":{
 
-    "showSharePopup": "Comparte esta app",
+    "showSharePopup": "Comparte esta aplicación",
+    "header": "Compartir esta aplicación",
+
     "shareField": "Elige tu opción para compartir",
     "shareTypeLabel": "Tipo",
     "shareTypeExplain": "Elige la manera en la que quieres compartir los resultados de tu red",
-    "shareExplain": "Elige el número de resultados que quieras mostrar y copia el código en tu web."
+    "shareExplain": "Elige el número de resultados que quieras mostrar y copia el código en tu web.",
+    "explainInvitations": "Generate individual invitation cards for your community",
+    "optionIframe": "Iframe para insertar en otras webs",
+    "optionBulletin": "Imprimir lista de _helpbuttons_",
+    "optionInvitations": "Invitaciones personales para imprimir"
 
   },
   "feed": {

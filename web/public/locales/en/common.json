@@ -14,6 +14,7 @@
     "start": "Where do you start?",
     "searchlocation": "Search location",
     "info": "What's this Network about?",
+    "seeMore": "See more",
     "loading": "...",
     "goToExplore": "Explore the _helpbuttons_",
     "goToCreate": "Publish",
@@ -54,7 +55,7 @@
     "shareTypeExplain": "Choose the type of share you want to do",
     "shareExplain": "Select the amount of results you want to show and copy the code to your site",
     "explainInvitations": "Generate individual invitation cards for your community",
-    "optionIframe": "List",
+    "optionIframe": "List Iframe to insert in other sites",
     "optionBulletin": "Printable bulletin",
     "optionInvitations": "Printable invitations"
   },
