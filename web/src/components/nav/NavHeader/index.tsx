@@ -11,7 +11,7 @@ import router from 'next/router';
 import { ListButtonTypes } from '../ButtonTypes';
 import { ToggleAdvancedFilters } from 'state/Explore';
 
-function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
+function NavHeader({ selectedNetwork, pageName = '' }) {
 
   const exploreMapState = useStore(
     store,
@@ -24,7 +24,7 @@ function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
   );
 
   const toggleAdvancedFilters = () => {
-    if(['Explose','Bulletin'].indexOf(pageName) > 0)
+    if(['Explore','Bulletin'].indexOf(pageName) >= 0)
     {
       store.emit(new ToggleAdvancedFilters())
     }else{

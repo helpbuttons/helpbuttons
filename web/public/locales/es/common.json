@@ -42,7 +42,8 @@
     "needLogo": "Antes de seleccionar un lugar, por favor añade tu logo",
     "needPlace": "Por favor, selecciona en qué zona se situa tu Red",
     "latestActivity": "Últimas actividads",
-    "installButton": "Instalar"
+    "installButton": "Instalar",
+    "share": "Compartir esta app"
   },
   "share":{
 
@@ -404,13 +405,14 @@
   },
   "setup": {
     "finish": "Finalizar configuración",
-    "welcomeMessage": "BIENVENIDO/A A TU INSTANCIA DE HELPBUTTONS",
-    "welcomeMessageLong": "<p>Aquí verás tu descripción.</p><p>Crea tu primera herramienta colaborativa con las opciones de abajo.</p>",
+    "welcomeMessage": "Bienvenido/a a tu instancia de Helpbuttons",
+    "welcomeMessageLong": "En el siguiente paso podrás configurar tu red. Crea tu primera herramienta colaborativa con las opciones que verás en la siguiente sección. Si tienes problemas, contacta con help@helpbuttons.org. Gracias por apoyar la colaboración libre.</p>",
     "hostname": "Nombre del host",
     "postgresPassword": "Contraseña de Postgresql",
     "postgresHostName": "Servidor de Postgresql",
     "smtpUrl": "URL de Smtp",
     "test": "prueba",
+    
     "createAdminTitle": "Crear cuenta de administrador",
     "postgresPort": "Puerto de Postgresql",
     "postgresDb": "Nombre de la base de datos de Postgresql",
