@@ -67,12 +67,15 @@ export default function HomeInfo({ metadata }) {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    store.emit(
-      new FindLatestNetworkActivity((latestActivities) => {
-        setActivities(() => latestActivities);
-      }),
-    );
-  }, []);
+    if(selectedNetwork)
+    {
+      store.emit(
+        new FindLatestNetworkActivity((latestActivities) => {
+          setActivities(() => latestActivities);
+        }),
+      );
+    }
+  }, [selectedNetwork]);
   return (
     <>
       {selectedNetwork && (
