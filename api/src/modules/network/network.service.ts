@@ -193,7 +193,7 @@ export class NetworkService {
       exploreSettings: updateDto.exploreSettings,
       backgroundColor: updateDto.backgroundColor,
       textColor: updateDto.textColor,
-      buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
+      buttonTemplates: updateDto.buttonTemplates,
       inviteOnly: updateDto.inviteOnly,
       locale: updateDto.locale,
       currency: updateDto.currency,

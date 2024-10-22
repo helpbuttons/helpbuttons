@@ -24,10 +24,8 @@ function NavHeader({ selectedNetwork, pageName = '' }) {
   );
 
   const toggleAdvancedFilters = () => {
-    if(['Explore','Bulletin'].indexOf(pageName) >= 0)
-    {
-      store.emit(new ToggleAdvancedFilters())
-    }else{
+    store.emit(new ToggleAdvancedFilters())
+    if(!(['Explore'].indexOf(pageName) > 0)){
       router.push('/Explore?showFilters=true')
     }
   }
