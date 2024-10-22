@@ -48,7 +48,6 @@ export function HeaderSearch({ results, toggleAdvancedFilters }) {
             where={exploreMapState.filters.where}
             filtering={filtering}
           />
-
           <SearchInfo
             query={exploreMapState.filters.query}
             tags={exploreMapState.filters.tags}
@@ -148,7 +147,6 @@ export function advancedSearchText(
     if (what == '') {
       return '';
     }
-
     return what + ' · ';
   };
   const whichTags = (tags) => {
@@ -161,11 +159,12 @@ export function advancedSearchText(
 
     const buttonTypesCaptions = helpButtonTypes
       .filter((type) =>
-        buttonTypes.find((buttonType) => type.name == buttonType),
+        buttonTypes.find((buttonType) => type == buttonType),
       )
-      .map((type) => type.caption);
+      .map((type) => type);
 
-    return buttonTypesCaptions.toString();
+    return buttonTypesCaptions.join(', ');
+
   };
   return (
     <>

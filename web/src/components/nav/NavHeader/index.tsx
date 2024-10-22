@@ -11,7 +11,7 @@ import router from 'next/router';
 import { ListButtonTypes } from '../ButtonTypes';
 import { ToggleAdvancedFilters } from 'state/Explore';
 
-function NavHeader({ selectedNetwork, pageName = 'Explore' }) {
+function NavHeader({ selectedNetwork, pageName = '' }) {
 
   const exploreMapState = useStore(
     store,

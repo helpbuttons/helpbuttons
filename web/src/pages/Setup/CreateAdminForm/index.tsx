@@ -149,6 +149,7 @@ function CreateAdminForm() {
                 errors={errors}
                 setValue={setValue}
                 watch={watch}
+                isInitAdminForm={true}
               />
             </div>
           </div>
