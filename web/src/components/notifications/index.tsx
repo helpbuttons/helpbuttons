@@ -12,6 +12,11 @@ import {
 } from 'state/Activity';
 import { useGlobalStore, useStore } from 'store/Store';
 
+const isSupported = () =>
+      'Notification' in window &&
+      'serviceWorker' in navigator &&
+      'PushManager' in window;
+
 export function DesktopNotificationsButton() {
   const hasNotificationPermissions = useGlobalStore(
     (state: GlobalState) =>
@@ -19,16 +24,12 @@ export function DesktopNotificationsButton() {
   );
 
   useEffect(() => {
-    if (Notification && Notification.permission === 'granted') {
+    if (isSupported() && Notification.permission === 'granted') {
       // Check if the browser supports notifications
       store.emit(new PermissionGranted());
     }
   }, []);
   const requestPermission = () => {
-    const isSupported = () =>
-      'Notification' in window &&
-      'serviceWorker' in navigator &&
-      'PushManager' in window;
 
     if (isSupported()) {
       Notification.requestPermission().then(function (getperm) {
