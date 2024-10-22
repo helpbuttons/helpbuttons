@@ -112,42 +112,40 @@ const FieldButtonTemplates = forwardRef(
                 style={buttonColorStyle(val.cssColor)}
               >
                 {editFieldIdx == idx &&
-                <Picker closeAction={() => setEditFieldIdx(() => null)} headerText={t('configuration.setType')}>
-                  <div className="form__button-type-section">
-                    <FieldText
-                      name="buttonTemplate.name"
-                      label={t('configuration.buttonTemplateName')}
-                      className="field-text"
-                      onChange={(e) => setEditFieldCaption(() => e.target.value)}
-                      defaultValue={editFieldCaption}
-                    />
-                    <EmojiPicker
-                     updateEmoji={(newEmoji) => setEditFieldEmoji(() => newEmoji)} 
-                     pickerEmoji={editFieldEmoji}
-                     label={t('configuration.buttonTemplateEmoji')}
-                     />
-
-                    <FieldColorPick
-                      name="buttonTemplateColor"
-                      classNameInput="squared"
-                      validationError={errors.buttonTemplateColor}
-                      setValue={(name, value) => setEditFieldCssColor(value)}
-                      label={t('configuration.buttonTemplateColor')}
-                      actionName={t('configuration.buttonTemplateColor')}
-                      value={editFieldCssColor}
-                    />
-                    <Btn
-                      btnType={BtnType.corporative}
-                      iconLink={<IoSaveOutline />}
-                      iconLeft={IconType.circle}
-                      contentAlignment={ContentAlignment.center}
-                      onClick={() => saveEdit(val)}
-                    />
-                  </div>
-                </Picker>
+                  <Picker closeAction={() => setEditFieldIdx(() => null)} headerText={t('configuration.setType')}>
+                    <div className="form__button-type-section">
+                      <FieldText
+                        name="buttonTemplate.name"
+                        label={t('configuration.buttonTemplateName')}
+                        className="field-text"
+                        onChange={(e) => setEditFieldCaption(() => e.target.value)}
+                        defaultValue={editFieldCaption}
+                      />
+                      <EmojiPicker
+                      updateEmoji={(newEmoji) => setEditFieldEmoji(() => newEmoji)} 
+                      pickerEmoji={editFieldEmoji}
+                      label={t('configuration.buttonTemplateEmoji')}
+                      />
+                      <FieldColorPick
+                        name="buttonTemplateColor"
+                        classNameInput="squared"
+                        validationError={errors.buttonTemplateColor}
+                        setValue={(name, value) => setEditFieldCssColor(value)}
+                        label={t('configuration.buttonTemplateColor')}
+                        actionName={t('configuration.buttonTemplateColor')}
+                        value={editFieldCssColor}
+                      />
+                      <Btn
+                        btnType={BtnType.corporative}
+                        iconLink={<IoSaveOutline />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                        onClick={() => saveEdit(val)}
+                      />
+                    </div>
+                  </Picker>
                 }
                 {editFieldIdx != idx && 
-                  <>
                   <HiddenTemplate value={val.hide}>
                     <Btn
                       btnType={BtnType.filterEmoji}
@@ -177,17 +175,16 @@ const FieldButtonTemplates = forwardRef(
                     }
                     {val.hide && 
                       <Btn
-                        btnType={BtnType.iconActions}
+                        btnType={BtnType.smallCircle}
                         iconLink={<IoPowerOutline />}
                         iconLeft={IconType.circle}
                         contentAlignment={ContentAlignment.center}
                         onClick={() => {
                           showIdx(idx, val)
-                      }}
+                        }}
                       />
                     }
-                    </HiddenTemplate>
-                  </>
+                  </HiddenTemplate>
                 } 
                 
               </div>
@@ -204,7 +201,7 @@ export default FieldButtonTemplates;
 function HiddenTemplate({value, children}){
   if(value)
   {
-    return <div style={{backgroundColor: 'lightred'}}>{children}</div>
+    return <>{children}</>
   }
   return <>{children}</>
 }
@@ -249,7 +246,7 @@ function ButtonTemplateForm({ label, explain, append }) {
   const openPopup = () => setShowPopup(() => true);
 
   return (
-      <PickerField label={''} explain={''} btnLabel={label} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
+      <PickerField btnType={BtnType.corporative} iconLeft={<IoAdd/>} label={''} explain={''} btnLabel={label} showPopup={showPopup} openPopup={openPopup} closePopup={closePopup}>
         {/* headerText={t('configuration.setType')} */}
         <>
         {/* <div className="form__input--button-type-field"></div> */}

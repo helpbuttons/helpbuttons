@@ -1,3 +1,5 @@
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import t from 'i18n';
 import { useEffect, useRef, useState } from 'react';
 import { userPattern } from 'shared/types/message.helper';
 
@@ -17,18 +19,23 @@ export function TextFormatted ({text}) {
       {isExpanded ? (
         <div>
           {formatMessage(text)}
-          {isLongText && <button onClick={toggleExpanded}>See Less</button>}
+          {isLongText && 
+          <Btn
+                      btnType={BtnType.corporative}
+                      caption={t('homeinfo.seeLess')}
+                      contentAlignment={ContentAlignment.center}
+                      onClick={() => toggleExpanded()}
+             />
+          }
         </div>
       ) : (
         <div>
           {formatMessage(text.slice(0, maxLength))}
           {isLongText && (
             <>
-              ... <button onClick={toggleExpanded}>See More</button>
               <Btn
                       btnType={BtnType.corporative}
-                      iconLink={<IoSaveOutline />}
-                      iconLeft={IconType.circle}
+                      caption={t('homeinfo.seeMore')}
                       contentAlignment={ContentAlignment.center}
                       onClick={() => toggleExpanded()}
              />
