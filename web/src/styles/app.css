@@ -4971,6 +4971,10 @@ hr {
   margin-left: 10px;
 }
 
+.header-search__info:first-letter {
+  text-transform: uppercase;
+}
+
 .header-search__icon {
   height: 20px;
   width: 20px;

@@ -14,6 +14,8 @@
     "selectedArea": "en el area seleccionada",
     "start": "¿Dónde quieres empezar?",
     "info": "¿De qué se trata?",
+    "seeMore": "Ver más",
+    "seeLess": "Ver menos",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
     "goToExplore": "Explorar _helpbuttons_",
@@ -42,15 +44,22 @@
     "needLogo": "Antes de seleccionar un lugar, por favor añade tu logo",
     "needPlace": "Por favor, selecciona en qué zona se situa tu Red",
     "latestActivity": "Últimas actividads",
-    "installButton": "Instalar"
+    "installButton": "Instalar",
+    "share": "Compartir esta app"
   },
   "share":{
 
-    "showSharePopup": "Comparte esta app",
+    "showSharePopup": "Comparte esta aplicación",
+    "header": "Compartir esta aplicación",
+
     "shareField": "Elige tu opción para compartir",
     "shareTypeLabel": "Tipo",
     "shareTypeExplain": "Elige la manera en la que quieres compartir los resultados de tu red",
-    "shareExplain": "Elige el número de resultados que quieras mostrar y copia el código en tu web."
+    "shareExplain": "Elige el número de resultados que quieras mostrar y copia el código en tu web.",
+    "explainInvitations": "Generate individual invitation cards for your community",
+    "optionIframe": "Iframe para insertar en otras webs",
+    "optionBulletin": "Imprimir lista de _helpbuttons_",
+    "optionInvitations": "Invitaciones personales para imprimir"
 
   },
   "feed": {
@@ -404,13 +413,14 @@
   },
   "setup": {
     "finish": "Finalizar configuración",
-    "welcomeMessage": "BIENVENIDO/A A TU INSTANCIA DE HELPBUTTONS",
-    "welcomeMessageLong": "<p>Aquí verás tu descripción.</p><p>Crea tu primera herramienta colaborativa con las opciones de abajo.</p>",
+    "welcomeMessage": "Bienvenido/a a tu instancia de Helpbuttons",
+    "welcomeMessageLong": "En el siguiente paso podrás configurar tu red. Crea tu primera herramienta colaborativa con las opciones que verás en la siguiente sección. Si tienes problemas, contacta con help@helpbuttons.org. Gracias por apoyar la colaboración libre.</p>",
     "hostname": "Nombre del host",
     "postgresPassword": "Contraseña de Postgresql",
     "postgresHostName": "Servidor de Postgresql",
     "smtpUrl": "URL de Smtp",
     "test": "prueba",
+    
     "createAdminTitle": "Crear cuenta de administrador",
     "postgresPort": "Puerto de Postgresql",
     "postgresDb": "Nombre de la base de datos de Postgresql",

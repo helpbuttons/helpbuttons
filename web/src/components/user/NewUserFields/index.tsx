@@ -19,6 +19,7 @@ export default function NewUserFields({
   setValue,
   watch,
   short = false,
+  isInitAdminForm=false,
 }) {
   const [hostname, setHostname] = useState('');
   const selectedNetwork: Network = useStore(
@@ -116,7 +117,7 @@ export default function NewUserFields({
       ></FieldPassword>
       } */}
       
-      {selectedNetwork && (
+      {selectedNetwork && !isInitAdminForm && (
           <FieldTags
             label={t('user.tags')}
             explain={t('user.tagsExplain')}

@@ -13,10 +13,12 @@ export default function PickerField({
   showPopup,
   headerText = '',
   openPopup,
+  iconLeft  = null,
   closePopup,
   button = <Btn
   btnType={btnType}
   caption={btnLabel}
+  iconLeft={iconLeft}
   contentAlignment={contentAligment}
   onClick={() => openPopup()}
 />
