@@ -67,4 +67,11 @@ import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
     }
     throw Error('resolution not allowed')
   }
+
+  @AllowGuest()
+  @Get('rss')
+  async rss()
+  {
+    return this.networkService.rss() 
+  }
 }

@@ -379,5 +379,30 @@ export class NetworkService {
       return network.buttonTemplates
     })
   }
+
+  public rss()
+  {
+    return `
+    <?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:georss="http://www.georss.org/georss">
+  <channel>
+    <title>My Geo-Enhanced RSS Feed</title>
+    <description>A sample RSS feed with geographic information</description>
+    <!-- ... other channel elements ... -->
+    <item>
+      <title>Sample Article Title</title>
+      <description>Sample article description...</description>
+      <link>http://example.com/article1</link>
+      <geo:lat>40.7128</geo:lat>
+      <geo:long>-74.0060</geo:long>
+      <geo:elevation>100</geo:elevation>
+      <georss:point>40.7128 -74.0060</georss:point>
+      <!-- ... other item elements ... -->
+    </item>
+    <!-- ... more items ... -->
+  </channel>
+</rss>
+    `
+  }
 }
 
