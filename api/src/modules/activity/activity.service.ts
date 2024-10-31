@@ -291,10 +291,14 @@ export class ActivityService {
   }
 
   newActivity(user, payload, addToDailyMailResume = false) {
-    console.log(
-      `new activity [${user.username}] ${payload.activityEventName} outbox? ${addToDailyMailResume}`,
-    );
-    
+    try{
+      console.log(
+        `new activity [${user.username}] ${payload.activityEventName} outbox? ${addToDailyMailResume}`,
+      );
+    }catch(err)
+    {
+      console.log(err)
+    }
     const activity = {
       id: dbIdGenerator(),
       owner: user,

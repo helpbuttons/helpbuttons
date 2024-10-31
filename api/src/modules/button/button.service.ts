@@ -45,7 +45,11 @@ import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { notifyUser } from '@src/app/app.event';
+import { Network } from '../network/network.entity';
 // import { RRule } from 'rrule';
+import * as handlebars from 'handlebars';
+import * as path from 'path';
+import configs from '@src/config/configuration';
 
 @Injectable()
 export class ButtonService {
@@ -315,12 +319,16 @@ export class ButtonService {
           },
         })
         .then((buttons) => {
-          return this.networkService.findButtonTypes().then((buttonTypes) => {
-            return buttons.filter((button) => {
-              const buttonType = buttonTypes.find((type) => type.name == button.type)
-              return !buttonType?.hide
-            })
-          })
+          return this.networkService
+            .findButtonTypes()
+            .then((buttonTypes) => {
+              return buttons.filter((button) => {
+                const buttonType = buttonTypes.find(
+                  (type) => type.name == button.type,
+                );
+                return !buttonType?.hide;
+              });
+            });
         })
         .then((buttons) => {
           return Promise.all(
@@ -643,5 +651,47 @@ export class ButtonService {
     ).then((btns) => {
       return btns.filter((btn) => !btn.expired);
     });
+  }
+
+  public rss() {
+    return this.buttonRepository
+      .find({
+        where: {
+          ...this.expiredBlockedConditions(),
+        },
+        take: 10,
+        order: {
+          created_at: 'DESC',
+        },
+      })
+      .then((buttons) => this.filterExpired(buttons))
+      .then(async (buttons) => {
+        const network: Network =
+          await this.networkService.findDefaultNetwork();
+
+        const templatePath = path.join(
+          __dirname,
+          'templates',
+          'rss.hbs',
+        );
+        const template = fs.readFileSync(templatePath, 'utf-8');
+        const compiledTemplate = handlebars.compile(template);
+        const rssItems = buttons.map((button: Button) => {
+          return {
+            title: button.title,
+            description: button.description,
+            link: `${configs().WEB_URL}/ButtonFile/${button.id}`,
+            lat: button.latitude,
+            long: button.longitude,
+          };
+        });
+        const context = {
+          name: network.name,
+          description: network.description,
+          items: rssItems,
+        };
+
+        return compiledTemplate(context);
+      });
   }
 }

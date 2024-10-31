@@ -32,6 +32,11 @@ module.exports = {
           destination: '/HomeInfo',
           permanent: true,
         },
+        {
+          source: '/rss',
+          destination: `${process.env.API_URL}/buttons/rss`,
+          permanent: true,
+        },
       ]
     },
     images: {
