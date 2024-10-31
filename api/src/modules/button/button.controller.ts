@@ -250,4 +250,12 @@ export class ButtonController {
   {
     return this.buttonService.embbed(page, take)
   }
+
+  @AllowGuest()
+  @Get('rss')
+  rss()
+  {
+    return this.buttonService.rss()
+  }
+
 }
