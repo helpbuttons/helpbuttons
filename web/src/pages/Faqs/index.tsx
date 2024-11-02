@@ -8,8 +8,11 @@ import router, { Router } from 'next/router';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { LoadabledComponent } from 'components/loading';
+import { useMetadataTitle } from 'state/Metadata';
 
 export default function Faqs({ metadata }) {
+  useMetadataTitle('F.A.Q.')
+
   return (
     <>
       <Popup title={t('faqs.title')} linkBack={() => router.back()}>

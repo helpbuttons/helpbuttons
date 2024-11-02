@@ -15,6 +15,7 @@ import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
 import CardProfile from 'components/user/CardProfile';
 import ContentList from 'components/list/ContentList';
+import { useMetadataTitle } from 'state/Metadata';
 
 export default function p(props) {
   const {userProfile} = props
@@ -28,6 +29,8 @@ export default function p(props) {
     store,
     (state: GlobalState) => state.loggedInUser,
   );
+  useMetadataTitle(t('menu.profile'))
+
   const [adminButtonId, setAdminButtonId] = useState(null);
 
   const router = useRouter();

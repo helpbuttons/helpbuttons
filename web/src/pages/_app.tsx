@@ -25,11 +25,12 @@ import t, { updateNomeclature } from 'i18n';
 import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
-import SEO from 'components/seo';
+import SEO, { MetadataSEO } from 'components/seo';
 import Loading, { LoadabledComponent } from 'components/loading';
 import MainPopup from 'components/popup/Main/';
 import { DesktopNotifications } from 'components/notifications';
 import { useConfig } from 'state/Setup';
+import { UpdateMetadata } from 'state/Metadata';
 
 export default appWithTranslation(MyApp);
 
@@ -225,6 +226,12 @@ function MyApp({ Component, pageProps }) {
     }
   }, [searchParams]);
 
+  useEffect(() => {
+    if(pageProps.metadata)
+    {
+      store.emit(new UpdateMetadata(pageProps.metadata))  
+    }
+  }, [pageProps])
   const [loading, setLoading] = useState<boolean>(false);
 
   Router.events.on('routeChangeStart', (url) => {
@@ -236,7 +243,7 @@ function MyApp({ Component, pageProps }) {
   });
 
   if (isSetup) {
-    return <Component {...pageProps} />;
+    return  <Component {...pageProps} />;
   } else if (pageName == 'Embbed') {
     return (
       <LoadabledComponent loading={!selectedNetwork || loading}>
@@ -245,18 +252,8 @@ function MyApp({ Component, pageProps }) {
     );
   } else if (!selectedNetworkLoading) {
     return (
-      <>
-        <Head>
-          <title>Helpbuttons.org</title>
-          <meta name="commit" content={'todo'} />
-        </Head>
-        {pageProps.metadata ? (
-          <SEO {...pageProps.metadata} />
-        ) : (
-          <Head>
-            <title>{selectedNetwork?.name}</title>
-          </Head>
-        )}
+        <>
+        <SEO/>
         <ClienteSideRendering>
           <DesktopNotifications />
         </ClienteSideRendering>
@@ -276,7 +273,6 @@ function MyApp({ Component, pageProps }) {
           }
         >
           <Alert />
-
           <div className="index__content">
             <ShowDesktopOnly>
               <NavHeader
@@ -300,7 +296,7 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
-  return <Loading />;
+  return  <><MetadataSEO {...pageProps.metadata} /><Loading /></>;
 }
 
 export const ClienteSideRendering = ({ children }) => {

@@ -40,6 +40,7 @@ import { ShareButton} from 'components/share';
 import { CardSubmenu, CardSubmenuOption } from 'components/card/CardSubmenu';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
+import { useMetadataTitle } from 'state/Metadata';
 
 export default function HomeInfo({ metadata }) {
   const selectedNetwork = useStore(
@@ -59,7 +60,7 @@ export default function HomeInfo({ metadata }) {
     store,
     (state: GlobalState) => state.loggedInUser,
   );
-
+  useMetadataTitle(t('menu.home'))
   const [navigatorCoordinates, setNavigatorCoordinates] =
     useState(null);
 
