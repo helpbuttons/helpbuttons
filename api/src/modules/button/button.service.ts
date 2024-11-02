@@ -26,7 +26,6 @@ import { getManager } from 'typeorm';
 import { NetworkService } from '../network/network.service';
 import { StorageService } from '../storage/storage.service';
 import { User } from '../user/user.entity';
-import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
 import { Role } from '@src/shared/types/roles';
 import {
   isImageData,
@@ -38,12 +37,8 @@ import { CustomHttpException } from '@src/shared/middlewares/errors/custom-http-
 import { ErrorName } from '@src/shared/types/error.list';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import * as fs from 'fs';
-import translate, {
-  readableDate,
-} from '@src/shared/helpers/i18n.helper';
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
-import { getUrl } from '@src/shared/helpers/mail.helper';
 import { notifyUser } from '@src/app/app.event';
 import { Network } from '../network/network.entity';
 // import { RRule } from 'rrule';
@@ -683,6 +678,8 @@ export class ButtonService {
             link: `${configs().WEB_URL}/ButtonFile/${button.id}`,
             lat: button.latitude,
             long: button.longitude,
+            created: button.created_at.toUTCString(),
+            image: configs().WEB_URL + '/api/' + button.image
           };
         });
         const context = {

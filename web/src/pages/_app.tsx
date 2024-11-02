@@ -236,27 +236,19 @@ function MyApp({ Component, pageProps }) {
   });
 
   if (isSetup) {
-    return <Component {...pageProps} />;
+    return <>11<Component {...pageProps} /></>;
   } else if (pageName == 'Embbed') {
     return (
+      <>22
       <LoadabledComponent loading={!selectedNetwork || loading}>
         <Component {...pageProps} />
       </LoadabledComponent>
+      </>
     );
   } else if (!selectedNetworkLoading) {
     return (
-      <>
-        <Head>
-          <title>Helpbuttons.org</title>
-          <meta name="commit" content={'todo'} />
-        </Head>
-        {pageProps.metadata ? (
-          <SEO {...pageProps.metadata} />
-        ) : (
-          <Head>
-            <title>{selectedNetwork?.name}</title>
-          </Head>
-        )}
+        <>
+        <SEO {...pageProps.metadata} />
         <ClienteSideRendering>
           <DesktopNotifications />
         </ClienteSideRendering>
@@ -300,7 +292,7 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
-  return <Loading />;
+  return  <><SEO {...pageProps.metadata} /><Loading /></>;
 }
 
 export const ClienteSideRendering = ({ children }) => {
