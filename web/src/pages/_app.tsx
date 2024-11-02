@@ -25,11 +25,12 @@ import t, { updateNomeclature } from 'i18n';
 import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
-import SEO from 'components/seo';
+import SEO, { MetadataSEO } from 'components/seo';
 import Loading, { LoadabledComponent } from 'components/loading';
 import MainPopup from 'components/popup/Main/';
 import { DesktopNotifications } from 'components/notifications';
 import { useConfig } from 'state/Setup';
+import { UpdateMetadata } from 'state/Metadata';
 
 export default appWithTranslation(MyApp);
 
@@ -225,6 +226,12 @@ function MyApp({ Component, pageProps }) {
     }
   }, [searchParams]);
 
+  useEffect(() => {
+    if(pageProps.metadata)
+    {
+      store.emit(new UpdateMetadata(pageProps.metadata))  
+    }
+  }, [pageProps])
   const [loading, setLoading] = useState<boolean>(false);
 
   Router.events.on('routeChangeStart', (url) => {
@@ -236,19 +243,17 @@ function MyApp({ Component, pageProps }) {
   });
 
   if (isSetup) {
-    return <>11<Component {...pageProps} /></>;
+    return  <Component {...pageProps} />;
   } else if (pageName == 'Embbed') {
     return (
-      <>22
       <LoadabledComponent loading={!selectedNetwork || loading}>
         <Component {...pageProps} />
       </LoadabledComponent>
-      </>
     );
   } else if (!selectedNetworkLoading) {
     return (
         <>
-        <SEO {...pageProps.metadata} />
+        <SEO/>
         <ClienteSideRendering>
           <DesktopNotifications />
         </ClienteSideRendering>
@@ -268,7 +273,6 @@ function MyApp({ Component, pageProps }) {
           }
         >
           <Alert />
-
           <div className="index__content">
             <ShowDesktopOnly>
               <NavHeader
@@ -292,7 +296,7 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
-  return  <><SEO {...pageProps.metadata} /><Loading /></>;
+  return  <><MetadataSEO {...pageProps.metadata} /><Loading /></>;
 }
 
 export const ClienteSideRendering = ({ children }) => {
