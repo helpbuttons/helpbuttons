@@ -4447,7 +4447,6 @@ li, ol, ul, h2 {
 .nav-bottom__link:hover .nav-bottom__icon,
 .nav-bottom__link :active .nav-bottom__icon {
   transition: 0.2s;
-  transform: translateY(-0.4rem);
 }
 
 .nav-bottom__text {
@@ -4481,10 +4480,7 @@ li, ol, ul, h2 {
 }
 
 .nav-bottom__link--create .nav-bottom__icon svg {
-  background-color: #0E0E0E;
-  padding: 5px;
-  color: #fff;
-  left: -18px;
+  color: #0E0E0E;
 }
 
 .nav-bottom__create-message {
@@ -4564,8 +4560,6 @@ li, ol, ul, h2 {
     cursor: pointer;
   }
   .nav-bottom__link--create .nav-bottom__icon svg {
-    padding: 6px;
-    background-color: var(--network-background-color);
     left: -18px;
     color: #0E0E0E;
   }
@@ -4770,7 +4764,7 @@ li, ol, ul, h2 {
   align-items: center;
   justify-content: center;
   margin: 0;
-  height: 20rem;
+  min-height: 20rem;
   flex-basis: 100%;
   padding: 15px;
   border-radius: 0;

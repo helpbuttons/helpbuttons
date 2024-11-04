@@ -44,14 +44,7 @@ export function AddCustomFields({ customFields, setCustomFields }) {
         onChanged={(value) => updateCustomField('event', value)}
         {...register('eventField')}
       />
-      <FieldCheckbox
-        name="priceField"
-        explain={t('configuration.priceFieldAddLabel')}
-        defaultValue={watch('priceField')}
-        text={t('configuration.priceFieldAdd')}
-        onChanged={(value) => updateCustomField('price', value)}
-        {...register('priceField')}
-      />
+
     </>
   );
 }

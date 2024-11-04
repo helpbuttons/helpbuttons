@@ -289,7 +289,7 @@ function ButtonTemplateForm({ label, explain, append }) {
         <Btn
           caption={t('configuration.addType')}
           onClick={() => onAddNewButtonTemplate(getValues())}
-          btnType={BtnType.corporative}
+          btnType={BtnType.submit}
         />
         </>
       </PickerField>
