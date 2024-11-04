@@ -9,6 +9,7 @@ import {
   UseInterceptors,
   UploadedFiles,
   ParseArrayPipe,
+  Header,
 } from '@nestjs/common';
 
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -250,4 +251,13 @@ export class ButtonController {
   {
     return this.buttonService.embbed(page, take)
   }
+
+  @AllowGuest()
+  @Get('rss')
+  @Header('Content-Type', 'application/xml')
+  rss()
+  {
+    return this.buttonService.rss()
+  }
+
 }

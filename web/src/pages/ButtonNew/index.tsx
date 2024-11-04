@@ -15,6 +15,7 @@ import { setMetadata } from 'services/ServerProps';
 import { useStore } from 'store/Store';
 import Loading from 'components/loading';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { useMetadataTitle } from 'state/Metadata';
 
 export default function ButtonNew({ metadata }) {
   const selectedNetwork = useStore(
@@ -22,6 +23,9 @@ export default function ButtonNew({ metadata }) {
     (state: GlobalState) => state.networks.selectedNetwork,
     null
   );
+
+  useMetadataTitle(t('menu.create'))
+
   return (
     <>
     {selectedNetwork.exploreSettings ? 

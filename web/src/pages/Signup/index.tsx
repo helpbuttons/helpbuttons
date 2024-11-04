@@ -31,6 +31,7 @@ import { Network } from 'shared/entities/network.entity';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { useMetadataTitle } from 'state/Metadata';
 
 export default function Signup() {
   const {
@@ -59,7 +60,8 @@ export default function Signup() {
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
-  
+  useMetadataTitle(t('menu.register'))
+
   const onSubmit = (data) => {
     
     // if (passwordsMatch(data, setError)) {

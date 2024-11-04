@@ -7,14 +7,18 @@ import { Store } from "store/Store";
 import { NetworksState, networksInitial } from "state/Networks";
 import { ExploreState, exploreInitial } from "state/Explore";
 import { Alert } from "state/Alerts";
-import { SetupDtoOut } from "services/Setup/config.type";
 import { User } from "shared/entities/user.entity";
 import { Invite } from "shared/entities/invite.entity";
 import { HomeInfoState, homeInfoStateInitial } from "state/HomeInfo";
 import { ActivitiesState, activitiesInitialState } from "state/Activity";
-export const metadata: Metadata = {
-  title: 'Home',
-  description: 'Welcome to Next.js',
+export const metadata = {
+  title: 'helpbuttons.org',
+  description : '',
+  image: '',
+  pageurl: '',
+  siteTitle: '',
+  color: '',
+  webUrl: '',
 }
 
 // -- estado global --
@@ -29,8 +33,10 @@ export interface GlobalState {
   draftNewCommentPost: any;
   invites: Invite[],
   homeInfo: HomeInfoState,
-  activitesState: ActivitiesState
+  activitesState: ActivitiesState,
+  metadata: Metadata
 }
+
 
 export const store = new Store<GlobalState>({
   networks: networksInitial,

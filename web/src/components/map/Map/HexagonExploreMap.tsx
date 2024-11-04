@@ -139,7 +139,7 @@ export default function HexagonExploreMap({
             handleClick={onMapClick}
           >
             <HbMapOverlay selectedNetwork={selectedNetwork} />
-            {places.map((place) => (<Overlay key={place.id} anchor={[place.coords.lat, place.coords.lng]}>{place.address}</Overlay>))}
+            {/* {places.map((place) => (<Overlay key={place.id} anchor={[place.coords.lat, place.coords.lng]}>{place.address}</Overlay>))} */}
             {/* {places.map((place) => (<MarkerPlace key={place.id} anchor={[place.coords.lat, place.coords.lng]} address={place.address}/> */}
             {/* </Overlay> */}
             <DisplayInstructions/>

@@ -5,8 +5,10 @@ import router from 'next/router';
 import t from 'i18n';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
+import { useMetadataTitle } from 'state/Metadata';
 
 export default function Error({metadata}) {
+  useMetadataTitle('Error')
 
   return (
     <>

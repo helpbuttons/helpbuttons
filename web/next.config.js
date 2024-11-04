@@ -17,7 +17,11 @@ module.exports = {
       {
         source: '/manifest.json',
         destination: `${process.env.API_URL}/networks/manifest.json`
-      }
+      },
+      {
+        source: '/rss',
+        destination: `${process.env.API_URL}/buttons/rss`,
+      },
       ]
     },
     async redirects() {
