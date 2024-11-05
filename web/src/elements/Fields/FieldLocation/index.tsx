@@ -33,6 +33,7 @@ export default function FieldLocation({
   let closeMenu = () => {
     setShowPopup(() => false);
   };
+  const [zoom, setZoom] = useState((markerPosition[0] && markerPosition[1]) ? maxZoom : selectedNetwork.exploreSettings.zoom);
 
   const requestAddressForMarkerPosition = (latLng, success) => {
     toggleLoadingNewAddress(() => true);
@@ -80,14 +81,14 @@ export default function FieldLocation({
     setLocation(latLng);
   };
 
-  const [showPopup, setShowPopup] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
 
-  // place searched on dropdown...
   const handleSelectedPlace = (newPlace) => {
     setLocation(
       [newPlace.geometry.lat, newPlace.geometry.lng],
       newPlace,
     );
+    setZoom(() => maxZoom)
   };
   const closePopup = () => setShowPopup(() => false);
   const openPopup = () => setShowPopup(() => true);
@@ -114,7 +115,8 @@ export default function FieldLocation({
             <MarkerEditorMap
               loadingNewAddress={loadingNewAddress}
               onMapClick={onMapClick}
-              defaultZoom={(markerPosition[0] && markerPosition[1]) ? maxZoom : selectedNetwork.exploreSettings.zoom}
+              zoom={zoom}
+              setZoom={setZoom}
               markerColor={markerColor ? markerColor : 'pink'}
               markerPosition={markerPosition}
               markerCaption={markerCaption}
