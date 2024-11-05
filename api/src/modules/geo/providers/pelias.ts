@@ -43,9 +43,15 @@ export class PeliasProvider implements GeoProvider {
   }
 
   hydratePlace(place: any): GeoAddress {
+    const city = place.properties.city
+      ? `${place.properties.city}, `
+      : '';
+    const country = place.properties.country
+      ? `${place.properties.country}`
+      : '';
     return {
       formatted: place.properties.label,
-      formatted_city: `city?`,
+      formatted_city: `${city}${country}`,
       geometry: {
         lat: place.geometry.coordinates[1],
         lng: place.geometry.coordinates[0],
