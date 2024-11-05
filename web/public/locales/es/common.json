@@ -179,7 +179,7 @@
     "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública."
   },
   "activitiesWithSubject": {
-    "newbutton": "{0} publicó un _helpbutton_ en  {1}",
+    "newbutton": "{0} creó _helpbutton_ en {1}",
     "newpost": "{0} publicó en {1}"
   },
   "user": {
