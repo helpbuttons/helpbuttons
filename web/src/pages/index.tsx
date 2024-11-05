@@ -12,7 +12,7 @@ import { Invite } from "shared/entities/invite.entity";
 import { HomeInfoState, homeInfoStateInitial } from "state/HomeInfo";
 import { ActivitiesState, activitiesInitialState } from "state/Activity";
 import { MetadataState, metadataInitialState } from "state/Metadata";
-
+import { CacheValue } from "state/Cache";
 
 // -- estado global --
 export interface GlobalState {
@@ -27,7 +27,8 @@ export interface GlobalState {
   invites: Invite[],
   homeInfo: HomeInfoState,
   activitesState: ActivitiesState,
-  metadata: MetadataState
+  metadata: MetadataState,
+  cacheValues: CacheValue[]
 }
 
 
@@ -45,7 +46,8 @@ export const store = new Store<GlobalState>({
   invites: [],
   homeInfo: homeInfoStateInitial,
   activitesState: activitiesInitialState,
-  metadata: metadataInitialState
+  metadata: metadataInitialState,
+  cacheValues: []
 });
 
 
