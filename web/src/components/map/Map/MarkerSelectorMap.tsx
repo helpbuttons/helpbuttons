@@ -31,7 +31,8 @@ export function MarkerEditorMap(props) {
 
 export default function MarkerViewMap({
   markerPosition,
-  defaultZoom,
+  zoom,
+  setZoom,
   markerColor,
   markerImage,
   markerCaption,
@@ -42,7 +43,6 @@ export default function MarkerViewMap({
 }) {
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
     useState(null);
-  const [zoom, setZoom] = useState(defaultZoom);
   const [mapCenter, setMapCenter] = useState(null);
   const mapCenterIsReady = useRef(false);
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
@@ -95,11 +95,9 @@ export default function MarkerViewMap({
       ) {
         mapCenterIsReady.current = true;
         setMapCenter(() => networkMapCenter);
-        setZoom(() => defaultZoom);
       }else if(markerPosition[0] && markerPosition[1])
       {
         setMapCenter(() => markerPosition);
-        setZoom(() => defaultZoom);
       }
     }
   }, [showHexagon, markerPosition, networkMapCenter]);
