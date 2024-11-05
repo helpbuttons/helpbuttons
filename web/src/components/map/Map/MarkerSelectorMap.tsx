@@ -23,6 +23,9 @@ export function MarkerEditorMap(props) {
         handleSelectedPlace={props.handleSelectedPlace}
         address={props.markerAddress}
         loadingNewAddress={props.loadingNewAddress}
+        hideAddress={props.hideAddress}
+        toggleLoadingNewAddress={props.toggleLoadingNewAddress}
+        markerPosition={props.markerPosition}
       />
       <MarkerViewMap {...props} editPosition={true} />
     </>
@@ -36,7 +39,7 @@ export default function MarkerViewMap({
   markerColor,
   markerImage,
   markerCaption,
-  showHexagon = false,
+  hideAddress,
   editPosition = false,
   onMapClick = (latLng) => {},
   networkMapCenter = null,
@@ -47,6 +50,7 @@ export default function MarkerViewMap({
   const mapCenterIsReady = useRef(false);
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     setZoom(() => zoom)
+    setMapCenter(() => center)
   };
 
   useEffect(() => {
@@ -65,7 +69,7 @@ export default function MarkerViewMap({
     return center;
   };
   function handleMapClicked({ latLng }) {
-    if (showHexagon) {
+    if (hideAddress) {
       onMapClick(getHexagonCenter(latLng, zoom));
     } else {
       onMapClick(latLng);
@@ -73,7 +77,7 @@ export default function MarkerViewMap({
   }
   useEffect(() => {
     if (mapCenterIsReady.current) {
-      if (showHexagon) {
+      if (hideAddress) {
         let polygons = latLngToGeoJson(
           markerPosition[0],
           markerPosition[1],
@@ -100,8 +104,17 @@ export default function MarkerViewMap({
         setMapCenter(() => markerPosition);
       }
     }
-  }, [showHexagon, markerPosition, networkMapCenter]);
+  }, [hideAddress, markerPosition, networkMapCenter]);
 
+  useEffect(() => {
+    if(hideAddress)
+    {
+      if(zoom > hexagonSizeZoom)
+      {
+        setZoom(() => hexagonSizeZoom)
+      }
+    }
+  }, [hideAddress])
   useEffect(() => {
     // zoom in if markerposition is set, and the user selected a new position, cause if zoom is too far makes no sense.
     if (mapCenterIsReady.current && markerPosition[0] && markerPosition[1]) {
@@ -122,7 +135,7 @@ export default function MarkerViewMap({
             width={'100%'}
             height={'16rem'}
           >
-            {showHexagon && (
+            {hideAddress && (
               <GeoJson
                 data={markerHexagonGeoJson}
                 styleCallback={(feature, hover) => {
@@ -130,7 +143,7 @@ export default function MarkerViewMap({
                 }}
               />
             )}
-            {!showHexagon && (
+            {!hideAddress && (
               <MarkerButtonIcon
                 anchor={markerPosition}
                 offset={[35, 65]}

@@ -5,6 +5,7 @@ import configs from '@src/config/configuration';
 import { PeliasProvider } from './providers/pelias';
 import { HttpHelper } from '@src/shared/helpers/http.helper';
 import { KomootGeoProvider } from './providers/komoot';
+import { Response } from 'express';
 
 @Injectable()
 export class GeoService {
@@ -13,22 +14,24 @@ export class GeoService {
     private readonly networkService: NetworkService,
     private readonly httpHelper: HttpHelper
   ) {
-
-    const geoCodeApiKey = configs().GEOCODE_APY_KEY
-    const geoCodeLimitCountries = configs().GEOCODE_LIMIT_COUNTRIES
-    if(geoCodeApiKey)
-    {
-      this.geoProvider = new PeliasProvider(this.httpHelper,geoCodeApiKey, geoCodeLimitCountries)
-    }else{
-      this.geoProvider = new KomootGeoProvider(this.httpHelper)
+    const geoCodeApiKey = configs().GEOCODE_APY_KEY;
+    const geoCodeLimitCountries = configs().GEOCODE_LIMIT_COUNTRIES;
+    if (geoCodeApiKey) {
+      this.geoProvider = new PeliasProvider(
+        this.httpHelper,
+        geoCodeApiKey,
+        geoCodeLimitCountries,
+      );
+    } else {
+      this.geoProvider = new KomootGeoProvider(this.httpHelper);
     }
   }
 
   async search(query: string) {
-    return this.geoProvider.searchQuery(query)
+    return this.geoProvider.searchQuery(query);
   }
 
-  async findAddress(lat: string, lng: string) {
-    return this.geoProvider.getAddress({lat: lat, lng: lng})
+  async findAddress(lat: string, lng: string, response: Response) {
+      return this.geoProvider.getAddress({ lat: lat, lng: lng });
   }
 }

@@ -23,7 +23,7 @@ export class PeliasProvider implements GeoProvider {
   }
 
   queryGeo(query): Promise<any> {
-    let url = `https://api.geocode.earth/v1/autocomplete?api_key=${this.apiKey}&text=${query}&size=5`;
+    let url = `https://api.geocode.earth/v1/autocomplete?api_key=${this.apiKey}&text=${query}&size=15`;
     if (this.limitCountries.length > 0) {
       url = `${url}&boundary.country=${this.limitCountries}`;
     }
@@ -43,15 +43,10 @@ export class PeliasProvider implements GeoProvider {
   }
 
   hydratePlace(place: any): GeoAddress {
-    const city = place.properties.city
-      ? `${place.properties.city}, `
-      : '';
-    const country = place.properties.country
-      ? `${place.properties.country}`
-      : '';
+    const placeProperties = place.properties;
     return {
       formatted: place.properties.label,
-      formatted_city: `${city}${country}`,
+      formatted_city: `${placeProperties.region}, ${placeProperties.country}`,
       geometry: {
         lat: place.geometry.coordinates[1],
         lng: place.geometry.coordinates[0],
@@ -60,12 +55,4 @@ export class PeliasProvider implements GeoProvider {
     };
   }
 
-  emptyPlace() {
-    return {
-      formatted: 'Unknown place',
-      formatted_city: 'Unknown place',
-      geometry: null,
-      id: null,
-    } as GeoAddress;
-  }
 }

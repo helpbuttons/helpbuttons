@@ -1,6 +1,3 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
-
-// import { HttpClient } from '@nestjs/common';
 export interface GeoPosition {
   lat: string;
   lng: string;

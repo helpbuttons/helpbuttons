@@ -32,7 +32,7 @@ export class GeoFindAddress implements WatchEvent {
 
   export class GeoReverseFindAddress implements WatchEvent {
     uid = '';
-    public constructor(private lat: number, private lng: number, private onReady) {  
+    public constructor(private lat: number, private lng: number, private onReady, private onError) {  
       this.uid = `place_${lat}${lng}`
     }
   
@@ -52,8 +52,17 @@ export class GeoFindAddress implements WatchEvent {
         }),
         catchError((error) => {
           console.error(error)
+          this.onError(error)
           return of(undefined)
         }),
       );
+    }
+  }
+  export function emptyPlace(position = {lat:'0' ,lng: '0'}) {
+    return {
+      formatted: 'Unknown place',
+      formatted_city: 'Unknown place',
+      geometry: position,
+      id: '',
     }
   }
