@@ -11,15 +11,8 @@ import { User } from "shared/entities/user.entity";
 import { Invite } from "shared/entities/invite.entity";
 import { HomeInfoState, homeInfoStateInitial } from "state/HomeInfo";
 import { ActivitiesState, activitiesInitialState } from "state/Activity";
-export const metadata = {
-  title: 'helpbuttons.org',
-  description : '',
-  image: '',
-  pageurl: '',
-  siteTitle: '',
-  color: '',
-  webUrl: '',
-}
+import { MetadataState, metadataInitialState } from "state/Metadata";
+
 
 // -- estado global --
 export interface GlobalState {
@@ -34,7 +27,7 @@ export interface GlobalState {
   invites: Invite[],
   homeInfo: HomeInfoState,
   activitesState: ActivitiesState,
-  metadata: Metadata
+  metadata: MetadataState
 }
 
 
@@ -51,7 +44,8 @@ export const store = new Store<GlobalState>({
   draftNewCommentPost: null,
   invites: [],
   homeInfo: homeInfoStateInitial,
-  activitesState: activitiesInitialState
+  activitesState: activitiesInitialState,
+  metadata: metadataInitialState
 });
 
 

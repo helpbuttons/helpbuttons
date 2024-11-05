@@ -1,28 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { HbMapUncontrolled } from '.';
-import { GeoJson, Point } from 'pigeon-maps';
+import { GeoJson, Marker } from 'pigeon-maps';
 import {
   getZoomResolution,
   latLngToGeoJson,
 } from 'shared/honeycomb.utils';
 import { MarkerButtonIcon } from './MarkerButton';
 import { cellToLatLng, latLngToCell } from 'h3-js';
-import { maxResolution } from 'shared/types/honeycomb.const';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
-
+import { LoadabledComponent } from 'components/loading';
+import {
+  hexagonSizeZoom,
+  onMarkerPositionChangeZoomTo,
+} from './Map.consts';
 
 export function MarkerEditorMap(props) {
-  
-  return <>
-          <DropDownSearchLocation
-            placeholder={t('homeinfo.searchlocation')}
-            handleSelectedPlace={props.handleSelectedPlace}
-            address={props.markerAddress}
-          />
-        <MarkerViewMap {...props} editPosition={true}/>
-  </>
-  
+  return (
+    <>
+      <DropDownSearchLocation
+        placeholder={t('homeinfo.searchlocation')}
+        handleSelectedPlace={props.handleSelectedPlace}
+        address={props.markerAddress}
+        loadingNewAddress={props.loadingNewAddress}
+      />
+      <MarkerViewMap {...props} editPosition={true} />
+    </>
+  );
 }
 
 export default function MarkerViewMap({
@@ -34,27 +38,22 @@ export default function MarkerViewMap({
   showHexagon = false,
   editPosition = false,
   onMapClick = (latLng) => {},
+  networkMapCenter = null,
 }) {
-  const [newMarkerPosition, setNewMarkerPosition] = useState<Point>(markerPosition);
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
     useState(null);
   const [zoom, setZoom] = useState(defaultZoom);
-  const [mapCenter, setMapCenter] = useState(markerPosition)
+  const [mapCenter, setMapCenter] = useState(null);
+  const mapCenterIsReady = useRef(false);
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
-    // setMarkerPosition(center);
-    if(editPosition)
-    {
-      setMapCenter(() => center);
-    }
-    setZoom(() => zoom);
+    setZoom(() => zoom)
   };
 
   useEffect(() => {
-    if(editPosition)
-    {
+    if (editPosition && mapCenterIsReady.current && markerPosition[0] && markerPosition[1]) {
       setMapCenter(() => markerPosition);
     }
-  }, [markerPosition])
+  }, [markerPosition]);
   const getHexagonCenter = (latLng, zoom) => {
     const cell = latLngToCell(
       latLng[0],
@@ -66,57 +65,84 @@ export default function MarkerViewMap({
     return center;
   };
   function handleMapClicked({ latLng }) {
-    setNewMarkerPosition(() => latLng);
+    if (showHexagon) {
+      onMapClick(getHexagonCenter(latLng, zoom));
+    } else {
+      onMapClick(latLng);
+    }
   }
+  useEffect(() => {
+    if (mapCenterIsReady.current) {
+      if (showHexagon) {
+        let polygons = latLngToGeoJson(
+          markerPosition[0],
+          markerPosition[1],
+          getZoomResolution(hexagonSizeZoom),
+        );
+        if(zoom < hexagonSizeZoom)
+        {
+          setZoom(() => hexagonSizeZoom)
+        }
+        setMarkerHexagonGeoJson(() => polygons);
+      } else {
+        setMarkerHexagonGeoJson(() => null);
+      }
+    } else {
+      if (
+        networkMapCenter &&
+        networkMapCenter[0] &&
+        networkMapCenter[1]
+      ) {
+        mapCenterIsReady.current = true;
+        setMapCenter(() => networkMapCenter);
+        setZoom(() => defaultZoom);
+      }else if(markerPosition[0] && markerPosition[1])
+      {
+        setMapCenter(() => markerPosition);
+        setZoom(() => defaultZoom);
+      }
+    }
+  }, [showHexagon, markerPosition, networkMapCenter]);
 
   useEffect(() => {
-    if (showHexagon) {
-      onMapClick(getHexagonCenter(newMarkerPosition, zoom));
-    } 
-    else {
-      onMapClick(newMarkerPosition);
+    // zoom in if markerposition is set, and the user selected a new position, cause if zoom is too far makes no sense.
+    if (mapCenterIsReady.current && markerPosition[0] && markerPosition[1]) {
+      if (zoom < onMarkerPositionChangeZoomTo) {
+        setZoom(() => zoom + 2);
+      }
     }
-  }, [newMarkerPosition]);
-  useEffect(() => {
-    if (showHexagon) {
-      let polygons = latLngToGeoJson(
-        markerPosition[0],
-        markerPosition[1],
-        getZoomResolution(zoom),
-      );
-      setMarkerHexagonGeoJson(() => polygons);
-    } else {
-      setMarkerHexagonGeoJson(() => null);
-    }
-  }, [showHexagon, zoom, markerPosition]);
+  }, [markerPosition])
   return (
     <>
       <div className="picker__map">
-        <HbMapUncontrolled
-          mapCenter={mapCenter}
-          mapZoom={zoom}
-          onBoundsChanged={onBoundsChanged}
-          handleMapClick={handleMapClicked}
-          width={'100%'}
-          height={'16rem'}
-        >
-          {showHexagon ? (
-            <GeoJson
-              data={markerHexagonGeoJson}
-              styleCallback={(feature, hover) => {
-                return { fill: markerColor, opacity: 0.4 };
-              }}
-            />
-          ) : (
-            <MarkerButtonIcon
-              anchor={markerPosition}
-              offset={[35, 65]}
-              cssColor={markerColor}
-              image={markerImage}
-              title={markerCaption}
-            />
-          )}
-        </HbMapUncontrolled>
+        <LoadabledComponent loading={!mapCenter}>
+          <HbMapUncontrolled
+            mapCenter={mapCenter}
+            mapZoom={zoom}
+            onBoundsChanged={onBoundsChanged}
+            handleMapClick={handleMapClicked}
+            width={'100%'}
+            height={'16rem'}
+          >
+            {showHexagon && (
+              <GeoJson
+                data={markerHexagonGeoJson}
+                styleCallback={(feature, hover) => {
+                  return { fill: markerColor, opacity: 0.4 };
+                }}
+              />
+            )}
+            {!showHexagon && (
+              <MarkerButtonIcon
+                anchor={markerPosition}
+                offset={[35, 65]}
+                cssColor={markerColor}
+                image={markerImage}
+                title={markerCaption}
+              />
+            )}
+          </HbMapUncontrolled>
+        </LoadabledComponent>
       </div>
     </>
   );

@@ -4,10 +4,10 @@ import { GeoService } from "services/Geo";
 import { WatchEvent } from "store/Event";
 
 export class GeoFindAddress implements WatchEvent {
-    public constructor(private address: string, private onReady) {}
+    public constructor(private query: string, private onReady) {}
   
     public watch(state: GlobalState) {
-      return GeoService.find(this.address).pipe(
+      return GeoService.find(this.query).pipe(
         map((places) => {
             this.onReady(places)
         }),

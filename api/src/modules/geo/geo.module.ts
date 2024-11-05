@@ -4,6 +4,7 @@ import { GeoService } from './geo.service';
 import { HttpModule } from '@nestjs/axios';
 import { NetworkModule } from '../network/network.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { HttpHelper } from '@src/shared/helpers/http.helper';
 @Module({
   imports: [
     HttpModule.register({
@@ -14,7 +15,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     CacheModule.register(),
   ],
   controllers: [GeoController],
-  providers: [GeoService],
+  providers: [GeoService, HttpHelper],
   exports: [GeoService],
 })
 export class GeoModule {}

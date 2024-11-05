@@ -2,6 +2,7 @@
 import { Map, Point, ZoomControl } from 'pigeon-maps';
 import { useEffect, useState } from 'react';
 import { HbMapTiles, HbTiles, maxZoom } from './Map.consts';
+import { LoadabledComponent } from 'components/loading';
 
 interface HbMapProps {
   center: Point;
@@ -116,9 +117,11 @@ export function HbMapUncontrolled({
   }, [tileType, mapZoom, mapCenter]);
 
   return (
+    <LoadabledComponent loading={!mapCenter}>
     <Map {...mapProps}>
       {children}
       <ZoomControl />
     </Map>
+    </LoadabledComponent>
   );
 }
