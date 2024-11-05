@@ -37,4 +37,4 @@ export enum BrowseType {
 
 export const maxZoom = 18;
 export const hexagonSizeZoom = 13;
-export const onMarkerPositionChangeZoomTo = 13;
+export const onMarkerPositionChangeZoomTo = 10;

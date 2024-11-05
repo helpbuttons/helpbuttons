@@ -46,6 +46,7 @@ export default function MarkerViewMap({
   const [mapCenter, setMapCenter] = useState(null);
   const mapCenterIsReady = useRef(false);
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
+    setZoom(() => zoom)
   };
 
   useEffect(() => {
@@ -82,9 +83,6 @@ export default function MarkerViewMap({
       } else {
         setMarkerHexagonGeoJson(() => null);
       }
-      if (zoom > onMarkerPositionChangeZoomTo) {
-        setZoom(() => onMarkerPositionChangeZoomTo);
-      }
     } else {
       if (
         networkMapCenter &&
@@ -102,6 +100,14 @@ export default function MarkerViewMap({
     }
   }, [showHexagon, markerPosition, networkMapCenter]);
 
+  useEffect(() => {
+    // zoom in if markerposition is set, and the user selected a new position, cause if zoom is too far makes no sense.
+    if (mapCenterIsReady.current && markerPosition[0] && markerPosition[1]) {
+      if (zoom < onMarkerPositionChangeZoomTo) {
+        setZoom(() => zoom + 2);
+      }
+    }
+  }, [markerPosition])
   return (
     <>
       <div className="picker__map">
