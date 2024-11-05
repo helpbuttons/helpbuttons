@@ -31,7 +31,8 @@
     "translations": "cp -r ../web/public/locales .",
     "cli": "CLI_PATH=./dist/cli.js npx nestjs-command",
     "cron:buttons:removepast": "yarn cli cron:buttons:removepast",
-    "config:genjwt": "yarn cli config:genjwt"
+    "config:genjwt": "yarn cli config:genjwt",
+    "link-common": "cp -r ../web/src/shared/types/* src/shared/types/"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -74,6 +75,7 @@
     "qrcode": "^1.5.4",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
+    "rss": "^1.2.2",
     "rxjs": "^7.2.0",
     "sharp": "0.29.3",
     "swagger-ui-express": "^4.3.0",

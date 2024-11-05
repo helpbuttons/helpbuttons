@@ -19,6 +19,6 @@ export class GeoController {
   @AllowGuest()
   @Get('reverse/:lat/:lng')
   async reverse(@Param('lat') lat: string, @Param('lng') lng: string) {
-    return await this.geoService.reverse(lat,lng)
+    return await this.geoService.findAddress(lat,lng)
   }
 }
