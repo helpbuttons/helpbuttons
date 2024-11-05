@@ -2,14 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { MarkerEditorMap } from 'components/map/Map/MarkerSelectorMap';
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
-import { SetupDtoOut } from 'shared/entities/setup.entity';
+import { store } from 'pages';
 import t from 'i18n';
 import { roundCoord } from 'shared/honeycomb.utils';
-import { ReverseGeo } from 'state/Explore';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
+import { useToggle } from 'shared/custom.hooks';
+import { GeoReverseFindAddress } from 'state/Geo';
 export default function FieldLocation({
   validationError,
   markerImage,
@@ -25,34 +24,27 @@ export default function FieldLocation({
   watch,
   setValue,
 }) {
-
   const hideAddress = watch('hideAddress');
   const latitude = watch('latitude');
   const longitude = watch('longitude');
-
-  const config: SetupDtoOut = useStore(
-    store,
-    (state: GlobalState) => state.config,
-  );
-
+  const [loadingNewAddress, toggleLoadingNewAddress] = useToggle(false)
   let closeMenu = () => {
     setShowPopup(() => false);
   };
 
   const requestAddressForMarkerPosition = (latLng, success) => {
+    toggleLoadingNewAddress(() => true)
     store.emit(
-      new ReverseGeo(
+      new GeoReverseFindAddress(
         latLng[0],
         latLng[1],
         (place) => {
-          success(place)
-        },
-        () => {
-          console.log('error getting address from coordinates')
-        },
+          toggleLoadingNewAddress(() => false)
+          success(place);
+        }
       ),
     );
-  }
+  };
   const setLocation = (latLng, place = null) => {
     setMarkerPosition([latLng[0], latLng[1]]);
     if (place) {
@@ -68,20 +60,24 @@ export default function FieldLocation({
         } else {
           updateAddress(place.formatted);
         }
-      } )
-      
+      });
     }
   };
   useEffect(() => {
-    requestAddressForMarkerPosition([latitude, longitude], (place) => {
-      if (hideAddress) {
-        updateAddress(place.formatted_city);
-      } else {
-        updateAddress(place.formatted);
-      }
-    } )
-   
-  }, [hideAddress])
+    if (latitude && longitude) {
+      requestAddressForMarkerPosition(
+        [latitude, longitude],
+        (place) => {
+          if (hideAddress) {
+            updateAddress(place.formatted_city);
+          } else {
+            updateAddress(place.formatted);
+          }
+        },
+      );
+    }
+  }, [hideAddress]);
+
   const onMapClick = (latLng) => {
     setLocation(latLng);
   };
@@ -95,14 +91,6 @@ export default function FieldLocation({
       newPlace,
     );
   };
-
-
-  useEffect(() => {
-    if (selectedNetwork && !markerPosition) {
-      setLocation(selectedNetwork.exploreSettings.center);
-    }
-  }, [selectedNetwork]);
-
   const closePopup = () => setShowPopup(() => false);
   const openPopup = () => setShowPopup(() => true);
   return (
@@ -124,17 +112,19 @@ export default function FieldLocation({
         openPopup={openPopup}
         closePopup={closePopup}
       >
-        <MarkerEditorMap
-          onMapClick={onMapClick}
-          defaultZoom={selectedNetwork.exploreSettings.zoom}
-          markerColor={markerColor ? markerColor : 'pink'}
-          markerPosition={markerPosition}
-          markerCaption={markerCaption}
-          markerImage={markerImage}
-          showHexagon={hideAddress}
-          handleSelectedPlace={handleSelectedPlace}
-          markerAddress={markerAddress}
-        />
+          <MarkerEditorMap
+            loadingNewAddress={loadingNewAddress}
+            onMapClick={onMapClick}
+            defaultZoom={selectedNetwork.exploreSettings.zoom}
+            markerColor={markerColor ? markerColor : 'pink'}
+            markerPosition={markerPosition}
+            markerCaption={markerCaption}
+            markerImage={markerImage}
+            showHexagon={hideAddress}
+            handleSelectedPlace={handleSelectedPlace}
+            markerAddress={markerAddress}
+            networkMapCenter={selectedNetwork.exploreSettings.center}
+          />
         <FieldCheckbox
           name="hideAddress"
           defaultValue={watch('hideAddress')}
