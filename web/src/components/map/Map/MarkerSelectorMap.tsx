@@ -79,6 +79,10 @@ export default function MarkerViewMap({
           markerPosition[1],
           getZoomResolution(hexagonSizeZoom),
         );
+        if(zoom < hexagonSizeZoom)
+        {
+          setZoom(() => hexagonSizeZoom)
+        }
         setMarkerHexagonGeoJson(() => polygons);
       } else {
         setMarkerHexagonGeoJson(() => null);
