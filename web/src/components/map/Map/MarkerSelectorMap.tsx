@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { HbMapUncontrolled } from '.';
-import { GeoJson, Point } from 'pigeon-maps';
+import { GeoJson, Marker } from 'pigeon-maps';
 import {
   getZoomResolution,
   latLngToGeoJson,
@@ -10,11 +10,9 @@ import { cellToLatLng, latLngToCell } from 'h3-js';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
 import { LoadabledComponent } from 'components/loading';
-import { useToggle } from 'shared/custom.hooks';
 import {
   hexagonSizeZoom,
-  maxZoom,
-  showMarkerInHexagonMaxZoom,
+  onMarkerPositionChangeZoomTo,
 } from './Map.consts';
 
 export function MarkerEditorMap(props) {
@@ -40,24 +38,18 @@ export default function MarkerViewMap({
   showHexagon = false,
   editPosition = false,
   onMapClick = (latLng) => {},
-  networkMapCenter = [0, 0],
+  networkMapCenter = null,
 }) {
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
     useState(null);
   const [zoom, setZoom] = useState(defaultZoom);
-  const [mapCenter, setMapCenter] = useState([0, 0]);
-  const [mapCenterIsReady, toggleMapCenterIsReady] = useToggle(false);
+  const [mapCenter, setMapCenter] = useState(null);
+  const mapCenterIsReady = useRef(false);
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
-    console.log('bounds changed...');
-    // setMarkerPosition(center);
-    if (editPosition) {
-      setMapCenter(() => center);
-    }
-    setZoom(() => zoom);
   };
 
   useEffect(() => {
-    if (editPosition) {
+    if (editPosition && mapCenterIsReady.current && markerPosition[0] && markerPosition[1]) {
       setMapCenter(() => markerPosition);
     }
   }, [markerPosition]);
@@ -72,50 +64,48 @@ export default function MarkerViewMap({
     return center;
   };
   function handleMapClicked({ latLng }) {
-    console.log('map clicked..')
     if (showHexagon) {
       onMapClick(getHexagonCenter(latLng, zoom));
-      
     } else {
       onMapClick(latLng);
     }
   }
   useEffect(() => {
-    if (showHexagon) {
-      let polygons = latLngToGeoJson(
-        markerPosition[0],
-        markerPosition[1],
-        getZoomResolution(hexagonSizeZoom),
-      );
-
-      setMarkerHexagonGeoJson(() => polygons);
-      if(zoom < showMarkerInHexagonMaxZoom)
-      {
-        setZoom(() => showMarkerInHexagonMaxZoom)
+    if (mapCenterIsReady.current) {
+      if (showHexagon) {
+        let polygons = latLngToGeoJson(
+          markerPosition[0],
+          markerPosition[1],
+          getZoomResolution(hexagonSizeZoom),
+        );
+        setMarkerHexagonGeoJson(() => polygons);
+      } else {
+        setMarkerHexagonGeoJson(() => null);
       }
-    }else{
-      setMarkerHexagonGeoJson(() => null);
-    }
-  }, [showHexagon, markerPosition])
-
-  useEffect(() => {
-    if (!mapCenterIsReady) {
-      if (!markerPosition[0] || !markerPosition[1]) {
+      if (zoom > onMarkerPositionChangeZoomTo) {
+        setZoom(() => onMarkerPositionChangeZoomTo);
+      }
+    } else {
+      if (
+        networkMapCenter &&
+        networkMapCenter[0] &&
+        networkMapCenter[1]
+      ) {
+        mapCenterIsReady.current = true;
         setMapCenter(() => networkMapCenter);
         setZoom(() => defaultZoom);
-        toggleMapCenterIsReady(true);
-      } else {
-        setZoom(() => maxZoom);
+      }else if(markerPosition[0] && markerPosition[1])
+      {
         setMapCenter(() => markerPosition);
-        toggleMapCenterIsReady(true);
+        setZoom(() => defaultZoom);
       }
     }
-  }, []);
+  }, [showHexagon, markerPosition, networkMapCenter]);
 
   return (
     <>
       <div className="picker__map">
-        <LoadabledComponent loading={!mapCenterIsReady}>
+        <LoadabledComponent loading={!mapCenter}>
           <HbMapUncontrolled
             mapCenter={mapCenter}
             mapZoom={zoom}
@@ -132,7 +122,7 @@ export default function MarkerViewMap({
                 }}
               />
             )}
-            {!showHexagon &&
+            {!showHexagon && (
               <MarkerButtonIcon
                 anchor={markerPosition}
                 offset={[35, 65]}
@@ -140,7 +130,7 @@ export default function MarkerViewMap({
                 image={markerImage}
                 title={markerCaption}
               />
-            }
+            )}
           </HbMapUncontrolled>
         </LoadabledComponent>
       </div>
