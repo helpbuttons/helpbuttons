@@ -19,7 +19,7 @@ import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 export function MarkerEditorMap(props) {
   return (
     <>
-      <DropDownWhere
+      {/* <DropDownWhere
         handleSelectedPlace={props.handleSelectedPlace}
         placeholder={t('homeinfo.searchlocation')}
         toggleLoadingNewAddress={props.toggleLoadingNewAddress}
@@ -28,8 +28,8 @@ export function MarkerEditorMap(props) {
         markerAddress={props.markerAddress}
         markerPosition={props.markerPosition}
         requestPlacesForQuery={props.requestPlacesForQuery}
-      />
-      {/* <DropDownSearchLocation
+      /> */}
+      <DropDownSearchLocation
         placeholder={t('homeinfo.searchlocation')}
         handleSelectedPlace={props.handleSelectedPlace}
         address={props.markerAddress}
@@ -37,7 +37,8 @@ export function MarkerEditorMap(props) {
         hideAddress={props.hideAddress}
         toggleLoadingNewAddress={props.toggleLoadingNewAddress}
         markerPosition={props.markerPosition}
-      /> */}
+        requestPlacesForQuery={props.requestPlacesForQuery}
+      />
       <MarkerViewMap {...props} editPosition={true} />
     </>
   );
