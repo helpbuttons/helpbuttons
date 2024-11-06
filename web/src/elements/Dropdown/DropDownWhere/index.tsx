@@ -5,16 +5,12 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import t from 'i18n';
-import { GlobalState, store } from 'pages';
-import { useCallback, useEffect, useState } from 'react';
+import { store } from 'pages';
+import { useEffect, useState } from 'react';
 import { IoLocationOutline } from 'react-icons/io5';
 import { useDebounce } from 'shared/custom.hooks';
-import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { roundCoords } from 'shared/honeycomb.utils';
-import { GeoFindAddress, GeoReverseFindAddress } from 'state/Geo';
-import { useRef } from 'store/Store';
-import debounce from 'lodash.debounce';
-
+import { GeoReverseFindAddress } from 'state/Geo';
 export function DropDownWhere({
   handleSelectedPlace,
   placeholder,

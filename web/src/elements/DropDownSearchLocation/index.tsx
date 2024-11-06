@@ -36,6 +36,7 @@ export default function DropDownSearchLocation({
   hideAddress = false,
   toggleLoadingNewAddress,
   markerPosition,
+  requestPlacesForQuery,
 }) {
   const config: SetupDtoOut = useStore(
     store,
@@ -86,37 +87,36 @@ export default function DropDownSearchLocation({
   }
   const bounce = useRef(false);
   const options = useRef([]);
-  const _loadSuggestions = function (inputValue, callback) {
+  const _loadSuggestions = function (input, callback) {
     toggleLoadingNewAddress(() => true);
-    store.emit(
-      new GeoFindAddress(inputValue, (places) => {
-        if (places.length > 0) {
-          if (hideAddress) {
-            options.current = _.uniqBy(places, 'label').map(
-              (place, key) => {
-                return {
-                  label: place.formatted_city,
-                  value: JSON.stringify(place),
-                  id: key,
-                };
-              },
-            );
-          } else {
-            options.current = places.map((place, key) => {
+    requestPlacesForQuery(input, (places) => {
+      if (places.length > 0) {
+        if (hideAddress) {
+          options.current = _.uniqBy(places, 'label').map(
+            (place, key) => {
               return {
-                label: place.formatted,
+                label: place.formatted_city,
                 value: JSON.stringify(place),
                 id: key,
               };
-            });
-          }
-
-          bounce.current = false;
-          toggleLoadingNewAddress(() => false);
-          return callback(options.current);
+            },
+          );
+        } else {
+          options.current = places.map((place, key) => {
+            return {
+              label: place.formatted,
+              value: JSON.stringify(place),
+              id: key,
+            };
+          });
         }
-      }),
-    );
+        
+        bounce.current = false;
+        toggleLoadingNewAddress(() => false);
+        return callback(options.current);
+      }
+      return callback([]);
+    });
   };
   const [input, setInput] = useState('');
   const debouncedFilter = useCallback(
@@ -141,18 +141,13 @@ export default function DropDownSearchLocation({
 
   return (
     <div className="form__field">
-      <LoadabledComponent loading={loadingNewAddress}>
+      <LoadabledComponent loading={!loadingNewAddress}>
         <label className="form__label">
           {label}
-          {(label && address) && (
+          {label && address && (
             <>
               {' '}
               {address}
-              {/* {label
-                ? ` ( ${address} [${roundCoords(
-                    center,
-                  ).toString()}] )`
-                : address} */}
             </>
           )}
         </label>
@@ -171,9 +166,8 @@ export default function DropDownSearchLocation({
             }
             console.log(action);
           }}
-          onBlur={() => 
+          onBlur={() =>
             setInput(() => {
-              console.log('address i : ' + address);
               return address;
             })
           }
@@ -197,8 +191,10 @@ export default function DropDownSearchLocation({
           />
         </LoadabledComponent>
       </div>
-      {(markerPosition[0] && markerPosition[1] && !hideAddress) && (
-        <>{address} ( {roundCoords(markerPosition).toString()} )</>
+      {markerPosition[0] && markerPosition[1] && !hideAddress && (
+        <>
+          {address} ( {roundCoords(markerPosition).toString()} )
+        </>
       )}
     </div>
   );
