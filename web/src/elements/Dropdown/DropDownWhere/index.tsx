@@ -1,4 +1,4 @@
-import Loading from 'components/loading';
+import Loading, { LoadabledComponent } from 'components/loading';
 import Btn, {
   BtnType,
   ContentAlignment,
@@ -6,21 +6,24 @@ import Btn, {
 } from 'elements/Btn';
 import t from 'i18n';
 import { GlobalState, store } from 'pages';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { IoLocationOutline } from 'react-icons/io5';
 import { useDebounce } from 'shared/custom.hooks';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { roundCoords } from 'shared/honeycomb.utils';
 import { GeoFindAddress, GeoReverseFindAddress } from 'state/Geo';
 import { useRef } from 'store/Store';
+import debounce from 'lodash.debounce';
 
 export function DropDownWhere({
   handleSelectedPlace,
   placeholder,
-  onFocus = (event) => {},
-  onBlur = (event) => {},
-  address = '',
-  center = [0, 0],
+  markerAddress = '',
+  markerPosition = [0, 0],
+  toggleLoadingNewAddress,
+  loadingNewAddress,
+  hideAddress,
+  requestPlacesForQuery,
 }) {
   const [options, setOptions] = useState([]);
 
@@ -28,10 +31,10 @@ export function DropDownWhere({
   const debounceInput = useDebounce(input, 300);
 
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [loadingNewAddress, setLoadingNewAddress] = useState(false);
+  const [hasFocus, setHasFocus] = useState(false);
 
   const setCenterFromBrowser = () => {
-    setLoadingNewAddress(true);
+    toggleLoadingNewAddress(true);
     setShowSuggestions(false);
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -41,87 +44,94 @@ export function DropDownWhere({
             position.coords.longitude,
             (place) => {
               handleSelectedPlace(place);
-              setLoadingNewAddress(false);
+              toggleLoadingNewAddress(false);
             },
+            (err) => console.log(err),
           ),
         );
       });
     }
   };
 
-  useEffect(() => {
-    if (debounceInput?.length > 2) {
-      setLoadingNewAddress(true);
-      setShowSuggestions(false);
-      store.emit(
-        new GeoFindAddress(debounceInput, (places) => {
-          setOptions(
-            places.map((place, key) => {
-              return (
-                <DropDownAutoCompleteOption
-                  key={key}
-                  label={place.formatted}
-                  value={JSON.stringify(place)}
-                />
-              );
-            }),
-          );
-          setLoadingNewAddress(false);
-          setShowSuggestions(true);
-        }),
-      );
-    }
-  }, [debounceInput]);
+  const handleKeyDown = () => {
+    if (input.length < 1) {
+      setShowSuggestions(() => false);
 
+      return;
+    }
+      requestPlacesForQuery(input, (places) => {
+        setOptions(
+          places.map((place, key) => {
+            const label = hideAddress
+              ? place.formatted_city
+              : place.formatted;
+            return (
+              <DropDownAutoCompleteOption
+                key={key}
+                label={label}
+                value={JSON.stringify(place)}
+              />
+            );
+          }),
+        );
+      });
+      toggleLoadingNewAddress(false);
+      setShowSuggestions(true);
+  };
   const onChangeInput = (e) => {
     let inputText = e.target.value;
-    setInput(inputText);
+    setInput(() => inputText);
   };
 
   const onClick = (e) => {
-    const place = JSON.parse(e.target.value);
-    setInput('');
+    if (e?.target?.value) {
+      const place = JSON.parse(e.target.value);
+      handleSelectedPlace(place);
+    }
     setShowSuggestions(false);
-    setLoadingNewAddress(false);
-    handleSelectedPlace(place);
+    toggleLoadingNewAddress(false);
   };
 
   const handleOnFocus = (event) => {
-    onFocus(event);
+    setShowSuggestions(true);
+    setHasFocus(true);
     event.target.setAttribute('autocomplete', 'off');
   };
-
+  const handleMouseLeave = (event) => {
+    setHasFocus(false);
+    setTimeout(() => !hasFocus ? setShowSuggestions(false) : '', 100);
+  };
   const onInputClick = (e) => {
     e.target.select();
   };
 
+  useEffect(() => {
+    setInput(() => markerAddress);
+  }, [markerAddress]);
   return (
     <>
-      <div className="form__field">
+      <div onMouseLeave={handleMouseLeave} className="form__field">
         <label className="form__label">
           {t('buttonFilters.where')}
-          {address && center && (
-            <>
-              ({address} - {roundCoords(center).toString()})
-            </>
-          )}
         </label>
-        <div className='form__field--location'>
-          <input
-            className="form__input"
-            autoComplete="on"
-            onChange={onChangeInput}
-            list=""
-            id="input"
-            name="browsers"
-            placeholder={placeholder}
-            type="text"
-            value={input}
-            onClick={onInputClick}
-            onFocus={handleOnFocus}
-            onBlur={onBlur}
-          ></input>
-          {!loadingNewAddress && 
+        <div className="form__field--location">
+          <LoadabledComponent loading={loadingNewAddress}>
+            <input
+              className="form__input"
+              autoComplete="on"
+              onChange={onChangeInput}
+              list=""
+              id="input"
+              name="browsers"
+              placeholder={placeholder}
+              type="text"
+              value={input}
+              onClick={onInputClick}
+              onFocus={handleOnFocus}
+              onKeyDown={handleKeyDown}
+            ></input>
+          </LoadabledComponent>
+          {!loadingNewAddress && (
             <Btn
               btnType={BtnType.circle}
               iconLink={<IoLocationOutline />}
@@ -129,10 +139,9 @@ export function DropDownWhere({
               contentAlignment={ContentAlignment.center}
               onClick={setCenterFromBrowser}
             />
-          }
+          )}
           {loadingNewAddress && <Loading />}
         </div>
-
         {showSuggestions && (
           <datalist
             onClick={onClick}
@@ -142,7 +151,9 @@ export function DropDownWhere({
             {options}
           </datalist>
         )}
-        
+        {markerAddress && markerPosition[0] && markerPosition[1] && (
+          <>({roundCoords(markerPosition).toString()})</>
+        )}
       </div>
     </>
   );
@@ -154,6 +165,8 @@ export function DropDownAutoCompleteOption({ value, label }) {
       className="dropdown-nets__dropdown-option"
       label={label}
       value={value}
-    >{label}</option>
+    >
+      {label}
+    </option>
   );
 }

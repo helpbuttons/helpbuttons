@@ -12,7 +12,7 @@
   },
   "homeinfo": {
     "start": "Where do you start?",
-    "searchlocation": "Search location",
+    "searchlocation": "What place are you looking for?",
     "info": "What's this Network about?",
     "seeMore": "See more",
     "seeLess": "See less",
@@ -107,8 +107,10 @@
     "whenExplain": "Filter events by date",
     "priceExplain": "Filter by price",
     "whereLabel": "Where ",
-    "byCategory": "By type",
+    "byCategory": "By category",
     "byPrice": "By price",
+    "byPlace": "Por lugar",
+    "byTopic": "Por tema",
     "byDate": "By creation date",
     "byProximity": "By proximity",
     "byEventDate": "By start of event",
@@ -118,7 +120,8 @@
     "filteredSearch": "in filtered search by:",
     "focusedArea": "in framed area",
     "locationLimited": "Limited to {0}, {1}",
-    "pickLocationLimits": "Choose a location"
+    "pickLocationLimits": "Choose a location",
+    "buttonTagsSuccess": "Tags added successfully"
   },
   "setup": {
     "hostname": "Hostname",
@@ -446,7 +449,7 @@
     "moderation": "Moderation",
     "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
-    "addType": "+ Create _helpbutton_ type with the above"
+    "addType": "+ Create _helpbutton_ type"
   },
   "configure": {
     "browsePins": "",

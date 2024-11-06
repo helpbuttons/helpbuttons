@@ -127,21 +127,6 @@ export class UpdateTagsList implements UpdateEvent{
     });
   }
 }
-export class ReverseGeo implements WatchEvent {
-  public constructor(
-    private lat: number,
-    private lng: number,
-    private onSuccess,
-    private onError,
-  ) {}
-
-  public watch(state: GlobalState) {
-    return GeoService.reverse(this.lat, this.lng).pipe(
-      map((place) => this.onSuccess(place)),
-      catchError((error) => handleError(this.onError, error))
-    );
-  }
-}
 
 export class CreateButton implements WatchEvent, UpdateEvent {
   public constructor(

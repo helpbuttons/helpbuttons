@@ -61,7 +61,7 @@ $nav-bottom-border: 32px;
     .nav-bottom__icon {
 
       transition: 0.2s;
-      transform: translateY(-0.4rem);
+      // transform: translateY(-0.4rem);
 
     }
 
@@ -110,10 +110,10 @@ $nav-bottom-border: 32px;
   .nav-bottom__icon {
     svg {
 
-      background-color: $color-black;
-      padding: $padding-small;
-      color: $color-white;
-      left: -18px;
+      // background-color: $color-black;
+      // padding: $padding-small;
+      color: $color-black;
+      // left: -18px;
       // fill: $color-white;
       // height: $nav-bottom-link-create-size;
       // width: $nav-bottom-link-create-size;
@@ -225,8 +225,8 @@ $nav-bottom-border: 32px;
         svg {
 
           // background-color: transparent;
-          padding: 6px;
-          background-color: $color-corporative;
+          // padding: 6px;
+          // background-color: $color-corporative;
           left: -18px;
           color: $color-black;
 

@@ -30,7 +30,6 @@ export default function HexagonExploreMap({
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
 
   const maxButtonsHexagon = useRef(1)
-  const [isRedrawingMap, setIsRedrawingMap] = useState(true)
 
   const showMarkersZoom = maxZoom - 2;
 
@@ -51,9 +50,7 @@ export default function HexagonExploreMap({
   );
 
   const onBoundsChanged = ({ center, zoom, bounds }) => {
-    setIsRedrawingMap(() => true)
     handleBoundsChange(bounds, center, zoom)
-
     setCenterBounds(center);
   };
 
@@ -67,8 +64,6 @@ export default function HexagonExploreMap({
     maxButtonsHexagon.current = h3TypeDensityHexes.reduce((accumulator, currentValue) => {
         return Math.max(accumulator, currentValue.count);
       }, 1);
-    setIsRedrawingMap(() => false)
-
   }, [h3TypeDensityHexes]);
 
   const buttonTypes = selectedNetwork.buttonTemplates;
@@ -145,14 +140,8 @@ export default function HexagonExploreMap({
             <DisplayInstructions/>
               <GeoJson>
                 {/* DRAW HEXAGONS ON MAP */}
-                {geoJsonFeatures.map((hexagonFeature) => (
+                {!(exploreSettings.zoom >= showMarkersZoom) && geoJsonFeatures.map((hexagonFeature) => (
                   <GeoJsonFeature
-                    // onMouseOver={() => {
-                    //   if(hexagonClicked != hexagonFeature.properties.hex)
-                    //   {
-                    //     store.emit(new UpdateHexagonClicked(hexagonFeature.properties.hex))
-                    //   }
-                    // }}
                     onClick={(feature) => {
                       if (hexagonFeature.properties.count > 0) {
                         store.emit(
@@ -210,7 +199,7 @@ export default function HexagonExploreMap({
                 ))}
 
                 {/* DRAW CLICKED HEXAGON ON MAP */}
-                {!isRedrawingMap &&
+                {!exploreSettings.loading &&
                   hexagonClicked &&
                   hexagonClickedFeatures && (
                     <GeoJsonFeature
@@ -231,7 +220,7 @@ export default function HexagonExploreMap({
             {/*
         show count of buttons per hexagon
         */}
-            {!isRedrawingMap &&
+            {!exploreSettings.loading &&
               !(exploreSettings.zoom >= showMarkersZoom) &&
               geoJsonFeatures.map((hexagonFeature) => {
                 if (hexagonFeature.properties.count > 0) {
@@ -266,7 +255,7 @@ export default function HexagonExploreMap({
               })}
 
             {/* draw clicked hexagon */}
-            {!isRedrawingMap &&
+            {!exploreSettings.loading &&
               hexagonClickedFeatures &&
               !(exploreSettings.zoom >= showMarkersZoom) && (
                 <Overlay
@@ -346,9 +335,9 @@ export default function HexagonExploreMap({
                 <IoStorefrontSharp />
               </button>
             </Overlay>
-            {isRedrawingMap && (
+            {exploreSettings.loading && (
               <Overlay anchor={centerBounds}>
-                <Loading />
+                <Loading /> loading
               </Overlay>
             )}
           </HbMap>

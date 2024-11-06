@@ -146,7 +146,7 @@
     "customFieldsExplain": "Estos son campos extra que puedes añadir a tus _helpbuttons_ para adaptarse a las diferentes tareas. Añade una fecha si quieres qu sirvan para gestionar eventos, o un precio si quieres que los usuarios vendan productos.",
     "priceFieldAddLabel": "Muestra un precio en tu tipo de _helpbutton_ para que los usuarios puedan comprar o vender",
     "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
-    "addType": "+ Crear tipo de _helpbutton_ con los campos superiores",
+    "addType": "+ Crear tipo de _helpbutton_",
     "currencyLabel": "Divisa",
     "setType": "",
     "buttonTemplatePlaceHolder": ""
@@ -179,7 +179,7 @@
     "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública."
   },
   "activitiesWithSubject": {
-    "newbutton": "{0} publicó un _helpbutton_ en  {1}",
+    "newbutton": "{0} creó _helpbutton_ en {1}",
     "newpost": "{0} publicó en {1}"
   },
   "user": {
@@ -312,6 +312,8 @@
     "byCategory": "Por categoría",
     "byDate": "Últimos creados",
     "byPrice": "Por precio",
+    "byPlace": "Por lugar",
+    "byTopic": "Por tema",
     "orderBy": "Ordenar por",
     "orderByExplain": "Elige el orden en el que mostrar _helpbuttons_ en la lista",
     "priceExplain": "Elige precio máximo y mínimo",
@@ -320,7 +322,9 @@
     "followTagSucess": "{0} fue añadido a tus temas de interés. Para ver tus temas de interés ve a Mi Perfil.",
     "focusedArea": "en la zona",
     "locationLimited": "Limitado a {0}, {1}",
-    "pickLocationLimits": "Elige una localización"
+    "pickLocationLimits": "Elige una localización",
+    "buttonTagsSuccess": "Tus temas de interés fueron actualizados"
+
   },
   "button": {
     "title": "Vista de _helpbutton_",
