@@ -16,7 +16,8 @@ let configs = {
   jwtSecret: process.env.jwtSecret,
   WEB_URL: process.env.WEB_URL,
   GEOCODE_APY_KEY: process.env?.GEOCODE_APY_KEY ? process.env.GEOCODE_APY_KEY : '',
-  GEOCODE_LIMIT_COUNTRIES: process.env?.GEOCODE_LIMIT_COUNTRIES ? process.env.GEOCODE_LIMIT_COUNTRIES : ''
+  GEOCODE_LIMIT_COUNTRIES: process.env?.GEOCODE_LIMIT_COUNTRIES ? process.env.GEOCODE_LIMIT_COUNTRIES : '',
+  GEO_SIMULATE : process.env?.GEO_SIMULATE ? true : false,
 }
 
 if (fs.existsSync(`${__dirname}/../../config/config.json`)) {
