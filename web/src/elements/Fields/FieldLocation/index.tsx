@@ -16,6 +16,7 @@ import { useToggle } from 'shared/custom.hooks';
 import { GeoReverseFindAddress, emptyPlace } from 'state/Geo';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import debounce from 'lodash.debounce';
+import { set } from 'immer/dist/internal';
 
 export default function FieldLocation({
   validationError,
@@ -32,40 +33,37 @@ export default function FieldLocation({
   watch,
   setValue,
 }) {
+  const [pickedMarkerPosition, setPickedMarkerPosition] =
+    useState(markerPosition);
+  const [pickedAddress, setPickedAddress] = useState(markerAddress);
+
   const hideAddress = watch('hideAddress');
   const latitude = watch('latitude');
   const longitude = watch('longitude');
   const loadingNewAddress = useRef(false);
-  let closeMenu = () => {
-    setShowPopup(() => false);
-  };
   const [zoom, setZoom] = useState(
     markerPosition[0] && markerPosition[1]
       ? maxZoom
       : selectedNetwork.exploreSettings.zoom,
   );
 
-  const [input, setInput] = useState('');
   const debouncedFilter = useCallback(
     debounce((latLng, success) => {
-      if (!loadingNewAddress.current) {
-        loadingNewAddress.current = true;
-        store.emit(
-          new GeoReverseFindAddress(
-            latLng[0],
-            latLng[1],
-            (place) => {
-              loadingNewAddress.current = false;
-              success(place);
-            },
-            (error) => {
-              loadingNewAddress.current = false;
-              success(emptyPlace({ lat: latLng[0], lng: latLng[1] }));
-              console.log(error);
-            },
-          ),
-        );
-      }
+      store.emit(
+        new GeoReverseFindAddress(
+          latLng[0],
+          latLng[1],
+          (place) => {
+            loadingNewAddress.current = false;
+            success(place);
+          },
+          (error) => {
+            loadingNewAddress.current = false;
+            success(emptyPlace({ lat: latLng[0], lng: latLng[1] }));
+            console.log(error);
+          },
+        ),
+      );
     }, 500),
     [],
   );
@@ -74,19 +72,20 @@ export default function FieldLocation({
     debouncedFilter(latLng, success);
   };
   const setLocation = (latLng, place = null) => {
-    setMarkerPosition([latLng[0], latLng[1]]);
+    setPickedMarkerPosition(() => [Number.parseFloat(latLng[0]), Number.parseFloat(latLng[1])]);
     if (place) {
+      console.log(place);
       if (hideAddress) {
-        updateAddress(place.formatted_city);
+        setPickedAddress(() => place.formatted_city);
       } else {
-        updateAddress(place.formatted);
+        setPickedAddress(() => place.formatted);
       }
     } else {
       requestAddressForMarkerPosition(latLng, (place) => {
         if (hideAddress) {
-          updateAddress(place.formatted_city);
+          setPickedAddress(() => place.formatted_city);
         } else {
-          updateAddress(place.formatted);
+          setPickedAddress(() => place.formatted);
         }
       });
     }
@@ -97,9 +96,9 @@ export default function FieldLocation({
         [latitude, longitude],
         (place) => {
           if (hideAddress) {
-            updateAddress(place.formatted_city);
+            setPickedAddress(() => place.formatted_city);
           } else {
-            updateAddress(place.formatted);
+            setPickedAddress(() => place.formatted);
           }
         },
       );
@@ -119,7 +118,16 @@ export default function FieldLocation({
     );
     setZoom(() => maxZoom);
   };
-  const closePopup = () => setShowPopup(() => false);
+  const closeWithoutSaving = () => {
+    setShowPopup(() => false);
+    setPickedAddress('');
+    setPickedMarkerPosition([null, null]);
+  };
+  const closeAndSave = () => {
+    updateAddress(pickedAddress);
+    setMarkerPosition(pickedMarkerPosition);
+    setShowPopup(() => false);
+  };
   const openPopup = () => setShowPopup(() => true);
   return (
     <>
@@ -139,7 +147,7 @@ export default function FieldLocation({
           headerText={t('picker.headerText')}
           explain={t('button.whereExplain')}
           openPopup={openPopup}
-          closePopup={closePopup}
+          closePopup={closeWithoutSaving}
         >
           <MarkerEditorMap
             loadingNewAddress={loadingNewAddress.current}
@@ -150,12 +158,12 @@ export default function FieldLocation({
             zoom={zoom}
             setZoom={setZoom}
             markerColor={markerColor ? markerColor : 'pink'}
-            markerPosition={markerPosition}
+            markerPosition={pickedMarkerPosition}
             markerCaption={markerCaption}
             markerImage={markerImage}
             hideAddress={hideAddress}
             handleSelectedPlace={handleSelectedPlace}
-            markerAddress={markerAddress}
+            markerAddress={pickedAddress}
             networkMapCenter={selectedNetwork.exploreSettings.center}
           />
           <FieldCheckbox
@@ -168,7 +176,7 @@ export default function FieldLocation({
             btnType={BtnType.submit}
             caption={t('common.save')}
             contentAlignment={ContentAlignment.center}
-            onClick={() => setShowPopup(!showPopup)}
+            onClick={() => closeAndSave()}
           />
         </PickerField>
       )}

@@ -6,6 +6,7 @@ import { PeliasProvider } from './providers/pelias';
 import { HttpHelper } from '@src/shared/helpers/http.helper';
 import { KomootGeoProvider } from './providers/komoot';
 import { Response } from 'express';
+import { SimulateGeoProvider } from './providers/simulate';
 
 @Injectable()
 export class GeoService {
@@ -16,7 +17,11 @@ export class GeoService {
   ) {
     const geoCodeApiKey = configs().GEOCODE_APY_KEY;
     const geoCodeLimitCountries = configs().GEOCODE_LIMIT_COUNTRIES;
-    if (geoCodeApiKey) {
+    const geoSimulate = configs().GEO_SIMULATE;
+    if(geoSimulate)
+    {
+      this.geoProvider = new SimulateGeoProvider()
+    }else if (geoCodeApiKey) {
       this.geoProvider = new PeliasProvider(
         this.httpHelper,
         geoCodeApiKey,
@@ -31,7 +36,7 @@ export class GeoService {
     return this.geoProvider.searchQuery(query);
   }
 
-  async findAddress(lat: string, lng: string, response: Response) {
+  async findAddress(lat: string, lng: string) {
       return this.geoProvider.getAddress({ lat: lat, lng: lng });
   }
 }
