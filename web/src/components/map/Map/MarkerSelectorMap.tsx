@@ -21,12 +21,13 @@ export function MarkerEditorMap(props) {
     <>
       <DropDownWhere
         handleSelectedPlace={props.handleSelectedPlace}
-        placeholder={'im a placeholder'}
+        placeholder={t('homeinfo.searchlocation')}
         toggleLoadingNewAddress={props.toggleLoadingNewAddress}
         loadingNewAddress={props.loadingNewAddress}
         hideAddress={props.hideAddress}
         markerAddress={props.markerAddress}
         markerPosition={props.markerPosition}
+        requestPlacesForQuery={props.requestPlacesForQuery}
       />
       {/* <DropDownSearchLocation
         placeholder={t('homeinfo.searchlocation')}

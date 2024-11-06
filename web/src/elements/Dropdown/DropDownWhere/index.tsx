@@ -23,6 +23,7 @@ export function DropDownWhere({
   toggleLoadingNewAddress,
   loadingNewAddress,
   hideAddress,
+  requestPlacesForQuery,
 }) {
   const [options, setOptions] = useState([]);
 
@@ -30,6 +31,7 @@ export function DropDownWhere({
   const debounceInput = useDebounce(input, 300);
 
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [hasFocus, setHasFocus] = useState(false);
 
   const setCenterFromBrowser = () => {
     toggleLoadingNewAddress(true);
@@ -44,88 +46,68 @@ export function DropDownWhere({
               handleSelectedPlace(place);
               toggleLoadingNewAddress(false);
             },
-            (err) => console.log(err)
+            (err) => console.log(err),
           ),
         );
       });
     }
   };
 
-  const _loadSuggestions = function (inputValue, callback) {
-    toggleLoadingNewAddress(true);
-    console.log('finding input: ' + inputValue);
-    store.emit(
-      new GeoFindAddress(inputValue, (places) => {
-        return callback(places);
-      }),
-    );
-  };
+  const handleKeyDown = () => {
+    if (input.length < 1) {
+      setShowSuggestions(() => false);
 
-  const debouncedFilter = useCallback(
-    debounce(
-      (inputValue, callback) =>
-        _loadSuggestions(inputValue, callback),
-      500,
-    ),
-    [],
-  );
-  useEffect(() => {
-    if(input.length < 1)
-    {
-        setShowSuggestions(() => false)
-        
-        return;
+      return;
     }
-    debouncedFilter(input, (places) => {
-      //   setOptions(options);
-      setOptions(
-        places.map((place, key) => {
-          const label = hideAddress
-            ? place.formatted_city
-            : place.formatted;
-          return (
-            <DropDownAutoCompleteOption
-              key={key}
-              label={label}
-              value={JSON.stringify(place)}
-            />
-          );
-        }),
-      );
+      requestPlacesForQuery(input, (places) => {
+        setOptions(
+          places.map((place, key) => {
+            const label = hideAddress
+              ? place.formatted_city
+              : place.formatted;
+            return (
+              <DropDownAutoCompleteOption
+                key={key}
+                label={label}
+                value={JSON.stringify(place)}
+              />
+            );
+          }),
+        );
+      });
       toggleLoadingNewAddress(false);
-    //   setShowSuggestions(true);
-    });
-  }, [input]);
+      setShowSuggestions(true);
+  };
   const onChangeInput = (e) => {
     let inputText = e.target.value;
     setInput(() => inputText);
   };
 
   const onClick = (e) => {
-    if(e?.target?.value)
-    {
-        const place = JSON.parse(e.target.value);
-        handleSelectedPlace(place);
+    if (e?.target?.value) {
+      const place = JSON.parse(e.target.value);
+      handleSelectedPlace(place);
     }
     setShowSuggestions(false);
-    toggleLoadingNewAddress(true);
-    
+    toggleLoadingNewAddress(false);
   };
 
   const handleOnFocus = (event) => {
-    setShowSuggestions(true)
+    setShowSuggestions(true);
+    setHasFocus(true);
     event.target.setAttribute('autocomplete', 'off');
   };
   const handleMouseLeave = (event) => {
-    setShowSuggestions(false)
-  }
+    setHasFocus(false);
+    setTimeout(() => !hasFocus ? setShowSuggestions(false) : '', 100);
+  };
   const onInputClick = (e) => {
     e.target.select();
   };
 
   useEffect(() => {
-    setInput(() => markerAddress)
-  }, [markerAddress])
+    setInput(() => markerAddress);
+  }, [markerAddress]);
   return (
     <>
       <div onMouseLeave={handleMouseLeave} className="form__field">
@@ -133,21 +115,22 @@ export function DropDownWhere({
           {t('buttonFilters.where')}
         </label>
         <div className="form__field--location">
-            <LoadabledComponent loading={loadingNewAddress}>
-          <input
-            className="form__input"
-            autoComplete="on"
-            onChange={onChangeInput}
-            list=""
-            id="input"
-            name="browsers"
-            placeholder={placeholder}
-            type="text"
-            value={input}
-            onClick={onInputClick}
-            onFocus={handleOnFocus}
-          ></input>
-        </LoadabledComponent>
+          <LoadabledComponent loading={loadingNewAddress}>
+            <input
+              className="form__input"
+              autoComplete="on"
+              onChange={onChangeInput}
+              list=""
+              id="input"
+              name="browsers"
+              placeholder={placeholder}
+              type="text"
+              value={input}
+              onClick={onInputClick}
+              onFocus={handleOnFocus}
+              onKeyDown={handleKeyDown}
+            ></input>
+          </LoadabledComponent>
           {!loadingNewAddress && (
             <Btn
               btnType={BtnType.circle}
@@ -169,9 +152,7 @@ export function DropDownWhere({
           </datalist>
         )}
         {markerAddress && markerPosition[0] && markerPosition[1] && (
-          <>
-            ({roundCoords(markerPosition).toString()})
-          </>
+          <>({roundCoords(markerPosition).toString()})</>
         )}
       </div>
     </>

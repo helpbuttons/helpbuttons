@@ -13,7 +13,11 @@ import { roundCoord } from 'shared/honeycomb.utils';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
 import { useToggle } from 'shared/custom.hooks';
-import { GeoReverseFindAddress, emptyPlace } from 'state/Geo';
+import {
+  GeoFindAddress,
+  GeoReverseFindAddress,
+  emptyPlace,
+} from 'state/Geo';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import debounce from 'lodash.debounce';
 import { set } from 'immer/dist/internal';
@@ -36,7 +40,7 @@ export default function FieldLocation({
   const [pickedMarkerPosition, setPickedMarkerPosition] =
     useState(markerPosition);
   const [pickedAddress, setPickedAddress] = useState(markerAddress);
-
+  const [pickedPlace, setPickedPlace] = useState(null);
   const hideAddress = watch('hideAddress');
   const latitude = watch('latitude');
   const longitude = watch('longitude');
@@ -47,7 +51,7 @@ export default function FieldLocation({
       : selectedNetwork.exploreSettings.zoom,
   );
 
-  const debouncedFilter = useCallback(
+  const GeofindReverse = useCallback(
     debounce((latLng, success) => {
       store.emit(
         new GeoReverseFindAddress(
@@ -68,13 +72,34 @@ export default function FieldLocation({
     [],
   );
 
+  const GeoFindByQuery = useCallback(
+    debounce((query, callback) => {
+      loadingNewAddress.current = true;
+      store.emit(
+        new GeoFindAddress(query, (places) => {
+          loadingNewAddress.current = false;
+          return callback(places);
+        }),
+      );
+    }, 500),
+    [],
+  );
+
+  const requestPlacesForQuery = (query, success) => {
+    GeoFindByQuery(query, (places) => success(places));
+  };
+
   const requestAddressForMarkerPosition = (latLng, success) => {
-    debouncedFilter(latLng, success);
+    GeofindReverse(latLng, success);
   };
   const setLocation = (latLng, place = null) => {
-    setPickedMarkerPosition(() => [Number.parseFloat(latLng[0]), Number.parseFloat(latLng[1])]);
+    setPickedMarkerPosition(() => [
+      Number.parseFloat(latLng[0]),
+      Number.parseFloat(latLng[1]),
+    ]);
+    
     if (place) {
-      console.log(place);
+      setPickedPlace(() => place);
       if (hideAddress) {
         setPickedAddress(() => place.formatted_city);
       } else {
@@ -82,6 +107,7 @@ export default function FieldLocation({
       }
     } else {
       requestAddressForMarkerPosition(latLng, (place) => {
+        setPickedPlace(() => place);
         if (hideAddress) {
           setPickedAddress(() => place.formatted_city);
         } else {
@@ -91,19 +117,14 @@ export default function FieldLocation({
     }
   };
   useEffect(() => {
-    if (latitude && longitude) {
-      requestAddressForMarkerPosition(
-        [latitude, longitude],
-        (place) => {
-          if (hideAddress) {
-            setPickedAddress(() => place.formatted_city);
-          } else {
-            setPickedAddress(() => place.formatted);
-          }
-        },
-      );
+    if (pickedPlace) {
+      if (hideAddress) {
+        setPickedAddress(() => pickedPlace.formatted_city);
+      } else {
+        setPickedAddress(() => pickedPlace.formatted);
+      }
     }
-  }, [hideAddress]);
+  }, [hideAddress, pickedPlace]);
 
   const onMapClick = (latLng) => {
     setLocation(latLng);
@@ -165,6 +186,7 @@ export default function FieldLocation({
             handleSelectedPlace={handleSelectedPlace}
             markerAddress={pickedAddress}
             networkMapCenter={selectedNetwork.exploreSettings.center}
+            requestPlacesForQuery={requestPlacesForQuery}
           />
           <FieldCheckbox
             name="hideAddress"
