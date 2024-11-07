@@ -46,6 +46,7 @@ const FieldButtonTemplates = forwardRef(
     const [editFieldCaption, setEditFieldCaption] = useState(null)
     const [editFieldCssColor, setEditFieldCssColor] = useState(null)
     const [editFieldEmoji, setEditFieldEmoji] = useState('😀')
+    const [editFieldCustomTypes, setEditFieldCustomTypes] = useState([])
     const [hideField, setHideField] = useState(false)
 
     let closeMenu = () => {
@@ -63,6 +64,7 @@ const FieldButtonTemplates = forwardRef(
       setEditFieldCssColor(() => value.cssColor)
       setEditFieldCaption(() => value.caption)
       setHideField(() => value.hide)
+      setEditFieldCustomTypes(() => value.customFields)
       if(value.icon)
       {
         setEditFieldEmoji(() => value.icon)
@@ -77,12 +79,14 @@ const FieldButtonTemplates = forwardRef(
         icon: editFieldEmoji,
         cssColor: editFieldCssColor, 
         caption: editFieldCaption,
-        hide: hideField
+        hide: hideField,
+        customFields: editFieldCustomTypes
       })
       setEditFieldIdx(() => null)
       setEditFieldCssColor(() => null)
       setEditFieldCaption(() => null)
       setHideField(() => false)
+      setEditFieldCustomTypes(() => [])
     }
 
     const hideIdx = (id, values) => {
@@ -135,6 +139,10 @@ const FieldButtonTemplates = forwardRef(
                         actionName={t('configuration.buttonTemplateColor')}
                         value={editFieldCssColor}
                       />
+                      <AddCustomFields
+                        customFields={editFieldCustomTypes}
+                        setCustomFields={setEditFieldCustomTypes}
+                      />
                       <Btn
                         btnType={BtnType.corporative}
                         iconLink={<IoSaveOutline />}
@@ -146,7 +154,7 @@ const FieldButtonTemplates = forwardRef(
                   </Picker>
                 }
                 {editFieldIdx != idx && 
-                  <HiddenTemplate value={val.hide}>
+                    <>
                     <Btn
                       btnType={BtnType.filterEmoji}
                       iconLeft={IconType.svg}
@@ -183,8 +191,7 @@ const FieldButtonTemplates = forwardRef(
                           showIdx(idx, val)
                         }}
                       />
-                    }
-                  </HiddenTemplate>
+                    }</>
                 } 
                 
               </div>
@@ -197,14 +204,6 @@ const FieldButtonTemplates = forwardRef(
 );
 
 export default FieldButtonTemplates;
-
-function HiddenTemplate({value, children}){
-  if(value)
-  {
-    return <>{children}</>
-  }
-  return <>{children}</>
-}
 
 function ButtonTemplateForm({ label, explain, append }) {
   const { register, setValue, watch, getValues, reset } = useForm({
@@ -240,7 +239,7 @@ function ButtonTemplateForm({ label, explain, append }) {
     }
   };
   const [showForm, setShowForm] = useState(false)
-  const [customFields, setCustomFields] = useState([]);
+  // const [customFields, setCustomFields] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const closePopup = () => setShowPopup(() => false);
   const openPopup = () => setShowPopup(() => true);
@@ -283,8 +282,8 @@ function ButtonTemplateForm({ label, explain, append }) {
           {t('configuration.customFieldsExplain')}
         </p>
         <AddCustomFields
-          customFields={customFields}
-          setCustomFields={setCustomFields}
+          customFields={watch('customFields')}
+          setCustomFields={(customFields) => setValue('customFields', customFields)}
         />
         <Btn
           caption={t('configuration.addType')}

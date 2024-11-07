@@ -62,7 +62,7 @@ function Configuration() {
       }, () => {}),
       
     );
-  });
+  }, []);
   const onSubmit = (data) => {
     store.emit(
       new UpdateNetwork(
