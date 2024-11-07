@@ -1,26 +1,18 @@
 //this is the component integrated in buttonNewPublish to display the location. It shows the current location and has a button to change the location that displays a picker with the differents location options for the network
 import React, {
-  useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { MarkerEditorMap } from 'components/map/Map/MarkerSelectorMap';
-import { store } from 'pages';
 import t from 'i18n';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
-import { useToggle } from 'shared/custom.hooks';
-import {
-  GeoFindAddress,
-  GeoReverseFindAddress,
-  emptyPlace,
-} from 'state/Geo';
 import { maxZoom } from 'components/map/Map/Map.consts';
-import debounce from 'lodash.debounce';
-import { set } from 'immer/dist/internal';
+import { useGeoReverse } from './location.helpers';
+
 
 export default function FieldLocation({
   validationError,
@@ -51,47 +43,8 @@ export default function FieldLocation({
       : selectedNetwork.exploreSettings.zoom,
   );
 
-  const GeofindReverse = useCallback(
-    debounce((latLng, success) => {
-      store.emit(
-        new GeoReverseFindAddress(
-          latLng[0],
-          latLng[1],
-          (place) => {
-            loadingNewAddress.current = false;
-            success(place);
-          },
-          (error) => {
-            loadingNewAddress.current = false;
-            success(emptyPlace({ lat: latLng[0], lng: latLng[1] }));
-            console.log(error);
-          },
-        ),
-      );
-    }, 500),
-    [],
-  );
+  const geoReverse = useGeoReverse()
 
-  const GeoFindByQuery = useCallback(
-    debounce((query, callback) => {
-      loadingNewAddress.current = true;
-      store.emit(
-        new GeoFindAddress(query, (places) => {
-          loadingNewAddress.current = false;
-          return callback(places);
-        }),
-      );
-    }, 500),
-    [],
-  );
-
-  const requestPlacesForQuery = (query, success) => {
-    GeoFindByQuery(query, (places) => success(places));
-  };
-
-  const requestAddressForMarkerPosition = (latLng, success) => {
-    GeofindReverse(latLng, success);
-  };
   const setLocation = (latLng, place = null) => {
     setPickedMarkerPosition(() => [
       Number.parseFloat(latLng[0]),
@@ -99,6 +52,7 @@ export default function FieldLocation({
     ]);
     
     if (place) {
+      loadingNewAddress.current = false;
       setPickedPlace(() => place);
       if (hideAddress) {
         setPickedAddress(() => place.formatted_city);
@@ -106,7 +60,9 @@ export default function FieldLocation({
         setPickedAddress(() => place.formatted);
       }
     } else {
-      requestAddressForMarkerPosition(latLng, (place) => {
+      loadingNewAddress.current = true
+      geoReverse(latLng, (place) => {
+        loadingNewAddress.current = false;
         setPickedPlace(() => place);
         if (hideAddress) {
           setPickedAddress(() => place.formatted_city);
@@ -186,7 +142,6 @@ export default function FieldLocation({
             handleSelectedPlace={handleSelectedPlace}
             markerAddress={pickedAddress}
             networkMapCenter={selectedNetwork.exploreSettings.center}
-            requestPlacesForQuery={requestPlacesForQuery}
           />
           <FieldCheckbox
             name="hideAddress"

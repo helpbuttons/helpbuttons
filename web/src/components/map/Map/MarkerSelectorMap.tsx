@@ -37,7 +37,6 @@ export function MarkerEditorMap(props) {
         hideAddress={props.hideAddress}
         toggleLoadingNewAddress={props.toggleLoadingNewAddress}
         markerPosition={props.markerPosition}
-        requestPlacesForQuery={props.requestPlacesForQuery}
       />
       <MarkerViewMap {...props} editPosition={true} />
     </>
