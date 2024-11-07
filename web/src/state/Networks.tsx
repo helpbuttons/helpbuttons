@@ -17,6 +17,7 @@ import { useEffect, useRef } from 'react';
 import { SetupSteps } from 'shared/setupSteps';
 import { ConfigFound, GetConfig } from './Setup';
 import { getLocale } from 'shared/sys.helper';
+import { roundCoords } from 'shared/honeycomb.utils';
 // import router from 'next/router';
 
 export interface NetworksState {
@@ -53,16 +54,6 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) =>
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
-}
-
-export class setNetwork implements UpdateEvent {
-  public constructor(private network) {}
-
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.networks.selectedNetwork = this.network
-    });
-  }
 }
 export class UpdateNetworkBackgroundColor implements UpdateEvent {
   public constructor(public color: string) {}
@@ -161,6 +152,10 @@ export class SelectedNetworkFetched implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      // @ts-ignore
+      newState.explore.map.filters.where.center = roundCoords(this.network.exploreSettings.center);
+
+      newState.explore.map.filters.where.radius = 100;
       newState.networks.selectedNetwork = this.network
       newState.networks.selectedNetworkLoading = false;
     });

@@ -25,6 +25,7 @@ import { LoadabledComponent } from 'components/loading';
 import AsyncSelect from 'react-select/async';
 import debounce from 'lodash.debounce';
 import _ from 'lodash';
+import { useGeoSearch } from 'elements/Fields/FieldLocation/location.helpers';
 
 export default function DropDownSearchLocation({
   handleSelectedPlace = (place) => {},
@@ -36,12 +37,13 @@ export default function DropDownSearchLocation({
   hideAddress = false,
   toggleLoadingNewAddress,
   markerPosition,
-  requestPlacesForQuery,
 }) {
   const config: SetupDtoOut = useStore(
     store,
     (state: GlobalState) => state.config,
   );
+
+  const geoSearch = useGeoSearch()
 
   const setSelectedOption = (selectedOption) => {
     const selectedPlace = JSON.parse(selectedOption.value);
@@ -50,7 +52,7 @@ export default function DropDownSearchLocation({
   };
 
   const [loadingUserAddress, toggleLoadingUserAddress] =
-    useToggle(false);
+    useState(false);
 
   const setCenterFromBrowser = () => {
     toggleLoadingUserAddress(true);
@@ -89,7 +91,8 @@ export default function DropDownSearchLocation({
   const options = useRef([]);
   const _loadSuggestions = function (input, callback) {
     toggleLoadingNewAddress(() => true);
-    requestPlacesForQuery(input, (places) => {
+    geoSearch(input, (places) => {
+      toggleLoadingNewAddress(() => false);
       if (places.length > 0) {
         if (hideAddress) {
           options.current = _.uniqBy(places, 'label').map(
@@ -141,7 +144,7 @@ export default function DropDownSearchLocation({
 
   return (
     <div className="form__field">
-      <LoadabledComponent loading={!loadingNewAddress}>
+      <LoadabledComponent loading={loadingNewAddress}>
         <label className="form__label">
           {label}
           {label && address && (
