@@ -16,16 +16,18 @@ export class GeoService {
     private readonly httpHelper: HttpHelper
   ) {
     const geoCodeApiKey = configs().GEOCODE_APY_KEY;
-    const geoCodeLimitCountries = configs().GEOCODE_LIMIT_COUNTRIES;
     const geoSimulate = configs().GEO_SIMULATE;
     if(geoSimulate)
     {
       this.geoProvider = new SimulateGeoProvider()
     }else if (geoCodeApiKey) {
+      const geoCodeLimitCountries = configs().GEOCODE_LIMIT_COUNTRIES;
+      const geoCodeHost = configs().GEOCODE_HOST;
       this.geoProvider = new PeliasProvider(
         this.httpHelper,
         geoCodeApiKey,
         geoCodeLimitCountries,
+        geoCodeHost
       );
     } else {
       this.geoProvider = new KomootGeoProvider(this.httpHelper);
