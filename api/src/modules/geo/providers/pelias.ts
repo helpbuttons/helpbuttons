@@ -7,13 +7,16 @@ import { HttpHelper } from '@src/shared/helpers/http.helper';
 export class PeliasProvider implements GeoProvider {
   apiKey = '';
   limitCountries = '';
+  geoCodeHost = ''
   constructor(
     private readonly httpHelper: HttpHelper,
     _apiKey,
     _limitCountries,
+    _geoCodeHost
   ) {
     this.apiKey = _apiKey;
     this.limitCountries = _limitCountries;
+    this.geoCodeHost = _geoCodeHost;
   }
 
   searchQuery(query: string): Promise<GeoAddress[]> {
@@ -21,9 +24,9 @@ export class PeliasProvider implements GeoProvider {
       return res.data.features.map((item) => this.hydratePlace(item));
     });
   }
-
+  GEOCODE_HOST
   queryGeo(query): Promise<any> {
-    let url = `https://api.geocode.earth/v1/autocomplete?api_key=${this.apiKey}&text=${query}&size=15`;
+    let url = `${this.geoCodeHost}v1/autocomplete?api_key=${this.apiKey}&text=${query}&size=15`;
     if (this.limitCountries.length > 0) {
       url = `${url}&boundary.country=${this.limitCountries}`;
     }
@@ -38,7 +41,7 @@ export class PeliasProvider implements GeoProvider {
 
   reverseGeo(lat, lng): Promise<any> {
     return this.httpHelper.get(
-      `https://api.geocode.earth/v1/reverse?api_key=${this.apiKey}&point.lat=${lat}&point.lon=${lng}`,
+      `${this.geoCodeHost}v1/reverse?api_key=${this.apiKey}&point.lat=${lat}&point.lon=${lng}`,
     );
   }
 
