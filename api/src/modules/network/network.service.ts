@@ -201,6 +201,22 @@ export class NetworkService {
       nomeclaturePlural: updateDto.nomeclaturePlural,
       requireApproval: updateDto.requireApproval
     };
+    
+    const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
+
+    const buttonTemplateActive = await this.entityManager.query(`select count(id), type from button group by type;`)
+
+    const orphanButtonTemplates = buttonTemplateActive.filter((btnTemplate) => {
+      return !(buttonTemplatesNew.find((name) => name == btnTemplate.type) !==  undefined);
+    } )
+
+    if(orphanButtonTemplates.length > 0)
+    {
+      const undeletedButtonTemplates = orphanButtonTemplates.map((btnTemplate) => btnTemplate.type)
+      throw new ValidationException({ buttonTemplates: 'cant delete button template ' + JSON.stringify(undeletedButtonTemplates)});
+    }
+    
+
     await getManager().transaction(
       async (transactionalEntityManager) => {
         if (Array.isArray(updateDto.tags)) {
