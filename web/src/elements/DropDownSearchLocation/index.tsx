@@ -194,9 +194,12 @@ export default function DropDownSearchLocation({
           />
         </LoadabledComponent>
       </div>
-      {markerPosition[0] && markerPosition[1] && !hideAddress && (
+      {address && 
+        <>{address}</>
+      }
+      {(markerPosition && markerPosition[0] && markerPosition[1] && !hideAddress) && (
         <>
-          {address} ( {roundCoords(markerPosition).toString()} )
+           ( {roundCoords(markerPosition).toString()} )
         </>
       )}
     </div>

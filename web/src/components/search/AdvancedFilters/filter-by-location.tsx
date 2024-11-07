@@ -44,13 +44,29 @@ export function FilterByLocationRadius({
     return sliderValue;
   };
 
+  const [pickedRadius, setPickedRadius] = useState(radius);
+  const [pickedPosition, setPickedPosition] = useState(center);
+  const [pickedPlace, setPickedPlace] = useState(null);
+
+  const saveAndClose = () => {
+    setRadius(pickedRadius);
+    handleSelectedPlace(pickedPlace);
+    closePopup();
+  };
+  const discardAndClose = () => {
+    setPickedRadius(() => radius);
+    setPickedPosition(() => center);
+    setPickedPlace(() => null);
+    // handleSelectedPlace(pickedPlace)
+    closePopup();
+  };
   return (
     <PickerField
       label={t('buttonFilters.where')}
       explain={t('buttonFilters.whereExplain')}
       title={t('buttonFilters.where')}
       btnLabel={
-        (address) ? (
+        address ? (
           <>
             {t('buttonFilters.locationLimited', [
               address,
@@ -63,37 +79,46 @@ export function FilterByLocationRadius({
       }
       showPopup={showPopup}
       openPopup={openPopup}
-      closePopup={closePopup}
+      closePopup={discardAndClose}
     >
       <DropDownSearchLocation
         placeholder={t('homeinfo.searchlocation')}
-        handleSelectedPlace={handleSelectedPlace}
-        address={address}
-        markerPosition={center}
+        handleSelectedPlace={(place) => {
+          setPickedPlace(() => place);
+          setPickedPosition(() => [
+            place.geometry.lat,
+            place.geometry.lng,
+          ]);
+        }}
+        markerPosition={pickedPosition}
         toggleLoadingNewAddress={() => {}}
+        address={address}
       />
-
+      {pickedPlace && (
         <div className="form__field">
           <label className="form__label">
             {t('buttonFilters.distance')} -&nbsp;
-            {readableDistance(radius)}
+            {readableDistance(pickedRadius)}
           </label>
           <div style={{ padding: '1rem' }}>
             <Slider
               min={1}
               max={(marks.length - 1) * 100}
               onChange={(radiusValue) => {
-                setRadius(calcRadiusFromSlider(radiusValue));
+                setPickedRadius(() =>
+                  calcRadiusFromSlider(radiusValue),
+                );
               }}
-              defaultValue={calcSliderFromRadius(radius)}
+              defaultValue={calcSliderFromRadius(pickedRadius)}
             />
           </div>
         </div>
+      )}
       <Btn
         btnType={BtnType.submit}
         caption={t('common.save')}
         contentAlignment={ContentAlignment.center}
-        onClick={() => closePopup()}
+        onClick={() => saveAndClose()}
       />
     </PickerField>
   );
