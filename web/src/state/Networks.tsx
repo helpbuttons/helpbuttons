@@ -152,10 +152,6 @@ export class SelectedNetworkFetched implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      // @ts-ignore
-      newState.explore.map.filters.where.center = roundCoords(this.network.exploreSettings.center);
-
-      newState.explore.map.filters.where.radius = 100;
       newState.networks.selectedNetwork = this.network
       newState.networks.selectedNetworkLoading = false;
     });
