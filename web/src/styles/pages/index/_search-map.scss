@@ -84,9 +84,6 @@ $search-map-height: 0; // Altura del header
 
   .search-map__name{
 
-    display: flex;
-    justify-content: center;
-    flex-flow: column;
     align-items: flex-start;
     overflow: hidden;
     max-height: 2.4rem;
