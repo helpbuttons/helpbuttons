@@ -161,7 +161,10 @@ export default function HomeInfo({ metadata }) {
                   <h3 className="homeinfo-card__header-title">
                     {t('homeinfo.info')}
                   </h3>
-                  
+                  <div class="homeinfo-card__controls">
+                    <InstallButton />
+                    <DesktopNotificationsButton/>
+                  </div>
                 </div>
                 <hr></hr>
 
@@ -174,10 +177,6 @@ export default function HomeInfo({ metadata }) {
                 </div>
 
                 <div className="homeinfo-card__section">
-                  <InstallButton />
-                </div>
-                <div className="homeinfo-card__section">
-                  <DesktopNotificationsButton/>
                 </div>
               </div>
 
