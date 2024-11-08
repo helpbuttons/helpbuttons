@@ -227,12 +227,14 @@ $card-button-list-border-height: $border-general-height;
 }
 
 .card-button-list__title {
-  font-size: $font-size-general;
+  font-size: $font-size-medium;
+  line-height: auto;
+
+
   margin-bottom: 0;
   font-weight: $font-weight-bold;
   color: $color-black;
   display: -webkit-box;
-  font-size: $font-size-title;
   margin: $padding-small 0;
   display: flex;
   flex-direction: row;
@@ -241,9 +243,6 @@ $card-button-list-border-height: $border-general-height;
   word-break: break-word;
   -webkit-line-clamp: 2;
   word-wrap: break-word;
-  height: 2.1em;
-  max-height: 2.2em;
-  line-height: 1em;
   text-overflow: ellipsis;
 
 }
@@ -498,6 +497,19 @@ $card-button-list-border-height: $border-general-height;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+}
+
+@media #{$breakpoints-medium} {
+  .card-button-list__title {
+    font-size: $font-size-general; 
+  }
+}
+
+
+@media #{$breakpoints-large} {
+  .card-button-list__title {
+    font-size: $font-size-title; 
+  }
 }
 
 

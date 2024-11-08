@@ -11,7 +11,7 @@ $card-button-situation-background-size: 14px;
 $card-button__submenu-show-width: 120px;
 $card-button__submenu-top-arrow-right: $padding-big;
 $card-button__submenu-show-left: calc( #{$card-button__submenu-show-width} / -2 );
-$card-button-size-icon-before: 18px;
+$card-button-size-icon-before: 16px;
 
 // convivences
 $card-button-whitespace: .5rem;
@@ -640,9 +640,9 @@ $card-button-border-height: $border-general-height;
   }
 }
 
-.card-button__city,
 .card-button__city-list,
 .card-button__date {
+
   color: black;
   font-size: $font-size-small;
   font-weight: bold;
@@ -650,7 +650,7 @@ $card-button-border-height: $border-general-height;
   white-space:pre-wrap; 
   overflow: hidden;
   text-overflow: ellipsis;
-  // position: absolute;
+
   bottom: 0;
   align-self: baseline;
   display: -webkit-box;
@@ -659,13 +659,16 @@ $card-button-border-height: $border-general-height;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   word-wrap: break-word;
-  // height: 2.6em;
+
   line-height: 1.4em;
 }
 
 .card-button__city {
+  font-size: $font-size-small;
   cursor: pointer;
   text-align: left;
+
+  text-overflow: ellipsis;
 }
 
 .card-button__city--displayMap {
@@ -714,10 +717,12 @@ $card-button-border-height: $border-general-height;
   background: red;
   content: '';
   display: inline-block;
-  height: $card-button-size-icon-before;
-  margin-right: .1rem;
+  margin-right: 4px;
   transform: translateY(.25rem);
+
+  height: $card-button-size-icon-before;
   width: $card-button-size-icon-before;
+  opacity: .6; // Revise
 }
 
 .card-button__city:before,
