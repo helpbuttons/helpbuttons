@@ -223,12 +223,14 @@ export class ActivityService {
     this.newActivity(button.owner, payload, false);
   }
 
-  findByUserId(userId: string, locale: string) : Promise<ActivityDtoOut[]> {
-    
+  public findByUserId(userId: string, locale: string) : Promise<ActivityDtoOut[]> {
     return this.networkService.findButtonTypes()
     .then((buttonTypes) => {
       return this.activityRepository.find({
-        where: { owner: { id: userId } },
+        where: { 
+          owner: { id: userId },
+          eventName: Not('NewPost') // Exclude NewPost events
+        },
         relations: ['owner'],
         order: { created_at: 'DESC' },
       }).then((activities) => {
