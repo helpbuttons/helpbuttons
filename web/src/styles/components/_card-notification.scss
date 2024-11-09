@@ -254,9 +254,7 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification__paragraph {
-  color: $card-notification-paragraph-color;
-  font-size: $font-size-general;
-  line-height: $text-line-height-small;
+  @extend .card-button__author-description;
 }
 
 

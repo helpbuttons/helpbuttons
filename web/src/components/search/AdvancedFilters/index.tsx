@@ -89,12 +89,9 @@ export default function AdvancedFilters({
   const days = watch('days')
   const query = watch('query');
 
-  const handleSelectedPlace = (place) => {
-    setValue('where.address', place.formatted);
-    setValue('where.center', [
-      place.geometry.lat,
-      place.geometry.lng,
-    ]);
+  const handleSelectedPlace = (address, center) => {
+    setValue('where.address', address);
+    setValue('where.center', center);
   };
 
 
@@ -218,9 +215,7 @@ export default function AdvancedFilters({
                       selectedButtonTypes={watch('helpButtonTypes')}
                     />
                     <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
-                    {!showFilterByDays && 
-                      <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
-                    }
+                    <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
                     
                   </div>
                 

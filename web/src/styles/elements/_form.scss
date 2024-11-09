@@ -45,13 +45,13 @@ margin: $margin-medium 0;
   color: $color-gray;
   top: 7px;
   left: 24px;
-  font-size: $font-size-general;
+  font-size: $font-size-small;
   font-weight: $font-weight-light;
   height: auto;
+
   &:first-letter {
     text-transform: uppercase;
   }
-  
 }
 
 
