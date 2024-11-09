@@ -1,5 +1,5 @@
 import { IoClose, IoSearch } from 'react-icons/io5';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { LoadabledComponent } from 'components/loading';
@@ -138,11 +138,12 @@ function SearchInfo({ filters, query, tags }) {
 
 export function advancedSearchText(
   query,
-  helpButtonTypes,
+  selectedButtonTypes,
   tags,
   filters,
   currency,
 ) {
+  const buttonTypes = useButtonTypes();
   const whatText = (what) => {
     if (what == '') {
       return '';
@@ -152,23 +153,35 @@ export function advancedSearchText(
   const whichTags = (tags) => {
     return (tags ? ' · ' : '') + tags.join(' · ');
   };
-  const types = (buttonTypes) => {
-    if (buttonTypes.length < 1) {
-      return t('buttonFilters.allButtonTypes');
+
+  const [filterTypesCaption, setFilterTypesCaption] = useState(
+    t('buttonFilters.allButtonTypes'),
+  );
+
+  useEffect(() => {
+    if (buttonTypes) {
+      if (selectedButtonTypes.length < 1) {
+        setFilterTypesCaption(() =>
+          t('buttonFilters.allButtonTypes'),
+        );
+      }
+
+      const buttonTypesCaptions = buttonTypes
+        .filter((buttonType) => {
+          return selectedButtonTypes.find((type) => {
+            return type == buttonType.name;
+          });
+        })
+        .map((buttonType) => {
+          console.log(buttonType)
+          return buttonType.caption;
+        });
+      setFilterTypesCaption(() => buttonTypesCaptions.join(', '));
     }
-
-    const buttonTypesCaptions = helpButtonTypes
-      .filter((type) =>
-        buttonTypes.find((buttonType) => type == buttonType),
-      )
-      .map((type) => type);
-
-    return buttonTypesCaptions.join(', ');
-
-  };
+  }, [buttonTypes, selectedButtonTypes]);
   return (
     <>
-      {whatText(query)} {types(filters.helpButtonTypes)}{' '}
+      {whatText(query)} {filterTypesCaption}
       {whichTags(tags)} {customFieldsFiltersText(filters, currency)}
     </>
   );

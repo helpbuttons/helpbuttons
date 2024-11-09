@@ -46,18 +46,17 @@ export function FilterByLocationRadius({
 
   const [pickedRadius, setPickedRadius] = useState(radius);
   const [pickedPosition, setPickedPosition] = useState(center);
-  const [pickedPlace, setPickedPlace] = useState(null);
+  const [pickedAddress, setPickedAddress] = useState(address);
 
   const saveAndClose = () => {
     setRadius(pickedRadius);
-    handleSelectedPlace(pickedPlace);
+    handleSelectedPlace(pickedAddress, pickedPosition)
     closePopup();
   };
   const discardAndClose = () => {
     setPickedRadius(() => radius);
     setPickedPosition(() => center);
-    setPickedPlace(() => null);
-    // handleSelectedPlace(pickedPlace)
+    setPickedAddress(() => null);
     closePopup();
   };
   return (
@@ -84,7 +83,7 @@ export function FilterByLocationRadius({
       <DropDownSearchLocation
         placeholder={t('homeinfo.searchlocation')}
         handleSelectedPlace={(place) => {
-          setPickedPlace(() => place);
+          setPickedAddress(() => place.formatted);
           setPickedPosition(() => [
             place.geometry.lat,
             place.geometry.lng,
@@ -92,9 +91,9 @@ export function FilterByLocationRadius({
         }}
         markerPosition={pickedPosition}
         toggleLoadingNewAddress={() => {}}
-        address={address}
+        address={pickedAddress}
       />
-      {pickedPlace && (
+      {address && (
         <div className="form__field">
           <label className="form__label">
             {t('buttonFilters.distance')} -&nbsp;
