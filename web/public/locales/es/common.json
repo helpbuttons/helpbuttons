@@ -45,6 +45,7 @@
     "needPlace": "Por favor, selecciona en qué zona se situa tu Red",
     "latestActivity": "Últimas actividads",
     "installButton": "Instalar",
+    "notificationsPermission": "Permitir notificaciones",
     "share": "Compartir esta app"
   },
   "share":{

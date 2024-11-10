@@ -8353,7 +8353,7 @@ body {
   }
   .search-map__network-title a {
     color: #2E2E2E;
-    margin: auto;
+    /* margin: auto; */
     height: inherit;
     width: inherit;
     display: flex;
@@ -8826,7 +8826,7 @@ body {
 
 @media only screen and (min-width: 991px) {
   .drag-tab {
-    top: 150px;
+    top: 140px;
   }
 }
 @media only screen and (min-width: 1280px) {
