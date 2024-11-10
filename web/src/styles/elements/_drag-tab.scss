@@ -93,6 +93,17 @@ $drag-tab-icon-size: 25px;
   
 }
 
+@media #{$breakpoints-medium} {
+
+  .drag-tab { 
+
+    top: 150px;
+
+  }
+
+
+}
+
 
 @media #{$breakpoints-xlarge} {
   .drag-tab {
@@ -105,11 +116,10 @@ $drag-tab-icon-size: 25px;
     height: auto;
     gap: $padding-medium;
     left: calc($index-content-left--distance + 20px);
-    top: 140px;
     border-radius: $border-radius-circle;
     cursor: pointer; /* fallback if grab cursor is unsupported */
     padding: $padding-small;
-    transition: $transition-default-slow;
+    // transition: $transition-default-slow;
     transform: translateY(0px);
     box-shadow: $box-shadow-on-map
 

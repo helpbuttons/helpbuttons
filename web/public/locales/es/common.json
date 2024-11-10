@@ -160,7 +160,7 @@
     "newcomment": "@{0} respondió en '{1}'",
     "newpost": "Has publicado en '{0}'",
     "newbuttoninterest": "Hay _helpbuttons_ sobre temas que sigues: {0}",
-    "newbutton": "Tu _helpbutton_ fue publicado en '{0}'",
+    "newbutton": "Tu _helpbutton_ está disponible en '{0}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
     "markedAllAsRead": "Marcado como leído",
     "newcommentSubject": "Alguien ha comentado en tu _helpbutton_",

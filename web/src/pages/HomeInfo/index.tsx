@@ -155,6 +155,7 @@ export default function HomeInfo({ metadata }) {
               </div>
             </div>
             <div className="homeinfo__sections">
+
               {/*  INFO CARD */}
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
@@ -180,42 +181,6 @@ export default function HomeInfo({ metadata }) {
                 </div>
               </div>
 
-              <div className="homeinfo-card">
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.activity')}
-                  </h3>
-                 <ShareButton onClick={() => store.emit(new SetMainPopup(MainPopupPage.SHARE))}/>
-                </div>
-                <hr></hr>
-                <div className="homeinfo__description">
-                  <ActivitiesList activities={activities} />
-                </div>
-              </div>
-
-              <div className="homeinfo-card" ref={scrollToContact}>
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.administeredby')}
-                  </h3>
-                </div>
-                <hr></hr>
-                <div className="homeinfo__description">
-                  {t('homeinfo.adminInstructions')}
-                  <div className="homeinfo__users">
-                    {selectedNetwork &&
-                      selectedNetwork.administrators &&
-                      selectedNetwork.administrators.map(
-                        (user, idx) => {
-                          return (
-                            <LinkAdminProfile user={user} key={idx} />
-                          );
-                        },
-                      )}
-                  </div>
-                </div>
-              </div>
-
               {/* STATS CARD */}
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
@@ -237,6 +202,7 @@ export default function HomeInfo({ metadata }) {
                   </div>
                 </div>
               </div>
+ 
 
               {/* TOP 10 HASHTAGS CARD OF NETWORK */}
               <div className="homeinfo-card">
@@ -273,6 +239,44 @@ export default function HomeInfo({ metadata }) {
                     </div>
                   </div>
                 )}
+
+              {/*  RECENT ACTIVITY IN THE APP */}
+              <div className="homeinfo-card">
+                <div className="homeinfo-card__header">
+                  <h3 className="homeinfo-card__header-title">
+                    {t('homeinfo.activity')}
+                  </h3>
+                 <ShareButton onClick={() => store.emit(new SetMainPopup(MainPopupPage.SHARE))}/>
+                </div>
+                <hr></hr>
+                <div className="homeinfo__description">
+                  <ActivitiesList activities={activities} />
+                </div>
+              </div>
+
+              <div className="homeinfo-card" ref={scrollToContact}>
+                <div className="homeinfo-card__header">
+                  <h3 className="homeinfo-card__header-title">
+                    {t('homeinfo.administeredby')}
+                  </h3>
+                </div>
+                <hr></hr>
+                <div className="homeinfo__description">
+                  {t('homeinfo.adminInstructions')}
+                  <div className="homeinfo__users">
+                    {selectedNetwork &&
+                      selectedNetwork.administrators &&
+                      selectedNetwork.administrators.map(
+                        (user, idx) => {
+                          return (
+                            <LinkAdminProfile user={user} key={idx} />
+                          );
+                        },
+                      )}
+                  </div>
+                </div>
+              </div>
+
 
               {/* ACTIONS CARD */}
               <div className="homeinfo-card">

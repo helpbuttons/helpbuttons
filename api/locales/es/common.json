@@ -272,7 +272,7 @@
   "buttonFilters": {
     "filters": "Búsqueda y filtros",
     "selectedArea": "en el área seleccionada",
-    "queryLabel": "Filtra por tema",
+    "queryLabel": "Filtra por palabras",
     "searchBarTop": "{1} _helpbuttons_ {0}",
     "queryExplain": "Escribe y pulsa Enter o selecciona palabras concretas sobre lo que quieras encontrar",
     "followTag": "Mándame alertas",

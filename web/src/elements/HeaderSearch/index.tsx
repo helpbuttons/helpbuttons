@@ -160,11 +160,7 @@ export function advancedSearchText(
 
   useEffect(() => {
     if (buttonTypes) {
-      if (selectedButtonTypes.length < 1) {
-        setFilterTypesCaption(() =>
-          t('buttonFilters.allButtonTypes'),
-        );
-      }
+
 
       const buttonTypesCaptions = buttonTypes
         .filter((buttonType) => {
@@ -177,6 +173,13 @@ export function advancedSearchText(
           return buttonType.caption;
         });
       setFilterTypesCaption(() => buttonTypesCaptions.join(', '));
+      
+      if (selectedButtonTypes.length < 1) {
+        setFilterTypesCaption(() =>
+          t('buttonFilters.allButtonTypes'),
+        );
+      }
+
     }
   }, [buttonTypes, selectedButtonTypes]);
   return (
