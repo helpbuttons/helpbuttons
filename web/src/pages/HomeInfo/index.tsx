@@ -111,108 +111,53 @@ export default function HomeInfo({ metadata }) {
               </div>
             )}
 
-            {/* INFO CARD */}
-            <div
-              className="homeinfo-card homeinfo__card--title-card"
-              style={
-                {
-                  '--network-jumbo': `url('${apiUrl}${selectedNetwork.jumbo}'`,
-                } as React.CSSProperties
-              }
-            >
-              <ShowMobileOnly>
-                <div className="homeinfo-card__header">
-                  <div className="homeinfo__network-title">
-                    <div className="avatar-medium--home">
-                      <NetworkLogo network={selectedNetwork} />
-                    </div>
-                    <h3 className="homeinfo__network-title-text">
-                      {selectedNetwork.name}
-                    </h3>
-                  </div>
-                </div>
-              </ShowMobileOnly>
-
-              <div className="homeinfo-card__section--actions">
-                <Btn
-                  btnType={BtnType.corporative}
-                  contentAlignment={ContentAlignment.center}
-                  iconLink={<IoMapOutline />}
-                  iconLeft={IconType.svg}
-                  extraClass="homeinfo__network-title-card--buttons"
-                  caption={t('homeinfo.goToExplore')}
-                  onClick={() => router.push('Explore')}
-                />
-                <Btn
-                  btnType={BtnType.corporative}
-                  contentAlignment={ContentAlignment.center}
-                  iconLeft={IconType.svg}
-                  iconLink={<IoAddCircle />}
-                  extraClass="homeinfo__network-title-card--buttons"
-                  caption={t('homeinfo.goToCreate')}
-                  onClick={() => router.push('ButtonNew')}
-                />
-              </div>
-            </div>
+            
             <div className="homeinfo__sections">
+              <ShowMobileOnly>
+                  <div className="homeinfo-card__header">
+                    <div className="homeinfo__network-title">
+                      <div className="avatar-medium--home">
+                        <NetworkLogo network={selectedNetwork} />
+                      </div>
+                      <h3 className="homeinfo__network-title-text">
+                        {selectedNetwork.name}
+                      </h3>
+                    </div>
+                  </div>
+                </ShowMobileOnly>
               {/*  INFO CARD */}
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
                   <h3 className="homeinfo-card__header-title">
                     {t('homeinfo.info')}
+ 
                   </h3>
+                  
                   <div class="homeinfo-card__controls">
+                  <Btn
+                          btnType={BtnType.filterCorp}
+                          contentAlignment={ContentAlignment.center}
+                          iconLink={<IoMapOutline />}
+                          iconLeft={IconType.svg}
+                          extraClass="homeinfo__network-title-card--buttons"
+                          caption={t('homeinfo.goToExplore')}
+                          onClick={() => router.push('Explore')}
+                    />
+                  </div>
+                </div>
+                <hr></hr>
+
+                <div className="homeinfo__description">
+                  <TextFormatted text={selectedNetwork.description} />
+                  
+                </div>
+                <div className="homeinfo-card__section">
+                  <div className="homeinfo-card__action-bottom">
+          
                     <InstallButton />
                     <DesktopNotificationsButton/>
-                  </div>
-                </div>
-                <hr></hr>
 
-                <div className="homeinfo__description">
-                  {/* <DesktopNotificationsButton/>
-                  <InstallButton /> */}
-
-                  <TextFormatted text={selectedNetwork.description} />
-
-                </div>
-
-                <div className="homeinfo-card__section">
-                </div>
-              </div>
-
-              <div className="homeinfo-card">
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.activity')}
-                  </h3>
-                 <ShareButton onClick={() => store.emit(new SetMainPopup(MainPopupPage.SHARE))}/>
-                </div>
-                <hr></hr>
-                <div className="homeinfo__description">
-                  <ActivitiesList activities={activities} />
-                </div>
-              </div>
-
-              <div className="homeinfo-card" ref={scrollToContact}>
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.administeredby')}
-                  </h3>
-                </div>
-                <hr></hr>
-                <div className="homeinfo__description">
-                  {t('homeinfo.adminInstructions')}
-                  <div className="homeinfo__users">
-                    {selectedNetwork &&
-                      selectedNetwork.administrators &&
-                      selectedNetwork.administrators.map(
-                        (user, idx) => {
-                          return (
-                            <LinkAdminProfile user={user} key={idx} />
-                          );
-                        },
-                      )}
-                  </div>
+                   </div>
                 </div>
               </div>
 
@@ -222,6 +167,17 @@ export default function HomeInfo({ metadata }) {
                   <h3 className="homeinfo-card__header-title">
                     {t('homeinfo.stats')}
                   </h3>
+                  <div className="homeinfo-card__controls">
+                    <Btn
+                        btnType={BtnType.filterCorp}
+                        contentAlignment={ContentAlignment.center}
+                        iconLeft={IconType.svg}
+                        iconLink={<IoAddCircle />}
+                        extraClass="homeinfo__network-title-card--buttons"
+                        caption={t('homeinfo.goToCreate')}
+                        onClick={() => router.push('ButtonNew')}
+                      />
+                  </div>
                 </div>
                 <hr></hr>
                 <div className="homeinfo__description">
@@ -235,7 +191,10 @@ export default function HomeInfo({ metadata }) {
                       pageName={'HomeInfo'}
                     />
                   </div>
+
+
                 </div>
+
               </div>
 
               {/* TOP 10 HASHTAGS CARD OF NETWORK */}
@@ -274,12 +233,53 @@ export default function HomeInfo({ metadata }) {
                   </div>
                 )}
 
+              {/*  RECENT ACTIVITY IN THE APP */}
+              <div className="homeinfo-card">
+                <div className="homeinfo-card__header">
+                  <h3 className="homeinfo-card__header-title">
+                    {t('homeinfo.activity')}
+                  </h3>
+                </div>
+
+                <hr></hr>
+                <div className="homeinfo__description">
+                  <ActivitiesList activities={activities} />
+                </div>
+              </div>
+
+              <div className="homeinfo-card" ref={scrollToContact}>
+                <div className="homeinfo-card__header">
+                  <h3 className="homeinfo-card__header-title">
+                    {t('homeinfo.administeredby')}
+                  </h3>
+                </div>
+                <hr></hr>
+                <div className="homeinfo__description">
+                  {t('homeinfo.adminInstructions')}
+                  <div className="homeinfo__users">
+                    {selectedNetwork &&
+                      selectedNetwork.administrators &&
+                      selectedNetwork.administrators.map(
+                        (user, idx) => {
+                          return (
+                            <LinkAdminProfile user={user} key={idx} />
+                          );
+                        },
+                      )}
+                  </div>
+                </div>
+              </div>
+
+
               {/* ACTIONS CARD */}
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
                   <h3 className="homeinfo-card__header-title">
                     {t('homeinfo.actions')}
                   </h3>
+                  <div className="homeinfo-card__controls">
+                    <ShareButton onClick={() => store.emit(new SetMainPopup(MainPopupPage.SHARE))}/>
+                  </div>
                 </div>
                 <hr></hr>
                 <div className="homeinfo-card__section">
@@ -303,6 +303,8 @@ export default function HomeInfo({ metadata }) {
                     <span>{t('menu.faqs')}</span>
                   </NavLink>
                 </div>
+
+
                 {currentUser && (
                   <>
                     <div className="homeinfo-card__section">
@@ -337,6 +339,24 @@ export default function HomeInfo({ metadata }) {
                           <span>{t('menu.donate')}</span>
                         </NavLink>
                       </div> */}
+              </div>
+            </div>
+            {/* INFO CARD */}
+           <div
+              className="homeinfo-card homeinfo__card--title-card"
+              style={
+                {
+                  '--network-jumbo': `url('${apiUrl}${selectedNetwork.jumbo}'`,
+                } as React.CSSProperties
+              }
+            >
+
+
+              <div className="homeinfo-card__section--actions">
+
+
+ 
+
               </div>
             </div>
           </div>

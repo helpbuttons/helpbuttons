@@ -23,7 +23,7 @@ export function InstallButton() {
               onClick={promptToInstall}
             />
         </div>
-      )}
+       )}
     </>
   );
 }
