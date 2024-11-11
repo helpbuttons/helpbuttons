@@ -1,5 +1,5 @@
 import ActivityCardNotification from '../../components/feed/ActivityCardNotification';
-import Btn, { ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 
 import t from 'i18n';
 import router from 'next/router';
@@ -8,6 +8,9 @@ import { Dropdown } from 'elements/Dropdown/Dropdown';
 import { ActivityEventName } from 'shared/types/activity.list';
 import { Activity } from 'shared/entities/activity.entity';
 import { ActivityDtoOut, NotificationType } from 'shared/dtos/activity.dto';
+import Accordion from 'elements/Accordion';
+import { IoList } from 'react-icons/io5';
+import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 
 export default function ActivityLayout({
   allActivities,
@@ -96,12 +99,61 @@ export default function ActivityLayout({
 
   return (
     <div className="feed__container">
+      <div className="feed-selector feed-selector--list-toggle">
+         <Btn
+            caption={t('activities.messages')}
+            btnType={BtnType.tab}
+            contentAlignment={ContentAlignment.center}
+          />
+          <Btn
+            caption={t('activities.notifications')}
+            btnType={BtnType.tab}
+            contentAlignment={ContentAlignment.center}
+            extraClass='btn--tab-active'
+          />
+      </div>
       <div className="feed-selector feed-selector--activity">
-        <Dropdown
-          options={notificationTypeOptions}
-          onChange={onChange}
-          defaultSelected={'all'}
-        />
+ 
+        <Accordion icon={<IoList />} title={t('buttonFilters.byCategory')}>
+          <FieldMultiSelect
+                  label={t('buttonFilters.types')}
+                  validationError={null}
+                  explain={t('buttonFilters.typesExplain')}
+                > 
+                  {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType) => {
+                    return (
+
+                      <MultiSelectOption
+                          defaultValue={
+                            helpButtonTypes.indexOf(buttonType.name) > -1
+                          } 
+                          iconLink={buttonType.icon}
+                          color={buttonType.cssColor}
+                          icon='emoji'
+                          name={buttonType.name}
+                          handleChange={(name, newValue) => {
+                            setButtonTypeValue(name, newValue);
+                          }}
+                        >
+                          {/* <div className="btn-filter__icon"></div> */}
+                          <div className="btn-with-icon__text">
+                            {buttonType.caption}
+                          </div>
+                        </MultiSelectOption>
+
+                    //   <div
+                    //     key={buttonType.name}
+                    //     style={buttonColorStyle(buttonType.cssColor)}
+                    //   >
+                    //     {/* <div className="btn-filter__icon"></div> */}
+                    //     <div className="btn-with-icon__text">
+                    //       {buttonType.caption}
+                    //     </div>
+                    // </div>
+                  );
+                })}
+              </FieldMultiSelect>
+            </Accordion>
       </div>
       <div className="feed-section--activity">
         <div className="feed-section--activity-content">
