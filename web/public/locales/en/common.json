@@ -146,6 +146,8 @@
     "connect": ""
   },
   "activities": {
+    "messages": "Messages",
+    "notifications": "Notifications",
     "allNotifications": "All Notifications",
     "allMessages": "All messages",
     "allPosts": "All Posts",
