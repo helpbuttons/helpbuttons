@@ -6044,11 +6044,16 @@ hr {
   font-size: 14px;
   flex-flow: row nowrap;
   word-break: keep-all;
-  justify-content: space-between;
+  justify-content: flex-end;
+}
+
+.card-notification__type {
+  color: var(--network-text-color);
+  padding-left: 5px;
+  font-size: 10px;
 }
 
 .card-notification__date {
-  flex: 0 1 50%;
   color: #828282;
   text-align: right;
   font-size: 10px;
@@ -6098,6 +6103,7 @@ hr {
   flex: 0 0 50%;
   padding: 5px 0 0 5px;
   pointer-events: none;
+  gap: 7px;
 }
 
 .card-notification__date:before {
