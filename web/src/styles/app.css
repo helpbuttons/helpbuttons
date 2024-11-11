@@ -6047,8 +6047,13 @@ hr {
   justify-content: space-between;
 }
 
+.card-notification__type {
+  color: var(--network-text-color);
+  padding-left: 5px;
+  font-size: 10px;
+}
+
 .card-notification__date {
-  flex: 0 1 50%;
   color: #828282;
   text-align: right;
   font-size: 10px;
@@ -6093,11 +6098,29 @@ hr {
   cursor: pointer;
 }
 
+.card-notification__helpbutton-type {
+  flex: 0 1 auto; /* 1 */
+  overflow: hidden;
+  font-weight: 800;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.card-notification__helpbutton-type p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
 .card-notification__label {
   display: inline-flex;
   flex: 0 0 50%;
   padding: 5px 0 0 5px;
   pointer-events: none;
+  gap: 7px;
+  align-items: center;
+  font-size: 14px;
 }
 
 .card-notification__date:before {

@@ -81,6 +81,12 @@ export function FaqSections() {
         {t('faqs.securityDescription')}
       </Accordion>
 
+      <Accordion
+        title={t('faqs.cookiesQuestion')}
+      >
+        {t('faqs.cookiesDescription')}
+      </Accordion>
+
       <Accordion title={t('faqs.contactQuestion')}>
         {t('faqs.contactDescription')}
       </Accordion>

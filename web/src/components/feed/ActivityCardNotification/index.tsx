@@ -183,10 +183,13 @@ function InnerNotificationCard({notifIcon, type, image, read, date, title, messa
 {
   return  (<><div className="card-notification__comment-count">
         <div className="card-notification__label">
-          <div className="hashtag hashtag--blue hashtag--with-icon">
+          <div className="card-notification__helpbutton-type">
             {notifIcon}
-            {type}
+            Button type
           </div>
+          <p className="">
+            Casa de la sierra
+          </p>
         </div>
       </div>
       <div className="card-notification__content">
@@ -201,16 +204,19 @@ function InnerNotificationCard({notifIcon, type, image, read, date, title, messa
         </div>
         <div className="card-notification__text">
           <div className="card-notification__header">
-            <div className="card-notification__info"></div>
-            {read ? (
-              readableTimeLeftToDate(date)
-            ) : (
-              <div className="card-notification__date">
-                {readableTimeLeftToDate(date)}
-              </div>
-            )}
+            <div className="card-notification__info"> 
+              <h2 className="card-notification__name">{title}</h2> 
+            </div>
+            <div className="card-notification__type">
+              {read ? (
+                readableTimeLeftToDate(date)
+              ) : (
+                <div className="card-notification__date">
+                  {readableTimeLeftToDate(date)}
+                </div>
+              )}
+            </div>
           </div>
-          <h2 className="card-notification__title">{title}</h2>
           <div className="card-notification__paragraph">
             {message && formatMessage(message)}
           </div>

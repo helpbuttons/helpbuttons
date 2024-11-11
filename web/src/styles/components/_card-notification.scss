@@ -130,12 +130,21 @@ $card-notification-delete-size: 100px;
   justify-content: space-between;
 }
 
+.card-notification__type {
+
+  color: $color-secondary;
+  padding-left: $padding-small;
+  font-size: $font-size-xsmall;
+
+
+}
+
 .card-notification__info {
   // flex: 0 1 50%;
 }
 
 .card-notification__date {
-  flex: 0 1 50%;
+  // flex: 0 1 50%;
   color: $color-gray;
   text-align: right;
   font-size: $font-size-xsmall;
@@ -201,6 +210,26 @@ $card-notification-delete-size: 100px;
   margin-right: 20px;
   cursor: pointer;
 
+
+}
+
+.card-notification__helpbutton-type {
+
+  flex: 0 1 auto;        /* 1 */
+  overflow: hidden;
+  font-weight: $font-weight-bolder;
+  display: flex;
+  gap: $padding-xsmall;
+  align-items: center;
+
+  p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    
+  }
+
 }
 
 .card-notification__label {
@@ -209,6 +238,9 @@ $card-notification-delete-size: 100px;
     flex: 0 0 50%;
     padding: $padding-small 0 0 $padding-small ;
     pointer-events: none;
+    gap: $margin-xsmall;
+    align-items: center;
+    font-size: $font-size-small;
 
 }
 
