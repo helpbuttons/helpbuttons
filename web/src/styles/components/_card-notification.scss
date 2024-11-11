@@ -127,7 +127,7 @@ $card-notification-delete-size: 100px;
   font-size: $font-size-small;
   flex-flow: row nowrap;
   word-break: keep-all;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .card-notification__type {
@@ -210,6 +210,26 @@ $card-notification-delete-size: 100px;
   margin-right: 20px;
   cursor: pointer;
 
+
+}
+
+.card-notification__helpbutton-type {
+
+  flex: 0 1 auto;        /* 1 */
+  overflow: hidden;
+  font-weight: $font-weight-bolder;
+  display: flex;
+  gap: $padding-xsmall;
+  align-items: center;
+
+  p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    
+  }
+
 }
 
 .card-notification__label {
@@ -219,6 +239,8 @@ $card-notification-delete-size: 100px;
     padding: $padding-small 0 0 $padding-small ;
     pointer-events: none;
     gap: $margin-xsmall;
+    align-items: center;
+    font-size: $font-size-small;
 
 }
 

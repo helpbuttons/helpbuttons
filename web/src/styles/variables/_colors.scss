@@ -20,14 +20,25 @@ $color-transparent: #3f3b33ad;
 $color-ligth-gray: #f0f0f0;
 $color-med-gray: #8da0a0;
 $color-dark-gray: #2E2E2E;
+$color-black-fonts: #0E0E0E;
 
 $color-gray-border: #D4D4D4;
 
 // corporative
-
 $color-corporative: var(--network-background-color); // yellow
 $color-secondary:  var(--network-text-color);
 $color-red: #EA5648;
 $color-green: #19AF96;
 $color-blue: #18AAD2;
 $color-dark-blue: #2F80ED; //blue de figma
+
+// Function to check brightness of a color and return white or black font color
+@function get-readable-font-color($background-color) {
+    $brightness: ((red($background-color) * 0.299) + (green($background-color) * 0.587) + (blue($background-color) * 0.114)) / 255;
+    @if $brightness > 0.5 {
+      @return $color-black; // dark font for lighter background
+    } @else {
+      @return $color-white; // light font for darker background
+    }
+  }
+
