@@ -43,11 +43,11 @@ export function ButtonForPopup({
   return (
     <>
       <Btn
-        btnType={BtnType.filterCorp}
+        btnType={BtnType.corporative}
         iconLink={buttonIcon}
         caption={buttonCaption}
         iconLeft={IconType.circle}
-        contentAlignment={ContentAlignment.center}
+        contentAlignment={ContentAlignment.left}
         onClick={onClick}
       />
     </>

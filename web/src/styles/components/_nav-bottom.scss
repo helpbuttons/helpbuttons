@@ -167,7 +167,7 @@ $nav-bottom-border: 32px;
   }
 
   .nav-bottom__link {
-    flex: 0 1 54px;
+    flex: 0 1 58px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -181,7 +181,7 @@ $nav-bottom-border: 32px;
 
   .nav-bottom__link--create {
       .nav-bottom__icon {
-        svg {;
+        svg {
           left: -18px;
           color: $color-black;
         }

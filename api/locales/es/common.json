@@ -17,7 +17,7 @@
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
     "goToExplore": "Explorar _helpbuttons_",
-    "goToCreate": "Crea tu _helpbutton_",
+    "goToCreate": "Publicar",
     "activity": "Actividad reciente",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
     "stats": "¿Qué hay en esta red?",
@@ -37,12 +37,12 @@
     "createNetworkButton": "Crea tu propia red",
     "createNetwork": "También puedes contactar al equipo si necesitas ayuda creando tu propia red",
     "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación:",
-    "callToAdmin": "Pulsa aquí si necesitas ayuda de alguien para entrar o publicar",
+    "callToAdmin": "Pulsa el teléfono necesitas ayuda de alguuien. La página almacena datos de su uso, puedes consultar detalle más abajo.",
     "networkIsPrivate": "Red privada",
     "needLogo": "Antes de seleccionar un lugar, por favor añade tu logo",
     "needPlace": "Por favor, selecciona en qué zona se situa tu Red",
     "latestActivity": "Últimas actividads",
-    "installButton": "Instalar"
+    "installButton": "Instalar app"
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -272,7 +272,7 @@
   "buttonFilters": {
     "filters": "Búsqueda y filtros",
     "selectedArea": "en el área seleccionada",
-    "queryLabel": "Filtra por tema",
+    "queryLabel": "Filtra por palabras",
     "searchBarTop": "{1} _helpbuttons_ {0}",
     "queryExplain": "Escribe y pulsa Enter o selecciona palabras concretas sobre lo que quieras encontrar",
     "followTag": "Mándame alertas",
