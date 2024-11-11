@@ -9,6 +9,7 @@ import {
   UseInterceptors,
   UploadedFiles,
   ParseArrayPipe,
+  Header,
 } from '@nestjs/common';
 
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -236,4 +237,27 @@ export class ButtonController {
       notifyUser(this.eventEmitter,ActivityEventName.NewButton,{button})  
     })
   }
+
+  @OnlyRegistered()
+  @Get('bulletin/:page/:take/:days')
+  bulletin(@Param('page') page: number, @Param('take') take: number, @Param('days') days: number)
+  {
+    return this.buttonService.bulletin(page, take, days)
+  }
+
+  @AllowGuest()
+  @Get('embbed/:page/:take')
+  embbed(@Param('page') page: number, @Param('take') take: number)
+  {
+    return this.buttonService.embbed(page, take)
+  }
+
+  @AllowGuest()
+  @Get('rss')
+  @Header('Content-Type', 'application/xml')
+  rss()
+  {
+    return this.buttonService.rss()
+  }
+
 }

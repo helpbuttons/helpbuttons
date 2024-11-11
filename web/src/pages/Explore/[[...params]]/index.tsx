@@ -6,6 +6,8 @@ import { LoadabledComponent } from 'components/loading';
 import t from 'i18n';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
+import { UpdateMetadataTitle, useMetadataTitle } from 'state/Metadata';
+import { useEffect } from 'react';
 
 export default function Explore({
   metadata
@@ -14,6 +16,8 @@ export default function Explore({
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
+  useMetadataTitle(t('menu.explore'))
+
   return (
     <>
       <ClienteSideRendering>

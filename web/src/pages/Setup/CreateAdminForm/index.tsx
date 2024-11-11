@@ -63,7 +63,7 @@ function CreateAdminForm() {
           
           if(error == 'not-found')
           {
-            router.push(SetupSteps.SYSADMIN_CONFIG);
+            console.log('config not found?!')
             return;
           }
 
@@ -149,6 +149,7 @@ function CreateAdminForm() {
                 errors={errors}
                 setValue={setValue}
                 watch={watch}
+                isInitAdminForm={true}
               />
             </div>
           </div>

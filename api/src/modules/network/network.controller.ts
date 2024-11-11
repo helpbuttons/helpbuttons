@@ -30,6 +30,12 @@ import { AllowGuest, OnlyAdmin } from '@src/shared/decorator/roles.decorator';
     async findDefaultNetwork() {
       return await this.networkService.findDefaultNetwork();
     }
+
+    @OnlyAdmin()
+    @Get('configuration')
+    async findConfig() {
+      return this.networkService.findDefaultNetwork(true);
+    }
     
     @OnlyAdmin()
     @Post('update')

@@ -8,7 +8,7 @@ import { IUser } from 'services/Users/types';
 import { UserService } from 'services/Users';
 
 import { HttpService, isHttpError } from 'services/HttpService';
-import { SignupRequestDto } from 'shared/dtos/auth.dto';
+import { SignupQRRequestDto, SignupRequestDto } from 'shared/dtos/auth.dto';
 import { GlobalState, store } from 'pages';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { handleError } from './helper';
@@ -36,6 +36,40 @@ export class Login implements WatchEvent {
 
   public watch(state: GlobalState) {
     return UserService.login(this.email, this.password).pipe(
+      map((userData) => {
+        if (userData) {
+          return new FetchUserData(this.onSuccess, this.onError);
+        }
+      }),
+      catchError((error) => {
+        let err = error.response;
+
+        if (
+          isHttpError(err) &&
+          err.statusCode === HttpStatus.UNAUTHORIZED
+        ) {
+          // Unauthorized
+          this.onError('login-incorrect');
+        } else {
+          throw err;
+        }
+        return of(undefined);
+      }),
+    );
+  }
+}
+
+
+export class LoginQR implements WatchEvent {
+  public constructor(
+    private qrcode: string,
+    private password: string,
+    private onSuccess,
+    private onError,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.loginQr(this.qrcode, this.password).pipe(
       map((userData) => {
         if (userData) {
           return new FetchUserData(this.onSuccess, this.onError);
@@ -249,12 +283,13 @@ export class SetInvites implements UpdateEvent {
 }
 
 export class CreateInvite implements WatchEvent {
-  public constructor(public data: InviteCreateDto) {}
+  public constructor(public data: InviteCreateDto, private onSuccess) {}
 
   public watch(state: GlobalState) {
     return UserService.createInvite(this.data).pipe(
       map((data) => {
         store.emit(new FindInvites());
+        this.onSuccess(data)
       }),
       catchError((error) => { return  of(undefined)})
     )
@@ -414,6 +449,25 @@ export class GetAdminPhone implements WatchEvent {
         this.onSuccess(data);
       }),
       catchError((error) => handleError(this.onError, error)),
+    );
+  }
+}
+
+export class SignupQR implements WatchEvent {
+  public constructor(
+    private signupQRRequestDto: SignupQRRequestDto,
+    private onSuccess,
+    private onError,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return UserService.signupQR(this.signupQRRequestDto).pipe(
+      map((token) => {
+        if (token) {
+          return new FetchUserData(this.onSuccess, this.onError);
+        }
+      }),
+      catchError((error) => handleError(this.onError,error))
     );
   }
 }

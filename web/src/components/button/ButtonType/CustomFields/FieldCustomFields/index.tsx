@@ -49,41 +49,47 @@ export default function FieldCustomFields({
   return <>{renderFields()}</>;
 }
 
-function FieldPrice({price, currency, watch, setValue, setFocus, errors, register}) {
+function FieldPrice({
+  price,
+  currency,
+  watch,
+  setValue,
+  setFocus,
+  errors,
+  register,
+}) {
   useEffect(() => {
-    if(price !== 0 && !price)
-    {
-      setValue('price', 0)
+    if (price !== 0 && !price) {
+      setValue('price', 0);
     }
-  }, [])
+  }, []);
   return (
-          <>
-            {price != -1 && (
-              <FieldNumber
-                name={'price'}
-                label={t(
-                  'customFields.priceLabel',
-                  [currency]
-                )}
-                watch={watch}
-                setValue={setValue}
-                setFocus={setFocus}
-                validationError={errors.price}
-                {...register('price', {
-                  required: true,
-                  valueAsNumber: true,
-                })}
-              />
-            )}
-            <FieldCheckbox
-              name="consultPrice"
-              defaultValue={price < 0}
-              text={t('customFields.consult')}
-              onChanged={(value) => {
-                setValue('price', value ? '-1' : '0');
-              }}
-              {...register('consultPrice')}
-            />
-          </>
-        );
+    <>
+      <label className="form__label">
+        {t('customFields.priceLabel', [currency])}
+      </label>
+      <FieldCheckbox
+        name="consultPrice"
+        defaultValue={price < 0}
+        text={t('customFields.consult')}
+        onChanged={(value) => {
+          setValue('price', value ? '-1' : '0');
+        }}
+        {...register('consultPrice')}
+      />
+      {price != -1 && (
+        <FieldNumber
+          name={'price'}
+          watch={watch}
+          setValue={setValue}
+          setFocus={setFocus}
+          validationError={errors.price}
+          {...register('price', {
+            required: true,
+            valueAsNumber: true,
+          })}
+        />
+      )}
+    </>
+  );
 }

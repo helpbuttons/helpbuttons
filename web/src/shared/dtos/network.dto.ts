@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Network, PrivacyType } from './network.entity';
+import { ButtonTemplate, Network, PrivacyType } from './network.entity';
 import {
   IsNumber,
   MinLength,
@@ -72,7 +72,7 @@ export class CreateNetworkDto implements Partial<Network> {
   textColor: string;
 
   @IsNotEmpty()
-  buttonTemplates: string;
+  buttonTemplates: ButtonTemplate[];
 
   @IsNotEmpty()
   requireApproval: boolean;

@@ -11,7 +11,7 @@ $card-button-situation-background-size: 14px;
 $card-button__submenu-show-width: 120px;
 $card-button__submenu-top-arrow-right: $padding-big;
 $card-button__submenu-show-left: calc( #{$card-button__submenu-show-width} / -2 );
-$card-button-size-icon-before: 18px;
+$card-button-size-icon-before: 16px;
 
 // convivences
 $card-button-whitespace: .5rem;
@@ -430,8 +430,6 @@ $card-button-border-height: $border-general-height;
 }
 
 
-
-
 .card-button__paragraph:first-letter {
   text-transform: uppercase;
 }
@@ -471,14 +469,20 @@ $card-button-border-height: $border-general-height;
 .card-button__picture {
   width: 100%;
   position: relative;
-  // max-height: $card-button-picture-max-height;
-  // height: auto;
-  // overflow-x: hidden;
   text-align: center;
+
   & img {
 
+    max-width: 100%;
+    max-height: 400px;
     width: auto;
-    object-fit: cover;
+    object-fit: contain !important;
+    pointer-events: auto;
+
+    &:hover{
+      cursor: pointer;
+    }
+
   }
 
   .hide{
@@ -486,6 +490,8 @@ $card-button-border-height: $border-general-height;
   }
   .show{
     display:block;
+    margin: auto;
+    width: fit-content;
   }
 }
 
@@ -502,6 +508,8 @@ $card-button-border-height: $border-general-height;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  background: transparent;
+  pointer-events: none;
   // display: none; //revise if image navigation
 
 }
@@ -509,7 +517,7 @@ $card-button-border-height: $border-general-height;
 .card-button__picture-nav .arrow {
 
   @extend .btn-circle--small !optional;
-  padding: 0;
+  pointer-events: auto;
 
 }
 
@@ -632,9 +640,9 @@ $card-button-border-height: $border-general-height;
   }
 }
 
-.card-button__city,
 .card-button__city-list,
 .card-button__date {
+
   color: black;
   font-size: $font-size-small;
   font-weight: bold;
@@ -642,7 +650,7 @@ $card-button-border-height: $border-general-height;
   white-space:pre-wrap; 
   overflow: hidden;
   text-overflow: ellipsis;
-  // position: absolute;
+
   bottom: 0;
   align-self: baseline;
   display: -webkit-box;
@@ -651,13 +659,16 @@ $card-button-border-height: $border-general-height;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   word-wrap: break-word;
-  // height: 2.6em;
+
   line-height: 1.4em;
 }
 
 .card-button__city {
+  font-size: $font-size-small;
   cursor: pointer;
   text-align: left;
+
+  text-overflow: ellipsis;
 }
 
 .card-button__city--displayMap {
@@ -706,10 +717,12 @@ $card-button-border-height: $border-general-height;
   background: red;
   content: '';
   display: inline-block;
-  height: $card-button-size-icon-before;
-  margin-right: .1rem;
+  margin-right: 4px;
   transform: translateY(.25rem);
+
+  height: $card-button-size-icon-before;
   width: $card-button-size-icon-before;
+  opacity: .6; // Revise
 }
 
 .card-button__city:before,
@@ -803,12 +816,50 @@ $card-button-border-height: $border-general-height;
 
 .card-button__gallery-zoom
 {
-  position: absolute;
+  position: fixed;
   z-index: $z-index-03;
   height: 100%;
   width: 100%;
+  top: 0;
+  left: 0;
   display: flex;
+  flex-wrap: wrap;
   align-content: center;
   justify-content: center;
   background-color: $color-gray-transparent;
+}
+
+.card-button__gallery-zoom--close-btn {
+
+  position: absolute;
+  z-index: $z-index-03;
+  top: 0;
+  right: 0;
+  margin: $margin-small; 
+
+}
+
+.card-button__image-wrapper {
+
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain !important;
+    pointer-events: auto;
+    z-index: $z-index-02;
+
+  }
+
 }

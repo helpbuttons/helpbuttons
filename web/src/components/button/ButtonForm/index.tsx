@@ -163,31 +163,25 @@ export default function ButtonForm({
             maxNumber={5}
             setValue={(images) => setValue('images', images)}
             validationError={errors.images}/>
-            <>
-              {selectedNetwork && (
-                <>
-                  <FieldLocation
-                    label={t('button.whereLabel')}
-                    setMarkerPosition={([lat, lng]) => {
-                      setValue('latitude', lat);
-                      setValue('longitude', lng);
-                    }}
-                    markerPosition={[watch('latitude'),watch('longitude')]}
-                    updateAddress={(address) => {
-                      setValue('address', address);
-                    }}
-                    markerAddress={watch('address')}
-                    markerImage={watch('image')}
-                    markerCaption={watch('title')}
-                    markerColor={markerColor}
-                    selectedNetwork={selectedNetwork}
-                    validationError={errors.address}
-                    watch={watch}
-                    setValue={setValue}
-                  />
-                </>
-              )}
-            </>
+            <FieldLocation
+              label={t('button.whereLabel')}
+              setMarkerPosition={([lat, lng]) => {
+                setValue('latitude', lat);
+                setValue('longitude', lng);
+              }}
+              markerPosition={[watch('latitude'),watch('longitude')]}
+              updateAddress={(address) => {
+                setValue('address', address);
+              }}
+              markerAddress={watch('address')}
+              markerImage={watch('image')}
+              markerCaption={watch('title')}
+              markerColor={markerColor}
+              selectedNetwork={selectedNetwork}
+              validationError={errors.address}
+              watch={watch}
+              setValue={setValue}
+            />
             <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency}/>
             <ButtonShare />
           </div>

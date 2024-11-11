@@ -1,20 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { SignupRequestDto } from './auth.dto';
+import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
 import { UserService } from '../user/user.service';
 import {
   dbIdGenerator,
   publicNanoidGenerator,
 } from '@src/shared/helpers/nanoid-generator.helper';
 import { UserCredentialService } from '../user-credential/user-credential.service';
-import { NodeEnv } from '@src/shared/types';
 import { MailService } from '../mail/mail.service';
-import { ExtractJwt } from 'passport-jwt';
-import { catchError } from 'rxjs';
 import { User } from '../user/user.entity';
 import { StorageService } from '../storage/storage.service';
-import { ValidationException } from '@src/shared/middlewares/errors/validation-filter.middleware';
-import { getManager } from 'typeorm';
 import { Role } from '@src/shared/types/roles';
 import { UserCredential } from '../user-credential/user-credential.entity';
 import {
@@ -27,7 +22,9 @@ import { ErrorName } from '@src/shared/types/error.list';
 import { isImageData } from '@src/shared/helpers/imageIsFile';
 import { NetworkService } from '../network/network.service';
 import { InviteService } from '../invite/invite.service';
-import { Exception } from 'handlebars';
+
+export const nomailString = '@nomail.com';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -40,6 +37,53 @@ export class AuthService {
     private readonly inviteService: InviteService,
   ) {}
 
+  async signupQR(signupQRUserDto: SignupQRRequestDto) {
+    
+    return this.inviteService.isInviteCodeValid(signupQRUserDto.qrCode)
+    .then((validInviteCode) => {
+      if(!validInviteCode)
+      {
+        throw new CustomHttpException(ErrorName.InvalidQrCode)
+      }
+      return {
+        username: signupQRUserDto.username,
+        qrcode: signupQRUserDto.qrCode,
+        email: signupQRUserDto.qrCode + nomailString,
+        name: signupQRUserDto.name,
+        password: publicNanoidGenerator(),
+        locale: signupQRUserDto.locale,
+        acceptPrivacyPolicy: signupQRUserDto.acceptPrivacyPolicy
+      }
+    })
+    .then((signupUserDto: SignupRequestDto) => {
+    const newUserDto = {
+      username: signupUserDto.username,
+      email: signupUserDto.email,
+      role: Role.registered,
+      name: signupUserDto.name,
+      verificationToken: publicNanoidGenerator(),
+      emailVerified: false,
+      id: dbIdGenerator(),
+      avatar: null,
+      description: '',
+      locale: signupUserDto.locale,
+      receiveNotifications: true,
+      showButtons: false,
+      tags: signupUserDto.tags,
+      radius: 0,
+      qrcode: signupUserDto.qrcode
+    };
+    
+      return this.createUser(newUserDto, signupUserDto).then(
+          (user) => {
+            if (!newUserDto.emailVerified) {
+              this.sendLoginToken(newUserDto, true);
+            }
+            return user;
+          },
+        );
+      });
+  }
   async signup(signupUserDto: SignupRequestDto) {
     const verificationToken = publicNanoidGenerator();
     let emailVerified = false;
@@ -114,20 +158,22 @@ export class AuthService {
         throw new CustomHttpException(ErrorName.InvalidMimetype);
       }
     }
-    return this.userService
-      .createUser(newUserDto)
+    return this.createUser(newUserDto, signupUserDto).
+    then((user) => {
+      if (!newUserDto.emailVerified && userCount > 1) {
+        this.sendLoginToken(newUserDto, true);
+      }
+      return user;
+    });
+  }
+
+  private createUser (newUserDto, signupUserDto) {
+    return this.userService.createUser(newUserDto)
       .then((user) => {
         return this.createUserCredential(
           newUserDto.id,
           signupUserDto.password,
         );
-      })
-      .then((user) => {
-        if (!newUserDto.emailVerified && userCount > 1) {
-          // only send login token if not creating admin
-          this.sendLoginToken(newUserDto, true);
-        }
-        return user;
       })
       .then((userCredentials) => {
         return this.getAccessToken(newUserDto);
@@ -280,5 +326,13 @@ export class AuthService {
       });
   }
 
-  
+
+  validateQrCode(qrCode: string) {
+    return this.userService
+      .findQrCode(qrCode)
+      .then((user: User) => {
+        return user
+      });
+  }
+
 }

@@ -2,12 +2,12 @@ import {
   Controller,
   Post,
   Body,
-  UseInterceptors,
   Get,
   Request,
   Param,
   UseGuards,
   HttpException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '@src/shared/decorator/current-user';
@@ -16,7 +16,7 @@ import { HttpStatus } from '@src/shared/types/http-status.enum';
 import { UserUpdateDto } from '../user/user.dto';
 import { User } from '../user/user.entity';
 
-import { LoginRequestDto, SignupRequestDto } from './auth.dto';
+import { SignupQRRequestDto, SignupRequestDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
@@ -24,6 +24,17 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 @Controller('users')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @AllowGuest()
+  @Post('signupQR')
+  async signupQR(@Body() signupQRUserDto: SignupQRRequestDto) {
+    return this.authService.signupQR(signupQRUserDto).then((accessToken) => {
+      if (typeof accessToken === typeof undefined) {
+        throw new HttpException('could not create token', HttpStatus.BAD_GATEWAY)
+      }
+      return accessToken;
+    });
+  }
 
   @AllowGuest()
   @Post('signup')
@@ -52,6 +63,19 @@ export class AuthController {
   @Post('login')
   async login(@Request() req) {
     return req.user;
+  }
+
+  @AllowGuest()
+  @Post('loginqr/:qrcode')
+  async loginqr(@Param('qrcode') qrcode: string) {
+    return this.authService.validateQrCode(qrcode)
+    .then((user) => {
+      if(!user)
+      {
+        throw new UnauthorizedException()
+      }
+      return this.authService.getAccessToken(user)
+    })
   }
 
   @OnlyRegistered()

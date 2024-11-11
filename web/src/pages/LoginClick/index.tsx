@@ -10,6 +10,7 @@ import { store } from 'pages';
 import { RequestNewLoginToken } from 'state/Users';
 import { alertService } from 'services/Alert';
 import { useRouter } from 'next/router';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function LoginClick() {
   const {
@@ -26,11 +27,11 @@ export default function LoginClick() {
         data.email,
         () => {
           alertService.info(t('user.newLoginTokenSent'));
-          router.push('/HomeInfo');
+          store.emit(new SetMainPopup(MainPopupPage.HIDE))
         },
         () => {
           alertService.error(t('user.errorRequestNewLoginToken'));
-          router.push('/HomeInfo');
+          store.emit(new SetMainPopup(MainPopupPage.HIDE))
         },
       ),
     );
@@ -44,15 +45,13 @@ export default function LoginClick() {
     }
     setParams(() => new URLSearchParams(router.query))
   },[router.isReady])
-  //   RequestNewLoginToken
 
   return (
     <>
-      <Popup title={t("user.loginClick")} linkFwd="/HomeInfo">
         <Form
           onSubmit={handleSubmit(onSubmit)}
           classNameExtra="login"
-        >
+        > 
           <div className="login__form">
             <div className="form__inputs-wrapper">
               <FieldText
@@ -78,19 +77,18 @@ export default function LoginClick() {
                 isSubmitting={isSubmitting}
               />
               <div className="popup__link">
-                <Link href={`/Login?${params.toString()}`}>
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
                   {t('user.loginWEmail')}
-                </Link>
+                </div>
               </div>
               <div className="popup__link">
-                <Link href={`/Signup?${params.toString()}`}>
+                <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.SIGNUP))} className={`nav-bottom__link`}>
                   {t('user.noAccount')}
-                </Link>
+                </div>
               </div>
             </div>
           </div>
         </Form>
-      </Popup>
     </>
   );
 }

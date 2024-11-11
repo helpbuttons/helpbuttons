@@ -5,13 +5,15 @@ import { NextPageContext } from 'next';
 import router from 'next/router';
 import { ServerPropsService, setMetadata } from 'services/ServerProps';
 import { setSSRLocale } from 'shared/sys.helper';
+import { useMetadataTitle } from 'state/Metadata';
 export default Login;
 
 function Login() {
+    useMetadataTitle(t('menu.login'))
+
     return (
-        <Popup title={t("user.login")} linkBack={() => router.back()}>
-           <LoginForm/>
-        </Popup>
+
+            <LoginForm/>
     );
 }
 

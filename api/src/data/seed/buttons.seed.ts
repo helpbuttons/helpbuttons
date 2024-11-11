@@ -70,7 +70,7 @@ export class ButtonsSeeder implements Seeder {
     // const network = await this.networkService.findDefaultNetwork();
     const network = await this.networkRepository.find({ order: { created_at: 'ASC' } });
 
-    const buttonTemplates = JSON.parse(network[0].buttonTemplates)
+    const buttonTemplates = network[0].buttonTemplates
     console.log('success')
     
     const buttonTypes = buttonTemplates.map((btnTemplate) => btnTemplate.name.toLowerCase())

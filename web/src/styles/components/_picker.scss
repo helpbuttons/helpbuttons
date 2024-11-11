@@ -1,6 +1,6 @@
 $picker-background: rgba(0,0,0,.2);
 $picker-header-height: 80px;
-$picker-max-width: 480px;
+$picker-max-width: 680px;
 $picker-border-radius: 25px;
 $picker-width: 240px;
 $picker-min-width: 240px;
@@ -90,7 +90,6 @@ $picker-comments-item-padding: 25px;
 //picker HEADERS
 .picker__header {
   width: 100%;
-
   font-size: $font-size-medium;
   font-weight: $font-weight-regular;
   text-align: center;
@@ -100,7 +99,7 @@ $picker-comments-item-padding: 25px;
 .picker__header {
 
   width: 100%;
-  padding: .5rem;
+  padding: $padding-big;
   position:  relative;
   height: $picker-header-height;
 
@@ -201,11 +200,11 @@ $picker-comments-item-padding: 25px;
 .picker__close-overlay {
   width: 100%;
   height: 100%;
-  width: 100vw;
   position: fixed;
   top: 0;
   left: 0;
   background-color:  $color-gray-transparent;
+  z-index: $z-index-03;
 }
 
 .picker__comments,
@@ -327,6 +326,7 @@ $picker-comments-item-padding: 25px;
   .picker {
 
     height: auto;
+    max-width: $picker-max-width;
 
   }
 
@@ -338,7 +338,7 @@ $picker-comments-item-padding: 25px;
   }
 
   .picker--over {
-    max-width: 500px;
+    max-width: 700px;
     z-index: $z-index-05;
     max-height: 90%;
   }

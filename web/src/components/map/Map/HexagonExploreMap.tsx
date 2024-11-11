@@ -30,7 +30,6 @@ export default function HexagonExploreMap({
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
 
   const maxButtonsHexagon = useRef(1)
-  const [isRedrawingMap, setIsRedrawingMap] = useState(true)
 
   const showMarkersZoom = maxZoom - 2;
 
@@ -51,9 +50,7 @@ export default function HexagonExploreMap({
   );
 
   const onBoundsChanged = ({ center, zoom, bounds }) => {
-    setIsRedrawingMap(() => true)
     handleBoundsChange(bounds, center, zoom)
-
     setCenterBounds(center);
   };
 
@@ -67,8 +64,6 @@ export default function HexagonExploreMap({
     maxButtonsHexagon.current = h3TypeDensityHexes.reduce((accumulator, currentValue) => {
         return Math.max(accumulator, currentValue.count);
       }, 1);
-    setIsRedrawingMap(() => false)
-
   }, [h3TypeDensityHexes]);
 
   const buttonTypes = selectedNetwork.buttonTemplates;
@@ -85,7 +80,48 @@ export default function HexagonExploreMap({
       setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonHighlight))
     }
   }, [hexagonHighlight,hexagonClicked, geoJsonFeatures])
-  
+  const places = [
+        {
+          address: 'Eiffel Tower, Paris, France',
+          coords: {
+            lat: 48.8584,
+            lng: 2.2945,
+          },
+          id: '1',
+        },
+        {
+          address: 'Colosseum, Rome, Italy',
+          coords: {
+            lat: 41.8902,
+            lng: 12.4922,
+          },
+          id: '2',
+        },
+        {
+          address: 'Brandenburg Gate, Berlin, Germany',
+          coords: {
+            lat: 52.5163,
+            lng: 13.3777,
+          },
+          id: '3',
+        },
+        {
+          address: 'Buckingham Palace, London, UK',
+          coords: {
+            lat: 51.5014,
+            lng: -0.1419,
+          },
+          id: '4',
+        },
+        {
+          address: 'Sagrada Família, Barcelona, Spain',
+          coords: {
+            lat: 41.4036,
+            lng: 2.1744,
+          },
+          id: '5',
+        },
+      ];
   return (
     <>
       {(exploreSettings.center && selectedNetwork) && (
@@ -98,17 +134,14 @@ export default function HexagonExploreMap({
             handleClick={onMapClick}
           >
             <HbMapOverlay selectedNetwork={selectedNetwork} />
+            {/* {places.map((place) => (<Overlay key={place.id} anchor={[place.coords.lat, place.coords.lng]}>{place.address}</Overlay>))} */}
+            {/* {places.map((place) => (<MarkerPlace key={place.id} anchor={[place.coords.lat, place.coords.lng]} address={place.address}/> */}
+            {/* </Overlay> */}
             <DisplayInstructions/>
               <GeoJson>
                 {/* DRAW HEXAGONS ON MAP */}
-                {geoJsonFeatures.map((hexagonFeature) => (
+                {!(exploreSettings.zoom >= showMarkersZoom) && geoJsonFeatures.map((hexagonFeature) => (
                   <GeoJsonFeature
-                    // onMouseOver={() => {
-                    //   if(hexagonClicked != hexagonFeature.properties.hex)
-                    //   {
-                    //     store.emit(new UpdateHexagonClicked(hexagonFeature.properties.hex))
-                    //   }
-                    // }}
                     onClick={(feature) => {
                       if (hexagonFeature.properties.count > 0) {
                         store.emit(
@@ -166,7 +199,7 @@ export default function HexagonExploreMap({
                 ))}
 
                 {/* DRAW CLICKED HEXAGON ON MAP */}
-                {!isRedrawingMap &&
+                {!exploreSettings.loading &&
                   hexagonClicked &&
                   hexagonClickedFeatures && (
                     <GeoJsonFeature
@@ -187,7 +220,7 @@ export default function HexagonExploreMap({
             {/*
         show count of buttons per hexagon
         */}
-            {!isRedrawingMap &&
+            {!exploreSettings.loading &&
               !(exploreSettings.zoom >= showMarkersZoom) &&
               geoJsonFeatures.map((hexagonFeature) => {
                 if (hexagonFeature.properties.count > 0) {
@@ -222,7 +255,7 @@ export default function HexagonExploreMap({
               })}
 
             {/* draw clicked hexagon */}
-            {!isRedrawingMap &&
+            {!exploreSettings.loading &&
               hexagonClickedFeatures &&
               !(exploreSettings.zoom >= showMarkersZoom) && (
                 <Overlay
@@ -302,9 +335,9 @@ export default function HexagonExploreMap({
                 <IoStorefrontSharp />
               </button>
             </Overlay>
-            {isRedrawingMap && (
+            {exploreSettings.loading && (
               <Overlay anchor={centerBounds}>
-                <Loading />
+                <Loading /> loading
               </Overlay>
             )}
           </HbMap>

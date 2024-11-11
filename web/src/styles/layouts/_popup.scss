@@ -71,7 +71,7 @@ body {
 .popup__header {
 
   width: 100%;
-  padding: $padding-big;
+  padding: $padding-big $padding-medium;
   position:  relative;
   border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
   height: $popup-header-height-mobile;
@@ -85,7 +85,7 @@ body {
 
 
 .popup__header-center {
-  flex: 0 1 $popup-header-width;
+  flex: 0 1 calc( 100% - #{$btn-circle-icon-height} * 2 );
   text-align: center;
   padding: 0 10px;
 
@@ -120,10 +120,8 @@ body {
 
 .popup__header-title  {
   font-size: $font-size-general;
-
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-bolder;
   color: $color-dark-gray;
-  letter-spacing: 2px;
 }
 
 .popup__header-button {
@@ -153,20 +151,18 @@ body {
 .popup__content {
 
   width: 100%;
-  height: auto;
-  overflow-y:visible;
-  // margin-bottom: $footer-height-mobile;
   overflow-x: hidden;
   border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;//REVISE
   display: flex;
   flex-direction: column;
-  // justify-content: space-between;
 
 }
 
 .popup__section {
 
-  padding: 1rem 1rem;
+  padding: $padding-big;
+  height: auto;
+  
 }
 
 .popup__img {
@@ -384,7 +380,7 @@ body {
     // Centering
     display: flex;
     flex-flow: column nowrap;
-    justify-content: center;
+    // justify-content: center;
     background: transparent;
     z-index: $z-index-03;
 
@@ -441,7 +437,8 @@ body {
     margin: auto;
     max-width: $popup-max-width;
     pointer-events: auto;
-  }
+    padding-top: $padding-big;
+    }
 
   .popup__header {
 

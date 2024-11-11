@@ -8,11 +8,15 @@ import { dbIdGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { EntityManager, In, Repository } from 'typeorm';
 import { Activity } from './activity.entity';
+
 import { UserService } from '../user/user.service';
 import { MailService } from '../mail/mail.service';
 import translate from '@src/shared/helpers/i18n.helper';
 import { getUrl } from '@src/shared/helpers/mail.helper';
 import { ButtonService } from '../button/button.service';
+import { getButtonActivity, getUserActivity, transformToMessage } from './activity.transform';
+import { NetworkService } from '../network/network.service';
+import { ActivityDtoOut } from './activity.dto';
 
 @Injectable()
 export class ActivityService {
@@ -24,6 +28,7 @@ export class ActivityService {
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
     private readonly buttonService: ButtonService,
+    private readonly networkService: NetworkService,
   ) {}
 
   @OnEvent(ActivityEventName.NewPost)
@@ -104,7 +109,7 @@ export class ActivityService {
   }
   @OnEvent(ActivityEventName.NewButton)
   async onNewButton(payload: any) {
-    const button_ = payload.data.button;
+    const button_ = getButtonActivity(payload.data);
     // check users following the button of this post, and add a new actitivy to the daily outbox
     return this.buttonService.findById(button_.id).then(async (button) => {
       // calculate users to be notified:
@@ -149,7 +154,10 @@ export class ActivityService {
                 return this.newActivity(user, payload, true);
               });
           }),
-        );
+        ).catch((err) => {
+          console.log(payload)
+          console.log(err)
+        });
       }
       
       return this.newActivity(button.owner, payload, false);
@@ -159,10 +167,15 @@ export class ActivityService {
   }
 
   @OnEvent(ActivityEventName.DeleteButton)
-  async onDeleteButton(payload: any) {
-    const {user, button} = payload.data;
-    // notify button owner
-    await this.newActivity(button.owner, payload, false);
+  async onDeleteButton(payload: any) {    
+    const button = getButtonActivity(payload.data);
+    const user = getUserActivity(payload.data)
+    
+    return this.entityManager.query(`delete from activity WHERE (data->'button'->'id' @> '"${button.id}"' OR data->'post'->'button'->'id' @> '"${button.id}"' OR data->'comment'->'button'->'id' @> '"${button.id}"')`)
+    .then(() => {
+
+      return this.newActivity(button.owner, payload, false);
+    })
   }
   @OnEvent(ActivityEventName.RenewButton)
   async onRenewButton(payload: any) {
@@ -193,45 +206,9 @@ export class ActivityService {
   @OnEvent(ActivityEventName.ExpiredButton)
   async onExpiredButton(payload: any) {
     const {button} = payload.data;
+
+    // delete from home info
     await this.newActivity(button.owner, payload, false);
-    /*notifyOwnerExpiredButton(button: Partial<Button>, isEvent: boolean = false)
-    {
-      return this.userService
-              .findById(button.owner.id)
-              .then((user) => {
-                return this.userService
-                  .getUserLoginParams(user.id)
-                  .then((loginParams) => {
-                    let content_ = 'button.isExpiringMail'
-                    let subject_ = 'button.isExpiringMailSubject'
-                    if(isEvent)
-                    {
-                      content_ = 'button.isExpiringEventMail'
-                      subject_ = 'button.isExpiringEventMailSubject'
-                    }
-                    return this.mailService.sendWithLink({
-                      to: user.email,
-                      content: translate(
-                        user.locale,
-                        content_,
-                        [button.title],
-                      ),
-                      subject: translate(
-                        user.locale,
-                        subject_,
-                      ),
-                      link: getUrl(
-                        user.locale,
-                        `/ButtonRenew/${button.id}${loginParams}`,
-                      ),
-                      linkCaption: translate(
-                        user.locale,
-                        'email.buttonLinkCaption',
-                      ),
-                    });
-                  });
-              })
-    }*/
   }
 
   @OnEvent(ActivityEventName.NewFollowingButton)
@@ -246,17 +223,38 @@ export class ActivityService {
     this.newActivity(button.owner, payload, false);
   }
 
-  findByUserId(userId: string) {
-    return this.activityRepository.find({
-      where: { owner: { id: userId } },
-      relations: ['owner'],
-      order: { created_at: 'DESC' },
-    }).then((activities) => {
-      return activities.map((activity) => 
-      {
-        return activity
+  findByUserId(userId: string, locale: string) : Promise<ActivityDtoOut[]> {
+    
+    return this.networkService.findButtonTypes()
+    .then((buttonTypes) => {
+      return this.activityRepository.find({
+        where: { owner: { id: userId } },
+        relations: ['owner'],
+        order: { created_at: 'DESC' },
+      }).then((activities) => {
+        return activities.map((activity): ActivityDtoOut => 
+        {
+          try{
+          return transformToMessage(activity, userId, buttonTypes, locale)
+          }catch(error)
+          {
+            console.log(error);
+          }
+          return  {
+            id: activity.id,
+            eventName: activity.eventName,
+            read: activity.read,
+            createdAt: activity.created_at.toString(),
+            title: "ops.",
+            message: "ops.",
+            image: 'image',
+            referenceId: 'ddd',
+            isPrivate: false,
+            isOwner: false
+          };;
+        })
       })
-    });
+    })
   }
 
   markAllAsRead(userId: string) {
@@ -293,10 +291,14 @@ export class ActivityService {
   }
 
   newActivity(user, payload, addToDailyMailResume = false) {
-    console.log(
-      `new activity [${user.username}] ${payload.activityEventName} outbox? ${addToDailyMailResume}`,
-    );
-    
+    try{
+      console.log(
+        `new activity [${user.username}] ${payload.activityEventName} outbox? ${addToDailyMailResume}`,
+      );
+    }catch(err)
+    {
+      console.log(err)
+    }
     const activity = {
       id: dbIdGenerator(),
       owner: user,
@@ -325,8 +327,17 @@ export class ActivityService {
         .delete({owner: {id: authorId}})
   }
 
-  public findNetworkActivity()
+  public findNetworkActivity(locale)
   {
-    return this.activityRepository.find({take: 5, order: { created_at: 'DESC' }, where: {homeinfo: true}})
+    return this.networkService.findButtonTypes()
+    .then((buttonTypes) => {
+
+      return this.activityRepository.find({take: 5, order: { created_at: 'DESC' }, where: {homeinfo: true}}).then((activities) => {
+        return activities.map((activity): ActivityDtoOut => 
+        {
+          return transformToMessage(activity, false, buttonTypes, locale)
+        })
+      })
+    })
   }
 }

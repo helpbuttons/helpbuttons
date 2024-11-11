@@ -8,7 +8,8 @@ import { useRouter } from 'next/router';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
 import { Network } from 'shared/entities/network.entity';
-import { getHostname, getLocale } from 'shared/sys.helper';
+import { getHostname } from 'shared/sys.helper';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useStore } from 'store/Store';
 
 export default function NewUserFields({
@@ -17,6 +18,8 @@ export default function NewUserFields({
   control,
   setValue,
   watch,
+  short = false,
+  isInitAdminForm=false,
 }) {
   const [hostname, setHostname] = useState('');
   const selectedNetwork: Network = useStore(
@@ -58,15 +61,17 @@ export default function NewUserFields({
 
   return (
     <>
-      <FieldText
-        name="email"
-        label={t('user.email')}
-        explain={t('user.emailExplain')}
-        classNameInput="squared"
-        placeholder={t('user.emailPlaceHolder')}
-        validationError={errors.email}
-        {...register('email', { required: true })}
-      ></FieldText>
+      {!short && 
+        <FieldText
+          name="email"
+          label={t('user.email')}
+          explain={t('user.emailExplain')}
+          classNameInput="squared"
+          placeholder={t('user.emailPlaceHolder')}
+          validationError={errors.email}
+          {...register('email', { required: true })}
+        ></FieldText>
+      }
       <FieldText
         name="name"
         label={t('user.name')}
@@ -76,18 +81,21 @@ export default function NewUserFields({
         validationError={errors.name}
         {...register('name', { required: true })}
       ></FieldText>
-      <FieldText
-        name="username"
-        label={`${t('user.username')} ${watch(
-          'username',
-        )}@${hostname}`}
-        explain={t('user.usernameCreateExplain')}
-        classNameInput="squared"
-        placeholder={t('user.usernamePlaceHolder')}
-        validationError={errors.username}
-        {...register('username', { required: true })}
-      ></FieldText>
-      <FieldPassword
+      {!short &&
+        <FieldText
+          name="username"
+          label={`${t('user.username')} ${watch(
+            'username',
+          )}@${hostname}`}
+          explain={t('user.usernameCreateExplain')}
+          classNameInput="squared"
+          placeholder={t('user.usernamePlaceHolder')}
+          validationError={errors.username}
+          {...register('username', { required: true })}
+        ></FieldText>
+      }
+      {!short &&
+        <FieldPassword
         name="password"
         explain={t('user.passwordExplain')}
         label={t('user.password')}
@@ -96,7 +104,20 @@ export default function NewUserFields({
         validationError={errors.password}
         {...register('password', { required: true, minLength: 8 })}
       ></FieldPassword>
-      {selectedNetwork && (
+      }
+       {/* {short &&
+        <FieldPassword
+        name="password"
+        explain={t('user.passwordExplain')}
+        label={t('user.password')}
+        classNameInput="squared"
+        placeholder={t('user.passwordPlaceHolder')}
+        validationError={errors.password}
+        {...register('password', { minLength: 8 })}
+      ></FieldPassword>
+      } */}
+      
+      {selectedNetwork && !isInitAdminForm && (
           <FieldTags
             label={t('user.tags')}
             explain={t('user.tagsExplain')}
@@ -120,7 +141,7 @@ export default function NewUserFields({
           minLength: 8,
         })}
       ></FieldPassword> */}
-      {t('user.acceptPrivacyPolicy')}<Link href="/Faqs">{t('user.privacyPolicyLink')}</Link>
+      {t('user.acceptPrivacyPolicy')}<Link onClick={() => store.emit(new SetMainPopup(MainPopupPage.FAQS))} href="#">{t('user.privacyPolicyLink')}</Link>
       <FieldCheckbox
         name="acceptPrivacyPolicy"
         // defaultValue={watch('acceptPrivacyPolicy')}

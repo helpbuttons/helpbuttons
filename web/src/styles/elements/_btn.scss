@@ -18,11 +18,10 @@ $btn-hashtag-bottom: 8px;
 $btn-hashtag-right-padding: 8px;
 $btn-hashtag-erase-height: 14px;
 $-border-height: $border-general-height;
-$btn-height: 54px;
+$btn-height: 48px;
 $btn-border-radius: $border-radius-semicircle;
 $btn-padding-big: $padding-big;
 $btn-max-height: 60px;
-$btn-height: 54px;
 $btn-circle-height: 54px;
 $btn-circle-small-height: 35px;
 $btn-circle-big-icon-height: 28px;
@@ -214,7 +213,6 @@ $btn-font-size-medium: $font-size-medium;
 ///REGULAR btnS FOR OPTIONS - OONE WITH AND ONE WITHOOUT ICONS
 .btn,
 .btn-with-icon {
-
   align-items: center;
   display: flex;
   padding: 0 $btn-padding-big;
@@ -227,7 +225,6 @@ $btn-font-size-medium: $font-size-medium;
   margin-top: $margin-xsmall;
   width: 100%;
   color: $color-black;
-
 }
 
 

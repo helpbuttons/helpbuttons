@@ -14,15 +14,17 @@
     "selectedArea": "en el area seleccionada",
     "start": "¿Dónde quieres empezar?",
     "info": "¿De qué se trata?",
+    "seeMore": "Ver más",
+    "seeLess": "Ver menos",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
-    "goToExplore": "Explorar _helpbuttons_",
-    "goToCreate": "Crea tu _helpbutton_",
+    "goToExplore": "Explorar",
+    "goToCreate": "Crear _helpbutton_",
     "activity": "Actividad reciente",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
     "stats": "¿Qué hay en esta red?",
     "users": "{0} usuarios en esta Red",
-    "actions": "¿Qué puedes hacer?",
+    "actions": "En resumen ¿Qué puedes hacer?",
     "popularHashtags": "¿Qué temas se tratan?",
     "popularHashtagsExplain": "Estos son los temas creados hasta la fecha. Puedes añadir temas nuevos creando tu _helpbutton_. Si te unes, también puedes recibir alertas sobre ellos añadiéndolos en la sección 'Mis Intereses' de tu Perfil.",
     "recommendedHashtags": "Temas recomendados por los administradores",
@@ -42,7 +44,24 @@
     "needLogo": "Antes de seleccionar un lugar, por favor añade tu logo",
     "needPlace": "Por favor, selecciona en qué zona se situa tu Red",
     "latestActivity": "Últimas actividads",
-    "installButton": "Instalar"
+    "installButton": "Instalar app",
+    "notificationsPermission": "Permitir notificaciones",
+    "share": "Compartir esta app"
+  },
+  "share":{
+
+    "showSharePopup": "Comparte esta aplicación",
+    "header": "Compartir esta aplicación",
+
+    "shareField": "Elige tu opción para compartir",
+    "shareTypeLabel": "Tipo",
+    "shareTypeExplain": "Elige la manera en la que quieres compartir los resultados de tu red",
+    "shareExplain": "Elige el número de resultados que quieras mostrar y copia el código en tu web.",
+    "explainInvitations": "Generate individual invitation cards for your community",
+    "optionIframe": "Iframe para insertar en otras webs",
+    "optionBulletin": "Imprimir lista de _helpbuttons_",
+    "optionInvitations": "Invitaciones personales para imprimir"
+
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -114,7 +133,7 @@
     "buttonTemplateColor": "Color de tipo",
     "buttonTemplateEmoji": "Icono de tipo",
     "buttonTemplateFormTitle": "Completa los campos para crear un nuevo tipo de _helpbutton_",
-    "buttonTemplateLabel": "Elige tus tipos de botón",
+    "buttonTemplateLabel": "Elige tus tipos de _helpbutton_",
     "createButtonTypePlaceholder": "Escribe el nombre de tu nuevo tipo de _helpbutton_",
     "nomeclaturePluralPlaceHolder": "Escribe aquí el nuevo nombre en plural. Por ejemplo, 'publicaciones'",
     "templateMissingFields": "Escoge un nombre y un color para crear tu tipo de _helpbutton_",
@@ -128,9 +147,10 @@
     "customFieldsExplain": "Estos son campos extra que puedes añadir a tus _helpbuttons_ para adaptarse a las diferentes tareas. Añade una fecha si quieres qu sirvan para gestionar eventos, o un precio si quieres que los usuarios vendan productos.",
     "priceFieldAddLabel": "Muestra un precio en tu tipo de _helpbutton_ para que los usuarios puedan comprar o vender",
     "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
-    "addType": "+ Crear tipo de _helpbutton_ con los campos superiores",
+    "addType": "+ Crear tipo de _helpbutton_",
     "currencyLabel": "Divisa",
-    "setType": ""
+    "setType": "",
+    "buttonTemplatePlaceHolder": ""
   },
   "activities": {
     "allNotifications": "Todas las actualizaciones",
@@ -141,7 +161,7 @@
     "newcomment": "@{0} respondió en '{1}'",
     "newpost": "Has publicado en '{0}'",
     "newbuttoninterest": "Hay _helpbuttons_ sobre temas que sigues: {0}",
-    "newbutton": "Tu _helpbutton_ fue publicado en '{0}'",
+    "newbutton": "Tu _helpbutton_ está disponible en '{0}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
     "markedAllAsRead": "Marcado como leído",
     "newcommentSubject": "Alguien ha comentado en tu _helpbutton_",
@@ -159,9 +179,8 @@
     "expiredEventType": "_helpbutton_ terminó",
     "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública."
   },
-  "activitiesWithSubject":
-  {
-    "newbutton": "{0} publicó un _helpbutton_ en  {1}",
+  "activitiesWithSubject": {
+    "newbutton": "{0} creó _helpbutton_ en {1}",
     "newpost": "{0} publicó en {1}"
   },
   "user": {
@@ -274,13 +293,13 @@
     "selectedArea": "en el área seleccionada",
     "queryLabel": "Filtra por tema",
     "searchBarTop": "{1} _helpbuttons_ {0}",
-    "queryExplain": "Escribe o pulsa palabras concretas sobre lo que quieras encontrar",
+    "queryExplain": "Escribe y pulsa Enter o selecciona palabras concretas sobre lo que quieras encontrar",
     "followTag": "Mándame alertas",
     "tagsExplain": "Las palabras clave son los temas más importantes o más tratados en la Red",
     "where": "Filtra por lugar",
     "distance": "Distancia de búsqueda",
     "allButtonTypes": "Todos los tipos",
-    "queryPlaceHolder": "Escribe aquí lo que buscas",
+    "queryPlaceHolder": "Pulsa y escribe lo que buscas",
     "whereExplain": "Busca en el lugar que quieras o pulsa en el icono para marcar tu ubicación",
     "types": "Filtra por tipo de _helpbuttons_",
     "typesExplain": "Selecciona los tipos de _helpbuttons_ que quieras filtrar",
@@ -291,8 +310,11 @@
     "whereLabel": "Filtra por lugar",
     "whenLabel": "Filtra por fecha",
     "whenExplain": "Filtra los eventos por fecha",
+    "byCategory": "Por categoría",
     "byDate": "Últimos creados",
     "byPrice": "Por precio",
+    "byPlace": "Por lugar",
+    "byTopic": "Por tema",
     "orderBy": "Ordenar por",
     "orderByExplain": "Elige el orden en el que mostrar _helpbuttons_ en la lista",
     "priceExplain": "Elige precio máximo y mínimo",
@@ -301,7 +323,9 @@
     "followTagSucess": "{0} fue añadido a tus temas de interés. Para ver tus temas de interés ve a Mi Perfil.",
     "focusedArea": "en la zona",
     "locationLimited": "Limitado a {0}, {1}",
-    "pickLocationLimits": "Elige una localización"
+    "pickLocationLimits": "Elige una localización",
+    "buttonTagsSuccess": "Tus temas de interés fueron actualizados"
+
   },
   "button": {
     "title": "Vista de _helpbutton_",
@@ -354,7 +378,9 @@
     "createUpdate": "Publicar Novedad",
     "authorTitle": "Autor:",
     "notFound": "No puedo encontrar tu button, talvez fue borrado?",
-    "invalidDates": ""
+    "invalidDates": "",
+    "followErrorAlert": "",
+    "unfollowErrorAlert": ""
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -383,15 +409,23 @@
     "address": "Error al obtener la dirección",
     "dates": "Fechas inválidas"
   },
+  "invitation":{
+    "card": "Tarjeta anónima de id individual",
+    "infoCard": "Escanea el código para entrar.",
+    "name": "Esta tarjeta es única y personal, no la pierdas.",
+    "contact": "Si quieres escribe un método de contacto.",
+    "infoQr": "Contacto:"
+  },
   "setup": {
     "finish": "Finalizar configuración",
-    "welcomeMessage": "BIENVENIDO/A A TU INSTANCIA DE HELPBUTTONS",
-    "welcomeMessageLong": "<p>Aquí verás tu descripción.</p><p>Crea tu primera herramienta colaborativa con las opciones de abajo.</p>",
+    "welcomeMessage": "Bienvenido/a a tu instancia de Helpbuttons",
+    "welcomeMessageLong": "En el siguiente paso podrás configurar tu red. Crea tu primera herramienta colaborativa con las opciones que verás en la siguiente sección. Si tienes problemas, contacta con help@helpbuttons.org. Gracias por apoyar la colaboración libre.</p>",
     "hostname": "Nombre del host",
     "postgresPassword": "Contraseña de Postgresql",
     "postgresHostName": "Servidor de Postgresql",
     "smtpUrl": "URL de Smtp",
     "test": "prueba",
+    
     "createAdminTitle": "Crear cuenta de administrador",
     "postgresPort": "Puerto de Postgresql",
     "postgresDb": "Nombre de la base de datos de Postgresql",
@@ -476,11 +510,13 @@
     "inviteOnlyNetwork": "Sólo puedes registrarte en esta red con una invitación.",
     "generate": "Crear nuevo link de invitación",
     "copied": "Link de invitación copiado {0}",
-    "title": "Invitaciones",
+    "title": "Invitaciones QR",
     "description": "Invita a personas, administra y comparte enlaces con otras personas para permitirles acceder a tu red",
     "inviteOnlyLabel": "Privacidad de la red",
-    "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con invitación.",
-    "inviteOnly": "Sólo permitir el registro con una invitación"
+    "inviteOnlyExplain": "Si habilitas esto, los usuarios solo podrán registrarse y publicar con un código QR.",
+    "inviteOnly": "Sólo permitir el registro con un código QR",
+    "generateQr": "QR",
+    "registered": "QR usado"
   },
   "customFields": {
     "priceLabel": "Precio ({0})",
@@ -529,10 +565,12 @@
     "requireApprovalLabel": "Moderación de la red",
     "requireApprovalExplain": "Si habilitas esto, todos los _helpbuttons_ creados (si no son por un administrador) no se publicarán en el mapa, hasta que un administrador lo apruebe",
     "awaitingApproval": "_helpbutton_ ha sido añadido a la lista de moderación, por favor espera a que un administrador la apruebe",
-    "created_at": "Creado"
+    "created_at": "Creado",
+    "title": "",
+    "created": "",
+    "confirm": ""
   },
-  "role":
-  {
+  "role": {
     "blocked": "deativado",
     "admin": "administrador",
     "registered": "registrado",

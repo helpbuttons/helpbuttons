@@ -73,15 +73,11 @@ $nav-header-new-message-radius: $border-radius-circle;
 
 
   .nav-header__container {
-
     background-color: $color-corporative;
     padding: 0 $padding-medium;
     display: flex;
-    height: $nav-header-height-desktop;
     justify-content: flex-start;
     box-shadow: none;
-
-
   }
 
 
@@ -91,7 +87,6 @@ $nav-header-new-message-radius: $border-radius-circle;
     flex: 0.9;
     width: 100%;
     z-index: 0;
-
   }
 
   .nav-header__filters {

@@ -18,9 +18,6 @@ export default function FieldImageUploads({
 }) {
   const [images, setImages] = useState(defaultImages);
 
-  useEffect(() => {
-    setImages(() => defaultImages)
-  }, [defaultImages])
   const onChange = (imageList, addUpdateIndex) => {
     if (imageList.length > 0) {
       setImages(() => imageList);
@@ -64,7 +61,7 @@ export default function FieldImageUploads({
             <div className="form__image-upload__image-wrapper">
               <label
                 htmlFor="files"
-                className="btn"
+                className="upload_file"
                 onClick={(e) => {
                   e.preventDefault();
                   onImageUpload();

@@ -1,5 +1,4 @@
 .publish_btn {
-
     padding: 0;
 
     .publish_btn-first {
@@ -9,45 +8,32 @@
     }
 
     .publish_btn-scd{
-
-        // padding: 1rem;
         border-top: 1px solid $color-gray-border;
         border-bottom: 1px solid $color-gray-border;
-
     }
     
     .card-button-list__tags {
-        
         display: flex;
         justify-content: flex-start;
         align-items: center;
         margin: 5px 0;
-        // min-height: 38px;
-
 
         .tags__list {
-
             display: flex;
             justify-content: flex-start;
             align-items: center;
             flex-wrap: wrap;
             max-width: 100%;
-    
-
         }
-
     }
-
 
 }
 
 .publish__submit {  
-
     margin: $margin-big 0;
     margin-bottom: $margin-big;
 
     .create_btn {
-        
         width: 100%;
         background-color: $color-gray-btn;
         color: $color-white;
@@ -55,7 +41,14 @@
         font-weight: bold;
         font-size: $font-size-general;
         border-radius: $border-radius-circle;
-
     }
 
+}
+
+.upload_file {
+    display: block;
+    margin: 12px 0;
+    background: #f0f0f0;
+    padding: 12px 24px;
+    text-align: center;
 }

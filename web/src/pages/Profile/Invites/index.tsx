@@ -7,7 +7,7 @@ import Btn, {
 import { DropdownField } from 'elements/Dropdown/Dropdown';
 import t from 'i18n';
 import { GlobalState, store } from 'pages';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
 
@@ -22,6 +22,11 @@ import {
 import { getShareLink } from 'shared/sys.helper';
 import { alertService } from 'services/Alert';
 import router from 'next/router';
+import QRCode from 'qrcode';
+
+const getInvitationLink = (code) => {
+  return '/Signup/Invite/' + code;
+};
 
 export default function Invites() {
   const invites: Invite[] = useStore(
@@ -74,11 +79,12 @@ export default function Invites() {
   };
   const onSubmit = (data) => {
     const invitation = {
-      maximumUsage: parseInt(data.maximumUsage),
+      // maximumUsage: parseInt(data.maximumUsage),
+      maximumUsage: 1,
       expirationTimeInSeconds: parseInt(data.expirationTimeInSeconds),
       followMe: data.followMe,
     };
-    store.emit(new CreateInvite(invitation));
+    store.emit(new CreateInvite(invitation, () => {console.log('got new invitation')}));
   };
 
   const isExpired = (date: Date) => {
@@ -88,77 +94,46 @@ export default function Invites() {
   const captionInvite = ({ usage, maximumUsage, expiration, id }) => {
     return (
       <>
-        {maximumUsage > 0 ? (
+        {/* {maximumUsage > 0 ? (
           <>
             {usage} / {maximumUsage}{' '}
           </>
         ) : (
-          <> {t('invite.nolimit')} </> 
-        )}
-        , {t('invite.expiresIn')} {expirationTime(expiration)}
+          <> {t('invite.nolimit')} </>
+        )} , */}
+        {t('invite.expiresIn')} {expirationTime(expiration)}
       </>
     );
   };
 
-  const getInvitationLink = (code) => {
-    return '/Signup/Invite/' + code;
-
-  }
-  const copyInvitation = (invitation) => {
-    const link = getInvitationLink(invitation.id);
-    navigator.clipboard.writeText(
-      getShareLink(link),
-    );
-    alertService.info(t('invite.copied', [link]))
-  }
   return (
     <>
       {loggedInUser && (
-        <>
-        {/* <Popup title={t('configuration.title')} LinkFwd="/Profile">
-        <Form
-        classNameExtra="configuration"
-        onSubmit={handleSubmit(onSubmit)}
-      > */}
-        {/* <div className="form__inputs-wrapper">
-          <div className="form__field">
-            <p className="form__explain">{description}</p>
-            <p>
-              <b>{getUrlOrigin()}</b>
-            </p>
-          </div>
-          </div>
-          </Form>
-        </Popup> */}
-          <Popup title={t('invite.title')} linkBack={() => router.back()}>
+          <Popup
+            title={t('invite.title')}
+            linkBack={() => router.back()}
+          >
             <Form
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="invite"
             >
               <div className="invite__form">
-               
-                <p className="form__explain">{t('invite.description')}</p>
+                <p className="form__explain">
+                  {t('invite.description')}
+                </p>
                 <div className="form__inputs-wrapper">
-                <DropdownField
-                  options={maximumUsageTimesOptions}
-                  defaultSelected={'nolimit'}
-                  onChange={(value) =>
-                    setValue('maximumUsage', value)
-                  }
-                  label={t('invite.maximumUsageTimes')}
-                />
-                <DropdownField
-                  options={expirationOptions}
-                  defaultSelected={'never'}
-                  onChange={(value) =>
-                    setValue('expirationTimeInSeconds', value)
-                  }
-                  label={t('invite.expiresIn')}
-                />
-                <Btn
-                  caption={t('invite.generate')}
-                  submit={true}
-                ></Btn>
+                  <DropdownField
+                    options={expirationOptions}
+                    defaultSelected={'never'}
+                    onChange={(value) =>
+                      setValue('expirationTimeInSeconds', value)
+                    }
+                    label={t('invite.expiresIn')}
+                  />
+                  <Btn
+                    caption={t('invite.generate')}
+                    submit={true}
+                  ></Btn>
                 </div>
               </div>
             </Form>
@@ -166,27 +141,52 @@ export default function Invites() {
             <div>
               {invites?.length > 0 &&
                 invites.map((invitation, idx) => (
-                  <div
-                    key={idx}
-                  >
-                    {(!isExpired(invitation.expiration) || !invitation.expiration) && (
-                      <div className='form__list-item--button-type-field' key={idx}>
-                      {captionInvite(invitation)}
-                      
-                      <Btn
-                        btnType={BtnType.filter}
-                        iconLeft={IconType.color}
-                        contentAlignment={ContentAlignment.left}
-                        caption={t('invite.clickToCopy')}
-                        onClick={() => copyInvitation(invitation)}
-                      />
+                  <div key={idx}>
+                    {(!isExpired(invitation.expiration) ||
+                      !invitation.expiration) && (
+                      <div
+                        className="form__list-item--button-type-field"
+                        key={idx}
+                      >
+                        {captionInvite(invitation)}
+                        {invitation.usage > 0 ? <>&nbsp;{t('invite.registered')}</>: <InvitationQrCode url={invitation} />}
+                        
+                        <img src="" />
                       </div>
                     )}
                   </div>
                 ))}
             </div>
           </Popup>
-        </>
+      )}
+    </>
+  );
+}
+
+function InvitationQrCode({ url }) {
+  const [qrCodeData, setQrCodeData] = useState(null);
+  const [invitationLink, setInvitationLink] = useState(null);
+  const generateQrCode = (invitation) => {
+    const link = getInvitationLink(invitation.id);
+    setInvitationLink(getShareLink(link))
+    QRCode.toDataURL(getShareLink(link), function (err, dataUrl) {
+      setQrCodeData(() => dataUrl);
+    });
+  };
+
+  return (
+    <>
+      {qrCodeData && <>{invitationLink}<img src={qrCodeData} /></>}
+      {!qrCodeData && (
+        <Btn
+          btnType={BtnType.filter}
+          iconLeft={IconType.color}
+          contentAlignment={ContentAlignment.left}
+          caption={t('invite.generateQr')}
+          onClick={() => {
+            generateQrCode(url);
+          }}
+        />
       )}
     </>
   );

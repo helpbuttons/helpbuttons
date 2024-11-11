@@ -1,12 +1,12 @@
-import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ajax } from 'rxjs/ajax';
+import { BehaviorSubject, Observable } from 'rxjs';
+
 
 import {
   localStorageService,
   LocalStorageVars,
 } from 'services/LocalStorage';
 import getConfig from 'next/config';
+import { rxjsHelper } from 'shared/helpers/rxjs.helper';
 
 export function isHttpError(err: object) {
   return err && err.statusCode && err.message;
@@ -26,16 +26,14 @@ export class HttpService {
     if (this.accessToken) {
       this.isAuthenticated$.next(true);
     }
-    const { publicRuntimeConfig } = getConfig()
+    const { publicRuntimeConfig } = getConfig();
     this.apiUrl = `${publicRuntimeConfig.apiUrl}/`;
   }
-  public getAccessToken()
-  {
-    return localStorageService.read(
-      LocalStorageVars.ACCESS_TOKEN,
-    );
+  public getAccessToken() {
+    return localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
   }
   public setAccessToken(accessToken?: string) {
+    console.log('setting up new token ' + accessToken)
     localStorageService.save(
       LocalStorageVars.ACCESS_TOKEN,
       accessToken.toString(),
@@ -44,7 +42,7 @@ export class HttpService {
   }
 
   public clearAccessToken() {
-    console.log('clearning access token')
+    console.log('cleaning access token');
     localStorageService.remove(LocalStorageVars.ACCESS_TOKEN);
     this.isAuthenticated$.next(false);
   }
@@ -55,15 +53,10 @@ export class HttpService {
     headers: object = {},
     keepPath: boolean = false,
   ): Observable<T | undefined> {
-    if (Object.keys(body).length > 0) {
-      const query = new URLSearchParams(body);
-      const queryString = query.toString();
-      path += '?' + queryString;
-    }
-    if (path.indexOf('//') === -1 && !keepPath) {
-      path = this.apiUrl + path;
-    }
-    return this._ajax('DELETE', path, {}, headers);
+    path = this.bodyToPath(path, body);
+    path = this.correctApiPath(path, keepPath);
+    headers = this.addTokenToHeaders(headers)
+    return rxjsHelper.delete(path, headers);
   }
 
   public get<T>(
@@ -72,15 +65,10 @@ export class HttpService {
     headers: object = {},
     keepPath: boolean = false,
   ): Observable<T | undefined> {
-    if (Object.keys(body).length > 0) {
-      const query = new URLSearchParams(body);
-      const queryString = query.toString();
-      path += '?' + queryString;
-    }
-    if (path.indexOf('//') === -1 && !keepPath) {
-      path = this.apiUrl + path;
-    }
-    return this._ajax('GET', path, {}, headers);
+    path = this.bodyToPath(path, body);
+    path = this.correctApiPath(path, keepPath);
+    headers = this.addTokenToHeaders(headers)
+    return rxjsHelper.get(path, headers);
   }
 
   public post<T>(
@@ -89,51 +77,34 @@ export class HttpService {
     headers: object = {},
     keepPath: boolean = false,
   ): Observable<T | undefined> {
-    if (path.indexOf('//') === -1 && !keepPath) {
-      path = this.apiUrl + path;
-    }
-    return this._ajax('POST', path, body, headers);
+    path = this.correctApiPath(path, keepPath);
+    headers = this.addTokenToHeaders(headers)
+    return rxjsHelper.post(path, body, headers);
   }
 
-  private _ajax<T>(
-    method: string,
-    path: string,
-    body: object,
-    headers: object,
-  ): Observable<T | undefined> {
-    return ajax({
-      url: path,
-      method: method,
-      body: body,
-      headers: { ...this._defaultHeaders(), ...headers },
-    }).pipe(map((result) => result.response as T | undefined));
-  }
-
-  private __ajax<T>(
-    method: string,
-    path: string,
-    body: object,
-    headers: object,
-  ): Observable<T | undefined> {
-    return ajax({
-      url: path,
-      method: method,
-      body: body,
-      headers: { ...this._defaultHeaders(), ...headers },
-    }).pipe(map((result) => result.response as T | undefined));
-  }
-
-  private _defaultHeaders(): object {
-    let headers = {
-      accept: 'application/json',
-    };
-
+  private addTokenToHeaders(headers): object {
     const accessToken = this.getAccessToken();
     if (accessToken) {
       headers['Authorization'] = `Bearer ${accessToken}`;
     }
 
-    return headers;
+    return { ...headers, accept: 'application/json' };
+  }
+ 
+  private bodyToPath(path, body) {
+    if (Object.keys(body).length > 0) {
+      const query = new URLSearchParams(body);
+      const queryString = query.toString();
+      path += '?' + queryString;
+    }
+    return path;
+  }
+
+  private correctApiPath(path, keepPath) {
+    if (path.indexOf('//') === -1 && !keepPath) {
+      path = this.apiUrl + path;
+    }
+    return path;
   }
 }
 

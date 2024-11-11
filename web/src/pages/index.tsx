@@ -5,17 +5,14 @@ import { Store } from "store/Store";
 //    Components
 
 import { NetworksState, networksInitial } from "state/Networks";
-import { UsersState, usersInitial } from "state/Users";
 import { ExploreState, exploreInitial } from "state/Explore";
 import { Alert } from "state/Alerts";
-import { SetupDtoOut } from "services/Setup/config.type";
 import { User } from "shared/entities/user.entity";
-import { Activity } from "shared/entities/activity.entity";
 import { Invite } from "shared/entities/invite.entity";
-export const metadata: Metadata = {
-  title: 'Home',
-  description: 'Welcome to Next.js',
-}
+import { HomeInfoState, homeInfoStateInitial } from "state/HomeInfo";
+import { ActivitiesState, activitiesInitialState } from "state/Activity";
+import { MetadataState, metadataInitialState } from "state/Metadata";
+import { CacheValue } from "state/Cache";
 
 // -- estado global --
 export interface GlobalState {
@@ -25,12 +22,15 @@ export interface GlobalState {
   explore: ExploreState;
   alerts: Alert[];
   config: SetupDtoOut;
-  activities: Activity[];
   showFilters: boolean;
-  unreadActivities: number;
   draftNewCommentPost: any;
-  invites: Invite[]
+  invites: Invite[],
+  homeInfo: HomeInfoState,
+  activitesState: ActivitiesState,
+  metadata: MetadataState,
+  cacheValues: CacheValue[]
 }
+
 
 export const store = new Store<GlobalState>({
   networks: networksInitial,
@@ -43,7 +43,11 @@ export const store = new Store<GlobalState>({
   showFilters: false,
   unreadActivities: 0,
   draftNewCommentPost: null,
-  invites: []
+  invites: [],
+  homeInfo: homeInfoStateInitial,
+  activitesState: activitiesInitialState,
+  metadata: metadataInitialState,
+  cacheValues: []
 });
 
 

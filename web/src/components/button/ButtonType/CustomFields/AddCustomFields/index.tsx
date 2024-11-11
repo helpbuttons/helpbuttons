@@ -1,45 +1,62 @@
+import { FieldCheckCard } from 'elements/Fields/FieldCheckCard';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import t from 'i18n';
 import { useForm } from 'react-hook-form';
+import { IoAccessibility, IoCalendar, IoCash } from 'react-icons/io5';
+import _ from 'lodash';
 
 export function AddCustomFields({ customFields, setCustomFields }) {
-  const { watch, register } = useForm({});
-  const updateCustomField = (fieldType,value) => {
-    if (value) {
-      setCustomFields((prevCustomFields) => {
-        const newCustomFields = [...prevCustomFields];
-        newCustomFields.push({ type: fieldType })
-        return newCustomFields
-      })
-    } else {
-      setCustomFields((prevCustomFields) => {
-        if(!prevCustomFields)
-        {
-          return []
-        }
-        return prevCustomFields.filter((customField) => customField.type != fieldType)
-      })
-    }
-  };
-
+  const hasPrice = customFields.find(
+    (customField) => customField.type == 'price',
+  );
+  const hasEvent = customFields.find(
+    (customField) => customField.type == 'event',
+  );
   return (
     <>
-      <FieldCheckbox
-        name="priceField"
-        explain={t('configuration.priceFieldAddLabel')}
-        defaultValue={watch('priceField')}
-        text={t('configuration.priceFieldAdd')}
-        onChanged={(value) => updateCustomField('price', value)}
-        {...register('priceField')}
-      />
-      <FieldCheckbox
-        name="eventField"
-        explain={t('configuration.dateFieldAddLabel')}
-        defaultValue={watch('eventField')}
-        text={t('eventType.eventFieldAdd')}
-        onChanged={(value) => updateCustomField('event', value)}
-        {...register('eventField')}
-      />
+      {customFields && (
+        <>
+          <FieldCheckCard
+            name="priceField"
+            image={<IoCash />}
+            explain={t('configuration.priceFieldAddLabel')}
+            text={t('configuration.priceFieldAdd')}
+            onChanged={(value) => {
+              console.log(value);
+              console.log(customFields);
+              if (value) {
+                setCustomFields(
+                  _.uniq([...customFields, { type: 'price' }]),
+                );
+              } else {
+                setCustomFields(
+                  customFields.filter((elem) => elem.type != 'price'),
+                );
+              }
+            }}
+            defaultValue={hasPrice}
+          />
+          <FieldCheckCard
+            name="eventField"
+            image={<IoCalendar />}
+            explain={t('configuration.dateFieldAddLabel')}
+            // defaultValue={watch('eventField')}
+            text={t('eventType.eventFieldAdd')}
+            onChanged={(value) => {
+              if (value) {
+                setCustomFields(
+                  _.uniq([...customFields, { type: 'event' }]),
+                );
+              } else {
+                setCustomFields(
+                  customFields.filter((elem) => elem.type != 'event'),
+                );
+              }
+            }}
+            defaultValue={hasEvent}
+          />
+        </>
+      )}
     </>
   );
 }

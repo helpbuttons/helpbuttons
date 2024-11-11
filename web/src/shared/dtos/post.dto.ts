@@ -8,5 +8,5 @@ export class MessageDto {
   })
   message: string;
 
-  images?: string[]
+  images?: string[];
 }

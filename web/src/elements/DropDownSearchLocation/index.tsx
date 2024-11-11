@@ -1,12 +1,19 @@
-import React, { useRef, useState } from 'react';
-import Select from 'react-select';
-import { Subject } from 'rxjs';
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { GlobalState, store } from 'pages';
 import { useStore } from 'store/Store';
 import { roundCoords } from 'shared/honeycomb.utils';
-import { useDebounce } from 'shared/custom.hooks';
-import { GeoFindAddress, GeoReverseFindAddress } from 'state/Geo';
+import { useToggle } from 'shared/custom.hooks';
+import {
+  GeoFindAddress,
+  GeoReverseFindAddress,
+  emptyPlace,
+} from 'state/Geo';
 import t from 'i18n';
 import Btn, {
   BtnType,
@@ -14,33 +21,41 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import { IoLocationOutline } from 'react-icons/io5';
-import Loading from 'components/loading';
+import { LoadabledComponent } from 'components/loading';
 import AsyncSelect from 'react-select/async';
 import debounce from 'lodash.debounce';
+import _ from 'lodash';
+import { useGeoSearch } from 'elements/Fields/FieldLocation/location.helpers';
 
 export default function DropDownSearchLocation({
-  handleSelectedPlace = (place) => {
-  },
+  handleSelectedPlace = (place) => {},
   placeholder,
   label = '',
   explain = '',
   address = '',
-  center = [0, 0],
+  loadingNewAddress = false,
+  hideAddress = false,
+  toggleLoadingNewAddress,
+  markerPosition,
 }) {
   const config: SetupDtoOut = useStore(
     store,
     (state: GlobalState) => state.config,
   );
 
+  const geoSearch = useGeoSearch()
+
   const setSelectedOption = (selectedOption) => {
     const selectedPlace = JSON.parse(selectedOption.value);
+    setInput(() => address);
     handleSelectedPlace(selectedPlace);
   };
 
-  const [loadingNewAddress, setLoadingNewAddress] = useState(false);
+  const [loadingUserAddress, toggleLoadingUserAddress] =
+    useState(false);
 
   const setCenterFromBrowser = () => {
-    setLoadingNewAddress(true);
+    toggleLoadingUserAddress(true);
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(function (position) {
         store.emit(
@@ -49,7 +64,17 @@ export default function DropDownSearchLocation({
             position.coords.longitude,
             (place) => {
               handleSelectedPlace(place);
-              setLoadingNewAddress(false);
+              toggleLoadingUserAddress(false);
+            },
+            (error) => {
+              toggleLoadingUserAddress(() => false);
+              handleSelectedPlace(
+                emptyPlace({
+                  lat: position.coords.latitude.toString(),
+                  lng: position.coords.longitude.toString(),
+                }),
+              );
+              console.log(error);
             },
           ),
         );
@@ -64,50 +89,102 @@ export default function DropDownSearchLocation({
   }
   const bounce = useRef(false);
   const options = useRef([]);
-  
-  const _loadSuggestions = (inputValue, callback) => {
-    fetch('/api/geo/search/' + inputValue).then((response) => {
-      return response.text().then((res) => {
-        {
-          const places = JSON.parse(res);
-          if (places.length > 0) {
-            options.current = places.map((place, key) => {
+  const _loadSuggestions = function (input, callback) {
+    toggleLoadingNewAddress(() => true);
+    geoSearch(input, (places) => {
+      toggleLoadingNewAddress(() => false);
+      if (places.length > 0) {
+        if (hideAddress) {
+          options.current = _.uniqBy(places, 'label').map(
+            (place, key) => {
               return {
-                label: place.formatted,
+                label: place.formatted_city,
                 value: JSON.stringify(place),
                 id: key,
               };
-            });
-            bounce.current = false;
-            return callback(options.current);
-          }
+            },
+          );
+        } else {
+          options.current = places.map((place, key) => {
+            return {
+              label: place.formatted,
+              value: JSON.stringify(place),
+              id: key,
+            };
+          });
         }
-      });
+        
+        bounce.current = false;
+        toggleLoadingNewAddress(() => false);
+        return callback(options.current);
+      }
+      return callback([]);
     });
   };
-  const loadSuggestions = debounce(_loadSuggestions, 300);
+  const [input, setInput] = useState('');
+  const debouncedFilter = useCallback(
+    debounce(
+      (inputValue, callback) =>
+        _loadSuggestions(inputValue, callback),
+      500,
+    ),
+    [],
+  );
+  const loadSuggestions = (inputValue, callback) => {
+    debouncedFilter(inputValue, callback);
+  };
+  useEffect(() => {
+    if (address) {
+      setInput(() => address);
+    }
+  }, [address]);
+  const handleFocus = (event) => {
+    event.target.select();
+  }
 
   return (
     <div className="form__field">
-      <label className="form__label">
-        {label}
-        {address && center && (
-          <>{label ? ` ( ${address} [${roundCoords(center).toString()}] )` : address}</>
-        )}
-      </label>
+      <LoadabledComponent loading={loadingNewAddress}>
+        <label className="form__label">
+          {label}
+          {label && address && (
+            <>
+              {' '}
+              {address}
+            </>
+          )}
+        </label>
+      </LoadabledComponent>
       {explain && <div className="form__explain">{explain}</div>}
       <div className="form__field--location">
         <AsyncSelect
+          inputValue={input}
+          onInputChange={(value, action) => {
+            //
+            if (
+              action?.action !== 'input-blur' &&
+              action?.action !== 'menu-close'
+            ) {
+              setInput(value);
+            }
+            console.log(action);
+          }}
+          onBlur={() =>
+            setInput(() => {
+              return address;
+            })
+          }
           isSearchable
           onChange={setSelectedOption}
           className="form__input--plugin"
-          placeholder={placeholder}
-          noOptionsMessage={() => placeholder}
-          cacheOptions={false}
+          placeholder={t('homeinfo.searchlocation')}
+          cacheOptions={true}
+          closeMenuOnSelect
           loadOptions={loadSuggestions}
-          value={address}
+          openMenuOnFocus
+          onFocus={handleFocus}
         />
-        {!loadingNewAddress && (
+        <LoadabledComponent loading={loadingUserAddress}>
           <Btn
             btnType={BtnType.circle}
             iconLink={<IoLocationOutline />}
@@ -115,10 +192,16 @@ export default function DropDownSearchLocation({
             contentAlignment={ContentAlignment.center}
             onClick={setCenterFromBrowser}
           />
-        )}
-
-        {loadingNewAddress && <Loading />}
+        </LoadabledComponent>
       </div>
+      {address && 
+        <>{address}</>
+      }
+      {(markerPosition && markerPosition[0] && markerPosition[1] && !hideAddress) && (
+        <>
+           ( {roundCoords(markerPosition).toString()} )
+        </>
+      )}
     </div>
   );
 }

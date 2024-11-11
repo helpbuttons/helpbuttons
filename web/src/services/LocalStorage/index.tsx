@@ -8,7 +8,8 @@ export enum LocalStorageVars {
   ACCESS_TOKEN = 'access_token',
   TOKEN_TYPE = 'token_type',
   NETWORK_SELECTED = 'network_id',
-  EXPLORE_SETTINGS='explore_settings'
+  EXPLORE_SETTINGS='explore_settings',
+  HAS_PERMISSION_NOTIFICATIONS='has_permission_notifications'
 }
 
 // add variable to localStorage to not loose on refresh

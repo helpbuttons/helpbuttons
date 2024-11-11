@@ -8,15 +8,17 @@
     "signup": "SignUp",
     "login": "Login",
     "home": "Home",
-    "donate": "Donate"
+    "donate": "Donate"    
   },
   "homeinfo": {
     "start": "Where do you start?",
-    "searchlocation": "Search location",
+    "searchlocation": "What place are you looking for?",
     "info": "What's this Network about?",
+    "seeMore": "See more",
+    "seeLess": "See less",
     "loading": "...",
-    "goToExplore": "Explore the _helpbuttons_",
-    "goToCreate": "Publish",
+    "goToExplore": "Explore _helpbuttons_",
+    "goToCreate": "Create _helpbutton_",
     "activity": "Recent Activity",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
@@ -37,9 +39,26 @@
     "createNetwork": "You can contact with the team if you need help making your own network",
     "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:",
     "networkIsPrivate": "Private network",
-    "callToAdmin": "Hi! Contact an assitant if you need help registering or publishing",
+    "callToAdmin": "Hi! Press the phone you need someone to help. The site keeps info about your usage, check the conditions and privacy policy.",
     "latestActivity": "Latest activities",
-    "installButton": "Install"
+    "installButton": "Install app",
+    "print": "Print activity",
+    "share": "Share options",
+    "notificationsPermission": "Allow notifications"
+    
+
+  },
+  "share":{
+    "header": "Share this app",
+    "showSharePopup": "Share this app",
+    "shareField": "Choose your share option",
+    "shareTypeLabel": "Sharing types",
+    "shareTypeExplain": "Choose the type of share you want to do",
+    "shareExplain": "Select the amount of results you want to show and copy the code to your site",
+    "explainInvitations": "Generate individual invitation cards for your community",
+    "optionIframe": "List Iframe to insert in other sites",
+    "optionBulletin": "Printable bulletin",
+    "optionInvitations": "Printable invitations"
   },
   "feed": {
     "write": "Write message",
@@ -88,7 +107,10 @@
     "whenExplain": "Filter events by date",
     "priceExplain": "Filter by price",
     "whereLabel": "Where ",
+    "byCategory": "By category",
     "byPrice": "By price",
+    "byPlace": "Por lugar",
+    "byTopic": "Por tema",
     "byDate": "By creation date",
     "byProximity": "By proximity",
     "byEventDate": "By start of event",
@@ -98,7 +120,8 @@
     "filteredSearch": "in filtered search by:",
     "focusedArea": "in framed area",
     "locationLimited": "Limited to {0}, {1}",
-    "pickLocationLimits": "Choose a location"
+    "pickLocationLimits": "Choose a location",
+    "buttonTagsSuccess": "Tags added successfully"
   },
   "setup": {
     "hostname": "Hostname",
@@ -109,8 +132,8 @@
     "postgresPort": "Postgresql Port",
     "smtpUrl": "Smtp url",
     "createAdminTitle": "Create administrator account",
-    "welcomeMessage": "WELCOME TO YOUR _helpbuttons_ INSTANCE",
-    "welcomeMessageLong": "<p>Here you´ll see your collaborative network description.</p><p>Create your first network with the options bellow.</p>",
+    "welcomeMessage": "Welcome to your _helpbuttons_ instance",
+    "welcomeMessageLong": "Next you´ll see your collaborative network description. Create your first network with the options in the next step.",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
     "configureInstanceTitle": "Setup the last details of your network",
@@ -149,8 +172,7 @@
     "expiredEventType": "_helpbutton_ ended",
     "expiredEventTitle": "'{0}' has passed its end date, it won't show no more on the public list."
   },
-  "activitiesWithSubject":
-  {
+  "activitiesWithSubject": {
     "newbutton": "{0} published a new _helpbutton_ in {1}",
     "newpost": "{0} published a new post in {1}"
   },
@@ -227,7 +249,9 @@
     "renewLink": "Renew your _helpbutton_",
     "createUpdate": "Publish Update",
     "authorTitle": "Author:",
-    "notFound": "Can't find your button, maybe it was deleted?"
+    "notFound": "Can't find your button, maybe it was deleted?",
+    "followErrorAlert": "",
+    "unfollowErrorAlert": ""
   },
   "user": {
     "login": "Write your credentials",
@@ -257,7 +281,7 @@
     "tags": "Your interests",
     "editProfile": "Edit profile",
     "name": "Profile name",
-    "nameExplain": "This is your free name that other users will see",
+    "nameExplain": "This is your name that other users will see",
     "namePlaceHolder": "Type your name with total freedom",
     "avatar": "Choose avatar",
     "avatarLabel": "Profile image",
@@ -423,9 +447,9 @@
     "moderationList": "Moderation",
     "createSupportButton": "Create your network's support button",
     "moderation": "Moderation",
-    "addType": "+ Create _helpbutton_ type with the above",
+    "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
-    "nomeclaturePluralPlaceHolder": ""
+    "addType": "+ Create _helpbutton_ type"
   },
   "configure": {
     "browsePins": "",
@@ -466,13 +490,22 @@
     "maximumUsageTimes": "Number of usages",
     "nolimit": "Without limit",
     "inviteOnlyNetwork": "You can only signup in this network with an invitation",
-    "generate": "Generate new invitation link",
+    "generate": "Generate new invitation",
     "copied": "Invitation link copied to clipboard {0}",
-    "title": "Invites",
+    "title": "QR invites",
     "description": "Invite people, manage and share links with other people to allow them to access your network",
     "inviteOnlyLabel": "Network privacy",
-    "inviteOnlyExplain": "If you enable this, users will only be able to register and publish with invitation. They will still see the _helpbuttons_.",
-    "inviteOnly": "Only allow signup with an invitation"
+    "inviteOnlyExplain": "If you enable this, users will only be able to register and publish if they use a QR code. They will still see the _helpbuttons_.",
+    "inviteOnly": "Only allow signup with an QR code",
+    "generateQr": "Get QR",
+    "registered": "Qr code already registered"
+  },
+  "invitation":{
+    "card": "Anonimous login individual card",
+    "infoCard": "Scan the code to enter.",
+    "name": "This card is unique and personal.",
+    "contact": "Write contact info if you want it to be returned in case of loss. Use it with responsibility.",
+    "infoQr": "Contact:"
   },
   "customFields": {
     "priceLabel": "Price ({0})",
@@ -522,13 +555,24 @@
     "requireApproval": "Only allow publishing with moderation",
     "requireApprovalLabel": "Network moderation",
     "requireApprovalExplain": "If you enable this, all _helpbuttons_ created (if not by an admin) won't be published on the map, before an administrator approves it",
-    "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an administrator to approve it"
+    "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an administrator to approve it",
+    "title": "Moderate content and users",
+    "adminCommunication": "Administrator communications",
+    "adminCommunicationLabel":"Administrator communications",
+    "adminCommunicationExplain":"Messages that you share here will be send to all admins or all users of the network",
+    "created": ""
   },
-  "roles":
-  {
+  "roles": {
     "blocked": "deactivated",
     "admin": "administrator",
     "registered": "registered",
     "guest": "guest"
+  },
+  "bulletin": {
+    "profileButton": "Create new bulletin",
+    "explainBulletin": "Here you can get a list of _helpbuttons_ in a pdf format, with QR codes. So you can spread the word in your own community.",
+    "found": "{0} _helpbuttons_ found. From today until {1}",
+    "pdfDate": "since {0}",
+    "since": "Since {0}"
   }
 }

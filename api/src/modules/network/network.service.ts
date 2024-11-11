@@ -63,7 +63,7 @@ export class NetworkService {
       exploreSettings: createDto.exploreSettings,
       backgroundColor: createDto.backgroundColor,
       textColor: createDto.textColor,
-      buttonTemplates: JSON.stringify(createDto.buttonTemplates),
+      buttonTemplates: createDto.buttonTemplates,
       locale: createDto.locale,
       currency: createDto.currency,
       nomeclature: createDto.nomeclature,
@@ -118,13 +118,14 @@ export class NetworkService {
   @UseInterceptors(CacheInterceptor)
   @CacheKey('defaultNetwork')
   @CacheTTL(30) // override TTL to 30 seconds
-  findDefaultNetwork(): Promise<NetworkDto> {
+  findDefaultNetwork(includeHidden = false): Promise<NetworkDto> {
     return this.networkRepository
       .find({ order: { created_at: 'ASC' } })
       .then((networks) => {
         if (networks.length < 1) {
+          console.log('no networks found?')
           throw new HttpException(
-            'Default network not found',
+            {message: '🙆🏼‍♂️Default network not found'},
             HttpStatus.NOT_FOUND,
           );
         }
@@ -138,20 +139,20 @@ export class NetworkService {
               defaultNetwork.nomeclature,
               defaultNetwork.nomeclaturePlural,
             );
+            const buttonTemplates = (templates) => {
+              return templates.filter((temp) => !temp?.hide)
+            }
+            
             return {
               ...defaultNetwork,
               buttonTypesCount: networkByButtonTypes,
-              exploreSettings: JSON.parse(
-                defaultNetwork.exploreSettings,
-              ),
+              exploreSettings: defaultNetwork.exploreSettings,
               buttonCount: networkByButtonTypes.reduce(
                 (totalCount, buttonType) =>
                   totalCount + parseInt(buttonType.count),
                 0,
               ),
-              buttonTemplates: JSON.parse(
-                defaultNetwork.buttonTemplates,
-              ),
+              buttonTemplates: buttonTemplates(defaultNetwork.buttonTemplates),
             };
           });
       })
@@ -172,12 +173,6 @@ export class NetworkService {
             return { ...network, administrators };
           });
       })
-      .catch((error) => {
-        if (typeof error === typeof HttpException) {
-          throw error;
-        }
-        throw new HttpException('🙆🏼‍♂️', HttpStatus.NOT_FOUND);
-      });
   }
 
   async findOne(id: string): Promise<any> {
@@ -187,23 +182,9 @@ export class NetworkService {
   async update(updateDto: UpdateNetworkDto) {
     const defaultNetwork = await this.findDefaultNetwork();
 
-    const buttonsToDelete =
-      await this.buttonsToDeleteFromButtonTemplates(
-        defaultNetwork.buttonTemplates,
-        updateDto.buttonTemplates,
-      );
-    if (buttonsToDelete.length > 0) {
-      const message = buttonsToDelete.map(
-        (btnType) =>
-          `can't delete '${btnType.type}', there are already ${btnType.count} buttons with this template`,
-      );
-      throw new ValidationException({ buttonTemplates: message });
-    }
-
     const network = {
       id: defaultNetwork.id,
       description: updateDto.description,
-      // url: createDto.url,
       tags: this.tagService.formatTags(updateDto.tags),
       privacy: updateDto.privacy,
       logo: null,
@@ -212,7 +193,7 @@ export class NetworkService {
       exploreSettings: updateDto.exploreSettings,
       backgroundColor: updateDto.backgroundColor,
       textColor: updateDto.textColor,
-      buttonTemplates: JSON.stringify(updateDto.buttonTemplates),
+      buttonTemplates: updateDto.buttonTemplates,
       inviteOnly: updateDto.inviteOnly,
       locale: updateDto.locale,
       currency: updateDto.currency,
@@ -220,6 +201,22 @@ export class NetworkService {
       nomeclaturePlural: updateDto.nomeclaturePlural,
       requireApproval: updateDto.requireApproval
     };
+    
+    const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
+
+    const buttonTemplateActive = await this.entityManager.query(`select count(id), type from button group by type;`)
+
+    const orphanButtonTemplates = buttonTemplateActive.filter((btnTemplate) => {
+      return !(buttonTemplatesNew.find((name) => name == btnTemplate.type) !==  undefined);
+    } )
+
+    if(orphanButtonTemplates.length > 0)
+    {
+      const undeletedButtonTemplates = orphanButtonTemplates.map((btnTemplate) => btnTemplate.type)
+      throw new ValidationException({ buttonTemplates: 'cant delete button template ' + JSON.stringify(undeletedButtonTemplates)});
+    }
+    
+
     await getManager().transaction(
       async (transactionalEntityManager) => {
         if (Array.isArray(updateDto.tags)) {
@@ -258,7 +255,6 @@ export class NetworkService {
             throw new ValidationException({ jumbo: err.message });
           }
         }
-
         await this.networkRepository.update(
           defaultNetwork.id,
           removeUndefined(network),
@@ -302,17 +298,10 @@ export class NetworkService {
     return [];
   }
 
-  async getButtonTemplates() {
-    return this.networkRepository
-      .find({ order: { created_at: 'ASC' } })
-      .then((networks) => {
-        return JSON.parse(networks[0].buttonTemplates);
-      });
-  }
 
   getButtonTypesWithEventField()
   {
-    return this.getButtonTemplates()
+    return this.findButtonTypes()
       .then((buttonTemplates) => {
         return buttonTemplates
           .filter((buttonTemplate) => {
@@ -399,4 +388,12 @@ export class NetworkService {
     })
     
   }
+
+  public findButtonTypes(){
+    return this.findDefaultNetwork()
+    .then((network) => {
+      return network.buttonTemplates
+    })
+  }
 }
+

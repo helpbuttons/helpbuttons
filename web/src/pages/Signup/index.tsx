@@ -30,6 +30,8 @@ import FieldText from 'elements/Fields/FieldText';
 import { Network } from 'shared/entities/network.entity';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { useMetadataTitle } from 'state/Metadata';
 
 export default function Signup() {
   const {
@@ -58,7 +60,8 @@ export default function Signup() {
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
-  
+  useMetadataTitle(t('menu.register'))
+
   const onSubmit = (data) => {
     
     // if (passwordsMatch(data, setError)) {
@@ -78,14 +81,11 @@ export default function Signup() {
           onError,
         ),
       );
-    // }
+    
   };
 
   const onSuccess = (userData) => {
-    const returnUrl: string = router.query.returnUrl
-      ? router.query.returnUrl.toString()
-      : '/Explore';
-    router.push(returnUrl, null, { locale: userData.locale })
+    store.emit(new SetMainPopup(MainPopupPage.HIDE))
   };
 
   const onError = (error) => {
@@ -105,14 +105,10 @@ export default function Signup() {
   }, [router])
 
   if(selectedNetwork?.inviteOnly && !inviteCode) {
-    return (
-      <Popup title="Signup" linkFwd="/HomeInfo">
-        {t('invite.inviteOnlyNetwork')}
-      </Popup>
+    return (<>{t('invite.inviteOnlyNetwork')}</>
     )
   }
   return (
-    <Popup title={t('user.signup')} linkFwd="/HomeInfo">
       <Form onSubmit={handleSubmit(onSubmit)} classNameExtra="login">
         <div className="login__form">
           <div className="form__inputs-wrapper">
@@ -135,14 +131,13 @@ export default function Signup() {
               />
             </div>
             <div className="popup__link">
-              <Link href={`/Login?${params.toString()}`}>
+              <div onClick={() => store.emit(new SetMainPopup(MainPopupPage.LOGIN))} className={`nav-bottom__link`}>
                 {t('user.loginLink')}
-              </Link>
+              </div>
             </div>
           </div>
         </div>
       </Form>
-    </Popup>
   );
 }
 

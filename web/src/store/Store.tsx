@@ -2,6 +2,7 @@ import { Event, isUpdateEvent, isWatchEvent, isEffectEvent }  from "../store/Eve
 import { withLatestFrom, map, share, filter  } from 'rxjs/operators';
 import { interval, BehaviorSubject, Subject} from 'rxjs';
 import { useState, useEffect } from 'react';
+import { store } from "pages";
 
 // === Definición del Store ===
 
@@ -84,6 +85,13 @@ export function useRef(store: Store, selector: func, defaultNull = true) {
 export function useStore(store: Store, selector: func, defaultNull = true) {
   return useRef(store, selector, defaultNull)
 }
-// Mejoras:
-// - gestión de errores
-// - que WatchEvent.watch pueda devolver una promesa además de un observable
+
+// (state: GlobalState) => state.activitesState.notificationsPermissionGranted
+export function useGlobalStore(localState)
+{
+  return useStore(
+    store,
+    localState,
+    false,
+  );
+}
