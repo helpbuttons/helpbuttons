@@ -1,3 +1,4 @@
+import Loading from 'components/loading';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { formatMessage } from 'elements/Message';
 import t from 'i18n';
@@ -37,14 +38,15 @@ export function ActivityMessageCard({
       // console.log(`error: buttonTypes = ${JSON.stringify(buttonTypes)}; button = ${JSON.stringify(button)}; message = ${JSON.stringify(message)} `)
     }
   }, [buttonTypes, button]);
-  const markingAsRead = useRef(false)
+  const [markingAsRead, setMarkingAsRead] = useState(false)
+
   const jumpToButtonMessage = (messageId, read) => {
-    
+  
     if(!read)
     { 
-      markingAsRead.current = true;
+      setMarkingAsRead(() => true)
       store.emit(new ActivityMarkAsRead(messageId, () => {
-        markingAsRead.current = false;
+        setMarkingAsRead(() => false)
         alertService.info(t('feed.markedAsRead'))
         router.push('/ButtonFile/' + message?.button.id.toString())
       }))
@@ -53,6 +55,8 @@ export function ActivityMessageCard({
   
   return (
     <>
+      {markingAsRead && <Loading/>}
+
       {message?.button && (
         <Link
           href="#"
@@ -87,10 +91,10 @@ export function ActivityMessageCard({
                   {t('feed.from')}: {message.authorName}
                   &nbsp;
                   {message.privacy == PrivacyType.PRIVATE && (
-                    <span style={{ color: 'red' }}>private</span>
+                    <span style={{ color: 'red' }}>{t('feed.privateBadge')}</span>
                   )}
-                  {message.privacy == PrivacyType.PRIVATE && (
-                    <span style={{ color: 'red' }}>private</span>
+                  {message.privacy != PrivacyType.PRIVATE && (
+                    <span style={{ color: 'blue' }}>{t('feed.publicBadge')}</span>
                   )}
                   {/* <h2 className="card-notification__name">{title}</h2>  */}
                 </div>

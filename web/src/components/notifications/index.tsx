@@ -10,7 +10,7 @@ import {
   PermissionRevoke,
   useActivities,
 } from 'state/Activity';
-import { useGlobalStore, useStore } from 'store/Store';
+import { useGlobalStore } from 'store/Store';
 
 const isSupported = () =>
       'Notification' in window &&

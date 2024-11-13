@@ -42,7 +42,7 @@ export class ActivityController {
   @OnlyRegistered()
   @Get('messages/read/:page')
   async messagesRead(@CurrentUser() user: User, @Param('page') page: string) : Promise<ActivityMessageDto[]> {
-    return this.activityService.findMessagesByUserId(user.id, user.locale, false, page ? page : 0);
+    return this.activityService.findMessagesByUserId(user.id, user.locale, true, page ? page : 0);
   }
   
 

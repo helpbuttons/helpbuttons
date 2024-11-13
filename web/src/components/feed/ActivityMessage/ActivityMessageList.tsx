@@ -60,11 +60,13 @@ export function ActivityMessageList() {
 
   const { listEndRef } = useScroll(
     () => {
-      console.log('scrolling...');
       if (!scrollLoading.current) {
         scrollLoading.current = true;
-        store.emit(new FindMoreReadMessages(()=> {
-          scrollLoading.current = false;
+        store.emit(new FindMoreReadMessages((messages)=> {
+          if(messages.length > 0)
+          {
+            scrollLoading.current = false;
+          }
         }))
       }
     },    
@@ -75,7 +77,7 @@ export function ActivityMessageList() {
 
   return (
     <>
-      {!(messages && messages.read && messages.unread) && <Loading />}
+      {!(messages || messages.read || messages.unread) && <Loading />}
       {messages && messages.read && messages.unread && (
         <div className="feed__container">
           <div className="feed-section--activity">
