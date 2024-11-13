@@ -71,7 +71,13 @@
     "or": "o",
     "signUp": "Únete como nuevo usuario",
     "beforeComment": "antes de comentar",
-    "from": "De"
+    "from": "De",
+    "unreadMessages": "Mensajes sin leer",
+    "markMessagesAsRead": "Marcar todos como leídos",
+    "byCategory": "Filtrar por categoría",
+    "readMessages": "Mensajes leídos",
+    "nounread": "No hay mensajes sin leer",
+    "read": "No hay mensajes aún"
   },
   "hostname": "nombre de host",
   "common": {
