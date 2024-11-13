@@ -73,7 +73,7 @@ export default function ActivityLayout({
       <div className="feed-selector feed-selector--activity">
         <Accordion
           icon={<IoList />}
-          title={t('feeds.byCategory')}
+          title={t('feed.byCategory')}
         >
           <FieldMultiSelect
             label={t('buttonFilters.types')}

@@ -68,7 +68,15 @@
     "or": "or",
     "signUp": "signup",
     "beforeComment": "before comment",
+    "unreadMessages": "Unread messages",
+    "markMessagesAsRead": "Mark all as read",
+    "byCategory": "Filter by category",
+    "readMessages": "Read messages",
+    "nounread": "No unread messages",
+    "read": "No messages yet",
     "from": "From"
+
+
   },
   "explore": {
     "noResults": "Sorry, there are no results here",

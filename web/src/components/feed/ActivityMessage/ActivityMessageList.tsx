@@ -1,7 +1,7 @@
 import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import { ActivityMessageCard } from './ActivityMessageCard';
 import t from 'i18n';
-import { IoChatbubbleOutline } from 'react-icons/io5';
+import { IoChatbox, IoChatbubbleOutline } from 'react-icons/io5';
 import { useEffect, useRef, useState } from 'react';
 import {
   ActivityMessagesMarkAllAsRead,
@@ -81,12 +81,18 @@ export function ActivityMessageList() {
       {messages && messages.read && messages.unread && (
         <div className="feed__container">
           <div className="feed-section--activity">
-            <IoChatbubbleOutline />
-            {t('feed.unreadMessages')}
-            <Btn
-              caption={t('feed.markMessagesAsRead')}
-              onClick={markAllAsRead}
-            ></Btn>
+            <div className="feed-section__title">
+              <IoChatbox />
+              {t('feed.unreadMessages')}
+            </div>
+            {messages.unread.length > 0 &&
+              <div className="feed__empty-message">
+                <Btn
+                  caption={t('feed.markMessagesAsRead')}
+                  onClick={markAllAsRead}
+                ></Btn>
+              </div>
+            }
             <div className="feed-section--activity-content">
               {messages.unread &&
                 messages.unread.map(
@@ -102,14 +108,15 @@ export function ActivityMessageList() {
               {(!messages.unread || messages.unread.length < 1) && (
                 <div className="feed__empty-message">
                   <div className="feed__empty-message--prev">
-                    {t('messages.nounread', ['activities'])}
+                    {t('feed.nounread', ['activities'])}
                   </div>
                 </div>
               )}
               <hr />
-              <IoChatbubbleOutline />
-              <h2>{t('feed.readMessages')}</h2>
-              <hr />
+              <div className="feed-section__title">
+                <IoChatbubbleOutline />
+                <h2>{t('feed.readMessages')}</h2>
+              </div>
               {messages.read && (
                 <>
                   {messages.read.map(
@@ -131,7 +138,7 @@ export function ActivityMessageList() {
               {(!messages.read || messages.read.length < 1) && (
                 <div className="feed__empty-message">
                   <div className="feed__empty-message--prev">
-                    {t('messages.read', ['activities'])}
+                    {t('feed.read', ['activities'])}
                   </div>
                 </div>
               )}
