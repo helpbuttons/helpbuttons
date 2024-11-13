@@ -7,7 +7,7 @@ export enum BtnType {
     splitIcon,
     filter,
     submit,
-    link,
+    small,
     dropdown,
     circle,
     smallCircle,
@@ -43,6 +43,7 @@ interface BtnProps {
     submit?: boolean;
     extraClass?:string;
     backgroundColor?:string;
+    borderColor?:string;
 }
 
 function BtnIcon({ icon, color, iconLink}: { icon: IconType }) {
@@ -98,6 +99,7 @@ export default function Btn({
     onClick = () => {},
     submit = false,
     backgroundColor,
+    borderColor,
 }: BtnProps) {
     let classNames = [];
     const hasIcon = iconRight !== null || iconLeft !== null;
@@ -115,8 +117,8 @@ export default function Btn({
         case BtnType.submit:
             classNames.push("btn btn--black");
             break;
-        case BtnType.link:
-            classNames.push("btn btn--link");
+        case BtnType.small:
+            classNames.push("btn btn--small");
             break;
         case BtnType.filter:
             if (hasIcon) {
@@ -166,7 +168,7 @@ export default function Btn({
         
     return (
         <button {...attr} onClick={onClick} disabled={disabled} className={className + ' ' + extraClass} 
-        style={{'borderColor': backgroundColor} as React.CSSProperties}  
+        style={{'borderColor': borderColor} as React.CSSProperties}  
         >
             {isSubmitting && <Spinner />}
             <BtnIcon icon={iconLeft} iconLink={iconLink} 

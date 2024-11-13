@@ -2,9 +2,10 @@ import MessageNew from 'components/feed/MessageNew';
 import { BtnButtonType } from 'components/nav/ButtonTypes';
 import Popup from 'components/popup/Popup';
 import Accordion from 'elements/Accordion';
-import {
+import Btn, {
   BtnAction,
   BtnCaption,
+  BtnType,
 } from 'elements/Btn';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import t from 'i18n';
@@ -112,73 +113,80 @@ function ModerationUsersList() {
         placeholder={t('common.search')}
         {...register('query')}
       /> */}
-      <table>
-        <thead>
-          <tr>
-            <th>{t('user.email')}</th>
-            <th>{t('user.name')}</th>
-            <th>{t('moderation.role')}</th>
-            <th>{t('moderation.verified')}</th>
-            <th>{t('moderation.actions')}</th>
-          </tr>
-        </thead>
-        <tbody>
-            {users.map((user, idx) => (
-              <tr key={idx}>
-                <td><Link href={`/p/${user.username}`}>{user.email}</Link></td>
-                <td><Link href={`/p/${user.username}`}>{user.name}</Link></td>
-                <td>{t(`role.${user.role}`)}</td>
-                <td>
-                  {user.verified ? (
-                    <IoCheckmarkCircleOutline />
-                  ) : (
-                    <IoBanOutline />
-                  )}
-                </td>
-                <td>
-                  {user.role == Role.registered &&
-                    <BtnCaption
-                      color={'green'}
-                      caption={t('moderation.promote')}
-                      icon={null}
-                      onClick={() => updateRole(user.id, Role.admin)}
-                    />
-                  }
-                  {user.role == Role.admin && 
-                    <BtnCaption
+      <div className='user-list__wrapper'>
+        <table className='user-list__table'>
+          <thead className='user-list__table--header'>
+            <tr className='user-list__table--header--row'>
+              <th className='user-list__table--header--cell'>{t('user.email')}</th>
+              <th className='user-list__table--header--cell'>{t('user.name')}</th>
+              <th className='user-list__table--header--cell'>{t('moderation.role')}</th>
+              <th className='user-list__table--header--cell'>{t('moderation.verified')}</th>
+              <th className='user-list__table--header--cell'>{t('moderation.actions')}</th>
+            </tr>
+          </thead>
+          <tbody className='user-list__table--body--row'>
+              {users.map((user, idx) => (
+                <tr className='user-list__table--body--cell' key={idx}>
+                  <td className='user-list__table--body--cell'><Link href={`/p/${user.username}`}>{user.email}</Link></td>
+                  <td className='user-list__table--body--cell'><Link href={`/p/${user.username}`}>{user.name}</Link></td>
+                  <td className='user-list__table--body--cell'>{t(`roles.${user.role}`)}</td>
+                  <td className='user-list__table--body--cell'>
+                    {user.verified ? (
+                      <IoCheckmarkCircleOutline />
+                    ) : (
+                      <IoBanOutline />
+                    )}
+                  </td>
+                  <td className='user-list__table--body--cell'>
+                    {user.role == Role.registered &&
+                      <Btn
+                        btnType={BtnType.small}
+
+                        borderColor={'green'}
+                        caption={t('moderation.promote')}
+                        iconLink={null}
+                        onClick={() => updateRole(user.id, Role.admin)}
+                      />
+                    }
+                    {user.role == Role.admin && 
+                      <Btn
+                        btnType={BtnType.small}
+                        borderColor={'red'}
+                        caption={t('moderation.revoke')}
+                        iconLink={null}
+                        onClick={() =>  updateRole(user.id, Role.registered)}
+                      />
+                    }
+                    {user.role == Role.registered &&
+                      <Btn
+                        btnType={BtnType.small}
+                        borderColor={'orange'}
+                        caption={t('moderation.deactivate')}
+                        iconLink={null}
+                        onClick={() => updateRole(user.id, Role.blocked)}
+                      />
+                    }
+                    {user.role == Role.blocked &&
+                      <Btn
+                        btnType={BtnType.small}
+                        borderColor={'green'}
+                        caption={t('moderation.activate')}
+                        iconLink={null}
+                        onClick={() => updateRole(user.id, Role.registered)}
+                      />
+                    }
+                    {/* <BtnCaption
                       color={'red'}
-                      caption={t('moderation.revoke')}
+                      caption={t('moderation.remove')}
                       icon={null}
-                      onClick={() =>  updateRole(user.id, Role.registered)}
-                    />
-                  }
-                  {user.role == Role.registered &&
-                    <BtnCaption
-                      color={'orange'}
-                      caption={t('moderation.deactivate')}
-                      icon={null}
-                      onClick={() => updateRole(user.id, Role.blocked)}
-                    />
-                  }
-                  {user.role == Role.blocked &&
-                    <BtnCaption
-                      color={'green'}
-                      caption={t('moderation.activate')}
-                      icon={null}
-                      onClick={() => updateRole(user.id, Role.registered)}
-                    />
-                  }
-                  {/* <BtnCaption
-                    color={'red'}
-                    caption={t('moderation.remove')}
-                    icon={null}
-                    onClick={() => console.log('remove user')}
-                  /> */}
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+                      onClick={() => console.log('remove user')}
+                    /> */}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
       </>) : t('moderation.emptyUsersList')}
       <Pagination page={page} setPage={setPage} array={users} take={10}/>
       
