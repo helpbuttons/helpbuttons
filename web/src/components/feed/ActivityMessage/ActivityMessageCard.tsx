@@ -41,17 +41,14 @@ export function ActivityMessageCard({
   const jumpToButtonMessage = (messageId, read) => {
     
     if(!read)
-    {
-      console.log(' JUMP ')
-      console.log(messageId)
-      
+    { 
       markingAsRead.current = true;
       store.emit(new ActivityMarkAsRead(messageId, () => {
         markingAsRead.current = false;
         alertService.info(t('feed.markedAsRead'))
+        router.push('/ButtonFile/' + message?.button.id.toString())
       }))
     }
-    router.push('/ButtonFile/' + message?.button.id.toString())
   }
   
   return (
