@@ -36,7 +36,7 @@ export default function FieldLocation({
   const hideAddress = watch('hideAddress');
   const latitude = watch('latitude');
   const longitude = watch('longitude');
-  const loadingNewAddress = useRef(false);
+  const [loadingNewAddress, setLoadingNewAddress] = useState(false)
   const [zoom, setZoom] = useState(
     markerPosition[0] && markerPosition[1]
       ? maxZoom
@@ -44,7 +44,6 @@ export default function FieldLocation({
   );
 
   const geoReverse = useGeoReverse()
-
   const setLocation = (latLng, place = null) => {
     setPickedMarkerPosition(() => [
       Number.parseFloat(latLng[0]),
@@ -52,7 +51,8 @@ export default function FieldLocation({
     ]);
     
     if (place) {
-      loadingNewAddress.current = false;
+      setLoadingNewAddress(() => false)
+      
       setPickedPlace(() => place);
       if (hideAddress) {
         setPickedAddress(() => place.formatted_city);
@@ -60,9 +60,9 @@ export default function FieldLocation({
         setPickedAddress(() => place.formatted);
       }
     } else {
-      loadingNewAddress.current = true
+      setLoadingNewAddress(() => true)
       geoReverse(latLng, (place) => {
-        loadingNewAddress.current = false;
+        setLoadingNewAddress(() => false)
         setPickedPlace(() => place);
         if (hideAddress) {
           setPickedAddress(() => place.formatted_city);
@@ -127,9 +127,9 @@ export default function FieldLocation({
           closePopup={closeWithoutSaving}
         >
           <MarkerEditorMap
-            loadingNewAddress={loadingNewAddress.current}
+            loadingNewAddress={loadingNewAddress}
             toggleLoadingNewAddress={(value) =>
-              (loadingNewAddress.current = value)
+              setLoadingNewAddress(() => value)
             }
             onMapClick={onMapClick}
             zoom={zoom}
@@ -154,6 +154,7 @@ export default function FieldLocation({
             caption={t('common.save')}
             contentAlignment={ContentAlignment.center}
             onClick={() => closeAndSave()}
+            disabled={!loadingNewAddress}
           />
         </PickerField>
       )}
