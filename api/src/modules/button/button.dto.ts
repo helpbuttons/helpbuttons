@@ -93,3 +93,17 @@ export class CreateButtonDto implements Partial<Button> {
 }
 
 export class UpdateButtonDto extends PartialType(CreateButtonDto) {}
+
+export class ButtonTemplate {
+  name: string;
+  color: string;
+  caption: string;
+  cssColor: string;
+  customFields: ButtonTemplateCustomFields[];
+  hide: boolean;
+  icon: string;
+}
+
+class ButtonTemplateCustomFields {
+  type: string;
+}

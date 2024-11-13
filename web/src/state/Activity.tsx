@@ -1,23 +1,34 @@
 import produce from 'immer';
 import { GlobalState, store } from 'pages';
-import { catchError, map } from 'rxjs';
+import { catchError, forkJoin, map, zip } from 'rxjs';
 import { ActivityService } from 'services/Activity';
 import { Activity, ActivityDtoOut } from 'shared/entities/activity.entity';
 import { ActivityEventName } from 'shared/types/activity.list';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { of } from 'rxjs';
-import { useStore } from 'store/Store';
+import { useGlobalStore, useStore } from 'store/Store';
 import { useCallback, useEffect, useState } from 'react';
 import { useInterval } from 'shared/custom.hooks';
 import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
+import { ActivityMessageDto } from 'shared/dtos/activity.dto';
+import { MessageDto } from 'shared/dtos/post.dto';
 
-export interface ActivitiesState {
-  activities: ActivityDtoOut[];
+export interface Activities {
+  messages: Messages;
+  notifications: Notifications;
   notificationsPermissionGranted: boolean;
 }
-
-export const activitiesInitialState: ActivitiesState = {
-  activities: [],
+export interface Messages {
+  read: ActivityMessageDto[];
+  unread: ActivityMessageDto[];
+}
+export interface Notifications {
+  read: ActivityDtoOut[];
+  unread: ActivityDtoOut[];
+}
+export const activitiesInitialState: Activities = {
+  messages: {read: [], unread: []},
+  notifications: {read: [], unread: []},
   notificationsPermissionGranted: false,
 };
 
@@ -25,7 +36,7 @@ export class PermissionGranted implements UpdateEvent{
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       localStorageService.save(LocalStorageVars.HAS_PERMISSION_NOTIFICATIONS, true)
-      newState.activitesState.notificationsPermissionGranted = true;
+      newState.activites.notificationsPermissionGranted = true;
     });
   }
 }
@@ -33,12 +44,12 @@ export class PermissionRevoke implements UpdateEvent{
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       localStorageService.remove(LocalStorageVars.HAS_PERMISSION_NOTIFICATIONS)
-      newState.activitesState.notificationsPermissionGranted = false;
+      newState.activites.notificationsPermissionGranted = false;
     });
   }
 }
 
-export class FindActivities implements WatchEvent {
+export class FindNewMessages implements WatchEvent {
   public constructor() {}
 
   public watch(state: GlobalState) {
@@ -46,36 +57,89 @@ export class FindActivities implements WatchEvent {
     {
       return of(undefined)
     }
-    return ActivityService.find().pipe(
-      map((activities: ActivityDtoOut[]) => {
-        store.emit(new ActivitiesFound(activities));
-      }),
-      catchError((error) => {
-        console.error(error)
-        return of(undefined)
-      }),
-    );
+    return ActivityService.messagesUnread().pipe(
+      map((messages: ActivityDtoOut[]) => {
+        store.emit(new FoundMessagesUnread(messages))
+      })
+    )
   }
 }
-export class ActivitiesFound implements UpdateEvent {
-  public constructor(private activities: ActivityDtoOut[]) {}
+
+export class FindMoreReadMessages implements WatchEvent {
+  public constructor(private onSuccess) {}
+
+  public watch(state: GlobalState) {
+    if(!state.loggedInUser)
+    {
+      return of(undefined)
+    }
+
+    return ActivityService.messagesUnread().pipe(
+      map((messages: ActivityDtoOut[]) => {
+        this.onSuccess()
+        store.emit(new FoundMessagesRead(messages))
+      })
+    )
+  }
+}
+
+export class FoundMessagesUnread implements UpdateEvent {
+  public constructor(private messages: ActivityMessageDto[]) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.activitesState.activities = this.activities;
+      newState.activites.messages.unread = this.messages;
     });
   }
 }
 
-export class ActivityMarkAllAsRead implements WatchEvent,UpdateEvent {
-  public constructor() {}
+export class FoundMessagesRead implements UpdateEvent {
+  public constructor(private messages: MessageDto[]) {}
+
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.activitesState.activities = state.activitesState.activities.map((activity) => { return {...activity, unread: false}});
+      //@ts-ignore
+      newState.activites.messages.read = [...state.activites.messages.read,this,...this.messages];
+    });
+  }
+}
+
+export class ActivityMarkAsRead implements WatchEvent,UpdateEvent {
+  public constructor(private messageId :string, private onSucess) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.activites.messages.unread = state.activites.messages.unread.filter((message: ActivityMessageDto) => message.id != this.messageId)
+       
+      const message = state.activites.messages.unread.find((message: ActivityMessageDto) => message.id == this.messageId);
+      newState.activites.messages.read = [...state.activites.messages.read, message]
     });
   }
   public watch(state: GlobalState) {
-    return ActivityService.markAllAsRead()
+    return ActivityService.markAsRead(this.messageId)
+    .pipe(map(() => this.onSucess()))
+  }
+}
+export class ActivityMessagesMarkAllAsRead implements WatchEvent,UpdateEvent {
+  public constructor() {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.activites.messages.read = [...state.activites.messages.unread.map((message) => { return {...message, unread: false}}), ...state.activites.messages.read];
+    });
+  }
+  public watch(state: GlobalState) {
+    return ActivityService.messagesMarkAllAsRead()
+  }
+}
+
+export class ActivityNotificationsMarkAllAsRead implements WatchEvent,UpdateEvent {
+  public constructor() {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      // newState.activites.notifications = state.activites.notifications.map((activity) => { return {...activity, unread: false}});
+    });
+  }
+  public watch(state: GlobalState) {
+    // return ActivityService.markAllAsRead()
   }
 }
 
@@ -101,32 +165,33 @@ export const activityTo = (activity: Activity) => {
 }
 
 export const useActivities = () => {
-  const activities = useStore(
-    store,
-    (state: GlobalState) => state.activitesState.activities,
-  );
-  const loggedInUser = useStore(
-    store,
-    (state: GlobalState) => state.loggedInUser,
-  );
-  const [countUnreadActivities, setCountUnreadActivities] = useState(0);
+  const messages = useGlobalStore((state: GlobalState) => state.activites.messages)
+  const notifications = useGlobalStore((state: GlobalState) => state.activites.notifications)
+  const loggedInUser = useGlobalStore((state: GlobalState) => state.loggedInUser)
+  
+  const increment = useCallback(() => { store.emit(new FindNewMessages()) }, []);
+  useInterval((increment), 20000, { paused: !loggedInUser });
 
-  useEffect(() => {
-    if(loggedInUser){
-      store.emit(new FindActivities())
-    }
-  }, [loggedInUser])
-  useEffect(() => {
-    if(activities)
-    {
-      setCountUnreadActivities(() => {
-        return unreadActivities(activities)
-      })
-    }
-  }, [activities])
-
-  const increment = useCallback(() => { store.emit(new FindActivities()) }, []);
-  useInterval(increment, 20000, { paused: !loggedInUser });
-
-  return {activities, unreadActivities: countUnreadActivities}
+  return {messages, notifications}
 }
+
+
+// export class SendMessageToAdmins implements WatchEvent {
+//   public constructor(private onSuccess) {}
+  
+//   public watch(state: GlobalState) {
+//     if(!state.loggedInUser)
+//     {
+//       return of(undefined)
+//     }
+    // state.networks.selectedNetwork.administrators.forEach((admin) =>
+    //   // Pos
+    // )
+    // return ActivityService.messagesUnread().pipe(
+    //   map((messages: ActivityDtoOut[]) => {
+    //     this.onSuccess()
+    //     store.emit(new FoundMessagesRead(messages))
+    //   })
+    // )
+  // }
+// }

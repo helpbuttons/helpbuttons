@@ -67,7 +67,8 @@
     "loginMessage": "login",
     "or": "or",
     "signUp": "signup",
-    "beforeComment": "before comment"
+    "beforeComment": "before comment",
+    "from": "From"
   },
   "explore": {
     "noResults": "Sorry, there are no results here",

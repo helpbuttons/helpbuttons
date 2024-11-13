@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
 import t from 'i18n';
 
-export default function ActivityCardNotification({ activity }) {
+export default function ActivityNotificationCard({ activity }) {
   return (
     <div>
   {(() => {
@@ -40,18 +40,8 @@ export default function ActivityCardNotification({ activity }) {
 
       
       case ActivityEventName.NewPostComment: {
-        let  badgeTitle = t('activities.newcommentType');
-        if (activity.isPrivate) {
-          badgeTitle = t('activities.newprivatecommentType');
-        }
-
-        return (
-          <NotificationCardCustomIcon
-            icon={<IoChatbubbleOutline />}
-            badgeTitle={badgeTitle}
-            activity={activity}
-          />
-          )
+        // its a message.. nothing to do..
+        return <></>
       }
       
       case ActivityEventName.NewFollowingButton: {

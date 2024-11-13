@@ -8,3 +8,8 @@ export enum ActivityEventName {
   RenewButton = 'renew.button',
   ExpiredButton = 'expired.button'
 }
+
+export enum PrivacyType {
+  PUBLIC = 'public',
+  PRIVATE = 'private',
+}

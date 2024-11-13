@@ -70,7 +70,8 @@
     "loginMessage": "Entra",
     "or": "o",
     "signUp": "Únete como nuevo usuario",
-    "beforeComment": "antes de comentar"
+    "beforeComment": "antes de comentar",
+    "from": "De"
   },
   "hostname": "nombre de host",
   "common": {
