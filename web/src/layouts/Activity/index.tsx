@@ -7,6 +7,9 @@ import MultiSelectOption from 'elements/MultiSelectOption';
 import { uniqueArray } from 'shared/sys.helper';
 import { ActivityMessageList } from 'components/feed/ActivityMessage/ActivityMessageList';
 import { ActivityNotificationList } from 'components/feed/ActivityNotification/ActivityNotificationList';
+import Accordion from 'elements/Accordion';
+import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
+import { IoList } from 'react-icons/io5';
 
 export default function ActivityLayout({
   loggedInUser,
@@ -67,17 +70,17 @@ export default function ActivityLayout({
           }
         />
       </div>
-      {/*<div className="feed-selector feed-selector--activity">
+      <div className="feed-selector feed-selector--activity">
         <Accordion
           icon={<IoList />}
-          title={t('buttonFilters.byCategory')}
+          title={t('feeds.byCategory')}
         >
           <FieldMultiSelect
             label={t('buttonFilters.types')}
             validationError={null}
             explain={t('buttonFilters.typesExplain')}
           >
-            {buttonTypes &&
+            {false && buttonTypes &&
               selectedButtonTypes &&
               buttonTypes.map((buttonType) => {
                 return (
@@ -103,7 +106,7 @@ export default function ActivityLayout({
               })}
           </FieldMultiSelect>
         </Accordion>
-    </div>*/}
+    </div>
       {activitySelectedTab == ActivityTab.MESSAGES && (
         <ActivityMessageList
         ></ActivityMessageList>

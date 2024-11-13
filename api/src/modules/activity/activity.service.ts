@@ -388,7 +388,6 @@ export class ActivityService {
         if (
           activity.eventName == ActivityEventName.NewPostComment
         ) {
-          console.log(activity)
           //@ts-ignore
           const comment = activity.data.comment;
           //@ts-ignore
