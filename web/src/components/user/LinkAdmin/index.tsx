@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { LinkProfile } from '../LinkProfile';
 import { GetAdminPhone } from 'state/Users';
-import { store } from 'pages';
+import { GlobalState, store } from 'pages';
 import Btn, {
   BtnType,
   ContentAlignment,
@@ -9,19 +9,37 @@ import Btn, {
 } from 'elements/Btn';
 import { IoCallOutline } from 'react-icons/io5';
 import t from 'i18n';
+import { useGlobalStore } from 'store/Store';
+import { alertService } from 'services/Alert';
+import router from 'next/router';
 
-export function LinkAdminProfile({ user }) {
-  const extra = <ShowPhone user={user} />
+export function LinkAdmin({ user }) {
+  const selectedNetwork = useGlobalStore(
+    (state: GlobalState) => state.networks.selectedNetwork,
+  );
+  const sendMessage = (raw) => {
+    // store.emit(new SendMessageToAdmins(raw, () => {
+    //   alertService.info('Message sent to the admins of the network')
+    //   router.push('/HomeInfo')
+    // }))
+  }
+  const extra = <ShowPhone user={user} />;
   return (
     <>
-      <LinkProfile
-        key={user.id}
-        username={user.username}
-        avatar={user.avatar}
-        name={user.name}
-        extra={extra}
-      ></LinkProfile>
-      
+      {selectedNetwork &&
+        selectedNetwork.administrators &&
+        selectedNetwork.administrators.map((user, idx) => {
+          return (
+            <LinkProfile
+              key={user.id}
+              username={user.username}
+              avatar={user.avatar}
+              name={user.name}
+              extra={extra}
+              // onClick=(sendMessage)
+            ></LinkProfile>
+          );
+        })}
     </>
   );
 }
@@ -66,7 +84,7 @@ function ShowPhone({ user }) {
             />
           )}
           {showPhone && (
-            <div className='card-button__phone-section'>
+            <div className="card-button__phone-section">
               <Btn
                 btnType={BtnType.filterCorp}
                 contentAlignment={ContentAlignment.center}
@@ -75,9 +93,7 @@ function ShowPhone({ user }) {
                 submit={true}
                 onClick={() => onCallClick()}
               />
-              <div className="">
-                {phone}
-              </div>
+              <div className="">{phone}</div>
             </div>
           )}
         </>

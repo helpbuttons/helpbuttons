@@ -31,6 +31,7 @@ import MainPopup from 'components/popup/Main/';
 import { DesktopNotifications } from 'components/notifications';
 import { useConfig } from 'state/Setup';
 import { UpdateMetadata } from 'state/Metadata';
+import { usePoolFindNewActivities } from 'state/Activity';
 
 export default appWithTranslation(MyApp);
 
@@ -41,7 +42,7 @@ function MyApp({ Component, pageProps }) {
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
-
+  usePoolFindNewActivities({timeMs: 10000})
   const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
   state.networks.selectedNetworkLoading)
   const loggedInUser = useStore(

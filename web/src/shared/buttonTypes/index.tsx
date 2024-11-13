@@ -11,12 +11,14 @@ export const useButtonTypes = () => {
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
-  return selectedNetwork ? selectedNetwork.buttonTemplates : []
+  return selectedNetwork
+  ?.buttonTemplates ? selectedNetwork
+  ?.buttonTemplates : []
 }
 
 export const showButtonTypeCaption = (typeName) => {
   const buttonTypes = useButtonTypes();
-  return buttonTypes.find((elem) => elem.name == typeName).caption
+  return buttonTypes?.length > 0 ? buttonTypes.find((elem) => elem.name == typeName).caption : '';
 }
 export const isButtonTypeEvent = (buttonType) => {
   const buttonTypes = useButtonTypes()

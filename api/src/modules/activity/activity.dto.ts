@@ -1,3 +1,4 @@
+import { PrivacyType } from "@src/shared/types/activity.list";
 
 export enum NotificationType {
     All,
@@ -17,4 +18,19 @@ export class ActivityDtoOut {
     image: string;
     isPrivate: boolean;
     isOwner: boolean;
+  }
+
+  export class ActivityMessageDto{
+    image: string;
+    button: {
+      type: string;
+      title: string;
+      id: string;
+    }
+    authorName: string;
+    privacy: PrivacyType;
+    messageExcerpt: string;
+    createdAt: Date;
+    id: string;
+    read: boolean;
   }

@@ -10,6 +10,7 @@ export enum BtnType {
     small,
     dropdown,
     circle,
+    tab,
     smallCircle,
     iconActions,
     filterCorp,
@@ -147,6 +148,9 @@ export default function Btn({
             break;
         case BtnType.smallLink:
             classNames.push("btn btn--link-small");
+            break;
+        case BtnType.tab:
+            classNames.push("btn btn--tab");
             break;
         default:
             if (hasIcon) {

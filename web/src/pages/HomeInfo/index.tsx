@@ -27,12 +27,11 @@ import { useEffect, useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { TextFormatted } from 'elements/Message';
-import { LinkAdminProfile } from 'components/user/LinkAdminProfile';
+import { LinkAdmin } from 'components/user/LinkAdmin';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { setSSRLocale } from 'shared/sys.helper';
-import { ActivitiesList } from 'layouts/Activity';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
@@ -41,6 +40,7 @@ import { CardSubmenu, CardSubmenuOption } from 'components/card/CardSubmenu';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
+import { ActivityList } from 'components/feed/Activity/ActivityList';
 
 export default function HomeInfo({ metadata }) {
   const selectedNetwork = useStore(
@@ -243,7 +243,7 @@ export default function HomeInfo({ metadata }) {
 
                 <hr></hr>
                 <div className="homeinfo__description">
-                  <ActivitiesList activities={activities} />
+                  <ActivityList activities={activities} />
                 </div>
               </div>
 
@@ -262,7 +262,7 @@ export default function HomeInfo({ metadata }) {
                       selectedNetwork.administrators.map(
                         (user, idx) => {
                           return (
-                            <LinkAdminProfile user={user} key={idx} />
+                            <LinkAdmin user={user} key={idx} />
                           );
                         },
                       )}

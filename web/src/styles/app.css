@@ -2009,6 +2009,14 @@
   border-color: var(--network-background-color);
 }
 
+.btn--tab {
+  border-radius: 8px 8px 0 0;
+}
+
+.btn--tab-active {
+  background-color: var(--network-background-color);
+}
+
 .btn--link, .btn--link-small {
   cursor: pointer;
   border: none;
@@ -6968,6 +6976,15 @@ hr {
   border-bottom: 1px solid #D4D4D4;
 }
 
+.feed-selector--list-toggle {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 0;
+  height: auto;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
 .feed-selector--activity {
   z-index: 300;
   position: relative;
@@ -7632,6 +7649,15 @@ hr {
   background-color: var(--network-background-color);
   padding: 15px;
   border-bottom: 1px solid #D4D4D4;
+}
+
+.feed-selector--list-toggle {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 0;
+  height: auto;
+  padding: 0;
+  background-color: #f0f0f0;
 }
 
 .feed-selector--activity {

@@ -518,6 +518,20 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+//TAB BTN VARIATION
+
+.btn--tab {
+
+  border-radius:  $border-radius-basic $border-radius-basic 0 0;
+
+}
+
+.btn--tab-active {
+
+  background-color:  $color-corporative;
+
+}
+
 //LINK btn VARIATION
 
 .btn--link {

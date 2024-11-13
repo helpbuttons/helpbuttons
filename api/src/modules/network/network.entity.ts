@@ -1,23 +1,10 @@
 import { BaseEntity } from '@src/shared/types/base.entity';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { Button } from '../button/button.entity';
+import { PrivacyType } from '@src/shared/types/activity.list';
+import { ButtonTemplate } from '../button/button.dto';
 
-export enum PrivacyType {
-  PUBLIC = 'public',
-  PRIVATE = 'private',
-}
-export class ButtonTemplate {
-  name: string;
-  color: string;
-  caption: string;
-  cssColor: string;
-  customFields: ButtonTemplateCustomFields[];
-  hide: boolean;
-}
 
-class ButtonTemplateCustomFields {
-  type: string;
-}
 @Entity()
 export class Network extends BaseEntity {
   @Column({})

@@ -70,7 +70,8 @@
     "loginMessage": "Entra",
     "or": "o",
     "signUp": "Únete como nuevo usuario",
-    "beforeComment": "antes de comentar"
+    "beforeComment": "antes de comentar",
+    "from": "De"
   },
   "hostname": "nombre de host",
   "common": {
@@ -153,7 +154,9 @@
     "buttonTemplatePlaceHolder": ""
   },
   "activities": {
-    "allNotifications": "Todas las actualizaciones",
+    "messages": "Mensajes",
+    "notifications": "Notificaciones",
+    "allNotifications": "Todas las notificaciones",
     "allMessages": "Todos los mensajes",
     "allPosts": "Todos los posts",
     "my": "Mi actividad",

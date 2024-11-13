@@ -67,7 +67,8 @@
     "loginMessage": "login",
     "or": "or",
     "signUp": "signup",
-    "beforeComment": "before comment"
+    "beforeComment": "before comment",
+    "from": "From"
   },
   "explore": {
     "noResults": "Sorry, there are no results here",
@@ -146,6 +147,8 @@
     "connect": ""
   },
   "activities": {
+    "messages": "Messages",
+    "notifications": "Notifications",
     "allNotifications": "All Notifications",
     "allMessages": "All messages",
     "allPosts": "All Posts",
