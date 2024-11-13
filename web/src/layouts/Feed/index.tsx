@@ -9,10 +9,7 @@ import t from 'i18n';
 import {
   IoAdd,
   IoCloseOutline,
-  IoMailOpenOutline,
-  IoMailOutline,
   IoPersonOutline,
-  IoTrashBinOutline,
 } from 'react-icons/io5';
 
 import { GlobalState, store } from 'pages';
@@ -32,9 +29,6 @@ import MessageNew from 'components/feed/MessageNew';
 import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';
 import { CardButtonHeadActions } from 'components/button/CardButton';
-import LoginOrSignup from 'components/authorization';
-import router from 'next/router';
-import { getReturnUrl } from 'shared/sys.helper';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function Feed({ button, show, toggleShow }: { button: Button, show: any, toggleShow: any }) {
@@ -51,7 +45,7 @@ export default function Feed({ button, show, toggleShow }: { button: Button, sho
       store.emit(
         new LoadPosts(
           button.id,
-          (posts) => setPosts(posts),
+          (posts) => {setPosts(posts); toggleShowReplyFirstPost(false)},
           (errorMessage) => alertService.error(errorMessage.caption),
         ),
       );
@@ -106,9 +100,6 @@ export default function Feed({ button, show, toggleShow }: { button: Button, sho
                 key={idx}
                 post={post}
                 loggedInUser={loggedInUser}
-                onNewComment={() => {
-                  reloadPosts();
-                }}
                 buttonOwnerId={buttonOwnerId}
                 isButtonOwner={isButtonOwner}
                 reloadPosts={reloadPosts}
@@ -133,7 +124,6 @@ export default function Feed({ button, show, toggleShow }: { button: Button, sho
 export function FeedElement({
   post,
   loggedInUser,
-  onNewComment,
   buttonOwnerId,
   isButtonOwner = false,
   reloadPosts,
@@ -228,7 +218,8 @@ export function FeedElement({
             <Compose
               referer={showComposePostReply}
               onCancel={() => {
-                setShowComposePostReply(null);
+                reloadPosts();
+                setShowComposePostReply(() => null);
               }}
               onCreate={() => {
                 reloadPosts();

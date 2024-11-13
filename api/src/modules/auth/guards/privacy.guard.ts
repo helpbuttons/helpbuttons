@@ -6,10 +6,9 @@ import {
 } from '@nestjs/common';
 import { HttpStatus } from '@src/shared/types/http-status.enum';
 
-import { Reflector } from '@nestjs/core';
-import { PrivacyType } from '@src/modules/network/network.entity';
 import { NetworkService } from '@src/modules/network/network.service';
 import { Observable } from 'rxjs';
+import { PrivacyType } from '@src/shared/types/activity.list';
 
 @Injectable()
 export class PrivacyGuard implements CanActivate {

@@ -38,6 +38,7 @@ export function readableTimeLeftToDate(date: Date) {
 
   if(!date)
   {
+    console.trace()
     console.log('could not compute date')
     return '';
   }

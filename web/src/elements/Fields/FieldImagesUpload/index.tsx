@@ -61,7 +61,7 @@ export default function FieldImageUploads({
             <div className="form__image-upload__image-wrapper">
               <label
                 htmlFor="files"
-                className="upload_file"
+                className="btn upload_file"
                 onClick={(e) => {
                   e.preventDefault();
                   onImageUpload();

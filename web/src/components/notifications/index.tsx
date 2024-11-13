@@ -4,11 +4,11 @@ import { GlobalState, store } from 'pages';
 import { useEffect, useRef } from 'react';
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { alertService } from 'services/Alert';
-import { ActivityDtoOut } from 'shared/dtos/activity.dto';
+import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import {
-  ActivityMarkAllAsRead,
   PermissionGranted,
   PermissionRevoke,
+  useActivities,
 } from 'state/Activity';
 import { useGlobalStore, useStore } from 'store/Store';
 
@@ -20,7 +20,7 @@ const isSupported = () =>
 export function DesktopNotificationsButton() {
   const hasNotificationPermissions = useGlobalStore(
     (state: GlobalState) =>
-      state.activitesState.notificationsPermissionGranted,
+      state.activites.notificationsPermissionGranted,
   );
 
   useEffect(() => {
@@ -61,40 +61,44 @@ export function DesktopNotificationsButton() {
 export function DesktopNotifications() {
   const hasNotificationPermissions = useGlobalStore(
     (state: GlobalState) =>
-      state.activitesState.notificationsPermissionGranted,
+      state.activites.notificationsPermissionGranted,
   );
 
-  const activities = useStore(
-    store,
-    (state: GlobalState) => state.activitesState.activities,
-  );
+  const {messages, notifications} = useActivities()
 
   const notificationsShown = useRef(false);
+  const maxMessagesToNotify = 5;
   useEffect(() => {
     if (
-      activities &&
-      activities.length > 0 &&
+      messages &&
+      messages.length > 0 &&
       !notificationsShown.current
     ) {
       notificationsShown.current = true;
 
-      activities
-        .filter((activity) => !activity.read)
-        .slice(0, 5)
-        .map((activity: ActivityDtoOut) => {
-          alertService.info(activity.title);
+      messages
+        .filter((message) => !message.read)
+        .slice(0, maxMessagesToNotify)
+        .map((message: ActivityMessageDto) => {
+          alertService.info(`You have a new message from: ${message.authorName}<br/>"${message.messageExcerpt}"`);
+          if(messages.length > maxMessagesToNotify)
+          {
+            alertService.warn(t('feed.manyUnreadMessages', [messages.length]))
+          }
         });
       // mark as read, if permissions to send notifications are given, dunno if best behavior.
-      if (hasNotificationPermissions) {
-        if (
-          activities.filter((activity) => !activity.read).length > 0
-        ) {
-          alertService.info(t('activities.markedAllAsRead'));
-          store.emit(new ActivityMarkAllAsRead());
-        }
-      }
-    }
-  }, [activities]);
+      // if (hasNotificationPermissions) {
+      //   if (
+      //     activities.filter((activity) => !activity.read).length > 0
+      //   ) {
+          // alertService.info(t('activities.markedAllNotificationsAsRead'));
+          // store.emit(new ActivityMarkAllAsRead());
 
+      //   }
+      // }
+    }
+  }, [messages]);
+
+  
   return <></>;
 }

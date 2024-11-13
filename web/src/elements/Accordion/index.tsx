@@ -19,7 +19,16 @@ export default function Accordion({
   }, [collapsed])
   
   const classNames = showChildren ? 'accordion accordion--open' : 'accordion';
-
+  const [display, setDisplay] = useState('none');
+useEffect(() => 
+{
+  if(showChildren)
+  {
+    setDisplay(() => 'block')
+  }else{
+    setDisplay(() => 'none')
+  }
+}, [showChildren])
     return (
         <>
           <Btn
@@ -32,11 +41,10 @@ export default function Accordion({
             contentAlignment={ContentAlignment.left}
             onClick={(e) => {e.preventDefault(); setShowChildren(!showChildren);handleClick()}}
           />
-          {showChildren &&
-            <div className="panel">
+          
+            <div className="panel" style={{display: display}}>
               {children}
             </div>
-          }
         </>
 
     );

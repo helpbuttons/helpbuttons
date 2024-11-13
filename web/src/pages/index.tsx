@@ -10,7 +10,7 @@ import { Alert } from "state/Alerts";
 import { User } from "shared/entities/user.entity";
 import { Invite } from "shared/entities/invite.entity";
 import { HomeInfoState, homeInfoStateInitial } from "state/HomeInfo";
-import { ActivitiesState, activitiesInitialState } from "state/Activity";
+import { Activities, activitiesInitialState } from "state/Activity";
 import { MetadataState, metadataInitialState } from "state/Metadata";
 import { CacheValue } from "state/Cache";
 
@@ -26,7 +26,7 @@ export interface GlobalState {
   draftNewCommentPost: any;
   invites: Invite[],
   homeInfo: HomeInfoState,
-  activitesState: ActivitiesState,
+  activites: Activities,
   metadata: MetadataState,
   cacheValues: CacheValue[]
 }
@@ -45,7 +45,7 @@ export const store = new Store<GlobalState>({
   draftNewCommentPost: null,
   invites: [],
   homeInfo: homeInfoStateInitial,
-  activitesState: activitiesInitialState,
+  activites: activitiesInitialState,
   metadata: metadataInitialState,
   cacheValues: []
 });

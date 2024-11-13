@@ -1,145 +1,117 @@
-import ActivityCardNotification from '../../components/feed/ActivityCardNotification';
-import Btn, { ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 
 import t from 'i18n';
-import router from 'next/router';
 import { useEffect, useState } from 'react';
-import { Dropdown } from 'elements/Dropdown/Dropdown';
-import { ActivityEventName } from 'shared/types/activity.list';
-import { Activity } from 'shared/entities/activity.entity';
-import { ActivityDtoOut, NotificationType } from 'shared/dtos/activity.dto';
+import {  useButtonTypes } from 'shared/buttonTypes';
+import MultiSelectOption from 'elements/MultiSelectOption';
+import { uniqueArray } from 'shared/sys.helper';
+import { ActivityMessageList } from 'components/feed/ActivityMessage/ActivityMessageList';
+import { ActivityNotificationList } from 'components/feed/ActivityNotification/ActivityNotificationList';
 
 export default function ActivityLayout({
-  allActivities,
   loggedInUser,
 }) {
-  const [activities, setActivities] = useState<Activity[]>(allActivities);
-  useEffect(() => {
-    setActivities(() => allActivities)
-  }, [allActivities])
-  const notificationTypeOptions = [
-    {
-      name: t('activities.allNotifications'),
-      value: NotificationType.All,
-    },
-    {
-      name: t('activities.my'),
-      value: NotificationType.MyActivity,
-    },
-    {
-      name: t('activities.interests'),
-      value: NotificationType.Interests,
-    },
-    {
-      name: t('activities.myhelpbuttons'),
-      value: NotificationType.MyHelpbuttons,
-    },
-  ];
-
-  const onChange = (selectedActivityGroup: NotificationType) => {
-    setActivities(() => {
-      // console.log(allActitvities)
-      // return allActivitiest
-      if (selectedActivityGroup == NotificationType.All) {
-        return allActivities;
-      } else if (
-        selectedActivityGroup == NotificationType.MyActivity
-      ) {
-        return allActivities
-        .filter((activity: ActivityDtoOut) => {
-          switch (activity.eventName) {
-            case ActivityEventName.NewButton:
-            case ActivityEventName.NewPostComment:
-            case ActivityEventName.NewPost: 
-            case ActivityEventName.ExpiredButton: {
-              return activity.isOwner;
-            }
-            case ActivityEventName.DeleteButton: {
-              return true;
-            }
-          }
-          return false;
-        });
-      } else if (
-        selectedActivityGroup == NotificationType.MyHelpbuttons
-      ) {
-        return allActivities.filter((activity: ActivityDtoOut) => {
-          switch (activity.eventName) {
-            case ActivityEventName.NewButton: {
-              return activity.isOwner
-            }
-            case ActivityEventName.DeleteButton: {
-              return true;
-            }
-            default:
-              return false;
-          }
-          return false;
-        });
-      } else if (
-        selectedActivityGroup == NotificationType.Interests
-      ) {
-        return allActivities.filter((activity: ActivityDtoOut) => {
-          switch (activity.eventName) {
-            case ActivityEventName.NewButton: {
-              return activity.isOwner
-            }
-            case ActivityEventName.NewFollowingButton:
-            case ActivityEventName.NewFollowedButton:
-              return true;
-          }
-          return false;
-        });
-      }
-    });
+  const buttonTypes = useButtonTypes();
+  const [selectedButtonTypes, setSelectedButtonTypes] =
+    useState(null);
+  const setButtonTypeValue = (name, value) => {
+    if (value) {
+      setSelectedButtonTypes(() =>
+        uniqueArray([...buttonTypes, name]),
+      );
+      return;
+    }
+    setSelectedButtonTypes(() =>
+      uniqueArray(
+        buttonTypes.filter((prevValue) => prevValue != name),
+      ),
+    );
   };
+  useEffect(() => {
+    if (buttonTypes && !selectedButtonTypes) {
+      console.log('setting up selected...');
+      setSelectedButtonTypes(() => buttonTypes);
+    }
+  }, [buttonTypes]);
+  enum ActivityTab {
+    MESSAGES,
+    NOTIFICATIONS,
+  }
 
+  const [activitySelectedTab, setSelectedTab] = useState(
+    ActivityTab.MESSAGES,
+  );
   return (
     <div className="feed__container">
-      <div className="feed-selector feed-selector--activity">
-        <Dropdown
-          options={notificationTypeOptions}
-          onChange={onChange}
-          defaultSelected={'all'}
+      <div className="feed-selector feed-selector--list-toggle">
+        <Btn
+          caption={t('activities.messages')}
+          btnType={BtnType.tab}
+          contentAlignment={ContentAlignment.center}
+          extraClass={
+            activitySelectedTab == ActivityTab.MESSAGES &&
+            'btn--tab-active'
+          }
+          onClick={() => setSelectedTab(() => ActivityTab.MESSAGES)}
+        />
+        <Btn
+          caption={t('activities.notifications')}
+          btnType={BtnType.tab}
+          contentAlignment={ContentAlignment.center}
+          extraClass={
+            activitySelectedTab == ActivityTab.NOTIFICATIONS &&
+            'btn--tab-active'
+          }
+          onClick={() =>
+            setSelectedTab(() => ActivityTab.NOTIFICATIONS)
+          }
         />
       </div>
-      <div className="feed-section--activity">
-        <div className="feed-section--activity-content">
-          {/* {JSON.stringify(activities)} */}
-          <ActivitiesList activities={activities} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export function ActivitiesList({ activities }) {
-  // const buttonTypes = useButtonTypes();
-
-  return (
-    <>
-      {activities &&
-        activities.map((activity, key) => {
-          return (
-            <div className="feed-element" key={key}>
-              <ActivityCardNotification
-                activity={activity}
-              />
-            </div>
-          );
-        })}
-      {(!activities || activities.length < 1) && (
-        <div className="feed__empty-message">
-          <div className="feed__empty-message--prev">
-            {t('activities.noactivity', ['activities'])}
-          </div>
-          <Btn
-            caption={t('explore.createEmpty')}
-            onClick={() => router.push('/ButtonNew')}
-            contentAlignment={ContentAlignment.center}
-          />
-        </div>
+      {/*<div className="feed-selector feed-selector--activity">
+        <Accordion
+          icon={<IoList />}
+          title={t('buttonFilters.byCategory')}
+        >
+          <FieldMultiSelect
+            label={t('buttonFilters.types')}
+            validationError={null}
+            explain={t('buttonFilters.typesExplain')}
+          >
+            {buttonTypes &&
+              selectedButtonTypes &&
+              buttonTypes.map((buttonType) => {
+                return (
+                  <MultiSelectOption
+                    key={buttonType.name}
+                    defaultValue={selectedButtonTypes.find(
+                      (_buttonType) =>
+                        _buttonType.name == buttonType.name,
+                    )}
+                    iconLink={buttonType.icon}
+                    color={buttonType.cssColor}
+                    icon="emoji"
+                    name={buttonType.name}
+                    handleChange={(name, newValue) => {
+                      setButtonTypeValue(name, newValue);
+                    }}
+                  >
+                    <div className="btn-with-icon__text">
+                      {buttonType.caption}
+                    </div>
+                  </MultiSelectOption>
+                );
+              })}
+          </FieldMultiSelect>
+        </Accordion>
+    </div>*/}
+      {activitySelectedTab == ActivityTab.MESSAGES && (
+        <ActivityMessageList
+        ></ActivityMessageList>
       )}
-    </>
+
+      {activitySelectedTab == ActivityTab.NOTIFICATIONS && (
+        <ActivityNotificationList notifications={[]}        ></ActivityNotificationList>
+      )}
+    </div>
   );
 }

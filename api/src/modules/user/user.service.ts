@@ -15,6 +15,7 @@ import { TagService } from '../tag/tag.service';
 import { publicNanoidGenerator } from '@src/shared/helpers/nanoid-generator.helper';
 import { plainToClass } from 'class-transformer';
 import { StorageService } from '../storage/storage.service';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UserService {
@@ -25,6 +26,7 @@ export class UserService {
     private readonly entityManager: EntityManager,
     private readonly tagService: TagService,
     private readonly storageService: StorageService,
+    private readonly mailService: MailService
   ) {}
 
   createUser(user: User) {
@@ -128,6 +130,21 @@ export class UserService {
       tags: this.tagService.formatTags(newUser.tags),
     });
   }
+
+  notifyMail(userId, content, subject, link, linkCaption){
+    return this.userRepository.findOneBy({id: userId})
+    .then((user) => {
+      this.mailService.sendWithLink({
+        to: user.email,
+        content,
+        subject,
+        link,
+        linkCaption,
+      });
+    })
+    ;
+  
+}
 
   loginToken(verificationToken: string) {
     if (verificationToken.length < 2) {
