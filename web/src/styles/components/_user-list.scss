@@ -1,0 +1,63 @@
+.user-list__wrapper {
+
+    width: 100%;
+    overflow-x: auto;
+
+}
+
+.user-list__table-container {
+    min-width: 800px;
+  }
+  
+  .user-list__table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+    font-size: $font-size-small;
+    background-color: #fff; // Optional: adjust background color as needed
+  
+    &--header {
+      background-color: #f0f0f0; // Optional: adjust header background color
+      text-align: left;
+  
+      &--row {
+        border-bottom: 2px solid #D4D4D4; // Border for header row
+      }
+  
+      &--cell {
+        padding: 12px;
+        font-weight: bold;
+        text-align: left; // Align headers with columns
+        white-space: nowrap; // Prevent headers from wrapping
+      }
+    }
+  
+    &--body--row {
+      &:nth-child(even) {
+        background-color: #fafafa; // Zebra striping for rows
+      }
+  
+      &--cell {
+        padding: 12px;
+        border-bottom: 1px solid #D4D4D4; // Border for each cell
+        white-space: nowrap; // Prevent cell text from wrapping
+      }
+  
+      a {
+        color: #2F80ED; // Link color
+        text-decoration: none;
+  
+        &:hover {
+          text-decoration: underline; // Underline on hover for links
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .user-list__table--header--cell,
+    .user-list__table--body--cell {
+      padding: 8px;
+    }
+  }
+  

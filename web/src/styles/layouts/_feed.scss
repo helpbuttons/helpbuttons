@@ -40,6 +40,19 @@ $feed-new-message-radius: $border-radius-circle;
 
 }
 
+.feed-section__title {
+
+  padding-top: $padding-small;
+  display: flex;
+  justify-content: flex-start;
+  gap: $padding-small;
+  align-items: center;
+  padding-left: $padding-small;
+  color: $color-gray;
+
+}
+
+
 .feed-section--activity-content{
 
   height: 100vh;

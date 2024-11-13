@@ -588,6 +588,14 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+.btn--small {
+
+  @extend .btn;
+  height: 20px;
+  font-size: $font-size-small;
+
+}
+
 //SMALL LINK btn VARIATION
 .btn--link-small {
 

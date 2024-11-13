@@ -68,7 +68,15 @@
     "or": "or",
     "signUp": "signup",
     "beforeComment": "before comment",
+    "unreadMessages": "Unread messages",
+    "markMessagesAsRead": "Mark all as read",
+    "byCategory": "Filter by category",
+    "readMessages": "Read messages",
+    "nounread": "No unread messages",
+    "read": "No messages yet",
     "from": "From"
+
+
   },
   "explore": {
     "noResults": "Sorry, there are no results here",
@@ -283,7 +291,7 @@
     "noAccount": "I don&apos;t have an account",
     "tags": "Your interests",
     "editProfile": "Edit profile",
-    "name": "Profile name",
+    "name": "Name",
     "nameExplain": "This is your name that other users will see",
     "namePlaceHolder": "Type your name with total freedom",
     "avatar": "Choose avatar",
