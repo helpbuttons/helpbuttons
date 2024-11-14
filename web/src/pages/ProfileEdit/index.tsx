@@ -158,7 +158,7 @@ export default function ProfileEdit() {
               <label className='form__label'> {loggedInUser.username}@{getHostname()} </label>
               
                 <div className="form__inputs-wrapper">
-                <Accordion collapsed={hasErrors('basics')} title={t('user.personalData')}>
+                <Accordion collapsed={true} title={t('user.personalData')}>
 
                   <FieldText
                     name="name"

@@ -44,7 +44,8 @@
     "installButton": "Install app",
     "print": "Print activity",
     "share": "Share options",
-    "notificationsPermission": "Allow notifications"
+    "notificationsPermission": "Allow notifications",
+    "featured": "Featured"
     
 
   },
@@ -74,8 +75,8 @@
     "readMessages": "Read messages",
     "nounread": "No unread messages",
     "read": "No messages yet",
-    "from": "From"
-
+    "from": "From",
+    "said": "said"
 
   },
   "explore": {

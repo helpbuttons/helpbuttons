@@ -60,8 +60,9 @@ export default function MainPopup({pageName}) {
           <Picker
             headerText={currentButton.title}
             closeAction={() => {store.emit(new updateCurrentButton(null)); router.back()}}
+            extraClass={'picker__content--nopadding'}
           >
-            {pageName}
+            {/* {pageName} */}
             <ButtonShow/>
           </Picker>
         )}

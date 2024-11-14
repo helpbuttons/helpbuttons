@@ -3385,7 +3385,11 @@ li, ol, ul, h2 {
   background: #fff !important;
   overflow-x: hidden;
   box-shadow: none;
-  border-radius: 25px;
+  border-radius: 8px;
+}
+
+.picker__content--nopadding {
+  padding: 0;
 }
 
 .react-colorful {
@@ -4898,6 +4902,14 @@ hr {
   border: 0px solid #f0f0f0;
   line-height: 1.5rem;
 }
+.homeinfo-card__section--attr {
+  font-size: 10px;
+  color: #8da0a0;
+  display: flex;
+  gap: 5px;
+  justify-content: end;
+}
+
 .homeinfo-card__section--actions {
   display: flex;
   flex-direction: column;
@@ -6012,6 +6024,17 @@ hr {
   right: 0;
 }
 
+.card-notification__ribbon:before {
+  background: green;
+  content: "";
+  display: inline-block;
+  margin-right: 4px;
+  transform: translateY(0.25rem);
+  height: 16px;
+  width: 16px;
+  opacity: 0.6;
+}
+
 .card-notification__content {
   display: flex;
   padding: 1rem;
@@ -6067,6 +6090,11 @@ hr {
   text-wrap: nowrap;
 }
 
+.card-notification__info {
+  font-weight: 500;
+  color: #8da0a0;
+}
+
 .card-notification__date {
   color: #828282;
   text-align: right;
@@ -6118,7 +6146,7 @@ hr {
   overflow: hidden;
   font-weight: 800;
   display: flex;
-  gap: 4px;
+  gap: 5px;
   align-items: center;
 }
 .card-notification__helpbutton-type p {
@@ -6128,8 +6156,22 @@ hr {
   max-width: 200px;
 }
 
+.card-notification__helpbutton-title {
+  color: #8da0a0;
+  font-size: 10px;
+}
+
 .card-notification__label {
   display: inline-flex;
+  flex: 0 0 50%;
+  padding: 5px 0 0 5px;
+  pointer-events: none;
+  gap: 7px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.card-notification__nolabel {
   flex: 0 0 50%;
   padding: 5px 0 0 5px;
   pointer-events: none;
@@ -6178,6 +6220,13 @@ hr {
   font-weight: 600;
   display: inline;
   font-size: 14px;
+  color: #8da0a0;
+  font-weight: 500;
+}
+
+.card-notification__paragraph {
+  font-size: 16px;
+  color: #828282;
 }
 
 .card-notification__delete {
@@ -9128,7 +9177,7 @@ body,
 }
 
 .homeinfo__container {
-  height: calc(var(--vh) - 71px) !important;
+  height: calc(var(--vh) - 69px) !important;
 }
 
 .popup__content {

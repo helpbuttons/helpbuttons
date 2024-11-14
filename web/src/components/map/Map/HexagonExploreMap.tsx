@@ -19,6 +19,7 @@ import { maxZoom } from './Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton } from './MarkerButton';
 import t from 'i18n';
+import { PoweredBy } from 'components/brand/powered';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -358,8 +359,7 @@ function HbMapOverlay({ selectedNetwork }) {
         <div className="search-map__network-title">
           <div>{selectedNetwork.name}</div>
           <div className="search-map__sign">
-            made with{' '}
-            <a href="https://helpbuttons.org">Helpbuttons</a>
+            <PoweredBy/>
           </div>
         </div>
       </Overlay>

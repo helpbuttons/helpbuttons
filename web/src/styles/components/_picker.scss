@@ -1,7 +1,7 @@
 $picker-background: rgba(0,0,0,.2);
 $picker-header-height: 80px;
 $picker-max-width: 680px;
-$picker-border-radius: 25px;
+$picker-border-radius: $border-radius-basic;
 $picker-width: 240px;
 $picker-min-width: 240px;
 $picker-content-height: calc( 100vh - #{$picker-header-height });
@@ -35,6 +35,12 @@ $picker-comments-item-padding: 25px;
   overflow-x: hidden;
   box-shadow: none;
   border-radius: $picker-border-radius ;
+
+}
+
+.picker__content--nopadding {
+
+  padding: 0;
 
 }
 

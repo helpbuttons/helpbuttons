@@ -47,10 +47,7 @@ export function ActivityMessageList() {
       {messages && messages.read && messages.unread && (
         <div className="feed__container">
           <div className="feed-section--activity">
-            <div className="feed-section__title">
-              <IoChatbubbles />
-              {t('feed.unreadMessages')}
-            </div>
+
             {(messages.unread.length > 0 && false)&&
               <div className="feed__empty-message">
                 <Btn
@@ -60,6 +57,10 @@ export function ActivityMessageList() {
               </div>
             }
             <div className="feed-section--activity-content">
+              <div className="feed-section__title">
+                <IoChatbubbles />
+                {t('feed.unreadMessages')}
+              </div>
               {messages.unread &&
                 messages.unread.map(
                   (message: ActivityMessageDto, key) => {

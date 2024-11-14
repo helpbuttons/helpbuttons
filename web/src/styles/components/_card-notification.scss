@@ -79,6 +79,18 @@ $card-notification-delete-size: 100px;
   right: 0;
 }
 
+.card-notification__ribbon:before {
+  background: green;
+  content: '';
+  display: inline-block;
+  margin-right: 4px;
+  transform: translateY(.25rem);
+
+  height: $card-button-size-icon-before;
+  width: $card-button-size-icon-before;
+  opacity: .6; // Revise
+}
+
 .card-notification__content {
   display: flex;
   padding: 1rem;
@@ -142,6 +154,8 @@ $card-notification-delete-size: 100px;
 
 .card-notification__info {
   // flex: 0 1 50%;
+  font-weight: $font-weight-light;
+  color: $color-med-gray;
 }
 
 .card-notification__date {
@@ -220,7 +234,7 @@ $card-notification-delete-size: 100px;
   overflow: hidden;
   font-weight: $font-weight-bolder;
   display: flex;
-  gap: $padding-xsmall;
+  gap: $padding-small;
   align-items: center;
 
   p {
@@ -233,6 +247,13 @@ $card-notification-delete-size: 100px;
 
 }
 
+.card-notification__helpbutton-title {
+
+  color: $color-med-gray;
+  font-size: $font-size-xsmall;
+
+}
+
 .card-notification__label {
 
     display: inline-flex;
@@ -242,6 +263,17 @@ $card-notification-delete-size: 100px;
     gap: $margin-xsmall;
     align-items: center;
     font-size: $font-size-small;
+
+}
+
+.card-notification__nolabel {
+
+  flex: 0 0 50%;
+  padding: $padding-small 0 0 $padding-small ;
+  pointer-events: none;
+  gap: $margin-xsmall;
+  align-items: center;
+  font-size: $font-size-small;
 
 }
 
@@ -284,10 +316,14 @@ $card-notification-delete-size: 100px;
   font-weight: $font-weight-bold;
   display: inline;
   font-size: $font-size-small;
+  color: $color-med-gray;
+  font-weight: $font-weight-light;
 }
 
 .card-notification__paragraph {
   @extend .card-button__author-description;
+  font-size: $font-size-general;
+  color: $color-gray;
 }
 
 

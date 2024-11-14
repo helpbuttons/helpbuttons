@@ -74,7 +74,10 @@ export default function Feed({ button }: { button: Button }) {
             <>
               <ComposePost
                 referer={{ button: button.id }}
-                onCancel={() => {}}
+                onCancel={() => {
+                  reloadPosts();
+                  toggleShowReplyFirstPost(() => false);
+                }}
                 onCreate={() => {
                   reloadPosts();
                 }}
@@ -294,25 +297,25 @@ export function ComposePost({
   );
 }
 
-export function Compose({ referer, onCreate, beforeCreate, onCancel }) {
+export function Compose({ referer, onCreate, onCancel }) {
   if (!referer) {
     return <></>;
   }
   if (referer.button) {
     return (
       <div className="button-file__message-section">
-        {/* <div className="button-file__action-section-close">
+        <div className="button-file__action-section-close">
             <Btn
               submit={false}
-              btnType={BtnType.iconActions}
+              btnType={BtnType.smallCircle}
               iconLink={<IoCloseOutline />}
               iconLeft={IconType.circle}
-              contentAlignment={ContentAlignment.right}
+              contentAlignment={ContentAlignment.center}
               onClick={() => {
                 onCancel();
               }}
             />
-          </div> */}
+          </div>
         <MessageNew
           onCreate={(message, images) => {
             store.emit(

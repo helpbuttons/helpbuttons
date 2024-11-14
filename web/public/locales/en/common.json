@@ -44,8 +44,9 @@
     "installButton": "Install app",
     "print": "Print activity",
     "share": "Share options",
-    "notificationsPermission": "Allow notifications"
-    
+    "notificationsPermission": "Allow notifications",
+    "featured": "Featured",
+    "powered": "Powered by"
 
   },
   "share":{
@@ -74,7 +75,9 @@
     "readMessages": "Read messages",
     "nounread": "No unread messages",
     "read": "No messages yet",
-    "from": "From"
+    "from": "From",
+    "privateBadge": "private",
+    "activitiesHistory": "Historial de actividades"
 
 
   },
@@ -162,7 +165,7 @@
     "allPosts": "All Posts",
     "my": "My activity",
     "interests": "My interests activity",
-    "newbutton": "Your _helpbutton_ was published in '{0}'",
+    "newbutton": "You created a _helpbutton_ in '{0}'",
     "newbuttoninterest": "There are _helpbuttons_ about topics that you follow {0}",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",
@@ -172,6 +175,7 @@
     "deletedType": "_helpbutton_ deleted",
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
+    "markedAsRead": "Marked as read",
     "newpost": "You posted in '{0}'",
     "newcomment": "@{0} replied with a message '{1}'",
     "newcommentSubject": "Someone commented on your _helpbutton_ '{0}'",
@@ -291,6 +295,7 @@
     "noAccount": "I don&apos;t have an account",
     "tags": "Your interests",
     "editProfile": "Edit profile",
+    "myHelpbuttons": "Your _helpbuttons_",
     "name": "Name",
     "nameExplain": "This is your name that other users will see",
     "namePlaceHolder": "Type your name with total freedom",

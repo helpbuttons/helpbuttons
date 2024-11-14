@@ -9,6 +9,9 @@ export const FieldLanguagePick = ({onChange, explain, defaultValue}) => {
         options={[
           { value: 'en', name: 'English' },
           { value: 'es', name: 'Español' },
+          { value: 'pt', name: 'Português' },
+          { value: 'eu', name: 'Euskera' },
+          { value: 'cat', name: 'Catalá' },
         ]}
         explain={explain}
         defaultSelected={defaultValue}
