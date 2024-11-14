@@ -222,9 +222,11 @@ $card-notification-delete-size: 100px;
 
 .card-notification__comment-count {
 
-  margin-right: 20px;
-  padding: $padding-medium;
+  padding: $padding-small $padding-big;
+  padding-bottom: 0;
+  // padding: $padding-medium;
   cursor: pointer;
+  position: relative;
   border-top: 1px solid var(--button-color);
   display: flex;
   justify-content: space-between;
@@ -318,10 +320,14 @@ $card-notification-delete-size: 100px;
 .card-notification__name {
   color: $color-dark-gray;
   font-weight: $font-weight-bold;
-  display: inline;
   font-size: $font-size-small;
   color: $color-med-gray;
   font-weight: $font-weight-light;
+
+  display: flex;
+  color: #8da0a0;
+  line-height: 15px;
+  padding-bottom: 5px;
 }
 
 .card-notification__paragraph {
