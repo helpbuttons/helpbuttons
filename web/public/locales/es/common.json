@@ -20,6 +20,8 @@
     "loading": "cargando",
     "goToExplore": "Explorar",
     "goToCreate": "Crear _helpbutton_",
+    "goToExplore": "Explorar",
+    "goToCreate": "Crear _helpbutton_",
     "activity": "Actividad reciente",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
     "stats": "¿Qué hay en esta red?",
