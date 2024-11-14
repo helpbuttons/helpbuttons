@@ -4907,7 +4907,7 @@ hr {
   color: #8da0a0;
   display: flex;
   gap: 5px;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .homeinfo-card__section--actions {
