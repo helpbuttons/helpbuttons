@@ -26,7 +26,7 @@ import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import Link from 'next/link';
-import { GetPhone, UpdateFiltersToFilterTag } from 'state/Explore';
+import { GetPhone, updateCurrentButton } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { TextFormatted, formatMessage } from 'elements/Message';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
@@ -525,13 +525,14 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   const profileHref = isButtonOwner(loggedInUser, button)
     ? `/Profile/`
     : `/p/${button.owner.username}`;
+  const closeButton = () => store.emit(new updateCurrentButton(null));
   return (
     <div className="card-button__author">
       <div className="card-button__info">
         <div className="card-button__author-title">
           {t('button.authorTitle')}
         </div>
-        <Link href={profileHref}>
+        <Link href={profileHref} onClick={closeButton}>
           <div className="card-button__name">
             {button.owner.name}{' '}
             <span className="card-button__username">
@@ -546,7 +547,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
       </div>
       <div className="card-button__avatar">
         <div className="avatar-big">
-          <Link href={profileHref}>
+          <Link href={profileHref} onClick={closeButton}>
             <ImageWrapper
               imageType={ImageType.avatarBig}
               src={button.owner.avatar}
