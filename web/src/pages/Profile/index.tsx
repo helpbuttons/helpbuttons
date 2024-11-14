@@ -9,7 +9,9 @@ import Link from 'next/link';
 import {
   IoBuildOutline,
   IoCreateOutline,
+  IoDocument,
   IoDocumentTextOutline,
+  IoFolderOutline,
   IoHammerOutline,
   IoLogOutOutline,
   IoQrCodeOutline,
@@ -60,6 +62,13 @@ export default function Profile() {
                         iconLeft={IconType.svg}
                         iconLink={<IoHammerOutline />}
                         caption={t('user.editProfile')}
+                      />
+                    </Link>
+                    <Link href="/">
+                      <Btn
+                        iconLeft={IconType.svg}
+                        iconLink={<IoFolderOutline />}
+                        caption={t('user.myHelpbuttons')}
                       />
                     </Link>
                     {/* {selectedNetwork?.inviteOnly &&  */}

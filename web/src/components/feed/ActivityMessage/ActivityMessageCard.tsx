@@ -45,7 +45,7 @@ export function ActivityMessageCard({
       store.emit(
         new ActivityMarkAsRead(messageId, () => {
           setMarkingAsRead(() => false);
-          alertService.info(t('feed.markedAsRead'));
+          alertService.info(t('notificaction.markedAsRead'));
           const buttonId = message.button.id;
           store.emit(
             new FindButton(buttonId, (button) => {
