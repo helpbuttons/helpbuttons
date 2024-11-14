@@ -53,21 +53,21 @@ export class ActivityController {
     return true;
   }
   
-  @OnlyRegistered()
-  @Get('notifications/markAllAsRead')
-  async notificationsMarkAllAsRead(@CurrentUser() user: User) : Promise<any> {
-    return this.activityService.markAllMessagesAsRead(user.id);
-  }
+  // @OnlyRegistered()
+  // @Get('notifications/markAllAsRead')
+  // async notificationsMarkAllAsRead(@CurrentUser() user: User) : Promise<any> {
+  //   return this.activityService.markAllMessagesAsRead(user.id);
+  // }
 
 
-  @OnlyRegistered()
-  @Get('notifications/unread')
-  async notificationsUnread(@CurrentUser() user: User) : Promise<ActivityDtoOut[]> {
-    return this.activityService.findNotificationsByUserId(user.id, user.locale, false, null);
-  }
+  // @OnlyRegistered()
+  // @Get('notifications/unread')
+  // async notificationsUnread(@CurrentUser() user: User) : Promise<ActivityDtoOut[]> {
+  //   return this.activityService.findNotificationsByUserId(user.id, user.locale, false, null);
+  // }
   
   @OnlyRegistered()
-  @Get('notifications/read/:page')
+  @Get('notifications/:page')
   async notificationsRead(@CurrentUser() user: User, @Param('page') page: string) : Promise<ActivityDtoOut[]> {
     return this.activityService.findNotificationsByUserId(user.id, user.locale, false, page ? page : 0);
   }
