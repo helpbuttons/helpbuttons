@@ -6012,6 +6012,17 @@ hr {
   right: 0;
 }
 
+.card-notification__ribbon:before {
+  background: green;
+  content: "";
+  display: inline-block;
+  margin-right: 4px;
+  transform: translateY(0.25rem);
+  height: 16px;
+  width: 16px;
+  opacity: 0.6;
+}
+
 .card-notification__content {
   display: flex;
   padding: 1rem;
@@ -6067,6 +6078,11 @@ hr {
   text-wrap: nowrap;
 }
 
+.card-notification__info {
+  font-weight: 500;
+  color: #8da0a0;
+}
+
 .card-notification__date {
   color: #828282;
   text-align: right;
@@ -6118,7 +6134,7 @@ hr {
   overflow: hidden;
   font-weight: 800;
   display: flex;
-  gap: 4px;
+  gap: 5px;
   align-items: center;
 }
 .card-notification__helpbutton-type p {
@@ -6126,6 +6142,11 @@ hr {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 200px;
+}
+
+.card-notification__helpbutton-title {
+  color: #8da0a0;
+  font-size: 10px;
 }
 
 .card-notification__label {
@@ -6178,6 +6199,10 @@ hr {
   font-weight: 600;
   display: inline;
   font-size: 14px;
+}
+
+.card-notification__paragraph {
+  color: #0E0E0E;
 }
 
 .card-notification__delete {

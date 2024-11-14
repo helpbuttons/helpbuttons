@@ -74,7 +74,9 @@
     "readMessages": "Read messages",
     "nounread": "No unread messages",
     "read": "No messages yet",
-    "from": "From"
+    "from": "From",
+    "privateBadge": "private",
+    "activitiesHistory": "Historial de actividades"
 
 
   },
@@ -162,7 +164,7 @@
     "allPosts": "All Posts",
     "my": "My activity",
     "interests": "My interests activity",
-    "newbutton": "Your _helpbutton_ was published in '{0}'",
+    "newbutton": "You created a _helpbutton_ in '{0}'",
     "newbuttoninterest": "There are _helpbuttons_ about topics that you follow {0}",
     "newbuttonType": "New _helpbutton_",
     "newcommentType": "Comment",

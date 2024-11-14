@@ -74,8 +74,8 @@
     "readMessages": "Read messages",
     "nounread": "No unread messages",
     "read": "No messages yet",
-    "from": "From"
-
+    "from": "From",
+    "said": "said"
 
   },
   "explore": {

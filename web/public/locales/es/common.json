@@ -77,7 +77,8 @@
     "byCategory": "Filtrar por categoría",
     "readMessages": "Mensajes leídos",
     "nounread": "No hay mensajes sin leer",
-    "read": "No hay mensajes aún"
+    "read": "No hay mensajes aún",
+    "said": "dijo"
   },
   "hostname": "nombre de host",
   "common": {

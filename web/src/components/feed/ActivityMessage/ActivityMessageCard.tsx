@@ -75,18 +75,23 @@ export function ActivityMessageCard({
           onClick={() =>
             jumpToButtonMessage(message.id, message.read)
           }
-          className="card-notification card-notification"
+          className="card-notification card-notification--ribbon"
+          // style={buttonColorStyle(buttonType?.cssColor)}
         >
           <div
             className="card-notification__comment-count"
-            style={buttonColorStyle(buttonType?.cssColor)}
+            // style={buttonColorStyle(buttonType?.cssColor)}
           >
             <div className="card-notification__label">
-              <div className="card-notification__helpbutton-type">
+              <div className="card-notification__helpbutton-type"
+                style={{ color: buttonType?.cssColor }}
+              >
                 {buttonType?.icon}
-                {showButtonTypeCaption(message.button.type)}
+                <span>
+                  {showButtonTypeCaption(message.button.type)}
+                </span>
               </div>
-              <p className="">{message.button.title}</p>
+              <p className="card-notification__helpbutton-title">{message.button.title}</p>
             </div>
           </div>
           <div className="card-notification__content">
@@ -109,7 +114,7 @@ export function ActivityMessageCard({
             <div className="card-notification__text">
               <div className="card-notification__header">
                 <div className="card-notification__info">
-                  {t('feed.from')}: {message.authorName}
+                  {message.authorName} {t('feed.said')}: 
                   &nbsp;
                   {message.privacy == PrivacyType.PRIVATE && (
                     <span style={{ color: 'red' }}>
