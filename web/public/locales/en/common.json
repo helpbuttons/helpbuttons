@@ -45,8 +45,8 @@
     "print": "Print activity",
     "share": "Share options",
     "notificationsPermission": "Allow notifications",
-    "featured": "Featured"
-
+    "featured": "Featured",
+    "powered": "Powered by"
 
   },
   "share":{
