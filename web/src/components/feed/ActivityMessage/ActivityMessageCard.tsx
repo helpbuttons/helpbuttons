@@ -1,6 +1,6 @@
 import Loading from 'components/loading';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
-import { formatMessage } from 'elements/Message';
+import { TextFormatted, formatMessage } from 'elements/Message';
 import t from 'i18n';
 import Link from 'next/link';
 import router from 'next/router';
@@ -50,6 +50,8 @@ export function ActivityMessageCard({
         alertService.info(t('feed.markedAsRead'))
         router.push('/ButtonFile/' + message?.button.id.toString())
       }))
+    }else{
+      router.push('/ButtonFile/' + message?.button.id.toString())
     }
   }
   
@@ -105,7 +107,8 @@ export function ActivityMessageCard({
                 </div>
               </div>
               <div className="card-notification__paragraph">
-                {message && formatMessage(message.messageExcerpt)}
+                <TextFormatted text={message.message} maxChars={100} />
+                {/* {message && formatMessage(m)} */}
               </div>
             </div>
           </div>

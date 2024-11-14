@@ -75,7 +75,6 @@ export class FindNewMessages implements WatchEvent {
     if (!state.loggedInUser) {
       return of(undefined);
     }
-
     return ActivityService.messagesUnread().pipe(
       map((messages: ActivityDtoOut[]) => {
         store.emit(new FoundMessagesUnread(messages));
@@ -89,14 +88,14 @@ export class FoundMessagesUnread implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      let _newMessages: ActivityUnreadMessage[];
-      _newMessages = this.newMessages.map((_msg) => {
-        const notified = state.activites.messages.unread.find(
-                  (_mssg) => _mssg.id != _msg.id,
-                )?.notified;
-          // console.log(notified)
-        return {..._msg, notified: false}
-      })
+      // let _newMessages: ActivityUnreadMessage[];
+      // _newMessages = this.newMessages.map((_msg) => {
+      //   const notified = state.activites.messages.unread.find(
+      //             (_mssg) => _mssg.id != _msg.id,
+      //           )?.notified;
+      //     // console.log(notified)
+      //   return {..._msg, notified: false}
+      // })
       //  = this.newMessages;
       // if (state.activites.messages?.unread?.length > 0) {
       //   const _znewMessages = this.newMessages.filter((_msg) =>).map((_message) => {
@@ -111,7 +110,7 @@ export class FoundMessagesUnread implements UpdateEvent {
       //   console.log(_znewMessages)
       // }
 
-      newState.activites.messages.unread = _newMessages;
+      newState.activites.messages.unread = this.newMessages.map((message) => {return {...message, notified: true}});
       // newState.activites.messages.unread = _.uniqBy([..._newMessages, ...state.activites.messages.unread], 'id')
       // const message = state.activites.messages.unread.find(
       //   (message: ActivityMessageDto) => message.id == this.messageId,
@@ -169,13 +168,12 @@ export class FoundMessagesRead implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      //   newState.activites.messages.read = [
-      //     ...state.activites.messages.read,
-      //     ...this.messages,
-      //   ];
-      //   newState.activites.messages.readPage =
-      //     state.activites.messages.readPage + 1;
-      // });
+        newState.activites.messages.read = _.uniqBy([
+          ...state.activites.messages.read,
+          ...this.messages,
+        ], 'id');
+        newState.activites.messages.readPage =
+          state.activites.messages.readPage + 1;
     });
   }
 }
@@ -294,7 +292,7 @@ export const usePoolFindNewActivities = ({ timeMs }) => {
         // store.emit(new ActivityNotified(message.id));
         // if(!message.notified)
         // {
-        //   alertService.info(message.messageExcerpt);
+        //   alertService.info(message.message);
         // }
       });
     }

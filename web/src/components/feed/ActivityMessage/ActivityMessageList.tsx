@@ -77,6 +77,7 @@ export function ActivityMessageList() {
 
   return (
     <>
+    {/* {JSON.stringify(messages)} */}
       {!(messages || messages.read || messages.unread) && <Loading />}
       {messages && messages.read && messages.unread && (
         <div className="feed__container">
@@ -85,7 +86,7 @@ export function ActivityMessageList() {
               <IoChatbox />
               {t('feed.unreadMessages')}
             </div>
-            {messages.unread.length > 0 &&
+            {(messages.unread.length > 0 && false)&&
               <div className="feed__empty-message">
                 <Btn
                   caption={t('feed.markMessagesAsRead')}

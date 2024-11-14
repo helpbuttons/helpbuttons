@@ -31,10 +31,11 @@ import { useToggle } from 'shared/custom.hooks';
 import { CardButtonHeadActions } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
-export default function Feed({ button, show, toggleShow }: { button: Button, show: any, toggleShow: any }) {
+export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
-  const [showReplyFirstPost, toggleShowReplyFirstPost] = useToggle(false);
-
+  const [showReplyFirstPost, toggleShowReplyFirstPost] =
+    useToggle(false);
+  const [showNewPostForm, toggleShowNewPostForm] = useToggle(false);
   const loggedInUser = useStore(
     store,
     (state: GlobalState) => state.loggedInUser,
@@ -45,7 +46,11 @@ export default function Feed({ button, show, toggleShow }: { button: Button, sho
       store.emit(
         new LoadPosts(
           button.id,
-          (posts) => {setPosts(posts); toggleShowReplyFirstPost(false)},
+          (posts) => {
+            setPosts(posts);
+            toggleShowReplyFirstPost(false);
+            toggleShowNewPostForm(false);
+          },
           (errorMessage) => alertService.error(errorMessage.caption),
         ),
       );
@@ -60,12 +65,12 @@ export default function Feed({ button, show, toggleShow }: { button: Button, sho
 
   const isButtonOwner = loggedInUser?.id == button.owner.id;
   const buttonOwnerId = button.owner.id;
-  
+
   return (
     <div className="feed-container">
       <div className="card-button__actions">
         <>
-          {(loggedInUser && isButtonOwner) && (
+          {loggedInUser && isButtonOwner && (
             <>
               <ComposePost
                 referer={{ button: button.id }}
@@ -73,40 +78,45 @@ export default function Feed({ button, show, toggleShow }: { button: Button, sho
                 onCreate={() => {
                   reloadPosts();
                 }}
-                show={show}
-                toggleShow={toggleShow}
+                show={showNewPostForm}
+                setShow={() => {toggleShowNewPostForm(true)}}
               />
             </>
           )}
-          {(loggedInUser) && (      
-            <CardButtonHeadActions button={button} isButtonOwner={isButtonOwner} action={() => toggleShowReplyFirstPost(true)}/>         
+          {loggedInUser && (
+            <CardButtonHeadActions
+              button={button}
+              isButtonOwner={isButtonOwner}
+              action={() => toggleShowReplyFirstPost(true)}
+            />
           )}
-          {(!loggedInUser) && (      
-            <CardButtonHeadActions button={button} isButtonOwner={isButtonOwner} action={
-              () => store.emit(new SetMainPopup(MainPopupPage.LOGIN))
-              // () => router.push({
-              // pathname: '/Login',
-              // query: { returnUrl: getReturnUrl() },
-            // })
-          }/>
+          {!loggedInUser && (
+            <CardButtonHeadActions
+              button={button}
+              isButtonOwner={isButtonOwner}
+              action={
+                () =>
+                  store.emit(new SetMainPopup(MainPopupPage.LOGIN))
+              }
+            />
           )}
-       </>
+        </>
       </div>
       <div className="feed-line"></div>
       <div className="feed-section">
         {posts &&
           posts.map((post, idx) => (
-              <FeedElement
-                key={idx}
-                post={post}
-                loggedInUser={loggedInUser}
-                buttonOwnerId={buttonOwnerId}
-                isButtonOwner={isButtonOwner}
-                reloadPosts={reloadPosts}
-                buttonId={button.id}
-                showCompose={(showReplyFirstPost && idx == 0)}
-                isLast={idx == (posts.length - 1 )}
-              />
+            <FeedElement
+              key={idx}
+              post={post}
+              loggedInUser={loggedInUser}
+              buttonOwnerId={buttonOwnerId}
+              isButtonOwner={isButtonOwner}
+              reloadPosts={reloadPosts}
+              buttonId={button.id}
+              showCompose={showReplyFirstPost && idx == 0}
+              isLast={idx == posts.length - 1}
+            />
           ))}
         {!posts ||
           (posts.length == 0 && (
@@ -141,17 +151,16 @@ export function FeedElement({
     );
   };
   useEffect(() => {
-    if(showCompose)
-    {
+    if (showCompose) {
       setShowComposePostReply(() => {
         return {
           post: post.id,
           privateMessage: false,
           mentions: [post.author.username],
         };
-      })
+      });
     }
-  }, [showCompose])
+  }, [showCompose]);
 
   return (
     <div className="feed-element">
@@ -159,7 +168,8 @@ export function FeedElement({
         <div className="card-notification__comment-count">
           <div className="card-notification__label">
             <div className="hashtag hashtag--blue hashtag--with-icon">
-              <IoPersonOutline/>{t('feed.update')}
+              <IoPersonOutline />
+              {t('feed.update')}
             </div>
           </div>
         </div>
@@ -171,7 +181,7 @@ export function FeedElement({
                 <Btn
                   submit={false}
                   btnType={BtnType.smallLink}
-                  caption={t("comment.sendPublic")}
+                  caption={t('comment.sendPublic')}
                   contentAlignment={ContentAlignment.right}
                   onClick={() =>
                     setShowComposePostReply(() => {
@@ -186,7 +196,7 @@ export function FeedElement({
                 <Btn
                   submit={false}
                   btnType={BtnType.smallLink}
-                  caption={t("comment.sendPrivate")}
+                  caption={t('comment.sendPrivate')}
                   contentAlignment={ContentAlignment.right}
                   onClick={() =>
                     setShowComposePostReply(() => {
@@ -204,14 +214,14 @@ export function FeedElement({
               (loggedInUser.id == post.author.id ||
                 isButtonOwner ||
                 isAdmin(loggedInUser)) && (
-                  <Btn
-                        submit={false}
-                        btnType={BtnType.smallLink}
-                        caption={t('comment.delete')}
-                        contentAlignment={ContentAlignment.right}
-                        onClick={() => deletePost(post.id)}
-                        disabled={isLast}
-                      />
+                <Btn
+                  submit={false}
+                  btnType={BtnType.smallLink}
+                  caption={t('comment.delete')}
+                  contentAlignment={ContentAlignment.right}
+                  onClick={() => deletePost(post.id)}
+                  disabled={isLast}
+                />
               )}
           </div>
           {loggedInUser && showComposePostReply?.post == post.id && (
@@ -223,7 +233,7 @@ export function FeedElement({
               }}
               onCreate={() => {
                 reloadPosts();
-                setShowComposePostReply(() => null)
+                setShowComposePostReply(() => null);
               }}
             />
           )}
@@ -248,57 +258,50 @@ export function ComposePost({
   onCreate,
   onCancel,
   show,
-  toggleShow,
+  setShow
 }) {
   const refCompose = useRef();
 
   useEffect(() => {
-    if(show && refCompose?.current)
-    {
-      refCompose.current.scrollIntoView()
+    if (show && refCompose?.current) {
+      refCompose.current.scrollIntoView();
     }
-  }, [show])
-  return (  
+  }, [show]);
+  
+  return (
     <>
-        {show &&
-        
-          <Compose referer={referer} onCreate={onCreate} onCancel={onCancel}/> 
-        }
-        {!show &&
-            <>
-
-                <Btn
-                  submit={false}
-                  btnType={BtnType.corporative}
-                  caption={t("button.createUpdate")}
-                  iconLink={<IoAdd />}
-                  iconLeft={IconType.circle}
-                  contentAlignment={ContentAlignment.center}
-                  onClick={() => {
-                    toggleShow(true);
-                  }}
-                />
-            </>
-          }
+      {show && (
+        <Compose
+          referer={referer}
+          onCreate={onCreate}
+          onCancel={onCancel}
+        />
+      )}
+      {!show && (
+        <>
+          <Btn
+            submit={false}
+            btnType={BtnType.corporative}
+            caption={t('button.createUpdate')}
+            iconLink={<IoAdd />}
+            iconLeft={IconType.circle}
+            contentAlignment={ContentAlignment.center}
+            onClick={() => setShow()}
+          />
+        </>
+      )}
     </>
-    
-  )
+  );
 }
 
-export function Compose({
-  referer,
-  onCreate,
-  onCancel,
-}) {
-
+export function Compose({ referer, onCreate, beforeCreate, onCancel }) {
   if (!referer) {
     return <></>;
   }
   if (referer.button) {
     return (
-      
       <div className="button-file__message-section">
-          {/* <div className="button-file__action-section-close">
+        {/* <div className="button-file__action-section-close">
             <Btn
               submit={false}
               btnType={BtnType.iconActions}
@@ -310,7 +313,7 @@ export function Compose({
               }}
             />
           </div> */}
-          <MessageNew
+        <MessageNew
           onCreate={(message, images) => {
             store.emit(
               new CreateNewPost(
@@ -329,7 +332,6 @@ export function Compose({
           }}
           mentions={[]}
         />
-        
       </div>
     );
   }
@@ -373,7 +375,6 @@ export function Compose({
           }}
           mentions={referer.mentions}
         />
-
       </div>
     );
   }
@@ -383,16 +384,15 @@ export function Compose({
       <div className="button-file__message-section">
         <div className="button-file__action-section-close">
           <Btn
-              submit={false}
-              btnType={BtnType.smallCircle}
-              iconLink={<IoCloseOutline />}
-              iconLeft={IconType.circle}
-              contentAlignment={ContentAlignment.center}
-              onClick={() => {
-                onCancel();
-              }}
-            />
-
+            submit={false}
+            btnType={BtnType.smallCircle}
+            iconLink={<IoCloseOutline />}
+            iconLeft={IconType.circle}
+            contentAlignment={ContentAlignment.center}
+            onClick={() => {
+              onCancel();
+            }}
+          />
         </div>
         <MessageNew
           isComment={true}
@@ -418,7 +418,6 @@ export function Compose({
           }}
           mentions={referer.mentions}
         />
-
       </div>
     );
   }

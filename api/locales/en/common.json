@@ -8,15 +8,17 @@
     "signup": "SignUp",
     "login": "Login",
     "home": "Home",
-    "donate": "Donate"
+    "donate": "Donate"    
   },
   "homeinfo": {
     "start": "Where do you start?",
-    "searchlocation": "Search location",
+    "searchlocation": "What place are you looking for?",
     "info": "What's this Network about?",
+    "seeMore": "See more",
+    "seeLess": "See less",
     "loading": "...",
-    "goToExplore": "Explore the _helpbuttons_",
-    "goToCreate": "Publish",
+    "goToExplore": "Explore _helpbuttons_",
+    "goToCreate": "Create _helpbutton_",
     "activity": "Recent Activity",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
     "createSubtitle": "Publish your _helpbuttons_ and collaborate",
@@ -37,9 +39,26 @@
     "createNetwork": "You can contact with the team if you need help making your own network",
     "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:",
     "networkIsPrivate": "Private network",
-    "callToAdmin": "Hi! Contact an assitant if you need help registering or publishing",
+    "callToAdmin": "Hi! Press the phone you need someone to help. The site keeps info about your usage, check the conditions and privacy policy.",
     "latestActivity": "Latest activities",
-    "installButton": "Install"
+    "installButton": "Install app",
+    "print": "Print activity",
+    "share": "Share options",
+    "notificationsPermission": "Allow notifications"
+    
+
+  },
+  "share":{
+    "header": "Share this app",
+    "showSharePopup": "Share this app",
+    "shareField": "Choose your share option",
+    "shareTypeLabel": "Sharing types",
+    "shareTypeExplain": "Choose the type of share you want to do",
+    "shareExplain": "Select the amount of results you want to show and copy the code to your site",
+    "explainInvitations": "Generate individual invitation cards for your community",
+    "optionIframe": "List Iframe to insert in other sites",
+    "optionBulletin": "Printable bulletin",
+    "optionInvitations": "Printable invitations"
   },
   "feed": {
     "write": "Write message",
@@ -48,7 +67,16 @@
     "loginMessage": "login",
     "or": "or",
     "signUp": "signup",
-    "beforeComment": "before comment"
+    "beforeComment": "before comment",
+    "unreadMessages": "Unread messages",
+    "markMessagesAsRead": "Mark all as read",
+    "byCategory": "Filter by category",
+    "readMessages": "Read messages",
+    "nounread": "No unread messages",
+    "read": "No messages yet",
+    "from": "From"
+
+
   },
   "explore": {
     "noResults": "Sorry, there are no results here",
@@ -88,7 +116,10 @@
     "whenExplain": "Filter events by date",
     "priceExplain": "Filter by price",
     "whereLabel": "Where ",
+    "byCategory": "By category",
     "byPrice": "By price",
+    "byPlace": "Por lugar",
+    "byTopic": "Por tema",
     "byDate": "By creation date",
     "byProximity": "By proximity",
     "byEventDate": "By start of event",
@@ -98,7 +129,8 @@
     "filteredSearch": "in filtered search by:",
     "focusedArea": "in framed area",
     "locationLimited": "Limited to {0}, {1}",
-    "pickLocationLimits": "Choose a location"
+    "pickLocationLimits": "Choose a location",
+    "buttonTagsSuccess": "Tags added successfully"
   },
   "setup": {
     "hostname": "Hostname",
@@ -109,8 +141,8 @@
     "postgresPort": "Postgresql Port",
     "smtpUrl": "Smtp url",
     "createAdminTitle": "Create administrator account",
-    "welcomeMessage": "WELCOME TO YOUR _helpbuttons_ INSTANCE",
-    "welcomeMessageLong": "<p>Here you´ll see your collaborative network description.</p><p>Create your first network with the options bellow.</p>",
+    "welcomeMessage": "Welcome to your _helpbuttons_ instance",
+    "welcomeMessageLong": "Next you´ll see your collaborative network description. Create your first network with the options in the next step.",
     "finish": "Finish setup",
     "configureInstanceDescription": "Wizard to help on configuring your network",
     "configureInstanceTitle": "Setup the last details of your network",
@@ -123,6 +155,8 @@
     "connect": ""
   },
   "activities": {
+    "messages": "Messages",
+    "notifications": "Notifications",
     "allNotifications": "All Notifications",
     "allMessages": "All messages",
     "allPosts": "All Posts",
@@ -139,8 +173,8 @@
     "noactivity": "You have no activity yet! Start creating your _helpbutton_ or interact with others!",
     "markedAllAsRead": "Notifications marked as read",
     "newpost": "You posted in '{0}'",
-    "newcomment": "@{0} replied in '{1}'",
-    "newcommentSubject": "Someone commented on your _helpbutton_",
+    "newcomment": "@{0} replied with a message '{1}'",
+    "newcommentSubject": "Someone commented on your _helpbutton_ '{0}'",
     "newfollow": "{0} is now following your _helpbutton_ {1}",
     "newfollowing": "your are now following the '{0}'",
     "newfollowed": "{0} now follows your '{1}'",
@@ -257,7 +291,7 @@
     "noAccount": "I don&apos;t have an account",
     "tags": "Your interests",
     "editProfile": "Edit profile",
-    "name": "Profile name",
+    "name": "Name",
     "nameExplain": "This is your name that other users will see",
     "namePlaceHolder": "Type your name with total freedom",
     "avatar": "Choose avatar",
@@ -424,9 +458,9 @@
     "moderationList": "Moderation",
     "createSupportButton": "Create your network's support button",
     "moderation": "Moderation",
-    "addType": "+ Create _helpbutton_ type with the above",
+    "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
-    "nomeclaturePluralPlaceHolder": ""
+    "addType": "+ Create _helpbutton_ type"
   },
   "configure": {
     "browsePins": "",
@@ -455,7 +489,11 @@
     "privacyDescription": "At _helpbuttons_, we respect your privacy and are committed to protecting your personal data. Our privacy policy outlines how we collect, store, use, and disclose your personal information. We comply with all relevant privacy laws and regulations, ensuring your data is used solely for the purpose of providing and improving our service. We are transparent about our data collection processes, and you have the right to access, update, or delete your personal data at any time. Remember, sharing personal information in _helpbuttons_ posts is at your discretion—be mindful and only share what you are comfortable with others knowing.\nPlease direct your questions to the following email: help@helpbuttons.org",
     "securityDescription": "Your security is our top priority. At _helpbuttons_, we implement stringent security measures to protect the integrity of our software and the safety of our users. We continually update and review our systems to ensure they meet the highest standards of cybersecurity. However, we also believe that security is a shared responsibility. We encourage our users to practice safe online behaviors, like using strong passwords and protecting personal information.\nPlease direct your questions to the following email: help@helpbuttons.org",
     "contactDescription": "Please direct your questions to the following email: help@helpbuttons.org",
-    "networksEthicsDescription": ""
+    "networksEthicsDescription": "",
+    "cookiesQuestion": "Cookies policy",
+    "cookiesDescription": "This site, uses cookies to provide a secure and personalized experience. Below is a description of specific cookies we use: 1. ACCESS_TOKEN (access_token): This cookie securely stores your access token, allowing you to stay logged in during your session without needing to re-authenticate. Type: Essential Duration: Session-based 2. TOKEN_TYPE (token_type): Used to identify the type of access token you are using, ensuring proper authentication and security. Type: Essential Duration: Session-based 3. NETWORK_SELECTED (network_id): Stores information about the selected network you are using on our platform, helping provide a customized experience based on your selection. Type: Functionality Duration: Session-based 4. EXPLORE_SETTINGS (explore_settings): Saves your preferences and settings in the explore feature, making your browsing experience more consistent and tailored. Type: Functionality Duration: Persistent 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Tracks whether you have given permission for notifications, allowing us to show or hide notifications based on your preference. Type: Preference Duration: Persistent You can manage your cookie settings through your browser’s preferences. "
+
+
   },
   "invite": {
     "never": "Never",
@@ -476,6 +514,13 @@
     "inviteOnly": "Only allow signup with an QR code",
     "generateQr": "Get QR",
     "registered": "Qr code already registered"
+  },
+  "invitation":{
+    "card": "Anonimous login individual card",
+    "infoCard": "Scan the code to enter.",
+    "name": "This card is unique and personal.",
+    "contact": "Write contact info if you want it to be returned in case of loss. Use it with responsibility.",
+    "infoQr": "Contact:"
   },
   "customFields": {
     "priceLabel": "Price ({0})",
@@ -526,7 +571,10 @@
     "requireApprovalLabel": "Network moderation",
     "requireApprovalExplain": "If you enable this, all _helpbuttons_ created (if not by an admin) won't be published on the map, before an administrator approves it",
     "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an administrator to approve it",
-    "title": "",
+    "title": "Moderate content and users",
+    "adminCommunication": "Administrator communications",
+    "adminCommunicationLabel":"Administrator communications",
+    "adminCommunicationExplain":"Messages that you share here will be send to all admins or all users of the network",
     "created": ""
   },
   "roles": {
@@ -534,5 +582,12 @@
     "admin": "administrator",
     "registered": "registered",
     "guest": "guest"
+  },
+  "bulletin": {
+    "profileButton": "Create new bulletin",
+    "explainBulletin": "Here you can get a list of _helpbuttons_ in a pdf format, with QR codes. So you can spread the word in your own community.",
+    "found": "{0} _helpbuttons_ found. From today until {1}",
+    "pdfDate": "since {0}",
+    "since": "Since {0}"
   }
 }

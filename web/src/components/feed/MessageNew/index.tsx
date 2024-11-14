@@ -1,12 +1,12 @@
+import Loading from 'components/loading';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import t from 'i18n';
-import { InsertedSignUpForm } from 'pages/Signup';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { IoMailOutline, IoPaperPlaneOutline } from 'react-icons/io5';
+import { IoPaperPlaneOutline } from 'react-icons/io5';
 import { uniqueArray } from 'shared/sys.helper';
 
 export default function MessageNew({
@@ -27,10 +27,15 @@ export default function MessageNew({
   const onSubmitLocal = (data) => {
     setValue('message', '');
     setValue('images', []);
+    setCreating(() => true)
     onCreate(data.message, data.images);
   };
 
   useEffect(() => {
+    if(watch('message').length > 1)
+    {
+      return;
+    }
     if (mentions.length > 0) {
       mentions = uniqueArray(mentions);
       setValue(
@@ -46,6 +51,13 @@ export default function MessageNew({
   useEffect(() => {
     setFocus('message')
   }, [])
+
+  const [creating, setCreating] = useState(false)
+  
+  if(creating)
+  {
+    return <Loading/>
+  }
   return (
     <>
       <div className="button-file__action-section--field">

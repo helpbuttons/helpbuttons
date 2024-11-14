@@ -145,7 +145,7 @@
     "newbutton": "Zure _helpbutton_ '{0}'n argitaratu da",
     "noactivity": "Oraindik ez duzu jarduerarik. Argitaratu edo besteekin elkarreragin zerbait ikusteko.",
     "markedAllAsRead": "Irakurritako gisa markatu",
-    "newcommentSubject": "Norbaitek zure _helpbutton_-ean iruzkindu du",
+    "newcommentSubject": "Norbaitek zure _helpbutton_-ean iruzkindu du '{0}'",
     "newfollow": "'{0}' zure _helpbutton_ '{1}' jarraitzen ari da",
     "newfollowing": "jarraitzen ari zara: _helpbutton_ '{0}'",
     "newfollowed": "{0} zure _helpbutton_ '{1}' jarraitzen ari da",

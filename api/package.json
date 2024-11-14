@@ -32,7 +32,7 @@
     "cli": "CLI_PATH=./dist/cli.js npx nestjs-command",
     "cron:buttons:removepast": "yarn cli cron:buttons:removepast",
     "config:genjwt": "yarn cli config:genjwt",
-    "link-common": "cp -r ../web/src/shared/types/* src/shared/types/"
+    "connect-web": "cp -r ../web/src/shared/types/* src/shared/types/ && yarn translations"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",

@@ -112,7 +112,7 @@ export class UserService {
           return this.findCounts(user)
         }
         return user;
-      });
+      })
   }
 
   update(userId: string, newUser) {
@@ -231,6 +231,9 @@ export class UserService {
       .update(userId, { verificationToken: verificationToken })
       .then((result) => {
         return verificationToken;
+      }).catch((err) => {
+        console.log(err)
+        return ''
       });
   }
 

@@ -29,8 +29,8 @@ export class ActivityDtoOut {
     }
     authorName: string;
     privacy: PrivacyType;
-    messageExcerpt: string;
     createdAt: Date;
     id: string;
     read: boolean;
+    message: string;
   }

@@ -29,8 +29,11 @@ export class ActivityDtoOut {
     }
     authorName: string;
     privacy: PrivacyType;
-    messageExcerpt: string;
     createdAt: Date;
     id: string;
     read: boolean;
+    message: string;
+    excerpt: string;
   }
+
+  export const ExcerptMaxChars = 60;

@@ -48,7 +48,7 @@ import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 
-export default function CardButton({ button, buttonTypes, onScollToCompose = () => {}}) {
+export default function CardButton({ button, buttonTypes}) {
   const buttonType = buttonTypes.find(
     (buttonType) => buttonType.name == button.type,
   );
@@ -66,7 +66,6 @@ export default function CardButton({ button, buttonTypes, onScollToCompose = () 
             <CardButtonHeadBig
               button={button}
               buttonTypes={buttonTypes}
-              onScollToCompose={onScollToCompose}
             />
           </div>
           <ImageGallery images={button?.images.map((image) => {return {src: image, alt: button.description} })} />
@@ -262,7 +261,7 @@ function CardButtonSubmenu({ button }) {
     </CardSubmenu>
   );
 }
-export function CardButtonHeadBig({ button, buttonTypes, onScollToCompose }) {
+export function CardButtonHeadBig({ button, buttonTypes }) {
   const { cssColor, caption, customFields, icon } = buttonTypes.find(
     (buttonType) => {
       return buttonType.name === button.type;

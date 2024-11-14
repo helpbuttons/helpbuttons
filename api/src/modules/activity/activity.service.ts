@@ -20,9 +20,11 @@ import {
   transformToMessage,
 } from './activity.transform';
 import { NetworkService } from '../network/network.service';
-import { ActivityDtoOut, ActivityMessageDto } from './activity.dto';
+import { ActivityDtoOut, ActivityMessageDto, ExcerptMaxChars } from './activity.dto';
 import { Button } from '../button/button.entity';
 import { User } from '../user/user.entity';
+import { unique } from '@src/shared/helpers/array.helper';
+import { excerpt } from './activity.utils';
 
 @Injectable()
 export class ActivityService {
@@ -39,14 +41,15 @@ export class ActivityService {
 
   @OnEvent(ActivityEventName.NewPost)
   async onNewPost(payload: any) {
-    const button_ = payload.data.post.button;
+    const post = payload.data.post;
+    const button = post.button;
     // check users following the button of this post, and add a new actitivy to the daily outbox
     return this.buttonService
-      .findById(button_.id)
-      .then(async (button) => {
+      .findById(button.id)
+      .then(async (_button) => {
         const usersFollowing =
           await this.userService.findAllByIdsToBeNotified(
-            button.followedBy,
+            _button.followedBy,
           );
 
         // notify users following button...
@@ -57,7 +60,7 @@ export class ActivityService {
         );
 
         // notify button owner
-        return this.createActivity(button.owner, payload, false);
+        return this.createActivity(_button.owner, payload, false);
       })
       .then(() => {
         return this.newNetworkActivity(payload);
@@ -73,28 +76,49 @@ export class ActivityService {
     const comment = payload.data.comment;
     const message = comment.message;
     const author = comment.author;
+    const button = comment.button;
 
-    // check users mentioned in comment, and notify them, not on outbox, but directly
-    await this.findUserMentionsInMessage(
+    // notify users mentioned
+    let userIdsMentioned = await this.findUserMentionsInMessage(
       message,
       author.username,
-    ).then((usersMentioned) => {
-      return Promise.all(
-        usersMentioned.map((user) => {
-          // notify all users which are mentioned in the message
+    ).then((users) =>
+      users.filter((user) => !!user).map((user) => user.id),
+    );
+
+    // notify owner of button if different from author
+    const userIdsToNotify = unique([
+      ...userIdsMentioned,
+      author.id,
+      button.owner.id,
+    ]);
+    console.log(userIdsToNotify)
+    return Promise.all(
+      userIdsToNotify.map((userId) => {
+        return this.userService.findById(userId).then((user) => {
+          if (user.id == author.id) {
+            console.log('author: ' + author.email)
+            return user;
+          }
+
+          console.log('sending mail to ' +user.email );
+          //by Mail
           return this.userService
             .getUserLoginParams(user.id)
             .then((loginParams) => {
+              // console.log('sending mail to: ' + user.email);
+              // we don't need to wait for the mail to be sent.. so we ignore this promise:
               this.mailService.sendWithLink({
                 to: user.email,
                 content: translate(
                   user.locale,
                   'activities.newcomment',
-                  [author.username, user.username, message],
+                  [author.username, message],
                 ),
                 subject: translate(
                   user.locale,
                   'activities.newcommentSubject',
+                  [button.title],
                 ),
                 link: getUrl(
                   user.locale,
@@ -105,38 +129,23 @@ export class ActivityService {
                   'email.buttonLinkCaption',
                 ),
               });
+
+              return user;
+            })
+            .then((user) => {
+              let read = false;
+              if (user.id == author.id) {
+                read = true;
+              }
+              if(!user)
+              {
+                return;
+              }
+              return this.createActivity(user, payload, false, read);
             });
-        }),
-      );
-    });
-
-    // notify owner of the button! (to mail and notifications)
-    const button = comment.button;
-    const owner = button.owner;
-    await this.userService
-      .getUserLoginParams(owner.id)
-      .then((loginParams) => {
-        this.userService.notifyMail(
-          owner.id,
-          translate(owner.locale, 'activities.newcomment', [
-            author.username,
-            owner.username,
-            message,
-          ]),
-          translate(owner.locale, 'activities.newcommentSubject'),
-          getUrl(
-            owner.locale,
-            `/ButtonFile/${comment.button.id}${loginParams}`,
-          ),
-          translate(owner.locale, 'email.buttonLinkCaption'),
-        );
-
-        // create new notification for owner of the button
-        return this.createActivity(owner, payload, false);
-      });
-
-    // create new notification for author of the comment
-    await this.createActivity(author, payload, false, true);
+        });
+      }),
+    );
   }
 
   @OnEvent(ActivityEventName.NewButton)
@@ -267,12 +276,11 @@ export class ActivityService {
     page,
     eventNameFindOptions = null,
     hydrate = (activity, buttonTypes) => {},
-  ): Promise<ActivityDtoOut[]|ActivityMessageDto[]> {
+  ): Promise<ActivityDtoOut[] | ActivityMessageDto[]> {
     //@ts-ignore
     return this.networkService
       .findButtonTypes()
       .then((buttonTypes) => {
-        
         let findConditions = {
           where: {
             owner: { id: userId },
@@ -280,31 +288,40 @@ export class ActivityService {
             read,
           },
           relations: ['owner'],
-          order: { created_at: "DESC" }, 
+          order: { created_at: 'DESC' },
+        };
+        if (page || page === 0) {
+          findConditions = {
+            ...findConditions,
+            ...{ take: 5, skip: page * 5 },
+          };
         }
-        if(page || page === 0)
-        {
-          findConditions = {...findConditions, ...{take: 5,
-          skip: page * 5}}
-        }
-        return this.activityRepository
-        //@ts-ignore
-        .find(findConditions)
-        .then(activities => {return {buttonTypes, activities}})
-
-        })
-        .then(({activities, buttonTypes}) => {
-            
-            return activities.map((activity): ActivityDtoOut|ActivityMessageDto => {
-              //@ts-ignore
-              return hydrate(activity, buttonTypes)
+        return (
+          this.activityRepository
+            //@ts-ignore
+            .find(findConditions)
+            .then((activities) => {
+              return { buttonTypes, activities };
             })
-          });
+        );
+      })
+      .then(({ activities, buttonTypes }) => {
+        return activities.map(
+          (activity): ActivityDtoOut | ActivityMessageDto => {
+            //@ts-ignore
+            return hydrate(activity, buttonTypes);
+          },
+        );
+      });
   }
 
-  private markAllAsRead(userId: string,  eventNameFindOptions) {
+  private markAllAsRead(userId: string, eventNameFindOptions) {
     return this.activityRepository.update(
-      { read: false, owner: { id: userId }, eventName: eventNameFindOptions, },
+      {
+        read: false,
+        owner: { id: userId },
+        eventName: eventNameFindOptions,
+      },
       { read: true },
     );
   }
@@ -324,17 +341,33 @@ export class ActivityService {
       return [];
     }
 
-    const usernamesMentioned = usernames
-      .map((username) => username.substring(1))
-      .filter((username) => username != authorOfMessage);
-
-    return await Promise.all(
-      usernamesMentioned.map(async (username) => {
-        return await this.userService.findByUsername(username);
-      }),
+    const usernamesMentioned = usernames.map((username) =>
+      username.substring(1),
     );
+    return Promise.all(
+      usernamesMentioned.map((username) => {
+        return this.userService.findByUsername(username);
+      }),
+    ).then((users) => users.filter((user) => user));
   }
 
+  createActivityForUsers(
+    users,
+    payload,
+    addToDailyMailResume = false,
+    read = false,
+  ) {
+    return Promise.all(
+      users.map((_user) =>
+        this.createActivity(
+          _user.id,
+          payload,
+          addToDailyMailResume,
+          read,
+        ),
+      ),
+    );
+  }
   createActivity(
     user,
     payload,
@@ -376,7 +409,13 @@ export class ActivityService {
   }
 
 
-  public findMessagesByUserId(userId, locale, read, page) : ActivityMessageDto[] {
+
+  public findMessagesByUserId(
+    userId,
+    locale,
+    read,
+    page,
+  ): ActivityMessageDto[] {
     //@ts-ignore
     return this.findByUserId(
       userId,
@@ -384,36 +423,40 @@ export class ActivityService {
       read,
       page,
       In([ActivityEventName.NewPostComment]),
-      (activity, buttonTypes) : ActivityMessageDto => {
-        if (
-          activity.eventName == ActivityEventName.NewPostComment
-        ) {
+      (activity, buttonTypes): ActivityMessageDto => {
+        if (activity.eventName == ActivityEventName.NewPostComment) {
           //@ts-ignore
           const comment = activity.data.comment;
           //@ts-ignore
-          const button :Button = comment.post.button
-          const authorButton : User = button.owner;
-          const excerptSize = 60;
+          const button: Button = comment.post.button;
+          const authorButton: User = button.owner;
+          const excerptMessage = excerpt(comment.message)
           return {
             image: button.image ? button.image : null, //  (authorButton.avatar ? authorButton.avatar : null)
             //@ts-ignore
             button: {
               type: button.type,
               title: button.title,
-              id: button.id
+              id: button.id,
             },
             authorName: comment.author.name,
             privacy: comment.privacy,
-            messageExcerpt: `${comment.message.substring(0,excerptSize)}${(comment.message.length > excerptSize) ? '...' : ''}`,
+            message: comment.message,
             createdAt: activity.created_at,
             read: activity.read,
-            id: activity.id.toString()
-          }
+            id: activity.id.toString(),
+            excerpt: excerptMessage,
+          };
         }
-      }
+      },
     );
   }
-  public findNotificationsByUserId(userId, locale, read, page = null) : ActivityDtoOut[] {
+  public findNotificationsByUserId(
+    userId,
+    locale,
+    read,
+    page = null,
+  ): ActivityDtoOut[] {
     //@ts-ignore
     return this.findByUserId(
       userId,
@@ -421,7 +464,7 @@ export class ActivityService {
       read,
       page,
       Not(In([ActivityEventName.NewPostComment])),
-      (activity, buttonTypes) : ActivityDtoOut => {
+      (activity, buttonTypes): ActivityDtoOut => {
         try {
           return transformToMessage(
             activity,
@@ -444,33 +487,45 @@ export class ActivityService {
           isPrivate: false,
           isOwner: false,
         };
-      }
-    )
+      },
+    );
   }
 
-  public markAllMessagesAsRead(userId)
-  {
-    return this.markAllAsRead(userId, In([ActivityEventName.NewPostComment]))
+  public markAllMessagesAsRead(userId) {
+    return this.markAllAsRead(
+      userId,
+      In([ActivityEventName.NewPostComment]),
+    );
   }
 
-  public markAllNotificationsAsRead(userId)
-  {
-    return this.markAllAsRead(userId, Not(In([ActivityEventName.NewPostComment])))
+  public markAllNotificationsAsRead(userId) {
+    return this.markAllAsRead(
+      userId,
+      Not(In([ActivityEventName.NewPostComment])),
+    );
   }
 
-
-
-  public findNetworkActivity(locale)
-  {
-    return this.networkService.findButtonTypes()
-    .then((buttonTypes) => {
-
-      return this.activityRepository.find({take: 5, order: { created_at: 'DESC' }, where: {homeinfo: true}}).then((activities) => {
-        return activities.map((activity): ActivityDtoOut => 
-        {
-          return transformToMessage(activity, false, buttonTypes, locale)
-        })
-      })
-    })
+  public findNetworkActivity(locale) {
+    return this.networkService
+      .findButtonTypes()
+      .then((buttonTypes) => {
+        return this.activityRepository
+          .find({
+            take: 5,
+            order: { created_at: 'DESC' },
+            where: { homeinfo: true },
+          })
+          .then((activities) => {
+            return activities.map((activity): ActivityDtoOut => {
+              return transformToMessage(
+                activity,
+                false,
+                buttonTypes,
+                locale,
+              );
+            });
+          });
+      });
   }
 }
+

@@ -28,7 +28,6 @@ import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import SEO, { MetadataSEO } from 'components/seo';
 import Loading, { LoadabledComponent } from 'components/loading';
 import MainPopup from 'components/popup/Main/';
-import { DesktopNotifications } from 'components/notifications';
 import { useConfig } from 'state/Setup';
 import { UpdateMetadata } from 'state/Metadata';
 import { usePoolFindNewActivities } from 'state/Activity';
@@ -255,9 +254,6 @@ function MyApp({ Component, pageProps }) {
     return (
         <>
         <SEO/>
-        <ClienteSideRendering>
-          <DesktopNotifications />
-        </ClienteSideRendering>
         <div
           className="index__container"
           style={

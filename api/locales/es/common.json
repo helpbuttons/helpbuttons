@@ -14,15 +14,17 @@
     "selectedArea": "en el area seleccionada",
     "start": "¿Dónde quieres empezar?",
     "info": "¿De qué se trata?",
+    "seeMore": "Ver más",
+    "seeLess": "Ver menos",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
-    "goToExplore": "Explorar _helpbuttons_",
-    "goToCreate": "Publicar",
+    "goToExplore": "Explorar",
+    "goToCreate": "Crear _helpbutton_",
     "activity": "Actividad reciente",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
     "stats": "¿Qué hay en esta red?",
     "users": "{0} usuarios en esta Red",
-    "actions": "¿Qué puedes hacer?",
+    "actions": "En resumen ¿Qué puedes hacer?",
     "popularHashtags": "¿Qué temas se tratan?",
     "popularHashtagsExplain": "Estos son los temas creados hasta la fecha. Puedes añadir temas nuevos creando tu _helpbutton_. Si te unes, también puedes recibir alertas sobre ellos añadiéndolos en la sección 'Mis Intereses' de tu Perfil.",
     "recommendedHashtags": "Temas recomendados por los administradores",
@@ -37,12 +39,29 @@
     "createNetworkButton": "Crea tu propia red",
     "createNetwork": "También puedes contactar al equipo si necesitas ayuda creando tu propia red",
     "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación:",
-    "callToAdmin": "Pulsa el teléfono necesitas ayuda de alguuien. La página almacena datos de su uso, puedes consultar detalle más abajo.",
+    "callToAdmin": "Pulsa aquí si necesitas ayuda de alguien para entrar o publicar",
     "networkIsPrivate": "Red privada",
     "needLogo": "Antes de seleccionar un lugar, por favor añade tu logo",
     "needPlace": "Por favor, selecciona en qué zona se situa tu Red",
     "latestActivity": "Últimas actividads",
-    "installButton": "Instalar app"
+    "installButton": "Instalar app",
+    "notificationsPermission": "Permitir notificaciones",
+    "share": "Compartir esta app"
+  },
+  "share":{
+
+    "showSharePopup": "Comparte esta aplicación",
+    "header": "Compartir esta aplicación",
+
+    "shareField": "Elige tu opción para compartir",
+    "shareTypeLabel": "Tipo",
+    "shareTypeExplain": "Elige la manera en la que quieres compartir los resultados de tu red",
+    "shareExplain": "Elige el número de resultados que quieras mostrar y copia el código en tu web.",
+    "explainInvitations": "Generate individual invitation cards for your community",
+    "optionIframe": "Iframe para insertar en otras webs",
+    "optionBulletin": "Imprimir lista de _helpbuttons_",
+    "optionInvitations": "Invitaciones personales para imprimir"
+
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -51,7 +70,14 @@
     "loginMessage": "Entra",
     "or": "o",
     "signUp": "Únete como nuevo usuario",
-    "beforeComment": "antes de comentar"
+    "beforeComment": "antes de comentar",
+    "from": "De",
+    "unreadMessages": "Mensajes sin leer",
+    "markMessagesAsRead": "Marcar todos como leídos",
+    "byCategory": "Filtrar por categoría",
+    "readMessages": "Mensajes leídos",
+    "nounread": "No hay mensajes sin leer",
+    "read": "No hay mensajes aún"
   },
   "hostname": "nombre de host",
   "common": {
@@ -114,7 +140,7 @@
     "buttonTemplateColor": "Color de tipo",
     "buttonTemplateEmoji": "Icono de tipo",
     "buttonTemplateFormTitle": "Completa los campos para crear un nuevo tipo de _helpbutton_",
-    "buttonTemplateLabel": "Elige tus tipos de botón",
+    "buttonTemplateLabel": "Elige tus tipos de _helpbutton_",
     "createButtonTypePlaceholder": "Escribe el nombre de tu nuevo tipo de _helpbutton_",
     "nomeclaturePluralPlaceHolder": "Escribe aquí el nuevo nombre en plural. Por ejemplo, 'publicaciones'",
     "templateMissingFields": "Escoge un nombre y un color para crear tu tipo de _helpbutton_",
@@ -128,24 +154,26 @@
     "customFieldsExplain": "Estos son campos extra que puedes añadir a tus _helpbuttons_ para adaptarse a las diferentes tareas. Añade una fecha si quieres qu sirvan para gestionar eventos, o un precio si quieres que los usuarios vendan productos.",
     "priceFieldAddLabel": "Muestra un precio en tu tipo de _helpbutton_ para que los usuarios puedan comprar o vender",
     "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
-    "addType": "+ Crear tipo de _helpbutton_ con los campos superiores",
+    "addType": "+ Crear tipo de _helpbutton_",
     "currencyLabel": "Divisa",
     "setType": "",
     "buttonTemplatePlaceHolder": ""
   },
   "activities": {
-    "allNotifications": "Todas las actualizaciones",
+    "messages": "Mensajes",
+    "notifications": "Notificaciones",
+    "allNotifications": "Todas las notificaciones",
     "allMessages": "Todos los mensajes",
     "allPosts": "Todos los posts",
     "my": "Mi actividad",
     "interests": "Actividad en mis suscripciones",
-    "newcomment": "@{0} respondió en '{1}'",
+    "newcomment": "@{0} respondió con un mensaje '{1}'",
     "newpost": "Has publicado en '{0}'",
     "newbuttoninterest": "Hay _helpbuttons_ sobre temas que sigues: {0}",
-    "newbutton": "Tu _helpbutton_ fue publicado en '{0}'",
+    "newbutton": "Tu _helpbutton_ está disponible en '{0}'",
     "noactivity": "No tienes ninguna actividad aún. Publica o interactúa con otros para ver cosas aquí.",
     "markedAllAsRead": "Marcado como leído",
-    "newcommentSubject": "Alguien ha comentado en tu _helpbutton_",
+    "newcommentSubject": "Alguien ha comentado en tu _helpbutton_ '{0}'",
     "newfollow": "'{0}' está ahora siguiendo tu _helpbutton_ '{1}'",
     "newfollowing": "estás ahora siguiendo: _helpbutton_ '{0}'",
     "newfollowed": "{0} ahora sigue tu _helpbutton_ '{1}'",
@@ -161,7 +189,7 @@
     "expiredEventTitle": "'{0}' ha pasado su fecha de finalización el dia {1}, no aparecerá más en la lista pública."
   },
   "activitiesWithSubject": {
-    "newbutton": "{0} creó un _helpbutton_ en  {1}",
+    "newbutton": "{0} creó _helpbutton_ en {1}",
     "newpost": "{0} publicó en {1}"
   },
   "user": {
@@ -291,8 +319,11 @@
     "whereLabel": "Filtra por lugar",
     "whenLabel": "Filtra por fecha",
     "whenExplain": "Filtra los eventos por fecha",
+    "byCategory": "Por categoría",
     "byDate": "Últimos creados",
     "byPrice": "Por precio",
+    "byPlace": "Por lugar",
+    "byTopic": "Por tema",
     "orderBy": "Ordenar por",
     "orderByExplain": "Elige el orden en el que mostrar _helpbuttons_ en la lista",
     "priceExplain": "Elige precio máximo y mínimo",
@@ -301,7 +332,9 @@
     "followTagSucess": "{0} fue añadido a tus temas de interés. Para ver tus temas de interés ve a Mi Perfil.",
     "focusedArea": "en la zona",
     "locationLimited": "Limitado a {0}, {1}",
-    "pickLocationLimits": "Elige una localización"
+    "pickLocationLimits": "Elige una localización",
+    "buttonTagsSuccess": "Tus temas de interés fueron actualizados"
+
   },
   "button": {
     "title": "Vista de _helpbutton_",
@@ -385,15 +418,23 @@
     "address": "Error al obtener la dirección",
     "dates": "Fechas inválidas"
   },
+  "invitation":{
+    "card": "Tarjeta anónima de id individual",
+    "infoCard": "Escanea el código para entrar.",
+    "name": "Esta tarjeta es única y personal, no la pierdas.",
+    "contact": "Si quieres escribe un método de contacto.",
+    "infoQr": "Contacto:"
+  },
   "setup": {
     "finish": "Finalizar configuración",
-    "welcomeMessage": "BIENVENIDO/A A TU INSTANCIA DE HELPBUTTONS",
-    "welcomeMessageLong": "<p>Aquí verás tu descripción.</p><p>Crea tu primera herramienta colaborativa con las opciones de abajo.</p>",
+    "welcomeMessage": "Bienvenido/a a tu instancia de Helpbuttons",
+    "welcomeMessageLong": "En el siguiente paso podrás configurar tu red. Crea tu primera herramienta colaborativa con las opciones que verás en la siguiente sección. Si tienes problemas, contacta con help@helpbuttons.org. Gracias por apoyar la colaboración libre.</p>",
     "hostname": "Nombre del host",
     "postgresPassword": "Contraseña de Postgresql",
     "postgresHostName": "Servidor de Postgresql",
     "smtpUrl": "URL de Smtp",
     "test": "prueba",
+    
     "createAdminTitle": "Crear cuenta de administrador",
     "postgresPort": "Puerto de Postgresql",
     "postgresDb": "Nombre de la base de datos de Postgresql",
@@ -464,7 +505,11 @@
     "ethicsDescription": "Este proyecto busca mejorar la autonomía de las personas y comunidades para cooperar. Nuestros tres principios son: Libertad, inclusión y descentralización. 1. Libertad para usar la herramienta y compartirla en múltiples propósitos. 2. Inclusión para acoger mediante un diseño responsable a aquellos menos familiarizados con las tecnologías, y para atender las necesidades de la vida real. 3. Descentralización para permitir múltiples grados de responsabilidad compartida en el uso de los datos: Desde la colectiva (servidores) a la más individual (claves anónimas). En caso de hacer uso de nuestros servidores, todo lo que se alinee con dichos valores, es bienvenido y tendrá total libertad. Creemos en la transparencia, la honestidad y el respeto por todas las personas. Si bien no podemos controlar el uso que se hace de nuestro software en otros servidores, en la medida de lo posible no permitiremos conductas que vayan contra la integridad y dignidad humanas, o que fomenten el maltrato animal. Nuestro software está diseñado para conectar a las personas y facilitar el intercambio, lo cual es una responsabilidad que tomamos en serio. Alentamos a nuestros usuarios a usar la plataforma y aquellas réplicas que hagan con los mismos valores en mente, priorizando la comunicación respetuosa y el intercambio consciente. Cualquier mal uso del software dentro de nuestros servidores, incluida la explotación, el daño a otros o la manipulación de las funcionalidades de la plataforma con fines personales, no será tolerado.",
     "privacyDescription": "Trabajamos cada día por encontrar mejores soluciones para la privacidad de los datos en las Redes creadas con Helpbuttons. Valoramos el derecho al anonimato y ofrecemos la posibilidad de participar tanto a personas que quieran ser totalmente anónimas como a aquellas que cedan sus datos personales. Helpbuttons está diseñado para NO hacer uso en ningún caso de los datos personales de los usuarios con fines comerciales o de interés personal de un grupo de usuarios. Así como ofrecemos la posibilidad de borrar totalmente tus datos de una manera fácil y transparente. Somos transparentes en cuanto a nuestros procesos de recopilación de datos, y tienes el derecho de acceder, actualizar o eliminar tus datos personales en cualquier momento. Recuerda que compartir información personal en las publicaciones de Helpbuttons está a tu discreción, sé consciente y comparte solo lo que te sientas cómodo compartiendo con los demás. Ten en cuenta que el responsable del manejo de tus datos es el administrador de tu Red, no compartas datos sensibles si no confías en dicho administrador. Por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
     "securityDescription": "Cada día incorporamos nuevas mejoras a la seguridad de las Redes, mediante el trabajo conjunto con la comunidad open source estamos analizando y preparando herramientas de seguridad para que usuarios sin conocimiento de informática puedan usarlas. Si crees que puede haber un probelma de seguridad relacionado con el uso de la Red ponte en contacto con el adminsitrador a través de la página de Inicio. Si crees que puede haber una brecha de seguridad informática que pone en riesgo la integridad de nuestro software y la seguridad de nuestros usuarios escríbenos a help@helpbuttons.org. Actualizamos y revisamos continuamente nuestros sistemas para garantizar que cumplan con los más altos estándares de ciberseguridad. Sin embargo, también creemos que la seguridad es una responsabilidad compartida. Si has instalado esta herramienta en tu servidor, te alentamos a practicar comportamientos seguros en línea, como usar contraseñas fuertes y proteger la información personal. Por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
-    "contactDescription": "Si quieres comunicar con los gestores de la página, acude a la sección de Inicio. Si quieres ponerte en contacto con los programadores que hacen posible la app, por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org"
+    "contactDescription": "Si quieres comunicar con los gestores de la página, acude a la sección de Inicio. Si quieres ponerte en contacto con los programadores que hacen posible la app, por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
+    "cookiesQuestion": "Cookies policy",
+    "cookiesDescription": "Este sitio utiliza cookies para ofrecer una experiencia segura y personalizada. A continuación, se describe el uso específico de cada cookie: 1. ACCESS_TOKEN (access_token): Esta cookie almacena de forma segura tu token de acceso, permitiéndote permanecer conectado durante la sesión sin necesidad de reautenticación. Tipo: Esencial Duración: Basada en la sesión 2. TOKEN_TYPE (token_type): Se usa para identificar el tipo de token de acceso que estás utilizando, garantizando una autenticación y seguridad adecuadas. Tipo: Esencial Duración: Basada en la sesión 3. NETWORK_SELECTED (network_id): Almacena información sobre la red seleccionada que estás utilizando en nuestra plataforma, ofreciendo una experiencia personalizada según tu elección. Tipo: Funcionalidad Duración: Basada en la sesión 4. EXPLORE_SETTINGS (explore_settings): Guarda tus preferencias y configuraciones en la función de exploración, haciendo que tu experiencia de navegación sea más consistente y personalizada. Tipo: Funcionalidad Duración: Persistente 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Registra si has dado permiso para recibir notificaciones, permitiéndonos mostrar u ocultar notificaciones según tu preferencia. Tipo: Preferencia Duración: Persistente Puedes gestionar la configuración de cookies a través de las preferencias de tu navegador. "
+  
+  
   },
   "invite": {
     "never": "Nunca",
@@ -538,10 +583,10 @@
     "created": "",
     "confirm": ""
   },
-  "role": {
-    "blocked": "deativado",
-    "admin": "administrador",
+  "roles": {
+    "blocked": "bloqueado",
+    "administrator": "administrador",
     "registered": "registrado",
-    "guest": "visitante"
+    "guest": "invitado"
   }
 }

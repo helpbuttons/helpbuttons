@@ -145,7 +145,7 @@
       "newbutton": "El teu _helpbutton_ ha estat publicat en '{0}'",
       "noactivity": "Encara no tens cap activitat. Publica o interactua amb altres per veure coses aquí.",
       "markedAllAsRead": "Marcat com a llegit",
-      "newcommentSubject": "Algú ha comentat en el teu _helpbutton_",
+      "newcommentSubject": "Algú ha comentat en el teu _helpbutton_ '{0}'",
       "newfollow": "'{0}' està ara seguint el teu _helpbutton_ '{1}'",
       "newfollowing": "estàs ara seguint: _helpbutton_ '{0}'",
       "newfollowed": "{0} ara segueix el teu _helpbutton_ '{1}'",
