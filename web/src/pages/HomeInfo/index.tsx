@@ -169,7 +169,7 @@ export default function HomeInfo({ metadata }) {
                 <hr></hr>
 
                 <div className="homeinfo__description">
-                  <TextFormatted text={selectedNetwork.description} />
+                  <TextFormatted maxChars={600} text={selectedNetwork.description} />
                 </div>
                 <div className="homeinfo-card__section">
                   <div className="homeinfo-card__action-bottom">
