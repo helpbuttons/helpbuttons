@@ -358,8 +358,8 @@ function HbMapOverlay({ selectedNetwork }) {
         <div className="search-map__network-title">
           <div>{selectedNetwork.name}</div>
           <div className="search-map__sign">
-            made with{' '}
-            <a href="https://helpbuttons.org">Helpbuttons</a>
+            {t('homeinfo.powered')}{' '}
+            <a href="https://helpbuttons.org">helpbuttons.org</a>
           </div>
         </div>
       </Overlay>

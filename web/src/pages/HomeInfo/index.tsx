@@ -35,13 +35,17 @@ import { setSSRLocale } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
-import { ShareButton} from 'components/share';
-import { CardSubmenu, CardSubmenuOption } from 'components/card/CardSubmenu';
+import { ShareButton } from 'components/share';
+import {
+  CardSubmenu,
+  CardSubmenuOption,
+} from 'components/card/CardSubmenu';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
 import { ActivityList } from 'components/feed/Activity/ActivityList';
 import { CardButtonHeadMedium } from 'components/button/CardButton';
+import { License, PoweredBy } from 'components/brand/powered';
 
 export default function HomeInfo({ metadata }) {
   const selectedNetwork = useStore(
@@ -61,7 +65,7 @@ export default function HomeInfo({ metadata }) {
     store,
     (state: GlobalState) => state.loggedInUser,
   );
-  useMetadataTitle(t('menu.home'))
+  useMetadataTitle(t('menu.home'));
   const [navigatorCoordinates, setNavigatorCoordinates] =
     useState(null);
 
@@ -69,8 +73,7 @@ export default function HomeInfo({ metadata }) {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    if(selectedNetwork)
-    {
+    if (selectedNetwork) {
       store.emit(
         new FindLatestNetworkActivity((latestActivities) => {
           setActivities(() => latestActivities);
@@ -112,37 +115,35 @@ export default function HomeInfo({ metadata }) {
               </div>
             )}
 
-            
             <div className="homeinfo__sections">
               <ShowMobileOnly>
-                  <div className="homeinfo-card__header">
-                    <div className="homeinfo__network-title">
-                      <div className="avatar-medium--home">
-                        <NetworkLogo network={selectedNetwork} />
-                      </div>
-                      <h3 className="homeinfo__network-title-text">
-                        {selectedNetwork.name}
-                      </h3>
+                <div className="homeinfo-card__header">
+                  <div className="homeinfo__network-title">
+                    <div className="avatar-medium--home">
+                      <NetworkLogo network={selectedNetwork} />
                     </div>
+                    <h3 className="homeinfo__network-title-text">
+                      {selectedNetwork.name}
+                    </h3>
                   </div>
-                </ShowMobileOnly>
-              
+                </div>
+              </ShowMobileOnly>
+
               {/*  FIXED BUTTONS */}
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
-                    <h3 className="homeinfo-card__header-title">
-                      {t('homeinfo.featured')}
-                    </h3>
+                  <h3 className="homeinfo-card__header-title">
+                    {t('homeinfo.featured')}
+                  </h3>
                 </div>
                 <hr></hr>
-               
-                  <div className="homeinfo-card__section">
+
+                <div className="homeinfo-card__section">
                   {/* <CardButtonHeadMedium
                     button={button}
                     buttonType={buttonType}
                   /> */}
-                  </div>
-              
+                </div>
               </div>
 
               {/*  INFO CARD */}
@@ -150,18 +151,17 @@ export default function HomeInfo({ metadata }) {
                 <div className="homeinfo-card__header">
                   <h3 className="homeinfo-card__header-title">
                     {t('homeinfo.info')}
- 
                   </h3>
-                  
+
                   <div className="homeinfo-card__controls">
-                  <Btn
-                          btnType={BtnType.filterCorp}
-                          contentAlignment={ContentAlignment.center}
-                          iconLink={<IoMapOutline />}
-                          iconLeft={IconType.svg}
-                          extraClass="homeinfo__network-title-card--buttons"
-                          caption={t('homeinfo.goToExplore')}
-                          onClick={() => router.push('Explore')}
+                    <Btn
+                      btnType={BtnType.filterCorp}
+                      contentAlignment={ContentAlignment.center}
+                      iconLink={<IoMapOutline />}
+                      iconLeft={IconType.svg}
+                      extraClass="homeinfo__network-title-card--buttons"
+                      caption={t('homeinfo.goToExplore')}
+                      onClick={() => router.push('Explore')}
                     />
                   </div>
                 </div>
@@ -169,15 +169,12 @@ export default function HomeInfo({ metadata }) {
 
                 <div className="homeinfo__description">
                   <TextFormatted text={selectedNetwork.description} />
-                  
                 </div>
                 <div className="homeinfo-card__section">
                   <div className="homeinfo-card__action-bottom">
-          
                     <InstallButton />
-                    <DesktopNotificationsButton/>
-
-                   </div>
+                    <DesktopNotificationsButton />
+                  </div>
                 </div>
               </div>
 
@@ -189,14 +186,14 @@ export default function HomeInfo({ metadata }) {
                   </h3>
                   <div className="homeinfo-card__controls">
                     <Btn
-                        btnType={BtnType.filterCorp}
-                        contentAlignment={ContentAlignment.center}
-                        iconLeft={IconType.svg}
-                        iconLink={<IoAddCircle />}
-                        extraClass="homeinfo__network-title-card--buttons"
-                        caption={t('homeinfo.goToCreate')}
-                        onClick={() => router.push('ButtonNew')}
-                      />
+                      btnType={BtnType.filterCorp}
+                      contentAlignment={ContentAlignment.center}
+                      iconLeft={IconType.svg}
+                      iconLink={<IoAddCircle />}
+                      extraClass="homeinfo__network-title-card--buttons"
+                      caption={t('homeinfo.goToCreate')}
+                      onClick={() => router.push('ButtonNew')}
+                    />
                   </div>
                 </div>
                 <hr></hr>
@@ -211,10 +208,7 @@ export default function HomeInfo({ metadata }) {
                       pageName={'HomeInfo'}
                     />
                   </div>
-
-
                 </div>
-
               </div>
 
               {/* TOP 10 HASHTAGS CARD OF NETWORK */}
@@ -281,15 +275,12 @@ export default function HomeInfo({ metadata }) {
                       selectedNetwork.administrators &&
                       selectedNetwork.administrators.map(
                         (user, idx) => {
-                          return (
-                            <LinkAdmin user={user} key={idx} />
-                          );
+                          return <LinkAdmin user={user} key={idx} />;
                         },
                       )}
                   </div>
                 </div>
               </div>
-
 
               {/* ACTIONS CARD */}
               <div className="homeinfo-card">
@@ -298,7 +289,13 @@ export default function HomeInfo({ metadata }) {
                     {t('homeinfo.actions')}
                   </h3>
                   <div className="homeinfo-card__controls">
-                    <ShareButton onClick={() => store.emit(new SetMainPopup(MainPopupPage.SHARE))}/>
+                    <ShareButton
+                      onClick={() =>
+                        store.emit(
+                          new SetMainPopup(MainPopupPage.SHARE),
+                        )
+                      }
+                    />
                   </div>
                 </div>
                 <hr></hr>
@@ -323,7 +320,6 @@ export default function HomeInfo({ metadata }) {
                     <span>{t('menu.faqs')}</span>
                   </NavLink>
                 </div>
-
 
                 {currentUser && (
                   <>
@@ -360,9 +356,20 @@ export default function HomeInfo({ metadata }) {
                         </NavLink>
                       </div> */}
               </div>
+              <div className="homeinfo-card">
+                <div className="homeinfo-card__header">
+                  <h3 className="homeinfo-card__header-title"></h3>
+                  <div className="homeinfo-card__section">
+                    <p>
+                    <PoweredBy/>
+                    <License/>
+                      
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            {/* INFO CARD */}
-           <div
+            <div
               className="homeinfo-card homeinfo__card--title-card"
               style={
                 {
@@ -370,14 +377,7 @@ export default function HomeInfo({ metadata }) {
                 } as React.CSSProperties
               }
             >
-
-
-              <div className="homeinfo-card__section--actions">
-
-
- 
-
-              </div>
+              <div className="homeinfo-card__section--actions"></div>
             </div>
           </div>
         </div>
@@ -429,29 +429,24 @@ export const getServerSideProps = async (ctx: NextPageContext) => {
 };
 
 function HomeinfoShareOptions({ user }) {
-  
-
   const getOptions = () => {
-    
-        return (
-          <>
-            <CardSubmenuOption
-              onClick={() => {
-                updateRole(user.id, Role.registered);
-              }}
-              label={t('share.share')}
-            />
-            <CardSubmenuOption
-              onClick={() => {
-                updateRole(user.id, Role.registered);
-              }}
-              label={t('share.embed')}
-            />
-          </>
-        );
-      
-    }
-  
+    return (
+      <>
+        <CardSubmenuOption
+          onClick={() => {
+            updateRole(user.id, Role.registered);
+          }}
+          label={t('share.share')}
+        />
+        <CardSubmenuOption
+          onClick={() => {
+            updateRole(user.id, Role.registered);
+          }}
+          label={t('share.embed')}
+        />
+      </>
+    );
+  };
 
   return <CardSubmenu extraClass="">{getOptions()}</CardSubmenu>;
 }
