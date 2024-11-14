@@ -359,15 +359,14 @@ export default function HomeInfo({ metadata }) {
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
                   <h3 className="homeinfo-card__header-title"></h3>
-                  <div className="homeinfo-card__section">
-                    <p>
-                    <PoweredBy/>
-                    <License/>
-                      
-                    </p>
-                  </div>
+
                 </div>
+                <span className="homeinfo-card__section--attr">
+                      <PoweredBy/>
+                      <License/>
+                </span>
               </div>
+
             </div>
             <div
               className="homeinfo-card homeinfo__card--title-card"

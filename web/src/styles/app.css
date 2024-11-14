@@ -4902,6 +4902,14 @@ hr {
   border: 0px solid #f0f0f0;
   line-height: 1.5rem;
 }
+.homeinfo-card__section--attr {
+  font-size: 10px;
+  color: #8da0a0;
+  display: flex;
+  gap: 5px;
+  justify-content: end;
+}
+
 .homeinfo-card__section--actions {
   display: flex;
   flex-direction: column;
@@ -9169,7 +9177,7 @@ body,
 }
 
 .homeinfo__container {
-  height: calc(var(--vh) - 71px) !important;
+  height: calc(var(--vh) - 69px) !important;
 }
 
 .popup__content {

@@ -264,6 +264,16 @@ hr {
 
 }
 
+.homeinfo-card__section--attr{
+
+  font-size: $font-size-xsmall;
+  color: $color-med-gray;
+  display: flex;
+  gap: $padding-small;
+  justify-content: end;
+
+}
+
 .homeinfo-card__section--actions {
   display: flex;
   flex-direction: column;
