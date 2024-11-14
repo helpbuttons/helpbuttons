@@ -23,12 +23,13 @@ export function LinkAdmins() {
     //   router.push('/HomeInfo')
     // }))
   }
-  const extra = <ShowPhone user={user} />;
+  
   return (
     <>
       {selectedNetwork &&
         selectedNetwork.administrators &&
         selectedNetwork.administrators.map((user, idx) => {
+          const extra = <ShowPhone user={user} />;
           return (
             <LinkProfile
               key={user.id}
