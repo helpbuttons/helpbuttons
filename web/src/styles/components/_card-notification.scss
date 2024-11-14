@@ -225,6 +225,9 @@ $card-notification-delete-size: 100px;
   margin-right: 20px;
   cursor: pointer;
   border-top: 1px solid var(--button-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 
 }
 
