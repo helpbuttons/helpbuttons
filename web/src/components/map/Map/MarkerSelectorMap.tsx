@@ -46,7 +46,7 @@ export function MarkerEditorMap(props) {
 export default function MarkerViewMap({
   markerPosition,
   zoom,
-  setZoom,
+  setZoom = (a) => {},
   markerColor,
   markerImage,
   markerCaption,
