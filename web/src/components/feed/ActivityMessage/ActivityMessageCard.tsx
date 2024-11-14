@@ -111,7 +111,7 @@ export function ActivityMessageCard({
                 <div className="card-notification__info">
                   {t('feed.from')}: {message.authorName}
                   &nbsp;
-                  {message.privacy == PrivacyType.PRIVATE && (
+                  <div style={{display: 'none'}}>{message.privacy == PrivacyType.PRIVATE && (
                     <span style={{ color: 'red' }}>
                       {t('feed.privateBadge')}
                     </span>
@@ -120,7 +120,7 @@ export function ActivityMessageCard({
                     <span style={{ color: 'blue' }}>
                       {t('feed.publicBadge')}
                     </span>
-                  )}
+                  )}</div>
                   {/* <h2 className="card-notification__name">{title}</h2>  */}
                 </div>
                 <div className="card-notification__type">
