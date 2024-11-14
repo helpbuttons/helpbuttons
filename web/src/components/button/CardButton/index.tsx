@@ -369,7 +369,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         {!button.hideAddress && showMap && (
           <MarkerViewMap
             markerPosition={[button.latitude, button.longitude]}
-            defaultZoom={maxZoom}
+            zoom={maxZoom}
             markerColor={cssColor}
             markerImage={button.image}
             markerCaption={button.title}

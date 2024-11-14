@@ -50,7 +50,7 @@ export default function MarkerViewMap({
   markerColor,
   markerImage,
   markerCaption,
-  hideAddress,
+  hideAddress = false,
   editPosition = false,
   onMapClick = (latLng) => {},
   networkMapCenter = null,

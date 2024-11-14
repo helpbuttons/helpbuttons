@@ -273,7 +273,7 @@ export class ActivityService {
   findByUserId(
     userId: string,
     locale: string,
-    read: boolean = false,
+    read: boolean = null,
     page,
     eventNameFindOptions = null,
     hydrate = (activity, buttonTypes) => {},
