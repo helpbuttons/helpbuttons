@@ -13,7 +13,7 @@ import { useGlobalStore } from 'store/Store';
 import { alertService } from 'services/Alert';
 import router from 'next/router';
 
-export function LinkAdmin({ user }) {
+export function LinkAdmins() {
   const selectedNetwork = useGlobalStore(
     (state: GlobalState) => state.networks.selectedNetwork,
   );

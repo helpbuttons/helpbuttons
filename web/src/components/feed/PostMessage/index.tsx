@@ -10,11 +10,12 @@ export default function PostMessage({ post }) {
       <div className="card-notification__content">
         <div className="card-notification__avatar">
           <div className="avatar-small">
-            {/* <ImageWrapper
+            <ImageWrapper
               imageType={ImageType.avatar}
               src={post.author.avatar}
               alt="Avatar"
-            /> */}
+            />
+             
           </div>
         </div>
         <div className="card-notification__text">
