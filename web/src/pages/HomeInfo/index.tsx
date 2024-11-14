@@ -129,23 +129,24 @@ export default function HomeInfo({ metadata }) {
                 </div>
               </ShowMobileOnly>
 
-              {/*  FIXED BUTTONS */}
-              <div className="homeinfo-card">
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.featured')}
-                  </h3>
-                </div>
-                <hr></hr>
+              {/*  PINNIED BUTTONS */}
+              {false && 
+                <div className="homeinfo-card">
+                  <div className="homeinfo-card__header">
+                    <h3 className="homeinfo-card__header-title">
+                      {t('homeinfo.featured')}
+                    </h3>
+                  </div>
+                  <hr></hr>
 
-                <div className="homeinfo-card__section">
-                  {/* <CardButtonHeadMedium
-                    button={button}
-                    buttonType={buttonType}
-                  /> */}
+                  <div className="homeinfo-card__section">
+                    {/* <CardButtonHeadMedium
+                      button={button}
+                      buttonType={buttonType}
+                    /> */}
+                  </div>
                 </div>
-              </div>
-
+              }
               {/*  INFO CARD */}
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">

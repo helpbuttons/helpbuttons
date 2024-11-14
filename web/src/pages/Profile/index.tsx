@@ -64,13 +64,15 @@ export default function Profile() {
                         caption={t('user.editProfile')}
                       />
                     </Link>
-                    <Link href="/">
-                      <Btn
-                        iconLeft={IconType.svg}
-                        iconLink={<IoFolderOutline />}
-                        caption={t('user.myHelpbuttons')}
-                      />
-                    </Link>
+                    {false && 
+                      <Link href="/">
+                        <Btn
+                          iconLeft={IconType.svg}
+                          iconLink={<IoFolderOutline />}
+                          caption={t('user.myHelpbuttons')}
+                        />
+                      </Link>
+                    }
                     {/* {selectedNetwork?.inviteOnly &&  */}
                       {/* <Link href="/Profile/Invites">
                         <Btn
