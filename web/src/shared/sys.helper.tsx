@@ -1,8 +1,8 @@
-import { translations } from 'i18n';
 import { pathToRegexp } from 'path-to-regexp';
 import { allowedPathsPerRole } from './pagesRoles';
 import { Role } from './types/roles';
 import getConfig from 'next/config';
+import { localesFiles } from 'i18n/availableLocales';
 
 let SSRLocale = 'en';
 
@@ -27,7 +27,7 @@ export function getHref() {
 
 export function getLocale(availableLocales = null) {
   if (!availableLocales) {
-    availableLocales = translations.map(({ locale }) => {
+    availableLocales = localesFiles.map(({ locale }) => {
       return locale;
     });
   }

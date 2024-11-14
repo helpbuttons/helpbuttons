@@ -111,7 +111,7 @@ export default function ProfileEdit() {
     store.emit(new FetchUserData((userData) => {
       if(userData.locale != 'en')
       {
-        router.push(`/${userData.locale}/Profile`)
+        router.push({ pathname: '/Profile' }, asPath, { locale: userData.locale });
       }else{
         router.push({ pathname: '/Profile' }, asPath, { locale: 'en' });
       }
