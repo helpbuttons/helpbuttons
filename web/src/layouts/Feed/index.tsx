@@ -76,7 +76,7 @@ export default function Feed({ button }: { button: Button }) {
                 referer={{ button: button.id }}
                 onCancel={() => {
                   reloadPosts();
-                  setShowComposePostReply(() => null);
+                  toggleShowReplyFirstPost(() => false);
                 }}
                 onCreate={() => {
                   reloadPosts();
@@ -297,7 +297,7 @@ export function ComposePost({
   );
 }
 
-export function Compose({ referer, onCreate, beforeCreate, onCancel }) {
+export function Compose({ referer, onCreate, onCancel }) {
   if (!referer) {
     return <></>;
   }
