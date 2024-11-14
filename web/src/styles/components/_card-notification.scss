@@ -223,6 +223,7 @@ $card-notification-delete-size: 100px;
 .card-notification__comment-count {
 
   margin-right: 20px;
+  padding: $padding-medium;
   cursor: pointer;
   border-top: 1px solid var(--button-color);
   display: flex;
@@ -260,7 +261,7 @@ $card-notification-delete-size: 100px;
 .card-notification__label {
 
     display: inline-flex;
-    flex: 0 0 50%;
+    // flex: 0 0 50%;
     padding: $padding-small 0 0 $padding-small ;
     pointer-events: none;
     gap: $margin-xsmall;
