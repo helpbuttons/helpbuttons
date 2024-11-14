@@ -27,7 +27,7 @@ import { useEffect, useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { TextFormatted } from 'elements/Message';
-import { LinkAdmin } from 'components/user/LinkAdmin';
+import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
@@ -272,13 +272,7 @@ export default function HomeInfo({ metadata }) {
                 <div className="homeinfo__description">
                   {t('homeinfo.adminInstructions')}
                   <div className="homeinfo__users">
-                    {selectedNetwork &&
-                      selectedNetwork.administrators &&
-                      selectedNetwork.administrators.map(
-                        (user, idx) => {
-                          return <LinkAdmin user={user} key={idx} />;
-                        },
-                      )}
+                    <LinkAdmins/>
                   </div>
                 </div>
               </div>
