@@ -305,11 +305,14 @@ $card-notification-delete-size: 100px;
   font-weight: $font-weight-bold;
   display: inline;
   font-size: $font-size-small;
+  color: $color-med-gray;
+  font-weight: $font-weight-light;
 }
 
 .card-notification__paragraph {
   @extend .card-button__author-description;
-  color: $color-black;
+  font-size: $font-size-general;
+  color: $color-gray;
 }
 
 

@@ -46,7 +46,9 @@
     "latestActivity": "Últimas actividads",
     "installButton": "Instalar app",
     "notificationsPermission": "Permitir notificaciones",
-    "share": "Compartir esta app"
+    "share": "Compartir esta app",
+    "featured": "Destacados"
+
   },
   "share":{
 

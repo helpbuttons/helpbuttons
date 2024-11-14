@@ -41,6 +41,7 @@ import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
 import { ActivityList } from 'components/feed/Activity/ActivityList';
+import { CardButtonHeadMedium } from 'components/button/CardButton';
 
 export default function HomeInfo({ metadata }) {
   const selectedNetwork = useStore(
@@ -125,6 +126,25 @@ export default function HomeInfo({ metadata }) {
                     </div>
                   </div>
                 </ShowMobileOnly>
+              
+              {/*  FIXED BUTTONS */}
+              <div className="homeinfo-card">
+                <div className="homeinfo-card__header">
+                    <h3 className="homeinfo-card__header-title">
+                      {t('homeinfo.featured')}
+                    </h3>
+                </div>
+                <hr></hr>
+               
+                  <div className="homeinfo-card__section">
+                  <CardButtonHeadMedium
+                    button={button}
+                    buttonType={buttonType}
+                  />
+                  </div>
+              
+              </div>
+
               {/*  INFO CARD */}
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">

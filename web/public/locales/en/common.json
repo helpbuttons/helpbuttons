@@ -44,8 +44,9 @@
     "installButton": "Install app",
     "print": "Print activity",
     "share": "Share options",
-    "notificationsPermission": "Allow notifications"
-    
+    "notificationsPermission": "Allow notifications",
+    "featured": "Featured"
+
 
   },
   "share":{
