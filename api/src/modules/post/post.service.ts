@@ -74,25 +74,6 @@ export class PostService {
         commentPosts = this.removeBlockedUsersComments(commentPosts);
         return commentPosts;
       })
-      .then((posts) => {
-        var _ = require('lodash/array');
-
-        let mentionedUsers = []
-        posts.map((post) => 
-          post.comments.map((comment) => {
-            _.union
-            mentionedUsers = [...mentionedUsers,mentionsOfMessage(comment.message, '')]
-          })
-        );
-        const uniqMentionedUsers = _.uniq(_.flatten(mentionedUsers))
-        return Promise.all(uniqMentionedUsers.map((username) => this.userService.findByUsername(username)))
-        .then((users) => {
-          return posts.map((post) => {return {...post,comments: post.comments.map((comment) => {
-            const commentsMentionUsers = mentionsOfMessage(comment.message, '').map((mention) => users.find((user) => user.username == mention))
-            return {...comment, mentions: commentsMentionUsers}
-          })}});
-        })
-      });
   }
 
   removeDeletedComments(posts) {

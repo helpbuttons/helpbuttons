@@ -4,7 +4,7 @@ import { MessageDto } from 'shared/dtos/post.dto';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { catchError, map } from 'rxjs/operators';
 import { handleError } from './helper';
-import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
+import { PrivacyType } from 'shared/types/privacy.enum';
 import { produce } from 'immer';
 
 export class CreateNewPost implements WatchEvent {
@@ -61,7 +61,7 @@ export class LoadPosts implements WatchEvent {
 export class CreateNewPostComment implements WatchEvent, UpdateEvent {
   public constructor(
     private postId: string,
-    private privacy: CommentPrivacyOptions,
+    private privacy: PrivacyType,
     private message,
     private onSuccess,
     private onError,
@@ -87,7 +87,7 @@ export class CreateNewCommentReply implements WatchEvent, UpdateEvent {
   public constructor(
     private postId: string,
     private commentId: string,
-    private privacy: CommentPrivacyOptions,
+    private privacy: PrivacyType,
     private message,
     private onSuccess,
     private onError,
