@@ -87,11 +87,16 @@ export function ActivityMessageCard({
                 style={{ color: buttonType?.cssColor }}
               >
                 {buttonType?.icon}
-                <span>
-                  {showButtonTypeCaption(message.button.type)}
+                <span>   
+                  {message.button.title}
                 </span>
               </div>
-              <p className="card-notification__helpbutton-title">{message.button.title}</p>
+              {/* <p className="card-notification__helpbutton-title">{message.button.title}</p> */}
+            </div>
+            <div className="card-notification__type">
+                  <div className="card-notification__date">
+                    {readableTimeLeftToDate(message.createdAt)}
+                  </div>
             </div>
           </div>
           <div className="card-notification__content">
@@ -123,11 +128,7 @@ export function ActivityMessageCard({
                   )}
                   {/* <h2 className="card-notification__name">{title}</h2>  */}
                 </div>
-                <div className="card-notification__type">
-                  <div className="card-notification__date">
-                    {readableTimeLeftToDate(message.createdAt)}
-                  </div>
-                </div>
+               
               </div>
               <div className="card-notification__paragraph">
                 <TextFormatted
