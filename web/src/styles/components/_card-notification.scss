@@ -266,6 +266,17 @@ $card-notification-delete-size: 100px;
 
 }
 
+.card-notification__nolabel {
+
+  flex: 0 0 50%;
+  padding: $padding-small 0 0 $padding-small ;
+  pointer-events: none;
+  gap: $margin-xsmall;
+  align-items: center;
+  font-size: $font-size-small;
+
+}
+
 .card-notification__date:before {
   background: $color-corporative;
   border-radius: $border-radius-circle;

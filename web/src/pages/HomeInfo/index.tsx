@@ -137,10 +137,10 @@ export default function HomeInfo({ metadata }) {
                 <hr></hr>
                
                   <div className="homeinfo-card__section">
-                  <CardButtonHeadMedium
+                  {/* <CardButtonHeadMedium
                     button={button}
                     buttonType={buttonType}
-                  />
+                  /> */}
                   </div>
               
               </div>
@@ -153,7 +153,7 @@ export default function HomeInfo({ metadata }) {
  
                   </h3>
                   
-                  <div class="homeinfo-card__controls">
+                  <div className="homeinfo-card__controls">
                   <Btn
                           btnType={BtnType.filterCorp}
                           contentAlignment={ContentAlignment.center}

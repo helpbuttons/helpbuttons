@@ -171,15 +171,25 @@ function InnerNotificationCard({
         className="card-notification__comment-count"
         // style={buttonColorStyle('red')}
       >
-        <div className="card-notification__label">
+        <div className="card-notification__nolabel">
           <div className="card-notification__helpbutton-type">
             {/* {buttonType?.icon} */}
             {/* {buttonType.name} */}
           </div>
           {/* <p className="">{'title'}</p> */}
         </div>
+        <div className="card-notification__type">
+              {read ? (
+                readableTimeLeftToDate(date)
+              ) : (
+                <div className="card-notification__date">
+                  {readableTimeLeftToDate(date)}
+                </div>
+              )}
+        </div>
       </div>
       <div className="card-notification__content">
+
         <div className="card-notification__avatar">
           <div className="avatar-medium">
             <ImageWrapper
@@ -194,15 +204,7 @@ function InnerNotificationCard({
             <div className="card-notification__info">
               <h2 className="card-notification__name">{title}</h2>
             </div>
-            <div className="card-notification__type">
-              {read ? (
-                readableTimeLeftToDate(date)
-              ) : (
-                <div className="card-notification__date">
-                  {readableTimeLeftToDate(date)}
-                </div>
-              )}
-            </div>
+
           </div>
           <div className="card-notification__paragraph">
             {message && formatMessage(message)}

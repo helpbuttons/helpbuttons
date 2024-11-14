@@ -6163,6 +6163,15 @@ hr {
   font-size: 14px;
 }
 
+.card-notification__nolabel {
+  flex: 0 0 50%;
+  padding: 5px 0 0 5px;
+  pointer-events: none;
+  gap: 7px;
+  align-items: center;
+  font-size: 14px;
+}
+
 .card-notification__date:before {
   background: var(--network-background-color);
   border-radius: 34px;

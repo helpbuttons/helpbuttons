@@ -45,17 +45,20 @@ function ErrorPopup({ errorCustomRaw = null }) {
         {t('error.notFoundMessage')}
       </div>
       {errorCustomRaw && <code>{errorCustomRaw}</code>}
-      {selectedNetwork &&
-        selectedNetwork.administrators &&
-        selectedNetwork.administrators.map((user, idx) => {
-          return (
-            <LinkAdmin
-              user={user}
-              key={idx}
-              // message={errorCustomRaw}
-            />
-          );
-        })}
+      <div className="homeinfo__description">
+        {t('homeinfo.adminInstructions')}
+        <div className="homeinfo__users">
+          {selectedNetwork &&
+            selectedNetwork.administrators &&
+            selectedNetwork.administrators.map(
+              (user, idx) => {
+                return (
+                  <LinkAdmin user={user} key={idx} />
+                );
+              },
+            )}
+        </div>
+      </div>
     </Popup>
   );
 }
