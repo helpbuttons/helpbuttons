@@ -6137,6 +6137,7 @@ hr {
 
 .card-notification__comment-count {
   margin-right: 20px;
+  padding: 10px;
   cursor: pointer;
   border-top: 1px solid var(--button-color);
   display: flex;
@@ -6166,7 +6167,6 @@ hr {
 
 .card-notification__label {
   display: inline-flex;
-  flex: 0 0 50%;
   padding: 5px 0 0 5px;
   pointer-events: none;
   gap: 7px;
