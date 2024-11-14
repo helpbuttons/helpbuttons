@@ -2,7 +2,7 @@ import { ImageGallery } from 'elements/ImageGallery';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { formatMessage } from 'elements/Message';
 import { readableTimeLeftToDate } from 'shared/date.utils';
-import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
+import { PrivacyType } from 'shared/types/privacy.enum';
 
 export default function PostMessage({ post }) {
   return (

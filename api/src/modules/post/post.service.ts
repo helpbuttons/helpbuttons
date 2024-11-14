@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { ButtonService } from '../button/button.service';
 import { User } from '../user/user.entity';
 import { Post } from './post.entity';
-import { CommentPrivacyOptions } from '@src/shared/types/privacy.enum';
+import { PrivacyType } from '@src/shared/types/privacy.enum';
 import translate, {
   readableDate,
 } from '@src/shared/helpers/i18n.helper';
@@ -118,7 +118,7 @@ export class PostService {
             return true;
           }
           if (
-            comment.privacy == CommentPrivacyOptions.PUBLIC ||
+            comment.privacy == PrivacyType.PUBLIC ||
             post.author.id == currentUser?.id ||
             comment.author.id == currentUser?.id
           ) {

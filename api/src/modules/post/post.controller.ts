@@ -13,7 +13,7 @@ import { ActivityEventName } from "@src/shared/types/activity.list";
 import { notifyUser } from "@src/app/app.event";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { Role } from "@src/shared/types/roles";
-import { CommentPrivacyOptions } from "@src/shared/types/privacy.enum";
+import { PrivacyType } from "@src/shared/types/privacy.enum";
 
 @ApiTags('post')
 @Controller('post')
@@ -48,7 +48,7 @@ export class PostController {
     @Post('new/comment/:privacy/:postId')
     async newComment(
       @Body() data: MessageDto,
-      @Param('privacy') privacy: CommentPrivacyOptions,
+      @Param('privacy') privacy: PrivacyType,
       @Param('postId') postId: string,
       @CurrentUser() user: User,
     ){
@@ -63,7 +63,7 @@ export class PostController {
     @Post('new/comment/:privacy/:postId/:commentParentId')
     async newCommentReply(
       @Body() data: MessageDto,
-      @Param('privacy') privacy: CommentPrivacyOptions,
+      @Param('privacy') privacy: PrivacyType,
       @Param('postId') postId: string,
       @Param('commentParentId') commentParentId: string,
       @CurrentUser() user: User,

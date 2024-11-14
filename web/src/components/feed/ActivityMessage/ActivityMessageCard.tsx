@@ -16,7 +16,7 @@ import {
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import { ButtonTemplate } from 'shared/dtos/button.dto';
-import { PrivacyType } from 'shared/types/activity.list';
+import { PrivacyType } from 'shared/types/privacy.enum';
 import { ActivityMarkAsRead } from 'state/Activity';
 
 export function ActivityMessageCard({
@@ -85,6 +85,13 @@ export function ActivityMessageCard({
                   src={message.image}
                   alt="image"
                 />
+                {message.button.image && 
+                  <ImageWrapper
+                    imageType={ImageType.avatarMed}
+                    src={message.button.image}
+                    alt="image"
+                  />
+                } 
               </div>
             </div>
             <div className="card-notification__text">

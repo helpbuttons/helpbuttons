@@ -9,7 +9,3 @@ export enum ActivityEventName {
   ExpiredButton = 'expired.button'
 }
 
-export enum PrivacyType {
-  PUBLIC = 'public',
-  PRIVATE = 'private',
-}

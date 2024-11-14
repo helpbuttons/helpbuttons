@@ -19,7 +19,7 @@ import {
 } from 'react-icons/io5';
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
-import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
+import { PrivacyType } from 'shared/types/privacy.enum';
 import { formatMessage } from 'elements/Message';
 import { uniqueArray } from 'shared/sys.helper';
 import { Compose } from 'layouts/Feed';
@@ -104,7 +104,7 @@ export function PostComment({
     <div
       className={
         'card-notification--comment ' +
-        (comment.privacy == CommentPrivacyOptions.PRIVATE
+        (comment.privacy == PrivacyType.PRIVATE
           ? ' card-notification--comment-private'
           : '') +
         (isReply ? ' card-notification--reply' : '')
@@ -114,7 +114,7 @@ export function PostComment({
       <div className="message__actions">
         {loggedInUser && (
           <>
-            {comment.privacy == CommentPrivacyOptions.PRIVATE && (
+            {comment.privacy == PrivacyType.PRIVATE && (
               <Btn
                 submit={false}
                 btnType={BtnType.smallLink}
@@ -127,7 +127,7 @@ export function PostComment({
                 }
               />
             )}
-            {comment.privacy == CommentPrivacyOptions.PUBLIC && (
+            {comment.privacy == PrivacyType.PUBLIC && (
               <Btn
                 submit={false}
                 btnType={BtnType.smallLink}
@@ -221,7 +221,7 @@ export function Comment({ comment }) {
 
         <div className="message__hour">
           {readableTimeLeftToDate(comment.created_at)},{' '}
-          {comment.privacy == CommentPrivacyOptions.PRIVATE && (
+          {comment.privacy == PrivacyType.PRIVATE && (
             <span style={{ color: 'red' }}>private</span>
           )}
         </div>

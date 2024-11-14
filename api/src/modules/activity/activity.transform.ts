@@ -1,7 +1,7 @@
 import { ActivityEventName } from '@src/shared/types/activity.list';
 import { Activity } from './activity.entity';
 import translate, { readableDate } from '@src/shared/helpers/i18n.helper';
-import { CommentPrivacyOptions } from '@src/shared/types/privacy.enum';
+import { PrivacyType } from '@src/shared/types/privacy.enum';
 
 export const transformToMessage = (
   activity: Activity,
@@ -95,7 +95,7 @@ export const transformToMessage = (
         title: title,
         image: button.image,
         referenceId: button.id,
-        isPrivate: comment.privacy == CommentPrivacyOptions.PRIVATE,
+        isPrivate: comment.privacy == PrivacyType.PRIVATE,
         isOwner: isOwner
       };
     }

@@ -8,7 +8,7 @@ import { HttpStatus } from '@src/shared/types/http-status.enum';
 
 import { NetworkService } from '@src/modules/network/network.service';
 import { Observable } from 'rxjs';
-import { PrivacyType } from '@src/shared/types/activity.list';
+import { PrivacyType } from "@src/shared/types/privacy.enum";
 
 @Injectable()
 export class PrivacyGuard implements CanActivate {

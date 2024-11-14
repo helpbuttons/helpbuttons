@@ -26,7 +26,7 @@ import {
 import { isAdmin } from 'state/Users';
 import { useStore } from 'store/Store';
 import MessageNew from 'components/feed/MessageNew';
-import { CommentPrivacyOptions } from 'shared/types/privacy.enum';
+import { PrivacyType } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';
 import { CardButtonHeadActions } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
@@ -354,9 +354,9 @@ export function Compose({ referer, onCreate, beforeCreate, onCancel }) {
           isComment={true}
           privateMessage={referer?.privateMessage}
           onCreate={(message, images) => {
-            let privacy = CommentPrivacyOptions.PUBLIC;
+            let privacy = PrivacyType.PUBLIC;
             if (referer?.privateMessage) {
-              privacy = CommentPrivacyOptions.PRIVATE;
+              privacy = PrivacyType.PRIVATE;
             }
             store.emit(
               new CreateNewCommentReply(
@@ -398,9 +398,9 @@ export function Compose({ referer, onCreate, beforeCreate, onCancel }) {
           isComment={true}
           privateMessage={referer?.privateMessage}
           onCreate={(message, images) => {
-            let privacy = CommentPrivacyOptions.PUBLIC;
+            let privacy = PrivacyType.PUBLIC;
             if (referer?.privateMessage) {
-              privacy = CommentPrivacyOptions.PRIVATE;
+              privacy = PrivacyType.PRIVATE;
             }
             store.emit(
               new CreateNewPostComment(

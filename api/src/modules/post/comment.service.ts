@@ -5,7 +5,7 @@ import { Repository } from "typeorm";
 import { User } from "../user/user.entity";
 import { Comment } from "./comment.entity";
 import { PostService } from "./post.service";
-import { CommentPrivacyOptions } from "@src/shared/types/privacy.enum";
+import { PrivacyType } from "@src/shared/types/privacy.enum";
 import { StorageService } from "../storage/storage.service";
 
 @Injectable()
@@ -18,7 +18,7 @@ export class CommentService {
     private storageService: StorageService
   ) {}
 
-  new(message: string, images: string[], postId: string, author: User, privacy: CommentPrivacyOptions) {
+  new(message: string, images: string[], postId: string, author: User, privacy: PrivacyType) {
     return this.storageService.storageMultipleImages(images)
     .then((imagesStored ) => {
       return this.postSerice.findById(postId).then((post) => {
@@ -37,7 +37,7 @@ export class CommentService {
     })
   }
 
-  newReply(message: string, images: string[], postId: string, commentParentId: string, author: User, privacy: CommentPrivacyOptions) {
+  newReply(message: string, images: string[], postId: string, commentParentId: string, author: User, privacy: PrivacyType) {
     return this.storageService.storageMultipleImages(images)
     .then((imagesStored ) => {
     return this.postSerice.findById(postId).then((post) => {

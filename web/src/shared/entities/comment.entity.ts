@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { Post } from "./post.entity";
 import { User } from "../user/user.entity";
 import { BaseEntity } from "@src/shared/types/base.entity";
-import { CommentPrivacyOptions } from "@src/shared/types/privacy.enum";
+import { PrivacyType } from "@src/shared/types/privacy.enum";
 
 @Entity()
 export class Comment extends BaseEntity {
@@ -24,10 +24,10 @@ export class Comment extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: CommentPrivacyOptions,
-    default: CommentPrivacyOptions.PUBLIC,
+    enum: PrivacyType,
+    default: PrivacyType.PUBLIC,
   })
-  privacy: CommentPrivacyOptions;
+  privacy: PrivacyType;
 
   @Column({default: null})
   commentParentId?: string;

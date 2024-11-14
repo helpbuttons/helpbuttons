@@ -1,4 +1,4 @@
-export enum CommentPrivacyOptions {
-    PRIVATE = 'private',
-    PUBLIC = 'public'
-  }
+export enum PrivacyType {
+  PUBLIC = 'public',
+  PRIVATE = 'private',
+}

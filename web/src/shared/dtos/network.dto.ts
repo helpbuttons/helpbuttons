@@ -14,7 +14,7 @@ import {
 import { PartialType } from '@nestjs/swagger';
 import { Column } from 'typeorm';
 import { User } from '../user/user.entity';
-import { PrivacyType } from '@src/shared/types/activity.list';
+import { PrivacyType } from "@src/shared/types/privacy.enum";
 import { ButtonTemplate } from '../button/button.dto';
 
 // https://github.com/typestack/class-validator

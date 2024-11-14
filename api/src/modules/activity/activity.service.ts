@@ -25,6 +25,7 @@ import { Button } from '../button/button.entity';
 import { User } from '../user/user.entity';
 import { unique } from '@src/shared/helpers/array.helper';
 import { excerpt } from './activity.utils';
+import { Comment } from '../post/comment.entity';
 
 @Injectable()
 export class ActivityService {
@@ -426,18 +427,19 @@ export class ActivityService {
       (activity, buttonTypes): ActivityMessageDto => {
         if (activity.eventName == ActivityEventName.NewPostComment) {
           //@ts-ignore
-          const comment = activity.data.comment;
+          const comment: Comment = activity.data.comment;
           //@ts-ignore
           const button: Button = comment.post.button;
-          const authorButton: User = button.owner;
+          const authorComment: User = comment.author;
           const excerptMessage = excerpt(comment.message)
           return {
-            image: button.image ? button.image : null, //  (authorButton.avatar ? authorButton.avatar : null)
+            image: authorComment.avatar ? authorComment.avatar : null, //  (authorButton.avatar ? authorButton.avatar : null)
             //@ts-ignore
             button: {
               type: button.type,
               title: button.title,
               id: button.id,
+              image: button.image
             },
             authorName: comment.author.name,
             privacy: comment.privacy,

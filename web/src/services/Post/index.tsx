@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 import { httpService } from "services/HttpService";
 import { MessageDto } from "shared/dtos/post.dto";
-import { CommentPrivacyOptions } from "shared/types/privacy.enum";
+import { PrivacyType } from "shared/types/privacy.enum";
 
 export class PostService {
 
@@ -20,7 +20,7 @@ export class PostService {
   
   public static newComment(
     postId: string,
-    privacy: CommentPrivacyOptions,
+    privacy: PrivacyType,
     data: MessageDto,
   ): Observable<any> {
     return httpService.post(`post/new/comment/${privacy}/${postId}`, data);
@@ -29,7 +29,7 @@ export class PostService {
   public static newCommentReply(
     postId: string,
     commentId: string,
-    privacy: CommentPrivacyOptions,
+    privacy: PrivacyType,
     data: MessageDto,
   ): Observable<any> {
     return httpService.post(`post/new/comment/${privacy}/${postId}/${commentId}`, data);

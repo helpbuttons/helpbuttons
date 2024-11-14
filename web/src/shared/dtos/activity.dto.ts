@@ -1,4 +1,4 @@
-import { PrivacyType } from "@src/shared/types/activity.list";
+import { PrivacyType } from "@src/shared/types/privacy.enum";
 
 export enum NotificationType {
     All,
@@ -26,6 +26,7 @@ export class ActivityDtoOut {
       type: string;
       title: string;
       id: string;
+      image: string;
     }
     authorName: string;
     privacy: PrivacyType;
@@ -33,4 +34,7 @@ export class ActivityDtoOut {
     id: string;
     read: boolean;
     message: string;
+    excerpt: string;
   }
+
+  export const ExcerptMaxChars = 60;
