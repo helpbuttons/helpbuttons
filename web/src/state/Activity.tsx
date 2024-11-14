@@ -167,8 +167,13 @@ export class FoundMessagesRead implements UpdateEvent {
           ...state.activites.messages.read,
           ...this.messages,
         ], 'id');
-        newState.activites.messages.readPage =
+
+        if(this.messages.length > 0)
+        {
+          newState.activites.messages.readPage =
           state.activites.messages.readPage + 1;
+        }
+        
     });
   }
 }
@@ -239,6 +244,7 @@ export class FindMoreNotifications implements WatchEvent {
       return of(undefined);
     }
     const page = state.activites.notificationsPage;
+    console.log('callliiing ')
     return ActivityService.notificationsRead(page).pipe(
       map((notifications: ActivityDtoOut[]) => {
         this.onSuccess(notifications);
@@ -249,16 +255,21 @@ export class FindMoreNotifications implements WatchEvent {
 }
 
 export class FoundNotifications implements UpdateEvent {
-  public constructor(private messages: ActivityDtoOut[]) {}
+  public constructor(private notifications: ActivityDtoOut[]) {}
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
         newState.activites.notifications = _.uniqBy([
           ...state.activites.notifications,
-          ...this.messages,
+          ...this.notifications,
         ], 'id');
-        newState.activites.notificationsPage =
+        console.log(this.notifications)
+        if(this.notifications.length > 0)
+        {
+          newState.activites.notificationsPage =
           state.activites.notificationsPage + 1;
+        }
+        
     });
   }
 }

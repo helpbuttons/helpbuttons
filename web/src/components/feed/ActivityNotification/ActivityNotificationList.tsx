@@ -2,7 +2,7 @@ import t from 'i18n';
 import ActivityNotificationCard from './ActivityNotificationCard';
 import Btn, { ContentAlignment } from 'elements/Btn';
 import router from 'next/router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useScroll } from 'shared/helpers/scroll.helper';
 import { store } from 'pages';
 import Loading from 'components/loading';
@@ -10,13 +10,16 @@ import { IoChatbox, IoFootsteps } from 'react-icons/io5';
 import { FindMoreNotifications, useActivities } from 'state/Activity';
 
 export function ActivityNotificationList() {
-  const [scrollLoading, setScrollLoading] = useState(false);
-
+  const scrollLoading = useRef(false);
+  
   const loadMore = () => {
-    if (!scrollLoading) {
-      setScrollLoading(() => true);
+    if (!scrollLoading.current) {
+      scrollLoading.current = true;
       store.emit(new FindMoreNotifications((notifications)=> {
-        setScrollLoading(() => false);
+        if(notifications.length > 0)
+        {
+          scrollLoading.current = false;
+        }
       }))
     }
   };
@@ -54,7 +57,6 @@ export function ActivityNotificationList() {
               </div>
             )}
             <div ref={listEndRef}>
-              {scrollLoading && <Loading/>}
             </div>
           </div>
         </div>
