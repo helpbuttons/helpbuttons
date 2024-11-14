@@ -6,7 +6,6 @@ import {
   Activity,
   ActivityDtoOut,
 } from 'shared/entities/activity.entity';
-import { ActivityEventName } from 'shared/types/activity.list';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { of } from 'rxjs';
 import { useGlobalStore, useStore } from 'store/Store';
@@ -17,13 +16,11 @@ import {
   localStorageService,
 } from 'services/LocalStorage';
 import { ActivityMessageDto } from 'shared/dtos/activity.dto';
-import { MessageDto } from 'shared/dtos/post.dto';
-import { alertService } from 'services/Alert';
-import { stat } from 'fs';
 import _ from 'lodash';
 export interface Activities {
   messages: Messages;
-  notifications: Notifications;
+  notifications: ActivityDtoOut[];
+  notificationsPage: number;
   notificationsPermissionGranted: boolean;
 }
 export interface Messages {
@@ -35,14 +32,12 @@ export interface Messages {
 export interface ActivityUnreadMessage extends ActivityMessageDto {
   notified: boolean;
 }
-export interface Notifications {
-  read: ActivityDtoOut[];
-  unread: ActivityDtoOut[];
-}
+
 export const activitiesInitialState: Activities = {
   //@ts-ignore
   messages: { read: [], unread: [], readPage: 0, notified: false },
-  notifications: { read: [], unread: [] },
+  notifications: [],
+  notificationsPage: 0,
   notificationsPermissionGranted: false,
 };
 
@@ -235,6 +230,41 @@ export class ActivityNotificationsMarkAllAsRead
     // return ActivityService.markAllAsRead()
   }
 }
+
+export class FindMoreNotifications implements WatchEvent {
+  public constructor(private onSuccess) {}
+
+  public watch(state: GlobalState) {
+    if (!state.loggedInUser) {
+      return of(undefined);
+    }
+    const page = state.activites.notificationsPage;
+    return ActivityService.notificationsRead(page).pipe(
+      map((notifications: ActivityDtoOut[]) => {
+        this.onSuccess(notifications);
+        store.emit(new FoundNotifications(notifications));
+      }),
+    );
+  }
+}
+
+export class FoundNotifications implements UpdateEvent {
+  public constructor(private messages: ActivityDtoOut[]) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+        newState.activites.notifications = _.uniqBy([
+          ...state.activites.notifications,
+          ...this.messages,
+        ], 'id');
+        newState.activites.notificationsPage =
+          state.activites.notificationsPage + 1;
+    });
+  }
+}
+
+
+
 
 export const unreadActivities = (activities) => {
   return activities.reduce((accumulator, activity) => {

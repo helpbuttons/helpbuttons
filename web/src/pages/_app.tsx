@@ -31,11 +31,16 @@ import MainPopup from 'components/popup/Main/';
 import { useConfig } from 'state/Setup';
 import { UpdateMetadata } from 'state/Metadata';
 import { usePoolFindNewActivities } from 'state/Activity';
+import { useSetButtonFromUrl } from 'components/button/ButtonShow';
 
 export default appWithTranslation(MyApp);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  useEffect(() => {
+    useSetButtonFromUrl();
+  }, [])
+  
   const [authorized, setAuthorized] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
@@ -286,7 +291,7 @@ function MyApp({ Component, pageProps }) {
                 />
               </ClienteSideRendering>
             </ShowMobileOnly>
-            <MainPopup />
+            <MainPopup pageName={pageName} />
           </div>
         </div>
       </>

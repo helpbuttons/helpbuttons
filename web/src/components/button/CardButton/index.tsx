@@ -18,15 +18,15 @@ import {
   makeImageUrl,
   readableDistance,
 } from 'shared/sys.helper';
-import { buttonColorStyle, isEventAndIsExpired } from 'shared/buttonTypes';
+import {
+  buttonColorStyle,
+  isEventAndIsExpired,
+} from 'shared/buttonTypes';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import Link from 'next/link';
-import {
-  GetPhone,
-  UpdateFiltersToFilterTag,
-} from 'state/Explore';
+import { GetPhone, UpdateFiltersToFilterTag } from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { TextFormatted, formatMessage } from 'elements/Message';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
@@ -47,15 +47,22 @@ import { Button } from 'shared/entities/button.entity';
 import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
+import Loading from 'components/loading';
 
-export default function CardButton({ button, buttonTypes}) {
-  const buttonType = buttonTypes.find(
-    (buttonType) => buttonType.name == button.type,
-  );
+export default function CardButton({ button, buttonTypes }) {
+  const [buttonType, setButtonType] = useState(null);
+  useEffect(() => {
+    setButtonType(() =>
+      buttonTypes.find(
+        (buttonType) => buttonType.name == button.type,
+      ),
+    );
+  }, [buttonTypes]);
 
   return (
     <>
-      {button && (
+      {!(button && buttonType) && (<Loading/>)}
+      {(button && buttonType) && (
         <>
           {/* <CardButtonOptions /> */}
 
@@ -68,11 +75,15 @@ export default function CardButton({ button, buttonTypes}) {
               buttonTypes={buttonTypes}
             />
           </div>
-          <ImageGallery images={button?.images.map((image) => {return {src: image, alt: button.description} })} />
+          <ImageGallery
+            images={button?.images.map((image) => {
+              return { src: image, alt: button.description };
+            })}
+          />
 
-          <CardButtonAuthorSection 
-          button={button}
-          buttonTypes={buttonTypes}
+          <CardButtonAuthorSection
+            button={button}
+            buttonTypes={buttonTypes}
           />
         </>
       )}
@@ -97,7 +108,11 @@ export function CardButtonHeadMedium({ button, buttonType }) {
 
         <div className="card-button__info">
           <div className="card-button__status">
-            {buttonType.icon && <div className="card-button__emoji">{buttonType.icon}</div>}
+            {buttonType.icon && (
+              <div className="card-button__emoji">
+                {buttonType.icon}
+              </div>
+            )}
             <span
               className="card-button"
               style={buttonColorStyle(buttonType.cssColor)}
@@ -116,11 +131,11 @@ export function CardButtonHeadMedium({ button, buttonType }) {
       </div>
 
       <div className="card-button-list__title">{button.title}</div>
-      {!button.image && 
+      {!button.image && (
         <div className="card-button-list__paragraph--small-card card-button-list__paragraph">
           <p>{button.description}</p>
         </div>
-      }
+      )}
       {/* <div className="card-button__hashtags">
         {button.tags.map((tag, idx) => {
           return (
@@ -130,13 +145,14 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           );
         })}
       </div> */}
-      <div className='card-button__custom-fields-container'>
-        {buttonType.customFields && buttonType.customFields.length > 0 && (
+      <div className="card-button__custom-fields-container">
+        {buttonType.customFields &&
+          buttonType.customFields.length > 0 && (
             <CardButtonCustomFields
               customFields={buttonType.customFields}
               button={button}
             />
-        )}
+          )}
         <div className="card-button__city card-button__everywhere ">
           {button.address}{' '}
           {button?.distance && (
@@ -236,7 +252,7 @@ function CardButtonSubmenu({ button }) {
       <CardSubmenuOption
         onClick={() => {
           navigator.clipboard.writeText(linkButton);
-          alertService.info(`${linkButton}`)
+          alertService.info(`${linkButton}`);
         }}
         label={t('button.copy')}
       />
@@ -288,16 +304,23 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
           }}
       />
       <ShowPhone button={button} /> */}
-      <ExpiringAlert button={button} isOwner={isButtonOwner(loggedInUser, button)}/>
-      {button.awaitingApproval && 
-        <FixedAlert alertType={AlertType.Info} message={t('moderation.awaitingApproval')}/>
-      }
+      <ExpiringAlert
+        button={button}
+        isOwner={isButtonOwner(loggedInUser, button)}
+      />
+      {button.awaitingApproval && (
+        <FixedAlert
+          alertType={AlertType.Info}
+          message={t('moderation.awaitingApproval')}
+        />
+      )}
       <div className="card-button__content card-button__full-content">
         <div className="card-button__header">
-
           <div className="card-button__info">
             <div className="card-button__status">
-              {icon && <div className="card-button__emoji">{icon}</div>}
+              {icon && (
+                <div className="card-button__emoji">{icon}</div>
+              )}
               <span
                 className="card-button__status"
                 style={buttonColorStyle(cssColor)}
@@ -317,10 +340,10 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
 
         <div className="card-button__paragraph">
-          <TextFormatted text={button.description}/>
+          <TextFormatted text={button.description} />
         </div>
         <div className="card-button__hashtags">
-          <TagsNav tags={button.tags}/>
+          <TagsNav tags={button.tags} />
         </div>
         {customFields && customFields.length > 0 && (
           <>
@@ -357,21 +380,36 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
   );
 }
 
-function ExpiringAlert({button, isOwner = false} : {button: Button, isOwner: boolean}) {
-  if(!isOwner)
-  {
+function ExpiringAlert({
+  button,
+  isOwner = false,
+}: {
+  button: Button;
+  isOwner: boolean;
+}) {
+  if (!isOwner) {
     return;
   }
-  if(!button.expired)
-  {
-     return;
+  if (!button.expired) {
+    return;
   }
-  
-  if(isEventAndIsExpired(button))
-  { 
-    return <FixedAlert alertType={AlertType.Info} message={`${t('button.endDatesExpired')}`}/>
+
+  if (isEventAndIsExpired(button)) {
+    return (
+      <FixedAlert
+        alertType={AlertType.Info}
+        message={`${t('button.endDatesExpired')}`}
+      />
+    );
   }
-  return <FixedAlert alertType={AlertType.Success} message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id}">${t('button.renewLink')}</a>`}/>
+  return (
+    <FixedAlert
+      alertType={AlertType.Success}
+      message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${
+        button.id
+      }">${t('button.renewLink')}</a>`}
+    />
+  );
 }
 function ShowPhone({ button }) {
   const [showPhone, toggleShowPhone] = useState(false);
@@ -410,12 +448,12 @@ function ShowPhone({ button }) {
         <>
           {!showPhone && (
             <Btn
-            btnType={BtnType.filterCorp}
-            contentAlignment={ContentAlignment.center}
-            iconLeft={IconType.circle}
-            iconLink={<IoCallOutline />}
-            onClick={() => onShowPhoneClick()}
-          />
+              btnType={BtnType.filterCorp}
+              contentAlignment={ContentAlignment.center}
+              iconLeft={IconType.circle}
+              iconLink={<IoCallOutline />}
+              onClick={() => onShowPhoneClick()}
+            />
           )}
           {showPhone && (
             <div>
@@ -438,21 +476,24 @@ function ShowPhone({ button }) {
   );
 }
 
-export function CardButtonHeadActions({ button, action, isButtonOwner }) {
-  
+export function CardButtonHeadActions({
+  button,
+  action,
+  isButtonOwner,
+}) {
   return (
     <>
-      {(action  && !isButtonOwner) && 
+      {action && !isButtonOwner && (
         <Btn
-            btnType={BtnType.corporative}
-            contentAlignment={ContentAlignment.center}
-            iconLeft={IconType.circle}
-            iconLink={<IoMailOutline />}
-            submit={true}
-            onClick={action}
+          btnType={BtnType.corporative}
+          contentAlignment={ContentAlignment.center}
+          iconLeft={IconType.circle}
+          iconLink={<IoMailOutline />}
+          submit={true}
+          onClick={action}
         />
-      }
-      {(button.hearts && !isButtonOwner) && (
+      )}
+      {button.hearts && !isButtonOwner && (
         <span className="btn-circle__icon">
           <IoHeartOutline />
           {button.hearts}
@@ -486,39 +527,37 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
     : `/p/${button.owner.username}`;
   return (
     <div className="card-button__author">
-          
-          <div className="card-button__info">
-          <div className="card-button__author-title">{t('button.authorTitle')}</div>
-            <Link href={profileHref}>
-              <div className="card-button__name">
-                
-                  {button.owner.name}{' '}
-                  <span className="card-button__username">
-                    {' '}
-                    {/* @{button.owner.username} */}
-                  </span>
-
-              </div>
-              <div className="card-button__author-description">
-                {button.owner.description}
-              </div>
-            </Link>
+      <div className="card-button__info">
+        <div className="card-button__author-title">
+          {t('button.authorTitle')}
+        </div>
+        <Link href={profileHref}>
+          <div className="card-button__name">
+            {button.owner.name}{' '}
+            <span className="card-button__username">
+              {' '}
+              {/* @{button.owner.username} */}
+            </span>
           </div>
-          <div className="card-button__avatar">
-            <div className="avatar-big">
-              <Link href={profileHref}>
-                <ImageWrapper
-                  imageType={ImageType.avatarBig}
-                  src={button.owner.avatar}
-                  alt="Avatar"
-                />
-              </Link>
-            </div>
+          <div className="card-button__author-description">
+            {button.owner.description}
           </div>
+        </Link>
       </div>
+      <div className="card-button__avatar">
+        <div className="avatar-big">
+          <Link href={profileHref}>
+            <ImageWrapper
+              imageType={ImageType.avatarBig}
+              src={button.owner.avatar}
+              alt="Avatar"
+            />
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
-
 
 export function CardButtonOptions() {
   return (
@@ -527,7 +566,6 @@ export function CardButtonOptions() {
         <div className="card-button__edit-icon card-button__submenu">
           <IoEllipsisHorizontalSharp />
         </div>
-
       </div>
 
       <div className="card-button__dropdown-container">

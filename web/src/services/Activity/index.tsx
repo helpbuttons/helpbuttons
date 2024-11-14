@@ -8,11 +8,6 @@ const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
 export class ActivityService {
 
-
-  public static find(): Observable<ActivityDtoOut[]> {
-    return httpService.get<any>("activity/find");
-  }
-
   public static markAsRead(activityId): Observable<Activity[]> {
     return httpService.post<any>("activity/markAsRead/" + activityId);
   }
@@ -27,13 +22,7 @@ export class ActivityService {
     return httpService.get<any>(`activity/messages/read/${page ? page : 0}`);
   }
 
-  public static notificationsUnread(): Observable<ActivityDtoOut[]> {
-    return httpService.get<any>("activity/notifications/unread");
-  }
-  public static notificationsRead(): Observable<ActivityDtoOut[]> {
-    return httpService.get<any>("activity/notifications/read");
-  }
-  public static notificationsMarkAllAsRead(): Observable<Activity[]> {
-    return httpService.post<any>("activity/notifications/markAllAsRead");
+  public static notificationsRead(page): Observable<ActivityDtoOut[]> {
+    return httpService.get<any>(`activity/notifications/${page}`);
   }
 }

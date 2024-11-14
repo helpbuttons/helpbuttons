@@ -18,6 +18,7 @@ import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import { ButtonTemplate } from 'shared/dtos/button.dto';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { ActivityMarkAsRead } from 'state/Activity';
+import { FindButton, updateCurrentButton } from 'state/Explore';
 
 export function ActivityMessageCard({
   message,
@@ -26,7 +27,7 @@ export function ActivityMessageCard({
 }) {
   const buttonTypes = useButtonTypes();
   const [buttonType, setButtonType] = useState<ButtonTemplate>(null);
-  const button = message?.button ? message.button: null;
+  const button = message?.button ? message.button : null;
   useEffect(() => {
     if (buttonTypes && button?.type) {
       setButtonType(() =>
@@ -34,35 +35,46 @@ export function ActivityMessageCard({
           (buttonTemplate) => buttonTemplate.name == button.type,
         ),
       );
-    }else{
-      // console.log(`error: buttonTypes = ${JSON.stringify(buttonTypes)}; button = ${JSON.stringify(button)}; message = ${JSON.stringify(message)} `)
-    }
+    } 
   }, [buttonTypes, button]);
-  const [markingAsRead, setMarkingAsRead] = useState(false)
+  const [markingAsRead, setMarkingAsRead] = useState(false);
 
   const jumpToButtonMessage = (messageId, read) => {
-  
-    if(!read)
-    { 
-      setMarkingAsRead(() => true)
-      store.emit(new ActivityMarkAsRead(messageId, () => {
-        setMarkingAsRead(() => false)
-        alertService.info(t('feed.markedAsRead'))
-        router.push('/ButtonFile/' + message?.button.id.toString())
-      }))
-    }else{
-      router.push('/ButtonFile/' + message?.button.id.toString())
+    if (!read) {
+      setMarkingAsRead(() => true);
+      store.emit(
+        new ActivityMarkAsRead(messageId, () => {
+          setMarkingAsRead(() => false);
+          alertService.info(t('feed.markedAsRead'));
+          const buttonId = message.button.id;
+          store.emit(
+            new FindButton(buttonId, (button) => {
+              store.emit(new updateCurrentButton(button));
+            }),
+          );
+          // router.push('/ButtonFile/' + message?.button.id.toString())
+        }),
+      );
+    } else {
+      const buttonId = message.button.id;
+      store.emit(
+        new FindButton(buttonId, (button) => {
+          store.emit(new updateCurrentButton(button));
+        }),
+      );
     }
-  }
-  
+  };
+
   return (
     <>
-      {markingAsRead && <Loading/>}
+      {/* {markingAsRead && <Loading />} */}
 
       {message?.button && (
         <Link
           href="#"
-          onClick={() => jumpToButtonMessage(message.id, message.read)}
+          onClick={() =>
+            jumpToButtonMessage(message.id, message.read)
+          }
           className="card-notification card-notification"
         >
           <div
@@ -85,13 +97,13 @@ export function ActivityMessageCard({
                   src={message.image}
                   alt="image"
                 />
-                {message.button.image && 
+                {message.button.image && (
                   <ImageWrapper
                     imageType={ImageType.avatarMed}
                     src={message.button.image}
                     alt="image"
                   />
-                } 
+                )}
               </div>
             </div>
             <div className="card-notification__text">
@@ -100,10 +112,14 @@ export function ActivityMessageCard({
                   {t('feed.from')}: {message.authorName}
                   &nbsp;
                   {message.privacy == PrivacyType.PRIVATE && (
-                    <span style={{ color: 'red' }}>{t('feed.privateBadge')}</span>
+                    <span style={{ color: 'red' }}>
+                      {t('feed.privateBadge')}
+                    </span>
                   )}
                   {message.privacy != PrivacyType.PRIVATE && (
-                    <span style={{ color: 'blue' }}>{t('feed.publicBadge')}</span>
+                    <span style={{ color: 'blue' }}>
+                      {t('feed.publicBadge')}
+                    </span>
                   )}
                   {/* <h2 className="card-notification__name">{title}</h2>  */}
                 </div>
@@ -114,14 +130,21 @@ export function ActivityMessageCard({
                 </div>
               </div>
               <div className="card-notification__paragraph">
-                <TextFormatted text={message.message} maxChars={100} />
+                <TextFormatted
+                  text={message.message}
+                  maxChars={100}
+                />
                 {/* {message && formatMessage(m)} */}
               </div>
             </div>
           </div>
         </Link>
       )}
-      {!message?.button && <ErrorLink errorMessage={`Error message has an error, please contact the administrator of your network with this message, including this ${message.id} which identifies your message. Thank you`}/>}
+      {!message?.button && (
+        <ErrorLink
+          errorMessage={`Error message has an error, please contact the administrator of your network with this message, including this ${message.id} which identifies your message. Thank you`}
+        />
+      )}
     </>
   );
 }

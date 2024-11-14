@@ -8,12 +8,18 @@ import LoginClick from "../../../pages/LoginClick";
 import t from "i18n";
 import { ShareForm } from "components/share";
 import { FaqSections } from "pages/Faqs";
+import { ButtonShow } from "components/button/ButtonShow";
+import { updateCurrentButton } from "state/Explore";
+import router from "next/router";
 
-export default function MainPopup() {
+export default function MainPopup({pageName}) {
     const closePopup = () =>
       store.emit(new SetMainPopup(MainPopupPage.HIDE));
     const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage) 
-  
+    const currentButton = useGlobalStore(
+      (state: GlobalState) => state.explore.currentButton,
+    );
+    
     return (
       <>
         {popupPage == MainPopupPage.LOGIN && (
@@ -48,6 +54,15 @@ export default function MainPopup() {
             closeAction={closePopup}
           >
             <FaqSections/>
+          </Picker>
+        )}
+         {(currentButton && pageName != 'Explore') && (
+          <Picker
+            headerText={currentButton.title}
+            closeAction={() => {store.emit(new updateCurrentButton(null)); router.back()}}
+          >
+            {pageName}
+            <ButtonShow/>
           </Picker>
         )}
       </>

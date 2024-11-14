@@ -168,8 +168,8 @@ export class SaveButtonDraft implements UpdateEvent {
 export class FindButton implements WatchEvent {
   public constructor(
     private buttonId: string,
-    private onSuccess,
-    private onError,
+    private onSuccess = (button) => {},
+    private onError = () => {},
   ) {}
 
   public watch(state: GlobalState) {

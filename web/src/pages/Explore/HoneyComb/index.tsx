@@ -42,9 +42,7 @@ import AdvancedFilters, {
 import { getDistance, isPointWithinRadius } from 'geolib';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
-import {
-  uniqueArray,
-} from 'shared/sys.helper';
+import { uniqueArray } from 'shared/sys.helper';
 import {
   orderByEventDate,
   orderByPrice,
@@ -118,10 +116,7 @@ function HoneyComb({ selectedNetwork }) {
                 }}
               >
                 {selectedNetwork.buttonTemplates?.length > 0 && (
-                  <ButtonShow
-                    currentButton={currentButton}
-                    buttonTypes={selectedNetwork.buttonTemplates}
-                  />
+                  <ButtonShow/>
                 )}
               </PopupButtonFile>
             )}
@@ -153,19 +148,13 @@ function HoneyComb({ selectedNetwork }) {
           >
             <NavHeader selectedNetwork={selectedNetwork} />
             <AdvancedFilters />
-
             {currentButton && (
               <PopupButtonFile
                 linkBack={() => {
                   store.emit(new updateCurrentButton(null));
                 }}
               >
-                {selectedNetwork.buttonTemplates?.length > 0 && (
-                  <ButtonShow
-                    currentButton={currentButton}
-                    buttonTypes={selectedNetwork.buttonTemplates}
-                  />
-                )}
+                <ButtonShow />
               </PopupButtonFile>
             )}
           </div>
@@ -179,9 +168,13 @@ function HoneyComb({ selectedNetwork }) {
             className={
               'index__content-bottom ' +
               (showMap ? '' : 'index__content-bottom') +
-              (isListOpen ? ' index__content-bottom--mid-screen' : '') +
+              (isListOpen
+                ? ' index__content-bottom--mid-screen'
+                : '') +
               (showLeftColumn ? '' : ' index__content-bottom--hide') +
-              (currentButton ? ' index__content-bottom--noscroll' : '')
+              (currentButton
+                ? ' index__content-bottom--noscroll'
+                : '')
             }
           >
             <List
@@ -219,12 +212,11 @@ function useExploreSettings({
   const handleUrl = () => {
     const params = new URLSearchParams(window.location.search);
 
-
-    let [zoom, lat, lng] = [null, null, null]
+    let [zoom, lat, lng] = [null, null, null];
     try {
       [zoom, lat, lng] = Array.from(router.query.params);
     } catch (err) {
-      store.emit( new RecenterExplore());
+      store.emit(new RecenterExplore());
     }
     const btnId = params.get('btn');
     const hex = params.get('hex');
@@ -234,7 +226,10 @@ function useExploreSettings({
       newFilters = { ...newFilters, query: params.get('q') };
     }
     if (params.has('tags')) {
-      newFilters = { ...newFilters, tags: params.get('tags').split(',')};
+      newFilters = {
+        ...newFilters,
+        tags: params.get('tags').split(','),
+      };
     }
     if (params.has('orderBy')) {
       newFilters = { ...newFilters, orderBy: params.get('orderBy') };
@@ -272,7 +267,6 @@ function useExploreSettings({
     if (newFilters) {
       store.emit(new UpdateFilters({ ...filters, ...newFilters }));
     }
-
     if (btnId) {
       store.emit(
         new FindButton(
@@ -281,7 +275,7 @@ function useExploreSettings({
             store.emit(new updateCurrentButton(buttonFetched));
           },
           (errorMessage) => {
-            console.log(errorMessage)
+            console.log(errorMessage);
             alertService.error(`Error fetching button`);
           },
         ),
@@ -292,17 +286,19 @@ function useExploreSettings({
         center: [lat, lng],
       };
       if (Number(zoom) > 0 && Number(zoom) < maxZoom) {
-        newUpdateSettings = { ...newUpdateSettings, zoom: Number(zoom) };
+        newUpdateSettings = {
+          ...newUpdateSettings,
+          zoom: Number(zoom),
+        };
       }
 
       newUpdateSettings = { ...newUpdateSettings, urlUpdated: true };
       store.emit(new UpdateExploreSettings(newUpdateSettings));
     }
-    
   };
   useEffect(() => {
     if (selectedNetwork && exploreSettings) {
-      handleUrl()
+      handleUrl();
     }
   }, [selectedNetwork]);
 
@@ -462,7 +458,7 @@ function useHexagonMap({
     const { filteredButtons, filteredHexagons } = applyFiltersHex(
       filters,
       boundsButtons,
-      buttonTypes
+      buttonTypes,
     );
 
     const orderedFilteredButtons = orderBy(
@@ -483,7 +479,6 @@ function useHexagonMap({
   useEffect(() => {
     updateDensityMap();
   }, [filters]);
-
 
   const handleBoundsChange = (bounds, center: Point, zoom) => {
     if (bounds) {

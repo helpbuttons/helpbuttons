@@ -1,10 +1,9 @@
 import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import { ActivityMessageCard } from './ActivityMessageCard';
 import t from 'i18n';
-import { IoChatbox, IoChatbubbleOutline } from 'react-icons/io5';
-import { useEffect, useRef, useState } from 'react';
+import { IoChatbox, IoChatbubbleOutline, IoChatbubbles } from 'react-icons/io5';
+import { useEffect, useRef } from 'react';
 import {
-  ActivityMessagesMarkAllAsRead,
   FindMoreReadMessages,
   FindNewMessages,
   useActivities,
@@ -12,45 +11,11 @@ import {
 import { store } from 'pages';
 import Btn from 'elements/Btn';
 import Loading from 'components/loading';
-import { alertService } from 'services/Alert';
-
-export function useScroll(onLoadMore) {
-  const [isVisible, setIsVisible] = useState(false);
-  const callbackFunction = (entries) => {
-    const [entry] = entries;
-    setIsVisible(() => entry.isIntersecting);
-
-    if (isVisible) {
-      onLoadMore();
-    }
-  };
-  const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 1.0,
-  };
-
-  const listEndRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      callbackFunction,
-      options,
-    );
-    if (listEndRef.current) observer.observe(listEndRef.current);
-
-    return () => {
-      if (listEndRef.current) observer.unobserve(listEndRef.current);
-    };
-  }, [listEndRef, options]);
-
-  return { listEndRef };
-}
+import { useScroll } from 'shared/helpers/scroll.helper';
 
 export function ActivityMessageList() {
   const { messages } = useActivities();
   const init = useRef(false);
-  const scrollLoading = useRef(false);
   useEffect(() => {
     if (!init.current) {
       init.current = true;
@@ -58,6 +23,7 @@ export function ActivityMessageList() {
     }
   }, []);
 
+  const scrollLoading = useRef(false);
   const { listEndRef } = useScroll(
     () => {
       if (!scrollLoading.current) {
@@ -77,13 +43,12 @@ export function ActivityMessageList() {
 
   return (
     <>
-    {/* {JSON.stringify(messages)} */}
       {!(messages || messages.read || messages.unread) && <Loading />}
       {messages && messages.read && messages.unread && (
         <div className="feed__container">
           <div className="feed-section--activity">
             <div className="feed-section__title">
-              <IoChatbox />
+              <IoChatbubbles />
               {t('feed.unreadMessages')}
             </div>
             {(messages.unread.length > 0 && false)&&
@@ -101,7 +66,6 @@ export function ActivityMessageList() {
                     return (
                       <div className="feed-element" key={key}>
                         <ActivityMessageCard message={message} />
-                        <hr />
                       </div>
                     );
                   },
@@ -115,7 +79,7 @@ export function ActivityMessageList() {
               )}
               <hr />
               <div className="feed-section__title">
-                <IoChatbubbleOutline />
+                <IoChatbubbles />
                 <h2>{t('feed.readMessages')}</h2>
               </div>
               {messages.read && (
@@ -125,14 +89,10 @@ export function ActivityMessageList() {
                       return (
                         <div className="feed-element" key={key}>
                           <ActivityMessageCard message={message} />
-                          <hr />
                         </div>
                       );
                     },
                   )}
-                  <div ref={listEndRef}>
-                    {scrollLoading.current && <Loading/>}
-                  </div>
                 </>
               )}
 
@@ -143,6 +103,9 @@ export function ActivityMessageList() {
                   </div>
                 </div>
               )}
+              <div ref={listEndRef}>
+                {scrollLoading.current && <Loading/>}
+              </div>
               <br />
               <br />
               <br />
