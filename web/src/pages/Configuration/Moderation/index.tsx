@@ -39,9 +39,6 @@ export default function Moderation() {
             <p className="form__explain">
               {t('moderation.description')}
             </p>
-            <p>
-              <b>{t('moderation.title')}</b>
-            </p>
           </div>
 
           <Accordion title={t('moderation.usersList')}>

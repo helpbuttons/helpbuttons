@@ -160,9 +160,12 @@ $card-notification-delete-size: 100px;
 
 .card-notification__date {
   // flex: 0 1 50%;
+  display: flex;
   color: $color-gray;
   text-align: right;
   font-size: $font-size-xsmall;
+  align-items: center;
+
 }
 
 .card-notification__date--nflex {

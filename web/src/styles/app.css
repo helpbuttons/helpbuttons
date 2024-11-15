@@ -6096,9 +6096,11 @@ hr {
 }
 
 .card-notification__date {
+  display: flex;
   color: #828282;
   text-align: right;
   font-size: 10px;
+  align-items: center;
 }
 
 .card-notification__date--nflex {

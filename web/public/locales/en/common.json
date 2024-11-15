@@ -96,7 +96,9 @@
     "displayInstructions": "Press an hexagon to display _helpbuttons_ info in that area",
     "both": "Map & List",
     "list": "List",
-    "map": "Map"
+    "map": "Map",
+    "hiddenButtons": "For privacy, there're some hidden _helpbuttons_."
+
   },
   "buttonFilters": {
     "filters": "Search filters",
