@@ -20,7 +20,7 @@ const isSupported = () =>
 export function DesktopNotificationsButton() {
   const hasNotificationPermissions = useGlobalStore(
     (state: GlobalState) =>
-      state.activites.notificationsPermissionGranted,
+      state.activities.notificationsPermissionGranted,
   );
 
   useEffect(() => {
