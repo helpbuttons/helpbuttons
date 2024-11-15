@@ -2,7 +2,7 @@ import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import { ActivityMessageCard } from './ActivityMessageCard';
 import t from 'i18n';
 import { IoChatbox, IoChatbubbleOutline, IoChatbubbles } from 'react-icons/io5';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   FindMoreReadMessages,
   FindNewMessages,
@@ -23,16 +23,19 @@ export function ActivityMessageList() {
     }
   }, []);
 
+  const [isLoading, setIsLoading] = useState(false)
   const scrollLoading = useRef(false);
   const { listEndRef } = useScroll(
     () => {
       if (!scrollLoading.current) {
         scrollLoading.current = true;
+        setIsLoading(() => true)
         store.emit(new FindMoreReadMessages((messages)=> {
           if(messages.length > 0)
           {
             scrollLoading.current = false;
           }
+          setIsLoading(() => false)
         }))
       }
     },    
@@ -105,7 +108,7 @@ export function ActivityMessageList() {
                 </div>
               )}
               <div ref={listEndRef}>
-                {scrollLoading.current && <Loading/>}
+                {isLoading && <Loading/>}
               </div>
               <br />
               <br />
