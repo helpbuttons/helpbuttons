@@ -148,3 +148,25 @@ export function readableDistance(distanceInMeters){
   }
   return  `${(distanceInMeters/1000).toFixed(2)} km`
 }
+
+
+export function nextElement(currentId, elements) {
+  const index = elements.findIndex(element => element.id === currentId);
+  
+  if (index !== -1 && index < elements.length - 1) {
+      return elements[index + 1];
+  }
+
+  return null;
+}
+
+
+export function previousElement(currentId, elements) {
+  const index = elements.findIndex(element => element.id === currentId);
+  
+  if ( index - 1 >= 0 ) {
+      return elements[index - 1];
+  }
+
+  return null;
+}

@@ -8,7 +8,7 @@ import { setMetadata } from 'services/ServerProps';
 import { useMetadataTitle } from 'state/Metadata';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { LinkAdmin } from 'components/user/LinkAdmin';
+import { LinkAdmins } from 'components/user/LinkAdmins';
 import { useGlobalStore } from 'store/Store';
 import { GlobalState } from 'pages';
 
@@ -48,15 +48,7 @@ function ErrorPopup({ errorCustomRaw = null }) {
       <div className="homeinfo__description">
         {t('homeinfo.adminInstructions')}
         <div className="homeinfo__users">
-          {selectedNetwork &&
-            selectedNetwork.administrators &&
-            selectedNetwork.administrators.map(
-              (user, idx) => {
-                return (
-                  <LinkAdmin user={user} key={idx} />
-                );
-              },
-            )}
+          <LinkAdmins/>
         </div>
       </div>
     </Popup>

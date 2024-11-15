@@ -6,23 +6,33 @@ import { GlobalState, store } from 'pages';
 import { useButtonTypes } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 import { useEffect } from 'react';
-import { FindButton, updateCurrentButton } from 'state/Explore';
+import { FindButton, NextCurrentButton, PreviousCurrentButton, updateCurrentButton } from 'state/Explore';
+import { useSwipeable } from 'react-swipeable';
+
 
 export function ButtonShow() {
   const currentButton = useGlobalStore(
     (state: GlobalState) => state.explore.currentButton,
   );
-  useEffect(() => {
-    // const url = new URL(window.location.href);
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => {
+      if(eventData.dir == "Left")
+      {
+        store.emit(new NextCurrentButton())
+      }
+      if(eventData.dir == "Right")
+      {
+        store.emit(new PreviousCurrentButton())
+      }
+    }
+  });
 
-    // const params = new URLSearchParams(url.search);
-    // params.set('btn', currentButton.id);
-    // url.search = params.toString();
+  useEffect(() => {
     window.history.replaceState(null, '', `/Explore?btn=${currentButton.id}`);
   }, [currentButton]);
   const buttonTypes = useButtonTypes();
   return (
-    <>
+     <div {...handlers}> 
       {currentButton && buttonTypes && (
         <>
           <CardButton
@@ -33,7 +43,7 @@ export function ButtonShow() {
         </>
       )}
       {!(currentButton && buttonTypes) && <Loading />}
-    </>
+      </div>
   );
 }
 

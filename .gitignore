@@ -38,6 +38,7 @@ yarn-error.log*
 # compiled output
 /dist
 /node_modules
+/android
 
 # Logs
 logs

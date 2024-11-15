@@ -13,7 +13,7 @@ import { useGlobalStore } from 'store/Store';
 import { alertService } from 'services/Alert';
 import router from 'next/router';
 
-export function LinkAdmin({ user }) {
+export function LinkAdmins() {
   const selectedNetwork = useGlobalStore(
     (state: GlobalState) => state.networks.selectedNetwork,
   );
@@ -22,23 +22,27 @@ export function LinkAdmin({ user }) {
     //   alertService.info('Message sent to the admins of the network')
     //   router.push('/HomeInfo')
     // }))
-  }
-  const extra = <ShowPhone user={user} />;
+  };
+
   return (
     <>
       {selectedNetwork &&
         selectedNetwork.administrators &&
         selectedNetwork.administrators.map((user, idx) => {
-          return (
-            <LinkProfile
-              key={user.id}
-              username={user.username}
-              avatar={user.avatar}
-              name={user.name}
-              extra={extra}
-              // onClick=(sendMessage)
-            ></LinkProfile>
-          );
+          if (user) {
+            const extra = <ShowPhone user={user} />;
+            return (
+              <LinkProfile
+                key={user.id}
+                username={user.username}
+                avatar={user.avatar}
+                name={user.name}
+                extra={extra}
+                // onClick=(sendMessage)
+              ></LinkProfile>
+            );
+          }
+          return <></>;
         })}
     </>
   );
