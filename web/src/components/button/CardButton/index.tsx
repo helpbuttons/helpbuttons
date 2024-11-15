@@ -26,7 +26,11 @@ import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import Link from 'next/link';
-import { GetPhone, updateCurrentButton } from 'state/Explore';
+import {
+  GetPhone,
+  setActivityCurrentButton,
+  updateCurrentButton,
+} from 'state/Explore';
 import { isAdmin } from 'state/Users';
 import { TextFormatted, formatMessage } from 'elements/Message';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
@@ -61,19 +65,29 @@ export default function CardButton({ button, buttonTypes }) {
 
   return (
     <>
-      {!(button && buttonType) && (<Loading/>)}
-      {(button && buttonType) && (
+      {!(button && buttonType) && <Loading />}
+      {button && buttonType && (
         <>
           {/* <CardButtonOptions /> */}
-
           <div
             className="card-button card-button__file"
             style={buttonColorStyle(buttonType.cssColor)}
           >
+            
+            <div>
+            {/* <Btn
+              onClick={() => store.emit(new NextCurrentButton())}
+              caption="next"
+            ></Btn>
+            <Btn
+              onClick={() => store.emit(new PreviousCurrentButton())}
+              caption="previous"
+            ></Btn> */}
             <CardButtonHeadBig
               button={button}
               buttonTypes={buttonTypes}
             />
+            </div>
           </div>
           <ImageGallery
             images={button?.images.map((image) => {
@@ -525,7 +539,10 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   const profileHref = isButtonOwner(loggedInUser, button)
     ? `/Profile/`
     : `/p/${button.owner.username}`;
-  const closeButton = () => store.emit(new updateCurrentButton(null));
+  const closeButton = () => {
+    store.emit(new setActivityCurrentButton(null))
+    store.emit(new updateCurrentButton(null))
+  };
   return (
     <div className="card-button__author">
       <div className="card-button__info">

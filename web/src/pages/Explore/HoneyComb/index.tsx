@@ -116,7 +116,7 @@ function HoneyComb({ selectedNetwork }) {
                 }}
               >
                 {selectedNetwork.buttonTemplates?.length > 0 && (
-                  <ButtonShow/>
+                  <ButtonShow button={currentButton}/>
                 )}
               </PopupButtonFile>
             )}
@@ -154,7 +154,7 @@ function HoneyComb({ selectedNetwork }) {
                   store.emit(new updateCurrentButton(null));
                 }}
               >
-                <ButtonShow />
+                <ButtonShow button={currentButton}/>
               </PopupButtonFile>
             )}
           </div>

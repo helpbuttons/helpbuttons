@@ -338,7 +338,7 @@ export default function HexagonExploreMap({
             </Overlay>
             {exploreSettings.loading && (
               <Overlay anchor={centerBounds}>
-                <Loading /> loading
+                <Loading />
               </Overlay>
             )}
           </HbMap>

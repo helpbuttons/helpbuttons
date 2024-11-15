@@ -6096,9 +6096,11 @@ hr {
 }
 
 .card-notification__date {
+  display: flex;
   color: #828282;
   text-align: right;
   font-size: 10px;
+  align-items: center;
 }
 
 .card-notification__date--nflex {
@@ -6136,9 +6138,10 @@ hr {
 }
 
 .card-notification__comment-count {
-  margin-right: 20px;
-  padding: 10px;
+  padding: 5px 15px;
+  padding-bottom: 0;
   cursor: pointer;
+  position: relative;
   border-top: 1px solid var(--button-color);
   display: flex;
   justify-content: space-between;
@@ -6221,10 +6224,13 @@ hr {
 .card-notification__name {
   color: #2E2E2E;
   font-weight: 600;
-  display: inline;
   font-size: 14px;
   color: #8da0a0;
   font-weight: 500;
+  display: flex;
+  color: #8da0a0;
+  line-height: 15px;
+  padding-bottom: 5px;
 }
 
 .card-notification__paragraph {

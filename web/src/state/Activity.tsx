@@ -48,7 +48,7 @@ export class PermissionGranted implements UpdateEvent {
         LocalStorageVars.HAS_PERMISSION_NOTIFICATIONS,
         true,
       );
-      newState.activites.notificationsPermissionGranted = true;
+      newState.activities.notificationsPermissionGranted = true;
     });
   }
 }
@@ -58,7 +58,7 @@ export class PermissionRevoke implements UpdateEvent {
       localStorageService.remove(
         LocalStorageVars.HAS_PERMISSION_NOTIFICATIONS,
       );
-      newState.activites.notificationsPermissionGranted = false;
+      newState.activities.notificationsPermissionGranted = false;
     });
   }
 }
@@ -83,60 +83,23 @@ export class FoundMessagesUnread implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      // let _newMessages: ActivityUnreadMessage[];
-      // _newMessages = this.newMessages.map((_msg) => {
-      //   const notified = state.activites.messages.unread.find(
-      //             (_mssg) => _mssg.id != _msg.id,
-      //           )?.notified;
-      //     // console.log(notified)
-      //   return {..._msg, notified: false}
-      // })
-      //  = this.newMessages;
-      // if (state.activites.messages?.unread?.length > 0) {
-      //   const _znewMessages = this.newMessages.filter((_msg) =>).map((_message) => {
-      //     return {
-      //       ..._message,
-      //       notified: state.activites.messages.unread.find(
-      //         (_msg) => _msg.id != _message.id,
-      //       )?.notified,
-      //     };
-      //   });
-      //   console.log(this.newMessages)
-      //   console.log(_znewMessages)
-      // }
+      const newNotifications = _.difference(this.newMessages, state.activities.messages.unread)
+      newNotifications.forEach((notification) => 
+      {
+        store.emit(new QueueNewNotification())
+      })
+      newState.activities.messages.unread = this.newMessages.map((message) => {return {...message, notified: true}});
+      
+    });
+  }
+}
 
-      newState.activites.messages.unread = this.newMessages.map((message) => {return {...message, notified: true}});
-      // newState.activites.messages.unread = _.uniqBy([..._newMessages, ...state.activites.messages.unread], 'id')
-      // const message = state.activites.messages.unread.find(
-      //   (message: ActivityMessageDto) => message.id == this.messageId,
-      // );
-      // const _newMessages = this.newMessages.map((_message) => {
-      //   return {
-      //     ..._message,
-      //     notified: false
-      //   }
-      // })
-      // newState.activites.messages.read = [
-      //   ...state.activites.messages.read,
-      //   message,
-      // ];
-      // if (
-      //   !(
-      //     JSON.stringify(state.activites.messages.unread) ==
-      //     JSON.stringify(this.newMessages)
-      //   )
-      // ) {
-      // newState.activites.messages.unread = this.newMessages
-      //   .filter(
-      //     (message) =>
-      //       !state.activites.messages.unread.find(
-      //         (_message) => message.id == _message.id,
-      //       ),
-      //   )
-      //   .map((message) => {
-      //     return { ...{ notified: false }, ...message };
-      //   });
-      // }
+export class QueueNewNotification implements UpdateEvent{
+  public constructor(private notification: PushNotification) {}
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+        newState.newNotification = this.notification;
     });
   }
 }
@@ -148,7 +111,7 @@ export class FindMoreReadMessages implements WatchEvent {
     if (!state.loggedInUser) {
       return of(undefined);
     }
-    const page = state.activites.messages.readPage;
+    const page = state.activities.messages.readPage;
     return ActivityService.messagesRead(page).pipe(
       map((messages: ActivityMessageDto[]) => {
         this.onSuccess(messages);
@@ -163,15 +126,15 @@ export class FoundMessagesRead implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-        newState.activites.messages.read = _.uniqBy([
-          ...state.activites.messages.read,
+        newState.activities.messages.read = _.uniqBy([
+          ...state.activities.messages.read,
           ...this.messages,
         ], 'id');
 
         if(this.messages.length > 0)
         {
-          newState.activites.messages.readPage =
-          state.activites.messages.readPage + 1;
+          newState.activities.messages.readPage =
+          state.activities.messages.readPage + 1;
         }
         
     });
@@ -182,17 +145,17 @@ export class ActivityMarkAsRead implements WatchEvent, UpdateEvent {
   public constructor(private messageId: string, private onSucess) {}
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.activites.messages.unread =
-        state.activites.messages.unread.filter(
+      newState.activities.messages.unread =
+        state.activities.messages.unread.filter(
           (message: ActivityMessageDto) =>
             message.id != this.messageId,
         );
 
-      const message = state.activites.messages.unread.find(
+      const message = state.activities.messages.unread.find(
         (message: ActivityMessageDto) => message.id == this.messageId,
       );
-      newState.activites.messages.read = [
-        ...state.activites.messages.read,
+      newState.activities.messages.read = [
+        ...state.activities.messages.read,
         message,
       ];
     });
@@ -209,11 +172,11 @@ export class ActivityMessagesMarkAllAsRead
   public constructor() {}
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.activites.messages.read = [
-        ...state.activites.messages.unread.map((message) => {
+      newState.activities.messages.read = [
+        ...state.activities.messages.unread.map((message) => {
           return { ...message, unread: false };
         }),
-        ...state.activites.messages.read,
+        ...state.activities.messages.read,
       ];
     });
   }
@@ -243,7 +206,7 @@ export class FindMoreNotifications implements WatchEvent {
     if (!state.loggedInUser) {
       return of(undefined);
     }
-    const page = state.activites.notificationsPage;
+    const page = state.activities.notificationsPage;
     console.log('callliiing ')
     return ActivityService.notificationsRead(page).pipe(
       map((notifications: ActivityDtoOut[]) => {
@@ -259,15 +222,15 @@ export class FoundNotifications implements UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-        newState.activites.notifications = _.uniqBy([
-          ...state.activites.notifications,
+        newState.activities.notifications = _.uniqBy([
+          ...state.activities.notifications,
           ...this.notifications,
         ], 'id');
         console.log(this.notifications)
         if(this.notifications.length > 0)
         {
-          newState.activites.notificationsPage =
-          state.activites.notificationsPage + 1;
+          newState.activities.notificationsPage =
+          state.activities.notificationsPage + 1;
         }
         
     });
@@ -290,14 +253,10 @@ export class ActivityNotified implements UpdateEvent {
   public constructor(private messageId: string) {}
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      const message = state.activites.messages.unread.find(
+      const message = state.activities.messages.unread.find(
         (message: ActivityMessageDto) => message.id == this.messageId,
       );
-      newState.activites.messages.read = _.uniqBy([...state.activites.messages.read,{...message, notified: true}], 'id')
-      // newState.activites.messages.read = [
-      //   ...state.activites.messages.read,
-      //   message,
-      // ];
+      newState.activities.messages.read = _.uniqBy([...state.activities.messages.read,{...message, notified: true}], 'id')
     });
   }
 }
@@ -313,10 +272,10 @@ export const activityTo = (activity: Activity) => {
 
 export const useActivities = () => {
   const messages = useGlobalStore(
-    (state: GlobalState) => state.activites.messages,
+    (state: GlobalState) => state.activities.messages,
   );
   const notifications = useGlobalStore(
-    (state: GlobalState) => state.activites.notifications,
+    (state: GlobalState) => state.activities.notifications,
   );
 
   return { messages, notifications };
@@ -324,7 +283,7 @@ export const useActivities = () => {
 
 export const usePoolFindNewActivities = ({ timeMs }) => {
   const messagesUnread = useGlobalStore(
-    (state: GlobalState) => state.activites.messages.unread,
+    (state: GlobalState) => state.activities.messages.unread,
   );
 
   useEffect(() => {

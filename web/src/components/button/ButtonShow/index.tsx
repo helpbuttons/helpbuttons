@@ -6,34 +6,45 @@ import { GlobalState, store } from 'pages';
 import { useButtonTypes } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 import { useEffect } from 'react';
-import { FindButton, updateCurrentButton } from 'state/Explore';
+import { FindButton, NextCurrentButton, PreviousCurrentButton, updateCurrentButton } from 'state/Explore';
+import { useSwipeable } from 'react-swipeable';
 
-export function ButtonShow() {
-  const currentButton = useGlobalStore(
-    (state: GlobalState) => state.explore.currentButton,
-  );
+
+export function ButtonShow({button}) {
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => {
+      if(eventData.dir == "Left")
+      {
+        store.emit(new NextCurrentButton())
+      }
+      if(eventData.dir == "Right")
+      {
+        store.emit(new PreviousCurrentButton())
+      }
+    }
+  });
+
   useEffect(() => {
-    // const url = new URL(window.location.href);
-
-    // const params = new URLSearchParams(url.search);
-    // params.set('btn', currentButton.id);
-    // url.search = params.toString();
-    window.history.replaceState(null, '', `/Explore?btn=${currentButton.id}`);
-  }, [currentButton]);
+    if(button)
+    {
+      window.history.replaceState(null, '', `/Explore?btn=${button.id}`);
+    }
+    
+  }, [button]);
   const buttonTypes = useButtonTypes();
   return (
-    <>
-      {currentButton && buttonTypes && (
+     <div {...handlers}> 
+      {button && buttonTypes && (
         <>
           <CardButton
-            button={currentButton}
+            button={button}
             buttonTypes={buttonTypes}
           />
-          <Feed button={currentButton} />
+          <Feed button={button} />
         </>
       )}
-      {!(currentButton && buttonTypes) && <Loading />}
-    </>
+      {!(button && buttonTypes) && <Loading />}
+      </div>
   );
 }
 

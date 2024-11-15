@@ -1,6 +1,6 @@
 import ButtonForm from 'components/button/ButtonForm';
 import { GlobalState, store } from 'pages';
-import { CreateButton, SaveButtonDraft, UpdateCachedHexagons } from 'state/Explore';
+import { CreateButton, SaveButtonDraft, UpdateCachedHexagons, updateCurrentButton } from 'state/Explore';
 import { alertService } from 'services/Alert';
 import { useForm } from 'react-hook-form';
 import router from 'next/router';
@@ -35,6 +35,8 @@ export default function ButtonNew({ metadata }) {
     </>
   );
 }
+
+
 function ButtonNewForm({ selectedNetwork }) {
   const defaultValues = {
     image: null,

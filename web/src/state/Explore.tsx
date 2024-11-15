@@ -22,6 +22,7 @@ import { of } from 'rxjs';
 import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import _ from 'lodash';
+import { nextElement, previousElement } from 'shared/sys.helper';
 
 
 export enum ExploreViewMode {
@@ -32,6 +33,7 @@ export enum ExploreViewMode {
 export interface ExploreState {
   draftButton: any;
   currentButton: Button;
+  activityCurrentButton: Button;
   map: ExploreMapState;
   settings: ExploreSettings;
 }
@@ -251,6 +253,42 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
     });
   }
 }
+
+export class NextCurrentButton implements UpdateEvent{
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      const nextButton = nextElement(state.explore.currentButton.id, state.explore.map.listButtons)
+      if(nextButton)
+      {
+        newState.explore.currentButton = nextButton;
+      }
+    })
+  }
+}
+
+export class PreviousCurrentButton implements UpdateEvent{
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      const previousButton = previousElement(state.explore.currentButton.id, state.explore.map.listButtons)
+      if(previousButton)
+      {
+        newState.explore.currentButton = previousButton;
+      }
+    })
+  }
+}
+
+
+export class setActivityCurrentButton implements UpdateEvent {
+  public constructor(private button: Button) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.activityCurrentButton = this.button;
+    });
+  }
+}
+
+
 export class updateCurrentButton implements UpdateEvent {
   public constructor(private button: Button) {}
   public update(state: GlobalState) {

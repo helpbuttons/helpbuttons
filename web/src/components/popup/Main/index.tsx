@@ -9,17 +9,18 @@ import t from "i18n";
 import { ShareForm } from "components/share";
 import { FaqSections } from "pages/Faqs";
 import { ButtonShow } from "components/button/ButtonShow";
-import { updateCurrentButton } from "state/Explore";
+import { setActivityCurrentButton, updateCurrentButton } from "state/Explore";
 import router from "next/router";
+import { useEffect } from "react";
 
 export default function MainPopup({pageName}) {
     const closePopup = () =>
       store.emit(new SetMainPopup(MainPopupPage.HIDE));
     const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage) 
-    const currentButton = useGlobalStore(
-      (state: GlobalState) => state.explore.currentButton,
+    const activityCurrentButton = useGlobalStore(
+      (state: GlobalState) => state.explore.activityCurrentButton,
     );
-    
+    const allowedPages =  ["Activity"]
     return (
       <>
         {popupPage == MainPopupPage.LOGIN && (
@@ -56,14 +57,14 @@ export default function MainPopup({pageName}) {
             <FaqSections/>
           </Picker>
         )}
-         {(currentButton && pageName != 'Explore') && (
+         {(activityCurrentButton && pageName.indexOf(allowedPages) > -1) && (
           <Picker
-            headerText={currentButton.title}
-            closeAction={() => {store.emit(new updateCurrentButton(null)); router.back()}}
+            headerText={activityCurrentButton.title}
+            closeAction={() => {store.emit(new setActivityCurrentButton(null)); router.back()}}
             extraClass={'picker__content--nopadding'}
           >
             {/* {pageName} */}
-            <ButtonShow/>
+            <ButtonShow button={activityCurrentButton}/>
           </Picker>
         )}
       </>
