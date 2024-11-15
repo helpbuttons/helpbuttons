@@ -26,11 +26,17 @@ export interface GlobalState {
   draftNewCommentPost: any;
   invites: Invite[],
   homeInfo: HomeInfoState,
-  activites: Activities,
+  activities: Activities,
   metadata: MetadataState,
-  cacheValues: CacheValue[]
+  cacheValues: CacheValue[],
+  // newNotifications: NewNotification[]
 }
 
+// interface NewNotification{
+//   message: string;
+//   created_at: string;
+  
+// }
 
 export const store = new Store<GlobalState>({
   networks: networksInitial,
@@ -39,13 +45,12 @@ export const store = new Store<GlobalState>({
   explore: exploreInitial,
   alerts: [],
   config: null,
-  activities: null,
   showFilters: false,
   unreadActivities: 0,
   draftNewCommentPost: null,
   invites: [],
   homeInfo: homeInfoStateInitial,
-  activites: activitiesInitialState,
+  activities: activitiesInitialState,
   metadata: metadataInitialState,
   cacheValues: []
 });
