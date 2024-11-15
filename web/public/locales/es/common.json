@@ -80,7 +80,9 @@
     "readMessages": "Mensajes leídos",
     "nounread": "No hay mensajes sin leer",
     "read": "No hay mensajes aún",
-    "said": "dijo"
+    "said": "dijo",
+    "privateBadge": "privado"
+
   },
   "hostname": "nombre de host",
   "common": {
@@ -300,7 +302,8 @@
     "both": "Mapa & Lista",
     "list": "Lista",
     "map": "Mapa",
-    "showList": ""
+    "showList": "Mostrar Lista",
+    "hiddenButtons": "Por privacidad, hay _helpbuttons_que ocultan su ubicación exacta."
   },
   "buttonFilters": {
     "filters": "Búsqueda y filtros",
@@ -566,27 +569,30 @@
     "notFoundMessage": "Página no encontrada o borrada"
   },
   "moderation": {
-    "buttons": "Aqui puedes revisar los usuarios de tu red, y los butones por aprobar",
+    "description": "Aqui puedes revisar los usuarios de tu red, y _helpbuttons_ a aprobar",
     "verified": "Verificado",
     "revoke": "Revocar derechos de administrador",
-    "promote": "Promocionar a administrador",
-    "activate": "Ativar",
-    "deactivate": "Deativar",
+    "promote": "Convertir en administrador",
+    "activate": "Activar",
+    "deactivate": "Desactivar",
     "remove": "Borrar",
     "actions": "Acciones",
     "role": "Role",
     "usersList": "Usuarios",
     "emptyButtonList": "No hay _helpbuttons_ para ser aprobados",
-    "buttonsList": "_helpbuttons_ lista de aprobación",
+    "buttonsList": "Lista de aprobación de _helpbuttons_",
     "emptyUsersList": "Sin usuarios",
     "requireApproval": "Permitir publicación solo con moderación",
     "requireApprovalLabel": "Moderación de la red",
     "requireApprovalExplain": "Si habilitas esto, todos los _helpbuttons_ creados (si no son por un administrador) no se publicarán en el mapa, hasta que un administrador lo apruebe",
     "awaitingApproval": "_helpbutton_ ha sido añadido a la lista de moderación, por favor espera a que un administrador la apruebe",
-    "created_at": "Creado",
-    "title": "",
-    "created": "",
-    "confirm": ""
+    "created_at": "Creado en",
+    "created": "creado",
+    "title": "Modera el contenido y los usuarios",
+    "confirm": "confirmar",
+    "adminCommunication": "Comunicaciones de administrador",
+    "adminCommunicationLabel":"Comunicaciones de administradores",
+    "adminCommunicationExplain":"Mensajes que envíes a través de este formulario serán notificados a todos los usuarios de la Red."
   },
   "roles": {
     "blocked": "bloqueado",
