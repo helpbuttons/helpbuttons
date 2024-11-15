@@ -1,16 +1,12 @@
-import Loading from 'components/loading';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { TextFormatted, formatMessage } from 'elements/Message';
 import t from 'i18n';
 import Link from 'next/link';
-import router from 'next/router';
 import { store } from 'pages';
 import { ErrorLink } from 'pages/Error';
 import { useEffect, useRef, useState } from 'react';
 import { alertService } from 'services/Alert';
 import {
-  buttonColorStyle,
-  showButtonTypeCaption,
   useButtonTypes,
 } from 'shared/buttonTypes';
 import { readableTimeLeftToDate } from 'shared/date.utils';
@@ -18,7 +14,7 @@ import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import { ButtonTemplate } from 'shared/dtos/button.dto';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { ActivityMarkAsRead } from 'state/Activity';
-import { FindButton, updateCurrentButton } from 'state/Explore';
+import { FindButton, setActivityCurrentButton } from 'state/Explore';
 
 export function ActivityMessageCard({
   message,
@@ -40,6 +36,14 @@ export function ActivityMessageCard({
   const [markingAsRead, setMarkingAsRead] = useState(false);
 
   const jumpToButtonMessage = (messageId, read) => {
+    const showPopupButton = (buttonId) => 
+    {
+      store.emit(
+        new FindButton(buttonId, (button) => {
+          store.emit(new setActivityCurrentButton(button));
+        }),
+      );
+    }
     if (!read) {
       setMarkingAsRead(() => true);
       store.emit(
@@ -47,21 +51,13 @@ export function ActivityMessageCard({
           setMarkingAsRead(() => false);
           alertService.info(t('notificaction.markedAsRead'));
           const buttonId = message.button.id;
-          store.emit(
-            new FindButton(buttonId, (button) => {
-              store.emit(new updateCurrentButton(button));
-            }),
-          );
+          showPopupButton(buttonId)
           // router.push('/ButtonFile/' + message?.button.id.toString())
         }),
       );
     } else {
       const buttonId = message.button.id;
-      store.emit(
-        new FindButton(buttonId, (button) => {
-          store.emit(new updateCurrentButton(button));
-        }),
-      );
+      showPopupButton(buttonId)
     }
   };
 

@@ -10,10 +10,7 @@ import { FindButton, NextCurrentButton, PreviousCurrentButton, updateCurrentButt
 import { useSwipeable } from 'react-swipeable';
 
 
-export function ButtonShow() {
-  const currentButton = useGlobalStore(
-    (state: GlobalState) => state.explore.currentButton,
-  );
+export function ButtonShow({button}) {
   const handlers = useSwipeable({
     onSwiped: (eventData) => {
       if(eventData.dir == "Left")
@@ -28,21 +25,25 @@ export function ButtonShow() {
   });
 
   useEffect(() => {
-    window.history.replaceState(null, '', `/Explore?btn=${currentButton.id}`);
-  }, [currentButton]);
+    if(button)
+    {
+      window.history.replaceState(null, '', `/Explore?btn=${button.id}`);
+    }
+    
+  }, [button]);
   const buttonTypes = useButtonTypes();
   return (
      <div {...handlers}> 
-      {currentButton && buttonTypes && (
+      {button && buttonTypes && (
         <>
           <CardButton
-            button={currentButton}
+            button={button}
             buttonTypes={buttonTypes}
           />
-          <Feed button={currentButton} />
+          <Feed button={button} />
         </>
       )}
-      {!(currentButton && buttonTypes) && <Loading />}
+      {!(button && buttonTypes) && <Loading />}
       </div>
   );
 }

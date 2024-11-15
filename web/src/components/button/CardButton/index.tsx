@@ -28,6 +28,7 @@ import { GlobalState, store } from 'pages';
 import Link from 'next/link';
 import {
   GetPhone,
+  setActivityCurrentButton,
   updateCurrentButton,
 } from 'state/Explore';
 import { isAdmin } from 'state/Users';
@@ -538,7 +539,10 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   const profileHref = isButtonOwner(loggedInUser, button)
     ? `/Profile/`
     : `/p/${button.owner.username}`;
-  const closeButton = () => store.emit(new updateCurrentButton(null));
+  const closeButton = () => {
+    store.emit(new setActivityCurrentButton(null))
+    store.emit(new updateCurrentButton(null))
+  };
   return (
     <div className="card-button__author">
       <div className="card-button__info">

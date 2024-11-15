@@ -10,13 +10,8 @@ import {
 import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
 import t from 'i18n';
-import { FindButton, updateCurrentButton } from 'state/Explore';
+import { FindButton, setActivityCurrentButton } from 'state/Explore';
 import { store } from 'pages';
-import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
-import { useEffect, useState } from 'react';
-import { ButtonTemplate } from 'shared/dtos/button.dto';
-import ButtonType from 'components/button/ButtonType';
-import Loading from 'components/loading';
 
 export default function ActivityNotificationCard({ activity }) {
   return (
@@ -140,7 +135,7 @@ export function NotificationCard(props) {
       <Link
         href="#"
         onClick={() =>
-          store.emit(new FindButton(props.buttonId, (_button) => store.emit(new updateCurrentButton(_button))))
+          store.emit(new FindButton(props.buttonId, (_button) => store.emit(new setActivityCurrentButton(_button))))
           
         }
         className="card-notification card-notification"
