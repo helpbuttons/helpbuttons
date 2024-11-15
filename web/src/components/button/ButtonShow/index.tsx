@@ -16,11 +16,11 @@ export function ButtonShow() {
   );
   const handlers = useSwipeable({
     onSwiped: (eventData) => {
-      if(eventData.dir == "Right")
+      if(eventData.dir == "Left")
       {
         store.emit(new NextCurrentButton())
       }
-      if(eventData.dir == "Left")
+      if(eventData.dir == "Right")
       {
         store.emit(new PreviousCurrentButton())
       }
