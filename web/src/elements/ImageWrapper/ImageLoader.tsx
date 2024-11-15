@@ -10,7 +10,7 @@ export const ImageLoader = ({ src, alt, ...props }) => {
 
   return (
     <>
-    <div className="loading__img" style={{ display: loader }} ></div>
+    {/* <div className="loading__img" style={{ display: loader }} ></div> */}
       <Image
         src={src}
         alt={alt}
