@@ -80,7 +80,9 @@
     "readMessages": "Mensajes leídos",
     "nounread": "No hay mensajes sin leer",
     "read": "No hay mensajes aún",
-    "said": "dijo"
+    "said": "dijo",
+    "privateBadge": "privado",
+
   },
   "hostname": "nombre de host",
   "common": {
@@ -300,7 +302,7 @@
     "both": "Mapa & Lista",
     "list": "Lista",
     "map": "Mapa",
-    "showList": ""
+    "showList": "Mostrar Lista"
   },
   "buttonFilters": {
     "filters": "Búsqueda y filtros",

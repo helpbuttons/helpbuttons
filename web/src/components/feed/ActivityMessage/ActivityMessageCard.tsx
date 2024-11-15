@@ -119,13 +119,13 @@ export function ActivityMessageCard({
             <div className="card-notification__text">
               <div className="card-notification__header">
                 <div className="card-notification__info">
-                  {message.authorName} {t('feed.said')}: 
-                  &nbsp;
                   {message.privacy == PrivacyType.PRIVATE && (
                     <span style={{ color: 'red' }}>
                       {t('feed.privateBadge')}
                     </span>
                   )}
+                  &nbsp;
+                  {message.authorName} {t('feed.said')}: 
                   {/* <h2 className="card-notification__name">{title}</h2>  */}
                 </div>
                
