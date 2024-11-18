@@ -17,6 +17,7 @@ import { ButtonService } from 'services/Buttons';
 import { Role } from 'shared/types/roles';
 import { Invite } from 'shared/entities/invite.entity';
 import { InviteCreateDto } from 'shared/dtos/invite.dto';
+import { activitiesInitialState } from './Activity';
 
 export interface UsersState {
   currentUser: IUser;
@@ -190,7 +191,7 @@ export class Logout implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.loggedInUser = null;
-      newState.activities = []
+      newState.activities = activitiesInitialState;
     });
   }
 }

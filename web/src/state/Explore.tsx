@@ -33,7 +33,6 @@ export enum ExploreViewMode {
 export interface ExploreState {
   draftButton: any;
   currentButton: Button;
-  activityCurrentButton: Button;
   map: ExploreMapState;
   settings: ExploreSettings;
 }
@@ -277,17 +276,6 @@ export class PreviousCurrentButton implements UpdateEvent{
     })
   }
 }
-
-
-export class setActivityCurrentButton implements UpdateEvent {
-  public constructor(private button: Button) {}
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.explore.activityCurrentButton = this.button;
-    });
-  }
-}
-
 
 export class updateCurrentButton implements UpdateEvent {
   public constructor(private button: Button) {}

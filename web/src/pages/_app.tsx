@@ -46,13 +46,16 @@ function MyApp({ Component, pageProps }) {
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
-  usePoolFindNewActivities({timeMs: 10000})
-  const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
-  state.networks.selectedNetworkLoading)
-  const loggedInUser = useStore(
-    store,
+  const messagesUnread = useGlobalStore(
+    (state: GlobalState) => state.activities.messages.unread
+  );
+  const loggedInUser = useGlobalStore(
     (state: GlobalState) => state.loggedInUser,
   );
+
+  const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
+  state.networks.selectedNetworkLoading)
+  
   const onFetchingNetworkError = (error) => {
     if (error === 'network-not-found') {
       setFetchingNetworkError(true)     
@@ -259,6 +262,7 @@ function MyApp({ Component, pageProps }) {
     return (
         <>
         <SEO/>
+        <ActivityPool loggedInUser={loggedInUser} messagesUnread={messagesUnread}/>
         <div
           className="index__container"
           style={
@@ -306,3 +310,11 @@ export const ClienteSideRendering = ({ children }) => {
   useEffect(() => setIsClient(true), []);
   return <>{isClient && children}</>;
 };
+
+
+function ActivityPool({loggedInUser, messagesUnread})
+{
+  usePoolFindNewActivities({timeMs: 10000, loggedInUser, messagesUnread})
+
+  return (<></>);
+}
