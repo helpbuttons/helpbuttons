@@ -18,7 +18,7 @@ import {
   RecenterExplore,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
-import { useStore } from 'store/Store';
+import { useGlobalStore, useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import router from 'next/router';
 import List from 'components/list/List';
@@ -302,11 +302,13 @@ function useExploreSettings({
     }
   }, [selectedNetwork]);
 
+  const currentProfile = useGlobalStore((state : GlobalState) => state.homeInfo.mainPopupUserProfile)
   useEffect(() => {
     if (
       exploreSettings?.center &&
       !exploreSettings.urlUpdated &&
-      filters
+      filters &&
+      !currentProfile
     ) {
       let obj = {};
 
@@ -348,7 +350,7 @@ function useExploreSettings({
         );
       }
     }
-  }, [exploreSettings, currentButton, filters]);
+  }, [exploreSettings, currentButton, filters, currentProfile]);
 }
 
 const getCurrentButtonFromUrl = () => {

@@ -543,8 +543,8 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   //   store.emit(new SetMainPopupCurrentButton(null))
   //   store.emit(new updateCurrentButton(null))
   // };
-  const onClick = () =>{
-
+  const onClick = (e) =>{
+    e.preventDefault()
     console.log('this goes for dev test.. make sure it works..')
     store.emit(new SetMainPopupCurrentProfile(button.owner))
   }

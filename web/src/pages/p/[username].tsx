@@ -44,8 +44,7 @@ export default function p(props) {
       <ShowProfile
         userProfile={userProfile}
         loggedInUser={loggedInUser}
-        closeAction={closeAction}
-      />{' '}
+      />
     </Popup>
   );
 }
@@ -53,7 +52,6 @@ export default function p(props) {
 export function ShowProfile({
   userProfile,
   loggedInUser,
-  closeAction,
 }) {
   const [userButtons, setUserButtons] = useState(null);
 
@@ -84,6 +82,14 @@ export function ShowProfile({
     }
     // store.emit(FindExtraFieldsUser(userProfile.id))
   }, []);
+
+  useEffect(() => {
+    if(userProfile)
+    {
+      window.history.replaceState(null, '', `/p/${userProfile.username}`);
+    }
+    
+  }, [userProfile]);
 
   const knownUsers = useRef(
     store,
