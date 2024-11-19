@@ -162,6 +162,8 @@ export function FeedElement({
           mentions: [post.author.username],
         };
       });
+    }else{
+      setShowComposePostReply(() => null)
     }
   }, [showCompose]);
 
@@ -227,7 +229,7 @@ export function FeedElement({
                 />
               )}
           </div>
-          {loggedInUser && showComposePostReply?.post == post.id && (
+          {(loggedInUser && showComposePostReply?.post == post.id) && (
             <Compose
               referer={showComposePostReply}
               onCancel={() => {
