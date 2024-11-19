@@ -124,17 +124,22 @@ export const bootstrap = async () => {
       console.log(err);
       throw Error("Can't connect to database");
     });
-
+  
+    const title = 'Helpbuttons API documentation'
   const config = new DocumentBuilder()
-    .setTitle('Helpbuttons backend')
-    .setDescription('.')
-    .setVersion('1.0')
+    .setTitle(title)
+    .setDescription('You chan check more about helpbuttons in our website helpbuttons.org')
     .addTag('hb')
     .addBearerAuth()
+    .addServer('/api')
+    .setBasePath('/api')
+    // .setTermsOfService('/Faqs')
+    .setContact('Helpbuttons Team', 'https://heplbuttons.org', 'help@helpbuttons.org')
+    .setLicense('CC BY-SA-4.0', 'https://creativecommons.org/licenses/by-sa/4.0/')
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('doc', app, document);
+  const document = SwaggerModule.createDocument(app, config, { ignoreGlobalPrefix: true });
+  SwaggerModule.setup('doc', app, document, { customSiteTitle: title});
   await app.listen('3001');
 };
 
