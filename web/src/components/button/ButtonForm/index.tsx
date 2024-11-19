@@ -160,6 +160,7 @@ export default function ButtonForm({
             maxNumber={5}
             setValue={(images) => setValue('images', images)}
             validationError={errors.images}/>
+            <div class="form__btn-search">
             <FieldLocation
               label={t('button.whereLabel')}
               setMarkerPosition={([lat, lng]) => {
@@ -179,6 +180,7 @@ export default function ButtonForm({
               watch={watch}
               setValue={setValue}
             />
+            </div>
             <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency}/>
             <ButtonShare />
           </div>

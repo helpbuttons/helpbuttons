@@ -215,8 +215,9 @@ export default function AdvancedFilters({
                       selectedButtonTypes={watch('helpButtonTypes')}
                     />
                     <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
-                    <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
-                    
+                    <div clasS="form__btn-search">
+                      <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
+                    </div>
                   </div>
                 
               </Form>
