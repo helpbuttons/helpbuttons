@@ -293,7 +293,6 @@ export default function HomeInfo({ metadata }) {
                     />
                   </div>
                 </div>
-                <hr></hr>
                 <div className="homeinfo-card__section">
                   <p>{t('homeinfo.exploreSubtitle')}</p>
                   <NavLink href="/Explore">
@@ -301,19 +300,21 @@ export default function HomeInfo({ metadata }) {
                     <span>{t('menu.explore')}</span>
                   </NavLink>
                 </div>
+                <div class="homeinfo-card__wrap">
                 <div className="homeinfo-card__section">
-                  <p>{t('homeinfo.createSubtitle')}</p>
-                  <NavLink href="/ButtonNew">
-                    <IoAddOutline />
-                    <span>{t('menu.create')}</span>
-                  </NavLink>
-                </div>
-                <div className="homeinfo-card__section">
-                  <p>{t('homeinfo.faqsSubtitle')}</p>
-                  <NavLink href="/Faqs">
-                    <IoHelpOutline />
-                    <span>{t('menu.faqs')}</span>
-                  </NavLink>
+                    <p>{t('homeinfo.createSubtitle')}</p>
+                    <NavLink href="/ButtonNew">
+                      <IoAddOutline />
+                      <span>{t('menu.create')}</span>
+                    </NavLink>
+                  </div>
+                  <div className="homeinfo-card__section">
+                    <p>{t('homeinfo.faqsSubtitle')}</p>
+                    <NavLink href="/Faqs">
+                      <IoHelpOutline />
+                      <span>{t('menu.faqs')}</span>
+                    </NavLink>
+                  </div>
                 </div>
 
                 {currentUser && (

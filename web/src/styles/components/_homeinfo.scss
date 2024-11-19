@@ -319,6 +319,15 @@ hr {
   .homeinfo-card__controls {
     flex-flow: row nowrap
   }
+
+  .homeinfo-card__wrap {
+    display: flex;
+    flex-flow: row wrap;
+  
+    .homeinfo-card__section {
+      flex: 0 1 50%;
+    }
+  }
 }
 
 
