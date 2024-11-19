@@ -66,6 +66,11 @@ $card-alert-icon-size: 30px;
   color: $color-white;
   gap: $padding-small;
 
+
+  button {
+    margin-left: 12px;
+  }
+
 }
 
 .card-alert__icon {
