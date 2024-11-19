@@ -139,7 +139,7 @@ export const bootstrap = async () => {
     .build();
 
   const document = SwaggerModule.createDocument(app, config, { ignoreGlobalPrefix: true });
-  SwaggerModule.setup('doc', app, document, { customSiteTitle: title});
+  SwaggerModule.setup('/', app, document, { customSiteTitle: title});
   await app.listen('3001');
 };
 

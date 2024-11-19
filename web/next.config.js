@@ -22,11 +22,7 @@ module.exports = {
       {
         source: '/rss',
         destination: `${process.env.API_URL}/buttons/rss`,
-      },
-      {
-        source: '/api-docs',
-        destination: `${process.env.API_URL}/doc/`,
-      },
+      }
     ];
   },
   async redirects() {
