@@ -25,7 +25,6 @@ $card-button-list-border-height: $border-general-height;
 
   background: $color-white;
   border: $card-button-list-border;
-  // width: $card-button-list-width;
   box-shadow: $card-button-list-box-shadow;
   position: relative;
   max-height: $card-button-list-height;
@@ -33,25 +32,15 @@ $card-button-list-border-height: $border-general-height;
   display: flex;
   line-height: $text-line-height-small;
   justify-content: space-between;
-  // margin-bottom: $card-button-list-margin-bottom;
   border-radius: $border-radius-basic $border-radius-basic $border-radius-basic  $border-radius-basic;
 
   .hashtag {
-
     cursor:none;
-
   }
 }
 
-
 .card-button-list:hover{
-
   cursor: pointer;
-  // border-left: solid 2px $color-gray ;
-  // border-bottom: solid 4px $color-gray ;
-  // border-right: solid 4px $color-gray ;
-  // box-shadow: outer $box-hard-shadow;
-
 }
 
 .card-button-list:after{
@@ -230,20 +219,10 @@ $card-button-list-border-height: $border-general-height;
   font-size: $font-size-medium;
   line-height: auto;
 
-
   margin-bottom: 0;
   font-weight: $font-weight-bold;
   color: $color-black;
-  display: -webkit-box;
   margin: $padding-small 0;
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
-  align-items:flex-start;
-  word-break: break-word;
-  -webkit-line-clamp: 2;
-  word-wrap: break-word;
-  text-overflow: ellipsis;
 
 }
 
@@ -313,39 +292,36 @@ $card-button-list-border-height: $border-general-height;
 }
 
 .card-button-list__paragraph {
-  word-break: break-word;
   color: $card-button-list-paragraph-color;
   font-size: $font-size-general;
-  white-space: pre-line;
   text-align: left;
-  flex-grow: 1;
-  overflow: hidden;
 
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  padding: 12px 0;
+  position: relative;
+
+  &:after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.9), white);
+    bottom: 0;
+    left: 0;
+    position: absolute;
+  }
 
   & p {
-    margin-top: 0;//Revise
-    word-break: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* number of lines to show */
-    line-clamp: 2; 
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
     max-height: 2.4em;
-    line-height: 1.2em;
+    line-height: 1.45em;
   }
 
   & a {
     color: var(--network-text-color);
     cursor: pointer;
   }
-}
-
-.card-button-list__paragraph--small-card {
-  
-  -webkit-line-clamp: 1;
-
 }
 
 .card-button-list__phone {
@@ -374,10 +350,9 @@ $card-button-list-border-height: $border-general-height;
 }
 
 .card-button-list__picture-container {
-  width: $card-button-list-image-large-width;
-  min-width: $card-button-list-image-width;
-  //
-  height: $card-button-list-image-height;
+  width: 200px;
+
+  height: 100%;
   overflow: hidden;
   position: relative;
   border-radius: $border-radius-basic;
