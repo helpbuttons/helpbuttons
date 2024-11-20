@@ -126,8 +126,7 @@ export const bootstrap = async () => {
     });
   
   const title = 'Helpbuttons API documentation'
-  const fs = require('fs')
-  const version = fs.readFileSync(path.resolve(__dirname, 'version'), 'utf8')
+  const version = require('./version.json').version
   const config = new DocumentBuilder()
     .setTitle(title)
     .setDescription('You chan check more about helpbuttons in our website helpbuttons.org')
