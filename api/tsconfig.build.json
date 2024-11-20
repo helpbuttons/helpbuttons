@@ -3,7 +3,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "removeComments": true,
-    "sourceMap": false
+    "sourceMap": false,
+    "assets": [
+      "src/version"
+    ]
   },
   "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
 }
