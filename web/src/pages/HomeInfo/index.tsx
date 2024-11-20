@@ -299,7 +299,7 @@ export default function HomeInfo({ metadata }) {
                     <span>{t('menu.explore')}</span>
                   </NavLink>
                 </div>
-                <div class="homeinfo-card__wrap">
+                <div className="homeinfo-card__wrap">
                 <div className="homeinfo-card__section">
                     <p>{t('homeinfo.createSubtitle')}</p>
                     <NavLink href="/ButtonNew">
