@@ -160,7 +160,7 @@ export default function ButtonForm({
             maxNumber={5}
             setValue={(images) => setValue('images', images)}
             validationError={errors.images}/>
-            <div class="form__btn-search">
+            <div className="form__btn-search">
             <FieldLocation
               label={t('button.whereLabel')}
               setMarkerPosition={([lat, lng]) => {
