@@ -22,7 +22,6 @@ export default function MainPopup({pageName}) {
     const mainPopupCurrentButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupCurrentButton) 
     const mainPopupUserProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile) 
 
-    const mainPopupCurrentButtonAllowedPages =  ["Activity"]
     return (
       <>
         {popupPage == MainPopupPage.LOGIN && (
@@ -67,7 +66,7 @@ export default function MainPopup({pageName}) {
             <ShowProfile userProfile={mainPopupUserProfile} loggedInUser={loggedInUser}/>
           </Picker>
         )}
-         {(mainPopupCurrentButton && pageName.indexOf(mainPopupCurrentButtonAllowedPages) > -1) && (
+         {(mainPopupCurrentButton) && (
           <Picker
             headerText={mainPopupCurrentButton.title}
             closeAction={() => {store.emit(new SetMainPopupCurrentButton(null)); router.back()}}
