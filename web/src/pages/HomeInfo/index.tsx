@@ -358,7 +358,7 @@ export default function HomeInfo({ metadata }) {
 
                 </div>
                 <span className="homeinfo-card__section--attr">
-                      <PoweredBy/>
+                      <PoweredBy showVersion/>
                       <License/>
                 </span>
               </div>

@@ -1,10 +1,16 @@
 import t from 'i18n';
+import { GlobalState } from 'pages';
+import { useGlobalStore } from 'store/Store';
 
-export function PoweredBy() {
+export function PoweredBy({showVersion = false}) {
+  const metadata = useGlobalStore(
+    (state: GlobalState) => state.metadata,
+  );
+
   return (
     <>
       {t('homeinfo.powered')}{' '}
-      <a href="https://helpbuttons.org">helpbuttons</a>
+      <a href="https://helpbuttons.org">helpbuttons {showVersion && metadata.version}</a>
     </>
   );
 }

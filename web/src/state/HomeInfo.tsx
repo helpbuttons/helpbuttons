@@ -1,6 +1,7 @@
 import produce from 'immer';
 import { GlobalState, store } from 'pages';
 import { map } from 'rxjs';
+import { NetworkService } from 'services/Networks';
 import { UserService } from 'services/Users';
 import { Button } from 'shared/entities/button.entity';
 import { User } from 'shared/entities/user.entity';
@@ -19,12 +20,14 @@ export interface HomeInfoState {
   mainPopupPage: MainPopupPage;
   mainPopupCurrentButton: Button;
   mainPopupUserProfile: User;
+  version: string;
 }
 
 export const homeInfoStateInitial = {
   mainPopupPage: MainPopupPage.HIDE,
   mainPopupCurrentButton: null,
-  mainPopupUserProfile: null
+  mainPopupUserProfile: null,
+  version: '?'
 };
 
 export class SetMainPopup implements UpdateEvent {

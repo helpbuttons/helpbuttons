@@ -19,7 +19,8 @@ import { checkDatabase } from './shared/helpers/config.helper';
 import { CallHandler, ExecutionContext, Injectable, PlainLiteralObject } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
 import { Role } from './shared/types/roles';
-  
+import { version } from './version.json'
+
 @Injectable()
 export class RolesSerializerInterceptor extends ClassSerializerInterceptor {
 
@@ -125,16 +126,15 @@ export const bootstrap = async () => {
       throw Error("Can't connect to database");
     });
   
-    const title = 'Helpbuttons API documentation'
+  const title = 'Helpbuttons API documentation'
   const config = new DocumentBuilder()
     .setTitle(title)
     .setDescription('You chan check more about helpbuttons in our website helpbuttons.org')
     .addTag('hb')
     .addBearerAuth()
-    .addServer('/api')
-    .setBasePath('/api')
-    // .setTermsOfService('/Faqs')
-    .setContact('Helpbuttons Team', 'https://heplbuttons.org', 'help@helpbuttons.org')
+    .addServer(`${configs().WEB_URL}/api`)
+    .setVersion(version)
+    .setContact('Helpbuttons Team', 'https://helpbuttons.org', 'help@helpbuttons.org')
     .setLicense('CC BY-SA-4.0', 'https://creativecommons.org/licenses/by-sa/4.0/')
     .build();
 
