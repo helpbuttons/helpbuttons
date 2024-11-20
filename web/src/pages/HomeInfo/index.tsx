@@ -44,8 +44,7 @@ import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
 import { ActivityList } from 'components/feed/Activity/ActivityList';
-import { CardButtonHeadMedium } from 'components/button/CardButton';
-import { License, PoweredBy } from 'components/brand/powered';
+import { PoweredExtra } from 'components/brand/powered';
 
 export default function HomeInfo({ metadata }) {
   const selectedNetwork = useStore(
@@ -358,8 +357,7 @@ export default function HomeInfo({ metadata }) {
 
                 </div>
                 <span className="homeinfo-card__section--attr">
-                      <PoweredBy showVersion/>
-                      <License/>
+                      <PoweredExtra/>
                 </span>
               </div>
 
