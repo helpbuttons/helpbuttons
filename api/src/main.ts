@@ -19,7 +19,6 @@ import { checkDatabase } from './shared/helpers/config.helper';
 import { CallHandler, ExecutionContext, Injectable, PlainLiteralObject } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
 import { Role } from './shared/types/roles';
-import { version } from './version.json'
 
 @Injectable()
 export class RolesSerializerInterceptor extends ClassSerializerInterceptor {
@@ -127,6 +126,8 @@ export const bootstrap = async () => {
     });
   
   const title = 'Helpbuttons API documentation'
+  const fs = require('fs')
+  const version = fs.readFileSync(path.resolve(__dirname, 'version'), 'utf8')
   const config = new DocumentBuilder()
     .setTitle(title)
     .setDescription('You chan check more about helpbuttons in our website helpbuttons.org')
