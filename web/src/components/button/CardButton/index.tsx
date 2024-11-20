@@ -28,7 +28,6 @@ import { GlobalState, store } from 'pages';
 import Link from 'next/link';
 import {
   GetPhone,
-  setActivityCurrentButton,
   updateCurrentButton,
 } from 'state/Explore';
 import { isAdmin } from 'state/Users';
@@ -52,6 +51,7 @@ import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
+import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 
 export default function CardButton({ button, buttonTypes }) {
   const [buttonType, setButtonType] = useState(null);
@@ -536,20 +536,25 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
     false,
   );
   const [showMap, setShowMap] = useState(false);
-  const profileHref = isButtonOwner(loggedInUser, button)
-    ? `/Profile/`
-    : `/p/${button.owner.username}`;
-  const closeButton = () => {
-    store.emit(new setActivityCurrentButton(null))
-    store.emit(new updateCurrentButton(null))
-  };
+  // const profileHref = isButtonOwner(loggedInUser, button)
+  //   ? `/Profile/`
+  //   : `/p/${button.owner.username}`;
+  // const closeButton = () => {
+  //   store.emit(new SetMainPopupCurrentButton(null))
+  //   store.emit(new updateCurrentButton(null))
+  // };
+  const onClick = (e) =>{
+    e.preventDefault()
+    console.log('this goes for dev test.. make sure it works..')
+    store.emit(new SetMainPopupCurrentProfile(button.owner))
+  }
   return (
     <div className="card-button__author">
       <div className="card-button__info">
         <div className="card-button__author-title">
           {t('button.authorTitle')}
         </div>
-        <Link href={profileHref} onClick={closeButton}>
+        <Link href="#" onClick={onClick}>
           <div className="card-button__name">
             {button.owner.name}{' '}
             <span className="card-button__username">
@@ -564,7 +569,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
       </div>
       <div className="card-button__avatar">
         <div className="avatar-big">
-          <Link href={profileHref} onClick={closeButton}>
+        <Link href="#" onClick={onClick}>
             <ImageWrapper
               imageType={ImageType.avatarBig}
               src={button.owner.avatar}

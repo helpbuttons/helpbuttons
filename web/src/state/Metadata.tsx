@@ -11,6 +11,7 @@ export interface MetadataState {
   siteTitle: string;
   color: string;
   webUrl: string;
+  version: string;
 }
 
 export const metadataInitialState: MetadataState = {
@@ -21,6 +22,7 @@ export const metadataInitialState: MetadataState = {
   siteTitle: '',
   color: '',
   webUrl: '',
+  version: '?'
 };
 
 export class UpdateMetadata implements UpdateEvent {

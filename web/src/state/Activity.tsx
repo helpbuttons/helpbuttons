@@ -281,11 +281,7 @@ export const useActivities = () => {
   return { messages, notifications };
 };
 
-export const usePoolFindNewActivities = ({ timeMs }) => {
-  const messagesUnread = useGlobalStore(
-    (state: GlobalState) => state.activities.messages.unread,
-  );
-
+export const usePoolFindNewActivities = ({loggedInUser, messagesUnread, timeMs }) => {
   useEffect(() => {
     if (messagesUnread) {
       messagesUnread.forEach((message) => {
@@ -297,9 +293,7 @@ export const usePoolFindNewActivities = ({ timeMs }) => {
       });
     }
   }, [messagesUnread]);
-  const loggedInUser = useGlobalStore(
-    (state: GlobalState) => state.loggedInUser,
-  );
+
   const increment = useCallback(() => {
     store.emit(new FindNewMessages());
   }, []);

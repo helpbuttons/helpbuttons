@@ -19,7 +19,7 @@ import { checkDatabase } from './shared/helpers/config.helper';
 import { CallHandler, ExecutionContext, Injectable, PlainLiteralObject } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
 import { Role } from './shared/types/roles';
-  
+
 @Injectable()
 export class RolesSerializerInterceptor extends ClassSerializerInterceptor {
 
@@ -124,17 +124,22 @@ export const bootstrap = async () => {
       console.log(err);
       throw Error("Can't connect to database");
     });
-
+  
+  const title = 'Helpbuttons API documentation'
+  const version = require('./version.json').version
   const config = new DocumentBuilder()
-    .setTitle('Helpbuttons backend')
-    .setDescription('.')
-    .setVersion('1.0')
+    .setTitle(title)
+    .setDescription('You chan check more about helpbuttons in our website helpbuttons.org')
     .addTag('hb')
     .addBearerAuth()
+    .addServer(`${configs().WEB_URL}/api`)
+    .setVersion(version)
+    .setContact('Helpbuttons Team', 'https://helpbuttons.org', 'help@helpbuttons.org')
+    .setLicense('CC BY-SA-4.0', 'https://creativecommons.org/licenses/by-sa/4.0/')
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('doc', app, document);
+  const document = SwaggerModule.createDocument(app, config, { ignoreGlobalPrefix: true });
+  SwaggerModule.setup('/', app, document, { customSiteTitle: title});
   await app.listen('3001');
 };
 

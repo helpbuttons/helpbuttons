@@ -18,6 +18,13 @@ $radio-color-gray-border: $color-gray-border;
   border: none;
   padding: 0;
 
+  display: flex;
+  flex-flow: row wrap;
+
+  div {
+    margin-right: 12px;
+  }
+
   &:focus {
     outline: none;
   }
@@ -25,8 +32,10 @@ $radio-color-gray-border: $color-gray-border;
 
 //label div for enclosing all radio button elements
 .radio__label {
-  display: block;
-  width: 100%;
+  .radio__content {
+    margin-top: 8px;
+    gap: 0; 
+  }
 }
 
 // (same but for filters, smaller buttons)
@@ -63,20 +72,23 @@ $radio-color-gray-border: $color-gray-border;
 
 //class that includes radio STYLED content after input div
 .radio__content {
-  @extend .btn-with-icon;
 
   background: $radio-color;
   border: $radio-content-border solid $color-gray-border;
-  display: flex;
   font-size: $font-size-medium;
   position: relative;
   height: $radio-height;
   transition: background 0.2s;
-  width: auto;
   color: $radio-color-text;
   min-width: 150px;
   border-radius: 42px;
   box-sizing: border-box;
+
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 100%;
+  padding: 0 12px;
 }
 
 .radio__content--bordered {

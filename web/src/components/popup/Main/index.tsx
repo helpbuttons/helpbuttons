@@ -1,6 +1,6 @@
 import { Picker } from "components/picker/Picker";
 import { GlobalState, store } from "pages";
-import { MainPopupPage, SetMainPopup } from "state/HomeInfo";
+import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from "state/HomeInfo";
 import { useGlobalStore } from "store/Store";
 import Login from "../../../pages/Login";
 import Signup from "../../../pages/Signup";
@@ -9,18 +9,19 @@ import t from "i18n";
 import { ShareForm } from "components/share";
 import { FaqSections } from "pages/Faqs";
 import { ButtonShow } from "components/button/ButtonShow";
-import { setActivityCurrentButton, updateCurrentButton } from "state/Explore";
 import router from "next/router";
 import { useEffect } from "react";
+import { ShowProfile } from "pages/p/[username]";
 
 export default function MainPopup({pageName}) {
     const closePopup = () =>
       store.emit(new SetMainPopup(MainPopupPage.HIDE));
+
+    const loggedInUser = useGlobalStore((state: GlobalState) => state.loggedInUser);
     const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage) 
-    const activityCurrentButton = useGlobalStore(
-      (state: GlobalState) => state.explore.activityCurrentButton,
-    );
-    const allowedPages =  ["Activity"]
+    const mainPopupCurrentButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupCurrentButton) 
+    const mainPopupUserProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile) 
+
     return (
       <>
         {popupPage == MainPopupPage.LOGIN && (
@@ -57,14 +58,22 @@ export default function MainPopup({pageName}) {
             <FaqSections/>
           </Picker>
         )}
-         {(activityCurrentButton && pageName.indexOf(allowedPages) > -1) && (
+        {(mainPopupUserProfile) && (
           <Picker
-            headerText={activityCurrentButton.title}
-            closeAction={() => {store.emit(new setActivityCurrentButton(null)); router.back()}}
+            headerText={t('user.otherProfileView')}
+            closeAction={() => {closePopup(); store.emit(new SetMainPopupCurrentProfile(null))}}
+          >
+            <ShowProfile userProfile={mainPopupUserProfile} loggedInUser={loggedInUser}/>
+          </Picker>
+        )}
+         {(mainPopupCurrentButton) && (
+          <Picker
+            headerText={mainPopupCurrentButton.title}
+            closeAction={() => {store.emit(new SetMainPopupCurrentButton(null)); router.back()}}
             extraClass={'picker__content--nopadding'}
           >
             {/* {pageName} */}
-            <ButtonShow button={activityCurrentButton}/>
+            <ButtonShow button={mainPopupCurrentButton}/>
           </Picker>
         )}
       </>

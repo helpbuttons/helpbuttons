@@ -2,7 +2,6 @@ import { Button } from 'shared/entities/button.entity';
 import { logError } from 'shared/log';
 import { makeImageUrl, setSSRLocale } from 'shared/sys.helper';
 import { HttpStatus } from 'shared/types/http-status.enum';
-
 export class ServerPropsService {
   public static async general(subtitle, ctx) {
     const baseURL = `${process.env.API_URL}/`;
@@ -71,18 +70,18 @@ export class ServerPropsService {
       };
     }
     setSSRLocale(networkConfigData.locale);
-
+    const version = require('../../../public/version.json').version
     let serverProps = {
-      metadata: getMetadata(
+      metadata: {...getMetadata(
         subtitle,
         networkConfigData,
         process.env.WEB_URL,
         ctx.resolvedUrl,
-      ),
+      ), version: version},
       _selectedNetwork: networkConfigData,
       _config: configData,
     };
-
+    
     if (ctx.query?.btn) {
       const btnId = ctx.query.btn;
       const buttonUrl = `${process.env.API_URL}/buttons/findById/${btnId}`;

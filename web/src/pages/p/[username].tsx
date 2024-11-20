@@ -2,12 +2,9 @@
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
-import {
-  FindExtraFieldsUser,
-  FindUserButtons,
-} from 'state/Users';
+import { FindExtraFieldsUser, FindUserButtons } from 'state/Users';
 import { Role } from 'shared/types/roles';
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';
@@ -18,20 +15,11 @@ import ContentList from 'components/list/ContentList';
 import { useMetadataTitle } from 'state/Metadata';
 
 export default function p(props) {
-  const {userProfile} = props
-  const [userButtons, setUserButtons] = useState(null);
-  const [extraFields, setExtraFields] = useState([]);
-  const knownUsers = useRef(
-    store,
-    (state: GlobalState) => state.knownUsers,
-  );
   const loggedInUser = useRef(
     store,
     (state: GlobalState) => state.loggedInUser,
   );
-  useMetadataTitle(t('menu.profile'))
-
-  const [adminButtonId, setAdminButtonId] = useState(null);
+  const { userProfile } = props;
 
   const router = useRouter();
 
@@ -39,6 +27,37 @@ export default function p(props) {
     if (!router.isReady) return;
     const username = router.query.username as string;
     let newUserProfile = '';
+
+    if (loggedInUser) {
+      if (loggedInUser.username == username) {
+        router.push('/Profile');
+      }
+    }
+  }, [userProfile, loggedInUser, router.isReady]);
+  const closeAction = () => router.back();
+  return (
+    <Popup
+      linkBack={closeAction}
+      title={t('user.otherProfileView')}
+      onScroll={() => {}}
+    >
+      <ShowProfile
+        userProfile={userProfile}
+        loggedInUser={loggedInUser}
+      />
+    </Popup>
+  );
+}
+
+export function ShowProfile({
+  userProfile,
+  loggedInUser,
+}) {
+  const [userButtons, setUserButtons] = useState(null);
+
+  const [extraFields, setExtraFields] = useState([]);
+  useEffect(() => {
+    // if user is admin... get more data!
     if (userProfile) {
       if (userProfile.showButtons && !userButtons) {
         console.log('getting user btns');
@@ -48,7 +67,7 @@ export default function p(props) {
           ),
         );
       }
-      // if user is admin... get more data!
+
       if (loggedInUser?.role == Role.admin) {
         store.emit(
           new FindExtraFieldsUser(
@@ -60,49 +79,55 @@ export default function p(props) {
           ),
         );
       }
-      // store.emit(FindExtraFieldsUser(userProfile.id))
     }
-    if (loggedInUser) {
-      if (loggedInUser.username == username) {
-        router.push('/Profile');
-      }
+    // store.emit(FindExtraFieldsUser(userProfile.id))
+  }, []);
+
+  useEffect(() => {
+    if(userProfile)
+    {
+      window.history.replaceState(null, '', `/p/${userProfile.username}`);
     }
-  }, [userProfile, loggedInUser, router.isReady]);
+    
+  }, [userProfile]);
+
+  const knownUsers = useRef(
+    store,
+    (state: GlobalState) => state.knownUsers,
+  );
+
+  useMetadataTitle(t('menu.profile'));
+
+  const [adminButtonId, setAdminButtonId] = useState(null);
 
   const buttonTypes = useButtonTypes();
 
   return (
     <>
-      <Popup
-        linkBack={() => router.back()}
-        title={t('user.otherProfileView')}
-        onScroll={() => {}}
-      >
-        {userProfile && (
-          <CardProfile
-            user={userProfile}
-            showAdminOptions={loggedInUser?.role == Role.admin}
-          />
+      {userProfile && (
+        <CardProfile
+          user={userProfile}
+          showAdminOptions={loggedInUser?.role == Role.admin}
+        />
+      )}
+      {loggedInUser?.role == Role.admin && (
+        <>Email: {extraFields.email}</>
+      )}
+      {userProfile?.showButtons &&
+        userButtons &&
+        userButtons?.length > 0 && (
+          <div className="card-profile__button-list">
+            <ContentList
+              buttons={userButtons}
+              buttonTypes={buttonTypes}
+              linkToPopup={false}
+            />
+          </div>
         )}
-        {loggedInUser?.role == Role.admin && (
-          <>Email: {extraFields.email}</>
-        )}
-        {userProfile?.showButtons &&
-          userButtons &&
-          userButtons?.length > 0 && (
-            <div className="card-profile__button-list">
-              <ContentList
-                buttons={userButtons}
-                buttonTypes={buttonTypes}
-                linkToPopup={false}
-              />
-            </div>
-          )}
-      </Popup>
     </>
   );
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
-  return setMetadata(t('menu.profile'), ctx)
+  return setMetadata(t('menu.profile'), ctx);
 };

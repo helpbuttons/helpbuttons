@@ -1,6 +1,11 @@
 import produce from 'immer';
-import { GlobalState } from 'pages';
-import { UpdateEvent } from 'store/Event';
+import { GlobalState, store } from 'pages';
+import { map } from 'rxjs';
+import { NetworkService } from 'services/Networks';
+import { UserService } from 'services/Users';
+import { Button } from 'shared/entities/button.entity';
+import { User } from 'shared/entities/user.entity';
+import { UpdateEvent, WatchEvent } from 'store/Event';
 
 export enum MainPopupPage {
   HIDE = 'hide',
@@ -8,14 +13,21 @@ export enum MainPopupPage {
   LOGIN = 'login',
   REQUEST_LINK = 'requestLink',
   SHARE = 'share',
-  FAQS = 'faqs'
+  FAQS = 'faqs',
+  PROFILE = 'profile'
 }
 export interface HomeInfoState {
   mainPopupPage: MainPopupPage;
+  mainPopupCurrentButton: Button;
+  mainPopupUserProfile: User;
+  version: string;
 }
 
 export const homeInfoStateInitial = {
   mainPopupPage: MainPopupPage.HIDE,
+  mainPopupCurrentButton: null,
+  mainPopupUserProfile: null,
+  version: '?'
 };
 
 export class SetMainPopup implements UpdateEvent {
@@ -24,6 +36,33 @@ export class SetMainPopup implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = this.newPage;
+    });
+  }
+}
+
+export class SetMainPopupCurrentButton implements UpdateEvent {
+  public constructor(private button: Button) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.homeInfo.mainPopupCurrentButton = this.button;
+    });
+  }
+}
+
+export class FindAndSetMainPopupCurrentProfile implements WatchEvent {
+  public constructor(private username: string) {}
+  public watch(state: GlobalState) {
+    return UserService.find(this.username).pipe(
+      map((data) => store.emit(new SetMainPopupCurrentProfile(data)))
+    );
+  }
+
+}
+export class SetMainPopupCurrentProfile implements UpdateEvent {
+  public constructor(private profile: User) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.homeInfo.mainPopupUserProfile = this.profile;
     });
   }
 }

@@ -81,3 +81,5 @@ web/android/*
 
 # COMMIT
 web/src/shared/commit.tsx
+.github-token
+last_version

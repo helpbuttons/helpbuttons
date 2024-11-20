@@ -30,7 +30,6 @@ export default function ActivityLayout({ loggedInUser }) {
   };
   useEffect(() => {
     if (buttonTypes && !selectedButtonTypes) {
-      console.log('setting up selected...');
       setSelectedButtonTypes(() => buttonTypes);
     }
   }, [buttonTypes]);

@@ -167,15 +167,16 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   height: auto;
   border-bottom: $border-style-basic;
   justify-content: space-between;
-  padding: $padding-small $padding-big;
   gap: $padding-small;
   position: relative;
   bottom: auto;
   left: auto;
-  min-height: 60px;
+  min-height: 42px;
   border-radius: $border-radius-semicircle $border-radius-semicircle 0 0 ;
   box-shadow: $box-shadow-divs;
-
+  
+  padding-left: 24px;
+  padding-right: 24px;
 
 }
 
@@ -207,70 +208,32 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
-//change movement when there's no scrollbar
-@media (hover: none) {
-
-  .list__container  {
-    // padding-bottom: calc($footer-height-mobile - 15px);
-  }
-
-}
-
-
-
-
 @media #{$breakpoints-medium} {
-
-  .list__order {
-
-    padding: $padding-medium $padding-big;
-    
-  }
-
   .list__show-map-button--hideList {
-
     bottom: 40px;
-  
   }
 
   .list__content--full-screen {
-
-  
     .list__element {
-
       flex: 0;
       flex-basis: 100%;
       min-width: $card-button-list-width;
-      // max-width: $card-button-list-width;
-  
     }
-  
   }
-
-
 }
 
 @media #{$breakpoints-large} {
 
   .list__content--full-screen {
-
-  
     .list__element {
 
       flex: 0;
       flex-basis: 50%;
-
       min-width: $card-button-list-width;
       // max-width: $card-button-list-width;
-  
     }
-  
   }
-
-
 }
-
-
 
 @media #{$breakpoints-xlarge} {
 
@@ -332,7 +295,6 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     height: auto;
     left: auto;
     border-radius: 0;
-    padding: $padding-medium $padding-big;
     
   }
 

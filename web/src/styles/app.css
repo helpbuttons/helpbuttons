@@ -2363,6 +2363,7 @@ em-emoji-picker {
   display: block;
   overflow: hidden;
   border: dashed #f0f0f0 1px;
+  white-space: pre-wrap;
 }
 
 .accordion--toggle {
