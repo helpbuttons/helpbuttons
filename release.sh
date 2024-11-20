@@ -40,7 +40,6 @@ create_release_github() {
             -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer $token" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/helpbuttons/helpbuttons/releases \
             -d '{
             "tag_name": "'"$version"'",
@@ -94,9 +93,9 @@ prepare_release() {
 
 
 echo "Do you want to prepare new release(p), push new release(r) ?"
-    read -r -n 1 -p "" push_dockerhub
+    read -r -n 1 -p "" what_u_want
 
-    case $push_dockerhub in
+    case $what_u_want in
     "p")
         prepare_release
         ;;
