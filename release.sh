@@ -4,9 +4,12 @@ set -e
 
 request_new_version() {
     # Prompt for the part to update
-    echo "Do you want to update the major(M), minor(m), or patch(p) version? (Enter 'M', 'm', or 'p')"
+    echo "Do you want to update the major(M), minor(m), patch(p) or keep(k) version?"
     read -r -n 1 -p "" level
     case $level in
+    "k")
+        version="${last_version}"
+        ;;
     "M")
         major=$(((${last_version:1:1} + 1)))
         version="v${major}.${last_version:3:1}.${last_version:5:1}"
@@ -85,15 +88,15 @@ release_new_version() {
 prepare_release() {
     last_version=$(cat version)
     request_new_version
-    
-    echo $version > web/public/version
-    echo $version > api/src/version
+    json_version="{\"version\": \"${version}\"}"
+    echo $json_version > web/public/version.json
+    echo $json_version > api/src/version.json
     echo $last_version > last_version
     echo $version > version
 }
 
 
-echo "Do you want to upgrade dev(d), prepare new release(p), push new release(r) ?"
+echo "Do you want to prepare new release(p), push new release(r) ?"
     read -r -n 1 -p "" push_dockerhub
 
     case $push_dockerhub in

@@ -70,21 +70,7 @@ export class ServerPropsService {
       };
     }
     setSSRLocale(networkConfigData.locale);
-    let version :string = '?'
-    try {
-      await fetch(process.env.WEB_URL + '/version', {
-        next: { revalidate: 30 },
-      }).then((response) => response.text().then((_version) => version = _version));
-    } catch (error) {
-      const errorMsg = 'error getting network configuration';
-      // console.log(errorMsg);
-      logError(errorMsg, error);
-      return {
-        ...catchMetadata,
-        error: { message: errorMsg, ...error },
-      };
-      // throw new Error(errorMsg);
-    }
+    const version = require('../../../public/version.json').version
     let serverProps = {
       metadata: {...getMetadata(
         subtitle,
