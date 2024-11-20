@@ -34,7 +34,8 @@ request_new_version() {
     echo $version
 }
 create_release_github() {
-    if [ $version !== $last_version ]; then
+    echo "creating release on github..."
+    if [ $version != $last_version ]; then
         curl -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
@@ -52,20 +53,6 @@ create_release_github() {
     fi
 }
 
-push_dockerhub() {
-    echo "Do you want to push a new version to dockerhub?"
-    read -r -n 1 -p "" push_dockerhub
-
-    case $push_dockerhub in
-    "y")
-        ssh helpbuttons.org "cd /live/scripts/ && ./update_ver.sh ${version}"
-        ;;
-    *)
-        echo "not building/pushing new version"
-        ;;
-    esac
-}
-
 release_new_version() {
     # change and pull master
     git checkout main
@@ -76,13 +63,21 @@ release_new_version() {
     version=$(cat version)
 
     # List of diffs of last master/tag
-    git_log_cmd=$(git log ${last_version}..HEAD --pretty=format:"%ad - %an - %s %h" --date="format:%d %b,%y")
+    git log ${last_version}..HEAD --pretty=format:"%ad - %an - %s %h" --date="format:%d %b,%y"
+    
+    echo "Did you tested everything on dev (y/n)?"
+    read -r -n 1 -p "" tested
 
-    token=$(cat .github-token)
-
-    create_release_github
-
-    push_dockerhub
+    case $tested in
+    "y")
+        token=$(cat .github-token)
+        create_release_github
+        ;;
+    *)
+        echo "please teste! <3"
+        ;;
+    esac
+    
 }
 
 prepare_release() {
@@ -91,8 +86,10 @@ prepare_release() {
     json_version="{\"version\": \"${version}\"}"
     echo $json_version > web/public/version.json
     echo $json_version > api/src/version.json
-    echo $last_version > last_version
-    echo $version > version
+    if [ $last_version != $version ]; then
+        echo $last_version > last_version
+        echo $version > version
+    fi
 }
 
 
