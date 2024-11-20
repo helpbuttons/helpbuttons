@@ -224,6 +224,9 @@ $card-button-list-border-height: $border-general-height;
   color: $color-black;
   margin: $padding-small 0;
 
+  word-break: break-word;
+  box-sizing: border-box;
+  flex: 0 1 100%;
 }
 
 .card-button-list__situation {
@@ -316,6 +319,7 @@ $card-button-list-border-height: $border-general-height;
   & p {
     max-height: 2.4em;
     line-height: 1.45em;
+    width: 100%;
   }
 
   & a {
@@ -349,25 +353,30 @@ $card-button-list-border-height: $border-general-height;
 
 }
 
+$card-button-picture-margin: 12px;
+
 .card-button-list__picture-container {
   width: 200px;
-
-  height: 100%;
+  height: calc( 100% - $card-button-picture-margin * 2);
   overflow: hidden;
   position: relative;
+  margin: $card-button-picture-margin;
+
   border-radius: $border-radius-basic;
-  display: flex;
-  background-size: cover;
-  align-content: center;
-  justify-content: center;
-  margin: $card-button-list-margin 0 0 $padding-small;
-  // display: flex;
-  // justify-content:  flex-start;
 
   & img {
-
-    width: auto;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    background-position: center center;
+    background-size: contain;
     object-fit: cover;
+    z-index: 3;
 
   }
 
