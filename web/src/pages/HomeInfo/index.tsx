@@ -65,21 +65,8 @@ export default function HomeInfo({ metadata }) {
     (state: GlobalState) => state.loggedInUser,
   );
   useMetadataTitle(t('menu.home'));
-  const [navigatorCoordinates, setNavigatorCoordinates] =
-    useState(null);
 
   const scrollToContact = useRef();
-  const [activities, setActivities] = useState([]);
-
-  useEffect(() => {
-    if (selectedNetwork) {
-      store.emit(
-        new FindLatestNetworkActivity((latestActivities) => {
-          setActivities(() => latestActivities);
-        }),
-      );
-    }
-  }, [selectedNetwork]);
   return (
     <>
       {selectedNetwork && (
@@ -99,274 +86,35 @@ export default function HomeInfo({ metadata }) {
       {selectedNetwork && (
         <div className="homeinfo__container">
           <div className="homeinfo__content">
-            {navigatorCoordinates && (
-              <div className="homeinfo-card">
-                <div className="homeinfo-homeinfo-card__header">
-                  <h3 className="homeinfo-homeinfo-card__header-title">
-                    {t('homeinfo.locationDetected')}
-                    <a
-                      href={`/Explore?lat=${navigatorCoordinates.latitude}&lng=${navigatorCoordinates.longitude}&zoom=13`}
-                    >
-                      {t('common.click')}
-                    </a>
-                  </h3>
-                </div>
-              </div>
-            )}
+            <NavigatorCoordsButton />
+
 
             <div className="homeinfo__sections">
               <ShowMobileOnly>
-                <div className="homeinfo-card__header">
-                  <div className="homeinfo__network-title">
-                    <div className="avatar-medium--home">
-                      <NetworkLogo network={selectedNetwork} />
-                    </div>
-                    <h3 className="homeinfo__network-title-text">
-                      {selectedNetwork.name}
-                    </h3>
-                  </div>
-                </div>
+                <HomeInfoNetworkLogo selectedNetwork={selectedNetwork}/>
+                
               </ShowMobileOnly>
 
-              {/*  PINNIED BUTTONS */}
-              {false && 
-                <div className="homeinfo-card">
-                  <div className="homeinfo-card__header">
-                    <h3 className="homeinfo-card__header-title">
-                      {t('homeinfo.featured')}
-                    </h3>
-                  </div>
-                  <hr></hr>
+              <HomeInfoPinnedButtons/>
+              <HomeInfoInfoCard selectedNetwork={selectedNetwork}/>
+              <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
+              <HomeInfoTopHashTags selectedNetwork={selectedNetwork}/>
 
-                  <div className="homeinfo-card__section">
-                    {/* <CardButtonHeadMedium
-                      button={button}
-                      buttonType={buttonType}
-                    /> */}
-                  </div>
-                </div>
-              }
-              {/*  INFO CARD */}
-              <div className="homeinfo-card">
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.info')}
-                  </h3>
+              <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork}/>
+              <HomeInfoRecentActivity selectedNetwork={selectedNetwork}/>
+              
+              <HomeInfoAdministeredBy scrollToContact={scrollToContact}/>
+              <HomeInfoActionCards currentUser={currentUser}/>
 
-                  <div className="homeinfo-card__controls">
-                    <Btn
-                      btnType={BtnType.filterCorp}
-                      contentAlignment={ContentAlignment.center}
-                      iconLink={<IoMapOutline />}
-                      iconLeft={IconType.svg}
-                      extraClass="homeinfo__network-title-card--buttons"
-                      caption={t('homeinfo.goToExplore')}
-                      onClick={() => router.push('Explore')}
-                    />
-                  </div>
-                </div>
-                <hr></hr>
-
-                <div className="homeinfo__description">
-                  <TextFormatted maxChars={600} text={selectedNetwork.description} />
-                </div>
-                <div className="homeinfo-card__section">
-                  <div className="homeinfo-card__action-bottom">
-                    <InstallButton />
-                    <DesktopNotificationsButton />
-                  </div>
-                </div>
-              </div>
-
-              {/* STATS CARD */}
-              <div className="homeinfo-card">
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.stats')}
-                  </h3>
-                  <div className="homeinfo-card__controls">
-                    <Btn
-                      btnType={BtnType.filterCorp}
-                      contentAlignment={ContentAlignment.center}
-                      iconLeft={IconType.svg}
-                      iconLink={<IoAddCircle />}
-                      extraClass="homeinfo__network-title-card--buttons"
-                      caption={t('homeinfo.goToCreate')}
-                      onClick={() => router.push('ButtonNew')}
-                    />
-                  </div>
-                </div>
-                <hr></hr>
-                <div className="homeinfo__description">
-                  {t('homeinfo.buttons', [
-                    selectedNetwork?.buttonCount,
-                    config?.userCount.toString(),
-                  ])}
-                  <div className="homeinfo__hashtags">
-                    <ListButtonTypes
-                      selectedNetwork={selectedNetwork}
-                      pageName={'HomeInfo'}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* TOP 10 HASHTAGS CARD OF NETWORK */}
-              <div className="homeinfo-card">
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.popularHashtags')}
-                  </h3>
-                </div>
-                <hr></hr>
-                <div className="homeinfo__description">
-                  {t('homeinfo.popularHashtagsExplain')}
-                </div>
-                <div className="homeinfo__hashtags">
-                  <TagsNav
-                    tags={selectedNetwork.topTags.map(
-                      (tag) => tag.tag,
-                    )}
-                  />
-                </div>
-              </div>
-
-              {/* HASHTAGS CARD OF NETWORK CONFIGURATION  */}
-              {selectedNetwork?.tags &&
-                selectedNetwork?.tags.length >= 0 && (
-                  <div className="homeinfo-card">
-                    <div className="homeinfo-card__header">
-                      <h3 className="homeinfo-card__header-title">
-                        {t('homeinfo.recommendedHashtags')}
-                      </h3>
-                    </div>
-                    <hr></hr>
-                    <div className="homeinfo__hashtags">
-                      <TagsNav tags={selectedNetwork.tags} />
-                    </div>
-                  </div>
-                )}
-
-              {/*  RECENT ACTIVITY IN THE APP */}
-              <div className="homeinfo-card">
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.activity')}
-                  </h3>
-                </div>
-
-                <hr></hr>
-                <div className="homeinfo__description">
-                  <ActivityList activities={activities} />
-                </div>
-              </div>
-
-              <div className="homeinfo-card" ref={scrollToContact}>
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.administeredby')}
-                  </h3>
-                </div>
-                <hr></hr>
-                <div className="homeinfo__description">
-                  {t('homeinfo.adminInstructions')}
-                  <div className="homeinfo__users">
-                    <LinkAdmins/>
-                  </div>
-                </div>
-              </div>
-
-              {/* ACTIONS CARD */}
-              <div className="homeinfo-card">
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.actions')}
-                  </h3>
-                  <div className="homeinfo-card__controls">
-                    <ShareButton
-                      onClick={() =>
-                        store.emit(
-                          new SetMainPopup(MainPopupPage.SHARE),
-                        )
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="homeinfo-card__section">
-                  <p>{t('homeinfo.exploreSubtitle')}</p>
-                  <NavLink href="/Explore">
-                    <IoGlobeOutline />
-                    <span>{t('menu.explore')}</span>
-                  </NavLink>
-                </div>
-                <div className="homeinfo-card__wrap">
-                <div className="homeinfo-card__section">
-                    <p>{t('homeinfo.createSubtitle')}</p>
-                    <NavLink href="/ButtonNew">
-                      <IoAddOutline />
-                      <span>{t('menu.create')}</span>
-                    </NavLink>
-                  </div>
-                  <div className="homeinfo-card__section">
-                    <p>{t('homeinfo.faqsSubtitle')}</p>
-                    <NavLink href="/Faqs">
-                      <IoHelpOutline />
-                      <span>{t('menu.faqs')}</span>
-                    </NavLink>
-                  </div>
-                </div>
-
-                {currentUser && (
-                  <>
-                    <div className="homeinfo-card__section">
-                      <p>{t('homeinfo.profileSubtitle')}</p>
-                      <NavLink href="/Profile">
-                        <IoLogInOutline />
-                        <span>{t('menu.profile')}</span>
-                      </NavLink>
-                    </div>
-                  </>
-                )}
-                {!currentUser && (
-                  <div className="homeinfo-card__section">
-                    <p>{t('homeinfo.loginSubtitle')}</p>
-                    <NavLink href="/Login">
-                      <IoLogInOutline />
-                      <span>{t('menu.login')}</span>
-                    </NavLink>
-                  </div>
-                )}
-                <div className="homeinfo-card__section">
-                  <p>{t('homeinfo.createNetwork')}</p>
-                  <NavLink href="https://helpbuttons.org">
-                    <IoAddOutline />
-                    <span>{t('homeinfo.createNetworkButton')}</span>
-                  </NavLink>
-                </div>
-                {/* <div className="homeinfo-card__section">
-                        <p>{t('homeinfo.donateSubtitle')}</p>
-                          <NavLink href="https://buy.stripe.com/dR68wx3CY17VdFKfZc">
-                          <IoCashOutline />
-                          <span>{t('menu.donate')}</span>
-                        </NavLink>
-                      </div> */}
-              </div>
-              <div className="homeinfo-card">
-                <div className="homeinfo-card__header">
-                  <h3 className="homeinfo-card__header-title"></h3>
-
-                </div>
-                <span className="homeinfo-card__section--attr">
-                      <PoweredExtra/>
-                </span>
-              </div>
+              <HomeInfoFooter/>
+              
 
             </div>
             <div
               className="homeinfo-card homeinfo__card--title-card"
               style={
                 {
-                  '--network-jumbo': `url('${apiUrl}${selectedNetwork.jumbo}'`,
+                  '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl+selectedNetwork.jumbo : '/assets/images/noIcon.png'}'`,
                 } as React.CSSProperties
               }
             >
@@ -442,4 +190,313 @@ function HomeinfoShareOptions({ user }) {
   };
 
   return <CardSubmenu extraClass="">{getOptions()}</CardSubmenu>;
+}
+
+function NavigatorCoordsButton() {
+  const [navigatorCoordinates, setNavigatorCoordinates] =
+    useState(null);
+  return (<>{navigatorCoordinates && (
+    <div className="homeinfo-card">
+      <div className="homeinfo-homeinfo-card__header">
+        <h3 className="homeinfo-homeinfo-card__header-title">
+          {t('homeinfo.locationDetected')}
+          <a
+            href={`/Explore?lat=${navigatorCoordinates.latitude}&lng=${navigatorCoordinates.longitude}&zoom=13`}
+          >
+            {t('common.click')}
+          </a>
+        </h3>
+      </div>
+    </div>
+  )}</>)
+}
+function HomeInfoNetworkLogo({selectedNetwork}) {
+  return (<div className="homeinfo-card__header">
+    <div className="homeinfo__network-title">
+      <div className="avatar-medium--home">
+        <NetworkLogo network={selectedNetwork} />
+      </div>
+      <h3 className="homeinfo__network-title-text">
+        {selectedNetwork.name}
+      </h3>
+    </div>
+  </div>)
+}
+
+function HomeInfoPinnedButtons() {
+  return (<>
+    {/*  PINNIED BUTTONS */}
+    {false &&
+      <div className="homeinfo-card">
+        <div className="homeinfo-card__header">
+          <h3 className="homeinfo-card__header-title">
+            {t('homeinfo.featured')}
+          </h3>
+        </div>
+        <hr></hr>
+
+        <div className="homeinfo-card__section">
+          {/* <CardButtonHeadMedium
+            button={button}
+            buttonType={buttonType}
+          /> */}
+        </div>
+      </div>
+    }</>
+  )
+}
+
+function HomeInfoInfoCard({selectedNetwork})
+{
+  return (<>{/*  INFO CARD */}
+    <div className="homeinfo-card">
+      <div className="homeinfo-card__header">
+        <h3 className="homeinfo-card__header-title">
+          {t('homeinfo.info')}
+        </h3>
+
+        <div className="homeinfo-card__controls">
+          <Btn
+            btnType={BtnType.filterCorp}
+            contentAlignment={ContentAlignment.center}
+            iconLink={<IoMapOutline />}
+            iconLeft={IconType.svg}
+            extraClass="homeinfo__network-title-card--buttons"
+            caption={t('homeinfo.goToExplore')}
+            onClick={() => router.push('Explore')}
+          />
+        </div>
+      </div>
+      <hr></hr>
+
+      <div className="homeinfo__description">
+        <TextFormatted maxChars={600} text={selectedNetwork.description} />
+      </div>
+      <div className="homeinfo-card__section">
+        <div className="homeinfo-card__action-bottom">
+          <InstallButton />
+          <DesktopNotificationsButton />
+        </div>
+      </div>
+    </div></>)
+}
+
+function HomeInfoStatsCard({selectedNetwork, config}) {
+return (<>
+              {/* STATS CARD */}
+              <div className="homeinfo-card">
+                <div className="homeinfo-card__header">
+                  <h3 className="homeinfo-card__header-title">
+                    {t('homeinfo.stats')}
+                  </h3>
+                  <div className="homeinfo-card__controls">
+                    <Btn
+                      btnType={BtnType.filterCorp}
+                      contentAlignment={ContentAlignment.center}
+                      iconLeft={IconType.svg}
+                      iconLink={<IoAddCircle />}
+                      extraClass="homeinfo__network-title-card--buttons"
+                      caption={t('homeinfo.goToCreate')}
+                      onClick={() => router.push('ButtonNew')}
+                    />
+                  </div>
+                </div><hr></hr>
+                <div className="homeinfo__description">
+                  {t('homeinfo.buttons', [
+                    selectedNetwork?.buttonCount,
+                    config?.userCount.toString(),
+                  ])}
+                  <div className="homeinfo__hashtags">
+                    <ListButtonTypes
+                      selectedNetwork={selectedNetwork}
+                      pageName={'HomeInfo'}
+                    />
+                  </div>
+                </div>
+              </div></>)
+}
+
+function HomeInfoTopHashTags({selectedNetwork}) {
+return (<>
+              {/* TOP 10 HASHTAGS CARD OF NETWORK */}
+              <div className="homeinfo-card">
+                <div className="homeinfo-card__header">
+                  <h3 className="homeinfo-card__header-title">
+                    {t('homeinfo.popularHashtags')}
+                  </h3>
+                </div>
+                <hr></hr>
+                <div className="homeinfo__description">
+                  {t('homeinfo.popularHashtagsExplain')}
+                </div>
+                <div className="homeinfo__hashtags">
+                  <TagsNav
+                    tags={selectedNetwork.topTags.map(
+                      (tag) => tag.tag,
+                    )}
+                  />
+                </div>
+              </div></>)
+}
+
+function HomeInfoPinnedHashTags({selectedNetwork}) {
+  return (<>
+  {/* HASHTAGS CARD OF NETWORK CONFIGURATION  */}
+  {selectedNetwork?.tags &&
+                selectedNetwork?.tags.length >= 0 && (
+                  <div className="homeinfo-card">
+                    <div className="homeinfo-card__header">
+                      <h3 className="homeinfo-card__header-title">
+                        {t('homeinfo.recommendedHashtags')}
+                      </h3>
+                    </div>
+                    <hr></hr>
+                    <div className="homeinfo__hashtags">
+                      <TagsNav tags={selectedNetwork.tags} />
+                    </div>
+                  </div>
+                )}
+  </>)
+}
+
+
+function HomeInfoRecentActivity({selectedNetwork}) {
+  const [activities, setActivities] = useState([]);
+  useEffect(() => {
+    if (selectedNetwork) {
+      store.emit(
+        new FindLatestNetworkActivity((latestActivities) => {
+          setActivities(() => latestActivities);
+        }),
+      );
+    }
+  }, [selectedNetwork]);
+  return (<>
+  {/*  RECENT ACTIVITY IN THE APP */}
+  <div className="homeinfo-card">
+                <div className="homeinfo-card__header">
+                  <h3 className="homeinfo-card__header-title">
+                    {t('homeinfo.activity')}
+                  </h3>
+                </div>
+
+                <hr></hr>
+                <div className="homeinfo__description">
+                  <ActivityList activities={activities} />
+                </div>
+              </div>
+  </>)
+}
+
+function HomeInfoAdministeredBy({scrollToContact}) {
+  return (<>
+  <div className="homeinfo-card" ref={scrollToContact}>
+                <div className="homeinfo-card__header">
+                  <h3 className="homeinfo-card__header-title">
+                    {t('homeinfo.administeredby')}
+                  </h3>
+                </div>
+                <hr></hr>
+                <div className="homeinfo__description">
+                  {t('homeinfo.adminInstructions')}
+                  <div className="homeinfo__users">
+                    <LinkAdmins />
+                  </div>
+                </div>
+              </div>
+  </>)
+}
+
+function HomeInfoActionCards({currentUser}) {
+  return (<>
+  {/* ACTIONS CARD */}
+  <div className="homeinfo-card">
+                <div className="homeinfo-card__header">
+                  <h3 className="homeinfo-card__header-title">
+                    {t('homeinfo.actions')}
+                  </h3>
+                  <div className="homeinfo-card__controls">
+                    <ShareButton
+                      onClick={() =>
+                        store.emit(
+                          new SetMainPopup(MainPopupPage.SHARE),
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="homeinfo-card__section">
+                  <p>{t('homeinfo.exploreSubtitle')}</p>
+                  <NavLink href="/Explore">
+                    <IoGlobeOutline />
+                    <span>{t('menu.explore')}</span>
+                  </NavLink>
+                </div>
+                <div className="homeinfo-card__wrap">
+                  <div className="homeinfo-card__section">
+                    <p>{t('homeinfo.createSubtitle')}</p>
+                    <NavLink href="/ButtonNew">
+                      <IoAddOutline />
+                      <span>{t('menu.create')}</span>
+                    </NavLink>
+                  </div>
+                  <div className="homeinfo-card__section">
+                    <p>{t('homeinfo.faqsSubtitle')}</p>
+                    <NavLink href="/Faqs">
+                      <IoHelpOutline />
+                      <span>{t('menu.faqs')}</span>
+                    </NavLink>
+                  </div>
+                </div>
+
+                {currentUser && (
+                  <>
+                    <div className="homeinfo-card__section">
+                      <p>{t('homeinfo.profileSubtitle')}</p>
+                      <NavLink href="/Profile">
+                        <IoLogInOutline />
+                        <span>{t('menu.profile')}</span>
+                      </NavLink>
+                    </div>
+                  </>
+                )}
+                {!currentUser && (
+                  <div className="homeinfo-card__section">
+                    <p>{t('homeinfo.loginSubtitle')}</p>
+                    <NavLink href="/Login">
+                      <IoLogInOutline />
+                      <span>{t('menu.login')}</span>
+                    </NavLink>
+                  </div>
+                )}
+                <div className="homeinfo-card__section">
+                  <p>{t('homeinfo.createNetwork')}</p>
+                  <NavLink href="https://helpbuttons.org">
+                    <IoAddOutline />
+                    <span>{t('homeinfo.createNetworkButton')}</span>
+                  </NavLink>
+                </div>
+                {/* <div className="homeinfo-card__section">
+                        <p>{t('homeinfo.donateSubtitle')}</p>
+                          <NavLink href="https://buy.stripe.com/dR68wx3CY17VdFKfZc">
+                          <IoCashOutline />
+                          <span>{t('menu.donate')}</span>
+                        </NavLink>
+                      </div> */}
+              </div>
+  </>)
+}
+
+function HomeInfoFooter() {
+  return (<>
+  <div className="homeinfo-card">
+                <div className="homeinfo-card__header">
+                  <h3 className="homeinfo-card__header-title"></h3>
+
+                </div>
+                <span className="homeinfo-card__section--attr">
+                  <PoweredExtra />
+                </span>
+              </div>
+  </>)
 }
