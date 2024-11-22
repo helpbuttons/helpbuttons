@@ -192,8 +192,17 @@ function MyApp({ Component, pageProps }) {
     };
   }, [config, selectedNetwork]);
 
-  const pageName = path.split('/')[1];
+  const pageName = getPageName(path.split('/')[1]);
+  
+  function getPageName(urlString) {
+    const finit = urlString.indexOf("#") !== -1 ? urlString.indexOf("#") : (urlString.indexOf("?") !== -1 ? urlString.indexOf("?") !== -1 : null)
+    if(finit){
+      return  urlString.substr(0,finit)  
+    }
+    return  urlString;
+  }
 
+  
   useEffect(() => {
     if (selectedNetwork) {
       updateNomeclature(
