@@ -5,6 +5,7 @@ import {
   FindButton,
   SaveButtonDraft,
   UpdateButton,
+  updateCurrentButton,
 } from 'state/Explore';
 import { NavigateTo } from 'state/Routes';
 import { useRef } from 'store/Store';
@@ -79,24 +80,19 @@ export default function ButtonEdit() {
     if(!router.isReady){
       return;
     }
-    setId(() => router.query.id as string)
+    setId(() =>  router.query.id as string)
+    store.emit(
+      new FindButton(
+        router.query.id as string,
+        (buttonFetched) => {
+          store.emit(new updateCurrentButton(buttonFetched))
+          setButton(buttonFetched);
+          reset(buttonFetched);
+        }
+      ),
+    );
   }, [router.isReady])
-  useEffect(() => {
-    if (id != null) {
-      store.emit(
-        new FindButton(
-          id,
-          (buttonFetched) => {
-            setButton(buttonFetched);
-            reset(buttonFetched);
-          },
-          (errorMessage) => {
-            alertService.error(errorMessage.caption);
-          },
-        ),
-      );
-    }
-  }, [id]);
+
   return (
     <>
     {button &&
