@@ -362,10 +362,12 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__hashtags {
+
+  display: flex;
   -webkit-line-clamp: 3;
   -webkit-box-orient:horizontal;
   overflow: scroll;
-  color: black;
+  color: $color-black;
     &:hover {
       // color: $hashtag-hover-color;
       // background: $color-black;

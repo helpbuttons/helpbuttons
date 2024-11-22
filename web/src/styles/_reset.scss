@@ -101,7 +101,6 @@ html,
 body,
 #__next,
 .index__container,
-.homeinfo__container,
 .homeinfo__card,
 .popup,
 .index__content,
@@ -115,7 +114,7 @@ body,
 
 .homeinfo__container {
 
-  height: calc(var(--vh) - 69px) !important;
+  height: calc(var(--vh) - 60px) !important;
 
 }
 

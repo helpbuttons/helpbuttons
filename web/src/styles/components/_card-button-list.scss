@@ -223,6 +223,9 @@ $card-button-list-border-height: $border-general-height;
   font-weight: $font-weight-bold;
   color: $color-black;
   margin: $padding-small 0;
+  max-height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   word-break: break-word;
   box-sizing: border-box;
@@ -299,21 +302,21 @@ $card-button-list-border-height: $border-general-height;
   text-align: left;
 
   display: flex;
-  height: 100%;
+  // height: 100%;
   overflow: hidden;
   padding: 12px 0;
   position: relative;
 
-  &:after {
-    display: block;
-    content: '';
-    width: 100%;
-    height: 50px;
-    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.9), white);
-    bottom: 0;
-    left: 0;
-    position: absolute;
-  }
+  // &:after {
+  //   display: block;
+  //   content: '';
+  //   width: 100%;
+  //   height: 50px;
+  //   background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.9), white);
+  //   bottom: 0;
+  //   left: 0;
+  //   position: absolute;
+  // }
 
   & p {
     max-height: 2.4em;

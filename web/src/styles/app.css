@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import "~@fontsource/nunito/index.css";
 @import "~@fontsource/nunito/700.css";
 @import "~@fontsource/nunito/400.css";
@@ -506,14 +507,19 @@
   background: none;
   border: none;
   padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+}
+.radio div {
+  margin-right: 12px;
 }
 .radio:focus {
   outline: none;
 }
 
-.radio__label {
-  display: block;
-  width: 100%;
+.radio__label .radio__content {
+  margin-top: 8px;
+  gap: 0;
 }
 
 .radio__filter-label {
@@ -548,16 +554,19 @@
 .radio__content {
   background: #fff;
   border: 1px solid #D4D4D4;
-  display: flex;
   font-size: 18px;
   position: relative;
   height: 54px;
   transition: background 0.2s;
-  width: auto;
   color: #0E0E0E;
   min-width: 150px;
   border-radius: 42px;
   box-sizing: border-box;
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 100%;
+  padding: 0 12px;
 }
 
 .radio__content--bordered {
@@ -1015,7 +1024,7 @@
 .form__field, .homeinfo__nets, .homeinfo__content, .form__image-upload-wrapper {
   max-width: 100%;
   font-size: 18px;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
 
 .form__field--noMargin {
@@ -1470,8 +1479,7 @@
 
 .btn, .homeinfo-card__section a, .accordion, .btn--small,
 .btn-with-icon,
-.checkbox__content,
-.radio__content {
+.checkbox__content {
   align-items: center;
   display: flex;
   padding: 0 15px;
@@ -1486,7 +1494,7 @@
   color: #0E0E0E;
 }
 
-.btn-with-icon, .homeinfo-card__section a, .checkbox__content, .radio__content {
+.btn-with-icon, .homeinfo-card__section a, .checkbox__content {
   gap: 25px;
 }
 
@@ -1580,7 +1588,6 @@
 [disabled].btn-circle--big-icon,
 .btn-with-icon[disabled],
 [disabled].checkbox__content,
-[disabled].radio__content,
 .btn-filter[disabled],
 [disabled].dropdown-select__trigger--filter,
 [disabled].dropdown__filter,
@@ -1603,7 +1610,6 @@
 [disabled].btn-circle--big-icon div,
 .btn-with-icon[disabled] div,
 [disabled].checkbox__content div,
-[disabled].radio__content div,
 .btn-filter[disabled] div,
 [disabled].dropdown-select__trigger--filter div,
 [disabled].dropdown__filter div,
@@ -1624,7 +1630,6 @@
 [disabled].btn-circle--big-icon svg,
 .btn-with-icon[disabled] svg,
 [disabled].checkbox__content svg,
-[disabled].radio__content svg,
 .btn-filter[disabled] svg,
 [disabled].dropdown-select__trigger--filter svg,
 [disabled].dropdown__filter svg,
@@ -1645,7 +1650,6 @@
 [disabled].btn-circle--big-icon:hover,
 .btn-with-icon[disabled]:hover,
 [disabled].checkbox__content:hover,
-[disabled].radio__content:hover,
 .btn-filter[disabled]:hover,
 [disabled].dropdown-select__trigger--filter:hover,
 [disabled].dropdown__filter:hover,
@@ -1669,7 +1673,6 @@
 [disabled].btn-circle--big-icon:hover svg,
 .btn-with-icon[disabled]:hover svg,
 [disabled].checkbox__content:hover svg,
-[disabled].radio__content:hover svg,
 .btn-filter[disabled]:hover svg,
 [disabled].dropdown-select__trigger--filter:hover svg,
 [disabled].dropdown__filter:hover svg,
@@ -1690,7 +1693,6 @@
 [disabled].btn-circle--big-icon:active,
 .btn-with-icon[disabled]:active,
 [disabled].checkbox__content:active,
-[disabled].radio__content:active,
 .btn-filter[disabled]:active,
 [disabled].dropdown-select__trigger--filter:active,
 [disabled].dropdown__filter:active,
@@ -1713,7 +1715,6 @@
 [disabled].btn-circle--big-icon:active svg,
 .btn-with-icon[disabled]:active svg,
 [disabled].checkbox__content:active svg,
-[disabled].radio__content:active svg,
 .btn-filter[disabled]:active svg,
 [disabled].dropdown-select__trigger--filter:active svg,
 [disabled].dropdown__filter:active svg,
@@ -1734,7 +1735,6 @@
 [disabled].btn-circle--big-icon:focus,
 .btn-with-icon[disabled]:focus,
 [disabled].checkbox__content:focus,
-[disabled].radio__content:focus,
 .btn-filter[disabled]:focus,
 [disabled].dropdown-select__trigger--filter:focus,
 [disabled].dropdown__filter:focus,
@@ -1757,7 +1757,6 @@
 [disabled].btn-circle--big-icon:focus svg,
 .btn-with-icon[disabled]:focus svg,
 [disabled].checkbox__content:focus svg,
-[disabled].radio__content:focus svg,
 .btn-filter[disabled]:focus svg,
 [disabled].dropdown-select__trigger--filter:focus svg,
 [disabled].dropdown__filter:focus svg,
@@ -1779,7 +1778,6 @@
 .btn-circle--big-icon:hover,
 .btn-with-icon:hover,
 .checkbox__content:hover,
-.radio__content:hover,
 .btn-filter:hover,
 .dropdown-select__trigger--filter:hover,
 .dropdown__filter:hover,
@@ -1803,7 +1801,6 @@
 .btn-circle--big-icon:hover svg,
 .btn-with-icon:hover svg,
 .checkbox__content:hover svg,
-.radio__content:hover svg,
 .btn-filter:hover svg,
 .dropdown-select__trigger--filter:hover svg,
 .dropdown__filter:hover svg,
@@ -1825,7 +1822,6 @@
 .btn-circle--big-icon:focus,
 .btn-with-icon:focus,
 .checkbox__content:focus,
-.radio__content:focus,
 .btn-filter:focus,
 .dropdown-select__trigger--filter:focus,
 .dropdown__filter:focus,
@@ -1848,7 +1844,6 @@
 .btn-circle--big-icon:focus svg,
 .btn-with-icon:focus svg,
 .checkbox__content:focus svg,
-.radio__content:focus svg,
 .btn-filter:focus svg,
 .dropdown-select__trigger--filter:focus svg,
 .dropdown__filter:focus svg,
@@ -1870,7 +1865,6 @@
 .btn-circle--big-icon:active,
 .btn-with-icon:active,
 .checkbox__content:active,
-.radio__content:active,
 .btn-filter:active,
 .dropdown-select__trigger--filter:active,
 .dropdown__filter:active,
@@ -1893,7 +1887,6 @@
 .btn-circle--big-icon:active svg,
 .btn-with-icon:active svg,
 .checkbox__content:active svg,
-.radio__content:active svg,
 .btn-filter:active svg,
 .dropdown-select__trigger--filter:active svg,
 .dropdown__filter:active svg,
@@ -1917,7 +1910,6 @@
   .btn-circle--big-icon:hover,
   .btn-with-icon:hover,
   .checkbox__content:hover,
-  .radio__content:hover,
   .btn-filter:hover,
   .dropdown-select__trigger--filter:hover,
   .dropdown__filter:hover,
@@ -1941,7 +1933,6 @@
   .btn-circle--big-icon:hover svg,
   .btn-with-icon:hover svg,
   .checkbox__content:hover svg,
-  .radio__content:hover svg,
   .btn-filter:hover svg,
   .dropdown-select__trigger--filter:hover svg,
   .dropdown__filter:hover svg,
@@ -1963,7 +1954,6 @@
   .btn-circle--big-icon:focus,
   .btn-with-icon:focus,
   .checkbox__content:focus,
-  .radio__content:focus,
   .btn-filter:focus,
   .dropdown-select__trigger--filter:focus,
   .dropdown__filter:focus,
@@ -1986,7 +1976,6 @@
   .btn-circle--big-icon:focus svg,
   .btn-with-icon:focus svg,
   .checkbox__content:focus svg,
-  .radio__content:focus svg,
   .btn-filter:focus svg,
   .dropdown-select__trigger--filter:focus svg,
   .dropdown__filter:focus svg,
@@ -2183,32 +2172,52 @@ em-emoji-picker {
   margin: 5px;
 }
 
+.form__btn-search .form__field:nth-child(1) .form__explain + .btn, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn, .form__btn-search .form__field:nth-child(1) .homeinfo-card__section .form__explain + a, .form__btn-search .homeinfo__nets:nth-child(1) .homeinfo-card__section .form__explain + a, .homeinfo-card__section .form__btn-search .form__field:nth-child(1) .form__explain + a, .homeinfo-card__section .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + a, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn, .form__btn-search .homeinfo__content:nth-child(1) .homeinfo-card__section .form__explain + a, .homeinfo-card__section .form__btn-search .homeinfo__content:nth-child(1) .form__explain + a, .form__btn-search .form__field:nth-child(1) .form__explain + .accordion, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .accordion, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .accordion, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn, .form__btn-search .form__image-upload-wrapper:nth-child(1) .homeinfo-card__section .form__explain + a, .homeinfo-card__section .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + a, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .accordion, .form__btn-search .form__field:nth-child(1) .form__explain + .btn--small, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn--small, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn--small, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn--small {
+  display: block;
+  background: white;
+  border: 4px solid black;
+  border-radius: 8px;
+  font-weight: bold;
+  padding: 0 48px;
+  margin: 0;
+}
+.form__btn-search .form__field:nth-child(1) .form__explain + .btn:after, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn:after, .form__btn-search .form__field:nth-child(1) .homeinfo-card__section .form__explain + a:after, .form__btn-search .homeinfo__nets:nth-child(1) .homeinfo-card__section .form__explain + a:after, .homeinfo-card__section .form__btn-search .form__field:nth-child(1) .form__explain + a:after, .homeinfo-card__section .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + a:after, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn:after, .form__btn-search .homeinfo__content:nth-child(1) .homeinfo-card__section .form__explain + a:after, .homeinfo-card__section .form__btn-search .homeinfo__content:nth-child(1) .form__explain + a:after, .form__btn-search .form__field:nth-child(1) .form__explain + .accordion:after, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .accordion:after, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .accordion:after, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn:after, .form__btn-search .form__image-upload-wrapper:nth-child(1) .homeinfo-card__section .form__explain + a:after, .homeinfo-card__section .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + a:after, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .accordion:after, .form__btn-search .form__field:nth-child(1) .form__explain + .btn--small:after, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn--small:after, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn--small:after, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn--small:after {
+  display: block;
+  content: "🔎";
+  position: absolute;
+  left: 12px;
+  top: 6px;
+  height: 28px;
+  width: 28px;
+}
+.form__btn-search .form__field:nth-child(1) .form__explain + .btn:focus, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn:focus, .form__btn-search .form__field:nth-child(1) .homeinfo-card__section .form__explain + a:focus, .form__btn-search .homeinfo__nets:nth-child(1) .homeinfo-card__section .form__explain + a:focus, .homeinfo-card__section .form__btn-search .form__field:nth-child(1) .form__explain + a:focus, .homeinfo-card__section .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + a:focus, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn:focus, .form__btn-search .homeinfo__content:nth-child(1) .homeinfo-card__section .form__explain + a:focus, .homeinfo-card__section .form__btn-search .homeinfo__content:nth-child(1) .form__explain + a:focus, .form__btn-search .form__field:nth-child(1) .form__explain + .accordion:focus, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .accordion:focus, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .accordion:focus, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn:focus, .form__btn-search .form__image-upload-wrapper:nth-child(1) .homeinfo-card__section .form__explain + a:focus, .homeinfo-card__section .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + a:focus, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .accordion:focus, .form__btn-search .form__field:nth-child(1) .form__explain + .btn--small:focus, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn--small:focus, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn--small:focus, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn--small:focus, .form__btn-search .form__field:nth-child(1) .form__explain + .btn:active, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn:active, .form__btn-search .form__field:nth-child(1) .homeinfo-card__section .form__explain + a:active, .form__btn-search .homeinfo__nets:nth-child(1) .homeinfo-card__section .form__explain + a:active, .homeinfo-card__section .form__btn-search .form__field:nth-child(1) .form__explain + a:active, .homeinfo-card__section .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + a:active, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn:active, .form__btn-search .homeinfo__content:nth-child(1) .homeinfo-card__section .form__explain + a:active, .homeinfo-card__section .form__btn-search .homeinfo__content:nth-child(1) .form__explain + a:active, .form__btn-search .form__field:nth-child(1) .form__explain + .accordion:active, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .accordion:active, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .accordion:active, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn:active, .form__btn-search .form__image-upload-wrapper:nth-child(1) .homeinfo-card__section .form__explain + a:active, .homeinfo-card__section .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + a:active, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .accordion:active, .form__btn-search .form__field:nth-child(1) .form__explain + .btn--small:active, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn--small:active, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn--small:active, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn--small:active, .form__btn-search .form__field:nth-child(1) .form__explain + .btn:hover, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn:hover, .form__btn-search .form__field:nth-child(1) .homeinfo-card__section .form__explain + a:hover, .form__btn-search .homeinfo__nets:nth-child(1) .homeinfo-card__section .form__explain + a:hover, .homeinfo-card__section .form__btn-search .form__field:nth-child(1) .form__explain + a:hover, .homeinfo-card__section .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + a:hover, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn:hover, .form__btn-search .homeinfo__content:nth-child(1) .homeinfo-card__section .form__explain + a:hover, .homeinfo-card__section .form__btn-search .homeinfo__content:nth-child(1) .form__explain + a:hover, .form__btn-search .form__field:nth-child(1) .form__explain + .accordion:hover, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .accordion:hover, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .accordion:hover, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn:hover, .form__btn-search .form__image-upload-wrapper:nth-child(1) .homeinfo-card__section .form__explain + a:hover, .homeinfo-card__section .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + a:hover, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .accordion:hover, .form__btn-search .form__field:nth-child(1) .form__explain + .btn--small:hover, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn--small:hover, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn--small:hover, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn--small:hover {
+  color: black;
+  background: white;
+}
+
 .dropdown__dropdown-trigger {
   text-align: left;
   overflow-x: hidden;
   height: 54px;
   padding: 0 15px;
   margin: 7px 0;
-  width: 100%;
-  border: 1px solid #D4D4D4;
-  border-radius: 2rem;
   background: #fff;
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
+  width: 100%;
+  border-radius: 8px;
+  background: #f0f0f0;
+  border-right: 24px solid #f0f0f0;
 }
 .dropdown__dropdown-trigger:hover {
   cursor: pointer;
 }
 .dropdown__dropdown-trigger:focus {
   cursor: pointer;
-  border-radius: 34px;
-  background: #fff;
 }
 .dropdown__dropdown-trigger:active {
   cursor: pointer;
-  border-radius: 34px;
-  background: #f0f0f0;
 }
 
 .dropdown__dropdown-trigger--list {
@@ -2499,6 +2508,9 @@ li, ol, ul, h2 {
   font-weight: 600;
   color: #fff;
   gap: 5px;
+}
+.card-alert__content button {
+  margin-left: 12px;
 }
 
 .card-alert__icon {
@@ -3345,7 +3357,7 @@ li, ol, ul, h2 {
 
 @media only screen and (min-width: 1440px) {
   .dropdown-nets__dropdown-trigger {
-    max-width: 700px;
+    max-width: 784px;
     min-width: 5rem;
   }
 }
@@ -4170,15 +4182,9 @@ li, ol, ul, h2 {
   margin-bottom: 0;
   font-weight: 600;
   color: #0E0E0E;
-  display: -webkit-box;
   margin: 5px 0;
-  display: flex;
-  flex-direction: row;
+  max-height: 50px;
   overflow: hidden;
-  align-items: flex-start;
-  word-break: break-word;
-  -webkit-line-clamp: 2;
-  word-wrap: break-word;
   text-overflow: ellipsis;
 }
 
@@ -4242,34 +4248,21 @@ li, ol, ul, h2 {
 }
 
 .card-button-list__paragraph {
-  word-break: break-word;
   color: #828282;
   font-size: 16px;
-  white-space: pre-line;
   text-align: left;
-  flex-grow: 1;
+  display: flex;
   overflow: hidden;
+  padding: 12px 0;
+  position: relative;
 }
 .card-button-list__paragraph p {
-  margin-top: 0;
-  word-break: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* number of lines to show */
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-wrap: break-word;
   max-height: 2.4em;
-  line-height: 1.2em;
+  line-height: 1.45em;
 }
 .card-button-list__paragraph a {
   color: var(--network-text-color);
   cursor: pointer;
-}
-
-.card-button-list__paragraph--small-card {
-  -webkit-line-clamp: 1;
 }
 
 .card-button-list__phone {
@@ -4296,9 +4289,8 @@ li, ol, ul, h2 {
 }
 
 .card-button-list__picture-container {
-  width: 220px;
-  min-width: 150px;
-  height: 210px;
+  width: 200px;
+  height: 100%;
   overflow: hidden;
   position: relative;
   border-radius: 8px;
@@ -4463,6 +4455,11 @@ li, ol, ul, h2 {
   color: #18AAD2 !important;
   cursor: pointer;
 }
+.nav-bottom__button:hover svg, .nav-bottom__button :active svg,
+.nav-bottom__link:hover svg,
+.nav-bottom__link :active svg {
+  fill: #18AAD2;
+}
 .nav-bottom__button:hover .nav-bottom__icon, .nav-bottom__button :active .nav-bottom__icon,
 .nav-bottom__link:hover .nav-bottom__icon,
 .nav-bottom__link :active .nav-bottom__icon {
@@ -4470,13 +4467,8 @@ li, ol, ul, h2 {
 }
 
 .nav-bottom__text {
-  font-size: 10px;
+  font-size: 12px;
   text-decoration: none;
-  padding: 2px 0 0;
-}
-
-.nav-bottom__link--active {
-  font-weight: bolder;
 }
 
 .nav-bottom__link--current {
@@ -4496,6 +4488,11 @@ li, ol, ul, h2 {
   animation: spread 1s ease-out forwards;
 }
 
+.nav-bottom__link--create {
+  padding-left: 32px;
+  padding-right: 32px;
+  background: white;
+}
 .nav-bottom__link--create .nav-bottom__icon svg {
   color: #0E0E0E;
 }
@@ -4518,11 +4515,10 @@ li, ol, ul, h2 {
 
 .nav-bottom__icon svg {
   fill: #0E0E0E;
-  height: 24px;
-  width: 24px;
+  height: 20px;
+  width: 20px;
   padding: 3px;
   padding-bottom: 0;
-  background: var(--network-background-color);
 }
 
 .notif-circle {
@@ -4551,7 +4547,7 @@ li, ol, ul, h2 {
     border-radius: 0 0 32px 32px;
     z-index: 0;
     justify-content: flex-end;
-    gap: 30px;
+    gap: 24px;
     position: relative;
     top: 0;
     align-items: center;
@@ -4566,6 +4562,9 @@ li, ol, ul, h2 {
   .nav-bottom__link:hover, .nav-bottom__link :active {
     cursor: pointer;
   }
+  .nav-bottom__link--create {
+    order: 4;
+  }
   .nav-bottom__link--create .nav-bottom__icon svg {
     left: -18px;
     color: #0E0E0E;
@@ -4573,11 +4572,6 @@ li, ol, ul, h2 {
   .nav-bottom__link--create:hover, .nav-bottom__link--create :active {
     color: #18AAD2 !important;
     cursor: pointer;
-  }
-  .nav-bottom__link--create:hover .nav-bottom__icon, .nav-bottom__link--create :active .nav-bottom__icon {
-    color: #18AAD2 !important;
-    transition: 0.2s;
-    transform: translateY(-0.4rem);
   }
   .nav-bottom__link--create:hover .nav-bottom__icon svg, .nav-bottom__link--create :active .nav-bottom__icon svg {
     fill: #18AAD2 !important;
@@ -4592,9 +4586,6 @@ li, ol, ul, h2 {
   .nav-bottom-profile {
     border-radius: 32px;
     max-width: 640px;
-  }
-  .nav-bottom__link--active {
-    height: auto;
   }
   .notif-circle {
     top: auto;
@@ -4674,7 +4665,7 @@ li, ol, ul, h2 {
     box-shadow: none;
   }
   .nav-header__content {
-    max-width: 700px;
+    max-width: 784px;
     justify-content: flex-start;
     flex: 0.9;
     width: 100%;
@@ -4948,6 +4939,13 @@ hr {
   }
   .homeinfo-card__controls {
     flex-flow: row nowrap;
+  }
+  .homeinfo-card__wrap {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  .homeinfo-card__wrap .homeinfo-card__section {
+    flex: 0 1 50%;
   }
 }
 @media only screen and (min-width: 1280px) {
@@ -5275,15 +5273,6 @@ hr {
   margin-bottom: 0;
 }
 
-.card-button__content > * {
-  display: flex;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-  word-break: break-word;
-  line-clamp: 2;
-}
-
 .card-button:after,
 .card-button:before {
   content: "";
@@ -5296,22 +5285,22 @@ hr {
   width: 100%;
 }
 
+.card-button__content,
+.card-button__content--small {
+  padding: 12px 16px;
+}
+
 .card-button__content {
-  padding: 15px;
   display: flex;
   flex-flow: column nowrap;
   height: 100%;
+  justify-content: space-between;
   width: 100%;
-}
-
-.card-button__content--small {
-  padding: 10px 5px 5px 10px;
 }
 
 .card-button__header {
   display: flex;
   flex-flow: row nowrap;
-  overflow-x: hidden;
   justify-content: space-between;
   gap: 15px;
 }
@@ -5562,10 +5551,11 @@ hr {
 }
 
 .card-button__hashtags {
+  display: flex;
   -webkit-line-clamp: 3;
   -webkit-box-orient: horizontal;
   overflow: scroll;
-  color: black;
+  color: #0E0E0E;
 }
 .card-button__ofrece .hashtag, .card-button__ofrece .form__input-tags li, .form__input-tags .card-button__ofrece li, .card-button__ofrece .form__tags-list .tags__list .tags__list-interest, .form__tags-list .tags__list .card-button__ofrece .tags__list-interest, .card-button__ofrece .form__tags-list .tags__list .tags__list-interest__selected, .form__tags-list .tags__list .card-button__ofrece .tags__list-interest__selected {
   background: #19AF96;
@@ -5900,6 +5890,10 @@ hr {
 }
 
 @media only screen and (min-width: 1280px) {
+  .card-button__content,
+  .card-button__content--small {
+    padding: 12px 24px;
+  }
   .card-button__full-content,
   .card-button__author,
   .card-button__actions {
@@ -6171,7 +6165,6 @@ hr {
 
 .card-notification__label {
   display: inline-flex;
-  padding: 5px 0 0 5px;
   pointer-events: none;
   gap: 7px;
   align-items: center;
@@ -6534,7 +6527,7 @@ hr {
     flex-flow: column nowrap;
     height: 100%;
     width: 100%;
-    min-width: 700px;
+    min-width: 784px;
     margin-bottom: 0;
     padding-bottom: 10px;
   }
@@ -7141,7 +7134,7 @@ hr {
 
 @media only screen and (min-width: 991px) {
   .feed__container {
-    max-width: 700px;
+    max-width: 784px;
     margin: auto;
     border-right: 1px solid #D4D4D4;
     border-left: 1px solid #D4D4D4;
@@ -7826,7 +7819,7 @@ hr {
 
 @media only screen and (min-width: 991px) {
   .feed__container {
-    max-width: 700px;
+    max-width: 784px;
     margin: auto;
     border-right: 1px solid #D4D4D4;
     border-left: 1px solid #D4D4D4;
@@ -7949,14 +7942,17 @@ hr {
   height: auto;
   border-bottom: 1px solid #D4D4D4;
   justify-content: space-between;
-  padding: 5px 15px;
   gap: 5px;
   position: relative;
   bottom: auto;
   left: auto;
-  min-height: 60px;
+  min-height: 42px;
   border-radius: 24px 24px 0 0;
   box-shadow: 0 0 22px 0px rgba(0, 0, 0, 0.2);
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 15px;
+  padding-bottom: 5px;
 }
 
 .list__order--full-screen {
@@ -7977,9 +7973,6 @@ hr {
 }
 
 @media only screen and (min-width: 991px) {
-  .list__order {
-    padding: 10px 15px;
-  }
   .list__show-map-button--hideList {
     bottom: 40px;
   }
@@ -8039,7 +8032,7 @@ hr {
     height: auto;
     left: auto;
     border-radius: 0;
-    padding: 10px 15px;
+    padding: 0 0;
   }
 }
 body {
@@ -8156,7 +8149,7 @@ body {
 }
 
 .popup__section {
-  padding: 15px;
+  padding: 24px;
   height: auto;
 }
 
@@ -8329,7 +8322,7 @@ body {
     min-height: 50px;
   }
   .popup__section {
-    padding: 5px 40px 40px 40px;
+    padding: 32px 36px;
   }
   .popup__options-h {
     flex-flow: row nowrap;
@@ -8342,7 +8335,7 @@ body {
 @media only screen and (min-width: 1280px) {
   .popup {
     margin: auto;
-    max-width: 700px;
+    max-width: 784px;
     pointer-events: auto;
     padding-top: 15px;
   }
@@ -8356,7 +8349,7 @@ body {
     border-radius: 0;
   }
   .popup--button-file {
-    max-width: 60vw;
+    max-width: 70vw;
   }
 }
 .repository {
@@ -8430,24 +8423,24 @@ body {
   .index__content-left {
     border-right: 1px solid #D4D4D4;
     flex-direction: column;
-    width: 60vw;
+    width: 70vw;
     float: left;
     height: 100%;
     transition: all 1s;
-    min-width: 60vw;
+    min-width: 70vw;
     box-shadow: 0 0 22px 0px rgba(0, 0, 0, 0.2);
   }
   .index__content-left--hide {
-    margin-left: -60vw;
+    margin-left: -70vw;
     bottom: 0;
   }
 }
 @media only screen and (min-width: 1440px) {
   .index__content-left {
-    width: 60vw;
+    width: 70vw;
   }
   .index__content-left--hide {
-    margin-left: -60vw;
+    margin-left: -70vw;
   }
 }
 .publish_btn {
@@ -8758,7 +8751,7 @@ body {
 .button-file__container {
   overflow-y: scroll;
   height: 100vh;
-  max-width: 700px;
+  max-width: 784px;
   padding-bottom: 70px;
 }
 
@@ -9038,7 +9031,7 @@ body {
     flex-direction: row-reverse;
     height: auto;
     gap: 10px;
-    left: calc(60vw + 20px);
+    left: calc(70vw + 20px);
     border-radius: 34px;
     cursor: pointer; /* fallback if grab cursor is unsupported */
     padding: 5px;
@@ -9066,7 +9059,7 @@ body {
 }
 @media only screen and (min-width: 1440px) {
   .drag-tab {
-    left: calc(60vw + 20px);
+    left: calc(70vw + 20px);
     margin-bottom: 5px;
   }
   .drag-tab--open {
@@ -9175,7 +9168,6 @@ html,
 body,
 #__next,
 .index__container,
-.homeinfo__container,
 .homeinfo__card,
 .popup,
 .index__content,
@@ -9187,7 +9179,7 @@ body,
 }
 
 .homeinfo__container {
-  height: calc(var(--vh) - 69px) !important;
+  height: calc(var(--vh) - 60px) !important;
 }
 
 .popup__content {
