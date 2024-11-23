@@ -40,8 +40,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     useSetButtonFromUrl();
   }, [])
-  
-  const [authorized, setAuthorized] = useState(false);
+  const [authorized, setAuthorized] = useState(null);
   const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
@@ -55,10 +54,9 @@ function MyApp({ Component, pageProps }) {
 
   const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
   state.networks.selectedNetworkLoading)
-  
   const onFetchingNetworkError = (error) => {
     if (error === 'network-not-found') {
-      setFetchingNetworkError(true)     
+      setFetchingNetworkError(true)
     }
   };
 
@@ -79,6 +77,20 @@ function MyApp({ Component, pageProps }) {
     console.log(error);
     return;
   };
+  const [pageName, setPageName] = useState('HomeInfo')
+  useEffect(() => {
+    setPageName(getPageName(path.split('/')[1]))
+
+    function getPageName(urlString) {
+      const finit = urlString.indexOf("#") !== -1 ? urlString.indexOf("#") : (urlString.indexOf("?") !== -1 ? urlString.indexOf("?") !== -1 : null)
+      if (finit) {
+        return urlString.substr(0, finit)
+      }
+      return urlString;
+    }
+  }, [path])
+  
+
 
   const config = useConfig(pageProps._config, onFetchingConfigError);
   const selectedNetwork = useSelectedNetwork(
@@ -128,52 +140,52 @@ function MyApp({ Component, pageProps }) {
       return;
     }
 
-    if (
-      !authorized &&
-      config &&
-      config.userCount < 1 &&
-      (path == SetupSteps.CREATE_ADMIN_FORM || path == '/Login')
+    if (!config) {
+      return;
+    }
+    if (config.userCount < 1 &&
+      (path == SetupSteps.CREATE_ADMIN_FORM)
     ) {
       setAuthorized(true);
+      return;
     }
-    // if (!authorized) {
-    if (UserService.isLoggedIn()) {
-      // check if local storage has a token
-      if (!loggedInUser) {
-        if (!isLoadingUser) {
-          store.emit(
-            new FetchUserData(
-              () => {
-                setIsLoadingUser(false);
-              },
-              (error) => {
-                // if local storage has a token, and fails to fetchUserData then delete storage token
-                UserService.logout();
-                setIsLoadingUser(false);
-              },
-            ),
-          );
-        }
-        setIsLoadingUser(true);
-      } else {
-        setAuthorized(isRoleAllowed(loggedInUser.role, path));
+
+    // check if local storage has a token
+    if (loggedInUser === false) {
+      if (!isLoadingUser) {
+        store.emit(
+          new FetchUserData(
+            () => {
+              setIsLoadingUser(false);
+            },
+            (error) => {
+              // if local storage has a token, and fails to fetchUserData then delete storage token
+              UserService.logout();
+              setIsLoadingUser(false);
+            },
+          ),
+        );
       }
-    } else {
-      if (config) {
-        if (
-          config.userCount < 1 &&
-          path == SetupSteps.CREATE_ADMIN_FORM
-        ) {
-          setAuthorized(true);
-        } else {
-          setAuthorized(isRoleAllowed(Role.guest, path));
-        }
-      } else if (path != SetupSteps.CREATE_ADMIN_FORM) {
-        setAuthorized(isRoleAllowed(Role.guest, path));
-      }
+      setIsLoadingUser(true);
+      return;
     }
-    // }
-  }, [path, config, loggedInUser]);
+    if (isLoadingUser) {
+      return;
+    }
+    if (loggedInUser) {
+      setAuthorized(isRoleAllowed(loggedInUser.role, path));
+      return;
+    }
+    const isAllowed = isRoleAllowed(Role.guest, path)
+    
+    if(!isAllowed)
+    {
+      router.push('/Error')
+      return;
+    }
+    setAuthorized(isAllowed);
+
+  }, [path, config, loggedInUser, pageName]);
 
   useEffect(() => {
     // Function to adjust the height of the index__container based on the actual viewport height
@@ -192,17 +204,8 @@ function MyApp({ Component, pageProps }) {
     };
   }, [config, selectedNetwork]);
 
-  const pageName = getPageName(path.split('/')[1]);
-  
-  function getPageName(urlString) {
-    const finit = urlString.indexOf("#") !== -1 ? urlString.indexOf("#") : (urlString.indexOf("?") !== -1 ? urlString.indexOf("?") !== -1 : null)
-    if(finit){
-      return  urlString.substr(0,finit)  
-    }
-    return  urlString;
-  }
 
-  
+
   useEffect(() => {
     if (selectedNetwork) {
       updateNomeclature(
@@ -244,9 +247,8 @@ function MyApp({ Component, pageProps }) {
   }, [searchParams]);
 
   useEffect(() => {
-    if(pageProps.metadata)
-    {
-      store.emit(new UpdateMetadata(pageProps.metadata))  
+    if (pageProps.metadata) {
+      store.emit(new UpdateMetadata(pageProps.metadata))
     }
   }, [pageProps])
   const [loading, setLoading] = useState<boolean>(false);
@@ -260,7 +262,7 @@ function MyApp({ Component, pageProps }) {
   });
 
   if (isSetup) {
-    return  <Component {...pageProps} />;
+    return <Component {...pageProps} />;
   } else if (pageName == 'Embbed') {
     return (
       <LoadabledComponent loading={!selectedNetwork || loading}>
@@ -269,22 +271,22 @@ function MyApp({ Component, pageProps }) {
     );
   } else if (!selectedNetworkLoading) {
     return (
-        <>
-        <SEO/>
-        <ActivityPool loggedInUser={loggedInUser} messagesUnread={messagesUnread}/>
+      <>
+        <SEO />
+        <ActivityPool loggedInUser={loggedInUser} messagesUnread={messagesUnread} />
         <div
           className="index__container"
           style={
             selectedNetwork
               ? ({
-                  '--network-background-color':
-                    selectedNetwork.backgroundColor,
-                  '--network-text-color': selectedNetwork.textColor,
-                } as React.CSSProperties)
+                '--network-background-color':
+                  selectedNetwork.backgroundColor,
+                '--network-text-color': selectedNetwork.textColor,
+              } as React.CSSProperties)
               : ({
-                  '--network-background-color': 'grey',
-                  '--network-text-color': 'pink',
-                } as React.CSSProperties)
+                '--network-background-color': 'grey',
+                '--network-text-color': 'pink',
+              } as React.CSSProperties)
           }
         >
           <Alert />
@@ -295,7 +297,8 @@ function MyApp({ Component, pageProps }) {
                 selectedNetwork={selectedNetwork}
               />
             </ShowDesktopOnly>
-            <Component {...pageProps} />
+            {authorized && <Component {...pageProps} />}
+            {!authorized && <Loading/>}
             <ShowMobileOnly>
               <ClienteSideRendering>
                 <NavBottom
@@ -311,7 +314,7 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
-  return  <><MetadataSEO {...pageProps.metadata} /><Loading /></>;
+  return <><MetadataSEO {...pageProps.metadata} /><Loading /></>;
 }
 
 export const ClienteSideRendering = ({ children }) => {
@@ -321,9 +324,8 @@ export const ClienteSideRendering = ({ children }) => {
 };
 
 
-function ActivityPool({loggedInUser, messagesUnread})
-{
-  usePoolFindNewActivities({timeMs: 10000, loggedInUser, messagesUnread})
+function ActivityPool({ loggedInUser, messagesUnread }) {
+  usePoolFindNewActivities({ timeMs: 10000, loggedInUser, messagesUnread })
 
   return (<></>);
 }
