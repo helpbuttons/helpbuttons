@@ -21,7 +21,7 @@ interface HbMapProps {
   zoomSnap: boolean;
   onClick: ({ event, latLng, pixel }) => void;
   provider: (x: any, y: any, z: any, dpr: any) => string;
-  width?: number;
+  width?: string;
   height?: number;
   maxZoom: number;
   minZoom: number;
@@ -69,7 +69,7 @@ export function HbMapUncontrolled({
   mapZoom,
   onBoundsChanged = (objectRet) => {},
   handleMapClick = ({latLng}) => {},
-  width = 200,
+  width,
   height = null,
   tileType = HbMapTiles.OSM,
 }) {

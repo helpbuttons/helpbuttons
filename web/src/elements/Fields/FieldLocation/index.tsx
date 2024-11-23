@@ -67,7 +67,12 @@ export default function FieldLocation({
         if (hideAddress) {
           setPickedAddress(() => place.formatted_city);
         } else {
-          setPickedAddress(() => place.formatted);
+          if(place)
+          {
+            setPickedAddress(() => place.formatted);
+          }else{
+            setPickedAddress(() => t('button.unknownPlace'));
+          }
         }
       });
     }

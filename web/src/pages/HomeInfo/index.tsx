@@ -31,7 +31,7 @@ import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
-import { setSSRLocale } from 'shared/sys.helper';
+import { logoImageUri, setSSRLocale } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
@@ -114,7 +114,7 @@ export default function HomeInfo({ metadata }) {
               className="homeinfo-card homeinfo__card--title-card"
               style={
                 {
-                  '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl+selectedNetwork.jumbo : '/assets/images/noIcon.png'}'`,
+                  '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl+selectedNetwork.jumbo : '/api'+ logoImageUri}'`,
                 } as React.CSSProperties
               }
             >

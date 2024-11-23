@@ -22,6 +22,7 @@ import { useButtonTypes } from 'shared/buttonTypes';
 import FieldCustomFields from '../ButtonType/CustomFields/FieldCustomFields';
 import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 import { alertService } from 'services/Alert';
+import { logoImageUri } from 'shared/sys.helper';
 
 export default function ButtonForm({
   onSubmit,
@@ -51,7 +52,7 @@ export default function ButtonForm({
   const [isReadyForLocationAndTime, setIsReadyForLocationAndTime] =
     useState(false);
   const [markerColor, setMarkerColor] = useState(null);
-  
+
   const buttonType = watch('type');
 
   useEffect(() => {
@@ -71,7 +72,7 @@ export default function ButtonForm({
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  const [customFields,setCustomFields] = useState([])
+  const [customFields, setCustomFields] = useState([])
 
   useEffect(() => {
     if (buttonTypes) {
@@ -83,7 +84,7 @@ export default function ButtonForm({
         setMarkerColor(() => buttonType.cssColor);
       }
       setCustomFields(() => {
-        if(buttonType?.customFields){
+        if (buttonType?.customFields) {
           return buttonType.customFields
         }
         return []
@@ -91,111 +92,116 @@ export default function ButtonForm({
     }
   }, [buttonType, buttonTypes]);
 
+  const images = watch('images')
+  const [image, setImage] = useState(null)
+  useEffect(() => { if (images.length > 0) { setImage(images[0]) }else{
+    setImage(null)
+  } }, [images])
 
   const onError = (errors, e) => alertService.error(t('validation.error'))
 
   return (
     <LoadabledComponent loading={!selectedNetwork}>
-      {selectedNetwork && 
-      <Popup title={title} linkFwd={'/Explore'}>
-        <Form
-          onSubmit={handleSubmit(onSubmit, onError)}
-          classNameExtra="publish_btn"
-        >
-          {isSubmitting ? <Loading/> : 
-          <>
-          <div className="form__inputs-wrapper">
-            <ButtonType
-              name="type"
-              label={t('button.typeLabel')}
-              {...register('type', { required: true })}
-              validationError={errors.type}
-              explain={t('button.typeExplain')}
-              buttonTypes={buttonTypes}
-            />
-            <FieldText
-              name="title"
-              label={t('button.titleLabel')}
-              placeholder={t('button.placeHolderTitle')}
-              validationError={errors.title}
-              watch={watch}
-              setValue={setValue}
-              explain={t('button.titleExplain')}
-              setFocus={setFocus}
-              {...register('title', { required: true })}
-            />
-            <FieldTextArea
-              label={t('button.descriptionLabel')}
-              name="description"
-              placeholder={t('button.placeHolderDescription')}
-              validationError={errors.description}
-              classNameExtra="squared"
-              watch={watch}
-              setValue={setValue}
-              setFocus={setFocus}
-              {...register('description', {
-                required: true,
-                minLength: 10,
-              })}
-            />
+      {selectedNetwork &&
+        <Popup title={title} linkFwd={'/Explore'}>
+          <Form
+            onSubmit={handleSubmit(onSubmit, onError)}
+            classNameExtra="publish_btn"
+          >
+            {isSubmitting ? <Loading /> :
+              <>
+                <div className="form__inputs-wrapper">
+                  <ButtonType
+                    name="type"
+                    label={t('button.typeLabel')}
+                    {...register('type', { required: true })}
+                    validationError={errors.type}
+                    explain={t('button.typeExplain')}
+                    buttonTypes={buttonTypes}
+                  />
+                  <FieldText
+                    name="title"
+                    label={t('button.titleLabel')}
+                    placeholder={t('button.placeHolderTitle')}
+                    validationError={errors.title}
+                    watch={watch}
+                    setValue={setValue}
+                    explain={t('button.titleExplain')}
+                    setFocus={setFocus}
+                    {...register('title', { required: true })}
+                  />
+                  <FieldTextArea
+                    label={t('button.descriptionLabel')}
+                    name="description"
+                    placeholder={t('button.placeHolderDescription')}
+                    validationError={errors.description}
+                    classNameExtra="squared"
+                    watch={watch}
+                    setValue={setValue}
+                    setFocus={setFocus}
+                    {...register('description', {
+                      required: true,
+                      minLength: 10,
+                    })}
+                  />
 
-            {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
-            <FieldTags
-              label={t('button.tagsLabel')}
-              explain={t('button.tagsExplain')}
-              placeholder={t('common.add')}
-              validationError={errors.tags}
-              setTags={(tags) => {
-                setValue('tags', tags);
-              }}
-              tags={watch('tags')}
-              maxTags={5}
-            />
-            <FieldImageUploads 
-            defaultImages={watch('images')}
-            name='images'
-            text={t('button.imagesText')} 
-            label={t('button.imagesLabel')} 
-            explain={t('button.imagesExplain')} 
-            maxNumber={5}
-            setValue={(images) => setValue('images', images)}
-            validationError={errors.images}/>
-            <div className="form__btn-search">
-            <FieldLocation
-              label={t('button.whereLabel')}
-              setMarkerPosition={([lat, lng]) => {
-                setValue('latitude', lat);
-                setValue('longitude', lng);
-              }}
-              markerPosition={[watch('latitude'),watch('longitude')]}
-              updateAddress={(address) => {
-                setValue('address', address);
-              }}
-              markerAddress={watch('address')}
-              markerImage={watch('image')}
-              markerCaption={watch('title')}
-              markerColor={markerColor}
-              selectedNetwork={selectedNetwork}
-              validationError={errors.address}
-              watch={watch}
-              setValue={setValue}
-            />
-            </div>
-            <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency}/>
-            <ButtonShare />
-          </div>
-          <div className="publish__submit">
-            <Btn
-              btnType={BtnType.submit}
-              contentAlignment={ContentAlignment.center}
-              caption={t('common.publish')}
-              isSubmitting={isSubmitting}
-              submit={true}
-            />
-          </div>
-          </>}
-        </Form>
-      </Popup>
+                  {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
+                  <FieldTags
+                    label={t('button.tagsLabel')}
+                    explain={t('button.tagsExplain')}
+                    placeholder={t('common.add')}
+                    validationError={errors.tags}
+                    setTags={(tags) => {
+                      setValue('tags', tags);
+                    }}
+                    tags={watch('tags')}
+                    maxTags={5}
+                  />
+                  <FieldImageUploads
+                    defaultImages={watch('images')}
+                    name='images'
+                    text={t('button.imagesText')}
+                    label={t('button.imagesLabel')}
+                    explain={t('button.imagesExplain')}
+                    maxNumber={5}
+                    setValue={(images) => setValue('images', images)}
+                    validationError={errors.images} />
+                  <div className="form__btn-search">
+                    <FieldLocation
+                      label={t('button.whereLabel')}
+                      setMarkerPosition={([lat, lng]) => {
+                        setValue('latitude', lat);
+                        setValue('longitude', lng);
+                      }}
+                      markerPosition={[watch('latitude'), watch('longitude')]}
+                      updateAddress={(address) => {
+                        setValue('address', address);
+                      }}
+                      markerAddress={watch('address')}
+                      markerImage={image}
+                      markerCaption={watch('title')}
+                      markerColor={markerColor}
+                      selectedNetwork={selectedNetwork}
+                      validationError={errors.address}
+                      watch={watch}
+                      setValue={setValue}
+                    />
+                  </div>
+                  <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />
+                  <ButtonShare />
+                </div>
+                <div className="publish__submit">
+                  <Btn
+                    btnType={BtnType.submit}
+                    contentAlignment={ContentAlignment.center}
+                    caption={t('common.publish')}
+                    isSubmitting={isSubmitting}
+                    submit={true}
+                  />
+                </div>
+              </>}
+          </Form>
+        </Popup>
       }
     </LoadabledComponent>
   );

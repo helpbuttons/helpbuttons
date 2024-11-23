@@ -2,12 +2,11 @@ import { NextPageContext } from 'next';
 import HoneyComb from '../HoneyComb';
 import { setMetadata } from 'services/ServerProps';
 import { ClienteSideRendering } from 'pages/_app';
-import { LoadabledComponent } from 'components/loading';
+import Loading from 'components/loading';
 import t from 'i18n';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
-import { UpdateMetadataTitle, useMetadataTitle } from 'state/Metadata';
-import { useEffect } from 'react';
+import { useMetadataTitle } from 'state/Metadata';
 
 export default function Explore({
   metadata
@@ -21,9 +20,10 @@ export default function Explore({
   return (
     <>
       <ClienteSideRendering>
-        <LoadabledComponent loading={!selectedNetwork}>
+        {selectedNetwork && 
           <HoneyComb selectedNetwork={selectedNetwork} />
-        </LoadabledComponent>
+        }
+        {!selectedNetwork && <Loading/>}
       </ClienteSideRendering>
     </>
   );

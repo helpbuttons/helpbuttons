@@ -18,7 +18,7 @@ export function MetadataSEO(props) {
   const [propsReceived, SetPropsReceived] = useState({
     title: 'loading...',
     description: 'loading...',
-    image: 'assets/img/noIcon.png',
+    image: '/api/networks/logo/192',
     pageurl: ' #',
     siteTitle: 'loading...',
     color: 'red',

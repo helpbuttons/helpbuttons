@@ -14,7 +14,6 @@ import {
   hexagonSizeZoom,
   onMarkerPositionChangeZoomTo,
 } from './Map.consts';
-import { DropDownWhere } from 'elements/Dropdown/DropDownWhere';
 
 export function MarkerEditorMap(props) {
   return (
