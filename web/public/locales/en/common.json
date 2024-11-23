@@ -97,8 +97,7 @@
     "both": "Map & List",
     "list": "List",
     "map": "Map",
-    "hiddenButtons": "For privacy, there're some hidden _helpbuttons_."
-
+    "hiddenButtons": "For privacy, there are {0} hidden _helpbuttons_."
   },
   "buttonFilters": {
     "filters": "Search filters",

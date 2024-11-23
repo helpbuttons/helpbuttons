@@ -7,12 +7,11 @@ import {
 } from 'state/Explore';
 import { HbMap } from '.';
 import {
-  convertH3DensityToFeatures, roundCoord,
-} from 'shared/honeycomb.utils';
+  convertH3DensityToFeatures} from 'shared/honeycomb.utils';
 import _ from 'lodash';
-import { buttonColorStyle, useButtonTypes } from 'shared/buttonTypes';
+import { buttonColorStyle } from 'shared/buttonTypes';
 import Loading from 'components/loading';
-import { IoAddCircle, IoStorefrontSharp } from 'react-icons/io5';
+import { IoStorefrontSharp } from 'react-icons/io5';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { useStore } from 'store/Store';
 import { maxZoom } from './Map.consts';
@@ -63,66 +62,75 @@ export default function HexagonExploreMap({
     setGeoJsonFeatures(() => convertH3DensityToFeatures(h3TypeDensityHexes).filter((hex) => hex.properties.count > 0));
 
     maxButtonsHexagon.current = h3TypeDensityHexes.reduce((accumulator, currentValue) => {
-        return Math.max(accumulator, currentValue.count);
-      }, 1);
+      return Math.max(accumulator, currentValue.count);
+    }, 1);
   }, [h3TypeDensityHexes]);
 
   const buttonTypes = selectedNetwork.buttonTemplates;
 
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
-
+  const [countFilteredButtons, setCountFilteredButtons] = useState(0)
   useEffect(() => {
-    if(!hexagonHighlight && !hexagonClicked)
-    {
+    if (!hexagonHighlight && !hexagonClicked) {
       setHexagonClickedFeatures(() => null)
-    }else if(hexagonClicked){
+    } else if (hexagonClicked) {
       setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonClicked))
-    }else if(hexagonHighlight){
+    } else if (hexagonHighlight) {
       setHexagonClickedFeatures(() => geoJsonFeatures.find((feature) => feature.properties.hex == hexagonHighlight))
     }
-  }, [hexagonHighlight,hexagonClicked, geoJsonFeatures])
+  }, [hexagonHighlight, hexagonClicked, geoJsonFeatures])
+
+  useEffect(() => {
+    const allHiddenButtons = boundsFilteredButtons.filter((elem) => elem.hideAddress === true)
+    if(exploreSettings.zoom >= showMarkersZoom ){
+      setCountFilteredButtons(allHiddenButtons.length)
+    }else{
+      setCountFilteredButtons(0)
+    }
+    
+  }, [boundsFilteredButtons, exploreSettings.zoom])
   const places = [
-        {
-          address: 'Eiffel Tower, Paris, France',
-          coords: {
-            lat: 48.8584,
-            lng: 2.2945,
-          },
-          id: '1',
-        },
-        {
-          address: 'Colosseum, Rome, Italy',
-          coords: {
-            lat: 41.8902,
-            lng: 12.4922,
-          },
-          id: '2',
-        },
-        {
-          address: 'Brandenburg Gate, Berlin, Germany',
-          coords: {
-            lat: 52.5163,
-            lng: 13.3777,
-          },
-          id: '3',
-        },
-        {
-          address: 'Buckingham Palace, London, UK',
-          coords: {
-            lat: 51.5014,
-            lng: -0.1419,
-          },
-          id: '4',
-        },
-        {
-          address: 'Sagrada Família, Barcelona, Spain',
-          coords: {
-            lat: 41.4036,
-            lng: 2.1744,
-          },
-          id: '5',
-        },
-      ];
+    {
+      address: 'Eiffel Tower, Paris, France',
+      coords: {
+        lat: 48.8584,
+        lng: 2.2945,
+      },
+      id: '1',
+    },
+    {
+      address: 'Colosseum, Rome, Italy',
+      coords: {
+        lat: 41.8902,
+        lng: 12.4922,
+      },
+      id: '2',
+    },
+    {
+      address: 'Brandenburg Gate, Berlin, Germany',
+      coords: {
+        lat: 52.5163,
+        lng: 13.3777,
+      },
+      id: '3',
+    },
+    {
+      address: 'Buckingham Palace, London, UK',
+      coords: {
+        lat: 51.5014,
+        lng: -0.1419,
+      },
+      id: '4',
+    },
+    {
+      address: 'Sagrada Família, Barcelona, Spain',
+      coords: {
+        lat: 41.4036,
+        lng: 2.1744,
+      },
+      id: '5',
+    },
+  ];
   return (
     <>
       {(exploreSettings.center && selectedNetwork) && (
@@ -135,89 +143,83 @@ export default function HexagonExploreMap({
             handleClick={onMapClick}
           >
             <HbMapOverlay selectedNetwork={selectedNetwork} />
-            {/* {places.map((place) => (<Overlay key={place.id} anchor={[place.coords.lat, place.coords.lng]}>{place.address}</Overlay>))} */}
-            {/* {places.map((place) => (<MarkerPlace key={place.id} anchor={[place.coords.lat, place.coords.lng]} address={place.address}/> */}
-            {/* </Overlay> */}
-            <DisplayInstructions/>
-              <GeoJson>
-                {/* DRAW HEXAGONS ON MAP */}
-                {!(exploreSettings.zoom >= showMarkersZoom) && geoJsonFeatures.map((hexagonFeature) => (
-                  <GeoJsonFeature
-                    onClick={(feature) => {
-                      if (hexagonFeature.properties.count > 0) {
-                        store.emit(
-                          new UpdateHexagonClicked(
-                            hexagonFeature.properties.hex,
-                          ),
-                        );
-                      } else {
-                        store.emit(new UpdateHexagonClicked(null));
-                      }
-                    }}
-                    feature={hexagonFeature}
-                    key={hexagonFeature.properties.hex}
-                    styleCallback={(feature, hover) => {
-                      if (hover) {
-                        return {
-                          fill: '#18AAD2',
-                          strokeWidth: '4',
-                          stroke: '#18AAD2',
-                          r: '20',
-                          opacity: 0.8,
-                        };
-                      }
-                      if (hexagonFeature.properties.count < 1) {
-                        return {
-                          fill: 'transparent',
-                          strokeWidth: '1',
-                          stroke: '#18AAD2',
-                          r: '20',
-                          opacity: 0.1,
-                        };
-                      }
-                      if (exploreSettings.zoom >= showMarkersZoom ) {
-                        return {
-                          fill: 'transparent',
-                          strokeWidth: '5',
-                          stroke: '#18AAD2',
-                          r: '20',
-                          opacity: 0.1,
-                        };
-                      }
+            <DisplayInstructions />
+            <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
+            <GeoJson>
+              {/* DRAW HEXAGONS ON MAP */}
+              {!(exploreSettings.zoom >= showMarkersZoom) && geoJsonFeatures.map((hexagonFeature) => (
+                <GeoJsonFeature
+                  onClick={(feature) => {
+                    if (hexagonFeature.properties.count > 0) {
+                      store.emit(
+                        new UpdateHexagonClicked(
+                          hexagonFeature.properties.hex,
+                        ),
+                      );
+                    } else {
+                      store.emit(new UpdateHexagonClicked(null));
+                    }
+                  }}
+                  feature={hexagonFeature}
+                  key={hexagonFeature.properties.hex}
+                  styleCallback={(feature, hover) => {
+                    if (hover) {
                       return {
                         fill: '#18AAD2',
-                        strokeWidth: '2',
+                        strokeWidth: '4',
                         stroke: '#18AAD2',
                         r: '20',
-                        opacity: '0.4',
+                        opacity: 0.8,
+                      };
+                    }
+                    if (hexagonFeature.properties.count < 1) {
+                      return {
+                        fill: 'transparent',
+                        strokeWidth: '1',
+                        stroke: '#18AAD2',
+                        r: '20',
+                        opacity: 0.1,
+                      };
+                    }
+                    if (exploreSettings.zoom >= showMarkersZoom) {
+                      return {
+                        fill: 'transparent',
+                        strokeWidth: '5',
+                        stroke: '#18AAD2',
+                        r: '20',
+                        opacity: 0.1,
+                      };
+                    }
+                    return {
+                      fill: '#18AAD2',
+                      strokeWidth: '2',
+                      stroke: '#18AAD2',
+                      r: '20',
+                      opacity: '0.4',
+                    };
+                  }}
+                />
+              ))}
 
-                        // (hexagonFeature.properties.count * 30) /
-                        //   (maxButtonsHexagon.current - maxButtonsHexagon.current / 7) /
-                        //   100,
+              {/* DRAW CLICKED HEXAGON ON MAP */}
+              {!exploreSettings.loading &&
+                hexagonClicked &&
+                hexagonClickedFeatures && (
+                  <GeoJsonFeature
+                    feature={hexagonClickedFeatures}
+                    key={`clicked_${hexagonClicked}`}
+                    styleCallback={(feature, hover) => {
+                      return {
+                        fill: 'white',
+                        opacity: '0.2',
                       };
                     }}
+                    onClick={() => {
+                      store.emit(new UpdateHexagonClicked(null));
+                    }}
                   />
-                ))}
-
-                {/* DRAW CLICKED HEXAGON ON MAP */}
-                {!exploreSettings.loading &&
-                  hexagonClicked &&
-                  hexagonClickedFeatures && (
-                    <GeoJsonFeature
-                      feature={hexagonClickedFeatures}
-                      key={`clicked_${hexagonClicked}`}
-                      styleCallback={(feature, hover) => {
-                        return {
-                          fill: 'white',
-                          opacity: '0.2',
-                        };
-                      }}
-                      onClick={() => {
-                        store.emit(new UpdateHexagonClicked(null));
-                      }}
-                    />
-                  )}
-              </GeoJson>
+                )}
+            </GeoJson>
             {/*
         show count of buttons per hexagon
         */}
@@ -305,8 +307,8 @@ export default function HexagonExploreMap({
                   </div>
                 </Overlay>
               )}
-            {exploreSettings.zoom >= showMarkersZoom && 
-              boundsFilteredButtons.filter(button => { return button.hideAddress ? false : button}).map((button, idx) => {
+            {exploreSettings.zoom >= showMarkersZoom &&
+              boundsFilteredButtons.filter(button => { return button.hideAddress ? false : button }).map((button, idx) => {
                 const btnType = buttonTypes.find((type) => {
                   return type.name == button.type;
                 });
@@ -330,7 +332,7 @@ export default function HexagonExploreMap({
               <button
                 className="pigeon-center-view"
                 onClick={() => {
-                  store.emit( new RecenterExplore());
+                  store.emit(new RecenterExplore());
                 }}
               >
                 <IoStorefrontSharp />
@@ -359,7 +361,7 @@ function HbMapOverlay({ selectedNetwork }) {
         <div className="search-map__network-title">
           <div>{selectedNetwork.name}</div>
           <div className="search-map__sign">
-            <PoweredBy/>
+            <PoweredBy />
           </div>
         </div>
       </Overlay>
@@ -382,11 +384,24 @@ function DisplayInstructions() {
   );
   return (
     <>
-      {(showInstructions && !loggedInUser ) && (
+      {(showInstructions && !loggedInUser) && (
         <div className="search-map__instructions">
           {t('explore.displayInstructions')}
         </div>
       )}
+    </>
+  );
+}
+
+
+function DisplayHiddenButtonsWarning({ countFilteredButtons }) {
+  return (
+    <>
+      {countFilteredButtons > 0 &&
+        <div className="search-map__hidden-buttons-warning">
+          {t('explore.hiddenButtons', [countFilteredButtons])}
+        </div>
+      }
     </>
   );
 }
