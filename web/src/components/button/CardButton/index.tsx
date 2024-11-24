@@ -221,9 +221,9 @@ function CardButtonSubmenu({ button }) {
     store,
     (state: GlobalState) => state.config,
   );
-  const loggedInUser = useRef(
+  const sessionUser = useRef(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
     false,
   );
 
@@ -238,11 +238,11 @@ function CardButtonSubmenu({ button }) {
   }, [config]);
 
   const FollowButtonMenuOption = (button) => {
-    if (!canFollowButton(button, loggedInUser)) {
+    if (!canFollowButton(button, sessionUser)) {
       return;
     }
 
-    if (isFollowingButton(button, loggedInUser)) {
+    if (isFollowingButton(button, sessionUser)) {
       return (
         <CardSubmenuOption
           onClick={() => {
@@ -271,8 +271,8 @@ function CardButtonSubmenu({ button }) {
         label={t('button.copy')}
       />
       {FollowButtonMenuOption(button)}
-      {(isButtonOwner(loggedInUser, button) ||
-        isAdmin(loggedInUser)) && (
+      {(isButtonOwner(sessionUser, button) ||
+        isAdmin(sessionUser)) && (
         <>
           <CardSubmenuOption
             onClick={() => {
@@ -297,9 +297,9 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
       return buttonType.name === button.type;
     },
   );
-  const loggedInUser = useRef(
+  const sessionUser = useRef(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
     false,
   );
   const [showMap, setShowMap] = useState(false);
@@ -320,7 +320,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
       <ShowPhone button={button} /> */}
       <ExpiringAlert
         button={button}
-        isOwner={isButtonOwner(loggedInUser, button)}
+        isOwner={isButtonOwner(sessionUser, button)}
       />
       {button.awaitingApproval && (
         <FixedAlert
@@ -349,7 +349,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
           {button.title}
           <FollowButtonHeart
             button={button}
-            loggedInUser={loggedInUser}
+            sessionUser={sessionUser}
           />
         </div>
 
@@ -530,13 +530,13 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
       return buttonType.name === button.type;
     },
   );
-  const loggedInUser = useRef(
+  const sessionUser = useRef(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
     false,
   );
   const [showMap, setShowMap] = useState(false);
-  // const profileHref = isButtonOwner(loggedInUser, button)
+  // const profileHref = isButtonOwner(sessionUser, button)
   //   ? `/Profile/`
   //   : `/p/${button.owner.username}`;
   // const closeButton = () => {
@@ -619,12 +619,12 @@ export function CardButtonOptions() {
   );
 }
 
-function FollowButtonHeart({ button, loggedInUser }) {
-  if (!canFollowButton(button, loggedInUser)) {
+function FollowButtonHeart({ button, sessionUser }) {
+  if (!canFollowButton(button, sessionUser)) {
     return;
   }
 
-  if (isFollowingButton(button, loggedInUser)) {
+  if (isFollowingButton(button, sessionUser)) {
     return (
       <Btn
         btnType={BtnType.iconActions}
@@ -685,8 +685,8 @@ const unFollowButton = (buttonId) => {
     ),
   );
 };
-function isButtonOwner(loggedInUser, button) {
+function isButtonOwner(sessionUser, button) {
   return (
-    loggedInUser && loggedInUser.username == button.owner.username
+    sessionUser && sessionUser.username == button.owner.username
   );
 }

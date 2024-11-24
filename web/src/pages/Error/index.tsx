@@ -24,7 +24,7 @@ export default function Error({ metadata }) {
   return (
     <>
       <ErrorPopup errorCustomRaw={errorCustomRaw} />
-      <NavBottom pageName="Error" loggedInUser={null} />
+      <NavBottom pageName="Error" sessionUser={null} />
     </>
   );
 }

@@ -14,9 +14,9 @@ import Link from 'next/link';
 export default FirstOpen;
 
 function FirstOpen() {
-  const loggedInUser = useRef(
+  const sessionUser = useRef(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
   );
 
   const {
@@ -37,7 +37,7 @@ function FirstOpen() {
 
   return (
     <>
-      {loggedInUser?.role == Role.admin && (
+      {sessionUser?.role == Role.admin && (
         <Popup title={t('setup.welcomeMessage')}>
           <Form classNameExtra="create-admin">
             <div className='form__field'>
@@ -58,7 +58,7 @@ function FirstOpen() {
           </Form>
         </Popup>
       )}
-      {!loggedInUser && 
+      {!sessionUser && 
         <Link href="/Login">Please login here</Link>
       }
     </>

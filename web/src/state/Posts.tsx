@@ -75,7 +75,7 @@ export class CreateNewPostComment implements WatchEvent, UpdateEvent {
   
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.loggedInUser.id]
+      newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.sessionUser.id]
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
       newState.explore.map.listButtons = []
@@ -101,7 +101,7 @@ export class CreateNewCommentReply implements WatchEvent, UpdateEvent {
   
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.loggedInUser.id]
+      newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.sessionUser.id]
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
       newState.explore.map.listButtons = []

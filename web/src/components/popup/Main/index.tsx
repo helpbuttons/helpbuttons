@@ -17,7 +17,7 @@ export default function MainPopup({pageName}) {
     const closePopup = () =>
       store.emit(new SetMainPopup(MainPopupPage.HIDE));
 
-    const loggedInUser = useGlobalStore((state: GlobalState) => state.loggedInUser);
+    const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
     const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage) 
     const mainPopupCurrentButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupCurrentButton) 
     const mainPopupUserProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile) 
@@ -63,7 +63,7 @@ export default function MainPopup({pageName}) {
             headerText={t('user.otherProfileView')}
             closeAction={() => {closePopup(); store.emit(new SetMainPopupCurrentProfile(null))}}
           >
-            <ShowProfile userProfile={mainPopupUserProfile} loggedInUser={loggedInUser}/>
+            <ShowProfile userProfile={mainPopupUserProfile} sessionUser={sessionUser}/>
           </Picker>
         )}
          {(mainPopupCurrentButton && allowedCurrentButton.indexOf(pageName) > -1 ) && (

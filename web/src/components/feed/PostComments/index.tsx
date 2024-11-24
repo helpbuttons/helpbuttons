@@ -32,7 +32,7 @@ import { ImageGallery } from 'elements/ImageGallery';
 export default function PostComments({
   comments,
   reloadPosts,
-  loggedInUser,
+  sessionUser,
   isButtonOwner,
   post,
 }) {
@@ -51,7 +51,7 @@ export default function PostComments({
                   <PostComment
                     key={key}
                     comment={comment}
-                    loggedInUser={loggedInUser}
+                    sessionUser={sessionUser}
                     isButtonOwner={isButtonOwner}
                     reloadPosts={reloadPosts}
                     post={post}
@@ -75,7 +75,7 @@ enum ComposeCommentState {
 
 export function PostComment({
   comment,
-  loggedInUser,
+  sessionUser,
   isButtonOwner,
   reloadPosts,
   post,
@@ -112,7 +112,7 @@ export function PostComment({
     >
       <Comment comment={comment} />
       <div className="message__actions">
-        {loggedInUser && (
+        {sessionUser && (
           <>
             {comment.privacy == PrivacyType.PRIVATE && (
               <Btn
@@ -141,7 +141,7 @@ export function PostComment({
           </>
         )}
 
-        {loggedInUser && (loggedInUser.id == comment.author.id || isButtonOwner || isAdmin(loggedInUser)) && (
+        {sessionUser && (sessionUser.id == comment.author.id || isButtonOwner || isAdmin(sessionUser)) && (
             <Btn
               submit={true}
               btnType={BtnType.smallLink}
@@ -165,8 +165,8 @@ export function PostComment({
             privateMessage:
               ComposeCommentState.PRIVATE == showComposeComment,
             mentions: [
-              ... loggedInUser.username != comment.author.username ? [comment.author.username] : [],
-              ...mentionsOfMessage(comment.message, loggedInUser.username),
+              ... sessionUser.username != comment.author.username ? [comment.author.username] : [],
+              ...mentionsOfMessage(comment.message, sessionUser.username),
             ],
           }}
           onCreate={() => {
@@ -187,7 +187,7 @@ export function PostComment({
                 isReply={true}
                 key={key}
                 comment={reply}
-                loggedInUser={loggedInUser}
+                sessionUser={sessionUser}
                 isButtonOwner={isButtonOwner}
                 reloadPosts={reloadPosts}
                 post={post}

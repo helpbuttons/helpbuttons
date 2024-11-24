@@ -18,7 +18,7 @@ import MultiSelectOption from 'elements/MultiSelectOption';
 import { AdvancedFiltersCustomFields, getCustomDropDownOrderBy } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { Dropdown, DropdownField } from 'elements/Dropdown/Dropdown';
 import { alertService } from 'services/Alert';
-import { FollowTag, FollowTags } from 'state/Users';
+import { FollowTags,  FollowTag } from 'state/Profile'
 import Popup from 'components/popup/Popup';
 import { Network } from 'shared/entities/network.entity';
 import { AllSuggestedTags, TagList, updateQueryWhenTagAdded, useTagsList } from 'elements/Fields/FieldTags';
@@ -279,13 +279,13 @@ export function AdvancedFiltersSortDropDown({className, label = '', orderBy, set
 }
 
 function TagFollow({tags}) {
-  const loggedInUser = useStore(
+  const sessionUser = useStore(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
     false,
   );
   const followTag = (tag) => {
-    if (!loggedInUser) {
+    if (!sessionUser) {
       router.push(`/Signup?follow=${tag}`)
       return;
     }
@@ -293,7 +293,7 @@ function TagFollow({tags}) {
   }
 
   const followTags = (tags) => {
-    if (!loggedInUser) {
+    if (!sessionUser) {
       router.push(`/Signup?follow=${tags}`)
       return;
     }
@@ -302,13 +302,13 @@ function TagFollow({tags}) {
 
   const [tagsToFollow, setTagsToFollow] = useState(tags)
   useEffect(() => {
-    if(loggedInUser)
+    if(sessionUser)
     {
       setTagsToFollow(() => 
-        _.difference(tags, loggedInUser.tags)
+        _.difference(tags, sessionUser.tags)
       )
     }
-  }, [loggedInUser, tags])
+  }, [sessionUser, tags])
   return (
     <>
       {(tagsToFollow && tagsToFollow.length > 0) && 

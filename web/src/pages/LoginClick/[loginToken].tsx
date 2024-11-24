@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { GlobalState, store } from 'pages';
-import { LoginToken } from 'state/Users';
+import { LoginToken } from 'state/Profile';
 import { alertService } from 'services/Alert';
 import t from 'i18n';
 import { useStore } from 'store/Store';

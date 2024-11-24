@@ -10,9 +10,9 @@ export default function ButtonBump({}) {
   const [id, setId] = useState(null);
   const router = useRouter();
 
-  const loggedInUser = useStore(
+  const sessionUser = useStore(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
     false,
   );
 
@@ -24,7 +24,7 @@ export default function ButtonBump({}) {
   }, [router.isReady]);
 
   useEffect(() => {
-    if (id && loggedInUser) {
+    if (id && sessionUser) {
       store.emit(
         new ButtonRenew(
           id,

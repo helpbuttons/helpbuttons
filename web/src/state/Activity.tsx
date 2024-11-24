@@ -67,7 +67,7 @@ export class FindNewMessages implements WatchEvent {
   public constructor() {}
 
   public watch(state: GlobalState) {
-    if (!state.loggedInUser) {
+    if (!state.sessionUser) {
       return of(undefined);
     }
     return ActivityService.messagesUnread().pipe(
@@ -108,7 +108,7 @@ export class FindMoreReadMessages implements WatchEvent {
   public constructor(private onSuccess) {}
 
   public watch(state: GlobalState) {
-    if (!state.loggedInUser) {
+    if (!state.sessionUser) {
       return of(undefined);
     }
     const page = state.activities.messages.readPage;
@@ -203,7 +203,7 @@ export class FindMoreNotifications implements WatchEvent {
   public constructor(private onSuccess) {}
 
   public watch(state: GlobalState) {
-    if (!state.loggedInUser) {
+    if (!state.sessionUser) {
       return of(undefined);
     }
     const page = state.activities.notificationsPage;
@@ -281,7 +281,7 @@ export const useActivities = () => {
   return { messages, notifications };
 };
 
-export const usePoolFindNewActivities = ({loggedInUser, messagesUnread, timeMs }) => {
+export const usePoolFindNewActivities = ({sessionUser, messagesUnread, timeMs }) => {
   useEffect(() => {
     if (messagesUnread) {
       messagesUnread.forEach((message) => {
@@ -297,14 +297,14 @@ export const usePoolFindNewActivities = ({loggedInUser, messagesUnread, timeMs }
   const increment = useCallback(() => {
     store.emit(new FindNewMessages());
   }, []);
-  useInterval(increment, timeMs, { paused: !loggedInUser });
+  useInterval(increment, timeMs, { paused: !sessionUser });
 };
 
 // export class SendMessageToAdmins implements WatchEvent {
 //   public constructor(private onSuccess) {}
 
 //   public watch(state: GlobalState) {
-//     if(!state.loggedInUser)
+//     if(!state.sessionUser)
 //     {
 //       return of(undefined)
 //     }

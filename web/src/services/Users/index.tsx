@@ -1,21 +1,15 @@
 import { Observable } from 'rxjs';
-import { ajax } from 'rxjs/ajax';
-import { map, tap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import getConfig from 'next/config';
+import { tap } from 'rxjs/operators';
 import { IUser, ICurrentUser } from "./network.type";
 import { httpService } from "services/HttpService";
-import { localStorageService, LocalStorageVars } from 'services/LocalStorage';
 import { SignupQRRequestDto, SignupRequestDto } from 'shared/dtos/auth.dto';
 import { User } from 'shared/entities/user.entity';
-import { Logout } from 'state/Users';
+import { Logout } from 'state/Profile';
 import { store } from 'pages';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { Role } from 'shared/types/roles';
 import { InviteCreateDto } from 'shared/dtos/invite.dto';
 import { Invite } from 'shared/entities/invite.entity';
-const { publicRuntimeConfig } = getConfig();
-const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
 //User services for all app
 export class UserService {
@@ -59,6 +53,7 @@ export class UserService {
   {
     return httpService.get<User>(`users/find/${username}`);
   }
+
 
   public static logout() {
     store.emit(new Logout());

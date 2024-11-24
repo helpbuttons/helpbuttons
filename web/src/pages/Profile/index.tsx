@@ -4,7 +4,7 @@ import CardProfile from 'components/user/CardProfile';
 import { useStore } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import router, { useRouter } from 'next/router';
-import { Logout } from 'state/Users';
+import { Logout } from 'state/Profile';
 import Link from 'next/link';
 import {
   IoBuildOutline,
@@ -26,9 +26,9 @@ import { getLocale } from 'shared/sys.helper';
 import { Network } from 'shared/entities/network.entity';
 
 export default function Profile() {
-  const loggedInUser = useStore(
+  const sessionUser = useStore(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
   );
 
   const { asPath } = useRouter();
@@ -36,26 +36,20 @@ export default function Profile() {
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
+  
   function logout() {
     UserService.logout();
-    if (getLocale() != selectedNetwork.locale) {
-      router.push({ pathname: '/HomeInfo'}, asPath, {
-        locale: selectedNetwork.locale,
-      });
-    }else{
-          router.push({ pathname: '/HomeInfo'})
-    }
   }
 
   return (
     <>
           <Popup linkFwd="/Explore" title={t('user.profileView')}>
-            <LoadabledComponent loading={!loggedInUser}>
-              <CardProfile user={loggedInUser} />
-              {(loggedInUser && !loggedInUser.phone && loggedInUser?.role == Role.admin) && 
+            <LoadabledComponent loading={!sessionUser}>
+              <CardProfile user={sessionUser} />
+              {(sessionUser && !sessionUser.phone && sessionUser?.role == Role.admin) && 
                <span style={{"color": "red"}}>{t('user.addSupport')}</span>
               }
-                {loggedInUser?.username == loggedInUser?.username && (
+                {sessionUser?.username == sessionUser?.username && (
                   <div className="card-profile__actions">
                     <Link href="/ProfileEdit">
                       <Btn
@@ -82,11 +76,11 @@ export default function Profile() {
                         />
                       </Link> */}
                     {/* } */}
-                    {loggedInUser?.role == Role.admin && 
+                    {sessionUser?.role == Role.admin && 
                       <AdminOptions/>
                     }
                     <Link href="/HomeInfo">
-                      <div onClick={logout} className="btn-with-icon">
+                      <div onClick={() => logout()} className="btn-with-icon">
                         <div className="btn-with-icon__icon">
                           <IoLogOutOutline />
                         </div>

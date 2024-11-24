@@ -47,9 +47,9 @@ function NetworkCreation() {
     },
   });
 
-  const loggedInUser = useRef(
+  const sessionUser = useRef(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
   );
   register("exploreSettings", { required: true })
   const onSubmit = (data) => {
@@ -153,7 +153,7 @@ function NetworkCreation() {
 
   return (
     <>
-      {loggedInUser?.role == Role.admin && (
+      {sessionUser?.role == Role.admin && (
         <Popup title={t('setup.configureInstanceTitle')}>
           <NetworkForm
             captionAction={t('setup.finish')}

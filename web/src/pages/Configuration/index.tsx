@@ -1,3 +1,4 @@
+import { Plugins } from 'components/button/ButtonType/CustomFields/AddCustomFields';
 import NetworkForm from 'components/network/NetworkForm';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
@@ -22,9 +23,9 @@ import { useStore } from 'store/Store';
 export default Configuration;
 
 function Configuration() {
-  const loggedInUser = useStore(
+  const sessionUser = useStore(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
     false,
   );
 
@@ -156,9 +157,10 @@ function Configuration() {
   return (
     <>
       {selectedNetwork &&
-        loggedInUser &&
-        loggedInUser.role == Role.admin && (
+        sessionUser &&
+        sessionUser.role == Role.admin && (
           <Popup title={t('configuration.title')} linkBack="/Profile">
+             <Plugins customFields={'ld'} setCustomFields={() => {}} />
             <NetworkForm
               handleSubmit={handleSubmit}
               onSubmit={onSubmit}

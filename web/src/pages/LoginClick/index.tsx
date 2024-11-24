@@ -7,7 +7,7 @@ import FieldText from 'elements/Fields/FieldText';
 import { useForm } from 'react-hook-form';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { store } from 'pages';
-import { RequestNewLoginToken } from 'state/Users';
+import { RequestNewLoginToken } from 'state/Profile';
 import { alertService } from 'services/Alert';
 import { useRouter } from 'next/router';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';

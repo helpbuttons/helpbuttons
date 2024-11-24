@@ -8,7 +8,7 @@ import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
 import { useSelectedNetwork } from 'state/Networks';
-import { FetchUserData, LoginToken } from 'state/Users';
+import { FetchUserData, LoginToken } from 'state/Profile';
 
 import { useGlobalStore, useStore } from 'store/Store';
 import { alertService } from 'services/Alert';
@@ -48,8 +48,8 @@ function MyApp({ Component, pageProps }) {
   const messagesUnread = useGlobalStore(
     (state: GlobalState) => state.activities.messages.unread
   );
-  const loggedInUser = useGlobalStore(
-    (state: GlobalState) => state.loggedInUser,
+  const sessionUser = useGlobalStore(
+    (state: GlobalState) => state.sessionUser,
   );
 
   const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
@@ -105,7 +105,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (
       fetchingNetworkError &&
-      loggedInUser &&
+      sessionUser &&
       config &&
       config.userCount > 0 &&
       path != SetupSteps.FIRST_OPEN &&
@@ -113,7 +113,7 @@ function MyApp({ Component, pageProps }) {
     ) {
       router.push(SetupSteps.FIRST_OPEN);
     }
-  }, [fetchingNetworkError, loggedInUser])
+  }, [fetchingNetworkError, sessionUser])
 
   useEffect(() => {
     if (setupPaths.includes(path)) {
@@ -126,13 +126,13 @@ function MyApp({ Component, pageProps }) {
       config &&
       config.userCount < 1 &&
       SetupSteps.CREATE_ADMIN_FORM != path &&
-      !loggedInUser
+      !sessionUser
     ) {
       router.push(SetupSteps.CREATE_ADMIN_FORM);
     } else if (
       SetupSteps.CREATE_ADMIN_FORM == path &&
-      loggedInUser &&
-      loggedInUser.role == Role.admin
+      sessionUser &&
+      sessionUser.role == Role.admin
     ) {
       router.push(SetupSteps.FIRST_OPEN);
     }
@@ -151,7 +151,7 @@ function MyApp({ Component, pageProps }) {
     }
 
     // check if local storage has a token
-    if (loggedInUser === false) {
+    if (sessionUser === false) {
       if (!isLoadingUser) {
         store.emit(
           new FetchUserData(
@@ -161,6 +161,7 @@ function MyApp({ Component, pageProps }) {
             (error) => {
               // if local storage has a token, and fails to fetchUserData then delete storage token
               UserService.logout();
+              // router.push('/HomeInfo')
               setIsLoadingUser(false);
             },
           ),
@@ -172,8 +173,8 @@ function MyApp({ Component, pageProps }) {
     if (isLoadingUser) {
       return;
     }
-    if (loggedInUser) {
-      setAuthorized(isRoleAllowed(loggedInUser.role, path));
+    if (sessionUser) {
+      setAuthorized(isRoleAllowed(sessionUser.role, path));
       return;
     }
     const isAllowed = isRoleAllowed(Role.guest, path)
@@ -185,7 +186,7 @@ function MyApp({ Component, pageProps }) {
     }
     setAuthorized(isAllowed);
 
-  }, [path, config, loggedInUser, pageName]);
+  }, [path, config, sessionUser, pageName]);
 
   useEffect(() => {
     // Function to adjust the height of the index__container based on the actual viewport height
@@ -217,12 +218,12 @@ function MyApp({ Component, pageProps }) {
   }, [selectedNetwork]);
 
   useEffect(() => {
-    if (loggedInUser) {
-      if (getLocale() != loggedInUser.locale) {
-        setSSRLocale(loggedInUser.locale);
+    if (sessionUser) {
+      if (getLocale() != sessionUser.locale) {
+        setSSRLocale(sessionUser.locale);
       }
     }
-  }, [loggedInUser]);
+  }, [sessionUser]);
 
   const searchParams = useSearchParams();
   const triedToLogin = useRef(false);
@@ -273,7 +274,7 @@ function MyApp({ Component, pageProps }) {
     return (
       <>
         <SEO />
-        <ActivityPool loggedInUser={loggedInUser} messagesUnread={messagesUnread} />
+        <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
         <div
           className="index__container"
           style={
@@ -303,7 +304,7 @@ function MyApp({ Component, pageProps }) {
               <ClienteSideRendering>
                 <NavBottom
                   pageName={pageName}
-                  loggedInUser={loggedInUser}
+                  sessionUser={sessionUser}
                 />
               </ClienteSideRendering>
             </ShowMobileOnly>
@@ -324,8 +325,8 @@ export const ClienteSideRendering = ({ children }) => {
 };
 
 
-function ActivityPool({ loggedInUser, messagesUnread }) {
-  usePoolFindNewActivities({ timeMs: 10000, loggedInUser, messagesUnread })
+function ActivityPool({ sessionUser, messagesUnread }) {
+  usePoolFindNewActivities({ timeMs: 10000, sessionUser, messagesUnread })
 
   return (<></>);
 }

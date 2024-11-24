@@ -372,9 +372,9 @@ function HbMapOverlay({ selectedNetwork }) {
 
 
 function DisplayInstructions() {
-  const loggedInUser = useStore(
+  const sessionUser = useStore(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
     false,
   );
   const showInstructions = useStore(
@@ -384,7 +384,7 @@ function DisplayInstructions() {
   );
   return (
     <>
-      {(showInstructions && !loggedInUser) && (
+      {(showInstructions && !sessionUser) && (
         <div className="search-map__instructions">
           {t('explore.displayInstructions')}
         </div>

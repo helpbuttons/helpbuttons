@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
 import { GlobalState, store } from 'pages';
-import { FetchUserData, UpdateProfile } from 'state/Users';
+import { FetchUserData, UpdateProfile } from 'state/Profile';
 
 //imported react components
 import { Link } from 'elements/Link';
@@ -66,9 +66,9 @@ export default function ProfileEdit() {
 
   const router = useRouter();
   const { pathname, asPath, query } = useRouter()
-  const loggedInUser: User = useRef(
+  const sessionUser: User = useRef(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
   );
   const [locale, setLocale] = useState(null)
 
@@ -137,25 +137,25 @@ export default function ProfileEdit() {
   };
   
   useEffect(() => {
-    if (loggedInUser) {
-      setLocale(loggedInUser.locale)
-      reset(loggedInUser);
+    if (sessionUser) {
+      setLocale(sessionUser.locale)
+      reset(sessionUser);
     }
-  }, [loggedInUser]);
+  }, [sessionUser]);
 
   const radius = watch('radius')
   const coordinates = watch('center.coordinates')
   const center = coordinates ? [coordinates[1],coordinates[0]] : null;
   return (
     <>
-      {loggedInUser && (
+      {sessionUser && (
         <>
           <Popup title={t('user.updateProfile')} linkBack={() => router.back()}>
             <Form
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="login"
             >
-              <label className='form__label'> {loggedInUser.username}@{getHostname()} </label>
+              <label className='form__label'> {sessionUser.username}@{getHostname()} </label>
               
                 <div className="form__inputs-wrapper">
                 <Accordion collapsed={true} title={t('user.personalData')}>
@@ -194,7 +194,7 @@ export default function ProfileEdit() {
                     {...register('description', { required: true })}
                   />
                                   
-                  <FieldLanguagePick onChange={(value) => setLocale(value)} explain={t('user.pickLanguageExplain')} defaultValue={loggedInUser.locale}/>
+                  <FieldLanguagePick onChange={(value) => setLocale(value)} explain={t('user.pickLanguageExplain')} defaultValue={sessionUser.locale}/>
 
                   <FieldText
                     name="email"
@@ -216,18 +216,18 @@ export default function ProfileEdit() {
                     {...register('phone')}
                   ></FieldText>  
 
-                  {loggedInUser.role == Role.admin && 
+                  {sessionUser.role == Role.admin && 
                     <>
                       <FieldCheckbox
                         name='publishPhone'
-                        defaultValue={loggedInUser.publishPhone}
+                        defaultValue={sessionUser.publishPhone}
                         text={t('user.adminPhonePublish')}
                         explain={t('user.adminPhonePublishExplain')}
                         onChanged={(value) => {setValue('publishPhone', value)}}
                       />
                       {/* <FieldCheckbox
                         name='showWhatsapp'
-                        defaultValue={loggedInUser.showWhatsapp}
+                        defaultValue={sessionUser.showWhatsapp}
                         text={t('user.showWhatsapp')}
                         onChanged={(value) => {setValue('showWhatsapp', value)}}
                       /> */}
@@ -237,7 +237,7 @@ export default function ProfileEdit() {
                     name='showButtons'
                     label={t('user.showButtonsProfileLabel')}
                     explain={t('user.showButtonsProfileExplain')}
-                    defaultValue={loggedInUser.showButtons}
+                    defaultValue={sessionUser.showButtons}
                     text={t('user.showButtons')}
                     onChanged={(value) => {setValue('showButtons', value)}}
                   />
@@ -249,7 +249,7 @@ export default function ProfileEdit() {
                     label={t('user.receiveNotifications')}
                     explain={t('user.receiveNotificationsExplain')}                                 
                     name='receiveNotifications'
-                    defaultValue={loggedInUser.receiveNotifications}
+                    defaultValue={sessionUser.receiveNotifications}
                     text={t('user.textReceiveNotifications')}
                     onChanged={(value) => {setValue('receiveNotifications', value)}}
                   />
@@ -326,7 +326,7 @@ export default function ProfileEdit() {
                           })}
                         ></FieldPassword>
 
-                      {loggedInUser.role != Role.admin && 
+                      {sessionUser.role != Role.admin && 
                         <Link href="/ProfileDelete">
                           <Btn
                             iconLeft={IconType.svg}

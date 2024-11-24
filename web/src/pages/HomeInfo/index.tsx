@@ -62,7 +62,7 @@ export default function HomeInfo({ metadata }) {
 
   const currentUser = useStore(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
   );
   useMetadataTitle(t('menu.home'));
 
