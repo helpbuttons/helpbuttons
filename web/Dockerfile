@@ -1,4 +1,4 @@
-FROM node:16.17.1-alpine as builder
+FROM node:22.8.0-alpine as builder
 ARG API_URL
 ENV API_URL "http://api:3001/"
 RUN mkdir -p /app/
@@ -15,7 +15,7 @@ RUN yarn
 COPY . /app/
 RUN yarn build
 
-FROM node:16.17.1-alpine as runner
+FROM node:22.8.0-alpine as runner
 ARG API_URL
 ENV API_URL "http://api:3001/"
 WORKDIR /app
