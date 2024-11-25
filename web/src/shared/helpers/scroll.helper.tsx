@@ -2,7 +2,6 @@ import Loading from "components/loading";
 import { useEffect, useRef, useState } from "react";
 
 export function useScroll(onLoadMore) {
-  const [isVisible, setIsVisible] = useState(false);
   const [noMoreToLoad, setNoMoreToLoad] = useState(false)
   const [scrollIsLoading, setScrollIsLoading] = useState(false)
 
@@ -10,10 +9,13 @@ export function useScroll(onLoadMore) {
     if (scrollIsLoading) {
       return;
     }
+    if(noMoreToLoad)
+    {
+      return;
+    }
     const [entry] = entries;
-    setIsVisible(() => entry.isIntersecting);
 
-    if (isVisible) {
+    if (entry.isIntersecting) {
       onLoadMore(
         {
           setScrollIsLoading: setScrollIsLoading,

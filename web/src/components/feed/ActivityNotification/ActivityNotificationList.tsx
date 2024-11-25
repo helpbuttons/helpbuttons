@@ -15,7 +15,7 @@ export function ActivityNotificationList() {
     ({ setNoMoreToLoad, setScrollIsLoading }) => {
       setScrollIsLoading(() => true)
       store.emit(new FindMoreNotifications((notifications) => {
-        if (notifications.length > 0) {
+        if (notifications.length < 1) {
           setNoMoreToLoad(() => true)
         }
         setScrollIsLoading(() => false)

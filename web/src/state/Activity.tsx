@@ -212,7 +212,6 @@ export class FindMoreNotifications implements WatchEvent {
       return of(undefined);
     }
     const page = state.activities.notificationsPage;
-    console.log('callliiing ')
     return ActivityService.notificationsRead(page).pipe(
       map((notifications: ActivityDtoOut[]) => {
         this.onSuccess(notifications);
@@ -231,7 +230,6 @@ export class FoundNotifications implements UpdateEvent {
           ...state.activities.notifications,
           ...this.notifications,
         ], 'id');
-        console.log(this.notifications)
         if(this.notifications.length > 0)
         {
           newState.activities.notificationsPage =

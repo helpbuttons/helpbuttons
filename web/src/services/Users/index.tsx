@@ -56,7 +56,6 @@ export class UserService {
 
 
   public static logout() {
-    store.emit(new Logout());
     httpService.clearAccessToken();
   }
 

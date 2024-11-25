@@ -22,7 +22,7 @@ interface HbMapProps {
   onClick: ({ event, latLng, pixel }) => void;
   provider: (x: any, y: any, z: any, dpr: any) => string;
   width?: string;
-  height?: number;
+  height?: string;
   maxZoom: number;
   minZoom: number;
 }

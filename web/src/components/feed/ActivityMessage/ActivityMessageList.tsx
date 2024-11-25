@@ -28,7 +28,7 @@ export function ActivityMessageList() {
     ({ setNoMoreToLoad, setScrollIsLoading }) => {
       setScrollIsLoading(() => true)
       store.emit(new FindMoreReadMessages((messages) => {
-        if (messages.length > 0) {
+        if (messages.length < 1) {
           setNoMoreToLoad(() => true)
         }
         setScrollIsLoading(() => false)
