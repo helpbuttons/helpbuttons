@@ -294,7 +294,7 @@ function MyApp({ Component, pageProps }) {
               />
             </ShowDesktopOnly>
             {authorized && <Component {...pageProps} />}
-            {!authorized && <>noauth<Loading/></>}
+            {!authorized && <><Loading/></>}
             <ShowMobileOnly>
               <ClienteSideRendering>
                 <NavBottom
