@@ -13,7 +13,7 @@ import Form from 'elements/Form';
 
 import { Invite } from 'shared/entities/invite.entity';
 import { User } from 'shared/entities/user.entity';
-import { CreateInvite, FindInvites } from 'state/Users';
+import { CreateInvite, FindInvites } from 'state/Profile';
 import { useStore } from 'store/Store';
 import {
   readableDate,
@@ -33,9 +33,9 @@ export default function Invites() {
     store,
     (state: GlobalState) => state.invites,
   );
-  const loggedInUser: User = useStore(
+  const sessionUser: User = useStore(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
   );
 
   useEffect(() => {
@@ -108,7 +108,7 @@ export default function Invites() {
 
   return (
     <>
-      {loggedInUser && (
+      {sessionUser && (
           <Popup
             title={t('invite.title')}
             linkBack={() => router.back()}

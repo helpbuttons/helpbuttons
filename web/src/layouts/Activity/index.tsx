@@ -11,7 +11,7 @@ import Accordion from 'elements/Accordion';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 import { IoList } from 'react-icons/io5';
 
-export default function ActivityLayout({ loggedInUser }) {
+export default function ActivityLayout({ sessionUser }) {
   const buttonTypes = useButtonTypes();
   const [selectedButtonTypes, setSelectedButtonTypes] =
     useState(null);

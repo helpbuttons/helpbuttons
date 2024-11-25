@@ -50,6 +50,29 @@ $search-map-height: 0; // Altura del header
 
 }
 
+.search-map__hidden-buttons-warning {
+  color: #2E2E2E;
+  padding: 10px;
+  bottom: 20%;
+  position: absolute;
+  left: calc(50% - 100px);
+  width: auto;
+  overflow: visible;
+  max-width: 200px;
+  text-align: center;
+  text-wrap: balance;
+  margin-left: auto;
+  z-index: 100;
+  margin-bottom: 20px;
+  background-color: #18AAD2;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
 @media #{$breakpoints-xlarge} {
 
   .search-map__network-title{

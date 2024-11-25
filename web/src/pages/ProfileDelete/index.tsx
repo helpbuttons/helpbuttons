@@ -6,13 +6,13 @@ import router from 'next/router';
 import { GlobalState, store } from 'pages';
 import { IoTrashBinOutline } from 'react-icons/io5';
 import { User } from 'shared/entities/user.entity';
-import { DeleteProfile } from 'state/Users';
+import { DeleteProfile } from 'state/Profile';
 import { useStore } from 'store/Store';
 
 export default function ProfileDelete() {
-  const loggedInUser: User = useStore(
+  const sessionUser: User = useStore(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
   );
 
   return (

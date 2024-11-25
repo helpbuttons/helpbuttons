@@ -25,6 +25,7 @@ export const FieldColorPick = React.forwardRef(
     const [stateColor, setStateColor] = useState(null);
     const [showHideMenu, setHideMenu] = useState(false);
     const deboungBgColor = useDebounce(stateColor, 50);
+    const [valueStore, setValueStore] = useState(value); // Declare 
     const setColor = (color) => {
       setStateColor(() => color);
     };
@@ -35,18 +36,19 @@ export const FieldColorPick = React.forwardRef(
       }
     }, [deboungBgColor]);
 
+    const onChanged = (e) => {setValueStore(e.target.value); onChange(e)} 
     return (
       <div className="form__field">
           <input
             name={name}
             ref={ref}
             placeholder={placeholder ? placeholder : label}
-            onChange={onChange}
+            onChange={onChanged}
             onBlur={onBlur}
             className={`form__input ${classNameInput} ${
               validationError ? 'validation-error' : ''
             }`}
-            value={value}
+            value={valueStore}
             type="hidden"
         />
         {showHideMenu && (

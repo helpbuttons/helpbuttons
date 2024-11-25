@@ -6,15 +6,15 @@ import {  useRef } from 'store/Store';
 import ActivityLayout from 'layouts/Activity';
 
 export default function Activity() {
-  const loggedInUser = useRef(
+  const sessionUser = useRef(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
     false,
   );
   return (
     <>
        <ActivityLayout
-          loggedInUser={loggedInUser}
+          sessionUser={sessionUser}
         />
     </>
   );

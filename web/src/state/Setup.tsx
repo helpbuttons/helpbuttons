@@ -23,7 +23,7 @@ export const useConfig = (_config, onError) => {
     {
       fetchingConfig.current = true
       store.emit(new GetConfig(() => console.log('got config!'), onError))
-    }else{
+    }else if(_config){
       store.emit(new ConfigFound(_config))
     }
   }, [_config])

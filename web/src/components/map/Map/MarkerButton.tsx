@@ -2,7 +2,6 @@ import { PigeonProps } from 'pigeon-maps';
 import React from 'react';
 // import { buttonColorStyle, buttonTypes } from 'shared/buttonTypes';
 import { Button } from 'shared/entities/button.entity';
-import { makeImageUrl } from 'shared/sys.helper';
 import CardButtonMap from '../CardButtonMap';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
@@ -47,6 +46,7 @@ export function MarkerButton(props: MarkerButtonProps) {
 
   return (
     <>
+    l
       <MarkerButtonIcon
         {...props}
         cssColor={props.color}
@@ -99,13 +99,11 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
           className="marker-button marker-button-selector"
         >
           <div className="avatar-medium marker-button__image">
-          {props.image && 
             <ImageWrapper
               imageType={ImageType.avatarMed}
               src={props.image}
               alt={props.title}
             />
-          }
           </div>
 
           <span className="marker-button__arrow"></span>

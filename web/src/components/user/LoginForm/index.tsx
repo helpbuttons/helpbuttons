@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
 import { store } from 'pages';
-import { Login } from 'state/Users';
+import { Login } from 'state/Profile';
 import { NavigateTo } from 'state/Routes';
 import Form from 'elements/Form';
 import FieldText from 'elements/Fields/FieldText';

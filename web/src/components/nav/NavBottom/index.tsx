@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react';
 
 export default NavBottom;
 
-function NavBottom({ loggedInUser, pageName }) {
+function NavBottom({ sessionUser, pageName }) {
   // const {unreadActivities, activities} = useActivities()
   const { notifications, messages } = useActivities();
   const [countUnreadNotifications, setCountUnreadNotifications] =
@@ -85,7 +85,7 @@ function NavBottom({ loggedInUser, pageName }) {
           <div className="nav-bottom__text">{t('menu.create')}</div>
         </NavLink>
 
-        {!loggedInUser && (
+        {!sessionUser && (
           <div
             // href="/Signup"
             onClick={() =>
@@ -102,7 +102,7 @@ function NavBottom({ loggedInUser, pageName }) {
           </div>
         )}
 
-        {loggedInUser && (
+        {sessionUser && (
           <>
             <NavLink
               href="/Profile"
@@ -140,7 +140,7 @@ function NavBottom({ loggedInUser, pageName }) {
           </>
         )}
 
-        {!loggedInUser && (
+        {!sessionUser && (
           <div
             onClick={() =>
               store.emit(new SetMainPopup(MainPopupPage.LOGIN))

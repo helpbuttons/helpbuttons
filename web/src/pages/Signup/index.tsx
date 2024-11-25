@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
 import { GlobalState, store } from 'pages';
-import { SignupUser } from 'state/Users';
+import { SignupUser } from 'state/Profile';
 
 //imported react components
 import { Link } from 'elements/Link';

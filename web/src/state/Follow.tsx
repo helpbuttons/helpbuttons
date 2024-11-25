@@ -20,7 +20,7 @@ export class FollowButton implements WatchEvent, UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.loggedInUser.id]
+      newState.explore.currentButton.followedBy = [...state.explore.currentButton.followedBy,state.sessionUser.id]
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
       newState.explore.map.listButtons = []
@@ -43,7 +43,7 @@ export class UnfollowButton implements WatchEvent, UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      const index = state.explore.currentButton.followedBy.indexOf(state.loggedInUser.id);
+      const index = state.explore.currentButton.followedBy.indexOf(state.sessionUser.id);
       if (index > -1) {
         let followedBy = [...state.explore.currentButton.followedBy];
         followedBy.splice(index,1)

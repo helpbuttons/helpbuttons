@@ -11,7 +11,7 @@ import { Network } from 'shared/entities/network.entity';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import t from 'i18n';
 import Popup from 'components/popup/Popup';
-import { Login, LoginQR, SignupQR } from 'state/Users';
+import { Login, LoginQR, SignupQR } from 'state/Profile';
 import { alertService } from 'services/Alert';
 import { getLocale } from 'shared/sys.helper';
 import { LoadabledComponent } from 'components/loading';

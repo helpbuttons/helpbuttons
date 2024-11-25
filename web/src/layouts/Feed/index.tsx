@@ -36,9 +36,9 @@ export default function Feed({ button }: { button: Button }) {
   const [showReplyFirstPost, toggleShowReplyFirstPost] =
     useToggle(false);
   const [showNewPostForm, toggleShowNewPostForm] = useToggle(false);
-  const loggedInUser = useStore(
+  const sessionUser = useStore(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
   );
 
   const reloadPosts = () => {
@@ -63,14 +63,14 @@ export default function Feed({ button }: { button: Button }) {
     reloadPosts();
   }, [button]);
 
-  const isButtonOwner = loggedInUser?.id == button.owner.id;
+  const isButtonOwner = sessionUser?.id == button.owner.id;
   const buttonOwnerId = button.owner.id;
 
   return (
     <div className="feed-container">
       <div className="card-button__actions">
         <>
-          {loggedInUser && isButtonOwner && (
+          {sessionUser && isButtonOwner && (
             <>
               <ComposePost
                 referer={{ button: button.id }}
@@ -86,14 +86,14 @@ export default function Feed({ button }: { button: Button }) {
               />
             </>
           )}
-          {loggedInUser && (
+          {sessionUser && (
             <CardButtonHeadActions
               button={button}
               isButtonOwner={isButtonOwner}
               action={() => toggleShowReplyFirstPost(true)}
             />
           )}
-          {!loggedInUser && (
+          {!sessionUser && (
             <CardButtonHeadActions
               button={button}
               isButtonOwner={isButtonOwner}
@@ -112,7 +112,7 @@ export default function Feed({ button }: { button: Button }) {
             <FeedElement
               key={idx}
               post={post}
-              loggedInUser={loggedInUser}
+              sessionUser={sessionUser}
               buttonOwnerId={buttonOwnerId}
               isButtonOwner={isButtonOwner}
               reloadPosts={reloadPosts}
@@ -136,7 +136,7 @@ export default function Feed({ button }: { button: Button }) {
 }
 export function FeedElement({
   post,
-  loggedInUser,
+  sessionUser,
   buttonOwnerId,
   isButtonOwner = false,
   reloadPosts,
@@ -181,7 +181,7 @@ export function FeedElement({
         <PostMessage post={post} />
         <>
           <div className="card-notification__answer-btn">
-            {loggedInUser && (
+            {sessionUser && (
               <>
                 <Btn
                   submit={false}
@@ -215,10 +215,10 @@ export function FeedElement({
                 />
               </>
             )}
-            {loggedInUser &&
-              (loggedInUser.id == post.author.id ||
+            {sessionUser &&
+              (sessionUser.id == post.author.id ||
                 isButtonOwner ||
-                isAdmin(loggedInUser)) && (
+                isAdmin(sessionUser)) && (
                 <Btn
                   submit={false}
                   btnType={BtnType.smallLink}
@@ -229,7 +229,7 @@ export function FeedElement({
                 />
               )}
           </div>
-          {(loggedInUser && showComposePostReply?.post == post.id) && (
+          {(sessionUser && showComposePostReply?.post == post.id) && (
             <Compose
               referer={showComposePostReply}
               onCancel={() => {
@@ -242,14 +242,14 @@ export function FeedElement({
               }}
             />
           )}
-          {/* {!loggedInUser && 
+          {/* {!sessionUser && 
             <LoginOrSignup/>
           } */}
         </>
         <PostComments
           comments={post.comments}
           reloadPosts={reloadPosts}
-          loggedInUser={loggedInUser}
+          sessionUser={sessionUser}
           isButtonOwner={isButtonOwner}
           post={post}
         />

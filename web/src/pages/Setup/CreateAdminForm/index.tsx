@@ -47,9 +47,9 @@ function CreateAdminForm() {
     (state: GlobalState) => state.config,
   );
 
-  const loggedInUser = useStore(
+  const sessionUser = useStore(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
     false,
   );
 

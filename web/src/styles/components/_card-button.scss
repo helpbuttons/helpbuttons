@@ -325,8 +325,9 @@ $card-button-border-height: $border-general-height;
   word-wrap: break-word;
   line-height: 1.3em;
   margin-bottom: $margin-xsmall;
-  text-overflow: ellipsis;
 
+
+  word-break: break-word;
 }
 
 
@@ -361,10 +362,12 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__hashtags {
+
+  display: flex;
   -webkit-line-clamp: 3;
   -webkit-box-orient:horizontal;
   overflow: scroll;
-  color: black;
+  color: $color-black;
     &:hover {
       // color: $hashtag-hover-color;
       // background: $color-black;
@@ -752,12 +755,6 @@ $card-button-border-height: $border-general-height;
 }
 
 @media #{$breakpoints-xlarge} {
-
-  .card-button__content,
-  .card-button__content--small {
-    padding: 12px 24px;
-  }
-
   .card-button__full-content,
   .card-button__author,
   .card-button__actions {

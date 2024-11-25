@@ -18,9 +18,9 @@ function NavHeader({ selectedNetwork, pageName = '' }) {
     (state: GlobalState) => state.explore.map,
     false,
   );
-  const loggedInUser = useStore(
+  const sessionUser = useStore(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
   );
 
   const toggleAdvancedFilters = () => {
@@ -49,7 +49,7 @@ function NavHeader({ selectedNetwork, pageName = '' }) {
           </div>
         </form>
         <ShowDesktopOnly>
-          <NavBottom pageName={pageName} loggedInUser={loggedInUser} />
+          <NavBottom pageName={pageName} sessionUser={sessionUser} />
         </ShowDesktopOnly>
       </div>
       <ShowDesktopOnly>

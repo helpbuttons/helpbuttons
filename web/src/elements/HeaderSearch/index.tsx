@@ -169,7 +169,6 @@ export function advancedSearchText(
           });
         })
         .map((buttonType) => {
-          console.log(buttonType)
           return buttonType.caption;
         });
       setFilterTypesCaption(() => buttonTypesCaptions.join(', '));

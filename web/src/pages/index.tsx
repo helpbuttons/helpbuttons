@@ -17,7 +17,7 @@ import { CacheValue } from "state/Cache";
 // -- estado global --
 export interface GlobalState {
   networks: NetworksState;
-  loggedInUser: User;
+  sessionUser: User;
   knownUsers: User[];
   explore: ExploreState;
   alerts: Alert[];
@@ -40,7 +40,7 @@ export interface GlobalState {
 
 export const store = new Store<GlobalState>({
   networks: networksInitial,
-  loggedInUser: false,
+  sessionUser: false,
   knownUsers: [],
   explore: exploreInitial,
   alerts: [],

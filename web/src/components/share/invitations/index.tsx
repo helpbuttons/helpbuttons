@@ -17,7 +17,7 @@ import { useSelectedNetwork } from 'state/Networks';
 import { Network } from 'shared/entities/network.entity';
 import QRCode from 'qrcode';
 import Loading from 'components/loading';
-import { CreateInvite } from 'state/Users';
+import { CreateInvite } from 'state/Profile';
 import { store } from 'pages';
 
 export default function ShareInvitationsForm() {

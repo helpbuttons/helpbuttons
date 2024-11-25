@@ -2,7 +2,9 @@
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'pages';
 import { useEffect, useState } from 'react';
-import { FindExtraFieldsUser, FindUserButtons } from 'state/Users';
+import { FindUserButtons } from 'state/Users';
+import { FindExtraFieldsUser } from 'state/Profile';
+
 import { Role } from 'shared/types/roles';
 import router, { useRouter } from 'next/router';
 import Popup from 'components/popup/Popup';
@@ -15,9 +17,9 @@ import ContentList from 'components/list/ContentList';
 import { useMetadataTitle } from 'state/Metadata';
 
 export default function p(props) {
-  const loggedInUser = useRef(
+  const sessionUser = useRef(
     store,
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
   );
   const { userProfile } = props;
 
@@ -28,12 +30,12 @@ export default function p(props) {
     const username = router.query.username as string;
     let newUserProfile = '';
 
-    if (loggedInUser) {
-      if (loggedInUser.username == username) {
+    if (sessionUser) {
+      if (sessionUser.username == username) {
         router.push('/Profile');
       }
     }
-  }, [userProfile, loggedInUser, router.isReady]);
+  }, [userProfile, sessionUser, router.isReady]);
   const closeAction = () => router.back();
   return (
     <Popup
@@ -43,7 +45,7 @@ export default function p(props) {
     >
       <ShowProfile
         userProfile={userProfile}
-        loggedInUser={loggedInUser}
+        sessionUser={sessionUser}
       />
     </Popup>
   );
@@ -51,7 +53,7 @@ export default function p(props) {
 
 export function ShowProfile({
   userProfile,
-  loggedInUser,
+  sessionUser,
 }) {
   const [userButtons, setUserButtons] = useState(null);
 
@@ -68,7 +70,7 @@ export function ShowProfile({
         );
       }
 
-      if (loggedInUser?.role == Role.admin) {
+      if (sessionUser?.role == Role.admin) {
         store.emit(
           new FindExtraFieldsUser(
             userProfile.id,
@@ -107,10 +109,10 @@ export function ShowProfile({
       {userProfile && (
         <CardProfile
           user={userProfile}
-          showAdminOptions={loggedInUser?.role == Role.admin}
+          showAdminOptions={sessionUser?.role == Role.admin}
         />
       )}
-      {loggedInUser?.role == Role.admin && (
+      {sessionUser?.role == Role.admin && (
         <>Email: {extraFields.email}</>
       )}
       {userProfile?.showButtons &&

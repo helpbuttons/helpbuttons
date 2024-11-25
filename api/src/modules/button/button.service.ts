@@ -246,7 +246,10 @@ export class ButtonService {
               );
             }
           } else if (isImageUrl(image)) {
-            button.images.push(image);
+            if(image)
+            {
+              button.images.push(image);
+            }
           } else {
             console.error('no image data, or image url?');
             console.log(image);

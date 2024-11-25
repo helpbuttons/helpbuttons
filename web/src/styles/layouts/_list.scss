@@ -67,7 +67,6 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   width: 100%;
   transition: $transition-default-slow;
   align-content: flex-start; /* Add this*/
-
 }
 
 
@@ -90,14 +89,9 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   width: 100%;
 
   .list__element {
-  
     max-width: $card-button-list-width;
-    height: auto;
     min-width: $card-button-list-width;
-
   }
-
-
 }
 
 
@@ -115,14 +109,9 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 
   .list__element {
-
-    flex: 1;
-    height: auto;
-    flex-basis: 100%;
-    // min-width: $card-button-list-width;
-
+    flex: 0 1 100%;
+    max-width: 100%;
   }
-
 }
 
 
@@ -177,6 +166,8 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   
   padding-left: 24px;
   padding-right: 24px;
+  padding-top: 15px;
+  padding-bottom: 5px;
 
 }
 
@@ -215,8 +206,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
   .list__content--full-screen {
     .list__element {
-      flex: 0;
-      flex-basis: 100%;
+      flex: 0 1 100%;
       min-width: $card-button-list-width;
     }
   }
@@ -226,11 +216,8 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
   .list__content--full-screen {
     .list__element {
-
-      flex: 0;
-      flex-basis: 50%;
+      flex: 0 1 50%;
       min-width: $card-button-list-width;
-      // max-width: $card-button-list-width;
     }
   }
 }
@@ -261,12 +248,9 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   }
 
   .list__element {
-
-    height: auto;
     width: 100%;
     flex-basis: 30%;
     min-width: $card-button-list-width;
-
   }
 
   .list__content--mid-screen {
@@ -279,12 +263,8 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     width: auto;
 
     .list__element {
-
-      height: auto;
-      flex-basis: 50%;
-      min-width: auto;
-      max-width: none;
-
+      flex: 0 1 50%;
+      min-width: 50%;
     }
   }
 
@@ -295,6 +275,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     height: auto;
     left: auto;
     border-radius: 0;
+    padding: 0 0 ;
     
   }
 

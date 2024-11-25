@@ -4,6 +4,7 @@ import { Role } from './types/roles';
 import getConfig from 'next/config';
 import { localesFiles } from 'i18n/availableLocales';
 
+export const logoImageUri = '/network/logo/'; // [16, 32, 48, 72, 96, 144, 168, 180, 192]
 let SSRLocale = 'en';
 
 export function setSSRLocale(_locale) {
@@ -51,7 +52,7 @@ export function makeImageUrl(image) {
   const { publicRuntimeConfig } = getConfig()
 
   if (!image) {
-    return '/assets/images/noIcon.png';
+    return `${publicRuntimeConfig.apiUrl}/networks/logo/192`;
   }
   const regex = /^data\:image/gm;
   const matches = image.match(regex);

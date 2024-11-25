@@ -2,12 +2,9 @@ import { HbMapUncontrolled } from '../';
 
 import { MapTileSelector } from './MapTileSelector';
 import t from 'i18n';
-import { BrowseTypeSelector } from './BrowseTypeSelector';
 import { BrowseType } from '../Map.consts';
-import { GeoJson } from 'pigeon-maps';
 import { MarkerButtonIcon } from '../MarkerButton';
 import { makeImageUrl } from 'shared/sys.helper';
-import { useEffect } from 'react';
 export function NetworkMapConfigure({
   mapSettings,
   onBoundsChanged,
@@ -75,7 +72,7 @@ export function NetworkMapConfigure({
               anchor={mapSettings.center}
               offset={[35, 65]}
               cssColor={markerColor}
-              image={makeImageUrl(marker.image)}
+              image={makeImageUrl(null)}
               title={marker.caption}
             />
           {/* {(mapSettings.browseType == BrowseType.PINS) && 

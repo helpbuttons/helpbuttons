@@ -9,7 +9,14 @@ import router from 'next/router';
 
 import CardButtonList from 'components/list/CardButtonList';
 import t from 'i18n';
-import Btn, { ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import { useScroll } from 'shared/helpers/scroll.helper';
+import { FindMoreReadMessages } from 'state/Activity';
+import { GlobalState, store } from 'pages';
+import Loading from 'components/loading';
+import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
+import { useGlobalStore } from 'store/Store';
+import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 
 export default function ContentList({
   buttons,
@@ -18,33 +25,21 @@ export default function ContentList({
   linkToPopup = true,
   ...props
 }) {
-  const containerRef = useRef(null)
-  const [ isVisible, setIsVisible ] = useState(false)
+
   const [buttonsSlice, setButtonsSlice] = useState(2)
 
-  const callbackFunction = (entries) => {
-    const [ entry ] = entries
-    setIsVisible(() => entry.isIntersecting)
+  const { endDivLoadMoreTrigger, noMoreToLoad } = useScroll(
 
-    if(isVisible  && buttonsSlice < buttons.length)
-    {
-      setButtonsSlice(() => buttonsSlice + 2)
-    }
-  }
-  const options = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 1.0
-  }
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(callbackFunction, options)
-    if (containerRef.current) observer.observe(containerRef.current)
-    
-    return () => {
-      if(containerRef.current) observer.unobserve(containerRef.current)
-    }
-  }, [containerRef, options])
+    ({ setNoMoreToLoad, setScrollIsLoading }) => {
+      setScrollIsLoading(() => true)
+      if (buttonsSlice < buttons.length) {
+        setButtonsSlice(() => buttonsSlice + 2)
+      } else {
+        setNoMoreToLoad(() => true)
+      }
+      setScrollIsLoading(() => false)
+    },
+  );
 
   if (buttons.length < 1) {
     return (
@@ -67,16 +62,68 @@ export default function ContentList({
   }
 
   return (
-    <>{buttons.slice(0,buttonsSlice).map((btn, i) => (
-        <CardButtonList
-          button={btn}
-          key={i}
-          buttonTypes={buttonTypes}
-          showMap={showMap}
-          linkToPopup={linkToPopup}
-        />
-      ))}
-     <div ref={containerRef}></div>
+    <>{buttons.slice(0, buttonsSlice).map((btn, i) => (
+      <CardButtonList
+        button={btn}
+        key={i}
+        buttonTypes={buttonTypes}
+        showMap={showMap}
+        linkToPopup={linkToPopup}
+      />
+    ))}
+      {noMoreToLoad && <NoMoreToLoad />}
+      {endDivLoadMoreTrigger}
     </>
   );
+}
+
+export function NoMoreToLoad() {
+  const filters = useGlobalStore((state: GlobalState) => state.explore.map.filters)
+  const filtersAreChanged =
+    JSON.stringify(defaultFilters) !=
+    JSON.stringify(filters);
+
+  return (
+    <div className="list__empty-message">
+      <div className="list__empty-message--comment">
+        {t('explore.emptyList')}
+      </div>
+      {filtersAreChanged &&
+        <Btn
+          btnType={BtnType.splitIcon}
+          caption={t('common.reset')}
+          contentAlignment={ContentAlignment.center}
+          onClick={(e) => {
+            store.emit(new ResetFilters());
+            store.emit(new ToggleAdvancedFilters(false));
+          }}
+        />
+      }
+      <Btn
+        caption={t('explore.createEmpty')}
+        onClick={() => router.push('/ButtonNew')}
+        contentAlignment={ContentAlignment.center}
+      />
+    </div>
+  )
+
+}
+
+export function EndListMessage() {
+  return (
+    <div className="list__empty-message">
+      <div className="list__empty-message--prev">
+        {t('explore.noResults')}
+      </div>
+      <div className="list__empty-message--comment">
+        {t('explore.emptyList')}
+      </div>
+      <Btn
+        caption={t('explore.createEmpty')}
+        onClick={() => router.push('/ButtonNew')}
+        contentAlignment={ContentAlignment.center}
+      />
+    </div>
+  )
+
 }

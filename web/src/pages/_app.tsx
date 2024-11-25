@@ -8,7 +8,7 @@ import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
 import { useSelectedNetwork } from 'state/Networks';
-import { FetchUserData, LoginToken } from 'state/Users';
+import { FetchUserData, LoginToken } from 'state/Profile';
 
 import { useGlobalStore, useStore } from 'store/Store';
 import { alertService } from 'services/Alert';
@@ -40,8 +40,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     useSetButtonFromUrl();
   }, [])
-  
-  const [authorized, setAuthorized] = useState(false);
+  const [authorized, setAuthorized] = useState(null);
   const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
@@ -49,16 +48,13 @@ function MyApp({ Component, pageProps }) {
   const messagesUnread = useGlobalStore(
     (state: GlobalState) => state.activities.messages.unread
   );
-  const loggedInUser = useGlobalStore(
-    (state: GlobalState) => state.loggedInUser,
-  );
 
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
   const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
   state.networks.selectedNetworkLoading)
-  
   const onFetchingNetworkError = (error) => {
     if (error === 'network-not-found') {
-      setFetchingNetworkError(true)     
+      setFetchingNetworkError(true)
     }
   };
 
@@ -79,6 +75,20 @@ function MyApp({ Component, pageProps }) {
     console.log(error);
     return;
   };
+  const [pageName, setPageName] = useState('HomeInfo')
+  useEffect(() => {
+    setPageName(getPageName(path.split('/')[1]))
+
+    function getPageName(urlString) {
+      const finit = urlString.indexOf("#") !== -1 ? urlString.indexOf("#") : (urlString.indexOf("?") !== -1 ? urlString.indexOf("?") !== -1 : null)
+      if (finit) {
+        return urlString.substr(0, finit)
+      }
+      return urlString;
+    }
+  }, [path])
+  
+
 
   const config = useConfig(pageProps._config, onFetchingConfigError);
   const selectedNetwork = useSelectedNetwork(
@@ -93,7 +103,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (
       fetchingNetworkError &&
-      loggedInUser &&
+      sessionUser &&
       config &&
       config.userCount > 0 &&
       path != SetupSteps.FIRST_OPEN &&
@@ -101,7 +111,7 @@ function MyApp({ Component, pageProps }) {
     ) {
       router.push(SetupSteps.FIRST_OPEN);
     }
-  }, [fetchingNetworkError, loggedInUser])
+  }, [fetchingNetworkError, sessionUser])
 
   useEffect(() => {
     if (setupPaths.includes(path)) {
@@ -114,13 +124,13 @@ function MyApp({ Component, pageProps }) {
       config &&
       config.userCount < 1 &&
       SetupSteps.CREATE_ADMIN_FORM != path &&
-      !loggedInUser
+      !sessionUser
     ) {
       router.push(SetupSteps.CREATE_ADMIN_FORM);
     } else if (
       SetupSteps.CREATE_ADMIN_FORM == path &&
-      loggedInUser &&
-      loggedInUser.role == Role.admin
+      sessionUser &&
+      sessionUser.role == Role.admin
     ) {
       router.push(SetupSteps.FIRST_OPEN);
     }
@@ -128,52 +138,50 @@ function MyApp({ Component, pageProps }) {
       return;
     }
 
-    if (
-      !authorized &&
-      config &&
-      config.userCount < 1 &&
-      (path == SetupSteps.CREATE_ADMIN_FORM || path == '/Login')
+    if (!config) {
+      return;
+    }
+    if (config.userCount < 1 &&
+      (path == SetupSteps.CREATE_ADMIN_FORM)
     ) {
       setAuthorized(true);
+      return;
     }
-    // if (!authorized) {
-    if (UserService.isLoggedIn()) {
-      // check if local storage has a token
-      if (!loggedInUser) {
-        if (!isLoadingUser) {
-          store.emit(
-            new FetchUserData(
-              () => {
-                setIsLoadingUser(false);
-              },
-              (error) => {
-                // if local storage has a token, and fails to fetchUserData then delete storage token
-                UserService.logout();
-                setIsLoadingUser(false);
-              },
-            ),
-          );
-        }
+
+    // check if local storage has a token
+    if (sessionUser === false) {
+      if (!isLoadingUser) {
         setIsLoadingUser(true);
-      } else {
-        setAuthorized(isRoleAllowed(loggedInUser.role, path));
+        store.emit(
+          new FetchUserData(
+            () => {
+              setIsLoadingUser(false);
+            },
+            (error) => {
+              setIsLoadingUser(false);
+            },
+          ),
+        );
       }
-    } else {
-      if (config) {
-        if (
-          config.userCount < 1 &&
-          path == SetupSteps.CREATE_ADMIN_FORM
-        ) {
-          setAuthorized(true);
-        } else {
-          setAuthorized(isRoleAllowed(Role.guest, path));
-        }
-      } else if (path != SetupSteps.CREATE_ADMIN_FORM) {
-        setAuthorized(isRoleAllowed(Role.guest, path));
-      }
+      return;
     }
-    // }
-  }, [path, config, loggedInUser]);
+    if (isLoadingUser) {
+      return;
+    }
+    if (sessionUser) {
+      setAuthorized(isRoleAllowed(sessionUser.role, path));
+      return;
+    }
+    const isAllowed = isRoleAllowed(Role.guest, path)
+    
+    if(!isAllowed)
+    {
+      router.push('/Error')
+      return;
+    }
+    setAuthorized(isAllowed);
+
+  }, [path, config, sessionUser, pageName]);
 
   useEffect(() => {
     // Function to adjust the height of the index__container based on the actual viewport height
@@ -192,7 +200,7 @@ function MyApp({ Component, pageProps }) {
     };
   }, [config, selectedNetwork]);
 
-  const pageName = path.split('/')[1];
+
 
   useEffect(() => {
     if (selectedNetwork) {
@@ -205,12 +213,12 @@ function MyApp({ Component, pageProps }) {
   }, [selectedNetwork]);
 
   useEffect(() => {
-    if (loggedInUser) {
-      if (getLocale() != loggedInUser.locale) {
-        setSSRLocale(loggedInUser.locale);
+    if (sessionUser) {
+      if (getLocale() != sessionUser.locale) {
+        setSSRLocale(sessionUser.locale);
       }
     }
-  }, [loggedInUser]);
+  }, [sessionUser]);
 
   const searchParams = useSearchParams();
   const triedToLogin = useRef(false);
@@ -235,9 +243,8 @@ function MyApp({ Component, pageProps }) {
   }, [searchParams]);
 
   useEffect(() => {
-    if(pageProps.metadata)
-    {
-      store.emit(new UpdateMetadata(pageProps.metadata))  
+    if (pageProps.metadata) {
+      store.emit(new UpdateMetadata(pageProps.metadata))
     }
   }, [pageProps])
   const [loading, setLoading] = useState<boolean>(false);
@@ -251,7 +258,7 @@ function MyApp({ Component, pageProps }) {
   });
 
   if (isSetup) {
-    return  <Component {...pageProps} />;
+    return <Component {...pageProps} />;
   } else if (pageName == 'Embbed') {
     return (
       <LoadabledComponent loading={!selectedNetwork || loading}>
@@ -260,22 +267,22 @@ function MyApp({ Component, pageProps }) {
     );
   } else if (!selectedNetworkLoading) {
     return (
-        <>
-        <SEO/>
-        <ActivityPool loggedInUser={loggedInUser} messagesUnread={messagesUnread}/>
+      <>
+        <SEO />
+        <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
         <div
           className="index__container"
           style={
             selectedNetwork
               ? ({
-                  '--network-background-color':
-                    selectedNetwork.backgroundColor,
-                  '--network-text-color': selectedNetwork.textColor,
-                } as React.CSSProperties)
+                '--network-background-color':
+                  selectedNetwork.backgroundColor,
+                '--network-text-color': selectedNetwork.textColor,
+              } as React.CSSProperties)
               : ({
-                  '--network-background-color': 'grey',
-                  '--network-text-color': 'pink',
-                } as React.CSSProperties)
+                '--network-background-color': 'grey',
+                '--network-text-color': 'pink',
+              } as React.CSSProperties)
           }
         >
           <Alert />
@@ -286,12 +293,13 @@ function MyApp({ Component, pageProps }) {
                 selectedNetwork={selectedNetwork}
               />
             </ShowDesktopOnly>
-            <Component {...pageProps} />
+            {authorized && <Component {...pageProps} />}
+            {!authorized && <><Loading/></>}
             <ShowMobileOnly>
               <ClienteSideRendering>
                 <NavBottom
                   pageName={pageName}
-                  loggedInUser={loggedInUser}
+                  sessionUser={sessionUser}
                 />
               </ClienteSideRendering>
             </ShowMobileOnly>
@@ -302,7 +310,7 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
-  return  <><MetadataSEO {...pageProps.metadata} /><Loading /></>;
+  return <><MetadataSEO {...pageProps.metadata} /><Loading /></>;
 }
 
 export const ClienteSideRendering = ({ children }) => {
@@ -312,9 +320,8 @@ export const ClienteSideRendering = ({ children }) => {
 };
 
 
-function ActivityPool({loggedInUser, messagesUnread})
-{
-  usePoolFindNewActivities({timeMs: 10000, loggedInUser, messagesUnread})
+function ActivityPool({ sessionUser, messagesUnread }) {
+  usePoolFindNewActivities({ timeMs: 10000, sessionUser, messagesUnread })
 
   return (<></>);
 }

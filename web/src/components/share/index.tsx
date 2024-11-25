@@ -37,7 +37,7 @@ export function ShareForm({}) {
   };
 
   const userLoggedIn = useGlobalStore(
-    (state: GlobalState) => state.loggedInUser,
+    (state: GlobalState) => state.sessionUser,
   );
   const [options, setOptions] = useState([
     // {
