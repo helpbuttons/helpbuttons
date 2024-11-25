@@ -27,6 +27,7 @@ export interface Messages {
   read: ActivityMessageDto[];
   readPage: number;
   unread: ActivityUnreadMessage[];
+  readLoaded: boolean
 }
 
 export interface ActivityUnreadMessage extends ActivityMessageDto {
@@ -35,7 +36,7 @@ export interface ActivityUnreadMessage extends ActivityMessageDto {
 
 export const activitiesInitialState: Activities = {
   //@ts-ignore
-  messages: { read: [], unread: [], readPage: 0, notified: false },
+  messages: { read: [], unread: [], readPage: 0, notified: false, readLoaded: false },
   notifications: [],
   notificationsPage: 0,
   notificationsPermissionGranted: false,
@@ -136,6 +137,10 @@ export class FoundMessagesRead implements UpdateEvent {
           newState.activities.messages.readPage =
           state.activities.messages.readPage + 1;
         }
+        if(this.messages.length < 0){
+          newState.activities.messages.readLoaded = true;
+        }
+        
         
     });
   }

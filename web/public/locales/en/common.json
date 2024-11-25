@@ -78,13 +78,13 @@
     "from": "From",
     "privateBadge": "private",
     "activitiesHistory": "Historial de actividades",
-    "said": "said"
-
-
+    "said": "said",
+    "noMoreMessages": "There are no more messages",
+    "noMoreNotifications": "There are no more notifications"
   },
   "explore": {
     "noResults": "Sorry, there are no results here",
-    "emptyList": "Please browse the map and touch to find more _helpbuttons_",
+    "emptyList": "Please browse the map to find more _helpbuttons_",
     "createEmpty": "Publish",
     "selectedHexagon": "in the selected area",
     "filteredRadius": "in {0} · {1}km",
@@ -201,7 +201,7 @@
     "publish": "Publish",
     "save": "Save",
     "search": "Search",
-    "reset": "Reset",
+    "reset": "Reset filters",
     "done": "Done",
     "saveSuccess": "{0} saved",
     "invalidMimeType": "{0} has invalid myme type ({1})",

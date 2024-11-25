@@ -15,6 +15,7 @@ import { useScroll } from 'shared/helpers/scroll.helper';
 
 export function ActivityMessageList() {
   const { messages } = useActivities();
+
   const init = useRef(false);
   useEffect(() => {
     if (!init.current) {
@@ -23,26 +24,20 @@ export function ActivityMessageList() {
     }
   }, []);
 
-  const [isLoading, setIsLoading] = useState(false)
-  const scrollLoading = useRef(false);
-  const { listEndRef } = useScroll(
-    () => {
-      if (!scrollLoading.current) {
-        scrollLoading.current = true;
-        setIsLoading(() => true)
-        store.emit(new FindMoreReadMessages((messages)=> {
-          if(messages.length > 0)
-          {
-            scrollLoading.current = false;
-          }
-          setIsLoading(() => false)
-        }))
-      }
-    },    
+  const { endDivLoadMoreTrigger, noMoreToLoad } = useScroll(
+    ({ setNoMoreToLoad, setScrollIsLoading }) => {
+      setScrollIsLoading(() => true)
+      store.emit(new FindMoreReadMessages((messages) => {
+        if (messages.length > 0) {
+          setNoMoreToLoad(() => true)
+        }
+        setScrollIsLoading(() => false)
+      }))
+    },
   );
 
   const markAllAsRead = () => console.log('TODO')
-    // store.emit(new ActivityMessagesMarkAllAsRead());
+  // store.emit(new ActivityMessagesMarkAllAsRead());
 
   return (
     <>
@@ -51,7 +46,7 @@ export function ActivityMessageList() {
         <div className="feed__container">
           <div className="feed-section--activity">
 
-            {(messages.unread.length > 0 && false)&&
+            {(messages.unread.length > 0 && false) &&
               <div className="feed__empty-message">
                 <Btn
                   caption={t('feed.markMessagesAsRead')}
@@ -100,6 +95,8 @@ export function ActivityMessageList() {
                 </>
               )}
 
+              {noMoreToLoad && <div className="list__empty-message">
+                <div className="list__empty-message--comment">{t('feed.noMoreMessages')}</div></div>}
               {(!messages.read || messages.read.length < 1) && (
                 <div className="feed__empty-message">
                   <div className="feed__empty-message--prev">
@@ -107,13 +104,7 @@ export function ActivityMessageList() {
                   </div>
                 </div>
               )}
-              <div ref={listEndRef}>
-                {isLoading && <Loading/>}
-              </div>
-              <br />
-              <br />
-              <br />
-              <br />
+              {endDivLoadMoreTrigger}
             </div>
           </div>
         </div>

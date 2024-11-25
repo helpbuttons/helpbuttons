@@ -10,30 +10,30 @@ import { IoChatbox, IoFootsteps } from 'react-icons/io5';
 import { FindMoreNotifications, useActivities } from 'state/Activity';
 
 export function ActivityNotificationList() {
-  const scrollLoading = useRef(false);
-  
-  const loadMore = () => {
-    if (!scrollLoading.current) {
-      scrollLoading.current = true;
-      store.emit(new FindMoreNotifications((notifications)=> {
-        if(notifications.length > 0)
-        {
-          scrollLoading.current = false;
-        }
-      }))
-    }
-  };
-  const { notifications } = useActivities();
-  const { listEndRef } = useScroll(loadMore);
 
+  const { endDivLoadMoreTrigger, noMoreToLoad } = useScroll(
+    ({ setNoMoreToLoad, setScrollIsLoading }) => {
+      setScrollIsLoading(() => true)
+      store.emit(new FindMoreNotifications((notifications) => {
+        if (notifications.length > 0) {
+          setNoMoreToLoad(() => true)
+        }
+        setScrollIsLoading(() => false)
+      }))
+    },
+  );
+
+  const { notifications } = useActivities();
+
+  const k = <></>
   return (
     <div className="feed__container">
       {!notifications && <Loading />}
       {notifications && (
         <div className="feed-section--activity">
           <div className="feed-section__title">
-              <IoFootsteps />
-              {t('feed.activitiesHistory')}
+            <IoFootsteps />
+            {t('feed.activitiesHistory')}
           </div>
           <div className="feed-section--activity-content">
             {notifications &&
@@ -56,8 +56,15 @@ export function ActivityNotificationList() {
                 />
               </div>
             )}
-            <div ref={listEndRef}>
-            </div>
+            {noMoreToLoad &&
+              <div className="feed__empty-message">
+                <div className="feed__empty-message--prev">
+                  {t('feed.noMoreNotifications')}
+                </div>
+              </div>
+            }
+
+            {endDivLoadMoreTrigger}
           </div>
         </div>
       )}
