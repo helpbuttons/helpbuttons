@@ -1,46 +1,23 @@
-//Users buttons an profile info URL
 import CardProfile from 'components/user/CardProfile';
-
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
-import router, { useRouter } from 'next/router';
-import { Logout } from 'state/Profile';
 import Link from 'next/link';
 import {
   IoBuildOutline,
   IoCreateOutline,
-  IoDocument,
-  IoDocumentTextOutline,
   IoFolderOutline,
   IoHammerOutline,
   IoLogOutOutline,
-  IoQrCodeOutline,
 } from 'react-icons/io5';
 import Btn, { IconType } from 'elements/Btn';
-import { UserService } from 'services/Users';
 import { Role } from 'shared/types/roles';
 import t from 'i18n';
 import { LoadabledComponent } from 'components/loading';
 import Popup from 'components/popup/Popup';
-import { getLocale } from 'shared/sys.helper';
-import { Network } from 'shared/entities/network.entity';
+import { useGlobalStore } from 'store/Store';
+import router from 'next/router';
 
 export default function Profile() {
-  const sessionUser = useStore(
-    store,
-    (state: GlobalState) => state.sessionUser,
-  );
-
-  const { asPath } = useRouter();
-  const selectedNetwork: Network = useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
   
-  function logout() {
-    UserService.logout();
-  }
-
+  const sessionUser = useGlobalStore((state) => state.sessionUser)
   return (
     <>
           <Popup linkFwd="/Explore" title={t('user.profileView')}>
@@ -80,7 +57,7 @@ export default function Profile() {
                       <AdminOptions/>
                     }
                     <Link href="/HomeInfo">
-                      <div onClick={() => logout()} className="btn-with-icon">
+                      <div onClick={() => router.push('/Logout')} className="btn-with-icon">
                         <div className="btn-with-icon__icon">
                           <IoLogOutOutline />
                         </div>

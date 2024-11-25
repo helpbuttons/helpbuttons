@@ -14,22 +14,6 @@ import { UserUpdateDto } from "shared/dtos/user.dto";
 import { InviteCreateDto } from "shared/dtos/invite.dto";
 import { Invite } from "shared/entities/invite.entity";
 
-const useProfile = () => {
-    // if (getLocale() != selectedNetwork.locale) {
-    //   console.log('pushing....')
-    //   router.push({ pathname: '/HomeInfo'}, asPath, {
-    //     locale: selectedNetwork.locale,
-    //   });
-    // }else{
-    //   console.log('pushing... also .')
-    //       router.push('/HomeInfo')
-    // }
-    useEffect(() => {
-        // observe userProfile... check authorization, or redirect to homeinfo? or back?
-    }, [])
-    return { useProfile: 'lala' }
-}
-
 export interface UsersState {
     currentUser: IUser;
 }
@@ -51,7 +35,7 @@ export class Login implements WatchEvent {
         return UserService.login(this.email, this.password).pipe(
             map((userData) => {
                 if (userData) {
-                    return new FetchUserData(this.onSuccess, this.onError);
+                    return store.emit(new FetchUserData(this.onSuccess, this.onError));
                 }
             }),
             catchError((error) => {
@@ -85,7 +69,7 @@ export class LoginQR implements WatchEvent {
         return UserService.loginQr(this.qrcode, this.password).pipe(
             map((userData) => {
                 if (userData) {
-                    return new FetchUserData(this.onSuccess, this.onError);
+                    return store.emit(new FetchUserData(this.onSuccess, this.onError));
                 }
             }),
             catchError((error) => {
@@ -117,7 +101,7 @@ export class SignupUser implements WatchEvent {
         return UserService.signup(this.signupRequestDto).pipe(
             map((token) => {
                 if (token) {
-                    return new FetchUserData(this.onSuccess, this.onError);
+                    return store.emit(new FetchUserData(this.onSuccess, this.onError))
                 }
             }),
             catchError((error) => handleError(this.onError, error))
@@ -136,7 +120,7 @@ export class SignupQR implements WatchEvent {
         return UserService.signupQR(this.signupQRRequestDto).pipe(
             map((token) => {
                 if (token) {
-                    return new FetchUserData(this.onSuccess, this.onError);
+                    return store.emit(new FetchUserData(this.onSuccess, this.onError))
                 }
             }),
             catchError((error) => handleError(this.onError, error))
@@ -157,8 +141,8 @@ export class FetchUserData implements WatchEvent {
                     this.onSuccess(userData);
                 }
             }),
-            map((userData) => new SetCurrentUser(userData)),
-            catchError((error) => handleError(this.onError, error))
+            map((userData) => store.emit(new SetCurrentUser(userData))),
+            catchError((error) => { store.emit(new SetCurrentUser(null)); return handleError(this.onError, error) })
         );
     }
 }
@@ -220,7 +204,7 @@ export class LoginToken implements WatchEvent {
         return UserService.loginToken(this.token).pipe(
             map((userData) => {
                 if (userData) {
-                    return new FetchUserData(this.onSuccess, this.onError);
+                    return store.emit(new FetchUserData(this.onSuccess, this.onError));
                 }
             }),
             catchError((error) => { this.onError(); return of(undefined) })
@@ -245,7 +229,7 @@ export class UpdateProfile implements WatchEvent {
     }
 }
 
-export class Logout implements UpdateEvent {
+export class SessionUserLogout implements UpdateEvent {
     public constructor() { }
 
     public update(state: GlobalState) {
@@ -260,7 +244,7 @@ export class DeleteProfile implements WatchEvent {
     public constructor() { }
     public watch(state: GlobalState) {
         return UserService.deleteme().pipe(
-            map(() => store.emit(new Logout()))
+            map(() => store.emit(new SessionUserLogout()))
         )
 
     }

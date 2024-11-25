@@ -48,10 +48,8 @@ function MyApp({ Component, pageProps }) {
   const messagesUnread = useGlobalStore(
     (state: GlobalState) => state.activities.messages.unread
   );
-  const sessionUser = useGlobalStore(
-    (state: GlobalState) => state.sessionUser,
-  );
 
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
   const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
   state.networks.selectedNetworkLoading)
   const onFetchingNetworkError = (error) => {
@@ -153,21 +151,18 @@ function MyApp({ Component, pageProps }) {
     // check if local storage has a token
     if (sessionUser === false) {
       if (!isLoadingUser) {
+        setIsLoadingUser(true);
         store.emit(
           new FetchUserData(
             () => {
               setIsLoadingUser(false);
             },
             (error) => {
-              // if local storage has a token, and fails to fetchUserData then delete storage token
-              UserService.logout();
-              // router.push('/HomeInfo')
               setIsLoadingUser(false);
             },
           ),
         );
       }
-      setIsLoadingUser(true);
       return;
     }
     if (isLoadingUser) {
@@ -299,7 +294,7 @@ function MyApp({ Component, pageProps }) {
               />
             </ShowDesktopOnly>
             {authorized && <Component {...pageProps} />}
-            {!authorized && <Loading/>}
+            {!authorized && <>noauth<Loading/></>}
             <ShowMobileOnly>
               <ClienteSideRendering>
                 <NavBottom
