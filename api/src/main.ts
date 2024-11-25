@@ -20,6 +20,8 @@ import { CallHandler, ExecutionContext, Injectable, PlainLiteralObject } from '@
 import { map, Observable } from 'rxjs';
 import { Role } from './shared/types/roles';
 
+import helmet from 'helmet';
+
 @Injectable()
 export class RolesSerializerInterceptor extends ClassSerializerInterceptor {
 
@@ -71,7 +73,17 @@ export const bootstrap = async () => {
   });
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-
+  app.use(helmet({
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        imgSrc: [`'self'`, 'data:', configs().WEB_URL],
+        scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
+        manifestSrc: [`'self'`, configs().WEB_URL],
+        // frameSrc: [`'self'`, configs().WEB_URL],
+      },
+    },
+  }));  
   app.useGlobalInterceptors(new RolesSerializerInterceptor(
     app.get(Reflector))
   );
