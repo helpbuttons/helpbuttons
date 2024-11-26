@@ -73,17 +73,15 @@ export const bootstrap = async () => {
   });
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-  app.use(helmet({
-    crossOriginEmbedderPolicy: false,
-    contentSecurityPolicy: {
-      directives: {
-        imgSrc: [`'self'`, 'data:', configs().WEB_URL],
-        scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
-        manifestSrc: [`'self'`, configs().WEB_URL],
-        // frameSrc: [`'self'`, configs().WEB_URL],
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          "script-src": ["'self'", configs().WEB_URL],
+        },
       },
-    },
-  }));  
+    }),
+  );
   app.useGlobalInterceptors(new RolesSerializerInterceptor(
     app.get(Reflector))
   );
