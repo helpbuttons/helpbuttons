@@ -291,7 +291,13 @@ export class updateCurrentButton implements UpdateEvent {
 
       } else if (!this.button) {
         newState.explore.settings.center = state.explore.settings.prevCenter
-        newState.explore.settings.zoom = state.networks.selectedNetwork.exploreSettings.zoom;
+        if (newState.explore.settings.zoom == state.explore.settings.prevZoom)
+        {
+          newState.explore.settings.zoom = state.networks.selectedNetwork.exploreSettings.zoom;
+        }else{
+          newState.explore.settings.zoom = state.explore.settings.prevZoom;
+        }
+        
       }
     });
   }
