@@ -10,6 +10,7 @@ import { NetworkModule } from '../network/network.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ButtonModule } from '../button/button.module';
 import { ActivityCommand } from './activity.command';
+import { PostModule } from '../post/post.module';
 
 
 @Module({
@@ -19,7 +20,8 @@ import { ActivityCommand } from './activity.command';
     MailModule,
     NetworkModule,
     ScheduleModule.forRoot(),
-    ButtonModule
+    ButtonModule,
+    PostModule
   ],
   controllers: [
     ActivityController

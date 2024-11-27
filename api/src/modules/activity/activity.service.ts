@@ -26,6 +26,7 @@ import { User } from '../user/user.entity';
 import { unique } from '@src/shared/helpers/array.helper';
 import { excerpt } from './activity.utils';
 import { Comment } from '../post/comment.entity';
+import { PostService } from '../post/post.service';
 
 @Injectable()
 export class ActivityService {
@@ -38,6 +39,7 @@ export class ActivityService {
     private readonly entityManager: EntityManager,
     private readonly buttonService: ButtonService,
     private readonly networkService: NetworkService,
+    private readonly postService: PostService,
   ) {}
 
   @OnEvent(ActivityEventName.NewPost)
@@ -45,7 +47,15 @@ export class ActivityService {
     const post = payload.data.post;
     const button = post.button;
     // check users following the button of this post, and add a new actitivy to the daily outbox
-    return this.buttonService
+    // console.log(button)
+    return this.postService.findByButtonId(button.id)
+    .then(async (posts) => {
+      if(posts.length <= 1)
+      {
+        console.log('do not notify, automatic post')
+        return Promise.resolve(true)
+      }
+      return await this.buttonService
       .findById(button.id)
       .then(async (_button) => {
         const usersFollowing =
@@ -66,6 +76,8 @@ export class ActivityService {
       .then(() => {
         return this.newNetworkActivity(payload);
       });
+    })
+    
   }
 
   @OnEvent(ActivityEventName.NewPostComment)
