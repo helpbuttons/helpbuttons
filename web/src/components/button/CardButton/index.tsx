@@ -316,8 +316,8 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             console.log('scrolling...')
             onScollToCompose()
           }}
-      />
-      <ShowPhone button={button} /> */}
+      /> */}
+      <ShowPhone button={button} />
       <ExpiringAlert
         button={button}
         isOwner={isButtonOwner(sessionUser, button)}

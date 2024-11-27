@@ -55,7 +55,7 @@ export class PostService {
     });
   }
 
-  public findByButtonId(buttonId, currentUser) {
+  public findByButtonId(buttonId, currentUser = null) {
     return this.postRepository
       .find({
         where: { button: { id: buttonId }, deleted: false },
@@ -87,7 +87,7 @@ export class PostService {
     });
   }
 
-  removePrivateComments(posts, currentUser) {
+  removePrivateComments(posts, currentUser = null) {
     return posts.map((post) => {
       return {
         ...post,

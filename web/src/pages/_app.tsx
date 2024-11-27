@@ -32,6 +32,8 @@ import { useConfig } from 'state/Setup';
 import { UpdateMetadata } from 'state/Metadata';
 import { usePoolFindNewActivities } from 'state/Activity';
 import { useSetButtonFromUrl } from 'components/button/ButtonShow';
+import { randomBytes } from 'crypto'
+import MetadataSEOFromStore from 'components/seo';
 
 export default appWithTranslation(MyApp);
 
@@ -45,6 +47,8 @@ function MyApp({ Component, pageProps }) {
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
+  const nonce = randomBytes(128).toString('base64')
+
   const messagesUnread = useGlobalStore(
     (state: GlobalState) => state.activities.messages.unread
   );
@@ -176,6 +180,9 @@ function MyApp({ Component, pageProps }) {
     
     if(!isAllowed)
     {
+      alertService.error(
+        `You are not allowed in here!`
+      );
       router.push('/Error')
       return;
     }
@@ -268,7 +275,7 @@ function MyApp({ Component, pageProps }) {
   } else if (!selectedNetworkLoading) {
     return (
       <>
-        <SEO />
+        <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce}/>
         <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
         <div
           className="index__container"
@@ -310,7 +317,7 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
-  return <><MetadataSEO {...pageProps.metadata} /><Loading /></>;
+  return <><MetadataSEO {...pageProps.metadata} nonce={nonce} /><Loading /></>;
 }
 
 export const ClienteSideRendering = ({ children }) => {

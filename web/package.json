@@ -24,6 +24,7 @@
     "circle-to-polygon": "^2.2.0",
     "class-validator": "^0.14.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "crypto-random-string": "^5.0.0",
     "dotenv": "^10.0.0",
     "dotenv-webpack": "^7.1.0",

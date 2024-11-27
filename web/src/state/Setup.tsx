@@ -10,7 +10,7 @@ import { UserService } from 'services/Users';
 import { SignupRequestDto } from 'shared/dtos/auth.dto';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateEvent, WatchEvent } from 'store/Event';
-import { FetchUserData } from './Users';
+import { FetchUserData } from './Profile';
 import { alertService } from 'services/Alert';
 import { useEffect, useRef } from 'react';
 import { useStore } from 'store/Store';

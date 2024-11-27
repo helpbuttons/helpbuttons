@@ -5,7 +5,7 @@ import { GlobalState } from 'pages';
 import { useEffect, useState } from 'react';
 import { useGlobalStore } from 'store/Store';
 
-export default function SEO() {
+export default function MetadataSEOFromStore() {
   const metadataStore = useGlobalStore(
     (state: GlobalState) => state.metadata,
   );
@@ -32,7 +32,11 @@ export function MetadataSEO(props) {
     siteTitle,
     color,
     webUrl,
+    nonce
   } =  propsReceived;
+
+  const csp = `object-src 'none'; base-uri 'none'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'`
+
   useEffect(() => {
     if(props)
     {
@@ -42,10 +46,10 @@ export function MetadataSEO(props) {
   }, [props])
   return (
     <>{webUrl &&
-      <Head>
+      <Head nonce={nonce}>
         <title>{title}</title>
         <meta name="description" content={description} />
-
+        <meta httpEquiv="Content-Security-Policy" content={csp} />
         {/* <!-- Schema.org markup for Google+ --> */}
         <meta itemProp="name" content={title} />
         <meta itemProp="description" content={description} />

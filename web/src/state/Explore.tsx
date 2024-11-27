@@ -99,7 +99,7 @@ export class FindButtons implements WatchEvent, UpdateEvent {
     private hexagons: string[],
     private onSuccess,
     private onError,
-  ) {}
+  ) { }
 
   public watch(state: GlobalState) {
     return ButtonService.find(this.resolution, this.hexagons).pipe(
@@ -117,14 +117,14 @@ export class FindButtons implements WatchEvent, UpdateEvent {
   }
 }
 
-export class UpdateTagsList implements UpdateEvent{
+export class UpdateTagsList implements UpdateEvent {
   public constructor(
     private buttons: Button[]
-  ) {}
+  ) { }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       const allTags = this.buttons.map((button) => button.tags)
-      newState.explore.map.allTags = _.uniq([..._.flattenDeep(allTags),... state.explore.map.allTags])
+      newState.explore.map.allTags = _.uniq([..._.flattenDeep(allTags), ...state.explore.map.allTags])
     });
   }
 }
@@ -135,7 +135,7 @@ export class CreateButton implements WatchEvent, UpdateEvent {
     private networkId: string,
     private onSuccess,
     private onError,
-  ) {}
+  ) { }
   public watch(state: GlobalState) {
     return ButtonService.new(this.button, this.networkId).pipe(
       map((buttonData) => {
@@ -157,7 +157,7 @@ export class CreateButton implements WatchEvent, UpdateEvent {
 }
 
 export class SaveButtonDraft implements UpdateEvent {
-  public constructor(private buttonDraft) {}
+  public constructor(private buttonDraft) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -169,19 +169,17 @@ export class SaveButtonDraft implements UpdateEvent {
 export class FindButton implements WatchEvent {
   public constructor(
     private buttonId: string,
-    private onSuccess = (button) => {},
-    private onError = () => {},
-  ) {}
+    private onSuccess = (button) => { },
+    private onError = () => { },
+  ) { }
 
   public watch(state: GlobalState) {
     return ButtonService.findById(this.buttonId).pipe(
       map((button) => {
-        if(button.eventStart)
-        {
+        if (button.eventStart) {
           button.eventStart = new Date(button.eventStart)
         }
-        if(button.eventEnd)
-        {
+        if (button.eventEnd) {
           button.eventEnd = new Date(button.eventEnd)
         }
         this.onSuccess(button)
@@ -192,7 +190,7 @@ export class FindButton implements WatchEvent {
 }
 
 export class ButtonFound implements UpdateEvent {
-  public constructor(private button: Button) {}
+  public constructor(private button: Button) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -206,7 +204,7 @@ export class ButtonDelete implements WatchEvent, UpdateEvent {
     private buttonId: string,
     private onSuccess,
     private onError,
-  ) {}
+  ) { }
 
   public watch(state: GlobalState) {
     return ButtonService.delete(this.buttonId).pipe(
@@ -233,7 +231,7 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
     private button: UpdateButtonDto,
     private onSuccess,
     private onError,
-  ) {}
+  ) { }
   public watch(state: GlobalState) {
     return ButtonService.update(this.buttonId, this.button).pipe(
       tap((data) => {
@@ -253,24 +251,22 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
   }
 }
 
-export class NextCurrentButton implements UpdateEvent{
+export class NextCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       const nextButton = nextElement(state.explore.currentButton.id, state.explore.map.listButtons)
-      if(nextButton)
-      {
+      if (nextButton) {
         newState.explore.currentButton = nextButton;
       }
     })
   }
 }
 
-export class PreviousCurrentButton implements UpdateEvent{
+export class PreviousCurrentButton implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       const previousButton = previousElement(state.explore.currentButton.id, state.explore.map.listButtons)
-      if(previousButton)
-      {
+      if (previousButton) {
         newState.explore.currentButton = previousButton;
       }
     })
@@ -278,39 +274,42 @@ export class PreviousCurrentButton implements UpdateEvent{
 }
 
 export class updateCurrentButton implements UpdateEvent {
-  public constructor(private button: Button) {}
+  public constructor(private button: Button) { }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.currentButton = this.button;
-      if(this.button)
-    {
-      newState.explore.settings.prevCenter = state.explore.settings.center
-      newState.explore.settings.prevZoom = state.explore.settings.zoom
-      
-      if(this.button.hideAddress)
-      {
-        newState.explore.settings.hexagonClicked = this.button.hexagon
-      }
-      
-      newState.explore.settings.center = roundCoords([this.button.latitude, this.button.longitude])
-      newState.explore.settings.zoom = maxZoom-1
+      if (this.button) {
+        newState.explore.settings.prevCenter = state.explore.settings.center
+        newState.explore.settings.prevZoom = state.explore.settings.zoom
 
-    }else if(!this.button){
-      newState.explore.settings.center = state.explore.settings.prevCenter
-      newState.explore.settings.zoom = state.explore.settings.prevZoom
-    }
+        if (this.button.hideAddress) {
+          newState.explore.settings.hexagonClicked = this.button.hexagon
+        }
+
+        newState.explore.settings.center = roundCoords([this.button.latitude, this.button.longitude])
+        newState.explore.settings.zoom = maxZoom - 1
+
+      } else if (!this.button) {
+        newState.explore.settings.center = state.explore.settings.prevCenter
+        if (newState.explore.settings.zoom == state.explore.settings.prevZoom)
+        {
+          newState.explore.settings.zoom = state.networks.selectedNetwork.exploreSettings.zoom;
+        }else{
+          newState.explore.settings.zoom = state.explore.settings.prevZoom;
+        }
+        
+      }
     });
   }
 }
 
 export class UpdateFilters implements UpdateEvent {
-  public constructor(private filters: ButtonFilters) {}
+  public constructor(private filters: ButtonFilters) { }
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      if(this.filters?.where.center)
-      {
+      if (this.filters?.where.center) {
         const newZoom = getZoomFromRadius(this.filters.where.radius)
-        newState.explore.settings.zoom = newZoom 
+        newState.explore.settings.zoom = newZoom
         newState.explore.settings.center = this.filters.where.center
       }
       let newFilters = this.filters;
@@ -320,8 +319,7 @@ export class UpdateFilters implements UpdateEvent {
       }).filter((tag) => tag)
 
       const newQuery = words.map((word) => {
-        if(state.explore.map.allTags.find((tag) => tag == word))
-        {
+        if (state.explore.map.allTags.find((tag) => tag == word)) {
           return ''
         }
         return word
@@ -335,57 +333,51 @@ export class UpdateFilters implements UpdateEvent {
 }
 
 export class ResetFilters implements UpdateEvent {
-  public constructor() {}
+  public constructor() { }
 
   public update(state: GlobalState) {
-    return produce(state, (newState) => {      newState.explore.map.filters = defaultFilters;
+    return produce(state, (newState) => {
+      newState.explore.map.filters = defaultFilters;
     });
   }
 }
 
 const getZoomFromRadius = (radius) => {
-  if (radius > 300)
-  {
+  if (radius > 300) {
     return 7
-  }else if (radius > 200)
-  {
+  } else if (radius > 200) {
     return 8
-  }else if (radius > 100)
-  {
+  } else if (radius > 100) {
     return 9
-  }else if (radius > 50)
-  {
+  } else if (radius > 50) {
     return 10
-  }else if (radius > 25)
-  {
+  } else if (radius > 25) {
     return 11
-  }else if (radius > 15)
-  {
+  } else if (radius > 15) {
     return 12
-  }else if (radius > 5)
-  {
+  } else if (radius > 5) {
     return 13
-  }else{
+  } else {
     return 15
   }
-  
+
 }
 export class UpdateFiltersToFilterTag implements UpdateEvent {
-  public constructor(private tag: string) {}
+  public constructor(private tag: string) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       // use query to filter tag...
       newState.explore.map.filters = {
         ...defaultFilters,
-        tags:  [this.tag]
+        tags: [this.tag]
       };
     });
   }
 }
 
 export class UpdateFiltersToFilterButtonType implements UpdateEvent {
-  public constructor(private buttonType: string) {}
+  public constructor(private buttonType: string) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -419,7 +411,7 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
 }
 
 export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
-  public constructor(private boundsFilteredButtons: Button[]) {}
+  public constructor(private boundsFilteredButtons: Button[]) { }
 
   public watch(state: GlobalState) {
 
@@ -433,11 +425,11 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
       ) {
         if (
           state.explore.settings.zoom !=
-            state.networks.selectedNetwork.exploreSettings.zoom ||
+          state.networks.selectedNetwork.exploreSettings.zoom ||
           JSON.stringify(state.explore.settings.center) !=
-            JSON.stringify(
-              state.networks.selectedNetwork.exploreSettings.center,
-            )
+          JSON.stringify(
+            state.networks.selectedNetwork.exploreSettings.center,
+          )
         ) {
           store.emit(
             new UpdateExploreSettings({
@@ -463,7 +455,7 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
   }
 }
 export class ResetButtonTypeClicked implements UpdateEvent {
-  public constructor() {}
+  public constructor() { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -472,7 +464,7 @@ export class ResetButtonTypeClicked implements UpdateEvent {
   }
 }
 export class UpdateExploreUpdating implements UpdateEvent {
-  public constructor() {}
+  public constructor() { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -482,21 +474,19 @@ export class UpdateExploreUpdating implements UpdateEvent {
 }
 
 export class UpdateHexagonClicked implements UpdateEvent {
-  public constructor(private hexagonClicked: string) {}
+  public constructor(private hexagonClicked: string) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.settings.hexagonClicked = this.hexagonClicked;
-      if(this.hexagonClicked)
-      {
+      if (this.hexagonClicked) {
         newState.explore.map.showInstructions = false;
         newState.explore.map.listButtons = listButtonsFilteredByHexagon(this.hexagonClicked, state.explore.map.boundsFilteredButtons)
         newState.explore.currentButton = null
-        if(state.explore.settings.viewMode == ExploreViewMode.MAP)
-        {
+        if (state.explore.settings.viewMode == ExploreViewMode.MAP) {
           newState.explore.settings.viewMode = ExploreViewMode.BOTH
         }
-      }else{
+      } else {
         newState.explore.map.listButtons = state.explore.map.boundsFilteredButtons
       }
     });
@@ -505,14 +495,13 @@ export class UpdateHexagonClicked implements UpdateEvent {
 
 
 export class HiglightHexagonFromButton implements UpdateEvent {
-  public constructor(private buttonHexagon: string) {}
+  public constructor(private buttonHexagon: string) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      if(this.buttonHexagon)
-      {
+      if (this.buttonHexagon) {
         newState.explore.settings.hexagonHighlight = cellToZoom(this.buttonHexagon, state.explore.settings.zoom)
-      }else{
+      } else {
         newState.explore.settings.hexagonHighlight = null
       }
     });
@@ -521,8 +510,7 @@ export class HiglightHexagonFromButton implements UpdateEvent {
 
 function listButtonsFilteredByHexagon(hexagonClicked, boundsFilteredButtons) {
   const resolutionRequested = getResolution(hexagonClicked);
-  if (hexagonClicked)
-  {
+  if (hexagonClicked) {
     return boundsFilteredButtons.filter(
       (button) =>
         cellToParent(button.hexagon, resolutionRequested) ==
@@ -530,10 +518,10 @@ function listButtonsFilteredByHexagon(hexagonClicked, boundsFilteredButtons) {
     );
   }
   return boundsFilteredButtons
-  
+
 }
 export class UpdateCachedHexagons implements UpdateEvent {
-  public constructor(private cachedHexagons: any[]) {}
+  public constructor(private cachedHexagons: any[]) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -542,7 +530,7 @@ export class UpdateCachedHexagons implements UpdateEvent {
   }
 }
 export class ClearCachedHexagons implements UpdateEvent {
-  public constructor() {}
+  public constructor() { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -553,16 +541,16 @@ export class ClearCachedHexagons implements UpdateEvent {
 export class UpdateExploreSettings implements UpdateEvent {
   public constructor(
     private newExploreSettings: Partial<ExploreSettings>,
-  ) {}
+  ) { }
   public watch(state: GlobalState) {
-      if (this.newExploreSettings?.zoom &&
-        getResolution(state.explore.settings.hexagonClicked) !=
-          getZoomResolution(Math.floor(this.newExploreSettings.zoom))
-      ) {
-        
-        store.emit(new UpdateHexagonClicked(null))
-      }
-      return of(undefined)
+    if (this.newExploreSettings?.zoom &&
+      getResolution(state.explore.settings.hexagonClicked) !=
+      getZoomResolution(Math.floor(this.newExploreSettings.zoom))
+    ) {
+
+      store.emit(new UpdateHexagonClicked(null))
+    }
+    return of(undefined)
   }
 
   public update(state: GlobalState) {
@@ -573,31 +561,28 @@ export class UpdateExploreSettings implements UpdateEvent {
       let newExploreSettings = {
         loading: false,
       };
-      
-      if (this.newExploreSettings.center)
-      {
-        newExploreSettings = {center: roundCoords(this.newExploreSettings.center), ...newExploreSettings}
+
+      if (this.newExploreSettings.center) {
+        newExploreSettings = { center: roundCoords(this.newExploreSettings.center), ...newExploreSettings }
       }
 
 
-      newExploreSettings = {zoom: this.newExploreSettings.zoom, ...newExploreSettings}
-        
-      if (!state.explore.currentButton)
-      {
-        newExploreSettings = {prevZoom: state.explore.settings.zoom, prevCenter: state.explore.settings.center, ...newExploreSettings}
+      newExploreSettings = { zoom: this.newExploreSettings.zoom, ...newExploreSettings }
+
+      if (!state.explore.currentButton) {
+        newExploreSettings = { prevZoom: state.explore.settings.zoom, prevCenter: state.explore.settings.center, ...newExploreSettings }
       }
-      if(prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center))
-      {
+      if (prevSettings.center != null && JSON.stringify(prevSettings.center) != JSON.stringify(this.newExploreSettings.center)) {
         newState.explore.map.showInstructions = false;
       }
-      newState.explore.settings = {...state.explore.settings,...newExploreSettings};
+      newState.explore.settings = { ...state.explore.settings, ...newExploreSettings };
     });
   }
 }
 
-export class SetExploreSettingsBoundsLoaded implements UpdateEvent{
+export class SetExploreSettingsBoundsLoaded implements UpdateEvent {
   public constructor(
-  ) {}
+  ) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -612,7 +597,7 @@ export class GetPhone implements WatchEvent {
     private buttonId: string,
     private onSuccess,
     private onError,
-  ) {}
+  ) { }
   public watch(state: GlobalState) {
     return ButtonService.getPhone(this.buttonId).pipe(
       map((data) => {
@@ -623,12 +608,12 @@ export class GetPhone implements WatchEvent {
   }
 }
 
-export class ButtonRenew implements WatchEvent{
+export class ButtonRenew implements WatchEvent {
   public constructor(
     private buttonId: string,
     private onSuccess,
     private onError,
-  ) {}
+  ) { }
   public watch(state: GlobalState) {
     return ButtonService.renew(this.buttonId).pipe(
       map((data) => {
@@ -640,14 +625,13 @@ export class ButtonRenew implements WatchEvent{
 }
 
 export class ToggleAdvancedFilters implements UpdateEvent {
-  public constructor(private value?) {}  
+  public constructor(private value?) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      if(this.value === false || this.value === true)
-      {
+      if (this.value === false || this.value === true) {
         newState.explore.map.showAdvancedFilters = this.value
-      }else{
+      } else {
         newState.explore.map.showAdvancedFilters = !state.explore.map.showAdvancedFilters
       }
     });
@@ -655,19 +639,17 @@ export class ToggleAdvancedFilters implements UpdateEvent {
 }
 
 export class RecenterExplore implements WatchEvent {
-  public constructor(private value?) {}  
-  public watch( state: GlobalState)
-  {
-    if(state?.networks?.selectedNetwork?.exploreSettings)
-    {
-      store.emit(new UpdateExploreSettings({zoom: state.networks.selectedNetwork.exploreSettings.zoom,center: state.networks.selectedNetwork.exploreSettings.center }))
+  public constructor(private value?) { }
+  public watch(state: GlobalState) {
+    if (state?.networks?.selectedNetwork?.exploreSettings) {
+      store.emit(new UpdateExploreSettings({ zoom: state.networks.selectedNetwork.exploreSettings.zoom, center: state.networks.selectedNetwork.exploreSettings.center }))
     }
   }
 }
 
 
-export class UpdateExploreViewMode implements UpdateEvent{
-  public constructor(private viewMode: ExploreViewMode) {}  
+export class UpdateExploreViewMode implements UpdateEvent {
+  public constructor(private viewMode: ExploreViewMode) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {

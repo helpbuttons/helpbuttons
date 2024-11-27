@@ -20,6 +20,8 @@ import { CallHandler, ExecutionContext, Injectable, PlainLiteralObject } from '@
 import { map, Observable } from 'rxjs';
 import { Role } from './shared/types/roles';
 
+import helmet from 'helmet';
+
 @Injectable()
 export class RolesSerializerInterceptor extends ClassSerializerInterceptor {
 
@@ -64,11 +66,22 @@ export const bootstrap = async () => {
   console.log(configs());
 
   const app = await NestFactory.create(AppModule);
-  app.enableCors({origin: configs().WEB_URL})
-  
+  // app.enableCors({origin: configs().WEB_URL})
+  app.use(function(req, res, next) {
+    res.setHeader("Content-Security-Policy", `script-src 'self' ${configs().WEB_URL}`);
+    return next();
+  });
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          "script-src": ["'self'", configs().WEB_URL],
+        },
+      },
+    }),
+  );
   app.useGlobalInterceptors(new RolesSerializerInterceptor(
     app.get(Reflector))
   );
