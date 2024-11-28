@@ -52,6 +52,7 @@ import { alertService } from 'services/Alert';
 import { ButtonShow } from 'components/button/ButtonShow';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import { applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
+import { Button } from 'shared/entities/button.entity';
 
 const defaultZoomPlace = 13;
 
@@ -60,12 +61,13 @@ function HoneyComb({ selectedNetwork }) {
     store,
     (state: GlobalState) => state.explore.currentButton,
   );
-
-  const exploreMapState: ExploreMapState = useStore(
+  
+  const listButtons : Button[] = useStore(
     store,
-    (state: GlobalState) => state.explore.map,
+    (state: GlobalState) => state.explore.map.listButtons,
     false,
   );
+
 
   const exploreSettings: ExploreSettings = useStore(
     store,
@@ -89,14 +91,6 @@ function HoneyComb({ selectedNetwork }) {
     filters,
   });
 
-  const { handleBoundsChange, h3TypeDensityHexes } = useHexagonMap({
-    toggleShowLeftColumn,
-    exploreSettings,
-    filters: exploreMapState.filters,
-    boundsFilteredButtons: exploreMapState.boundsFilteredButtons,
-    cachedHexagons: exploreMapState.cachedHexagons,
-    buttonTypes: selectedNetwork?.buttonTemplates,
-  });
 
   return (
     <>
@@ -116,7 +110,7 @@ function HoneyComb({ selectedNetwork }) {
               </PopupButtonFile>
             )}
             <ExploreContainerList
-             listButtons={exploreMapState.listButtons}
+             listButtons={listButtons}
              showLeftColumn={showLeftColumn}
              showMap={true}
              isListOpen={isListOpen}
@@ -125,13 +119,8 @@ function HoneyComb({ selectedNetwork }) {
              toggleShowLeftColumn={toggleShowLeftColumn}
             />
           </ExploreContainerLeftColumn>
-
-          <HexagonExploreMap
-            exploreSettings={exploreSettings}
-            h3TypeDensityHexes={h3TypeDensityHexes}
-            handleBoundsChange={handleBoundsChange}
-            selectedNetwork={selectedNetwork}
-          />
+          <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
+          
         </ExploreContainer>
       </ShowDesktopOnly>
       <ShowMobileOnly>
@@ -149,12 +138,7 @@ function HoneyComb({ selectedNetwork }) {
               </PopupButtonFile>
             )}
           </ExploreContainerLeftColumn>
-          <HexagonExploreMap
-            exploreSettings={exploreSettings}
-            h3TypeDensityHexes={h3TypeDensityHexes}
-            handleBoundsChange={handleBoundsChange}
-            selectedNetwork={selectedNetwork}
-          />
+          <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
           <div
           className={
             'index__content-bottom ' +
@@ -169,7 +153,7 @@ function HoneyComb({ selectedNetwork }) {
           }
         >
           <ExploreContainerList
-             listButtons={exploreMapState.listButtons}
+             listButtons={listButtons}
              showLeftColumn={showLeftColumn}
              showMap={showMap}
              isListOpen={isListOpen}
@@ -595,3 +579,27 @@ function ExploreContainerList({listButtons, showLeftColumn, showMap, isListOpen,
             onLeftColumnToggle={toggleShowLeftColumn}
           />
 }
+
+function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwork})
+{
+  const exploreMapState: ExploreMapState = useStore(
+    store,
+    (state: GlobalState) => state.explore.map,
+    false,
+  );
+  const { handleBoundsChange, h3TypeDensityHexes } = useHexagonMap({
+    toggleShowLeftColumn,
+    exploreSettings,
+    filters: exploreMapState.filters,
+    boundsFilteredButtons: exploreMapState.boundsFilteredButtons,
+    cachedHexagons: exploreMapState.cachedHexagons,
+    buttonTypes: selectedNetwork?.buttonTemplates,
+  });
+
+  return (<HexagonExploreMap
+            exploreSettings={exploreSettings}
+            h3TypeDensityHexes={h3TypeDensityHexes}
+            handleBoundsChange={handleBoundsChange}
+            selectedNetwork={selectedNetwork}
+          />)
+  }
