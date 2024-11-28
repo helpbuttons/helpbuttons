@@ -7,7 +7,8 @@ import {
 } from 'state/Explore';
 import { HbMap } from '.';
 import {
-  convertH3DensityToFeatures} from 'shared/honeycomb.utils';
+  convertH3DensityToFeatures
+} from 'shared/honeycomb.utils';
 import _ from 'lodash';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import Loading from 'components/loading';
@@ -19,6 +20,7 @@ import { Button } from 'shared/entities/button.entity';
 import { MarkerButton } from './MarkerButton';
 import t from 'i18n';
 import { PoweredBy } from 'components/brand/powered';
+import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -82,12 +84,12 @@ export default function HexagonExploreMap({
 
   useEffect(() => {
     const allHiddenButtons = boundsFilteredButtons.filter((elem) => elem.hideAddress === true)
-    if(exploreSettings.zoom >= showMarkersZoom ){
+    if (exploreSettings.zoom >= showMarkersZoom) {
       setCountFilteredButtons(allHiddenButtons.length)
-    }else{
+    } else {
       setCountFilteredButtons(0)
     }
-    
+
   }, [boundsFilteredButtons, exploreSettings.zoom])
   const places = [
     {
@@ -359,7 +361,8 @@ function HbMapOverlay({ selectedNetwork }) {
     <ShowMobileOnly>
       <Overlay anchor={[100, 100]}>
         <div className="search-map__network-title">
-          <div>{selectedNetwork.name}</div>
+          <div><ImageWrapper
+            src={selectedNetwork.logo} alt={selectedNetwork.name} imageType={ImageType.avatar} />&nbsp;{selectedNetwork.name}</div>
           <div className="search-map__sign">
             <PoweredBy />
           </div>
