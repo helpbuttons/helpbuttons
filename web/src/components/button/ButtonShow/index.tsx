@@ -24,13 +24,6 @@ export function ButtonShow({button}) {
     }
   });
 
-  useEffect(() => {
-    if(button)
-    {
-      window.history.replaceState(null, '', `/Explore?btn=${button.id}`);
-    }
-    
-  }, [button]);
   const buttonTypes = useButtonTypes();
   return (
      <div {...handlers}> 
@@ -48,17 +41,3 @@ export function ButtonShow({button}) {
   );
 }
 
-export const useSetButtonFromUrl = () => {
-  const url = new URL(window.location.href);
-
-  const params = new URLSearchParams(url.search);
-  const btnId = params.get('btn');
-
-  if (btnId) {
-    store.emit(
-      new FindButton(btnId, (buttonFetched) => {
-        store.emit(new updateCurrentButton(buttonFetched));
-      }),
-    );
-  }
-};

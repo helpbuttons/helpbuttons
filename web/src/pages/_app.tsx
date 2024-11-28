@@ -1,16 +1,14 @@
 import '../styles/app.scss';
-import Head from 'next/head';
 import { useState, useEffect, useRef } from 'react';
 import { Router, useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
-import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
 import { GlobalState, store } from 'pages';
 import { useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Profile';
 
-import { useGlobalStore, useStore } from 'store/Store';
+import { useGlobalStore } from 'store/Store';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
 
@@ -20,42 +18,41 @@ import {
   isRoleAllowed,
   setSSRLocale,
 } from 'shared/sys.helper';
-// import { version } from 'shared/commit';
 import t, { updateNomeclature } from 'i18n';
 import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
-import SEO, { MetadataSEO } from 'components/seo';
+import { MetadataSEO } from 'components/seo';
 import Loading, { LoadabledComponent } from 'components/loading';
 import MainPopup from 'components/popup/Main/';
 import { useConfig } from 'state/Setup';
 import { UpdateMetadata } from 'state/Metadata';
 import { usePoolFindNewActivities } from 'state/Activity';
-import { useSetButtonFromUrl } from 'components/button/ButtonShow';
 import { randomBytes } from 'crypto'
 import MetadataSEOFromStore from 'components/seo';
+import { useRebuildUrl } from 'components/uri/builder';
 
 export default appWithTranslation(MyApp);
 
+
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  useEffect(() => {
-    useSetButtonFromUrl();
-  }, [])
+
   const [authorized, setAuthorized] = useState(null);
   const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
   const nonce = randomBytes(128).toString('base64')
-
+  useRebuildUrl(router);
   const messagesUnread = useGlobalStore(
     (state: GlobalState) => state.activities.messages.unread
   );
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
   const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
-  state.networks.selectedNetworkLoading)
+    state.networks.selectedNetworkLoading)
   const onFetchingNetworkError = (error) => {
     if (error === 'network-not-found') {
       setFetchingNetworkError(true)
@@ -91,7 +88,7 @@ function MyApp({ Component, pageProps }) {
       return urlString;
     }
   }, [path])
-  
+
 
 
   const config = useConfig(pageProps._config, onFetchingConfigError);
@@ -177,9 +174,8 @@ function MyApp({ Component, pageProps }) {
       return;
     }
     const isAllowed = isRoleAllowed(Role.guest, path)
-    
-    if(!isAllowed)
-    {
+
+    if (!isAllowed) {
       alertService.error(
         `You are not allowed in here!`
       );
@@ -275,7 +271,7 @@ function MyApp({ Component, pageProps }) {
   } else if (!selectedNetworkLoading) {
     return (
       <>
-        <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce}/>
+        <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
         <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
         <div
           className="index__container"
@@ -301,7 +297,7 @@ function MyApp({ Component, pageProps }) {
               />
             </ShowDesktopOnly>
             {authorized && <Component {...pageProps} />}
-            {!authorized && <><Loading/></>}
+            {!authorized && <><Loading /></>}
             <ShowMobileOnly>
               <ClienteSideRendering>
                 <NavBottom
