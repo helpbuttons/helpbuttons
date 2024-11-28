@@ -127,17 +127,10 @@ $map-btns-size-mobile: 30px;
 }
 
 .pigeon-attribution {
-
+    position: relative;
+    top: -5px;
+    right: 10px;
     background: transparent !important;
-    // display: flex !important;
-    // flex-direction: column !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    bottom: 0px !important;
-    right: 10px !important;
-    font-size: 7px !important;
-    // writing-mode: vertical-rl !important;
-    text-orientation: mixed !important;
 
 }
 
@@ -247,8 +240,6 @@ $map-btns-size-mobile: 30px;
     }
 
     .pigeon-attribution {
-    
-        bottom: 0 !important;
     
     }
 

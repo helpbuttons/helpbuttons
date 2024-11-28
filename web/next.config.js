@@ -39,4 +39,7 @@ module.exports = {
   },
   i18n,
   output: 'standalone',
+  sassOptions: {
+    includePaths: [__dirname + '/styles'],
+  },
 };
