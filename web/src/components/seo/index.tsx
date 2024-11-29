@@ -46,10 +46,11 @@ export function MetadataSEO(props) {
   }, [props])
   return (
     <>{webUrl &&
-      <Head nonce={nonce}>
+      // <Head nonce={nonce}>
+        <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
-        <meta httpEquiv="Content-Security-Policy" content={csp} />
+        {/* <meta httpEquiv="Content-Security-Policy" content={csp} /> */}
         {/* <!-- Schema.org markup for Google+ --> */}
         <meta itemProp="name" content={title} />
         <meta itemProp="description" content={description} />
