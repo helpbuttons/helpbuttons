@@ -125,8 +125,9 @@ $card-alert-icon-size: 30px;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 
   &__content {
-    background-color: $color-white;
+    background-color: $color-corporative;
     max-width: 1200px;
+    border-radius: $border-radius-basic;
     padding: $padding-big;
     display: flex;
     flex-direction: column;
