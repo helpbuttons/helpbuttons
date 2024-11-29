@@ -16,6 +16,8 @@ import {
 } from './Map.consts';
 
 export function MarkerEditorMap(props) {
+  const [mapCenter, setMapCenter] = useState(null);
+
   return (
     <>
       {/* <DropDownWhere
@@ -36,8 +38,9 @@ export function MarkerEditorMap(props) {
         hideAddress={props.hideAddress}
         toggleLoadingNewAddress={props.toggleLoadingNewAddress}
         markerPosition={props.markerPosition}
+        mapCenter={mapCenter}
       />
-      <MarkerViewMap {...props} editPosition={true} />
+      <MarkerViewMap {...props} mapCenter={mapCenter} setMapCenter={setMapCenter} editPosition={true} />
     </>
   );
 }
@@ -53,10 +56,11 @@ export default function MarkerViewMap({
   editPosition = false,
   onMapClick = (latLng) => {},
   networkMapCenter = null,
+  mapCenter,
+  setMapCenter
 }) {
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
     useState(null);
-  const [mapCenter, setMapCenter] = useState(null);
   const mapCenterIsReady = useRef(false);
   const onBoundsChanged = ({ center, zoom, bounds, initial }) => {
     setZoom(() => zoom);

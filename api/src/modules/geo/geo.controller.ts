@@ -11,9 +11,9 @@ export class GeoController {
   constructor(private readonly geoService: GeoService) {}
 
   @AllowGuest()
-  @Get('search/:address')
-  new(@Param('address') address: string) {
-    return this.geoService.search(address)
+  @Get('search/:latCenter/:lngCenter/:query')
+  new(@Param('latCenter') latCenter: string, @Param('lngCenter') lngCenter: string, @Param('query') query: string) {
+    return this.geoService.search(latCenter, lngCenter, query)
   }
 
   @AllowGuest()

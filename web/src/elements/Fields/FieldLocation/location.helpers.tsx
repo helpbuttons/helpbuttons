@@ -9,9 +9,9 @@ import {
 
 export const useGeoSearch = () => {
   const GeoFindByQuery = useCallback(
-    debounce((query, callback) => {
+    debounce((latCenter, lngCenter, query, callback) => {
       store.emit(
-        new GeoFindAddress(query, (places) => {
+        new GeoFindAddress(latCenter, lngCenter, query, (places) => {
           return callback(places);
         }),
       );
@@ -19,8 +19,9 @@ export const useGeoSearch = () => {
     [],
   );
 
-  const _debounceFunc = (query, success) => {
-    GeoFindByQuery(query, (places) => success(places));
+  const _debounceFunc = (latCenter, lngCenter, query, success) => {
+    console.log(latCenter)
+    GeoFindByQuery(latCenter, lngCenter, query, (places) => success(places));
   };
 
   return _debounceFunc;

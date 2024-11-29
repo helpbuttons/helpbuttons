@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { GlobalState, store } from 'pages';
-import { useStore } from 'store/Store';
+import { useGlobalStore, useStore } from 'store/Store';
 import { roundCoords } from 'shared/honeycomb.utils';
 import { useToggle } from 'shared/custom.hooks';
 import {
@@ -37,11 +37,9 @@ export default function DropDownSearchLocation({
   hideAddress = false,
   toggleLoadingNewAddress,
   markerPosition,
+  mapCenter
 }) {
-  const config: SetupDtoOut = useStore(
-    store,
-    (state: GlobalState) => state.config,
-  );
+  const center: number[] = useGlobalStore((state: GlobalState) => state.explore.settings.center);
 
   const geoSearch = useGeoSearch()
 
@@ -89,9 +87,16 @@ export default function DropDownSearchLocation({
   }
   const bounce = useRef(false);
   const options = useRef([]);
-  const _loadSuggestions = function (input, callback) {
+  const _loadSuggestions = function (_mapCenter, input, callback) {
     toggleLoadingNewAddress(() => true);
-    geoSearch(input, (places) => {
+    console.log(_mapCenter)
+    if(!_mapCenter){
+      console.log(
+        'map center is null, canceling geo!'
+      )
+      return callback([]);
+    }
+    geoSearch(_mapCenter[0], _mapCenter[1],input, (places) => {
       toggleLoadingNewAddress(() => false);
       if (places.length > 0) {
         if (hideAddress) {
@@ -124,14 +129,14 @@ export default function DropDownSearchLocation({
   const [input, setInput] = useState('');
   const debouncedFilter = useCallback(
     debounce(
-      (inputValue, callback) =>
-        _loadSuggestions(inputValue, callback),
+      (mapCenter, inputValue, callback) =>
+        {_loadSuggestions(mapCenter, inputValue, callback)},
       500,
     ),
     [],
   );
   const loadSuggestions = (inputValue, callback) => {
-    debouncedFilter(inputValue, callback);
+    debouncedFilter(mapCenter, inputValue, callback);
   };
   useEffect(() => {
     if (address) {
@@ -167,7 +172,7 @@ export default function DropDownSearchLocation({
             ) {
               setInput(value);
             }
-            console.log(action);
+            // console.log(action);
           }}
           onBlur={() =>
             setInput(() => {

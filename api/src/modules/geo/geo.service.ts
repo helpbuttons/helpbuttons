@@ -7,7 +7,20 @@ import { HttpHelper } from '@src/shared/helpers/http.helper';
 import { KomootGeoProvider } from './providers/komoot';
 import { Response } from 'express';
 import { SimulateGeoProvider } from './providers/simulate';
+import { GeoAddress } from './providers/provider.interface';
+import getDistance from 'geolib/es/getDistance';
 
+function sortPlacesByProximity(centerLat: number, centerLng: number, places: GeoAddress[]): GeoAddress[] {
+  return places.sort((a, b) => {
+    // const distanceA = getDistance({latitude: centerLat,longitude: centerLng}, {latitude: parseFloat(a.geometry.lat), longitude: parseFloat(a.geometry.lng)});
+    // const distanceB = getDistance({latitude: centerLat,longitude: centerLng}, {latitude: parseFloat(b.geometry.lat), longitude: parseFloat(b.geometry.lng)});
+    
+    // // console.log(distanceA-distanceB)
+    // // const value = distanceA - distanceB;
+    // // const distance = value > 0 ? value : value * -1;
+    // return (distanceA > distanceB)
+  });
+}
 @Injectable()
 export class GeoService {
   geoProvider = null;
@@ -34,8 +47,33 @@ export class GeoService {
     }
   }
 
-  async search(query: string) {
-    return this.geoProvider.searchQuery(query);
+  async search(latCenter: string, lngCenter: string, query: string) {
+    console.log(latCenter)
+    console.log(lngCenter)
+    console.log('query: ' + query)
+    return this.geoProvider.searchQuery(query)
+    .then((geoAddresses: GeoAddress[]) => {
+      console.log(geoAddresses)
+      const sortedAddressDis = geoAddresses.map((address) => {
+        //   console.log(`${JSON.stringify({latitude: parseFloat(latCenter),longitude: parseFloat(lngCenter)})} ${JSON.stringify({latitude: parseFloat(address.geometry.lat), longitude: parseFloat(address.geometry.lng)})}`)
+          return {
+            ...address,
+            distance: getDistance({latitude: latCenter,longitude: lngCenter}, {latitude: parseFloat(address.geometry.lat), longitude: parseFloat(address.geometry.lng)})
+          }
+        })
+      // const sortedAddress = sortPlacesByProximity(parseFloat(latCenter), parseFloat(lngCenter), geoAddresses)
+      // ${JSON{latitude: latCenter,longitude: lngCenter}, {latitude: parseFloat(address.geometry.lat), longitude: parseFloat(address.geometry.lng)})
+      // console.log()
+      
+      // console.log(sortedAddressDis)
+      return geoAddresses;
+      
+      // geoAddresses.sort((a: GeoAddress,b: GeoAddress) => {
+      //   a.geometry.lat, a.geometry.lng
+        
+      // })
+    } );
+
   }
 
   async findAddress(lat: string, lng: string) {

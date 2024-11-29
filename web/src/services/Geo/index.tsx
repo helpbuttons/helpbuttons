@@ -3,8 +3,8 @@ import { httpService } from 'services/HttpService';
 import { roundCoord } from 'shared/honeycomb.utils';
 // const opencage = require('opencage-api-client');
 export class GeoService {
-  public static find(address: string): Observable<any> {
-    const url = `geo/search/${address}`
+  public static find(latCenter, lngCenter, address: string): Observable<any> {
+    const url = `geo/search/${latCenter}/${lngCenter}/${address}`
     return httpService.get<any>(url)
   }
 
