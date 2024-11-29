@@ -152,19 +152,7 @@ export default function AdvancedFilters({
                     {showFilterByDays && 
                       <FilterByDays days={days} setDays={(value) => setValue('days', value)}/>
                     }
-                    <FieldText
-                      name="query"
-                      label={t('buttonFilters.queryLabel')}
-                      placeholder={t('buttonFilters.queryPlaceHolder')}
-                      explain={t('buttonFilters.queryExplain')}
-                      {...register('query')}
-                    >
-                      <TagList tags={tags} remove={remove}/>
-                      <AllSuggestedTags word={query.substring(query.lastIndexOf(" ")+1)} maxTags={5} tags={tags} addTag={(tag) => {addTag(tag); setValue('query',updateQueryWhenTagAdded(query, tag))}}/>
-                      <TagFollow tags={tags}/>
-                    </FieldText>
-                    <Accordion icon={<IoList/>} title={t('buttonFilters.byCategory')}>
-                      <FieldMultiSelect
+                    <FieldMultiSelect
                         label={t('buttonFilters.types')}
                         validationError={null}
                         explain={t('buttonFilters.typesExplain')}
@@ -201,8 +189,22 @@ export default function AdvancedFilters({
                           // </div>
                         );
                       })}
-                      </FieldMultiSelect>
-                    </Accordion>
+                    </FieldMultiSelect>
+                    <div className="form__btn-search">
+                      <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
+                    </div>
+                    <FieldText
+                      name="query"
+                      label={t('buttonFilters.queryLabel')}
+                      placeholder={t('buttonFilters.queryPlaceHolder')}
+                      explain={t('buttonFilters.queryExplain')}
+                      {...register('query')}
+                    >
+                      <TagList tags={tags} remove={remove}/>
+                      <AllSuggestedTags word={query.substring(query.lastIndexOf(" ")+1)} maxTags={5} tags={tags} addTag={(tag) => {addTag(tag); setValue('query',updateQueryWhenTagAdded(query, tag))}}/>
+                      <TagFollow tags={tags}/>
+                    </FieldText>
+ 
 
                     <AdvancedFiltersSortDropDown
                       className={'dropdown__dropdown-trigger'}
@@ -215,9 +217,7 @@ export default function AdvancedFilters({
                       selectedButtonTypes={watch('helpButtonTypes')}
                     />
                     <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
-                    <div clasS="form__btn-search">
-                      <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
-                    </div>
+
                   </div>
                 
               </Form>

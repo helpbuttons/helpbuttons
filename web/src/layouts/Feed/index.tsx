@@ -28,7 +28,7 @@ import { useStore } from 'store/Store';
 import MessageNew from 'components/feed/MessageNew';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';
-import { CardButtonHeadActions } from 'components/button/CardButton';
+import { CardButtonHeadActions, ShowPhone } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function Feed({ button }: { button: Button }) {
@@ -245,7 +245,8 @@ export function FeedElement({
           {/* {!sessionUser && 
             <LoginOrSignup/>
           } */}
-        </>
+
+        {/* <ShowPhone button={post.comments} /> */}
         <PostComments
           comments={post.comments}
           reloadPosts={reloadPosts}
@@ -253,6 +254,7 @@ export function FeedElement({
           isButtonOwner={isButtonOwner}
           post={post}
         />
+                </>
       </div>
     </div>
   );
@@ -276,11 +278,13 @@ export function ComposePost({
   return (
     <>
       {show && (
-        <Compose
-          referer={referer}
-          onCreate={onCreate}
-          onCancel={onCancel}
-        />
+        <>
+          <Compose
+            referer={referer}
+            onCreate={onCreate}
+            onCancel={onCancel}
+          />
+        </>
       )}
       {!show && (
         <>

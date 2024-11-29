@@ -96,8 +96,8 @@ export default function HomeInfo({ metadata }) {
               </ShowMobileOnly>
 
               <HomeInfoPinnedButtons/>
-              <HomeInfoInfoCard selectedNetwork={selectedNetwork}/>
               <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
+              <HomeInfoInfoCard selectedNetwork={selectedNetwork}/>
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork}/>
 
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork}/>
@@ -110,16 +110,7 @@ export default function HomeInfo({ metadata }) {
               
 
             </div>
-            <div
-              className="homeinfo-card homeinfo__card--title-card"
-              style={
-                {
-                  '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl+selectedNetwork.jumbo : '/api'+ logoImageUri}'`,
-                } as React.CSSProperties
-              }
-            >
-              <div className="homeinfo-card__section--actions"></div>
-            </div>
+
           </div>
         </div>
       )}
@@ -220,6 +211,7 @@ function HomeInfoNetworkLogo({selectedNetwork}) {
         {selectedNetwork.name}
       </h3>
     </div>
+    
   </div>)
 }
 
@@ -287,7 +279,13 @@ return (<>
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
                   <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.stats')}
+   
+                  
+                  {t('homeinfo.stats', [
+                    selectedNetwork?.title,
+                    
+                  ])}
+                    
                   </h3>
                   <div className="homeinfo-card__controls">
                     <Btn

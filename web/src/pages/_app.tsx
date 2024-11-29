@@ -46,6 +46,7 @@ function MyApp({ Component, pageProps }) {
   const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
+  const [showCookiesBanner, setShowCookiesBanner] = useState(false);
   const path = router.asPath.split('?')[0];
   const nonce = randomBytes(128).toString('base64')
 
@@ -60,6 +61,19 @@ function MyApp({ Component, pageProps }) {
     if (error === 'network-not-found') {
       setFetchingNetworkError(true)
     }
+  };
+
+
+  useEffect(() => {
+    const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+    if (!cookiesAccepted) {
+      setShowCookiesBanner(true);
+    }
+  }, []);
+
+  const handleAcceptCookies = () => {
+    localStorage.setItem('cookiesAccepted', 'true');
+    setShowCookiesBanner(false);
   };
 
   const onFetchingConfigError = (error) => {
@@ -274,6 +288,7 @@ function MyApp({ Component, pageProps }) {
       <>
         <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce}/>
         <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
+        
         <div
           className="index__container"
           style={
@@ -289,7 +304,22 @@ function MyApp({ Component, pageProps }) {
               } as React.CSSProperties)
           }
         >
+          {/* Cookies Disclaimer Banner */}
+          <div className="card-alert__container">
+            <div className="cookies-banner__content">
+              <p>
+                This site uses cookies only when you log in. For more details, see our{' '}
+                <a href="/Faqs" target="_blank" rel="noopener noreferrer">
+                  Cookie Policy
+                </a>.
+              </p>
+              <button className="cookies-banner__button" onClick={handleAcceptCookies}>
+                Accept
+              </button>
+            </div>
+          </div>
           <Alert />
+         
           <div className="index__content">
             <ShowDesktopOnly>
               <NavHeader
@@ -310,6 +340,7 @@ function MyApp({ Component, pageProps }) {
             <MainPopup pageName={pageName} />
           </div>
         </div>
+
       </>
     );
   }

@@ -138,7 +138,7 @@ $dropdown-bck: #f0f0f0;
   text-decoration: none;
   border: none;
   border-radius: 2rem;
-  background: $color-white;
+  background: transparent;
   color: $color-black;
 
   transition: all 0.2s ease-in-out;
@@ -159,12 +159,12 @@ $dropdown-bck: #f0f0f0;
   &:focus {
     cursor: pointer;
     border-radius: $border-radius-circle;
-    background: $color-white;
+    background: transparent;
   }
   &:active {
     cursor: pointer;
     border-radius: $border-radius-circle;
-    background: $color-ligth-gray;
+    background: transparent
   }
 
 }
@@ -178,8 +178,7 @@ $dropdown-bck: #f0f0f0;
     overflow-y: auto;
 
     position: absolute;
-    background-color: white;
-    border: 1px solid blue;
+    background-color: $color-white;
     border-radius: 0 0 5px 5px;
     border-top: none;
     font-family: sans-serif;

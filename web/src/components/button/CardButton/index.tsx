@@ -317,7 +317,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             onScollToCompose()
           }}
       /> */}
-      <ShowPhone button={button} />
+        <ShowPhone button={button} />
       <ExpiringAlert
         button={button}
         isOwner={isButtonOwner(sessionUser, button)}
