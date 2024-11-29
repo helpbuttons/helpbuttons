@@ -125,23 +125,23 @@ function SearchInfo({ filters, query, tags }) {
 
   return (
     <div className="header-search__info">
-      {advancedSearchText(
-        query,
-        filters.helpButtonTypes,
-        tags,
-        filters,
-        selectedNetwork.currency,
-      )}
+      <AdvancedFiltersQueryString
+        query={query}
+        selectedButtonTypes={filters.helpButtonTypes}
+        tags={tags}
+        filters={filters}
+        currency={selectedNetwork.currency}
+      />
     </div>
   );
 }
 
-export function advancedSearchText(
-  query,
-  selectedButtonTypes,
-  tags,
-  filters,
-  currency,
+export function AdvancedFiltersQueryString(
+  { query,
+    selectedButtonTypes,
+    tags,
+    filters,
+    currency }
 ) {
   const buttonTypes = useButtonTypes();
   const whatText = (what) => {
@@ -172,7 +172,7 @@ export function advancedSearchText(
           return buttonType.caption;
         });
       setFilterTypesCaption(() => buttonTypesCaptions.join(', '));
-      
+
       if (selectedButtonTypes.length < 1) {
         setFilterTypesCaption(() =>
           t('buttonFilters.allButtonTypes'),
