@@ -13,6 +13,7 @@ import { HomeInfoState, homeInfoStateInitial } from "state/HomeInfo";
 import { Activities, activitiesInitialState } from "state/Activity";
 import { MetadataState, metadataInitialState } from "state/Metadata";
 import { CacheValue } from "state/Cache";
+import { geoMapInitial, GeoMapState } from "state/Geo";
 
 // -- estado global --
 export interface GlobalState {
@@ -29,6 +30,7 @@ export interface GlobalState {
   activities: Activities,
   metadata: MetadataState,
   cacheValues: CacheValue[],
+  geo: GeoMapState
   // newNotifications: NewNotification[]
 }
 
@@ -52,7 +54,8 @@ export const store = new Store<GlobalState>({
   homeInfo: homeInfoStateInitial,
   activities: activitiesInitialState,
   metadata: metadataInitialState,
-  cacheValues: []
+  cacheValues: [],
+  geo: geoMapInitial
 });
 
 

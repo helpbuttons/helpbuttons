@@ -159,7 +159,7 @@ export default function FieldLocation({
             caption={t('common.save')}
             contentAlignment={ContentAlignment.center}
             onClick={() => closeAndSave()}
-            disabled={loadingNewAddress}
+            disabled={!!loadingNewAddress}
           />
         </PickerField>
       )}

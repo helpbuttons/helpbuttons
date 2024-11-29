@@ -1,12 +1,32 @@
 import { GlobalState, store } from "pages";
 import { catchError, map, of } from "rxjs";
 import { GeoService } from "services/Geo";
-import { WatchEvent } from "store/Event";
+import { UpdateEvent, WatchEvent } from "store/Event";
 import { CacheMatch, CachePut } from "./Cache";
+import produce from "immer";
 
+export interface GeoMapState {
+  latCenterSearch: string,
+  lngCenterSearch: string
+} 
+
+export const geoMapInitial:GeoMapState = {
+  latCenterSearch: '0',
+  lngCenterSearch: '0'
+};
+
+export class SetGeoSearchCenter implements UpdateEvent{
+  public constructor(private latCenter: string, private lngCenter: string) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.geo.latCenterSearch = this.latCenter
+      newState.geo.lngCenterSearch = this.lngCenter
+    });
+  }
+}
 export class GeoFindAddress implements WatchEvent {
     uid = '';
-    public constructor(private query: string, private onReady) {
+    public constructor(private latCenter: string, private lngCenter: string, private query: string, private onReady) {
       this.uid = `places_${query}`
     }
     
@@ -17,7 +37,7 @@ export class GeoFindAddress implements WatchEvent {
         this.onReady(found.response)
         return of(undefined);
       }
-      return GeoService.find(this.query).pipe(
+      return GeoService.find(this.latCenter, this.lngCenter, this.query).pipe(
         map((places) => {
             store.emit(new CachePut(this.uid, places))
             this.onReady(places)
