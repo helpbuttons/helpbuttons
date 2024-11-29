@@ -10,18 +10,17 @@ import {
 } from '@react-pdf/renderer';
 import Btn, { IconType } from 'elements/Btn';
 import { IoAdd } from 'react-icons/io5';
-import Popup from 'components/popup/Popup';
 import { PdfIframe, usePdfGenerateBlob } from '../pdf';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
-import { useSelectedNetwork } from 'state/Networks';
-import { Network } from 'shared/entities/network.entity';
 import QRCode from 'qrcode';
 import Loading from 'components/loading';
 import { CreateInvite } from 'state/Profile';
-import { store } from 'pages';
+import { GlobalState, store } from 'pages';
+import { useGlobalStore } from 'store/Store';
 
 export default function ShareInvitationsForm() {
-  const selectedNetwork: Network = useSelectedNetwork();
+
+  const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork)
   const [invitations, setInvitations] = useState([]);
   const [loading, setLoading] = useState(true);
 

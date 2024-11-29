@@ -52,6 +52,7 @@ import { alertService } from 'services/Alert';
 import { ButtonShow } from 'components/button/ButtonShow';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import { applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
+import { Button } from 'shared/entities/button.entity';
 
 const defaultZoomPlace = 13;
 
@@ -60,12 +61,13 @@ function HoneyComb({ selectedNetwork }) {
     store,
     (state: GlobalState) => state.explore.currentButton,
   );
-
-  const exploreMapState: ExploreMapState = useStore(
+  
+  const listButtons : Button[] = useStore(
     store,
-    (state: GlobalState) => state.explore.map,
+    (state: GlobalState) => state.explore.map.listButtons,
     false,
   );
+
 
   const exploreSettings: ExploreSettings = useStore(
     store,
@@ -89,26 +91,13 @@ function HoneyComb({ selectedNetwork }) {
     filters,
   });
 
-  const { handleBoundsChange, h3TypeDensityHexes } = useHexagonMap({
-    toggleShowLeftColumn,
-    exploreSettings,
-    filters: exploreMapState.filters,
-    boundsFilteredButtons: exploreMapState.boundsFilteredButtons,
-    cachedHexagons: exploreMapState.cachedHexagons,
-    buttonTypes: selectedNetwork?.buttonTemplates,
-  });
 
   return (
     <>
       <ShowDesktopOnly>
-        <div className="index__explore-container">
-          <AdvancedFilters />
-          <div
-            className={
-              'index__content-left ' +
-              (showLeftColumn ? '' : 'index__content-left--hide')
-            }
-          >
+        <AdvancedFilters />
+        <ExploreContainer>
+          <ExploreContainerLeftColumn showLeftColumn={showLeftColumn}>
             {currentButton && (
               <PopupButtonFile
                 linkBack={() => {
@@ -116,36 +105,27 @@ function HoneyComb({ selectedNetwork }) {
                 }}
               >
                 {selectedNetwork.buttonTemplates?.length > 0 && (
-                  <ButtonShow button={currentButton}/>
+                  <ButtonShow button={currentButton} />
                 )}
               </PopupButtonFile>
             )}
-
-            <List
-              buttons={exploreMapState.listButtons}
-              showLeftColumn={showLeftColumn}
-              onLeftColumnToggle={toggleShowLeftColumn}
-              showMap={true}
-              isListOpen={isListOpen}
-              setListOpen={setListOpen}
+            <ExploreContainerList
+             listButtons={listButtons}
+             showLeftColumn={showLeftColumn}
+             showMap={true}
+             isListOpen={isListOpen}
+             setListOpen={setListOpen}
+             toggleShowMap={toggleShowMap}
+             toggleShowLeftColumn={toggleShowLeftColumn}
             />
-          </div>
-          <HexagonExploreMap
-            exploreSettings={exploreSettings}
-            h3TypeDensityHexes={h3TypeDensityHexes}
-            handleBoundsChange={handleBoundsChange}
-            selectedNetwork={selectedNetwork}
-          />
-        </div>
+          </ExploreContainerLeftColumn>
+          <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
+          
+        </ExploreContainer>
       </ShowDesktopOnly>
       <ShowMobileOnly>
-        <div className="index__explore-container">
-          <div
-            className={
-              'index__content-left ' +
-              (showLeftColumn ? '' : 'index__content-left--hide')
-            }
-          >
+        <ExploreContainer>
+          <ExploreContainerLeftColumn showLeftColumn={showLeftColumn}>
             <NavHeader selectedNetwork={selectedNetwork} />
             <AdvancedFilters />
             {currentButton && (
@@ -154,41 +134,37 @@ function HoneyComb({ selectedNetwork }) {
                   store.emit(new updateCurrentButton(null));
                 }}
               >
-                <ButtonShow button={currentButton}/>
+                <ButtonShow button={currentButton} />
               </PopupButtonFile>
             )}
-          </div>
-          <HexagonExploreMap
-            exploreSettings={exploreSettings}
-            h3TypeDensityHexes={h3TypeDensityHexes}
-            handleBoundsChange={handleBoundsChange}
-            selectedNetwork={selectedNetwork}
-          />
+          </ExploreContainerLeftColumn>
+          <ExploreHexagonMap toggleShowLeftColumn={toggleShowLeftColumn} exploreSettings={exploreSettings} selectedNetwork={selectedNetwork}/>
           <div
-            className={
-              'index__content-bottom ' +
-              (showMap ? '' : 'index__content-bottom') +
-              (isListOpen
-                ? ' index__content-bottom--mid-screen'
-                : '') +
-              (showLeftColumn ? '' : ' index__content-bottom--hide') +
-              (currentButton
-                ? ' index__content-bottom--noscroll'
-                : '')
-            }
-          >
-            <List
-              buttons={exploreMapState.listButtons}
-              showLeftColumn={showLeftColumn}
-              showMap={showMap}
-              isListOpen={isListOpen}
-              setListOpen={setListOpen}
-              toggleShowMap={toggleShowMap}
-              onLeftColumnToggle={toggleShowLeftColumn}
-            />
-          </div>
+          className={
+            'index__content-bottom ' +
+            (showMap ? '' : 'index__content-bottom') +
+            (isListOpen
+              ? ' index__content-bottom--mid-screen'
+              : '') +
+            (showLeftColumn ? '' : ' index__content-bottom--hide') +
+            (currentButton
+              ? ' index__content-bottom--noscroll'
+              : '')
+          }
+        >
+          <ExploreContainerList
+             listButtons={listButtons}
+             showLeftColumn={showLeftColumn}
+             showMap={showMap}
+             isListOpen={isListOpen}
+             setListOpen={setListOpen}
+             toggleShowMap={toggleShowMap}
+             toggleShowLeftColumn={toggleShowLeftColumn}
+          />
         </div>
-      </ShowMobileOnly>
+        </ExploreContainer>
+        
+    </ShowMobileOnly >
     </>
   );
 }
@@ -302,7 +278,7 @@ function useExploreSettings({
     }
   }, [selectedNetwork]);
 
-  const currentProfile = useGlobalStore((state : GlobalState) => state.homeInfo.mainPopupUserProfile)
+  const currentProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile)
   useEffect(() => {
     if (
       exploreSettings?.center &&
@@ -333,9 +309,8 @@ function useExploreSettings({
       }
 
       const urlParams = new URLSearchParams(obj);
-      const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${
-        exploreSettings.center[0]
-      }/${exploreSettings.center[1]}/?${urlParams.toString()}`;
+      const newUrl = `/Explore/${Math.floor(exploreSettings.zoom)}/${exploreSettings.center[0]
+        }/${exploreSettings.center[1]}/?${urlParams.toString()}`;
 
       const currentButtonFromUrl = getCurrentButtonFromUrl();
       const updateUrl =
@@ -570,3 +545,61 @@ export const orderBy = (buttons, orderBy, center) => {
   }
   return buttons;
 };
+
+
+function ExploreContainer(props) {
+  const { children } = props
+
+  return (<div className="index__explore-container">
+    {children}
+  </div>
+  )
+}
+
+function ExploreContainerLeftColumn(props) {
+  const { showLeftColumn, children } = props
+  return (
+    <div
+      className={
+        'index__content-left ' +
+        (showLeftColumn ? '' : 'index__content-left--hide')
+      }
+    >{children}</div>)
+}
+
+function ExploreContainerList({listButtons, showLeftColumn, showMap, isListOpen, setListOpen, toggleShowMap, toggleShowLeftColumn})
+{
+  return <List
+            buttons={listButtons}
+            showLeftColumn={showLeftColumn}
+            showMap={showMap}
+            isListOpen={isListOpen}
+            setListOpen={setListOpen}
+            toggleShowMap={toggleShowMap}
+            onLeftColumnToggle={toggleShowLeftColumn}
+          />
+}
+
+function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwork})
+{
+  const exploreMapState: ExploreMapState = useStore(
+    store,
+    (state: GlobalState) => state.explore.map,
+    false,
+  );
+  const { handleBoundsChange, h3TypeDensityHexes } = useHexagonMap({
+    toggleShowLeftColumn,
+    exploreSettings,
+    filters: exploreMapState.filters,
+    boundsFilteredButtons: exploreMapState.boundsFilteredButtons,
+    cachedHexagons: exploreMapState.cachedHexagons,
+    buttonTypes: selectedNetwork?.buttonTemplates,
+  });
+
+  return (<HexagonExploreMap
+            exploreSettings={exploreSettings}
+            h3TypeDensityHexes={h3TypeDensityHexes}
+            handleBoundsChange={handleBoundsChange}
+            selectedNetwork={selectedNetwork}
+          />)
+  }
