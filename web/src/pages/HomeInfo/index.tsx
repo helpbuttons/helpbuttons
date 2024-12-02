@@ -17,8 +17,12 @@ import {
   IoClose,
   IoGlobeOutline,
   IoHelpOutline,
+  IoLocate,
   IoLogInOutline,
   IoMapOutline,
+  IoPin,
+  IoPinOutline,
+  IoPinSharp,
   IoShare,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
@@ -76,7 +80,7 @@ export default function HomeInfo({ metadata }) {
               selectedNetwork={selectedNetwork}
               pageName={'HomeInfo'}
             />
-            <AdvancedFilters isHome={true} />
+            <AdvancedFilters isHome={false} />
           </div>
         </ShowMobileOnly>
       )}
@@ -91,12 +95,14 @@ export default function HomeInfo({ metadata }) {
 
             <div className="homeinfo__sections">
               <ShowMobileOnly>
-                <HomeInfoNetworkLogo selectedNetwork={selectedNetwork}/>
-                
+                <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} apiUrl={apiUrl}/>
               </ShowMobileOnly>
-
+              <HomeSloganCard selectedNetwork={selectedNetwork} config={config}/>
               <HomeInfoPinnedButtons/>
-              <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
+              <ShowMobileOnly>
+                <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
+              </ShowMobileOnly>
+              <HomeInfoKeyPlaces selectedNetwork={selectedNetwork} config={config}/>
               <HomeInfoInfoCard selectedNetwork={selectedNetwork}/>
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork}/>
 
@@ -201,18 +207,27 @@ function NavigatorCoordsButton() {
     </div>
   )}</>)
 }
-function HomeInfoNetworkLogo({selectedNetwork}) {
-  return (<div className="homeinfo-card__header">
-    <div className="homeinfo__network-title">
-      <div className="avatar-medium--home">
-        <NetworkLogo network={selectedNetwork} />
+function HomeInfoNetworkLogo({selectedNetwork, apiUrl}) {
+  return (
+  <div className="homeinfo-card homeinfo__card--title-card"
+    style={
+      {
+        '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl+selectedNetwork.jumbo : '/api'+ logoImageUri}'`,
+      } as React.CSSProperties
+    }
+   >
+    <div className="homeinfo-card__header ">
+      <div className="homeinfo__network-title">
+        <div className="avatar-medium--home">
+          <NetworkLogo network={selectedNetwork} />
+        </div>
+        <h3 className="homeinfo__network-title-text">
+          {selectedNetwork.name}
+        </h3>
       </div>
-      <h3 className="homeinfo__network-title-text">
-        {selectedNetwork.name}
-      </h3>
     </div>
-    
-  </div>)
+  </div>
+  )
 }
 
 function HomeInfoPinnedButtons() {
@@ -244,7 +259,9 @@ function HomeInfoInfoCard({selectedNetwork})
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
-          {t('homeinfo.info')}
+          {t('homeinfo.info' , [
+             selectedNetwork?.name,
+           ])}
         </h3>
 
         <div className="homeinfo-card__controls">
@@ -264,14 +281,47 @@ function HomeInfoInfoCard({selectedNetwork})
       <div className="homeinfo__description">
         <TextFormatted maxChars={600} text={selectedNetwork.description} />
       </div>
-      <div className="homeinfo-card__section">
-        <div className="homeinfo-card__action-bottom">
-          <InstallButton />
-          <DesktopNotificationsButton />
-        </div>
-      </div>
+
     </div></>)
 }
+
+
+function HomeInfoKeyPlaces({selectedNetwork, config}) {
+  return (<>
+                {/* STATS CARD */}
+                <div className="homeinfo-card">
+                  <div className="homeinfo-card__header">
+                    <h3 className="homeinfo-card__header-title">
+     
+                      {t('homeinfo.keyplacesTitle')}
+                      
+                    </h3>
+                  </div>
+                  <hr></hr>
+                  <div className="homeinfo__section">
+                    <div className="homeinfo__hashtags">
+                      <Btn
+                        btnType={BtnType.filterCorp}
+                        contentAlignment={ContentAlignment.center}
+                        iconLeft={IconType.svg}
+                        iconLink={<IoPinSharp />}
+                        extraClass="homeinfo__network-title-card--buttons"
+                        caption={t('Poblaciion1')}
+                        onClick={() => router.push('ButtonNew')}
+                      />
+                      <Btn
+                        btnType={BtnType.filterCorp}
+                        contentAlignment={ContentAlignment.center}
+                        iconLeft={IconType.svg}
+                        iconLink={<IoPinSharp />}
+                        extraClass="homeinfo__network-title-card--buttons"
+                        caption={t('Poblaciion2')}
+                        onClick={() => router.push('ButtonNew')}
+                      />
+                    </div>
+                  </div>
+                </div></>)
+  }
 
 function HomeInfoStatsCard({selectedNetwork, config}) {
 return (<>
@@ -282,13 +332,12 @@ return (<>
    
                   
                   {t('homeinfo.stats', [
-                    selectedNetwork?.title,
-                    
+                    selectedNetwork?.name,
                   ])}
                     
                   </h3>
                   <div className="homeinfo-card__controls">
-                    <Btn
+                    {/* <Btn
                       btnType={BtnType.filterCorp}
                       contentAlignment={ContentAlignment.center}
                       iconLeft={IconType.svg}
@@ -296,14 +345,14 @@ return (<>
                       extraClass="homeinfo__network-title-card--buttons"
                       caption={t('homeinfo.goToCreate')}
                       onClick={() => router.push('ButtonNew')}
-                    />
+                    /> */}
                   </div>
                 </div><hr></hr>
                 <div className="homeinfo__description">
-                  {t('homeinfo.buttons', [
+                  {/* {t('homeinfo.buttons', [
                     selectedNetwork?.buttonCount,
                     config?.userCount.toString(),
-                  ])}
+                  ])} */}
                   <div className="homeinfo__hashtags">
                     <ListButtonTypes
                       selectedNetwork={selectedNetwork}
@@ -313,6 +362,41 @@ return (<>
                 </div>
               </div></>)
 }
+
+function HomeSloganCard({selectedNetwork, config}) {
+  return (<>
+                {/* SLOGAN CARD */}
+                <div className="homeinfo-card homeinfo__card--slogan-card">
+                  <div className="homeinfo-card__header homeinfo-card__header--slogan-card">
+                    <h3 className="homeinfo-card__header-title">
+                     {t('homeinfo.slogan')} 
+                    </h3>
+                    <div className="homeinfo-card__controls">
+                      <Btn
+                        btnType={BtnType.filterCorp}
+                        contentAlignment={ContentAlignment.center}
+                        iconLeft={IconType.svg}
+                        iconLink={<IoAddCircle />}
+                        extraClass="homeinfo__network-title-card--buttons"
+                        caption={t('homeinfo.goToCreate')}
+                        onClick={() => router.push('ButtonNew')}
+                      />
+                    </div>
+                  </div><hr></hr>
+                  {/* <div className="homeinfo__description">
+                    {t('homeinfo.buttons', [
+                      selectedNetwork?.buttonCount,
+                      config?.userCount.toString(),
+                    ])}
+                  </div> */}
+                  {/* <div className="homeinfo-card__section"> */}
+                  {/* <div className="homeinfo-card__action-bottom">
+                    <InstallButton />
+                    <DesktopNotificationsButton />
+                  </div> */}
+                {/* </div> */}
+                </div></>)
+  }
 
 function HomeInfoTopHashTags({selectedNetwork}) {
 return (<>
@@ -347,6 +431,17 @@ function HomeInfoPinnedHashTags({selectedNetwork}) {
                       <h3 className="homeinfo-card__header-title">
                         {t('homeinfo.recommendedHashtags')}
                       </h3>
+                      <div className="homeinfo-card__controls">
+                        <Btn
+                          btnType={BtnType.filterCorp}
+                          contentAlignment={ContentAlignment.center}
+                          iconLeft={IconType.svg}
+                          iconLink={<IoAddCircle />}
+                          extraClass="homeinfo__network-title-card--buttons"
+                          caption={t('homeinfo.suscribe')}
+                          onClick={() => router.push('ButtonNew')}
+                        />
+                      </div>
                     </div>
                     <hr></hr>
                     <div className="homeinfo__hashtags">

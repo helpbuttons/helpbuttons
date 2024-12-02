@@ -13,11 +13,11 @@
   "homeinfo": {
     "start": "Where do you start?",
     "searchlocation": "What place are you looking for?",
-    "info": "What's this Network about?",
+    "info": "What's {0} about?",
     "seeMore": "See more",
     "seeLess": "See less",
     "loading": "...",
-    "goToExplore": "Explore _helpbuttons_",
+    "goToExplore": "Explore",
     "goToCreate": "Create _helpbutton_",
     "activity": "Recent Activity",
     "exploreSubtitle": "See & Search the _helpbuttons_ on this map",
@@ -29,8 +29,9 @@
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
     "locationDetected": "Do you want to navigate to check _helpbuttons_ in your region?",
-    "stats": "What's in {0}?",
-    "buttons": "There are {0} _helpbuttons_ in this network, divided by the following types:",
+    "stats": "{0}'s categories ",
+    "slogan": "Do you need hands? Do you offer hands?",
+    "buttons": "Select from the following categories",
     "users": "{0} users in this network",
     "administeredby": "Admin and support ",
     "adminInstructions": "Contact any of the following users if you need help using the app",
@@ -39,14 +40,16 @@
     "createNetwork": "You can contact with the team if you need help making your own network",
     "donateSubtitle": "This tool doesn't trade with your data and doesn't charge for the use. If you like this, you can support the team behind this project here:",
     "networkIsPrivate": "Private network",
-    "callToAdmin": "Hi! Press the phone you need someone to help. The site keeps info about your usage, check the conditions and privacy policy.",
+    "callToAdmin": "Hi! Press the phone if you need someone to help.",
     "latestActivity": "Latest activities",
     "installButton": "Install app",
     "print": "Print activity",
     "share": "Share options",
     "notificationsPermission": "Allow notifications",
     "featured": "Featured",
-    "powered": "Powered by"
+    "powered": "Powered by",
+    "keyplacesTitle": "Main sites",
+    "suscribe": "Suscribe to the topics"
 
   },
   "share":{
@@ -596,5 +599,9 @@
     "found": "{0} _helpbuttons_ found. From today until {1}",
     "pdfDate": "since {0}",
     "since": "Since {0}"
+  },
+  "cookies": {
+    "intro": "Create new bulletin",
+    "cookiepolicy": "Create new bulletin"
   }
 }

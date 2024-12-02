@@ -29,7 +29,7 @@
     "profileSubtitle": "Check your profile",
     "loginSubtitle": "Enter or create your account!",
     "locationDetected": "Do you want to navigate to check _helpbuttons_ in your region?",
-    "stats": "What's in this Network?",
+    "stats": "What's in {0}?",
     "buttons": "There are {1} users and {0} _helpbuttons_ in this network, divided by the following types:",
     "users": "{0} users in this network",
     "administeredby": "Admin and support ",

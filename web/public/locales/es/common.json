@@ -39,7 +39,7 @@
     "createNetworkButton": "Crea tu propia red",
     "createNetwork": "También puedes contactar al equipo si necesitas ayuda creando tu propia red",
     "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación:",
-    "callToAdmin": "Pulsa aquí si necesitas ayuda de alguien para entrar o publicar",
+    "callToAdmin": "Llama aquí si necesitas ayuda de alguien para entrar o publicar",
     "networkIsPrivate": "Red privada",
     "needLogo": "Antes de seleccionar un lugar, por favor añade tu logo",
     "needPlace": "Por favor, selecciona en qué zona se situa tu Red",
@@ -47,7 +47,9 @@
     "installButton": "Instalar app",
     "notificationsPermission": "Permitir notificaciones",
     "share": "Compartir esta app",
-    "featured": "Destacados"
+    "featured": "Destacados",
+    "keyplacesTitle": "Lugares principales",
+    "suscribe": "Sucribirme a los temas"
 
   },
   "share":{

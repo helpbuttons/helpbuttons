@@ -8,6 +8,7 @@ export default function Accordion({
     title,
     children,
     icon,
+    accordionId,
     handleClick = () => {},
     collapsed = false,
 }) {
@@ -30,7 +31,7 @@ useEffect(() =>
   }
 }, [showChildren])
     return (
-        <>
+        <div id={accordionId} >
           <Btn
             btnType={BtnType.splitIcon}
             iconLink={icon}
@@ -45,7 +46,7 @@ useEffect(() =>
             <div className="panel" style={{display: display}}>
               {children}
             </div>
-        </>
+        </div>
 
     );
 }

@@ -305,19 +305,21 @@ function MyApp({ Component, pageProps }) {
           }
         >
           {/* Cookies Disclaimer Banner */}
-          <div className="card-alert__container">
-            <div className="cookies-banner__content">
-              <p>
-                This site uses cookies only when you log in. For more details, see our{' '}
-                <a href="/Faqs" target="_blank" rel="noopener noreferrer">
-                  Cookie Policy
-                </a>.
-              </p>
-              <button className="cookies-banner__button" onClick={handleAcceptCookies}>
-                Accept
-              </button>
+          {showCookiesBanner && (
+            <div className="card-alert__container">
+              <div className="cookies-banner__content">
+                <p>
+                  {t("cookies.intro")}
+                  <a href="/Faqs?v=cookies" target="_blank" rel="noopener noreferrer">
+                  {t("cookies.cookiepolicy")}
+                  </a>.
+                </p>
+                <button className="cookies-banner__button" onClick={handleAcceptCookies}>
+                  Accept
+                </button>
+              </div>
             </div>
-          </div>
+          )}
           <Alert />
          
           <div className="index__content">

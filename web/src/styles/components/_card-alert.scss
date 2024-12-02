@@ -112,17 +112,7 @@ $card-alert-icon-size: 30px;
 }
 
 .cookies-banner {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #232323;
-  color: #ffffff;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+ 
 
   &__content {
     background-color: $color-corporative;
@@ -135,7 +125,6 @@ $card-alert-icon-size: 30px;
     text-align: center;
 
     a {
-      color: #4caf50;
       text-decoration: underline;
 
       &:hover {
@@ -146,7 +135,7 @@ $card-alert-icon-size: 30px;
 
   &__button {
     margin-top: 0.5rem;
-    background-color: #4caf50;
+    background-color: $color-black;
     color: #ffffff;
     border: none;
     padding: 0.5rem 1rem;
