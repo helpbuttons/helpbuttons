@@ -6735,7 +6735,7 @@ hr {
 .pigeon-attribution {
   position: relative;
   right: 10px;
-  bottom: -30px;
+  bottom: 60px !important;
   background: transparent !important;
   font-size: 10px;
 }
@@ -6819,7 +6819,7 @@ hr {
     padding: 10px;
   }
   .pigeon-attribution {
-    bottom: 0;
+    bottom: 0 !important;
   }
   .pigeon-center-view {
     height: 40px;
