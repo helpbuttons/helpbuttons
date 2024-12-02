@@ -1,9 +1,9 @@
 //popup for extra filters when they don't fit in the filter section under the header. It uses popup classes and overllays to all site.
 
 import Head from 'next/head';
-import { GlobalState } from 'pages';
+import { GlobalState } from 'state';
 import { useEffect, useState } from 'react';
-import { useGlobalStore } from 'store/Store';
+import { useGlobalStore } from 'state';
 
 export default function MetadataSEOFromStore() {
   const metadataStore = useGlobalStore(

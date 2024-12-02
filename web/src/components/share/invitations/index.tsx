@@ -15,8 +15,8 @@ import { getShareLink, makeImageUrl } from 'shared/sys.helper';
 import QRCode from 'qrcode';
 import Loading from 'components/loading';
 import { CreateInvite } from 'state/Profile';
-import { GlobalState, store } from 'pages';
-import { useGlobalStore } from 'store/Store';
+import { GlobalState, store } from 'state';
+import { useGlobalStore } from 'state';
 
 export default function ShareInvitationsForm() {
 

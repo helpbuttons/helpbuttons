@@ -5,7 +5,7 @@ import { IoChevronBackOutline } from 'react-icons/io5';
 import { CardButtonHeadMedium } from 'components/button/CardButton';
 import { buttonColorStyle } from 'shared/buttonTypes';
 import { HiglightHexagonFromButton, updateCurrentButton } from 'state/Explore';
-import { store } from 'pages';
+import { store } from 'state';
 import router from 'next/router';
 
 export default function CardButtonList({ buttonTypes, button, showMap, linkToPopup, linkIframe }) {

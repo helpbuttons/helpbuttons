@@ -1,6 +1,6 @@
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import t from 'i18n';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect, useRef } from 'react';
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { alertService } from 'services/Alert';
@@ -10,7 +10,7 @@ import {
   PermissionRevoke,
   useActivities,
 } from 'state/Activity';
-import { useGlobalStore } from 'store/Store';
+import { useGlobalStore } from 'state';
 
 const isSupported = () =>
       'Notification' in window &&

@@ -5,7 +5,7 @@ import { WatchEvent } from 'store/Event';
 import { UpdateEvent } from '../store/Event';
 
 import { ButtonService } from 'services/Buttons';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';

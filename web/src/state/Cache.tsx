@@ -1,7 +1,7 @@
 import produce from 'immer';
-import { GlobalState } from 'pages';
+import { GlobalState } from 'state';
 import { UpdateEvent, WatchEvent } from 'store/Event';
-import { useGlobalStore } from 'store/Store';
+import { useGlobalStore } from 'state';
 
 export interface CacheValue {
   key: string;

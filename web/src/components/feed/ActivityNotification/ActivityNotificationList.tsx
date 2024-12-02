@@ -4,7 +4,7 @@ import Btn, { ContentAlignment } from 'elements/Btn';
 import router from 'next/router';
 import { useRef, useState } from 'react';
 import { useScroll } from 'shared/helpers/scroll.helper';
-import { store } from 'pages';
+import { store } from 'state';
 import Loading from 'components/loading';
 import { IoChatbox, IoFootsteps } from 'react-icons/io5';
 import { FindMoreNotifications, useActivities } from 'state/Activity';

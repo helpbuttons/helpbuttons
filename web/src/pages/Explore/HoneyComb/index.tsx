@@ -18,8 +18,8 @@ import {
   RecenterExplore,
 } from 'state/Explore';
 import NavHeader from 'components/nav/NavHeader'; //just for mobile
-import { useGlobalStore, useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import router from 'next/router';
 import List from 'components/list/List';
 import { Point } from 'pigeon-maps';
@@ -337,7 +337,6 @@ const getCurrentButtonFromUrl = () => {
     ? currentUrlSearchParams.get('btn')
     : null;
 };
-store.emit(new ClearCachedHexagons());
 
 function useHexagonMap({
   toggleShowLeftColumn,

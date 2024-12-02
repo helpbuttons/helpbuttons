@@ -9,7 +9,7 @@ import { UserService } from 'services/Users';
 
 import { HttpService, isHttpError } from 'services/HttpService';
 import { SignupQRRequestDto, SignupRequestDto } from 'shared/dtos/auth.dto';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { handleError } from './helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';

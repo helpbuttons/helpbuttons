@@ -12,7 +12,7 @@ import {
   IoPersonOutline,
 } from 'react-icons/io5';
 
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect, useRef, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
@@ -24,7 +24,7 @@ import {
   LoadPosts,
 } from 'state/Posts';
 import { isAdmin } from 'state/Users';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 import MessageNew from 'components/feed/MessageNew';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';

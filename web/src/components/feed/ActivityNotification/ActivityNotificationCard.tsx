@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
 import t from 'i18n';
 import { FindButton } from 'state/Explore';
-import { store } from 'pages';
+import { store } from 'state';
 import { SetMainPopupCurrentButton } from 'state/HomeInfo';
 
 export default function ActivityNotificationCard({ activity }) {

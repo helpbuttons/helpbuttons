@@ -1,7 +1,7 @@
 import t from 'i18n';
 import { useEffect, useState } from 'react';
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import { Button } from 'shared/entities/button.entity';
 import QRCode from 'qrcode';
 

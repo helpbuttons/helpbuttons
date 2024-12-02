@@ -10,8 +10,8 @@ import {
 import ContentList from 'components/list/ContentList';
 import t from 'i18n';
 import { AdvancedFiltersSortDropDown } from 'components/search/AdvancedFilters';
-import { GlobalState, store } from 'pages';
-import { useStore } from 'store/Store';
+import { GlobalState, store } from 'state';
+import { useStore } from 'state';
 import {
   ExploreViewMode,
   UpdateExploreViewMode,

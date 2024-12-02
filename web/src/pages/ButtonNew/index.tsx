@@ -1,5 +1,5 @@
 import ButtonForm from 'components/button/ButtonForm';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { CreateButton, SaveButtonDraft, UpdateCachedHexagons, updateCurrentButton } from 'state/Explore';
 import { alertService } from 'services/Alert';
 import { useForm } from 'react-hook-form';
@@ -12,7 +12,7 @@ import { readableDate } from 'shared/date.utils';
 import { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 import Loading from 'components/loading';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';

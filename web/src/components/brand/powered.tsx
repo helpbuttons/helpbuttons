@@ -1,6 +1,6 @@
 import t from 'i18n';
-import { GlobalState } from 'pages';
-import { useGlobalStore } from 'store/Store';
+import { GlobalState } from 'state';
+import { useGlobalStore } from 'state';
 
 export function PoweredBy() {
   return (

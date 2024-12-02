@@ -1,9 +1,9 @@
 import { NextRouter } from "next/router";
-import { GlobalState, store } from "pages";
+import { GlobalState, store } from "state";
 import { useEffect } from "react";
 import { FindButton, updateCurrentButton } from "state/Explore";
 import { MainPopupPage, SetMainPopup } from "state/HomeInfo";
-import { useGlobalStore } from "store/Store";
+import { useGlobalStore } from 'state';
 
 export const useRebuildUrl = (router: NextRouter) => {
     const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
 import NetworkLogo from 'components/network/Components';
 import Link from 'next/link';
@@ -20,14 +20,14 @@ export default function BrandCard({}) {
         <div className="search-map__network-title">
           <ShowDesktopOnly>
             <div className="avatar-medium--home">
-              <Link href="/HomeInfo">
+              <Link href="/">
                 <NetworkLogo network={selectedNetwork} />
               </Link>
             </div>
           </ShowDesktopOnly>
 
           <div className="search-map__name">
-            <Link href="/HomeInfo">{selectedNetwork.name}</Link>
+            <Link href="/">{selectedNetwork.name}</Link>
             <div className="search-map__sign">
               <PoweredBy/>
               

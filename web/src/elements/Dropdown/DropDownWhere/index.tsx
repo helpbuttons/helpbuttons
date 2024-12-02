@@ -5,7 +5,7 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import t from 'i18n';
-import { store } from 'pages';
+import { store } from 'state';
 import { useEffect, useState } from 'react';
 import { IoLocationOutline } from 'react-icons/io5';
 import { useDebounce } from 'shared/custom.hooks';

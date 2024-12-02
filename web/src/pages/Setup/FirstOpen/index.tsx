@@ -2,7 +2,7 @@ import Popup from 'components/popup/Popup';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import Form from 'elements/Form';
 import { useRouter } from 'next/router';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Role } from 'shared/types/roles';

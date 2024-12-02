@@ -1,8 +1,8 @@
 import { Event, isUpdateEvent, isWatchEvent, isEffectEvent }  from "../store/Event";
 import { withLatestFrom, map, share, filter  } from 'rxjs/operators';
-import { interval, BehaviorSubject, Subject} from 'rxjs';
+import { interval, BehaviorSubject, Subject, Observable} from 'rxjs';
 import { useState, useEffect } from 'react';
-import { store } from "pages";
+import { GlobalState } from "state";
 
 // === Definición del Store ===
 
@@ -63,7 +63,7 @@ export class Store<T> {
 
 // === Hook para suscribirse al store ===
 
-export function useRef(store: Store, selector: func, defaultNull = true) {
+export function useRef(store: Store<GlobalState>, selector: Function, defaultNull = true) {
   let defaultValue = null;
   if(!defaultNull)
   {
@@ -80,17 +80,4 @@ export function useRef(store: Store, selector: func, defaultNull = true) {
   });
 
   return value;
-}
-
-export function useStore(store: Store, selector: func, defaultNull = true) {
-  return useRef(store, selector, defaultNull)
-}
-
-export function useGlobalStore(localState)
-{
-  return useStore(
-    store,
-    localState,
-    false,
-  );
 }

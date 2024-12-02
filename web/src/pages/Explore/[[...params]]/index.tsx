@@ -4,8 +4,8 @@ import { setMetadata } from 'services/ServerProps';
 import { ClienteSideRendering } from 'pages/_app';
 import Loading from 'components/loading';
 import t from 'i18n';
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import { useMetadataTitle } from 'state/Metadata';
 
 export default function Explore({

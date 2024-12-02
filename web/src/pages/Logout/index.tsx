@@ -1,4 +1,4 @@
-import { store } from "pages";
+import { store } from "state";
 import { useEffect } from "react"
 import { UserService } from "services/Users";
 import { SessionUserLogout } from "state/Profile";

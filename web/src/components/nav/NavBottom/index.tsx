@@ -13,7 +13,7 @@ import { IoLogInOutline } from 'react-icons/io5';
 import { IoGlobeOutline } from 'react-icons/io5';
 import { IoHomeOutline } from 'react-icons/io5';
 import t from 'i18n';
-import { store } from 'pages';
+import { store } from 'state';
 import { RecenterExplore } from 'state/Explore';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useActivities } from 'state/Activity';
@@ -43,7 +43,7 @@ function NavBottom({ sessionUser, pageName }) {
     <>
       <nav id="bottom-nav" className="nav-bottom">
         <NavLink
-          href="/HomeInfo"
+          href="/"
           className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
             'HomeInfo',
           )}`}

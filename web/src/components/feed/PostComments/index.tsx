@@ -3,7 +3,7 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import { store } from 'pages';
+import { store } from 'state';
 import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';

@@ -1,4 +1,4 @@
-import { GlobalState, store } from "pages";
+import { GlobalState, store } from "state";
 import { catchError, map, of } from "rxjs";
 import { GeoService } from "services/Geo";
 import { WatchEvent } from "store/Event";
