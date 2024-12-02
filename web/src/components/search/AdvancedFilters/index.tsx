@@ -169,7 +169,7 @@ export default function AdvancedFilters({
                         validationError={null}
                         explain={t('buttonFilters.typesExplain')}
                       > 
-                        {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType) => {
+                        {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType, idx) => {
                           return (
 
                             <MultiSelectOption
@@ -183,6 +183,7 @@ export default function AdvancedFilters({
                                 handleChange={(name, newValue) => {
                                   setButtonTypeValue(name, newValue);
                                 }}
+                                key={idx}
                               >
                                 {/* <div className="btn-filter__icon"></div> */}
                                 <div className="btn-with-icon__text">
@@ -215,7 +216,7 @@ export default function AdvancedFilters({
                       selectedButtonTypes={watch('helpButtonTypes')}
                     />
                     <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
-                    <div clasS="form__btn-search">
+                    <div className="form__btn-search">
                       <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
                     </div>
                   </div>
