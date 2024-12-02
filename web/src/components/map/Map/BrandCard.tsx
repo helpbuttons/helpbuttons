@@ -1,6 +1,6 @@
 import React from 'react';
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
 import NetworkLogo from 'components/network/Components';
 import Link from 'next/link';

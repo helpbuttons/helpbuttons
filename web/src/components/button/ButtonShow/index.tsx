@@ -1,8 +1,8 @@
 import Feed from 'layouts/Feed';
 import CardButton from '../CardButton';
 import { useToggle } from 'shared/custom.hooks';
-import { useGlobalStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useGlobalStore } from 'state';
+import { GlobalState, store } from 'state';
 import { useButtonTypes } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 import { useEffect } from 'react';

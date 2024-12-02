@@ -5,12 +5,12 @@ import NewUserFields, {
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import Form from 'elements/Form';
 import router from 'next/router';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { CreateAdmin, GetConfig } from 'state/Setup';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 import { SetupSteps } from '../../../shared/setupSteps';
 import t from 'i18n';
 import { useEffect, useState } from 'react';

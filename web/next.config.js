@@ -25,15 +25,6 @@ module.exports = {
       }
     ];
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/HomeInfo',
-        permanent: true,
-      },
-    ];
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
   },

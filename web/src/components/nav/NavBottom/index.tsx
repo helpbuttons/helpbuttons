@@ -13,7 +13,7 @@ import { IoLogInOutline } from 'react-icons/io5';
 import { IoGlobeOutline } from 'react-icons/io5';
 import { IoHomeOutline } from 'react-icons/io5';
 import t from 'i18n';
-import { store } from 'pages';
+import { store } from 'state';
 import { RecenterExplore } from 'state/Explore';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useActivities } from 'state/Activity';

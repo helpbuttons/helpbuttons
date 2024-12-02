@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { SignupUser } from 'state/Profile';
 
 //imported react components
@@ -25,7 +25,7 @@ import { alertService } from 'services/Alert';
 import t from 'i18n';
 import { setValidationErrors } from 'state/helper';
 import { getLocale } from 'shared/sys.helper';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 import FieldText from 'elements/Fields/FieldText';
 import { Network } from 'shared/entities/network.entity';
 import { NextPageContext } from 'next';

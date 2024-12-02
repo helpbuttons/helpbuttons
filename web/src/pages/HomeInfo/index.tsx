@@ -1,5 +1,5 @@
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import router from 'next/router';
 import t from 'i18n';
 import Btn, {

@@ -1,10 +1,10 @@
 import t from 'i18n';
 import { useRouter } from 'next/router';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect, useRef, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { ButtonRenew } from 'state/Explore';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 
 export default function ButtonBump({}) {
   const [id, setId] = useState(null);

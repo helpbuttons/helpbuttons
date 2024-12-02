@@ -1,6 +1,6 @@
 import t from "i18n";
 import { useRouter } from "next/router";
-import { store } from "pages";
+import { store } from "state";
 import { useEffect } from "react";
 import { alertService } from "services/Alert";
 import { UnsubscribeMails } from "state/Users";

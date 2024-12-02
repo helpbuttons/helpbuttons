@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import {
   RecenterExplore,
   UpdateHexagonClicked, updateCurrentButton,
@@ -13,7 +13,7 @@ import { buttonColorStyle } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 import { IoStorefrontSharp } from 'react-icons/io5';
 import { ShowMobileOnly } from 'elements/SizeOnly';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 import { maxZoom } from './Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton } from './MarkerButton';

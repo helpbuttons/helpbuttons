@@ -3,11 +3,11 @@ import Btn, { IconType } from 'elements/Btn';
 import t from 'i18n';
 import Link from 'next/link';
 import router from 'next/router';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { IoTrashBinOutline } from 'react-icons/io5';
 import { User } from 'shared/entities/user.entity';
 import { DeleteProfile } from 'state/Profile';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 
 export default function ProfileDelete() {
   const sessionUser: User = useStore(

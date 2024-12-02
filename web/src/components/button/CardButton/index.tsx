@@ -24,7 +24,7 @@ import {
 } from 'shared/buttonTypes';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import Link from 'next/link';
 import {
   GetPhone,

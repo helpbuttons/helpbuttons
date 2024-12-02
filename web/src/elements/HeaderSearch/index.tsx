@@ -1,7 +1,7 @@
 import { IoClose, IoSearch } from 'react-icons/io5';
 import React, { useEffect, useRef, useState } from 'react';
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import { LoadabledComponent } from 'components/loading';
 import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';

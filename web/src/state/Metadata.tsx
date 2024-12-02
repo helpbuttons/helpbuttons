@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect } from 'react';
 import { UpdateEvent } from 'store/Event';
 

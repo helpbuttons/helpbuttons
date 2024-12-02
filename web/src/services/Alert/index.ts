@@ -1,4 +1,4 @@
-import { store } from 'pages';
+import { store } from 'state';
 import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 import { AddAlert, RemoveAlert, RemoveAllAlerts } from 'state/Alerts';
 

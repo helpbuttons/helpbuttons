@@ -4,11 +4,11 @@ import { Router, useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
 import { appWithTranslation } from 'next-i18next';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state/';
 import { useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Profile';
 
-import { useGlobalStore } from 'store/Store';
+import { useGlobalStore } from 'state';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
 

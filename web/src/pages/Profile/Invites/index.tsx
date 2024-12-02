@@ -6,7 +6,7 @@ import Btn, {
 } from 'elements/Btn';
 import { DropdownField } from 'elements/Dropdown/Dropdown';
 import t from 'i18n';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
@@ -14,7 +14,7 @@ import Form from 'elements/Form';
 import { Invite } from 'shared/entities/invite.entity';
 import { User } from 'shared/entities/user.entity';
 import { CreateInvite, FindInvites } from 'state/Profile';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 import {
   readableDate,
   readableTimeLeftToDate,

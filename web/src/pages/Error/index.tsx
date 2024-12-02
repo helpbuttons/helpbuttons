@@ -9,8 +9,8 @@ import { useMetadataTitle } from 'state/Metadata';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { LinkAdmins } from 'components/user/LinkAdmins';
-import { useGlobalStore } from 'store/Store';
-import { GlobalState } from 'pages';
+import { useGlobalStore } from 'state';
+import { GlobalState } from 'state';
 
 export default function Error({ metadata }) {
   useMetadataTitle('Error');

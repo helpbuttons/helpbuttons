@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { map } from 'rxjs';
 import { NetworkService } from 'services/Networks';
 import { UserService } from 'services/Users';

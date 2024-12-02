@@ -5,8 +5,8 @@ import React, {
   useState,
 } from 'react';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
-import { GlobalState, store } from 'pages';
-import { useStore } from 'store/Store';
+import { GlobalState, store } from 'state';
+import { useStore } from 'state';
 import { roundCoords } from 'shared/honeycomb.utils';
 import { useToggle } from 'shared/custom.hooks';
 import {

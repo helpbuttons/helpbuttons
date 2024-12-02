@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { FetchUserData, UpdateProfile } from 'state/Profile';
 
 //imported react components

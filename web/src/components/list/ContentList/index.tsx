@@ -12,10 +12,10 @@ import t from 'i18n';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { useScroll } from 'shared/helpers/scroll.helper';
 import { FindMoreReadMessages } from 'state/Activity';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import Loading from 'components/loading';
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
-import { useGlobalStore } from 'store/Store';
+import { useGlobalStore } from 'state';
 import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
 
 export default function ContentList({

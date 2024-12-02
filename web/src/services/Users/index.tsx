@@ -5,7 +5,7 @@ import { httpService } from "services/HttpService";
 import { SignupQRRequestDto, SignupRequestDto } from 'shared/dtos/auth.dto';
 import { User } from 'shared/entities/user.entity';
 import { Logout } from 'state/Profile';
-import { store } from 'pages';
+import { store } from 'state';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { Role } from 'shared/types/roles';
 import { InviteCreateDto } from 'shared/dtos/invite.dto';

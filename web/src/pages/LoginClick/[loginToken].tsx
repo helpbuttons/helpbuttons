@@ -2,11 +2,11 @@
 //imported from libraries
 import React, { useRef, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { LoginToken } from 'state/Profile';
 import { alertService } from 'services/Alert';
 import t from 'i18n';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 
 export default function LoginClick() {
   const router = useRouter();

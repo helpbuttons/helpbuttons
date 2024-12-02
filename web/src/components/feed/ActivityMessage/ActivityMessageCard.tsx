@@ -2,7 +2,7 @@ import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { TextFormatted, formatMessage } from 'elements/Message';
 import t from 'i18n';
 import Link from 'next/link';
-import { store } from 'pages';
+import { store } from 'state';
 import { ErrorLink } from 'pages/Error';
 import { useEffect, useRef, useState } from 'react';
 import { alertService } from 'services/Alert';

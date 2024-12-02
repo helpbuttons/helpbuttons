@@ -1,4 +1,4 @@
-import { GlobalState, store } from "pages";
+import { GlobalState, store } from "state";
 import { useEffect } from "react"
 import { catchError, map, of, tap } from "rxjs";
 import { isHttpError } from "services/HttpService";

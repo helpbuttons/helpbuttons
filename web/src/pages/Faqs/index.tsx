@@ -5,8 +5,8 @@ import t from 'i18n';
 import { NextPageContext } from 'next';
 import { useSearchParams } from 'next/navigation';
 import router, { Router } from 'next/router';
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import { LoadabledComponent } from 'components/loading';
 import { useMetadataTitle } from 'state/Metadata';
 

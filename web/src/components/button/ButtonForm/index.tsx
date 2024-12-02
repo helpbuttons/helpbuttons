@@ -14,7 +14,7 @@ import ButtonShare from 'components/button/ButtonShare';
 import FieldTags from 'elements/Fields/FieldTags';
 import { useRef } from 'store/Store';
 // import FieldImageUpload from "elements/Fields/FieldImageUpload";
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { Network } from 'shared/entities/network.entity';
 import t from 'i18n';
 import Loading, { LoadabledComponent } from 'components/loading';
