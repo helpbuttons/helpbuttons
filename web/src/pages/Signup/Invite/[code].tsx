@@ -15,6 +15,8 @@ import { Login, LoginQR, SignupQR } from 'state/Profile';
 import { alertService } from 'services/Alert';
 import { getLocale } from 'shared/sys.helper';
 import { LoadabledComponent } from 'components/loading';
+import { NextPageContext } from 'next';
+import { setMetadata } from 'services/ServerProps';
 
 export default function Invite() {
   const router = useRouter();
@@ -127,3 +129,7 @@ export default function Invite() {
     
   );
 }
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  return setMetadata(t('seo.invite'), ctx);
+};

@@ -1,5 +1,9 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { NextPageContext } from 'next'
+import { setSSRLocale } from 'shared/sys.helper'
+import { setMetadata } from 'services/ServerProps'
+import t from 'i18n'
 export default function ButtonFile({
   metadata,
 }) {
@@ -13,3 +17,7 @@ export default function ButtonFile({
   }, [router.query.id])
   
 }
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  return setMetadata(t('seo.buttonEdit'), ctx);
+};

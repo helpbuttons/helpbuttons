@@ -165,7 +165,6 @@ function SupportBanner({ scrollToContact }) {
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
-  setSSRLocale(ctx.locale);
   return setMetadata(t('menu.home'), ctx);
 };
 
