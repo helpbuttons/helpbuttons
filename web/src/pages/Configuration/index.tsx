@@ -92,7 +92,7 @@ function Configuration() {
           if (data.locale != 'en') {
             router.push(`/${data.locale}/HomeInfo`);
           } else {
-            router.push({ pathname: '/HomeInfo' }, asPath, {
+            router.push({ pathname: '/' }, asPath, {
               locale: 'en',
             });
           }

@@ -77,7 +77,7 @@ function NetworkCreation() {
         () => {
           const onComplete = () => {
             alertService.info(t('common.saveSuccess', ['instance']));
-            let url = '/HomeInfo';
+            let url = '/';
             if(getLocale() !=  data.locale )
             {
               url = `/${data.locale}/${url}`

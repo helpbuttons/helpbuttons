@@ -12,7 +12,7 @@ export default function Unsubscribe() {
         if(email)
         {
             store.emit(new UnsubscribeMails(email, () => {alertService.info(t('user.unsubscribed'))}))
-            router.push('/HomeInfo')
+            router.push('/')
         }
         
     }, [email])

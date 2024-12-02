@@ -22,7 +22,7 @@ export default function ProfileDelete() {
           onClick={() => {
             store.emit(new DeleteProfile());
             router.push({
-              pathname: '/HomeInfo'
+              pathname: '/'
             });
           }}
           href="#"

@@ -25,7 +25,7 @@ export default function LoginClick() {
 
     const onError = (err) => {
       alertService.error(t('user.loginError'));
-      router.push('/HomeInfo');
+      router.push('/');
     };
     if (!initialized.current) {
       initialized.current = true;

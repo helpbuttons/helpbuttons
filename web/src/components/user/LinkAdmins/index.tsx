@@ -20,7 +20,7 @@ export function LinkAdmins() {
   const sendMessage = (raw) => {
     // store.emit(new SendMessageToAdmins(raw, () => {
     //   alertService.info('Message sent to the admins of the network')
-    //   router.push('/HomeInfo')
+    //   router.push('/')
     // }))
   };
 

@@ -38,7 +38,7 @@ function ErrorPopup({ errorCustomRaw = null }) {
       title={t('common.error')}
       linkBack={() => {
         // router.back()
-        router.push('/HomeInfo');
+        router.push('/');
       }}
     >
       <div className="error__message">

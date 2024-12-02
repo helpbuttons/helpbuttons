@@ -56,7 +56,7 @@ export default function Profile() {
                     {sessionUser?.role == Role.admin && 
                       <AdminOptions/>
                     }
-                    <Link href="/HomeInfo">
+                    <Link href="/">
                       <div onClick={() => router.push('/Logout')} className="btn-with-icon">
                         <div className="btn-with-icon__icon">
                           <IoLogOutOutline />
