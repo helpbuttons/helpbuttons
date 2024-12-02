@@ -98,11 +98,11 @@ export default function HomeInfo({ metadata }) {
                 <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} apiUrl={apiUrl}/>
               </ShowMobileOnly>
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config}/>
-              <HomeInfoPinnedButtons/>
+              {/* <HomeInfoPinnedButtons/> */}
               <ShowMobileOnly>
                 <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
               </ShowMobileOnly>
-              <HomeInfoKeyPlaces selectedNetwork={selectedNetwork} config={config}/>
+              {/* <HomeInfoKeyPlaces selectedNetwork={selectedNetwork} config={config}/> */}
               <HomeInfoInfoCard selectedNetwork={selectedNetwork}/>
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork}/>
 
