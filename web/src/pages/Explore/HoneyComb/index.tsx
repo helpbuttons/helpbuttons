@@ -50,9 +50,10 @@ import {
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { alertService } from 'services/Alert';
 import { ButtonShow } from 'components/button/ButtonShow';
-import { maxZoom } from 'components/map/Map/Map.consts';
-import { applyFiltersHex } from 'components/search/AdvancedFilters/filters.type';
+import { maxZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
+import { applyFiltersHex, isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
+import { filter } from 'rxjs';
 
 const defaultZoomPlace = 13;
 
@@ -586,19 +587,37 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
     (state: GlobalState) => state.explore.map,
     false,
   );
+  const boundsFilteredButtons = exploreMapState.boundsFilteredButtons
   const { handleBoundsChange, h3TypeDensityHexes } = useHexagonMap({
     toggleShowLeftColumn,
     exploreSettings,
     filters: exploreMapState.filters,
-    boundsFilteredButtons: exploreMapState.boundsFilteredButtons,
+    boundsFilteredButtons: boundsFilteredButtons,
     cachedHexagons: exploreMapState.cachedHexagons,
     buttonTypes: selectedNetwork?.buttonTemplates,
   });
+  const [countFilteredButtons, setCountFilteredButtons] = useState(0)
+
+  const filtered = isFiltering()
+  useEffect(() => {
+    const allHiddenButtons = boundsFilteredButtons.filter((elem) => elem.hideAddress === true)
+    
+    if(exploreMapState.listButtons.length > boundsFilteredButtons.length)
+    {
+      setCountFilteredButtons(exploreMapState.listButtons.length)
+    }else if(exploreSettings.zoom >= showMarkersZoom ){
+      setCountFilteredButtons(allHiddenButtons.length)
+    }else{
+      setCountFilteredButtons(0)
+    }
+    
+  }, [boundsFilteredButtons, exploreSettings.zoom])
 
   return (<HexagonExploreMap
             exploreSettings={exploreSettings}
             h3TypeDensityHexes={h3TypeDensityHexes}
             handleBoundsChange={handleBoundsChange}
             selectedNetwork={selectedNetwork}
+            countFilteredButtons={countFilteredButtons}
           />)
   }

@@ -16,7 +16,7 @@ import { GlobalState, store } from 'state';
 import Loading from 'components/loading';
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { useGlobalStore } from 'state';
-import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
+import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
 
 export default function ContentList({
   buttons,
@@ -78,17 +78,13 @@ export default function ContentList({
 }
 
 export function NoMoreToLoad() {
-  const filters = useGlobalStore((state: GlobalState) => state.explore.map.filters)
-  const filtersAreChanged =
-    JSON.stringify(defaultFilters) !=
-    JSON.stringify(filters);
-
+  const filtered = isFiltering()
   return (
     <div className="list__empty-message">
       <div className="list__empty-message--comment">
         {t('explore.emptyList')}
       </div>
-      {filtersAreChanged &&
+      {filtered &&
         <Btn
           btnType={BtnType.splitIcon}
           caption={t('common.reset')}
