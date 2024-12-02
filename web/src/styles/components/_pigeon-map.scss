@@ -128,9 +128,10 @@ $map-btns-size-mobile: 30px;
 
 .pigeon-attribution {
     position: relative;
-    top: -5px;
     right: 10px;
+    bottom: -30px;
     background: transparent !important;
+    font-size: $font-size-xsmall;
 
 }
 
@@ -240,7 +241,7 @@ $map-btns-size-mobile: 30px;
     }
 
     .pigeon-attribution {
-    
+    bottom: 0;
     }
 
     .pigeon-center-view {
