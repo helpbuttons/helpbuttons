@@ -21,7 +21,8 @@ export const allowedPathsPerRole =
             '/Signup/Invite/:code',
             '/Unsubscribe',
             '/Error',
-            '/Logout'
+            '/Logout',
+            '/HomeInfo'
         ]
     },
     {
