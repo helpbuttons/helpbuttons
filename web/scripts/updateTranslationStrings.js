@@ -17,7 +17,7 @@ const saveTranslatioFile = (locale, data) => {
   return fs.writeFileSync(`../public/locales/${locale}/common.json`, JSON.stringify(data, null, 2));
 };
 
-const allLocales = ['en', 'es'];
+const allLocales = ['en', 'es', 'cat', 'eu', 'pt'];
 
 const syncTranslations = (foundTranslations) => {
   let allTranslations = [];
@@ -25,12 +25,14 @@ const syncTranslations = (foundTranslations) => {
   allTranslations = allLocales.map((locale) => {
     return {locale: locale, translations: require(translatioFile(locale))};
   });
+  const englishTranslations = allTranslations.find((elem) => elem.locale == 'en').translations
   foundTranslations.map((foundTranslation) => {
     allTranslations = allTranslations.map(({locale, translations}) => {
       if(!_.get(translations, foundTranslation))
       {
         console.log(`Adding new ${foundTranslation} to ${locale}`)
-        _.set(translations, foundTranslation, '');
+        const englishTranslation = _.get(englishTranslations, foundTranslation)
+        _.set(translations, foundTranslation, englishTranslation);
       }
       return {locale, translations}
     })
