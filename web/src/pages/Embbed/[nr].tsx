@@ -3,7 +3,7 @@ import Loading from 'components/loading';
 import t from 'i18n';
 import { NextPageContext } from 'next';
 import router from 'next/router';
-import {  store } from 'pages';
+import { store } from 'state';
 import { useEffect, useRef, useState } from 'react';
 import { setMetadata } from 'services/ServerProps';
 import { useButtonTypes } from 'shared/buttonTypes';

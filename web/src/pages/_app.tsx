@@ -31,6 +31,7 @@ import { usePoolFindNewActivities } from 'state/Activity';
 import { randomBytes } from 'crypto'
 import MetadataSEOFromStore from 'components/seo';
 import { useRebuildUrl } from 'components/uri/builder';
+import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 
 export default appWithTranslation(MyApp);
 
@@ -287,7 +288,8 @@ function MyApp({ Component, pageProps }) {
                 '--network-text-color': 'pink',
               } as React.CSSProperties)
           }
-        >
+        > 
+          <CookiesBanner/>
           <Alert />
           <div className="index__content">
             <ShowDesktopOnly>
@@ -327,4 +329,42 @@ function ActivityPool({ sessionUser, messagesUnread }) {
   usePoolFindNewActivities({ timeMs: 10000, sessionUser, messagesUnread })
 
   return (<></>);
+}
+
+
+export function CookiesBanner() {
+  const [showCookiesBanner, setShowCookiesBanner] = useState(false);
+  useEffect(() => {
+    const cookiesAccepted = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE);
+    if (!cookiesAccepted) {
+      setShowCookiesBanner(true);
+    }
+  }, []);
+  const handleAcceptCookies = () => {
+    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, true);
+    setShowCookiesBanner(false);
+  };
+
+  return (
+    <>{showCookiesBanner &&
+    <div className="card-alert__container">
+      <div className="cookies-banner__content">
+        <p>
+          This site uses cookies only when you log in. For more
+          details, see our{' '}
+          <a href="/Faqs" target="_blank" rel="noopener noreferrer">
+            Cookie Policy
+          </a>
+          .
+        </p>
+        <button
+          className="cookies-banner__button"
+          onClick={handleAcceptCookies}
+        >
+          Accept
+        </button>
+      </div>
+    </div>
+    }</>
+  );
 }
