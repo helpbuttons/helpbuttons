@@ -350,10 +350,9 @@ export function CookiesBanner() {
     <div className="card-alert__container">
       <div className="cookies-banner__content">
         <p>
-          This site uses cookies only when you log in. For more
-          details, see our{' '}
+        {t('faqs.cookiesExplanation')}
           <a href="/Faqs" target="_blank" rel="noopener noreferrer">
-            Cookie Policy
+          {t('faqs.cookiesPolicy')}
           </a>
           .
         </p>
@@ -361,7 +360,7 @@ export function CookiesBanner() {
           className="cookies-banner__button"
           onClick={handleAcceptCookies}
         >
-          Accept
+          {t('faqs.cookieAccept')}
         </button>
       </div>
     </div>
