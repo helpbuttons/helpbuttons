@@ -30,6 +30,7 @@ export const useRebuildUrl = (router: NextRouter) => {
         if (window) {
             if (popupPage != MainPopupPage.HIDE) {
                 const newUrl = giveMeUrl([{ name: 'v', value: popupPage }])
+                console.log(newUrl)
                 window.history.replaceState(null, '', newUrl);
             }
         }
@@ -45,6 +46,7 @@ export const useRebuildUrl = (router: NextRouter) => {
     }, [router])
 
     const giveMeUrl = (_params) => {
+        const addTrailingSlash = str => str.endsWith('/') ? str : `${str}/`;
         if (window) {
             const path = router.asPath.split('?')[0];
             const url = new URL(window.location.href);
@@ -56,7 +58,7 @@ export const useRebuildUrl = (router: NextRouter) => {
 
                 params.set(_param.name, _param.value)
             })
-            return `${path}/?${params.toString()}`;
+            return `${addTrailingSlash(path)}?${params.toString()}`;
         }
     }
 
