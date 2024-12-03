@@ -1,9 +1,5 @@
 ///button marker over the map
-import React, {
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useState } from 'react';
 
 import router from 'next/router';
 
@@ -25,32 +21,36 @@ export default function ContentList({
   linkToPopup = true,
   ...props
 }) {
-
-  const [buttonsSlice, setButtonsSlice] = useState(2)
-
-  const { endDivLoadMoreTrigger, noMoreToLoad } = useScroll(
-
-    ({ setNoMoreToLoad, setScrollIsLoading }) => {
-      setScrollIsLoading(() => true)
-      if (buttonsSlice < buttons.length) {
-        setButtonsSlice(() => buttonsSlice + 2)
-      } else {
-        setNoMoreToLoad(() => true)
-      }
-      setScrollIsLoading(() => false)
-    },
+  const [buttonsSlice, setButtonsSlice] = useState(2);
+  const isLoadingButtons = useGlobalStore(
+    (state: GlobalState) => state.explore.map.loading,
   );
+  const { endDivLoadMoreTrigger, noMoreToLoad, scrollIsLoading } =
+    useScroll(({ setNoMoreToLoad, setScrollIsLoading }) => {
+      setScrollIsLoading(() => true);
+      if (buttonsSlice < buttons.length) {
+        setButtonsSlice(() => buttonsSlice + 2);
+      } else {
+        setNoMoreToLoad(() => true);
+      }
+      setScrollIsLoading(() => false);
+    });
 
   if (buttons.length < 1) {
     return (
       <>
         <div className="list__empty-message">
-          <div className="list__empty-message--prev">
-            {t('explore.noResults')}
-          </div>
-          <div className="list__empty-message--comment">
-            {t('explore.emptyList')}
-          </div>
+          {isLoadingButtons && <Loading />}
+          {!isLoadingButtons && (
+            <>
+              <div className="list__empty-message--prev">
+                {t('explore.noResults')}
+              </div>
+              <div className="list__empty-message--comment">
+                {t('explore.emptyList')}
+              </div>
+            </>
+          )}
           <Btn
             caption={t('explore.createEmpty')}
             onClick={() => router.push('/ButtonNew')}
@@ -62,15 +62,16 @@ export default function ContentList({
   }
 
   return (
-    <>{buttons.slice(0, buttonsSlice).map((btn, i) => (
-      <CardButtonList
-        button={btn}
-        key={i}
-        buttonTypes={buttonTypes}
-        showMap={showMap}
-        linkToPopup={linkToPopup}
-      />
-    ))}
+    <>
+      {buttons.slice(0, buttonsSlice).map((btn, i) => (
+        <CardButtonList
+          button={btn}
+          key={i}
+          buttonTypes={buttonTypes}
+          showMap={showMap}
+          linkToPopup={linkToPopup}
+        />
+      ))}
       {noMoreToLoad && <NoMoreToLoad />}
       {endDivLoadMoreTrigger}
     </>
@@ -78,13 +79,13 @@ export default function ContentList({
 }
 
 export function NoMoreToLoad() {
-  const filtered = isFiltering()
+  const filtered = isFiltering();
   return (
     <div className="list__empty-message">
       <div className="list__empty-message--comment">
         {t('explore.emptyList')}
       </div>
-      {filtered &&
+      {filtered && (
         <Btn
           btnType={BtnType.splitIcon}
           caption={t('common.reset')}
@@ -94,15 +95,14 @@ export function NoMoreToLoad() {
             store.emit(new ToggleAdvancedFilters(false));
           }}
         />
-      }
+      )}
       <Btn
         caption={t('explore.createEmpty')}
         onClick={() => router.push('/ButtonNew')}
         contentAlignment={ContentAlignment.center}
       />
     </div>
-  )
-
+  );
 }
 
 export function EndListMessage() {
@@ -120,6 +120,5 @@ export function EndListMessage() {
         contentAlignment={ContentAlignment.center}
       />
     </div>
-  )
-
+  );
 }

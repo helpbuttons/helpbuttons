@@ -598,14 +598,10 @@ function ExploreHexagonMap({toggleShowLeftColumn, exploreSettings, selectedNetwo
   });
   const [countFilteredButtons, setCountFilteredButtons] = useState(0)
 
-  const filtered = isFiltering()
   useEffect(() => {
     const allHiddenButtons = boundsFilteredButtons.filter((elem) => elem.hideAddress === true)
     
-    if(exploreMapState.listButtons.length > boundsFilteredButtons.length)
-    {
-      setCountFilteredButtons(exploreMapState.listButtons.length)
-    }else if(exploreSettings.zoom >= showMarkersZoom ){
+    if(exploreSettings.zoom >= showMarkersZoom ){
       setCountFilteredButtons(allHiddenButtons.length)
     }else{
       setCountFilteredButtons(0)
