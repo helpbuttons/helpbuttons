@@ -3,6 +3,7 @@ import {
   HttpStatus,
   Inject,
   Injectable,
+  UseInterceptors,
   forwardRef,
 } from '@nestjs/common';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
@@ -45,6 +46,14 @@ import { Network } from '../network/network.entity';
 import * as handlebars from 'handlebars';
 import * as path from 'path';
 import configs from '@src/config/configuration';
+import {
+  CACHE_MANAGER,
+  CacheInterceptor,
+  CacheKey,
+  CacheTTL,
+} from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
+import { CacheKeys } from '@src/shared/types/cache.keys';
 
 @Injectable()
 export class ButtonService {
@@ -61,6 +70,7 @@ export class ButtonService {
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
     private eventEmitter: EventEmitter2,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache
   ) {}
 
   async create(
@@ -70,7 +80,7 @@ export class ButtonService {
     user: User,
   ) {
     const network = await this.networkService.findOne(networkId);
-
+    this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let hasPhone = false;
     if (user.phone) {
       hasPhone = true;
@@ -198,7 +208,7 @@ export class ButtonService {
     currentUser: User,
   ) {
     const currentButton = await this.findById(id, true);
-
+    this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let location = {};
     let hexagon = {};
     location = {
@@ -286,6 +296,9 @@ export class ButtonService {
     });
   }
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheKey(CacheKeys.FINDH3_CACHE_KEY)
+  @CacheTTL(30)
   async findh3(resolution, hexagons): Promise<Button[]> {
     try {
       if (hexagons && hexagons.length > 1000) {
@@ -354,6 +367,7 @@ export class ButtonService {
   }
 
   async delete(buttonId: string) {
+    this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     return this.findById(buttonId).then((button) => {
       return this.buttonRepository
         .update(button.id, { deleted: true })

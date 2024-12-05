@@ -11,6 +11,7 @@ import { ButtonCron } from './button.cron';
 import { MailModule } from '../mail/mail.module';
 import { UserModule } from '../user/user.module';
 import { ButtonCommand } from './button.command';
+import { CacheModule } from '@nestjs/cache-manager';
 
 
 @Module({
@@ -21,7 +22,8 @@ import { ButtonCommand } from './button.command';
     StorageModule,
     forwardRef(() => PostModule),
     MailModule,
-    UserModule
+    UserModule,
+    CacheModule.register()
   ],
   controllers: [
     ButtonController
