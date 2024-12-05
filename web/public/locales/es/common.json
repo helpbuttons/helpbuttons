@@ -47,14 +47,12 @@
     "installButton": "Instalar app",
     "notificationsPermission": "Permitir notificaciones",
     "share": "Compartir esta app",
-    "featured": "Destacados"
-
+    "featured": "Destacados",
+    "powered": "Powered by"
   },
-  "share":{
-
+  "share": {
     "showSharePopup": "Comparte esta aplicación",
     "header": "Compartir esta aplicación",
-
     "shareField": "Elige tu opción para compartir",
     "shareTypeLabel": "Tipo",
     "shareTypeExplain": "Elige la manera en la que quieres compartir los resultados de tu red",
@@ -62,8 +60,8 @@
     "explainInvitations": "Generate individual invitation cards for your community",
     "optionIframe": "Iframe para insertar en otras webs",
     "optionBulletin": "Imprimir lista de _helpbuttons_",
-    "optionInvitations": "Invitaciones personales para imprimir"
-
+    "optionInvitations": "Invitaciones personales para imprimir",
+    "share": ""
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -81,8 +79,9 @@
     "nounread": "No hay mensajes sin leer",
     "read": "No hay mensajes aún",
     "said": "dijo",
-    "privateBadge": "privado"
-
+    "privateBadge": "privado",
+    "noMoreNotifications": "There are no more notifications",
+    "noMoreMessages": "There are no more messages"
   },
   "hostname": "nombre de host",
   "common": {
@@ -161,8 +160,8 @@
     "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
     "addType": "+ Crear tipo de _helpbutton_",
     "currencyLabel": "Divisa",
-    "setType": "",
-    "buttonTemplatePlaceHolder": ""
+    "setType": "Set _helpbutton_ type properties",
+    "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here"
   },
   "activities": {
     "messages": "Mensajes",
@@ -342,7 +341,6 @@
     "locationLimited": "Limitado a {0}, {1}",
     "pickLocationLimits": "Elige una localización",
     "buttonTagsSuccess": "Tus temas de interés fueron actualizados"
-
   },
   "button": {
     "title": "Vista de _helpbutton_",
@@ -426,7 +424,7 @@
     "address": "Error al obtener la dirección",
     "dates": "Fechas inválidas"
   },
-  "invitation":{
+  "invitation": {
     "card": "Tarjeta anónima de id individual",
     "infoCard": "Escanea el código para entrar.",
     "name": "Esta tarjeta es única y personal, no la pierdas.",
@@ -442,7 +440,6 @@
     "postgresHostName": "Servidor de Postgresql",
     "smtpUrl": "URL de Smtp",
     "test": "prueba",
-    
     "createAdminTitle": "Crear cuenta de administrador",
     "postgresPort": "Puerto de Postgresql",
     "postgresDb": "Nombre de la base de datos de Postgresql",
@@ -472,7 +469,7 @@
     "sendPublic": "Responder",
     "sendPrivate": "Responder en privado",
     "send": "Enviar",
-    "posted": ""
+    "posted": "Comment posted"
   },
   "picker": {
     "headerText": "Elige una localización"
@@ -515,9 +512,9 @@
     "securityDescription": "Cada día incorporamos nuevas mejoras a la seguridad de las Redes, mediante el trabajo conjunto con la comunidad open source estamos analizando y preparando herramientas de seguridad para que usuarios sin conocimiento de informática puedan usarlas. Si crees que puede haber un probelma de seguridad relacionado con el uso de la Red ponte en contacto con el adminsitrador a través de la página de Inicio. Si crees que puede haber una brecha de seguridad informática que pone en riesgo la integridad de nuestro software y la seguridad de nuestros usuarios escríbenos a help@helpbuttons.org. Actualizamos y revisamos continuamente nuestros sistemas para garantizar que cumplan con los más altos estándares de ciberseguridad. Sin embargo, también creemos que la seguridad es una responsabilidad compartida. Si has instalado esta herramienta en tu servidor, te alentamos a practicar comportamientos seguros en línea, como usar contraseñas fuertes y proteger la información personal. Por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
     "contactDescription": "Si quieres comunicar con los gestores de la página, acude a la sección de Inicio. Si quieres ponerte en contacto con los programadores que hacen posible la app, por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
     "cookiesQuestion": "Cookies policy",
-    "cookiesDescription": "Este sitio utiliza cookies para ofrecer una experiencia segura y personalizada. A continuación, se describe el uso específico de cada cookie: 1. ACCESS_TOKEN (access_token): Esta cookie almacena de forma segura tu token de acceso, permitiéndote permanecer conectado durante la sesión sin necesidad de reautenticación. Tipo: Esencial Duración: Basada en la sesión 2. TOKEN_TYPE (token_type): Se usa para identificar el tipo de token de acceso que estás utilizando, garantizando una autenticación y seguridad adecuadas. Tipo: Esencial Duración: Basada en la sesión 3. NETWORK_SELECTED (network_id): Almacena información sobre la red seleccionada que estás utilizando en nuestra plataforma, ofreciendo una experiencia personalizada según tu elección. Tipo: Funcionalidad Duración: Basada en la sesión 4. EXPLORE_SETTINGS (explore_settings): Guarda tus preferencias y configuraciones en la función de exploración, haciendo que tu experiencia de navegación sea más consistente y personalizada. Tipo: Funcionalidad Duración: Persistente 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Registra si has dado permiso para recibir notificaciones, permitiéndonos mostrar u ocultar notificaciones según tu preferencia. Tipo: Preferencia Duración: Persistente Puedes gestionar la configuración de cookies a través de las preferencias de tu navegador. "
-  
-  
+    "cookiesDescription": "Este sitio utiliza cookies para ofrecer una experiencia segura y personalizada. A continuación, se describe el uso específico de cada cookie: 1. ACCESS_TOKEN (access_token): Esta cookie almacena de forma segura tu token de acceso, permitiéndote permanecer conectado durante la sesión sin necesidad de reautenticación. Tipo: Esencial Duración: Basada en la sesión 2. TOKEN_TYPE (token_type): Se usa para identificar el tipo de token de acceso que estás utilizando, garantizando una autenticación y seguridad adecuadas. Tipo: Esencial Duración: Basada en la sesión 3. NETWORK_SELECTED (network_id): Almacena información sobre la red seleccionada que estás utilizando en nuestra plataforma, ofreciendo una experiencia personalizada según tu elección. Tipo: Funcionalidad Duración: Basada en la sesión 4. EXPLORE_SETTINGS (explore_settings): Guarda tus preferencias y configuraciones en la función de exploración, haciendo que tu experiencia de navegación sea más consistente y personalizada. Tipo: Funcionalidad Duración: Persistente 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Registra si has dado permiso para recibir notificaciones, permitiéndonos mostrar u ocultar notificaciones según tu preferencia. Tipo: Preferencia Duración: Persistente Puedes gestionar la configuración de cookies a través de las preferencias de tu navegador. ",
+    "cookiesExplanation": "This site uses cookies only when you log in. For more details, see our ",
+    "cookieAccept": "Accept"
   },
   "invite": {
     "never": "Nunca",
@@ -591,13 +588,30 @@
     "title": "Modera el contenido y los usuarios",
     "confirm": "confirmar",
     "adminCommunication": "Comunicaciones de administrador",
-    "adminCommunicationLabel":"Comunicaciones de administradores",
-    "adminCommunicationExplain":"Mensajes que envíes a través de este formulario serán notificados a todos los usuarios de la Red."
+    "adminCommunicationLabel": "Comunicaciones de administradores",
+    "adminCommunicationExplain": "Mensajes que envíes a través de este formulario serán notificados a todos los usuarios de la Red."
   },
   "roles": {
     "blocked": "bloqueado",
     "administrator": "administrador",
     "registered": "registrado",
     "guest": "invitado"
+  },
+  "notificaction": {
+    "markedAsRead": ""
+  },
+  "bulletin": {
+    "since": "Since {0}",
+    "filter": "",
+    "noButtons": ""
+  },
+  "places": {
+    "addNew": "",
+    "add": "",
+    "save": ""
+  },
+  "seo": {
+    "embbed": "",
+    "buttonEdit": ""
   }
 }

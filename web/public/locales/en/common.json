@@ -8,7 +8,7 @@
     "signup": "SignUp",
     "login": "Login",
     "home": "Home",
-    "donate": "Donate"    
+    "donate": "Donate"
   },
   "homeinfo": {
     "start": "Where do you start?",
@@ -47,9 +47,8 @@
     "notificationsPermission": "Allow notifications",
     "featured": "Featured",
     "powered": "Powered by"
-
   },
-  "share":{
+  "share": {
     "header": "Share this app",
     "showSharePopup": "Share this app",
     "shareField": "Choose your share option",
@@ -59,7 +58,8 @@
     "explainInvitations": "Generate individual invitation cards for your community",
     "optionIframe": "List Iframe to insert in other sites",
     "optionBulletin": "Printable bulletin",
-    "optionInvitations": "Printable invitations"
+    "optionInvitations": "Printable invitations",
+    "share": ""
   },
   "feed": {
     "write": "Write message",
@@ -501,7 +501,8 @@
     "cookiesDescription": "This site, uses cookies to provide a secure and personalized experience. Below is a description of specific cookies we use: 1. ACCESS_TOKEN (access_token): This cookie securely stores your access token, allowing you to stay logged in during your session without needing to re-authenticate. Type: Essential Duration: Session-based 2. TOKEN_TYPE (token_type): Used to identify the type of access token you are using, ensuring proper authentication and security. Type: Essential Duration: Session-based 3. NETWORK_SELECTED (network_id): Stores information about the selected network you are using on our platform, helping provide a customized experience based on your selection. Type: Functionality Duration: Session-based 4. EXPLORE_SETTINGS (explore_settings): Saves your preferences and settings in the explore feature, making your browsing experience more consistent and tailored. Type: Functionality Duration: Persistent 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Tracks whether you have given permission for notifications, allowing us to show or hide notifications based on your preference. Type: Preference Duration: Persistent You can manage your cookie settings through your browser's preferences. ",
     "cookiesExplanation": "This site uses cookies only when you log in. For more details, see our ",
     "cookiesPolicy": "Cookie Policy",
-    "cookieAccept": "Accept"    
+    "cookieAccept": "Accept",
+    "networkEthics": ""
   },
   "invite": {
     "never": "Never",
@@ -523,7 +524,7 @@
     "generateQr": "Get QR",
     "registered": "Qr code already registered"
   },
-  "invitation":{
+  "invitation": {
     "card": "Anonimous login individual card",
     "infoCard": "Scan the code to enter.",
     "name": "This card is unique and personal.",
@@ -581,8 +582,8 @@
     "awaitingApproval": "_helpbutton_ has been added to the moderation list, please wait for an administrator to approve it",
     "title": "Moderate content and users",
     "adminCommunication": "Administrator communications",
-    "adminCommunicationLabel":"Administrator communications",
-    "adminCommunicationExplain":"Messages that you share here will be send to all admins or all users of the network",
+    "adminCommunicationLabel": "Administrator communications",
+    "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
     "created": ""
   },
   "roles": {
@@ -596,6 +597,20 @@
     "explainBulletin": "Here you can get a list of _helpbuttons_ in a pdf format, with QR codes. So you can spread the word in your own community.",
     "found": "{0} _helpbuttons_ found. From today until {1}",
     "pdfDate": "since {0}",
-    "since": "Since {0}"
+    "since": "Since {0}",
+    "filter": "",
+    "noButtons": ""
+  },
+  "notificaction": {
+    "markedAsRead": ""
+  },
+  "places": {
+    "addNew": "",
+    "add": "",
+    "save": ""
+  },
+  "seo": {
+    "embbed": "",
+    "buttonEdit": ""
   }
 }
