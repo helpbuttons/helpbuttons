@@ -51,7 +51,6 @@ export default function HomeInfo({ metadata }) {
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
   );
-
   const config = useStore(
     store,
     (state: GlobalState) => state.config,
@@ -225,7 +224,7 @@ function HomeInfoNetworkLogo({selectedNetwork}) {
 function HomeInfoPinnedButtons() {
   return (<>
     {/*  PINNIED BUTTONS */}
-    {false &&
+    {true &&
       <div className="homeinfo-card">
         <div className="homeinfo-card__header">
           <h3 className="homeinfo-card__header-title">
