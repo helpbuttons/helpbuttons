@@ -558,6 +558,22 @@ export class ButtonService {
     return this.buttonRepository.update(buttonId, { expired: true });
   }
 
+  /* setPin(buttonId: string, status: boolean) {
+    return this.buttonRepository.update(buttonId, { pin: status });
+  } */
+
+  async findByPin() {
+    let buttons: Button[] = await this.buttonRepository.find({
+      where: {
+        pin: true,
+        deleted: false,
+        expired: false,
+      },
+    });
+
+    return buttons;
+  }
+
   public deleteme(ownerId: string) {
     return this.buttonRepository
       .find({ where: { owner: { id: ownerId } } })

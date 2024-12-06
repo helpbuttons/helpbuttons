@@ -268,7 +268,8 @@
     "authorTitle": "Author:",
     "notFound": "Can't find your button, maybe it was deleted?",
     "followErrorAlert": "",
-    "unfollowErrorAlert": ""
+    "unfollowErrorAlert": "",
+    "pin": "Pin"
   },
   "user": {
     "login": "Write your credentials",
