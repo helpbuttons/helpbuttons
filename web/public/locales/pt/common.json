@@ -356,7 +356,8 @@
     "notFound": "Não consigo encontrar seu botão, talvez tenha sido excluído?",
     "invalidDates": "",
     "followErrorAlert": "",
-    "unfollowErrorAlert": ""
+    "unfollowErrorAlert": "",
+    "pin": "Pin"
   },
   "calendarOnce": {
     "label": "Uma vez",
