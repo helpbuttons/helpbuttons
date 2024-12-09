@@ -356,7 +356,8 @@
       "notFound": "No puc trobar el teu botó, potser va ser esborrat?",
       "invalidDates": "",
       "followErrorAlert": "",
-      "unfollowErrorAlert": ""
+      "unfollowErrorAlert": "",
+      "pin": "Pin"
     },
     "calendarOnce": {
       "label": "Una vegada",

@@ -397,7 +397,8 @@
     "notFound": "No puedo encontrar tu button, talvez fue borrado?",
     "invalidDates": "",
     "followErrorAlert": "",
-    "unfollowErrorAlert": ""
+    "unfollowErrorAlert": "",
+    "pin": "Pinear"
   },
   "calendarOnce": {
     "label": "Una vez",
