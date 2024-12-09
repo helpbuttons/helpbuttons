@@ -5,10 +5,10 @@ import getConfig from 'next/config';
 import { localesFiles } from 'i18n/availableLocales';
 
 export const logoImageUri = '/network/logo/'; // [16, 32, 48, 72, 96, 144, 168, 180, 192]
-let SSRLocale = 'en';
+export let locale = 'en';
 
-export function setSSRLocale(_locale) {
-  SSRLocale = _locale;
+export function setLocale(_locale) {
+  locale = _locale;
 }
 export function getShareLink(link) {
   const locale = (getLocale() == 'en' )? '' : `/${getLocale()}`
@@ -26,14 +26,12 @@ export function getHref() {
   return window.location.href;
 }
 
-export function getLocale(availableLocales = null) {
-  if (!availableLocales) {
-    availableLocales = localesFiles.map(({ locale }) => {
-      return locale;
-    });
-  }
+export function getLocaleFromUrl()
+{
   try {
     const splitHref = getHref().split('/');
+
+    const availableLocales = localesFiles.map(({ locale }) => locale);
 
     if (
       splitHref &&
@@ -43,9 +41,11 @@ export function getLocale(availableLocales = null) {
       return splitHref[3];
     }
   } catch (err) {
-    return SSRLocale;
+    return null;
   }
-  return SSRLocale;
+}
+export function getLocale() {
+  return locale;
 }
 
 export function makeImageUrl(image) {

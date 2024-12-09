@@ -1,6 +1,6 @@
 import { Button } from 'shared/entities/button.entity';
 import { logError } from 'shared/log';
-import { makeImageUrl, setSSRLocale } from 'shared/sys.helper';
+import { makeImageUrl, setLocale } from 'shared/sys.helper';
 import { HttpStatus } from 'shared/types/http-status.enum';
 export class ServerPropsService {
   public static async general(subtitle, ctx) {
@@ -69,7 +69,7 @@ export class ServerPropsService {
         },
       };
     }
-    setSSRLocale(networkConfigData.locale);
+    setLocale(networkConfigData.locale);
     const version = require('../../../public/version.json').version
     let serverProps = {
       metadata: {...getMetadata(
@@ -153,7 +153,7 @@ export function getMetadata(subtitle, selectedNetwork, webUrl, uri) {
 }
 
 export async function setMetadata(subtitle, ctx) {
-  setSSRLocale(ctx.locale);
+  setLocale(ctx.locale);
   const isServerReq = (req) => !req.url.startsWith('/_next');
   try {
     const serverProps = (isServerReq(ctx.req) || ctx.params?.username)

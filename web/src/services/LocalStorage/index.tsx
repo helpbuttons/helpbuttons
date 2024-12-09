@@ -9,7 +9,8 @@ export enum LocalStorageVars {
   TOKEN_TYPE = 'token_type',
   NETWORK_SELECTED = 'network_id',
   EXPLORE_SETTINGS='explore_settings',
-  HAS_PERMISSION_NOTIFICATIONS='has_permission_notifications'
+  HAS_PERMISSION_NOTIFICATIONS='has_permission_notifications',
+  COOKIES_ACCEPTANCE='cookies_acceptance'
 }
 
 // add variable to localStorage to not loose on refresh
