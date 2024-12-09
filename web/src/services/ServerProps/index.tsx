@@ -153,7 +153,6 @@ export function getMetadata(subtitle, selectedNetwork, webUrl, uri) {
 }
 
 export async function setMetadata(subtitle, ctx) {
-  setLocale(ctx.locale);
   const isServerReq = (req) => !req.url.startsWith('/_next');
   try {
     const serverProps = (isServerReq(ctx.req) || ctx.params?.username)

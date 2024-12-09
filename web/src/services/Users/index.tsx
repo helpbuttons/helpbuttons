@@ -124,4 +124,5 @@ export class UserService {
   public static deleteme(): Observable<any>{
     return httpService.get<any>(`users/deleteme`)
   }
+  
 }

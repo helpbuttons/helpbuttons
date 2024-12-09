@@ -15,6 +15,5 @@ const Home: NextPage = (props) => {
 export default Home;
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
-  setLocale(ctx.locale);
   return setMetadata(t('menu.home'), ctx);
 };

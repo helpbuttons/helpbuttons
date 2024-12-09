@@ -213,7 +213,6 @@ function MyApp({ Component, pageProps }) {
         selectedNetwork.nomeclature,
         selectedNetwork.nomeclaturePlural,
       );
-      setLocale(selectedNetwork.locale);
     }
   }, [selectedNetwork]);
 
@@ -369,10 +368,13 @@ const useWhichLocale = ({ sessionLocale, networkLocale }) => {
   useEffect(() => {
     const localeFromUrl = getLocaleFromUrl();
     if (localeFromUrl) {
+      console.log('set from url')
       setLocale(localeFromUrl);
     } else if (sessionLocale && networkLocale) {
+      console.log('set user session')
       setLocale(sessionLocale);
     } else if (networkLocale) {
+      console.log('set from network')
       setLocale(networkLocale);
     }
     set_Locale((prevLocale) => {

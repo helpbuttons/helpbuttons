@@ -16,6 +16,5 @@ function Login() {
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
-    setLocale(ctx.locale);
     return setMetadata(t('menu.login'), ctx)
   };

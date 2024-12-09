@@ -146,3 +146,20 @@ export class GetAdminPhone implements WatchEvent {
     );
   }
 }
+
+
+export class GetPhone implements WatchEvent {
+  public constructor(
+    private userId: string,
+    private onSuccess,
+    private onError,
+  ) { }
+  public watch(state: GlobalState) {
+    return UserService.getPhone(this.userId).pipe(
+      map((data) => {
+        this.onSuccess(data);
+      }),
+      catchError((error) => handleError(this.onError, error)),
+    );
+  }
+}
