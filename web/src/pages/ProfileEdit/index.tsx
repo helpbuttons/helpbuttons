@@ -25,7 +25,7 @@ import { User } from 'shared/entities/user.entity';
 import { useRef } from 'store/Store';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import FieldPassword from 'elements/Fields/FieldPassword';
-import { findError, getHostname } from 'shared/sys.helper';
+import { findError, getHostname, locale, setLocale } from 'shared/sys.helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import t from 'i18n';
@@ -62,15 +62,13 @@ export default function ProfileEdit() {
   }});
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
-
+  const [_locale, set_Locale] = useState(locale)
 
   const router = useRouter();
-  const { pathname, asPath, query } = useRouter()
   const sessionUser: User = useRef(
     store,
     (state: GlobalState) => state.sessionUser,
   );
-  const [locale, setLocale] = useState(null)
 
   const onSubmit = (data: UserUpdateDto) => {
     let dataToSubmit : UserUpdateDto =
@@ -82,7 +80,7 @@ export default function ProfileEdit() {
       password_new_confirm: data.password_new_confirm,
       set_new_password: setNewPassword,
       description: data.description,
-      locale: locale,
+      locale: _locale,
       receiveNotifications: data.receiveNotifications,
       showButtons: data.showButtons,
       tags: data.tags,
@@ -90,7 +88,8 @@ export default function ProfileEdit() {
       address: data.address,
       radius: data.radius,
       phone: data.phone,
-      publishPhone: data.publishPhone
+      publishPhone: data.publishPhone,
+      showWassap: data.showWassap
     }
     if (setNewPassword)  {
       // check passwords match.. send to backend
@@ -109,12 +108,8 @@ export default function ProfileEdit() {
   const onSuccess = () => {
     
     store.emit(new FetchUserData((userData) => {
-      if(userData.locale != 'en')
-      {
-        router.push({ pathname: '/Profile' }, asPath, { locale: userData.locale });
-      }else{
-        router.push({ pathname: '/Profile' }, asPath, { locale: 'en' });
-      }
+      setLocale( userData.locale )
+      router.push({ pathname: '/Profile' });
     }, onError));
     ;
   };
@@ -138,7 +133,6 @@ export default function ProfileEdit() {
   
   useEffect(() => {
     if (sessionUser) {
-      setLocale(sessionUser.locale)
       reset(sessionUser);
     }
   }, [sessionUser]);
@@ -194,7 +188,7 @@ export default function ProfileEdit() {
                     {...register('description', { required: true })}
                   />
                                   
-                  <FieldLanguagePick onChange={(value) => setLocale(value)} explain={t('user.pickLanguageExplain')} defaultValue={sessionUser.locale}/>
+                  <FieldLanguagePick onChange={(value) => set_Locale(value)} explain={t('user.pickLanguageExplain')} defaultValue={sessionUser.locale}/>
 
                   <FieldText
                     name="email"
@@ -240,6 +234,14 @@ export default function ProfileEdit() {
                     defaultValue={sessionUser.showButtons}
                     text={t('user.showButtons')}
                     onChanged={(value) => {setValue('showButtons', value)}}
+                  />
+                  <FieldCheckbox
+                    name='showWassap'
+                    label={t('user.showWassap')}
+                    explain={t('user.showWassapExplain')}
+                    defaultValue={sessionUser.showWassap}
+                    text={t('user.showWassap')}
+                    onChanged={(value) => {setValue('showWassap', value)}}
                   />
 
                 </Accordion>

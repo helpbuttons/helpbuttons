@@ -42,7 +42,9 @@
     "needLogo": "Lekua hautatu aurretik, gehitu zure logotipoa, mesedez",
     "needPlace": "Aukeratu zure Sarearen eremua mesedez",
     "latestActivity": "Azken jarduerak",
-    "installButton": "Instalatu"
+    "installButton": "Instalatu",
+    "powered": "Powered by",
+    "featured": "Featured"
   },
   "feed": {
     "write": "Idatzi mezu bat",
@@ -51,7 +53,12 @@
     "loginMessage": "Sartu",
     "or": "edo",
     "signUp": "Erabiltzaile berri bezala batu",
-    "beforeComment": "iruzkin egin aurretik"
+    "beforeComment": "iruzkin egin aurretik",
+    "noMoreNotifications": "There are no more notifications",
+    "markMessagesAsRead": "Mark all as read",
+    "nounread": "No unread messages",
+    "noMoreMessages": "There are no more messages",
+    "said": "said"
   },
   "hostname": "host izena",
   "common": {
@@ -130,8 +137,8 @@
     "dateFieldAddLabel": "Erakutsi data zure _helpbutton_ motan, ekitaldi gisa jokatuko du eta egutegi bidez bilatu ahal izango da",
     "addType": "+ Sortu goiko eremuak dituen _helpbutton_ mota",
     "currencyLabel": "Moneta",
-    "setType": "",
-    "buttonTemplatePlaceHolder": ""
+    "setType": "Set _helpbutton_ type properties",
+    "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here"
   },
   "activities": {
     "allNotifications": "Aldaketa guztiak",
@@ -158,7 +165,8 @@
     "deletedType": "_helpbutton_ ezabatu",
     "myhelpbuttons": "Nire _helpbuttons_",
     "expiredEventType": "_helpbutton_ amaituta",
-    "expiredEventTitle": "'{0}' amaiera-data {1} egunean gainditu du, ez da jendaurrean gehiago erakutsiko."
+    "expiredEventTitle": "'{0}' amaiera-data {1} egunean gainditu du, ez da jendaurrean gehiago erakutsiko.",
+    "notifications": "Notifications"
   },
   "activitiesWithSubject": {
     "newbutton": "{0}ek _helpbutton_ argitaratu du {1}",
@@ -246,7 +254,8 @@
     "iAccept": "Onartzen dut",
     "pleaseAcceptPrivacy": "Mesedez, onartu gure pribatutasun politika",
     "loginError": "",
-    "errorRequestNewLoginToken": ""
+    "errorRequestNewLoginToken": "",
+    "myHelpbuttons": "Your _helpbuttons_"
   },
   "configure": {
     "browsePins": "Mapa kokapen pinen bidez",
@@ -267,7 +276,7 @@
     "both": "Mapa & Zerrenda",
     "list": "Zerrenda",
     "map": "Mapa",
-    "showList": ""
+    "showList": "Show List"
   },
   "buttonFilters": {
     "filters": "Bilatu eta iragazi",
@@ -424,7 +433,7 @@
     "sendPublic": "Erantzun",
     "sendPrivate": "Erantzun pribatuki",
     "send": "Bidali",
-    "posted": ""
+    "posted": "Comment posted"
   },
   "picker": {
     "headerText": "Aukeratu kokapena"
@@ -465,7 +474,10 @@
     "ethicsDescription": "Proiektu honen helburua pertsonen eta komunitateen autonomia hobetu eta lankidetza sustatzea da. Gure hiru printzipioak hauek dira: Askatasuna, inklusioa eta deszentralizazioa. 1. Tresna erabiltzeko askatasuna eta hainbat helburutarako partekatzeko. 2. Teknologietan ohiturarik gabekoak arduraz diseinatutako proiektuarekin hartzeko inklusioa, eta bizitza errealeko beharrei erantzuteko. 3. Datuen erabileran erantzukizun partekatu maila desberdinak ahalbidetzeko deszentralizazioa: Kolektiboetatik (zerbitzariak) banakakoetara (gako anonimoak). Gure zerbitzariak erabiliz gero, balio horiekin bat egiten duen guztia onartua izango da eta askatasun osoa izango du. Gardentasuna, zintzotasuna eta pertsona guztien errespetua sinesten dugu. Beste zerbitzari batzuetan softwarearen erabilera kontrolatu ezin dugun arren, gure zerbitzarian giza duintasunaren eta osotasunaren aurkako edo animalien tratu txarrak bultzatzen dituzten jokabideak ez ditugu onartuko. Gure softwarea pertsonei konektatzeko eta trukea errazteko diseinatuta dago, eta hau guretzat arduraz hartzen dugun erantzukizuna da. Gure erabiltzaileei plataforma eta egiten dituzten kopiak errespetuzko komunikazio eta kontzientziazko trukearen balio berberak betetzea gomendatzen diegu. Gure zerbitzariak erabiltzen dituzten bitartean, softwarearen erabilera okerra ez da onartuko, besteak beste, ustiapena, kaltea edo plataformaren funtzionalitateen manipulazioa interes pertsonaletarako.",
     "privacyDescription": "Helpbuttons-en Sarea sortutako datuen pribatutasunari buruzko irtenbide hobeak aurkitzeko egunero lan egiten dugu. Anonimotasun eskubidea baloratzen dugu, eta erabiltzaileei aukera ematen diegu erabat anonimoak izan edo beren datu pertsonalak uzten dituztenak izateko. Helpbuttons-ek erabiltzaileen datu pertsonalak merkataritzarako edo erabiltzaile talde baten interes pertsonalerako erabiltzea debekatuta dago. Zure datuak guztiz ezabatzeko aukera eskaintzen dugu modu erraz eta garden batean. Datu-bilketako prozesuak gardenak dira, eta edozein unetan zure datu pertsonalak eskuratzeko, eguneratzeko edo ezabatzeko eskubidea duzu. Gogoratu Helpbuttons argitalpenetan informazio pertsonala partekatzea zure diskrezioa dela; izan kontziente eta partekatu bakarrik partekatu nahi duzun hori. Kontuan izan zure datuen arduraduna zure Sarearen administratzailea dela, ez partekatu datu sentikorrak administratzaile horretan konfiantzarik ez baduzu. Zure galderak hurrengo helbide elektronikora bidali mesedez: help@helpbuttons.org",
     "securityDescription": "Egunero hobekuntza berriak gehitzen dizkiogu Sareen segurtasunari, komunitate open sourcearekin elkarlanean aritu eta segurtasun tresnak prestatuz erabiltzaileek informatika ezagutza gabe erabil ditzaten. Sarearen erabilerarekin lotutako segurtasun arazoren bat dagoela uste baduzu, jarri harremanetan administratzailearekin hasiera orriaren bidez. Uste baduzu gure softwarearen segurtasuna arriskuan jar dezakeen segurtasun-zulo informatiko bat dagoela eta erabiltzaileengan segurtasun-arazoren bat eragin dezakeela, idatz iezaguzu help@helpbuttons.org. Eguneratu eta etengabe aztertzen ditugu gure sistemak zibersegurtasun estandarrik handienekin betetzen direla ziurtatzeko. Hala ere, segurtasuna erantzukizun partekatu bat dela uste dugu. Tresna hau zure zerbitzarian instalatu baduzu, lineako segurtasun jokabideak praktikatzea gomendatzen dizugu, hala nola, pasahitz sendoak erabiltzea eta informazio pertsonala babestea. Zure galderak hurrengo helbide elektronikora bidali mesedez: help@helpbuttons.org",
-    "contactDescription": "Orriaren arduradunekin harremanetan jarri nahi baduzu, joan Hasiera atalera. Aplikazioa posible egiten duten programatzaileekin harremanetan jarri nahi baduzu, bidali zure galderak hurrengo helbide elektronikora mesedez: help@helpbuttons.org"
+    "contactDescription": "Orriaren arduradunekin harremanetan jarri nahi baduzu, joan Hasiera atalera. Aplikazioa posible egiten duten programatzaileekin harremanetan jarri nahi baduzu, bidali zure galderak hurrengo helbide elektronikora mesedez: help@helpbuttons.org",
+    "cookiesExplanation": "This site uses cookies only when you log in. For more details, see our ",
+    "cookieAccept": "Accept",
+    "cookiesQuestion": "Cookies policy"
   },
   "invite": {
     "never": "Inoiz ez",
@@ -537,12 +549,43 @@
     "created_at": "Sortua",
     "title": "",
     "created": "",
-    "confirm": ""
+    "confirm": "Confirm",
+    "adminCommunication": "Administrator communications",
+    "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network"
   },
   "role": {
     "blocked": "desaktibatuta",
     "admin": "administratzailea",
     "registered": "erregistratua",
     "guest": "gonbidatua"
+  },
+  "notificaction": {
+    "markedAsRead": ""
+  },
+  "bulletin": {
+    "since": "Since {0}",
+    "filter": "",
+    "noButtons": ""
+  },
+  "invitation": {
+    "card": "Anonimous login individual card",
+    "name": "This card is unique and personal.",
+    "infoQr": "Contact:"
+  },
+  "share": {
+    "shareExplain": "Select the amount of results you want to show and copy the code to your site",
+    "optionIframe": "List Iframe to insert in other sites",
+    "optionInvitations": "Printable invitations",
+    "shareTypeExplain": "Choose the type of share you want to do",
+    "share": ""
+  },
+  "places": {
+    "addNew": "",
+    "add": "",
+    "save": ""
+  },
+  "seo": {
+    "embbed": "",
+    "buttonEdit": ""
   }
 }

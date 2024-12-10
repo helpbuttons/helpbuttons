@@ -42,7 +42,9 @@
     "needLogo": "Antes de selecionar um lugar, adicione seu logotipo, por favor",
     "needPlace": "Por favor, selecione em qual área está localizada sua Rede",
     "latestActivity": "Últimas atividades",
-    "installButton": "Instalar"
+    "installButton": "Instalar",
+    "powered": "Powered by",
+    "featured": "Featured"
   },
   "feed": {
     "write": "Escrever mensagem",
@@ -51,7 +53,12 @@
     "loginMessage": "Entre",
     "or": "ou",
     "signUp": "Inscreva-se como novo usuário",
-    "beforeComment": "antes de comentar"
+    "beforeComment": "antes de comentar",
+    "noMoreNotifications": "There are no more notifications",
+    "markMessagesAsRead": "Mark all as read",
+    "nounread": "No unread messages",
+    "noMoreMessages": "There are no more messages",
+    "said": "said"
   },
   "hostname": "nome do host",
   "common": {
@@ -130,8 +137,8 @@
     "dateFieldAddLabel": "Exiba uma data no seu tipo de _helpbutton_ para que ele se comporte como um evento e possa ser pesquisado no calendário",
     "addType": "+ Criar tipo de _helpbutton_ com os campos acima",
     "currencyLabel": "Moeda",
-    "setType": "",
-    "buttonTemplatePlaceHolder": ""
+    "setType": "Set _helpbutton_ type properties",
+    "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here"
   },
   "activities": {
     "allNotifications": "Todas as atualizações",
@@ -158,7 +165,8 @@
     "deletedType": "Exclusão _helpbutton_",
     "myhelpbuttons": "Meus _helpbuttons_",
     "expiredEventType": "_helpbutton_ expirado",
-    "expiredEventTitle": "'{0}' expirou em {1}, não aparecerá mais na lista pública."
+    "expiredEventTitle": "'{0}' expirou em {1}, não aparecerá mais na lista pública.",
+    "notifications": "Notifications"
   },
   "activitiesWithSubject": {
     "newbutton": "{0} publicou um _helpbutton_ em {1}",
@@ -246,7 +254,8 @@
     "iAccept": "Eu aceito",
     "pleaseAcceptPrivacy": "Aceite nossa política de privacidade, por favor",
     "loginError": "",
-    "errorRequestNewLoginToken": ""
+    "errorRequestNewLoginToken": "",
+    "myHelpbuttons": "Your _helpbuttons_"
   },
   "configure": {
     "browsePins": "Mapa com pinos de localização",
@@ -267,7 +276,7 @@
     "both": "Mapa & Lista",
     "list": "Lista",
     "map": "Mapa",
-    "showList": ""
+    "showList": "Show List"
   },
   "buttonFilters": {
     "filters": "Pesquisa e filtros",
@@ -424,7 +433,7 @@
     "sendPublic": "Responder",
     "sendPrivate": "Responder em privado",
     "send": "Enviar",
-    "posted": ""
+    "posted": "Comment posted"
   },
   "picker": {
     "headerText": "Escolha uma localização"
@@ -465,7 +474,10 @@
     "ethicsDescription": "Este projeto visa melhorar a autonomia das pessoas e comunidades para cooperar. Nossos três princípios são: Liberdade, inclusão e descentralização. 1. Liberdade para usar a ferramenta e compartilhá-la para diversos fins. 2. Inclusão para acolher, através de um design responsável, aqueles menos familiarizados com as tecnologias e atender às necessidades da vida real. 3. Descentralização para permitir diferentes níveis de responsabilidade compartilhada no uso de dados: Desde a coletiva (servidores) até a mais individual (chaves anônimas). No caso de usar nossos servidores, tudo o que se alinha com esses valores é bem-vindo e terá total liberdade. Acreditamos na transparência, na honestidade e no respeito por todas as pessoas. Embora não possamos controlar o uso que se faz de nosso software em outros servidores, na medida do possível não permitiremos condutas que violem a integridade e dignidade humana, ou que incentivem maus-tratos aos animais. Nosso software é projetado para conectar pessoas e facilitar trocas, o que é uma responsabilidade que levamos a sério. Incentivamos nossos usuários a usarem a plataforma e quaisquer réplicas que fizerem com esses mesmos valores em mente, priorizando a comunicação respeitosa e a troca consciente. Qualquer uso indevido do software dentro de nossos servidores, incluindo exploração, dano a outros ou manipulação das funcionalidades da plataforma para fins pessoais, não será tolerado.",
     "privacyDescription": "Trabalhamos todos os dias para encontrar melhores soluções para a privacidade dos dados nas Redes criadas com o Helpbuttons. Valorizamos o direito ao anonimato e oferecemos a possibilidade de participar tanto para pessoas que desejam ser totalmente anônimas quanto para aquelas que fornecem seus dados pessoais. O Helpbuttons é projetado para NÃO fazer uso em nenhum caso dos dados pessoais dos usuários para fins comerciais ou de interesse pessoal de um grupo de usuários. Também oferecemos a possibilidade de excluir totalmente seus dados de maneira fácil e transparente. Somos transparentes em nossos processos de coleta de dados, e você tem o direito de acessar, atualizar ou excluir seus dados pessoais a qualquer momento. Lembre-se de que compartilhar informações pessoais nas publicações do Helpbuttons é a seu critério; seja consciente e compartilhe apenas o que se sentir confortável em compartilhar com os outros. Tenha em mente que o responsável pelo gerenciamento de seus dados é o administrador da sua Rede; não compartilhe dados sensíveis se não confiar nesse administrador. Por favor, envie suas perguntas para o seguinte e-mail: help@helpbuttons.org",
     "securityDescription": "Todos os dias incorporamos novas melhorias à segurança das Redes; através do trabalho conjunto com a comunidade open source, estamos analisando e preparando ferramentas de segurança para que usuários sem conhecimento de informática possam usá-las. Se você acredita que pode haver um problema de segurança relacionado ao uso da Rede, entre em contato com o administrador através da página inicial. Se você acredita que pode haver uma falha de segurança informática que coloca em risco a integridade de nosso software e a segurança de nossos usuários, escreva-nos para help@helpbuttons.org. Atualizamos e revisamos continuamente nossos sistemas para garantir que estejam em conformidade com os mais altos padrões de cibersegurança. No entanto, também acreditamos que a segurança é uma responsabilidade compartilhada. Se você instalou esta ferramenta em seu servidor, incentivamos a prática de comportamentos seguros online, como o uso de senhas fortes e a proteção de informações pessoais. Por favor, envie suas perguntas para o seguinte e-mail: help@helpbuttons.org",
-    "contactDescription": "Se você deseja se comunicar com os gestores da página, vá até a seção Início. Se você deseja entrar em contato com os programadores que tornam o app possível, por favor, envie suas perguntas para o seguinte e-mail: help@helpbuttons.org"
+    "contactDescription": "Se você deseja se comunicar com os gestores da página, vá até a seção Início. Se você deseja entrar em contato com os programadores que tornam o app possível, por favor, envie suas perguntas para o seguinte e-mail: help@helpbuttons.org",
+    "cookiesExplanation": "This site uses cookies only when you log in. For more details, see our ",
+    "cookieAccept": "Accept",
+    "cookiesQuestion": "Cookies policy"
   },
   "invite": {
     "never": "Nunca",
@@ -537,12 +549,43 @@
     "created_at": "Criado",
     "title": "",
     "created": "",
-    "confirm": ""
+    "confirm": "Confirm",
+    "adminCommunication": "Administrator communications",
+    "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network"
   },
   "role": {
     "blocked": "desativado",
     "admin": "administrador",
     "registered": "registrado",
     "guest": "visitante"
+  },
+  "notificaction": {
+    "markedAsRead": ""
+  },
+  "bulletin": {
+    "since": "Since {0}",
+    "filter": "",
+    "noButtons": ""
+  },
+  "invitation": {
+    "card": "Anonimous login individual card",
+    "name": "This card is unique and personal.",
+    "infoQr": "Contact:"
+  },
+  "share": {
+    "shareExplain": "Select the amount of results you want to show and copy the code to your site",
+    "optionIframe": "List Iframe to insert in other sites",
+    "optionInvitations": "Printable invitations",
+    "shareTypeExplain": "Choose the type of share you want to do",
+    "share": ""
+  },
+  "places": {
+    "addNew": "",
+    "add": "",
+    "save": ""
+  },
+  "seo": {
+    "embbed": "",
+    "buttonEdit": ""
   }
 }

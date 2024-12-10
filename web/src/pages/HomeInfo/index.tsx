@@ -31,7 +31,7 @@ import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
-import { logoImageUri, setSSRLocale } from 'shared/sys.helper';
+import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';

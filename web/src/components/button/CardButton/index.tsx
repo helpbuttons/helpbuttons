@@ -6,6 +6,7 @@ import {
   IoMailOutline,
   IoCallOutline,
   IoHeart,
+  IoLogoWhatsapp,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -26,11 +27,7 @@ import { SetupDtoOut } from 'shared/entities/setup.entity';
 import { useRef } from 'store/Store';
 import { GlobalState, store } from 'state';
 import Link from 'next/link';
-import {
-  GetPhone,
-  updateCurrentButton,
-} from 'state/Explore';
-import { isAdmin } from 'state/Users';
+import { GetPhone, isAdmin } from 'state/Users';
 import { TextFormatted, formatMessage } from 'elements/Message';
 import { CardButtonCustomFields } from '../ButtonType/CustomFields/CardButtonCustomFields';
 import {
@@ -99,6 +96,7 @@ export default function CardButton({ button, buttonTypes }) {
             button={button}
             buttonTypes={buttonTypes}
           />
+          <ShowPhone user={button.owner} />
         </>
       )}
     </>
@@ -323,7 +321,6 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             onScollToCompose()
           }}
       /> */}
-      <ShowPhone button={button} />
       <ExpiringAlert
         button={button}
         isOwner={isButtonOwner(sessionUser, button)}
@@ -431,65 +428,72 @@ function ExpiringAlert({
     />
   );
 }
-function ShowPhone({ button }) {
+
+function ShowPhone({ user }) {
   const [showPhone, toggleShowPhone] = useState(false);
   const [phone, setPhone] = useState(null);
+
+  useEffect(() => {
+    toggleShowPhone(() => true)
+  }, [phone])
+  const jumpTo = (url) => {
+    window.location.replace(url);
+  }
   const onCallClick = () => {
     if (phone == null) {
       store.emit(
         new GetPhone(
-          button.id,
+          user.id,
           (phone) => {
             setPhone(phone);
+            jumpTo(`tel:${phone}`);
           },
           () => {},
         ),
       );
+    }else{
+      jumpTo(`tel:${phone}`);
     }
-    window.open('tel:' + phone);
   };
-  const onShowPhoneClick = () => {
+
+  const onWassapClick = ( ) => {
     if (phone == null) {
       store.emit(
         new GetPhone(
-          button.id,
+          user.id,
           (phone) => {
             setPhone(phone);
+            jumpTo(`whatsapp://send?phone=+${phone}`)
           },
           () => {},
         ),
       );
+    }else{
+      jumpTo(`whatsapp://send?phone=+${phone}`)
     }
-    toggleShowPhone(!showPhone);
-  };
+  }
+
   return (
     <>
-      {button?.owner?.publishPhone && (
+      {user?.publishPhone && (
         <>
-          {!showPhone && (
             <Btn
               btnType={BtnType.filterCorp}
               contentAlignment={ContentAlignment.center}
               iconLeft={IconType.circle}
               iconLink={<IoCallOutline />}
-              onClick={() => onShowPhoneClick()}
+              onClick={() => onCallClick()}
             />
-          )}
-          {showPhone && (
-            <div>
-              <Btn
-                btnType={BtnType.filterCorp}
-                contentAlignment={ContentAlignment.center}
-                iconLeft={IconType.circle}
-                iconLink={<IoCallOutline />}
-                submit={true}
-                onClick={() => onCallClick()}
-              />
-              <div className="card-button__rating--phone">
-                {phone}
-              </div>
-            </div>
-          )}
+          {user.showWassap && 
+            <Btn
+              btnType={BtnType.filterCorp}
+              contentAlignment={ContentAlignment.center}
+              iconLeft={IconType.circle}
+              iconLink={<IoLogoWhatsapp />}
+              onClick={() => onWassapClick()}
+            />
+          }
+          {showPhone && <>{phone}</>}
         </>
       )}
     </>

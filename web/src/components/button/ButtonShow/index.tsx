@@ -13,14 +13,14 @@ import { useSwipeable } from 'react-swipeable';
 export function ButtonShow({button}) {
   const handlers = useSwipeable({
     onSwiped: (eventData) => {
-      if(eventData.dir == "Left")
-      {
-        store.emit(new NextCurrentButton())
-      }
-      if(eventData.dir == "Right")
-      {
-        store.emit(new PreviousCurrentButton())
-      }
+      // if(eventData.dir == "Left")
+      // {
+      //   store.emit(new NextCurrentButton())
+      // }
+      // if(eventData.dir == "Right")
+      // {
+      //   store.emit(new PreviousCurrentButton())
+      // }
     }
   });
 

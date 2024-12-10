@@ -14,9 +14,12 @@ import { SetupSteps } from '../shared/setupSteps';
 
 import { Role } from 'shared/types/roles';
 import {
+  getHref,
   getLocale,
+  getLocaleFromUrl,
   isRoleAllowed,
-  setSSRLocale,
+  locale,
+  setLocale,
 } from 'shared/sys.helper';
 import t, { updateNomeclature } from 'i18n';
 import { useSearchParams } from 'next/navigation';
@@ -34,8 +37,6 @@ import { useRebuildUrl } from 'components/uri/builder';
 import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 
 export default appWithTranslation(MyApp);
-
-
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -212,17 +213,10 @@ function MyApp({ Component, pageProps }) {
         selectedNetwork.nomeclature,
         selectedNetwork.nomeclaturePlural,
       );
-      setSSRLocale(selectedNetwork.locale);
     }
   }, [selectedNetwork]);
 
-  useEffect(() => {
-    if (sessionUser) {
-      if (getLocale() != sessionUser.locale) {
-        setSSRLocale(sessionUser.locale);
-      }
-    }
-  }, [sessionUser]);
+  useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork.locale });
 
   const searchParams = useSearchParams();
   const triedToLogin = useRef(false);
@@ -331,7 +325,6 @@ function ActivityPool({ sessionUser, messagesUnread }) {
   return (<></>);
 }
 
-
 export function CookiesBanner() {
   const [showCookiesBanner, setShowCookiesBanner] = useState(false);
   useEffect(() => {
@@ -366,4 +359,31 @@ export function CookiesBanner() {
     </div>
     }</>
   );
+}
+
+const useWhichLocale = ({ sessionLocale, networkLocale }) => {
+
+  const [_locale, set_Locale] = useState('en');
+
+  useEffect(() => {
+    const localeFromUrl = getLocaleFromUrl();
+    if (localeFromUrl) {
+      console.log('set from url')
+      setLocale(localeFromUrl);
+    } else if (sessionLocale && networkLocale) {
+      console.log('set user session')
+      setLocale(sessionLocale);
+    } else if (networkLocale) {
+      console.log('set from network')
+      setLocale(networkLocale);
+    }
+    set_Locale((prevLocale) => {
+      console.log(locale + ' > ' + prevLocale)
+      if (locale !== prevLocale && prevLocale && locale) {
+        return locale;
+      }
+      return locale;
+    });
+  }, [networkLocale, sessionLocale]);
+  return;
 }
