@@ -215,7 +215,21 @@ export class ButtonController {
       })
     });
   }
-  
+
+  @AllowGuest()
+  @AllowIfNetworkIsPublic()
+  @Get('pinned')
+  async pinned() {
+    return await this.buttonService.findByPin();
+  }
+
+  /* @OnlyAdmin()
+  @Post('pin/:buttonId')
+  async pin(@Param('buttonId') buttonId: string) {
+    const button = await this.buttonService.findById(buttonId, true);
+    return button ? 'a pinear' : 'des-pinear';
+  } */
+
   @AllowGuest()
   @Get('monthCalendar/:month/:year')
   async monthCalendar(@Param('month') month: number,@Param('year') year: number) {
