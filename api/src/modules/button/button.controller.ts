@@ -220,12 +220,10 @@ export class ButtonController {
   @AllowIfNetworkIsPublic()
   @Get('pinned')
   async pinned() {
-    const button = await this.buttonService.findByPin();
-    console.log('button', button)
-    return button;
+    return await this.buttonService.findByPin();
   }
 
-  /* @OnlyRegistered()
+  /* @OnlyAdmin()
   @Post('pin/:buttonId')
   async pin(@Param('buttonId') buttonId: string) {
     const button = await this.buttonService.findById(buttonId, true);

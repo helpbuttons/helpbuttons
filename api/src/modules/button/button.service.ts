@@ -576,13 +576,17 @@ export class ButtonService {
     return this.buttonRepository.update(buttonId, { pin: status });
   } */
 
-  async findByPin() {
+  async findByPin(
+    includeExpired: boolean = false,
+  ) {
     let buttons: Button[] = await this.buttonRepository.find({
       where: {
         pin: true,
         deleted: false,
         expired: false,
+        ...this.expiredBlockedConditions(includeExpired)
       },
+      relations: ['owner'],
     });
 
     return buttons;
