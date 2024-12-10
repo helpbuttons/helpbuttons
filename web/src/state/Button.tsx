@@ -123,3 +123,30 @@ export class FindEmbbedButtons implements WatchEvent {
     );
   }
 }
+
+export class UpdateButtonPinned implements UpdateEvent {
+  public constructor(private buttons: Button[]) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.map.pinnedButtons = this.buttons;
+    });
+  }
+}
+  
+export class ButtonPinned implements WatchEvent {
+  public constructor(
+    private onSuccess = undefined,
+  ) {}
+
+  public watch(state: GlobalState) {
+    return ButtonService.pinned().pipe(
+      map((pinned) => {
+        store.emit(new UpdateButtonPinned(pinned))
+        this.onSuccess(pinned);
+      }),
+      catchError((error) => {
+        return of(undefined);
+      }),
+    );
+  }
+}

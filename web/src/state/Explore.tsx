@@ -68,6 +68,7 @@ export interface ExploreMapState {
   filters: ButtonFilters;
   buttonTypeClicked: boolean; // this is used to jump to center of network if no buttons are found
   listButtons: Button[]; // if hexagon clicked, can be different from boundsButtons
+  pinnedButtons: Button[];
   boundsFilteredButtons: Button[];
   cachedHexagons: any[];
   loading: boolean;
@@ -82,6 +83,7 @@ export const exploreInitial = {
   map: {
     filters: defaultFilters,
     listButtons: [], // if hexagon clicked, can be different from boundsButtons
+    pinnedButtons: [],
     boundsFilteredButtons: [],
     cachedHexagons: [],
     loading: true,
