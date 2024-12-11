@@ -96,7 +96,7 @@ export default function CardButton({ button, buttonTypes }) {
             button={button}
             buttonTypes={buttonTypes}
           />
-          <ShowPhone user={button.owner} />
+          {/* <ShowPhone user={button.owner} /> */}
         </>
       )}
     </>
@@ -423,76 +423,76 @@ function ExpiringAlert({
   );
 }
 
-function ShowPhone({ user }) {
-  const [showPhone, toggleShowPhone] = useState(false);
-  const [phone, setPhone] = useState(null);
+// function ShowPhone({ user }) {
+//   const [showPhone, toggleShowPhone] = useState(false);
+//   const [phone, setPhone] = useState(null);
 
-  useEffect(() => {
-    toggleShowPhone(() => true)
-  }, [phone])
-  const jumpTo = (url) => {
-    window.location.replace(url);
-  }
-  const onCallClick = () => {
-    if (phone == null) {
-      store.emit(
-        new GetPhone(
-          user.id,
-          (phone) => {
-            setPhone(phone);
-            jumpTo(`tel:${phone}`);
-          },
-          () => {},
-        ),
-      );
-    }else{
-      jumpTo(`tel:${phone}`);
-    }
-  };
+//   useEffect(() => {
+//     toggleShowPhone(() => true)
+//   }, [phone])
+//   const jumpTo = (url) => {
+//     window.location.replace(url);
+//   }
+//   const onCallClick = () => {
+//     if (phone == null) {
+//       store.emit(
+//         new GetPhone(
+//           user.id,
+//           (phone) => {
+//             setPhone(phone);
+//             jumpTo(`tel:${phone}`);
+//           },
+//           () => {},
+//         ),
+//       );
+//     }else{
+//       jumpTo(`tel:${phone}`);
+//     }
+//   };
 
-  const onWassapClick = ( ) => {
-    if (phone == null) {
-      store.emit(
-        new GetPhone(
-          user.id,
-          (phone) => {
-            setPhone(phone);
-            jumpTo(`whatsapp://send?phone=+${phone}`)
-          },
-          () => {},
-        ),
-      );
-    }else{
-      jumpTo(`whatsapp://send?phone=+${phone}`)
-    }
-  }
+//   const onWassapClick = ( ) => {
+//     if (phone == null) {
+//       store.emit(
+//         new GetPhone(
+//           user.id,
+//           (phone) => {
+//             setPhone(phone);
+//             jumpTo(`whatsapp://send?phone=+${phone}`)
+//           },
+//           () => {},
+//         ),
+//       );
+//     }else{
+//       jumpTo(`whatsapp://send?phone=+${phone}`)
+//     }
+//   }
 
-  return (
-    <>
-      {user?.publishPhone && (
-        <>
-            <Btn
-              btnType={BtnType.filterCorp}
-              contentAlignment={ContentAlignment.center}
-              iconLeft={IconType.circle}
-              iconLink={<IoCallOutline />}
-              onClick={() => onCallClick()}
-            />
-          {user.showWassap && 
-            <Btn
-              btnType={BtnType.filterCorp}
-              contentAlignment={ContentAlignment.center}
-              iconLeft={IconType.circle}
-              iconLink={<IoLogoWhatsapp />}
-              onClick={() => onWassapClick()}
-            />
-          }
-          {showPhone && <>{phone}</>}
-        </>
-      )}
-    </>
-  );
-}
+//   return (
+//     <>
+//       {user?.publishPhone && (
+//         <>
+//             <Btn
+//               btnType={BtnType.filterCorp}
+//               contentAlignment={ContentAlignment.center}
+//               iconLeft={IconType.circle}
+//               iconLink={<IoCallOutline />}
+//               onClick={() => onCallClick()}
+//             />
+//           {user.showWassap && 
+//             <Btn
+//               btnType={BtnType.filterCorp}
+//               contentAlignment={ContentAlignment.center}
+//               iconLeft={IconType.circle}
+//               iconLink={<IoLogoWhatsapp />}
+//               onClick={() => onWassapClick()}
+//             />
+//           }
+//           {showPhone && <>{phone}</>}
+//         </>
+//       )}
+//     </>
+//   );
+// }
 
 export function CardButtonHeadActions({
   button,
