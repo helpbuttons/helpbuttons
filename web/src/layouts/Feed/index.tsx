@@ -173,13 +173,13 @@ export function ShowPhone({ user }) {
           user.id,
           (phone) => {
             setPhone(phone);
-            jumpTo(`whatsapp://send?phone=+${phone}`)
+            jumpTo(`https://wa.me/+${phone}`)
           },
           () => {},
         ),
       );
     }else{
-      jumpTo(`whatsapp://send?phone=+${phone}`)
+      jumpTo(`https://wa.me/+${phone}`)
     }
   }
 
