@@ -90,4 +90,8 @@ export class ButtonService {
   public static pinned(): Observable<any> {
     return httpService.get<any>(`buttons/pinned`);
   }
+
+  public static pin(buttonId, pin): Observable<any> {
+    return httpService.post<any>("buttons/pin/" + buttonId, { pin });
+  }
 }

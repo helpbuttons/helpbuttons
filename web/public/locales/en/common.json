@@ -269,7 +269,10 @@
     "notFound": "Can't find your button, maybe it was deleted?",
     "followErrorAlert": "",
     "unfollowErrorAlert": "",
-    "pin": "Pin"
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "pinSuccess": "Success pin",
+    "unpinSuccess":"Sucess unpin"
   },
   "user": {
     "login": "Write your credentials",

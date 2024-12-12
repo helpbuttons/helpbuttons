@@ -366,7 +366,10 @@
     "invalidDates": "",
     "followErrorAlert": "",
     "unfollowErrorAlert": "",
-    "pin": "Pin"
+    "pin": "Pineatu",
+    "unpin": "Unpineatu",
+    "pinSuccess": "Broche de sucesso",
+    "unpinSuccess":"Unbroche de sucesso"
   },
   "calendarOnce": {
     "label": "Uma vez",

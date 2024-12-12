@@ -366,7 +366,10 @@
     "invalidDates": "",
     "followErrorAlert": "",
     "unfollowErrorAlert": "",
-    "pin": "Pineatu"
+    "pin": "Pineatu",
+    "unpin": "Unpineatu",
+    "pinSuccess": "Pin arrakastaztatsua",
+    "unpinSuccess":"Unpin arrakastaztatsua"
   },
   "calendarOnce": {
     "label": "Behin",

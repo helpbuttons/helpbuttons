@@ -366,7 +366,10 @@
     "invalidDates": "",
     "followErrorAlert": "",
     "unfollowErrorAlert": "",
-    "pin": "Pin"
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "pinSuccess": "Pin satisfactori",
+    "unpinSuccess":"Unpin satisfactori"
   },
   "calendarOnce": {
     "label": "Una vegada",

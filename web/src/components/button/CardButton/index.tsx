@@ -288,7 +288,7 @@ function CardButtonSubmenu({ button }) {
             onClick={() => {
               router.push(`/ButtonPin/${button.id}`);
             }}
-            label={t('button.pin')}
+            label={button.pin ? t('button.unpin') : t('button.pin')}
           />
         </>
       )}

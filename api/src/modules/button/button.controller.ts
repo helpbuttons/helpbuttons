@@ -217,20 +217,6 @@ export class ButtonController {
   }
 
   @AllowGuest()
-  @AllowIfNetworkIsPublic()
-  @Get('pinned')
-  async pinned() {
-    return await this.buttonService.findByPin();
-  }
-
-  /* @OnlyAdmin()
-  @Post('pin/:buttonId')
-  async pin(@Param('buttonId') buttonId: string) {
-    const button = await this.buttonService.findById(buttonId, true);
-    return button ? 'a pinear' : 'des-pinear';
-  } */
-
-  @AllowGuest()
   @Get('monthCalendar/:month/:year')
   async monthCalendar(@Param('month') month: number,@Param('year') year: number) {
     return await this.buttonService.monthCalendar((month-1), year)
@@ -274,4 +260,18 @@ export class ButtonController {
     return this.buttonService.rss()
   }
 
+  @AllowGuest()
+  @AllowIfNetworkIsPublic()
+  @Get('pinned')
+  async pinned() {
+    return await this.buttonService.findByPin();
+  }
+
+  @OnlyAdmin()
+  @Post('pin/:buttonId')
+  async pin(@Param('buttonId') buttonId: string) {
+    const { pin } = await this.buttonService.findById(buttonId, true);
+    await this.buttonService.setPin(buttonId, !pin);
+    return !pin;
+  }
 }

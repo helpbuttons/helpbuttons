@@ -572,9 +572,9 @@ export class ButtonService {
     return this.buttonRepository.update(buttonId, { expired: true });
   }
 
-  /* setPin(buttonId: string, status: boolean) {
+  setPin(buttonId: string, status: boolean) {
     return this.buttonRepository.update(buttonId, { pin: status });
-  } */
+  }
 
   async findByPin(
     includeExpired: boolean = false,
