@@ -25,12 +25,12 @@ import {
   DeletePost,
   LoadPosts,
 } from 'state/Posts';
-import { GetPhone, isAdmin } from 'state/Users';
+import { isAdmin } from 'state/Users';
 import { useStore } from 'state';
 import MessageNew from 'components/feed/MessageNew';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';
-import { CardButtonHeadActions } from 'components/button/CardButton';
+import { ButtonOwnerPhone, CardButtonHeadActions } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function Feed({ button }: { button: Button }) {
@@ -71,7 +71,7 @@ export default function Feed({ button }: { button: Button }) {
   return (
     <div className="feed-container">
       <div className="card-button__actions">
-        <ShowPhone user={button.owner} />
+        <ButtonOwnerPhone user={button.owner} />
 
         <>
           {sessionUser && isButtonOwner && (
@@ -136,77 +136,6 @@ export default function Feed({ button }: { button: Button }) {
           ))}
       </div>
     </div>
-  );
-}
-
-export function ShowPhone({ user }) {
-  const [showPhone, toggleShowPhone] = useState(false);
-  const [phone, setPhone] = useState(null);
-
-  useEffect(() => {
-    toggleShowPhone(() => true)
-  }, [phone])
-  const jumpTo = (url) => {
-    window.location.replace(url);
-  }
-  const onCallClick = () => {
-    if (phone == null) {
-      store.emit(
-        new GetPhone(
-          user.id,
-          (phone) => {
-            setPhone(phone);
-            jumpTo(`tel:${phone}`);
-          },
-          () => {},
-        ),
-      );
-    }else{
-      jumpTo(`tel:${phone}`);
-    }
-  };
-
-  const onWassapClick = ( ) => {
-    if (phone == null) {
-      store.emit(
-        new GetPhone(
-          user.id,
-          (phone) => {
-            setPhone(phone);
-            jumpTo(`https://wa.me/+${phone}`)
-          },
-          () => {},
-        ),
-      );
-    }else{
-      jumpTo(`https://wa.me/+${phone}`)
-    }
-  }
-
-  return (
-    <>
-      {user?.publishPhone && (
-        <>
-          <Btn
-            btnType={BtnType.corporative}
-            contentAlignment={ContentAlignment.center}
-            iconLeft={IconType.circle}
-            iconLink={<IoCallOutline />}
-            onClick={() => onCallClick()}
-          />
-          {showPhone && <>{phone}</>}
-          {user.showWassap && 
-            <Btn
-              btnType={BtnType.corporative}
-              contentAlignment={ContentAlignment.center}
-              iconLeft={IconType.circle}
-              iconLink={<IoLogoWhatsapp />}
-              onClick={() => onWassapClick()}
-            />
-          }
-        </>
-      )}
-    </>
   );
 }
 
