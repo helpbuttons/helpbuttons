@@ -365,7 +365,11 @@
     "notFound": "No puc trobar el teu botó, potser va ser esborrat?",
     "invalidDates": "",
     "followErrorAlert": "",
-    "unfollowErrorAlert": ""
+    "unfollowErrorAlert": "",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "pinSuccess": "Pin satisfactori",
+    "unpinSuccess":"Unpin satisfactori"
   },
   "calendarOnce": {
     "label": "Una vegada",

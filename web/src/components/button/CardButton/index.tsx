@@ -284,6 +284,12 @@ function CardButtonSubmenu({ button }) {
             }}
             label={t('button.delete')}
           />
+          <CardSubmenuOption
+            onClick={() => {
+              router.push(`/ButtonPin/${button.id}`);
+            }}
+            label={button.pin ? t('button.unpin') : t('button.pin')}
+          />
         </>
       )}
     </CardSubmenu>
