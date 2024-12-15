@@ -623,22 +623,26 @@ function isButtonOwner(sessionUser, button) {
   );
 }
 
-
-
-export function LinkIf({ phoneLink, children }) {
-  if (phoneLink) {
-    return <a href={phoneLink} target="_blank">{children}</a>
-  } else {
-    return <>{children}</>
-  }
-
-}
-
 export function ButtonOwnerPhone({ user }) {
   const [showPhone, toggleShowPhone] = useState(false);
   const [phone, setPhone] = useState(null);
   const isLoadingPhone = React.useRef(false)
 
+
+  // const getPhone = () => {
+  //   if (phone == null && !isLoadingPhone.current) {
+  //     isLoadingPhone.current = true;
+  //     store.emit(
+  //       new GetPhone(
+  //         user.id,
+  //         (phone) => {
+  //           setPhone(() => phone);
+  //         },
+  //         () => {},
+  //       ),
+  //     );
+  //   }
+  // };
 
   useEffect(() => {
     if (phone == null && !isLoadingPhone.current) {
@@ -648,7 +652,6 @@ export function ButtonOwnerPhone({ user }) {
           user.id,
           (phone) => {
             setPhone(phone);
-            jumpTo(`tel:${phone}`);
           },
           () => { },
         ),
@@ -664,7 +667,7 @@ export function ButtonOwnerPhone({ user }) {
     <>
       {user?.publishPhone && (
         <>
-          {/* <LinkIf phoneLink={phone ? `tel:${phone}` : false}> */}
+          {!showPhone && 
             <Btn
               btnType={BtnType.corporative}
               contentAlignment={ContentAlignment.center}
@@ -672,21 +675,10 @@ export function ButtonOwnerPhone({ user }) {
               iconLink={<IoCallOutline />}
               onClick={() => toggleShowPhone(true)}
             />
-          {/* </LinkIf> */}
-          {user.showWassap &&
-            // <LinkIf phoneLink={phone ? `https://wa.me/+${phone}` : false}>
-              <Btn
-                btnType={BtnType.corporative}
-                contentAlignment={ContentAlignment.center}
-                iconLeft={IconType.circle}
-                iconLink={<IoLogoWhatsapp />}
-                onClick={() => jumpTo(`https://wa.me/+${phone}`)}
-              />
-            // </LinkIf>
           }
           {showPhone && 
             <div className="card-button__phone-section">
-             <Btn
+            <Btn
               btnType={BtnType.filterCorp}
               contentAlignment={ContentAlignment.center}
               iconLeft={IconType.circle}
@@ -696,6 +688,16 @@ export function ButtonOwnerPhone({ user }) {
               {phone}
             </div>
           }
+          {user.showWassap &&
+              <Btn
+                btnType={BtnType.corporative}
+                contentAlignment={ContentAlignment.center}
+                iconLeft={IconType.circle}
+                iconLink={<IoLogoWhatsapp />}
+                onClick={() => jumpTo(`https://wa.me/+${phone}`)}
+              />
+          }
+          
         </>
       )}
     </>
