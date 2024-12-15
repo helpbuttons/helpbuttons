@@ -89,7 +89,7 @@ export default function HexagonExploreMap({
             tileType={exploreSettings.tileType}
             handleClick={onMapClick}
           >
-            <HbMapOverlay selectedNetwork={selectedNetwork} />
+            {/* <HbMapOverlay selectedNetwork={selectedNetwork} /> */}
             <DisplayInstructions />
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
