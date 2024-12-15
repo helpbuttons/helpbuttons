@@ -638,6 +638,8 @@ export function ButtonOwnerPhone({ user }) {
   const [showPhone, toggleShowPhone] = useState(false);
   const [phone, setPhone] = useState(null);
   const isLoadingPhone = React.useRef(false)
+
+
   useEffect(() => {
     if (phone == null && !isLoadingPhone.current) {
       isLoadingPhone.current = true;
@@ -662,7 +664,7 @@ export function ButtonOwnerPhone({ user }) {
     <>
       {user?.publishPhone && (
         <>
-          <LinkIf phoneLink={phone ? `tel:${phone}` : false}>
+          {/* <LinkIf phoneLink={phone ? `tel:${phone}` : false}> */}
             <Btn
               btnType={BtnType.corporative}
               contentAlignment={ContentAlignment.center}
@@ -670,19 +672,30 @@ export function ButtonOwnerPhone({ user }) {
               iconLink={<IoCallOutline />}
               onClick={() => toggleShowPhone(true)}
             />
-          </LinkIf>
+          {/* </LinkIf> */}
           {user.showWassap &&
-            <LinkIf phoneLink={phone ? `https://wa.me/+${phone}` : false}>
+            // <LinkIf phoneLink={phone ? `https://wa.me/+${phone}` : false}>
               <Btn
                 btnType={BtnType.corporative}
                 contentAlignment={ContentAlignment.center}
                 iconLeft={IconType.circle}
                 iconLink={<IoLogoWhatsapp />}
-                onClick={() => toggleShowPhone(true)}
+                onClick={() => jumpTo(`https://wa.me/+${phone}`)}
               />
-            </LinkIf>
+            // </LinkIf>
           }
-          {showPhone && <>{phone}</>}
+          {showPhone && 
+            <div className="card-button__phone-section">
+             <Btn
+              btnType={BtnType.filterCorp}
+              contentAlignment={ContentAlignment.center}
+              iconLeft={IconType.circle}
+              iconLink={<IoCallOutline />}
+              onClick={() => jumpTo(`tel:${phone}`)}
+            />
+              {phone}
+            </div>
+          }
         </>
       )}
     </>

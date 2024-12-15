@@ -2230,7 +2230,7 @@ em-emoji-picker {
   text-decoration: none;
   border: none;
   border-radius: 2rem;
-  background: #fff;
+  background: transparent;
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
@@ -2539,6 +2539,49 @@ li, ol, ul, h2 {
   flex-direction: row;
   flex-wrap: wrap;
   gap: 5px;
+}
+
+.cookies-banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #232323;
+  color: #ffffff;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+.cookies-banner__content {
+  background-color: #fff;
+  max-width: 1200px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.cookies-banner__content a {
+  color: #4caf50;
+  text-decoration: underline;
+}
+.cookies-banner__content a:hover {
+  text-decoration: none;
+}
+.cookies-banner__button {
+  margin-top: 0.5rem;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.cookies-banner__button:hover {
+  background-color: #45a049;
 }
 
 @media only screen and (min-width: 1280px) {
