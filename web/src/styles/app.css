@@ -5056,7 +5056,7 @@ hr {
 .header-search__icon {
   height: 20px;
   width: 20px;
-  margin-right: 7px;
+  margin-left: 7px;
 }
 .header-search__icon svg {
   width: 20px;
@@ -5073,13 +5073,13 @@ hr {
   height: 40px;
   /* width: 100%; */
   align-items: center;
-  border-radius: 0 34px 34px 0;
+  border-radius: 34px 0 0 34px;
   border-left: 2px solid #2E2E2E;
 }
 
 .header-search__icons {
   position: absolute;
-  right: 0;
+  left: 0;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -5201,6 +5201,7 @@ hr {
   position: relative;
   height: 2.5rem;
   overflow: hidden;
+  padding-left: 30px;
 }
 
 .header-search__half-column {
