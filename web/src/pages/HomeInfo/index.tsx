@@ -80,9 +80,9 @@ export default function HomeInfo({ metadata }) {
           </div>
         </ShowMobileOnly>
       )}
-      {!currentUser && (
+      {/* {!currentUser && (
         <SupportBanner scrollToContact={scrollToContact} />
-      )}
+      )} */}
       {selectedNetwork && (
         <div className="homeinfo__container">
           <div className="homeinfo__content">

@@ -4806,22 +4806,16 @@ li, ol, ul, h2 {
   background-repeat: no-repeat, repeat;
   background-position: center;
   background-size: cover;
-  position: absolute;
-  z-index: -1;
   height: 100%;
-  border-radius: 0;
-  top: 0;
-  align-items: center;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: center;
-  margin: 0;
-  min-height: 20rem;
-  flex-basis: 100%;
-  padding: 15px;
-  border-radius: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-radius: 20px 20px 0px 0;
+  background-color: red;
+}
+
+.homeinfo__card--slogan-card {
+  border-radius: 0px 0px 20px 20px;
+  margin-top: 0;
 }
 
 .homeinfo__network-title {
@@ -4891,6 +4885,13 @@ li, ol, ul, h2 {
 .homeinfo-card__header .homeinfo-card__header-title {
   font-size: 18px;
   font-weight: bold;
+}
+
+.homeinfo-card__header--slogan-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
 
 hr {
@@ -5016,6 +5017,10 @@ hr {
     margin: 0;
     padding: 25px;
     margin-bottom: 7px;
+  }
+  .homeinfo__card--slogan-card {
+    border-radius: 8px;
+    margin-top: 0;
   }
 }
 .header-search__content {
@@ -6785,9 +6790,9 @@ hr {
 .pigeon-attribution {
   position: relative;
   right: 10px;
-  bottom: 60px !important;
+  bottom: 0px !important;
   background: transparent !important;
-  font-size: 8px;
+  font-size: 10px !important;
 }
 
 .pigeon-map__custom-block {
