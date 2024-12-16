@@ -91,9 +91,10 @@ export default function HomeInfo({ metadata }) {
 
             <div className="homeinfo__sections">
               <ShowMobileOnly>
-                <HomeInfoNetworkLogo selectedNetwork={selectedNetwork}/>
-                
+                <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} apiUrl={apiUrl}/>
               </ShowMobileOnly>
+
+              <HomeSloganCard selectedNetwork={selectedNetwork} config={config}/>
 
               <HomeInfoPinnedButtons/>
               <HomeInfoInfoCard selectedNetwork={selectedNetwork}/>
@@ -210,6 +211,7 @@ function NavigatorCoordsButton() {
   )}</>)
 }
 function HomeInfoNetworkLogo({selectedNetwork, apiUrl}) {
+
   return (<div className="homeinfo-card__header">
       <div className="homeinfo-card homeinfo__card--title-card"
     style={
