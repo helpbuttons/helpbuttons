@@ -5942,6 +5942,13 @@ hr {
   .card-button__actions {
     padding: 30px;
   }
+  .card-button__actions {
+    flex-direction: row;
+    gap: 5px;
+  }
+  .card-button__phone-section {
+    min-width: 33%;
+  }
   .card-button__dropdown-container {
     right: 1px;
     top: 4rem;
@@ -7988,10 +7995,10 @@ hr {
   min-height: 42px;
   border-radius: 24px 24px 0 0;
   box-shadow: 0 0 22px 0px rgba(0, 0, 0, 0.2);
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 10px;
+  padding-right: 10px;
   padding-top: 15px;
-  padding-bottom: 5px;
+  padding-bottom: 4px;
 }
 
 .list__order--full-screen {

@@ -671,7 +671,8 @@ export function ButtonOwnerPhone({ user }) {
             <Btn
               btnType={BtnType.corporative}
               contentAlignment={ContentAlignment.center}
-              iconLeft={IconType.circle}
+              caption={t('button.showPhone')}
+              iconLeft={IconType.svg}
               iconLink={<IoCallOutline />}
               onClick={() => toggleShowPhone(true)}
             />
