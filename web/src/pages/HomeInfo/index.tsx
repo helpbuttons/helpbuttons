@@ -233,6 +233,41 @@ function HomeInfoNetworkLogo({selectedNetwork, apiUrl}) {
   )
 }
 
+function HomeSloganCard({selectedNetwork, config}) {
+return (<>
+              {/* SLOGAN CARD */}
+              <div className="homeinfo-card homeinfo__card--slogan-card">
+                <div className="homeinfo-card__header homeinfo-card__header--slogan-card">
+                  <h3 className="homeinfo-card__header-title">
+                    {t('homeinfo.slogan')} 
+                  </h3>
+                  <div className="homeinfo-card__controls">
+                    <Btn
+                      btnType={BtnType.filterCorp}
+                      contentAlignment={ContentAlignment.center}
+                      iconLeft={IconType.svg}
+                      iconLink={<IoAddCircle />}
+                      extraClass="homeinfo__network-title-card--buttons"
+                      caption={t('homeinfo.goToCreate')}
+                      onClick={() => router.push('ButtonNew')}
+                    />
+                  </div>
+                </div><hr></hr>
+                {/* <div className="homeinfo__description">
+                  {t('homeinfo.buttons', [
+                    selectedNetwork?.buttonCount,
+                    config?.userCount.toString(),
+                  ])}
+                </div> */}
+                {/* <div className="homeinfo-card__section"> */}
+                {/* <div className="homeinfo-card__action-bottom">
+                  <InstallButton />
+                  <DesktopNotificationsButton />
+                </div> */}
+              {/* </div> */}
+              </div></>)
+}
+
 function HomeInfoPinnedButtons() {
   return (<>
     {/*  PINNIED BUTTONS */}
