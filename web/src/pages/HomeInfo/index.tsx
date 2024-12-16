@@ -209,17 +209,28 @@ function NavigatorCoordsButton() {
     </div>
   )}</>)
 }
-function HomeInfoNetworkLogo({selectedNetwork}) {
+function HomeInfoNetworkLogo({selectedNetwork, apiUrl}) {
   return (<div className="homeinfo-card__header">
-    <div className="homeinfo__network-title">
-      <div className="avatar-medium--home">
-        <NetworkLogo network={selectedNetwork} />
+      <div className="homeinfo-card homeinfo__card--title-card"
+    style={
+      {
+        '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl+selectedNetwork.jumbo : '/api'+ logoImageUri}'`,
+      } as React.CSSProperties
+    }
+   >
+    <div className="homeinfo-card__header ">
+      <div className="homeinfo__network-title">
+        <div className="avatar-medium--home">
+          <NetworkLogo network={selectedNetwork} />
+        </div>
+        <h3 className="homeinfo__network-title-text">
+          {selectedNetwork.name}
+        </h3>
       </div>
-      <h3 className="homeinfo__network-title-text">
-        {selectedNetwork.name}
-      </h3>
     </div>
-  </div>)
+  </div>
+  </div>
+  )
 }
 
 function HomeInfoPinnedButtons() {
@@ -251,7 +262,9 @@ function HomeInfoInfoCard({selectedNetwork})
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
-          {t('homeinfo.info')}
+        {t('homeinfo.info' , [
+             selectedNetwork?.name,
+           ])}
         </h3>
 
         <div className="homeinfo-card__controls">
