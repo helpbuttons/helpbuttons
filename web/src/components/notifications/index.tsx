@@ -44,16 +44,16 @@ export function DesktopNotificationsButton() {
   };
   return (
     <>
-      {!hasNotificationPermissions && (
+      {/* {!hasNotificationPermissions && ( */}
         <Btn
-          btnType={BtnType.filterCorp}
+          btnType={BtnType.corporative}
           iconLink={<IoNotificationsOutline />}
           caption={t('homeinfo.notificationsPermission')}
           iconLeft={IconType.circle}
           contentAlignment={ContentAlignment.center}
           onClick={requestPermission}
         />
-      )}
+       {/* )}  */}
     </>
   );
 }

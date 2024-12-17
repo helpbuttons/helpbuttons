@@ -17,6 +17,7 @@ import {
   IoClose,
   IoGlobeOutline,
   IoHelpOutline,
+  IoInformation,
   IoLogInOutline,
   IoMapOutline,
   IoShare,
@@ -90,15 +91,14 @@ export default function HomeInfo({ metadata }) {
 
 
             <div className="homeinfo__sections">
-              <ShowMobileOnly>
-                <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} apiUrl={apiUrl}/>
-              </ShowMobileOnly>
-
+              <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} apiUrl={apiUrl}/>
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config}/>
 
               <HomeInfoPinnedButtons/>
-              <HomeInfoInfoCard selectedNetwork={selectedNetwork}/>
               <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
+              <HomeInfoInfoCard selectedNetwork={selectedNetwork}/>
+              <HomeInfoInstallCard selectedNetwork={selectedNetwork}/>
+              
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork}/>
 
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork}/>
@@ -111,7 +111,7 @@ export default function HomeInfo({ metadata }) {
               
 
             </div>
-            <div
+            {/* <div
               className="homeinfo-card homeinfo__card--title-card"
               style={
                 {
@@ -120,7 +120,7 @@ export default function HomeInfo({ metadata }) {
               }
             >
               <div className="homeinfo-card__section--actions"></div>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
@@ -305,15 +305,7 @@ function HomeInfoInfoCard({selectedNetwork})
         </h3>
 
         <div className="homeinfo-card__controls">
-          <Btn
-            btnType={BtnType.filterCorp}
-            contentAlignment={ContentAlignment.center}
-            iconLink={<IoMapOutline />}
-            iconLeft={IconType.svg}
-            extraClass="homeinfo__network-title-card--buttons"
-            caption={t('homeinfo.goToExplore')}
-            onClick={() => router.push('Explore')}
-          />
+
         </div>
       </div>
       <hr></hr>
@@ -321,6 +313,40 @@ function HomeInfoInfoCard({selectedNetwork})
       <div className="homeinfo__description">
         <TextFormatted maxChars={600} text={selectedNetwork.description} />
       </div>
+      <div className="homeinfo-card__section">
+        <div className="homeinfo-card__action-bottom">
+          <Btn
+            btnType={BtnType.filterCorp}
+            contentAlignment={ContentAlignment.center}
+            iconLink={<IoInformation />}
+            iconLeft={IconType.svg}
+            extraClass="homeinfo__network-title-card--buttons"
+            caption={t('homeinfo.knowMore')}
+            onClick={() => router.push('Faqs')}
+
+          />
+        </div>
+      </div>
+    </div></>)
+}
+
+
+function HomeInfoInstallCard({selectedNetwork})
+{
+  return (<>{/*  INSTALL CARD */}
+    <div className="homeinfo-card">
+      <div className="homeinfo-card__header">
+        <h3 className="homeinfo-card__header-title">
+        {t('homeinfo.install' , [
+             selectedNetwork?.name,
+           ])}
+        </h3>
+
+        <div className="homeinfo-card__controls">
+
+        </div>
+      </div>
+      <hr></hr>
       <div className="homeinfo-card__section">
         <div className="homeinfo-card__action-bottom">
           <InstallButton />
@@ -339,15 +365,7 @@ return (<>
                     {t('homeinfo.stats')}
                   </h3>
                   <div className="homeinfo-card__controls">
-                    <Btn
-                      btnType={BtnType.filterCorp}
-                      contentAlignment={ContentAlignment.center}
-                      iconLeft={IconType.svg}
-                      iconLink={<IoAddCircle />}
-                      extraClass="homeinfo__network-title-card--buttons"
-                      caption={t('homeinfo.goToCreate')}
-                      onClick={() => router.push('ButtonNew')}
-                    />
+              
                   </div>
                 </div><hr></hr>
                 <div className="homeinfo__description">
@@ -362,6 +380,19 @@ return (<>
                     />
                   </div>
                 </div>
+                <div className="homeinfo-card__section">
+                  <div className="homeinfo-card__action-bottom">
+                    <Btn
+                      btnType={BtnType.filterCorp}
+                      contentAlignment={ContentAlignment.center}
+                      iconLink={<IoMapOutline />}
+                      iconLeft={IconType.svg}
+                      extraClass="homeinfo__network-title-card--buttons"
+                      caption={t('homeinfo.goToExplore')}
+                      onClick={() => router.push('Explore')}
+                    />
+                  </div>
+               </div>
               </div></>)
 }
 

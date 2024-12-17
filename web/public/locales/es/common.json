@@ -19,6 +19,8 @@
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
     "goToExplore": "Explorar",
+    "knowMore": "Saber más",
+    "install": "Instala {0} y recibe notificaciones si quieres:",
     "goToCreate": "Crear _helpbutton_",
     "activity": "Actividad reciente",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
