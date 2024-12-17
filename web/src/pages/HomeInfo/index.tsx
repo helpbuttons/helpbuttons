@@ -212,26 +212,25 @@ function NavigatorCoordsButton() {
 }
 function HomeInfoNetworkLogo({selectedNetwork, apiUrl}) {
 
-  return (<div className="homeinfo-card__header">
-      <div className="homeinfo-card homeinfo__card--title-card"
-    style={
-      {
-        '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl+selectedNetwork.jumbo : '/api'+ logoImageUri}'`,
-      } as React.CSSProperties
-    }
-   >
-    <div className="homeinfo-card__header ">
-      <div className="homeinfo__network-title">
-        <div className="avatar-medium--home">
-          <NetworkLogo network={selectedNetwork} />
-        </div>
-        <h3 className="homeinfo__network-title-text">
-          {selectedNetwork.name}
-        </h3>
-      </div>
-    </div>
-  </div>
-  </div>
+  return (
+          <div className="homeinfo-card homeinfo__card--title-card"
+            style={
+              {
+                '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl+selectedNetwork.jumbo : '/api'+ logoImageUri}'`,
+              } as React.CSSProperties
+            }
+          >
+            <div className="homeinfo-card__header ">
+              <div className="homeinfo__network-title">
+                <div className="avatar-medium--home">
+                  <NetworkLogo network={selectedNetwork} />
+                </div>
+                <h3 className="homeinfo__network-title-text">
+                  {selectedNetwork.name}
+                </h3>
+              </div>
+            </div>
+          </div>
   )
 }
 
