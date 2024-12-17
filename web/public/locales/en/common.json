@@ -299,6 +299,8 @@
     "editProfile": "Edit profile",
     "myHelpbuttons": "Your _helpbuttons_",
     "name": "Name",
+    "showWassap": "Enable Whatsapp link",
+    "showWassapExplain": "Show a link to your whatsapp app if you want",
     "nameExplain": "This is your name that other users will see",
     "namePlaceHolder": "Type your name with total freedom",
     "avatar": "Choose avatar",
