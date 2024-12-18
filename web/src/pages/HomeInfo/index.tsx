@@ -48,6 +48,7 @@ import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
 import { ActivityList } from 'components/feed/Activity/ActivityList';
 import { PoweredExtra } from 'components/brand/powered';
+import { IsMobilePhone } from 'class-validator';
 
 export default function HomeInfo({ metadata }) {
   const selectedNetwork = useStore(
@@ -97,7 +98,11 @@ export default function HomeInfo({ metadata }) {
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config}/>
 
               <HomeInfoPinnedButtons/>
-              <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
+              {/* <HomeInfoPinnedUsers selectedNetwork={selectedNetwork} config={config}/> */}
+
+              <ShowMobileOnly>
+                 <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
+              </ShowMobileOnly>
               <HomeInfoInfoCard selectedNetwork={selectedNetwork}/>
               <HomeInfoInstallCard selectedNetwork={selectedNetwork}/>
               
@@ -256,18 +261,7 @@ return (<>
                     />
                   </div>
                 </div><hr></hr>
-                {/* <div className="homeinfo__description">
-                  {t('homeinfo.buttons', [
-                    selectedNetwork?.buttonCount,
-                    config?.userCount.toString(),
-                  ])}
-                </div> */}
-                {/* <div className="homeinfo-card__section"> */}
-                {/* <div className="homeinfo-card__action-bottom">
-                  <InstallButton />
-                  <DesktopNotificationsButton />
-                </div> */}
-              {/* </div> */}
+            
               </div></>)
 }
 
