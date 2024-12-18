@@ -1,5 +1,5 @@
 $picker-background: rgba(0,0,0,.2);
-$picker-header-height: 80px;
+$picker-header-height: 50px;
 $picker-max-width: 680px;
 $picker-border-radius: $border-radius-basic;
 $picker-width: 240px;
@@ -88,8 +88,6 @@ $picker-comments-item-padding: 25px;
   box-shadow: none;
 }
 
-
-
 //picker HEADERS
 .picker__header {
   width: 100%;
@@ -102,9 +100,12 @@ $picker-comments-item-padding: 25px;
 .picker__header {
 
   width: 100%;
-  padding: $padding-big;
   position:  relative;
   height: $picker-header-height;
+
+  padding: $padding-big $padding-medium;
+  border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
+  border-bottom: 1px solid $color-ligth-gray;
 
 }
 

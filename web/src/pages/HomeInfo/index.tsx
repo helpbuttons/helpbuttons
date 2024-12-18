@@ -18,6 +18,7 @@ import {
   IoGlobeOutline,
   IoHelpOutline,
   IoInformation,
+  IoInformationCircle,
   IoLogInOutline,
   IoMapOutline,
   IoShare,
@@ -317,7 +318,7 @@ function HomeInfoInfoCard({selectedNetwork})
           <Btn
             btnType={BtnType.filterCorp}
             contentAlignment={ContentAlignment.center}
-            iconLink={<IoInformation />}
+            iconLink={<IoInformationCircle />}
             iconLeft={IconType.svg}
             extraClass="homeinfo__network-title-card--buttons"
             caption={t('homeinfo.knowMore')}
@@ -361,7 +362,9 @@ return (<>
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
                   <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.stats')}
+                    {t('homeinfo.stats' , [
+                      selectedNetwork?.name,
+                    ])}
                   </h3>
                   <div className="homeinfo-card__controls">
               

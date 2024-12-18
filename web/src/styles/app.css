@@ -2197,14 +2197,15 @@ em-emoji-picker {
   height: 54px;
   padding: 0 15px;
   margin: 7px 0;
-  background: #fff;
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
   width: 100%;
   border-radius: 8px;
   background: #f0f0f0;
-  border-right: 24px solid #f0f0f0;
+  padding-right: 1rem;
+  background-position-x: 70%;
+  border-right: 15px solid transparent;
 }
 .dropdown__dropdown-trigger:hover {
   cursor: pointer;
@@ -2230,13 +2231,10 @@ em-emoji-picker {
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
   background-repeat: no-repeat;
   background-position-x: 100%;
   background-position-y: 50%;
+  border-right: 15px solid transparent;
 }
 .dropdown__dropdown-trigger--list:hover {
   cursor: pointer;
@@ -3487,9 +3485,11 @@ li, ol, ul, h2 {
 .picker__header--trans,
 .picker__header {
   width: 100%;
-  padding: 15px;
   position: relative;
-  height: 80px;
+  height: 50px;
+  padding: 15px 10px;
+  border-radius: 24px 24px 0 0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .picker__header--trans {
@@ -4942,9 +4942,6 @@ hr {
 .homeinfo-card__section--attr {
   font-size: 10px;
   color: #8da0a0;
-  display: flex;
-  gap: 5px;
-  justify-content: flex-end;
 }
 
 .homeinfo-card__section--actions {
