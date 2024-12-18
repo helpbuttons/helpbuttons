@@ -1364,6 +1364,7 @@
   color: #0E0E0E;
   padding: 15px 0rem;
   height: 48px;
+  min-height: 48px;
   width: 100%;
   white-space: nowrap;
   font-size: 16px;
@@ -3434,15 +3435,17 @@ li, ol, ul, h2 {
   padding: 15px;
   background: #fff !important;
   overflow-x: hidden;
+  height: auto;
   border-radius: 8px;
 }
 
 .picker__content {
   width: 100%;
   overflow-x: hidden;
-  border-radius: 0 0 24px 24px;
   display: flex;
   flex-direction: column;
+  padding: 15px;
+  overflow-y: auto;
 }
 
 .picker__content--nopadding {
@@ -3666,6 +3669,7 @@ li, ol, ul, h2 {
   width: auto;
   display: flex;
   margin-bottom: 25px;
+  min-height: 250px;
 }
 .picker__map .pigeon-zoom-buttons {
   right: 5px;

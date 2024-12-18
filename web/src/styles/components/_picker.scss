@@ -26,16 +26,19 @@ $picker-comments-item-padding: 25px;
   padding: $picker-padding;
   background: $color-white !important;
   overflow-x: hidden;
+  height: auto;
   border-radius: $picker-border-radius ;
+
 }
 
 .picker__content {
 
   width: 100%;
   overflow-x: hidden;
-  border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;//REVISE
   display: flex;
   flex-direction: column;
+  padding: $padding-big;
+  overflow-y: auto;
 
 }
 
@@ -311,6 +314,7 @@ $picker-comments-item-padding: 25px;
   width: auto;
   display: flex;
   margin-bottom: $margin-medium;
+  min-height: 250px;
 
   .pigeon-zoom-buttons {
 
