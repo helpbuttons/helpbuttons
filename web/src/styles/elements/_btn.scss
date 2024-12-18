@@ -284,6 +284,7 @@ $btn-font-size-medium: $font-size-medium;
   font-size: $font-size-general;
   text-align: left;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   text-overflow: ellipsis;
   overflow: hidden;
   line-height: 1.2rem;

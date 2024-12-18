@@ -85,11 +85,6 @@ $picker-comments-item-padding: 25px;
 .picker__section__pick {
   max-height: 40vh;
 }
-.picker__section {
-
-  // padding: 1rem;
-  
-}
 
 .picker-box-shadow {
   box-shadow: none;
@@ -133,16 +128,12 @@ $picker-comments-item-padding: 25px;
   }
 }
 
-.picker__header-nav {
-}
 
 .picker__header-left {
-  @extend .picker__header-nav;
   text-align: left;
 }
 
 .picker__header-right {
-  @extend .picker__header-nav;
   text-align: right;
 }
 
