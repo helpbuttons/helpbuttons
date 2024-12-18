@@ -18,8 +18,10 @@ import {
   IoGlobeOutline,
   IoHelpOutline,
   IoInformation,
+  IoInformationCircle,
   IoLogInOutline,
   IoMapOutline,
+  IoSearchOutline,
   IoShare,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
@@ -317,7 +319,7 @@ function HomeInfoInfoCard({selectedNetwork})
           <Btn
             btnType={BtnType.filterCorp}
             contentAlignment={ContentAlignment.center}
-            iconLink={<IoInformation />}
+            iconLink={<IoInformationCircle />}
             iconLeft={IconType.svg}
             extraClass="homeinfo__network-title-card--buttons"
             caption={t('homeinfo.knowMore')}
@@ -361,7 +363,9 @@ return (<>
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
                   <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.stats')}
+                    {t('homeinfo.stats' , [
+                      selectedNetwork?.name,
+                    ])}
                   </h3>
                   <div className="homeinfo-card__controls">
               
@@ -384,7 +388,7 @@ return (<>
                     <Btn
                       btnType={BtnType.filterCorp}
                       contentAlignment={ContentAlignment.center}
-                      iconLink={<IoMapOutline />}
+                      iconLink={<IoSearchOutline />}
                       iconLeft={IconType.svg}
                       extraClass="homeinfo__network-title-card--buttons"
                       caption={t('homeinfo.goToExplore')}
@@ -430,6 +434,8 @@ function HomeInfoPinnedHashTags({selectedNetwork}) {
                       </h3>
                     </div>
                     <hr></hr>
+                    <div className="homeinfo__description">
+                    </div>
                     <div className="homeinfo__hashtags">
                       <TagsNav tags={selectedNetwork.tags} />
                     </div>

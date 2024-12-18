@@ -12,7 +12,7 @@ import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import { useGeoReverse } from './location.helpers';
-import { IoSearch } from 'react-icons/io5';
+import { IoSearch, IoSearchOutline } from 'react-icons/io5';
 
 
 export default function FieldLocation({
@@ -116,7 +116,7 @@ export default function FieldLocation({
     <>
       {selectedNetwork?.exploreSettings?.center && (
         <PickerField
-          iconLink={<IoSearch/>}
+          iconLink={<IoSearchOutline/>}
           showPopup={showPopup}
           validationError={validationError}
           label={t('button.whereLabel')}

@@ -506,6 +506,7 @@
   background: none;
   border: none;
   padding: 0;
+  justify-content: space-between;
   display: flex;
   flex-flow: row wrap;
 }
@@ -1038,7 +1039,7 @@
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: row;
-  padding: 5px;
+  padding: 5px 0;
   gap: 5px;
 }
 .form__field--location button {
@@ -1529,6 +1530,7 @@
   font-size: 16px;
   text-align: left;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   text-overflow: ellipsis;
   overflow: hidden;
   line-height: 1.2rem;
@@ -2197,14 +2199,15 @@ em-emoji-picker {
   height: 54px;
   padding: 0 15px;
   margin: 7px 0;
-  background: #fff;
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
   width: 100%;
   border-radius: 8px;
   background: #f0f0f0;
-  border-right: 24px solid #f0f0f0;
+  padding-right: 1rem;
+  background-position-x: 70%;
+  border-right: 15px solid transparent;
 }
 .dropdown__dropdown-trigger:hover {
   cursor: pointer;
@@ -2230,13 +2233,10 @@ em-emoji-picker {
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
   background-repeat: no-repeat;
   background-position-x: 100%;
   background-position-y: 50%;
+  border-right: 15px solid transparent;
 }
 .dropdown__dropdown-trigger--list:hover {
   cursor: pointer;
@@ -3428,17 +3428,29 @@ li, ol, ul, h2 {
   display: none;
 }
 
-.picker__content {
+.picker {
   overflow: auto;
   width: auto;
   min-width: 240px;
   overflow-y: visible !important;
   padding: 15px;
-  padding-top: 0;
   background: #fff !important;
   overflow-x: hidden;
-  box-shadow: none;
+  height: auto;
   border-radius: 8px;
+}
+
+.picker__content {
+  width: 100%;
+  overflow-x: hidden;
+  flex-direction: column;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.picker__section {
+  display: flex;
+  flex-direction: column;
 }
 
 .picker__content--nopadding {
@@ -3488,9 +3500,11 @@ li, ol, ul, h2 {
 .picker__header--trans,
 .picker__header {
   width: 100%;
-  padding: 15px;
   position: relative;
-  height: 80px;
+  height: 50px;
+  padding: 15px 10px;
+  border-radius: 24px 24px 0 0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .picker__header--trans {
@@ -3498,7 +3512,7 @@ li, ol, ul, h2 {
 }
 
 .picker__header-center {
-  flex: 0 1 100%;
+  flex: 0 1 calc(100% - 20px * 2);
   text-align: center;
   padding: 0 10px;
 }
@@ -3660,6 +3674,7 @@ li, ol, ul, h2 {
   width: auto;
   display: flex;
   margin-bottom: 25px;
+  min-height: 250px;
 }
 .picker__map .pigeon-zoom-buttons {
   right: 5px;
@@ -3674,6 +3689,7 @@ li, ol, ul, h2 {
   width: 100%;
   height: 100%;
   z-index: 500;
+  padding: 0;
 }
 
 @media only screen and (min-width: 991px) {
@@ -3687,8 +3703,14 @@ li, ol, ul, h2 {
     max-width: 680px;
     height: auto;
   }
+  .picker__content {
+    padding: 30px 30px;
+  }
+  .picker__content--nopadding {
+    padding: 0;
+  }
   .picker--over {
-    max-width: 700px;
+    width: 100%;
     z-index: 500;
     max-height: 90%;
   }
@@ -4942,9 +4964,6 @@ hr {
 .homeinfo-card__section--attr {
   font-size: 10px;
   color: #8da0a0;
-  display: flex;
-  gap: 5px;
-  justify-content: flex-end;
 }
 
 .homeinfo-card__section--actions {
@@ -5822,7 +5841,7 @@ hr {
 
 .card-button__city-list,
 .card-button__date {
-  color: black;
+  color: #0E0E0E;
   font-size: 14px;
   font-weight: bold;
   text-align: left;
@@ -8154,7 +8173,7 @@ body {
   text-align: right;
 }
 
-.popup__header-content {
+.popup__header-content, .picker__header-content {
   height: 100%;
   display: flex;
   align-items: center;
@@ -8164,8 +8183,9 @@ body {
 
 .popup__header-title {
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 600;
   color: #2E2E2E;
+  letter-spacing: 2px;
 }
 
 .popup__header-button {
@@ -8197,7 +8217,7 @@ body {
 }
 
 .popup__section {
-  padding: 24px;
+  padding: 15px;
   height: auto;
 }
 
@@ -8370,7 +8390,7 @@ body {
     min-height: 50px;
   }
   .popup__section {
-    padding: 32px 36px;
+    padding: 30px 30px;
   }
   .popup__options-h {
     flex-flow: row nowrap;
@@ -9309,6 +9329,10 @@ a {
 }
 a:hover {
   color: #828282;
+}
+
+p a {
+  text-decoration: underline;
 }
 
 .disabled {

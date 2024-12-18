@@ -144,17 +144,6 @@ export default function DropDownSearchLocation({
 
   return (
     <div className="form__field">
-      <LoadabledComponent loading={loadingNewAddress}>
-        <label className="form__label">
-          {label}
-          {label && address && (
-            <>
-              {' '}
-              {address}
-            </>
-          )}
-        </label>
-      </LoadabledComponent>
       {explain && <div className="form__explain">{explain}</div>}
       <div className="form__field--location">
         <AsyncSelect

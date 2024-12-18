@@ -1,5 +1,5 @@
 $picker-background: rgba(0,0,0,.2);
-$picker-header-height: 80px;
+$picker-header-height: 50px;
 $picker-max-width: 680px;
 $picker-border-radius: $border-radius-basic;
 $picker-width: 240px;
@@ -18,24 +18,33 @@ $picker-comments-item-padding: 25px;
 
 
 .picker {
-  // Scroll picker content
-}
-
-.picker__content {
-
-  // position: absolute;
+  //picker div
   overflow: auto;
   width: auto; //Revise antes era 100%
   min-width: $picker-min-width;
   overflow-y: visible !important;
-  // max-height: 90vh;
   padding: $picker-padding;
-  padding-top: 0;
   background: $color-white !important;
   overflow-x: hidden;
-  box-shadow: none;
+  height: auto;
   border-radius: $picker-border-radius ;
 
+}
+
+.picker__content {
+
+  width: 100%;
+  overflow-x: hidden;
+  // display: flex;
+  flex-direction: column;
+  padding: $padding-big;
+  overflow-y: auto;
+
+}
+
+.picker__section {
+  display: flex;
+  flex-direction: column;
 }
 
 .picker__content--nopadding {
@@ -81,17 +90,10 @@ $picker-comments-item-padding: 25px;
 .picker__section__pick {
   max-height: 40vh;
 }
-.picker__section {
-
-  // padding: 1rem;
-  
-}
 
 .picker-box-shadow {
   box-shadow: none;
 }
-
-
 
 //picker HEADERS
 .picker__header {
@@ -105,9 +107,12 @@ $picker-comments-item-padding: 25px;
 .picker__header {
 
   width: 100%;
-  padding: $padding-big;
   position:  relative;
   height: $picker-header-height;
+
+  padding: $padding-big $padding-medium;
+  border-radius: $border-radius-semicircle $border-radius-semicircle 0 0;
+  border-bottom: 1px solid $color-ligth-gray;
 
 }
 
@@ -117,7 +122,7 @@ $picker-comments-item-padding: 25px;
 
 
 .picker__header-center {
-  flex: 0 1 $picker-header-width;
+  flex: 0 1 calc( 100% - #{$btn-circle-icon-height} * 2 );
   text-align: center;
   padding: 0 10px;
 
@@ -128,20 +133,18 @@ $picker-comments-item-padding: 25px;
   }
 }
 
-.picker__header-nav {
-}
 
 .picker__header-left {
-  @extend .picker__header-nav;
   text-align: left;
 }
 
 .picker__header-right {
-  @extend .picker__header-nav;
   text-align: right;
 }
 
 .picker__header-content {
+
+  @extend .popup__header-content;
   height: 100%;
   display: flex;
   align-items: center;
@@ -307,6 +310,7 @@ $picker-comments-item-padding: 25px;
   width: auto;
   display: flex;
   margin-bottom: $margin-medium;
+  min-height: 250px;
 
   .pigeon-zoom-buttons {
 
@@ -325,12 +329,12 @@ $picker-comments-item-padding: 25px;
   width: 100%;
   height: 100%;
   z-index: $z-index-05;
+  padding: 0;
 
 }
 
 @media #{$breakpoints-medium} {
   .picker {
-
     height: auto;
     max-width: $picker-max-width;
 
@@ -339,12 +343,23 @@ $picker-comments-item-padding: 25px;
   .picker__header,
   .picker__content {
     background: $color-white;
-    max-width: $picker-max-width;//revise voy a poner 600 px luego pasar a variable $picker-max-width
+    max-width: $picker-max-width;
     height: auto;
   }
 
+  .picker__content {
+    padding: $padding-huge $padding-huge;
+  }
+
+  .picker__content--nopadding {
+
+    padding: 0;
+  
+  }
+
   .picker--over {
-    max-width: 700px;
+    // max-width: 700px;
+    width: 100%;
     z-index: $z-index-05;
     max-height: 90%;
   }

@@ -18,7 +18,7 @@
     "seeLess": "Ver menos",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
-    "goToExplore": "Explorar",
+    "goToExplore": "Explorar _helpbuttons_",
     "knowMore": "Saber más",
     "install": "Instala {0} y recibe notificaciones si quieres:",
     "goToCreate": "Crear _helpbutton_",
@@ -357,6 +357,7 @@
     "imagesExplain": "Imágenes que selecciones se mostrarán en tu _helpbutton_",
     "imagesText": "Elegir imágenes",
     "whenLabel": "Cuándo",
+    "whenExplain": "Si tiene fecha, especifícala aquí.",
     "changeDateLabel": "Elige una fecha",
     "changePlaceLabel": "Elige un lugar",
     "firstPost": "¡Hola! Creé este _helpbutton_ el {0}, deja un comentario si quieres",
@@ -540,6 +541,7 @@
   },
   "customFields": {
     "priceLabel": "Precio ({0})",
+    "priceExplain": "Especifica un valor. Usa 0 si es gratuito y Precio a consultar si no está definido",
     "consult": "Precio a consultar",
     "free": "Gratis"
   },

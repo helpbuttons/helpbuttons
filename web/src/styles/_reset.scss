@@ -116,7 +116,6 @@ body,
 
   height: calc(var(--vh)) !important;
 
-
 }
 
 .homeinfo__container {
@@ -157,8 +156,6 @@ body,
   /* Add other styles as needed */
 }
 
-
-
 ol,
 ul {
   list-style: none;
@@ -194,6 +191,16 @@ a {
     color: $color-gray;
 
   }
+}
+
+p {
+
+  & a {
+
+    text-decoration: underline;
+
+  }
+
 }
 
 .disabled {
