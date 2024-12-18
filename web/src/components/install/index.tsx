@@ -12,18 +12,16 @@ export function InstallButton() {
 
   return (
     <>
-      {prompt && (
-        <div>
+      {/* {prompt && ( */}
           <Btn
-              btnType={BtnType.filterCorp}
+              btnType={BtnType.corporative}
               iconLink={<IoDownload />}
               caption={t('homeinfo.installButton')}
               iconLeft={IconType.circle}
               contentAlignment={ContentAlignment.center}
               onClick={promptToInstall}
             />
-        </div>
-       )}
+       {/* )} */}
     </>
   );
 }
