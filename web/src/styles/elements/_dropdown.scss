@@ -64,7 +64,7 @@ $dropdown-max-width: 30rem;
 
 
 
-$dropdown-bck: #f0f0f0;
+$dropdown-bck: $color-ligth-gray;
 
 .dropdown__dropdown-trigger {
   text-align: left;
@@ -72,14 +72,15 @@ $dropdown-bck: #f0f0f0;
   height: $form-input-height;
   padding: 0 $padding-big;
   margin: $margin-xsmall 0;
-  background: $color-white;
   color: $color-black;
   transition: all 0.2s ease-in-out;
   font-size: $font-size-general;
   width: 100%;
   border-radius: 8px;
   background: $dropdown-bck;
-  border-right: 24px solid $dropdown-bck; // ñapa enorme.
+  padding-right: 1rem;
+  background-position-x: 70%;
+  border-right: $padding-big solid transparent;
 
   &:hover {
     cursor: pointer;
@@ -112,13 +113,14 @@ $dropdown-bck: #f0f0f0;
   transition: all 0.2s ease-in-out;
   font-size: $font-size-general;
 
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  // -webkit-appearance: none;
+  // -moz-appearance: none;
+  // appearance: none;
+  // background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
   background-repeat: no-repeat;
   background-position-x: 100%;
   background-position-y: 50%;
+  border-right: $padding-big solid transparent;
 
 
 
