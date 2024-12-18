@@ -96,7 +96,6 @@ export default function CardButton({ button, buttonTypes }) {
             button={button}
             buttonTypes={buttonTypes}
           />
-          {/* <ShowPhone user={button.owner} /> */}
         </>
       )}
     </>
@@ -627,22 +626,6 @@ export function ButtonOwnerPhone({ user }) {
   const [showPhone, toggleShowPhone] = useState(false);
   const [phone, setPhone] = useState(null);
   const isLoadingPhone = React.useRef(false)
-
-
-  // const getPhone = () => {
-  //   if (phone == null && !isLoadingPhone.current) {
-  //     isLoadingPhone.current = true;
-  //     store.emit(
-  //       new GetPhone(
-  //         user.id,
-  //         (phone) => {
-  //           setPhone(() => phone);
-  //         },
-  //         () => {},
-  //       ),
-  //     );
-  //   }
-  // };
 
   useEffect(() => {
     if (phone == null && !isLoadingPhone.current) {
