@@ -3426,7 +3426,7 @@ li, ol, ul, h2 {
   display: none;
 }
 
-.picker__content {
+.picker {
   overflow: auto;
   width: auto;
   min-width: 240px;
@@ -3434,8 +3434,15 @@ li, ol, ul, h2 {
   padding: 15px;
   background: #fff !important;
   overflow-x: hidden;
-  box-shadow: none;
   border-radius: 8px;
+}
+
+.picker__content {
+  width: 100%;
+  overflow-x: hidden;
+  border-radius: 0 0 24px 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 .picker__content--nopadding {
@@ -3686,6 +3693,9 @@ li, ol, ul, h2 {
     background: #fff;
     max-width: 680px;
     height: auto;
+  }
+  .picker__content {
+    padding: 30px 30px;
   }
   .picker--over {
     width: 100%;
@@ -8195,7 +8205,7 @@ body {
 }
 
 .popup__section {
-  padding: 24px;
+  padding: 15px;
   height: auto;
 }
 
@@ -8368,7 +8378,7 @@ body {
     min-height: 50px;
   }
   .popup__section {
-    padding: 32px 36px;
+    padding: 30px 30px;
   }
   .popup__options-h {
     flex-flow: row nowrap;

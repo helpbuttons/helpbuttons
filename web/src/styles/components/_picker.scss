@@ -18,11 +18,7 @@ $picker-comments-item-padding: 25px;
 
 
 .picker {
-  // Scroll picker content
-}
-
-.picker__content {
-
+  //picker div
   overflow: auto;
   width: auto; //Revise antes era 100%
   min-width: $picker-min-width;
@@ -30,8 +26,16 @@ $picker-comments-item-padding: 25px;
   padding: $picker-padding;
   background: $color-white !important;
   overflow-x: hidden;
-  box-shadow: none;
   border-radius: $picker-border-radius ;
+}
+
+.picker__content {
+
+  width: 100%;
+  overflow-x: hidden;
+  border-radius: 0 0 $border-radius-semicircle $border-radius-semicircle;//REVISE
+  display: flex;
+  flex-direction: column;
 
 }
 
@@ -331,7 +335,6 @@ $picker-comments-item-padding: 25px;
 
 @media #{$breakpoints-medium} {
   .picker {
-
     height: auto;
     max-width: $picker-max-width;
 
@@ -340,8 +343,12 @@ $picker-comments-item-padding: 25px;
   .picker__header,
   .picker__content {
     background: $color-white;
-    max-width: $picker-max-width;//revise voy a poner 600 px luego pasar a variable $picker-max-width
+    max-width: $picker-max-width;
     height: auto;
+  }
+
+  .picker__content {
+    padding: $padding-huge $padding-huge;
   }
 
   .picker--over {
