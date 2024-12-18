@@ -26,7 +26,7 @@ import _ from 'lodash';
 import { FilterByLocationRadius } from './filter-by-location';
 import { FilterByDays } from './filter-by-days';
 import Accordion from 'elements/Accordion';
-import { IoBook, IoList } from 'react-icons/io5';
+import { IoBook, IoList, IoSearch } from 'react-icons/io5';
 
 
 
@@ -149,9 +149,7 @@ export default function AdvancedFilters({
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="filters__content">
- 
-                  {/* <Accordion icon={<IoList/>} title={t('buttonFilters.byCategory')}> */}
-                    <FieldMultiSelect
+                     <FieldMultiSelect
                       label={t('buttonFilters.types')}
                       validationError={null}
                       explain={t('buttonFilters.typesExplain')}
@@ -172,26 +170,15 @@ export default function AdvancedFilters({
                               }}
                               key={idx}
                             >
-                              {/* <div className="btn-filter__icon"></div> */}
                               <div className="btn-with-icon__text">
                                 {buttonType.caption}
                               </div>
                             </MultiSelectOption>
 
-                        //   <div
-                        //     key={buttonType.name}
-                        //     style={buttonColorStyle(buttonType.cssColor)}
-                        //   >
-                        //     {/* <div className="btn-filter__icon"></div> */}
-                        //     <div className="btn-with-icon__text">
-                        //       {buttonType.caption}
-                        //     </div>
-                        // </div>
+
                       );
                     })}
                     </FieldMultiSelect>
-                    {/* </Accordion> */}
-
                     {showFilterByDays && 
                       <FilterByDays days={days} setDays={(value) => setValue('days', value)}/>
                     }
@@ -218,9 +205,9 @@ export default function AdvancedFilters({
                       selectedButtonTypes={watch('helpButtonTypes')}
                     />
                     <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
-                    <div className="form__btn-search">
-                      <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
-                    </div>
+                    {/* <div className="form__btn-search"> */}
+                      <FilterByLocationRadius  handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
+                    {/* </div> */}
                   </div>
                 
               </Form>

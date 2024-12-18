@@ -145,7 +145,6 @@ export default function ButtonForm({
                     })}
                   />
 
-                  {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}
                   <FieldTags
                     label={t('button.tagsLabel')}
                     explain={t('button.tagsExplain')}
@@ -165,28 +164,28 @@ export default function ButtonForm({
                     explain={t('button.imagesExplain')}
                     maxNumber={5}
                     setValue={(images) => setValue('images', images)}
-                    validationError={errors.images} />
-                  <div className="form__btn-search">
-                    <FieldLocation
-                      label={t('button.whereLabel')}
-                      setMarkerPosition={([lat, lng]) => {
-                        setValue('latitude', lat);
-                        setValue('longitude', lng);
-                      }}
-                      markerPosition={[watch('latitude'), watch('longitude')]}
-                      updateAddress={(address) => {
-                        setValue('address', address);
-                      }}
-                      markerAddress={watch('address')}
-                      markerImage={image}
-                      markerCaption={watch('title')}
-                      markerColor={markerColor}
-                      selectedNetwork={selectedNetwork}
-                      validationError={errors.address}
-                      watch={watch}
-                      setValue={setValue}
+                    validationError={errors.images} 
+                  />
+                  <FieldLocation
+                    label={t('button.whereLabel')}
+                    setMarkerPosition={([lat, lng]) => {
+                      setValue('latitude', lat);
+                      setValue('longitude', lng);
+                    }}
+                    markerPosition={[watch('latitude'), watch('longitude')]}
+                    updateAddress={(address) => {
+                      setValue('address', address);
+                    }}
+                    markerAddress={watch('address')}
+                    markerImage={image}
+                    markerCaption={watch('title')}
+                    markerColor={markerColor}
+                    selectedNetwork={selectedNetwork}
+                    validationError={errors.address}
+                    watch={watch}
+                    setValue={setValue}
+                  
                     />
-                  </div>
                   <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />
                   <ButtonShare />
                 </div>
