@@ -5,8 +5,11 @@ import {
   IoAddCircleOutline,
   IoAddCircleSharp,
   IoAddOutline,
+  IoChatbox,
+  IoChatboxOutline,
   IoPersonAddOutline,
   IoSearch,
+  IoSearchOutline,
 } from 'react-icons/io5';
 import { IoPersonOutline } from 'react-icons/io5';
 import { IoHeartOutline } from 'react-icons/io5';
@@ -67,7 +70,7 @@ function NavBottom({ sessionUser, pageName }) {
           )}`}
         >
           <div className="nav-bottom__icon">
-            <IoSearch />
+            <IoSearchOutline />
           </div>
           <div className="nav-bottom__text">{t('menu.explore')}</div>
         </NavLink>
@@ -85,24 +88,7 @@ function NavBottom({ sessionUser, pageName }) {
           </div>
           <div className="nav-bottom__text">{t('menu.create')}</div>
         </NavLink>
-
-        {/* {!sessionUser && (
-          <div
-            // href="/Signup"
-            onClick={() =>
-              store.emit(new SetMainPopup(MainPopupPage.SIGNUP))
-            }
-            className={`nav-bottom__link nav-bottom__link--active ${isCurrent(
-              'Signup',
-            )}`}
-          >
-            <div className="nav-bottom__icon">
-              <IoPersonAddOutline />
-            </div>
-            <div className="nav-bottom__text">{t('menu.signup')}</div>
-          </div>
-        )} */}
-
+        
         {sessionUser && (
           <>
             <NavLink
@@ -131,7 +117,7 @@ function NavBottom({ sessionUser, pageName }) {
                     {countUnreadNotifications}
                   </span>
                 )}
-                <IoHeartOutline />
+                <IoChatboxOutline />
               </div>
 
               <div className="nav-bottom__text">

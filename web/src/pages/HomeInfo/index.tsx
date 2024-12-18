@@ -21,6 +21,7 @@ import {
   IoInformationCircle,
   IoLogInOutline,
   IoMapOutline,
+  IoSearchOutline,
   IoShare,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
@@ -387,7 +388,7 @@ return (<>
                     <Btn
                       btnType={BtnType.filterCorp}
                       contentAlignment={ContentAlignment.center}
-                      iconLink={<IoMapOutline />}
+                      iconLink={<IoSearchOutline />}
                       iconLeft={IconType.svg}
                       extraClass="homeinfo__network-title-card--buttons"
                       caption={t('homeinfo.goToExplore')}
@@ -433,6 +434,8 @@ function HomeInfoPinnedHashTags({selectedNetwork}) {
                       </h3>
                     </div>
                     <hr></hr>
+                    <div className="homeinfo__description">
+                    </div>
                     <div className="homeinfo__hashtags">
                       <TagsNav tags={selectedNetwork.tags} />
                     </div>
