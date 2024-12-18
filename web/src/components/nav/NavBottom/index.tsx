@@ -6,6 +6,7 @@ import {
   IoAddCircleSharp,
   IoAddOutline,
   IoPersonAddOutline,
+  IoSearch,
 } from 'react-icons/io5';
 import { IoPersonOutline } from 'react-icons/io5';
 import { IoHeartOutline } from 'react-icons/io5';
@@ -66,7 +67,7 @@ function NavBottom({ sessionUser, pageName }) {
           )}`}
         >
           <div className="nav-bottom__icon">
-            <IoGlobeOutline />
+            <IoSearch />
           </div>
           <div className="nav-bottom__text">{t('menu.explore')}</div>
         </NavLink>
@@ -85,7 +86,7 @@ function NavBottom({ sessionUser, pageName }) {
           <div className="nav-bottom__text">{t('menu.create')}</div>
         </NavLink>
 
-        {!sessionUser && (
+        {/* {!sessionUser && (
           <div
             // href="/Signup"
             onClick={() =>
@@ -100,7 +101,7 @@ function NavBottom({ sessionUser, pageName }) {
             </div>
             <div className="nav-bottom__text">{t('menu.signup')}</div>
           </div>
-        )}
+        )} */}
 
         {sessionUser && (
           <>

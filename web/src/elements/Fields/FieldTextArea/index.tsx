@@ -56,7 +56,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
           </>
         }
         <ShowDesktopOnly>
-          <EmojiPicker updateEmoji={addEmoji} pickerEmoji="😀"/>
+          <EmojiPicker updateEmoji={addEmoji} pickerEmoji="😀" label={undefined} explain={undefined}/>
         </ShowDesktopOnly>
         <FieldError validationError={validationError} />
       </div>
