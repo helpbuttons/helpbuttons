@@ -3443,10 +3443,14 @@ li, ol, ul, h2 {
 .picker__content {
   width: 100%;
   overflow-x: hidden;
-  display: flex;
   flex-direction: column;
   padding: 15px;
   overflow-y: auto;
+}
+
+.picker__section {
+  display: flex;
+  flex-direction: column;
 }
 
 .picker__content--nopadding {

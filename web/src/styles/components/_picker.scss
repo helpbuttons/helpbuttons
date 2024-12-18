@@ -35,11 +35,16 @@ $picker-comments-item-padding: 25px;
 
   width: 100%;
   overflow-x: hidden;
-  display: flex;
+  // display: flex;
   flex-direction: column;
   padding: $padding-big;
   overflow-y: auto;
 
+}
+
+.picker__section {
+  display: flex;
+  flex-direction: column;
 }
 
 .picker__content--nopadding {
@@ -351,7 +356,7 @@ $picker-comments-item-padding: 25px;
     padding: 0;
   
   }
-  
+
   .picker--over {
     // max-width: 700px;
     width: 100%;
