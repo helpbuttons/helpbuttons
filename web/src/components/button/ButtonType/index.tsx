@@ -33,6 +33,7 @@ const ButtonType = React.forwardRef(
                 onChange={onChange}
                 onBlur={onBlur}
                 name={name}
+                color={buttonType.cssColor}
                 ref={ref}
                 value={buttonType.name}
                 key={idx}
