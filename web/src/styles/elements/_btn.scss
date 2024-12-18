@@ -243,6 +243,25 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+
+.btn--form-search-field {
+      background: $color-white;
+      border: 4px solid $color-black;
+      border-radius: $border-radius-basic;
+      font-weight: $font-weight-bold;
+      height: $form-input-height;
+      
+      margin: 0;
+      
+      &:focus,
+      &:active,
+      &:hover {
+        color: $color-white;
+        background: $color-black;
+      }
+  
+}
+
 .btn-with-icon__icon {
 
   // max-height: $btn-with-icon-icon-width;

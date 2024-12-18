@@ -16,6 +16,7 @@ export enum BtnType {
     filterCorp,
     smallLink,
     filterEmoji,
+    searchPickerField,
 }
 
 export enum IconType {
@@ -151,6 +152,9 @@ export default function Btn({
             break;
         case BtnType.tab:
             classNames.push("btn btn--tab");
+            break;
+        case BtnType.searchPickerField:
+            classNames.push("btn btn--form-search-field");
             break;
         default:
             if (hasIcon) {

@@ -185,6 +185,7 @@ export default function ButtonForm({
                       validationError={errors.address}
                       watch={watch}
                       setValue={setValue}
+                    
                     />
                   </div>
                   <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />
