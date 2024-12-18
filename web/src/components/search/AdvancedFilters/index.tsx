@@ -149,9 +149,7 @@ export default function AdvancedFilters({
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="filters__content">
- 
-                  {/* <Accordion icon={<IoList/>} title={t('buttonFilters.byCategory')}> */}
-                    <FieldMultiSelect
+                     <FieldMultiSelect
                       label={t('buttonFilters.types')}
                       validationError={null}
                       explain={t('buttonFilters.typesExplain')}
@@ -172,26 +170,15 @@ export default function AdvancedFilters({
                               }}
                               key={idx}
                             >
-                              {/* <div className="btn-filter__icon"></div> */}
                               <div className="btn-with-icon__text">
                                 {buttonType.caption}
                               </div>
                             </MultiSelectOption>
 
-                        //   <div
-                        //     key={buttonType.name}
-                        //     style={buttonColorStyle(buttonType.cssColor)}
-                        //   >
-                        //     {/* <div className="btn-filter__icon"></div> */}
-                        //     <div className="btn-with-icon__text">
-                        //       {buttonType.caption}
-                        //     </div>
-                        // </div>
+
                       );
                     })}
                     </FieldMultiSelect>
-                    {/* </Accordion> */}
-
                     {showFilterByDays && 
                       <FilterByDays days={days} setDays={(value) => setValue('days', value)}/>
                     }

@@ -1535,6 +1535,13 @@
   max-height: 2.4rem;
 }
 
+.btn--file-upload {
+  margin: 12px 0;
+  background: #f0f0f0;
+  padding: 12px 24px;
+  text-align: center;
+}
+
 .btn-circle, .btn-circle--small, .card-button__picture-nav .arrow, .card-button-list__nav .arrow, .card-button-map__nav .arrow, .btn-circle--big-icon, .form__image-upload--remove-icon {
   display: flex;
   flex-flow: row nowrap;
@@ -8517,14 +8524,6 @@ body {
   font-weight: bold;
   font-size: 16px;
   border-radius: 34px;
-}
-
-.upload_file {
-  display: block;
-  margin: 12px 0;
-  background: #f0f0f0;
-  padding: 12px 24px;
-  text-align: center;
 }
 
 .search-map__network-title {

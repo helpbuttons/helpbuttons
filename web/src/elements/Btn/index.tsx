@@ -17,6 +17,7 @@ export enum BtnType {
     smallLink,
     filterEmoji,
     searchPickerField,
+    fileUpload,
 }
 
 export enum IconType {
@@ -155,6 +156,9 @@ export default function Btn({
             break;
         case BtnType.searchPickerField:
             classNames.push("btn btn--form-search-field");
+            break;
+        case BtnType.fileUpload:
+            classNames.push("btn btn--file-upload");
             break;
         default:
             if (hasIcon) {
