@@ -31,7 +31,6 @@ export default function PickerEventTypeMultipleForm({
   };
   return (
     <>
-      <div className="picker__content">
         <div className="picker__section">
           <div className="picker__section__pick">
             <div className="picker__row">
@@ -60,7 +59,6 @@ export default function PickerEventTypeMultipleForm({
             )}
           </div>
         </div>
-      </div>
     </>
   );
 }

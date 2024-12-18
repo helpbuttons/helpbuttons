@@ -24,8 +24,8 @@ services:
     networks:
       - internal_network
     #   - external_network
-    # ports: 
-    #   - 3001:3001
+    ports: 
+      - 3001:3001
 
   db:
     # build: postgres/
@@ -45,8 +45,8 @@ services:
       - internal_network
     #  - external_network
     #uncomment if using docker-compose up db and yarn dev for backend and not docker-compose.dev
-    ports: 
-      - 5432:5432
+    # ports: 
+    #   - 5432:5432
 
   redis:
     restart: always

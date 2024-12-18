@@ -346,6 +346,12 @@ $picker-comments-item-padding: 25px;
     padding: $padding-huge $padding-huge;
   }
 
+  .picker__content--nopadding {
+
+    padding: 0;
+  
+  }
+  
   .picker--over {
     // max-width: 700px;
     width: 100%;

@@ -55,9 +55,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
           <div className="form__input--text-length">{textLength} / {maxLength}</div>
           </>
         }
-        <ShowDesktopOnly>
-          <EmojiPicker updateEmoji={addEmoji} pickerEmoji="😀" label={undefined} explain={undefined}/>
-        </ShowDesktopOnly>
+
         <FieldError validationError={validationError} />
       </div>
     </>
