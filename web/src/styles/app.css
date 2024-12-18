@@ -4983,8 +4983,12 @@ hr {
 }
 
 @media only screen and (min-width: 991px) {
+  .homeinfo-card {
+    padding: 25px;
+  }
   .homeinfo__card--title-card {
     min-height: 10em;
+    margin-bottom: 0;
   }
   .homeinfo__network-title {
     display: none;
@@ -5017,13 +5021,7 @@ hr {
   .homeinfo__sections {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
     padding-bottom: 48px;
-  }
-  .homeinfo-card {
-    margin: 0;
-    padding: 25px;
-    margin-bottom: 7px;
   }
   .homeinfo__card--slogan-card {
     border-radius: 0px 0px 20px 20px;
