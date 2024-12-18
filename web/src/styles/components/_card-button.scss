@@ -763,6 +763,19 @@ $card-button-border-height: $border-general-height;
 
   }
 
+  .card-button__actions {
+
+    flex-direction: row;
+    gap: $padding-small;
+    
+  }
+
+  .card-button__phone-section {
+
+    min-width: 33%;
+
+  }
+
   .card-button__dropdown-container {
 
     right: $padding-xxsmall;
