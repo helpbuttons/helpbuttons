@@ -11,7 +11,11 @@ export function Picker({ closeAction, headerText, children, extraClass}) {
           <div  className="picker__header">
             <div  className="picker__header-content">
               <div  className="picker__header-left"></div>
-              <div  className="picker__header-center">{headerText}</div>
+              <div  className="picker__header-center">
+                <h1 className="popup__header-title">
+                  {headerText}
+                </h1>
+              </div>
               <div  className="picker__header-right">
                 <a onClick={() => closeAction()} className="picker__header-button">
                   <div className="btn-circle__icon">

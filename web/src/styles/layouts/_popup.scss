@@ -96,16 +96,12 @@ body {
   }
 }
 
-.popup__header-nav {
-}
 
 .popup__header-left {
-  @extend .popup__header-nav;
   text-align: left;
 }
 
 .popup__header-right {
-  @extend .popup__header-nav;
   text-align: right;
   // margin-right: $margin-small;
 }
@@ -119,9 +115,11 @@ body {
 }
 
 .popup__header-title  {
+
   font-size: $font-size-general;
-  font-weight: $font-weight-bolder;
+  font-weight: $font-weight-bold;
   color: $color-dark-gray;
+  letter-spacing: 2px;
 }
 
 .popup__header-button {
