@@ -89,7 +89,6 @@ export default function HexagonExploreMap({
             tileType={exploreSettings.tileType}
             handleClick={onMapClick}
           >
-            {/* <HbMapOverlay selectedNetwork={selectedNetwork} /> */}
             <DisplayInstructions />
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
@@ -294,26 +293,6 @@ export default function HexagonExploreMap({
         </>
       )}
     </>
-  );
-}
-
-function HbMapOverlay({ selectedNetwork }) {
-  {
-    /* DISPLAY INSTRUCTIONS OVER MAP*/
-  }
-
-  return (
-    <ShowMobileOnly>
-      <Overlay anchor={[100, 100]}>
-        <div className="search-map__network-title">
-          <div>{selectedNetwork.name}</div>
-          <div className="search-map__sign">
-            <PoweredBy />
-          </div>
-        </div>
-      </Overlay>
-    </ShowMobileOnly>
-
   );
 }
 
