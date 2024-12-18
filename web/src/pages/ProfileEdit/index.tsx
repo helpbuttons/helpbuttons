@@ -149,10 +149,8 @@ export default function ProfileEdit() {
               onSubmit={handleSubmit(onSubmit)}
               classNameExtra="login"
             >
-              <label className='form__label'> {sessionUser.username}@{getHostname()} </label>
-              
                 <div className="form__inputs-wrapper">
-                <Accordion collapsed={true} title={t('user.personalData')}>
+                <Accordion collapsed={true} title={t('user.personalData') }>
 
                   <FieldText
                     name="name"
