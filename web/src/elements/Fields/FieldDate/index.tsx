@@ -15,6 +15,7 @@ import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multi
 import FieldError from '../FieldError';
 import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
 import PickerField from 'components/picker/PickerField';
+import { IoTime, IoTimeOutline } from 'react-icons/io5';
 
 export default function FieldDate({
   title,
@@ -53,24 +54,27 @@ export default function FieldDate({
   // https://www.npmjs.com/package/react-time-picker
   return (
     <>
-    <ShowDate
-          eventStart={eventStart}
-          eventEnd={eventEnd}
-          eventType={eventType}
-          eventData={eventData}
-          title={title}
-        />
     <PickerField
       showPopup={showPopup}
-      btnLabel={t('button.changeDateLabel')}
-      headerText={''}
       openPopup={openPopup}
+      explain={t('button.whenExplain')}
+      iconLink={<IoTimeOutline/>}
+      btnLabel={
+          <ShowDate
+            eventStart={eventStart}
+            eventEnd={eventEnd}
+            eventType={eventType}
+            eventData={eventData}
+            title={title}
+        />
+      }
+      headerText={t('eventType.typePicker')}
+      label={t('button.whenLabel')}
       closePopup={closePopup}
     >
       <div className="picker__section">
               <EventType
                 name="eventType"
-                label={t('eventType.typePicker')}
                 value={eventType}
                 {...register('eventType')}
               />
@@ -245,8 +249,8 @@ export function ShowDate({
 }) {
   return (
     <>
-      {(eventStart || eventData) && (
-        <div className="card-button__date">
+      {(eventStart || eventData) ? (
+        <div className="">
           {readableEventDateTime(
             eventType,
             eventStart,
@@ -255,6 +259,8 @@ export function ShowDate({
             hideRecurrentDates
           )}
         </div>
+      ) : ( 
+        <>{title}</>
       )}{' '}
     </>
   );

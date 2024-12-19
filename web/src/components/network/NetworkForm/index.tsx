@@ -122,6 +122,18 @@ function NetworkForm({
               setFocus={setFocus}
               {...register('description', { required: true })}
             />
+             <FieldText
+              name="slogan"
+              label={t('configuration.sloganLabel')}
+              explain={t('configuration.sloganExplain')}
+              placeholder={t('configuration.sloganPlaceHolder')}
+              classNameInput="squared"
+              validationError={errors.slogan}
+              watch={watch}
+              setValue={setValue}
+              setFocus={setFocus}
+              {...register('slogan', { required: true })}
+            />
             <FieldCheckbox
               name='inviteOnly'
               label={t('invite.inviteOnlyLabel')}

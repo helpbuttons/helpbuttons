@@ -1,7 +1,7 @@
 import Btn, { BtnType, IconType } from 'elements/Btn';
 import { ImageContainer, ImageType } from 'elements/ImageWrapper';
 import { useEffect, useState } from 'react';
-import { IoClose } from 'react-icons/io5';
+import { IoClose, IoCloudUpload } from 'react-icons/io5';
 import ImageUploading from 'react-images-uploading';
 
 export default function FieldImageUploads({
@@ -59,7 +59,7 @@ export default function FieldImageUploads({
             { imageList, onImageUpload, onImageRemove }, // write your building UI
           ) => (
             <div className="form__image-upload__image-wrapper">
-              <label
+              {/* <label
                 htmlFor="files"
                 className="btn upload_file"
                 onClick={(e) => {
@@ -68,7 +68,20 @@ export default function FieldImageUploads({
                 }}
               >
                 {text}
-              </label>
+              </label> */}
+
+              <Btn
+                  btnType={BtnType.fileUpload}
+                  iconLink={<IoCloudUpload />}
+                  iconLeft={IconType.svg}
+                  htmlFor="files"
+                  caption={text}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onImageUpload();
+                  }}
+                />
+
               {imageList.length > 0 && (
                   <ul className="form__image-upload-preview--wrap">
                     {imageList.map((item, index) => (
