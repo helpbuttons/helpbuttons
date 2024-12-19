@@ -55,7 +55,7 @@
     "showSharePopup": "Share this app",
     "shareField": "Choose your share option",
     "shareTypeLabel": "Sharing types",
-    "shareTypeExplain": "Choose the type of share you want to do",
+    "shareTypeExplain": "Choose the type of share you want to do. If problems, try in desktop.",
     "shareExplain": "Select the amount of results you want to show and copy the code to your site",
     "explainInvitations": "Generate individual invitation cards for your community",
     "optionIframe": "List Iframe to insert in other sites",
