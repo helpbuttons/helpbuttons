@@ -348,20 +348,13 @@ export function CookiesBanner() {
     <>{showCookiesBanner &&
     <div className="card-alert__container">
       <div className="cookies-banner__content">
-        <p>
+        <p className="cookies-banner__title">
         {t('faqs.cookiesExplanation')}
           <a href="/Faqs" target="_blank" rel="noopener noreferrer">
           {t('faqs.cookiesPolicy')}
           </a>
           .
         </p>
-          <Btn
-            btnType={BtnType.submit}
-            iconLeft={IconType.circle}
-            caption={t('faqs.cookieReject')}
-            contentAlignment={ContentAlignment.center}
-            onClick={handleAcceptCookies}
-          />
           <Btn
             btnType={BtnType.submit}
             iconLeft={IconType.circle}
