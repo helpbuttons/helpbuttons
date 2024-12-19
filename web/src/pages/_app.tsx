@@ -35,6 +35,8 @@ import { randomBytes } from 'crypto'
 import MetadataSEOFromStore from 'components/seo';
 import { useRebuildUrl } from 'components/uri/builder';
 import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import { IoSaveOutline } from 'react-icons/io5';
 
 export default appWithTranslation(MyApp);
 
@@ -337,6 +339,10 @@ export function CookiesBanner() {
     localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, true);
     setShowCookiesBanner(false);
   };
+  const handleRejectCookies = () => {
+    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, false);
+    setShowCookiesBanner(false);
+  };
 
   return (
     <>{showCookiesBanner &&
@@ -349,12 +355,20 @@ export function CookiesBanner() {
           </a>
           .
         </p>
-        <button
-          className="cookies-banner__button"
-          onClick={handleAcceptCookies}
-        >
-          {t('faqs.cookieAccept')}
-        </button>
+          <Btn
+            btnType={BtnType.submit}
+            iconLeft={IconType.circle}
+            caption={t('faqs.cookieReject')}
+            contentAlignment={ContentAlignment.center}
+            onClick={handleAcceptCookies}
+          />
+          <Btn
+            btnType={BtnType.submit}
+            iconLeft={IconType.circle}
+            caption={t('faqs.cookieAccept')}
+            contentAlignment={ContentAlignment.center}
+            onClick={handleAcceptCookies}
+          />
       </div>
     </div>
     }</>
