@@ -194,16 +194,6 @@ export default function AdvancedFilters({
                       <TagFollow tags={tags}/>
                     </FieldText>
 
-                    <AdvancedFiltersSortDropDown
-                      className={'dropdown__dropdown-trigger'}
-                      label={t('buttonFilters.orderBy')}
-                      explain={t('buttonFilters.orderByExplain')}
-                      orderBy={watch('orderBy')}
-                      isForm={true}
-                      setOrderBy={(value) => setValue('orderBy',value)}
-                      buttonTypes={buttonTypes}
-                      selectedButtonTypes={watch('helpButtonTypes')}
-                    />
                     <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
                     {/* <div className="form__btn-search"> */}
                       <FilterByLocationRadius  handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
