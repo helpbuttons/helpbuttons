@@ -248,7 +248,7 @@ const getCustomFields = (buttonTypes, selectedButtonTypes) => {
   }
   const filteredButtonTypes = buttonTypes.filter((buttonType) => {
       
-    if (selectedButtonTypes.indexOf(buttonType.name) > -1) {
+    if (selectedButtonTypes.indexOf(buttonType.name) > -1 || selectedButtonTypes.length == 0) {
       return true;
     }
     return false;
