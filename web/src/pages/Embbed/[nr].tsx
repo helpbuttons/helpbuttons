@@ -1,8 +1,11 @@
 import CardButtonList from 'components/list/CardButtonList';
 import Loading from 'components/loading';
+import t from 'i18n';
+import { NextPageContext } from 'next';
 import router from 'next/router';
-import {  store } from 'pages';
+import { store } from 'state';
 import { useEffect, useRef, useState } from 'react';
+import { setMetadata } from 'services/ServerProps';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { FindEmbbedButtons } from 'state/Button';
 
@@ -64,3 +67,7 @@ export default function Embbed() {
     </>
   );
 }
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  return setMetadata(t('seo.embbed'), ctx);
+};

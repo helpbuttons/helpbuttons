@@ -1,8 +1,10 @@
 import { applyCustomFieldsFilters } from "components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields";
 import { isPointWithinRadius } from "geolib";
 import { Point } from "pigeon-maps";
+import { useEffect, useState } from "react";
 import { Button } from "shared/entities/button.entity";
 import { recalculateDensityMap } from "shared/honeycomb.utils";
+import { GlobalState, useGlobalStore } from "state";
 export const defaultDaysForBulletin = 30;
 export const defaultButtonsForEmbbed = 5;
 export interface ButtonFilters {
@@ -122,3 +124,14 @@ export interface ButtonFilters {
     );
     return {filteredButtons}    
   };
+
+  export const isFiltering = () =>
+  {
+    const filters = useGlobalStore((state: GlobalState) => state.explore.map.filters)
+    const [isFiltering, setIsFiltering] = useState(false)
+    useEffect(() => {
+      setIsFiltering(JSON.stringify(defaultFilters) !=
+      JSON.stringify(filters));
+    }, [filters])
+    return isFiltering
+  }

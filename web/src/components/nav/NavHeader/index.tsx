@@ -2,8 +2,8 @@
 import React from 'react';
 
 import { HeaderSearch } from 'elements/HeaderSearch';
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import NavBottom from '../NavBottom';
 import BrandCard from 'components/map/Map/BrandCard';
 import { ShowDesktopOnly } from 'elements/SizeOnly';

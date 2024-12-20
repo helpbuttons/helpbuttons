@@ -1,6 +1,6 @@
 import { BtnCaption } from 'elements/Btn';
 import router from 'next/router';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect, useState } from 'react';
 import { useButtonTypes } from 'shared/buttonTypes';
 import {
@@ -8,7 +8,7 @@ import {
   UpdateFiltersToFilterButtonType,
   updateCurrentButton,
 } from 'state/Explore';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 
 export function ListButtonTypes({ selectedNetwork, pageName }) {
   const showAdvancedFilters = useStore(

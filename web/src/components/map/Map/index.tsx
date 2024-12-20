@@ -96,10 +96,10 @@ export function HbMapUncontrolled({
       maxZoom: maxZoom,
       minZoom: 4,
     };
-    if (width !== null) {
+    if (width !== null && !isNaN(width)) {
       mapProps = { ...mapProps, width };
     }
-    if (height !== null) {
+    if (height !== null ) {
       mapProps = { ...mapProps, height };
     }
     return mapProps;

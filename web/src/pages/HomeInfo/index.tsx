@@ -1,5 +1,5 @@
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import router from 'next/router';
 import t from 'i18n';
 import Btn, {
@@ -17,8 +17,11 @@ import {
   IoClose,
   IoGlobeOutline,
   IoHelpOutline,
+  IoInformation,
+  IoInformationCircle,
   IoLogInOutline,
   IoMapOutline,
+  IoSearchOutline,
   IoShare,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
@@ -31,7 +34,7 @@ import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
-import { logoImageUri, setSSRLocale } from 'shared/sys.helper';
+import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
@@ -45,6 +48,7 @@ import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
 import { ActivityList } from 'components/feed/Activity/ActivityList';
 import { PoweredExtra } from 'components/brand/powered';
+import { IsMobilePhone } from 'class-validator';
 
 export default function HomeInfo({ metadata }) {
   const selectedNetwork = useStore(
@@ -80,9 +84,9 @@ export default function HomeInfo({ metadata }) {
           </div>
         </ShowMobileOnly>
       )}
-      {!currentUser && (
+      {/* {!currentUser && (
         <SupportBanner scrollToContact={scrollToContact} />
-      )}
+      )} */}
       {selectedNetwork && (
         <div className="homeinfo__container">
           <div className="homeinfo__content">
@@ -90,14 +94,18 @@ export default function HomeInfo({ metadata }) {
 
 
             <div className="homeinfo__sections">
-              <ShowMobileOnly>
-                <HomeInfoNetworkLogo selectedNetwork={selectedNetwork}/>
-                
-              </ShowMobileOnly>
+              <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} apiUrl={apiUrl}/>
+              <HomeSloganCard selectedNetwork={selectedNetwork} config={config}/>
 
               <HomeInfoPinnedButtons/>
+              {/* <HomeInfoPinnedUsers selectedNetwork={selectedNetwork} config={config}/> */}
+
+              <ShowMobileOnly>
+                 <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
+              </ShowMobileOnly>
               <HomeInfoInfoCard selectedNetwork={selectedNetwork}/>
-              <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
+              <HomeInfoInstallCard selectedNetwork={selectedNetwork}/>
+              
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork}/>
 
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork}/>
@@ -110,7 +118,7 @@ export default function HomeInfo({ metadata }) {
               
 
             </div>
-            <div
+            {/* <div
               className="homeinfo-card homeinfo__card--title-card"
               style={
                 {
@@ -119,7 +127,7 @@ export default function HomeInfo({ metadata }) {
               }
             >
               <div className="homeinfo-card__section--actions"></div>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
@@ -165,7 +173,6 @@ function SupportBanner({ scrollToContact }) {
 }
 
 export const getServerSideProps = async (ctx: NextPageContext) => {
-  setSSRLocale(ctx.locale);
   return setMetadata(t('menu.home'), ctx);
 };
 
@@ -210,17 +217,52 @@ function NavigatorCoordsButton() {
     </div>
   )}</>)
 }
-function HomeInfoNetworkLogo({selectedNetwork}) {
-  return (<div className="homeinfo-card__header">
-    <div className="homeinfo__network-title">
-      <div className="avatar-medium--home">
-        <NetworkLogo network={selectedNetwork} />
-      </div>
-      <h3 className="homeinfo__network-title-text">
-        {selectedNetwork.name}
-      </h3>
-    </div>
-  </div>)
+function HomeInfoNetworkLogo({selectedNetwork, apiUrl}) {
+
+  return (
+          <div className="homeinfo-card homeinfo__card--title-card"
+            style={
+              {
+                '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl+selectedNetwork.jumbo : '/api'+ logoImageUri}'`,
+              } as React.CSSProperties
+            }
+          >
+            <div className="homeinfo-card__header ">
+              <div className="homeinfo__network-title">
+                <div className="avatar-medium--home">
+                  <NetworkLogo network={selectedNetwork} />
+                </div>
+                <h3 className="homeinfo__network-title-text">
+                  {selectedNetwork.name}
+                </h3>
+              </div>
+            </div>
+          </div>
+  )
+}
+
+function HomeSloganCard({selectedNetwork, config}) {
+return (<>
+              {/* SLOGAN CARD */}
+              <div className="homeinfo-card homeinfo__card--slogan-card">
+                <div className="homeinfo-card__header homeinfo-card__header--slogan-card">
+                  <h3 className="homeinfo-card__header-title">
+                  {selectedNetwork.slogan}
+                  </h3>
+                  <div className="homeinfo-card__controls">
+                    <Btn
+                      btnType={BtnType.filterCorp}
+                      contentAlignment={ContentAlignment.center}
+                      iconLeft={IconType.svg}
+                      iconLink={<IoAddCircle />}
+                      extraClass="homeinfo__network-title-card--buttons"
+                      caption={t('homeinfo.goToCreate')}
+                      onClick={() => router.push('ButtonNew')}
+                    />
+                  </div>
+                </div><hr></hr>
+            
+              </div></>)
 }
 
 function HomeInfoPinnedButtons() {
@@ -252,19 +294,13 @@ function HomeInfoInfoCard({selectedNetwork})
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
-          {t('homeinfo.info')}
+        {t('homeinfo.info' , [
+             selectedNetwork?.name,
+           ])}
         </h3>
 
         <div className="homeinfo-card__controls">
-          <Btn
-            btnType={BtnType.filterCorp}
-            contentAlignment={ContentAlignment.center}
-            iconLink={<IoMapOutline />}
-            iconLeft={IconType.svg}
-            extraClass="homeinfo__network-title-card--buttons"
-            caption={t('homeinfo.goToExplore')}
-            onClick={() => router.push('Explore')}
-          />
+
         </div>
       </div>
       <hr></hr>
@@ -272,6 +308,40 @@ function HomeInfoInfoCard({selectedNetwork})
       <div className="homeinfo__description">
         <TextFormatted maxChars={600} text={selectedNetwork.description} />
       </div>
+      <div className="homeinfo-card__section">
+        <div className="homeinfo-card__action-bottom">
+          <Btn
+            btnType={BtnType.filterCorp}
+            contentAlignment={ContentAlignment.center}
+            iconLink={<IoInformationCircle />}
+            iconLeft={IconType.svg}
+            extraClass="homeinfo__network-title-card--buttons"
+            caption={t('homeinfo.knowMore')}
+            onClick={() => router.push('Faqs')}
+
+          />
+        </div>
+      </div>
+    </div></>)
+}
+
+
+function HomeInfoInstallCard({selectedNetwork})
+{
+  return (<>{/*  INSTALL CARD */}
+    <div className="homeinfo-card">
+      <div className="homeinfo-card__header">
+        <h3 className="homeinfo-card__header-title">
+        {t('homeinfo.install' , [
+             selectedNetwork?.name,
+           ])}
+        </h3>
+
+        <div className="homeinfo-card__controls">
+
+        </div>
+      </div>
+      <hr></hr>
       <div className="homeinfo-card__section">
         <div className="homeinfo-card__action-bottom">
           <InstallButton />
@@ -287,18 +357,12 @@ return (<>
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
                   <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.stats')}
+                    {t('homeinfo.stats' , [
+                      selectedNetwork?.name,
+                    ])}
                   </h3>
                   <div className="homeinfo-card__controls">
-                    <Btn
-                      btnType={BtnType.filterCorp}
-                      contentAlignment={ContentAlignment.center}
-                      iconLeft={IconType.svg}
-                      iconLink={<IoAddCircle />}
-                      extraClass="homeinfo__network-title-card--buttons"
-                      caption={t('homeinfo.goToCreate')}
-                      onClick={() => router.push('ButtonNew')}
-                    />
+              
                   </div>
                 </div><hr></hr>
                 <div className="homeinfo__description">
@@ -313,6 +377,19 @@ return (<>
                     />
                   </div>
                 </div>
+                <div className="homeinfo-card__section">
+                  <div className="homeinfo-card__action-bottom">
+                    <Btn
+                      btnType={BtnType.filterCorp}
+                      contentAlignment={ContentAlignment.center}
+                      iconLink={<IoSearchOutline />}
+                      iconLeft={IconType.svg}
+                      extraClass="homeinfo__network-title-card--buttons"
+                      caption={t('homeinfo.goToExplore')}
+                      onClick={() => router.push('Explore')}
+                    />
+                  </div>
+               </div>
               </div></>)
 }
 
@@ -351,6 +428,8 @@ function HomeInfoPinnedHashTags({selectedNetwork}) {
                       </h3>
                     </div>
                     <hr></hr>
+                    <div className="homeinfo__description">
+                    </div>
                     <div className="homeinfo__hashtags">
                       <TagsNav tags={selectedNetwork.tags} />
                     </div>

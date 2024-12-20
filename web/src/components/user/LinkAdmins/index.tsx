@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { LinkProfile } from '../LinkProfile';
 import { GetAdminPhone } from 'state/Users';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import Btn, {
   BtnType,
   ContentAlignment,
@@ -9,7 +9,7 @@ import Btn, {
 } from 'elements/Btn';
 import { IoCallOutline } from 'react-icons/io5';
 import t from 'i18n';
-import { useGlobalStore } from 'store/Store';
+import { useGlobalStore } from 'state';
 import { alertService } from 'services/Alert';
 import router from 'next/router';
 
@@ -20,7 +20,7 @@ export function LinkAdmins() {
   const sendMessage = (raw) => {
     // store.emit(new SendMessageToAdmins(raw, () => {
     //   alertService.info('Message sent to the admins of the network')
-    //   router.push('/HomeInfo')
+    //   router.push('/')
     // }))
   };
 

@@ -8,11 +8,13 @@ import Btn, {
 import t from 'i18n';
 import {
   IoAdd,
+  IoCallOutline,
   IoCloseOutline,
+  IoLogoWhatsapp,
   IoPersonOutline,
 } from 'react-icons/io5';
 
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect, useRef, useState } from 'react';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
@@ -24,11 +26,11 @@ import {
   LoadPosts,
 } from 'state/Posts';
 import { isAdmin } from 'state/Users';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 import MessageNew from 'components/feed/MessageNew';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';
-import { CardButtonHeadActions } from 'components/button/CardButton';
+import { ButtonOwnerPhone, CardButtonHeadActions } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function Feed({ button }: { button: Button }) {
@@ -69,6 +71,8 @@ export default function Feed({ button }: { button: Button }) {
   return (
     <div className="feed-container">
       <div className="card-button__actions">
+        <ButtonOwnerPhone user={button.owner} />
+
         <>
           {sessionUser && isButtonOwner && (
             <>
@@ -134,6 +138,7 @@ export default function Feed({ button }: { button: Button }) {
     </div>
   );
 }
+
 export function FeedElement({
   post,
   sessionUser,

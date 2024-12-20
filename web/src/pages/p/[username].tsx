@@ -1,6 +1,6 @@
 //Users buttons an profile info URL
 import { useRef } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect, useState } from 'react';
 import { FindUserButtons } from 'state/Users';
 import { FindExtraFieldsUser } from 'state/Profile';

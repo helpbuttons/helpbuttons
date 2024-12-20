@@ -1,7 +1,7 @@
 import Router from 'next/router';
 
 import { EffectEvent } from 'store/Event';
-import { GlobalState } from 'store/Store';
+import { GlobalState } from 'state';
 
 // TODO: not clear if this should be an event, a service
 //       or directly call to Router in pages. Think about it.

@@ -11,7 +11,7 @@ import { IoWarningOutline } from "react-icons/io5";
 
 import { IoCloseOutline } from "react-icons/io5";
 import { useRef } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { RemoveAlert } from 'state/Alerts';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 

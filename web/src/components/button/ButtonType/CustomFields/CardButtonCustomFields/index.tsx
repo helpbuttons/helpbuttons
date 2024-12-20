@@ -1,10 +1,10 @@
 import { ShowDate } from 'elements/Fields/FieldDate';
 import t from 'i18n';
 import _ from 'lodash';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { formatCurrency } from 'shared/currency.utils';
 import { Network } from 'shared/entities/network.entity';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 
 export function CardButtonCustomFields({ customFields, button }) {
   const selectedNetwork: Network = useStore(

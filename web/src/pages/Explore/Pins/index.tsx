@@ -10,7 +10,7 @@
 // } from 'state/Explore';
 // import NavHeader from 'components/nav/NavHeader'; //just for mobile
 // import { useRef } from 'store/Store';
-// import { GlobalState, store } from 'pages';
+// import { GlobalState, store } from 'state';
 import { withRouter } from 'next/router';
 // import List from 'components/list/List';
 // import { buttonTypes } from 'shared/buttonTypes';

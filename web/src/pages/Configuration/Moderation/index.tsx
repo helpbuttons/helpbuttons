@@ -11,7 +11,7 @@ import { TagsNav } from 'elements/Fields/FieldTags';
 import t from 'i18n';
 import Link from 'next/link';
 import router from 'next/router';
-import { store } from 'pages';
+import { store } from 'state';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {

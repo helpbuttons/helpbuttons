@@ -8,7 +8,7 @@ import {
   FindNewMessages,
   useActivities,
 } from 'state/Activity';
-import { store } from 'pages';
+import { store } from 'state';
 import Btn from 'elements/Btn';
 import Loading from 'components/loading';
 import { useScroll } from 'shared/helpers/scroll.helper';

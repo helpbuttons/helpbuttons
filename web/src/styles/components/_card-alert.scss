@@ -111,6 +111,54 @@ $card-alert-icon-size: 30px;
 
 }
 
+.cookies-banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #232323;
+  color: #ffffff;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+
+  &__content {
+    background-color: $color-white;
+    max-width: 1200px;
+    padding: $padding-big;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    a {
+      color: #4caf50;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__button {
+    margin-top: 0.5rem;
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+
+    &:hover {
+      background-color: #45a049;
+    }
+  }
+}
+
 
 
 @media #{$breakpoints-xlarge} {

@@ -71,7 +71,8 @@ export class AuthService {
       showButtons: false,
       tags: signupUserDto.tags,
       radius: 0,
-      qrcode: signupUserDto.qrcode
+      qrcode: signupUserDto.qrcode,
+      showWassap: false
     };
     
       return this.createUser(newUserDto, signupUserDto).then(
@@ -125,6 +126,7 @@ export class AuthService {
       showButtons: false,
       tags: signupUserDto.tags,
       radius: 0,
+      showWassap: false,
     };
 
     const regex = /^[a-zA-Z0-9\_\-\.]+$/gm;
@@ -281,7 +283,8 @@ export class AuthService {
       address: data.address,
       radius: data.radius,
       phone: data.phone,
-      publishPhone: data.publishPhone
+      publishPhone: data.publishPhone,
+      showWassap: data.showWassap
     };
 
     if (isImageData(data.avatar)) {

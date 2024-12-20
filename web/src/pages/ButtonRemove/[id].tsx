@@ -1,6 +1,6 @@
 import t from 'i18n';
 import { useRouter } from 'next/router';
-import { store } from 'pages';
+import { store } from 'state';
 import { useEffect, useRef } from 'react';
 import { alertService } from 'services/Alert';
 import { ButtonDelete } from 'state/Explore';

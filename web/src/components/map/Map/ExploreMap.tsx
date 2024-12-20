@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { GeoJson, Point } from 'pigeon-maps';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton, MarkerButtonPopup } from './MarkerButton';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { updateCurrentButton } from 'state/Explore';
 import { HbMap } from '.';
 import { BrowseType } from './Map.consts';

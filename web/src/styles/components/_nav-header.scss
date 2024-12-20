@@ -97,7 +97,7 @@ $nav-header-new-message-radius: $border-radius-circle;
     padding: $padding-medium $padding-big ;
     overflow-x:auto;
 
-    height: 64px;
+    height: $nav-header-height-desktop;
     border-bottom: 1px solid $color-gray-border;
     
   }

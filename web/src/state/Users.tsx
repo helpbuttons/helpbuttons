@@ -9,7 +9,7 @@ import { UserService } from 'services/Users';
 
 import { HttpService, isHttpError } from 'services/HttpService';
 import { SignupQRRequestDto, SignupRequestDto } from 'shared/dtos/auth.dto';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { handleError } from './helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
@@ -137,6 +137,23 @@ export class GetAdminPhone implements WatchEvent {
     private onSuccess,
     private onError,
   ) {}
+  public watch(state: GlobalState) {
+    return UserService.getPhone(this.userId).pipe(
+      map((data) => {
+        this.onSuccess(data);
+      }),
+      catchError((error) => handleError(this.onError, error)),
+    );
+  }
+}
+
+
+export class GetPhone implements WatchEvent {
+  public constructor(
+    private userId: string,
+    private onSuccess,
+    private onError,
+  ) { }
   public watch(state: GlobalState) {
     return UserService.getPhone(this.userId).pipe(
       map((data) => {

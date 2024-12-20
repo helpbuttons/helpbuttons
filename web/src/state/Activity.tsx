@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { catchError, forkJoin, map, zip } from 'rxjs';
 import { ActivityService } from 'services/Activity';
 import {
@@ -8,7 +8,7 @@ import {
 } from 'shared/entities/activity.entity';
 import { UpdateEvent, WatchEvent } from 'store/Event';
 import { of } from 'rxjs';
-import { useGlobalStore, useStore } from 'store/Store';
+import { useGlobalStore } from 'state';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useInterval } from 'shared/custom.hooks';
 import {

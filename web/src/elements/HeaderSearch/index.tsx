@@ -1,12 +1,12 @@
 import { IoClose, IoSearch } from 'react-icons/io5';
 import React, { useEffect, useRef, useState } from 'react';
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import { LoadabledComponent } from 'components/loading';
 import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { customFieldsFiltersText } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
-import { defaultFilters } from 'components/search/AdvancedFilters/filters.type';
+import { defaultFilters, isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { readableDistance } from 'shared/sys.helper';
 
@@ -19,14 +19,11 @@ export function HeaderSearch({ results, toggleAdvancedFilters }) {
   );
 
   const clearButton = useRef(null);
-
-  const filtering =
-    JSON.stringify(defaultFilters) !=
-    JSON.stringify(exploreMapState.filters);
+  const filtered = isFiltering()
   return (
     <div
       className={
-        filtering
+        filtered
           ? 'header-search__tool--filtered'
           : 'header-search__tool'
       }
@@ -46,7 +43,7 @@ export function HeaderSearch({ results, toggleAdvancedFilters }) {
           <SearchText
             count={results.count}
             where={exploreMapState.filters.where}
-            filtering={filtering}
+            filtering={filtered}
           />
           <SearchInfo
             query={exploreMapState.filters.query}
@@ -54,12 +51,12 @@ export function HeaderSearch({ results, toggleAdvancedFilters }) {
             filters={exploreMapState.filters}
           />
           <div className="header-search__icons">
-            {!filtering && (
+            {!filtered && (
               <div className="header-search__icon">
                 <IoSearch />
               </div>
             )}
-            {filtering && (
+            {filtered && (
               <div
                 ref={clearButton}
                 className="header-search__icon--close"
@@ -121,27 +118,27 @@ function SearchInfo({ filters, query, tags }) {
     false,
   );
 
-  if (!selectedNetwork) return '';
+  if (!selectedNetwork) return <></>;
 
   return (
     <div className="header-search__info">
-      {advancedSearchText(
-        query,
-        filters.helpButtonTypes,
-        tags,
-        filters,
-        selectedNetwork.currency,
-      )}
+      <AdvancedFiltersQueryString
+        query={query}
+        selectedButtonTypes={filters.helpButtonTypes}
+        tags={tags}
+        filters={filters}
+        currency={selectedNetwork.currency}
+      />
     </div>
   );
 }
 
-export function advancedSearchText(
-  query,
-  selectedButtonTypes,
-  tags,
-  filters,
-  currency,
+export function AdvancedFiltersQueryString(
+  { query,
+    selectedButtonTypes,
+    tags,
+    filters,
+    currency }
 ) {
   const buttonTypes = useButtonTypes();
   const whatText = (what) => {
@@ -172,7 +169,7 @@ export function advancedSearchText(
           return buttonType.caption;
         });
       setFilterTypesCaption(() => buttonTypesCaptions.join(', '));
-      
+
       if (selectedButtonTypes.length < 1) {
         setFilterTypesCaption(() =>
           t('buttonFilters.allButtonTypes'),

@@ -1,5 +1,5 @@
 import ButtonForm from 'components/button/ButtonForm';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import {
   CreateButton,
   FindButton,

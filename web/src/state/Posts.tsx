@@ -1,4 +1,4 @@
-import { GlobalState } from 'pages';
+import { GlobalState } from 'state';
 import { PostService } from 'services/Post';
 import { MessageDto } from 'shared/dtos/post.dto';
 import { UpdateEvent, WatchEvent } from 'store/Event';

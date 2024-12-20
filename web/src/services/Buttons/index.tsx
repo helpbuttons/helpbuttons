@@ -63,10 +63,6 @@ export class ButtonService {
     return httpService.get<any>(`buttons/unfollow/${id}`);
   }
 
-  public static getPhone(id: any): Observable<any> {
-    return httpService.get<any>(`buttons/getphone/${id}`);
-  }
-
   public static renew(id: any): Observable<any> {
     return httpService.get<any>(`buttons/renew/${id}`);
   }

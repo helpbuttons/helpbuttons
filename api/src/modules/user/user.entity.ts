@@ -121,6 +121,10 @@ export class User extends BaseEntity {
 
   @Column('text', {nullable: true})
   qrcode?: string;
+
+  @Expose()
+  @Column({default: false})
+  showWassap: boolean;
 }
 
 export interface UserRelations {

@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { GlobalState } from 'pages';
+import { GlobalState } from 'state';
 import { UpdateEvent } from 'store/Event';
 
 export interface Alert {

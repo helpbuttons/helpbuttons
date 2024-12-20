@@ -6,7 +6,7 @@ import { Link } from 'elements/Link';
 import FieldText from 'elements/Fields/FieldText';
 import { useForm } from 'react-hook-form';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import { store } from 'pages';
+import { store } from 'state';
 import { RequestNewLoginToken } from 'state/Profile';
 import { alertService } from 'services/Alert';
 import { useRouter } from 'next/router';

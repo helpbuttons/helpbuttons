@@ -6,7 +6,7 @@ import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import UserAvatar from '../components';
 import { getHostname } from 'shared/sys.helper';
 import t from 'i18n';
-import { store } from "pages";
+import { store } from "state";
 import { UpdateRole, isAdmin } from "state/Users";
 import { alertService } from "services/Alert";
 import router from "next/router";

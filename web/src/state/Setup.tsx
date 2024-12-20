@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { of, tap } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { isHttpError } from 'services/HttpService';
@@ -13,7 +13,7 @@ import { UpdateEvent, WatchEvent } from 'store/Event';
 import { FetchUserData } from './Profile';
 import { alertService } from 'services/Alert';
 import { useEffect, useRef } from 'react';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 
 
 export const useConfig = (_config, onError) => {
