@@ -266,8 +266,9 @@
     "createUpdate": "Publish Update",
     "authorTitle": "Author:",
     "notFound": "Can't find your button, maybe it was deleted?",
-    "followErrorAlert": "",
-    "unfollowErrorAlert": ""
+    "followErrorAlert": "Can't follow now, sorry",
+    "unfollowErrorAlert": "Can`t unfollow now, sorry",
+    "extraOptions": "Extra options"
   },
   "user": {
     "login": "Write your credentials",

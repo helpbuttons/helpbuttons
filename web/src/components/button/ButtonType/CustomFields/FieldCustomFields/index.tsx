@@ -64,10 +64,25 @@ function FieldPrice({
     }
   }, []);
   return (
-    <>
+    <div className="form__field">
       <label className="form__label">
         {t('customFields.priceLabel', [currency])}
       </label>
+      <p className="form__explain">{t('customFields.priceExplain')}</p>
+      {price != -1 && (
+        <FieldNumber
+          name={'price'}
+          watch={watch}
+          setValue={setValue}
+          setFocus={setFocus}
+          extraClass="form__field--noMargin"
+          validationError={errors.price}
+          {...register('price', {
+            required: true,
+            valueAsNumber: true,
+          })}
+        />
+      )}
       <FieldCheckbox
         name="consultPrice"
         defaultValue={price < 0}
@@ -77,19 +92,6 @@ function FieldPrice({
         }}
         {...register('consultPrice')}
       />
-      {price != -1 && (
-        <FieldNumber
-          name={'price'}
-          watch={watch}
-          setValue={setValue}
-          setFocus={setFocus}
-          validationError={errors.price}
-          {...register('price', {
-            required: true,
-            valueAsNumber: true,
-          })}
-        />
-      )}
-    </>
+    </div>
   );
 }

@@ -145,7 +145,7 @@ function ButtonNewForm({ selectedNetwork }) {
         setFocus={setFocus}
         isSubmitting={isSubmitting}
         onSubmit={onSubmit}
-        title={t('common.publishTitle', ['_helpbutton_'])}
+        header={t('common.publishTitle', ['_helpbutton_'])}
       ></ButtonForm>
     }
     </>

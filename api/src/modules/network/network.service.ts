@@ -60,6 +60,7 @@ export class NetworkService {
       logo: null,
       jumbo: null,
       name: createDto.name,
+      slogan: createDto.slogan,
       exploreSettings: createDto.exploreSettings,
       backgroundColor: createDto.backgroundColor,
       textColor: createDto.textColor,
@@ -185,6 +186,7 @@ export class NetworkService {
     const network = {
       id: defaultNetwork.id,
       description: updateDto.description,
+      slogan: updateDto.slogan,
       tags: this.tagService.formatTags(updateDto.tags),
       privacy: updateDto.privacy,
       logo: null,

@@ -17,6 +17,9 @@ export class Network extends BaseEntity {
   @Column({})
   description: string;
 
+  @Column({ default: ['Start collaborating now'] })
+  public slogan: string;
+
   @Column({ nullable: true })
   url?: string;
 
