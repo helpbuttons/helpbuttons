@@ -235,7 +235,7 @@
     "changePlaceLabel": "Choose place",
     "whenLabel": "Choose date",
     "whenExplain": "Specify the date",
-    "invalidDates": "Invalid Dates",
+    "invalidDates": "Check date and/or hour",
     "changeDateLabel": "Choose date",
     "placeHolderTitle": "Write a title for your _helpbutton_",
     "placeHolderDescription": "Write a description for your _helpbutton_",
@@ -270,8 +270,9 @@
     "createUpdate": "Publish Update",
     "authorTitle": "Author:",
     "notFound": "Can't find your button, maybe it was deleted?",
-    "followErrorAlert": "",
-    "unfollowErrorAlert": ""
+    "followErrorAlert": "Can`t follow now, sorry",
+    "unfollowErrorAlert": "Can`t unfollow now, sorry",
+    "extraOptions": "Extra editing options"
   },
   "user": {
     "login": "Write your credentials",

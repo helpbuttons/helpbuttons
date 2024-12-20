@@ -399,9 +399,10 @@
     "createUpdate": "Publicar Novedad",
     "authorTitle": "Autor:",
     "notFound": "No puedo encontrar tu button, talvez fue borrado?",
-    "invalidDates": "",
-    "followErrorAlert": "",
-    "unfollowErrorAlert": ""
+    "invalidDates": "Fechas y/o horas no incorrectas",
+    "followErrorAlert": "No se pudo suscribir",
+    "unfollowErrorAlert": "No se pudo desuscribir",
+    "extraOptions": "Opciones de edición avanzadas"
   },
   "calendarOnce": {
     "label": "Una vez",
