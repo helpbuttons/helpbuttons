@@ -329,23 +329,26 @@ function ActivityPool({ sessionUser, messagesUnread }) {
 
 export function CookiesBanner() {
   const [showCookiesBanner, setShowCookiesBanner] = useState(false);
+
+  const [cookiesChecked, setCookiesChecked] = useState(false);
+
   useEffect(() => {
+  if (!cookiesChecked) {
     const cookiesAccepted = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE);
     if (!cookiesAccepted) {
       setShowCookiesBanner(true);
     }
+    setCookiesChecked(true);
+  }
   }, []);
+
   const handleAcceptCookies = () => {
     localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, true);
     setShowCookiesBanner(false);
   };
-  const handleRejectCookies = () => {
-    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, false);
-    setShowCookiesBanner(false);
-  };
 
   return (
-    // <>{showCookiesBanner &&
+    <>{showCookiesBanner &&
     <div className="card-alert__container">
       <div className="cookies-banner__content">
         <p className="cookies-banner__title">
@@ -364,7 +367,7 @@ export function CookiesBanner() {
           />
       </div>
     </div>
-    //    </>}
+      }</>
   );
 }
 
