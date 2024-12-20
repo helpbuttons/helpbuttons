@@ -106,14 +106,14 @@ $jumbo-height: 10em;
 
   margin-top: 0;
   margin-bottom: 0;
-  border-radius: 20px 20px 0px 0;
+  border-radius: $border-radius-circle $border-radius-circle 0px 0;
   background-color: red;
 
 }
 
 .homeinfo__card--slogan-card {
 
-  border-radius: 0px 0px 20px 20px;
+  border-radius: 0px 0px $border-radius-basic $border-radius-basic;
   margin-top: 0;
 
 }
@@ -382,7 +382,6 @@ hr {
 
   .homeinfo__card--slogan-card {
 
-    border-radius: 0px 0px 20px 20px;
     margin-top: 0;
   
   }

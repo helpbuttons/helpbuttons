@@ -345,7 +345,7 @@ export function CookiesBanner() {
   };
 
   return (
-    <>{showCookiesBanner &&
+    // <>{showCookiesBanner &&
     <div className="card-alert__container">
       <div className="cookies-banner__content">
         <p className="cookies-banner__title">
@@ -364,7 +364,7 @@ export function CookiesBanner() {
           />
       </div>
     </div>
-    }</>
+    //    </>}
   );
 }
 
