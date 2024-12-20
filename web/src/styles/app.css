@@ -2564,7 +2564,7 @@ li, ol, ul, h2 {
   text-decoration: none;
 }
 
-@media only screen and (min-width: 1280px) {
+@media only screen and (min-width: 991px) {
   .cookies-banner__content {
     width: 40%;
     border-radius: 8px;
@@ -2572,6 +2572,8 @@ li, ol, ul, h2 {
     bottom: 15px;
     left: 15px;
   }
+}
+@media only screen and (min-width: 1280px) {
   .card-alert__container {
     top: auto;
     bottom: 0;

@@ -143,9 +143,7 @@ $card-alert-icon-size: 30px;
   }
 
 
-
-
-@media #{$breakpoints-xlarge} {
+@media #{$breakpoints-medium} {
 
   .cookies-banner__content {
 
@@ -156,6 +154,12 @@ $card-alert-icon-size: 30px;
     left: $padding-big;
 
   }
+
+}
+
+@media #{$breakpoints-xlarge} {
+
+
 
   .card-alert__container {
     top: auto;
