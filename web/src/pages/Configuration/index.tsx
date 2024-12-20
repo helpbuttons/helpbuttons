@@ -69,6 +69,7 @@ function Configuration() {
         {
           name: data.name,
           description: data.description,
+          slogan: data.slogan,
           tags: data.tags,
           privacy: data.privacy,
           logo: data.logo,

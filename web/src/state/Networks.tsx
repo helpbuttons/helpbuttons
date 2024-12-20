@@ -31,6 +31,7 @@ export const networksInitial = {
   selectedNetwork: {
     name: '...',
     description: '',
+    slogan: '',
     buttonTemplates: [],
     topTags: [],
     backgroundColor: 'grey',

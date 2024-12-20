@@ -74,7 +74,7 @@ function NetworkForm({
   }, [buttonTemplates])
 
   const accordionChapters = [
-    { name: 'defineNetwork', fields: ['name', 'description'] },
+    { name: 'defineNetwork', fields: ['name', 'description', 'slogan'] },
     { name: 'appearance', fields: ['logo', 'jumbo'] },
     { name: 'configuration', fields: ['exploreSettings'] },
   ];

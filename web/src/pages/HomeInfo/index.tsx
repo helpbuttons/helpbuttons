@@ -247,7 +247,7 @@ return (<>
               <div className="homeinfo-card homeinfo__card--slogan-card">
                 <div className="homeinfo-card__header homeinfo-card__header--slogan-card">
                   <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.slogan')} 
+                  {selectedNetwork.slogan}
                   </h3>
                   <div className="homeinfo-card__controls">
                     <Btn

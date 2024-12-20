@@ -608,6 +608,10 @@
     "markedAsRead": ""
   },
   "bulletin": {
+    "profileButton": "Crear nuevo boletín",
+    "explainBulletin": "Here you can get a list of _helpbuttons_ in a pdf format, with QR codes. So you can spread the word in your own community.",
+    "found": "{0} _helpbuttons_ found. From today until {1}",
+    "pdfDate": "since {0}",
     "since": "Since {0}",
     "filter": "",
     "noButtons": ""
