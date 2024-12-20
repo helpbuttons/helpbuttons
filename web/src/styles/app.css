@@ -8407,7 +8407,7 @@ body {
     border-radius: 0;
   }
   .popup--button-file {
-    max-width: 70vw;
+    max-width: 63vw;
   }
 }
 .repository {
@@ -8481,24 +8481,24 @@ body {
   .index__content-left {
     border-right: 1px solid #D4D4D4;
     flex-direction: column;
-    width: 70vw;
+    width: 63vw;
     float: left;
     height: 100%;
     transition: all 1s;
-    min-width: 70vw;
+    min-width: 63vw;
     box-shadow: 0 0 22px 0px rgba(0, 0, 0, 0.2);
   }
   .index__content-left--hide {
-    margin-left: -70vw;
+    margin-left: -63vw;
     bottom: 0;
   }
 }
 @media only screen and (min-width: 1440px) {
   .index__content-left {
-    width: 70vw;
+    width: 63vw;
   }
   .index__content-left--hide {
-    margin-left: -70vw;
+    margin-left: -63vw;
   }
 }
 .publish_btn {
@@ -9104,7 +9104,7 @@ body {
     flex-direction: row-reverse;
     height: auto;
     gap: 10px;
-    left: calc(70vw + 20px);
+    left: calc(63vw + 20px);
     border-radius: 34px;
     cursor: pointer; /* fallback if grab cursor is unsupported */
     padding: 5px;
@@ -9132,7 +9132,7 @@ body {
 }
 @media only screen and (min-width: 1440px) {
   .drag-tab {
-    left: calc(70vw + 20px);
+    left: calc(63vw + 20px);
     margin-bottom: 5px;
   }
   .drag-tab--open {
