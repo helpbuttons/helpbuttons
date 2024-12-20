@@ -75,6 +75,7 @@ function FieldPrice({
           watch={watch}
           setValue={setValue}
           setFocus={setFocus}
+          extraClass="form__field--noMargin"
           validationError={errors.price}
           {...register('price', {
             required: true,

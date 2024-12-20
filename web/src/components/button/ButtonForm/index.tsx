@@ -189,7 +189,7 @@ export default function ButtonForm({
                     />
                   <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />
                   <ButtonShare />
-                  <Accordion title={t("button.extraOptions")} icon={<IoAdd/>}>
+                  <Accordion extraClass={"accordion--toggle--grey-bordered"} title={t("button.extraOptions")} icon={<IoAdd/>}>
                     <FieldText
                       name="title"
                       label={t('button.titleLabel')}
@@ -216,6 +216,7 @@ export default function ButtonForm({
                     
                   </Accordion>
                 </div>
+
                 <div className="publish__submit">
                   <Btn
                     btnType={BtnType.submit}
