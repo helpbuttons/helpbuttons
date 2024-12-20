@@ -315,9 +315,8 @@ hr {
  @media #{$breakpoints-medium} {
 
   .homeinfo-card {
-    // margin: 0;
     padding: $margin-medium;
-    // margin-bottom: $margin-xsmall;
+    margin-bottom: $margin-xsmall;
   }
 
   .homeinfo__card--title-card {
@@ -379,7 +378,6 @@ hr {
     // padding-top: 48px;
     padding-bottom: 48px;
   }
-
 
 
   .homeinfo__card--slogan-card {

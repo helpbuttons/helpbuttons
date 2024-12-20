@@ -6,7 +6,7 @@ export function DropdownField({
   onChange = (value) => {},
   defaultSelected = null,
   explain = '',
-  className = 'dropdown-select__trigger',
+  className = 'dropdown__dropdown-trigger',
   value = null
 }) {
   return (

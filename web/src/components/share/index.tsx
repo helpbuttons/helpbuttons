@@ -98,7 +98,7 @@ export function ShareForm({}) {
               }
               value={shareOptionSelected}
             />
-          </div>
+        </div>
           {renderShareForm()}
     </>
   );

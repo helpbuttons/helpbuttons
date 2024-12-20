@@ -5000,6 +5000,7 @@ hr {
 @media only screen and (min-width: 991px) {
   .homeinfo-card {
     padding: 25px;
+    margin-bottom: 7px;
   }
   .homeinfo__card--title-card {
     min-height: 10em;

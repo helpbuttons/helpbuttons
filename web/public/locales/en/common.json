@@ -55,7 +55,7 @@
     "showSharePopup": "Share this app",
     "shareField": "Choose your share option",
     "shareTypeLabel": "Sharing types",
-    "shareTypeExplain": "Choose the type of share you want to do",
+    "shareTypeExplain": "Choose the type of share you want to do. If problems, try in desktop.",
     "shareExplain": "Select the amount of results you want to show and copy the code to your site",
     "explainInvitations": "Generate individual invitation cards for your community",
     "optionIframe": "List Iframe to insert in other sites",
@@ -509,9 +509,10 @@
     "networksEthicsDescription": "",
     "cookiesQuestion": "Cookies policy",
     "cookiesDescription": "This site, uses cookies to provide a secure and personalized experience. Below is a description of specific cookies we use: 1. ACCESS_TOKEN (access_token): This cookie securely stores your access token, allowing you to stay logged in during your session without needing to re-authenticate. Type: Essential Duration: Session-based 2. TOKEN_TYPE (token_type): Used to identify the type of access token you are using, ensuring proper authentication and security. Type: Essential Duration: Session-based 3. NETWORK_SELECTED (network_id): Stores information about the selected network you are using on our platform, helping provide a customized experience based on your selection. Type: Functionality Duration: Session-based 4. EXPLORE_SETTINGS (explore_settings): Saves your preferences and settings in the explore feature, making your browsing experience more consistent and tailored. Type: Functionality Duration: Persistent 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Tracks whether you have given permission for notifications, allowing us to show or hide notifications based on your preference. Type: Preference Duration: Persistent You can manage your cookie settings through your browser's preferences. ",
-    "cookiesExplanation": "This site uses cookies only when you log in. For more details, see our ",
+    "cookiesExplanation": "We use cookies only when you log in. This is just an informative banner. For more details, see our ",
     "cookiesPolicy": "Cookie Policy",
     "cookieAccept": "Accept",
+    "cookieReject": "Reject",
     "networkEthics": ""
   },
   "invite": {
