@@ -4,6 +4,8 @@ $info-nets-max-width: $grid-max-width--mobile;
 $info-image-height: 700px;
 $info-content-mobile-bottom-padding: calc( $footer-height-mobile*2 );
 $info-content-head-margin-mobile: 71px;
+$jumbo-height: 10em;
+
 
 .homeinfo__selected {
 
@@ -100,23 +102,19 @@ $info-content-head-margin-mobile: 71px;
   background-repeat: no-repeat, repeat;
   background-position: center;
   background-size: cover;
-  position: absolute;
-  z-index: $z-index-background;
   height: 100%;
-  border-radius: 0;
-  top: 0;
-  align-items: center;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: center;
-  // justify-content: center;
-  margin: 0 ;
-  min-height: 20rem;
-  flex-basis: 100%;
-  padding: $padding-big;
-  border-radius: 0;
+
+  margin-top: 0;
+  margin-bottom: 0;
+  border-radius: $border-radius-circle $border-radius-circle 0px 0;
+  background-color: red;
+
+}
+
+.homeinfo__card--slogan-card {
+
+  border-radius: 0px 0px $border-radius-basic $border-radius-basic;
+  margin-top: 0;
 
 }
 
@@ -206,6 +204,14 @@ $info-content-head-margin-mobile: 71px;
   }
 }
 
+.homeinfo-card__header--slogan-card {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
 
 hr {
   border-top: 0.5px solid $color-ligth-gray;
@@ -268,9 +274,6 @@ hr {
 
   font-size: $font-size-xsmall;
   color: $color-med-gray;
-  display: flex;
-  gap: $padding-small;
-  justify-content: flex-end;
 
 }
 
@@ -310,6 +313,25 @@ hr {
 
 
  @media #{$breakpoints-medium} {
+
+  .homeinfo-card {
+    padding: $margin-medium;
+    margin-bottom: $margin-xsmall;
+  }
+
+  .homeinfo__card--title-card {
+
+    min-height: $jumbo-height;
+    margin-bottom: 0;
+
+  }
+
+  .homeinfo__network-title {
+
+    display: none;
+
+  }
+
   .homeinfo-card__header {
     .homeinfo-card__header-title {
       font-size: $font-size-title;
@@ -351,16 +373,17 @@ hr {
   .homeinfo__sections {
     display: flex;
     flex-wrap: wrap;
-    gap: $margin-small;
+    // gap: $margin-small;
     // margin-top: -150px;
     // padding-top: 48px;
     padding-bottom: 48px;
   }
 
-  .homeinfo-card {
-    margin: 0;
-    padding: $margin-medium;
-    margin-bottom: $margin-xsmall;
+
+  .homeinfo__card--slogan-card {
+
+    margin-top: 0;
+  
   }
 
 

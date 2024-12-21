@@ -12,6 +12,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
     validationError,
     placeholder,
     classNameExtra,
+    functionExtra,
     watch,
     setValue,
     setFocus,
@@ -26,9 +27,11 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
   }
   const handleChange = (event) => {
     setValue(name, `${event.target.value}`)
+    if (functionExtra)
+      functionExtra (event);
   }
     const [textLength, setTextLength] = useState(0);
-     const onInput = (obj) => {
+    const onInput = (obj) => {
         if (maxLength > 0){
             if ( obj.target.value.length > maxLength) {
                 obj.target.value = obj.target.value.slice(0, maxLength)
@@ -55,9 +58,7 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
           <div className="form__input--text-length">{textLength} / {maxLength}</div>
           </>
         }
-        <ShowDesktopOnly>
-          <EmojiPicker updateEmoji={addEmoji} pickerEmoji="😀"/>
-        </ShowDesktopOnly>
+
         <FieldError validationError={validationError} />
       </div>
     </>

@@ -8,6 +8,7 @@ export default function Accordion({
     title,
     children,
     icon,
+    extraClass,
     handleClick = () => {},
     collapsed = false,
 }) {
@@ -37,7 +38,7 @@ useEffect(() =>
             
             iconLeft={IconType.circle}
             caption={title}
-            extraClass={classNames}
+            extraClass={classNames + ' ' + extraClass}
             contentAlignment={ContentAlignment.left}
             onClick={(e) => {e.preventDefault(); setShowChildren(!showChildren);handleClick()}}
           />

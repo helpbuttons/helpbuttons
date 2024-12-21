@@ -129,10 +129,17 @@ $map-btns-size-mobile: 30px;
 .pigeon-attribution {
     position: relative;
     right: 10px;
-    bottom: 60px !important;
+    bottom: 0px !important;
     background: transparent !important;
-    font-size: 8px;
+    font-size: $font-size-xsmall !important;
 
+    // &::before {
+        
+    //     content: "<a href="">fix a </a> " ;
+
+    // }
+
+   
 }
 
 .pigeon-map__custom-block {

@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @import "~@fontsource/nunito/index.css";
 @import "~@fontsource/nunito/700.css";
 @import "~@fontsource/nunito/400.css";
@@ -507,6 +506,7 @@
   background: none;
   border: none;
   padding: 0;
+  justify-content: space-between;
   display: flex;
   flex-flow: row wrap;
 }
@@ -1039,7 +1039,7 @@
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: row;
-  padding: 5px;
+  padding: 5px 0;
   gap: 5px;
 }
 .form__field--location button {
@@ -1503,6 +1503,19 @@
   height: 48px;
 }
 
+.btn--form-search-field {
+  background: #fff;
+  border: 4px solid #0E0E0E;
+  border-radius: 8px;
+  font-weight: 600;
+  height: 54px;
+  margin: 0;
+}
+.btn--form-search-field:focus, .btn--form-search-field:active, .btn--form-search-field:hover {
+  color: #fff;
+  background: #0E0E0E;
+}
+
 .btn-with-icon__icon {
   max-width: 25px;
   margin-right: 4px;
@@ -1517,10 +1530,18 @@
   font-size: 16px;
   text-align: left;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   text-overflow: ellipsis;
   overflow: hidden;
   line-height: 1.2rem;
   max-height: 2.4rem;
+}
+
+.btn--file-upload {
+  margin: 12px 0;
+  background: #f0f0f0;
+  padding: 12px 24px;
+  text-align: center;
 }
 
 .btn-circle, .btn-circle--small, .card-button__picture-nav .arrow, .card-button-list__nav .arrow, .card-button-map__nav .arrow, .btn-circle--big-icon, .form__image-upload--remove-icon {
@@ -2172,43 +2193,21 @@ em-emoji-picker {
   margin: 5px;
 }
 
-.form__btn-search .form__field:nth-child(1) .form__explain + .btn, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn, .form__btn-search .form__field:nth-child(1) .homeinfo-card__section .form__explain + a, .form__btn-search .homeinfo__nets:nth-child(1) .homeinfo-card__section .form__explain + a, .homeinfo-card__section .form__btn-search .form__field:nth-child(1) .form__explain + a, .homeinfo-card__section .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + a, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn, .form__btn-search .homeinfo__content:nth-child(1) .homeinfo-card__section .form__explain + a, .homeinfo-card__section .form__btn-search .homeinfo__content:nth-child(1) .form__explain + a, .form__btn-search .form__field:nth-child(1) .form__explain + .accordion, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .accordion, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .accordion, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn, .form__btn-search .form__image-upload-wrapper:nth-child(1) .homeinfo-card__section .form__explain + a, .homeinfo-card__section .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + a, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .accordion, .form__btn-search .form__field:nth-child(1) .form__explain + .btn--small, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn--small, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn--small, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn--small {
-  display: block;
-  background: white;
-  border: 4px solid black;
-  border-radius: 8px;
-  font-weight: bold;
-  padding: 0 48px;
-  margin: 0;
-}
-.form__btn-search .form__field:nth-child(1) .form__explain + .btn:after, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn:after, .form__btn-search .form__field:nth-child(1) .homeinfo-card__section .form__explain + a:after, .form__btn-search .homeinfo__nets:nth-child(1) .homeinfo-card__section .form__explain + a:after, .homeinfo-card__section .form__btn-search .form__field:nth-child(1) .form__explain + a:after, .homeinfo-card__section .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + a:after, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn:after, .form__btn-search .homeinfo__content:nth-child(1) .homeinfo-card__section .form__explain + a:after, .homeinfo-card__section .form__btn-search .homeinfo__content:nth-child(1) .form__explain + a:after, .form__btn-search .form__field:nth-child(1) .form__explain + .accordion:after, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .accordion:after, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .accordion:after, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn:after, .form__btn-search .form__image-upload-wrapper:nth-child(1) .homeinfo-card__section .form__explain + a:after, .homeinfo-card__section .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + a:after, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .accordion:after, .form__btn-search .form__field:nth-child(1) .form__explain + .btn--small:after, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn--small:after, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn--small:after, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn--small:after {
-  display: block;
-  content: "🔎";
-  position: absolute;
-  left: 12px;
-  top: 6px;
-  height: 28px;
-  width: 28px;
-}
-.form__btn-search .form__field:nth-child(1) .form__explain + .btn:focus, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn:focus, .form__btn-search .form__field:nth-child(1) .homeinfo-card__section .form__explain + a:focus, .form__btn-search .homeinfo__nets:nth-child(1) .homeinfo-card__section .form__explain + a:focus, .homeinfo-card__section .form__btn-search .form__field:nth-child(1) .form__explain + a:focus, .homeinfo-card__section .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + a:focus, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn:focus, .form__btn-search .homeinfo__content:nth-child(1) .homeinfo-card__section .form__explain + a:focus, .homeinfo-card__section .form__btn-search .homeinfo__content:nth-child(1) .form__explain + a:focus, .form__btn-search .form__field:nth-child(1) .form__explain + .accordion:focus, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .accordion:focus, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .accordion:focus, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn:focus, .form__btn-search .form__image-upload-wrapper:nth-child(1) .homeinfo-card__section .form__explain + a:focus, .homeinfo-card__section .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + a:focus, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .accordion:focus, .form__btn-search .form__field:nth-child(1) .form__explain + .btn--small:focus, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn--small:focus, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn--small:focus, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn--small:focus, .form__btn-search .form__field:nth-child(1) .form__explain + .btn:active, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn:active, .form__btn-search .form__field:nth-child(1) .homeinfo-card__section .form__explain + a:active, .form__btn-search .homeinfo__nets:nth-child(1) .homeinfo-card__section .form__explain + a:active, .homeinfo-card__section .form__btn-search .form__field:nth-child(1) .form__explain + a:active, .homeinfo-card__section .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + a:active, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn:active, .form__btn-search .homeinfo__content:nth-child(1) .homeinfo-card__section .form__explain + a:active, .homeinfo-card__section .form__btn-search .homeinfo__content:nth-child(1) .form__explain + a:active, .form__btn-search .form__field:nth-child(1) .form__explain + .accordion:active, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .accordion:active, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .accordion:active, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn:active, .form__btn-search .form__image-upload-wrapper:nth-child(1) .homeinfo-card__section .form__explain + a:active, .homeinfo-card__section .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + a:active, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .accordion:active, .form__btn-search .form__field:nth-child(1) .form__explain + .btn--small:active, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn--small:active, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn--small:active, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn--small:active, .form__btn-search .form__field:nth-child(1) .form__explain + .btn:hover, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn:hover, .form__btn-search .form__field:nth-child(1) .homeinfo-card__section .form__explain + a:hover, .form__btn-search .homeinfo__nets:nth-child(1) .homeinfo-card__section .form__explain + a:hover, .homeinfo-card__section .form__btn-search .form__field:nth-child(1) .form__explain + a:hover, .homeinfo-card__section .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + a:hover, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn:hover, .form__btn-search .homeinfo__content:nth-child(1) .homeinfo-card__section .form__explain + a:hover, .homeinfo-card__section .form__btn-search .homeinfo__content:nth-child(1) .form__explain + a:hover, .form__btn-search .form__field:nth-child(1) .form__explain + .accordion:hover, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .accordion:hover, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .accordion:hover, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn:hover, .form__btn-search .form__image-upload-wrapper:nth-child(1) .homeinfo-card__section .form__explain + a:hover, .homeinfo-card__section .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + a:hover, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .accordion:hover, .form__btn-search .form__field:nth-child(1) .form__explain + .btn--small:hover, .form__btn-search .homeinfo__nets:nth-child(1) .form__explain + .btn--small:hover, .form__btn-search .homeinfo__content:nth-child(1) .form__explain + .btn--small:hover, .form__btn-search .form__image-upload-wrapper:nth-child(1) .form__explain + .btn--small:hover {
-  color: black;
-  background: white;
-}
-
 .dropdown__dropdown-trigger {
   text-align: left;
   overflow-x: hidden;
   height: 54px;
   padding: 0 15px;
   margin: 7px 0;
-  background: #fff;
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
   width: 100%;
   border-radius: 8px;
   background: #f0f0f0;
-  border-right: 24px solid #f0f0f0;
+  padding-right: 1rem;
+  background-position-x: 70%;
+  border-right: 15px solid transparent;
 }
 .dropdown__dropdown-trigger:hover {
   cursor: pointer;
@@ -2230,16 +2229,14 @@ em-emoji-picker {
   text-decoration: none;
   border: none;
   border-radius: 2rem;
-  background: #fff;
+  background: transparent;
   color: #0E0E0E;
   transition: all 0.2s ease-in-out;
   font-size: 16px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
   background-repeat: no-repeat;
   background-position-x: 100%;
   background-position-y: 50%;
+  border-right: 15px solid transparent;
 }
 .dropdown__dropdown-trigger--list:hover {
   cursor: pointer;
@@ -2391,7 +2388,7 @@ em-emoji-picker {
 }
 
 .accordion--toggle--grey-bordered {
-  border-color: #0e0e0e;
+  border-color: #f0f0f0;
 }
 
 .accordion--content {
@@ -2541,7 +2538,40 @@ li, ol, ul, h2 {
   gap: 5px;
 }
 
+.cookies-banner__content {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  gap: 15px;
+  z-index: 600;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 120px;
+  text-align: center;
+  background-color: #fff;
+  color: #0E0E0E;
+  border-top: 1px solid #D4D4D4;
+  box-shadow: 0 0 22px 0px rgba(0, 0, 0, 0.2);
+}
+.cookies-banner__content a {
+  color: var(--network-background-color);
+  text-decoration: underline;
+}
+.cookies-banner__content a:hover {
+  text-decoration: none;
+}
+
 @media only screen and (min-width: 1280px) {
+  .cookies-banner__content {
+    width: 40%;
+    border-radius: 8px;
+    border: 1px solid #D4D4D4;
+    bottom: 15px;
+    left: 15px;
+  }
   .card-alert__container {
     top: auto;
     bottom: 0;
@@ -3388,17 +3418,29 @@ li, ol, ul, h2 {
   display: none;
 }
 
-.picker__content {
+.picker {
   overflow: auto;
   width: auto;
   min-width: 240px;
   overflow-y: visible !important;
   padding: 15px;
-  padding-top: 0;
   background: #fff !important;
   overflow-x: hidden;
-  box-shadow: none;
+  height: auto;
   border-radius: 8px;
+}
+
+.picker__content {
+  width: 100%;
+  overflow-x: hidden;
+  flex-direction: column;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.picker__section {
+  display: flex;
+  flex-direction: column;
 }
 
 .picker__content--nopadding {
@@ -3448,9 +3490,11 @@ li, ol, ul, h2 {
 .picker__header--trans,
 .picker__header {
   width: 100%;
-  padding: 15px;
   position: relative;
-  height: 80px;
+  height: 50px;
+  padding: 15px 10px;
+  border-radius: 24px 24px 0 0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .picker__header--trans {
@@ -3458,7 +3502,7 @@ li, ol, ul, h2 {
 }
 
 .picker__header-center {
-  flex: 0 1 100%;
+  flex: 0 1 calc(100% - 20px * 2);
   text-align: center;
   padding: 0 10px;
 }
@@ -3620,6 +3664,7 @@ li, ol, ul, h2 {
   width: auto;
   display: flex;
   margin-bottom: 25px;
+  min-height: 250px;
 }
 .picker__map .pigeon-zoom-buttons {
   right: 5px;
@@ -3634,6 +3679,7 @@ li, ol, ul, h2 {
   width: 100%;
   height: 100%;
   z-index: 500;
+  padding: 0;
 }
 
 @media only screen and (min-width: 991px) {
@@ -3647,8 +3693,14 @@ li, ol, ul, h2 {
     max-width: 680px;
     height: auto;
   }
+  .picker__content {
+    padding: 30px 30px;
+  }
+  .picker__content--nopadding {
+    padding: 0;
+  }
   .picker--over {
-    max-width: 700px;
+    width: 100%;
     z-index: 500;
     max-height: 90%;
   }
@@ -4763,22 +4815,16 @@ li, ol, ul, h2 {
   background-repeat: no-repeat, repeat;
   background-position: center;
   background-size: cover;
-  position: absolute;
-  z-index: -1;
   height: 100%;
-  border-radius: 0;
-  top: 0;
-  align-items: center;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: center;
-  margin: 0;
-  min-height: 20rem;
-  flex-basis: 100%;
-  padding: 15px;
-  border-radius: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-radius: 34px 34px 0px 0;
+  background-color: red;
+}
+
+.homeinfo__card--slogan-card {
+  border-radius: 0px 0px 8px 8px;
+  margin-top: 0;
 }
 
 .homeinfo__network-title {
@@ -4850,6 +4896,13 @@ li, ol, ul, h2 {
   font-weight: bold;
 }
 
+.homeinfo-card__header--slogan-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
 hr {
   border-top: 0.5px solid #f0f0f0;
 }
@@ -4901,9 +4954,6 @@ hr {
 .homeinfo-card__section--attr {
   font-size: 10px;
   color: #8da0a0;
-  display: flex;
-  gap: 5px;
-  justify-content: flex-end;
 }
 
 .homeinfo-card__section--actions {
@@ -4938,6 +4988,17 @@ hr {
 }
 
 @media only screen and (min-width: 991px) {
+  .homeinfo-card {
+    padding: 25px;
+    margin-bottom: 7px;
+  }
+  .homeinfo__card--title-card {
+    min-height: 10em;
+    margin-bottom: 0;
+  }
+  .homeinfo__network-title {
+    display: none;
+  }
   .homeinfo-card__header .homeinfo-card__header-title {
     font-size: 22px;
   }
@@ -4966,13 +5027,10 @@ hr {
   .homeinfo__sections {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
     padding-bottom: 48px;
   }
-  .homeinfo-card {
-    margin: 0;
-    padding: 25px;
-    margin-bottom: 7px;
+  .homeinfo__card--slogan-card {
+    margin-top: 0;
   }
 }
 .header-search__content {
@@ -5013,7 +5071,7 @@ hr {
 .header-search__icon {
   height: 20px;
   width: 20px;
-  margin-right: 7px;
+  margin-left: 7px;
 }
 .header-search__icon svg {
   width: 20px;
@@ -5030,13 +5088,13 @@ hr {
   height: 40px;
   /* width: 100%; */
   align-items: center;
-  border-radius: 0 34px 34px 0;
+  border-radius: 34px 0 0 34px;
   border-left: 2px solid #2E2E2E;
 }
 
 .header-search__icons {
   position: absolute;
-  right: 0;
+  left: 0;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -5158,6 +5216,7 @@ hr {
   position: relative;
   height: 2.5rem;
   overflow: hidden;
+  padding-left: 30px;
 }
 
 .header-search__half-column {
@@ -5772,7 +5831,7 @@ hr {
 
 .card-button__city-list,
 .card-button__date {
-  color: black;
+  color: #0E0E0E;
   font-size: 14px;
   font-weight: bold;
   text-align: left;
@@ -5898,6 +5957,13 @@ hr {
   .card-button__author,
   .card-button__actions {
     padding: 30px;
+  }
+  .card-button__actions {
+    flex-direction: row;
+    gap: 5px;
+  }
+  .card-button__phone-section {
+    min-width: 33%;
   }
   .card-button__dropdown-container {
     right: 1px;
@@ -6735,9 +6801,9 @@ hr {
 .pigeon-attribution {
   position: relative;
   right: 10px;
-  bottom: 60px !important;
+  bottom: 0px !important;
   background: transparent !important;
-  font-size: 8px;
+  font-size: 10px !important;
 }
 
 .pigeon-map__custom-block {
@@ -7945,10 +8011,10 @@ hr {
   min-height: 42px;
   border-radius: 24px 24px 0 0;
   box-shadow: 0 0 22px 0px rgba(0, 0, 0, 0.2);
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 10px;
+  padding-right: 10px;
   padding-top: 15px;
-  padding-bottom: 5px;
+  padding-bottom: 4px;
 }
 
 .list__order--full-screen {
@@ -8097,7 +8163,7 @@ body {
   text-align: right;
 }
 
-.popup__header-content {
+.popup__header-content, .picker__header-content {
   height: 100%;
   display: flex;
   align-items: center;
@@ -8107,8 +8173,9 @@ body {
 
 .popup__header-title {
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 600;
   color: #2E2E2E;
+  letter-spacing: 2px;
 }
 
 .popup__header-button {
@@ -8140,7 +8207,7 @@ body {
 }
 
 .popup__section {
-  padding: 24px;
+  padding: 15px;
   height: auto;
 }
 
@@ -8313,7 +8380,7 @@ body {
     min-height: 50px;
   }
   .popup__section {
-    padding: 32px 36px;
+    padding: 30px 30px;
   }
   .popup__options-h {
     flex-flow: row nowrap;
@@ -8340,7 +8407,7 @@ body {
     border-radius: 0;
   }
   .popup--button-file {
-    max-width: 70vw;
+    max-width: 63vw;
   }
 }
 .repository {
@@ -8414,24 +8481,24 @@ body {
   .index__content-left {
     border-right: 1px solid #D4D4D4;
     flex-direction: column;
-    width: 70vw;
+    width: 63vw;
     float: left;
     height: 100%;
     transition: all 1s;
-    min-width: 70vw;
+    min-width: 63vw;
     box-shadow: 0 0 22px 0px rgba(0, 0, 0, 0.2);
   }
   .index__content-left--hide {
-    margin-left: -70vw;
+    margin-left: -63vw;
     bottom: 0;
   }
 }
 @media only screen and (min-width: 1440px) {
   .index__content-left {
-    width: 70vw;
+    width: 63vw;
   }
   .index__content-left--hide {
-    margin-left: -70vw;
+    margin-left: -63vw;
   }
 }
 .publish_btn {
@@ -8467,14 +8534,6 @@ body {
   font-weight: bold;
   font-size: 16px;
   border-radius: 34px;
-}
-
-.upload_file {
-  display: block;
-  margin: 12px 0;
-  background: #f0f0f0;
-  padding: 12px 24px;
-  text-align: center;
 }
 
 .search-map__network-title {
@@ -9045,7 +9104,7 @@ body {
     flex-direction: row-reverse;
     height: auto;
     gap: 10px;
-    left: calc(70vw + 20px);
+    left: calc(63vw + 20px);
     border-radius: 34px;
     cursor: pointer; /* fallback if grab cursor is unsupported */
     padding: 5px;
@@ -9073,7 +9132,7 @@ body {
 }
 @media only screen and (min-width: 1440px) {
   .drag-tab {
-    left: calc(70vw + 20px);
+    left: calc(63vw + 20px);
     margin-bottom: 5px;
   }
   .drag-tab--open {
@@ -9260,6 +9319,10 @@ a {
 }
 a:hover {
   color: #828282;
+}
+
+p a {
+  text-decoration: underline;
 }
 
 .disabled {

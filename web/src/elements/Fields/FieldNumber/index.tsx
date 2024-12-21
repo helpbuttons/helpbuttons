@@ -10,12 +10,15 @@ const FieldNumber = React.forwardRef(({
     onBlur,
     validationError,
     value,
+    extraClass,
     explain,
     extraMessage
 }, ref): IFieldText => {
     return (
-        <div className="form__field">
-            <label className="form__label">{label}</label>
+        <div className={"form__field" + ' ' + extraClass}>
+            {label && 
+                <label className="form__label">{label}</label>
+            }
             {explain && 
                 <p className="form__explain">{explain}</p>
             }
