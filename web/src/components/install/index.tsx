@@ -12,7 +12,7 @@ export function InstallButton() {
 
   return (
     <>
-      {/* {prompt && ( */}
+      {prompt && (
           <Btn
               btnType={BtnType.corporative}
               iconLink={<IoDownload />}
@@ -21,7 +21,7 @@ export function InstallButton() {
               contentAlignment={ContentAlignment.center}
               onClick={promptToInstall}
             />
-       {/* )} */}
+        )} 
     </>
   );
 }
