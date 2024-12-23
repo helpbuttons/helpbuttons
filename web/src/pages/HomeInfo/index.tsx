@@ -49,6 +49,9 @@ import { useMetadataTitle } from 'state/Metadata';
 import { ActivityList } from 'components/feed/Activity/ActivityList';
 import { PoweredExtra } from 'components/brand/powered';
 import { ButtonPinned } from 'state/Button';
+import { useButtonTypes } from 'shared/buttonTypes';
+import CardButton, { CardButtonHeadMedium } from 'components/button/CardButton';
+import CardButtonList from 'components/list/CardButtonList';
 
 export default function HomeInfo({ metadata }) {
   useEffect(() => {
@@ -235,9 +238,12 @@ function HomeInfoNetworkLogo({ selectedNetwork }) {
   </div>)
 }
 
+
 function HomeInfoPinnedButtons({ pinnedButtons }) {
+  const buttonTypes = useButtonTypes();
+
   return (<>
-    {/*  PINNIED BUTTONS */}
+    {/*  PINNED BUTTONS */}
     {pinnedButtons.length > 0 &&
       <div className="homeinfo-card">
         <div className="homeinfo-card__header">
@@ -248,53 +254,19 @@ function HomeInfoPinnedButtons({ pinnedButtons }) {
         <hr></hr>
 
         <div className="homeinfo-card__section2">
-          {/* pinned buttons{JSON.stringify(pinnedButtons)} */}
-          {/* <CardButtonHeadMedium
-            button={button}
-            buttonType={buttonType}
-          /> */}
 
           <div className="featured-card">
             {pinnedButtons.map(button => {
               return (
-                <div className="featured-card__container">
-                  <p className="featured-card__hr"></p>
-
-                  <div className="featured-card__content">
-                    <Link href={`Explore/17/${button.latitude}/${button.longitude}/?btn=${button.id}`}>
-                      <img src={makeImageUrl(button.image)} alt="Imagen 1" className="featured-card__content-image" />
-                    </Link>
-                    <div>
-                      <div className="featured-card__content-user">
-                        <img src={makeImageUrl(button.owner.avatar)} alt="Imagen 1" className="featured-card__content-avatar" />
-                        <div>
-                          <div className="featured-card__content-type">
-                            {button.type}
-                          </div>
-                          <div className="featured-card__content-userdata">
-                            <span>{button.owner.username}</span>
-                            <span>@{button.owner.username}@server</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="featured-card__content-description">
-                        {button.description}
-                      </div>
-
-                      <div className="featured-card__content-tags">
-                        {button.tags.map(tag => { return <div className="hashtag">{tag}</div> })}
-                      </div>
-
-                      <div className="featured-card__content-address">
-                        <IoLocationOutline /> {button.address}
-                      </div>
-                      <div className="featured-card__content-time">
-                        <IoTimeOutline /> now
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  <>
+                    <CardButtonList
+                      button={button}
+                      buttonTypes={buttonTypes}
+                      showMap={false}
+                      linkToPopup={false}
+                      linkIframe={true}
+                    />
+                  </>
               )}
             )}
           </div>
