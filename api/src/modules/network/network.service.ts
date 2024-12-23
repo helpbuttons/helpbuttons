@@ -350,6 +350,8 @@ export class NetworkService {
       return {
         name: network.name,
         short_name: network.name,
+        version: "1.0.0",
+        id: `${network.name}@${configs().WEB_URL}`,
         start_url: '.',
         display: 'standalone',
         background_color: network.backgroundColor,

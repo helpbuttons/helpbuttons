@@ -342,6 +342,17 @@ export function CookiesBanner() {
   }
   }, []);
 
+  useEffect(() => {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      console.log('beforeinstallprompt event fired'); // Check if this logs
+      e.preventDefault();
+    });
+  
+    return () => {
+      window.removeEventListener('beforeinstallprompt', () => {});
+    };
+  }, []);
+
   const handleAcceptCookies = () => {
     localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, true);
     setShowCookiesBanner(false);
