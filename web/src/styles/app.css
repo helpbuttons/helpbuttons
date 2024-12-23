@@ -4786,6 +4786,9 @@ li, ol, ul, h2 {
   display: flex;
   flex-direction: row;
 }
+.homeinfo__section--featured .list__element {
+  min-width: 400px;
+}
 
 .homeinfo-card__action-bottom {
   display: flex;
@@ -7928,6 +7931,7 @@ hr {
   height: auto;
   flex-basis: 100%;
   padding-right: 4px;
+  min-width: 400px;
 }
 
 .list__content--mid-screen {

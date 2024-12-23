@@ -73,7 +73,16 @@ $info-content-head-margin-mobile: 71px;
 .homeinfo__section--featured {
   display: flex;
   flex-direction: row;
+
+  & .list__element {
+
+    min-width: $card-button-list-width;
+
+  }
+  
 }
+
+
 
 
 .homeinfo-card__action-bottom {
