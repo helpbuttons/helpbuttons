@@ -253,22 +253,19 @@ function HomeInfoPinnedButtons({ pinnedButtons }) {
         </div>
         <hr></hr>
 
-        <div className="homeinfo-card__section2">
+        <div className="homeinfo-card__section">
 
-          <div className="featured-card">
-            {pinnedButtons.map(button => {
-              return (
-                  <>
+          <div className="homeinfo__section--featured">
+            {pinnedButtons.map((btn, i) => (
                     <CardButtonList
-                      button={button}
+                      button={btn}
+                      key={i}
                       buttonTypes={buttonTypes}
                       showMap={false}
-                      linkToPopup={false}
+                      linkToPopup={true}
                       linkIframe={true}
                     />
-                  </>
-              )}
-            )}
+                  ))}
           </div>
         </div>
       </div>
