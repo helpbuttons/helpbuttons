@@ -5,6 +5,8 @@ $info-image-height: 700px;
 $info-content-mobile-bottom-padding: calc( $footer-height-mobile*2 );
 $info-content-head-margin-mobile: 71px;
 
+
+
 .homeinfo__selected {
 
   border: 1px solid $color-black;
@@ -42,7 +44,6 @@ $info-content-head-margin-mobile: 71px;
   margin: auto;
   font-family: inherit;
   padding: 0 0 ;
-  min-width: fit-content;
   background-color: transparent;
   width: 100%;
   height: auto;
@@ -61,11 +62,25 @@ $info-content-head-margin-mobile: 71px;
   position: relative;
   margin: $margin-small $margin-xsmall;
   flex: 0 1 100%;
+  overflow: hidden;
 
   hr {
     display: none;
   }
 }
+
+.homeinfo__section--featured {
+  display: flex;
+  flex-direction: row;
+
+  & .list__element {
+
+    min-width: $card-button-list-width;
+
+  }
+  
+}
+
 
 .homeinfo-card__action-bottom {
 
@@ -256,6 +271,7 @@ hr {
   border-color: $color-ligth-gray;
   border: 0px solid $color-ligth-gray;
   line-height: $text-line-height-small;
+  overflow-x: auto;
 
   a {
     @extend .btn;
@@ -331,9 +347,6 @@ hr {
 }
 
 
-
-
-
 @media #{$breakpoints-xlarge} {
   .homeinfo__bottom {
     bottom: 2%;
@@ -346,6 +359,8 @@ hr {
 
   .homeinfo__content {
     padding-bottom: 0px;
+    min-width: fit-content;
+
   } 
 
   .homeinfo__sections {

@@ -365,7 +365,11 @@
     "notFound": "Ezin dut zure botoia aurkitu, ezabatuta izan daiteke?",
     "invalidDates": "",
     "followErrorAlert": "",
-    "unfollowErrorAlert": ""
+    "unfollowErrorAlert": "",
+    "pin": "Pineatu",
+    "unpin": "Unpineatu",
+    "pinSuccess": "Pin arrakastaztatsua",
+    "unpinSuccess":"Unpin arrakastaztatsua"
   },
   "calendarOnce": {
     "label": "Behin",
