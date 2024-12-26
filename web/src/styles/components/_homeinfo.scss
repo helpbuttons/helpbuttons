@@ -44,7 +44,6 @@ $info-content-head-margin-mobile: 71px;
   margin: auto;
   font-family: inherit;
   padding: 0 0 ;
-  min-width: fit-content;
   background-color: transparent;
   width: 100%;
   height: auto;
@@ -363,6 +362,8 @@ hr {
 
   .homeinfo__content {
     padding-bottom: 0px;
+    min-width: fit-content;
+
   } 
 
   .homeinfo__sections {

@@ -4897,8 +4897,6 @@ li, ol, ul, h2 {
   margin: auto;
   font-family: inherit;
   padding: 0 0;
-  min-width: -moz-fit-content;
-  min-width: fit-content;
   background-color: transparent;
   width: 100%;
   height: auto;
@@ -5152,6 +5150,8 @@ hr {
   }
   .homeinfo__content {
     padding-bottom: 0px;
+    min-width: -moz-fit-content;
+    min-width: fit-content;
   }
   .homeinfo__sections {
     display: flex;
