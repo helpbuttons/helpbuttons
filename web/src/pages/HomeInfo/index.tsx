@@ -265,6 +265,8 @@ function HomeInfoPinnedButtons({ pinnedButtons }) {
                       linkToPopup={false}
                       linkIframe={false}
                     />
+                  
+
                   ))}
           </div>
         </div>
