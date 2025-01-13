@@ -70,6 +70,7 @@ function Configuration() {
           name: data.name,
           description: data.description,
           tags: data.tags,
+          slogan: data.slogan,
           privacy: data.privacy,
           logo: data.logo,
           jumbo: data.jumbo,
