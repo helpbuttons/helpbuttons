@@ -17,8 +17,10 @@ import {
   IoClose,
   IoGlobeOutline,
   IoHelpOutline,
+  IoInformation,
   IoLogInOutline,
   IoMapOutline,
+  IoSearchOutline,
   IoShare,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
@@ -80,9 +82,9 @@ export default function HomeInfo({ metadata }) {
           </div>
         </ShowMobileOnly>
       )}
-      {!currentUser && (
+      {/* {!currentUser && (
         <SupportBanner scrollToContact={scrollToContact} />
-      )}
+      )} */}
       {selectedNetwork && (
         <div className="homeinfo__container">
           <div className="homeinfo__content">
@@ -90,10 +92,9 @@ export default function HomeInfo({ metadata }) {
 
 
             <div className="homeinfo__sections">
-              <ShowMobileOnly>
-                <HomeInfoNetworkLogo selectedNetwork={selectedNetwork}/>
-                
-              </ShowMobileOnly>
+                <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} apiUrl={apiUrl}/>
+                <HomeSloganCard selectedNetwork={selectedNetwork} config={config}/>
+
 
               <HomeInfoPinnedButtons/>
               <ShowMobileOnly>
@@ -112,16 +113,6 @@ export default function HomeInfo({ metadata }) {
               <HomeInfoFooter/>
               
 
-            </div>
-            <div
-              className="homeinfo-card homeinfo__card--title-card"
-              style={
-                {
-                  '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl+selectedNetwork.jumbo : '/api'+ logoImageUri}'`,
-                } as React.CSSProperties
-              }
-            >
-              <div className="homeinfo-card__section--actions"></div>
             </div>
           </div>
         </div>
@@ -212,17 +203,27 @@ function NavigatorCoordsButton() {
     </div>
   )}</>)
 }
-function HomeInfoNetworkLogo({selectedNetwork}) {
-  return (<div className="homeinfo-card__header">
-    <div className="homeinfo__network-title">
-      <div className="avatar-medium--home">
-        <NetworkLogo network={selectedNetwork} />
+function HomeInfoNetworkLogo({selectedNetwork, apiUrl}) {
+    return (
+      <div className="homeinfo-card homeinfo__card--title-card"
+        style={
+          {
+            '--network-jumbo': `url('${selectedNetwork.jumbo ? apiUrl+selectedNetwork.jumbo : '/api'+ logoImageUri}'`,
+          } as React.CSSProperties
+        }
+      >
+        <div className="homeinfo-card__header ">
+          <div className="homeinfo__network-title">
+            <div className="avatar-medium--home">
+              <NetworkLogo network={selectedNetwork} />
+            </div>
+            <h3 className="homeinfo__network-title-text">
+              {selectedNetwork.name}
+            </h3>
+          </div>
+        </div>
       </div>
-      <h3 className="homeinfo__network-title-text">
-        {selectedNetwork.name}
-      </h3>
-    </div>
-  </div>)
+  )
 }
 
 function HomeInfoPinnedButtons() {
@@ -247,6 +248,43 @@ function HomeInfoPinnedButtons() {
     }</>
   )
 }
+
+
+function HomeSloganCard({selectedNetwork, config}) {
+  return (<>
+                {/* SLOGAN CARD */}
+                <div className="homeinfo-card homeinfo__card--slogan-card">
+                  <div className="homeinfo-card__header homeinfo-card__header--slogan-card">
+                    <h3 className="homeinfo-card__header-title">
+                      {t('homeinfo.slogan')} 
+                    </h3>
+                    <div className="homeinfo-card__controls">
+                      <Btn
+                        btnType={BtnType.filterCorp}
+                        contentAlignment={ContentAlignment.center}
+                        iconLeft={IconType.svg}
+                        iconLink={<IoAddCircle />}
+                        extraClass="homeinfo__network-title-card--buttons"
+                        caption={t('homeinfo.goToCreate')}
+                        onClick={() => router.push('ButtonNew')}
+                      />
+                    </div>
+                  </div><hr></hr>
+                  {/* <div className="homeinfo__description">
+                    {t('homeinfo.buttons', [
+                      selectedNetwork?.buttonCount,
+                      config?.userCount.toString(),
+                    ])}
+                  </div> */}
+                  {/* <div className="homeinfo-card__section"> */}
+                  {/* <div className="homeinfo-card__action-bottom">
+                    <InstallButton />
+                    <DesktopNotificationsButton />
+                  </div> */}
+                {/* </div> */}
+                </div></>)
+  }
+
 
 function HomeInfoInfoCard({selectedNetwork})
 {
@@ -276,8 +314,16 @@ function HomeInfoInfoCard({selectedNetwork})
       </div>
       <div className="homeinfo-card__section">
         <div className="homeinfo-card__action-bottom">
-          <InstallButton />
-          <DesktopNotificationsButton />
+          <Btn
+            btnType={BtnType.filterCorp}
+            contentAlignment={ContentAlignment.center}
+            iconLink={<IoInformation />}
+            iconLeft={IconType.svg}
+            extraClass="homeinfo__network-title-card--buttons"
+            caption={t('homeinfo.knowMore')}
+            onClick={() => router.push('Faqs')}
+
+          />
         </div>
       </div>
     </div></>)
@@ -289,7 +335,9 @@ return (<>
               <div className="homeinfo-card">
                 <div className="homeinfo-card__header">
                   <h3 className="homeinfo-card__header-title">
-                    {t('homeinfo.stats')}
+                    {t('homeinfo.stats' , [
+                      selectedNetwork?.name,
+                    ])}
                   </h3>
                   <div className="homeinfo-card__controls">
                     <Btn
@@ -315,6 +363,7 @@ return (<>
                     />
                   </div>
                 </div>
+
               </div></>)
 }
 
