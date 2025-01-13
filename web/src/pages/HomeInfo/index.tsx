@@ -96,8 +96,11 @@ export default function HomeInfo({ metadata }) {
               </ShowMobileOnly>
 
               <HomeInfoPinnedButtons/>
+              <ShowMobileOnly>
+                 <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
+              </ShowMobileOnly>
               <HomeInfoInfoCard selectedNetwork={selectedNetwork}/>
-              <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config}/>
+              
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork}/>
 
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork}/>
@@ -314,6 +317,8 @@ return (<>
                 </div>
               </div></>)
 }
+
+
 
 function HomeInfoTopHashTags({selectedNetwork}) {
 return (<>
