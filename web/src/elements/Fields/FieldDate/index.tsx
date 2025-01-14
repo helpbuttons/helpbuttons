@@ -108,7 +108,7 @@ export default function FieldDate({
                 />
               )}
               {invalidDates && 
-                <FieldError validationError={{message: 'invalid dates'}} />
+                <FieldError validationError={{message: 'Check date & hours'}} />
               }
               <Btn
                 btnType={BtnType.submit}

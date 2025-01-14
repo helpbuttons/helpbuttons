@@ -233,7 +233,7 @@
     "whereLabel": "Choose place",
     "whereExplain": "Pick a location for your _helpbutton_",
     "changePlaceLabel": "Choose place",
-    "invalidDates": "Invalid Dates",
+    "invalidDates": "Invalid dates, check hours",
     "changeDateLabel": "Choose date",
     "placeHolderTitle": "Write a title for your _helpbutton_",
     "placeHolderDescription": "Write a description for your _helpbutton_",
@@ -388,7 +388,7 @@
     "invalidForm": "Error validating the form",
     "inviteOnly": "Invite only network",
     "address": "Error getting address",
-    "dates": "Invalid dates",
+    "dates": "Invalid dates, check hours",
     "invalidMimeType": ""
   },
   "post": {
