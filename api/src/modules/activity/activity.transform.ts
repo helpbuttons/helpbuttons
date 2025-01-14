@@ -151,7 +151,7 @@ export const transformToMessage = (
         const button = getButtonActivity(activity.data)
         return {
             ...activityOut,
-            message: 'massage',
+            message: '',
             title: translate(locale, 'activities.deletebutton', [button.title]),
             image: button.image,
             referenceId: button.id,
