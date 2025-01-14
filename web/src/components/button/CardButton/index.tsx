@@ -9,7 +9,7 @@ import {
   IoLogoWhatsapp,
 } from 'react-icons/io5';
 import t from 'i18n';
-
+import React from 'react';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 
 import router from 'next/router';
@@ -70,9 +70,9 @@ export default function CardButton({ button, buttonTypes }) {
             className="card-button card-button__file"
             style={buttonColorStyle(buttonType.cssColor)}
           >
-            
+
             <div>
-            {/* <Btn
+              {/* <Btn
               onClick={() => store.emit(new NextCurrentButton())}
               caption="next"
             ></Btn>
@@ -80,10 +80,10 @@ export default function CardButton({ button, buttonTypes }) {
               onClick={() => store.emit(new PreviousCurrentButton())}
               caption="previous"
             ></Btn> */}
-            <CardButtonHeadBig
-              button={button}
-              buttonTypes={buttonTypes}
-            />
+              <CardButtonHeadBig
+                button={button}
+                buttonTypes={buttonTypes}
+              />
             </div>
           </div>
           <ImageGallery
@@ -96,7 +96,6 @@ export default function CardButton({ button, buttonTypes }) {
             button={button}
             buttonTypes={buttonTypes}
           />
-          <ShowPhone user={button.owner} />
         </>
       )}
     </>
@@ -271,21 +270,21 @@ function CardButtonSubmenu({ button }) {
       {FollowButtonMenuOption(button)}
       {(isButtonOwner(sessionUser, button) ||
         isAdmin(sessionUser)) && (
-        <>
-          <CardSubmenuOption
-            onClick={() => {
-              router.push(`/ButtonEdit/${button.id}`);
-            }}
-            label={t('button.edit')}
-          />
-          <CardSubmenuOption
-            onClick={() => {
-              router.push(`/ButtonRemove/${button.id}`);
-            }}
-            label={t('button.delete')}
-          />
-        </>
-      )}
+          <>
+            <CardSubmenuOption
+              onClick={() => {
+                router.push(`/ButtonEdit/${button.id}`);
+              }}
+              label={t('button.edit')}
+            />
+            <CardSubmenuOption
+              onClick={() => {
+                router.push(`/ButtonRemove/${button.id}`);
+              }}
+              label={t('button.delete')}
+            />
+          </>
+        )}
     </CardSubmenu>
   );
 }
@@ -416,81 +415,9 @@ function ExpiringAlert({
   return (
     <FixedAlert
       alertType={AlertType.Success}
-      message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${
-        button.id
-      }">${t('button.renewLink')}</a>`}
+      message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id
+        }">${t('button.renewLink')}</a>`}
     />
-  );
-}
-
-function ShowPhone({ user }) {
-  const [showPhone, toggleShowPhone] = useState(false);
-  const [phone, setPhone] = useState(null);
-
-  useEffect(() => {
-    toggleShowPhone(() => true)
-  }, [phone])
-  const jumpTo = (url) => {
-    window.location.replace(url);
-  }
-  const onCallClick = () => {
-    if (phone == null) {
-      store.emit(
-        new GetPhone(
-          user.id,
-          (phone) => {
-            setPhone(phone);
-            jumpTo(`tel:${phone}`);
-          },
-          () => {},
-        ),
-      );
-    }else{
-      jumpTo(`tel:${phone}`);
-    }
-  };
-
-  const onWassapClick = ( ) => {
-    if (phone == null) {
-      store.emit(
-        new GetPhone(
-          user.id,
-          (phone) => {
-            setPhone(phone);
-            jumpTo(`whatsapp://send?phone=+${phone}`)
-          },
-          () => {},
-        ),
-      );
-    }else{
-      jumpTo(`whatsapp://send?phone=+${phone}`)
-    }
-  }
-
-  return (
-    <>
-      {user?.publishPhone && (
-        <>
-            <Btn
-              btnType={BtnType.filterCorp}
-              contentAlignment={ContentAlignment.center}
-              iconLeft={IconType.circle}
-              iconLink={<IoCallOutline />}
-              onClick={() => onCallClick()}
-            />
-          {user.showWassap && 
-            <Btn
-              btnType={BtnType.filterCorp}
-              contentAlignment={ContentAlignment.center}
-              iconLeft={IconType.circle}
-              iconLink={<IoLogoWhatsapp />}
-              onClick={() => onWassapClick()}
-            />
-          }
-          {showPhone && <>{phone}</>}
-        </>
-      )}
-    </>
   );
 }
 
@@ -547,7 +474,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   //   store.emit(new SetMainPopupCurrentButton(null))
   //   store.emit(new updateCurrentButton(null))
   // };
-  const onClick = (e) =>{
+  const onClick = (e) => {
     e.preventDefault()
     console.log('this goes for dev test.. make sure it works..')
     store.emit(new SetMainPopupCurrentProfile(button.owner))
@@ -573,7 +500,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
       </div>
       <div className="card-button__avatar">
         <div className="avatar-big">
-        <Link href="#" onClick={onClick}>
+          <Link href="#" onClick={onClick}>
             <ImageWrapper
               imageType={ImageType.avatarBig}
               src={button.owner.avatar}
@@ -694,3 +621,75 @@ function isButtonOwner(sessionUser, button) {
     sessionUser && sessionUser.username == button.owner.username
   );
 }
+
+export function ButtonOwnerPhone({button, user }) {
+  const [showPhone, toggleShowPhone] = useState(false);
+  const [phone, setPhone] = useState(null);
+  const isLoadingPhone = React.useRef(false)
+  const sessionUser = useRef(
+    store,
+    (state: GlobalState) => state.sessionUser,
+    false,
+  );
+
+  useEffect(() => {
+    if (phone == null && !isLoadingPhone.current) {
+      isLoadingPhone.current = true;
+      store.emit(
+        new GetPhone(
+          user.id,
+          (phone) => {
+            setPhone(phone);
+          },
+          () => { },
+        ),
+      );
+    }
+  }, [showPhone])
+
+  const jumpTo = (url) => {
+    window.location.replace(url);
+  }
+
+  return (
+    <>
+      {user?.publishPhone && (
+        <>
+          {!showPhone && !isButtonOwner(user, button) && 
+            <Btn
+              btnType={BtnType.corporative}
+              contentAlignment={ContentAlignment.center}
+              caption={t('button.showPhone')}
+              iconLeft={IconType.svg}
+              iconLink={<IoCallOutline />}
+              onClick={() => toggleShowPhone(true)}
+            />
+          }
+          {showPhone && 
+            <div className="card-button__phone-section">
+            <Btn
+              btnType={BtnType.filterCorp}
+              contentAlignment={ContentAlignment.center}
+              iconLeft={IconType.circle}
+              iconLink={<IoCallOutline />}
+              onClick={() => jumpTo(`tel:${phone}`)}
+            />
+              {phone}
+            </div>
+          }
+          {user.showWassap && !isButtonOwner(user, button) &&
+              <Btn
+                btnType={BtnType.corporative}
+                contentAlignment={ContentAlignment.center}
+                iconLeft={IconType.circle}
+                iconLink={<IoLogoWhatsapp />}
+                onClick={() => jumpTo(`https://wa.me/+${phone}`)}
+              />
+          }
+          
+        </>
+      )}
+    </>
+  );
+}
+

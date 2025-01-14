@@ -69,6 +69,7 @@ export default function Feed({ button }: { button: Button }) {
   return (
     <div className="feed-container">
       <div className="card-button__actions">
+        <ButtonOwnerPhone user={button.owner} button={button}/>
         <>
           {sessionUser && isButtonOwner && (
             <>
