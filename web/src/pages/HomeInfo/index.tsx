@@ -93,6 +93,7 @@ export default function HomeInfo({ metadata }) {
 
 
             <div className="homeinfo__sections">
+              
               <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} apiUrl={apiUrl}/>
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config}/>
 
