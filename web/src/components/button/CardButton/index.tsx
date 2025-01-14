@@ -655,7 +655,7 @@ export function ButtonOwnerPhone({button, user }) {
     <>
       {user?.publishPhone && (
         <>
-          {!showPhone && !isButtonOwner(user, button) && 
+          {!showPhone && isButtonOwner(user, button) && 
             <Btn
               btnType={BtnType.corporative}
               contentAlignment={ContentAlignment.center}
@@ -677,7 +677,7 @@ export function ButtonOwnerPhone({button, user }) {
               {phone}
             </div>
           }
-          {user.showWassap && !isButtonOwner(user, button) &&
+          {user.showWassap &&
               <Btn
                 btnType={BtnType.corporative}
                 contentAlignment={ContentAlignment.center}
