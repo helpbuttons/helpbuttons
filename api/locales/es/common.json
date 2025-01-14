@@ -18,16 +18,14 @@
     "seeLess": "Ver menos",
     "searchlocation": "Buscar ubicacion",
     "loading": "cargando",
-    "goToExplore": "Explorar _helpbuttons_",
-    "knowMore": "Saber más",
-    "install": "Instala {0} y recibe notificaciones si quieres:",
+    "goToExplore": "Explorar",
     "goToCreate": "Crear _helpbutton_",
     "activity": "Actividad reciente",
     "locationDetected": "¿Quieres consultar los _helpbuttons_ en tu zona?",
     "stats": "¿Qué hay en esta red?",
     "users": "{0} usuarios en esta Red",
     "actions": "En resumen ¿Qué puedes hacer?",
-    "popularHashtags": "¿Qué temas se tratan?",
+    "popularHashtags": "¿Qué palabras se usan?",
     "popularHashtagsExplain": "Estos son los temas creados hasta la fecha. Puedes añadir temas nuevos creando tu _helpbutton_. Si te unes, también puedes recibir alertas sobre ellos añadiéndolos en la sección 'Mis Intereses' de tu Perfil.",
     "recommendedHashtags": "Temas recomendados por los administradores",
     "profileSubtitle": "Comprueba tu perfil",
@@ -37,7 +35,7 @@
     "administeredby": "Moderadores y asistencia",
     "adminInstructions": "Estas personas se encargan de mantener la red. Contáctalos si necesitas ayuda para entender algo o publicar:",
     "loginSubtitle": "¡Entra o crea tu cuenta!",
-    "buttons": "Hay {0} _helpbuttons_ en esta Red",
+    "buttons": "Hay {0} _helpbuttons_ y {1} usuarios en esta Red",
     "createNetworkButton": "Crea tu propia red",
     "createNetwork": "También puedes contactar al equipo si necesitas ayuda creando tu propia red",
     "donateSubtitle": "Esta app no comercia con tu información ni cobra por su uso. Si te gusta esta filosofía puedes apoyarnos con una donación:",
@@ -49,26 +47,21 @@
     "installButton": "Instalar app",
     "notificationsPermission": "Permitir notificaciones",
     "share": "Compartir esta app",
-    "featured": "Destacados"
-
+    "featured": "Destacados",
+    "powered": "Powered by"
   },
-  "share":{
-
+  "share": {
     "showSharePopup": "Comparte esta aplicación",
     "header": "Compartir esta aplicación",
-
     "shareField": "Elige tu opción para compartir",
     "shareTypeLabel": "Tipo",
-    "shareTypeExplain": "Elige la manera en la que quieres compartir los resultados de tu red. Funciona mejor en un ordenador.",
+    "shareTypeExplain": "Elige la manera en la que quieres compartir los resultados de tu red",
     "shareExplain": "Elige el número de resultados que quieras mostrar y copia el código en tu web.",
     "explainInvitations": "Generate individual invitation cards for your community",
     "optionIframe": "Iframe para insertar en otras webs",
     "optionBulletin": "Imprimir lista de _helpbuttons_",
     "optionInvitations": "Invitaciones personales para imprimir",
-    "profileButton": "Crear nuevo boletín",
-    "explainBulletin": "Here you can get a list of _helpbuttons_ in a pdf format, with QR codes. So you can spread the word in your own community.",
-    "found": "{0} _helpbuttons_ found. From today until {1}",
-    "pdfDate": "since {0}",
+    "share": ""
   },
   "feed": {
     "write": "Escribir mensaje",
@@ -85,7 +78,10 @@
     "readMessages": "Mensajes leídos",
     "nounread": "No hay mensajes sin leer",
     "read": "No hay mensajes aún",
-    "said": "dijo"
+    "said": "dijo",
+    "privateBadge": "privado",
+    "noMoreNotifications": "There are no more notifications",
+    "noMoreMessages": "There are no more messages"
   },
   "hostname": "nombre de host",
   "common": {
@@ -115,9 +111,6 @@
     "namePlaceHolder": "Red de agricultores de Vilanova",
     "descriptionLabel": "Descripción de tu Red",
     "privacySetPrivate": "Pulsa aquí para volver a red privada",
-    "sloganLabel": "Frase de bienvenida",
-    "sloganExplain": "Esta es una frase corta que da la bienvenida a tu red",
-    "sloganPlaceHolder": "Ejemplo: La red que ayuda a otros",
     "images": "Imágenes de Red",
     "jumbo": "Selecciona imagen de fondo de la Red",
     "locationExplain": "El mapa se centrará siempre sobre el lugar y el radio de tu Red cada vez que alguien entre en la herramienta",
@@ -167,8 +160,8 @@
     "dateFieldAddLabel": "Muestra una fecha en tu tipo de _helpbutton_ para que se comporte como un evento y se pueda buscar por calendario",
     "addType": "+ Crear tipo de _helpbutton_",
     "currencyLabel": "Divisa",
-    "setType": "",
-    "buttonTemplatePlaceHolder": ""
+    "setType": "Set _helpbutton_ type properties",
+    "buttonTemplatePlaceHolder": "Write your _helpbutton_ type name here"
   },
   "activities": {
     "messages": "Mensajes",
@@ -308,7 +301,8 @@
     "both": "Mapa & Lista",
     "list": "Lista",
     "map": "Mapa",
-    "showList": ""
+    "showList": "Mostrar Lista",
+    "hiddenButtons": "Por privacidad, hay _helpbuttons_que ocultan su ubicación exacta."
   },
   "buttonFilters": {
     "filters": "Búsqueda y filtros",
@@ -331,7 +325,7 @@
     "maxPriceLabel": "Hasta",
     "whereLabel": "Filtra por lugar",
     "whenLabel": "Filtra por fecha",
-    "whenExplain": "Si tiene fecha, especifícala aquí.",
+    "whenExplain": "Filtra los eventos por fecha",
     "byCategory": "Por categoría",
     "byDate": "Últimos creados",
     "byPrice": "Por precio",
@@ -339,7 +333,7 @@
     "byTopic": "Por tema",
     "orderBy": "Ordenar por",
     "orderByExplain": "Elige el orden en el que mostrar _helpbuttons_ en la lista",
-    "priceExplain": "Especifica un valor. Usa 0 si es gratuito y Precio a consultar si no está definido",
+    "priceExplain": "Elige precio máximo y mínimo",
     "byProximity": "Por proximidad",
     "byEventDate": "Por inicio del evento",
     "followTagSucess": "{0} fue añadido a tus temas de interés. Para ver tus temas de interés ve a Mi Perfil.",
@@ -347,7 +341,6 @@
     "locationLimited": "Limitado a {0}, {1}",
     "pickLocationLimits": "Elige una localización",
     "buttonTagsSuccess": "Tus temas de interés fueron actualizados"
-
   },
   "button": {
     "title": "Vista de _helpbutton_",
@@ -400,9 +393,9 @@
     "createUpdate": "Publicar Novedad",
     "authorTitle": "Autor:",
     "notFound": "No puedo encontrar tu button, talvez fue borrado?",
-    "invalidDates": "Fechas y/o horas no incorrectas",
-    "extraOptions": "Opciones de edición avanzadas",
-    "autoGenerated": ", autogenerado a partir de la descripción."
+    "invalidDates": "",
+    "followErrorAlert": "",
+    "unfollowErrorAlert": ""
   },
   "calendarOnce": {
     "label": "Una vez",
@@ -431,7 +424,7 @@
     "address": "Error al obtener la dirección",
     "dates": "Fechas inválidas"
   },
-  "invitation":{
+  "invitation": {
     "card": "Tarjeta anónima de id individual",
     "infoCard": "Escanea el código para entrar.",
     "name": "Esta tarjeta es única y personal, no la pierdas.",
@@ -447,7 +440,6 @@
     "postgresHostName": "Servidor de Postgresql",
     "smtpUrl": "URL de Smtp",
     "test": "prueba",
-    
     "createAdminTitle": "Crear cuenta de administrador",
     "postgresPort": "Puerto de Postgresql",
     "postgresDb": "Nombre de la base de datos de Postgresql",
@@ -477,7 +469,7 @@
     "sendPublic": "Responder",
     "sendPrivate": "Responder en privado",
     "send": "Enviar",
-    "posted": ""
+    "posted": "Comment posted"
   },
   "picker": {
     "headerText": "Elige una localización"
@@ -521,7 +513,7 @@
     "contactDescription": "Si quieres comunicar con los gestores de la página, acude a la sección de Inicio. Si quieres ponerte en contacto con los programadores que hacen posible la app, por favor, dirige tus preguntas al siguiente correo electrónico: help@helpbuttons.org",
     "cookiesQuestion": "Cookies policy",
     "cookiesDescription": "Este sitio utiliza cookies para ofrecer una experiencia segura y personalizada. A continuación, se describe el uso específico de cada cookie: 1. ACCESS_TOKEN (access_token): Esta cookie almacena de forma segura tu token de acceso, permitiéndote permanecer conectado durante la sesión sin necesidad de reautenticación. Tipo: Esencial Duración: Basada en la sesión 2. TOKEN_TYPE (token_type): Se usa para identificar el tipo de token de acceso que estás utilizando, garantizando una autenticación y seguridad adecuadas. Tipo: Esencial Duración: Basada en la sesión 3. NETWORK_SELECTED (network_id): Almacena información sobre la red seleccionada que estás utilizando en nuestra plataforma, ofreciendo una experiencia personalizada según tu elección. Tipo: Funcionalidad Duración: Basada en la sesión 4. EXPLORE_SETTINGS (explore_settings): Guarda tus preferencias y configuraciones en la función de exploración, haciendo que tu experiencia de navegación sea más consistente y personalizada. Tipo: Funcionalidad Duración: Persistente 5. HAS_PERMISSION_NOTIFICATIONS (has_permission_notifications): Registra si has dado permiso para recibir notificaciones, permitiéndonos mostrar u ocultar notificaciones según tu preferencia. Tipo: Preferencia Duración: Persistente Puedes gestionar la configuración de cookies a través de las preferencias de tu navegador. ",
-    "cookiesExplanation": "No usamos cookies a menos que te registres en la plataforma. Este mensaje es meramente informativo de ello. Para más detalles consulta nuestra ",
+    "cookiesExplanation": "This site uses cookies only when you log in. For more details, see our ",
     "cookieAccept": "Accept"
   },
   "invite": {
@@ -566,40 +558,60 @@
     "of": "de",
     "the": "El",
     "each": "Cada",
-    "from": "desde",
-    "at": "desde las"
+    "from": "Desde",
+    "at": "Desde las"
   },
   "error": {
     "error": "Algo fue mal",
     "notFoundMessage": "Página no encontrada o borrada"
   },
   "moderation": {
-    "buttons": "Aqui puedes revisar los usuarios de tu red, y los butones por aprobar",
+    "description": "Aqui puedes revisar los usuarios de tu red, y _helpbuttons_ a aprobar",
     "verified": "Verificado",
     "revoke": "Revocar derechos de administrador",
-    "promote": "Promocionar a administrador",
-    "activate": "Ativar",
-    "deactivate": "Deativar",
+    "promote": "Convertir en administrador",
+    "activate": "Activar",
+    "deactivate": "Desactivar",
     "remove": "Borrar",
     "actions": "Acciones",
     "role": "Role",
     "usersList": "Usuarios",
     "emptyButtonList": "No hay _helpbuttons_ para ser aprobados",
-    "buttonsList": "_helpbuttons_ lista de aprobación",
+    "buttonsList": "Lista de aprobación de _helpbuttons_",
     "emptyUsersList": "Sin usuarios",
     "requireApproval": "Permitir publicación solo con moderación",
     "requireApprovalLabel": "Moderación de la red",
     "requireApprovalExplain": "Si habilitas esto, todos los _helpbuttons_ creados (si no son por un administrador) no se publicarán en el mapa, hasta que un administrador lo apruebe",
     "awaitingApproval": "_helpbutton_ ha sido añadido a la lista de moderación, por favor espera a que un administrador la apruebe",
-    "created_at": "Creado",
-    "title": "",
-    "created": "",
-    "confirm": ""
+    "created_at": "Creado en",
+    "created": "creado",
+    "title": "Modera el contenido y los usuarios",
+    "confirm": "confirmar",
+    "adminCommunication": "Comunicaciones de administrador",
+    "adminCommunicationLabel": "Comunicaciones de administradores",
+    "adminCommunicationExplain": "Mensajes que envíes a través de este formulario serán notificados a todos los usuarios de la Red."
   },
   "roles": {
     "blocked": "bloqueado",
     "administrator": "administrador",
     "registered": "registrado",
     "guest": "invitado"
+  },
+  "notificaction": {
+    "markedAsRead": ""
+  },
+  "bulletin": {
+    "since": "Since {0}",
+    "filter": "",
+    "noButtons": ""
+  },
+  "places": {
+    "addNew": "",
+    "add": "",
+    "save": ""
+  },
+  "seo": {
+    "embbed": "",
+    "buttonEdit": ""
   }
 }

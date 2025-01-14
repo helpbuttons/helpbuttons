@@ -28,10 +28,11 @@ const ButtonType = React.forwardRef(
       <>
         <FieldRadio label={label} explain={explain}>
           {buttonTypes.map((buttonType, idx) => (
-            <div key={idx} style={buttonColorStyle(buttonType.cssColor)}>
+            <div key={idx}>
               <FieldRadioOption
                 onChange={onChange}
                 onBlur={onBlur}
+                color={buttonType.cssColor}
                 name={name}
                 ref={ref}
                 value={buttonType.name}
