@@ -135,7 +135,7 @@
     "focusedArea": "in framed area",
     "locationLimited": "Limited to {0}, {1}",
     "pickLocationLimits": "Choose a location",
-    "buttonTagsSuccess": "Tags added successfully"
+    "followTagsSucess": "Tags added successfully"
   },
   "setup": {
     "hostname": "Hostname",
