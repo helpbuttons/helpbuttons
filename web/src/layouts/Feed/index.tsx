@@ -28,7 +28,7 @@ import { useStore } from 'state';
 import MessageNew from 'components/feed/MessageNew';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';
-import { CardButtonHeadActions } from 'components/button/CardButton';
+import { ButtonOwnerPhone, CardButtonHeadActions } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function Feed({ button }: { button: Button }) {
