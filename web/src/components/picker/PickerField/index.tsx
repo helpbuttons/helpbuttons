@@ -1,5 +1,5 @@
 import { Picker } from 'components/picker/Picker';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import FieldError from 'elements/Fields/FieldError';
 
 export default function PickerField({
@@ -9,16 +9,18 @@ export default function PickerField({
   explain = '',
   children,
   contentAligment = ContentAlignment.left,
-  btnType = BtnType.splitIcon,
+  btnType = BtnType.searchPickerField,
   showPopup,
   headerText = '',
   openPopup,
-  iconLeft  = null,
+  iconLeft= null,
+  iconLink= null,
   closePopup,
   button = <Btn
   btnType={btnType}
   caption={btnLabel}
-  iconLeft={iconLeft}
+  iconLink= {iconLink}
+  iconLeft={IconType.svg}
   contentAlignment={contentAligment}
   onClick={() => openPopup()}
 />
