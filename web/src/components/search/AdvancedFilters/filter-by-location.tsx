@@ -4,6 +4,7 @@ import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import t from 'i18n';
 import Slider from 'rc-slider';
 import { useState } from 'react';
+import { IoSearch } from 'react-icons/io5';
 import { readableDistance } from 'shared/sys.helper';
 
 export function FilterByLocationRadius({
@@ -64,6 +65,7 @@ export function FilterByLocationRadius({
       label={t('buttonFilters.where')}
       explain={t('buttonFilters.whereExplain')}
       title={t('buttonFilters.where')}
+      iconLink={<IoSearch/>}
       btnLabel={
         address ? (
           <>

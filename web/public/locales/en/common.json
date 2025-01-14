@@ -135,7 +135,7 @@
     "focusedArea": "in framed area",
     "locationLimited": "Limited to {0}, {1}",
     "pickLocationLimits": "Choose a location",
-    "buttonTagsSuccess": "Tags added successfully"
+    "followTagsSucess": "Tags added successfully"
   },
   "setup": {
     "hostname": "Hostname",
@@ -228,11 +228,12 @@
     "imagesLabel": "Upload the images you want",
     "imagesExplain": "Images will be displayed in a carrousel in your _helpbutton_ page",
     "imagesText": "Upload Image",
+    "whenLabel": "Choose date",
+    "whenExplain": "Specify the date",
     "whereLabel": "Choose place",
     "whereExplain": "Pick a location for your _helpbutton_",
     "changePlaceLabel": "Choose place",
-    "whenLabel": "When ?",
-    "invalidDates": "Invalid Dates",
+    "invalidDates": "Invalid dates, check hours",
     "changeDateLabel": "Choose date",
     "placeHolderTitle": "Write a title for your _helpbutton_",
     "placeHolderDescription": "Write a description for your _helpbutton_",
@@ -387,7 +388,7 @@
     "invalidForm": "Error validating the form",
     "inviteOnly": "Invite only network",
     "address": "Error getting address",
-    "dates": "Invalid dates",
+    "dates": "Invalid dates, check hours",
     "invalidMimeType": ""
   },
   "post": {
