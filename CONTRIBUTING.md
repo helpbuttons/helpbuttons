@@ -37,8 +37,6 @@ The instance of helpbuttons runnning in https://dev.helpbuttons.org is up to dat
 
 ## Setup for development
 
-### GENERAL
-
 1. Change to the dev branch
 
 `$ git checkout dev`
@@ -47,102 +45,109 @@ The instance of helpbuttons runnning in https://dev.helpbuttons.org is up to dat
 
 `$ cp env.sample .env`
 
-_Step three depend of your preference:_
+3. Choose one of the next two options:
 
-+ #### API with Docker (to develope just in frontend)
->
->3. Edit .env accordingly.
->
-> - set `hostName` to `localhost`
->
-> - set `VERSION` to `dev`
->
-> - set `API_URL` to `http://localhost:3001/`
->
->4. Generate jwt token:
->
->`$ docker-compose run api yarn config:genjwt`
->
->5. Add the generated string as a `jwtSecret` to the `.env`
->
->6. Edit the `docker-compose.yml`, so that the frontend has access to the api, by binding the port 3001
->
->```
-> ports: 
->  - 3001:3001
->```
->
->and make sure api is in the external_network network by uncomenting the line on the networks of the api
->
->` - external_network`
->
->7. Run api and database:
->
->`$ docker-compose up api`
->
->8. Run all the migrations / setup the database schema:
->
->`$ docker-compose exec api yarn migration:run`
->
-+ #### API with yarn
->
->_We recommend that you use our pre-build docker image for postgres, because we added goodies like the [h3](https://github.com/uber/h3) library and gis._
->
->3. Edit .env accordingly.
-> set `POSTGRES_HOSTNAME` to `localhost`.
->
-> set `hostName` to `localhost`
->
-> set `VERSION` to `dev`
->
-> set `API_URL` to `http://localhost:3001/`
->
->4. You want to be able to access 5432 port on your localhost machine because database still running on docker, so you have to expose it by editing the `docker-compose.yml` file.
->
->```
-> ports: 
->  - 5432:5432
->```
->
->and make sure api is in the external_network network by uncomenting the line on the networks of the db
->
->` - external_network`
->
->5. Run the database
->
->`$ docker-compose up db`
->
->6. To run the api in watch mode you need firstly to go into the api directory
->
->`$ cd api`
->
->7. Create the uploads directory and give the correct permissions
->
->`$ mkdir uploads`
->
->`$ chmod o+w uploads`
->
->8. Install all node_modules packages
->
->`$ yarn`
->
->9. Generate jwt token:
->
->`$ yarn config:genjwt`
->
->10. Add the generated string as a `jwtSecret` to the `.env` file
->
->11. Create a symlink or copy the .env file to the api directory
->
->`$ ln -s ../.env .` or `$ cp ../.env .`
->
->12. Run in watch/development mode
->
->`$ yarn dev`
->
->13. Run all the migrations / setup the database schema:
->
->`$ yarn migration:run`
++ <details>
+    <summary>API with Docker (to develope just in frontend)</summary>
+
+    >
+    >1. Edit .env accordingly.
+    >
+    > - set `hostName` to `localhost`
+    >
+    > - set `VERSION` to `dev`
+    >
+    > - set `API_URL` to `http://localhost:3001/`
+    >
+    >2. Generate jwt token:
+    >
+    >`$ docker-compose run api yarn config:genjwt`
+    >
+    >3. Add the generated string as a `jwtSecret` to the `.env`
+    >
+    >4. Edit the `docker-compose.yml`, so that the frontend has access to the api, by binding the port 3001
+    >
+    >```
+    > ports: 
+    >  - 3001:3001
+    >```
+    >
+    >and make sure api is in the external_network network by uncomenting the line on the networks of the api
+    >
+    >` - external_network`
+    >
+    >5. Run api and database:
+    >
+    >`$ docker-compose up api`
+    >
+    >6. Run all the migrations / setup the database schema:
+    >
+    >`$ docker-compose exec api yarn migration:run`
+    >
+</details>
+
++ <details>
+    <summary>API with yarn</summary>
+
+    >
+    >_We recommend that you use our pre-build docker image for postgres, because we added goodies like the [h3](https://github.com/uber/h3) library and gis._
+    >
+    >3. Edit .env accordingly.
+    > set `POSTGRES_HOSTNAME` to `localhost`.
+    >
+    > set `hostName` to `localhost`
+    >
+    > set `VERSION` to `dev`
+    >
+    > set `API_URL` to `http://localhost:3001/`
+    >
+    >4. You want to be able to access 5432 port on your localhost machine because database still running on docker, so you have to expose it by editing the `docker-compose.yml` file.
+    >
+    >```
+    > ports: 
+    >  - 5432:5432
+    >```
+    >
+    >and make sure api is in the external_network network by uncomenting the line on the networks of the db
+    >
+    >` - external_network`
+    >
+    >5. Run the database
+    >
+    >`$ docker-compose up db`
+    >
+    >6. To run the api in watch mode you need firstly to go into the api directory
+    >
+    >`$ cd api`
+    >
+    >7. Create the uploads directory and give the correct permissions
+    >
+    >`$ mkdir uploads`
+    >
+    >`$ chmod o+w uploads`
+    >
+    >8. Install all node_modules packages
+    >
+    >`$ yarn`
+    >
+    >9. Generate jwt token:
+    >
+    >`$ yarn config:genjwt`
+    >
+    >10. Add the generated string as a `jwtSecret` to the `.env` file
+    >
+    >11. Create a symlink or copy the .env file to the api directory
+    >
+    >`$ ln -s ../.env .` or `$ cp ../.env .`
+    >
+    >12. Run in watch/development mode
+    >
+    >`$ yarn dev`
+    >
+    >13. Run all the migrations / setup the database schema:
+    >
+    >`$ yarn migration:run`
+</details>
 
 4. To run the ui in development mode, enter the frontend source folder
 
