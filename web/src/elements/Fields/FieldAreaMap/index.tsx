@@ -7,7 +7,7 @@ import t from 'i18n';
 
 import { NetworkMapConfigure } from 'components/map/Map/NetworkMapConfigure';
 import { BrowseType, HbMapTiles } from 'components/map/Map/Map.consts';
-import { circleToPolygon } from 'shared/geo.utils';
+import circleToPolygon from 'circle-to-polygon';
 import { getBoundsHexFeatures, roundCoords } from 'shared/honeycomb.utils';
 import PickerField from 'components/picker/PickerField';
 
