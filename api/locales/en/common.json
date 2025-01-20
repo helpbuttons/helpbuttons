@@ -467,7 +467,10 @@
     "moderation": "Moderation",
     "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
-    "addType": "+ Create _helpbutton_ type"
+    "addType": "+ Create _helpbutton_ type",
+    "sloganLabel": "Network's welcome phrase",
+    "sloganExplain": "This is a short slogan that welcomes people to your network",
+    "sloganPlaceHolder": "ie. The network made to help others"
   },
   "configure": {
     "browsePins": "",

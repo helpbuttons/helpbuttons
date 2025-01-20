@@ -29,6 +29,7 @@ function NetworkCreation() {
     defaultValues: {
       name: '',
       description: '',
+      slogan: 'Write here your slogan and cooperate!',
       logo: '',
       jumbo: '',
       tags: [],
@@ -59,6 +60,7 @@ function NetworkCreation() {
         {
           name: data.name,
           description: data.description,
+          slogan: data.slogan,
           tags: data.tags,
           privacy: 'public',
           logo: data.logo,

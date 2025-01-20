@@ -1926,6 +1926,9 @@ window.onload = function() {
               "description": {
                 "type": "string"
               },
+              "slogan": {
+                "type": "string"
+              },
               "privacy": {
                 "type": "string",
                 "enum": [
@@ -1953,6 +1956,9 @@ window.onload = function() {
                 "type": "string"
               },
               "description": {
+                "type": "string"
+              },
+              "slogan": {
                 "type": "string"
               },
               "privacy": {

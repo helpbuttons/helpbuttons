@@ -7,6 +7,7 @@ import { IoAccessibility } from "react-icons/io5";
 export default function Accordion({
     title,
     children,
+    extraClass,
     icon,
     handleClick = () => {},
     collapsed = false,
@@ -37,7 +38,7 @@ useEffect(() =>
             
             iconLeft={IconType.circle}
             caption={title}
-            extraClass={classNames}
+            extraClass={classNames + ' ' + extraClass}
             contentAlignment={ContentAlignment.left}
             onClick={(e) => {e.preventDefault(); setShowChildren(!showChildren);handleClick()}}
           />
