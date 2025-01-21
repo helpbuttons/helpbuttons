@@ -48,7 +48,7 @@ The instance of helpbuttons runnning in https://dev.helpbuttons.org is up to dat
 3. Choose one of the next two options:
 
 + <details>
-    <summary>API with Docker (to develope just in frontend)</summary>
+    <summary>To develop frontend code (api + db will run in docker)</summary>
 
     >
     >1. Edit .env accordingly.
@@ -87,7 +87,7 @@ The instance of helpbuttons runnning in https://dev.helpbuttons.org is up to dat
 </details>
 
 + <details>
-    <summary>API with yarn</summary>
+    <summary>To develop backend code (modified postgis version will be run using docker)</summary>
 
     >
     >_We recommend that you use our pre-build docker image for postgres, because we added goodies like the [h3](https://github.com/uber/h3) library and gis._
