@@ -69,6 +69,7 @@ $jumbo-height: 10em;
   }
 }
 
+
 .homeinfo-card__action-bottom {
 
   display: flex;
@@ -167,7 +168,7 @@ $jumbo-height: 10em;
 .homeinfo__sections {
   position: relative;
   z-index: $z-index-base;
-  max-width: 840px;
+  max-width: 100vw;
   margin: auto;
   margin-top: 20px;
   flex-grow: 1;

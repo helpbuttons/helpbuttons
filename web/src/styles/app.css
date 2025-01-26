@@ -1418,6 +1418,7 @@
   display: flex;
   align-items: center;
   padding-right: 10px;
+  max-width: 100%;
   font-weight: 600;
 }
 .btn-filter-with-emoji .btn-with-icon__icon {
@@ -4866,7 +4867,7 @@ li, ol, ul, h2 {
 .homeinfo__sections {
   position: relative;
   z-index: 10;
-  max-width: 840px;
+  max-width: 100vw;
   margin: auto;
   margin-top: 20px;
   flex-grow: 1;

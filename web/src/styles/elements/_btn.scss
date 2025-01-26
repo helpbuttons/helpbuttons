@@ -124,6 +124,7 @@ $btn-font-size-medium: $font-size-medium;
   align-items: center;
   // padding: 10px 7px 8px 0;
   padding-right: $btn-padding;
+  max-width: 100%;
   font-weight: $font-weight-bold;
 
   .btn-with-icon__icon{
