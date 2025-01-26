@@ -4993,6 +4993,9 @@ hr {
     padding: 25px;
     margin-bottom: 7px;
   }
+  .homeinfo__sections {
+    max-width: 840px;
+  }
   .homeinfo__card--title-card {
     min-height: 10em;
     margin-bottom: 0;
