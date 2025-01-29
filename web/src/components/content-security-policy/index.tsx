@@ -1,0 +1,1 @@
+export const contentSecurityPolicy = (nonce) =>  `object-src 'none'; base-uri 'none'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'`
