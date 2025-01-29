@@ -83,6 +83,7 @@ function Configuration() {
           nomeclature: data.nomeclature,
           nomeclaturePlural: data.nomeclaturePlural,
           requireApproval: data.requireApproval,
+          slogan: data.slogan
         },
         (network) => {
           store.emit(new UpdateExploreSettings(data.exploreSettings));

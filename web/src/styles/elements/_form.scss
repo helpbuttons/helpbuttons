@@ -156,7 +156,9 @@ margin: $margin-medium 0;
   margin-bottom: $margin-xsmall;
 
 }
-
+.form__input__field {
+  margin: $margin-xsmall 0;
+}
 
 //REVISE DE LAS CLASES DEL INPUT
 .form__input {
@@ -169,7 +171,6 @@ margin: $margin-medium 0;
   padding: $padding-big $padding-big;
   font-size: $font-size-general;
   height: $form-input-height;
-  margin: $margin-xsmall 0;
   text-overflow: ellipsis;
 
   & ul {
