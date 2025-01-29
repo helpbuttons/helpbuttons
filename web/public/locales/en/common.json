@@ -524,13 +524,6 @@
     "generateQr": "Get QR",
     "registered": "Qr code already registered"
   },
-  "invitation": {
-    "card": "Anonimous login individual card",
-    "infoCard": "Scan the code to enter.",
-    "name": "This card is unique and personal.",
-    "contact": "Write contact info if you want it to be returned in case of loss. Use it with responsibility.",
-    "infoQr": "Contact:"
-  },
   "customFields": {
     "priceLabel": "Price ({0})",
     "consult": "Price to consult",
