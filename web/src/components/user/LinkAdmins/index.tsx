@@ -30,7 +30,7 @@ export function LinkAdmins() {
         selectedNetwork.administrators &&
         selectedNetwork.administrators.map((user, idx) => {
           if (user) {
-            const extra = <ShowPhone user={user} />;
+            const extra = <ShowUserPhone user={user} />;
             return (
               <LinkProfile
                 key={user.id}
@@ -48,7 +48,7 @@ export function LinkAdmins() {
   );
 }
 
-function ShowPhone({ user }) {
+function ShowUserPhone({ user }) {
   const [showPhone, toggleShowPhone] = useState(false);
   const [phone, setPhone] = useState(null);
   const onCallClick = () => {
