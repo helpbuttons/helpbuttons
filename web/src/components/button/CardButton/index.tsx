@@ -70,9 +70,9 @@ export default function CardButton({ button, buttonTypes }) {
             className="card-button card-button__file"
             style={buttonColorStyle(buttonType.cssColor)}
           >
-            
+
             <div>
-            {/* <Btn
+              {/* <Btn
               onClick={() => store.emit(new NextCurrentButton())}
               caption="next"
             ></Btn>
@@ -80,10 +80,10 @@ export default function CardButton({ button, buttonTypes }) {
               onClick={() => store.emit(new PreviousCurrentButton())}
               caption="previous"
             ></Btn> */}
-            <CardButtonHeadBig
-              button={button}
-              buttonTypes={buttonTypes}
-            />
+              <CardButtonHeadBig
+                button={button}
+                buttonTypes={buttonTypes}
+              />
             </div>
           </div>
           <ImageGallery
@@ -271,21 +271,21 @@ function CardButtonSubmenu({ button }) {
       {FollowButtonMenuOption(button)}
       {(isButtonOwner(sessionUser, button) ||
         isAdmin(sessionUser)) && (
-        <>
-          <CardSubmenuOption
-            onClick={() => {
-              router.push(`/ButtonEdit/${button.id}`);
-            }}
-            label={t('button.edit')}
-          />
-          <CardSubmenuOption
-            onClick={() => {
-              router.push(`/ButtonRemove/${button.id}`);
-            }}
-            label={t('button.delete')}
-          />
-        </>
-      )}
+          <>
+            <CardSubmenuOption
+              onClick={() => {
+                router.push(`/ButtonEdit/${button.id}`);
+              }}
+              label={t('button.edit')}
+            />
+            <CardSubmenuOption
+              onClick={() => {
+                router.push(`/ButtonRemove/${button.id}`);
+              }}
+              label={t('button.delete')}
+            />
+          </>
+        )}
     </CardSubmenu>
   );
 }
@@ -416,9 +416,8 @@ function ExpiringAlert({
   return (
     <FixedAlert
       alertType={AlertType.Success}
-      message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${
-        button.id
-      }">${t('button.renewLink')}</a>`}
+      message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id
+        }">${t('button.renewLink')}</a>`}
     />
   );
 }
@@ -442,15 +441,15 @@ function ShowPhone({ user }) {
             setPhone(phone);
             jumpTo(`tel:${phone}`);
           },
-          () => {},
+          () => { },
         ),
       );
-    }else{
+    } else {
       jumpTo(`tel:${phone}`);
     }
   };
 
-  const onWassapClick = ( ) => {
+  const onWassapClick = () => {
     if (phone == null) {
       store.emit(
         new GetPhone(
@@ -459,10 +458,10 @@ function ShowPhone({ user }) {
             setPhone(phone);
             jumpTo(`whatsapp://send?phone=+${phone}`)
           },
-          () => {},
+          () => { },
         ),
       );
-    }else{
+    } else {
       jumpTo(`whatsapp://send?phone=+${phone}`)
     }
   }
@@ -471,14 +470,14 @@ function ShowPhone({ user }) {
     <>
       {user?.publishPhone && (
         <>
-            <Btn
-              btnType={BtnType.filterCorp}
-              contentAlignment={ContentAlignment.center}
-              iconLeft={IconType.circle}
-              iconLink={<IoCallOutline />}
-              onClick={() => onCallClick()}
-            />
-          {user.showWassap && 
+          <Btn
+            btnType={BtnType.filterCorp}
+            contentAlignment={ContentAlignment.center}
+            iconLeft={IconType.circle}
+            iconLink={<IoCallOutline />}
+            onClick={() => onCallClick()}
+          />
+          {user.showWassap &&
             <Btn
               btnType={BtnType.filterCorp}
               contentAlignment={ContentAlignment.center}
@@ -547,7 +546,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   //   store.emit(new SetMainPopupCurrentButton(null))
   //   store.emit(new updateCurrentButton(null))
   // };
-  const onClick = (e) =>{
+  const onClick = (e) => {
     e.preventDefault()
     console.log('this goes for dev test.. make sure it works..')
     store.emit(new SetMainPopupCurrentProfile(button.owner))
@@ -573,7 +572,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
       </div>
       <div className="card-button__avatar">
         <div className="avatar-big">
-        <Link href="#" onClick={onClick}>
+          <Link href="#" onClick={onClick}>
             <ImageWrapper
               imageType={ImageType.avatarBig}
               src={button.owner.avatar}
