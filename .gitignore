@@ -5,9 +5,12 @@
 /.pnp
 .pnp.js
 /web/pigeon-maps/
+/stickers 
 
 # testing
 /coverage
+/web/src/styles/app.css
+/web/src/styles/app.css.map
 
 # next.js
 /.next/
