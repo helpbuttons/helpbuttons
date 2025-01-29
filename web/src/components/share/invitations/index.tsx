@@ -256,7 +256,7 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
         <View style={styles.qrDiv}>
           <Image src={qrCodeImage} />
         </View>
-        <Text style={styles.qrCode}>Personal ID: {qrCode}</Text>
+        <Text style={styles.qrCode}>{qrCode}</Text>
       </View>
     </View>
   );
