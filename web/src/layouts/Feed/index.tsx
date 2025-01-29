@@ -8,7 +8,12 @@ import Btn, {
 import t from 'i18n';
 import {
   IoAdd,
+  IoCallOutline,
   IoCloseOutline,
+  IoCreate,
+  IoCreateOutline,
+  IoLogoWhatsapp,
+  IoPencilOutline,
   IoPersonOutline,
 } from 'react-icons/io5';
 
@@ -30,6 +35,7 @@ import { PrivacyType } from 'shared/types/privacy.enum';
 import { useToggle } from 'shared/custom.hooks';
 import { ButtonOwnerPhone, CardButtonHeadActions } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import router from 'next/router';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -73,6 +79,16 @@ export default function Feed({ button }: { button: Button }) {
         <>
           {sessionUser && isButtonOwner && (
             <>
+              <Btn
+                btnType={BtnType.corporative}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+                caption={t('button.edit')}
+                iconLink={<IoCreateOutline/>}
+                onClick={() => {
+                  router.push(`/ButtonEdit/${button.id}`);
+                }}
+              />
               <ComposePost
                 referer={{ button: button.id }}
                 onCancel={() => {
@@ -135,6 +151,7 @@ export default function Feed({ button }: { button: Button }) {
     </div>
   );
 }
+
 export function FeedElement({
   post,
   sessionUser,
