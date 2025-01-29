@@ -15,6 +15,7 @@ import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multi
 import FieldError from '../FieldError';
 import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
 import PickerField from 'components/picker/PickerField';
+import { IoTimeOutline } from 'react-icons/io5';
 
 export default function FieldDate({
   title,
@@ -53,17 +54,21 @@ export default function FieldDate({
   // https://www.npmjs.com/package/react-time-picker
   return (
     <>
-    <ShowDate
-          eventStart={eventStart}
-          eventEnd={eventEnd}
-          eventType={eventType}
-          eventData={eventData}
-          title={title}
-        />
     <PickerField
       showPopup={showPopup}
-      btnLabel={t('button.changeDateLabel')}
-      headerText={''}
+      explain={t('button.whenExplain')}
+      iconLink={<IoTimeOutline/>}
+      btnLabel={
+          <ShowDate
+            eventStart={eventStart}
+            eventEnd={eventEnd}
+            eventType={eventType}
+            eventData={eventData}
+            title={title}
+        />
+      }
+      headerText={t('eventType.typePicker')}
+      label={t('button.whenLabel')}
       openPopup={openPopup}
       closePopup={closePopup}
     >
@@ -104,7 +109,7 @@ export default function FieldDate({
                 />
               )}
               {invalidDates && 
-                <FieldError validationError={{message: 'invalid dates'}} />
+                <FieldError validationError={{message: t('validation.dates')}} />
               }
               <Btn
                 btnType={BtnType.submit}
@@ -126,7 +131,6 @@ export default function FieldDate({
     //       title={title}
     //     />
     //     <div className="btn" onClick={() => setHideMenu(true)}>
-    //       {t('button.changeDateLabel')}
     //     </div>
     //   </div>
     //   {showHideMenu && (
@@ -245,8 +249,8 @@ export function ShowDate({
 }) {
   return (
     <>
-      {(eventStart || eventData) && (
-        <div className="card-button__date">
+      {(eventStart || eventData) ? (
+        <div>
           {readableEventDateTime(
             eventType,
             eventStart,
@@ -255,7 +259,7 @@ export function ShowDate({
             hideRecurrentDates
           )}
         </div>
-      )}{' '}
+      ) : <>{title}</>}
     </>
   );
 }

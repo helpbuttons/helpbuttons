@@ -327,7 +327,7 @@ function ActivityPool({ sessionUser, messagesUnread }) {
 }
 
 export function CookiesBanner() {
-  const [showCookiesBanner, setShowCookiesBanner] = useState(true);
+  const [showCookiesBanner, setShowCookiesBanner] = useState(false);
   useEffect(() => {
     const cookiesAccepted = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE);
     if (!cookiesAccepted) {
