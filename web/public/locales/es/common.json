@@ -355,7 +355,6 @@
     "imagesExplain": "Imágenes que selecciones se mostrarán en tu _helpbutton_",
     "imagesText": "Elegir imágenes",
     "whenLabel": "Cuándo",
-    "changeDateLabel": "Elige una fecha",
     "changePlaceLabel": "Elige un lugar",
     "firstPost": "¡Hola! Creé este _helpbutton_ el {0}, deja un comentario si quieres",
     "errorCreated": "Error al publicar",

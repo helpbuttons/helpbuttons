@@ -325,7 +325,6 @@
     "imagesExplain": "Les imatges que seleccionis es mostraran al teu _helpbutton_",
     "imagesText": "Tria imatges",
     "whenLabel": "Quan",
-    "changeDateLabel": "Tria una data",
     "changePlaceLabel": "Tria un lloc",
     "firstPost": "Hola! Vaig crear aquest _helpbutton_ el {0}, deixa un comentari si vols",
     "errorCreated": "Error al publicar",

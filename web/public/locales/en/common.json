@@ -106,7 +106,7 @@
     "queryLabel": "What do you search",
     "queryExplain": "Specify whatever you want to find",
     "queryPlaceHolder": "Type here the words",
-    "followTag": "I want to receive notifications about",
+    "followTag": "Notify me about",
     "where": "Where ?",
     "whereExplain": "Search the place you want or click the icon to check your location.",
     "distance": "Search Distance",
@@ -234,7 +234,6 @@
     "whereExplain": "Pick a location for your _helpbutton_",
     "changePlaceLabel": "Choose place",
     "invalidDates": "Invalid dates, check hours",
-    "changeDateLabel": "Choose date",
     "placeHolderTitle": "Write a title for your _helpbutton_",
     "placeHolderDescription": "Write a description for your _helpbutton_",
     "firstPost": "Hi! I created this _helpbutton_ at {0}, leave a comment if you want",
@@ -354,7 +353,9 @@
     "pressToAccept": "Click here to accept",
     "iAccept": "I accept",
     "pleaseAcceptPrivacy": "Please accept our privacy policy",
-    "errorRequestNewLoginToken": ""
+    "errorRequestNewLoginToken": "",
+    "showWassap": "Enable Whatsapp link",
+    "showWassapExplain": "Show a link to your whatsapp app if you want"
   },
   "picker": {
     "headerText": "Choose a location"
@@ -388,7 +389,7 @@
     "invalidForm": "Error validating the form",
     "inviteOnly": "Invite only network",
     "address": "Error getting address",
-    "dates": "Invalid dates, check hours",
+    "dates": "Invalid date and hours",
     "invalidMimeType": ""
   },
   "post": {
