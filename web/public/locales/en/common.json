@@ -398,7 +398,7 @@
     "invalidForm": "Error validating the form",
     "inviteOnly": "Invite only network",
     "address": "Error getting address",
-    "dates": "Invalid dates",
+    "dates": "Invalid dates, the end date time should not be before the start",
     "invalidMimeType": ""
   },
   "post": {
