@@ -30,8 +30,8 @@ $radio-color-gray-border: $color-gray-border;
 //label div for enclosing all radio button elements
 .radio__label {
   .radio__content {
-    margin-top: 8px;
-    gap: 0; 
+    margin-top: $margin-xxsmall;
+    gap: $padding-medium; 
   }
 }
 
