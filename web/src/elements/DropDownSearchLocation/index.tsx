@@ -173,23 +173,25 @@ export default function DropDownSearchLocation({
           openMenuOnFocus
           onFocus={handleFocus}
         />
-        <LoadabledComponent loading={loadingUserAddress}>
           <Btn
             btnType={BtnType.circle}
-            iconLink={<IoLocationOutline />}
+            iconLink={
+              <LoadabledComponent loading={loadingUserAddress}>
+                  <IoLocationOutline />
+              </LoadabledComponent>
+            }
             iconLeft={IconType.circle}
             contentAlignment={ContentAlignment.center}
             onClick={setCenterFromBrowser}
           />
-        </LoadabledComponent>
       </div>
       {address && 
         <>{address}</>
       }
       {(markerPosition && markerPosition[0] && markerPosition[1] && !hideAddress) && (
-        <>
+        <div className='form__input-subtitle-option'>
            ( {roundCoords(markerPosition).toString()} )
-        </>
+        </div>
       )}
     </div>
   );
