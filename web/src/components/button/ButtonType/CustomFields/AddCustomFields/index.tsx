@@ -22,8 +22,6 @@ export function AddCustomFields({ customFields, setCustomFields }) {
             explain={t('configuration.priceFieldAddLabel')}
             text={t('configuration.priceFieldAdd')}
             onChanged={(value) => {
-              console.log(value);
-              console.log(customFields);
               if (value) {
                 setCustomFields(
                   _.uniq([...customFields, { type: 'price' }]),

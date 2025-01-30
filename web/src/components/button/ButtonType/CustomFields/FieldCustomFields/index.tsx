@@ -68,6 +68,9 @@ function FieldPrice({
       <label className="form__label">
         {t('customFields.priceLabel', [currency])}
       </label>
+      <p className="form__explain">
+          {t('customFields.priceExplain')}
+        </p>
       <FieldCheckbox
         name="consultPrice"
         defaultValue={price < 0}

@@ -7,7 +7,7 @@ import { IoAccessibility } from "react-icons/io5";
 export default function Accordion({
     title,
     children,
-    icon,
+    icon = null,
     handleClick = () => {},
     collapsed = false,
 }) {
@@ -33,7 +33,7 @@ useEffect(() =>
         <>
           <Btn
             btnType={BtnType.splitIcon}
-            iconLink={icon}
+            iconLink={icon ? icon : null}
             
             iconLeft={IconType.circle}
             caption={title}
