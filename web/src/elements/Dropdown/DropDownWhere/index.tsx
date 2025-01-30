@@ -106,6 +106,7 @@ export function DropDownWhere({
   }, [markerAddress]);
   return (
     <>
+      {/* //this is not used anywhere. Erase this component? */}
       <div onMouseLeave={handleMouseLeave} className="form__field">
         <label className="form__label">
           {t('buttonFilters.where')}
