@@ -278,7 +278,7 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
-          {t('homeinfo.stats', selectedNetwork?.name)}
+          {t('homeinfo.stats', [selectedNetwork.name])}
         </h3>
         <div className="homeinfo-card__controls">
 

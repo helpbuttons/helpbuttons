@@ -566,7 +566,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
             </span>
           </div>
           <div className="card-button__author-description">
-            {button.owner.description}
+            <TextFormatted maxChars={600} text={button.owner.description} />
           </div>
         </Link>
       </div>
