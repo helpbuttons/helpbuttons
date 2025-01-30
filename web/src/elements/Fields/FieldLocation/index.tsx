@@ -116,7 +116,7 @@ export default function FieldLocation({
     <>
       {selectedNetwork?.exploreSettings?.center && (
         <PickerField
-          iconLink={IoSearchOutline}
+          iconLink={<IoSearchOutline/>}
           showPopup={showPopup}
           validationError={validationError}
           label={t('button.whereLabel')}
