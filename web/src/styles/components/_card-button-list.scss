@@ -355,16 +355,18 @@ $card-button-list-border-height: $border-general-height;
 
 }
 
-$card-button-picture-margin: 12px;
 
 .card-button-list__picture-container {
   width: 200px;
-  height: calc( 100% - $card-button-picture-margin * 2);
+  height: calc( 100% - 4px);
+  top: 4px;
+  bottom: 0;
   overflow: hidden;
   position: relative;
-  margin: $card-button-picture-margin;
 
-  border-radius: $border-radius-basic;
+  // margin: $card-button-picture-margin;
+
+  border-radius: 0 0 0 $border-radius-basic;
 
   & img {
     position: absolute;
