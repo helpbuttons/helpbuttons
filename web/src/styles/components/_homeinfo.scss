@@ -162,8 +162,6 @@ $info-content-head-margin-mobile: 71px;
 
   font-size: $font-size-huge;
   line-height: $font-size-huge;
-  word-wrap: break-word;
-  word-break: break-all;
   display: flex;
   border-radius: $border-radius-basic;
   // background-color: $color-dark-gray;
@@ -172,6 +170,11 @@ $info-content-head-margin-mobile: 71px;
   max-width: 100%;
   align-self: center;
   justify-content: center;
+
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%; /* Adjust as needed */
 
   &:first-letter {
 
