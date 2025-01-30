@@ -126,18 +126,18 @@ export default function MarkerViewMap({
       }
     }
   }, [hideAddress]);
-  useEffect(() => {
-    // zoom in if markerposition is set, and the user selected a new position, cause if zoom is too far makes no sense.
-    if (
-      mapCenterIsReady.current &&
-      markerPosition[0] &&
-      markerPosition[1]
-    ) {
-      if (zoom < onMarkerPositionChangeZoomTo) {
-        setZoom(() => zoom + 2);
-      }
-    }
-  }, [markerPosition]);
+  // useEffect(() => {
+  //   // zoom in if markerposition is set, and the user selected a new position, cause if zoom is too far makes no sense.
+  //   if (
+  //     mapCenterIsReady.current &&
+  //     markerPosition[0] &&
+  //     markerPosition[1]
+  //   ) {
+  //     if (zoom < onMarkerPositionChangeZoomTo) {
+  //       setZoom(() => zoom + 2);
+  //     }
+  //   }
+  // }, [markerPosition]);
   return (
     <>
       <div className="picker__map">
