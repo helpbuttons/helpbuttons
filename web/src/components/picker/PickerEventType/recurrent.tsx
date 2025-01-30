@@ -152,7 +152,7 @@ export default function PickerEventTypeRecurrentForm({
           </>
         )}
         {startDate && endDate && (
-          <div className="form__field">
+        <div className="picker__row">
             <TimePick
               dateTime={startDate}
               setDateTime={(value) => setStartDate(value)}
