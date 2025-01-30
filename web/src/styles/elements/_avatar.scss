@@ -49,9 +49,24 @@ $avatar-medium-max-width: 50px;
   border-style: solid;
   object-fit: cover;
   overflow: hidden;
+  margin-top: auto;
+
 
   top: 0;
   border-width: 2px;
+
+  img {
+    height: 100%;
+    height: $avatar-medium-max-width;
+
+  }
+  
+  a {
+    display: contents;
+    height: $avatar-medium-max-width;
+
+
+  }
 
 }
 
