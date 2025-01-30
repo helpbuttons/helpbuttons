@@ -27,7 +27,6 @@ export default function PickerField({
 }) {
 
   return (
-    <>
       <div className="form__field">
         <label
           className="form__label"
@@ -35,14 +34,13 @@ export default function PickerField({
           {label}
         </label>
         <p className="form__explain">{explain}</p>
-        <FieldError validationError={validationError} />
         {button}
-      </div>
-      {showPopup &&
+        {showPopup &&
         <Picker closeAction={closePopup} headerText={headerText}>
           {children}
         </Picker>
-      }
-    </>
+         }
+        <FieldError validationError={validationError} />
+      </div>  
   );
 }
