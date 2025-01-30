@@ -136,11 +136,20 @@ const FieldButtonTemplates = forwardRef(
                         actionName={t('configuration.buttonTemplateColor')}
                         value={editFieldCssColor}
                       />
+                     
                       {editFieldCustomTypes && 
-                        <AddCustomFields
-                          customFields={editFieldCustomTypes}
-                          setCustomFields={setEditFieldCustomTypes}
-                        />
+                      <>
+                        <label className="form__label">
+                        {t('configuration.customFields')}:
+                          </label>
+                          <p className="form__explain">
+                            {t('configuration.customFieldsExplain')}
+                          </p>
+                          <AddCustomFields
+                            customFields={editFieldCustomTypes}
+                            setCustomFields={setEditFieldCustomTypes}
+                          />
+                      </>
                       }
                       <Btn
                         btnType={BtnType.corporative}
@@ -256,7 +265,6 @@ function ButtonTemplateForm({ label, explain, append }) {
           name={t('configuration.buttonTemplateName')}
           label={t('configuration.buttonTemplateName')}
           placeholder={t('configuration.createButtonTypePlaceholder')}
-          className="field-text"
           // onChange={(e) => setValue('text', e.target.value)}
           {...register('text')}
         />
@@ -264,6 +272,7 @@ function ButtonTemplateForm({ label, explain, append }) {
           updateEmoji={(newEmoji) => setValue('emoji', newEmoji)}
           pickerEmoji={watch('emoji')}
           label={t('configuration.buttonTemplateEmoji')}
+          explain={''}
         />
         <FieldColorPick
           name="buttonTemplateColor"
