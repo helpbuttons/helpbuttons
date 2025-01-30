@@ -173,7 +173,6 @@ export default function DropDownSearchLocation({
           openMenuOnFocus
           onFocus={handleFocus}
         />
-        {/* <LoadabledComponent loading={loadingUserAddress}> */}
           <Btn
             btnType={BtnType.circle}
             iconLink={
@@ -185,7 +184,6 @@ export default function DropDownSearchLocation({
             contentAlignment={ContentAlignment.center}
             onClick={setCenterFromBrowser}
           />
-        {/* </LoadabledComponent> */}
       </div>
       {address && 
         <>{address}</>
