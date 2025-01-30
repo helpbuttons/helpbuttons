@@ -101,9 +101,9 @@ export default function HomeInfo({ metadata }) {
 
               <HomeInfoPinnedButtons />
               
-              <ShowDesktopOnly>
+              <ShowMobileOnly>
                <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
-              </ShowDesktopOnly>
+              </ShowMobileOnly>
 
               <HomeInfoInfoCard selectedNetwork={selectedNetwork} />
 
@@ -274,6 +274,9 @@ function HomeInfoInfoCard({ selectedNetwork }) {
       <div className="homeinfo__description">
         <TextFormatted maxChars={600} text={selectedNetwork.description} />
       </div>
+      <HomeInfoActionButton>
+        <HomeInfoCreateButton />
+      </HomeInfoActionButton>
     </div></>)
 }
 
@@ -301,9 +304,6 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
           />
         </div>
       </div>
-      <HomeInfoActionButton>
-        <HomeInfoCreateButton />
-      </HomeInfoActionButton>
     </div></>)
 }
 
