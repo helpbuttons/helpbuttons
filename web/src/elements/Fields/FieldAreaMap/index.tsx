@@ -10,6 +10,7 @@ import { BrowseType, HbMapTiles } from 'components/map/Map/Map.consts';
 import { circleToPolygon } from 'shared/geo.utils';
 import { getBoundsHexFeatures, roundCoords } from 'shared/honeycomb.utils';
 import PickerField from 'components/picker/PickerField';
+import { IoSearchOutline } from 'react-icons/io5';
 
 export default function FieldAreaMap({
   validationError,
@@ -25,7 +26,7 @@ export default function FieldAreaMap({
   const closePopup = () => setShowPopup(() => false)
   const openPopup = () => setShowPopup(() => true)
   return (
-    <PickerField showPopup={showPopup} validationError={validationError} label={label} btnLabel={label} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
+    <PickerField   iconLink ={<IoSearchOutline/>}    showPopup={showPopup} validationError={validationError} label={label} btnLabel={label} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
        <FieldAreaMapSettings
           defaultExploreSettings={value}
           onChange={onChange}

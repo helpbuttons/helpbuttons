@@ -13,18 +13,14 @@ $radio-color-gray-border: $color-gray-border;
 
 //frame div for erasing any style and warrantee 100% space FOR all radio buttons
 .radio {
+
   width: 100%;
   background: none;
+  flex-flow: row wrap;
   border: none;
   padding: 0;
-  justify-content: space-between;
-
   display: flex;
-  flex-flow: row wrap;
-
-  div {
-    margin-right: 12px;
-  }
+  gap: $padding-small;
 
   &:focus {
     outline: none;
@@ -34,8 +30,8 @@ $radio-color-gray-border: $color-gray-border;
 //label div for enclosing all radio button elements
 .radio__label {
   .radio__content {
-    margin-top: 8px;
-    gap: 0; 
+    margin-top: $margin-xxsmall;
+    gap: $padding-medium; 
   }
 }
 

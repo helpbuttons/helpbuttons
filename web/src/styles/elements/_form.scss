@@ -106,7 +106,7 @@ margin: $margin-medium 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: row;
   // background-color: $color-white;
   padding: $padding-small 0;
@@ -249,10 +249,6 @@ margin: $margin-medium 0;
     position: absolute;
 
   }
-
-}
-
-.form__input-interest{
 
 }
 
@@ -426,17 +422,6 @@ width: 100%;
   margin-bottom: 0;
 }
 
-.form__input--button-type-field button {
-  // flex-basis: 20%; /* Take 20% of the width */
-  // margin-bottom: $margin-medium;
-}
-
-.form__field .btn--corporative {
-
-  // margin-bottom: $margin-medium;
-
-}
-
 .form__options-v {
 
   flex-flow: column nowrap;
@@ -520,7 +505,8 @@ width: 100%;
 
 }
 
-.form__input-subtitle--text {
+.form__input-subtitle--text,
+.form__input-subtitle-option  {
 
   margin: 0 0 $margin-xxsmall $margin-small;
   font-size: $font-size-small;

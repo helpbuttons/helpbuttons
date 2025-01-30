@@ -56,7 +56,7 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
           }
         >
           {label && <label className="form__label">{label}</label>}
-          {explain && <p className="form__explain">{explain}</p>}
+          <p className="form__explain">{explain}</p>
           <input
             name={name}
             ref={ref}
