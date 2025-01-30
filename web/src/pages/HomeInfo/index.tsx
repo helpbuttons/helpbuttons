@@ -28,7 +28,7 @@ import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { TextFormatted } from 'elements/Message';
 import { LinkAdmins } from 'components/user/LinkAdmins';
-import { ShowMobileOnly } from 'elements/SizeOnly';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { logoImageUri } from 'shared/sys.helper';
@@ -100,8 +100,11 @@ export default function HomeInfo({ metadata }) {
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config} />
 
               <HomeInfoPinnedButtons />
+              
+              <ShowMobileOnly>
+               <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
+              </ShowMobileOnly>
 
-              <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
               <HomeInfoInfoCard selectedNetwork={selectedNetwork} />
 
               <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
@@ -216,17 +219,19 @@ function NavigatorCoordsButton() {
     </div>
   )}</>)
 }
+
 function HomeInfoNetworkLogo({ selectedNetwork }) {
-  return (<div className="homeinfo-card__header">
-    <div className="homeinfo__network-title">
-      <div className="avatar-medium--home">
-        <NetworkLogo network={selectedNetwork} />
+  return (
+
+        <div className="homeinfo__network-title">
+          <div className="avatar-medium--home">
+            <NetworkLogo network={selectedNetwork} />
+          </div>
+          <h3 className="homeinfo__network-title-text">
+            {selectedNetwork.name}
+          </h3>
       </div>
-      <h3 className="homeinfo__network-title-text">
-        {selectedNetwork.name}
-      </h3>
-    </div>
-  </div>)
+  )
 }
 
 function HomeInfoPinnedButtons() {
@@ -269,6 +274,9 @@ function HomeInfoInfoCard({ selectedNetwork }) {
       <div className="homeinfo__description">
         <TextFormatted maxChars={600} text={selectedNetwork.description} />
       </div>
+      <HomeInfoActionButton>
+        <HomeInfoCreateButton />
+      </HomeInfoActionButton>
     </div></>)
 }
 
@@ -296,9 +304,6 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
           />
         </div>
       </div>
-      <HomeInfoActionButton>
-        <HomeInfoCreateButton />
-      </HomeInfoActionButton>
     </div></>)
 }
 
