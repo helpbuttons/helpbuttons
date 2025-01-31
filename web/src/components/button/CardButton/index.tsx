@@ -364,7 +364,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
           <TagsNav tags={button.tags} />
         </div>
 
-        <div className="card-button__locDate">
+        <div className="card-button__bottom-properties">
           {customFields && customFields.length > 0 && (
             <>
               <CardButtonCustomFields
