@@ -8,8 +8,6 @@ $avatar-margin: $padding-big;
   height: auto;
   display: flex;
   flex-direction: column;
-  padding-top: $padding-big;
-
 }
 
 .card-profile__name {
@@ -19,6 +17,15 @@ $avatar-margin: $padding-big;
   gap: $padding-small;
 
 }
+
+.card-profile__description {
+  font-size: $font-size-general;
+  font-weight: $font-weight-regular;
+  margin: $margin-small;
+  margin-top: $margin-xxsmall;
+
+}
+
 
 .card-profile__tags {
 
@@ -155,16 +162,20 @@ $avatar-margin: $padding-big;
   font-weight: $font-weight-bold;
   color: $color-black;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   text-overflow: ellipsis;
-  gap: $margin-xsmall;
+  
+  gap: $margin-xxxsmall;
+  max-width: 200px;
 }
 
 .card-profile__username {
-  font-size: $font-size-medium;
+  font-size: $font-size-general;
   font-weight: $font-weight-light;
   color: $color-gray;
+  position: relative;
+  top: -15px;
 }
 
 .grid-one__column-mid-element {
@@ -183,7 +194,36 @@ $avatar-margin: $padding-big;
 
 }
 
+.card-profile__icon {
+  svg {
+
+    height: 20px;
+
+  }
+
+}
+
+@media #{$breakpoints-medium} {
+
+  .card-profile__avatar-container-name {
+    max-width: 300px;
+    flex-direction: row;
+  }
+
+  .card-profile__username {
+    top: 0;
+  }
+  .card-profile__description {
+
+    margin-top: $margin-small;
+
+  }
+
+}
+
+
 @media #{$breakpoints-xlarge} {
+
 
   .card-profile__container {
     // display: flex;
