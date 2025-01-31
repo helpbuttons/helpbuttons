@@ -7,6 +7,7 @@ import {
   IoCallOutline,
   IoHeart,
   IoLogoWhatsapp,
+  IoLocationOutline,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -146,6 +147,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
       {!button.image && (
         <div className="card-button-list__paragraph--small-card card-button-list__paragraph">
           <p>{button.description}</p>
+          
         </div>
       )}
       {/* <div className="card-button__hashtags">
@@ -157,6 +159,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           );
         })}
       </div> */}
+      
       <div className="card-button__custom-fields-container">
         {buttonType.customFields &&
           buttonType.customFields.length > 0 && (
@@ -165,7 +168,9 @@ export function CardButtonHeadMedium({ button, buttonType }) {
               button={button}
             />
           )}
+          
         <div className="card-button__city card-button__everywhere ">
+          <IoLocationOutline/>
           {button.address}{' '}
           {button?.distance && (
             <> - {readableDistance(button?.distance)}</>
@@ -175,6 +180,8 @@ export function CardButtonHeadMedium({ button, buttonType }) {
     </div>
   );
 }
+
+
 
 // Pin of the map
 /*
@@ -356,15 +363,16 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         <div className="card-button__hashtags">
           <TagsNav tags={button.tags} />
         </div>
-        {customFields && customFields.length > 0 && (
-          <>
-            <CardButtonCustomFields
-              customFields={customFields}
-              button={button}
-            />
-          </>
-        )}
+
         <div className="card-button__locDate">
+          {customFields && customFields.length > 0 && (
+            <>
+              <CardButtonCustomFields
+                customFields={customFields}
+                button={button}
+              />
+            </>
+          )}
           <div
             className={
               'card-button__city card-button__everywhere' +
@@ -374,6 +382,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             }
             onClick={() => setShowMap(() => !showMap)}
           >
+            {<IoLocationOutline/>}
             {button.address}
           </div>
         </div>

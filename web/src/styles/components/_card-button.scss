@@ -623,7 +623,8 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__city-list,
-.card-button__date {
+.card-button__date,
+.card-button__city {
 
   color: $color-black;
   font-size: $font-size-small;
@@ -642,7 +643,19 @@ $card-button-border-height: $border-general-height;
   text-overflow: ellipsis;
   word-wrap: break-word;
 
+  display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
   line-height: 1.4em;
+
+    & svg {
+
+      width: $card-button-size-icon-before;
+      height: $card-button-size-icon-before;
+      margin-right: $margin-xxsmall;
+
+    }
 }
 
 .card-button__city {
@@ -693,30 +706,6 @@ $card-button-border-height: $border-general-height;
   padding: .5rem;
 }
 
-.card-button__city:before,
-.card-button__city-list:before,
-.card-button__date:before {
-  background: red;
-  content: '';
-  display: inline-block;
-  margin-right: 4px;
-  transform: translateY(.25rem);
-
-  height: $card-button-size-icon-before;
-  width: $card-button-size-icon-before;
-  opacity: .6; // Revise
-}
-
-.card-button__city:before,
-.card-button__city-list:before {
-  background: transparent url('../../../public/assets/svg/icons/icon-map.svg') left center no-repeat;
-  background-size: 100% auto;
-}
-
-.card-button__date:before {
-  background: transparent url('../../../public/assets/svg/icons/time_black.svg') left center no-repeat;
-  background-size: 100% auto;
-}
 
 .card-button__avatar-container {
   border-radius: 50%;

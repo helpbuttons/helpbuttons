@@ -15,7 +15,7 @@ import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multi
 import FieldError from '../FieldError';
 import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
 import PickerField from 'components/picker/PickerField';
-import { IoTimeOutline } from 'react-icons/io5';
+import { IoLocationOutline, IoTime, IoTimeOutline } from 'react-icons/io5';
 
 export default function FieldDate({
   title,
@@ -231,9 +231,12 @@ const EventType = React.forwardRef(
             </div>
           ))}
         </FieldRadio>
-        {value &&
-          eventTypes.find((eventType) => eventType.type == value)
-            .explain}
+        <div className='form__explain'>
+          {value &&
+            eventTypes.find((eventType) => eventType.type == value)
+              .explain
+          }
+        </div>
       </>
     );
   },
@@ -250,7 +253,7 @@ export function ShowDate({
   return (
     <>
       {(eventStart || eventData) ? (
-        <div>
+        <>
           {readableEventDateTime(
             eventType,
             eventStart,
@@ -258,7 +261,7 @@ export function ShowDate({
             loadRrules(eventData),
             hideRecurrentDates
           )}
-        </div>
+        </>
       ) : <>{title}</>}
     </>
   );
