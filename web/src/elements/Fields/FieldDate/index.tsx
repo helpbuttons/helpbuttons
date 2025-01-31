@@ -214,7 +214,6 @@ const EventType = React.forwardRef(
       <>
         <FieldRadio label={label} explain={explain}>
           {eventTypes.map((eventType, idx) => (
-            <div key={idx}>
               <FieldRadioOption
                 onChange={(value) => onChange(value)}
                 onBlur={onBlur}
@@ -228,7 +227,6 @@ const EventType = React.forwardRef(
                   {eventType.label}
                 </div>
               </FieldRadioOption>
-            </div>
           ))}
         </FieldRadio>
         {value &&
