@@ -49,7 +49,6 @@ $avatar-medium-max-width: 50px;
   border-style: solid;
   object-fit: cover;
   overflow: hidden;
-  margin-top: auto;
 
 
   top: 0;
@@ -85,3 +84,16 @@ $avatar-medium-max-width: 50px;
   display: flex;
 
 }
+
+
+@media #{$breakpoints-medium} {
+
+  .avatar-medium--home {
+
+    margin-top: auto;
+
+
+  }
+
+}
+
