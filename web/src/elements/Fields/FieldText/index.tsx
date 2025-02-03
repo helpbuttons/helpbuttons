@@ -71,19 +71,15 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
             onInput={onInput}
           />
           <div className="form__input-subtitle">
-            <div className="form__input-subtitle-side">
               {maxLength > 0 && (
                 <label className="form__input-subtitle--text">
                   {textLength} / {maxLength}
                 </label>
               )}
-              <label className="form__input-subtitle--error">
                 <FieldError
                   validationError={validationError}
                   extraMessage={extraMessage}
                 />
-              </label>
-            </div>
   
             {/* {subInputLink &&
   
