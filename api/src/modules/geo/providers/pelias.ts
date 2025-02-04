@@ -14,6 +14,7 @@ export class PeliasProvider implements GeoProvider {
     _limitCountries,
     _geoCodeHost
   ) {
+    console.log('starting pelias connection!')
     this.apiKey = _apiKey;
     this.limitCountries = _limitCountries;
     this.geoCodeHost = _geoCodeHost;
