@@ -185,11 +185,11 @@ export default function DropDownSearchLocation({
             onClick={setCenterFromBrowser}
           />
       </div>
-      {address && 
+      {/* {address && 
         <>{address}</>
-      }
+      } */}
       {(markerPosition && markerPosition[0] && markerPosition[1] && !hideAddress) && (
-        <div className='form__input-subtitle-option'>
+        <div className='form__input-subtitle-option form__input-subtitle--grayed'>
            ( {roundCoords(markerPosition).toString()} )
         </div>
       )}

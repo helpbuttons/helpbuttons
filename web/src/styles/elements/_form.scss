@@ -109,7 +109,7 @@ margin: $margin-medium 0;
   align-items: center;
   flex-direction: row;
   // background-color: $color-white;
-  padding: $padding-small 0;
+  // padding: $padding-small 0;
   gap: $padding-small;
 
   button {
@@ -530,6 +530,13 @@ width: 100%;
 
   @extend .form__input-subtitle--text;
   color: $color-red;
+
+}
+
+
+.form__input-subtitle--grayed {
+
+  color: $color-gray;
 
 }
 
