@@ -5,6 +5,7 @@ import { GlobalState, store } from 'state';
 import { formatCurrency } from 'shared/currency.utils';
 import { Network } from 'shared/entities/network.entity';
 import { useStore } from 'state';
+import { IoTimeOutline } from 'react-icons/io5';
 
 export function CardButtonCustomFields({ customFields, button }) {
   const selectedNetwork: Network = useStore(
@@ -13,7 +14,7 @@ export function CardButtonCustomFields({ customFields, button }) {
   );
 
   const renderFields = () => {
-    const reversedCustomFields = [...customFields]
+    const reversedCustomFields = [...customFields].reverse();
     return reversedCustomFields.map((fieldProps, key) => {
       const type = fieldProps.type;
       let field = <>{JSON.stringify(fieldProps)}</>;
@@ -44,14 +45,18 @@ export function CardButtonCustomFields({ customFields, button }) {
 
       if (type == 'event') {
         field = (
-            <ShowDate
-              eventStart={button.eventStart}
-              eventEnd={button.eventEnd}
-              eventType={button.eventType}
-              title={button.title}
-              eventData={button.eventData}
-              hideRecurrentDates={true}
-            />
+            <div className='card-button__date'>
+              <IoTimeOutline/>
+              <ShowDate
+                eventStart={button.eventStart}
+                eventEnd={button.eventEnd}
+                eventType={button.eventType}
+                title={button.title}
+                eventData={button.eventData}
+                hideRecurrentDates={true}
+              />
+            </div>
+            
         );
       }
 

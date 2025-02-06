@@ -42,7 +42,7 @@ export default function PickerEventTypeMultipleForm({
         />
       </div>
       {(eventStart && eventEnd) && (
-        <>
+        <div className="picker__row">
           <TimePick
             dateTime={eventStart}
             setDateTime={(value) => setEventStart(value)}
@@ -53,7 +53,7 @@ export default function PickerEventTypeMultipleForm({
             setDateTime={(value) => setEventEnd(value)}
             label={t('eventType.until') + readableTime(eventEnd)}
           />
-        </>
+        </div>
       )}
     </>
   );

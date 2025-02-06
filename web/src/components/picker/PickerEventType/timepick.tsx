@@ -30,9 +30,10 @@ export function TimePick({ dateTime, setDateTime, label }) {
       showPopup={pickerTime}
       btnLabel={
         <>
-          <IoTimeOutline /> {label}
+           {label}
         </>
       }
+      iconLink={<IoTimeOutline/>}
       headerText={''}
       openPopup={showPickTime}
       closePopup={hidePickTime}
