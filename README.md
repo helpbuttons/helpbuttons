@@ -10,9 +10,10 @@ We're currently testing real life examples that you can check in our website. Sp
 
 You can install your own tool in your server with this repo or ask us for help and host it at <a rel="me" href="https://helpbuttons.org">helputtons.org</a>
 
-We accept donations: 
-
+Project financed by Wof!, a nonprofit organization dedicated to promote social cooperation and public debate: 
+If you want to support us, you can donate here: 
 [USD/EUR](https://buy.stripe.com/9AQ5kl3CYaIvgRW6ou)
+
 
 ![UX view](https://watchoutfreedom.com/wp-content/uploads/2024/03/Captura-de-Pantalla-2024-03-13-a-las-21.30.09-2048x1124.jpg "UX view")
 
