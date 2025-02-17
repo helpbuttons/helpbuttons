@@ -14,8 +14,6 @@ We accept donations:
 
 [USD/EUR](https://buy.stripe.com/9AQ5kl3CYaIvgRW6ou)
 
-[BTC](https://pagosinreglas.ddns.net/plugins/lnbank/lnurl/4165ff8c-2fc8-4e0f-ae43-b7d3d3852322)
-
 
 ![UX view](https://watchoutfreedom.com/wp-content/uploads/2024/03/Captura-de-Pantalla-2024-03-13-a-las-21.30.09-2048x1124.jpg "UX view")
 
