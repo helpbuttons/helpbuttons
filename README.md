@@ -10,8 +10,7 @@ We're currently testing real life examples that you can check in our website. Sp
 
 You can install your own tool in your server with this repo or ask us for help and host it at <a rel="me" href="https://helpbuttons.org">helputtons.org</a>
 
-Project financed by Wof!, a nonprofit organization dedicated to promote social cooperation and public debate: 
-If you want to support us, you can donate here: 
+Project financed by <a rel="me" href="https://wofreedom.org">Wof!</a>, a nonprofit organization dedicated to promote social cooperation and public debate. If you want to support us, you can donate here: 
 [USD/EUR](https://buy.stripe.com/9AQ5kl3CYaIvgRW6ou)
 
 
