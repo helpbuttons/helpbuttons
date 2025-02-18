@@ -124,6 +124,7 @@ $btn-font-size-medium: $font-size-medium;
   align-items: center;
   // padding: 10px 7px 8px 0;
   padding-right: $btn-padding;
+  max-width: 100%;
   font-weight: $font-weight-bold;
 
   .btn-with-icon__icon{
@@ -243,6 +244,25 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+
+.btn--form-search-field {
+      background: $color-white;
+      border: 4px solid $color-black;
+      border-radius: $border-radius-basic;
+      font-weight: $font-weight-bold;
+      height: $form-input-height;
+      
+      margin: 0;
+      
+      &:focus,
+      &:active,
+      &:hover {
+        color: $color-white;
+        background: $color-black;
+      }
+  
+}
+
 .btn-with-icon__icon {
 
   // max-height: $btn-with-icon-icon-width;
@@ -264,6 +284,7 @@ $btn-font-size-medium: $font-size-medium;
   font-size: $font-size-general;
   text-align: left;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   text-overflow: ellipsis;
   overflow: hidden;
   line-height: 1.2rem;
@@ -271,6 +292,12 @@ $btn-font-size-medium: $font-size-medium;
 
 }
 
+.btn--file-upload {
+  margin: 12px 0;
+  background: #f0f0f0;
+  padding: 12px 24px;
+  text-align: center;
+}
 
 //CIRCLE btn LIKE OFFER/NEED FILTER, DELETE feed BUTTON, NAV IN CARD BUTTONS, AND OTHERS.
 

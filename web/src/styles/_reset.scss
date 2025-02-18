@@ -112,6 +112,12 @@ body,
   /* Add other styles as needed */
 }
 
+.index__explore-container {
+
+  height: calc(var(--vh)) !important;
+
+}
+
 .homeinfo__container {
 
   height: calc(var(--vh) - 60px) !important;
@@ -150,8 +156,6 @@ body,
   /* Add other styles as needed */
 }
 
-
-
 ol,
 ul {
   list-style: none;
@@ -189,6 +193,16 @@ a {
   }
 }
 
+p {
+
+  & a {
+
+    text-decoration: underline;
+
+  }
+
+}
+
 .disabled {
   pointer-events: none;
   background-color: $color-white;
@@ -209,7 +223,7 @@ a {
   .feed-section--activity-content,
   .feed__container
   {
-    height: calc(var(--vh)) !important;
+    height: calc(var(--vh) - $header-height-desktop - $nav-header-height-desktop) !important;
   }
 
   .popup__content {

@@ -56,7 +56,7 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
           }
         >
           {label && <label className="form__label">{label}</label>}
-          {explain && <p className="form__explain">{explain}</p>}
+          <p className="form__explain">{explain}</p>
           <input
             name={name}
             ref={ref}
@@ -71,19 +71,15 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
             onInput={onInput}
           />
           <div className="form__input-subtitle">
-            <div className="form__input-subtitle-side">
               {maxLength > 0 && (
                 <label className="form__input-subtitle--text">
                   {textLength} / {maxLength}
                 </label>
               )}
-              <label className="form__input-subtitle--error">
                 <FieldError
                   validationError={validationError}
                   extraMessage={extraMessage}
                 />
-              </label>
-            </div>
   
             {/* {subInputLink &&
   

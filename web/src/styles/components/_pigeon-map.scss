@@ -127,18 +127,19 @@ $map-btns-size-mobile: 30px;
 }
 
 .pigeon-attribution {
-
-    background: transparent !important;
-    // display: flex !important;
-    // flex-direction: column !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    position: relative;
+    right: 10px;
     bottom: 0px !important;
-    right: 10px !important;
-    font-size: 7px !important;
-    // writing-mode: vertical-rl !important;
-    text-orientation: mixed !important;
+    background: transparent !important;
+    font-size: $font-size-xsmall !important;
 
+    // &::before {
+        
+    //     content: "<a href="">fix a </a> " ;
+
+    // }
+
+   
 }
 
 .pigeon-map__custom-block {
@@ -247,9 +248,7 @@ $map-btns-size-mobile: 30px;
     }
 
     .pigeon-attribution {
-    
-        bottom: 0 !important;
-    
+    bottom: 0 !important;
     }
 
     .pigeon-center-view {

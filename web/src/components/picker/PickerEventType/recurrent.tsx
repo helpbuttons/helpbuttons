@@ -12,6 +12,7 @@ import t from 'i18n';
 import { TimePick } from './timepick';
 import WeekDayPicker from './weekDayPicker';
 import CalendarHb from 'components/calendar';
+import { IoTimeOutline } from 'react-icons/io5';
 
 const convertWeekDay = (date) => {
   const weekday = date.getDay() - 1;
@@ -152,7 +153,7 @@ export default function PickerEventTypeRecurrentForm({
           </>
         )}
         {startDate && endDate && (
-          <div className="form__field">
+        <div className="picker__row">
             <TimePick
               dateTime={startDate}
               setDateTime={(value) => setStartDate(value)}
@@ -166,7 +167,7 @@ export default function PickerEventTypeRecurrentForm({
           </div>
         )}
         <div className="form__field">
-          <label className='form__label'>{recrule && <>{recurrentToText(rrule)}</>}</label>
+          <label className='card-button__date'>{recrule && <><IoTimeOutline/>{recurrentToText(rrule)}</>}</label>
         </div>
       </div>
     </>

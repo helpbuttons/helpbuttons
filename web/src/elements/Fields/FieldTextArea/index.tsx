@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import FieldError from "../FieldError";
-import { EmojiPicker } from "components/emoji";
 import { ShowDesktopOnly } from "elements/SizeOnly";
 
 
@@ -55,9 +54,6 @@ export const FieldTextArea = React.forwardRef((props, ref) => {
           <div className="form__input--text-length">{textLength} / {maxLength}</div>
           </>
         }
-        <ShowDesktopOnly>
-          <EmojiPicker updateEmoji={addEmoji} pickerEmoji="😀"/>
-        </ShowDesktopOnly>
         <FieldError validationError={validationError} />
       </div>
     </>

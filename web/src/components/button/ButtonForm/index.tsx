@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Form from 'elements/Form';
 
 import Popup from 'components/popup/Popup';
-import ButtonType from 'components/button/ButtonType';
+import FieldButtonType from 'components/button/ButtonType';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 
 import FieldLocation from 'elements/Fields/FieldLocation';
@@ -14,7 +14,7 @@ import ButtonShare from 'components/button/ButtonShare';
 import FieldTags from 'elements/Fields/FieldTags';
 import { useRef } from 'store/Store';
 // import FieldImageUpload from "elements/Fields/FieldImageUpload";
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { Network } from 'shared/entities/network.entity';
 import t from 'i18n';
 import Loading, { LoadabledComponent } from 'components/loading';
@@ -111,7 +111,7 @@ export default function ButtonForm({
             {isSubmitting ? <Loading /> :
               <>
                 <div className="form__inputs-wrapper">
-                  <ButtonType
+                  <FieldButtonType
                     name="type"
                     label={t('button.typeLabel')}
                     {...register('type', { required: true })}

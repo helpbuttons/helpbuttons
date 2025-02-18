@@ -12,7 +12,7 @@ import { Role } from 'shared/types/roles';
 import t from 'i18n';
 import { LoadabledComponent } from 'components/loading';
 import Popup from 'components/popup/Popup';
-import { useGlobalStore } from 'store/Store';
+import { useGlobalStore } from 'state';
 import router from 'next/router';
 
 export default function Profile() {
@@ -56,7 +56,7 @@ export default function Profile() {
                     {sessionUser?.role == Role.admin && 
                       <AdminOptions/>
                     }
-                    <Link href="/HomeInfo">
+                    <Link href="/">
                       <div onClick={() => router.push('/Logout')} className="btn-with-icon">
                         <div className="btn-with-icon__icon">
                           <IoLogOutOutline />

@@ -10,18 +10,17 @@ import {
 } from '@react-pdf/renderer';
 import Btn, { IconType } from 'elements/Btn';
 import { IoAdd } from 'react-icons/io5';
-import Popup from 'components/popup/Popup';
 import { PdfIframe, usePdfGenerateBlob } from '../pdf';
 import { getShareLink, makeImageUrl } from 'shared/sys.helper';
-import { useSelectedNetwork } from 'state/Networks';
-import { Network } from 'shared/entities/network.entity';
 import QRCode from 'qrcode';
 import Loading from 'components/loading';
 import { CreateInvite } from 'state/Profile';
-import { store } from 'pages';
+import { GlobalState, store } from 'state';
+import { useGlobalStore } from 'state';
 
 export default function ShareInvitationsForm() {
-  const selectedNetwork: Network = useSelectedNetwork();
+
+  const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork)
   const [invitations, setInvitations] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -80,21 +79,25 @@ export default function ShareInvitationsForm() {
     generatePdf()
   }, [invitations])
   return (
-    <>
-        {t('share.explainInvitations')}
-        <div>
-        {invitations.length}
+        <>
+          <div className="form__field">
+            <div className="form__label">
+              {t('share.explainInvitations')}
+              
+            </div>
+          <Btn
+            onClick={() => {
+              getNewQrCode();
+            }}
+            caption={invitations.length}
+            iconLeft={IconType.svg}
+            iconLink={<IoAdd />}
+          />
         </div>
-        <Btn
-          onClick={() => {
-            getNewQrCode();
-          }}
-          iconLeft={IconType.svg}
-          iconLink={<IoAdd />}
-        />
-        {loading && <Loading />}
-        {!loading && <PdfIframe blob={pdfBlobUrl} />}
-    </>
+
+          {loading && <Loading />}
+          {!loading && <PdfIframe blob={pdfBlobUrl} />}
+        </>
   );
 }
 const InvitationsPdf = ({ selectedNetwork, invitations }) => {
@@ -130,14 +133,31 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
     cardWrapper: {
       display: 'flex',
       flexDirection: 'column',
-      padding: '0px',
+      padding: '0px 10px',
+      paddingTop: '10px',
+      alignItems: 'center',
       fontSize: '14px',
-      height: 'auto',
-      minWidth: '295px',
-      borderRadius: '5px',
+      height: '165px',
+      minWidth: '140px',
+      maxWidth: '160px',
       border: '0px solid selectedNetwork.borderColor',
       borderColor: selectedNetwork.borderColor,
+      backgroundColor: selectedNetwork.backgroundColor,
       boxSizing: 'border-box',
+      borderRadius: '20px',
+      gap:'10px',
+
+    },
+    networkTitleText: {
+
+      minHeight: '2px',
+      width: '100%',
+      position: 'relative',
+      alignContent:'center',
+      textAlign: 'center',
+      paddingBottom:'40px',
+      paddingTop:'0',
+
 
     },
     networkLogo: {
@@ -145,26 +165,30 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       maxWidth: '25px',
       minHeight: '35px',
       minWidth: '35px',
+      display: 'none',
     },
     networkHeader: {
       backgroundColor: selectedNetwork.backgroundColor,
       display: 'flex',
       flexDirection: 'row',
+      flexWrap: 'nowrap',
       alignItems: 'center',
-      gap: '20px',
+      gap: '0px',
       height: 'auto',
-      padding: '10px',
+      padding: '30px',
+      boxsizing: 'border-box',
+      paddingBottom: '10px',
+      paddingTop: '10px',
     },
     invitationCard: {
       maxWidth: '100%',
-      padding: '15px',
-      paddingTop: '0px',
-      paddingRight: '0px',
+      padding: '0px',
       display: 'flex',
-      flexDirection: 'row',
-      justifyContent:'space-between',
+      flexDirection: 'column',
+      justifyContent:'center',
+      alignContent: 'center',
       minHeight: 'auto',
-      height: '150px',
+      height: '130px',
       overflowX: 'hidden',
       boxSizing: 'border-box',
 
@@ -172,15 +196,17 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
     qrDiv: {
       display: 'flex',
       flexDirection: 'column',
-      position: 'absolute',
-      height: 'auto',
-      right: '10px',
+      height: '100%',
       fontSize: '10px',
       // overflow: 'hidden',
-      width: '95px',
-      minHeight: '150px',
-      alignContent: 'flex-start',
+      minWidth: '90px',
+      minHeight: '90px',
       justifyContent: 'center',
+      alignContent: 'center',
+      backgroundColor: 'white',
+      borderRadius: '5px',
+      boxSizing: 'border-box',
+      margin: 'auto',
       wordWrap: 'break-word',      // Ensure that words can break
       overflowWrap: 'break-word',  // Handle breaking in most browsers
 
@@ -203,44 +229,29 @@ const InvitationCard = ({ selectedNetwork, qrCode, qrCodeImage }) => {
       alignContent:'center',
     },
     qrCode: {
-      display: 'flex',
       whiteSpace: 'normal',    
       wordBreak: 'break-all',
-
+      paddingTop: '10px',
+      maxWidth: '100%',
           // Allow text to wrap to the next line
       // hyphens: 'auto',             // Add hyphenation to break long words
-      flexWrap: 'nowrap',
-      position: 'absolute',
-      width: '100%',
-      fontSize:'10px',
-      bottom:'10px',
+      flexWrap: 'wrap',
+      width: '150px',
+      fontSize:'8px',
     },
     networkTitle: {
-      display: 'flex',
-      flexDirection: 'column',
       fontWeight: 'bold',
-      gap: '5px',
+      alignContent: 'center',
+      paddingTop: '0',
     }
   });
 
   return (
     <View style={styles.cardWrapper}>
-      <View style={styles.networkHeader}>
-        <Image
-          style={styles.networkLogo}
-          src={makeImageUrl(selectedNetwork.image)}
-        />
-        <View style={styles.networkTitle}>
-          <Text>{selectedNetwork.name}</Text>
-          <Text>{t('invitation.card')}</Text>
-        </View>
-      </View>
+
       <View style={styles.invitationCard}>
-        <View style={styles.textDiv}>
-          <Text>{t('invitation.infoCard')}</Text>
-          <Text>{t('invitation.name')}</Text>
-          <Text>{t('invitation.contact')}</Text>
-          <Text>{t('invitation.infoQr')}</Text>
+        <View style={styles.networkTitle}>
+          <Text style={styles.networkTitleText}>{selectedNetwork.name}</Text>
         </View>
         <View style={styles.qrDiv}>
           <Image src={qrCodeImage} />

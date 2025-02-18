@@ -7,12 +7,12 @@ import { WatchEvent, UpdateEvent, EffectEvent } from 'store/Event';
 import { NetworkService } from 'services/Networks';
 import { isHttpError } from 'services/HttpService';
 import { of } from 'rxjs';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { CreateNetworkDto } from 'shared/dtos/network.dto';
 import { Network } from 'shared/entities/network.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateExploreSettings } from './Explore';
-import { useStore } from 'store/Store';
+import { useGlobalStore } from 'state';
 import { useEffect, useRef } from 'react';
 import { SetupSteps } from 'shared/setupSteps';
 import { ConfigFound, GetConfig } from './Setup';
@@ -24,6 +24,7 @@ export interface NetworksState {
   // networks: Network[];
   selectedNetwork: Network;
   selectedNetworkLoading: boolean;
+  intialized: boolean;
 } 
 
 export const networksInitial = {
@@ -36,24 +37,28 @@ export const networksInitial = {
     textColor: 'pink',
   },
   selectedNetworkLoading: true,
+  initialized: false,
 };
 
 export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) => console.log(error)) : Network => {
   const fetchingNetwork = useRef(false)
+  const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
+
   useEffect(() => {
-    if(!_selectedNetwork && !fetchingNetwork.current)
+    if(!selectedNetwork.initialized)
     {
-      fetchingNetwork.current = true
-      store.emit(new FetchDefaultNetwork(() => console.log('fetched network!!'), onError))
-    }else if(_selectedNetwork){
-      store.emit(new SelectedNetworkFetched(_selectedNetwork))
+      if(!_selectedNetwork && !fetchingNetwork.current )
+        {
+          fetchingNetwork.current = true
+          store.emit(new FetchDefaultNetwork(() => console.log('fetched network!!'), onError))
+        }else if(_selectedNetwork){
+          store.emit(new SelectedNetworkFetched(_selectedNetwork))
+        }
     }
+    
   }, [_selectedNetwork])
 
-  return useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
+  return selectedNetwork;
 }
 export class UpdateNetworkBackgroundColor implements UpdateEvent {
   public constructor(public color: string) {}
@@ -154,6 +159,7 @@ export class SelectedNetworkFetched implements UpdateEvent {
     return produce(state, (newState) => {
       newState.networks.selectedNetwork = this.network
       newState.networks.selectedNetworkLoading = false;
+      newState.networks.intialized = true;
     });
   }
 }

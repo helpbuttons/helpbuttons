@@ -1,10 +1,10 @@
 //Form component with the main fields for signup in the platform
 //imported from libraries
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 //imported internal classes, variables, files or functions
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { SignupUser } from 'state/Profile';
 
 //imported react components
@@ -25,7 +25,7 @@ import { alertService } from 'services/Alert';
 import t from 'i18n';
 import { setValidationErrors } from 'state/helper';
 import { getLocale } from 'shared/sys.helper';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 import FieldText from 'elements/Fields/FieldText';
 import { Network } from 'shared/entities/network.entity';
 import { NextPageContext } from 'next';
@@ -41,7 +41,7 @@ export default function Signup() {
     setValue,
     watch,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     defaultValues: {
       username: '',
@@ -62,8 +62,10 @@ export default function Signup() {
   );
   useMetadataTitle(t('menu.register'))
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const onSubmit = (data) => {
-    
+    setIsSubmitting(true)
     // if (passwordsMatch(data, setError)) {
       store.emit(
         new SignupUser(
@@ -75,7 +77,7 @@ export default function Signup() {
             avatar: null,
             locale: getLocale(),
             inviteCode: data.inviteCode,
-            acceptPrivacyPolicy: data.acceptPrivacyPolicy
+            acceptPrivacyPolicy: data.acceptPrivacyPolicy,
           },
           onSuccess,
           onError,
@@ -85,10 +87,12 @@ export default function Signup() {
   };
 
   const onSuccess = (userData) => {
+    setIsSubmitting(false)
     store.emit(new SetMainPopup(MainPopupPage.HIDE))
   };
 
   const onError = (error) => {
+    setIsSubmitting(false)
     setValidationErrors(error?.validationErrors, setError);
     console.log(error);
     alertService.error(error.caption);
@@ -127,7 +131,7 @@ export default function Signup() {
                 btnType={BtnType.submit}
                 caption={t('user.register')}
                 contentAlignment={ContentAlignment.center}
-                isSubmitting={isSubmitting}
+                disabled={isSubmitting}
               />
             </div>
             <div className="popup__link">

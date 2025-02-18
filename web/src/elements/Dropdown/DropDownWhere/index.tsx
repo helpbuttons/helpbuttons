@@ -5,7 +5,7 @@ import Btn, {
   IconType,
 } from 'elements/Btn';
 import t from 'i18n';
-import { store } from 'pages';
+import { store } from 'state';
 import { useEffect, useState } from 'react';
 import { IoLocationOutline } from 'react-icons/io5';
 import { useDebounce } from 'shared/custom.hooks';
@@ -148,7 +148,7 @@ export function DropDownWhere({
           </datalist>
         )}
         {markerAddress && markerPosition[0] && markerPosition[1] && (
-          <>({roundCoords(markerPosition).toString()})</>
+          <div className='form__input-subtitle--grayed form__input-subtitle--option'>({roundCoords(markerPosition).toString()})</div>
         )}
       </div>
     </>

@@ -2,11 +2,11 @@
 //imported from libraries
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import Form from 'elements/Form';
 import NewUserFields from 'components/user/NewUserFields';
 import { useForm } from 'react-hook-form';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 import { Network } from 'shared/entities/network.entity';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import t from 'i18n';
@@ -15,6 +15,8 @@ import { Login, LoginQR, SignupQR } from 'state/Profile';
 import { alertService } from 'services/Alert';
 import { getLocale } from 'shared/sys.helper';
 import { LoadabledComponent } from 'components/loading';
+import { NextPageContext } from 'next';
+import { setMetadata } from 'services/ServerProps';
 
 export default function Invite() {
   const router = useRouter();
@@ -127,3 +129,7 @@ export default function Invite() {
     
   );
 }
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  return setMetadata(t('seo.invite'), ctx);
+};

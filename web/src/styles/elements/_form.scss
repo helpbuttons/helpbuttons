@@ -106,10 +106,10 @@ margin: $margin-medium 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: row;
   // background-color: $color-white;
-  padding: $padding-small;
+  // padding: $padding-small 0;
   gap: $padding-small;
 
   button {
@@ -156,7 +156,9 @@ margin: $margin-medium 0;
   margin-bottom: $margin-xsmall;
 
 }
-
+.form__input__field {
+  margin: $margin-xsmall 0;
+}
 
 //REVISE DE LAS CLASES DEL INPUT
 .form__input {
@@ -169,7 +171,6 @@ margin: $margin-medium 0;
   padding: $padding-big $padding-big;
   font-size: $font-size-general;
   height: $form-input-height;
-  margin: $margin-xsmall 0;
   text-overflow: ellipsis;
 
   & ul {
@@ -248,10 +249,6 @@ margin: $margin-medium 0;
     position: absolute;
 
   }
-
-}
-
-.form__input-interest{
 
 }
 
@@ -425,17 +422,6 @@ width: 100%;
   margin-bottom: 0;
 }
 
-.form__input--button-type-field button {
-  // flex-basis: 20%; /* Take 20% of the width */
-  // margin-bottom: $margin-medium;
-}
-
-.form__field .btn--corporative {
-
-  // margin-bottom: $margin-medium;
-
-}
-
 .form__options-v {
 
   flex-flow: column nowrap;
@@ -519,7 +505,8 @@ width: 100%;
 
 }
 
-.form__input-subtitle--text {
+.form__input-subtitle--text,
+.form__input-subtitle-option  {
 
   margin: 0 0 $margin-xxsmall $margin-small;
   font-size: $font-size-small;
@@ -543,6 +530,13 @@ width: 100%;
 
   @extend .form__input-subtitle--text;
   color: $color-red;
+
+}
+
+
+.form__input-subtitle--grayed {
+
+  color: $color-gray;
 
 }
 

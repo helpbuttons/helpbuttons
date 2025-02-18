@@ -3,8 +3,8 @@ import FieldError from '../FieldError';
 import { IoClose } from 'react-icons/io5';
 import { tagify } from 'shared/sys.helper';
 import _ from 'lodash';
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import { UpdateFiltersToFilterTag, updateCurrentButton } from 'state/Explore';
 import router from 'next/router';
 

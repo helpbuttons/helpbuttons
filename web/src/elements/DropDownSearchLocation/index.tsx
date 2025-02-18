@@ -5,8 +5,8 @@ import React, {
   useState,
 } from 'react';
 import { SetupDtoOut } from 'shared/entities/setup.entity';
-import { GlobalState, store } from 'pages';
-import { useStore } from 'store/Store';
+import { GlobalState, store } from 'state';
+import { useStore } from 'state';
 import { roundCoords } from 'shared/honeycomb.utils';
 import { useToggle } from 'shared/custom.hooks';
 import {
@@ -144,17 +144,6 @@ export default function DropDownSearchLocation({
 
   return (
     <div className="form__field">
-      <LoadabledComponent loading={loadingNewAddress}>
-        <label className="form__label">
-          {label}
-          {label && address && (
-            <>
-              {' '}
-              {address}
-            </>
-          )}
-        </label>
-      </LoadabledComponent>
       {explain && <div className="form__explain">{explain}</div>}
       <div className="form__field--location">
         <AsyncSelect
@@ -184,23 +173,25 @@ export default function DropDownSearchLocation({
           openMenuOnFocus
           onFocus={handleFocus}
         />
-        <LoadabledComponent loading={loadingUserAddress}>
           <Btn
             btnType={BtnType.circle}
-            iconLink={<IoLocationOutline />}
+            iconLink={
+              <LoadabledComponent loading={loadingUserAddress}>
+                  <IoLocationOutline />
+              </LoadabledComponent>
+            }
             iconLeft={IconType.circle}
             contentAlignment={ContentAlignment.center}
             onClick={setCenterFromBrowser}
           />
-        </LoadabledComponent>
       </div>
-      {address && 
+      {/* {address && 
         <>{address}</>
-      }
+      } */}
       {(markerPosition && markerPosition[0] && markerPosition[1] && !hideAddress) && (
-        <>
+        <div className='form__input-subtitle-option form__input-subtitle--grayed'>
            ( {roundCoords(markerPosition).toString()} )
-        </>
+        </div>
       )}
     </div>
   );

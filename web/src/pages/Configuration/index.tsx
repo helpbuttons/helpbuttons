@@ -2,7 +2,7 @@ import NetworkForm from 'components/network/NetworkForm';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
 import router, { useRouter } from 'next/router';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
@@ -17,7 +17,7 @@ import {
   UpdateNetworkBackgroundColor,
   UpdateNetworkTextColor,
 } from 'state/Networks';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 
 export default Configuration;
 
@@ -83,6 +83,7 @@ function Configuration() {
           nomeclature: data.nomeclature,
           nomeclaturePlural: data.nomeclaturePlural,
           requireApproval: data.requireApproval,
+          slogan: data.slogan
         },
         (network) => {
           store.emit(new UpdateExploreSettings(data.exploreSettings));
@@ -92,7 +93,7 @@ function Configuration() {
           if (data.locale != 'en') {
             router.push(`/${data.locale}/HomeInfo`);
           } else {
-            router.push({ pathname: '/HomeInfo' }, asPath, {
+            router.push({ pathname: '/' }, asPath, {
               locale: 'en',
             });
           }

@@ -5,7 +5,7 @@ import { WatchEvent } from 'store/Event';
 import { UpdateEvent } from '../store/Event';
 
 import { ButtonService } from 'services/Buttons';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { Button } from 'shared/entities/button.entity';
 import { GeoService } from 'services/Geo';
 import { UpdateButtonDto } from 'shared/dtos/feed-button.dto';
@@ -588,23 +588,6 @@ export class SetExploreSettingsBoundsLoaded implements UpdateEvent {
     return produce(state, (newState) => {
       newState.explore.settings.bounds = null;
     });
-  }
-}
-
-
-export class GetPhone implements WatchEvent {
-  public constructor(
-    private buttonId: string,
-    private onSuccess,
-    private onError,
-  ) { }
-  public watch(state: GlobalState) {
-    return ButtonService.getPhone(this.buttonId).pipe(
-      map((data) => {
-        this.onSuccess(data);
-      }),
-      catchError((error) => handleError(this.onError, error)),
-    );
   }
 }
 

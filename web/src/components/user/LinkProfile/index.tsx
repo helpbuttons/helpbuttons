@@ -1,6 +1,6 @@
 import ImageWrapper, { ImageType } from "elements/ImageWrapper";
 import Link from "next/link";
-import { store } from "pages";
+import { store } from "state";
 import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentProfile } from "state/HomeInfo";
 
 export function LinkProfile({ username, avatar, name, extra = <></>}) {

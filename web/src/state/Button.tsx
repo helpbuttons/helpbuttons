@@ -1,4 +1,4 @@
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { catchError, map, of } from 'rxjs';
 import { ButtonService } from 'services/Buttons';
 import { UpdateEvent, WatchEvent } from 'store/Event';

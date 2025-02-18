@@ -1,7 +1,7 @@
 import { Picker } from "components/picker/Picker";
-import { GlobalState, store } from "pages";
+import { GlobalState, store } from "state";
 import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from "state/HomeInfo";
-import { useGlobalStore } from "store/Store";
+import { useGlobalStore } from 'state';
 import Login from "../../../pages/Login";
 import Signup from "../../../pages/Signup";
 import LoginClick from "../../../pages/LoginClick";

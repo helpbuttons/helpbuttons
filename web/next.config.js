@@ -25,18 +25,12 @@ module.exports = {
       }
     ];
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/HomeInfo',
-        permanent: true,
-      },
-    ];
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
   },
   i18n,
   output: 'standalone',
+  sassOptions: {
+    includePaths: [__dirname + '/styles'],
+  },
 };

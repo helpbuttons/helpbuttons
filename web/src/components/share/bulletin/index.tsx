@@ -1,7 +1,7 @@
 import t from 'i18n';
 import { useEffect, useState } from 'react';
-import { useStore } from 'store/Store';
-import { GlobalState, store } from 'pages';
+import { useStore } from 'state';
+import { GlobalState, store } from 'state';
 import { Button } from 'shared/entities/button.entity';
 import QRCode from 'qrcode';
 
@@ -30,7 +30,6 @@ import {
   defaultDaysForBulletin,
 } from 'components/search/AdvancedFilters/filters.type';
 import { readableDate, readableTime } from 'shared/date.utils';
-import { advancedSearchText } from 'elements/HeaderSearch';
 import { orderBy } from 'pages/Explore/HoneyComb';
 import { Network } from 'shared/entities/network.entity';
 import Loading from 'components/loading';
@@ -94,13 +93,13 @@ export default function ShareBulletinForm() {
           <br />
           {filters && (
             <>
-              {advancedSearchText(
-                filters.query,
-                buttonTypes,
-                [],
-                filters,
-                selectedNetwork.currency,
-              )}
+              {/* <AdvancedFiltersQueryString
+                  query={query}
+                  selectedButtonTypes={filters.helpButtonTypes}
+                  tags={tags}
+                  filters={filters}
+                  currency={selectedNetwork.currency}
+              /> */}
             </>
           )}
         </>

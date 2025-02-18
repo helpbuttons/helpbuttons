@@ -1,5 +1,5 @@
-import { GlobalState, store } from 'pages';
-import { useStore } from 'store/Store';
+import { GlobalState, store } from 'state';
+import { useStore } from 'state';
 
 
 export const buttonColorStyle = (cssColor: string) => {

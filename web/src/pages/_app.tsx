@@ -1,61 +1,61 @@
 import '../styles/app.scss';
-import Head from 'next/head';
 import { useState, useEffect, useRef } from 'react';
 import { Router, useRouter } from 'next/router';
 import NavBottom from 'components/nav/NavBottom'; //just for mobile
 import Alert from 'components/overlay/Alert';
-import { UserService } from 'services/Users';
 import { appWithTranslation } from 'next-i18next';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state/';
 import { useSelectedNetwork } from 'state/Networks';
 import { FetchUserData, LoginToken } from 'state/Profile';
 
-import { useGlobalStore, useStore } from 'store/Store';
+import { useGlobalStore } from 'state';
 import { alertService } from 'services/Alert';
 import { SetupSteps } from '../shared/setupSteps';
 
 import { Role } from 'shared/types/roles';
 import {
+  getHref,
   getLocale,
+  getLocaleFromUrl,
   isRoleAllowed,
-  setSSRLocale,
+  locale,
+  setLocale,
 } from 'shared/sys.helper';
-// import { version } from 'shared/commit';
 import t, { updateNomeclature } from 'i18n';
 import { useSearchParams } from 'next/navigation';
 import NavHeader from 'components/nav/NavHeader';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
-import SEO, { MetadataSEO } from 'components/seo';
+import { MetadataSEO } from 'components/seo';
 import Loading, { LoadabledComponent } from 'components/loading';
 import MainPopup from 'components/popup/Main/';
 import { useConfig } from 'state/Setup';
 import { UpdateMetadata } from 'state/Metadata';
 import { usePoolFindNewActivities } from 'state/Activity';
-import { useSetButtonFromUrl } from 'components/button/ButtonShow';
 import { randomBytes } from 'crypto'
 import MetadataSEOFromStore from 'components/seo';
+import { useRebuildUrl } from 'components/uri/builder';
+import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 
 export default appWithTranslation(MyApp);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  useEffect(() => {
-    useSetButtonFromUrl();
-  }, [])
+
   const [authorized, setAuthorized] = useState(null);
   const [isSetup, setIsSetup] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [fetchingNetworkError, setFetchingNetworkError] = useState(false)
   const path = router.asPath.split('?')[0];
   const nonce = randomBytes(128).toString('base64')
-
+  useRebuildUrl(router);
   const messagesUnread = useGlobalStore(
     (state: GlobalState) => state.activities.messages.unread
   );
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
   const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
-  state.networks.selectedNetworkLoading)
+    state.networks.selectedNetworkLoading)
   const onFetchingNetworkError = (error) => {
     if (error === 'network-not-found') {
       setFetchingNetworkError(true)
@@ -91,7 +91,7 @@ function MyApp({ Component, pageProps }) {
       return urlString;
     }
   }, [path])
-  
+
 
 
   const config = useConfig(pageProps._config, onFetchingConfigError);
@@ -177,9 +177,8 @@ function MyApp({ Component, pageProps }) {
       return;
     }
     const isAllowed = isRoleAllowed(Role.guest, path)
-    
-    if(!isAllowed)
-    {
+
+    if (!isAllowed) {
       alertService.error(
         `You are not allowed in here!`
       );
@@ -215,17 +214,10 @@ function MyApp({ Component, pageProps }) {
         selectedNetwork.nomeclature,
         selectedNetwork.nomeclaturePlural,
       );
-      setSSRLocale(selectedNetwork.locale);
     }
   }, [selectedNetwork]);
 
-  useEffect(() => {
-    if (sessionUser) {
-      if (getLocale() != sessionUser.locale) {
-        setSSRLocale(sessionUser.locale);
-      }
-    }
-  }, [sessionUser]);
+  useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork.locale });
 
   const searchParams = useSearchParams();
   const triedToLogin = useRef(false);
@@ -275,7 +267,7 @@ function MyApp({ Component, pageProps }) {
   } else if (!selectedNetworkLoading) {
     return (
       <>
-        <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce}/>
+        <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
         <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
         <div
           className="index__container"
@@ -291,7 +283,8 @@ function MyApp({ Component, pageProps }) {
                 '--network-text-color': 'pink',
               } as React.CSSProperties)
           }
-        >
+        > 
+          <CookiesBanner/>
           <Alert />
           <div className="index__content">
             <ShowDesktopOnly>
@@ -301,7 +294,7 @@ function MyApp({ Component, pageProps }) {
               />
             </ShowDesktopOnly>
             {authorized && <Component {...pageProps} />}
-            {!authorized && <><Loading/></>}
+            {!authorized && <><Loading /></>}
             <ShowMobileOnly>
               <ClienteSideRendering>
                 <NavBottom
@@ -331,4 +324,68 @@ function ActivityPool({ sessionUser, messagesUnread }) {
   usePoolFindNewActivities({ timeMs: 10000, sessionUser, messagesUnread })
 
   return (<></>);
+}
+
+export function CookiesBanner() {
+  const [showCookiesBanner, setShowCookiesBanner] = useState(false);
+  useEffect(() => {
+    const cookiesAccepted = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE);
+    if (!cookiesAccepted) {
+      setShowCookiesBanner(true);
+    }
+  }, []);
+  const handleAcceptCookies = () => {
+    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, true);
+    setShowCookiesBanner(false);
+  };
+
+  return (
+    <>{showCookiesBanner &&
+    <div className="card-alert__container">
+      <div className="cookies-banner__content">
+        <p>
+        {t('faqs.cookiesExplanation')}
+          <a href="/Faqs" target="_blank" rel="noopener noreferrer">
+          {t('faqs.cookiesPolicy')}
+          </a>
+          .
+        </p>
+        <Btn
+            btnType={BtnType.submit}
+            iconLeft={IconType.circle}
+            caption={t('faqs.cookieAccept')}
+            contentAlignment={ContentAlignment.center}
+            onClick={handleAcceptCookies}
+          />
+      </div>
+    </div>
+    }</>
+  );
+}
+
+const useWhichLocale = ({ sessionLocale, networkLocale }) => {
+
+  const [_locale, set_Locale] = useState('en');
+
+  useEffect(() => {
+    const localeFromUrl = getLocaleFromUrl();
+    if (localeFromUrl) {
+      console.log('set from url')
+      setLocale(localeFromUrl);
+    } else if (sessionLocale && networkLocale) {
+      console.log('set user session')
+      setLocale(sessionLocale);
+    } else if (networkLocale) {
+      console.log('set from network')
+      setLocale(networkLocale);
+    }
+    set_Locale((prevLocale) => {
+      console.log(locale + ' > ' + prevLocale)
+      if (locale !== prevLocale && prevLocale && locale) {
+        return locale;
+      }
+      return locale;
+    });
+  }, [networkLocale, sessionLocale]);
+  return;
 }

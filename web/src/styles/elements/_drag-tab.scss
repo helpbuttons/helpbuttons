@@ -97,7 +97,7 @@ $drag-tab-icon-size: 25px;
 
   .drag-tab { 
 
-    top: 140px;
+    top: calc($header-height-desktop + $nav-header-height-desktop + 20px);
 
   }
 

@@ -5,12 +5,12 @@ import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect, useState } from 'react';
 import { Network } from 'shared/entities/network.entity';
 import { getHostname } from 'shared/sys.helper';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 
 export default function NewUserFields({
   register,

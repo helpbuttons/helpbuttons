@@ -9,7 +9,7 @@ export function CardSubmenu({ children, extraClass }) {
     <div ref={ref} className={extraClass}>
       <div
 
-        className="card-button__edit-icon card-button__submenu"
+        className="card-button__edit-icon card-button__submenu card-profile__submenu"
       >
          {/* <Btn
           btnType={BtnType.filterCorp}

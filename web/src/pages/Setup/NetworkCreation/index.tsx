@@ -2,7 +2,7 @@ import NetworkForm from 'components/network/NetworkForm';
 import Popup from 'components/popup/Popup';
 import t from 'i18n';
 import router from 'next/router';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { alertService } from 'services/Alert';
@@ -43,7 +43,8 @@ function NetworkCreation() {
       locale: 'en',
       nomeclature: 'Helpbutton',
       nomeclaturePlural: 'Helpbuttons',
-      requireApproval: false
+      requireApproval: false,
+      slogan: ''
     },
   });
 
@@ -72,12 +73,13 @@ function NetworkCreation() {
           nomeclature: data.nomeclature,
           nomeclaturePlural: data.nomeclaturePlural,
           locale: data.locale,
-          requireApproval: data.requireApproval
+          requireApproval: data.requireApproval,
+          slogan: data.slogan
         },
         () => {
           const onComplete = () => {
             alertService.info(t('common.saveSuccess', ['instance']));
-            let url = '/HomeInfo';
+            let url = '/';
             if(getLocale() !=  data.locale )
             {
               url = `/${data.locale}/${url}`

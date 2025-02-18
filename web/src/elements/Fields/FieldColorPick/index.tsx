@@ -39,6 +39,8 @@ export const FieldColorPick = React.forwardRef(
     const onChanged = (e) => {setValueStore(e.target.value); onChange(e)} 
     return (
       <div className="form__field">
+        {label && <label className="form__label">{label}</label>}
+        <p className="form__explain">{explain}</p>
           <input
             name={name}
             ref={ref}
@@ -58,8 +60,7 @@ export const FieldColorPick = React.forwardRef(
           />
         )}
         <FieldError validationError={validationError} />
-        {label && <label className="form__label">{label}</label>}
-        {explain && <p className="form__explain">{explain}</p>}
+
         <div
           className="btn"
           onClick={() => setHideMenu(!showHideMenu)}

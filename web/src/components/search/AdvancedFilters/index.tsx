@@ -7,10 +7,10 @@ import { defaultFilters } from './filters.type';
 import { useForm } from 'react-hook-form';
 import Form from 'elements/Form';
 import { buttonColorStyle } from 'shared/buttonTypes';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import { ResetFilters, ToggleAdvancedFilters, UpdateFilters } from 'state/Explore';
 import router from 'next/router';
-import { useStore } from 'store/Store';
+import { useStore } from 'state';
 import { useButtonTypes } from 'shared/buttonTypes';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 import { uniqueArray } from 'shared/sys.helper';
@@ -169,7 +169,7 @@ export default function AdvancedFilters({
                         validationError={null}
                         explain={t('buttonFilters.typesExplain')}
                       > 
-                        {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType) => {
+                        {(helpButtonTypes && buttonTypes) && buttonTypes.map((buttonType, idx) => {
                           return (
 
                             <MultiSelectOption
@@ -183,22 +183,13 @@ export default function AdvancedFilters({
                                 handleChange={(name, newValue) => {
                                   setButtonTypeValue(name, newValue);
                                 }}
+                                key={idx}
                               >
                                 {/* <div className="btn-filter__icon"></div> */}
                                 <div className="btn-with-icon__text">
                                   {buttonType.caption}
                                 </div>
                               </MultiSelectOption>
-
-                          //   <div
-                          //     key={buttonType.name}
-                          //     style={buttonColorStyle(buttonType.cssColor)}
-                          //   >
-                          //     {/* <div className="btn-filter__icon"></div> */}
-                          //     <div className="btn-with-icon__text">
-                          //       {buttonType.caption}
-                          //     </div>
-                          // </div>
                         );
                       })}
                       </FieldMultiSelect>
@@ -215,7 +206,7 @@ export default function AdvancedFilters({
                       selectedButtonTypes={watch('helpButtonTypes')}
                     />
                     <AdvancedFiltersCustomFields watch={watch} buttonTypes={buttonTypes} register={register} setValue={setValue}/>
-                    <div clasS="form__btn-search">
+                    <div className="form__btn-search">
                       <FilterByLocationRadius handleSelectedPlace={handleSelectedPlace} address={address} center={center} radius={radius} setRadius={(value) => setValue('where.radius', value)}/>
                     </div>
                   </div>

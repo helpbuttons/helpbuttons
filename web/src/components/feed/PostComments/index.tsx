@@ -3,7 +3,7 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import { store } from 'pages';
+import { store } from 'state';
 import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';
@@ -28,6 +28,8 @@ import { useToggle } from 'shared/custom.hooks';
 import t from 'i18n';
 import { mentionsOfMessage } from 'shared/types/message.helper';
 import { ImageGallery } from 'elements/ImageGallery';
+import Link from 'next/link';
+import { FindAndSetMainPopupCurrentProfile } from 'state/HomeInfo';
 
 export default function PostComments({
   comments,
@@ -201,6 +203,10 @@ export function PostComment({
   );
 }
 export function Comment({ comment }) {
+    const onClick = (e) =>{
+      e.preventDefault()
+      store.emit(new FindAndSetMainPopupCurrentProfile(comment.author.username))
+    }
   return (
     <>
       <div className="message message--others">
@@ -214,7 +220,6 @@ export function Comment({ comment }) {
             </p>
           </div>
         </div>
-
         <div className="message__content">
           {formatMessage(comment.message, comment.mentions)}
         </div>
@@ -227,11 +232,13 @@ export function Comment({ comment }) {
         </div>
 
         <div className="message__avatar">
+        <Link href="#" onClick={onClick}>
           <ImageWrapper
             imageType={ImageType.avatar}
             src={comment.author.avatar}
             alt="Avatar"
           />
+        </Link>
         </div>
         <ImageGallery images={comment?.images?.map((image) => {return {src: image, alt: comment.message} })} />
       </div>

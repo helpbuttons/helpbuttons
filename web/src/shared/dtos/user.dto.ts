@@ -54,4 +54,6 @@ export class UserUpdateDto {
   phone?: string;
 
   publishPhone?: boolean;
+
+  showWassap?: boolean;
 }

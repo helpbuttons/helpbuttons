@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
-import { GlobalState, store } from 'pages';
+import { GlobalState, store } from 'state';
 import {
   RecenterExplore,
   UpdateHexagonClicked, updateCurrentButton,
@@ -13,8 +13,8 @@ import { buttonColorStyle } from 'shared/buttonTypes';
 import Loading from 'components/loading';
 import { IoStorefrontSharp } from 'react-icons/io5';
 import { ShowMobileOnly } from 'elements/SizeOnly';
-import { useStore } from 'store/Store';
-import { maxZoom } from './Map.consts';
+import { useStore } from 'state';
+import { showMarkersZoom } from './Map.consts';
 import { Button } from 'shared/entities/button.entity';
 import { MarkerButton } from './MarkerButton';
 import t from 'i18n';
@@ -25,13 +25,12 @@ export default function HexagonExploreMap({
   handleBoundsChange,
   exploreSettings,
   selectedNetwork,
+  countFilteredButtons
 }) {
   const [centerBounds, setCenterBounds] = useState<Point>(null);
   const [geoJsonFeatures, setGeoJsonFeatures] = useState([])
 
   const maxButtonsHexagon = useRef(1)
-
-  const showMarkersZoom = maxZoom - 2;
 
   const hexagonClicked = useStore(
     store,
@@ -69,7 +68,6 @@ export default function HexagonExploreMap({
   const buttonTypes = selectedNetwork.buttonTemplates;
 
   const [hexagonClickedFeatures, setHexagonClickedFeatures] = useState(null)
-  const [countFilteredButtons, setCountFilteredButtons] = useState(0)
   useEffect(() => {
     if (!hexagonHighlight && !hexagonClicked) {
       setHexagonClickedFeatures(() => null)
@@ -80,15 +78,6 @@ export default function HexagonExploreMap({
     }
   }, [hexagonHighlight, hexagonClicked, geoJsonFeatures])
 
-  useEffect(() => {
-    const allHiddenButtons = boundsFilteredButtons.filter((elem) => elem.hideAddress === true)
-    if(exploreSettings.zoom >= showMarkersZoom ){
-      setCountFilteredButtons(allHiddenButtons.length)
-    }else{
-      setCountFilteredButtons(0)
-    }
-    
-  }, [boundsFilteredButtons, exploreSettings.zoom])
   const places = [
     {
       address: 'Eiffel Tower, Paris, France',
@@ -142,7 +131,6 @@ export default function HexagonExploreMap({
             tileType={exploreSettings.tileType}
             handleClick={onMapClick}
           >
-            <HbMapOverlay selectedNetwork={selectedNetwork} />
             <DisplayInstructions />
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
@@ -350,25 +338,6 @@ export default function HexagonExploreMap({
   );
 }
 
-function HbMapOverlay({ selectedNetwork }) {
-  {
-    /* DISPLAY INSTRUCTIONS OVER MAP*/
-  }
-
-  return (
-    <ShowMobileOnly>
-      <Overlay anchor={[100, 100]}>
-        <div className="search-map__network-title">
-          <div>{selectedNetwork.name}</div>
-          <div className="search-map__sign">
-            <PoweredBy />
-          </div>
-        </div>
-      </Overlay>
-    </ShowMobileOnly>
-
-  );
-}
 
 
 function DisplayInstructions() {

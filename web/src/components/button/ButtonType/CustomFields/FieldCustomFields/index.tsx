@@ -1,6 +1,6 @@
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import FieldDate from 'elements/Fields/FieldDate';
-import FieldNumber from 'elements/Fields/FieldNumber';
+import FieldNumber, { InputNumber } from 'elements/Fields/FieldNumber';
 import t from 'i18n';
 import React, { useEffect } from 'react';
 
@@ -13,14 +13,14 @@ export default function FieldCustomFields({
   errors,
   currency,
 }) {
-  
+
   const renderFields = () => {
     return customFields.map((fieldProps, key) => {
       const type = fieldProps.type;
       let field = <>{JSON.stringify(fieldProps)}</>;
       if (type == 'price') {
-        field = <FieldPrice price={watch('price')} currency={currency} watch={watch} setValue={setValue} setFocus={setFocus} errors={errors} register={register}/>
-        
+        field = <FieldPrice price={watch('price')} currency={currency} watch={watch} setValue={setValue} setFocus={setFocus} errors={errors} register={register} />
+
       }
       if (type == 'event') {
         field = (
@@ -68,6 +68,9 @@ function FieldPrice({
       <label className="form__label">
         {t('customFields.priceLabel', [currency])}
       </label>
+      <p className="form__explain">
+          {t('customFields.priceExplain')}
+        </p>
       <FieldCheckbox
         name="consultPrice"
         defaultValue={price < 0}
@@ -78,12 +81,8 @@ function FieldPrice({
         {...register('consultPrice')}
       />
       {price != -1 && (
-        <FieldNumber
-          name={'price'}
+        <InputNumber name={'price'} validationError={errors.price}
           watch={watch}
-          setValue={setValue}
-          setFocus={setFocus}
-          validationError={errors.price}
           {...register('price', {
             required: true,
             valueAsNumber: true,

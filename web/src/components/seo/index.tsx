@@ -1,9 +1,9 @@
 //popup for extra filters when they don't fit in the filter section under the header. It uses popup classes and overllays to all site.
 
 import Head from 'next/head';
-import { GlobalState } from 'pages';
+import { GlobalState } from 'state';
 import { useEffect, useState } from 'react';
-import { useGlobalStore } from 'store/Store';
+import { useGlobalStore } from 'state';
 
 export default function MetadataSEOFromStore() {
   const metadataStore = useGlobalStore(
@@ -15,15 +15,7 @@ export default function MetadataSEOFromStore() {
   );
 }
 export function MetadataSEO(props) {
-  const [propsReceived, SetPropsReceived] = useState({
-    title: 'loading...',
-    description: 'loading...',
-    image: '/api/networks/logo/192',
-    pageurl: ' #',
-    siteTitle: 'loading...',
-    color: 'red',
-    webUrl: null,
-  })
+
   const {
     title,
     description,
@@ -31,25 +23,17 @@ export function MetadataSEO(props) {
     pageurl,
     siteTitle,
     color,
-    webUrl,
     nonce
-  } =  propsReceived;
+  } =  props;
 
   const csp = `object-src 'none'; base-uri 'none'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'`
 
-  useEffect(() => {
-    if(props)
-    {
-      SetPropsReceived(() => props)  
-    }
-    
-  }, [props])
   return (
-    <>{webUrl &&
-      <Head nonce={nonce}>
+      // <Head nonce={nonce}>
+        <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
-        <meta httpEquiv="Content-Security-Policy" content={csp} />
+        {/* <meta httpEquiv="Content-Security-Policy" content={csp} /> */}
         {/* <!-- Schema.org markup for Google+ --> */}
         <meta itemProp="name" content={title} />
         <meta itemProp="description" content={description} />
@@ -73,18 +57,18 @@ export function MetadataSEO(props) {
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href={`${webUrl}/api/networks/logo/32`}
+          href={`${pageurl}/api/networks/logo/32`}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href={`${webUrl}/api/networks/logo/16`}
+          href={`${pageurl}/api/networks/logo/16`}
         />
-        <link rel="manifest" href={`${webUrl}/manifest.json`} />
+        <link rel="manifest" href={`${pageurl}/manifest.json`} />
         <link
           rel="mask-icon"
-          href={`${webUrl}/api/networks/logo/32`}
+          href={`${pageurl}/api/networks/logo/32`}
           color={color}
         />
         <meta name="msapplication-TileColor" content={color} />
@@ -93,9 +77,9 @@ export function MetadataSEO(props) {
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href={`${webUrl}/api/networks/logo/180`}
+          href={`${pageurl}/api/networks/logo/180`}
         />
-      </Head>}</>
+      </Head>
 
   );
 }
