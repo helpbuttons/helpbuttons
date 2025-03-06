@@ -122,7 +122,7 @@ function ButtonNewForm({ selectedNetwork }) {
     }else if(err.errorName == ErrorName.invalidDates){
       alertService.error(t('button.invalidDates'))
     }else if(err.errorName == ErrorName.InvalidMimetype){
-      alertService.error(t('validation.invalidMimeType'))
+      alertService.error(err.caption);
     }else{
       console.error(JSON.stringify(err))
     }

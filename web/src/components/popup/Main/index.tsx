@@ -21,7 +21,7 @@ export default function MainPopup({pageName}) {
     const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage) 
     const mainPopupCurrentButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupCurrentButton) 
     const mainPopupUserProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile) 
-    const allowedCurrentButton = ['HomeInfo', 'Activity']
+    const allowedCurrentButton = ['HomeInfo', 'Activity', '', '#']
     return (
       <>
         {popupPage == MainPopupPage.LOGIN && (

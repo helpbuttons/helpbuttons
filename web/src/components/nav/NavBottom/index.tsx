@@ -28,8 +28,6 @@ function NavBottom({ sessionUser, pageName }) {
     useState(0);
   const isCurrent = (menuName) => {
     if (pageName && pageName.startsWith(menuName)) {
-      console.log('menuName', menuName);
-      console.log('pageName', pageName);
       return 'nav-bottom__link--current';
     }
     return '';

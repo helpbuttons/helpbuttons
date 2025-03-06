@@ -206,7 +206,6 @@
     "reset": "Reset filters",
     "done": "Done",
     "saveSuccess": "{0} saved",
-    "invalidMimeType": "{0} has invalid myme type ({1})",
     "publishTitle": "Publish new {0}",
     "editTitle": "Edit {0}",
     "next": "Next",
