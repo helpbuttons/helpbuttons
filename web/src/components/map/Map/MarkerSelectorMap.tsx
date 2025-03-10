@@ -14,6 +14,7 @@ import {
   hexagonSizeZoom,
   onMarkerPositionChangeZoomTo,
 } from './Map.consts';
+import FieldText from 'elements/Fields/FieldText';
 
 export function MarkerEditorMap(props) {
   return (
@@ -29,9 +30,9 @@ export function MarkerEditorMap(props) {
         requestPlacesForQuery={props.requestPlacesForQuery}
       /> */}
       <DropDownSearchLocation
-        placeholder={t('homeinfo.searchlocation')}
+        placeholder={t('homeinfo.address')}
         handleSelectedPlace={props.handleSelectedPlace}
-        address={props.markerAddress}
+        markerAddress={props.markerAddress}
         loadingNewAddress={props.loadingNewAddress}
         hideAddress={props.hideAddress}
         toggleLoadingNewAddress={props.toggleLoadingNewAddress}
