@@ -269,7 +269,7 @@ export default function HexagonExploreMap({
                         }
                         return (
                           <span
-                            className="pigeon-map__hex-element"
+                            className="pigeon-map__hex-element--selected"
                             style={{
                               color: btnType.cssColor,
                               fontWeight: 'bold',
