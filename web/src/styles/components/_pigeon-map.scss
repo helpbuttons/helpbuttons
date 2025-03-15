@@ -174,19 +174,20 @@ $map-btns-size-mobile: 30px;
 
 
 .pigeon-map__hex-wrap--selected::before {
-    // content: "";
-    // position: absolute;
-    // top: 50%; /* Adjusted to start from the middle of the div */
-    // left: 50%;
-    // transform: translate(-50%, -50%); /* Center the circle both horizontally and vertically */
-    // animation: createBox .25s;
-    // // width: 100%;
-    // // padding-top: 100%;
-    // width: 290%;
-    // padding-top: 290%; /* This creates a square that scales to cover the height */
-    // border-radius: $border-radius-circle; /* This makes the square a circle */
-    // z-index: -1;
-    // transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    content: "";
+    position: absolute;
+    top: 50%; /* Adjusted to start from the middle of the div */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the circle both horizontally and vertically */
+    animation: createBox .25s;
+    // width: 100%;
+    // padding-top: 100%;
+    background-color: $color-white;
+    width: 100%;
+    padding-top: 100%; /* This creates a square that scales to cover the height */
+    border-radius: $border-radius-circle; /* This makes the square a circle */
+    z-index: -1;
+    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   }
 
@@ -195,7 +196,9 @@ $map-btns-size-mobile: 30px;
 .pigeon-map__hex-wrap--selected {
 
     position: relative;
+
     display: flex;
+    min-width: 80px;
     max-width: 100px;
     flex-direction: row;
     justify-content: center;
