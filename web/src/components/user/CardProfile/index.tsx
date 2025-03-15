@@ -21,8 +21,9 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
         <div className="card-profile__container-avatar-content">
               {showAdminOptions && 
-              <ProfileAdminOptions user={user} />
-            }
+                <ProfileAdminOptions user={user} />
+              }
+
             <figure className="card-profile__avatar-container avatar">
 
               <div className="avatar-big">
@@ -45,32 +46,39 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
               {/* {t('user.created_date')}: {readableTimeLeftToDate(user.created_at)} */}
     
-              <figure className="card-profile__rating">
-
-                <div className="paragraph grid-three__column">
-                   {user.followsCount}
-                  <div className="card-profile__icon">
-                    <IoHeartOutline />
-                  </div>
-                </div>
-                <div className="paragraph grid-three__column">
-                  {user.buttonCount}
-                  <div className="card-profile__icon">
-                    <IoAddCircleOutline />
-                  </div>
-                </div>
-                <div className="paragraph grid-three__column">
-                  {user.commentCount}
-                  <div className="card-profile__icon">
-                    <IoChatbubbleOutline />
-                  </div>
-                </div>
-
-              </figure>
-
             </div>
 
         </div>
+        {user.followsCount || user.buttonCount || user.commentCount &&
+        <figure className="card-profile__rating">
+
+           { user.followsCount &&
+            <div className="card-profile__rate">
+              <div className="card-profile__rate-label">
+               {t('user.timesFollowed')} 
+              </div>
+              {user.followsCount}
+            </div>
+            }
+            {user.buttonCount &&
+            <div className="card-profile__rate">
+              <div className="card-profile__rate-label">
+              {t('user.helpbuttonsPublishedAmount')} 
+              </div>
+              {user.buttonCount}
+            </div>
+            }
+             {user.commentCount &&
+            <div className="card-profile__rate">
+              <div className="card-profile__rate-label">
+                {t('user.commentsAmount')} 
+              </div>
+              {user.commentCount}
+              </div>
+              }
+
+          </figure>
+          }
 
         <div className="card-profile__data">
 

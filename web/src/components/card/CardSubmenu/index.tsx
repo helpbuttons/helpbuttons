@@ -1,4 +1,5 @@
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import t from 'i18n';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 import useComponentVisible from 'shared/custom.hooks';
 
@@ -28,8 +29,7 @@ export function CardSubmenu({ children, extraClass }) {
         <Btn
           btnType={BtnType.filterCorp}
           contentAlignment={ContentAlignment.center}
-          iconRight={IconType.circle}
-          iconLink={<IoEllipsisHorizontalSharp />}
+          caption= {t('common.options')}
           onClick={() => {
             setShowSubmenu(!showSubmenu);
           }}
