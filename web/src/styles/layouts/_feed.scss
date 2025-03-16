@@ -21,9 +21,12 @@ $feed-new-message-radius: $border-radius-circle;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: $margin-medium auto;
+  margin: $margin-xsmall auto;
   font-weight: $font-weight-bold;
-  font-size: $font-size-medium;
+  color: $color-gray;
+  font-size: $font-size-small;
+
+
 }
 
 .feed-section {

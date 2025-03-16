@@ -109,11 +109,12 @@ export function PostComment({
         (comment.privacy == PrivacyType.PRIVATE
           ? ' card-notification--comment-private'
           : '') +
-        (isReply ? ' card-notification--reply' : '')
+        (isReply ? ' card-notification--reply' : '') + 
+        (sessionUser && (sessionUser.id == comment.author.id) ? ' card-notification--reply' : '')
       }
     >
-      <Comment comment={comment} />
-      <div className="message__actions">
+      <Comment comment={comment} sessionUser={sessionUser}/>
+      <div className={'message__actions ' + (sessionUser && (sessionUser.id == comment.author.id) ? ' ' : 'message__actions--you') }>
         {sessionUser && (
           <>
             {comment.privacy == PrivacyType.PRIVATE && (
@@ -202,46 +203,86 @@ export function PostComment({
       </>
   );
 }
-export function Comment({ comment }) {
+export function Comment({ comment, sessionUser }) {
     const onClick = (e) =>{
       e.preventDefault()
       store.emit(new FindAndSetMainPopupCurrentProfile(comment.author.username))
     }
+    const isAuthor = sessionUser.id === comment?.author?.id;
+    
   return (
     <>
-      <div className="message message--others">
-        <div className="message__header">
-          <div className="message__user-name-container">
-            <p className="message__author">
-              <span className="message__name">
-                {comment.author.name}
-              </span>{' '}
-              {/* @{comment.author.username} */}
-            </p>
+    {!isAuthor &&
+        <div className="message message--you">
+          <div className="message__header">
+            <div className="message__user-name-container">
+              <p className="message__author">
+                <span className="message__name">
+                  {comment.author.name}
+                </span>{' '}
+                {/* @{comment.author.username} */}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="message__content">
-          {formatMessage(comment.message, comment.mentions)}
-        </div>
+          <div className="message__content">
+            {formatMessage(comment.message, comment.mentions)}
+          </div>
 
-        <div className="message__hour">
-          {readableTimeLeftToDate(comment.created_at)},{' '}
-          {comment.privacy == PrivacyType.PRIVATE && (
-            <span style={{ color: 'red' }}>private</span>
-          )}
-        </div>
+          <div className="message__hour">
+            {readableTimeLeftToDate(comment.created_at)},{' '}
+            {comment.privacy == PrivacyType.PRIVATE && (
+              <span style={{ color: 'red' }}>private</span>
+            )}
+          </div>
 
-        <div className="message__avatar">
-        <Link href="#" onClick={onClick}>
-          <ImageWrapper
-            imageType={ImageType.avatar}
-            src={comment.author.avatar}
-            alt="Avatar"
-          />
-        </Link>
+          <div className="message__avatar">
+          <Link href="#" onClick={onClick}>
+            <ImageWrapper
+              imageType={ImageType.avatar}
+              src={comment.author.avatar}
+              alt="Avatar"
+            />
+          </Link>
+          </div>
+          <ImageGallery images={comment?.images?.map((image) => {return {src: image, alt: comment.message} })} />
         </div>
-        <ImageGallery images={comment?.images?.map((image) => {return {src: image, alt: comment.message} })} />
-      </div>
+      }
+      {isAuthor &&
+        <div className="message message--others">
+
+          <div className="message__header">
+            <div className="message__user-name-container">
+              <p className="message__author">
+                <span className="message__name">
+                  {comment.author.name}
+                </span>{' '}
+                {/* @{comment.author.username} */}
+              </p>
+            </div>
+          </div>
+          <div className="message__content">
+            {formatMessage(comment.message, comment.mentions)}
+          </div>
+
+          <div className="message__hour">
+            {readableTimeLeftToDate(comment.created_at)},{' '}
+            {comment.privacy == PrivacyType.PRIVATE && (
+              <span style={{ color: 'red' }}>private</span>
+            )}
+          </div>
+          <div className="message__avatar">
+          <Link href="#" onClick={onClick}>
+            <ImageWrapper
+              imageType={ImageType.avatar}
+              src={comment.author.avatar}
+              alt="Avatar"
+            />
+          </Link>
+          </div>
+          
+          <ImageGallery images={comment?.images?.map((image) => {return {src: image, alt: comment.message} })} />
+        </div>
+      }
     </>
   );
 }

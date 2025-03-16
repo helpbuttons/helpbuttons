@@ -196,9 +196,6 @@ $card-notification-delete-size: 100px;
 
 }
 
-.card-notification--reply {
-  padding-left: 20%;
-}
 
 .card-notification--comment-private {
 
@@ -337,7 +334,6 @@ $card-notification-delete-size: 100px;
   color: $color-gray;
   text-overflow: ellipsis;
   word-wrap: break-word;
-  max-height: 3.6em;
   line-height: $text-line-height-xsmall;
   font-size: $font-size-general;
   color: $color-gray;
