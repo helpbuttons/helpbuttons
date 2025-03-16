@@ -82,8 +82,8 @@ export default function Feed({ button }: { button: Button }) {
             <>
               <Btn
                 btnType={BtnType.corporative}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.center}
+                iconLeft={IconType.svg}
+                contentAlignment={ContentAlignment.left}
                 caption={t('button.edit')}
                 iconLink={<IoCreateOutline/>}
                 onClick={() => {
@@ -308,8 +308,8 @@ export function ComposePost({
             btnType={BtnType.corporative}
             caption={t('button.createUpdate')}
             iconLink={<IoAdd />}
-            iconLeft={IconType.circle}
-            contentAlignment={ContentAlignment.center}
+            iconLeft={IconType.svg}
+            contentAlignment={ContentAlignment.left}
             onClick={() => setShow()}
           />
         </>

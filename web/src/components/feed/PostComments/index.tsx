@@ -207,7 +207,8 @@ export function Comment({ comment, sessionUser }) {
       e.preventDefault()
       store.emit(new FindAndSetMainPopupCurrentProfile(comment.author.username))
     }
-    const isAuthor = sessionUser.id === comment?.author?.id;
+
+    const isAuthor = sessionUser?.id === comment?.author?.id;
     
   return (
     <>
