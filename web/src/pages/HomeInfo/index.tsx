@@ -105,9 +105,10 @@ export default function HomeInfo({ metadata }) {
                <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
               </ShowMobileOnly>
 
+              <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
+
               <HomeInfoInfoCard selectedNetwork={selectedNetwork} />
 
-              <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork} />
 
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork} />
@@ -274,9 +275,7 @@ function HomeInfoInfoCard({ selectedNetwork }) {
       <div className="homeinfo__description">
         <TextFormatted maxChars={600} text={selectedNetwork.description} />
       </div>
-      <HomeInfoActionButton>
-        <HomeInfoCreateButton />
-      </HomeInfoActionButton>
+
     </div></>)
 }
 
@@ -310,31 +309,35 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
 function HomeInfoTopHashTags({ selectedNetwork }) {
   return (<>
     {/* TOP 10 HASHTAGS CARD OF NETWORK */}
-    <div className="homeinfo-card">
-      <div className="homeinfo-card__header">
-        <h3 className="homeinfo-card__header-title">
-          {t('homeinfo.popularHashtags')}
-        </h3>
+    {selectedNetwork?.topTags &&
+      selectedNetwork?.topTags.length > 0 && (
+      <div className="homeinfo-card">
+        <div className="homeinfo-card__header">
+          <h3 className="homeinfo-card__header-title">
+            {t('homeinfo.popularHashtags')}
+          </h3>
+        </div>
+        <hr></hr>
+        <div className="homeinfo__description">
+          {t('homeinfo.popularHashtagsExplain')}
+        </div>
+        <div className="homeinfo__hashtags">
+          <TagsNav
+            tags={selectedNetwork.topTags.map(
+              (tag) => tag.tag,
+            )}
+          />
+        </div>
       </div>
-      <hr></hr>
-      <div className="homeinfo__description">
-        {t('homeinfo.popularHashtagsExplain')}
-      </div>
-      <div className="homeinfo__hashtags">
-        <TagsNav
-          tags={selectedNetwork.topTags.map(
-            (tag) => tag.tag,
-          )}
-        />
-      </div>
-    </div></>)
+    )}
+    </>)
 }
 
 function HomeInfoPinnedHashTags({ selectedNetwork }) {
   return (<>
     {/* HASHTAGS CARD OF NETWORK CONFIGURATION  */}
     {selectedNetwork?.tags &&
-      selectedNetwork?.tags.length >= 0 && (
+      selectedNetwork?.tags.length > 0 && (
         <div className="homeinfo-card">
           <div className="homeinfo-card__header">
             <h3 className="homeinfo-card__header-title">
@@ -503,12 +506,14 @@ function HomeSloganCard({ selectedNetwork, config }) {
       </div><hr></hr>
       <HomeInfoActionButton>
         <HomeInfoExploreButton />
+        <HomeInfoCreateButton />
       </HomeInfoActionButton>
     </div></>)
 }
 
 
 function HomeInfoInstallCard({ selectedNetwork }) {
+
   return (
     <>
       <div className="homeinfo-card">
@@ -527,8 +532,10 @@ function HomeInfoInstallCard({ selectedNetwork }) {
         <HomeInfoActionButton>
           <InstallButton />
           <DesktopNotificationsButton />
-        </HomeInfoActionButton></div></>)
+        </HomeInfoActionButton>
+        </div></>)
 }
+
 function HomeInfoExploreButton() {
   return (
 
