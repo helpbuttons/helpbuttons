@@ -227,6 +227,7 @@ $card-notification-delete-size: 100px;
 
   padding: $padding-small $padding-big;
   padding-bottom: 0;
+  min-height: 10px;
   cursor: pointer;
   position: relative;
   border-top: 1px solid var(--button-color);

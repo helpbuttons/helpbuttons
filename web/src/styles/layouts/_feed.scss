@@ -15,13 +15,15 @@ $feed-new-message-radius: $border-radius-circle;
 
 .feed-line {
 
-  display: none;
-  // position: absolute; revise
-  // height: 100%;
-  // width: 10px;
-  // background-color: $color-black;
-  // margin: 0 auto;
-  // left: 50%;
+  // display: none;
+  position: relative; 
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: $margin-medium auto;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-medium;
 }
 
 .feed-section {

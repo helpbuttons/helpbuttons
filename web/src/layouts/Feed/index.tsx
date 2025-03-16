@@ -123,7 +123,7 @@ export default function Feed({ button }: { button: Button }) {
           )}
         </>
       </div>
-      <div className="feed-line"></div>
+      <div className="feed-line">{t('feed.messages')}</div>
       <div className="feed-section">
         {posts &&
           posts.map((post, idx) => (
@@ -191,10 +191,10 @@ export function FeedElement({
       <div className="card-notification card-notification--feed">
         <div className="card-notification__comment-count">
           <div className="card-notification__label">
-            <div className="hashtag hashtag--blue hashtag--with-icon">
+            {/* <div className="hashtag hashtag--blue hashtag--with-icon">
               <IoPersonOutline />
               {t('feed.update')}
-            </div>
+            </div> */}
           </div>
         </div>
         <PostMessage post={post} />
