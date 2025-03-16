@@ -42,6 +42,12 @@ export function DesktopNotificationsButton() {
       });
     }
   };
+
+
+  if (hasNotificationPermissions) {
+    return null;
+  }
+
   return (
     <>
       {!hasNotificationPermissions && (

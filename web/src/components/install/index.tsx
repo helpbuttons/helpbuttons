@@ -10,6 +10,10 @@ import { IoDownload } from 'react-icons/io5';
 export function InstallButton() {
   const [prompt, promptToInstall] = useAddToHomescreenPrompt();
 
+  if (!prompt) {
+    return null; 
+  }
+
   return (
     <>
       {prompt && (
