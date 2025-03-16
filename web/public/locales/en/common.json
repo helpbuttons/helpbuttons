@@ -274,6 +274,7 @@
     "renewLink": "Renew your _helpbutton_",
     "createUpdate": "Publish Update",
     "authorTitle": "Author:",
+    "sendComment":"Send message",
     "notFound": "Can't find your button, maybe it was deleted?",
     "followErrorAlert": "Can`t follow now, sorry",
     "unfollowErrorAlert": "Can`t unfollow now, sorry",

@@ -467,7 +467,7 @@ export function ButtonOwnerPhone({ user, button }) {
           {!showPhone && isButtonOwner(user, button) && 
             <Btn
               btnType={BtnType.corporative}
-              contentAlignment={ContentAlignment.center}
+              contentAlignment={ContentAlignment.left}
               caption={t('button.showPhone')}
               iconLeft={IconType.svg}
               iconLink={<IoCallOutline />}
@@ -512,8 +512,9 @@ export function CardButtonHeadActions({
       {action && !isButtonOwner && (
         <Btn
           btnType={BtnType.corporative}
-          contentAlignment={ContentAlignment.center}
-          iconLeft={IconType.circle}
+          contentAlignment={ContentAlignment.left}
+          iconLeft={IconType.svg}
+          caption={t('button.sendComment')}
           iconLink={<IoMailOutline />}
           submit={true}
           onClick={action}
