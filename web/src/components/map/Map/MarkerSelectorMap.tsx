@@ -15,21 +15,13 @@ import {
   onMarkerPositionChangeZoomTo,
 } from './Map.consts';
 import FieldText from 'elements/Fields/FieldText';
+import SearchBar from 'elements/SearchBar';
+import LocationSearchBar from 'elements/SearchBar';
 
 export function MarkerEditorMap(props) {
   return (
     <>
-      {/* <DropDownWhere
-        handleSelectedPlace={props.handleSelectedPlace}
-        placeholder={t('homeinfo.searchlocation')}
-        toggleLoadingNewAddress={props.toggleLoadingNewAddress}
-        loadingNewAddress={props.loadingNewAddress}
-        hideAddress={props.hideAddress}
-        markerAddress={props.markerAddress}
-        markerPosition={props.markerPosition}
-        requestPlacesForQuery={props.requestPlacesForQuery}
-      /> */}
-      <DropDownSearchLocation
+      {/* <DropDownSearchLocation
         placeholder={t('homeinfo.address')}
         handleSelectedPlace={props.handleSelectedPlace}
         markerAddress={props.markerAddress}
@@ -37,7 +29,13 @@ export function MarkerEditorMap(props) {
         hideAddress={props.hideAddress}
         toggleLoadingNewAddress={props.toggleLoadingNewAddress}
         markerPosition={props.markerPosition}
-      />
+      /> */}
+      <LocationSearchBar
+        placeholder={t('homeinfo.address')}
+        markerAddress={props.markerAddress} isLoadingExternally={props.loadingNewAddress}
+        hideAddress={props.hideAddress}
+        handleSelectedPlace={props.handleSelectedPlace}
+        />
       <MarkerViewMap {...props} editPosition={true} />
     </>
   );
@@ -46,13 +44,13 @@ export function MarkerEditorMap(props) {
 export default function MarkerViewMap({
   markerPosition,
   zoom,
-  setZoom = (a) => {},
+  setZoom = (a) => { },
   markerColor,
   markerImage,
   markerCaption,
   hideAddress = false,
   editPosition = false,
-  onMapClick = (latLng) => {},
+  onMapClick = (latLng) => { },
   networkMapCenter = null,
 }) {
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =

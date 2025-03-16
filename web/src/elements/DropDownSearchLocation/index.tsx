@@ -20,7 +20,7 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import { IoCopyOutline, IoCreateOutline, IoLocationOutline } from 'react-icons/io5';
+import { IoCloseOutline, IoCopyOutline, IoCreateOutline, IoLocationOutline } from 'react-icons/io5';
 import { LoadabledComponent } from 'components/loading';
 import AsyncSelect from 'react-select/async';
 import debounce from 'lodash.debounce';
@@ -28,6 +28,7 @@ import _ from 'lodash';
 import { useGeoSearch } from 'elements/Fields/FieldLocation/location.helpers';
 import FieldText from 'elements/Fields/FieldText';
 import { useForm } from 'react-hook-form';
+import { alertService } from 'services/Alert';
 
 export default function DropDownSearchLocation({
   handleSelectedPlace = (place) => { },
@@ -48,8 +49,11 @@ export default function DropDownSearchLocation({
   const geoSearch = useGeoSearch()
 
   const setSelectedOption = (selectedOption) => {
+    if (!selectedOption) {
+      setInput(() => '');
+      return
+    }
     const selectedPlace = JSON.parse(selectedOption.value);
-    setInput(() => markerAddress);
     handleSelectedPlace(selectedPlace);
   };
   interface SelectOption {
@@ -60,22 +64,11 @@ export default function DropDownSearchLocation({
   }
   const bounce = useRef(false);
   const options = useRef([]);
-  const _loadSuggestions = function (input, callback) {
+  const loadSuggestions = function (input, callback) {
     toggleLoadingNewAddress(() => true);
-    geoSearch(input, (places) => {
+    geoSearch(input, hideAddress, (places) => {
       toggleLoadingNewAddress(() => false);
       if (places.length > 0) {
-        if (hideAddress) {
-          options.current = _.uniqBy(places, 'label').map(
-            (place, key) => {
-              return {
-                label: place.formatted_city,
-                value: JSON.stringify(place),
-                id: key,
-              };
-            },
-          );
-        } else {
           options.current = places.map((place, key) => {
             return {
               label: place.formatted,
@@ -83,27 +76,19 @@ export default function DropDownSearchLocation({
               id: key,
             };
           });
-        }
 
         bounce.current = false;
         toggleLoadingNewAddress(() => false);
         return callback(options.current);
       }
       return callback([]);
+    }, (error) => {
+      alertService.error(t('button.errorAddressFetch'))
+      return callback([]);
     });
   };
   const [input, setInput] = useState('');
-  const debouncedFilter = useCallback(
-    debounce(
-      (inputValue, callback) =>
-        _loadSuggestions(inputValue, callback),
-      500,
-    ),
-    [],
-  );
-  const loadSuggestions = (inputValue, callback) => {
-    debouncedFilter(inputValue, callback);
-  };
+
   useEffect(() => {
     if (markerAddress) {
       setInput(() => markerAddress);
@@ -118,24 +103,17 @@ export default function DropDownSearchLocation({
     <div className="form__field">
       {explain && <div className="form__explain">{explain}</div>}
       <div className="form__field--location">
-        <FieldText
-          name="where"
-          label={t('button.where')}
-          placeholder={t('button.placeHolderWhere')}
-        />
         {!showCustomAddressForm ?
           <>
             <AsyncSelect
               inputValue={input}
               onInputChange={(value, action) => {
-                //
                 if (
                   action?.action !== 'input-blur' &&
                   action?.action !== 'menu-close'
                 ) {
                   setInput(value);
                 }
-                console.log(action);
               }}
               onBlur={() =>
                 setInput(() => {
@@ -152,17 +130,28 @@ export default function DropDownSearchLocation({
               openMenuOnFocus
               onFocus={handleFocus}
             />
+            <Btn
+              btnType={BtnType.submit}
+              caption={t('button.customLocation')}
+              iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.center}
+              onClick={() => { setShowCustomAddressForm(() => true) }}
+            />
             <LoadUserLocationButton handleSelectedPlace={handleSelectedPlace} />
           </>
-          : <CustomAddress showCustomAddressForm={showCustomAddressForm} markerAddress={markerAddress} />
+          :
+          <><CustomAddress showCustomAddressForm={showCustomAddressForm} markerAddress={markerAddress} />
+            <Btn
+              btnType={BtnType.circle}
+              iconLink={<IoCloseOutline />}
+              iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.center}
+              onClick={() => { setShowCustomAddressForm(() => false) }}
+
+            />
+          </>
         }
-        <Btn
-          btnType={BtnType.circle}
-          iconLink={<IoCopyOutline />}
-          iconLeft={IconType.circle}
-          contentAlignment={ContentAlignment.center}
-          onClick={() => { setShowCustomAddressForm(() => !showCustomAddressForm) }}
-        />
+
 
       </div>
       {/* {address && 

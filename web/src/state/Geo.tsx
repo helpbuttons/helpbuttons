@@ -6,8 +6,8 @@ import { CacheMatch, CachePut } from "./Cache";
 
 export class GeoFindAddress implements WatchEvent {
     uid = '';
-    public constructor(private query: string, private onReady) {
-      this.uid = `places_${query}`
+    public constructor(private query: string, private limited: boolean , private onReady, private onError) {
+      this.uid = `places_${JSON.stringify(limited)}_${query}`
     }
     
     public watch(state: GlobalState) {
@@ -17,13 +17,14 @@ export class GeoFindAddress implements WatchEvent {
         this.onReady(found.response)
         return of(undefined);
       }
-      return GeoService.find(this.query).pipe(
+      return GeoService.find(this.query, this.limited).pipe(
         map((places) => {
             store.emit(new CachePut(this.uid, places))
             this.onReady(places)
         }),
         catchError((error) => {
           console.error(error)
+          this.onError(error)
           return of(undefined)
         }),
       );
@@ -40,8 +41,6 @@ export class GeoFindAddress implements WatchEvent {
       const found = CacheMatch(state, this.uid)
       if(found)
       {
-        console.log('hit')
-        console.log(found)
         this.onReady(found.response)
         return of(undefined);
       }
@@ -61,7 +60,6 @@ export class GeoFindAddress implements WatchEvent {
   export function emptyPlace(position = {lat:'0' ,lng: '0'}) {
     return {
       formatted: 'Unknown place',
-      formatted_city: 'Unknown place',
       geometry: position,
       id: '',
     }

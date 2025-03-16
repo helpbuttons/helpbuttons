@@ -55,36 +55,24 @@ export default function FieldLocation({
       setLoadingNewAddress(() => false)
       
       setPickedPlace(() => place);
-      if (hideAddress) {
-        setPickedAddress(() => place.formatted_city);
-      } else {
-        setPickedAddress(() => place.formatted);
-      }
+      setPickedAddress(() => place.formatted);
     } else {
       setLoadingNewAddress(() => true)
       geoReverse(latLng, (place) => {
         setLoadingNewAddress(() => false)
         setPickedPlace(() => place);
-        if (hideAddress) {
-          setPickedAddress(() => place.formatted_city);
-        } else {
-          if(place)
-          {
-            setPickedAddress(() => place.formatted);
-          }else{
-            setPickedAddress(() => t('button.unknownPlace'));
-          }
+        if(place)
+        {
+          setPickedAddress(() => place.formatted);
+        }else{
+          setPickedAddress(() => t('button.unknownPlace'));
         }
       });
     }
   };
   useEffect(() => {
     if (pickedPlace) {
-      if (hideAddress) {
-        setPickedAddress(() => pickedPlace.formatted_city);
-      } else {
-        setPickedAddress(() => pickedPlace.formatted);
-      }
+      setPickedAddress(() => pickedPlace.formatted);
     }
   }, [hideAddress, pickedPlace]);
 

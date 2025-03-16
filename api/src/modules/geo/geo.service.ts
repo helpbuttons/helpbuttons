@@ -38,6 +38,10 @@ export class GeoService {
     return this.geoProvider.searchQuery(query);
   }
 
+  async searchLimited(query: string) {
+    return this.geoProvider.searchLimited(query);
+  }
+
   async findAddress(lat: string, lng: string) {
       return this.geoProvider.getAddress({ lat: lat, lng: lng });
   }

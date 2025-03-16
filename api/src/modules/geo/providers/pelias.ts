@@ -24,7 +24,13 @@ export class PeliasProvider implements GeoProvider {
       return res.data.features.map((item) => this.hydratePlace(item));
     });
   }
-  GEOCODE_HOST
+  
+  searchLimited(query: string): Promise<GeoAddress[]> {
+    return this.queryGeo(`${query}&layers=-address,-venue`).then((res) => {
+      return res.data.features.map((item) => this.hydratePlace(item));
+    });
+  }
+
   queryGeo(query): Promise<any> {
     let url = `${this.geoCodeHost}v1/autocomplete?api_key=${this.apiKey}&text=${query}&size=15`;
     if (this.limitCountries.length > 0) {
@@ -47,9 +53,10 @@ export class PeliasProvider implements GeoProvider {
 
   hydratePlace(place: any): GeoAddress {
     const placeProperties = place.properties;
+    console.log(placeProperties)
+    const label = placeProperties.label.replace(placeProperties.region_a, placeProperties.region)
     return {
-      formatted: place.properties.label,
-      formatted_city: `${placeProperties.region}, ${placeProperties.country}`,
+      formatted: label,
       geometry: {
         lat: place.geometry.coordinates[1],
         lng: place.geometry.coordinates[0],
