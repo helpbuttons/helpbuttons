@@ -1,4 +1,4 @@
-import { useGlobalStore, useStore } from 'state';
+import { useStore } from 'state';
 import { GlobalState, store } from 'state';
 import router from 'next/router';
 import t from 'i18n';
@@ -33,7 +33,7 @@ import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { logoImageUri } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
-import { InstallButton, useAddToHomescreenPrompt } from 'components/install';
+import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ShareButton } from 'components/share';
 import {
@@ -513,17 +513,6 @@ function HomeSloganCard({ selectedNetwork, config }) {
 
 
 function HomeInfoInstallCard({ selectedNetwork }) {
-  
-  const hasNotificationPermissions = useGlobalStore(
-    (state: GlobalState) =>
-      state.activities.notificationsPermissionGranted,
-  );
-
-  const [prompt, promptToInstall] = useAddToHomescreenPrompt();
-
-  if(hasNotificationPermissions && !prompt){
-    return null;
-  }
 
   return (
     <>
