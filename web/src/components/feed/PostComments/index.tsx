@@ -109,8 +109,7 @@ export function PostComment({
         (comment.privacy == PrivacyType.PRIVATE
           ? ' card-notification--comment-private'
           : '') +
-        (isReply ? ' card-notification--reply' : '') + 
-        (sessionUser && (sessionUser.id == comment.author.id) ? ' card-notification--reply' : '')
+        (isReply ? ' card-notification--reply' : '')
       }
     >
       <Comment comment={comment} sessionUser={sessionUser}/>
