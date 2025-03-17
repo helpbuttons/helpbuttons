@@ -137,7 +137,6 @@ export function NotificationCard(props) {
         href="#"
         onClick={() =>
           store.emit(new FindButton(props.buttonId, (_button) => store.emit(new SetMainPopupCurrentButton(_button))))
-          
         }
         className="card-notification card-notification"
       >

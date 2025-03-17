@@ -1,21 +1,29 @@
 import { ImageGallery } from 'elements/ImageGallery';
 import ImageWrapper, { ImageType } from 'elements/ImageWrapper';
 import { formatMessage } from 'elements/Message';
+import Link from 'next/link';
 import { readableTimeLeftToDate } from 'shared/date.utils';
 import { PrivacyType } from 'shared/types/privacy.enum';
+import { store } from 'state';
+import { FindAndSetMainPopupCurrentProfile } from 'state/HomeInfo';
 
 export default function PostMessage({ post }) {
+    const onClick = (e) =>{
+      e.preventDefault()
+      store.emit(new FindAndSetMainPopupCurrentProfile(post.author.username))
+    }
   return (
     <>
       <div className="card-notification__content">
         <div className="card-notification__avatar">
           <div className="avatar-small">
+          <Link href="#" onClick={onClick}>
             <ImageWrapper
               imageType={ImageType.avatar}
               src={post.author.avatar}
               alt="Avatar"
             />
-             
+          </Link>
           </div>
         </div>
         <div className="card-notification__text">

@@ -31,36 +31,30 @@ export default function PickerEventTypeMultipleForm({
   };
   return (
     <>
-      <div className="picker__content">
-        <div className="picker__section">
-          <div className="picker__section__pick">
-            <div className="picker__row">
-              <CalendarHb
-                onChange={(newDates) => {
-                  setDates(newDates);
-                }}
-                value={[eventStart, eventEnd]}
-                selectRange
-                minDate={new Date()}
-              />
-            </div>
-            {(eventStart && eventEnd) && (
-              <>
-                <TimePick
-                  dateTime={eventStart}
-                  setDateTime={(value) => setEventStart(value)}
-                  label={t('eventType.from') + readableTime(eventStart)}
-                />
-                <TimePick
-                  dateTime={eventEnd}
-                  setDateTime={(value) => setEventEnd(value)}
-                  label={t('eventType.until') + readableTime(eventEnd)}
-                />
-              </>
-            )}
-          </div>
-        </div>
+      <div className="picker__row">
+        <CalendarHb
+          onChange={(newDates) => {
+            setDates(newDates);
+          }}
+          value={[eventStart, eventEnd]}
+          selectRange
+          minDate={new Date()}
+        />
       </div>
+      {(eventStart && eventEnd) && (
+        <div className="picker__row">
+          <TimePick
+            dateTime={eventStart}
+            setDateTime={(value) => setEventStart(value)}
+            label={t('eventType.from') + readableTime(eventStart)}
+          />
+          <TimePick
+            dateTime={eventEnd}
+            setDateTime={(value) => setEventEnd(value)}
+            label={t('eventType.until') + readableTime(eventEnd)}
+          />
+        </div>
+      )}
     </>
   );
 }

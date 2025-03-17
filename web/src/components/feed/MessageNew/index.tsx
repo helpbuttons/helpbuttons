@@ -80,14 +80,6 @@ export default function MessageNew({
               watch={watch}
               setFocus={setFocus}
             />
-            {/* {isComment && !privateMessage && (
-              <div className="form__input-subtitle-side">
-                <label className="form__input-subtitle--error">
-                  {t('comment.public')}
-                </label>
-
-              </div>
-            )} */}
             {isComment && privateMessage && (
               <div className="form__input-subtitle-side">
                 <label className="form__input-subtitle--error">

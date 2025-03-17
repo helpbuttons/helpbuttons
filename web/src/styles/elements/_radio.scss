@@ -10,20 +10,20 @@ $radio-color-hover: $color-gray;
 $radio-color-text-checked: $color-white;
 $radio-color-checked: $color-black;
 $radio-color-gray-border: $color-gray-border;
+$radion-label-min-width: 235px;
+$radion-label-min-width-mobile: 100px;
 
 //frame div for erasing any style and warrantee 100% space FOR all radio buttons
 .radio {
+
   width: 100%;
   background: none;
+  flex-flow: row wrap;
   border: none;
   padding: 0;
-
   display: flex;
-  flex-flow: row wrap;
-
-  div {
-    margin-right: 12px;
-  }
+  justify-content: flex-start;
+  gap: $padding-small;
 
   &:focus {
     outline: none;
@@ -32,9 +32,12 @@ $radio-color-gray-border: $color-gray-border;
 
 //label div for enclosing all radio button elements
 .radio__label {
+    flex: 0 0 auto;          /* Prevents buttons from growing or shrinking */
+    min-width: $radion-label-min-width-mobile; /* Ensures buttons have a minimum width */
+
   .radio__content {
-    margin-top: 8px;
-    gap: 0; 
+    margin-top: $margin-xxsmall;
+    gap: $padding-medium; 
   }
 }
 
@@ -197,5 +200,13 @@ $radio-color-gray-border: $color-gray-border;
   }
 }
 
-@media #{$breakpoints-xxlarge} {
+@media #{$breakpoints-medium} {
+
+  .radio__label{
+
+    min-width: $radion-label-min-width; /* Ensures buttons have a minimum width */
+
+  }
+
+
 }

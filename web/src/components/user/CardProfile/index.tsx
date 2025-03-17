@@ -1,5 +1,5 @@
 //Profile Card with the the info displayed by the user in Profile page. It shows different options depending if it's other user profile or your profile when logged.
-import {  IoChatbubbleOutline, IoHandLeftOutline, IoHeartOutline, IoPersonOutline, IoRibbonOutline } from "react-icons/io5";
+import {  IoAddCircleOutline, IoChatbubbleOutline, IoHandLeftOutline, IoHeartOutline, IoPersonOutline, IoRibbonOutline } from "react-icons/io5";
 import { Link } from 'elements/Link';
 import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 
@@ -49,19 +49,19 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
                 <div className="paragraph grid-three__column">
                    {user.followsCount}
-                  <div className="btn-circle__icon">
+                  <div className="card-profile__icon">
                     <IoHeartOutline />
                   </div>
                 </div>
                 <div className="paragraph grid-three__column">
                   {user.buttonCount}
-                  <div className="btn-circle__icon">
-                    <IoPersonOutline />
+                  <div className="card-profile__icon">
+                    <IoAddCircleOutline />
                   </div>
                 </div>
                 <div className="paragraph grid-three__column">
                   {user.commentCount}
-                  <div className="btn-circle__icon">
+                  <div className="card-profile__icon">
                     <IoChatbubbleOutline />
                   </div>
                 </div>
@@ -74,10 +74,12 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
         <div className="card-profile__data">
 
-            <div className="card-profile__tags grid-one__column-mid-element">
+            {/* TODO: 
+              - define what to do with tags
+              <div className="card-profile__tags grid-one__column-mid-element"> */}
               {/* <div className="hashtag">{t('user.tags')}</div> */}
-            </div>
-            <div className="card-profile__description grid-one__column-mid-element">
+            {/* </div> */}
+            <div className="card-profile__description">
                {user.description}
             </div>
 

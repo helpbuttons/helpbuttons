@@ -35,6 +35,7 @@ import { randomBytes } from 'crypto'
 import MetadataSEOFromStore from 'components/seo';
 import { useRebuildUrl } from 'components/uri/builder';
 import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 
 export default appWithTranslation(MyApp);
 
@@ -349,12 +350,13 @@ export function CookiesBanner() {
           </a>
           .
         </p>
-        <button
-          className="cookies-banner__button"
-          onClick={handleAcceptCookies}
-        >
-          {t('faqs.cookieAccept')}
-        </button>
+        <Btn
+            btnType={BtnType.submit}
+            iconLeft={IconType.circle}
+            caption={t('faqs.cookieAccept')}
+            contentAlignment={ContentAlignment.center}
+            onClick={handleAcceptCookies}
+          />
       </div>
     </div>
     }</>

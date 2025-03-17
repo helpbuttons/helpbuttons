@@ -23,14 +23,14 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 
 }
 
-.list__container--full-screen {
+// .list__container--full-screen {
 
-  // height: calc(var(--vh) - 194px) !important;
+//   // height: calc(var(--vh) - 194px) !important;
 
-  // top: 100px;
-  // padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
+//   // top: 100px;
+//   // padding-bottom: calc($footer-height-mobile + 2*$margin-medium);
 
-}
+// }
 
 .list__show-map-button {
 
@@ -165,10 +165,10 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   border-radius: $border-radius-semicircle $border-radius-semicircle 0 0 ;
   box-shadow: $box-shadow-divs;
   
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 15px;
-  padding-bottom: 5px;
+  padding-left: $padding-medium;
+  padding-right: $padding-medium;
+  padding-top: $padding-big;
+  padding-bottom: $padding-xsmall;
 
 }
 

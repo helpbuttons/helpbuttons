@@ -43,9 +43,8 @@ export default function PickerEventTypeOnceForm({
           minDate={new Date()}
         />
       </div>
-      <div className="picker__row">
         {eventStart && (
-          <>
+          <div className="picker__row">
             <TimePick
               dateTime={eventStart}
               setDateTime={(value) => setEventStart(value)}
@@ -56,9 +55,8 @@ export default function PickerEventTypeOnceForm({
               setDateTime={(value) => setEventEnd(value)}
               label={t('eventType.until') + readableTime(eventEnd)}
             />
-          </>
+          </div>
         )}
-      </div>
     </>
   );
 }

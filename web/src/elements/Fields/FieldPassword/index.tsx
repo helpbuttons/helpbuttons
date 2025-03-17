@@ -40,11 +40,8 @@ const FieldPassword = React.forwardRef(({
             {/* <FieldError validationError={validationError}/> */}
             <div className="form__input-subtitle">
 
-                <div className="form__input-subtitle-side">
-                    <label className="form__input-subtitle--error">
-                        <FieldError validationError={validationError}/> 
-                    </label>
-                </div>
+
+               <FieldError validationError={validationError}/> 
                 
                 <div className="form__input-subtitle-side">
                     <div onClick={() => setShowPassword(!showPassword)} className="form__input-subtitle--text">

@@ -190,16 +190,6 @@ export default function AdvancedFilters({
                                   {buttonType.caption}
                                 </div>
                               </MultiSelectOption>
-
-                          //   <div
-                          //     key={buttonType.name}
-                          //     style={buttonColorStyle(buttonType.cssColor)}
-                          //   >
-                          //     {/* <div className="btn-filter__icon"></div> */}
-                          //     <div className="btn-with-icon__text">
-                          //       {buttonType.caption}
-                          //     </div>
-                          // </div>
                         );
                       })}
                       </FieldMultiSelect>

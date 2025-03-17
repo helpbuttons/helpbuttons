@@ -15,6 +15,7 @@ import PickerEventTypeMultipleForm from 'components/picker/PickerEventType/multi
 import FieldError from '../FieldError';
 import PickerEventTypeRecurrentForm, { loadRrules, recurrentToText } from 'components/picker/PickerEventType/recurrent';
 import PickerField from 'components/picker/PickerField';
+import { IoLocationOutline, IoTime, IoTimeOutline } from 'react-icons/io5';
 
 export default function FieldDate({
   title,
@@ -53,17 +54,21 @@ export default function FieldDate({
   // https://www.npmjs.com/package/react-time-picker
   return (
     <>
-    <ShowDate
-          eventStart={eventStart}
-          eventEnd={eventEnd}
-          eventType={eventType}
-          eventData={eventData}
-          title={title}
-        />
     <PickerField
       showPopup={showPopup}
-      btnLabel={t('button.changeDateLabel')}
-      headerText={''}
+      explain={t('button.whenExplain')}
+      iconLink={<IoTimeOutline/>}
+      btnLabel={
+          <ShowDate
+            eventStart={eventStart}
+            eventEnd={eventEnd}
+            eventType={eventType}
+            eventData={eventData}
+            title={title}
+        />
+      }
+      headerText={t('eventType.typePicker')}
+      label={t('button.whenLabel')}
       openPopup={openPopup}
       closePopup={closePopup}
     >
@@ -104,7 +109,7 @@ export default function FieldDate({
                 />
               )}
               {invalidDates && 
-                <FieldError validationError={{message: 'invalid dates'}} />
+                <FieldError validationError={{message: t('validation.dates')}} />
               }
               <Btn
                 btnType={BtnType.submit}
@@ -126,7 +131,6 @@ export default function FieldDate({
     //       title={title}
     //     />
     //     <div className="btn" onClick={() => setHideMenu(true)}>
-    //       {t('button.changeDateLabel')}
     //     </div>
     //   </div>
     //   {showHideMenu && (
@@ -210,7 +214,6 @@ const EventType = React.forwardRef(
       <>
         <FieldRadio label={label} explain={explain}>
           {eventTypes.map((eventType, idx) => (
-            <div key={idx}>
               <FieldRadioOption
                 onChange={(value) => onChange(value)}
                 onBlur={onBlur}
@@ -224,12 +227,14 @@ const EventType = React.forwardRef(
                   {eventType.label}
                 </div>
               </FieldRadioOption>
-            </div>
           ))}
         </FieldRadio>
-        {value &&
-          eventTypes.find((eventType) => eventType.type == value)
-            .explain}
+        <div className='form__explain'>
+          {value &&
+            eventTypes.find((eventType) => eventType.type == value)
+              .explain
+          }
+        </div>
       </>
     );
   },
@@ -245,8 +250,8 @@ export function ShowDate({
 }) {
   return (
     <>
-      {(eventStart || eventData) && (
-        <div className="card-button__date">
+      {(eventStart || eventData) ? (
+        <>
           {readableEventDateTime(
             eventType,
             eventStart,
@@ -254,8 +259,8 @@ export function ShowDate({
             loadRrules(eventData),
             hideRecurrentDates
           )}
-        </div>
-      )}{' '}
+        </>
+      ) : <>{title}</>}
     </>
   );
 }

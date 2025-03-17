@@ -31,7 +31,7 @@ import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
 import { TextFormatted } from 'elements/Message';
 import { LinkAdmins } from 'components/user/LinkAdmins';
-import { ShowMobileOnly } from 'elements/SizeOnly';
+import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
 import { logoImageUri, makeImageUrl } from 'shared/sys.helper';
@@ -98,9 +98,13 @@ export default function HomeInfo({ metadata }) {
           </div>
         </ShowMobileOnly>
       )}
+
+      {/* 
+      Make this optional
+      https://github.com/helpbuttons/helpbuttons/issues/1057
       {!currentUser && (
         <SupportBanner scrollToContact={scrollToContact} />
-      )}
+      )} */}
       {selectedNetwork && (
         <div className="homeinfo__container">
           <div className="homeinfo__content">
@@ -111,10 +115,17 @@ export default function HomeInfo({ metadata }) {
               <ShowMobileOnly>
                 <HomeInfoNetworkLogo selectedNetwork={selectedNetwork} />
               </ShowMobileOnly>
+              <HomeSloganCard selectedNetwork={selectedNetwork} config={config} />
 
               <HomeInfoPinnedButtons pinnedButtons={pinnedButtons} />
+              
+              <ShowMobileOnly>
+               <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
+              </ShowMobileOnly>
+
               <HomeInfoInfoCard selectedNetwork={selectedNetwork} />
-              <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
+
+              <HomeInfoInstallCard selectedNetwork={selectedNetwork} />
               <HomeInfoTopHashTags selectedNetwork={selectedNetwork} />
 
               <HomeInfoPinnedHashTags selectedNetwork={selectedNetwork} />
@@ -124,6 +135,7 @@ export default function HomeInfo({ metadata }) {
               <HomeInfoActionCards currentUser={currentUser} />
 
               <HomeInfoFooter />
+
 
             </div>
             <div
@@ -225,17 +237,19 @@ function NavigatorCoordsButton() {
     </div>
   )}</>)
 }
+
 function HomeInfoNetworkLogo({ selectedNetwork }) {
-  return (<div className="homeinfo-card__header">
-    <div className="homeinfo__network-title">
-      <div className="avatar-medium--home">
-        <NetworkLogo network={selectedNetwork} />
+  return (
+
+        <div className="homeinfo__network-title">
+          <div className="avatar-medium--home">
+            <NetworkLogo network={selectedNetwork} />
+          </div>
+          <h3 className="homeinfo__network-title-text">
+            {selectedNetwork.name}
+          </h3>
       </div>
-      <h3 className="homeinfo__network-title-text">
-        {selectedNetwork.name}
-      </h3>
-    </div>
-  </div>)
+  )
 }
 
 
@@ -284,15 +298,7 @@ function HomeInfoInfoCard({ selectedNetwork }) {
         </h3>
 
         <div className="homeinfo-card__controls">
-          <Btn
-            btnType={BtnType.filterCorp}
-            contentAlignment={ContentAlignment.center}
-            iconLink={<IoMapOutline />}
-            iconLeft={IconType.svg}
-            extraClass="homeinfo__network-title-card--buttons"
-            caption={t('homeinfo.goToExplore')}
-            onClick={() => router.push('Explore')}
-          />
+
         </div>
       </div>
       <hr></hr>
@@ -300,12 +306,9 @@ function HomeInfoInfoCard({ selectedNetwork }) {
       <div className="homeinfo__description">
         <TextFormatted maxChars={600} text={selectedNetwork.description} />
       </div>
-      <div className="homeinfo-card__section">
-        <div className="homeinfo-card__action-bottom">
-          <InstallButton />
-          <DesktopNotificationsButton />
-        </div>
-      </div>
+      <HomeInfoActionButton>
+        <HomeInfoCreateButton />
+      </HomeInfoActionButton>
     </div></>)
 }
 
@@ -315,18 +318,10 @@ function HomeInfoStatsCard({ selectedNetwork, config }) {
     <div className="homeinfo-card">
       <div className="homeinfo-card__header">
         <h3 className="homeinfo-card__header-title">
-          {t('homeinfo.stats')}
+          {t('homeinfo.stats', [selectedNetwork.name])}
         </h3>
         <div className="homeinfo-card__controls">
-          <Btn
-            btnType={BtnType.filterCorp}
-            contentAlignment={ContentAlignment.center}
-            iconLeft={IconType.svg}
-            iconLink={<IoAddCircle />}
-            extraClass="homeinfo__network-title-card--buttons"
-            caption={t('homeinfo.goToCreate')}
-            onClick={() => router.push('ButtonNew')}
-          />
+
         </div>
       </div><hr></hr>
       <div className="homeinfo__description">
@@ -379,6 +374,7 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
             </h3>
           </div>
           <hr></hr>
+          <div className="homeinfo__description"></div>
           <div className="homeinfo__hashtags">
             <TagsNav tags={selectedNetwork.tags} />
           </div>
@@ -527,4 +523,76 @@ function HomeInfoFooter() {
       </span>
     </div>
   </>)
+}
+function HomeSloganCard({ selectedNetwork, config }) {
+  return (<>
+    {/* SLOGAN CARD */}
+    <div className="homeinfo-card homeinfo__card--slogan-card">
+      <div className="homeinfo-card__header homeinfo-card__header--slogan-card">
+        <h3 className="homeinfo-card__header-title">
+          {selectedNetwork.slogan}
+        </h3>
+      </div><hr></hr>
+      <HomeInfoActionButton>
+        <HomeInfoExploreButton />
+      </HomeInfoActionButton>
+    </div></>)
+}
+
+
+function HomeInfoInstallCard({ selectedNetwork }) {
+  return (
+    <>
+      <div className="homeinfo-card">
+        <div className="homeinfo-card__header">
+          <h3 className="homeinfo-card__header-title">
+            {t('homeinfo.install', [
+              selectedNetwork?.name,
+            ])}
+          </h3>
+
+          <div className="homeinfo-card__controls">
+
+          </div>
+        </div>
+        <hr></hr>
+        <HomeInfoActionButton>
+          <InstallButton />
+          <DesktopNotificationsButton />
+        </HomeInfoActionButton></div></>)
+}
+function HomeInfoExploreButton() {
+  return (
+
+    <Btn
+      btnType={BtnType.filterCorp}
+      contentAlignment={ContentAlignment.center}
+      iconLink={<IoMapOutline />}
+      iconLeft={IconType.svg}
+      extraClass="homeinfo__network-title-card--buttons"
+      caption={t('homeinfo.goToExplore')}
+      onClick={() => router.push('Explore')}
+    />
+  )
+}
+
+function HomeInfoCreateButton() {
+  return (
+    <Btn
+      btnType={BtnType.filterCorp}
+      contentAlignment={ContentAlignment.center}
+      iconLeft={IconType.svg}
+      iconLink={<IoAddCircle />}
+      extraClass="homeinfo__network-title-card--buttons"
+      caption={t('homeinfo.goToCreate')}
+      onClick={() => router.push('ButtonNew')}
+    />
+  )
+}
+
+function HomeInfoActionButton({ children }) {
+  return (<div className="homeinfo-card__section">
+    <div className="homeinfo-card__action-bottom">
+      {children}
+    </div></div>)
 }

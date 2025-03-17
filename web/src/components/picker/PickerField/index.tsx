@@ -1,5 +1,5 @@
 import { Picker } from 'components/picker/Picker';
-import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
+import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import FieldError from 'elements/Fields/FieldError';
 
 export default function PickerField({
@@ -9,23 +9,24 @@ export default function PickerField({
   explain = '',
   children,
   contentAligment = ContentAlignment.left,
-  btnType = BtnType.splitIcon,
+  btnType = BtnType.searchPickerField,
   showPopup,
   headerText = '',
   openPopup,
-  iconLeft  = null,
+  iconLeft = null,
+  iconLink = null,
   closePopup,
   button = <Btn
-  btnType={btnType}
-  caption={btnLabel}
-  iconLeft={iconLeft}
-  contentAlignment={contentAligment}
-  onClick={() => openPopup()}
-/>
+    btnType={btnType}
+    caption={btnLabel}
+    iconLink= {iconLink}
+    iconLeft={IconType.svg}
+    contentAlignment={contentAligment}
+    onClick={() => openPopup()}
+  />
 }) {
 
   return (
-    <>
       <div className="form__field">
         <label
           className="form__label"
@@ -33,14 +34,13 @@ export default function PickerField({
           {label}
         </label>
         <p className="form__explain">{explain}</p>
-        <FieldError validationError={validationError} />
         {button}
-      </div>
-      {showPopup && 
-          <Picker closeAction={closePopup} headerText={headerText}>
-          { children }
-          </Picker>
-        }
-    </>
+        {showPopup &&
+        <Picker closeAction={closePopup} headerText={headerText}>
+          {children}
+        </Picker>
+         }
+        <FieldError validationError={validationError} />
+      </div>  
   );
 }

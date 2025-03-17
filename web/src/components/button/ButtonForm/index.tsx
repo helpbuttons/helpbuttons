@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Form from 'elements/Form';
 
 import Popup from 'components/popup/Popup';
-import ButtonType from 'components/button/ButtonType';
+import FieldButtonType from 'components/button/ButtonType';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 
 import FieldLocation from 'elements/Fields/FieldLocation';
@@ -111,7 +111,7 @@ export default function ButtonForm({
             {isSubmitting ? <Loading /> :
               <>
                 <div className="form__inputs-wrapper">
-                  <ButtonType
+                  <FieldButtonType
                     name="type"
                     label={t('button.typeLabel')}
                     {...register('type', { required: true })}

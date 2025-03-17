@@ -7,6 +7,7 @@ import {
   IoCallOutline,
   IoHeart,
   IoLogoWhatsapp,
+  IoLocationOutline,
 } from 'react-icons/io5';
 import t from 'i18n';
 
@@ -49,6 +50,7 @@ import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
 import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import React from 'react';
 
 export default function CardButton({ button, buttonTypes }) {
   const [buttonType, setButtonType] = useState(null);
@@ -70,9 +72,9 @@ export default function CardButton({ button, buttonTypes }) {
             className="card-button card-button__file"
             style={buttonColorStyle(buttonType.cssColor)}
           >
-            
+
             <div>
-            {/* <Btn
+              {/* <Btn
               onClick={() => store.emit(new NextCurrentButton())}
               caption="next"
             ></Btn>
@@ -80,10 +82,10 @@ export default function CardButton({ button, buttonTypes }) {
               onClick={() => store.emit(new PreviousCurrentButton())}
               caption="previous"
             ></Btn> */}
-            <CardButtonHeadBig
-              button={button}
-              buttonTypes={buttonTypes}
-            />
+              <CardButtonHeadBig
+                button={button}
+                buttonTypes={buttonTypes}
+              />
             </div>
           </div>
           <ImageGallery
@@ -96,7 +98,6 @@ export default function CardButton({ button, buttonTypes }) {
             button={button}
             buttonTypes={buttonTypes}
           />
-          <ShowPhone user={button.owner} />
         </>
       )}
     </>
@@ -147,6 +148,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
       {!button.image && (
         <div className="card-button-list__paragraph--small-card card-button-list__paragraph">
           <p>{button.description}</p>
+          
         </div>
       )}
       {/* <div className="card-button__hashtags">
@@ -158,6 +160,7 @@ export function CardButtonHeadMedium({ button, buttonType }) {
           );
         })}
       </div> */}
+      
       <div className="card-button__custom-fields-container">
         {buttonType.customFields &&
           buttonType.customFields.length > 0 && (
@@ -166,7 +169,9 @@ export function CardButtonHeadMedium({ button, buttonType }) {
               button={button}
             />
           )}
+          
         <div className="card-button__city card-button__everywhere ">
+          <IoLocationOutline/>
           {button.address}{' '}
           {button?.distance && (
             <> - {readableDistance(button?.distance)}</>
@@ -176,6 +181,8 @@ export function CardButtonHeadMedium({ button, buttonType }) {
     </div>
   );
 }
+
+
 
 // Pin of the map
 /*
@@ -363,15 +370,16 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         <div className="card-button__hashtags">
           <TagsNav tags={button.tags} />
         </div>
-        {customFields && customFields.length > 0 && (
-          <>
-            <CardButtonCustomFields
-              customFields={customFields}
-              button={button}
-            />
-          </>
-        )}
-        <div className="card-button__locDate">
+
+        <div className="card-button__bottom-properties">
+          {customFields && customFields.length > 0 && (
+            <>
+              <CardButtonCustomFields
+                customFields={customFields}
+                button={button}
+              />
+            </>
+          )}
           <div
             className={
               'card-button__city card-button__everywhere' +
@@ -381,6 +389,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             }
             onClick={() => setShowMap(() => !showMap)}
           >
+            {<IoLocationOutline/>}
             {button.address}
           </div>
         </div>
@@ -423,78 +432,77 @@ function ExpiringAlert({
   return (
     <FixedAlert
       alertType={AlertType.Success}
-      message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${
-        button.id
-      }">${t('button.renewLink')}</a>`}
+      message={`${t('button.isExpiringLink')} <a href="/ButtonRenew/${button.id
+        }">${t('button.renewLink')}</a>`}
     />
   );
 }
 
-function ShowPhone({ user }) {
+export function ButtonOwnerPhone({ user, button }) {
   const [showPhone, toggleShowPhone] = useState(false);
   const [phone, setPhone] = useState(null);
+  const isLoadingPhone = React.useRef(false)
+  const sessionUser = useRef(
+    store,
+    (state: GlobalState) => state.sessionUser,
+    false,
+  );
 
   useEffect(() => {
-    toggleShowPhone(() => true)
-  }, [phone])
+    if (phone == null && !isLoadingPhone.current) {
+      isLoadingPhone.current = true;
+      store.emit(
+        new GetPhone(
+          user.id,
+          (phone) => {
+            setPhone(phone);
+          },
+          () => { },
+        ),
+      );
+    }
+  }, [showPhone])
+
   const jumpTo = (url) => {
     window.location.replace(url);
-  }
-  const onCallClick = () => {
-    if (phone == null) {
-      store.emit(
-        new GetPhone(
-          user.id,
-          (phone) => {
-            setPhone(phone);
-            jumpTo(`tel:${phone}`);
-          },
-          () => {},
-        ),
-      );
-    }else{
-      jumpTo(`tel:${phone}`);
-    }
-  };
-
-  const onWassapClick = ( ) => {
-    if (phone == null) {
-      store.emit(
-        new GetPhone(
-          user.id,
-          (phone) => {
-            setPhone(phone);
-            jumpTo(`whatsapp://send?phone=+${phone}`)
-          },
-          () => {},
-        ),
-      );
-    }else{
-      jumpTo(`whatsapp://send?phone=+${phone}`)
-    }
   }
 
   return (
     <>
       {user?.publishPhone && (
         <>
+          {!showPhone && isButtonOwner(user, button) && 
+            <Btn
+              btnType={BtnType.corporative}
+              contentAlignment={ContentAlignment.center}
+              caption={t('button.showPhone')}
+              iconLeft={IconType.svg}
+              iconLink={<IoCallOutline />}
+              onClick={() => toggleShowPhone(true)}
+            />
+          }
+          {showPhone && 
+            <div className="card-button__phone-section">
             <Btn
               btnType={BtnType.filterCorp}
               contentAlignment={ContentAlignment.center}
               iconLeft={IconType.circle}
               iconLink={<IoCallOutline />}
-              onClick={() => onCallClick()}
+              onClick={() => jumpTo(`tel:${phone}`)}
             />
-          {user.showWassap && 
-            <Btn
-              btnType={BtnType.filterCorp}
-              contentAlignment={ContentAlignment.center}
-              iconLeft={IconType.circle}
-              iconLink={<IoLogoWhatsapp />}
-              onClick={() => onWassapClick()}
-            />
+              {phone}
+            </div>
           }
-          {showPhone && <>{phone}</>}
+          {user.showWassap &&
+              <Btn
+                btnType={BtnType.corporative}
+                contentAlignment={ContentAlignment.center}
+                iconLeft={IconType.circle}
+                iconLink={<IoLogoWhatsapp />}
+                onClick={() => jumpTo(`https://wa.me/+${phone}`)}
+              />
+          }
+
         </>
       )}
     </>
@@ -554,7 +562,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   //   store.emit(new SetMainPopupCurrentButton(null))
   //   store.emit(new updateCurrentButton(null))
   // };
-  const onClick = (e) =>{
+  const onClick = (e) => {
     e.preventDefault()
     console.log('this goes for dev test.. make sure it works..')
     store.emit(new SetMainPopupCurrentProfile(button.owner))
@@ -574,13 +582,13 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
             </span>
           </div>
           <div className="card-button__author-description">
-            {button.owner.description}
+            <TextFormatted maxChars={600} text={button.owner.description} />
           </div>
         </Link>
       </div>
       <div className="card-button__avatar">
         <div className="avatar-big">
-        <Link href="#" onClick={onClick}>
+          <Link href="#" onClick={onClick}>
             <ImageWrapper
               imageType={ImageType.avatarBig}
               src={button.owner.avatar}

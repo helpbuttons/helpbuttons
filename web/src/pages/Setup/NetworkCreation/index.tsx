@@ -43,7 +43,8 @@ function NetworkCreation() {
       locale: 'en',
       nomeclature: 'Helpbutton',
       nomeclaturePlural: 'Helpbuttons',
-      requireApproval: false
+      requireApproval: false,
+      slogan: ''
     },
   });
 
@@ -72,7 +73,8 @@ function NetworkCreation() {
           nomeclature: data.nomeclature,
           nomeclaturePlural: data.nomeclaturePlural,
           locale: data.locale,
-          requireApproval: data.requireApproval
+          requireApproval: data.requireApproval,
+          slogan: data.slogan
         },
         () => {
           const onComplete = () => {

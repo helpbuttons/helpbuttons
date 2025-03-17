@@ -170,10 +170,34 @@ export class ButtonService {
             });
         }
 
-        button.images =
-          await this.storageService.storageMultipleImages(
-            createDto.images,
+        if (createDto.images?.length > 0) {
+          await Promise.all(
+            createDto.images.map(async (image) => {
+              if (isImageData(image)) {
+                try {
+                  const newImage = await this.storageService.newImage64(
+                    image,
+                  );
+                  if (newImage) {
+                    button.images.push(newImage);
+                  }
+                } catch (err) {
+                  throw new CustomHttpException(
+                    ErrorName.InvalidMimetype,
+                  );
+                }
+              } else if (isImageUrl(image)) {
+                if(image)
+                {
+                  button.images.push(image);
+                }
+              } else {
+                console.error('no image data, or image url?');
+                console.log(image);
+              }
+            }),
           );
+        }
         if (button.images.length > 0) {
           button.image = button.images[0];
         }

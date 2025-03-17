@@ -82,7 +82,7 @@ export const errorsList: ErrorText[] =
     },
     {
         name: ErrorName.invalidDates,
-        caption: `Invalid dates`,
+        caption: `Invalid dates, check hours`,
         status: HttpStatus.NOT_ACCEPTABLE
     },
     {
