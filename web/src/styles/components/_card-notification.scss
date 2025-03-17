@@ -196,9 +196,6 @@ $card-notification-delete-size: 100px;
 
 }
 
-.card-notification--reply {
-  padding-left: 20%;
-}
 
 .card-notification--comment-private {
 
@@ -227,6 +224,7 @@ $card-notification-delete-size: 100px;
 
   padding: $padding-small $padding-big;
   padding-bottom: 0;
+  min-height: 10px;
   cursor: pointer;
   position: relative;
   border-top: 1px solid var(--button-color);
@@ -331,7 +329,12 @@ $card-notification-delete-size: 100px;
 }
 
 .card-notification__paragraph {
-  @extend .card-button__author-description;
+
+  font-size: $font-size-small;
+  color: $color-gray;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  line-height: $text-line-height-xsmall;
   font-size: $font-size-general;
   color: $color-gray;
 }
