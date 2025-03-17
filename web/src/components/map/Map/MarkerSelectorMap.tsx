@@ -31,7 +31,7 @@ export function MarkerEditorMap(props) {
         markerPosition={props.markerPosition}
       /> */}
       <LocationSearchBar
-        placeholder={t('homeinfo.address')}
+        placeholder={t('button.locationPlaceholder')}
         markerAddress={props.markerAddress} isLoadingExternally={props.loadingNewAddress}
         hideAddress={props.hideAddress}
         handleSelectedPlace={props.handleSelectedPlace}

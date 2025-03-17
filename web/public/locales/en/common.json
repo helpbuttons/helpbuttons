@@ -251,6 +251,7 @@
     "errorCreated": "",
     "pickButtonTemplateColor": "Pick a color",
     "unknownPlace": "Unknown Place",
+    "locationPlaceholder": "Write a place or address",
     "hideAddress": "Hide exact location",
     "follow": "Follow",
     "unfollow": "Unfollow",
@@ -366,6 +367,7 @@
     "errorRequestNewLoginToken": ""
   },
   "picker": {
+    
     "headerText": "Choose a location"
   },
   "eventType": {

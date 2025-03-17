@@ -70,15 +70,18 @@ export default function LocationSearchBar({
         <div className="form__field">
             {label && <div className="form__label">{label}</div>}
             {explain && <div className="form__explain">{explain}</div>}
-            <div className="form__field--location">
-                <div className="input-wrapper">
-                    <IoSearchCircleOutline />
+            <div className="form__field-dropdown">
+                <div className="form__field--location">
                     <input
+                        className="form__input"
+                    
                         placeholder={placeholder}
                         value={input}
                         onChange={(e) => handleChange(e.target.value)}
                         onFocus={handleFocus}
                     />
+
+                    {/* Removing this button with loading is giving issues with layout */}
                     {isLoading ?
                         <Loading /> :
                         <>
@@ -87,7 +90,7 @@ export default function LocationSearchBar({
                     }
                 </div>
                 {(results && results.length > 0) && <SearchResultsList handleSelectedPlace={handleSelectedPlace} results={results} hideAddress={hideAddress} />}
-                {(!results || results.length < 1) && <>No results</>}
+                {(!results || results.length < 1) && <div className="dropdown__dropdown-no-result">No results</div>}
                 {hideAddress}<br />
             </div>
         </div>
@@ -97,7 +100,7 @@ export default function LocationSearchBar({
 export function SearchResultsList({ results, hideAddress,handleSelectedPlace }) {
     return (
 
-        <div className="results-list">
+        <div className="dropdown__dropdown-content">
             {results.map((result, id) => {
                 return <SearchResult handleSelectedPlace={handleSelectedPlace} result={result} key={id} />;
             })}
@@ -109,7 +112,7 @@ export function SearchResultsList({ results, hideAddress,handleSelectedPlace }) 
 export function SearchResult({ result,handleSelectedPlace }) {
     return (
         <div 
-            className="__search-result"
+            className="dropdown__dropdown-option"
             onClick={(e) => { handleSelectedPlace(result) }}
         >
             {result.formatted}
