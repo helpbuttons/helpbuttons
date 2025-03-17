@@ -67,11 +67,11 @@ export default function LocationSearchBar({
 
     const handleFocus = (event) => event.target.select();
     return <>
-        <div className="form__field">
+        <div className="form__field form__field--location-wrapper">
             {label && <div className="form__label">{label}</div>}
             {explain && <div className="form__explain">{explain}</div>}
-            <div className="form__field-dropdown">
-                <div className="form__field--location">
+            <div className="form__field-dropdown form__field-dropdown--location">
+                <div className="form__field-dropdown--input-location">
                     <input
                         className="form__input"
                     

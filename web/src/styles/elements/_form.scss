@@ -99,7 +99,7 @@ margin: $margin-medium 0;
   margin-bottom: 0;
 }
 
-.form__field--location {
+.form__field-dropdown--input-location {
 
   display: flex;
   flex-direction: row;
@@ -119,6 +119,19 @@ margin: $margin-medium 0;
 
   }
 
+}
+
+.form__field-dropdown--location {
+
+  position: absolute;
+  z-index: $z-index-06;
+  width: 100%;
+
+}
+
+.form__field--location-wrapper {
+  position: relative;
+  min-height: 60px;
 }
 
 .form__field--feed {
