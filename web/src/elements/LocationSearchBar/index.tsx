@@ -5,8 +5,9 @@ import { useGeoSearch } from "elements/Fields/FieldLocation/location.helpers";
 import FieldText from "elements/Fields/FieldText";
 import t from "i18n";
 import { useEffect, useState } from "react";
-import { IoCloseOutline, IoSearchCircleOutline } from "react-icons/io5";
+import { IoCloseOutline, IoCopyOutline, IoSearchCircleOutline } from "react-icons/io5";
 import { alertService } from "services/Alert";
+import { roundCoords } from "shared/honeycomb.utils";
 
 export default function LocationSearchBar({
     placeholder,
@@ -17,6 +18,7 @@ export default function LocationSearchBar({
     isCustomAddress,
     setIsCustomAddress,
     setMarkerAddress,
+    markerPosition,
     setMarkerPosition
 }) {
     const [input, setInput] = useState(markerAddress);
@@ -44,12 +46,15 @@ export default function LocationSearchBar({
     }
 
     useEffect(() => {
-        if (isCustomAddress) {
-            setResults(() => [])
-        }
-    }, [setIsCustomAddress])
+        console.log('setting custom???!')
+        // if (isCustomAddress) {
+        //     setResults(() => [])
+        // }
+        
+    }, [isCustomAddress])
 
     useEffect(() => {
+        toggleShowAddCustomButton(() => false)
         setInput(() => markerAddress)
     }, [markerAddress])
 
@@ -81,9 +86,7 @@ export default function LocationSearchBar({
         event.target.select();
         toggleShowAddCustomButton(() => true)
     }
-    const handleBlur = () => {
-        toggleShowAddCustomButton(() => false)
-    }
+    
     return <>
         <div className="form__field form__field--location-wrapper">
             {label && <div className="form__label">{label}</div>}
@@ -100,14 +103,13 @@ export default function LocationSearchBar({
                                     value={input}
                                     onChange={(e) => handleChange(e.target.value)}
                                     onFocus={handleFocus}
-                                    onBlur={handleBlur}
                                 />
                             }
                             {results == null && <><Loading/>...</>}
                         </>
                     }
                     {isCustomAddress &&
-                        <><FieldText label={t('button.labelCustomAddress')} name={"customAddress"} onChange={(e) => console.log(e.target.value)} />
+                        <><FieldText placeholder={t('button.placeHodlerCustomAddress')} name={"customAddress"} onChange={(e) => console.log(e.target.value)} />
                             <Btn
                                 btnType={BtnType.circle}
                                 iconLink={<IoCloseOutline />}
@@ -125,21 +127,25 @@ export default function LocationSearchBar({
                     </>
                 }
                 {showAddCustomButton &&
-                    <SearchCustomAddress setIsCustomAddress={setIsCustomAddress} />
+                    <SearchCustomAddress handleClick={() => { console.log('clicked'); setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
                 }
 
-
+            {(markerPosition && markerPosition[0] && markerPosition[1] && !hideAddress) && (
+                    <div className='form__input-subtitle-option form__input-subtitle--grayed'>
+                    ( {roundCoords(markerPosition).toString()} )
+                    </div>
+                )}
             </div>
         </div>
     </>
 }
 
-export function SearchCustomAddress({ setIsCustomAddress }) {
+export function SearchCustomAddress({ handleClick }) {
     return (<>
         <hr />
         <div
             className="dropdown__dropdown-option"
-            onClick={(e) => { setIsCustomAddress(() => true) }}
+            onClick={handleClick}
         >
             {t('button.proposeAddress')}
         </div>

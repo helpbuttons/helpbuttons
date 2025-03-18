@@ -97,6 +97,7 @@ export default function FieldLocation({
       isCustomAddress={isCustomAddress}
       setIsCustomAddress={setIsCustomAddress}
       setMarkerPosition={setMarkerPosition}
+      markerPosition={markerPosition}
     />
     <MarkerEditorMap
       toggleLoadingNewAddress={(value) =>
