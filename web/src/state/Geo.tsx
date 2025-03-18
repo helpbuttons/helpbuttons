@@ -33,8 +33,8 @@ export class GeoFindAddress implements WatchEvent {
 
   export class GeoReverseFindAddress implements WatchEvent {
     uid = '';
-    public constructor(private lat: number, private lng: number, private onReady, private onError) {  
-      this.uid = `place_${lat}${lng}`
+    public constructor(private lat: number, private lng: number, private limited: boolean, private onReady, private onError) {  
+      this.uid = `place_${limited}_${lat}${lng}`
     }
   
     public watch(state: GlobalState) {
@@ -44,7 +44,7 @@ export class GeoFindAddress implements WatchEvent {
         this.onReady(found.response)
         return of(undefined);
       }
-      return GeoService.reverse(this.lat, this.lng).pipe(
+      return GeoService.reverse(this.lat, this.lng, this.limited).pipe(
         map((place) => {
             store.emit(new CachePut(this.uid, place))
             this.onReady(place)

@@ -1,4 +1,3 @@
-//this is the component integrated in buttonNewPublish to display the location. It shows the current location and has a button to change the location that displays a picker with the differents location options for the network
 import React, {
   useEffect,
   useRef,
@@ -10,9 +9,10 @@ import t from 'i18n';
 import { roundCoord } from 'shared/honeycomb.utils';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
-import { maxZoom } from 'components/map/Map/Map.consts';
+import {  minZoom } from 'components/map/Map/Map.consts';
 import { useGeoReverse } from './location.helpers';
 import { IoSearchOutline } from 'react-icons/io5';
+import LocationSearchBar from 'elements/LocationSearchBar';
 
 
 export default function FieldLocation({
@@ -22,140 +22,114 @@ export default function FieldLocation({
   markerColor,
   markerAddress,
   selectedNetwork,
-  updateAddress,
+  setMarkerAddress,
   setMarkerPosition,
   markerPosition,
   explain = '',
   label,
-  watch,
-  setValue,
+  setHideAddress,
+  hideAddress
 }) {
-  const [pickedMarkerPosition, setPickedMarkerPosition] =
-    useState(markerPosition);
-  const [pickedAddress, setPickedAddress] = useState(markerAddress);
-  const [pickedPlace, setPickedPlace] = useState(null);
-  const hideAddress = watch('hideAddress');
-  const latitude = watch('latitude');
-  const longitude = watch('longitude');
-  const [loadingNewAddress, setLoadingNewAddress] = useState(false)
-  const [zoom, setZoom] = useState(
-    markerPosition[0] && markerPosition[1]
-      ? maxZoom
-      : selectedNetwork.exploreSettings.zoom,
-  );
+  const [zoom, setZoom] = useState(minZoom);
+  const [showPopup, setShowPopup] = useState(false);
+  const unsavedMarkerAdress = useRef(markerAddress)
+  const unsavedMarkerPosition = useRef(markerPosition)
+  const closeWithoutSaving = () => {
+    setMarkerAddress(unsavedMarkerAdress.current)
+    setMarkerPosition(unsavedMarkerPosition.current)
+    setShowPopup(() => false)
+  }
+  const closeAndSave = () => {
+    unsavedMarkerAdress.current = markerAddress
+    unsavedMarkerPosition.current = markerPosition
+    setShowPopup(() => false)
+  }
+  const openPopup = () => setShowPopup(() => true)
 
-  const geoReverse = useGeoReverse()
-  const setLocation = (latLng, place = null) => {
-    setPickedMarkerPosition(() => [
-      Number.parseFloat(latLng[0]),
-      Number.parseFloat(latLng[1]),
-    ]);
-    
-    if (place) {
-      setLoadingNewAddress(() => false)
-      
-      setPickedPlace(() => place);
-      setPickedAddress(() => place.formatted);
-    } else {
-      setLoadingNewAddress(() => true)
-      geoReverse(latLng, (place) => {
-        setLoadingNewAddress(() => false)
-        setPickedPlace(() => place);
-        if(place)
-        {
-          setPickedAddress(() => place.formatted);
-        }else{
-          setPickedAddress(() => t('button.unknownPlace'));
-        }
-      });
-    }
-  };
-  useEffect(() => {
-    if (pickedPlace) {
-      setPickedAddress(() => pickedPlace.formatted);
-    }
-  }, [hideAddress, pickedPlace]);
+  const [isCustomAddress, setIsCustomAddress] = useState(false)
 
   const onMapClick = (latLng) => {
-    setLocation(latLng);
-  };
+    setMarkerPosition(latLng)
+    setMarkerAddress(null)
+  }
 
-  const [showPopup, setShowPopup] = useState(false);
+  const getLatLngAddress = useGeoReverse()
 
-  const handleSelectedPlace = (newPlace) => {
-    setLocation(
-      [newPlace.geometry.lat, newPlace.geometry.lng],
-      newPlace,
-    );
-    setZoom(() => maxZoom);
-  };
-  const closeWithoutSaving = () => {
-    setShowPopup(() => false);
-    setPickedAddress('');
-    setPickedMarkerPosition([null, null]);
-  };
-  const closeAndSave = () => {
-    updateAddress(pickedAddress);
-    setMarkerPosition(pickedMarkerPosition);
-    setShowPopup(() => false);
-  };
-  const openPopup = () => setShowPopup(() => true);
-  return (
-    <>
-      {selectedNetwork?.exploreSettings?.center && (
-        <PickerField
-          iconLink={<IoSearchOutline/>}
-          showPopup={showPopup}
-          validationError={validationError}
-          label={t('button.whereLabel')}
-          btnLabel={
-            <LocationCoordinates
-              latitude={markerPosition[0]}
-              longitude={markerPosition[1]}
-              address={markerAddress}
-              label={label}
-            />
-          }
-          headerText={t('picker.headerText')}
-          explain={t('button.whereExplain')}
-          openPopup={openPopup}
-          closePopup={closeWithoutSaving}
-        >
-          <MarkerEditorMap
-            loadingNewAddress={loadingNewAddress}
-            toggleLoadingNewAddress={(value) =>
-              setLoadingNewAddress(() => value)
-            }
-            onMapClick={onMapClick}
-            zoom={zoom}
-            setZoom={setZoom}
-            markerColor={markerColor ? markerColor : 'pink'}
-            markerPosition={pickedMarkerPosition}
-            markerCaption={markerCaption}
-            markerImage={markerImage}
-            hideAddress={hideAddress}
-            handleSelectedPlace={handleSelectedPlace}
-            markerAddress={pickedAddress}
-            networkMapCenter={selectedNetwork.exploreSettings.center}
-          />
-          <FieldCheckbox
-            name="hideAddress"
-            defaultValue={watch('hideAddress')}
-            text={t('button.hideAddress')}
-            onChanged={(value) => setValue('hideAddress', value)}
-          />
-          <Btn
-            btnType={BtnType.submit}
-            caption={t('common.save')}
-            contentAlignment={ContentAlignment.center}
-            onClick={() => closeAndSave()}
-            disabled={loadingNewAddress}
-          />
-        </PickerField>
-      )}
-    </>
-  );
+  useEffect(() => {
+    if(markerAddress == null)
+    {
+      getLatLngAddress(markerPosition, hideAddress, (place) => {
+        setMarkerAddress(place.formatted)
+      });
+    }
+    
+  }, [markerPosition])
+
+  useEffect(() => {
+    setMarkerAddress(null)
+  }, [hideAddress])
+
+
+  const loadingNewAddress = markerAddress == null;
+  return <PickerField
+    iconLink={<IoSearchOutline />}
+    showPopup={showPopup}
+    validationError={validationError}
+    label={t('button.whereLabel')}
+    btnLabel={
+      <LocationCoordinates
+        latitude={markerPosition[0]}
+        longitude={markerPosition[1]}
+        address={markerAddress}
+        label={label}
+      />
+    }
+    headerText={t('picker.headerText')}
+    explain={t('button.whereExplain')}
+    openPopup={openPopup}
+    closePopup={closeWithoutSaving}
+  >
+    <LocationSearchBar
+      placeholder={t('button.locationPlaceholder')}
+      markerAddress={markerAddress}
+      hideAddress={hideAddress}
+      setMarkerAddress={setMarkerAddress}
+      isCustomAddress={isCustomAddress}
+      setIsCustomAddress={setIsCustomAddress}
+      setMarkerPosition={setMarkerPosition}
+    />
+    <MarkerEditorMap
+      toggleLoadingNewAddress={(value) =>
+        setMarkerAddress(false)
+      }
+      onMapClick={onMapClick}
+      zoom={zoom}
+      setZoom={setZoom}
+      markerColor={markerColor ? markerColor : 'pink'}
+      markerPosition={markerPosition}
+      markerCaption={markerCaption}
+      markerImage={markerImage}
+      hideAddress={hideAddress}
+      markerAddress={markerAddress}
+      networkMapCenter={selectedNetwork.exploreSettings.center}
+      editPosition={true}
+    />
+    <FieldCheckbox
+      name="hideAddress"
+      defaultValue={hideAddress}
+      text={t('button.hideAddress')}
+      onChanged={setHideAddress}
+    />
+    <Btn
+      btnType={BtnType.submit}
+      caption={t('common.save')}
+      contentAlignment={ContentAlignment.center}
+      onClick={() => closeAndSave()}
+      disabled={loadingNewAddress}
+    />
+  </PickerField>
 }
+
 
 export function LocationCoordinates({
   latitude,

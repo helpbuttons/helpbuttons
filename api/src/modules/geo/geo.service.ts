@@ -45,4 +45,9 @@ export class GeoService {
   async findAddress(lat: string, lng: string) {
       return this.geoProvider.getAddress({ lat: lat, lng: lng });
   }
+
+  async findAddressLimited(lat: string, lng: string) {
+    return this.geoProvider.getLimitedAddress({ lat: lat, lng: lng });
+  }
+  
 }

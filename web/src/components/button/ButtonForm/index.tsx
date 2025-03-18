@@ -100,6 +100,7 @@ export default function ButtonForm({
 
   const onError = (errors, e) => alertService.error(t('validation.error'))
 
+
   return (
     <LoadabledComponent loading={!selectedNetwork}>
       {selectedNetwork &&
@@ -174,17 +175,17 @@ export default function ButtonForm({
                         setValue('longitude', lng);
                       }}
                       markerPosition={[watch('latitude'), watch('longitude')]}
-                      updateAddress={(address) => {
+                      setMarkerAddress={(address) => {
                         setValue('address', address);
                       }}
+                      setHideAddress={(value) => setValue('hideAddress', value)}
+                      hideAddress={watch('hideAddress')}
                       markerAddress={watch('address')}
                       markerImage={image}
                       markerCaption={watch('title')}
                       markerColor={markerColor}
                       selectedNetwork={selectedNetwork}
                       validationError={errors.address}
-                      watch={watch}
-                      setValue={setValue}
                     />
                   </div>
                   <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />

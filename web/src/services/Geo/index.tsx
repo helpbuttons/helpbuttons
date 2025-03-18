@@ -8,8 +8,8 @@ export class GeoService {
     return httpService.get<any>(url)
   }
 
-  public static reverse(lat: number, lng: number): Observable<any> {
-    const url = `geo/reverse/${roundCoord(lat)}/${roundCoord(lng)}`
+  public static reverse(lat: number, lng: number, limited: boolean): Observable<any> {
+    const url = `geo/reverse/${limited ? 'limited' : 'full'}/${roundCoord(lat)}/${roundCoord(lng)}`
     return httpService.get<any>(url)
   }
   

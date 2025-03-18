@@ -2,42 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import { HbMapUncontrolled } from '.';
 import { GeoJson, Marker } from 'pigeon-maps';
 import {
+  getHexagonCenter,
   getZoomResolution,
   latLngToGeoJson,
 } from 'shared/honeycomb.utils';
 import { MarkerButtonIcon } from './MarkerButton';
-import { cellToLatLng, latLngToCell } from 'h3-js';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
-import t from 'i18n';
 import { LoadabledComponent } from 'components/loading';
 import {
   hexagonSizeZoom,
-  onMarkerPositionChangeZoomTo,
 } from './Map.consts';
-import FieldText from 'elements/Fields/FieldText';
-import SearchBar from 'elements/SearchBar';
-import LocationSearchBar from 'elements/SearchBar';
-
 export function MarkerEditorMap(props) {
   return (
-    <>
-      {/* <DropDownSearchLocation
-        placeholder={t('homeinfo.address')}
-        handleSelectedPlace={props.handleSelectedPlace}
-        markerAddress={props.markerAddress}
-        loadingNewAddress={props.loadingNewAddress}
-        hideAddress={props.hideAddress}
-        toggleLoadingNewAddress={props.toggleLoadingNewAddress}
-        markerPosition={props.markerPosition}
-      /> */}
-      <LocationSearchBar
-        placeholder={t('button.locationPlaceholder')}
-        markerAddress={props.markerAddress} isLoadingExternally={props.loadingNewAddress}
-        hideAddress={props.hideAddress}
-        handleSelectedPlace={props.handleSelectedPlace}
-        />
-      <MarkerViewMap {...props} editPosition={true} />
-    </>
+    <MarkerViewMap {...props}/>
   );
 }
 
@@ -61,7 +37,7 @@ export default function MarkerViewMap({
     setZoom(() => zoom);
     setMapCenter(() => center);
   };
-
+  
   useEffect(() => {
     if (
       editPosition &&
@@ -72,16 +48,7 @@ export default function MarkerViewMap({
       setMapCenter(() => markerPosition);
     }
   }, [markerPosition]);
-  const getHexagonCenter = (latLng, zoom) => {
-    const cell = latLngToCell(
-      latLng[0],
-      latLng[1],
-      getZoomResolution(zoom),
-    );
-    const center = cellToLatLng(cell);
 
-    return center;
-  };
   function handleMapClicked({ latLng }) {
     if (hideAddress) {
       onMapClick(getHexagonCenter(latLng, zoom));
@@ -97,9 +64,6 @@ export default function MarkerViewMap({
           markerPosition[1],
           getZoomResolution(hexagonSizeZoom),
         );
-        if (zoom < hexagonSizeZoom) {
-          setZoom(() => hexagonSizeZoom);
-        }
         setMarkerHexagonGeoJson(() => polygons);
       } else {
         setMarkerHexagonGeoJson(() => null);
@@ -125,18 +89,7 @@ export default function MarkerViewMap({
       }
     }
   }, [hideAddress]);
-  // useEffect(() => {
-  //   // zoom in if markerposition is set, and the user selected a new position, cause if zoom is too far makes no sense.
-  //   if (
-  //     mapCenterIsReady.current &&
-  //     markerPosition[0] &&
-  //     markerPosition[1]
-  //   ) {
-  //     if (zoom < onMarkerPositionChangeZoomTo) {
-  //       setZoom(() => zoom + 2);
-  //     }
-  //   }
-  // }, [markerPosition]);
+
   return (
     <>
       <div className="picker__map">
@@ -160,6 +113,15 @@ export default function MarkerViewMap({
             {!hideAddress && (
               <MarkerButtonIcon
                 anchor={markerPosition}
+                offset={[35, 65]}
+                cssColor={markerColor}
+                image={markerImage}
+                title={markerCaption}
+              />
+            )}
+            {hideAddress && (
+              <MarkerButtonIcon
+                anchor={getHexagonCenter(markerPosition, hexagonSizeZoom)}
                 offset={[35, 65]}
                 cssColor={markerColor}
                 image={markerImage}

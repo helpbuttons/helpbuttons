@@ -167,7 +167,7 @@ export default function DropDownSearchLocation({
   );
 }
 
-export function LoadUserLocationButton({ handleSelectedPlace }) {
+export function LoadUserLocationButton({ handleBrowserLocation, hideAddress }) {
   const [loadingUserAddress, toggleLoadingUserAddress] =
     useState(false);
 
@@ -179,13 +179,14 @@ export function LoadUserLocationButton({ handleSelectedPlace }) {
           new GeoReverseFindAddress(
             position.coords.latitude,
             position.coords.longitude,
+            hideAddress,
             (place) => {
-              handleSelectedPlace(place);
+              handleBrowserLocation(place);
               toggleLoadingUserAddress(false);
             },
             (error) => {
               toggleLoadingUserAddress(() => false);
-              handleSelectedPlace(
+              handleBrowserLocation(
                 emptyPlace({
                   lat: position.coords.latitude.toString(),
                   lng: position.coords.longitude.toString(),

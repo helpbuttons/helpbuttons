@@ -30,8 +30,14 @@ export class GeoController {
   }
 
   @AllowGuest()
-  @Get('reverse/:lat/:lng')
+  @Get('reverse/full/:lat/:lng')
   reverse(@Param('lat') lat: string, @Param('lng') lng: string) {
     return this.geoService.findAddress(lat,lng)
+  }
+
+  @AllowGuest()
+  @Get('reverse/limited/:lat/:lng')
+  reverseLimited(@Param('lat') lat: string, @Param('lng') lng: string) {
+    return this.geoService.findAddressLimited(lat,lng)
   }
 }

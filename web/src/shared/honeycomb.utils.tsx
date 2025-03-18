@@ -305,3 +305,14 @@ export function cellToZoom(hexagon, zoom)
   const resolution = getZoomResolution(zoom)
   return cellToParent(hexagon, resolution)
 }
+
+export const getHexagonCenter = (latLng, zoom) => {
+  const cell = latLngToCell(
+    latLng[0],
+    latLng[1],
+    getZoomResolution(zoom),
+  );
+  const center = cellToLatLng(cell);
+
+  return center;
+};
