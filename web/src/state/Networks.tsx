@@ -25,7 +25,7 @@ export interface NetworksState {
   selectedNetwork: Network;
   selectedNetworkLoading: boolean;
   intialized: boolean;
-} 
+}
 
 export const networksInitial = {
   selectedNetwork: {
@@ -40,28 +40,26 @@ export const networksInitial = {
   initialized: false,
 };
 
-export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) => console.log(error)) : Network => {
-  const fetchingNetwork = useRef(false)
+export const useSelectedNetwork = (_selectedNetwork = null): Network => {
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
 
   useEffect(() => {
-    if(!selectedNetwork.initialized)
-    {
-      if(!_selectedNetwork && !fetchingNetwork.current )
-        {
-          fetchingNetwork.current = true
-          store.emit(new FetchDefaultNetwork(() => console.log('fetched network!!'), onError))
-        }else if(_selectedNetwork){
-          store.emit(new SelectedNetworkFetched(_selectedNetwork))
-        }
+    if (_selectedNetwork) {
+      store.emit(new SelectedNetworkFetched(_selectedNetwork))
+      return;
     }
-    
-  }, [_selectedNetwork])
+    if (!selectedNetwork) {
+      store.emit(new FetchDefaultNetwork(() => {
+      }, () => {
+        console.log('error fetching network')
+      }))
+    }
+  }, [selectedNetwork])
 
   return selectedNetwork;
 }
 export class UpdateNetworkBackgroundColor implements UpdateEvent {
-  public constructor(public color: string) {}
+  public constructor(public color: string) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -70,7 +68,7 @@ export class UpdateNetworkBackgroundColor implements UpdateEvent {
   }
 }
 export class UpdateNetworkTextColor implements UpdateEvent {
-  public constructor(public color: string) {}
+  public constructor(public color: string) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -80,7 +78,7 @@ export class UpdateNetworkTextColor implements UpdateEvent {
 }
 
 export class FetchNetworkConfiguration implements WatchEvent {
-  public constructor(private onSuccess, private onError) {}
+  public constructor(private onSuccess, private onError) { }
 
   public watch(state: GlobalState) {
     return NetworkService.configuration().pipe(
@@ -114,7 +112,7 @@ export class FetchNetworkConfiguration implements WatchEvent {
 
 
 export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
-  public constructor(private onSuccess, private onError) {}
+  public constructor(private onSuccess, private onError) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -153,7 +151,7 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
 }
 
 export class SelectedNetworkFetched implements UpdateEvent {
-  public constructor(private network: Network) {}
+  public constructor(private network: Network) { }
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
@@ -165,78 +163,78 @@ export class SelectedNetworkFetched implements UpdateEvent {
 }
 
 export class CreateNetwork implements WatchEvent {
-    public constructor(
-      private network,
-      private onSuccess,
-      private onError
-    ) {}
-    public watch(state: GlobalState) {
-      return NetworkService.new(this.network).pipe(
-        map((networkData) => {
-          this.onSuccess(networkData.response);
-        }),
-        catchError((error) => {
-          if(!error.response){
-            this.onError(error, this.network);
-            throw error
-          }
-          let err = error.response;
-          
-          if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
-            this.onError("unauthorized", this.network);
-          } else if (err.statusCode === HttpStatus.BAD_REQUEST && err.message === "validation-error" && err.validationErrors) {
-            this.onError(err)
-          } else{
-            this.onError(err)
-            throw error;
-          }
-          return of(undefined);
-        })
-      );
-    }
+  public constructor(
+    private network,
+    private onSuccess,
+    private onError
+  ) { }
+  public watch(state: GlobalState) {
+    return NetworkService.new(this.network).pipe(
+      map((networkData) => {
+        this.onSuccess(networkData.response);
+      }),
+      catchError((error) => {
+        if (!error.response) {
+          this.onError(error, this.network);
+          throw error
+        }
+        let err = error.response;
+
+        if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
+          this.onError("unauthorized", this.network);
+        } else if (err.statusCode === HttpStatus.BAD_REQUEST && err.message === "validation-error" && err.validationErrors) {
+          this.onError(err)
+        } else {
+          this.onError(err)
+          throw error;
+        }
+        return of(undefined);
+      })
+    );
   }
+}
 
-  export class UpdateNetwork implements WatchEvent {
-    public constructor(
-      private network,
-      private onSuccess,
-      private onError
-    ) {}
-    public watch(state: GlobalState) {
-      return NetworkService.update(this.network).pipe(
-        map((networkData) => {
-          this.onSuccess(networkData.response);
-        }),
-        catchError((error) => {
-          if(!error.response){
-            this.onError(error, this.network);
-            throw error
-          }
-          let err = error.response;
-          
-          if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
-            this.onError("unauthorized", this.network);
-          } else if (err.statusCode === HttpStatus.BAD_REQUEST && err.message === "validation-error" && err.validationErrors) {
-            this.onError(err)
-          } else{
-            this.onError(err)
-            throw error;
-          }
-          return of(undefined);
-        })
-      );
-    }
+export class UpdateNetwork implements WatchEvent {
+  public constructor(
+    private network,
+    private onSuccess,
+    private onError
+  ) { }
+  public watch(state: GlobalState) {
+    return NetworkService.update(this.network).pipe(
+      map((networkData) => {
+        this.onSuccess(networkData.response);
+      }),
+      catchError((error) => {
+        if (!error.response) {
+          this.onError(error, this.network);
+          throw error
+        }
+        let err = error.response;
+
+        if (isHttpError(err) && err.statusCode === 401) { // Unauthorized
+          this.onError("unauthorized", this.network);
+        } else if (err.statusCode === HttpStatus.BAD_REQUEST && err.message === "validation-error" && err.validationErrors) {
+          this.onError(err)
+        } else {
+          this.onError(err)
+          throw error;
+        }
+        return of(undefined);
+      })
+    );
   }
+}
 
 
-  export class FindLatestNetworkActivity implements WatchEvent {
-    public constructor( private onSuccess
-    ) {}
-    public watch(state: GlobalState) {
-      return NetworkService.activity(getLocale()).pipe(
-        map((activities) => {
-          this.onSuccess(activities)
-        }))
-      }
-    }
-    
+export class FindLatestNetworkActivity implements WatchEvent {
+  public constructor(private onSuccess
+  ) { }
+  public watch(state: GlobalState) {
+    return NetworkService.activity(getLocale()).pipe(
+      map((activities) => {
+        this.onSuccess(activities)
+      }))
+  }
+}
+

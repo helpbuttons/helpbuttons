@@ -99,8 +99,6 @@ export default function ButtonForm({
   } }, [images])
 
   const onError = (errors, e) => alertService.error(t('validation.error'))
-
-
   return (
     <LoadabledComponent loading={!selectedNetwork}>
       {selectedNetwork &&

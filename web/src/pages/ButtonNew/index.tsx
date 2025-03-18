@@ -16,19 +16,16 @@ import { useStore } from 'state';
 import Loading from 'components/loading';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
+import { useSelectedNetwork } from 'state/Networks';
 
 export default function ButtonNew({ metadata }) {
-  const selectedNetwork = useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-    null
-  );
+  const selectedNetwork = useSelectedNetwork()
 
   useMetadataTitle(t('menu.create'))
 
   return (
     <>
-    {selectedNetwork.exploreSettings ? 
+    {selectedNetwork?.exploreSettings?.center ? 
       <ButtonNewForm selectedNetwork={selectedNetwork} />
      : <Loading/>
     }
@@ -41,8 +38,8 @@ function ButtonNewForm({ selectedNetwork }) {
   const defaultValues = {
     image: null,
     description: '',
-    latitude: null,
-    longitude: null,
+    latitude: selectedNetwork.exploreSettings.center[0],
+    longitude: selectedNetwork.exploreSettings.center[1],
     type: '',
     tags: [],
     title: '',
@@ -69,7 +66,7 @@ function ButtonNewForm({ selectedNetwork }) {
     defaultValues
   });
 
-  register("address", { required: true })
+  register("address", { required: true })  
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const onSubmit = (data) => {
@@ -132,7 +129,7 @@ function ButtonNewForm({ selectedNetwork }) {
   const {loadedDraft} = useButtonDraft({watch, getValues, reset, defaultValues})
   return (
     <>
-    {loadedDraft && 
+    {loadedDraft &&
       <ButtonForm
         watch={watch}
         reset={reset}
