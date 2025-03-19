@@ -54,8 +54,6 @@ function MyApp({ Component, pageProps }) {
   );
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
-  const selectedNetworkLoading = useGlobalStore((state: GlobalState) =>
-    state.networks.selectedNetworkLoading)
   const onFetchingNetworkError = (error) => {
     if (error === 'network-not-found') {
       setFetchingNetworkError(true)
@@ -263,7 +261,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </LoadabledComponent>
     );
-  } else if (!selectedNetworkLoading) {
+  } else if (!selectedNetwork.initialized) {
     return (
       <>
         <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />

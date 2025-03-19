@@ -23,8 +23,7 @@ import { roundCoords } from 'shared/honeycomb.utils';
 export interface NetworksState {
   // networks: Network[];
   selectedNetwork: Network;
-  selectedNetworkLoading: boolean;
-  intialized: boolean;
+  initialized: boolean;
 }
 
 export const networksInitial = {
@@ -36,25 +35,24 @@ export const networksInitial = {
     backgroundColor: 'grey',
     textColor: 'pink',
   },
-  selectedNetworkLoading: true,
   initialized: false,
 };
 
 export const useSelectedNetwork = (_selectedNetwork = null): Network => {
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
-
+  const initialized = useGlobalStore((state: GlobalState) => state.networks.initialized);
   useEffect(() => {
     if (_selectedNetwork) {
       store.emit(new SelectedNetworkFetched(_selectedNetwork))
       return;
     }
-    if (!selectedNetwork) {
+    if (selectedNetwork && !initialized) {
       store.emit(new FetchDefaultNetwork(() => {
       }, () => {
         console.log('error fetching network')
       }))
     }
-  }, [selectedNetwork])
+  }, [])
 
   return selectedNetwork;
 }
@@ -116,7 +114,7 @@ export class FetchDefaultNetwork implements UpdateEvent, WatchEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
-      newState.networks.selectedNetworkLoading = true;
+      newState.networks.initialized = true;
     });
   }
 
@@ -156,8 +154,7 @@ export class SelectedNetworkFetched implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.networks.selectedNetwork = this.network
-      newState.networks.selectedNetworkLoading = false;
-      newState.networks.intialized = true;
+      newState.networks.initialized = true;
     });
   }
 }
