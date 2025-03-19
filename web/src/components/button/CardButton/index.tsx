@@ -106,6 +106,7 @@ export default function CardButton({ button, buttonTypes }) {
 
 // card button list on explore
 export function CardButtonHeadMedium({ button, buttonType }) {
+
   return (
     <div className="card-button__content card-button__content--small">
       <div className="card-button__header">
@@ -278,21 +279,27 @@ function CardButtonSubmenu({ button }) {
       {FollowButtonMenuOption(button)}
       {(isButtonOwner(sessionUser, button) ||
         isAdmin(sessionUser)) && (
-          <>
-            <CardSubmenuOption
-              onClick={() => {
-                router.push(`/ButtonEdit/${button.id}`);
-              }}
-              label={t('button.edit')}
-            />
-            <CardSubmenuOption
-              onClick={() => {
-                router.push(`/ButtonRemove/${button.id}`);
-              }}
-              label={t('button.delete')}
-            />
-          </>
-        )}
+        <>
+          <CardSubmenuOption
+            onClick={() => {
+              router.push(`/ButtonEdit/${button.id}`);
+            }}
+            label={t('button.edit')}
+          />
+          <CardSubmenuOption
+            onClick={() => {
+              router.push(`/ButtonRemove/${button.id}`);
+            }}
+            label={t('button.delete')}
+          />
+          <CardSubmenuOption
+            onClick={() => {
+              router.push(`/ButtonPin/${button.id}`);
+            }}
+            label={button.pin ? t('button.unpin') : t('button.pin')}
+          />
+        </>
+      )}
     </CardSubmenu>
   );
 }
