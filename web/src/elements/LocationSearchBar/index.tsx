@@ -109,7 +109,7 @@ export default function LocationSearchBar({
                         </>
                     }
                     {isCustomAddress &&
-                        <><FieldText placeholder={t('button.placeHodlerCustomAddress')} name={"customAddress"} onChange={(e) => console.log(e.target.value)} />
+                        <><FieldText placeholder={t('button.placeHodlerCustomAddress')} name={"customAddress"} defaultValue={markerAddress} onChange={(e) => setMarkerAddress(e.target.value)} />
                             <Btn
                                 btnType={BtnType.circle}
                                 iconLink={<IoCloseOutline />}

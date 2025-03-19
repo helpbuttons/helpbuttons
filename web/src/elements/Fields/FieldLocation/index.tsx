@@ -49,14 +49,18 @@ export default function FieldLocation({
   const [isCustomAddress, setIsCustomAddress] = useState(false)
 
   const onMapClick = (latLng) => {
+    if(!isCustomAddress)
+    {
+      setMarkerAddress(null)
+    }
     setMarkerPosition(latLng)
-    setMarkerAddress(null)
+    
   }
 
   const getLatLngAddress = useGeoReverse()
 
   useEffect(() => {
-    if(markerAddress == null && markerPosition[0] != null )
+    if(markerPosition[0] != null && !isCustomAddress)
     {
       getLatLngAddress(markerPosition, hideAddress, (place) => {
         setMarkerAddress(place.formatted)
