@@ -168,11 +168,9 @@ export default function ButtonForm({
                   <div className="form__btn-search">
                     <FieldLocation
                       label={t('button.whereLabel')}
-                      setMarkerPosition={([lat, lng]) => {
-                        setValue('latitude', lat);
-                        setValue('longitude', lng);
-                      }}
-                      markerPosition={[watch('latitude'), watch('longitude')]}
+                      setLatitude={(lat) => setValue('latitude', lat)}
+                      setLongitude={(lng) => setValue('longitude', lng)}
+                      defaultMarkerPosition={[watch('latitude'), watch('longitude')]}
                       setMarkerAddress={(address) => {
                         setValue('address', address);
                       }}

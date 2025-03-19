@@ -23,25 +23,26 @@ export default function FieldLocation({
   markerAddress,
   selectedNetwork,
   setMarkerAddress,
-  setMarkerPosition,
-  markerPosition,
   explain = '',
   label,
   setHideAddress,
-  hideAddress
+  hideAddress,
+  setLatitude,
+  setLongitude,
+  defaultMarkerPosition
 }) {
+  const [markerPosition, setMarkerPosition] = useState(defaultMarkerPosition)
   const [zoom, setZoom] = useState(minZoom);
   const [showPopup, setShowPopup] = useState(false);
   const unsavedMarkerAdress = useRef(markerAddress)
-  const unsavedMarkerPosition = useRef(markerPosition)
   const closeWithoutSaving = () => {
     setMarkerAddress(unsavedMarkerAdress.current)
-    setMarkerPosition(unsavedMarkerPosition.current)
     setShowPopup(() => false)
   }
   const closeAndSave = () => {
     unsavedMarkerAdress.current = markerAddress
-    unsavedMarkerPosition.current = markerPosition
+    setLatitude(markerPosition[0])
+    setLongitude(markerPosition[1])
     setShowPopup(() => false)
   }
   const openPopup = () => setShowPopup(() => true)
@@ -64,9 +65,12 @@ export default function FieldLocation({
     {
       getLatLngAddress(markerPosition, hideAddress, (place) => {
         setMarkerAddress(place.formatted)
-      });
+      },
+      (error) => {
+        setMarkerAddress(t('button.unknowPlace'))
+      }
+      );
     }
-    
   }, [markerPosition])
 
   useEffect(() => {

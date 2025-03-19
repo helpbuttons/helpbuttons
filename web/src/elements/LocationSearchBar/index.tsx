@@ -21,23 +21,8 @@ export default function LocationSearchBar({
     markerPosition,
     setMarkerPosition
 }) {
-    const [input, setInput] = useState(markerAddress);
     const [results, setResults] = useState([]);
     const [showAddCustomButton, toggleShowAddCustomButton] = useState(false)
-
-    const handleChange = (value) => {
-        setInput((prevValue) => {
-            if (prevValue != value) {
-                if (value.length > 3) {
-                    searchAddress(input, hideAddress)
-                } else {
-                    setResults(() => [])
-                }
-            }
-            return value;
-        });
-
-    };
 
     const handleAddressPicked = (place) => {
         setMarkerAddress(place.formatted)
@@ -46,79 +31,21 @@ export default function LocationSearchBar({
     }
 
     useEffect(() => {
-        console.log('setting custom???!')
-        // if (isCustomAddress) {
-        //     setResults(() => [])
-        // }
-        
-    }, [isCustomAddress])
-
-    useEffect(() => {
         toggleShowAddCustomButton(() => false)
-        setInput(() => markerAddress)
     }, [markerAddress])
 
-    const geoSearch = useGeoSearch()
-
-    const searchAddress = (input, limit) => {
-        setResults(() => null)
-        geoSearch(input, limit, (places) => {
-            if (places.length > 0) {
-                const placesFound = places.map((place, key) => {
-                    return {
-                        ...place,
-                        id: key,
-                    };
-                })
-                setResults(() => placesFound);
-                return;
-            }
-            setResults(() => [])
-            return;
-        }, (error) => {
-            alertService.error(t('button.errorAddressFetch'))
-            setResults(() => [])
-            return;
-        });
-    };
-
     const handleFocus = (event) => {
-        event.target.select();
         toggleShowAddCustomButton(() => true)
     }
-    
+
     return <>
         <div className="form__field form__field--location-wrapper">
             {label && <div className="form__label">{label}</div>}
             {explain && <div className="form__explain">{explain}</div>}
             <div className="form__field-dropdown form__field-dropdown--location">
                 <div className="form__field-dropdown--input-location">
-                    {!isCustomAddress &&
-                        <>
-                            {!markerAddress ? <><Loading />...</> :
-                                <input
-                                    className="form__input"
-
-                                    placeholder={placeholder}
-                                    value={input}
-                                    onChange={(e) => handleChange(e.target.value)}
-                                    onFocus={handleFocus}
-                                />
-                            }
-                            {results == null && <><Loading/>...</>}
-                        </>
-                    }
-                    {isCustomAddress &&
-                        <><FieldText placeholder={t('button.placeHodlerCustomAddress')} name={"customAddress"} defaultValue={markerAddress} onChange={(e) => setMarkerAddress(e.target.value)} />
-                            <Btn
-                                btnType={BtnType.circle}
-                                iconLink={<IoCloseOutline />}
-                                iconLeft={IconType.circle}
-                                contentAlignment={ContentAlignment.center}
-                                onClick={() => { setIsCustomAddress(() => false) }}
-                            />
-                        </>
-                    }
+                    <FieldLocationSearch isCustomAddress={isCustomAddress} markerAddress={markerAddress} placeholder={placeholder} onResults={setResults} onFocus={handleFocus} showLoading={results == null} hideAddress={hideAddress} />
+                    <FieldCustomAddress isCustomAddress={isCustomAddress} setMarkerAddress={setMarkerAddress} setIsCustomAddress={setIsCustomAddress} markerAddress={markerAddress} />
                     <LoadUserLocationButton handleBrowserLocation={handleAddressPicked} hideAddress={hideAddress} />
                 </div>
                 {(results && results.length > 0) &&
@@ -130,9 +57,9 @@ export default function LocationSearchBar({
                     <SearchCustomAddress handleClick={() => { console.log('clicked'); setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
                 }
 
-            {(markerPosition && markerPosition[0] && markerPosition[1] && !hideAddress) && (
+                {(markerPosition && markerPosition[0] && markerPosition[1] && !hideAddress) && (
                     <div className='form__input-subtitle-option form__input-subtitle--grayed'>
-                    ( {roundCoords(markerPosition).toString()} )
+                        ( {roundCoords(markerPosition).toString()} )
                     </div>
                 )}
             </div>
@@ -140,6 +67,88 @@ export default function LocationSearchBar({
     </>
 }
 
+function FieldLocationSearch({ isCustomAddress, markerAddress, placeholder, onResults, hideAddress, showLoading, onFocus }) {
+    const geoSearch = useGeoSearch()
+    const [input, setInput] = useState(markerAddress);
+
+    useEffect(() => {
+        setInput(() => markerAddress)
+    }, [markerAddress])
+    const searchAddress = (input, limit) => {
+        onResults(() => null)
+        geoSearch(input, limit, (places) => {
+            if (places.length > 0) {
+                const placesFound = places.map((place, key) => {
+                    return {
+                        ...place,
+                        id: key,
+                    };
+                })
+                onResults(() => placesFound);
+                return;
+            }
+            onResults(() => [])
+            return;
+        }, (error) => {
+            alertService.error(t('button.errorAddressFetch'))
+            onResults(() => [])
+            return;
+        });
+    };
+    const handleChange = (value) => {
+        setInput((prevValue) => {
+            if (prevValue != value) {
+                if (value.length > 3) {
+                    searchAddress(input, hideAddress)
+                } else {
+                    onResults(() => [])
+                }
+            }
+            return value;
+        });
+    };
+
+    const handleFocus = (event) => {
+        event.target.select();
+        onFocus(event)
+    }
+    return <>{!isCustomAddress &&
+        <>
+            {!markerAddress ? <><Loading />...</> :
+                <input
+                    className="form__input"
+
+                    placeholder={placeholder}
+                    value={input}
+                    onChange={(e) => handleChange(e.target.value)}
+                    onFocus={handleFocus}
+                />
+            }
+            {showLoading && <><Loading />...</>}
+        </>
+    }</>
+
+}
+function FieldCustomAddress({ isCustomAddress, setMarkerAddress, setIsCustomAddress, markerAddress }) {
+    const handleFocus = (e) => {
+        e.target.select()
+    }
+    const handleChange = (e) => {
+        setMarkerAddress(e.target.value)
+    }
+    return (<>{isCustomAddress &&
+        <><FieldText placeholder={t('button.placeHodlerCustomAddress')} name={"customAddress"} defaultValue={markerAddress} onChange={handleChange} onFocus={handleFocus} />
+            <Btn
+                btnType={BtnType.circle}
+                iconLink={<IoCloseOutline />}
+                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.center}
+                onClick={() => { setIsCustomAddress(() => false) }}
+            />
+        </>
+    }
+    </>)
+}
 export function SearchCustomAddress({ handleClick }) {
     return (<>
         <hr />

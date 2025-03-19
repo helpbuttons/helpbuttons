@@ -28,7 +28,7 @@ export const useGeoSearch = () => {
 
 export const useGeoReverse = () => {
   const GeofindReverse = useCallback(
-    debounce((latLng, limited, success) => {
+    debounce((latLng, limited, success, onError) => {
       store.emit(
         new GeoReverseFindAddress(
           latLng[0],
@@ -38,8 +38,7 @@ export const useGeoReverse = () => {
             success(place);
           },
           (error) => {
-            success(emptyPlace({ lat: latLng[0], lng: latLng[1] }));
-            console.log(error);
+            onError(error);
           },
         ),
       );
@@ -47,8 +46,8 @@ export const useGeoReverse = () => {
     [],
   );
 
-  const _debounceFunc = (latLng, limited, success) => {
-    GeofindReverse(latLng, limited, success);
+  const _debounceFunc = (latLng, limited, success, onError) => {
+    GeofindReverse(latLng, limited, success, onError);
   };
   return _debounceFunc;
 };
