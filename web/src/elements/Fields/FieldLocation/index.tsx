@@ -61,7 +61,7 @@ export default function FieldLocation({
   const getLatLngAddress = useGeoReverse()
 
   useEffect(() => {
-    if(markerPosition[0] != null && !isCustomAddress)
+    if(markerAddress == null && !isCustomAddress)
     {
       getLatLngAddress(markerPosition, hideAddress, (place) => {
         setMarkerAddress(place.formatted)
