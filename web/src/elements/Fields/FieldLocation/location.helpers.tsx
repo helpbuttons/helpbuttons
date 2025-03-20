@@ -9,18 +9,18 @@ import {
 
 export const useGeoSearch = () => {
   const GeoFindByQuery = useCallback(
-    debounce((query, callback) => {
+    debounce((query, limited, onSuccess, onError) => {
       store.emit(
-        new GeoFindAddress(query, (places) => {
-          return callback(places);
-        }),
+        new GeoFindAddress(query,limited, (places) => {
+          return onSuccess(places);
+        }, (error) => onError(error)),
       );
-    }, 500),
+    }, 50),
     [],
   );
 
-  const _debounceFunc = (query, success) => {
-    GeoFindByQuery(query, (places) => success(places));
+  const _debounceFunc = (query, limited, success, error) => {
+    GeoFindByQuery(query,limited, (places) => success(places), error);
   };
 
   return _debounceFunc;
@@ -28,17 +28,17 @@ export const useGeoSearch = () => {
 
 export const useGeoReverse = () => {
   const GeofindReverse = useCallback(
-    debounce((latLng, success) => {
+    debounce((latLng, limited, success, onError) => {
       store.emit(
         new GeoReverseFindAddress(
           latLng[0],
           latLng[1],
+          limited,
           (place) => {
             success(place);
           },
           (error) => {
-            success(emptyPlace({ lat: latLng[0], lng: latLng[1] }));
-            console.log(error);
+            onError(error);
           },
         ),
       );
@@ -46,8 +46,8 @@ export const useGeoReverse = () => {
     [],
   );
 
-  const _debounceFunc = (latLng, success) => {
-    GeofindReverse(latLng, success);
+  const _debounceFunc = (latLng, limited, success, onError) => {
+    GeofindReverse(latLng, limited, success, onError);
   };
   return _debounceFunc;
 };

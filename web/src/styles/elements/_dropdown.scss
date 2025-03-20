@@ -143,31 +143,43 @@ $dropdown-bck: $color-ligth-gray;
 .dropdown__dropdown-content {
 
     width: 100%;
-    margin-top: 10px;
-    text-align: center;
+    margin-top: 0;
     max-height: 150px;
     overflow-y: auto;
-
-    position: absolute;
-    background-color: white;
-    border: 1px solid blue;
-    border-radius: 0 0 5px 5px;
+    position: relative;
+    border-radius: 0 0 $border-radius-basic $border-radius-basic;
     border-top: none;
-    font-family: sans-serif;
-    width: 350px;
-    padding: 5px;
+    padding: 0;
 
 }
 
 .dropdown__dropdown-option {
 
   display: block;
-  cursor: pointer;
+  font-size: $font-size-small;
   width: 100%;
   background: white;
   border: unset;
-  border-radius: $border-radius-semicircle; //REVISE
+  border-radius: 0; 
+  padding: $padding-medium;
 
+  &:hover {
+    background-color: $color-ligth-gray;
+    cursor: pointer;
+  }
+
+
+}
+
+.dropdown__dropdown-no-result {
+
+  display: block;
+  font-size: $font-size-small;
+  width: 100%;
+  background: white;
+  border: unset;
+  border-radius: 0; 
+  padding: $padding-medium;
 
 }
 

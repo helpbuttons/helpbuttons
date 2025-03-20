@@ -58,9 +58,7 @@ export function DropDownWhere({
       requestPlacesForQuery(input, (places) => {
         setOptions(
           places.map((place, key) => {
-            const label = hideAddress
-              ? place.formatted_city
-              : place.formatted;
+            const label = place.formatted;
             return (
               <DropDownAutoCompleteOption
                 key={key}

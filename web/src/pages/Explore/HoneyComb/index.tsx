@@ -50,7 +50,7 @@ import {
 import PopupButtonFile from 'components/popup/PopupButtonFile';
 import { alertService } from 'services/Alert';
 import { ButtonShow } from 'components/button/ButtonShow';
-import { maxZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
+import { maxZoom, minZoom, showMarkersZoom } from 'components/map/Map/Map.consts';
 import { applyFiltersHex, isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { filter } from 'rxjs';
@@ -262,7 +262,7 @@ function useExploreSettings({
       let newUpdateSettings: Partial<ExploreSettings> = {
         center: [lat, lng],
       };
-      if (Number(zoom) > 0 && Number(zoom) < maxZoom) {
+      if (Number(zoom) > minZoom && Number(zoom) < maxZoom) {
         newUpdateSettings = {
           ...newUpdateSettings,
           zoom: Number(zoom),
