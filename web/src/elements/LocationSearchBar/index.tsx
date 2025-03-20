@@ -113,7 +113,7 @@ function FieldLocationSearch({ isCustomAddress, markerAddress, placeholder, onRe
     return <>{!isCustomAddress &&
         <>
             {!markerAddress ? 
-                <div className="form__input"><Loading /></div> 
+                <div className="form__input--dropdown-search"><div className="form__input--dropdown-search__input"></div><div className="form__input--location-loading"><Loading /></div></div> 
             :
                 <div className="form__input--dropdown-search">
                 <input
