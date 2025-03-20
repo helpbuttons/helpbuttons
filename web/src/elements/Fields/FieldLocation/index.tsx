@@ -123,7 +123,6 @@ export default function FieldLocation({
       networkMapCenter={selectedNetwork.exploreSettings.center}
       editPosition={true}
     />
-    {/* Hide this field if the add custom address form is shown */}
     <FieldCheckbox
       name="hideAddress"
       defaultValue={hideAddress}
