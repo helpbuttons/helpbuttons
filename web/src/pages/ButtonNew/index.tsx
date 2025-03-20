@@ -45,7 +45,7 @@ function ButtonNewForm({ selectedNetwork }) {
     title: '',
     images: [],
     radius: 1,
-    address: '',
+    address: null,
     when: { dates: [], type: null },
     hideAddress: false,
     eventData: null

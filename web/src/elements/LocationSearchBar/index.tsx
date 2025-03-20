@@ -44,14 +44,12 @@ export default function LocationSearchBar({
             {explain && <div className="form__explain">{explain}</div>}
             <div className="form__field-dropdown form__field-dropdown--location">
                 <div className="form__field-dropdown--input-location">
-                    <FieldLocationSearch isCustomAddress={isCustomAddress} markerAddress={markerAddress} placeholder={placeholder} onResults={setResults} onFocus={handleFocus} showLoading={results == null} hideAddress={hideAddress} />
+                    <FieldLocationSearch isCustomAddress={isCustomAddress} markerAddress={markerAddress} placeholder={placeholder} onResults={setResults} onFocus={handleFocus} showLoading={(results == null)} hideAddress={hideAddress} />
                     <FieldCustomAddress isCustomAddress={isCustomAddress} setMarkerAddress={setMarkerAddress} setIsCustomAddress={setIsCustomAddress} markerAddress={markerAddress} />
                     <LoadUserLocationButton handleBrowserLocation={handleAddressPicked} hideAddress={hideAddress} />
                 </div>
                 {(results && results.length > 0) &&
-                    <>
-                        <SearchResultsList handleAddressPicked={handleAddressPicked} results={results} hideAddress={hideAddress} />
-                    </>
+                    <SearchResultsList handleAddressPicked={handleAddressPicked} results={results} hideAddress={hideAddress} />
                 }
                 {showAddCustomButton &&
                     <SearchCustomAddress handleClick={() => { console.log('clicked'); setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
@@ -136,8 +134,17 @@ function FieldCustomAddress({ isCustomAddress, setMarkerAddress, setIsCustomAddr
     const handleChange = (e) => {
         setMarkerAddress(e.target.value)
     }
+    const [input, setInput] = useState(markerAddress);
+
     return (<>{isCustomAddress &&
-        <><FieldText placeholder={t('button.placeHodlerCustomAddress')} name={"customAddress"} defaultValue={markerAddress} onChange={handleChange} onFocus={handleFocus} />
+        <>
+            <input
+                className="form__input"
+                placeholder={t('button.placeHodlerCustomAddress')}
+                value={input}
+                onFocus={handleFocus}
+                onChange={handleChange}
+            />
             <Btn
                 btnType={BtnType.circle}
                 iconLink={<IoCloseOutline />}
