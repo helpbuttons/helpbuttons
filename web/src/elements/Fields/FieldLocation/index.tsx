@@ -67,7 +67,7 @@ export default function FieldLocation({
         setMarkerAddress(place.formatted)
       },
       (error) => {
-        setMarkerAddress(t('button.unknowPlace'))
+        setMarkerAddress(t('button.unknownPlace'))
       }
       );
     }
@@ -123,6 +123,7 @@ export default function FieldLocation({
       networkMapCenter={selectedNetwork.exploreSettings.center}
       editPosition={true}
     />
+    {/* Hide this field if the add custom address form is shown */}
     <FieldCheckbox
       name="hideAddress"
       defaultValue={hideAddress}

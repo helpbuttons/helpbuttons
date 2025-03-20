@@ -112,17 +112,23 @@ function FieldLocationSearch({ isCustomAddress, markerAddress, placeholder, onRe
     }
     return <>{!isCustomAddress &&
         <>
-            {!markerAddress ? <><Loading />...</> :
+            {!markerAddress ? 
+                <div className="form__input"><Loading /></div> 
+            :
+                <div className="form__input--dropdown-search">
                 <input
-                    className="form__input"
+                    className="form__input--dropdown-search__input"
 
                     placeholder={placeholder}
                     value={input}
                     onChange={(e) => handleChange(e.target.value)}
                     onFocus={handleFocus}
                 />
+                {showLoading && <div className="form__input--location-loading"><Loading /></div>}
+                </div> 
             }
-            {showLoading && <><Loading />...</>}
+            
+            
         </>
     }</>
 
