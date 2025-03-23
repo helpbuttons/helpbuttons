@@ -635,6 +635,12 @@ width: 100%;
   
 }
 
+.form__input--location-loading {
+  display: flex;
+  align-items: center;
+  
+}
+
 @media #{$breakpoints-medium} {
 
   .form__input--button-type-field {

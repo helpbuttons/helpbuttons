@@ -143,22 +143,25 @@ function FieldCustomAddress({ isCustomAddress, setMarkerAddress, setIsCustomAddr
     const [input, setInput] = useState(markerAddress);
 
     return (<>{isCustomAddress &&
-        <>
-            <input
-                className="form__input"
-                placeholder={t('button.placeHodlerCustomAddress')}
-                value={input}
-                onFocus={handleFocus}
-                onChange={handleChange}
-            />
-            <Btn
-                btnType={BtnType.circle}
-                iconLink={<IoCloseOutline />}
-                iconLeft={IconType.circle}
-                contentAlignment={ContentAlignment.center}
-                onClick={() => { setIsCustomAddress(() => false) }}
-            />
-        </>
+            <div className="form__input--dropdown-search">
+                <input
+                    className="form__input--dropdown-search__input"
+                    placeholder={t('button.placeHodlerCustomAddress')}
+                    value={input}
+                    onFocus={handleFocus}
+                    onChange={handleChange}
+                />
+                <div className="form__input--location-loading">
+                    <Btn
+                        btnType={BtnType.smallCircle}
+                        iconLink={<IoCloseOutline />}
+                        iconLeft={IconType.circle}
+                        contentAlignment={ContentAlignment.center}
+                        onClick={() => { setIsCustomAddress(() => false) }}
+                    />
+                    </div>
+                
+            </div>
     }
     </>)
 }
