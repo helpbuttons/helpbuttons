@@ -143,7 +143,7 @@ function FieldCustomAddress({ isCustomAddress, setMarkerAddress, setIsCustomAddr
     const [input, setInput] = useState(markerAddress);
 
     return (<>{isCustomAddress &&
-            <div className="form__input--dropdown-search">
+            <div className="form__input--edit-address form__input--dropdown-search ">
                 <input
                     className="form__input--dropdown-search__input"
                     placeholder={t('button.placeHodlerCustomAddress')}

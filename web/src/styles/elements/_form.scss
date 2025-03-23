@@ -164,30 +164,12 @@ margin: $margin-medium 0;
 
 }
 
-.form__input--dropdown-search {
-
-  @extend .form__input;
-  display: flex;
-  flex-direction: row;
-
-}
-
-.form__input--dropdown-search__input {
-
-  height: 100%;
-  width: 100%;
-
-  
-}
 
 .form__explain,
 .form__label {
 
   margin-bottom: $margin-xsmall;
 
-}
-.form__input__field {
-  margin: $margin-xsmall 0;
 }
 
 //REVISE DE LAS CLASES DEL INPUT
@@ -223,6 +205,31 @@ margin: $margin-medium 0;
 
 
 }
+
+.form__input__field {
+  margin: $margin-xsmall 0;
+}
+
+
+.form__input--edit-address {
+  border: 1px solid $color-corporative;
+}
+
+.form__input--dropdown-search {
+
+  @extend .form__input;
+  display: flex;
+  flex-direction: row;
+
+}
+
+.form__input--dropdown-search__input {
+
+  height: 100%;
+  width: 100%;
+  
+}
+
 
 .form__input--text-length {
 
@@ -638,7 +645,7 @@ width: 100%;
 .form__input--location-loading {
   display: flex;
   align-items: center;
-  
+
 }
 
 @media #{$breakpoints-medium} {
