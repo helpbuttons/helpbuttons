@@ -20,16 +20,18 @@ export default function CardProfile({ user, showAdminOptions = false}) {
     <>
 
         <div className="card-profile__container-avatar-content">
+
               {showAdminOptions && 
+
                 <ProfileAdminOptions user={user} />
+
               }
 
             <figure className="card-profile__avatar-container avatar">
 
               <div className="avatar-big">
-                <UserAvatar user={user}/>
 
-                {/* <ImageWrapper imageType={ImageType.avatar} src={user.avatar} alt="avatar"/> */}
+                <UserAvatar user={user}/>
 
               </div>
 
@@ -51,33 +53,26 @@ export default function CardProfile({ user, showAdminOptions = false}) {
         </div>
           <figure className="card-profile__rating">
 
-            { user.followsCount &&
-              <div className="card-profile__rate">
-                <div className="card-profile__rate-label">
-                {t('user.timesFollowed')} 
+                <div className="card-profile__rate">
+                  <div className="card-profile__rate-label">
+                  {t('user.timesFollowed')} 
+                  </div>
+                  {user?.followsCount ?? 0}
                 </div>
-                {user.followsCount}
-              </div>
-              }
-              {user.buttonCount &&
-              <div className="card-profile__rate">
-                <div className="card-profile__rate-label">
-                {t('user.helpbuttonsPublishedAmount')} 
+                <div className="card-profile__rate">
+                  <div className="card-profile__rate-label">
+                  {t('user.helpbuttonsPublishedAmount')} 
+                  </div>
+                  {user?.buttonCount?? 0}
                 </div>
-                {user.buttonCount}
-              </div>
-              }
-              {user.commentCount &&
-              <div className="card-profile__rate">
-                <div className="card-profile__rate-label">
-                  {t('user.commentsAmount')} 
+                <div className="card-profile__rate">
+                  <div className="card-profile__rate-label">
+                    {t('user.commentsAmount')} 
+                  </div>
+                    {user?.commentCount ?? 0}
                 </div>
-                  {user.commentCount}
-              </div>
-              }
 
             </figure>
-          
 
         <div className="card-profile__data">
 
@@ -89,12 +84,6 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             <div className="card-profile__description">
                {user.description}
             </div>
-
-            {/* <div className="card-profile__phone grid-one__column-mid-element">
-              TODO: 
-              - place
-
-            </div> */}
 
         </div>
     </>
