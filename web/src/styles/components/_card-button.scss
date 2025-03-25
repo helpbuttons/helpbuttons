@@ -791,14 +791,13 @@ $card-button-border-height: $border-general-height;
   .card-button__dropdown-container {
 
     right: $padding-xxsmall;
-    top: 4rem;
+    top: calc($margin-big + $margin-big);
 
   }
 
   .card-button__submenu {
 
-    padding: $padding-medium;
-    gap: $padding-small;
+    padding: $margin-medium;
 
   }
 

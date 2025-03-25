@@ -9,27 +9,13 @@ export function CardSubmenu({ children, extraClass }) {
   return (
     <div ref={ref} className={extraClass}>
       <div
-
         className="card-button__edit-icon card-button__submenu card-profile__submenu"
       >
-         {/* <Btn
-          btnType={BtnType.filterCorp}
-          contentAlignment={ContentAlignment.left}
-          iconRight={IconType.circle}
-          iconLink={<IoMailOpenOutline />}
-          
-        />
         <Btn
-          btnType={BtnType.filterCorp}
-          contentAlignment={ContentAlignment.left}
-          iconRight={IconType.circle}
-          iconLink={<IoCallOutline />}
-          
-        /> */}
-        <Btn
-          btnType={BtnType.filterCorp}
+          btnType={BtnType.smallCircle}
           contentAlignment={ContentAlignment.center}
-          caption= {t('common.options')}
+          iconLeft={IconType.circle}
+          iconLink={<IoEllipsisHorizontalSharp />}
           onClick={() => {
             setShowSubmenu(!showSubmenu);
           }}

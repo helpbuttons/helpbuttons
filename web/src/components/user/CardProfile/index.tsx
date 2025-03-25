@@ -49,36 +49,35 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             </div>
 
         </div>
-        {user.followsCount || user.buttonCount || user.commentCount &&
-        <figure className="card-profile__rating">
+          <figure className="card-profile__rating">
 
-           { user.followsCount &&
-            <div className="card-profile__rate">
-              <div className="card-profile__rate-label">
-               {t('user.timesFollowed')} 
+            { user.followsCount &&
+              <div className="card-profile__rate">
+                <div className="card-profile__rate-label">
+                {t('user.timesFollowed')} 
+                </div>
+                {user.followsCount}
               </div>
-              {user.followsCount}
-            </div>
-            }
-            {user.buttonCount &&
-            <div className="card-profile__rate">
-              <div className="card-profile__rate-label">
-              {t('user.helpbuttonsPublishedAmount')} 
+              }
+              {user.buttonCount &&
+              <div className="card-profile__rate">
+                <div className="card-profile__rate-label">
+                {t('user.helpbuttonsPublishedAmount')} 
+                </div>
+                {user.buttonCount}
               </div>
-              {user.buttonCount}
-            </div>
-            }
-             {user.commentCount &&
-            <div className="card-profile__rate">
-              <div className="card-profile__rate-label">
-                {t('user.commentsAmount')} 
-              </div>
-              {user.commentCount}
+              }
+              {user.commentCount &&
+              <div className="card-profile__rate">
+                <div className="card-profile__rate-label">
+                  {t('user.commentsAmount')} 
+                </div>
+                  {user.commentCount}
               </div>
               }
 
-          </figure>
-          }
+            </figure>
+          
 
         <div className="card-profile__data">
 
