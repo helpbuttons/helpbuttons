@@ -34,6 +34,7 @@ export class GeoService {
     }
   }
 
+  
   async search(query: string) {
     return this.geoProvider.searchQuery(query).then((results) =>
       this.searchCustom(query).then((customResults) => [...customResults, ...results])

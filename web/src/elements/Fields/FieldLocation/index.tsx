@@ -6,10 +6,10 @@ import React, {
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { MarkerEditorMap } from 'components/map/Map/MarkerSelectorMap';
 import t from 'i18n';
-import { roundCoord } from 'shared/honeycomb.utils';
+import { roundCoord, roundCoords } from 'shared/honeycomb.utils';
 import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
-import {  minZoom } from 'components/map/Map/Map.consts';
+import { minZoom } from 'components/map/Map/Map.consts';
 import { useGeoReverse } from './location.helpers';
 import { IoSearchOutline } from 'react-icons/io5';
 import LocationSearchBar from 'elements/LocationSearchBar';
@@ -31,9 +31,13 @@ export default function FieldLocation({
   setLongitude,
   defaultMarkerPosition
 }) {
-  const [markerPosition, setMarkerPosition] = useState(defaultMarkerPosition)
+  const [markerPosition, setMarkerPosition] = useState(roundCoords(defaultMarkerPosition))
+
   const [zoom, setZoom] = useState(minZoom);
   const [showPopup, setShowPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
+  const [mapAddress, setMapAddress] = useState({address: markerAddress, hideAddress: hideAddress})
+  
   const unsavedMarkerAdress = useRef(markerAddress)
   const closeWithoutSaving = () => {
     setMarkerAddress(unsavedMarkerAdress.current)
@@ -50,33 +54,38 @@ export default function FieldLocation({
   const [isCustomAddress, setIsCustomAddress] = useState(false)
 
   const onMapClick = (latLng) => {
-    if(!isCustomAddress)
-    {
-      setMarkerAddress(null)
-    }
-    setMarkerPosition(latLng)
-    
+    setMarkerPosition(() => latLng)
+    findAddressFromPosition(latLng, hideAddress)
   }
 
   const getLatLngAddress = useGeoReverse()
-
-  useEffect(() => {
-    if(markerAddress == null && !isCustomAddress)
-    {
-      getLatLngAddress(markerPosition, hideAddress, (place) => {
-        setMarkerAddress(place.formatted)
-      },
+  const findAddressFromPosition = (latLng, hideAddress) => {
+    setIsLoading(() => true)
+    getLatLngAddress(latLng, hideAddress, (place) => {
+      setMapAddress(() => {return {address: place.formatted, hideAddress: hideAddress}})
+      setIsLoading(() => false)
+    },
       (error) => {
-        setMarkerAddress(t('button.unknownPlace'))
+        setIsLoading(() => false)
+        setMapAddress(() => {return {address: t('button.unknownPlace'), hideAddress: null}})
       }
-      );
+    );
+  }
+  
+  useEffect(() => {
+    if (!isCustomAddress) {
+      setMarkerAddress(mapAddress.address)
     }
-  }, [markerPosition])
+  }, [mapAddress, isCustomAddress])
 
   useEffect(() => {
-    setMarkerAddress(null)
+    findAddressFromPosition(markerPosition, hideAddress)
+  }, [])
+  useEffect(() => {
+    if(hideAddress != mapAddress.hideAddress){
+        findAddressFromPosition(markerPosition, hideAddress)
+    }
   }, [hideAddress])
-
 
   const loadingNewAddress = markerAddress == null;
   return <PickerField
@@ -106,11 +115,12 @@ export default function FieldLocation({
       setIsCustomAddress={setIsCustomAddress}
       setMarkerPosition={setMarkerPosition}
       markerPosition={markerPosition}
+      isLoading={isLoading}
+      setIsLoading={setIsLoading}
+      mapAddress={mapAddress}
     />
     <MarkerEditorMap
-      toggleLoadingNewAddress={(value) =>
-        setMarkerAddress(false)
-      }
+      toggleLoadingNewAddress={() => setIsLoading(() => true)}
       onMapClick={onMapClick}
       zoom={zoom}
       setZoom={setZoom}

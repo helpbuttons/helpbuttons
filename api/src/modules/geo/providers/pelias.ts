@@ -54,7 +54,6 @@ export class PeliasProvider implements GeoProvider {
   reverseGeo(lat, lng, limited = false): Promise<any> {
     const url =
       `${this.geoCodeHost}v1/reverse?api_key=${this.apiKey}&point.lat=${lat}&point.lon=${lng}${limited ? '&layers=-address,-venue' : ''}`;
-    console.log(url)
     return this.httpHelper.get(url);
   }
 
