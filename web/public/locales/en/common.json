@@ -215,7 +215,8 @@
     "reloadConfig": "Reload Config",
     "deleteSuccess": "Deleted",
     "error": "Something went wrong",
-    "notFoundMessage": "Page not found or deleted"
+    "notFoundMessage": "Page not found or deleted",
+    "options": "Options"
   },
   "button": {
     "title": "_helpbutton_ view",
@@ -365,7 +366,10 @@
     "pressToAccept": "Click here to accept",
     "iAccept": "I accept",
     "pleaseAcceptPrivacy": "Please accept our privacy policy",
-    "errorRequestNewLoginToken": ""
+    "errorRequestNewLoginToken": "",
+    "helpbuttonsPublishedAmount": "Published",
+    "timesFollowed": "Followed",
+    "commentsAmount": "Commented"
   },
   "picker": {
     "headerText": "Choose a location"
