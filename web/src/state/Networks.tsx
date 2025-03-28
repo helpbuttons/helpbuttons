@@ -18,6 +18,7 @@ import { SetupSteps } from 'shared/setupSteps';
 import { ConfigFound, GetConfig } from './Setup';
 import { getLocale } from 'shared/sys.helper';
 import { roundCoords } from 'shared/honeycomb.utils';
+import dconsole from 'shared/debugger';
 // import router from 'next/router';
 
 export interface NetworksState {
@@ -40,7 +41,7 @@ export const networksInitial = {
   initialized: false,
 };
 
-export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) => console.log(error)) : Network => {
+export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) => dconsole.error(error)) : Network => {
   const fetchingNetwork = useRef(false)
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
 
@@ -50,7 +51,7 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = (error) =>
       if(!_selectedNetwork && !fetchingNetwork.current )
         {
           fetchingNetwork.current = true
-          store.emit(new FetchDefaultNetwork(() => console.log('fetched network!!'), onError))
+          store.emit(new FetchDefaultNetwork(() => dconsole.log('fetched network!!'), onError))
         }else if(_selectedNetwork){
           store.emit(new SelectedNetworkFetched(_selectedNetwork))
         }

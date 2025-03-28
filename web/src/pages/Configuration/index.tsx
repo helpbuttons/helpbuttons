@@ -18,6 +18,7 @@ import {
   UpdateNetworkTextColor,
 } from 'state/Networks';
 import { useStore } from 'state';
+import dconsole from 'shared/debugger';
 
 export default Configuration;
 
@@ -101,7 +102,7 @@ function Configuration() {
             new FetchDefaultNetwork(
               () => {},
               (error) => {
-                console.log(error);
+                dconsole.error(error);
               },
             ),
           );
@@ -116,7 +117,7 @@ function Configuration() {
               const mimetype = err.validationErrors.jumbo.substr(
                 mimetypeError.length,
               );
-              console.log(mimetype);
+              dconsole.log(mimetype);
               const mimetypeErrorMessage = t(
                 'common.invalidMimeType',
                 ['background image', mimetype],
@@ -148,7 +149,7 @@ function Configuration() {
               );
             }
           } else {
-            console.log(err);
+            dconsole.error(err);
           }
         },
       ),

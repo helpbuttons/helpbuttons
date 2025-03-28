@@ -7,6 +7,7 @@ import {
 } from 'services/LocalStorage';
 import getConfig from 'next/config';
 import { rxjsHelper } from 'shared/helpers/rxjs.helper';
+import dconsole from 'shared/debugger';
 
 export function isHttpError(err: object) {
   return err && err.statusCode && err.message;
@@ -33,7 +34,7 @@ export class HttpService {
     return localStorageService.read(LocalStorageVars.ACCESS_TOKEN);
   }
   public setAccessToken(accessToken?: string) {
-    console.log('setting up new token ' + accessToken)
+    dconsole.log('setting up new token ' + accessToken)
     localStorageService.save(
       LocalStorageVars.ACCESS_TOKEN,
       accessToken.toString(),
@@ -42,7 +43,7 @@ export class HttpService {
   }
 
   public clearAccessToken() {
-    console.log('cleaning access token');
+    dconsole.log('cleaning access token');
     localStorageService.remove(LocalStorageVars.ACCESS_TOKEN);
     this.isAuthenticated$.next(false);
   }

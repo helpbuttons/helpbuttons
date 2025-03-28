@@ -1,5 +1,5 @@
+import dconsole from 'shared/debugger';
 import { Button } from 'shared/entities/button.entity';
-import { logError } from 'shared/log';
 import { makeImageUrl, setLocale } from 'shared/sys.helper';
 import { HttpStatus } from 'shared/types/http-status.enum';
 export class ServerPropsService {
@@ -27,9 +27,7 @@ export class ServerPropsService {
       configData = await configRes.json();
     } catch (error) {
       const errorMsg = 'error getting config ' + configURL;
-      // console.log(errorMsg);
-      logError(errorMsg, error);
-      // throw new Error(errorMsg);
+      dconsole.error(errorMsg, error);
       return catchMetadata;
     }
 
@@ -46,8 +44,7 @@ export class ServerPropsService {
       networkConfigData = await networkConfigRes.json();
     } catch (error) {
       const errorMsg = 'error getting network configuration';
-      // console.log(errorMsg);
-      logError(errorMsg, error);
+      dconsole.error(errorMsg, error);
       return {
         ...catchMetadata,
         error: { message: errorMsg, ...error },
@@ -59,7 +56,7 @@ export class ServerPropsService {
       networkConfigData?.statusCode == 404
     ) {
       const errorMsg = 'error getting network configuration 2';
-      logError(errorMsg, networkConfigData);
+      dconsole.error(errorMsg, networkConfigData);
 
       return {
         ...catchMetadata,
@@ -167,7 +164,7 @@ export async function setMetadata(subtitle, ctx) {
         };
     return { props: serverProps };
   } catch (err) {
-    console.log(err)
+    dconsole.error(err)
     return {
       props: {
         metadata: null,

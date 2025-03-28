@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import buildCalendar from "./build";
 import dayStyles from "./styles";
+import dconsole from "shared/debugger";
 
 export default function PickerDate() {
   const [calendar, setCalendar] = useState([]);
@@ -46,7 +47,7 @@ export default function PickerDate() {
 
   const CalendarioHoraDia = value.minutes(ParseIntMinutes).hours(ParseIntHour);
 
-  console.log(CalendarioHoraDia);
+  dconsole.log(CalendarioHoraDia);
 
   const updateHoras = function (event) {
     setHour(event.target.value);

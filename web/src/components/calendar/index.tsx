@@ -8,6 +8,7 @@ import {
 import { Button } from 'shared/entities/button.entity';
 import { FindMonthCalendar } from 'state/Button';
 import _ from 'lodash';
+import dconsole from 'shared/debugger';
 
 export default function CalendarHb(props) {
   const [monthEvents, setMonthEvents] = useState([]);
@@ -42,7 +43,7 @@ export default function CalendarHb(props) {
         value,
         view,
       }) => {
-        console.log('yellow');
+        dconsole.log('yellow');
         if (view == 'month') {
           const selectedDate = new Date(activeStartDate);
 

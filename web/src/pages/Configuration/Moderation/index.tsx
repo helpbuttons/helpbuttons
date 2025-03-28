@@ -176,7 +176,7 @@ function ModerationUsersList() {
                       color={'red'}
                       caption={t('moderation.remove')}
                       icon={null}
-                      onClick={() => console.log('remove user')}
+                      onClick={() => dconsole.log('remove user')}
                     /> */}
                   </td>
                 </tr>
@@ -293,14 +293,14 @@ function ModerationHelpButtonsList() {
                         color={'orange'}
                         caption={t('button.edit')}
                         icon={null}
-                        onClick={() => console.log('edit button')}
+                        onClick={() => dconsole.log('edit button')}
                       />
                     </Link>
                     {/* <BtnCaption
                       color={'red'}
                       caption={t('moderation.remove')}
                       icon={null}
-                      onClick={() => console.log('remove button')}
+                      onClick={() => dconsole.log('remove button')}
                     /> */}
                   </td>
                 </tr>

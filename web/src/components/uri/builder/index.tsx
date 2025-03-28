@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { FindButton, updateCurrentButton } from "state/Explore";
 import { MainPopupPage, SetMainPopup } from "state/HomeInfo";
 import { useGlobalStore } from 'state';
+import dconsole from "shared/debugger";
 
 export const useRebuildUrl = (router: NextRouter) => {
     const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton)
@@ -30,7 +31,7 @@ export const useRebuildUrl = (router: NextRouter) => {
         if (window) {
             if (popupPage != MainPopupPage.HIDE) {
                 const newUrl = giveMeUrl([{ name: 'v', value: popupPage }])
-                console.log(newUrl)
+                dconsole.log(newUrl)
                 window.history.replaceState(null, '', newUrl);
             }
         }

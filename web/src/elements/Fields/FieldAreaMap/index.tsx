@@ -11,6 +11,7 @@ import { circleToPolygon } from 'shared/geo.utils';
 import { getBoundsHexFeatures, roundCoords } from 'shared/honeycomb.utils';
 import PickerField from 'components/picker/PickerField';
 import { IoSearchOutline } from 'react-icons/io5';
+import dconsole from 'shared/debugger';
 
 export default function FieldAreaMap({
   validationError,
@@ -43,7 +44,7 @@ export function FieldAreaMapSettings({
   onChange,
   marker,
   markerColor = 'pink',
-  closePopup = () => {console.log('defailtt yyy')}
+  closePopup = () => {dconsole.log('defailtt yyy')}
 }) {
 
   const [mapSettings, setMapSettings] = useState(() => {

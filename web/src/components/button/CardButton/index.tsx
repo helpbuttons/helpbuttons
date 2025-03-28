@@ -51,6 +51,7 @@ import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
 import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
+import dconsole from 'shared/debugger';
 
 export default function CardButton({ button, buttonTypes }) {
   const [buttonType, setButtonType] = useState(null);
@@ -548,7 +549,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   // };
   const onClick = (e) => {
     e.preventDefault()
-    console.log('this goes for dev test.. make sure it works..')
+    dconsole.log('this goes for dev test.. make sure it works..')
     store.emit(new SetMainPopupCurrentProfile(button.owner))
   }
   return (

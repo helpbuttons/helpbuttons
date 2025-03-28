@@ -5,6 +5,7 @@ import { UpdateEvent, WatchEvent } from 'store/Event';
 import { dbToRRule } from 'components/picker/PickerEventType/recurrent';
 import produce from 'immer';
 import { Button } from 'shared/entities/button.entity';
+import dconsole from 'shared/debugger';
 
 export class FindMonthCalendar implements WatchEvent {
   public constructor(
@@ -28,7 +29,7 @@ export class FindMonthCalendar implements WatchEvent {
         ),
       ),
       catchError((error) => {
-        console.log(error);
+        dconsole.error(error);
         return of(undefined);
       }),
     );

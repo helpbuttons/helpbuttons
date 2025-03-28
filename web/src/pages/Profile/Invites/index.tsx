@@ -23,6 +23,7 @@ import { getShareLink } from 'shared/sys.helper';
 import { alertService } from 'services/Alert';
 import router from 'next/router';
 import QRCode from 'qrcode';
+import dconsole from 'shared/debugger';
 
 const getInvitationLink = (code) => {
   return '/Signup/Invite/' + code;
@@ -84,7 +85,7 @@ export default function Invites() {
       expirationTimeInSeconds: parseInt(data.expirationTimeInSeconds),
       followMe: data.followMe,
     };
-    store.emit(new CreateInvite(invitation, () => {console.log('got new invitation')}));
+    store.emit(new CreateInvite(invitation, () => {dconsole.log('got new invitation')}));
   };
 
   const isExpired = (date: Date) => {

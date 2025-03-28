@@ -17,6 +17,7 @@ import {
 } from 'services/LocalStorage';
 import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import _ from 'lodash';
+import dconsole from 'shared/debugger';
 export interface Activities {
   messages: Messages;
   notifications: ActivityDtoOut[];
@@ -265,7 +266,7 @@ export class ActivityNotified implements UpdateEvent {
 }
 
 export const activityTo = (activity: Activity) => {
-  console.log(activity);
+  dconsole.log(activity);
   switch (activity.eventName) {
     case '':
       return { type: 'this', message: 'oloooow' };

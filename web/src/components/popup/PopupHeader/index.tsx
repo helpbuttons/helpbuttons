@@ -2,6 +2,7 @@
 import { IoArrowBack, IoClose } from "react-icons/io5";
 import { Link } from 'elements/Link';
 import Router from 'next/router';
+import dconsole from "shared/debugger";
 
 
 export default function PopupHeader({children, linkBack = null,linkFwd = null}) {
@@ -12,7 +13,7 @@ export default function PopupHeader({children, linkBack = null,linkFwd = null}) 
     } else if (typeof action === "string") {
       Router.push(action)
     } else {
-      console.log('wrong action ' + typeof action)
+      dconsole.log('wrong action ' + typeof action)
     }
   }
   return (

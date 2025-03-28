@@ -18,6 +18,7 @@ import { Role } from 'shared/types/roles';
 import { Invite } from 'shared/entities/invite.entity';
 import { InviteCreateDto } from 'shared/dtos/invite.dto';
 import { activitiesInitialState } from './Activity';
+import dconsole from 'shared/debugger';
 
 export class AddUserToKnownUsers implements UpdateEvent {
   public constructor(private newUser: IUser) {}
@@ -115,7 +116,7 @@ export class FindUserButtons implements WatchEvent {
       map((buttonList) => {
         this.onResult(buttonList);
       }),
-      catchError((error) => {this.onResult([]); console.log(error); return  of(undefined)})
+      catchError((error) => {this.onResult([]); dconsole.log(error); return  of(undefined)})
     )
   }
 }

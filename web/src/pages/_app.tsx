@@ -36,6 +36,7 @@ import MetadataSEOFromStore from 'components/seo';
 import { useRebuildUrl } from 'components/uri/builder';
 import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import dconsole from 'shared/debugger';
 
 export default appWithTranslation(MyApp);
 
@@ -63,11 +64,11 @@ function MyApp({ Component, pageProps }) {
   };
 
   const onFetchingConfigError = (error) => {
-    console.log(error);
-    console.log('fetching config error...');
+    dconsole.error(error);
+    dconsole.error('fetching config error...');
     if (error == 'not-found' || error == 'nosysadminconfig') {
       console.error(error);
-      console.log('config not found? contact your sysadmin');
+      dconsole.error('config not found? contact your sysadmin');
     }
 
     if (error == 'nobackend') {
@@ -76,13 +77,13 @@ function MyApp({ Component, pageProps }) {
       );
       router.push('/Error');
     }
-    console.log(error);
+    dconsole.log(error);
     return;
   };
   const [pageName, setPageName] = useState('HomeInfo')
   useEffect(() => {
     setPageName(getPageName(path.split('/')[1]))
-
+    // debugMessage(`fetching ${pageName}`)
     function getPageName(urlString) {
       const finit = urlString.indexOf("#") !== -1 ? urlString.indexOf("#") : (urlString.indexOf("?") !== -1 ? urlString.indexOf("?") !== -1 : null)
       if (finit) {
@@ -118,6 +119,7 @@ function MyApp({ Component, pageProps }) {
   }, [fetchingNetworkError, sessionUser])
 
   useEffect(() => {
+    dconsole.log(path)
     if (setupPaths.includes(path)) {
       setIsSetup(() => true);
     } else {
@@ -370,17 +372,17 @@ const useWhichLocale = ({ sessionLocale, networkLocale }) => {
   useEffect(() => {
     const localeFromUrl = getLocaleFromUrl();
     if (localeFromUrl) {
-      console.log('set from url')
+      dconsole.log('set from url')
       setLocale(localeFromUrl);
     } else if (sessionLocale && networkLocale) {
-      console.log('set user session')
+      dconsole.log('set user session')
       setLocale(sessionLocale);
     } else if (networkLocale) {
-      console.log('set from network')
+      dconsole.log('set from network')
       setLocale(networkLocale);
     }
     set_Locale((prevLocale) => {
-      console.log(locale + ' > ' + prevLocale)
+      dconsole.log(locale + ' > ' + prevLocale)
       if (locale !== prevLocale && prevLocale && locale) {
         return locale;
       }

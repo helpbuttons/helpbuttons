@@ -48,7 +48,7 @@ export function NetworkMapConfigure({
               <GeoJson
               data={mapSettings.honeyCombFeatures}
               onClick={(feature) => {
-                console.log(feature.payload.properties.hex);
+                dconsole.log(feature.payload.properties.hex);
               }}
               styleCallback={(feature, hover) => {
                 if (hover) {
