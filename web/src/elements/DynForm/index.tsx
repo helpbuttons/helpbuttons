@@ -10,7 +10,6 @@ const DynamicForm = (props) => {
   };
 
   const onChange = (e, key, type = "single") => {
-    //console.log(`${key} changed ${e.target.value} type ${type}`);
     if (type === "single") {
       setState((prevState) =>
         ({
@@ -33,7 +32,6 @@ const DynamicForm = (props) => {
           [key]: data
         }));
       } else {
-        // console.log("found", key, state[key]);
         // this.setState({
         //   [key]: [e.target.value, ...this.state[key]]
         // });
@@ -98,7 +96,6 @@ const DynamicForm = (props) => {
 
       if (type == "select") {
         const options = m.options.map(o => {
-          //console.log("select: ", o.value, value);
           return (
             <option
               {...modelProps}
@@ -111,7 +108,6 @@ const DynamicForm = (props) => {
           );
         });
 
-        //console.log("Select default: ", value);
         input = (
           <select
             value={value}
@@ -131,7 +127,6 @@ const DynamicForm = (props) => {
           if (value && value.length > 0) {
             checked = value.indexOf(o.value) > -1 ? true : false;
           }
-          //console.log("Checkbox: ", checked);
           return (
             <React.Fragment key={"cfr" + o.key}>
               <input

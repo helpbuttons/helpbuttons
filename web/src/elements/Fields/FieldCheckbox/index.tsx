@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { IoCheckmark } from "react-icons/io5";
 import FieldError from "../FieldError";
 import t from "i18n";
+import dconsole from "shared/debugger";
 
 
 export const FieldCheckbox = React.forwardRef(({
@@ -10,7 +11,7 @@ export const FieldCheckbox = React.forwardRef(({
     name,
     explain,
     text,
-    onChanged = (value) => {console.log(value)},
+    onChanged = (value) => {dconsole.log(value)},
     defaultValue = false,
     textOn = null,
     validationError = false,

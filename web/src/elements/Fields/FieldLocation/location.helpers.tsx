@@ -6,6 +6,7 @@ import {
   GeoReverseFindAddress,
   emptyPlace,
 } from 'state/Geo';
+import dconsole from 'shared/debugger';
 
 export const useGeoSearch = () => {
   const GeoFindByQuery = useCallback(
@@ -38,7 +39,7 @@ export const useGeoReverse = () => {
           },
           (error) => {
             success(emptyPlace({ lat: latLng[0], lng: latLng[1] }));
-            console.log(error);
+            dconsole.log(error);
           },
         ),
       );
