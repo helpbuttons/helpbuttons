@@ -344,7 +344,7 @@
     "tagsExplain": "This is important to supply the best service. Select or write words that you are interested in and you will receive notifications of the _helpbuttons_ created. Write and press enter or separate by commas to add a word.",
     "tagsSignupExplain": "Optionally, select and write words that you are interested in and you will receive notifications of the _helpbuttons_ created with those topics. Write and press enter or separate by commas to add a word.",
     "distance": "Maximum distance of notification",
-    "distanceExplain": "_helpbuttons_ created farer from this radius won't be notified. 0 means no limit.",
+    "distanceExplain": "_helpbuttons_ created farer from this radius won't be notified.",
     "location": "Your base location",
     "locationExplain": "Specify a base location for notifications",
     "personalData": "Your user data",
