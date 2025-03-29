@@ -4,7 +4,6 @@ export interface GeoPosition {
 }
 export interface GeoAddress {
   formatted: string;
-  formatted_city: string;
   geometry: GeoPosition;
   id: string;
 }

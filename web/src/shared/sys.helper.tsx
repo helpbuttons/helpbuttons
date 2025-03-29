@@ -141,7 +141,7 @@ export const findError = (errorsToFind, errors) => {
 export function readableDistance(distanceInMeters){
   if(!distanceInMeters)
   {
-    return <>&infin; m</>
+    return `∞ m`
   }
   if(distanceInMeters < 1001)
   {

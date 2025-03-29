@@ -25,7 +25,7 @@ import { User } from 'shared/entities/user.entity';
 import { useRef } from 'store/Store';
 import { FieldImageUpload } from 'elements/Fields/FieldImageUpload';
 import FieldPassword from 'elements/Fields/FieldPassword';
-import { findError, getHostname, locale, setLocale } from 'shared/sys.helper';
+import { findError, getHostname, locale, readableDistance, setLocale } from 'shared/sys.helper';
 import { UserUpdateDto } from 'shared/dtos/user.dto';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import t from 'i18n';
@@ -38,6 +38,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { Role } from 'shared/types/roles';
 import { IoTrashBinOutline } from 'react-icons/io5';
+import LocationSearchBar, { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 
 export default function ProfileEdit() {
   const {
@@ -253,19 +254,16 @@ export default function ProfileEdit() {
                     text={t('user.textReceiveNotifications')}
                     onChanged={(value) => {setValue('receiveNotifications', value)}}
                   />
-
-
-                  <DropDownSearchLocation
-                    label={t('user.location')}
-                    handleSelectedPlace={(newPlace) => {setValue('center', {coordinates: [newPlace.geometry.lat, newPlace.geometry.lng]}); setValue('address', newPlace.formatted)}}
+                  <LocationSearchBarSimple 
                     placeholder={t('user.location')}
-                    address={watch('address')}
-                    explain={t('user.locationExplain')}
-                    center={center}
+                    markerAddress={watch('address')}
+                    setMarkerAddress={(address) => setValue('address', address)}
+                    markerPosition={watch('center.coordinates')}
+                    setMarkerPosition={(position) => setValue('center', {coordinates: position})}
                   />
                 <div className="form__field">
                     <label className="form__label">
-                      {t('user.distance')} ({radius} km)
+                      {t('user.distance')} - {readableDistance(radius)}
                     </label>
                     <p className='form__explain'>{t('user.distanceExplain')} </p>
                     <div style={{ padding: '1rem' }}>

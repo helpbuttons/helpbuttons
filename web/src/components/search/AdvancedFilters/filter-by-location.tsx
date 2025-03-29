@@ -1,6 +1,7 @@
 import PickerField from 'components/picker/PickerField';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import DropDownSearchLocation from 'elements/DropDownSearchLocation';
+import { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 import t from 'i18n';
 import Slider from 'rc-slider';
 import { useState } from 'react';
@@ -65,11 +66,11 @@ export function FilterByLocationRadius({
       explain={t('buttonFilters.whereExplain')}
       title={t('buttonFilters.where')}
       btnLabel={
-        address ? (
+        pickedAddress ? (
           <>
             {t('buttonFilters.locationLimited', [
-              address,
-              readableDistance(radius),
+              pickedAddress,
+              readableDistance(pickedRadius),
             ])}
           </>
         ) : (
@@ -80,24 +81,18 @@ export function FilterByLocationRadius({
       openPopup={openPopup}
       closePopup={discardAndClose}
     >
-      <DropDownSearchLocation
+      <LocationSearchBarSimple 
         placeholder={t('homeinfo.searchlocation')}
-        handleSelectedPlace={(place) => {
-          setPickedAddress(() => place.formatted);
-          setPickedPosition(() => [
-            place.geometry.lat,
-            place.geometry.lng,
-          ]);
-        }}
+        markerAddress={pickedAddress}
+        setMarkerAddress={(address) => setPickedAddress(() => address)}
         markerPosition={pickedPosition}
-        toggleLoadingNewAddress={() => {}}
-        address={pickedAddress}
+        setMarkerPosition={(markerPosition) => setPickedPosition(() => markerPosition)}
       />
-      {address && (
+      {pickedAddress && (
         <div className="form__field">
           <label className="form__label">
             {t('buttonFilters.distance')} -&nbsp;
-            {readableDistance(pickedRadius)}
+            <>{readableDistance(pickedRadius)}</>
           </label>
           <div style={{ padding: '1rem' }}>
             <Slider

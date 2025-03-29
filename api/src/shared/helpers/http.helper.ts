@@ -11,14 +11,21 @@ export class HttpHelper {
 
   get(url): Promise<any> {
     return this.httpService.axiosRef
-      .get(encodeURI(url), {timeout: 5000})
+      .get(encodeURI(url), {timeout: 15000})
       .catch((err) => {
-        console.log(err);
-        console.log('failed url ' + url);
-        throw new HttpException(
-          'Error requesting api ',
-          HttpStatus.BAD_GATEWAY,
-        );
+        if (err.code === 'ECONNABORTED') {
+          throw new HttpException(
+            `Request timeout ${url}`,
+            HttpStatus.BAD_GATEWAY,
+          );
+        }else{
+          console.log(err);
+          console.log('failed url ' + url);
+          throw new HttpException(
+            'Error requesting api ',
+            HttpStatus.BAD_GATEWAY,
+          );
+        }
       });
   }
 }
