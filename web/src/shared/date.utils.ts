@@ -1,3 +1,4 @@
+import dconsole from './debugger';
 import { getLocale } from './sys.helper';
 // good read: https://dockyard.com/blog/2020/02/14/you-probably-don-t-need-moment-js-anymore
 
@@ -39,7 +40,7 @@ export function readableTimeLeftToDate(date: Date) {
   if(!date)
   {
     console.trace()
-    console.log('could not compute date')
+    dconsole.error('could not compute date')
     return '';
   }
   return getRelativeTime(new Date(date));

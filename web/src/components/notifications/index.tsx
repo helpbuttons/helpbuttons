@@ -11,6 +11,7 @@ import {
   useActivities,
 } from 'state/Activity';
 import { useGlobalStore } from 'state';
+import dconsole from 'shared/debugger';
 
 const isSupported = () =>
       'Notification' in window &&
@@ -34,7 +35,7 @@ export function DesktopNotificationsButton() {
     if (isSupported()) {
       Notification.requestPermission().then(function (getperm) {
         if (getperm == 'granted') {
-          console.log(getperm);
+          dconsole.log(getperm);
           store.emit(new PermissionGranted());
         } else {
           store.emit(new PermissionRevoke());
