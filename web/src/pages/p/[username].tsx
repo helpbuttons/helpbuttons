@@ -113,9 +113,6 @@ export function ShowProfile({
           showAdminOptions={sessionUser?.role == Role.admin}
         />
       )}
-      {sessionUser?.role == Role.admin && (
-        <>Email: {extraFields.email}</>
-      )}
       {userProfile?.showButtons &&
         userButtons &&
         userButtons?.length > 0 && (
