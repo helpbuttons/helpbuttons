@@ -500,7 +500,7 @@ function HomeSloganCard({ selectedNetwork, config }) {
     {/* SLOGAN CARD */}
     <div className="homeinfo-card homeinfo__card--slogan-card">
       <div className="homeinfo-card__header homeinfo-card__header--slogan-card">
-        <h3 className="homeinfo-card__header-title">
+        <h3 className="homeinfo-card__header-title--slogan">
           {selectedNetwork.slogan}
         </h3>
       </div><hr></hr>

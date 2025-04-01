@@ -154,8 +154,6 @@ $info-content-head-margin-mobile: 71px;
   margin: $margin-small $margin-xsmall;
   margin-top: 0;
 
-
-
 }
 
 .homeinfo__network-title-text {
@@ -163,6 +161,8 @@ $info-content-head-margin-mobile: 71px;
   font-size: $font-size-huge;
   line-height: $font-size-huge;
   display: flex;
+  font-weight: $font-weight-bolder;
+  text-transform: uppercase;
   border-radius: $border-radius-basic;
   // background-color: $color-dark-gray;
   padding: $padding-big;
@@ -231,6 +231,17 @@ $info-content-head-margin-mobile: 71px;
   }
 }
 
+.homeinfo-card__header-title--slogan {
+
+  position: relative;
+  background: $color-ligth-gray;
+  padding: $padding-big;
+  color: $color-black;
+  font-size: $font-size-title;
+  font-weight: $font-weight-bolder;
+  border-radius: $border-radius-basic;
+
+}
 
 hr {
   border-top: 0.5px solid $color-ligth-gray;
@@ -335,6 +346,23 @@ hr {
 
 
  @media #{$breakpoints-medium} {
+
+  .homeinfo__network-title-text {
+
+    font-weight: $font-weight-bolder;
+  }
+
+
+  .homeinfo-card__header-title--slogan {
+
+    background: $color-ligth-gray;
+    padding: $padding-big $padding-huge;
+    color: $color-black;
+    font-size: $font-size-title;
+    font-weight: $font-weight-bolder;
+    border-radius: $border-radius-basic;
+  
+  }
 
   .homeinfo-card {
     padding: $margin-medium;
