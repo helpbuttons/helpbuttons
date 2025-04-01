@@ -98,7 +98,8 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
           onClick={props.onClick}
           className="marker-button marker-button-selector"
         >
-          <div className="avatar-medium marker-button__image">
+
+          <div className=" marker-button__image">
             <ImageWrapper
               imageType={ImageType.avatarMed}
               src={props.image}
