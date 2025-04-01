@@ -2,56 +2,31 @@ import React, { useEffect, useRef, useState } from 'react';
 import { HbMapUncontrolled } from '.';
 import { GeoJson, Marker } from 'pigeon-maps';
 import {
+  getHexagonCenter,
   getZoomResolution,
   latLngToGeoJson,
 } from 'shared/honeycomb.utils';
 import { MarkerButtonIcon } from './MarkerButton';
-import { cellToLatLng, latLngToCell } from 'h3-js';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
-import t from 'i18n';
 import { LoadabledComponent } from 'components/loading';
 import {
   hexagonSizeZoom,
-  onMarkerPositionChangeZoomTo,
 } from './Map.consts';
-
 export function MarkerEditorMap(props) {
   return (
-    <>
-      {/* <DropDownWhere
-        handleSelectedPlace={props.handleSelectedPlace}
-        placeholder={t('homeinfo.searchlocation')}
-        toggleLoadingNewAddress={props.toggleLoadingNewAddress}
-        loadingNewAddress={props.loadingNewAddress}
-        hideAddress={props.hideAddress}
-        markerAddress={props.markerAddress}
-        markerPosition={props.markerPosition}
-        requestPlacesForQuery={props.requestPlacesForQuery}
-      /> */}
-      <DropDownSearchLocation
-        placeholder={t('homeinfo.searchlocation')}
-        handleSelectedPlace={props.handleSelectedPlace}
-        address={props.markerAddress}
-        loadingNewAddress={props.loadingNewAddress}
-        hideAddress={props.hideAddress}
-        toggleLoadingNewAddress={props.toggleLoadingNewAddress}
-        markerPosition={props.markerPosition}
-      />
-      <MarkerViewMap {...props} editPosition={true} />
-    </>
+    <MarkerViewMap {...props}/>
   );
 }
 
 export default function MarkerViewMap({
   markerPosition,
   zoom,
-  setZoom = (a) => {},
+  setZoom = (a) => { },
   markerColor,
   markerImage,
   markerCaption,
   hideAddress = false,
   editPosition = false,
-  onMapClick = (latLng) => {},
+  onMapClick = (latLng) => { },
   networkMapCenter = null,
 }) {
   const [markerHexagonGeoJson, setMarkerHexagonGeoJson] =
@@ -62,7 +37,7 @@ export default function MarkerViewMap({
     setZoom(() => zoom);
     setMapCenter(() => center);
   };
-
+  
   useEffect(() => {
     if (
       editPosition &&
@@ -73,16 +48,7 @@ export default function MarkerViewMap({
       setMapCenter(() => markerPosition);
     }
   }, [markerPosition]);
-  const getHexagonCenter = (latLng, zoom) => {
-    const cell = latLngToCell(
-      latLng[0],
-      latLng[1],
-      getZoomResolution(zoom),
-    );
-    const center = cellToLatLng(cell);
 
-    return center;
-  };
   function handleMapClicked({ latLng }) {
     if (hideAddress) {
       onMapClick(getHexagonCenter(latLng, zoom));
@@ -98,9 +64,6 @@ export default function MarkerViewMap({
           markerPosition[1],
           getZoomResolution(hexagonSizeZoom),
         );
-        if (zoom < hexagonSizeZoom) {
-          setZoom(() => hexagonSizeZoom);
-        }
         setMarkerHexagonGeoJson(() => polygons);
       } else {
         setMarkerHexagonGeoJson(() => null);
@@ -126,18 +89,7 @@ export default function MarkerViewMap({
       }
     }
   }, [hideAddress]);
-  // useEffect(() => {
-  //   // zoom in if markerposition is set, and the user selected a new position, cause if zoom is too far makes no sense.
-  //   if (
-  //     mapCenterIsReady.current &&
-  //     markerPosition[0] &&
-  //     markerPosition[1]
-  //   ) {
-  //     if (zoom < onMarkerPositionChangeZoomTo) {
-  //       setZoom(() => zoom + 2);
-  //     }
-  //   }
-  // }, [markerPosition]);
+
   return (
     <>
       <div className="picker__map">
@@ -161,6 +113,15 @@ export default function MarkerViewMap({
             {!hideAddress && (
               <MarkerButtonIcon
                 anchor={markerPosition}
+                offset={[35, 65]}
+                cssColor={markerColor}
+                image={markerImage}
+                title={markerCaption}
+              />
+            )}
+            {hideAddress && (
+              <MarkerButtonIcon
+                anchor={getHexagonCenter(markerPosition, hexagonSizeZoom)}
                 offset={[35, 65]}
                 cssColor={markerColor}
                 image={markerImage}

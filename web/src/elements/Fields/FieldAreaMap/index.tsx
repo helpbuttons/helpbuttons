@@ -6,12 +6,16 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import t from 'i18n';
 
 import { NetworkMapConfigure } from 'components/map/Map/NetworkMapConfigure';
-import { BrowseType, HbMapTiles } from 'components/map/Map/Map.consts';
+import { BrowseType, HbMapTiles, maxZoom, minZoom } from 'components/map/Map/Map.consts';
 import { circleToPolygon } from 'shared/geo.utils';
-import { getBoundsHexFeatures, roundCoords } from 'shared/honeycomb.utils';
+import { getBoundsHexFeatures, roundCoord, roundCoords } from 'shared/honeycomb.utils';
 import PickerField from 'components/picker/PickerField';
 import { IoSearchOutline } from 'react-icons/io5';
 import dconsole from 'shared/debugger';
+import Slider from 'rc-slider';
+import LocationSearchBar, { LocationSearchBarSimple } from 'elements/LocationSearchBar';
+import { useGeoReverse } from '../FieldLocation/location.helpers';
+
 
 export default function FieldAreaMap({
   validationError,
@@ -77,7 +81,15 @@ export function FieldAreaMapSettings({
     }
   }
 
-
+  
+  const setZoom = (newZoom) => {
+    setMapSettings((prevSettings) => {return {...prevSettings, zoom: newZoom}})
+  }
+  const setCenter = (newCenter) => {
+    setMapSettings((prevSettings) => {
+      return {...prevSettings, center: newCenter}
+    })
+  };
 
   const setRadius = (newRadius) => {
     setMapSettings((prevSettings) => {return {...prevSettings, radius: newRadius, geometry: circleToPolygon([prevSettings.center[1],prevSettings.center[0]], newRadius)}})
@@ -107,16 +119,35 @@ export function FieldAreaMapSettings({
     })
   };
   const handleMapClick = ({latLng}) => {
+    findAddressFromPosition(latLng, false)
     setMapSettings((prevSettings) => {
       return {...prevSettings, center: latLng, geometry: circleToPolygon(latLng, prevSettings.radius)}
     })
   }
 
+  const [address, setAddress] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const getLatLngAddress = useGeoReverse()
+  const findAddressFromPosition = (latLng, hideAddress) => {
+    setIsLoading(() => true)
+    getLatLngAddress(latLng, hideAddress, (place) => {
+      setAddress(() => place.formatted)
+      setIsLoading(() => false)
+    },
+      (error) => {
+        setIsLoading(() => false)
+        setAddress(() => t('button.unknownPlace'))
+      }
+    );
+  }
+  
   useEffect(() => {
     onChange({zoom: mapSettings.zoom, center: mapSettings.center, radius: mapSettings.radius, tileType: mapSettings.tileType, browseType: mapSettings.browseType})
   }, [mapSettings])
 return (
   <>
+  
               <NetworkMapConfigure
                 mapSettings={mapSettings}
                 onBoundsChanged={onBoundsChanged}
@@ -127,10 +158,30 @@ return (
                 tileType={mapSettings.tileType}
                 markerColor={markerColor}
               />
-              {/* <DropDownSearchLocation
-                placeholder={t('homeinfo.searchlocation')}
-                handleSelectedPlace={handleSelectedPlace}
-              /> */}
+              <LocationSearchBar
+                placeholder={t('button.locationPlaceholder')}
+                markerAddress={address}
+                hideAddress={true}
+                setMarkerAddress={setAddress}
+                isCustomAddress={null}
+                setIsCustomAddress={() => {}}
+                setMarkerPosition={setCenter}
+                markerPosition={mapSettings.center}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                mapAddress={{address: address}}
+              />
+              <Slider
+                min={minZoom}
+                max={maxZoom}
+                onChange={(newZoom) => {
+                  setZoom(newZoom)
+                  dconsole.log('change zoom in the map')
+                }}
+                value={mapSettings.zoom}
+              />
+              {mapSettings.zoom}
+
               <Btn
                 btnType={BtnType.submit}
                 caption={t('common.save')}

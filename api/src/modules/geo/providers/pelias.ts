@@ -19,12 +19,19 @@ export class PeliasProvider implements GeoProvider {
     this.geoCodeHost = _geoCodeHost;
   }
 
-  searchQuery(query: string): Promise<GeoAddress[]> {
-    return this.queryGeo(query).then((res) => {
+  // focus.point
+  searchQuery(query: string, center: number[]): Promise<GeoAddress[]> {
+    return this.queryGeo(`${query}&layers=venue,address,localadmin,locality,borough&focus.point.lat=${center[0]}&focus.point.lon=${center[1]}`).then((res) => {
       return res.data.features.map((item) => this.hydratePlace(item));
     });
   }
-  GEOCODE_HOST
+  
+  searchLimited(query: string, center: number[]): Promise<GeoAddress[]> {
+    return this.queryGeo(`${query}&layers=localadmin,locality,borough&focus.point.lat=${center[0]}&focus.point.lon=${center[1]}`).then((res) => {
+      return res.data.features.map((item) => this.hydratePlace(item, true));
+    });
+  }
+
   queryGeo(query): Promise<any> {
     let url = `${this.geoCodeHost}v1/autocomplete?api_key=${this.apiKey}&text=${query}&size=15`;
     if (this.limitCountries.length > 0) {
@@ -39,17 +46,23 @@ export class PeliasProvider implements GeoProvider {
     );
   }
 
-  reverseGeo(lat, lng): Promise<any> {
-    return this.httpHelper.get(
-      `${this.geoCodeHost}v1/reverse?api_key=${this.apiKey}&point.lat=${lat}&point.lon=${lng}`,
+  getLimitedAddress(position: GeoPosition): Promise<GeoAddress> {
+    return this.reverseGeo(position.lat, position.lng, true).then((res) =>
+      this.hydratePlace(res.data.features[0]),
     );
   }
 
-  hydratePlace(place: any): GeoAddress {
+  reverseGeo(lat, lng, limited = false): Promise<any> {
+    const url =
+      `${this.geoCodeHost}v1/reverse?api_key=${this.apiKey}&point.lat=${lat}&point.lon=${lng}${limited ? '&layers=-address,-venue' : ''}`;
+    return this.httpHelper.get(url);
+  }
+
+  hydratePlace(place: any, limited = false): GeoAddress {
     const placeProperties = place.properties;
+    const label = placeProperties.label.replace(placeProperties.region_a, placeProperties.region)
     return {
-      formatted: place.properties.label,
-      formatted_city: `${placeProperties.region}, ${placeProperties.country}`,
+      formatted: label,
       geometry: {
         lat: place.geometry.coordinates[1],
         lng: place.geometry.coordinates[0],
