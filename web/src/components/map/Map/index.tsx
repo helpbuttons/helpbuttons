@@ -88,7 +88,7 @@ export function HbMapUncontrolled({
           bounds,
         });
       },
-      zoomSnap: false,
+      zoomSnap: true,
       onClick: ({ event, latLng, pixel }) => {
         handleMapClick({ latLng });
       },

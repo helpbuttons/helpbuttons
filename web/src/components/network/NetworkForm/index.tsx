@@ -22,8 +22,6 @@ import Accordion from 'elements/Accordion';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
-import { DropdownField } from 'elements/Dropdown/Dropdown';
-import { alertService } from 'services/Alert';
 
 export default NetworkForm;
 
