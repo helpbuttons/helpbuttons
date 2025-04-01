@@ -7,6 +7,8 @@ import { KomootGeoProvider } from './providers/komoot';
 import { SimulateGeoProvider } from './providers/simulate';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
+import { GeoAddress } from './providers/provider.interface';
+import { NetworkService } from '../network/network.service';
 
 @Injectable()
 export class GeoService {
@@ -15,6 +17,7 @@ export class GeoService {
     private readonly httpHelper: HttpHelper,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
+    private readonly networkService: NetworkService
   ) {
     const geoCodeApiKey = configs().GEOCODE_APY_KEY;
     const geoSimulate = configs().GEO_SIMULATE;
@@ -34,17 +37,24 @@ export class GeoService {
     }
   }
 
-  
+
   async search(query: string) {
-    return this.geoProvider.searchQuery(query).then((results) =>
-      this.searchCustom(query).then((customResults) => [...customResults, ...results])
-    );
+    return this.networkService
+      .getCenter()
+      .then((center) => {
+        return this.geoProvider.searchQuery(query, center).then((results) =>
+          this.searchCustom(query).then((customResults) => [...customResults, ...results]))
+          .then((addresses) => this.removeDuplicateAdresses(addresses))
+      })
+
   }
 
   async searchLimited(query: string) {
-    return this.geoProvider.searchLimited(query).then((results) =>
-      this.searchCustom(query).then((customResults) => [...customResults, ...results])
-    );
+    return this.networkService
+      .getCenter()
+      .then((center) => this.geoProvider.searchLimited(query, center).then((results) =>
+        this.searchCustom(query).then((customResults) => [...customResults, ...results]))
+        .then((addresses) => this.removeDuplicateAdresses(addresses)))
   }
 
   async findAddress(lat: string, lng: string) {
@@ -62,4 +72,23 @@ export class GeoService {
     )
       .then((results) => results.map((customPlace) => { return { formatted: customPlace.address, geometry: { lat: customPlace.latitude, lng: customPlace.longitude } } }))
   }
+
+  // sortAddresses(addresses: GeoAddress[]) {
+  //   return addresses.sort((addressA, addressB) => addressA.formatted.localeCompare(addressB.formatted))
+  // }
+
+  removeDuplicateAdresses(addresses: GeoAddress[]): GeoAddress[] {
+    const seenAddresses = new Set<string>();
+    const uniqueAddresses: GeoAddress[] = [];
+
+    for (const address of addresses) {
+      if (!seenAddresses.has(address.formatted)) {
+        seenAddresses.add(address.formatted);
+        uniqueAddresses.push(address);
+      }
+    }
+
+    return uniqueAddresses;
+  }
+
 }

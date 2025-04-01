@@ -11,7 +11,7 @@ export class GeoController {
 
   @AllowGuest()
   @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60*60*24)
+  @CacheTTL(1000*60*60)
   @Get('search/full/:address')
   full(@Param('address') address: string) {
     // setTimeout(() => {},)
@@ -22,18 +22,15 @@ export class GeoController {
 
   @AllowGuest()
   @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60*60*24)
+  @CacheTTL(1000*60*60)
   @Get('search/limited/:address')
   limited(@Param('address') address: string) {
-    // setTimeout(() => {},)
-    
-    // throw new CustomHttpException(ErrorName.InvalidUsername);
     return this.geoService.searchLimited(address)
   }
 
   @AllowGuest()
   @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60*60*24)
+  @CacheTTL(1000*60*60)
   @Get('reverse/full/:lat/:lng')
   reverse(@Param('lat') lat: string, @Param('lng') lng: string) {
     return this.geoService.findAddress(lat,lng)
@@ -41,7 +38,7 @@ export class GeoController {
 
   @AllowGuest()
   @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60*60*24)
+  @CacheTTL(1000*60*60)
   @Get('reverse/limited/:lat/:lng')
   reverseLimited(@Param('lat') lat: string, @Param('lng') lng: string) {
     return this.geoService.findAddressLimited(lat,lng)

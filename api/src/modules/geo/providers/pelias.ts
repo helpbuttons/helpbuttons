@@ -19,15 +19,16 @@ export class PeliasProvider implements GeoProvider {
     this.geoCodeHost = _geoCodeHost;
   }
 
-  searchQuery(query: string): Promise<GeoAddress[]> {
-    return this.queryGeo(query).then((res) => {
+  // focus.point
+  searchQuery(query: string, center: number[]): Promise<GeoAddress[]> {
+    return this.queryGeo(`${query}&layers=venue,address,localadmin,locality,borough&focus.point.lat=${center[0]}&focus.point.lon=${center[1]}`).then((res) => {
       return res.data.features.map((item) => this.hydratePlace(item));
     });
   }
   
-  searchLimited(query: string): Promise<GeoAddress[]> {
-    return this.queryGeo(`${query}&layers=-address,-venue`).then((res) => {
-      return res.data.features.map((item) => this.hydratePlace(item));
+  searchLimited(query: string, center: number[]): Promise<GeoAddress[]> {
+    return this.queryGeo(`${query}&layers=localadmin,locality,borough&focus.point.lat=${center[0]}&focus.point.lon=${center[1]}`).then((res) => {
+      return res.data.features.map((item) => this.hydratePlace(item, true));
     });
   }
 
@@ -57,7 +58,7 @@ export class PeliasProvider implements GeoProvider {
     return this.httpHelper.get(url);
   }
 
-  hydratePlace(place: any): GeoAddress {
+  hydratePlace(place: any, limited = false): GeoAddress {
     const placeProperties = place.properties;
     const label = placeProperties.label.replace(placeProperties.region_a, placeProperties.region)
     return {
