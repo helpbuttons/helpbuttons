@@ -161,9 +161,9 @@ return (
               <LocationSearchBar
                 placeholder={t('button.locationPlaceholder')}
                 markerAddress={address}
-                hideAddress={false}
+                hideAddress={true}
                 setMarkerAddress={setAddress}
-                isCustomAddress={false}
+                isCustomAddress={null}
                 setIsCustomAddress={() => {}}
                 setMarkerPosition={setCenter}
                 markerPosition={mapSettings.center}

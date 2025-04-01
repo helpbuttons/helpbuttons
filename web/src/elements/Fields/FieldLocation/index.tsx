@@ -33,7 +33,7 @@ export default function FieldLocation({
 }) {
   const [markerPosition, setMarkerPosition] = useState(roundCoords(defaultMarkerPosition))
 
-  const [zoom, setZoom] = useState(minZoom);
+  const [zoom, setZoom] = useState(selectedNetwork.exploreSettings.zoom);
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [mapAddress, setMapAddress] = useState({address: markerAddress, hideAddress: hideAddress})
