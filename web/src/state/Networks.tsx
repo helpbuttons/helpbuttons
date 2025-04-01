@@ -18,6 +18,7 @@ import { SetupSteps } from 'shared/setupSteps';
 import { ConfigFound, GetConfig } from './Setup';
 import { getLocale } from 'shared/sys.helper';
 import { roundCoords } from 'shared/honeycomb.utils';
+import dconsole from 'shared/debugger';
 // import router from 'next/router';
 
 export interface NetworksState {

@@ -54,6 +54,7 @@ import { maxZoom, minZoom, showMarkersZoom } from 'components/map/Map/Map.consts
 import { applyFiltersHex, isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import { Button } from 'shared/entities/button.entity';
 import { filter } from 'rxjs';
+import dconsole from 'shared/debugger';
 
 const defaultZoomPlace = 13;
 
@@ -252,7 +253,7 @@ function useExploreSettings({
             store.emit(new updateCurrentButton(buttonFetched));
           },
           (errorMessage) => {
-            console.log(errorMessage);
+            dconsole.error(errorMessage);
             alertService.error(`Error fetching button`);
           },
         ),

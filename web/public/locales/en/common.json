@@ -74,6 +74,7 @@
     "unreadMessages": "Unread messages",
     "markMessagesAsRead": "Mark all as read",
     "byCategory": "Filter by category",
+    "messages": "Comments section",
     "readMessages": "Read messages",
     "nounread": "No unread messages",
     "read": "No messages yet",
@@ -214,7 +215,8 @@
     "reloadConfig": "Reload Config",
     "deleteSuccess": "Deleted",
     "error": "Something went wrong",
-    "notFoundMessage": "Page not found or deleted"
+    "notFoundMessage": "Page not found or deleted",
+    "options": "Options"
   },
   "button": {
     "title": "_helpbutton_ view",
@@ -245,7 +247,7 @@
     "firstPost": "Hi! I created this _helpbutton_ at {0}, leave a comment if you want",
     "share": "Share",
     "copy": "Copy Link",
-    "delete": "Finalize",
+    "delete": "Delete",
     "edit": "Edit",
     "created": "Your _helpbutton_ has been published",
     "errorCreated": "",
@@ -273,6 +275,7 @@
     "renewLink": "Renew your _helpbutton_",
     "createUpdate": "Publish Update",
     "authorTitle": "Author:",
+    "sendComment":"Send message",
     "notFound": "Can't find your button, maybe it was deleted?",
     "followErrorAlert": "Can`t follow now, sorry",
     "unfollowErrorAlert": "Can`t unfollow now, sorry",
@@ -366,7 +369,10 @@
     "pressToAccept": "Click here to accept",
     "iAccept": "I accept",
     "pleaseAcceptPrivacy": "Please accept our privacy policy",
-    "errorRequestNewLoginToken": ""
+    "errorRequestNewLoginToken": "",
+    "helpbuttonsPublishedAmount": "Published",
+    "timesFollowed": "Followed",
+    "commentsAmount": "Commented"
   },
   "picker": {
     

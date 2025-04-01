@@ -3,6 +3,7 @@ import { catchError, map, of } from "rxjs";
 import { GeoService } from "services/Geo";
 import { WatchEvent } from "store/Event";
 import { CacheMatch, CachePut } from "./Cache";
+import dconsole from "shared/debugger";
 
 export class GeoFindAddress implements WatchEvent {
     uid = '';
@@ -41,6 +42,8 @@ export class GeoFindAddress implements WatchEvent {
       const found = CacheMatch(state, this.uid)
       if(found)
       {
+        dconsole.log('hit')
+        dconsole.log(found)
         this.onReady(found.response)
         return of(undefined);
       }

@@ -14,6 +14,7 @@ import { FetchUserData } from './Profile';
 import { alertService } from 'services/Alert';
 import { useEffect, useRef } from 'react';
 import { useStore } from 'state';
+import dconsole from 'shared/debugger';
 
 
 export const useConfig = (_config, onError) => {
@@ -22,7 +23,7 @@ export const useConfig = (_config, onError) => {
     if(!_config && !fetchingConfig.current)
     {
       fetchingConfig.current = true
-      store.emit(new GetConfig(() => console.log('got config!'), onError))
+      store.emit(new GetConfig(() => dconsole.log('got config!'), onError))
     }else if(_config){
       store.emit(new ConfigFound(_config))
     }

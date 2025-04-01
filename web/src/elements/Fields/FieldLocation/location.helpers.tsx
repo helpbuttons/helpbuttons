@@ -6,6 +6,7 @@ import {
   GeoReverseFindAddress,
   emptyPlace,
 } from 'state/Geo';
+import dconsole from 'shared/debugger';
 
 export const useGeoSearch = () => {
   const GeoFindByQuery = useCallback(

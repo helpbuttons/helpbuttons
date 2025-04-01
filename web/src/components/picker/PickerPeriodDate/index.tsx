@@ -1,6 +1,7 @@
 //a variation of picker specific for time
 import moment from "moment";
 import { useState } from "react";
+import dconsole from "shared/debugger";
 
 export default function PickerPeriodDate() {
   const [Days, setDays] = useState(moment());
@@ -42,8 +43,6 @@ export default function PickerPeriodDate() {
 
                     .day(1);
 
-                  console.log();
-
                   if (moment() < Lunes) {
                     setDays(Lunes);
                   } else {
@@ -62,7 +61,7 @@ export default function PickerPeriodDate() {
                   moment().locale("es");
                   const Martes = moment().startOf("week").day(2);
                   const MartesQueViene = moment().day(9).startOf("week").day(2);
-                  console.log(Martes);
+                  dconsole.log(Martes);
 
                   if (moment() < Martes) {
                     setDays(Martes);
@@ -84,7 +83,7 @@ export default function PickerPeriodDate() {
                     .day(10)
                     .startOf("week")
                     .day(3);
-                  console.log(Miercoles);
+                  dconsole.log(Miercoles);
 
                   if (moment() < Miercoles) {
                     setDays(Miercoles);
@@ -107,7 +106,7 @@ export default function PickerPeriodDate() {
                     .day(11)
                     .startOf("week")
                     .day(4);
-                  console.log(Jueves);
+                    dconsole.log(Jueves);
 
                   if (moment() < Jueves) {
                     setDays(Jueves);
@@ -130,7 +129,7 @@ export default function PickerPeriodDate() {
                     .day(12)
                     .startOf("week")
                     .day(5);
-                  console.log(Viernes);
+                    dconsole.log(Viernes);
 
                   if (moment() < Viernes) {
                     setDays(Viernes);
@@ -153,7 +152,7 @@ export default function PickerPeriodDate() {
                     .day(13)
                     .startOf("week")
                     .day(6);
-                  console.log(Sabado);
+                    dconsole.log(Sabado);
 
                   if (moment() < Sabado) {
                     setDays(Sabado);
@@ -176,7 +175,7 @@ export default function PickerPeriodDate() {
                     .day(14)
                     .startOf("week")
                     .day(7);
-                  console.log(Domingo);
+                    dconsole.log(Domingo);
 
                   if (moment() < Domingo) {
                     setDays(Domingo);

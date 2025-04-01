@@ -74,8 +74,6 @@ $message-you-margin-left:40px;
 
 }
 
-
-
 .message__name {
 
     width: 100%;
@@ -92,7 +90,6 @@ $message-you-margin-left:40px;
 
       // width: calc(100% - 80px);
 
-
 }
 
 .message__content {
@@ -102,16 +99,15 @@ $message-you-margin-left:40px;
 
 }
 
-
-
 .message--you {
 
-  background-color: $color-gray;
+  background-color: $color-ligth-gray;
   margin-right: auto;
   margin-left: $message-you-margin-left;
-  min-width: $message-min-width;
+  min-width: 50%;
   border-radius: $message-border-radius-semicircle $message-border-radius-semicircle $message-border-radius-semicircle 0;
   margin-bottom: $margin-xsmall;
+  color: $color-black;
 
 
 
@@ -124,6 +120,20 @@ $message-you-margin-left:40px;
   .message__content {
 
     text-align: left;
+
+  }
+
+
+  .message__avatar {
+
+    left: -40px;
+    bottom: 0;
+    height: 35px;
+    position: absolute;
+    display: flex;
+    border-radius: $border-radius-circle;
+    overflow: hidden;
+    border-radius: 100%;
 
   }
 
@@ -164,5 +174,13 @@ $message-you-margin-left:40px;
   margin-right: $margin-xxsmall;
   padding: $padding-small 0;
 
+
+}
+
+.message__actions--you {
+
+  margin-right: auto;
+  display: flex;
+  justify-content: flex-start;
 
 }

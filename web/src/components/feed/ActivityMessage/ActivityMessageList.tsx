@@ -12,6 +12,7 @@ import { store } from 'state';
 import Btn from 'elements/Btn';
 import Loading from 'components/loading';
 import { useScroll } from 'shared/helpers/scroll.helper';
+import dconsole from 'shared/debugger';
 
 export function ActivityMessageList() {
   const { messages } = useActivities();
@@ -36,7 +37,7 @@ export function ActivityMessageList() {
     },
   );
 
-  const markAllAsRead = () => console.log('TODO')
+  const markAllAsRead = () => dconsole.log('TODO')
   // store.emit(new ActivityMessagesMarkAllAsRead());
 
   return (

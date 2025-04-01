@@ -68,7 +68,7 @@ $card-alert-icon-size: 30px;
 
 
   button {
-    margin-left: 12px;
+    margin-left: $margin-small;
   }
 
 }
@@ -90,6 +90,8 @@ $card-alert-icon-size: 30px;
   font-weight: bold;
   margin: auto 0;
   height: 100%;
+  word-wrap: break-all;
+  word-break: break-all;
 }
 
 .card-alert__top-text,
