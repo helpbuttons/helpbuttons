@@ -98,6 +98,15 @@ export function MarkerButtonIcon(props: MarkerButtonIconProps) {
           onClick={props.onClick}
           className="marker-button marker-button-selector"
         >
+
+          <div className=" marker-button__image">
+            <ImageWrapper
+              imageType={ImageType.avatarMed}
+              src={props.image}
+              alt={props.title}
+            />
+          </div>
+
           <span className="marker-button__arrow"></span>
           {props.title && 
             <div className="marker-button__tags marker-button-selector-title">

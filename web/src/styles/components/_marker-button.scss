@@ -5,7 +5,7 @@ $marker-button-width: 70px;
 $marker-button-radius: $border-radius-circle;
 $marker-button-line: 0.2rem;
 $marker-arrow-width: 2px;
-$marker-arrow-height: 25px;
+$marker-arrow-height: 5px;
 
 @use "sass:math";
 
@@ -32,11 +32,27 @@ $cycle: 10;
 .marker-button {
   cursor: grab;
   transition: transform 0.2s ease;
+  height: auto;
+}
+
+.marker-button .marker-button__image {
+  display: none;
+  opacity: 0;
+  transform: scale(0); /* Just a visual feedback */
+  transition: opacity 0.3s ease;
 }
 
 .marker-button:hover {
-  z-index: $z-index-01;
+  z-index: $z-index-02;
   transform: scale(1.1); /* Just a visual feedback */
+
+}
+
+
+.marker-button:hover .marker-button__image {
+  display: block;
+  opacity: 1;
+  transform: scale(1); /* Just a visual feedback */
 }
 
 .marker-button:active {
@@ -104,6 +120,7 @@ $cycle: 10;
     }
     .marker-button__arrow {
       &:after {
+        height: auto;
         border-top-color: $color-green;
       }
     }
@@ -190,7 +207,7 @@ $cycle: 10;
       border-right: 6px solid transparent;
       border-left: 6px solid transparent;
       position: absolute;
-      bottom: -33px;
+      bottom: -13px;
       right: 0;
       left: 0;
       margin: 0 auto;
