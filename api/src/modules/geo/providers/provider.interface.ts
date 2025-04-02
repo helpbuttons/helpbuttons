@@ -8,6 +8,6 @@ export interface GeoAddress {
   id: string;
 }
 export interface GeoProvider {
-  searchQuery(query: string, center: number[]): Promise<GeoAddress[]>;
+  searchQuery(query: string, lat: string, lng: string): Promise<GeoAddress[]>;
   getAddress(position: GeoPosition): Promise<GeoAddress>;
 }
