@@ -47,7 +47,7 @@ function ButtonNewForm({ selectedNetwork }) {
     radius: 1,
     address: null,
     when: { dates: [], type: null },
-    hideAddress: false,
+    hideAddress: selectedNetwork.hideLocationDefault,
     eventData: null
   };
   const {

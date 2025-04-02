@@ -45,7 +45,8 @@ function NetworkCreation() {
       nomeclature: 'Helpbutton',
       nomeclaturePlural: 'Helpbuttons',
       requireApproval: false,
-      slogan: ''
+      slogan: '',
+      hideLocationDefault: false
     },
   });
 
@@ -75,7 +76,8 @@ function NetworkCreation() {
           nomeclaturePlural: data.nomeclaturePlural,
           locale: data.locale,
           requireApproval: data.requireApproval,
-          slogan: data.slogan
+          slogan: data.slogan,
+          hideLocationDefault: data.hideLocationDefault
         },
         () => {
           const onComplete = () => {
