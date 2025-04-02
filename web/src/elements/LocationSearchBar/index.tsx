@@ -5,11 +5,12 @@ import t from "i18n";
 import { useEffect, useRef, useState } from "react";
 import { IoCloseOutline, IoLocationOutline } from "react-icons/io5";
 import { alertService } from "services/Alert";
-import { roundCoords } from "shared/honeycomb.utils";
+import dconsole from "shared/debugger";
+import { roundCoord } from "shared/honeycomb.utils";
 import { store } from "state";
 import { emptyPlace, GeoReverseFindAddress } from "state/Geo";
 import { useSelectedNetwork } from "state/Networks";
-        
+
 export function LocationSearchBarSimple({
     placeholder,
     label = null,
@@ -36,7 +37,7 @@ export function LocationSearchBarSimple({
             {explain && <div className="form__explain">{explain}</div>}
             <div className="form__field-dropdown form__field-dropdown--location">
                 <div className="form__field-dropdown--input-location">
-                    <FieldLocationSearch pickedAddress={searchAddress} placeholder={placeholder} setResults={setResults} isLoading={isLoading} setIsLoading={setIsLoading} /> 
+                    <FieldLocationSearch pickedAddress={searchAddress} placeholder={placeholder} setResults={setResults} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={markerPosition} /> 
                     <LoadUserLocationButton handleBrowserLocation={handleAddressPicked}/>
                 </div>
                 {(results && results.length > 0) &&
@@ -108,7 +109,7 @@ export default function LocationSearchBar({
             {explain && <div className="form__explain">{explain}</div>}
             <div className="form__field-dropdown form__field-dropdown--location">
                 <div className="form__field-dropdown--input-location">
-                    <FieldLocationSearch isCustomAddress={isCustomAddress} pickedAddress={searchAddress} placeholder={placeholder} setResults={setResults} onFocus={handleFocus} hideAddress={hideAddress} isLoading={isLoading} setIsLoading={setIsLoading} />
+                    <FieldLocationSearch isCustomAddress={isCustomAddress} pickedAddress={searchAddress} placeholder={placeholder} setResults={setResults} onFocus={handleFocus} hideAddress={hideAddress} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={markerPosition} />
                     <FieldCustomAddress isCustomAddress={isCustomAddress} pickedAddress={searchAddress} setPickedAddress={setSearchAddress} setIsCustomAddress={setIsCustomAddress} />
                     <LoadUserLocationButton handleBrowserLocation={handleAddressPicked} hideAddress={hideAddress} />
                 </div>
@@ -129,7 +130,7 @@ export default function LocationSearchBar({
     </>
 }
 
-function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults, hideAddress = false, onFocus = () => {}, pickedAddress, isLoading, setIsLoading }) {
+function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults, hideAddress = false, onFocus = (event) => {}, pickedAddress, isLoading, setIsLoading, focusPoint }) {
     const geoSearch = useGeoSearch()
     const [searching, setIsSearching] = useState(false)
     const [input, setInput] = useState(pickedAddress);
@@ -147,8 +148,8 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
     }, [pickedAddress])
     const searchAddress = () => {
         setIsSearching(() => true)
-        console.log('searchingddd... ' + input)
-        geoSearch(searchQuery.current.q, searchQuery.current.limit, (places) => {
+        dconsole.log('searchingddd... ', focusPoint, input)
+        geoSearch(searchQuery.current.q, roundCoord(focusPoint[0]), roundCoord(focusPoint[1]), searchQuery.current.limit, (places) => {
             if (places.length > 0) {
                 const placesFound = places.map((place, key) => {
                     return {
@@ -174,7 +175,7 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
         }
         setInput((prevValue) => {
             if (prevValue != value) {
-                
+
                 if (value.length > 0) {
                     searchQuery.current.q = value;
                     searchAddress()

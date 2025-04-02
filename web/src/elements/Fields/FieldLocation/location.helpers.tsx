@@ -4,15 +4,13 @@ import { store } from 'state';
 import {
   GeoFindAddress,
   GeoReverseFindAddress,
-  emptyPlace,
 } from 'state/Geo';
-import dconsole from 'shared/debugger';
 
 export const useGeoSearch = () => {
   const GeoFindByQuery = useCallback(
-    debounce((query, limited, onSuccess, onError) => {
+    debounce((query, lat, lon, limited, onSuccess, onError) => {
       store.emit(
-        new GeoFindAddress(query,limited, (places) => {
+        new GeoFindAddress(query, lat, lon, limited, (places) => {
           return onSuccess(places);
         }, (error) => onError(error)),
       );
@@ -20,8 +18,8 @@ export const useGeoSearch = () => {
     [],
   );
 
-  const _debounceFunc = (query, limited, success, error) => {
-    GeoFindByQuery(query,limited, (places) => success(places), error);
+  const _debounceFunc = (query, lat, lon, limited, success, error) => {
+    GeoFindByQuery(query, lat, lon, limited, (places) => success(places), error);
   };
 
   return _debounceFunc;
@@ -36,7 +34,7 @@ export const useGeoReverse = () => {
           latLng[1],
           limited,
           (place) => {
-            if(!place){
+            if (!place) {
               onError('place is null');
               return;
             }

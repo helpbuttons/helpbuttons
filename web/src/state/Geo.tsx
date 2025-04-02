@@ -7,7 +7,7 @@ import dconsole from "shared/debugger";
 
 export class GeoFindAddress implements WatchEvent {
     uid = '';
-    public constructor(private query: string, private limited: boolean , private onReady, private onError) {
+    public constructor(private query: string,private lat: string,private lon: string, private limited: boolean , private onReady, private onError) {
       this.uid = `places_${JSON.stringify(limited)}_${query}`
     }
     
@@ -18,7 +18,7 @@ export class GeoFindAddress implements WatchEvent {
         this.onReady(found.response)
         return of(undefined);
       }
-      return GeoService.find(this.query, this.limited).pipe(
+      return GeoService.find(this.query, this.lat, this.lon, this.limited).pipe(
         map((places) => {
             store.emit(new CachePut(this.uid, places))
             this.onReady(places)

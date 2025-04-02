@@ -37,24 +37,18 @@ export class GeoService {
     }
   }
 
-
-  async search(query: string) {
-    return this.networkService
-      .getCenter()
-      .then((center) => {
-        return this.geoProvider.searchQuery(query, center).then((results) =>
+  async search(query: string, lat: string, lon: string) {
+      return this.geoProvider.searchQuery(query, lat, lon).then((results) =>
           this.searchCustom(query).then((customResults) => [...customResults, ...results]))
           .then((addresses) => this.removeDuplicateAdresses(addresses))
-      })
+      
 
   }
 
-  async searchLimited(query: string) {
-    return this.networkService
-      .getCenter()
-      .then((center) => this.geoProvider.searchLimited(query, center).then((results) =>
+  async searchLimited(query: string, lat: string, lon: string) {
+    return this.geoProvider.searchLimited(query, lat, lon).then((results) =>
         this.searchCustom(query).then((customResults) => [...customResults, ...results]))
-        .then((addresses) => this.removeDuplicateAdresses(addresses)))
+        .then((addresses) => this.removeDuplicateAdresses(addresses))
   }
 
   async findAddress(lat: string, lng: string) {

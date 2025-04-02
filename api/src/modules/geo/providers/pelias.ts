@@ -20,14 +20,14 @@ export class PeliasProvider implements GeoProvider {
   }
 
   // focus.point
-  searchQuery(query: string, center: number[]): Promise<GeoAddress[]> {
-    return this.queryGeo(`${query}&layers=venue,address,localadmin,locality,borough&focus.point.lat=${center[0]}&focus.point.lon=${center[1]}`).then((res) => {
+  searchQuery(query: string, lat: string, lon: string): Promise<GeoAddress[]> {
+    return this.queryGeo(`${query}&layers=venue,address,localadmin,locality,borough&focus.point.lat=${lat}&focus.point.lon=${lon}`).then((res) => {
       return res.data.features.map((item) => this.hydratePlace(item));
     });
   }
   
-  searchLimited(query: string, center: number[]): Promise<GeoAddress[]> {
-    return this.queryGeo(`${query}&layers=localadmin,locality,borough&focus.point.lat=${center[0]}&focus.point.lon=${center[1]}`).then((res) => {
+  searchLimited(query: string, lat: string, lon: string): Promise<GeoAddress[]> {
+    return this.queryGeo(`${query}&layers=localadmin,locality,borough&focus.point.lat=${lat}&focus.point.lon=${lon}`).then((res) => {
       return res.data.features.map((item) => this.hydratePlace(item, true));
     });
   }
