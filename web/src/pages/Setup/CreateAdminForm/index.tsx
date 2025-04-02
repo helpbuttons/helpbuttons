@@ -126,8 +126,12 @@ function CreateAdminForm() {
             }else if(error?.validationErrors)
             {
               setValidationErrors(error?.validationErrors, setError);
+            }else if(error.message == 'invalid-username'){
+              setError('username', { type: 'custom', message: 'invalid username' });
+            }else{
+              dconsole.error(error);
             }
-            dconsole.error(error);
+            
           },
         ),
       );

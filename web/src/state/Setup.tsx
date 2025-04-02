@@ -207,8 +207,9 @@ export class CreateAdmin implements WatchEvent {
           err.statusCode === HttpStatus.CONFLICT
         ) {
           this.onError(err);
-        } else {
-          ('oi')
+        } else if(err.statusCode == HttpStatus.NOT_ACCEPTABLE) {          
+          this.onError(err)
+        }else{
           throw error;
         }
         return of(undefined);

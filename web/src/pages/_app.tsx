@@ -37,6 +37,7 @@ import { useRebuildUrl } from 'components/uri/builder';
 import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import dconsole from 'shared/debugger';
+import Head from 'next/head';
 
 export default appWithTranslation(MyApp);
 
@@ -256,7 +257,8 @@ function MyApp({ Component, pageProps }) {
   });
 
   if (isSetup) {
-    return <Component {...pageProps} />;
+    return <> <Head>
+      <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /></>;
   } else if (pageName == 'Embbed') {
     return (
       <LoadabledComponent loading={!selectedNetwork || loading}>
