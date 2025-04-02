@@ -182,10 +182,6 @@ export class NetworkService {
               return fullNetwork
             })
         } else {
-
-
-          console.log('hit');
-          console.log(network);
           return network
         }
       })
