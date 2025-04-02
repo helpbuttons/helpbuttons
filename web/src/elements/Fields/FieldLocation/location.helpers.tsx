@@ -36,6 +36,10 @@ export const useGeoReverse = () => {
           latLng[1],
           limited,
           (place) => {
+            if(!place){
+              onError('place is null');
+              return;
+            }
             success(place);
           },
           (error) => {
