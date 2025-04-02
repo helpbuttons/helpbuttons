@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { IoCloseOutline, IoLocationOutline } from "react-icons/io5";
 import { alertService } from "services/Alert";
 import dconsole from "shared/debugger";
-import { roundCoord } from "shared/honeycomb.utils";
+import { roundCoord, roundCoords } from "shared/honeycomb.utils";
 import { store } from "state";
 import { emptyPlace, GeoReverseFindAddress } from "state/Geo";
 import { useSelectedNetwork } from "state/Networks";
