@@ -1,11 +1,11 @@
 import PickerField from 'components/picker/PickerField';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
-import DropDownSearchLocation from 'elements/DropDownSearchLocation';
 import { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 import t from 'i18n';
 import Slider from 'rc-slider';
 import { useState } from 'react';
 import { readableDistance } from 'shared/sys.helper';
+import { useNetworkCenter, useSelectedNetwork } from 'state/Networks';
 
 export function FilterByLocationRadius({
   handleSelectedPlace,
@@ -15,6 +15,8 @@ export function FilterByLocationRadius({
   setRadius,
 }) {
   const [showPopup, setShowPopup] = useState(false);
+
+  const focusPoint = useNetworkCenter()
 
   const closePopup = () => setShowPopup(() => false);
   const openPopup = () => setShowPopup(() => true);
@@ -85,7 +87,7 @@ export function FilterByLocationRadius({
         placeholder={t('homeinfo.searchlocation')}
         markerAddress={pickedAddress}
         setMarkerAddress={(address) => setPickedAddress(() => address)}
-        markerPosition={pickedPosition}
+        focusPoint={focusPoint}
         setMarkerPosition={(markerPosition) => setPickedPosition(() => markerPosition)}
       />
       {pickedAddress && (
@@ -96,7 +98,7 @@ export function FilterByLocationRadius({
           </label>
           <div style={{ padding: '1rem' }}>
             <Slider
-              min={1}
+              min={0}
               max={(marks.length - 1) * 100}
               onChange={(radiusValue) => {
                 setPickedRadius(() =>

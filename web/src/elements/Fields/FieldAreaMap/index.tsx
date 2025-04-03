@@ -6,7 +6,6 @@ import t from 'i18n';
 
 import { NetworkMapConfigure } from 'components/map/Map/NetworkMapConfigure';
 import { BrowseType, HbMapTiles, maxZoom, minZoom } from 'components/map/Map/Map.consts';
-import { circleToPolygon } from 'shared/geo.utils';
 import { getBoundsHexFeatures, roundCoord, roundCoords } from 'shared/honeycomb.utils';
 import PickerField from 'components/picker/PickerField';
 import { IoSearchOutline } from 'react-icons/io5';
@@ -14,6 +13,7 @@ import dconsole from 'shared/debugger';
 import Slider from 'rc-slider';
 import LocationSearchBar, { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 import { useGeoReverse } from '../FieldLocation/location.helpers';
+import { circleGeoJSON } from 'shared/geo.utils';
 
 
 export default function FieldAreaMap({
@@ -29,15 +29,17 @@ export default function FieldAreaMap({
 
   const closePopup = () => setShowPopup(() => false)
   const openPopup = () => setShowPopup(() => true)
+
+  const labelPicker = value?.zoom ? t('configuration.areaPicked',[roundCoord(value.center[0]),roundCoord(value.center[1]),value.zoom]) : label
   return (
-    <PickerField   iconLink ={<IoSearchOutline/>}    showPopup={showPopup} validationError={validationError} label={label} btnLabel={label} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
-       <FieldAreaMapSettings
-          defaultExploreSettings={value}
-          onChange={onChange}
-          marker={marker}
-          closePopup={closePopup}
-        />
-    </PickerField>
+      <PickerField   iconLink ={<IoSearchOutline/>}    showPopup={showPopup} validationError={validationError} label={label} btnLabel={labelPicker} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
+        <FieldAreaMapSettings
+            defaultExploreSettings={value}
+            onChange={onChange}
+            marker={marker}
+            closePopup={closePopup}
+          />
+      </PickerField>
   )
 }
 
@@ -63,7 +65,7 @@ export function FieldAreaMapSettings({
         step: 100,
         onChange: (newRadius) => setRadius(newRadius)
       },
-      geometry: circleToPolygon([0,0], 10000),
+      geometry: circleGeoJSON(0,0, 10000),
       browseType: BrowseType.HONEYCOMB,
       honeyCombFeatures: null,
     }, ...defaultExploreSettings}
@@ -120,7 +122,7 @@ export function FieldAreaMapSettings({
   const handleMapClick = ({latLng}) => {
     findAddressFromPosition(latLng, false)
     setMapSettings((prevSettings) => {
-      return {...prevSettings, center: latLng, geometry: circleToPolygon(latLng, prevSettings.radius)}
+      return {...prevSettings, center: latLng, geometry: circleGeoJSON(latLng[1],latLng[0], prevSettings.radius * 0.001)}
     })
   }
 
@@ -149,17 +151,17 @@ return (
   
               <LocationSearchBar
                 placeholder={t('button.locationPlaceholder')}
-                markerAddress={address}
+                pickedAddress={address}
                 hideAddress={true}
-                setMarkerAddress={setAddress}
+                setPickedAddress={setAddress}
                 isCustomAddress={null}
                 setIsCustomAddress={() => {}}
-                setMarkerPosition={setCenter}
-                markerPosition={mapSettings.center}
+                setPickedPosition={setCenter}
+                focusPoint={mapSettings.center}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
+                pickedPosition={mapSettings.center}
                 explain={t('configuration.centerOfMap')}
-                mapAddress={{address: address}}
               />
 
               <NetworkMapConfigure

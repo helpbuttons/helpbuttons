@@ -17,8 +17,9 @@ export function LocationSearchBarSimple({
     explain = null,
     markerAddress,
     setMarkerAddress,
-    markerPosition,
-    setMarkerPosition
+    markerPosition = null,
+    setMarkerPosition,
+    focusPoint
 }){
     const [searchAddress, setSearchAddress] = useState(markerAddress)
     const [results, setResults] = useState([]);
@@ -37,7 +38,7 @@ export function LocationSearchBarSimple({
             {explain && <div className="form__explain">{explain}</div>}
             <div className="form__field-dropdown form__field-dropdown--location">
                 <div className="form__field-dropdown--input-location">
-                    <FieldLocationSearch pickedAddress={searchAddress} placeholder={placeholder} setResults={setResults} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={markerPosition} /> 
+                    <FieldLocationSearch pickedAddress={searchAddress} placeholder={placeholder} setResults={setResults} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={focusPoint} /> 
                     <LoadUserLocationButton handleBrowserLocation={handleAddressPicked}/>
                 </div>
                 {(results && results.length > 0) &&
@@ -59,12 +60,13 @@ export default function LocationSearchBar({
     hideAddress,
     isCustomAddress,
     setIsCustomAddress,
-    pickedPosition,
+    pickedPosition = null,
     setPickedPosition,
     isLoading,
     setIsLoading,
     pickedAddress,
-    setPickedAddress
+    setPickedAddress,
+    focusPoint,
 }) {
     const [results, setResults] = useState([]);
     const [showAddCustomButton, toggleShowAddCustomButton] = useState(false)
@@ -92,7 +94,7 @@ export default function LocationSearchBar({
             {explain && <div className="form__explain">{explain}</div>}
             <div className="form__field-dropdown form__field-dropdown--location">
                 <div className="form__field-dropdown--input-location">
-                    <FieldLocationSearch isCustomAddress={isCustomAddress} pickedAddress={pickedAddress} placeholder={placeholder} setResults={setResults} onFocus={handleFocus} hideAddress={hideAddress} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={pickedPosition} />
+                    <FieldLocationSearch isCustomAddress={isCustomAddress} pickedAddress={pickedAddress} placeholder={placeholder} setResults={setResults} onFocus={handleFocus} hideAddress={hideAddress} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={focusPoint} />
                     <FieldCustomAddress isCustomAddress={isCustomAddress} pickedAddress={pickedAddress} setPickedAddress={setPickedAddress} setIsCustomAddress={setIsCustomAddress} />
                     <LoadUserLocationButton handleBrowserLocation={handleAddressPicked} hideAddress={hideAddress} />
                 </div>
@@ -103,7 +105,7 @@ export default function LocationSearchBar({
                     <SearchCustomAddress handleClick={() => { setIsCustomAddress(true); toggleShowAddCustomButton(() => false) }} />
                 }
 
-                {(pickedPosition && pickedPosition[0] && pickedPosition[1]) && (
+                {(pickedPosition && pickedPosition[0] !== null && pickedPosition[1] !== null) && (
                     <div className='form__input-subtitle-option form__input-subtitle--grayed'>
                         ( {roundCoords(pickedPosition).toString()} )
                     </div>

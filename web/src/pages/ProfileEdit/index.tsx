@@ -39,6 +39,7 @@ import 'rc-slider/assets/index.css';
 import { Role } from 'shared/types/roles';
 import { IoTrashBinOutline } from 'react-icons/io5';
 import LocationSearchBar, { LocationSearchBarSimple } from 'elements/LocationSearchBar';
+import { useNetworkCenter } from 'state/Networks';
 
 export default function ProfileEdit() {
   const {
@@ -64,6 +65,7 @@ export default function ProfileEdit() {
   const [errorMsg, setErrorMsg] = useState(undefined);
   const [setNewPassword, setSetNewPassword] = useState(false);
   const [_locale, set_Locale] = useState(locale)
+  const focusPoint = useNetworkCenter()
 
   const router = useRouter();
   const sessionUser: User = useRef(
@@ -258,7 +260,7 @@ export default function ProfileEdit() {
                     placeholder={t('user.location')}
                     markerAddress={watch('address')}
                     setMarkerAddress={(address) => setValue('address', address)}
-                    markerPosition={watch('center.coordinates')}
+                    focusPoint={focusPoint}
                     setMarkerPosition={(position) => setValue('center', {coordinates: position})}
                   />
                 <div className="form__field">

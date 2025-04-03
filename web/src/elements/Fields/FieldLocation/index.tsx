@@ -135,6 +135,7 @@ export default function FieldLocation({
       setIsLoading={setIsLoading}
       pickedAddress={pickedAddress}
       setPickedAddress={setPickedAddress}
+      focusPoint={pickedPosition}
     />
     <MarkerEditorMap
       toggleLoadingNewAddress={() => setIsLoading(() => true)}
