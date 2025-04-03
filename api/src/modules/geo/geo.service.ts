@@ -41,7 +41,8 @@ export class GeoService {
       return this.geoProvider.searchQuery(query, lat, lon).then((results) =>
           this.searchCustom(query).then((customResults) => [...customResults, ...results]))
           .then((addresses) => this.removeDuplicateAdresses(addresses))
-          .then((addresses) => this.sortAddresses(addresses, query))
+          .then((addresses) => this.sortAlphabetically(addresses))
+          .then((addresses) => this.sortMatches(addresses, query))
   }
 
   async searchLimited(query: string, lat: string, lon: string) {
@@ -66,14 +67,19 @@ export class GeoService {
       .then((results) => results.map((customPlace) => { return { formatted: customPlace.address, geometry: { lat: customPlace.latitude, lng: customPlace.longitude } } }))
   }
 
-  sortAddresses(addresses: GeoAddress[], query) {
+  sortAlphabetically(addresses: GeoAddress[]) {
+    return addresses.sort((addressA, addressB) => {
+      return addressA.formatted.localeCompare(addressB.formatted)
+    })
+  }
+
+  sortMatches(addresses: GeoAddress[], query) {
     return addresses.sort((addressA, addressB) => {
       if(addressA.formatted.toLowerCase().startsWith(query.toLowerCase()))
       {
-        console.log(addressA.formatted)
         return -1;
       }
-      return addressA.formatted.localeCompare(addressB.formatted)
+      return 0;
     })
   }
 
