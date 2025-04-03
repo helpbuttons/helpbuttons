@@ -12,43 +12,33 @@ $marker-arrow-height: 5px;
 $cycle: 10;
 
 
-
-
-
-
 .marker-button {
 
-  height: $marker-button-height;
   width: $marker-button-width;
+  height: auto;
+
   border: none;
-  position: relative;
   margin: auto;
   margin-bottom: 0;
-
+  position: absolute;
+  bottom: -70px;
   transition: transform 0.3s ease;
-
-}
-
-.marker-button {
   cursor: grab;
-  transition: transform 0.2s ease;
-
-  display: FLEX;
+  display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  // height: auto;
 }
 
 .marker-button .marker-button__image {
   display: none;
   opacity: 0;
-  transform: scale(0); /* Just a visual feedback */
+  transform: scale(0); 
   transition: opacity 0.3s ease;
 }
 
 .marker-button:hover {
   z-index: $z-index-02;
-  transform: scale(1.1); /* Just a visual feedback */
+  transform: scale(1.1); 
 
 }
 
@@ -58,24 +48,29 @@ $cycle: 10;
   align-items: center;
   justify-content: center;
   opacity: 1;
-  transform: scale(1); /* Just a visual feedback */
+  transform: scale(1);
+}
+
+.marker-button:hover .marker-button__link-tag {
+  display: none;
 }
 
 .marker-button:active {
   cursor: grabbing;
   z-index: $z-index-03;
-  transform: scale(1.1); /* Just a visual feedback */
+  transform: scale(1.1); 
 }
 
 .marker-button__image {
-    width: 100%;
+    width: $marker-button-width;
     height: 100%;
     margin: auto;
     border-style: solid;
     z-index: 1;
-    object-fit: cover;
+    // object-fit: cover;
     overflow: hidden;
     border-width: $marker-button-line;
+    border-radius: $border-radius-semicircle;
     display: flex;
 
     &:hover {
@@ -94,6 +89,7 @@ $cycle: 10;
 .marker-button--grey {
     opacity: 0.5;
   }
+
 .marker-button--change {
     &:before,
     &:after {
@@ -282,6 +278,7 @@ $cycle: 10;
   position: absolute;
   bottom: 102%;
   left: 50%;
+  min-height: 20px;
   transform: translateX(-50%);
   background: $color-gray;
   border-radius: $border-radius-semicircle;
@@ -376,5 +373,29 @@ $cycle: 10;
     &:after {
       border-top-color: var(--button-color);
     }
+  }
+}
+
+.marker-button__image--fix {
+
+  @extend .marker-button__image;
+  
+  border-width: $marker-button-line;
+  display: flex;
+  transform: scale(1); 
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border-style: solid;
+  z-index: 1;
+  object-fit: cover;
+  overflow: hidden;
+  border-width: $marker-button-line;
+  display: flex;
+
+  &:hover {
+
+    cursor: pointer;
+
   }
 }

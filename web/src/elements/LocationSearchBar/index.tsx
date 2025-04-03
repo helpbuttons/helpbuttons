@@ -119,7 +119,6 @@ export default function LocationSearchBar({
                 {(showAddCustomButton && ( results && results.length < 1 ) && isCustomAddress !== null) &&
                     <SearchCustomAddress handleClick={() => { setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
                 }
-
                 {(markerPosition && markerPosition[0] && markerPosition[1] && !hideAddress) && (
                     <div className='form__input-subtitle-option form__input-subtitle--grayed'>
                         ( {roundCoords(markerPosition).toString()} )
