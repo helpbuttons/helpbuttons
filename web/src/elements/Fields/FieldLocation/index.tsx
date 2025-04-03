@@ -13,6 +13,7 @@ import { minZoom } from 'components/map/Map/Map.consts';
 import { useGeoReverse } from './location.helpers';
 import { IoSearchOutline } from 'react-icons/io5';
 import LocationSearchBar from 'elements/LocationSearchBar';
+import dconsole from 'shared/debugger';
 
 
 export default function FieldLocation({
@@ -29,77 +30,94 @@ export default function FieldLocation({
   hideAddress,
   setLatitude,
   setLongitude,
-  defaultMarkerPosition,
   isCustomAddress,
-  setIsCustomAddress
+  setIsCustomAddress,
+  markerPosition
 }) {
-  const [markerPosition, setMarkerPosition] = useState(roundCoords(defaultMarkerPosition))
+  const [pickedPosition, setPickedPosition] = useState(markerPosition)
 
   const [zoom, setZoom] = useState(selectedNetwork.exploreSettings.zoom);
   const [showPopup, setShowPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
-  const [mapAddress, setMapAddress] = useState({address: markerAddress, hideAddress: hideAddress})
-  
-  const unsavedMarkerAdress = useRef(markerAddress)
+  const [pickedAddress, setPickedAddress] = useState(markerAddress)
+
   const closeWithoutSaving = () => {
-    setMarkerAddress(unsavedMarkerAdress.current)
+
+    setPickedAddress(() => markerAddress)
+    setPickedPosition(() => markerPosition)
     setShowPopup(() => false)
   }
   const closeAndSave = () => {
-    unsavedMarkerAdress.current = markerAddress
-    setLatitude(markerPosition[0])
-    setLongitude(markerPosition[1])
-    setShowPopup(() => false)
+    if (!isCustomAddress && hideAddress) {
+      getLatLngAddress(pickedPosition, true, (place) => {
+        const address = place.formatted;
+        setMarkerAddress(address)
+        setLatitude(pickedPosition[0])
+        setLongitude(pickedPosition[1])
+        setShowPopup(() => false)
+      },
+        (error) => {
+          const address = t('button.unknownPlace')
+          setMarkerAddress(address)
+          setLatitude(pickedPosition[0])
+          setLongitude(pickedPosition[1])
+          setShowPopup(() => false)
+        }
+      );
+    } else {
+      setMarkerAddress(pickedAddress)
+      setLatitude(pickedPosition[0])
+      setLongitude(pickedPosition[1])
+      setShowPopup(() => false)
+    }
+
   }
   const openPopup = () => setShowPopup(() => true)
 
   const onMapClick = (latLng) => {
-    setMarkerPosition(() => latLng)
-    findAddressFromPosition(latLng, hideAddress)
+    setPickedPosition(() => latLng)
+    if (!isCustomAddress) {
+      findAddressFromPosition(latLng)
+    }
   }
 
   const getLatLngAddress = useGeoReverse()
-  const findAddressFromPosition = (latLng, hideAddress) => {
+  const findAddressFromPosition = (latLng) => {
+
     setIsLoading(() => true)
-    getLatLngAddress(latLng, hideAddress, (place) => {
-      setMapAddress(() => {return {address: place.formatted, hideAddress: hideAddress}})
-      setIsLoading(() => false)
-    },
-      (error) => {
+    console.log('gettin addresss ', latLng)
+    if (latLng[0] && latLng[1]) {
+      getLatLngAddress(latLng, false, (place) => {
+        dconsole.log('gettings place... ', place)
+        setPickedAddress(() => place.formatted)
         setIsLoading(() => false)
-        setMapAddress(() => {return {address: t('button.unknownPlace'), hideAddress: null}})
-      }
-    );
+      },
+        (error) => {
+          setIsLoading(() => false)
+          setPickedAddress(() => t('button.unknownPlace'))
+        }
+      );
+    }
   }
-  
-  useEffect(() => {
-    if (!isCustomAddress) {
-      setMarkerAddress(mapAddress.address)
-    }
-  }, [mapAddress, isCustomAddress])
 
   useEffect(() => {
-    findAddressFromPosition(markerPosition, hideAddress)
-  }, [])
-  useEffect(() => {
-    if(hideAddress != mapAddress.hideAddress){
-        findAddressFromPosition(markerPosition, hideAddress)
+    if (!isCustomAddress && pickedPosition) {
+      findAddressFromPosition(pickedPosition)
     }
-  }, [hideAddress])
+  }, [isCustomAddress])
 
-  const loadingNewAddress = markerAddress == null;
   return <PickerField
     iconLink={<IoSearchOutline />}
     showPopup={showPopup}
     validationError={validationError}
     label={t('button.whereLabel')}
     btnLabel={
-      <LocationCoordinates
+      markerPosition ? <LocationCoordinates
         latitude={markerPosition[0]}
         longitude={markerPosition[1]}
         address={markerAddress}
         label={label}
-      />
+      /> : t('button.whereLabel')
     }
     headerText={t('picker.headerText')}
     explain={t('button.whereExplain')}
@@ -108,16 +126,15 @@ export default function FieldLocation({
   >
     <LocationSearchBar
       placeholder={t('button.locationPlaceholder')}
-      markerAddress={markerAddress}
       hideAddress={hideAddress}
-      setMarkerAddress={setMarkerAddress}
       isCustomAddress={isCustomAddress}
       setIsCustomAddress={setIsCustomAddress}
-      setMarkerPosition={setMarkerPosition}
-      markerPosition={markerPosition}
+      setPickedPosition={setPickedPosition}
+      pickedPosition={pickedPosition}
       isLoading={isLoading}
       setIsLoading={setIsLoading}
-      mapAddress={mapAddress}
+      pickedAddress={pickedAddress}
+      setPickedAddress={setPickedAddress}
     />
     <MarkerEditorMap
       toggleLoadingNewAddress={() => setIsLoading(() => true)}
@@ -125,11 +142,10 @@ export default function FieldLocation({
       zoom={zoom}
       setZoom={setZoom}
       markerColor={markerColor ? markerColor : 'pink'}
-      markerPosition={markerPosition}
+      pickedPosition={pickedPosition}
       markerCaption={markerCaption}
       markerImage={markerImage}
       hideAddress={hideAddress}
-      markerAddress={markerAddress}
       networkMapCenter={selectedNetwork.exploreSettings.center}
       editPosition={true}
     />
@@ -144,7 +160,7 @@ export default function FieldLocation({
       caption={t('common.save')}
       contentAlignment={ContentAlignment.center}
       onClick={() => closeAndSave()}
-      disabled={loadingNewAddress}
+      disabled={isLoading || !pickedPosition}
     />
   </PickerField>
 }

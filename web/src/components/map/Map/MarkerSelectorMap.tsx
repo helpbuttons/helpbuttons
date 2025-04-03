@@ -11,14 +11,15 @@ import { LoadabledComponent } from 'components/loading';
 import {
   hexagonSizeZoom,
 } from './Map.consts';
+import dconsole from 'shared/debugger';
 export function MarkerEditorMap(props) {
   return (
-    <MarkerViewMap {...props}/>
+    <MarkerViewMap {...props} />
   );
 }
 
 export default function MarkerViewMap({
-  markerPosition,
+  pickedPosition,
   zoom,
   setZoom = (a) => { },
   markerColor,
@@ -37,50 +38,45 @@ export default function MarkerViewMap({
     setZoom(() => zoom);
     setMapCenter(() => center);
   };
-  
+
   useEffect(() => {
     if (
       editPosition &&
       mapCenterIsReady.current &&
-      markerPosition[0] &&
-      markerPosition[1]
+      pickedPosition &&
+      pickedPosition[0] &&
+      pickedPosition[1]
     ) {
-      setMapCenter(() => markerPosition);
+      setMapCenter(() => pickedPosition);
     }
-  }, [markerPosition]);
+  }, [pickedPosition]);
 
   function handleMapClicked({ latLng }) {
-    if (hideAddress) {
-      onMapClick(getHexagonCenter(latLng, zoom));
-    } else {
-      onMapClick(latLng);
-    }
+    onMapClick(latLng);
   }
   useEffect(() => {
     if (mapCenterIsReady.current) {
       if (hideAddress) {
         let polygons = latLngToGeoJson(
-          markerPosition[0],
-          markerPosition[1],
+          pickedPosition[0],
+          pickedPosition[1],
           getZoomResolution(hexagonSizeZoom),
         );
         setMarkerHexagonGeoJson(() => polygons);
       } else {
         setMarkerHexagonGeoJson(() => null);
       }
-    } else {
-      if (
-        networkMapCenter &&
-        networkMapCenter[0] &&
-        networkMapCenter[1]
-      ) {
-        mapCenterIsReady.current = true;
-        setMapCenter(() => networkMapCenter);
-      } else if (markerPosition[0] && markerPosition[1]) {
-        setMapCenter(() => markerPosition);
-      }
+    } else if (pickedPosition && pickedPosition[0] && pickedPosition[1]) {
+      setMapCenter(() => pickedPosition);
+    } else if (
+      networkMapCenter &&
+      networkMapCenter[0] &&
+      networkMapCenter[1]
+    ) {
+      mapCenterIsReady.current = true;
+      setMapCenter(() => networkMapCenter);
     }
-  }, [hideAddress, markerPosition, networkMapCenter]);
+  }, [hideAddress, pickedPosition, networkMapCenter]);
 
   useEffect(() => {
     if (hideAddress) {
@@ -112,7 +108,7 @@ export default function MarkerViewMap({
             )}
             {!hideAddress && (
               <MarkerButtonIcon
-                anchor={markerPosition}
+                anchor={pickedPosition}
                 offset={[35, 65]}
                 cssColor={markerColor}
                 image={markerImage}
@@ -121,7 +117,7 @@ export default function MarkerViewMap({
             )}
             {hideAddress && (
               <MarkerButtonIcon
-                anchor={getHexagonCenter(markerPosition, hexagonSizeZoom)}
+                anchor={getHexagonCenter(pickedPosition, hexagonSizeZoom)}
                 offset={[35, 65]}
                 cssColor={markerColor}
                 image={markerImage}
