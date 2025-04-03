@@ -117,11 +117,9 @@ COALESCE(
   }
 
   update(userId: string, newUser) {
-    let center = null;
     if (newUser.center?.coordinates) {
-      const center = `ST_Point(${newUser.center.coordinates[1]}, ${newUser.center.coordinates[0]}, 4326) ::geography`;
       this.entityManager.query(
-        `update public.user set center = ${center} where id = '${userId}'`,
+        `update public.user set center = ST_Point($1, $2, 4326) ::geography where id = $3`,[newUser.center.coordinates[1], newUser.center.coordinates[0], userId]
       );
     }
 
