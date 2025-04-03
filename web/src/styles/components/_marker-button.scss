@@ -32,7 +32,11 @@ $cycle: 10;
 .marker-button {
   cursor: grab;
   transition: transform 0.2s ease;
-  height: auto;
+
+  display: FLEX;
+  justify-content: flex-end;
+  align-items: flex-end;
+  // height: auto;
 }
 
 .marker-button .marker-button__image {
@@ -50,7 +54,9 @@ $cycle: 10;
 
 
 .marker-button:hover .marker-button__image {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 1;
   transform: scale(1); /* Just a visual feedback */
 }
