@@ -279,7 +279,14 @@ function NetworkForm({
               value={watch('exploreSettings')}
               markerColor={watch('backgroundColor')}
             />
-
+            <FieldCheckbox
+              name='hideLocationDefault'
+              label={t('geo.hideLocationByDefaultLabel')}
+              explain={t('geo.hideLocationByDefaultExplain')}
+              defaultValue={watch('hideLocationDefault')}
+              text={t('geo.hideLocationByDefaultText')}
+              onChanged={(value) => setValue('hideLocationDefault', value)}
+            />
             <FieldTags
               label={t('configuration.tags')}
               explain={t('configuration.tagsExplain')}
