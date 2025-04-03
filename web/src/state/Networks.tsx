@@ -13,7 +13,7 @@ import { Network } from 'shared/entities/network.entity';
 import { HttpStatus } from 'shared/types/http-status.enum';
 import { UpdateExploreSettings } from './Explore';
 import { useGlobalStore } from 'state';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SetupSteps } from 'shared/setupSteps';
 import { ConfigFound, GetConfig } from './Setup';
 import { getLocale } from 'shared/sys.helper';
@@ -59,8 +59,20 @@ export const useSelectedNetwork = (_selectedNetwork = null): Network => {
   return selectedNetwork;
 }
 
-//@ts-ignore
-export const useNetworkCenter = () => (useSelectedNetwork().exploreSettings).center;
+
+export const useNetworkCenter = () => {
+  const selectedNetwork = useSelectedNetwork();
+  const [center, setCenter] = useState([0,0])
+  useEffect(() => {
+    // @ts-ignore
+    if(selectedNetwork?.exploreSettings?.center)
+    {
+      // @ts-ignore
+      setCenter(() => selectedNetwork.exploreSettings.center)
+    }
+  }, [selectedNetwork])
+  return center;
+};
 
 export class UpdateNetworkBackgroundColor implements UpdateEvent {
   public constructor(public color: string) { }
