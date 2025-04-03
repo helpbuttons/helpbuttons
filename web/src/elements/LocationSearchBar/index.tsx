@@ -117,7 +117,7 @@ export default function LocationSearchBar({
                     <SearchResultsList handleAddressPicked={handleAddressPicked} results={results} hideAddress={hideAddress} />
                 }
                 {(showAddCustomButton && isCustomAddress !== null) &&
-                    <SearchCustomAddress handleClick={() => { setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
+                    <SearchCustomAddress handleClick={() => { setIsCustomAddress(true); toggleShowAddCustomButton(() => false) }} />
                 }
 
                 {(markerPosition && markerPosition[0] && markerPosition[1] && !hideAddress) && (
@@ -236,7 +236,7 @@ function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, pickedAddress
                     iconLink={<IoCloseOutline />}
                     iconLeft={IconType.circle}
                     contentAlignment={ContentAlignment.center}
-                    onClick={() => { setIsCustomAddress(() => false) }}
+                    onClick={() => { setIsCustomAddress(false) }}
                 />
             </div>
 

@@ -48,7 +48,8 @@ function ButtonNewForm({ selectedNetwork }) {
     address: null,
     when: { dates: [], type: null },
     hideAddress: false,
-    eventData: null
+    eventData: null,
+    isCustomAddress: false
   };
   const {
     register,

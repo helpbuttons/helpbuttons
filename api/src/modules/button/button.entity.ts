@@ -139,4 +139,8 @@ export class Button extends BaseEntity {
   @Expose()
   @Column({default: false})
   awaitingApproval: boolean;
+
+  @Expose()
+  @Column({default: false})
+  isCustomAddress: boolean;
 }

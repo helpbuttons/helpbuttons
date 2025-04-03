@@ -29,7 +29,9 @@ export default function FieldLocation({
   hideAddress,
   setLatitude,
   setLongitude,
-  defaultMarkerPosition
+  defaultMarkerPosition,
+  isCustomAddress,
+  setIsCustomAddress
 }) {
   const [markerPosition, setMarkerPosition] = useState(roundCoords(defaultMarkerPosition))
 
@@ -50,8 +52,6 @@ export default function FieldLocation({
     setShowPopup(() => false)
   }
   const openPopup = () => setShowPopup(() => true)
-
-  const [isCustomAddress, setIsCustomAddress] = useState(false)
 
   const onMapClick = (latLng) => {
     setMarkerPosition(() => latLng)
