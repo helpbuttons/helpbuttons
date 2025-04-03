@@ -65,7 +65,7 @@ export function NetworkMapConfigure({
           } */}
             <MarkerButtonIcon
               anchor={mapSettings.center}
-              offset={[35, 65]}
+              offset={[25, 50]}
               cssColor={markerColor}
               image={makeImageUrl(null)}
               title={marker.caption}

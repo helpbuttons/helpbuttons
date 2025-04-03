@@ -1,7 +1,7 @@
-$marker-button-height: 70px;
+$marker-button-height: 50px;
 $marker-button-height-name: 20px;
 $marker-button-width-change: 25px;
-$marker-button-width: 70px;
+$marker-button-width: 50px;
 $marker-button-radius: $border-radius-circle;
 $marker-button-line: 0.2rem;
 $marker-arrow-width: 2px;
@@ -15,26 +15,19 @@ $cycle: 10;
 .marker-button {
 
   width: $marker-button-width;
-  height: auto;
-
+  height: $marker-button-height;
   border: none;
   margin: auto;
   margin-bottom: 0;
   position: absolute;
-  bottom: -70px;
   transition: transform 0.3s ease;
   cursor: grab;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-end;
 }
 
-.marker-button .marker-button__image {
-  display: none;
-  opacity: 0;
-  transform: scale(0); 
-  transition: opacity 0.3s ease;
-}
+
 
 .marker-button:hover {
   z-index: $z-index-02;
@@ -42,17 +35,8 @@ $cycle: 10;
 
 }
 
-
-.marker-button:hover .marker-button__image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 1;
-  transform: scale(1);
-}
-
 .marker-button:hover .marker-button__link-tag {
-  display: none;
+  opacity: 1;
 }
 
 .marker-button:active {
@@ -62,6 +46,8 @@ $cycle: 10;
 }
 
 .marker-button__image {
+    align-items: center;
+    justify-content: center;
     width: $marker-button-width;
     height: 100%;
     margin: auto;
@@ -268,39 +254,12 @@ $cycle: 10;
   white-space: nowrap;
   justify-content: center;
   width: fit-content;
+  display: flex;
   left: auto;
   max-height: 50px;
 
 }
 
-.marker-button__link-tag {
-
-  position: absolute;
-  bottom: 102%;
-  left: 50%;
-  min-height: 20px;
-  transform: translateX(-50%);
-  background: $color-gray;
-  border-radius: $border-radius-semicircle;
-  color: $color-white;
-  display: block;
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-wrap: normal;
-  word-break: keep-all;
-  hyphens: auto;
-  font-size: $font-size-general;
-  font-weight: $font-weight-bold;
-  padding: $padding-small $padding-medium;
-
-  &:hover {
-
-    cursor: pointer;
-
-  }
-
-}
 
 .marker-button__link-tag--alone {
 
@@ -399,3 +358,36 @@ $cycle: 10;
 
   }
 }
+
+
+.marker-button__link-tag {
+
+  position: absolute;
+  bottom: 102%;
+  min-height: 20px;
+  transform: translateX(15%); 
+  background: $color-gray;
+  border-radius: $border-radius-semicircle;
+  color: $color-white;
+  display: block;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: normal;
+  word-break: keep-all;
+  hyphens: auto;
+  font-size: $font-size-general;
+  font-weight: $font-weight-bold;
+  padding: $padding-small $padding-medium;
+  opacity: 0;
+  min-height: 30px;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+
+    cursor: pointer;
+
+  }
+
+}
+
