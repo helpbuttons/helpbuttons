@@ -182,6 +182,8 @@ export default function ButtonForm({
                       markerColor={markerColor}
                       selectedNetwork={selectedNetwork}
                       validationError={errors.address}
+                      isCustomAddress={watch('isCustomAddress')}
+                      setIsCustomAddress={(value) => setValue('isCustomAddress', value)}
                     />
                   </div>
                   <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />

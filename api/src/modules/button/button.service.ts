@@ -150,6 +150,7 @@ export class ButtonService {
       hasPhone,
       eventData: createDto.eventData,
       awaitingApproval,
+      isCustomAddress: createDto.isCustomAddress
     };
 
     await getManager().transaction(
@@ -231,6 +232,8 @@ export class ButtonService {
     updateDto: UpdateButtonDto,
     currentUser: User,
   ) {
+    console.log('updating...')
+    console.log(updateDto)
     const currentButton = await this.findById(id, true);
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let location = {};
