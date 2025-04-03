@@ -72,7 +72,8 @@ export class NetworkService {
       currency: createDto.currency,
       nomeclature: createDto.nomeclature,
       nomeclaturePlural: createDto.nomeclaturePlural,
-      requireApproval: createDto.requireApproval
+      requireApproval: createDto.requireApproval,
+      hideLocationDefault: createDto.hideLocationDefault
     };
     await getManager().transaction(
       async (transactionalEntityManager) => {
@@ -216,7 +217,8 @@ export class NetworkService {
       currency: updateDto.currency,
       nomeclature: updateDto.nomeclature,
       nomeclaturePlural: updateDto.nomeclaturePlural,
-      requireApproval: updateDto.requireApproval
+      requireApproval: updateDto.requireApproval,
+      hideLocationDefault: updateDto.hideLocationDefault
     };
     const buttonTemplatesNew = network.buttonTemplates.filter((btnTemplate) => !btnTemplate.hide).map((btnTemplate) => btnTemplate.name)
 

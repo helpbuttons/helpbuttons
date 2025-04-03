@@ -75,4 +75,7 @@ export class Network extends BaseEntity {
 
   @Column({default: false})
   requireApproval: boolean;
+
+  @Column({default: false})
+  hideLocationDefault: boolean;
 }

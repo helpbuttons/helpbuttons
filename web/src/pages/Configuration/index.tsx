@@ -29,7 +29,6 @@ function Configuration() {
     false,
   );
 
-  const [loadingNetwork, setLoadingNetwork] = useToggle(true);
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -44,15 +43,15 @@ function Configuration() {
 
   const backgroundColor = watch('backgroundColor');
   useUpdateBackgroundColor(backgroundColor);
-
+  const [on, setOn] = useState(false)
   const textColor = watch('textColor');
   useTextColor(textColor);
   const { pathname, asPath, query } = useRouter();
 
   const [selectedNetwork, setSelectedNetwork] = useState(null);
   useEffect(() => {
-    if (selectedNetwork && !selectedNetwork?.init && loadingNetwork) {
-      setLoadingNetwork(false);
+    if (selectedNetwork && !selectedNetwork?.init) {
+      setOn(() => true)
       reset(selectedNetwork);
     }
   }, [selectedNetwork]);
@@ -84,7 +83,8 @@ function Configuration() {
           nomeclature: data.nomeclature,
           nomeclaturePlural: data.nomeclaturePlural,
           requireApproval: data.requireApproval,
-          slogan: data.slogan
+          slogan: data.slogan,
+          hideLocationDefault: data.hideLocationDefault
         },
         (network) => {
           store.emit(new UpdateExploreSettings(data.exploreSettings));
@@ -157,9 +157,9 @@ function Configuration() {
   };
   return (
     <>
-      {selectedNetwork &&
+      {(selectedNetwork &&
         sessionUser &&
-        sessionUser.role == Role.admin && (
+        sessionUser.role == Role.admin && on) && (
           <Popup title={t('configuration.title')} linkBack="/Profile">
              {/* <Plugins customFields={'ld'} setCustomFields={() => {}} /> */}
             <NetworkForm
@@ -175,7 +175,6 @@ function Configuration() {
               captionAction={t('common.save')}
               linkFwd="/Profile"
               description={t('configuration.description')}
-              defaultExploreSettings={selectedNetwork.exploreSettings}
             />
           </Popup>
         )}
