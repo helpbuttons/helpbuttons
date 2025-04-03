@@ -379,7 +379,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
         {!button.hideAddress && showMap && (
           <MarkerViewMap
-            markerPosition={[button.latitude, button.longitude]}
+            pickedPosition={[button.latitude, button.longitude]}
             zoom={maxZoom}
             markerColor={cssColor}
             markerImage={button.image}
