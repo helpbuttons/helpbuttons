@@ -423,49 +423,38 @@ function ExpiringAlert({
 }
 
 export function ButtonOwnerPhone({ user, button }) {
-  const [showPhone, toggleShowPhone] = useState(false);
   const [phone, setPhone] = useState(null);
-  const isLoadingPhone = React.useRef(false)
-  const sessionUser = useRef(
-    store,
-    (state: GlobalState) => state.sessionUser,
-    false,
-  );
-
-  useEffect(() => {
-    if (phone == null && !isLoadingPhone.current) {
-      isLoadingPhone.current = true;
-      store.emit(
+  
+  const showPhone = () => {
+    store.emit(
         new GetPhone(
           user.id,
           (phone) => {
-            setPhone(phone);
+            setPhone(() => phone);
           },
           () => { },
         ),
       );
-    }
-  }, [showPhone])
-
+  }
   const jumpTo = (url) => {
     window.location.replace(url);
   }
-
   return (
     <>
       {user?.publishPhone && (
         <>
-          {!showPhone && isButtonOwner(user, button) && 
+        {JSON.stringify(showPhone)}
+          {!phone && 
             <Btn
               btnType={BtnType.corporative}
               contentAlignment={ContentAlignment.left}
               caption={t('button.showPhone')}
               iconLeft={IconType.svg}
               iconLink={<IoCallOutline />}
-              onClick={() => toggleShowPhone(true)}
+              onClick={showPhone}
             />
           }
-          {showPhone && 
+          {phone && 
             <div className="card-button__phone-section">
             <Btn
               btnType={BtnType.filterCorp}
