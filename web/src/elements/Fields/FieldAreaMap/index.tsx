@@ -29,15 +29,17 @@ export default function FieldAreaMap({
 
   const closePopup = () => setShowPopup(() => false)
   const openPopup = () => setShowPopup(() => true)
+
+  const labelPicker = value?.zoom ? t('configuration.areaPicked',[roundCoord(value.center[0]),roundCoord(value.center[1]),value.zoom]) : label
   return (
-    <PickerField   iconLink ={<IoSearchOutline/>}    showPopup={showPopup} validationError={validationError} label={label} btnLabel={label} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
-       <FieldAreaMapSettings
-          defaultExploreSettings={value}
-          onChange={onChange}
-          marker={marker}
-          closePopup={closePopup}
-        />
-    </PickerField>
+      <PickerField   iconLink ={<IoSearchOutline/>}    showPopup={showPopup} validationError={validationError} label={label} btnLabel={labelPicker} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
+        <FieldAreaMapSettings
+            defaultExploreSettings={value}
+            onChange={onChange}
+            marker={marker}
+            closePopup={closePopup}
+          />
+      </PickerField>
   )
 }
 
@@ -159,16 +161,16 @@ return (
               />
               <LocationSearchBar
                 placeholder={t('button.locationPlaceholder')}
-                markerAddress={address}
+                pickedAddress={address}
                 hideAddress={true}
-                setMarkerAddress={setAddress}
+                setPickedAddress={setAddress}
                 isCustomAddress={null}
                 setIsCustomAddress={() => {}}
-                setMarkerPosition={setCenter}
-                markerPosition={mapSettings.center}
+                setPickedPosition={setCenter}
+                focusPoint={mapSettings.center}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
-                mapAddress={{address: address}}
+                pickedPosition={mapSettings.center}
               />
               <Slider
                 min={minZoom}

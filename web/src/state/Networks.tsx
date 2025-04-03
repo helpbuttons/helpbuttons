@@ -39,6 +39,7 @@ export const networksInitial = {
   initialized: false,
 };
 
+
 export const useSelectedNetwork = (_selectedNetwork = null): Network => {
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
   const initialized = useGlobalStore((state: GlobalState) => state.networks.initialized);
@@ -57,6 +58,10 @@ export const useSelectedNetwork = (_selectedNetwork = null): Network => {
 
   return selectedNetwork;
 }
+
+//@ts-ignore
+export const useNetworkCenter = () => (useSelectedNetwork().exploreSettings).center;
+
 export class UpdateNetworkBackgroundColor implements UpdateEvent {
   public constructor(public color: string) { }
 

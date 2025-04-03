@@ -281,10 +281,10 @@ function NetworkForm({
             />
             <FieldCheckbox
               name='hideLocationDefault'
-              label={t('geo.hideLocationByDefaultLabel')}
-              explain={t('geo.hideLocationByDefaultExplain')}
+              label={t('configuration.hideLocationByDefaultLabel')}
+              explain={t('configuration.hideLocationByDefaultExplain')}
               defaultValue={watch('hideLocationDefault')}
-              text={t('geo.hideLocationByDefaultText')}
+              text={t('configuration.hideLocationByDefaultText')}
               onChanged={(value) => setValue('hideLocationDefault', value)}
             />
             <FieldTags

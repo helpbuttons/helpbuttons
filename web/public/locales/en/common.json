@@ -490,7 +490,8 @@
     "moderation": "Moderation",
     "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
-    "addType": "+ Create _helpbutton_ type"
+    "addType": "+ Create _helpbutton_ type",
+    "areaPicked": "Center: ({0},{1}) zoom: {2}"
   },
   "configure": {
     "browsePins": "",
