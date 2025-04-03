@@ -6,7 +6,6 @@ import t from 'i18n';
 
 import { NetworkMapConfigure } from 'components/map/Map/NetworkMapConfigure';
 import { BrowseType, HbMapTiles, maxZoom, minZoom } from 'components/map/Map/Map.consts';
-import { circleToPolygon } from 'shared/geo.utils';
 import { getBoundsHexFeatures, roundCoord, roundCoords } from 'shared/honeycomb.utils';
 import PickerField from 'components/picker/PickerField';
 import { IoSearchOutline } from 'react-icons/io5';
@@ -14,6 +13,7 @@ import dconsole from 'shared/debugger';
 import Slider from 'rc-slider';
 import LocationSearchBar, { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 import { useGeoReverse } from '../FieldLocation/location.helpers';
+import { circleGeoJSON } from 'shared/geo.utils';
 
 
 export default function FieldAreaMap({
@@ -65,7 +65,7 @@ export function FieldAreaMapSettings({
         step: 100,
         onChange: (newRadius) => setRadius(newRadius)
       },
-      geometry: circleToPolygon([0,0], 10000),
+      geometry: circleGeoJSON(0,0, 10000),
       browseType: BrowseType.HONEYCOMB,
       honeyCombFeatures: null,
     }, ...defaultExploreSettings}
@@ -122,7 +122,7 @@ export function FieldAreaMapSettings({
   const handleMapClick = ({latLng}) => {
     findAddressFromPosition(latLng, false)
     setMapSettings((prevSettings) => {
-      return {...prevSettings, center: latLng, geometry: circleToPolygon(latLng, prevSettings.radius)}
+      return {...prevSettings, center: latLng, geometry: circleGeoJSON(latLng[1],latLng[0], prevSettings.radius * 0.001)}
     })
   }
 
@@ -147,18 +147,8 @@ export function FieldAreaMapSettings({
     onChange({zoom: mapSettings.zoom, center: mapSettings.center, radius: mapSettings.radius, tileType: mapSettings.tileType, browseType: mapSettings.browseType})
   }, [mapSettings])
 return (
-  <>
+  <div className="form__field form__field--location-wrapper">
   
-              <NetworkMapConfigure
-                mapSettings={mapSettings}
-                onBoundsChanged={onBoundsChanged}
-                handleMapClick={handleMapClick}
-                setMapTile={setMapTile}
-                marker={marker}
-                setBrowseType={setBrowseType}
-                tileType={mapSettings.tileType}
-                markerColor={markerColor}
-              />
               <LocationSearchBar
                 placeholder={t('button.locationPlaceholder')}
                 pickedAddress={address}
@@ -171,17 +161,36 @@ return (
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 pickedPosition={mapSettings.center}
+                explain={t('configuration.centerOfMap')}
               />
-              <Slider
-                min={minZoom}
-                max={maxZoom}
-                onChange={(newZoom) => {
-                  setZoom(newZoom)
-                  dconsole.log('change zoom in the map')
-                }}
-                value={mapSettings.zoom}
+
+              <NetworkMapConfigure
+                mapSettings={mapSettings}
+                onBoundsChanged={onBoundsChanged}
+                handleMapClick={handleMapClick}
+                setMapTile={setMapTile}
+                marker={marker}
+                setBrowseType={setBrowseType}
+                tileType={mapSettings.tileType}
+                markerColor={markerColor}
               />
-              {mapSettings.zoom}
+               <div className="form__field">
+                <div className="form__explain">{t('configuration.zoomLevel')}</div>
+                <div className="form__input--slider">
+
+                <Slider
+                  min={minZoom}
+                  max={maxZoom}
+                  onChange={(newZoom) => {
+                    setZoom(newZoom)
+                    dconsole.log('change zoom in the map')
+                  }}
+                  value={mapSettings.zoom}
+                />
+                </div>
+
+                {mapSettings.zoom}
+              </div>
 
               <Btn
                 btnType={BtnType.submit}
@@ -189,6 +198,6 @@ return (
                 contentAlignment={ContentAlignment.center}
                 onClick={() => closePopup()}
               />
-              </>
+              </div>
 )
 }

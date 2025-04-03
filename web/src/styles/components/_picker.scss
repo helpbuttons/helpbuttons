@@ -321,6 +321,18 @@ $picker-comments-item-padding: 25px;
 
 }
 
+.picker__map:hover {
+
+ cursor: grab;
+
+}
+
+.picker__map:active {
+
+  cursor: grabbing;
+ 
+ }
+
 .picker--over {
 
   position: absolute;
