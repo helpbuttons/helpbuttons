@@ -469,16 +469,6 @@ export class ButtonService {
     return true;
   }
 
-  async getPhone(buttonId: string) {
-    const query = `SELECT public.user.phone from button, public.user WHERE button.id = '${buttonId}' AND "ownerId" = public.user.id`;
-    const result = await this.entityManager.query(query);
-
-    if (result.length > 0) {
-      return result[0].phone;
-    }
-    return '';
-  }
-
   findDeletedAndRemoveMedia() {
     // created more than 1 month ago
     return this.entityManager
@@ -542,9 +532,7 @@ export class ButtonService {
   }
 
   updateModifiedDate(buttonId: string) {
-    return this.entityManager.query(
-      `UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = '${buttonId}'`,
-    );
+    return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = $1`, [buttonId]);
   }
 
   checkAndSetExpired(button: Button) {

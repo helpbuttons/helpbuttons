@@ -180,13 +180,6 @@ export class ButtonController {
     })
   }
 
-  @AllowGuest()
-  @Get('getphone/:buttonId')
-  async getPhone(@Param('buttonId') buttonId: string)
-  {
-    return this.buttonService.getPhone(buttonId)
-  }
-
   @OnlyRegistered()
   @Get('/renew/:buttonId')
   async renew(@Param('buttonId') buttonId: string, @CurrentUser() user: User)

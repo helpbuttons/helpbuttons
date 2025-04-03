@@ -4,7 +4,7 @@ import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 import useComponentVisible from 'shared/custom.hooks';
 
 
-export function CardSubmenu({ children, extraClass }) {
+export function CardSubmenu({ children, extraClass = '' }) {
   const { ref, showSubmenu, setShowSubmenu } = useComponentVisible(false);
   return (
     <div ref={ref} className={extraClass}>

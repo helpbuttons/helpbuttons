@@ -286,36 +286,6 @@ export class NetworkService {
     return getConfig();
   }
 
-  async buttonsToDeleteFromButtonTemplates(
-    currentBtnTypes,
-    _newBtnTypes,
-  ) {
-    const networkBtnTypes = currentBtnTypes.map(
-      (btnType) => btnType.name,
-    );
-    const newNetworkBtnTypes = _newBtnTypes.map(
-      (btnType) => btnType.name,
-    );
-
-    const deletedFromNetwork = networkBtnTypes.filter((btnType) => {
-      return !(newNetworkBtnTypes.indexOf(btnType) > -1);
-    });
-    if (deletedFromNetwork.length > 0) {
-      const types = deletedFromNetwork.reduce((result, btnType) => {
-        if (result.length > 0) {
-          return `${result},'${btnType}'`;
-        } else {
-          return `'${btnType}'`;
-        }
-      }, '');
-      const query = `select count(id), type from button where type IN (${types}) group by type`;
-
-      return await this.entityManager.query(query);
-    }
-    return [];
-  }
-
-
   getButtonTypesWithEventField() {
     return this.findButtonTypes()
       .then((buttonTemplates) => {
