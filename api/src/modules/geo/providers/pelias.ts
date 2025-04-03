@@ -48,7 +48,7 @@ export class PeliasProvider implements GeoProvider {
 
   getLimitedAddress(position: GeoPosition): Promise<GeoAddress> {
     return this.reverseGeo(position.lat, position.lng, true).then((res) =>
-      this.hydratePlace(res.data.features[0]),
+      this.hydratePlace(res.data.features[0], true),
     );
   }
 
@@ -60,7 +60,12 @@ export class PeliasProvider implements GeoProvider {
 
   hydratePlace(place: any, limited = false): GeoAddress {
     const placeProperties = place.properties;
-    const label = placeProperties.label.replace(placeProperties.region_a, placeProperties.region)
+    let label = placeProperties.label.replace(placeProperties.region_a, placeProperties.region)
+    if(limited)
+    {
+      label = `${placeProperties.localadmin ? placeProperties.localadmin+', ' : ''}${placeProperties.region ? placeProperties.region+', ' : ''}${placeProperties.country ? placeProperties.country : ''}`
+    }
+    
     return {
       formatted: label,
       geometry: {

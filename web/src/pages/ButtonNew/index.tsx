@@ -38,8 +38,8 @@ function ButtonNewForm({ selectedNetwork }) {
   const defaultValues = {
     image: null,
     description: '',
-    latitude: selectedNetwork.exploreSettings.center[0],
-    longitude: selectedNetwork.exploreSettings.center[1],
+    latitude: null,
+    longitude: null,
     type: '',
     tags: [],
     title: '',

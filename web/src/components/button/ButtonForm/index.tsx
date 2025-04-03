@@ -170,7 +170,7 @@ export default function ButtonForm({
                       label={t('button.whereLabel')}
                       setLatitude={(lat) => setValue('latitude', lat)}
                       setLongitude={(lng) => setValue('longitude', lng)}
-                      defaultMarkerPosition={[watch('latitude'), watch('longitude')]}
+                      markerPosition={[watch('latitude'), watch('longitude')]}
                       setMarkerAddress={(address) => {
                         setValue('address', address);
                       }}

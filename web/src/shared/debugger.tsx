@@ -13,14 +13,21 @@ class Console {
 
     log(...args) {
         if (this.isDebugEnabled) {
-            // const timestamp = new Date().toISOString();
-            console.log(`[DEBUG]`, ...args);
+            const { stack } = new Error();
+            const stackLine = stack.split('\n')[1] || '';
+            const fileName = stackLine.split('///')[1] || '';
+            if (fileName) {
+                console.log(`[DEBUG]`, ...args, '      >' , fileName);
+            }else{
+                console.log(`[DEBUG]`, ...args);
+            }
         }
     }
 
     error(...args) {
         if (this.isDebugEnabled) {
-            console.error(`[DEBUG ERROR]`, ...args);
+            const { stack } = new Error();
+            console.error(`[DEBUG ERROR]`,stack, ...args);
         }
     }
 }
