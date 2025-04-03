@@ -170,7 +170,7 @@ export default function ButtonForm({
                       label={t('button.whereLabel')}
                       setLatitude={(lat) => setValue('latitude', lat)}
                       setLongitude={(lng) => setValue('longitude', lng)}
-                      defaultMarkerPosition={[watch('latitude'), watch('longitude')]}
+                      markerPosition={[watch('latitude'), watch('longitude')]}
                       setMarkerAddress={(address) => {
                         setValue('address', address);
                       }}
@@ -182,6 +182,8 @@ export default function ButtonForm({
                       markerColor={markerColor}
                       selectedNetwork={selectedNetwork}
                       validationError={errors.address}
+                      isCustomAddress={watch('isCustomAddress')}
+                      setIsCustomAddress={(value) => setValue('isCustomAddress', value)}
                     />
                   </div>
                   <FieldCustomFields customFields={customFields} watch={watch} setValue={setValue} setFocus={setFocus} register={register} errors={errors} currency={selectedNetwork.currency} />

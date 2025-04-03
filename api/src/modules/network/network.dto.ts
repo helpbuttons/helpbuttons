@@ -98,6 +98,8 @@ export class CreateNetworkDto implements Partial<Network> {
   nomeclature?: string;
 
   nomeclaturePlural?: string;
+
+  hideLocationDefault: boolean;
 }
 
 export class UpdateNetworkDto extends PartialType(CreateNetworkDto) {}

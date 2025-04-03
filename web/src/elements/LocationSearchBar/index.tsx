@@ -56,32 +56,28 @@ export default function LocationSearchBar({
     placeholder,
     label = null,
     explain = null,
-    markerAddress,
     hideAddress,
     isCustomAddress,
     setIsCustomAddress,
-    setMarkerAddress,
-    markerPosition,
-    setMarkerPosition,
+    pickedPosition,
+    setPickedPosition,
     isLoading,
     setIsLoading,
-    mapAddress
+    pickedAddress,
+    setPickedAddress
 }) {
     const [results, setResults] = useState([]);
     const [showAddCustomButton, toggleShowAddCustomButton] = useState(false)
-    const [searchAddress, setSearchAddress] = useState(markerAddress)
 
     const handleAddressPicked = (place) => {
-        setSearchAddress(() => place.formatted)
-        setMarkerAddress(place.formatted)
-        setMarkerPosition([place.geometry.lat, place.geometry.lng])
+        setPickedAddress(() => place.formatted)
+        setPickedPosition(() => [place.geometry.lat, place.geometry.lng])
         setResults(() => [])
         toggleShowAddCustomButton(() => false)
     }
 
     useEffect(() => {
         if (!showAddCustomButton) {
-            setMarkerPosition(markerPosition)
             setResults(() => null)
         }
     }, [showAddCustomButton])
@@ -90,27 +86,14 @@ export default function LocationSearchBar({
         toggleShowAddCustomButton(() => true)
     }
 
-    useEffect(() => {
-        if (!isCustomAddress) {
-            setSearchAddress(() => mapAddress.address)
-        }
-    }, [mapAddress, isCustomAddress])
-
-    useEffect(() => {
-        if (isCustomAddress) {
-            setMarkerAddress(searchAddress)
-        }
-    }, [searchAddress, isCustomAddress])
-
-
     return <>
         <div className="form__field form__field--location-wrapper">
             {label && <div className="form__label">{label}</div>}
             {explain && <div className="form__explain">{explain}</div>}
             <div className="form__field-dropdown form__field-dropdown--location">
                 <div className="form__field-dropdown--input-location">
-                    <FieldLocationSearch isCustomAddress={isCustomAddress} pickedAddress={searchAddress} placeholder={placeholder} setResults={setResults} onFocus={handleFocus} hideAddress={hideAddress} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={markerPosition} />
-                    <FieldCustomAddress isCustomAddress={isCustomAddress} pickedAddress={searchAddress} setPickedAddress={setSearchAddress} setIsCustomAddress={setIsCustomAddress} />
+                    <FieldLocationSearch isCustomAddress={isCustomAddress} pickedAddress={pickedAddress} placeholder={placeholder} setResults={setResults} onFocus={handleFocus} hideAddress={hideAddress} isLoading={isLoading} setIsLoading={setIsLoading} focusPoint={pickedPosition} />
+                    <FieldCustomAddress isCustomAddress={isCustomAddress} pickedAddress={pickedAddress} setPickedAddress={setPickedAddress} setIsCustomAddress={setIsCustomAddress} />
                     <LoadUserLocationButton handleBrowserLocation={handleAddressPicked} hideAddress={hideAddress} />
                 </div>
                 {(results && results.length > 0) &&
@@ -119,9 +102,10 @@ export default function LocationSearchBar({
                 {(showAddCustomButton && ( results && results.length < 1 ) && isCustomAddress !== null) &&
                     <SearchCustomAddress handleClick={() => { setIsCustomAddress(() => true); toggleShowAddCustomButton(() => false) }} />
                 }
-                {(markerPosition && markerPosition[0] && markerPosition[1] && !hideAddress) && (
+
+                {(pickedPosition && pickedPosition[0] && pickedPosition[1]) && (
                     <div className='form__input-subtitle-option form__input-subtitle--grayed'>
-                        ( {roundCoords(markerPosition).toString()} )
+                        ( {roundCoords(pickedPosition).toString()} )
                     </div>
                 )}
             </div>
@@ -132,23 +116,23 @@ export default function LocationSearchBar({
 function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults, hideAddress = false, onFocus = (event) => {}, pickedAddress, isLoading, setIsLoading, focusPoint }) {
     const geoSearch = useGeoSearch()
     const [searching, setIsSearching] = useState(false)
-    const [input, setInput] = useState(pickedAddress);
-    const searchQuery = useRef({q: '', limit: hideAddress})
-
-    useEffect(() => {
-        searchQuery.current.limit = hideAddress;
-    }, [hideAddress])
+    const [input, setInput] = useState(pickedAddress ? pickedAddress : '');
+    const searchQuery = useRef(pickedAddress)
 
     useEffect(() => {
         setIsLoading(() => searching)
     }, [searching])
     useEffect(() => {
-        setInput(() => pickedAddress)
+        if(pickedAddress)
+        {
+            setInput(() => pickedAddress)
+        }
     }, [pickedAddress])
+
     const searchAddress = () => {
         setIsSearching(() => true)
-        dconsole.log('searchingddd... ', focusPoint, input)
-        geoSearch(searchQuery.current.q, roundCoord(focusPoint[0]), roundCoord(focusPoint[1]), searchQuery.current.limit, (places) => {
+        dconsole.log('searching... ', focusPoint, searchQuery.current)
+        geoSearch(searchQuery.current, roundCoord(focusPoint[0]), roundCoord(focusPoint[1]), false, (places) => {
             if (places.length > 0) {
                 const placesFound = places.map((place, key) => {
                     return {
@@ -176,7 +160,7 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
             if (prevValue != value) {
 
                 if (value.length > 0) {
-                    searchQuery.current.q = value;
+                    searchQuery.current = value;
                     searchAddress()
                 }else{
                     setResults(() => [])
@@ -207,18 +191,15 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
 function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, pickedAddress, setPickedAddress }) {
 
     const [input, setInput] = useState(pickedAddress);
-    useEffect(() => {
-        setInput(() => pickedAddress)
-    }, [pickedAddress])
 
     const handleFocus = (e) => {
         e.target.select()
     }
     const handleChange = (e) => {
-        setPickedAddress(() => e.target.value)
+        const value = e.target.value
+        setPickedAddress(() => value)
+        setInput(value)
     }
-
-
 
     return (<>{isCustomAddress &&
         <div className="form__input--dropdown-search">
@@ -235,10 +216,9 @@ function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, pickedAddress
                     iconLink={<IoCloseOutline />}
                     iconLeft={IconType.circle}
                     contentAlignment={ContentAlignment.center}
-                    onClick={() => { setIsCustomAddress(() => false) }}
+                    onClick={() => { setIsCustomAddress(false) }}
                 />
             </div>
-
         </div>
     }
     </>)
