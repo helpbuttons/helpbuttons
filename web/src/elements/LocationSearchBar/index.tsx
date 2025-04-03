@@ -208,15 +208,14 @@ function FieldLocationSearch({ isCustomAddress = false, placeholder, setResults,
 function FieldCustomAddress({ isCustomAddress, setIsCustomAddress, pickedAddress, setPickedAddress }) {
 
     const [input, setInput] = useState(pickedAddress);
-    useEffect(() => {
-        setInput(() => pickedAddress)
-    }, [pickedAddress])
 
     const handleFocus = (e) => {
         e.target.select()
     }
     const handleChange = (e) => {
-        setPickedAddress(() => e.target.value)
+        const value = e.target.value
+        setPickedAddress(() => value)
+        setInput(value)
     }
 
 
