@@ -27,7 +27,7 @@ export class UserService {
     private readonly tagService: TagService,
     private readonly storageService: StorageService,
     private readonly mailService: MailService
-  ) {}
+  ) { }
 
   createUser(user: User) {
     return this.userRepository.insert([user]);
@@ -43,12 +43,12 @@ export class UserService {
 
   findById(id: string, includeCounts = false) {
     return this.userRepository.findOne({ where: { id } })
-    .then((user) => {
-      if (includeCounts) {
-        return this.findCounts(user)
-      }
-      return user;
-    });
+      .then((user) => {
+        if (includeCounts) {
+          return this.findCounts(user)
+        }
+        return user;
+      });
 
   }
 
@@ -78,27 +78,28 @@ export class UserService {
       where: { email: `${email}` },
     });
   }
+  async findCounts(user) {
 
-  findCounts(user){
-    return Promise.all([
-      this.entityManager.query(
-        `select sum(cardinality("followedBy")) as "followsCount" from button where "ownerId"= '${user.id}' `
-      ),
-      this.entityManager.query(
-        `select count(button.id) as "buttonsCount" from button where "ownerId" = '${user.id}'`
-      ),
-      this.entityManager.query(
-        `select count(post.id) as "postsCount" from post where "authorId" = '${user.id}'`
-      ),
-      this.entityManager.query(
-        `select count(comment.id) as "commentsCount" from comment where "authorId" = '${user.id}'`
-      ),
-    ]).then(([followsCount, buttonCount, postCount, commentCount]) => {
+    const q = `SELECT COALESCE(
+        (select sum(cardinality("followedBy")) as "followsCount" from button where "ownerId"= $1), 
+      0) as "followersCount",
+      COALESCE(
+        (select count(button.id) as "buttonsCount" from button where "ownerId" = $1),0) as "buttonCount",
+        COALESCE(
+        (select count(post.id) as "postsCount" from post where "authorId" = $1),0) as "postCount",
+COALESCE(
+        (select count(comment.id) as "commentsCount" from comment where "authorId" = $1),0) as "commentCount"
+        `;
+    return this.entityManager.query(
+      q, [user.id]
+    ).then((results) => {
+      const result = results[0]
       return {
         ...user,
-        followsCount: followsCount[0].followsCount,
-        commentCount: parseInt(commentCount[0].commentsCount) + parseInt(postCount[0].postsCount),
-        buttonCount: buttonCount[0].buttonsCount,
+        followsCount: parseInt(result.followersCount),
+        postsCount: parseInt(result.postCount),
+        commentCount: parseInt(result.commentCount) + parseInt(result.postCount),
+        buttonCount: parseInt(result.buttonCount),
       };
     });
   }
@@ -131,20 +132,20 @@ export class UserService {
     });
   }
 
-  notifyMail(userId, content, subject, link, linkCaption){
-    return this.userRepository.findOneBy({id: userId})
-    .then((user) => {
-      this.mailService.sendWithLink({
-        to: user.email,
-        content,
-        subject,
-        link,
-        linkCaption,
-      });
-    })
-    ;
-  
-}
+  notifyMail(userId, content, subject, link, linkCaption) {
+    return this.userRepository.findOneBy({ id: userId })
+      .then((user) => {
+        this.mailService.sendWithLink({
+          to: user.email,
+          content,
+          subject,
+          link,
+          linkCaption,
+        });
+      })
+      ;
+
+  }
 
   loginToken(verificationToken: string) {
     if (verificationToken.length < 2) {
@@ -180,8 +181,8 @@ export class UserService {
     return this.userRepository.update(userId, { role: newRole });
   }
 
-  moderationList( user: User, page: number) {
-    return this.userRepository.find({take: 10, skip: page * 10, order: { name: 'ASC' }, where: {id: Not(user.id)}})
+  moderationList(user: User, page: number) {
+    return this.userRepository.find({ take: 10, skip: page * 10, order: { name: 'ASC' }, where: { id: Not(user.id) } })
   }
 
   async unsubscribe(email) {
@@ -248,26 +249,23 @@ export class UserService {
 
   getPhone(userId) {
     return this.findById(userId).then((user) => {
-      if(user.publishPhone)
-      {
+      if (user.publishPhone) {
         return user.phone
       }
       return ''
     });
   }
 
-  public deleteme(currentUser: User)
-  {
-    if(currentUser.avatar)
-    {
+  public deleteme(currentUser: User) {
+    if (currentUser.avatar) {
       this.storageService.delete(currentUser.avatar)
     }
 
     return this.userRepository
-        .delete({id: currentUser.id})
+      .delete({ id: currentUser.id })
   }
 
-  public findQrCode(qrcode: string){
-    return this.userRepository.findOne({where:  {qrcode: qrcode}})
+  public findQrCode(qrcode: string) {
+    return this.userRepository.findOne({ where: { qrcode: qrcode } })
   }
 }

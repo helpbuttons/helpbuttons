@@ -532,9 +532,7 @@ export class ButtonService {
   }
 
   updateModifiedDate(buttonId: string) {
-    return this.entityManager.query(
-      `UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = '${buttonId}'`,
-    );
+    return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = $1`, [buttonId]);
   }
 
   checkAndSetExpired(button: Button) {
