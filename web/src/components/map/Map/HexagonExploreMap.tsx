@@ -59,7 +59,6 @@ export default function HexagonExploreMap({
     if(filtersByLocation?.center && filtersByLocation?.radius)
     {
       setFilteredCircle(() => circleGeoJSON(filtersByLocation.center[1],filtersByLocation.center[0], filtersByLocation.radius*0.001));
-      dconsole.log(filteredCircle)
     }else{
       setFilteredCircle(() => null)
     }
