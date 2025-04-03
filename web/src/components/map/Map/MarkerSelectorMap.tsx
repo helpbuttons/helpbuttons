@@ -109,7 +109,7 @@ export default function MarkerViewMap({
             {!hideAddress && (
               <MarkerButtonIcon
                 anchor={pickedPosition}
-                offset={[35, 65]}
+                offset={[25, 50]}
                 cssColor={markerColor}
                 image={markerImage}
                 title={markerCaption}
@@ -118,7 +118,7 @@ export default function MarkerViewMap({
             {hideAddress && (
               <MarkerButtonIcon
                 anchor={getHexagonCenter(pickedPosition, hexagonSizeZoom)}
-                offset={[35, 65]}
+                offset={[25, 50]}
                 cssColor={markerColor}
                 image={markerImage}
                 title={markerCaption}

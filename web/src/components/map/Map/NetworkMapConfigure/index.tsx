@@ -26,11 +26,6 @@ export function NetworkMapConfigure({
       {/* <BrowseTypeSelector
         setBrowseType={setBrowseType}
       /> */}
-      <div className='form__field'>
-         <p className='form__explain'>
-           {t('configuration.centerOfMap')}
-        </p>
-      </div>
 
       {(mapSettings.browseType != BrowseType.LIST) && 
 
@@ -70,7 +65,7 @@ export function NetworkMapConfigure({
           } */}
             <MarkerButtonIcon
               anchor={mapSettings.center}
-              offset={[35, 65]}
+              offset={[25, 50]}
               cssColor={markerColor}
               image={makeImageUrl(null)}
               title={marker.caption}

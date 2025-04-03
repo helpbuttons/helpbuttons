@@ -145,18 +145,8 @@ export function FieldAreaMapSettings({
     onChange({zoom: mapSettings.zoom, center: mapSettings.center, radius: mapSettings.radius, tileType: mapSettings.tileType, browseType: mapSettings.browseType})
   }, [mapSettings])
 return (
-  <>
+  <div className="form__field form__field--location-wrapper">
   
-              <NetworkMapConfigure
-                mapSettings={mapSettings}
-                onBoundsChanged={onBoundsChanged}
-                handleMapClick={handleMapClick}
-                setMapTile={setMapTile}
-                marker={marker}
-                setBrowseType={setBrowseType}
-                tileType={mapSettings.tileType}
-                markerColor={markerColor}
-              />
               <LocationSearchBar
                 placeholder={t('button.locationPlaceholder')}
                 markerAddress={address}
@@ -168,18 +158,37 @@ return (
                 markerPosition={mapSettings.center}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
+                explain={t('configuration.centerOfMap')}
                 mapAddress={{address: address}}
               />
-              <Slider
-                min={minZoom}
-                max={maxZoom}
-                onChange={(newZoom) => {
-                  setZoom(newZoom)
-                  dconsole.log('change zoom in the map')
-                }}
-                value={mapSettings.zoom}
+
+              <NetworkMapConfigure
+                mapSettings={mapSettings}
+                onBoundsChanged={onBoundsChanged}
+                handleMapClick={handleMapClick}
+                setMapTile={setMapTile}
+                marker={marker}
+                setBrowseType={setBrowseType}
+                tileType={mapSettings.tileType}
+                markerColor={markerColor}
               />
-              {mapSettings.zoom}
+               <div className="form__field">
+                <div className="form__explain">{t('configuration.zoomLevel')}</div>
+                <div className="form__input--slider">
+
+                <Slider
+                  min={minZoom}
+                  max={maxZoom}
+                  onChange={(newZoom) => {
+                    setZoom(newZoom)
+                    dconsole.log('change zoom in the map')
+                  }}
+                  value={mapSettings.zoom}
+                />
+                </div>
+
+                {mapSettings.zoom}
+              </div>
 
               <Btn
                 btnType={BtnType.submit}
@@ -187,6 +196,6 @@ return (
                 contentAlignment={ContentAlignment.center}
                 onClick={() => closePopup()}
               />
-              </>
+              </div>
 )
 }
