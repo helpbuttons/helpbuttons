@@ -46,7 +46,6 @@ export function MarkerButton(props: MarkerButtonProps) {
 
   return (
     <>
-    l
       <MarkerButtonIcon
         {...props}
         cssColor={props.color}
