@@ -296,6 +296,8 @@ export class ButtonService {
     }
     if (button.images.length > 0) {
       button.image = button.images[0];
+    }else{
+      button.image = null;
     }
 
     this.buttonRepository
