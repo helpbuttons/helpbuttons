@@ -81,12 +81,15 @@ function MyApp({ Component, pageProps }) {
   };
   const [pageName, setPageName] = useState('HomeInfo')
   useEffect(() => {
-    setPageName(getPageName(path.split('/')[1]))
-    // debugMessage(`fetching ${pageName}`)
+    setPageName(() => getPageName(path.split('/')[1]))
     function getPageName(urlString) {
       const finit = urlString.indexOf("#") !== -1 ? urlString.indexOf("#") : (urlString.indexOf("?") !== -1 ? urlString.indexOf("?") !== -1 : null)
       if (finit) {
         return urlString.substr(0, finit)
+      }
+      if(!urlString)
+      {
+        return 'HomeInfo'
       }
       return urlString;
     }
