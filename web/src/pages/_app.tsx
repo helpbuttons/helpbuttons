@@ -87,8 +87,7 @@ function MyApp({ Component, pageProps }) {
       if (finit) {
         return urlString.substr(0, finit)
       }
-      if(!urlString)
-      {
+      if (!urlString) {
         return 'HomeInfo'
       }
       return urlString;
@@ -259,62 +258,69 @@ function MyApp({ Component, pageProps }) {
     setLoading(false);
   });
 
-  if (isSetup) {
-    return <> <Head>
-      <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /></>;
-  } else if (pageName == 'Embbed') {
-    return (
-      <LoadabledComponent loading={!selectedNetwork || loading}>
-        <Component {...pageProps} />
-      </LoadabledComponent>
-    );
-  } else if (!selectedNetwork.initialized) {
-    return (
-      <>
-        <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
-        <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
-        <div
-          className="index__container"
-          style={
-            selectedNetwork
-              ? ({
-                '--network-background-color':
-                  selectedNetwork.backgroundColor,
-                '--network-text-color': selectedNetwork.textColor,
-              } as React.CSSProperties)
-              : ({
-                '--network-background-color': 'grey',
-                '--network-text-color': 'pink',
-              } as React.CSSProperties)
-          }
-        > 
-          <CookiesBanner/>
-          <Alert />
-          <div className="index__content">
-            <ShowDesktopOnly>
-              <NavHeader
-                pageName={pageName}
-                selectedNetwork={selectedNetwork}
-              />
-            </ShowDesktopOnly>
-            {authorized && <Component {...pageProps} />}
-            {!authorized && <><Loading /></>}
-            <ShowMobileOnly>
-              <ClienteSideRendering>
-                <NavBottom
-                  pageName={pageName}
-                  sessionUser={sessionUser}
-                />
-              </ClienteSideRendering>
-            </ShowMobileOnly>
-            <MainPopup pageName={pageName} />
-          </div>
-        </div>
-      </>
-    );
-  }
+  return <>
+    <MetadataSEO {...pageProps.metadata} nonce={nonce} />
+    {(function () {
 
-  return <><MetadataSEO {...pageProps.metadata} nonce={nonce} /><Loading /></>;
+      if (isSetup) {
+        return <> <Head>
+          <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /></>;
+      } else if (pageName == 'Embbed') {
+        return (
+          <LoadabledComponent loading={!selectedNetwork || loading}>
+            <Component {...pageProps} />
+          </LoadabledComponent>
+        );
+      } else if (!selectedNetwork.initialized) {
+        return (
+          <>
+            {/* <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} /> */}
+            <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
+            <div
+              className="index__container"
+              style={
+                selectedNetwork
+                  ? ({
+                    '--network-background-color':
+                      selectedNetwork.backgroundColor,
+                    '--network-text-color': selectedNetwork.textColor,
+                  } as React.CSSProperties)
+                  : ({
+                    '--network-background-color': 'grey',
+                    '--network-text-color': 'pink',
+                  } as React.CSSProperties)
+              }
+            >
+              <CookiesBanner />
+              <Alert />
+              <div className="index__content">
+                <ShowDesktopOnly>
+                  <NavHeader
+                    pageName={pageName}
+                    selectedNetwork={selectedNetwork}
+                  />
+                </ShowDesktopOnly>
+                {authorized && <Component {...pageProps} />}
+                {!authorized && <><Loading /></>}
+                <ShowMobileOnly>
+                  <ClienteSideRendering>
+                    <NavBottom
+                      pageName={pageName}
+                      sessionUser={sessionUser}
+                    />
+                  </ClienteSideRendering>
+                </ShowMobileOnly>
+                <MainPopup pageName={pageName} />
+              </div>
+            </div>
+          </>
+        );
+      } else {
+        return <><Loading /></>;
+      }
+
+    }).call(this)}
+  </>
 }
 
 export const ClienteSideRendering = ({ children }) => {
