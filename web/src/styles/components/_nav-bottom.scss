@@ -141,9 +141,7 @@ $nav-bottom-border: 32px;
    z-index: $z-index-01;
    background: var(--network-text-color);
    pointer-events:none;
-
 }
-
 
 @media #{$breakpoints-xlarge} {
   .nav-bottom {

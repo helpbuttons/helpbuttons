@@ -550,12 +550,19 @@ $btn-font-size-medium: $font-size-medium;
 .btn--tab {
 
   border-radius:  $border-radius-basic $border-radius-basic 0 0;
+  color: $color-gray;
+  background-color: $color-ligth-gray;
+  border: none;
+  border-bottom: $border-style-basic;
 
 }
 
 .btn--tab-active {
 
   background-color:  $color-corporative;
+  color: $color-dark-gray;
+  border: $border-style-basic;
+  border-bottom: none;
 
 }
 
