@@ -312,7 +312,22 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
 
   return (
     <>
-      <CardButtonSubmenu button={button} />
+      <div className='card-button__head-actions'>
+        <FollowButtonHeart
+          button={button}
+          sessionUser={sessionUser}
+        />
+        <Btn
+          btnType={BtnType.smallCircle}
+          contentAlignment={ContentAlignment.center}
+          iconLeft={IconType.circle}
+          iconLink={<IoMailOutline />}
+          onClick={() => {
+            setShowSubmenu(!showSubmenu);
+          }}
+        />
+        <CardButtonSubmenu button={button} />
+      </div>
       <ExpiringAlert
         button={button}
         isOwner={isButtonOwner(sessionUser, button)}
@@ -342,10 +357,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
 
         <div className="card-button__title">
           {button.title}
-          <FollowButtonHeart
-            button={button}
-            sessionUser={sessionUser}
-          />
+
         </div>
 
         <div className="card-button__paragraph">
@@ -582,24 +594,30 @@ function FollowButtonHeart({ button, sessionUser }) {
 
   if (isFollowingButton(button, sessionUser)) {
     return (
-      <Btn
-        btnType={BtnType.iconActions}
-        contentAlignment={ContentAlignment.center}
-        iconLink={<IoHeartOutline />}
-        iconLeft={IconType.circle}
-        onClick={() => followButton(button.id)}
-      />
+      <div className='card-button__follow-wrap'>
+        {t('button.followme')}
+        <Btn
+          btnType={BtnType.iconActions}
+          contentAlignment={ContentAlignment.center}
+          iconLink={<IoHeartOutline />}
+          iconLeft={IconType.circle}
+          onClick={() => followButton(button.id)}
+        />
+      </div>  
     );
   }
 
   return (
-    <Btn
-      btnType={BtnType.iconActions}
-      contentAlignment={ContentAlignment.center}
-      iconLink={<IoHeart />}
-      iconLeft={IconType.circle}
-      onClick={() => unFollowButton(button.id)}
-    />
+    <div className='card-button__follow-wrap'>
+      {t('button.following')}
+      <Btn
+        btnType={BtnType.iconActions}
+        contentAlignment={ContentAlignment.center}
+        iconLink={<IoHeart />}
+        iconLeft={IconType.circle}
+        onClick={() => unFollowButton(button.id)}
+      />
+    </div>  
   );
 }
 
