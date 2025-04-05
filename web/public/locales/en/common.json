@@ -308,7 +308,7 @@
     "newPasswordPlaceHolder": "Your new password",
     "passwordMismatch": "passwords won't match",
     "loginButton": "ENTER",
-    "noAccount": "I don&apos;t have an account",
+    "noAccount": "I don't have an account",
     "tags": "Your interests",
     "editProfile": "Edit profile",
     "myHelpbuttons": "Your _helpbuttons_",
@@ -492,7 +492,12 @@
     "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
     "addType": "+ Create _helpbutton_ type",
-    "areaPicked": "Center: ({0},{1}) zoom: {2}"
+    "areaPicked": "Center: ({0},{1}) zoom: {2}",
+    
+    "hideLocationByDefaultLabel":"Master hide location by default",
+    "hideLocationByDefaultExplain":"Hide exact location by default in new created _helpbuttons_. It will display an area instead of a pin. User can manually disabled/enable it in any _helpbutton_.",
+    "hideLocationByDefaultText":"Enable hide exact location"
+
   },
   "configure": {
     "browsePins": "",

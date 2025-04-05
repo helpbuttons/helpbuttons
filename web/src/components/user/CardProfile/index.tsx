@@ -21,11 +21,10 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
         <div className="card-profile__container-avatar-content">
 
-              {showAdminOptions && 
 
                 <ProfileAdminOptions user={user} />
 
-              }
+              
 
             <figure className="card-profile__avatar-container avatar">
 
@@ -41,9 +40,9 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             
               <div className="card-profile__avatar-container-name">
 
-                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="hashtag hashtag--blue">Admin</div>}</div>
+                {user?.role == Role.admin && <div className="card-profile__role hashtag hashtag--blue">Admin</div>}
+                <div className="card-profile__name">{user.name} </div>
                 <span className="card-profile__username">{ user.username }</span>
-                
               </div>
 
               {/* {t('user.created_date')}: {readableTimeLeftToDate(user.created_at)} */}
@@ -51,41 +50,40 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             </div>
 
         </div>
-          <figure className="card-profile__rating">
-
-                <div className="card-profile__rate">
-                  <div className="card-profile__rate-label">
-                  {t('user.timesFollowed')} 
-                  </div>
-                  {user?.followsCount ?? 0}
-                </div>
-                <div className="card-profile__rate">
-                  <div className="card-profile__rate-label">
-                  {t('user.helpbuttonsPublishedAmount')} 
-                  </div>
-                  {user?.buttonCount?? 0}
-                </div>
-                <div className="card-profile__rate">
-                  <div className="card-profile__rate-label">
-                    {t('user.commentsAmount')} 
-                  </div>
-                    {user?.commentCount ?? 0}
-                </div>
-
-            </figure>
-
         <div className="card-profile__data">
 
-            {/* TODO: 
-              - define what to do with tags
-              <div className="card-profile__tags grid-one__column-mid-element"> */}
-              {/* <div className="hashtag">{t('user.tags')}</div> */}
-            {/* </div> */}
-            <div className="card-profile__description">
-               {user.description}
-            </div>
+          {/* TODO: 
+            - define what to do with tags
+            <div className="card-profile__tags grid-one__column-mid-element"> */}
+            {/* <div className="hashtag">{t('user.tags')}</div> */}
+          {/* </div> */}
+          <div className="card-profile__description">
+            {user.description}
+          </div>
 
         </div>
+        <figure className="card-profile__rating">
+
+              <div className="card-profile__rate card-profile__rate--enabled">
+                <div className="card-profile__rate-label">
+                {t('user.timesFollowed')} 
+                </div>
+                {user?.followsCount ?? 0}
+              </div>
+              <div className="card-profile__rate">
+                <div className="card-profile__rate-label">
+                {t('user.helpbuttonsPublishedAmount')} 
+                </div>
+                {user?.buttonCount?? 0}
+              </div>
+              <div className="card-profile__rate">
+                <div className="card-profile__rate-label">
+                  {t('user.commentsAmount')} 
+                </div>
+                  {user?.commentCount ?? 0}
+              </div>
+
+          </figure>
     </>
   );
 }

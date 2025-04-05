@@ -15,14 +15,16 @@ $avatar-margin: $padding-big;
   display: flex;
   flex-direction: row;
   gap: $padding-small;
+  font-size: $font-size-general;
+  padding-bottom: $padding-medium;
 
 }
 
 .card-profile__description {
   font-size: $font-size-general;
   font-weight: $font-weight-regular;
-  margin: $margin-small 0;
   margin-top: $margin-xsmall;
+  margin-bottom: $margin-xxsmall 0;
 
   color: $color-gray;
 
@@ -43,11 +45,9 @@ $avatar-margin: $padding-big;
   background-size: contain;
   margin: $margin-small auto;
   margin-bottom: 0;
-  padding: $padding-medium 0;
   font-weight: $font-weight-bold;
   border-top: $border-style-basic;
   border-bottom: $border-style-basic;
-  gap: $padding-big;
 
   & svg {
     width: 1rem;
@@ -60,15 +60,39 @@ $avatar-margin: $padding-big;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: $padding-medium $padding-medium;
+  color: $color-gray;
 
+  &:hover {
+
+    background-color: $color-ligth-gray;
+    cursor: pointer;
+
+  }
+
+}
+
+.card-profile__rate--enabled {
+
+  font-weight: $font-weight-bolder;
+  color: $color-black;
 }
 
 .card-profile__rate-label {
 
-  color: $color-gray;
-  font-weight: $font-weight-light;
   font-size: $font-size-small;
   padding-right: $padding-medium;
+
+
+
+}
+
+
+.card-profile__rate-label--enable {
+
+  color: $color-black;
+  font-weight: $font-weight-bolder;
+
 }
 
 .card-profile__icon {
@@ -199,9 +223,10 @@ $avatar-margin: $padding-big;
 }
 
 .card-profile__username {
-  font-size: $font-size-general;
+  font-size: $font-size-small;
   font-weight: $font-weight-light;
   color: $color-gray;
+
   position: relative;
   top: -15px;
 }
@@ -237,7 +262,27 @@ $avatar-margin: $padding-big;
 
 }
 
+.card-profile__role {
+
+  margin: 0;
+
+}
+
 @media #{$breakpoints-medium} {
+
+  .card-profile__name {
+
+    display: flex;
+    flex-direction: row;
+    gap: $padding-small;
+    font-size: $font-size-title;
+    padding-bottom: 0;
+  
+  }
+
+  .card-profile__username {
+    font-size: $font-size-general;
+  }
 
   .card-profile__avatar-container-name {
     max-width: 300px;
