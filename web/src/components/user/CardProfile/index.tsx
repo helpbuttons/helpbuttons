@@ -21,10 +21,11 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
         <div className="card-profile__container-avatar-content">
 
+              {showAdminOptions && 
 
                 <ProfileAdminOptions user={user} />
 
-              
+              }
 
             <figure className="card-profile__avatar-container avatar">
 
