@@ -348,7 +348,6 @@ $card-button-border-height: $border-general-height;
   align-items:flex-start;
   word-wrap: break-word;
   line-height: 1.3em;
-  margin-bottom: $margin-xsmall;
 
 
   word-break: break-word;
@@ -385,6 +384,44 @@ $card-button-border-height: $border-general-height;
   margin-left: 1rem;
 }
 
+.card-button__hashtags-wrapper {
+
+  display: flex;
+  flex-direction: column;
+  height: 40px;
+
+}
+
+.card-button__hashtags-wrapper--hr {
+
+  color: $color-gray;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  font-size: $font-size-small;
+  gap: $padding-big;
+
+  & hr {
+    border-top: $border-style-light;
+    background-color: $color-ligth-gray;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+}
+
+.card-button__hashtags-wrapper--label {
+  flex-wrap: nowrap;
+  word-break: keep-all;
+  white-space: no-wrap;
+  min-width: max-content;
+  width: max-content;
+  font-size: $font-size-xsmall;
+}
+
 .card-button__hashtags {
 
   display: flex;
@@ -392,6 +429,7 @@ $card-button-border-height: $border-general-height;
   -webkit-box-orient:horizontal;
   overflow: scroll;
   color: $color-black;
+
     &:hover {
       // color: $hashtag-hover-color;
       // background: $color-black;
@@ -421,7 +459,7 @@ $card-button-border-height: $border-general-height;
   // overflow: hidden;
   flex-grow: 1;
   display: block;
-  margin: $margin-xxsmall 0  $margin-small 0;
+  margin: $margin-xxsmall 0  $margin-xxsmall 0;
 
   & p {
     margin-top: 0;//Revise
@@ -559,6 +597,7 @@ $card-button-border-height: $border-general-height;
   z-index: $z-index-01;
   right: $padding-xxsmall;
   top: 3rem;
+  width: max-content;
 }
 
 .card-button__dropdown-content {
@@ -854,6 +893,13 @@ $card-button-border-height: $border-general-height;
     gap: $padding-big;
     right: 0;
   }
+
+  .card-button__title {
+
+    margin-bottom: $margin-xsmall;
+
+  }
+
 
 }
 

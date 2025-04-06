@@ -74,7 +74,7 @@
     "unreadMessages": "Unread messages",
     "markMessagesAsRead": "Mark all as read",
     "byCategory": "Filter by category",
-    "messages": "Comments section",
+    "messages": "Updates & comments:",
     "readMessages": "Read messages",
     "nounread": "No unread messages",
     "read": "No messages yet",
@@ -284,7 +284,8 @@
     "proposeAddress": "Add a missing place in {0}",
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
     "followme": "Follow me for news",
-    "following": "following!"
+    "following": "following!",
+    "seeHashtags":"See tags"
   },
   "user": {
     "login": "Write your credentials",
@@ -430,7 +431,8 @@
     "posted": "Comment posted",
     "sendPublic": "Answer",
     "sendPrivate": "Answer privately",
-    "send": "Send"
+    "send": "Send",
+    "makePublic":"Show message in public"
   },
   "configuration": {
     "config": "Advanced options",
