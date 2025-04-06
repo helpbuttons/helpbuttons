@@ -101,7 +101,7 @@ $message-you-margin-left: $margin-xbig;
 
 .message--you {
 
-  background-color: $color-ligth-gray;
+  background-color: $color-white;
   margin-right: auto;
   margin-left: $message-you-margin-left;
   min-width: 50%;
@@ -140,7 +140,7 @@ $message-you-margin-left: $margin-xbig;
 
 .message--others {
 
-  background-color: $color-ligth-gray;
+  background-color: $color-white;
   min-width: 50%;
   border-radius: $message-border-radius-semicircle $message-border-radius-semicircle 0 $message-border-radius-semicircle ;
   margin-bottom: $margin-xsmall;
