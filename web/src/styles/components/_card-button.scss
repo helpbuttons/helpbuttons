@@ -764,7 +764,7 @@ $card-button-border-height: $border-general-height;
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
-  background-color: $color-gray-transparent;
+  background-color: $color-dark-gray;
 }
 
 .card-button__gallery-zoom--close-btn {
@@ -875,7 +875,7 @@ $card-button-border-height: $border-general-height;
     // max-width: 600px;
 
     img {
-      max-width: 600px;
+      max-width: 800px;
       margin: auto;
     }
 
