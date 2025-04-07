@@ -2,9 +2,6 @@
 //a foreach => buttons
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  IoArrowBack,
-  IoCaretBackCircleOutline,
-  IoCaretBackOutline,
   IoClose,
   IoList,
   IoMap,

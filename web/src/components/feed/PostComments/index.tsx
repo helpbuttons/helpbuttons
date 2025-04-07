@@ -113,49 +113,49 @@ export function PostComment({
       }
     >
       <Comment comment={comment} sessionUser={sessionUser}/>
-        <div className={'message__actions ' + (sessionUser && (sessionUser.id == comment.author.id) ? ' ' : 'message__actions--you') }>
-          {sessionUser && (
-            <>
-              {comment.privacy == PrivacyType.PRIVATE && (
-                <Btn
-                  submit={false}
-                  btnType={BtnType.smallLink}
-                  caption={t('comment.sendPrivate')}
-                  contentAlignment={ContentAlignment.right}
-                  onClick={() =>
-                    toggleShowComposeComment(
-                      ComposeCommentState.PRIVATE,
-                    )
-                  }
-                />
-              )}
-              {comment.privacy == PrivacyType.PUBLIC && (
-                <Btn
-                  submit={false}
-                  btnType={BtnType.smallLink}
-                  caption={t('comment.sendPublic')}
-                  contentAlignment={ContentAlignment.right}
-                  onClick={() =>
-                    toggleShowComposeComment(ComposeCommentState.PUBLIC)
-                  }
-                />
-              )}
-            </>
-          )}
-
-          {sessionUser && (sessionUser.id == comment.author.id || isButtonOwner || isAdmin(sessionUser)) && (
+      <div className={'message__actions ' + (sessionUser && (sessionUser.id == comment.author.id) ? ' ' : 'message__actions--you') }>
+        {sessionUser && (
+          <>
+            {comment.privacy == PrivacyType.PRIVATE && (
               <Btn
-                submit={true}
+                submit={false}
                 btnType={BtnType.smallLink}
-                // iconLink={<IoTrashBinOutline />}
-                caption={t('comment.delete')}
-                // iconLeft={IconType.circle}
+                caption={t('comment.sendPrivate')}
                 contentAlignment={ContentAlignment.right}
-                onClick={() => deleteComment(comment.id)}
+                onClick={() =>
+                  toggleShowComposeComment(
+                    ComposeCommentState.PRIVATE,
+                  )
+                }
               />
             )}
-        </div>
+            {comment.privacy == PrivacyType.PUBLIC && (
+              <Btn
+                submit={false}
+                btnType={BtnType.smallLink}
+                caption={t('comment.sendPublic')}
+                contentAlignment={ContentAlignment.right}
+                onClick={() =>
+                  toggleShowComposeComment(ComposeCommentState.PUBLIC)
+                }
+              />
+            )}
+          </>
+        )}
 
+        {sessionUser && (sessionUser.id == comment.author.id || isButtonOwner || isAdmin(sessionUser)) && (
+            <Btn
+              submit={true}
+              btnType={BtnType.smallLink}
+              // iconLink={<IoTrashBinOutline />}
+              caption={t('comment.delete')}
+              // iconLeft={IconType.circle}
+              contentAlignment={ContentAlignment.right}
+              onClick={() => deleteComment(comment.id)}
+            />
+          )}
+      </div>
+   
     </div>
     {showComposeComment != ComposeCommentState.HIDE && (
         <Compose

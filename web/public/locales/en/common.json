@@ -74,17 +74,16 @@
     "unreadMessages": "Unread messages",
     "markMessagesAsRead": "Mark all as read",
     "byCategory": "Filter by category",
+    "messages": "Updates & comments:",
     "readMessages": "Read messages",
     "nounread": "No unread messages",
     "read": "No messages yet",
     "from": "From",
     "privateBadge": "private",
-    "activitiesHistory": "Activity history",
+    "activitiesHistory": "Historial de actividades",
     "said": "said",
     "noMoreMessages": "There are no more messages",
-    "noMoreNotifications": "There are no more notifications",
-    "messages": "Private Messages",
-    "publicBoard": "Public Updates and Comments"
+    "noMoreNotifications": "There are no more notifications"
   },
   "explore": {
     "noResults": "Sorry, there are no results here",
@@ -426,7 +425,7 @@
   },
   "comment": {
     "delete": "Delete",
-    "private": "You're sending a private message. Only the cited user will see it.",
+    "private": "You're sending a private message. Only the destination user could see it.",
     "public": "This comment is public, everyone could see it.",
     "placeholderWrite": "Write a message in this post",
     "posted": "Comment posted",

@@ -123,8 +123,7 @@ export default function Feed({ button }: { button: Button }) {
           )}
         </>
       </div>
-      <div className="feed-section__title">{t('feed.publicBoard')}</div>
-      
+      <div className="feed-line">{t('feed.messages')}</div>
       <div className="feed-section">
         {posts &&
           posts.map((post, idx) => (
@@ -178,7 +177,7 @@ export function FeedElement({
       setShowComposePostReply(() => {
         return {
           post: post.id,
-          privateMessage: true,
+          privateMessage: false,
           mentions: [post.author.username],
         };
       });
@@ -218,7 +217,7 @@ export function FeedElement({
                     })
                   }
                 />
-                {/* <Btn
+                <Btn
                   submit={false}
                   btnType={BtnType.smallLink}
                   caption={t('comment.sendPrivate')}
@@ -232,7 +231,7 @@ export function FeedElement({
                       };
                     })
                   }
-                /> */}
+                />
               </>
             )}
             {sessionUser &&
