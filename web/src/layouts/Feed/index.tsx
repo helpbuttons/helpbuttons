@@ -217,21 +217,7 @@ export function FeedElement({
                     })
                   }
                 />
-                <Btn
-                  submit={false}
-                  btnType={BtnType.smallLink}
-                  caption={t('comment.sendPrivate')}
-                  contentAlignment={ContentAlignment.right}
-                  onClick={() =>
-                    setShowComposePostReply(() => {
-                      return {
-                        post: post.id,
-                        privateMessage: true,
-                        mentions: [post.author.username],
-                      };
-                    })
-                  }
-                />
+                
               </>
             )}
             {sessionUser &&

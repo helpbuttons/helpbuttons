@@ -133,7 +133,7 @@ export function PostComment({
               <Btn
                 submit={false}
                 btnType={BtnType.smallLink}
-                caption={t('comment.sendPublic')}
+                caption={t('comment.reply')}
                 contentAlignment={ContentAlignment.right}
                 onClick={() =>
                   toggleShowComposeComment(ComposeCommentState.PUBLIC)
