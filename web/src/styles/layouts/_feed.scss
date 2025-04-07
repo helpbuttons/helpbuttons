@@ -70,7 +70,7 @@ $feed-new-message-radius: $border-radius-circle;
   height: $feed-selector-height;
   background-color: $feed-color-corporative;
   padding: $padding-big;
-  border-bottom: $border-style-basic;
+  border-bottom: none;
 }
 
 .feed-selector--list-toggle {
@@ -82,6 +82,22 @@ $feed-new-message-radius: $border-radius-circle;
   padding: 0;
   background-color: $color-ligth-gray;
 
+}
+
+.feed-selector__toggle-button {
+
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+}
+
+.feed-selector__notif-circle {
+  margin-top: $padding-medium;
+  margin-right: $padding-medium;
+  padding: $padding-medium;
+  
 }
 
 .feed-selector--activity {
