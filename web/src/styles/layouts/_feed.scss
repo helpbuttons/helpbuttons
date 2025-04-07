@@ -49,11 +49,12 @@ $feed-new-message-radius: $border-radius-circle;
 
   padding-top: $padding-small;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   gap: $padding-small;
   align-items: center;
   padding-left: $padding-small;
   color: $color-gray;
+  width: 100%;
 
 }
 
@@ -81,6 +82,38 @@ $feed-new-message-radius: $border-radius-circle;
   height: auto;
   padding: 0;
   background-color: $color-ligth-gray;
+
+}
+
+.feed-selector__multitab {
+
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  gap: $padding-small;
+  width: 50%;
+  overflow: auto;
+
+}
+
+.feed-selector__fixed-width-tab {
+
+  min-width: 200px;
+
+}
+
+.feed-selector__fill-gap {
+
+  flex-grow: 1;
+  border-bottom: $border-style-basic;
+
+}
+
+.feed-selector--button-messages {
+
+  width: 100%;
+  overflow: auto;
+
 
 }
 
