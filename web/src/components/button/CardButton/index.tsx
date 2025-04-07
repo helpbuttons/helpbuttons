@@ -469,8 +469,9 @@ export function ButtonOwnerPhone({ user, button }) {
           {user.showWassap &&
               <Btn
                 btnType={BtnType.corporative}
-                contentAlignment={ContentAlignment.center}
-                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.left}
+                caption={t('button.whatsapp')}
+                iconLeft={IconType.svg}
                 iconLink={<IoLogoWhatsapp />}
                 onClick={() => jumpTo(`https://wa.me/+${phone}`)}
               />
