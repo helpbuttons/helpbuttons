@@ -40,7 +40,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__content,
 .card-button__content--small {
-  padding: 12px 16px;
+  padding: $padding-huge $padding-huge;
 }
 
 .card-button__content {
@@ -147,7 +147,7 @@ $card-button-border-height: $border-general-height;
   padding: $padding-big;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: flex-start;
   vertical-align: baseline;
   background-color: $color-white;
   border-top: 1px dashed $color-ligth-gray;
@@ -179,6 +179,8 @@ $card-button-border-height: $border-general-height;
   flex-wrap:inherit;
   font-size: $font-size-small;
   gap: $padding-medium;
+  margin-top: $margin-xsmall;
+  height: 48px;
 
 }
 
@@ -317,7 +319,7 @@ $card-button-border-height: $border-general-height;
 .card-button__title {
   font-weight: $font-weight-bold;
   color: $color-black;
-  font-size: $font-size-title;
+  font-size: $font-size-huge;
   padding: $padding-big 0;
   display: flex;
   flex-direction: row;
@@ -452,12 +454,13 @@ $card-button-border-height: $border-general-height;
   width: 100%;
   position: relative;
   text-align: center;
-
+  
   & img {
 
     max-width: 100%;
     max-height: 400px;
     width: auto;
+    height: auto;
     object-fit: contain !important;
     pointer-events: auto;
 
@@ -747,75 +750,6 @@ $card-button-border-height: $border-general-height;
 }
 
 
-@media #{$breakpoints-medium} {
-
-  .card-button__bottom-properties {
-    gap: $margin-small;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    align-items: center;
-    overflow: visible;
-    gap: $margin-small;
-    margin-bottom: $margin-small;
-
-  }
-
-}
-
-
-@media #{$breakpoints-xlarge} {
-
-
-  .card-button__full-content,
-  .card-button__author,
-  .card-button__actions {
-
-    padding: $padding-huge;
-
-  }
-
-  .card-button__actions {
-
-    // flex-direction: row;
-    gap: $padding-small;
-    
-  }
-
-  .card-button__phone-section {
-
-    min-width: 33%;
-
-  }
-
-  .card-button__dropdown-container {
-
-    right: $padding-xxsmall;
-    top: 4rem;
-
-  }
-
-  .card-button__submenu {
-
-    padding: $padding-medium;
-    gap: $padding-small;
-
-  }
-
-  .card-button__full-content {
-
-    padding-bottom: $padding-small;
-
-  }
-
-
-  .card-button__title {
-
-    padding-top: $padding-big;
-
-  }
-
-}
 .card-button__picture-lightbox{
   background-color: pink;
 }
@@ -865,6 +799,87 @@ $card-button-border-height: $border-general-height;
     object-fit: contain !important;
     pointer-events: auto;
     z-index: $z-index-02;
+
+  }
+
+}
+
+
+@media #{$breakpoints-medium} {
+
+  .card-button__bottom-properties {
+    gap: $margin-small;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    overflow: visible;
+    gap: $margin-small;
+    margin-bottom: $margin-small;
+
+  }
+
+}
+
+
+@media #{$breakpoints-xlarge} {
+
+
+  .card-button__full-content,
+  .card-button__author,
+  .card-button__actions {
+
+    padding: $padding-huge;
+
+  }
+
+  .card-button__actions {
+
+    // flex-direction: row;
+    gap: $padding-small;
+    
+  }
+
+  .card-button__phone-section {
+
+    min-width: 33%;
+
+  }
+
+  .card-button__dropdown-container {
+
+    right: $padding-xxsmall;
+    top: calc($margin-big + $margin-big);
+
+  }
+
+  .card-button__submenu {
+
+    padding: $margin-medium;
+
+  }
+
+  .card-button__full-content {
+
+    padding-bottom: $padding-small;
+
+  }
+
+
+  .card-button__title {
+
+    padding-top: $padding-big;
+
+  }
+
+  .card-button__image-wrapper {
+
+    max-width: 600px;
+
+    img {
+      max-width: 1200px;
+      margin: auto;
+    }
 
   }
 

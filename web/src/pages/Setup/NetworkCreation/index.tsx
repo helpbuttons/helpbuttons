@@ -11,6 +11,7 @@ import { getLocale } from 'shared/sys.helper';
 import { Role } from 'shared/types/roles';
 import { CreateNetwork, FetchDefaultNetwork } from 'state/Networks';
 import { useRef } from 'store/Store';
+import dconsole from 'shared/debugger';
 
 // name, description, logo, background image, button template, color pallete, colors
 export default NetworkCreation;
@@ -44,7 +45,8 @@ function NetworkCreation() {
       nomeclature: 'Helpbutton',
       nomeclaturePlural: 'Helpbuttons',
       requireApproval: false,
-      slogan: ''
+      slogan: '',
+      hideLocationDefault: false
     },
   });
 
@@ -74,7 +76,8 @@ function NetworkCreation() {
           nomeclaturePlural: data.nomeclaturePlural,
           locale: data.locale,
           requireApproval: data.requireApproval,
-          slogan: data.slogan
+          slogan: data.slogan,
+          hideLocationDefault: data.hideLocationDefault
         },
         () => {
           const onComplete = () => {
@@ -88,7 +91,7 @@ function NetworkCreation() {
           };
           store.emit(
             new FetchDefaultNetwork(onComplete, (error) => {
-              console.log(error);
+              dconsole.error(error);
             }),
           );
         },
@@ -131,7 +134,7 @@ function NetworkCreation() {
               );
             }
           } else {
-            console.log(err);
+            dconsole.error(err);
           }
         },
       ),

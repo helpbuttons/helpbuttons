@@ -1,34 +1,20 @@
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import t from 'i18n';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 import useComponentVisible from 'shared/custom.hooks';
 
 
-export function CardSubmenu({ children, extraClass }) {
+export function CardSubmenu({ children, extraClass = '' }) {
   const { ref, showSubmenu, setShowSubmenu } = useComponentVisible(false);
   return (
     <div ref={ref} className={extraClass}>
       <div
-
         className="card-button__edit-icon card-button__submenu card-profile__submenu"
       >
-         {/* <Btn
-          btnType={BtnType.filterCorp}
-          contentAlignment={ContentAlignment.left}
-          iconRight={IconType.circle}
-          iconLink={<IoMailOpenOutline />}
-          
-        />
         <Btn
-          btnType={BtnType.filterCorp}
-          contentAlignment={ContentAlignment.left}
-          iconRight={IconType.circle}
-          iconLink={<IoCallOutline />}
-          
-        /> */}
-        <Btn
-          btnType={BtnType.filterCorp}
+          btnType={BtnType.smallCircle}
           contentAlignment={ContentAlignment.center}
-          iconRight={IconType.circle}
+          iconLeft={IconType.circle}
           iconLink={<IoEllipsisHorizontalSharp />}
           onClick={() => {
             setShowSubmenu(!showSubmenu);

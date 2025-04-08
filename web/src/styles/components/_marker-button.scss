@@ -1,35 +1,65 @@
-$marker-button-height: 70px;
+$marker-button-height: 50px;
 $marker-button-height-name: 20px;
 $marker-button-width-change: 25px;
-$marker-button-width: 70px;
+$marker-button-width: 50px;
 $marker-button-radius: $border-radius-circle;
 $marker-button-line: 0.2rem;
 $marker-arrow-width: 2px;
-$marker-arrow-height: 25px;
+$marker-arrow-height: 5px;
 
+@use "sass:math";
 
+$cycle: 10;
 
 
 .marker-button {
 
-  height: $marker-button-height;
   width: $marker-button-width;
+  height: $marker-button-height;
   border: none;
-  position: relative;
   margin: auto;
   margin-bottom: 0;
+  position: absolute;
+  transition: transform 0.3s ease;
+  cursor: grab;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+}
+
+
+
+.marker-button:hover {
+  z-index: $z-index-02;
+  transform: scale(1.1); 
 
 }
 
+.marker-button:hover .marker-button__link-tag {
+  opacity: 1;
+  z-index: $z-index-03;
+
+}
+
+.marker-button:active {
+  cursor: grabbing;
+  z-index: $z-index-03;
+  transform: scale(1.1); 
+}
+
 .marker-button__image {
-    width: 100%;
+    align-items: center;
+    justify-content: center;
+    width: $marker-button-width;
     height: 100%;
     margin: auto;
     border-style: solid;
     z-index: 1;
-    object-fit: cover;
+    // object-fit: cover;
     overflow: hidden;
     border-width: $marker-button-line;
+    border-radius: $border-radius-semicircle;
     display: flex;
 
     &:hover {
@@ -48,6 +78,7 @@ $marker-arrow-height: 25px;
 .marker-button--grey {
     opacity: 0.5;
   }
+
 .marker-button--change {
     &:before,
     &:after {
@@ -80,6 +111,7 @@ $marker-arrow-height: 25px;
     }
     .marker-button__arrow {
       &:after {
+        height: auto;
         border-top-color: $color-green;
       }
     }
@@ -166,7 +198,7 @@ $marker-arrow-height: 25px;
       border-right: 6px solid transparent;
       border-left: 6px solid transparent;
       position: absolute;
-      bottom: -33px;
+      bottom: -13px;
       right: 0;
       left: 0;
       margin: 0 auto;
@@ -220,43 +252,20 @@ $marker-arrow-height: 25px;
 
   overflow-x: auto;
   overflow-y: auto;
+  position: absolute;
   max-width: fit-content;
-  padding: 0 0 $padding-small 0;
+  top: -44px;
   white-space: nowrap;
   justify-content: center;
   width: fit-content;
-  left: auto;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
   max-height: 50px;
 
 }
 
-.marker-button__link-tag {
-
-  position: absolute;
-  bottom: 102%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: $color-gray;
-  border-radius: $border-radius-semicircle;
-  color: $color-white;
-  display: block;
-  max-width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-wrap: normal;
-  word-break: keep-all;
-  hyphens: auto;
-  font-size: $font-size-general;
-  font-weight: $font-weight-bold;
-  padding: $padding-small $padding-medium;
-
-  &:hover {
-
-    cursor: pointer;
-
-  }
-
-}
 
 .marker-button__link-tag--alone {
 
@@ -331,3 +340,59 @@ $marker-arrow-height: 25px;
     }
   }
 }
+
+.marker-button__image--fix {
+
+  @extend .marker-button__image;
+  
+  border-width: $marker-button-line;
+  display: flex;
+  transform: scale(1); 
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border-style: solid;
+  z-index: 1;
+  object-fit: cover;
+  overflow: hidden;
+  border-width: $marker-button-line;
+  display: flex;
+
+  &:hover {
+
+    cursor: pointer;
+
+  }
+}
+
+
+.marker-button__link-tag {
+
+  bottom: 102%;
+  min-height: 20px;
+  background: $color-gray;
+
+  border-radius: $border-radius-semicircle;
+  color: $color-white;
+  display: block;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: normal;
+  word-break: keep-all;
+  hyphens: auto;
+  font-size: $font-size-general;
+  font-weight: $font-weight-bold;
+  padding: $padding-small $padding-medium;
+  opacity: 0;
+  min-height: 30px;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+
+    cursor: pointer;
+
+  }
+
+}
+

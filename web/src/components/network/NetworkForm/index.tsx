@@ -22,8 +22,6 @@ import Accordion from 'elements/Accordion';
 import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import { FieldLanguagePick } from 'elements/Fields/FieldLanguagePick';
 import FieldButtonTemplates from 'components/button/ButtonType/FieldButtonTemplates';
-import { DropdownField } from 'elements/Dropdown/Dropdown';
-import { alertService } from 'services/Alert';
 
 export default NetworkForm;
 
@@ -281,7 +279,14 @@ function NetworkForm({
               value={watch('exploreSettings')}
               markerColor={watch('backgroundColor')}
             />
-
+            <FieldCheckbox
+              name='hideLocationDefault'
+              label={t('configuration.hideLocationByDefaultLabel')}
+              explain={t('configuration.hideLocationByDefaultExplain')}
+              defaultValue={watch('hideLocationDefault')}
+              text={t('configuration.hideLocationByDefaultText')}
+              onChanged={(value) => setValue('hideLocationDefault', value)}
+            />
             <FieldTags
               label={t('configuration.tags')}
               explain={t('configuration.tagsExplain')}

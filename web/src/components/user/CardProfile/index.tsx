@@ -20,15 +20,18 @@ export default function CardProfile({ user, showAdminOptions = false}) {
     <>
 
         <div className="card-profile__container-avatar-content">
+
               {showAdminOptions && 
-              <ProfileAdminOptions user={user} />
-            }
+
+                <ProfileAdminOptions user={user} />
+
+              }
+
             <figure className="card-profile__avatar-container avatar">
 
               <div className="avatar-big">
-                <UserAvatar user={user}/>
 
-                {/* <ImageWrapper imageType={ImageType.avatar} src={user.avatar} alt="avatar"/> */}
+                <UserAvatar user={user}/>
 
               </div>
 
@@ -45,32 +48,31 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
               {/* {t('user.created_date')}: {readableTimeLeftToDate(user.created_at)} */}
     
-              <figure className="card-profile__rating">
-
-                <div className="paragraph grid-three__column">
-                   {user.followsCount}
-                  <div className="card-profile__icon">
-                    <IoHeartOutline />
-                  </div>
-                </div>
-                <div className="paragraph grid-three__column">
-                  {user.buttonCount}
-                  <div className="card-profile__icon">
-                    <IoAddCircleOutline />
-                  </div>
-                </div>
-                <div className="paragraph grid-three__column">
-                  {user.commentCount}
-                  <div className="card-profile__icon">
-                    <IoChatbubbleOutline />
-                  </div>
-                </div>
-
-              </figure>
-
             </div>
 
         </div>
+          <figure className="card-profile__rating">
+
+                <div className="card-profile__rate">
+                  <div className="card-profile__rate-label">
+                  {t('user.timesFollowed')} 
+                  </div>
+                  {user?.followsCount ?? 0}
+                </div>
+                <div className="card-profile__rate">
+                  <div className="card-profile__rate-label">
+                  {t('user.helpbuttonsPublishedAmount')} 
+                  </div>
+                  {user?.buttonCount?? 0}
+                </div>
+                <div className="card-profile__rate">
+                  <div className="card-profile__rate-label">
+                    {t('user.commentsAmount')} 
+                  </div>
+                    {user?.commentCount ?? 0}
+                </div>
+
+            </figure>
 
         <div className="card-profile__data">
 
@@ -82,12 +84,6 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             <div className="card-profile__description">
                {user.description}
             </div>
-
-            {/* <div className="card-profile__phone grid-one__column-mid-element">
-              TODO: 
-              - place
-
-            </div> */}
 
         </div>
     </>

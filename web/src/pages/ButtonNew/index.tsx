@@ -16,19 +16,16 @@ import { useStore } from 'state';
 import Loading from 'components/loading';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
+import { useSelectedNetwork } from 'state/Networks';
 
 export default function ButtonNew({ metadata }) {
-  const selectedNetwork = useStore(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-    null
-  );
+  const selectedNetwork = useSelectedNetwork()
 
   useMetadataTitle(t('menu.create'))
 
   return (
     <>
-    {selectedNetwork.exploreSettings ? 
+    {selectedNetwork?.exploreSettings?.center ? 
       <ButtonNewForm selectedNetwork={selectedNetwork} />
      : <Loading/>
     }
@@ -48,10 +45,11 @@ function ButtonNewForm({ selectedNetwork }) {
     title: '',
     images: [],
     radius: 1,
-    address: '',
+    address: null,
     when: { dates: [], type: null },
-    hideAddress: false,
-    eventData: null
+    hideAddress: selectedNetwork.hideLocationDefault,
+    eventData: null,
+    isCustomAddress: false
   };
   const {
     register,
@@ -69,7 +67,7 @@ function ButtonNewForm({ selectedNetwork }) {
     defaultValues
   });
 
-  register("address", { required: true })
+  register("address", { required: true })  
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const onSubmit = (data) => {
@@ -123,6 +121,8 @@ function ButtonNewForm({ selectedNetwork }) {
       alertService.error(t('button.invalidDates'))
     }else if(err.errorName == ErrorName.InvalidMimetype){
       alertService.error(err.caption);
+    }else if(err.errorName == ErrorName.validationError){
+      alertService.error(err.caption);
     }else{
       console.error(JSON.stringify(err))
     }
@@ -132,7 +132,7 @@ function ButtonNewForm({ selectedNetwork }) {
   const {loadedDraft} = useButtonDraft({watch, getValues, reset, defaultValues})
   return (
     <>
-    {loadedDraft && 
+    {loadedDraft &&
       <ButtonForm
         watch={watch}
         reset={reset}

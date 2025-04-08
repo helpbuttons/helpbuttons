@@ -5,6 +5,7 @@ module.exports = {
   reactStrictMode: true,
   publicRuntimeConfig: {
     apiUrl: '/api',
+    debug: `${process.env.DEBUG}`
   },
   typescript: {
     ignoreBuildErrors: true,

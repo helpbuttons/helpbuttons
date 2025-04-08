@@ -13,6 +13,7 @@ import { HttpHelper } from '@src/shared/helpers/http.helper';
     }),
     forwardRef(() => NetworkModule),
     CacheModule.register(),
+    NetworkModule
   ],
   controllers: [GeoController],
   providers: [GeoService, HttpHelper],

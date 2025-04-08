@@ -143,4 +143,8 @@ export class Button extends BaseEntity {
   @Expose()
   @Column('boolean', { default: false })
   pin: boolean;
+
+  @Expose()
+  @Column({default: false})
+  isCustomAddress: boolean;
 }

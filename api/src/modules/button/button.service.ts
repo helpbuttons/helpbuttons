@@ -150,6 +150,7 @@ export class ButtonService {
       hasPhone,
       eventData: createDto.eventData,
       awaitingApproval,
+      isCustomAddress: createDto.isCustomAddress
     };
 
     await getManager().transaction(
@@ -231,6 +232,8 @@ export class ButtonService {
     updateDto: UpdateButtonDto,
     currentUser: User,
   ) {
+    console.log('updating...')
+    console.log(updateDto)
     const currentButton = await this.findById(id, true);
     this.cacheManager.del(CacheKeys.FINDH3_CACHE_KEY)
     let location = {};
@@ -293,6 +296,8 @@ export class ButtonService {
     }
     if (button.images.length > 0) {
       button.image = button.images[0];
+    }else{
+      button.image = null;
     }
 
     this.buttonRepository
@@ -466,16 +471,6 @@ export class ButtonService {
     return true;
   }
 
-  async getPhone(buttonId: string) {
-    const query = `SELECT public.user.phone from button, public.user WHERE button.id = '${buttonId}' AND "ownerId" = public.user.id`;
-    const result = await this.entityManager.query(query);
-
-    if (result.length > 0) {
-      return result[0].phone;
-    }
-    return '';
-  }
-
   findDeletedAndRemoveMedia() {
     // created more than 1 month ago
     return this.entityManager
@@ -539,9 +534,7 @@ export class ButtonService {
   }
 
   updateModifiedDate(buttonId: string) {
-    return this.entityManager.query(
-      `UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = '${buttonId}'`,
-    );
+    return this.entityManager.query(`UPDATE button SET updated_at = CURRENT_TIMESTAMP, deleted = false, expired = false WHERE id = $1`, [buttonId]);
   }
 
   checkAndSetExpired(button: Button) {

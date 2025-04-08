@@ -51,6 +51,7 @@ import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
 import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
+import dconsole from 'shared/debugger';
 
 export default function CardButton({ button, buttonTypes }) {
   const [buttonType, setButtonType] = useState(null);
@@ -319,16 +320,6 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
   return (
     <>
       <CardButtonSubmenu button={button} />
-      {/* <Btn
-          btnType={BtnType.filterCorp}
-          contentAlignment={ContentAlignment.center}
-          iconRight={IconType.circle}
-          iconLink={<IoMailOutline />}
-          onClick={() => {
-            console.log('scrolling...')
-            onScollToCompose()
-          }}
-      /> */}
       <ExpiringAlert
         button={button}
         isOwner={isButtonOwner(sessionUser, button)}
@@ -395,7 +386,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         </div>
         {!button.hideAddress && showMap && (
           <MarkerViewMap
-            markerPosition={[button.latitude, button.longitude]}
+            pickedPosition={[button.latitude, button.longitude]}
             zoom={maxZoom}
             markerColor={cssColor}
             markerImage={button.image}
@@ -439,49 +430,38 @@ function ExpiringAlert({
 }
 
 export function ButtonOwnerPhone({ user, button }) {
-  const [showPhone, toggleShowPhone] = useState(false);
   const [phone, setPhone] = useState(null);
-  const isLoadingPhone = React.useRef(false)
-  const sessionUser = useRef(
-    store,
-    (state: GlobalState) => state.sessionUser,
-    false,
-  );
-
-  useEffect(() => {
-    if (phone == null && !isLoadingPhone.current) {
-      isLoadingPhone.current = true;
-      store.emit(
+  
+  const showPhone = () => {
+    store.emit(
         new GetPhone(
           user.id,
           (phone) => {
-            setPhone(phone);
+            setPhone(() => phone);
           },
           () => { },
         ),
       );
-    }
-  }, [showPhone])
-
+  }
   const jumpTo = (url) => {
     window.location.replace(url);
   }
-
   return (
     <>
       {user?.publishPhone && (
         <>
-          {!showPhone && isButtonOwner(user, button) && 
+        {JSON.stringify(showPhone)}
+          {!phone && 
             <Btn
               btnType={BtnType.corporative}
-              contentAlignment={ContentAlignment.center}
+              contentAlignment={ContentAlignment.left}
               caption={t('button.showPhone')}
               iconLeft={IconType.svg}
               iconLink={<IoCallOutline />}
-              onClick={() => toggleShowPhone(true)}
+              onClick={showPhone}
             />
           }
-          {showPhone && 
+          {phone && 
             <div className="card-button__phone-section">
             <Btn
               btnType={BtnType.filterCorp}
@@ -496,8 +476,9 @@ export function ButtonOwnerPhone({ user, button }) {
           {user.showWassap &&
               <Btn
                 btnType={BtnType.corporative}
-                contentAlignment={ContentAlignment.center}
-                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.left}
+                caption={t('button.whatsapp')}
+                iconLeft={IconType.svg}
                 iconLink={<IoLogoWhatsapp />}
                 onClick={() => jumpTo(`https://wa.me/+${phone}`)}
               />
@@ -519,8 +500,9 @@ export function CardButtonHeadActions({
       {action && !isButtonOwner && (
         <Btn
           btnType={BtnType.corporative}
-          contentAlignment={ContentAlignment.center}
-          iconLeft={IconType.circle}
+          contentAlignment={ContentAlignment.left}
+          iconLeft={IconType.svg}
+          caption={t('button.sendComment')}
           iconLink={<IoMailOutline />}
           submit={true}
           onClick={action}
@@ -564,7 +546,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   // };
   const onClick = (e) => {
     e.preventDefault()
-    console.log('this goes for dev test.. make sure it works..')
+    dconsole.log('this goes for dev test.. make sure it works..')
     store.emit(new SetMainPopupCurrentProfile(button.owner))
   }
   return (
@@ -578,7 +560,6 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
             {button.owner.name}{' '}
             <span className="card-button__username">
               {' '}
-              {/* @{button.owner.username} */}
             </span>
           </div>
           <div className="card-button__author-description">
@@ -601,42 +582,6 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   );
 }
 
-export function CardButtonOptions() {
-  return (
-    <div className="card-button__options-menu">
-      <div className="card-button__trigger">
-        <div className="card-button__edit-icon card-button__submenu">
-          <IoEllipsisHorizontalSharp />
-        </div>
-      </div>
-
-      <div className="card-button__dropdown-container">
-        <div className="card-button__dropdown-arrow"></div>
-        <div className="card-button__dropdown-content">
-          <div className="card-button__trigger-options">
-            Editar botón
-          </div>
-
-          <button className="card-button__trigger-options card-button__trigger-button">
-            Quitar botón de la red
-          </button>
-
-          <button className="card-button__trigger-options card-button__trigger-button">
-            Borrar botón
-          </button>
-
-          <button className="card-button__trigger-options card-button__trigger-button">
-            Compartir botón
-          </button>
-
-          <button className="card-button__trigger-options card-button__trigger-button">
-            Reportar botón
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function FollowButtonHeart({ button, sessionUser }) {
   if (!canFollowButton(button, sessionUser)) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { GeoJson, GeoJsonFeature, Marker, Overlay, Point } from 'pigeon-maps';
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import {
   RecenterExplore,
   UpdateHexagonClicked, updateCurrentButton,
@@ -19,6 +19,8 @@ import { Button } from 'shared/entities/button.entity';
 import { MarkerButton } from './MarkerButton';
 import t from 'i18n';
 import { PoweredBy } from 'components/brand/powered';
+import { circleGeoJSON } from 'shared/geo.utils';
+import dconsole from 'shared/debugger';
 
 export default function HexagonExploreMap({
   h3TypeDensityHexes,
@@ -48,6 +50,19 @@ export default function HexagonExploreMap({
     false,
   );
 
+  const filtersByLocation = useGlobalStore(
+    (state: GlobalState) => state.explore.map.filters.where
+  );
+
+  const [filteredCircle, setFilteredCircle] = useState(null)
+  useEffect(() => {
+    if(filtersByLocation?.center && filtersByLocation?.radius)
+    {
+      setFilteredCircle(() => circleGeoJSON(filtersByLocation.center[1],filtersByLocation.center[0], filtersByLocation.radius*0.001));
+    }else{
+      setFilteredCircle(() => null)
+    }
+  }, [filtersByLocation])
   const onBoundsChanged = ({ center, zoom, bounds }) => {
     handleBoundsChange(bounds, center, zoom)
     setCenterBounds(center);
@@ -78,48 +93,7 @@ export default function HexagonExploreMap({
     }
   }, [hexagonHighlight, hexagonClicked, geoJsonFeatures])
 
-  const places = [
-    {
-      address: 'Eiffel Tower, Paris, France',
-      coords: {
-        lat: 48.8584,
-        lng: 2.2945,
-      },
-      id: '1',
-    },
-    {
-      address: 'Colosseum, Rome, Italy',
-      coords: {
-        lat: 41.8902,
-        lng: 12.4922,
-      },
-      id: '2',
-    },
-    {
-      address: 'Brandenburg Gate, Berlin, Germany',
-      coords: {
-        lat: 52.5163,
-        lng: 13.3777,
-      },
-      id: '3',
-    },
-    {
-      address: 'Buckingham Palace, London, UK',
-      coords: {
-        lat: 51.5014,
-        lng: -0.1419,
-      },
-      id: '4',
-    },
-    {
-      address: 'Sagrada Família, Barcelona, Spain',
-      coords: {
-        lat: 41.4036,
-        lng: 2.1744,
-      },
-      id: '5',
-    },
-  ];
+  const radiusCircle = circleGeoJSON(0,0, 100);
   return (
     <>
       {(exploreSettings.center && selectedNetwork) && (
@@ -134,6 +108,10 @@ export default function HexagonExploreMap({
             <DisplayInstructions />
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
+              
+            <GeoJsonFeature feature={radiusCircle}/>
+            {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
+            
               {/* DRAW HEXAGONS ON MAP */}
               {!(exploreSettings.zoom >= showMarkersZoom) && geoJsonFeatures.map((hexagonFeature) => (
                 <GeoJsonFeature
@@ -269,7 +247,7 @@ export default function HexagonExploreMap({
                         }
                         return (
                           <span
-                            className="pigeon-map__hex-element"
+                            className="pigeon-map__hex-element--selected"
                             style={{
                               color: btnType.cssColor,
                               fontWeight: 'bold',

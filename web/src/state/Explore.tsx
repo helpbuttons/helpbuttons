@@ -291,6 +291,8 @@ export class updateCurrentButton implements UpdateEvent {
         newState.explore.settings.center = roundCoords([this.button.latitude, this.button.longitude])
         newState.explore.settings.zoom = maxZoom - 1
 
+        newState.explore.map.boundsFilteredButtons = [this.button]
+        
       } else if (!this.button) {
         newState.explore.settings.center = state.explore.settings.prevCenter
         if (newState.explore.settings.zoom == state.explore.settings.prevZoom)

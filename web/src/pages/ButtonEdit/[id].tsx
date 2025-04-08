@@ -1,14 +1,10 @@
 import ButtonForm from 'components/button/ButtonForm';
-import { GlobalState, store } from 'state';
+import { store } from 'state';
 import {
-  CreateButton,
   FindButton,
-  SaveButtonDraft,
   UpdateButton,
   updateCurrentButton,
 } from 'state/Explore';
-import { NavigateTo } from 'state/Routes';
-import { useRef } from 'store/Store';
 import { alertService } from 'services/Alert';
 import { Button } from 'shared/entities/button.entity';
 import { useEffect, useState } from 'react';
@@ -17,13 +13,9 @@ import { UpdateButtonDto } from 'shared/dtos/button.dto';
 import t from 'i18n';
 import { useRouter } from 'next/router';
 import { ErrorName } from 'shared/types/error.list';
+import dconsole from 'shared/debugger';
 
 export default function ButtonEdit() {
-  const selectedNetwork = useRef(
-    store,
-    (state: GlobalState) => state.networks.selectedNetwork,
-  );
-
 
   const {
     register,
@@ -48,7 +40,6 @@ export default function ButtonEdit() {
   const router = useRouter()
   const onSubmit = (data) => {
     setIsSubmitting(() => true)
-
     store.emit(
       new UpdateButton(id,
         data,
