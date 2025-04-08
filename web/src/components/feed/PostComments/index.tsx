@@ -3,7 +3,7 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import { store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';
@@ -38,6 +38,9 @@ export default function PostComments({
   isButtonOwner,
   post,
 }) {
+  const focusMessageId = useGlobalStore(
+    (state: GlobalState) => state.activities.focusMessageId,
+  );
   const commentParentIds = comments.filter(
     (comment) => comment.commentParentId,
   );
@@ -52,6 +55,7 @@ export default function PostComments({
                 return (
                   <PostComment
                     key={key}
+                    focus={comment.id == focusMessageId}
                     comment={comment}
                     sessionUser={sessionUser}
                     isButtonOwner={isButtonOwner}
@@ -82,7 +86,8 @@ export function PostComment({
   reloadPosts,
   post,
   replies,
-  isReply = false
+  isReply = false,
+  focus = false
 }) {
   const deleteComment = (commentId) => {
     store.emit(
@@ -110,6 +115,7 @@ export function PostComment({
           ? ' card-notification--comment-private'
           : '') +
         (isReply ? ' card-notification--reply' : '')
+        + focus ? ' card-notification-comment-focus' : ''
       }
     >
       <Comment comment={comment} sessionUser={sessionUser}/>
