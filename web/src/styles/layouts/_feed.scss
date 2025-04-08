@@ -19,12 +19,14 @@ $feed-new-message-radius: $border-radius-circle;
   position: relative; 
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  padding: $padding-huge;
   align-items: center;
-  margin: $margin-xsmall auto;
   font-weight: $font-weight-bold;
   color: $color-gray;
   font-size: $font-size-small;
+  margin: auto;
 
 
 }

@@ -185,8 +185,6 @@ $card-button-border-height: $border-general-height;
   background-color: $color-white;
   border-top: 1px dashed $color-ligth-gray;
   border-radius: 0 0 $border-radius-circle $border-radius-circle;
-  max-width: $grid-max-width;
-  margin: auto;
 
   span {
     align-items: center;
@@ -448,6 +446,7 @@ $card-button-border-height: $border-general-height;
   -webkit-box-orient:horizontal;
   overflow: scroll;
   color: $color-black;
+  flex-wrap: wrap;
 
     &:hover {
       // color: $hashtag-hover-color;
@@ -538,14 +537,12 @@ $card-button-border-height: $border-general-height;
   width: 100%;
   position: relative;
   text-align: center;
-  max-height: 400px;
-  overflow: hidden;
   
   & img {
 
     max-width: 100%;
     width: 100%;
-    height: auto;
+    max-height: 400px;
     object-fit: cover !important;
     pointer-events: auto;
 
