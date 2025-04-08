@@ -238,6 +238,8 @@ $feed-new-message-radius: $border-radius-circle;
   .feed-section {
 
     padding-bottom: $padding-small;
+    max-width: $grid-max-width;
+    margin: auto;
 
   }
 

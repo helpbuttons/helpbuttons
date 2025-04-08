@@ -203,10 +203,10 @@ $card-notification-delete-size: 100px;
 
     background: repeating-linear-gradient(
     45deg,
-    $color-ligth-gray,
+    $color-white,
+    $color-white 1px,
     $color-ligth-gray 4px,
-    #fff 4px,
-    #fff 20px
+    $color-ligth-gray 20px
   );
 
 }
@@ -336,7 +336,7 @@ $card-notification-delete-size: 100px;
   color: $color-gray;
   text-overflow: ellipsis;
   word-wrap: break-word;
-  line-height: $text-line-height-xsmall;
+  line-height: $text-line-height-small;
   font-size: $font-size-general;
   color: $color-gray;
 }

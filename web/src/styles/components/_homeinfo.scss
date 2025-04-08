@@ -127,6 +127,11 @@ $info-content-head-margin-mobile: 71px;
 
 }
 
+.homeinfo__card--slogan-card {
+
+  background-color: $color-gray-transparent;
+}
+
 
 .homeinfo-card__header--slogan-card {
 
@@ -134,6 +139,7 @@ $info-content-head-margin-mobile: 71px;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  color: $color-white;
 }
 
 .homeinfo__network-title {
@@ -184,6 +190,12 @@ $info-content-head-margin-mobile: 71px;
 
 }
 
+.homeinfo-card__header-title--slogan {
+
+  font-size: $font-size-huge;
+
+}
+
 .homeinfo__network-title-card--buttons {
 
   margin-top: $margin-small;
@@ -208,6 +220,7 @@ $info-content-head-margin-mobile: 71px;
 }
 
 
+
 .homeinfo-card__header {
 
   display: flex;
@@ -229,6 +242,7 @@ $info-content-head-margin-mobile: 71px;
     font-size: $font-size-medium;
     font-weight: bold; // revise
   }
+
 }
 
 
@@ -237,11 +251,13 @@ hr {
 }
 
 .homeinfo__description {
+
   overflow:auto;
   white-space: pre-wrap;
   padding: $padding-medium 0;
   word-wrap: break-word;
   display: inline-block;
+  font-size: $font-size-medium;
   width: 98%;
   max-width: 98%;
 
@@ -355,9 +371,11 @@ hr {
 
   .homeinfo-card__header {
     .homeinfo-card__header-title {
-      font-size: $font-size-title;
+      font-size: $font-size-medium;
     }
   }
+
+
 
   .homeinfo-card__controls {
     flex-flow: row nowrap
@@ -408,6 +426,12 @@ hr {
     margin: 0;
     padding: $margin-medium;
     margin-bottom: $margin-xsmall;
+  }
+
+    .homeinfo-card__header-title--slogan {
+
+    font-size: $font-size-huge;
+  
   }
 
 
