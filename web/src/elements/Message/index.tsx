@@ -28,9 +28,9 @@ export function TextFormatted({
   return (
     <>
       {!isLongText || isExpanded ? (
-        <div>{formatMessage(text)}</div>
+        <p>{formatMessage(text)}</p>
       ) : (
-        <div>
+        <>
           {formatMessage(text.slice(0, maxChars))}
           {text.length > maxChars ? '...' : ''}
           {(showExpandButton && isLongText) && (
@@ -41,7 +41,7 @@ export function TextFormatted({
               onClick={() => expand()}
             />
           )}
-        </div>
+        </>
       )}
     </>
   );

@@ -358,11 +358,6 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
 
         <div className="card-button__title">
           {button.title}
-
-        </div>
-
-        <div className="card-button__paragraph">
-          <TextFormatted text={button.description} />
         </div>
         <div className="card-button__hashtags-wrapper">
           {!showHashtags && 
@@ -374,6 +369,10 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
           }
           {showHashtags && <TagsNav tags={button.tags} />}
         </div>
+        <div className="card-button__paragraph">
+          <TextFormatted text={button.description} />
+        </div>
+
 
         <div className="card-button__bottom-properties">
           {customFields && customFields.length > 0 && (
@@ -489,8 +488,9 @@ export function ButtonOwnerPhone({ user, button }) {
           {user.showWassap &&
               <Btn
                 btnType={BtnType.corporative}
-                contentAlignment={ContentAlignment.center}
-                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.left}
+                caption={t('button.whatsapp')}
+                iconLeft={IconType.svg}
                 iconLink={<IoLogoWhatsapp />}
                 onClick={() => jumpTo(`https://wa.me/+${phone}`)}
               />
@@ -564,15 +564,9 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   return (
     <div className="card-button__author">
       <div className="card-button__info">
-        <div className="card-button__author-title">
-          {t('button.authorTitle')}
-        </div>
         <Link href="#" onClick={onClick}>
           <div className="card-button__name">
-            {button.owner.name}{' '}
-            <span className="card-button__username">
-              {' '}
-            </span>
+          {t('button.authorTitle')}{button.owner.name}
           </div>
           <div className="card-button__author-description">
             <TextFormatted maxChars={600} text={button.owner.description} />
