@@ -275,7 +275,7 @@
     "renewLink": "Renew your _helpbutton_",
     "createUpdate": "Publish Update",
     "authorTitle": "Published by ",
-    "sendComment":"Send message",
+    "sendComment":"Send message to {0}",
     "notFound": "Can't find your button, maybe it was deleted?",
     "followErrorAlert": "Can`t follow now, sorry",
     "unfollowErrorAlert": "Can`t unfollow now, sorry",
@@ -429,7 +429,8 @@
     "public": "This comment is public, everyone could see it.",
     "placeholderWrite": "Write a message in this post",
     "posted": "Comment posted",
-    "sendPublic": "Answer",
+    "sendPublic": "Publish comment",
+    "reply": "Answer",
     "sendPrivate": "Answer privately",
     "send": "Send",
     "makePublic":"Show message in public"
