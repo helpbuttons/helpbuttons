@@ -309,10 +309,26 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
     false,
   );
   const [showMap, setShowMap] = useState(false);
+  const [showHashtags, setShowHashtags] = useState(false);
 
   return (
     <>
-      <CardButtonSubmenu button={button} />
+      <div className='card-button__head-actions'>
+        <FollowButtonHeart
+          button={button}
+          sessionUser={sessionUser}
+        />
+        <Btn
+          btnType={BtnType.smallCircle}
+          contentAlignment={ContentAlignment.center}
+          iconLeft={IconType.circle}
+          iconLink={<IoMailOutline />}
+          onClick={() => {
+            setShowSubmenu(!showSubmenu);
+          }}
+        />
+        <CardButtonSubmenu button={button} />
+      </div>
       <ExpiringAlert
         button={button}
         isOwner={isButtonOwner(sessionUser, button)}
@@ -342,18 +358,21 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
 
         <div className="card-button__title">
           {button.title}
-          <FollowButtonHeart
-            button={button}
-            sessionUser={sessionUser}
-          />
         </div>
-
+        <div className="card-button__hashtags-wrapper">
+          {!showHashtags && 
+            <div             
+              onClick={() => setShowHashtags(() => !showHashtags)}
+              className="card-button__hashtags-wrapper--hr">
+                <hr></hr><span className="card-button__hashtags-wrapper--label">{t('button.seeHashtags')}</span>
+            </div>
+          }
+          {showHashtags && <TagsNav tags={button.tags} />}
+        </div>
         <div className="card-button__paragraph">
           <TextFormatted text={button.description} />
         </div>
-        <div className="card-button__hashtags">
-          <TagsNav tags={button.tags} />
-        </div>
+
 
         <div className="card-button__bottom-properties">
           {customFields && customFields.length > 0 && (
@@ -469,8 +488,9 @@ export function ButtonOwnerPhone({ user, button }) {
           {user.showWassap &&
               <Btn
                 btnType={BtnType.corporative}
-                contentAlignment={ContentAlignment.center}
-                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.left}
+                caption={t('button.whatsapp')}
+                iconLeft={IconType.svg}
                 iconLink={<IoLogoWhatsapp />}
                 onClick={() => jumpTo(`https://wa.me/+${phone}`)}
               />
@@ -544,15 +564,9 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   return (
     <div className="card-button__author">
       <div className="card-button__info">
-        <div className="card-button__author-title">
-          {t('button.authorTitle')}
-        </div>
         <Link href="#" onClick={onClick}>
           <div className="card-button__name">
-            {button.owner.name}{' '}
-            <span className="card-button__username">
-              {' '}
-            </span>
+          {t('button.authorTitle')}{button.owner.name}
           </div>
           <div className="card-button__author-description">
             <TextFormatted maxChars={600} text={button.owner.description} />
@@ -582,24 +596,30 @@ function FollowButtonHeart({ button, sessionUser }) {
 
   if (isFollowingButton(button, sessionUser)) {
     return (
-      <Btn
-        btnType={BtnType.iconActions}
-        contentAlignment={ContentAlignment.center}
-        iconLink={<IoHeartOutline />}
-        iconLeft={IconType.circle}
-        onClick={() => followButton(button.id)}
-      />
+      <div className='card-button__follow-wrap'>
+        {t('button.followme')}
+        <Btn
+          btnType={BtnType.iconActions}
+          contentAlignment={ContentAlignment.center}
+          iconLink={<IoHeartOutline />}
+          iconLeft={IconType.circle}
+          onClick={() => followButton(button.id)}
+        />
+      </div>  
     );
   }
 
   return (
-    <Btn
-      btnType={BtnType.iconActions}
-      contentAlignment={ContentAlignment.center}
-      iconLink={<IoHeart />}
-      iconLeft={IconType.circle}
-      onClick={() => unFollowButton(button.id)}
-    />
+    <div className='card-button__follow-wrap'>
+      {t('button.following')}
+      <Btn
+        btnType={BtnType.iconActions}
+        contentAlignment={ContentAlignment.center}
+        iconLink={<IoHeart />}
+        iconLeft={IconType.circle}
+        onClick={() => unFollowButton(button.id)}
+      />
+    </div>  
   );
 }
 

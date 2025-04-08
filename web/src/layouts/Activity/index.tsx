@@ -44,28 +44,34 @@ export default function ActivityLayout({ sessionUser }) {
   return (
     <div className="feed__container">
       <div className="feed-selector feed-selector--list-toggle">
-        <Btn
-          caption={t('activities.messages')}
-          btnType={BtnType.tab}
-          contentAlignment={ContentAlignment.center}
-          extraClass={
-            activitySelectedTab == ActivityTab.MESSAGES &&
-            'btn--tab-active'
-          }
-          onClick={() => setSelectedTab(() => ActivityTab.MESSAGES)}
-        />
-        <Btn
-          caption={t('activities.notifications')}
-          btnType={BtnType.tab}
-          contentAlignment={ContentAlignment.center}
-          extraClass={
-            activitySelectedTab == ActivityTab.NOTIFICATIONS &&
-            'btn--tab-active'
-          }
-          onClick={() =>
-            setSelectedTab(() => ActivityTab.NOTIFICATIONS)
-          }
-        />
+        <div className='feed-selector__toggle-button'>
+          <span className='notif-circle feed-selector__notif-circle'>1</span>
+          <Btn
+            caption={t('activities.messages')}
+            btnType={BtnType.tab}
+            contentAlignment={ContentAlignment.center}
+            extraClass={
+              activitySelectedTab == ActivityTab.MESSAGES &&
+              'btn--tab-active'
+            }
+            onClick={() => setSelectedTab(() => ActivityTab.MESSAGES)}
+          />
+        </div>
+        <div className='feed-selector__toggle-button'>
+          <span className='notif-circle feed-selector__notif-circle'>1</span>
+          <Btn
+            caption={t('activities.notifications')}
+            btnType={BtnType.tab}
+            contentAlignment={ContentAlignment.center}
+            extraClass={
+              activitySelectedTab == ActivityTab.NOTIFICATIONS &&
+              'btn--tab-active'
+            }
+            onClick={() =>
+              setSelectedTab(() => ActivityTab.NOTIFICATIONS)
+            }
+          />
+        </div>
       </div>
       {false && (
       <div className="feed-selector feed-selector--activity">

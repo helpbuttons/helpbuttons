@@ -180,6 +180,7 @@ $card-notification-delete-size: 100px;
   gap: $padding-small 0;
   align-items: baseline;
   flex-wrap: wrap;
+  border-radius: 0 0 $border-radius-basic $border-radius-basic;
 
     button {
 
@@ -193,6 +194,7 @@ $card-notification-delete-size: 100px;
 
   border-top: 1px dashed $color-ligth-gray ;
   padding-top: $padding-big;
+  background-color: $color-ligth-gray;
 
 }
 

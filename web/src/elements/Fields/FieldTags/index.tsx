@@ -234,7 +234,7 @@ export function TagsNav({ tags }) {
   };
 
   return (
-    <>
+    <div className="card-button__hashtags">
       {tags.map((tag, idx) => {
         return (
           <div
@@ -250,6 +250,6 @@ export function TagsNav({ tags }) {
           </div>
         );
       })}
-    </>
+    </div>
   );
 }

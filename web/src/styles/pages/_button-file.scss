@@ -202,6 +202,7 @@ $button-file__container-max-width: $grid-max-width;
   bottom: 0;
   left: 0;
   z-index: $z-index-04;
+  box-shadow: $box-shadow-divs;
 
 
 }
@@ -250,8 +251,16 @@ $button-file__container-max-width: $grid-max-width;
 
     .button-file__message-section {
 
-      position: relative;
-    
+      position: fixed;
+      width: 50%;
+      top: auto;
+      left: calc(25%);
+      border-radius: $border-radius-basic;
+      height: max-content;
+      margin-bottom: auto;
+      margin: auto;
+      box-shadow: $box-shadow-divs;
+
     }
       
 

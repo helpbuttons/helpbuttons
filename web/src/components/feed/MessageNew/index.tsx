@@ -1,12 +1,13 @@
 import Loading from 'components/loading';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
 import t from 'i18n';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { IoPaperPlaneOutline } from 'react-icons/io5';
+import { IoLogoPaypal, IoPaperPlaneOutline } from 'react-icons/io5';
 import { uniqueArray } from 'shared/sys.helper';
 
 export default function MessageNew({
@@ -96,6 +97,13 @@ export default function MessageNew({
               validationError={null}
             />
           </div>
+           
+            <FieldCheckbox
+              name='makePublic'
+              defaultValue={privateMessage}
+              text={t('comment.makePublic')}
+              onChanged={(value) => {setValue('privateMessage', value)}}
+            />
           <Btn
               submit={true}
               btnType={BtnType.corporative}
