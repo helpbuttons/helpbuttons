@@ -2,7 +2,7 @@
 // blocks in other style files too, ex: aside-info
 
 $index-mobile-fixed-z-index: $z-index-05;
-$index-content-left--distance: $list-width-desktop;
+$index-content-left--distance: $grid-max-width;
 
 .index__mobile-fixed {
   width: 100%;
@@ -39,6 +39,7 @@ $index-content-left--distance: $list-width-desktop;
 .index__content-left {
 
   transition: $transition-default-slow;
+  max-width: $grid-max-width;
 
 }
 
