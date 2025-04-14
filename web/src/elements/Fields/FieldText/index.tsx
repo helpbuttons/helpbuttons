@@ -1,6 +1,7 @@
 import React, { ForwardedRef, ReactNode, useState } from "react";
 import FieldError from "../FieldError";
 import t from "i18n";
+import { AnyMxRecord } from "dns";
 
 interface IFieldText {
     label: string;
@@ -15,6 +16,8 @@ interface IFieldText {
     extraMessage?: string;
     maxLength?: number;
     defaultValue?: string;
+    subInputLink?: any;
+    subInputLinkText?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
     onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -36,6 +39,8 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
         extraMessage,
         maxLength = -1,
         defaultValue,
+        subInputLink,
+        subInputLinkText,
         children,
       },
       ref: ForwardedRef<HTMLInputElement>
@@ -79,19 +84,19 @@ const FieldText = React.forwardRef<HTMLInputElement, IFieldText>(
                   {textLength} / {maxLength}
                 </label>
               )}
+              
                 <FieldError
                   validationError={validationError}
                   extraMessage={extraMessage}
                 />
-  
-            {/* {subInputLink &&
-  
-                      <div className="form__input-subtitle-side">
-                          <a href={subInputLink} className="form__input-subtitle--text link">
-                              {subInputLinkText}
-                          </a>
-                      </div>
-                  } */}
+
+              {/* {subInputLink &&
+                <div className="form__input-subtitle-side">
+                    <a href={subInputLink} className="form__input-subtitle--text link">
+                        {subInputLinkText}
+                    </a>
+                </div>
+              } */}
           </div>
           {children}
         </div>

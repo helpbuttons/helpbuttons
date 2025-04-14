@@ -80,7 +80,19 @@ export default function NewUserFields({
         placeholder={t('user.namePlaceHolder')}
         validationError={errors.name}
         {...register('name', { required: true })}
-      ></FieldText>
+      >
+      
+              <div className="form__input-subtitle-side">
+                    <label className="form__input-subtitle--text">
+                      {`${t('user.username')} ${watch(
+                        'username',
+                      )}@${hostname}`}
+                    </label>
+                    <div className="form__input-subtitle--text link">
+                        {t('common.edit')}
+                    </div>
+              </div>
+      </FieldText>
       {!short &&
         <FieldText
           name="username"
