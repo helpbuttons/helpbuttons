@@ -61,7 +61,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 .list__content {
 
   display: flex;
-  padding: $padding-big $padding-big;
+  // padding: $padding-big $padding-big;
   background-color: $color-ligth-gray;
   z-index: $z-index-02;
   width: 100%;

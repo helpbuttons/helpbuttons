@@ -99,7 +99,7 @@ export default function MessageNew({
           </div>
           <Btn
               submit={true}
-              btnType={BtnType.corporative}
+              btnType={BtnType.submit}
               caption={t("comment.send")}
               iconLink={<IoPaperPlaneOutline />}
               iconLeft={IconType.svg}

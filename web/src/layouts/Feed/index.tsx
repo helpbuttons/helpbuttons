@@ -13,6 +13,7 @@ import {
   IoCreate,
   IoCreateOutline,
   IoLogoWhatsapp,
+  IoMailOutline,
   IoPencilOutline,
   IoPersonOutline,
 } from 'react-icons/io5';
@@ -36,6 +37,7 @@ import { useToggle } from 'shared/custom.hooks';
 import { ButtonOwnerPhone, CardButtonHeadActions } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import router from 'next/router';
+import { IncomingMessage } from 'node:http';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -78,32 +80,6 @@ export default function Feed({ button }: { button: Button }) {
         <ButtonOwnerPhone user={button.owner} button={button}/>
 
         <>
-          {sessionUser && isButtonOwner && (
-            <>
-              <Btn
-                btnType={BtnType.corporative}
-                iconLeft={IconType.svg}
-                contentAlignment={ContentAlignment.left}
-                caption={t('button.edit')}
-                iconLink={<IoCreateOutline/>}
-                onClick={() => {
-                  router.push(`/ButtonEdit/${button.id}`);
-                }}
-              />
-              <ComposePost
-                referer={{ button: button.id }}
-                onCancel={() => {
-                  reloadPosts();
-                  toggleShowReplyFirstPost(() => false);
-                }}
-                onCreate={() => {
-                  reloadPosts();
-                }}
-                show={showNewPostForm}
-                setShow={() => {toggleShowNewPostForm(true)}}
-              />
-            </>
-          )}
           {sessionUser && (
             <CardButtonHeadActions
               button={button}
@@ -123,8 +99,42 @@ export default function Feed({ button }: { button: Button }) {
           )}
         </>
       </div>
-      <div className="feed-line">{t('feed.messages')}</div>
+      <div className="feed-line">
+        
+        {t('feed.messages')}
+        {sessionUser && isButtonOwner && (
+            <>
+              <ComposePost
+                referer={{ button: button.id }}
+                onCancel={() => {
+                  reloadPosts();
+                  toggleShowReplyFirstPost(() => false);
+                }}
+                onCreate={() => {
+                  reloadPosts();
+                }}
+                show={showNewPostForm}
+                setShow={() => {toggleShowNewPostForm(true)}}
+              />
+           
+            </>
+          )}
+          {sessionUser && !isButtonOwner && (
+            <>
+                <Btn
+                  btnType={BtnType.submit}
+                  contentAlignment={ContentAlignment.left}
+                  iconLeft={IconType.svg}
+                  caption={t('button.publishComment')}
+                  iconLink={<IoAdd />}
+                  submit={true}
+                />
+            </>
+          )}
+      </div>
+    
       <div className="feed-section">
+       
         {posts &&
           posts.map((post, idx) => (
             <FeedElement
@@ -312,11 +322,11 @@ export function ComposePost({
         <>
           <Btn
             submit={false}
-            btnType={BtnType.corporative}
+            btnType={BtnType.submit}
             caption={t('button.createUpdate')}
             iconLink={<IoAdd />}
             iconLeft={IconType.svg}
-            contentAlignment={ContentAlignment.left}
+            contentAlignment={ContentAlignment.center}
             onClick={() => setShow()}
           />
         </>

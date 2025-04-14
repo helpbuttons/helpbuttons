@@ -127,6 +127,11 @@ $info-content-head-margin-mobile: 71px;
 
 }
 
+.homeinfo__card--slogan-card {
+
+  background-color: $color-gray-transparent;
+}
+
 
 .homeinfo-card__header--slogan-card {
 
@@ -134,6 +139,7 @@ $info-content-head-margin-mobile: 71px;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  color: $color-white;
 }
 
 .homeinfo__network-title {
@@ -162,6 +168,7 @@ $info-content-head-margin-mobile: 71px;
 
   font-size: $font-size-huge;
   line-height: $font-size-huge;
+  font-weight: $font-weight-bolder;
   display: flex;
   border-radius: $border-radius-basic;
   // background-color: $color-dark-gray;
@@ -182,6 +189,13 @@ $info-content-head-margin-mobile: 71px;
 
   }
 
+}
+
+.homeinfo-card__header-title--slogan {
+
+  font-size: $font-size-huge;
+  font-weight: $font-weight-bolder;
+  line-height: $text-line-height-medium;
 }
 
 .homeinfo__network-title-card--buttons {
@@ -208,6 +222,7 @@ $info-content-head-margin-mobile: 71px;
 }
 
 
+
 .homeinfo-card__header {
 
   display: flex;
@@ -225,10 +240,13 @@ $info-content-head-margin-mobile: 71px;
     background-color: $color-gray;
   }
 
-  .homeinfo-card__header-title {
-    font-size: $font-size-medium;
-    font-weight: bold; // revise
-  }
+
+
+}
+
+.homeinfo-card__header-title {
+  font-weight: bold;
+  font-size: $font-size-title;
 }
 
 
@@ -237,11 +255,13 @@ hr {
 }
 
 .homeinfo__description {
+
   overflow:auto;
   white-space: pre-wrap;
   padding: $padding-medium 0;
   word-wrap: break-word;
   display: inline-block;
+  font-size: $font-size-medium;
   width: 98%;
   max-width: 98%;
 
@@ -280,7 +300,7 @@ hr {
   font-size: $font-size-small;
   border-color: $color-ligth-gray;
   border: 0px solid $color-ligth-gray;
-  line-height: $text-line-height-small;
+  line-height: $text-line-height-xsmall;
 
   a {
     @extend .btn;
@@ -351,12 +371,6 @@ hr {
 
     display: none;
 
-  }
-
-  .homeinfo-card__header {
-    .homeinfo-card__header-title {
-      font-size: $font-size-title;
-    }
   }
 
   .homeinfo-card__controls {

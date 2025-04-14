@@ -40,7 +40,7 @@ $card-button-border-height: $border-general-height;
 
 .card-button__content,
 .card-button__content--small {
-  padding: $padding-big $padding-big;
+  padding: $padding-big $padding-big $padding-medium $padding-big ;
 }
 
 
@@ -62,7 +62,7 @@ $card-button-border-height: $border-general-height;
   align-items: center;
   padding-top: $padding-huge;
   padding-right: $padding-huge;
-  gap: $padding-big;
+  gap: $padding-small;
   right: 0;
 }
 
@@ -77,11 +77,13 @@ $card-button-border-height: $border-general-height;
 .card-button__author {
   display: flex;
   flex-flow: row nowrap;
-  align-items: center;
+  align-items: flex-start;
   gap: $padding-huge;
   padding:  $padding-medium $padding-huge;
   justify-content: space-between;
   border-top: $border-style-light;
+  max-width: $grid-max-width;
+  margin-right: auto;
 
 }
 
@@ -120,6 +122,8 @@ $card-button-border-height: $border-general-height;
 
 .card-button__avatar {
   // flex: 0 1 12%;
+
+  align-self: center;
 
   & > button {
     border: none;
@@ -172,6 +176,7 @@ $card-button-border-height: $border-general-height;
 
 
 .card-button__actions {
+
   padding: $padding-huge;
   display: flex;
   flex-direction: column;
@@ -180,6 +185,7 @@ $card-button-border-height: $border-general-height;
   background-color: $color-white;
   border-top: 1px dashed $color-ligth-gray;
   border-radius: 0 0 $border-radius-circle $border-radius-circle;
+
   span {
     align-items: center;
     padding-right: 1rem;
@@ -351,6 +357,7 @@ $card-button-border-height: $border-general-height;
   color: $color-black;
   font-size: $font-size-huge;
   padding: $padding-big 0 $padding-xsmall 0;
+
   display: flex;
   flex-direction: row;
   align-items:flex-start;
@@ -440,6 +447,7 @@ $card-button-border-height: $border-general-height;
   -webkit-box-orient:horizontal;
   overflow: scroll;
   color: $color-black;
+  flex-wrap: wrap;
 
     &:hover {
       // color: $hashtag-hover-color;
@@ -534,8 +542,8 @@ $card-button-border-height: $border-general-height;
   & img {
 
     max-width: 100%;
+    width: 100%;
     max-height: 400px;
-    width: auto;
     object-fit: cover !important;
     pointer-events: auto;
 
@@ -598,7 +606,6 @@ $card-button-border-height: $border-general-height;
   width: auto;
   height: 30px;
   position: relative;
-  right: $padding-xsmall;
 }
 
 .card-button__options-menu {
@@ -813,7 +820,7 @@ $card-button-border-height: $border-general-height;
   flex-direction: column;
   justify-content: center;
   flex-wrap: wrap;
-  gap: $margin-small;
+  gap: $margin-xsmall;
   align-items: flex-start;
   overflow: visible;
 
@@ -914,6 +921,15 @@ $card-button-border-height: $border-general-height;
     margin-bottom: $margin-xsmall;
 
   }
+
+  .card-max-width {
+
+    max-width: $grid-max-width;
+
+
+  }
+
+
 
 
 }

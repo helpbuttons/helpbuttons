@@ -359,7 +359,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
         <div className="card-button__title">
           {button.title}
         </div>
-        <div className="card-button__hashtags-wrapper">
+        {/* <div className="card-button__hashtags-wrapper">
           {!showHashtags && 
             <div             
               onClick={() => setShowHashtags(() => !showHashtags)}
@@ -368,7 +368,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
             </div>
           }
           {showHashtags && <TagsNav tags={button.tags} />}
-        </div>
+        </div> */}
         <div className="card-button__paragraph">
           <TextFormatted text={button.description} />
         </div>
@@ -563,16 +563,6 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
   }
   return (
     <div className="card-button__author">
-      <div className="card-button__info">
-        <Link href="#" onClick={onClick}>
-          <div className="card-button__name">
-          {t('button.authorTitle')}{button.owner.name}
-          </div>
-          <div className="card-button__author-description">
-            <TextFormatted maxChars={600} text={button.owner.description} />
-          </div>
-        </Link>
-      </div>
       <div className="card-button__avatar">
         <div className="avatar-big">
           <Link href="#" onClick={onClick}>
@@ -584,6 +574,17 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
           </Link>
         </div>
       </div>
+      <div className="card-button__info">
+        <Link href="#" onClick={onClick}>
+          <div className="card-button__name">
+          {t('button.authorTitle')}{button.owner.name}
+          </div>
+          <div className="card-button__author-description">
+            <TextFormatted maxChars={600} text={button.owner.description} />
+          </div>
+        </Link>
+      </div>
+      
     </div>
   );
 }
