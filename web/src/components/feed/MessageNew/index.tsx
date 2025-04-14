@@ -97,13 +97,6 @@ export default function MessageNew({
               validationError={null}
             />
           </div>
-           
-            <FieldCheckbox
-              name='makePublic'
-              defaultValue={privateMessage}
-              text={t('comment.makePublic')}
-              onChanged={(value) => {setValue('privateMessage', value)}}
-            />
           <Btn
               submit={true}
               btnType={BtnType.corporative}
