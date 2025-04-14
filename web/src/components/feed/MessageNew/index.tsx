@@ -106,7 +106,7 @@ export default function MessageNew({
             />
           <Btn
               submit={true}
-              btnType={BtnType.corporative}
+              btnType={BtnType.submit}
               caption={t("comment.send")}
               iconLink={<IoPaperPlaneOutline />}
               iconLeft={IconType.svg}

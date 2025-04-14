@@ -74,7 +74,7 @@
     "unreadMessages": "Unread messages",
     "markMessagesAsRead": "Mark all as read",
     "byCategory": "Filter by category",
-    "messages": "Updates & comments:",
+    "messages": "Public board & comments",
     "readMessages": "Read messages",
     "nounread": "No unread messages",
     "read": "No messages yet",
@@ -285,7 +285,8 @@
     "whatsapp": "Connect in Whatsapp",
     "followme": "Follow me for news",
     "following": "following!",
-    "seeHashtags":"See tags"
+    "seeHashtags":"See tags",
+    "publishComment": "Publish comment"
   },
   "user": {
     "login": "Write your credentials",

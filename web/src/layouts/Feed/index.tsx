@@ -13,6 +13,7 @@ import {
   IoCreate,
   IoCreateOutline,
   IoLogoWhatsapp,
+  IoMailOutline,
   IoPencilOutline,
   IoPersonOutline,
 } from 'react-icons/io5';
@@ -36,6 +37,7 @@ import { useToggle } from 'shared/custom.hooks';
 import { ButtonOwnerPhone, CardButtonHeadActions } from 'components/button/CardButton';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import router from 'next/router';
+import { IncomingMessage } from 'node:http';
 
 export default function Feed({ button }: { button: Button }) {
   const [posts, setPosts] = useState(null);
@@ -114,9 +116,21 @@ export default function Feed({ button }: { button: Button }) {
                 show={showNewPostForm}
                 setShow={() => {toggleShowNewPostForm(true)}}
               />
+           
             </>
           )}
-
+          {sessionUser && !isButtonOwner && (
+            <>
+                <Btn
+                  btnType={BtnType.submit}
+                  contentAlignment={ContentAlignment.left}
+                  iconLeft={IconType.svg}
+                  caption={t('button.publishComment')}
+                  iconLink={<IoAdd />}
+                  submit={true}
+                />
+            </>
+          )}
       </div>
     
       <div className="feed-section">
@@ -305,7 +319,7 @@ export function ComposePost({
             caption={t('button.createUpdate')}
             iconLink={<IoAdd />}
             iconLeft={IconType.svg}
-            contentAlignment={ContentAlignment.left}
+            contentAlignment={ContentAlignment.center}
             onClick={() => setShow()}
           />
         </>
