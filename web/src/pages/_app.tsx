@@ -56,11 +56,6 @@ function MyApp({ Component, pageProps }) {
   );
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
-  const onFetchingNetworkError = (error) => {
-    if (error === 'network-not-found') {
-      setFetchingNetworkError(true)
-    }
-  };
 
   const onFetchingConfigError = (error) => {
     dconsole.error(error);
@@ -98,7 +93,8 @@ function MyApp({ Component, pageProps }) {
 
   const config = useConfig(pageProps._config, onFetchingConfigError);
   const selectedNetwork = useSelectedNetwork(
-    pageProps._selectedNetwork
+    pageProps._selectedNetwork,
+    () => setFetchingNetworkError(() => true)
   );
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
