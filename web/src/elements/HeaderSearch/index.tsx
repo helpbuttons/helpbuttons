@@ -10,13 +10,15 @@ import { defaultFilters, isFiltering } from 'components/search/AdvancedFilters/f
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { readableDistance } from 'shared/sys.helper';
 
-///search button in explore and home
-export function HeaderSearch({ results, toggleAdvancedFilters }) {
-  const exploreMapState = useStore(
-    store,
-    (state: GlobalState) => state.explore.map,
-    false,
-  );
+export function HeaderSearch({ toggleAdvancedFilters, pageName, exploreMapState, selectedNetwork}) {
+  const [buttonCount, setButtonCount] = useState(selectedNetwork.buttonCount)
+  
+  useEffect(() => {
+    if(['Explore','Bulletin'].indexOf(pageName) < 0) {
+      setButtonCount(() => exploreMapState.listButtons.length)
+    }
+    
+  }, [exploreMapState.listButtons])
 
   const clearButton = useRef(null);
   const filtered = isFiltering()
@@ -41,7 +43,7 @@ export function HeaderSearch({ results, toggleAdvancedFilters }) {
       >
         <div className="header-search__column">
           <SearchText
-            count={results.count}
+            count={buttonCount}
             where={exploreMapState.filters.where}
             filtering={filtered}
           />
