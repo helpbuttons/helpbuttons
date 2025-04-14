@@ -41,7 +41,6 @@ export const networksInitial = {
 
 
 export const useSelectedNetwork = (_selectedNetwork = null, onError = () => { console.log('error fetching network') }): Network => {
-  dconsole.log('useselectednetwork..')
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
   const initialized = useGlobalStore((state: GlobalState) => state.networks.initialized);
   useEffect(() => {
