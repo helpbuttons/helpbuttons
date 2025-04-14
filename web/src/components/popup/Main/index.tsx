@@ -24,24 +24,27 @@ export default function MainPopup({pageName}) {
     const allowedCurrentButton = ['HomeInfo', 'Activity', '', '#']
     return (
       <>
-        {popupPage == MainPopupPage.LOGIN && (
-          <Picker closeAction={closePopup} headerText={t('user.login')}>
-            <Login />
-          </Picker>
-        )}
-        {popupPage == MainPopupPage.SIGNUP && (
-          <Picker
-            headerText={t('user.signup')}
-            closeAction={closePopup}
-          >
-            <Signup />
-          </Picker>
-        )}
-        {popupPage == MainPopupPage.REQUEST_LINK && (
-          <Picker closeAction={closePopup} headerText={null}>
-            <LoginClick />
-          </Picker>
-        )}
+        <LogginInUserNowAllowed sessionUser={sessionUser}>
+          {(popupPage == MainPopupPage.LOGIN) && (
+            <Picker closeAction={closePopup} headerText={t('user.login')}>
+              <Login />
+            </Picker>
+          )}
+          {(popupPage == MainPopupPage.SIGNUP) && (
+            <Picker
+              headerText={t('user.signup')}
+              closeAction={closePopup}
+            >
+              <Signup />
+            </Picker>
+          )}
+          {popupPage == MainPopupPage.REQUEST_LINK && (
+            <Picker closeAction={closePopup} headerText={null}>
+              <LoginClick />
+            </Picker>
+          )}
+        </LogginInUserNowAllowed>
+        
         {popupPage == MainPopupPage.SHARE && (
           <Picker
             headerText={t('share.header')}
@@ -78,4 +81,14 @@ export default function MainPopup({pageName}) {
         )}
       </>
     );
+  }
+
+
+  function LogginInUserNowAllowed({sessionUser, children})
+  {
+    if(sessionUser)
+    {
+      return <></>
+    }
+    return children
   }

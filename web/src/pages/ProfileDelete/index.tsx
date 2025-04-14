@@ -8,6 +8,7 @@ import { IoTrashBinOutline } from 'react-icons/io5';
 import { User } from 'shared/entities/user.entity';
 import { DeleteProfile } from 'state/Profile';
 import { useStore } from 'state';
+import { alertService } from 'services/Alert';
 
 export default function ProfileDelete() {
   const sessionUser: User = useStore(
@@ -20,10 +21,9 @@ export default function ProfileDelete() {
       <div className="card-profile__actions">
         <Link
           onClick={() => {
+            alertService.success(t('user.deletedAccount'))
+            router.push('/')
             store.emit(new DeleteProfile());
-            router.push({
-              pathname: '/'
-            });
           }}
           href="#"
         >

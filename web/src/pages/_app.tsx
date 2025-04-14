@@ -180,7 +180,7 @@ function MyApp({ Component, pageProps }) {
       alertService.error(
         `You are not allowed in here!`
       );
-      router.push('/Error')
+      router.push('/')
       return;
     }
     setAuthorized(isAllowed);

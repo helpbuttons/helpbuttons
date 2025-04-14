@@ -374,7 +374,9 @@
     "errorRequestNewLoginToken": "",
     "helpbuttonsPublishedAmount": "Published",
     "timesFollowed": "Followed",
-    "commentsAmount": "Commented"
+    "commentsAmount": "Commented",
+    "signupSuccess": "Your signup was sucessful! Welcome to {0} ",
+    "deletedAccount": "Your data was deleted sucessfuly!"
   },
   "picker": {
     
