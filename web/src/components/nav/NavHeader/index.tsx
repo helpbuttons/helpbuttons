@@ -2,7 +2,7 @@
 import React from 'react';
 
 import { HeaderSearch } from 'elements/HeaderSearch';
-import { useStore } from 'state';
+import { useGlobalStore } from 'state';
 import { GlobalState, store } from 'state';
 import NavBottom from '../NavBottom';
 import BrandCard from 'components/map/Map/BrandCard';
@@ -13,15 +13,8 @@ import { ToggleAdvancedFilters } from 'state/Explore';
 
 function NavHeader({ selectedNetwork, pageName = '' }) {
 
-  const exploreMapState = useStore(
-    store,
-    (state: GlobalState) => state.explore.map,
-    false,
-  );
-  const sessionUser = useStore(
-    store,
-    (state: GlobalState) => state.sessionUser,
-  );
+  const exploreMapState = useGlobalStore((state: GlobalState) => state.explore.map);
+  const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
 
   const toggleAdvancedFilters = () => {
     store.emit(new ToggleAdvancedFilters())
@@ -39,12 +32,10 @@ function NavHeader({ selectedNetwork, pageName = '' }) {
         <form className="nav-header__content">
           <div className="nav-header__content-message">
             <HeaderSearch
-              results={{
-                count: ((['Explore','Bulletin'].indexOf(pageName) < 0) || !exploreMapState.listButtons)
-                  ? selectedNetwork?.buttonCount
-                  : exploreMapState.listButtons.length,
-              }}
               toggleAdvancedFilters={toggleAdvancedFilters}
+              pageName={pageName}
+              selectedNetwork={selectedNetwork}
+              exploreMapState={exploreMapState}
             />
           </div>
         </form>
