@@ -271,7 +271,7 @@ function MyApp({ Component, pageProps }) {
             <Component {...pageProps} />
           </LoadabledComponent>
         );
-      } else if (!selectedNetwork.initialized) {
+      } else if (selectedNetwork.id) {
         return (
           <>
             {/* <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} /> */}
