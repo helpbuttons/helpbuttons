@@ -359,13 +359,22 @@ export function CookiesBanner() {
           </a>
           .
         </p>
-        <Btn
-            btnType={BtnType.submit}
-            iconLeft={IconType.circle}
-            caption={t('faqs.cookieAccept')}
-            contentAlignment={ContentAlignment.center}
-            onClick={handleAcceptCookies}
-          />
+        <div className="cookies-banner__buttons">
+          <Btn
+              btnType={BtnType.submit}
+              iconLeft={IconType.circle}
+              caption={t('faqs.cookieAccept')}
+              contentAlignment={ContentAlignment.center}
+              onClick={handleAcceptCookies}
+            />
+            <Btn
+              btnType={BtnType.submit}
+              iconLeft={IconType.circle}
+              caption={t('faqs.cookiereject')}
+              contentAlignment={ContentAlignment.center}
+              onClick={handleAcceptCookies}
+            />
+        </div>
       </div>
     </div>
     }</>
