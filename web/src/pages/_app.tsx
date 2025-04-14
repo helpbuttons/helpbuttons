@@ -38,6 +38,7 @@ import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
+import CookiesBanner from 'components/home/CookiesBanner';
 
 export default appWithTranslation(MyApp);
 
@@ -335,42 +336,6 @@ function ActivityPool({ sessionUser, messagesUnread }) {
   return (<></>);
 }
 
-export function CookiesBanner() {
-  const [showCookiesBanner, setShowCookiesBanner] = useState(false);
-  useEffect(() => {
-    const cookiesAccepted = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE);
-    if (!cookiesAccepted) {
-      setShowCookiesBanner(true);
-    }
-  }, []);
-  const handleAcceptCookies = () => {
-    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, true);
-    setShowCookiesBanner(false);
-  };
-
-  return (
-    <>{showCookiesBanner &&
-    <div className="card-alert__container">
-      <div className="cookies-banner__content">
-        <p>
-        {t('faqs.cookiesExplanation')}
-          <a href="/Faqs" target="_blank" rel="noopener noreferrer">
-          {t('faqs.cookiesPolicy')}
-          </a>
-          .
-        </p>
-        <Btn
-            btnType={BtnType.submit}
-            iconLeft={IconType.circle}
-            caption={t('faqs.cookieAccept')}
-            contentAlignment={ContentAlignment.center}
-            onClick={handleAcceptCookies}
-          />
-      </div>
-    </div>
-    }</>
-  );
-}
 
 const useWhichLocale = ({ sessionLocale, networkLocale }) => {
 
