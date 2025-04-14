@@ -7,7 +7,7 @@ import Form from 'elements/Form';
 import t from 'i18n';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { IoLogoPaypal, IoPaperPlaneOutline } from 'react-icons/io5';
+import { IoPaperPlaneOutline } from 'react-icons/io5';
 import { uniqueArray } from 'shared/sys.helper';
 
 export default function MessageNew({
