@@ -98,7 +98,7 @@ function List({
   }, [hexagonClicked]);
 
   const [isListFullScreen, setListFullScreen] =
-    useState<boolean>(false);
+    useState<boolean>(true);
   // const [isListOpen, setListOpen] = useState<boolean>(true);
 
   const toggleListOpen = (value1, value2) => {

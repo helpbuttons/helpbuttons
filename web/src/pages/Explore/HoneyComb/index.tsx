@@ -82,7 +82,7 @@ function HoneyComb({ selectedNetwork }) {
     false,
   );
   const [showLeftColumn, toggleShowLeftColumn] = useToggle(true);
-  const [showMap, toggleShowMap] = useToggle(true);
+  const [showMap, toggleShowMap] = useToggle(false);
   const [isListOpen, setListOpen] = useState<boolean>(true);
 
   useExploreSettings({

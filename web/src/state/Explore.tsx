@@ -61,7 +61,7 @@ export const exploreSettingsDefault: ExploreSettings = {
   loading: true,
   hexagonClicked: null,
   hexagonHighlight: null,
-  viewMode: ExploreViewMode.BOTH,
+  viewMode: ExploreViewMode.LIST,
   urlUpdated: false,
 };
 export interface ExploreMapState {
