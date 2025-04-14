@@ -9,11 +9,11 @@ import BrandCard from 'components/map/Map/BrandCard';
 import { ShowDesktopOnly } from 'elements/SizeOnly';
 import router from 'next/router';
 import { ListButtonTypes } from '../ButtonTypes';
-import { ToggleAdvancedFilters } from 'state/Explore';
+import { ExploreMapState, ToggleAdvancedFilters } from 'state/Explore';
 
 function NavHeader({ selectedNetwork, pageName = '' }) {
 
-  const exploreMapState = useGlobalStore((state: GlobalState) => state.explore.map);
+  const exploreMapState : ExploreMapState = useGlobalStore((state: GlobalState) => state.explore.map);
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
 
   const toggleAdvancedFilters = () => {

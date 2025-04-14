@@ -7,18 +7,19 @@ import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { customFieldsFiltersText } from 'components/button/ButtonType/CustomFields/AdvancedFiltersCustomFields';
 import { defaultFilters, isFiltering } from 'components/search/AdvancedFilters/filters.type';
-import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
+import { ExploreMapState, ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { readableDistance } from 'shared/sys.helper';
+import { Network } from 'shared/entities/network.entity';
 
-export function HeaderSearch({ toggleAdvancedFilters, pageName, exploreMapState, selectedNetwork}) {
+export function HeaderSearch({ toggleAdvancedFilters, pageName, exploreMapState, selectedNetwork}: {toggleAdvancedFilters: any, pageName: string, exploreMapState: ExploreMapState, selectedNetwork: any}) {
   const [buttonCount, setButtonCount] = useState(selectedNetwork.buttonCount)
   
   useEffect(() => {
-    if(['Explore','Bulletin'].indexOf(pageName) < 0) {
-      setButtonCount(() => exploreMapState.listButtons.length)
+    if(['Explore','Bulletin'].indexOf(pageName) > -1) {
+      setButtonCount(() => exploreMapState.boundsFilteredButtons.length)
     }
     
-  }, [exploreMapState.listButtons])
+  }, [exploreMapState.boundsFilteredButtons])
 
   const clearButton = useRef(null);
   const filtered = isFiltering()
