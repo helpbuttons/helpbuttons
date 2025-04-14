@@ -213,6 +213,9 @@ function MyApp({ Component, pageProps }) {
         selectedNetwork.nomeclaturePlural,
       );
     }
+    if([SetupSteps.CREATE_ADMIN_FORM.toString(), SetupSteps.FIRST_OPEN.toString(), SetupSteps.NETWORK_CREATION.toString()].indexOf(path) && selectedNetwork && selectedNetwork.id ){
+      router.push('/')
+    }
   }, [selectedNetwork]);
 
   useWhichLocale({ sessionLocale: sessionUser?.locale, networkLocale: selectedNetwork.locale });
