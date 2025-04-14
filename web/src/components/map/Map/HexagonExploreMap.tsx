@@ -93,7 +93,6 @@ export default function HexagonExploreMap({
     }
   }, [hexagonHighlight, hexagonClicked, geoJsonFeatures])
 
-  const radiusCircle = circleGeoJSON(0,0, 100);
   return (
     <>
       {(exploreSettings.center && selectedNetwork) && (
@@ -109,7 +108,6 @@ export default function HexagonExploreMap({
             <DisplayHiddenButtonsWarning countFilteredButtons={countFilteredButtons} />
             <GeoJson>
               
-            <GeoJsonFeature feature={radiusCircle}/>
             {filteredCircle && <GeoJsonFeature feature={filteredCircle}/>}
             
               {/* DRAW HEXAGONS ON MAP */}
