@@ -370,7 +370,7 @@ export function CookiesBanner() {
             <Btn
               btnType={BtnType.submit}
               iconLeft={IconType.circle}
-              caption={t('faqs.cookiereject')}
+              caption={t('faqs.cookieReject')}
               contentAlignment={ContentAlignment.center}
               onClick={handleAcceptCookies}
             />
