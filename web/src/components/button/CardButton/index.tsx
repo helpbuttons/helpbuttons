@@ -514,7 +514,7 @@ export function CardButtonHeadActions({
           btnType={BtnType.corporative}
           contentAlignment={ContentAlignment.left}
           iconLeft={IconType.svg}
-          caption={t('button.sendComment')}
+          caption={t('button.sendPrivateMessage')}
           iconLink={<IoMailOutline />}
           submit={true}
           onClick={action}

@@ -287,6 +287,8 @@
     "following": "following!",
     "seeHashtags":"See tags",
     "publishComment": "Publish comment"
+    "placeHodlerCustomAddress": "Write the new name and select place on the map",
+    "sendPrivateMessage": "Send private message"
   },
   "user": {
     "login": "Write your credentials",

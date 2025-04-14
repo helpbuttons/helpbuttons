@@ -93,7 +93,7 @@ export function FieldAreaMapSettings({
   };
 
   const setRadius = (newRadius) => {
-    setMapSettings((prevSettings) => {return {...prevSettings, radius: newRadius, geometry: circleToPolygon([prevSettings.center[1],prevSettings.center[0]], newRadius)}})
+    setMapSettings((prevSettings) => {return {...prevSettings, radius: newRadius, geometry: circleGeoJSON(prevSettings.center[1],prevSettings.center[0], newRadius)}})
   }
 
   const setMapTile = (mapTile) => {
@@ -108,15 +108,15 @@ export function FieldAreaMapSettings({
     setMapSettings((prevSettings) => {
       if(prevSettings.browseType == BrowseType.HONEYCOMB)
       {
-        return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleToPolygon(roundCoords([center[1],center[0]]), prevSettings.radius), bounds: bounds, honeyCombFeatures: getBoundsHexFeatures(bounds,zoom)}
+        return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds, honeyCombFeatures: getBoundsHexFeatures(bounds,zoom)}
       }
-      return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleToPolygon(roundCoords([center[1],center[0]]), prevSettings.radius), bounds: bounds}
+      return {...prevSettings, center, zoom: zoom, slider: getSliderSettings(zoom, bounds), geometry: circleGeoJSON(center[1],center[0], prevSettings.radius), bounds: bounds}
     })
   }
 
   const handleSelectedPlace = (place) => {
     setMapSettings((prevSettings) => {
-      return {...prevSettings, center: [place.geometry.lat, place.geometry.lng], zoom:16,geometry: circleToPolygon([place.geometry.lat, place.geometry.lng], prevSettings.radius)}
+      return {...prevSettings, center: [place.geometry.lat, place.geometry.lng], zoom:16,geometry: circleGeoJSON(place.geometry.lat, place.geometry.lng, prevSettings.radius)}
     })
   };
   const handleMapClick = ({latLng}) => {

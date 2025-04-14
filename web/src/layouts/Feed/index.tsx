@@ -146,6 +146,7 @@ export default function Feed({ button }: { button: Button }) {
               reloadPosts={reloadPosts}
               buttonId={button.id}
               showCompose={showReplyFirstPost && idx == 0}
+              showReplyFirstPost={showReplyFirstPost}
               isLast={idx == posts.length - 1}
             />
           ))}
@@ -172,6 +173,7 @@ export function FeedElement({
   buttonId,
   showCompose = false,
   isLast = false,
+  showReplyFirstPost = false
 }) {
   const [showComposePostReply, setShowComposePostReply] =
     useState(null);
@@ -184,10 +186,15 @@ export function FeedElement({
   };
   useEffect(() => {
     if (showCompose) {
+      let isPrivate = false;
+      if(showReplyFirstPost)
+      {
+        isPrivate = true;
+      }
       setShowComposePostReply(() => {
         return {
           post: post.id,
-          privateMessage: false,
+          privateMessage: isPrivate,
           mentions: [post.author.username],
         };
       });
@@ -227,7 +234,7 @@ export function FeedElement({
                     })
                   }
                 />
-                <Btn
+                {/* <Btn
                   submit={false}
                   btnType={BtnType.smallLink}
                   caption={t('comment.sendPrivate')}
@@ -241,7 +248,7 @@ export function FeedElement({
                       };
                     })
                   }
-                />
+                /> */}
               </>
             )}
             {sessionUser &&
