@@ -274,9 +274,7 @@ function HomeInfoInfoCard({ selectedNetwork }) {
       <div className="homeinfo__description">
         <TextFormatted maxChars={600} text={selectedNetwork.description} />
       </div>
-      <HomeInfoActionButton>
-        <HomeInfoCreateButton />
-      </HomeInfoActionButton>
+
     </div></>)
 }
 
@@ -503,6 +501,7 @@ function HomeSloganCard({ selectedNetwork, config }) {
       </div><hr></hr>
       <HomeInfoActionButton>
         <HomeInfoExploreButton />
+        <HomeInfoCreateButton />
       </HomeInfoActionButton>
     </div></>)
 }
