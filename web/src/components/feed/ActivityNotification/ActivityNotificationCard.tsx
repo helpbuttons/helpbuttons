@@ -10,9 +10,9 @@ import {
 import Link from 'next/link';
 import { formatMessage } from 'elements/Message';
 import t from 'i18n';
-import { FindButton } from 'state/Explore';
+import { FindButton, updateCurrentButton } from 'state/Explore';
 import { store } from 'state';
-import { SetMainPopupCurrentButton } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 
 export default function ActivityNotificationCard({ activity }) {
   return (
@@ -136,7 +136,10 @@ export function NotificationCard(props) {
       <Link
         href="#"
         onClick={() =>
-          store.emit(new FindButton(props.buttonId, (_button) => store.emit(new SetMainPopupCurrentButton(_button))))
+          store.emit(new FindButton(props.buttonId, (_button) => {
+            store.emit(new updateCurrentButton(_button));
+            store.emit(new SetMainPopup(MainPopupPage.BUTTON));
+          }))
         }
         className="card-notification card-notification"
       >

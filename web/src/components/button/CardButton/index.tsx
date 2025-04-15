@@ -49,9 +49,10 @@ import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
-import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
 import dconsole from 'shared/debugger';
+import { ButtonPin, ButtonUnpin } from 'state/Button';
 
 export default function CardButton({ button, buttonTypes }) {
   const [buttonType, setButtonType] = useState(null);
@@ -107,6 +108,7 @@ export default function CardButton({ button, buttonTypes }) {
 
 // card button list on explore
 export function CardButtonHeadMedium({ button, buttonType }) {
+
   return (
     <div className="card-button__content card-button__content--small">
       <div className="card-button__header">
@@ -279,21 +281,27 @@ function CardButtonSubmenu({ button }) {
       {FollowButtonMenuOption(button)}
       {(isButtonOwner(sessionUser, button) ||
         isAdmin(sessionUser)) && (
-          <>
-            <CardSubmenuOption
-              onClick={() => {
-                router.push(`/ButtonEdit/${button.id}`);
-              }}
-              label={t('button.edit')}
-            />
-            <CardSubmenuOption
-              onClick={() => {
-                router.push(`/ButtonRemove/${button.id}`);
-              }}
-              label={t('button.delete')}
-            />
-          </>
-        )}
+        <>
+          <CardSubmenuOption
+            onClick={() => {
+              router.push(`/ButtonEdit/${button.id}`);
+            }}
+            label={t('button.edit')}
+          />
+          <CardSubmenuOption
+            onClick={() => {
+              router.push(`/ButtonRemove/${button.id}`);
+            }}
+            label={t('button.delete')}
+          />
+          <CardSubmenuOption
+            onClick={() => {
+              button.pin ? store.emit(new ButtonUnpin(button.id, () => alertService.success(t('button.unpinSuccess')))) : store.emit(new ButtonPin(button.id,() => alertService.success(t('button.pinSuccess'))))
+            }}
+            label={button.pin ? t('button.unpin') : t('button.pin')}
+          />
+        </>
+      )}
     </CardSubmenu>
   );
 }
@@ -530,13 +538,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
     false,
   );
   const [showMap, setShowMap] = useState(false);
-  // const profileHref = isButtonOwner(sessionUser, button)
-  //   ? `/Profile/`
-  //   : `/p/${button.owner.username}`;
-  // const closeButton = () => {
-  //   store.emit(new SetMainPopupCurrentButton(null))
-  //   store.emit(new updateCurrentButton(null))
-  // };
+
   const onClick = (e) => {
     e.preventDefault()
     dconsole.log('this goes for dev test.. make sure it works..')

@@ -14,18 +14,17 @@ export enum MainPopupPage {
   REQUEST_LINK = 'requestLink',
   SHARE = 'share',
   FAQS = 'faqs',
-  PROFILE = 'profile'
+  PROFILE = 'profile',
+  BUTTON = 'button'
 }
 export interface HomeInfoState {
   mainPopupPage: MainPopupPage;
-  mainPopupCurrentButton: Button;
   mainPopupUserProfile: User;
   version: string;
 }
 
 export const homeInfoStateInitial = {
   mainPopupPage: MainPopupPage.HIDE,
-  mainPopupCurrentButton: null,
   mainPopupUserProfile: null,
   version: '?'
 };
@@ -36,15 +35,6 @@ export class SetMainPopup implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.homeInfo.mainPopupPage = this.newPage;
-    });
-  }
-}
-
-export class SetMainPopupCurrentButton implements UpdateEvent {
-  public constructor(private button: Button) {}
-  public update(state: GlobalState) {
-    return produce(state, (newState) => {
-      newState.homeInfo.mainPopupCurrentButton = this.button;
     });
   }
 }

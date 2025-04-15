@@ -17,12 +17,15 @@ import {
   IoClose,
   IoGlobeOutline,
   IoHelpOutline,
+  IoLocationOutline,
   IoLogInOutline,
   IoMapOutline,
   IoShare,
+  IoTimeOutline,
 } from 'react-icons/io5';
 import { setMetadata } from 'services/ServerProps';
 import { NextPageContext } from 'next';
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import AdvancedFilters from 'components/search/AdvancedFilters';
 import { useToggle } from 'shared/custom.hooks';
@@ -31,7 +34,7 @@ import { LinkAdmins } from 'components/user/LinkAdmins';
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { ListButtonTypes } from 'components/nav/ButtonTypes';
 import getConfig from 'next/config';
-import { logoImageUri } from 'shared/sys.helper';
+import { logoImageUri, makeImageUrl } from 'shared/sys.helper';
 import { FindLatestNetworkActivity } from 'state/Networks';
 import { InstallButton } from 'components/install';
 import { TagsNav } from 'elements/Fields/FieldTags';
@@ -45,8 +48,13 @@ import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
 import { ActivityList } from 'components/feed/Activity/ActivityList';
 import { PoweredExtra } from 'components/brand/powered';
+import { useButtonTypes } from 'shared/buttonTypes';
+import CardButton, { CardButtonHeadMedium } from 'components/button/CardButton';
+import CardButtonList from 'components/list/CardButtonList';
+import HomeInfoPinnedButtons from 'components/home/Pinned';
 
 export default function HomeInfo({ metadata }) {
+
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -234,28 +242,6 @@ function HomeInfoNetworkLogo({ selectedNetwork }) {
   )
 }
 
-function HomeInfoPinnedButtons() {
-  return (<>
-    {/*  PINNIED BUTTONS */}
-    {false &&
-      <div className="homeinfo-card">
-        <div className="homeinfo-card__header">
-          <h3 className="homeinfo-card__header-title">
-            {t('homeinfo.featured')}
-          </h3>
-        </div>
-        <hr></hr>
-
-        <div className="homeinfo-card__section">
-          {/* <CardButtonHeadMedium
-            button={button}
-            buttonType={buttonType}
-          /> */}
-        </div>
-      </div>
-    }</>
-  )
-}
 
 function HomeInfoInfoCard({ selectedNetwork }) {
   return (<>{/*  INFO CARD */}
@@ -334,7 +320,7 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
   return (<>
     {/* HASHTAGS CARD OF NETWORK CONFIGURATION  */}
     {selectedNetwork?.tags &&
-      selectedNetwork?.tags.length >= 0 && (
+      selectedNetwork?.tags.length > 0 && (
         <div className="homeinfo-card">
           <div className="homeinfo-card__header">
             <h3 className="homeinfo-card__header-title">
