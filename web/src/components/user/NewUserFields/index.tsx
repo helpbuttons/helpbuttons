@@ -22,6 +22,7 @@ export default function NewUserFields({
   isInitAdminForm=false,
 }) {
   const [hostname, setHostname] = useState('');
+  const [showUsername, setshowUsername] = useState(false);
   const selectedNetwork: Network = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -58,6 +59,7 @@ export default function NewUserFields({
       setValue('username', nameToUsername(name));
     }
   }, [name]);
+  const username = watch('username')
 
   return (
     <>
@@ -80,13 +82,25 @@ export default function NewUserFields({
         placeholder={t('user.namePlaceHolder')}
         validationError={errors.name}
         {...register('name', { required: true })}
-      ></FieldText>
-      {!short &&
+      >
+      { username &&  !showUsername &&
+          <div className="form__input-subtitle-side">
+              <label className="form__input-subtitle--text">
+                {`${t('user.usernameWillBe')}`} 
+                <span className='highlight'>
+                  {`${username}@${hostname}`}
+                </span>
+                  <span onClick={() => setshowUsername(true) } className="link">
+                      {t('common.edit')}
+                  </span> 
+              </label>
+          </div>
+        }
+      </FieldText>
+      {showUsername &&
         <FieldText
           name="username"
-          label={`${t('user.username')} ${watch(
-            'username',
-          )}@${hostname}`}
+          label={`${t('user.username')} ${username}@${hostname}`}
           explain={t('user.usernameCreateExplain')}
           classNameInput="squared"
           placeholder={t('user.usernamePlaceHolder')}
