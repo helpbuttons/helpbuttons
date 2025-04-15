@@ -6,7 +6,7 @@ import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import UserAvatar from '../components';
 import { getHostname } from 'shared/sys.helper';
 import t from 'i18n';
-import { store } from "state";
+import { store, useGlobalStore } from "state";
 import { UpdateRole, isAdmin } from "state/Users";
 import { alertService } from "services/Alert";
 import router from "next/router";
@@ -16,16 +16,26 @@ import { Role } from "shared/types/roles";
 
 export default function CardProfile({ user, showAdminOptions = false}) {
 
+  const sessionUser = useGlobalStore((state) => state.sessionUser)
+  
   return (
     <>
 
         <div className="card-profile__container-avatar-content">
 
+            <CardSubmenu>
+              {user?.role == Role.admin && 
+                 <AdminOptions/>
+               }
               {showAdminOptions && 
-
-                <ProfileAdminOptions user={user} />
-
+                <>
+                  <ProfileAdminOptions user={user} />
+                </>
               }
+              {user?.username == sessionUser?.username &&
+               <GeneralOptions />
+              }
+            </CardSubmenu>
 
             <figure className="card-profile__avatar-container avatar">
 
@@ -148,5 +158,44 @@ function ProfileAdminOptions({ user }) {
     }
   };
 
-  return <CardSubmenu>{user && getOptions(user)}</CardSubmenu>;
+
+  return <>{user && getOptions(user)}</>;
+}
+
+
+function AdminOptions() {
+  return (
+    <>
+          <CardSubmenuOption
+            onClick={() => {
+              router.push('/Configuration');
+            }}
+            label={t('configuration.title')}
+          />
+          <CardSubmenuOption
+            onClick={() => {
+              router.push('/Configuration/Moderation');
+            }}
+            label={t('configuration.moderation')}
+          />
+    </>
+  );
+}
+
+function GeneralOptions() {
+  return (
+    <>
+          <CardSubmenuOption
+            onClick={() => {
+              router.push('/ProfileEdit');
+            }}
+            label={t('user.editProfile')}
+          />
+          <CardSubmenuOption
+            onClick={() => router.push('/Logout')}
+            label={t('user.logout')}
+          />
+          
+    </>
+  );
 }
