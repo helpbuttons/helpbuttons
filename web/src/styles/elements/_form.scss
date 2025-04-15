@@ -554,6 +554,8 @@ width: 100%;
 
   margin: 0 0 $margin-xxsmall $margin-small;
   font-size: $font-size-small;
+  display: flex;
+  flex-direction: row;
 
   &:hover {
 

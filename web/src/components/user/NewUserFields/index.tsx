@@ -22,6 +22,7 @@ export default function NewUserFields({
   isInitAdminForm=false,
 }) {
   const [hostname, setHostname] = useState('');
+  const [showUsername, setshowUsername] = useState(false);
   const selectedNetwork: Network = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
@@ -81,19 +82,24 @@ export default function NewUserFields({
         validationError={errors.name}
         {...register('name', { required: true })}
       >
-      
-              <div className="form__input-subtitle-side">
-                    <label className="form__input-subtitle--text">
-                      {`${t('user.username')} ${watch(
-                        'username',
-                      )}@${hostname}`}
-                    </label>
-                    <div className="form__input-subtitle--text link">
-                        {t('common.edit')}
-                    </div>
-              </div>
+      { watch('username',) &&  !showUsername &&
+          <div className="form__input-subtitle-side">
+              <label className="form__input-subtitle--text">
+                {`${t('user.usernameWillBe')}`} 
+                <span className='highlight'>
+                  {`${watch(
+                    'username',
+                  )}@${hostname}`}
+                </span>
+                
+                  <span onClick={() => setshowUsername(true) } className="form__input-subtitle--text link">
+                      {t('common.edit')}
+                  </span> 
+              </label>
+          </div>
+        }
       </FieldText>
-      {!short &&
+      {showUsername &&
         <FieldText
           name="username"
           label={`${t('user.username')} ${watch(

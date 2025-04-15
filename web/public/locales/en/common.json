@@ -216,7 +216,8 @@
     "deleteSuccess": "Deleted",
     "error": "Something went wrong",
     "notFoundMessage": "Page not found or deleted",
-    "options": "Options"
+    "options": "Options",
+    "edit": "Edit"
   },
   "button": {
     "title": "_helpbutton_ view",
@@ -296,6 +297,7 @@
     "emailExplain": "This is your login email and where you'll receive notifications",
     "emailPlaceHolder": "email@example.tld",
     "username": "Username",
+    "usernameWillBe": "Your username will be ",
     "usernameExplain": "The username is what will identify you in this network and others",
     "usernameCreateExplain": "Create your username. The username is what will identify you in this network and others",
     "usernamePlaceHolder": "Type a unique name",
@@ -330,6 +332,7 @@
     "descriptExplain": "Short description of waht you do or what you are",
     "loginLink": "You have an account",
     "showPassword": "Show Password",
+    "hidePassword": "Hide Password",
     "loginWEmail": "Login with password",
     "register": "Register",
     "sendLoginToken": "Send login email",
@@ -346,7 +349,7 @@
     "showButtonsProfileExplain": "Mark if you want to show a list of what you publish in your public profile",
     "showButtons": "Show my _helpbuttons_ on my profile page",
     "loginError": "Failed to login, please try again or contact the admin",
-    "tagsExplain": "This is important to supply the best service. Select or write words that you are interested in and you will receive notifications of the _helpbuttons_ created. Write and press enter or separate by commas to add a word.",
+    "tagsExplain": "Select or write words that you are interested in and you will receive notifications of the _helpbuttons_ created on those topics. Write and press enter or separate by commas to add a word.",
     "tagsSignupExplain": "Optionally, select and write words that you are interested in and you will receive notifications of the _helpbuttons_ created with those topics. Write and press enter or separate by commas to add a word.",
     "distance": "Maximum distance of notification",
     "distanceExplain": "_helpbuttons_ created farer from this radius won't be notified.",
