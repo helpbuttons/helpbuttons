@@ -64,7 +64,7 @@ $card-button-border-height: $border-general-height;
   flex-flow: row nowrap;
   align-items: center;
   gap: $padding-big;
-  padding:  $padding-medium $padding-big;
+  padding:  $padding-medium $padding-huge;
   justify-content: space-between;
   border-top: 1px $color-ligth-gray solid;
 
@@ -593,7 +593,7 @@ $card-button-border-height: $border-general-height;
   height: 35px;
   border-radius: 1px;
   width: 100%;
-  line-height: 35px;
+  line-height: $text-line-height-xsmall;
   align-items: center;
   padding: 25px;
   display: flex;
