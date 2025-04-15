@@ -72,7 +72,7 @@ export class ButtonsSeeder implements Seeder {
     const network = await this.networkRepository.find({ order: { created_at: 'ASC' } });
 
     const buttonTemplates = network[0].buttonTemplates
-    const buttonTypes = buttonTemplates.map((btnTemplate) => btnTemplate.name.toLowerCase())
+    const buttonTypes = buttonTemplates.map((btnTemplate) => btnTemplate.name)
     console.log('button types found:')
     console.log(JSON.stringify(buttonTemplates))
     const btns = buttons.buttons.filter((button) => {
