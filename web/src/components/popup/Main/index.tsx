@@ -1,6 +1,6 @@
 import { Picker } from "components/picker/Picker";
 import { GlobalState, store } from "state";
-import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from "state/HomeInfo";
+import { MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from "state/HomeInfo";
 import { useGlobalStore } from 'state';
 import Login from "../../../pages/Login";
 import Signup from "../../../pages/Signup";
@@ -19,29 +19,32 @@ export default function MainPopup({pageName}) {
 
     const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
     const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage) 
-    const mainPopupCurrentButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupCurrentButton) 
+    const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton) 
     const mainPopupUserProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile) 
     const allowedCurrentButton = ['HomeInfo', 'Activity', '', '#']
     return (
       <>
-        {popupPage == MainPopupPage.LOGIN && (
-          <Picker closeAction={closePopup} headerText={t('user.login')}>
-            <Login />
-          </Picker>
-        )}
-        {popupPage == MainPopupPage.SIGNUP && (
-          <Picker
-            headerText={t('user.signup')}
-            closeAction={closePopup}
-          >
-            <Signup />
-          </Picker>
-        )}
-        {popupPage == MainPopupPage.REQUEST_LINK && (
-          <Picker closeAction={closePopup} headerText={null}>
-            <LoginClick />
-          </Picker>
-        )}
+        <LogginInUserNowAllowed sessionUser={sessionUser}>
+          {(popupPage == MainPopupPage.LOGIN) && (
+            <Picker closeAction={closePopup} headerText={t('user.login')}>
+              <Login />
+            </Picker>
+          )}
+          {(popupPage == MainPopupPage.SIGNUP) && (
+            <Picker
+              headerText={t('user.signup')}
+              closeAction={closePopup}
+            >
+              <Signup />
+            </Picker>
+          )}
+          {popupPage == MainPopupPage.REQUEST_LINK && (
+            <Picker closeAction={closePopup} headerText={null}>
+              <LoginClick />
+            </Picker>
+          )}
+        </LogginInUserNowAllowed>
+        
         {popupPage == MainPopupPage.SHARE && (
           <Picker
             headerText={t('share.header')}
@@ -66,16 +69,26 @@ export default function MainPopup({pageName}) {
             <ShowProfile userProfile={mainPopupUserProfile} sessionUser={sessionUser}/>
           </Picker>
         )}
-         {(mainPopupCurrentButton && allowedCurrentButton.indexOf(pageName) > -1 ) && (
+         {(popupPage == MainPopupPage.BUTTON && allowedCurrentButton.indexOf(pageName) > -1 ) && (
           <Picker
-            headerText={mainPopupCurrentButton.title}
-            closeAction={() => {store.emit(new SetMainPopupCurrentButton(null)); router.back()}}
+            headerText={currentButton.title}
+            closeAction={() => {closePopup()}}
             extraClass={'picker__content--nopadding'}
           >
             {/* {pageName} */}
-            <ButtonShow button={mainPopupCurrentButton}/>
+            <ButtonShow button={currentButton}/>
           </Picker>
         )}
       </>
     );
+  }
+
+
+  function LogginInUserNowAllowed({sessionUser, children})
+  {
+    if(sessionUser)
+    {
+      return <></>
+    }
+    return children
   }

@@ -16,6 +16,7 @@ import CardProfile from 'components/user/CardProfile';
 import ContentList from 'components/list/ContentList';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
+import { ButtonLinkType } from 'components/list/CardButtonList';
 
 export default function p(props) {
   const sessionUser = useRef(
@@ -120,7 +121,7 @@ export function ShowProfile({
             <ContentList
               buttons={userButtons}
               buttonTypes={buttonTypes}
-              linkToPopup={false}
+              linkType={ButtonLinkType.MAINPOPUP}
             />
           </div>
         )}

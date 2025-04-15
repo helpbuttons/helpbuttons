@@ -24,6 +24,7 @@ import Btn, {
 import { ShowDesktopOnly, ShowMobileOnly } from 'elements/SizeOnly';
 import { useButtonTypes } from 'shared/buttonTypes';
 import DraggableList from '../DraggableList';
+import { ButtonLinkType } from '../CardButtonList';
 
 function List({
   onLeftColumnToggle,
@@ -179,6 +180,7 @@ function List({
                     buttons={buttons}
                     buttonTypes={buttonTypes}
                     showMap={showMap}
+                    linkType={ButtonLinkType.EXPLORE}
                   />
                 )}
               </div>
@@ -262,6 +264,7 @@ function List({
                   buttons={buttons}
                   buttonTypes={buttonTypes}
                   showMap={showMap}
+                  linkType={ButtonLinkType.EXPLORE}
                 />
               )}
             </div>

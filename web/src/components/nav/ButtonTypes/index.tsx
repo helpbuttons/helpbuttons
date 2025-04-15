@@ -77,9 +77,7 @@ export function ButtonTypesNav({ buttonTypes, pageName = '' }) {
 
 export function BtnButtonType({ buttonTypeName, preCaption = '', pageName = ''}) {
   const filterButtonType = (buttonType) => {
-    store.emit(new ToggleAdvancedFilters(false));
     store.emit(new UpdateFiltersToFilterButtonType(buttonType));
-    store.emit(new updateCurrentButton(null));
     if (pageName != 'Explore') {
       router.push('/Explore');
     }
