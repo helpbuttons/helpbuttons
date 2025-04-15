@@ -91,8 +91,7 @@ export default function NewUserFields({
                     'username',
                   )}@${hostname}`}
                 </span>
-                
-                  <span onClick={() => setshowUsername(true) } className="form__input-subtitle--text link">
+                  <span onClick={() => setshowUsername(true) } className="link">
                       {t('common.edit')}
                   </span> 
               </label>
