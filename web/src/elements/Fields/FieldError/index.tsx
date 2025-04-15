@@ -30,13 +30,14 @@ export default function FieldError({
 
     return (
         <>
-            {message && 
-                    <div className="form__input-subtitle-side">
-                        <label className="form__input-subtitle--error">
-                            {message}
-                        </label>
-                    </div>
-            }
+             <div className="form__input-subtitle-side">
+                {message && 
+                            <label className="form__input-subtitle--error">
+                                {message}
+                            </label>
+                }
+              </div>
+
         </>
     );
 }
