@@ -63,11 +63,9 @@ export default function CardProfile({ user, showAdminOptions = false}) {
         </div>
         <div className="card-profile__data">
 
-          {/* TODO: 
-            - define what to do with tags
-            <div className="card-profile__tags grid-one__column-mid-element"> */}
-            {/* <div className="hashtag">{t('user.tags')}</div> */}
-          {/* </div> */}
+          <div className="card-profile__tags grid-one__column-mid-element">
+           <div className="hashtag">{t('user.tags')}</div> 
+          </div>
           <div className="card-profile__description">
             {user.description}
           </div>
