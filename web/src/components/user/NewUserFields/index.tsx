@@ -59,6 +59,7 @@ export default function NewUserFields({
       setValue('username', nameToUsername(name));
     }
   }, [name]);
+  const username = watch('username')
 
   return (
     <>
@@ -82,14 +83,12 @@ export default function NewUserFields({
         validationError={errors.name}
         {...register('name', { required: true })}
       >
-      { watch('username',) &&  !showUsername &&
+      { username &&  !showUsername &&
           <div className="form__input-subtitle-side">
               <label className="form__input-subtitle--text">
                 {`${t('user.usernameWillBe')}`} 
                 <span className='highlight'>
-                  {`${watch(
-                    'username',
-                  )}@${hostname}`}
+                  {`${username}@${hostname}`}
                 </span>
                   <span onClick={() => setshowUsername(true) } className="link">
                       {t('common.edit')}
@@ -101,9 +100,7 @@ export default function NewUserFields({
       {showUsername &&
         <FieldText
           name="username"
-          label={`${t('user.username')} ${watch(
-            'username',
-          )}@${hostname}`}
+          label={`${t('user.username')} ${username}@${hostname}`}
           explain={t('user.usernameCreateExplain')}
           classNameInput="squared"
           placeholder={t('user.usernamePlaceHolder')}
