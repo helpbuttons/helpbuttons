@@ -1,4 +1,4 @@
-import CardButtonList from 'components/list/CardButtonList';
+import CardButtonList, { ButtonLinkType } from 'components/list/CardButtonList';
 import Loading from 'components/loading';
 import t from 'i18n';
 import { NextPageContext } from 'next';
@@ -58,8 +58,7 @@ export default function Embbed() {
                 key={i}
                 buttonTypes={buttonTypes}
                 showMap={false}
-                linkToPopup={false}
-                linkIframe={true}
+                linkType={ButtonLinkType.IFRAME}
               />
             ))}
           </>

@@ -342,7 +342,7 @@
     "unknownPlace": "Local desconhecido",
     "hideAddress": "Esconder localização exata",
     "created": "criado",
-    "follow": "Inscrever-se",
+    "follow": "Seguir",
     "unfollow": "Deixar de seguir",
     "followAlert": "Você se inscreveu, receberá suas atualizações.",
     "unfollowAlert": "Você deixou de seguir, não receberá mais atualizações",
@@ -365,11 +365,7 @@
     "notFound": "Não consigo encontrar seu botão, talvez tenha sido excluído?",
     "invalidDates": "",
     "followErrorAlert": "",
-    "unfollowErrorAlert": "",
-    "pin": "Pineatu",
-    "unpin": "Unpineatu",
-    "pinSuccess": "Broche de sucesso",
-    "unpinSuccess":"Unbroche de sucesso"
+    "unfollowErrorAlert": ""
   },
   "calendarOnce": {
     "label": "Uma vez",

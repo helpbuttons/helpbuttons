@@ -134,7 +134,7 @@ export class UpdateButtonPinned implements UpdateEvent {
   }
 }
 
-export class ButtonPinned implements WatchEvent {
+export class FindPinnedButtons implements WatchEvent {
   public constructor(
     private onSuccess = undefined,
   ) { }
@@ -152,31 +152,53 @@ export class ButtonPinned implements WatchEvent {
   }
 }
 
-export class ButtonPin implements WatchEvent {
+export class ButtonPin implements WatchEvent, UpdateEvent {
+
   public constructor(
     private buttonId: string,
     private onSuccess = undefined,
   ) { }
 
   public watch(state: GlobalState) {
-    ButtonService.findById(this.buttonId).pipe(
-      switchMap(button => {
-        const pin = !!button.pin;
-        return ButtonService.pin(this.buttonId, pin).pipe(
-          map(() => {
-            this.onSuccess(pin);
-          }),
-          catchError((error) => {
-            return of(undefined);
-          })
-        );
+    return ButtonService.pin(this.buttonId).pipe(
+      map(() => {
+        this.onSuccess();
       }),
       catchError((error) => {
         return of(undefined);
-      })
-    ).subscribe({
-      next: (result) => {},
-      error: (err) => {}
+      }),
+    );
+  }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.currentButton.pin = true;
+      newState.explore.map.pinnedButtons.push(state.explore.currentButton)
+    });
+  }
+}
+
+export class ButtonUnpin implements WatchEvent, UpdateEvent {
+  public constructor(
+    private buttonId: string,
+    private onSuccess = undefined,
+  ) { }
+
+  public watch(state: GlobalState) {
+    return ButtonService.unpin(this.buttonId).pipe(
+      map(() => {
+        this.onSuccess();
+      }),
+      catchError((error) => {
+        return of(undefined);
+      }),
+    );
+  }
+
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.explore.currentButton.pin = false;
+      newState.explore.map.pinnedButtons = state.explore.map.pinnedButtons.filter((button) => button.id != state.explore.currentButton.id)
     });
   }
 }

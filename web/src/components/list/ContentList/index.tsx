@@ -19,7 +19,7 @@ export default function ContentList({
   buttons,
   buttonTypes,
   showMap = false,
-  linkToPopup = true,
+  linkType = null,
   ...props
 }) {
   const [buttonsSlice, setButtonsSlice] = useState(2);
@@ -70,7 +70,7 @@ export default function ContentList({
           key={i}
           buttonTypes={buttonTypes}
           showMap={showMap}
-          linkToPopup={linkToPopup}
+          linkType={linkType}
         />
       ))}
       <NoMoreToLoad />

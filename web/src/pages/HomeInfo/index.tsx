@@ -48,26 +48,16 @@ import { DesktopNotificationsButton } from 'components/notifications';
 import { useMetadataTitle } from 'state/Metadata';
 import { ActivityList } from 'components/feed/Activity/ActivityList';
 import { PoweredExtra } from 'components/brand/powered';
-import { ButtonPinned } from 'state/Button';
 import { useButtonTypes } from 'shared/buttonTypes';
 import CardButton, { CardButtonHeadMedium } from 'components/button/CardButton';
 import CardButtonList from 'components/list/CardButtonList';
+import HomeInfoPinnedButtons from 'components/home/Pinned';
 
 export default function HomeInfo({ metadata }) {
-  useEffect(() => {
-    store.emit(
-      new ButtonPinned(),
-    );
-  }, []);
 
   const selectedNetwork = useStore(
     store,
     (state: GlobalState) => state.networks.selectedNetwork,
-  );
-
-  const pinnedButtons = useStore(
-    store,
-    (state: GlobalState) => state.explore.map.pinnedButtons,
   );
 
   const config = useStore(
@@ -117,7 +107,7 @@ export default function HomeInfo({ metadata }) {
               </ShowMobileOnly>
               <HomeSloganCard selectedNetwork={selectedNetwork} config={config} />
 
-              <HomeInfoPinnedButtons pinnedButtons={pinnedButtons} />
+              <HomeInfoPinnedButtons />
               
               <ShowMobileOnly>
                <HomeInfoStatsCard selectedNetwork={selectedNetwork} config={config} />
@@ -253,42 +243,6 @@ function HomeInfoNetworkLogo({ selectedNetwork }) {
 }
 
 
-function HomeInfoPinnedButtons({ pinnedButtons }) {
-  const buttonTypes = useButtonTypes();
-
-  return (<>
-    {/*  PINNED BUTTONS */}
-    {pinnedButtons.length > 0 &&
-      <div className="homeinfo-card">
-        <div className="homeinfo-card__header">
-          <h3 className="homeinfo-card__header-title">
-            {t('homeinfo.featured')}
-          </h3>
-        </div>
-        <hr></hr>
-
-        <div className="homeinfo-card__section">
-
-          <div className="homeinfo__section--featured">
-            {pinnedButtons.map((btn, i) => (
-                    <CardButtonList
-                      button={btn}
-                      key={i}
-                      buttonTypes={buttonTypes}
-                      showMap={false}
-                      linkToPopup={false}
-                      linkIframe={false}
-                    />
-                  
-
-                  ))}
-          </div>
-        </div>
-      </div>
-    }</>
-  )
-}
-
 function HomeInfoInfoCard({ selectedNetwork }) {
   return (<>{/*  INFO CARD */}
     <div className="homeinfo-card">
@@ -366,7 +320,7 @@ function HomeInfoPinnedHashTags({ selectedNetwork }) {
   return (<>
     {/* HASHTAGS CARD OF NETWORK CONFIGURATION  */}
     {selectedNetwork?.tags &&
-      selectedNetwork?.tags.length >= 0 && (
+      selectedNetwork?.tags.length > 0 && (
         <div className="homeinfo-card">
           <div className="homeinfo-card__header">
             <h3 className="homeinfo-card__header-title">

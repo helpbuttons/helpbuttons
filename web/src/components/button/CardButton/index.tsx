@@ -49,9 +49,10 @@ import MarkerViewMap from 'components/map/Map/MarkerSelectorMap';
 import { TagsNav } from 'elements/Fields/FieldTags';
 import { ImageGallery } from 'elements/ImageGallery';
 import Loading from 'components/loading';
-import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from 'state/HomeInfo';
+import { SetMainPopupCurrentProfile } from 'state/HomeInfo';
 import React from 'react';
 import dconsole from 'shared/debugger';
+import { ButtonPin, ButtonUnpin } from 'state/Button';
 
 export default function CardButton({ button, buttonTypes }) {
   const [buttonType, setButtonType] = useState(null);
@@ -295,7 +296,7 @@ function CardButtonSubmenu({ button }) {
           />
           <CardSubmenuOption
             onClick={() => {
-              router.push(`/ButtonPin/${button.id}`);
+              button.pin ? store.emit(new ButtonUnpin(button.id, () => alertService.success(t('button.unpinSuccess')))) : store.emit(new ButtonPin(button.id,() => alertService.success(t('button.pinSuccess'))))
             }}
             label={button.pin ? t('button.unpin') : t('button.pin')}
           />
@@ -537,13 +538,7 @@ export function CardButtonAuthorSection({ button, buttonTypes }) {
     false,
   );
   const [showMap, setShowMap] = useState(false);
-  // const profileHref = isButtonOwner(sessionUser, button)
-  //   ? `/Profile/`
-  //   : `/p/${button.owner.username}`;
-  // const closeButton = () => {
-  //   store.emit(new SetMainPopupCurrentButton(null))
-  //   store.emit(new updateCurrentButton(null))
-  // };
+
   const onClick = (e) => {
     e.preventDefault()
     dconsole.log('this goes for dev test.. make sure it works..')

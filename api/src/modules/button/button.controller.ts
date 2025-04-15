@@ -256,15 +256,19 @@ export class ButtonController {
   @AllowGuest()
   @AllowIfNetworkIsPublic()
   @Get('pinned')
-  async pinned() {
-    return await this.buttonService.findByPin();
+  pinned() {
+    return this.buttonService.findByPin();
   }
 
   @OnlyAdmin()
-  @Post('pin/:buttonId')
-  async pin(@Param('buttonId') buttonId: string) {
-    const { pin } = await this.buttonService.findById(buttonId, true);
-    await this.buttonService.setPin(buttonId, !pin);
-    return !pin;
+  @Get('pin/:buttonId')
+  pin(@Param('buttonId') buttonId: string) {
+    return this.buttonService.setPin(buttonId, true);
+  }
+
+  @OnlyAdmin()
+  @Get('unpin/:buttonId')
+  unpin(@Param('buttonId') buttonId: string) {
+    return this.buttonService.setPin(buttonId, false);
   }
 }
