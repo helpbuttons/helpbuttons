@@ -23,7 +23,8 @@ export function MetadataSEO(props) {
     pageurl,
     siteTitle,
     color,
-    nonce
+    nonce,
+    webUrl
   } =  props;
 
   const csp = `object-src 'none'; base-uri 'none'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https: http: 'nonce-${nonce}' 'strict-dynamic'`
@@ -57,18 +58,18 @@ export function MetadataSEO(props) {
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href={`${pageurl}/api/networks/logo/32`}
+          href={`${webUrl}/api/networks/logo/32`}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href={`${pageurl}/api/networks/logo/16`}
+          href={`${webUrl}/api/networks/logo/16`}
         />
-        <link rel="manifest" href={`${pageurl}/manifest.json`} />
+        <link rel="manifest" href={`${webUrl}/manifest.json`} />
         <link
           rel="mask-icon"
-          href={`${pageurl}/api/networks/logo/32`}
+          href={`${webUrl}api/networks/logo/32`}
           color={color}
         />
         <meta name="msapplication-TileColor" content={color} />
@@ -77,7 +78,7 @@ export function MetadataSEO(props) {
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href={`${pageurl}/api/networks/logo/180`}
+          href={`${webUrl}/api/networks/logo/180`}
         />
       </Head>
 

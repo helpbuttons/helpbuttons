@@ -38,6 +38,7 @@ import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
+import CookiesBanner from 'components/home/CookiesBanner';
 
 export default appWithTranslation(MyApp);
 
@@ -56,11 +57,6 @@ function MyApp({ Component, pageProps }) {
   );
 
   const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser)
-  const onFetchingNetworkError = (error) => {
-    if (error === 'network-not-found') {
-      setFetchingNetworkError(true)
-    }
-  };
 
   const onFetchingConfigError = (error) => {
     dconsole.error(error);
@@ -81,12 +77,14 @@ function MyApp({ Component, pageProps }) {
   };
   const [pageName, setPageName] = useState('HomeInfo')
   useEffect(() => {
-    setPageName(getPageName(path.split('/')[1]))
-    // debugMessage(`fetching ${pageName}`)
+    setPageName(() => getPageName(path.split('/')[1]))
     function getPageName(urlString) {
       const finit = urlString.indexOf("#") !== -1 ? urlString.indexOf("#") : (urlString.indexOf("?") !== -1 ? urlString.indexOf("?") !== -1 : null)
       if (finit) {
         return urlString.substr(0, finit)
+      }
+      if (!urlString) {
+        return 'HomeInfo'
       }
       return urlString;
     }
@@ -96,7 +94,8 @@ function MyApp({ Component, pageProps }) {
 
   const config = useConfig(pageProps._config, onFetchingConfigError);
   const selectedNetwork = useSelectedNetwork(
-    pageProps._selectedNetwork
+    pageProps._selectedNetwork,
+    () => setFetchingNetworkError(() => true)
   );
   const setupPaths: string[] = [
     SetupSteps.CREATE_ADMIN_FORM,
@@ -182,7 +181,7 @@ function MyApp({ Component, pageProps }) {
       alertService.error(
         `You are not allowed in here!`
       );
-      router.push('/Error')
+      router.push('/')
       return;
     }
     setAuthorized(isAllowed);
@@ -214,6 +213,9 @@ function MyApp({ Component, pageProps }) {
         selectedNetwork.nomeclature,
         selectedNetwork.nomeclaturePlural,
       );
+    }
+    if(([SetupSteps.CREATE_ADMIN_FORM.toString(), SetupSteps.FIRST_OPEN.toString(), SetupSteps.NETWORK_CREATION.toString()].indexOf(path) > -1 )&& selectedNetwork && selectedNetwork.id ){
+      router.push('/')
     }
   }, [selectedNetwork]);
 
@@ -256,62 +258,69 @@ function MyApp({ Component, pageProps }) {
     setLoading(false);
   });
 
-  if (isSetup) {
-    return <> <Head>
-      <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /></>;
-  } else if (pageName == 'Embbed') {
-    return (
-      <LoadabledComponent loading={!selectedNetwork || loading}>
-        <Component {...pageProps} />
-      </LoadabledComponent>
-    );
-  } else if (!selectedNetwork.initialized) {
-    return (
-      <>
-        <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
-        <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
-        <div
-          className="index__container"
-          style={
-            selectedNetwork
-              ? ({
-                '--network-background-color':
-                  selectedNetwork.backgroundColor,
-                '--network-text-color': selectedNetwork.textColor,
-              } as React.CSSProperties)
-              : ({
-                '--network-background-color': 'grey',
-                '--network-text-color': 'pink',
-              } as React.CSSProperties)
-          }
-        > 
-          <CookiesBanner/>
-          <Alert />
-          <div className="index__content">
-            <ShowDesktopOnly>
-              <NavHeader
-                pageName={pageName}
-                selectedNetwork={selectedNetwork}
-              />
-            </ShowDesktopOnly>
-            {authorized && <Component {...pageProps} />}
-            {!authorized && <><Loading /></>}
-            <ShowMobileOnly>
-              <ClienteSideRendering>
-                <NavBottom
-                  pageName={pageName}
-                  sessionUser={sessionUser}
-                />
-              </ClienteSideRendering>
-            </ShowMobileOnly>
-            <MainPopup pageName={pageName} />
-          </div>
-        </div>
-      </>
-    );
-  }
+  return <>
+    <MetadataSEO {...pageProps.metadata} nonce={nonce} />
+    {(function () {
 
-  return <><MetadataSEO {...pageProps.metadata} nonce={nonce} /><Loading /></>;
+      if (isSetup) {
+        return <> <Head>
+          <title>Creating new helpbuttons network...</title></Head><Component {...pageProps} /></>;
+      } else if (pageName == 'Embbed') {
+        return (
+          <LoadabledComponent loading={!selectedNetwork || loading}>
+            <Component {...pageProps} />
+          </LoadabledComponent>
+        );
+      } else if (selectedNetwork.id) {
+        return (
+          <>
+            {/* <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} /> */}
+            <ActivityPool sessionUser={sessionUser} messagesUnread={messagesUnread} />
+            <div
+              className="index__container"
+              style={
+                selectedNetwork
+                  ? ({
+                    '--network-background-color':
+                      selectedNetwork.backgroundColor,
+                    '--network-text-color': selectedNetwork.textColor,
+                  } as React.CSSProperties)
+                  : ({
+                    '--network-background-color': 'grey',
+                    '--network-text-color': 'pink',
+                  } as React.CSSProperties)
+              }
+            >
+              <CookiesBanner />
+              <Alert />
+              <div className="index__content">
+                <ShowDesktopOnly>
+                  <NavHeader
+                    pageName={pageName}
+                    selectedNetwork={selectedNetwork}
+                  />
+                </ShowDesktopOnly>
+                {authorized && <Component {...pageProps} />}
+                {!authorized && <><Loading /></>}
+                <ShowMobileOnly>
+                  <ClienteSideRendering>
+                    <NavBottom
+                      pageName={pageName}
+                      sessionUser={sessionUser}
+                    />
+                  </ClienteSideRendering>
+                </ShowMobileOnly>
+                <MainPopup pageName={pageName} />
+              </div>
+            </div>
+          </>
+        );
+      } else {
+        return <><Loading /></>;
+      }
+
+    }).call(this)}
+  </>
 }
 
 export const ClienteSideRendering = ({ children }) => {
@@ -327,42 +336,6 @@ function ActivityPool({ sessionUser, messagesUnread }) {
   return (<></>);
 }
 
-export function CookiesBanner() {
-  const [showCookiesBanner, setShowCookiesBanner] = useState(false);
-  useEffect(() => {
-    const cookiesAccepted = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE);
-    if (!cookiesAccepted) {
-      setShowCookiesBanner(true);
-    }
-  }, []);
-  const handleAcceptCookies = () => {
-    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, true);
-    setShowCookiesBanner(false);
-  };
-
-  return (
-    <>{showCookiesBanner &&
-    <div className="card-alert__container">
-      <div className="cookies-banner__content">
-        <p>
-        {t('faqs.cookiesExplanation')}
-          <a href="/Faqs" target="_blank" rel="noopener noreferrer">
-          {t('faqs.cookiesPolicy')}
-          </a>
-          .
-        </p>
-        <Btn
-            btnType={BtnType.submit}
-            iconLeft={IconType.circle}
-            caption={t('faqs.cookieAccept')}
-            contentAlignment={ContentAlignment.center}
-            onClick={handleAcceptCookies}
-          />
-      </div>
-    </div>
-    }</>
-  );
-}
 
 const useWhichLocale = ({ sessionLocale, networkLocale }) => {
 

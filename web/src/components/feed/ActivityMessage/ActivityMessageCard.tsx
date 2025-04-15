@@ -13,7 +13,7 @@ import { readableTimeLeftToDate } from 'shared/date.utils';
 import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import { ButtonTemplate } from 'shared/dtos/button.dto';
 import { PrivacyType } from 'shared/types/privacy.enum';
-import { ActivityMarkAsRead } from 'state/Activity';
+import { ActivityMarkAsRead, SetFocusOnMessage } from 'state/Activity';
 import { FindButton } from 'state/Explore';
 import { SetMainPopupCurrentButton } from 'state/HomeInfo';
 
@@ -60,6 +60,8 @@ export function ActivityMessageCard({
       const buttonId = message.button.id;
       showPopupButton(buttonId)
     }
+
+    store.emit(new SetFocusOnMessage(messageId))
   };
 
   return (

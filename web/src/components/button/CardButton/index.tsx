@@ -469,8 +469,9 @@ export function ButtonOwnerPhone({ user, button }) {
           {user.showWassap &&
               <Btn
                 btnType={BtnType.corporative}
-                contentAlignment={ContentAlignment.center}
-                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.left}
+                caption={t('button.whatsapp')}
+                iconLeft={IconType.svg}
                 iconLink={<IoLogoWhatsapp />}
                 onClick={() => jumpTo(`https://wa.me/+${phone}`)}
               />
@@ -494,7 +495,7 @@ export function CardButtonHeadActions({
           btnType={BtnType.corporative}
           contentAlignment={ContentAlignment.left}
           iconLeft={IconType.svg}
-          caption={t('button.sendComment')}
+          caption={t('button.sendPrivateMessage')}
           iconLink={<IoMailOutline />}
           submit={true}
           onClick={action}
