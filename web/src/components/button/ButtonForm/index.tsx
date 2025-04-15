@@ -138,10 +138,7 @@ export default function ButtonForm({
                     watch={watch}
                     setValue={setValue}
                     setFocus={setFocus}
-                    {...register('description', {
-                      required: true,
-                      minLength: 10,
-                    })}
+                    {...register('description')}
                   />
 
                   {/* TODO: Warning: Cannot update a component (`ButtonNew`) while rendering a different component (`FieldTags`). To locate the bad setState() call inside `FieldTags`, follow the stack trace as described in https://reactjs.org */}

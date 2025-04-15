@@ -23,6 +23,7 @@ import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import _ from 'lodash';
 import { nextElement, previousElement } from 'shared/sys.helper';
+import dconsole from 'shared/debugger';
 
 
 export enum ExploreViewMode {
@@ -386,7 +387,8 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.buttonTypeClicked = true;
-
+      newState.explore.map.showAdvancedFilters = false;
+      newState.explore.currentButton = null;
       let newFilters = {
         ...defaultFilters,
         helpButtonTypes: [this.buttonType],

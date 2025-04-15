@@ -3,7 +3,7 @@ import Btn, {
   ContentAlignment,
   IconType,
 } from 'elements/Btn';
-import { store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { DeleteComment } from 'state/Posts';
 import { alertService } from 'services/Alert';
 import { isAdmin } from 'state/Users';
@@ -23,7 +23,7 @@ import { PrivacyType } from 'shared/types/privacy.enum';
 import { formatMessage } from 'elements/Message';
 import { uniqueArray } from 'shared/sys.helper';
 import { Compose } from 'layouts/Feed';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useToggle } from 'shared/custom.hooks';
 import t from 'i18n';
 import { mentionsOfMessage } from 'shared/types/message.helper';
@@ -82,7 +82,7 @@ export function PostComment({
   reloadPosts,
   post,
   replies,
-  isReply = false
+  isReply = false,
 }) {
   const deleteComment = (commentId) => {
     store.emit(
@@ -101,6 +101,25 @@ export function PostComment({
       setShowComposeComment(() => ComposeCommentState.HIDE);
     }
   };
+
+  const [focus, setFocus] = useState(false)
+  const focusMessageId = useGlobalStore(
+    (state: GlobalState) => state.activities.focusMessageId,
+  );
+  useEffect(() => {
+    if(focusMessageId == comment.id){
+      setFocus(() => true)
+    }else{
+      setFocus(() => false)
+    }
+  }, [focusMessageId])
+
+  const alertRef = useRef(null);
+  useEffect(() => {
+    if (alertRef.current) {
+      alertRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [focus]); 
   return (
     <>
     <div
@@ -110,8 +129,11 @@ export function PostComment({
           ? ' card-notification--comment-private'
           : '') +
         (isReply ? ' card-notification--reply' : '')
+        +( focus ? ' card-notification-comment-focus' : '')
       }
     >
+      {focus && <div ref={alertRef}></div>}
+      
       <Comment comment={comment} sessionUser={sessionUser}/>
       <div className={'message__actions ' + (sessionUser && (sessionUser.id == comment.author.id) ? ' ' : 'message__actions--you') }>
         {sessionUser && (

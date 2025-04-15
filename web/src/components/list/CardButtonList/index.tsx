@@ -8,7 +8,7 @@ import { HiglightHexagonFromButton, updateCurrentButton } from 'state/Explore';
 import { store } from 'state';
 import router from 'next/router';
 
-export default function CardButtonList({ buttonTypes, button, showMap, linkToPopup, linkIframe }) {
+export default function CardButtonList({ buttonTypes, button, showMap, linkToPopup, linkIframe = null }) {
   const buttonType = buttonTypes.find(
     (buttonTemplate) => buttonTemplate.name == button.type,
   );
