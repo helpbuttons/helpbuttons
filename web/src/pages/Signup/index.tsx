@@ -90,6 +90,7 @@ export default function Signup() {
   const onSuccess = (userData) => {
     setIsSubmitting(false)
     store.emit(new SetMainPopup(MainPopupPage.HIDE))
+    alertService.success(t('user.signupSuccess', [selectedNetwork.name]))
   };
 
   const onError = (error) => {

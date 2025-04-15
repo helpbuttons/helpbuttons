@@ -38,6 +38,7 @@ import { LocalStorageVars, localStorageService } from 'services/LocalStorage';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
 import dconsole from 'shared/debugger';
 import Head from 'next/head';
+import CookiesBanner from 'components/home/CookiesBanner';
 
 export default appWithTranslation(MyApp);
 
@@ -180,7 +181,7 @@ function MyApp({ Component, pageProps }) {
       alertService.error(
         `You are not allowed in here!`
       );
-      router.push('/Error')
+      router.push('/')
       return;
     }
     setAuthorized(isAllowed);
@@ -213,7 +214,7 @@ function MyApp({ Component, pageProps }) {
         selectedNetwork.nomeclaturePlural,
       );
     }
-    if([SetupSteps.CREATE_ADMIN_FORM.toString(), SetupSteps.FIRST_OPEN.toString(), SetupSteps.NETWORK_CREATION.toString()].indexOf(path) && selectedNetwork && selectedNetwork.id ){
+    if(([SetupSteps.CREATE_ADMIN_FORM.toString(), SetupSteps.FIRST_OPEN.toString(), SetupSteps.NETWORK_CREATION.toString()].indexOf(path) > -1 )&& selectedNetwork && selectedNetwork.id ){
       router.push('/')
     }
   }, [selectedNetwork]);
@@ -270,7 +271,7 @@ function MyApp({ Component, pageProps }) {
             <Component {...pageProps} />
           </LoadabledComponent>
         );
-      } else if (!selectedNetwork.initialized) {
+      } else if (selectedNetwork.id) {
         return (
           <>
             {/* <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} /> */}
@@ -335,42 +336,6 @@ function ActivityPool({ sessionUser, messagesUnread }) {
   return (<></>);
 }
 
-export function CookiesBanner() {
-  const [showCookiesBanner, setShowCookiesBanner] = useState(false);
-  useEffect(() => {
-    const cookiesAccepted = localStorageService.read(LocalStorageVars.COOKIES_ACCEPTANCE);
-    if (!cookiesAccepted) {
-      setShowCookiesBanner(true);
-    }
-  }, []);
-  const handleAcceptCookies = () => {
-    localStorageService.save(LocalStorageVars.COOKIES_ACCEPTANCE, true);
-    setShowCookiesBanner(false);
-  };
-
-  return (
-    <>{showCookiesBanner &&
-    <div className="card-alert__container">
-      <div className="cookies-banner__content">
-        <p>
-        {t('faqs.cookiesExplanation')}
-          <a href="/Faqs" target="_blank" rel="noopener noreferrer">
-          {t('faqs.cookiesPolicy')}
-          </a>
-          .
-        </p>
-        <Btn
-            btnType={BtnType.submit}
-            iconLeft={IconType.circle}
-            caption={t('faqs.cookieAccept')}
-            contentAlignment={ContentAlignment.center}
-            onClick={handleAcceptCookies}
-          />
-      </div>
-    </div>
-    }</>
-  );
-}
 
 const useWhichLocale = ({ sessionLocale, networkLocale }) => {
 

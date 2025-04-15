@@ -23,6 +23,7 @@ import { ButtonsOrderBy } from 'components/search/AdvancedFilters';
 import { maxZoom } from 'components/map/Map/Map.consts';
 import _ from 'lodash';
 import { nextElement, previousElement } from 'shared/sys.helper';
+import dconsole from 'shared/debugger';
 
 
 export enum ExploreViewMode {
@@ -68,6 +69,7 @@ export interface ExploreMapState {
   filters: ButtonFilters;
   buttonTypeClicked: boolean; // this is used to jump to center of network if no buttons are found
   listButtons: Button[]; // if hexagon clicked, can be different from boundsButtons
+  pinnedButtons: Button[];
   boundsFilteredButtons: Button[];
   cachedHexagons: any[];
   loading: boolean;
@@ -82,6 +84,7 @@ export const exploreInitial = {
   map: {
     filters: defaultFilters,
     listButtons: [], // if hexagon clicked, can be different from boundsButtons
+    pinnedButtons: null,
     boundsFilteredButtons: [],
     cachedHexagons: [],
     loading: true,
@@ -384,7 +387,8 @@ export class UpdateFiltersToFilterButtonType implements UpdateEvent {
   public update(state: GlobalState) {
     return produce(state, (newState) => {
       newState.explore.map.buttonTypeClicked = true;
-
+      newState.explore.map.showAdvancedFilters = false;
+      newState.explore.currentButton = null;
       let newFilters = {
         ...defaultFilters,
         helpButtonTypes: [this.buttonType],

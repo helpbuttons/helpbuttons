@@ -16,8 +16,17 @@ export enum LocalStorageVars {
 // add variable to localStorage to not loose on refresh
 function save(name: LocalStorageVars, data: any) {
   if (typeof window !== typeof undefined) {
-    return window.localStorage.setItem(name, data);
+    if(name == LocalStorageVars.COOKIES_ACCEPTANCE)
+    {
+      return window.localStorage.setItem(name, data);  
+    }else{
+      if(window.localStorage.getItem(LocalStorageVars.COOKIES_ACCEPTANCE) !== null)
+      {
+        return window.localStorage.setItem(name, data);
+      }
+    }
   }
+  console.log('You rejected cookies previously')
 }
 
 // get variable from localStorage

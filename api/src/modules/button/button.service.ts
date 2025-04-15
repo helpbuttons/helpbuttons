@@ -589,6 +589,22 @@ export class ButtonService {
     return this.buttonRepository.update(buttonId, { expired: true });
   }
 
+  setPin(buttonId: string, status: boolean) {
+    return this.buttonRepository.update(buttonId, { pin: status });
+  }
+
+  findByPin(
+    includeExpired: boolean = false,
+  ) {
+    return this.buttonRepository.find({
+      where: {
+        pin: true,
+        ...this.expiredBlockedConditions(includeExpired)
+      },
+      relations: ['owner'],
+    });
+  }
+
   public deleteme(ownerId: string) {
     return this.buttonRepository
       .find({ where: { owner: { id: ownerId } } })

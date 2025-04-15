@@ -40,21 +40,24 @@ export const networksInitial = {
 };
 
 
-export const useSelectedNetwork = (_selectedNetwork = null, onError = () => {console.log('error fetching network')}): Network => {
+export const useSelectedNetwork = (_selectedNetwork = null, onError = () => { console.log('error fetching network') }): Network => {
   const selectedNetwork = useGlobalStore((state: GlobalState) => state.networks.selectedNetwork);
   const initialized = useGlobalStore((state: GlobalState) => state.networks.initialized);
   useEffect(() => {
-    if (_selectedNetwork) {
-      store.emit(new SelectedNetworkFetched(_selectedNetwork))
-      return;
+    if (!initialized) {
+      if (_selectedNetwork?.id) {
+        dconsole.log('got network ..', _selectedNetwork)
+        store.emit(new SelectedNetworkFetched(_selectedNetwork))
+        return;
+      } else if (!(selectedNetwork?.id)) {
+        store.emit(new FetchDefaultNetwork(() => {
+        }, () => {
+          onError()
+        }))
+
+      }
     }
-    if (selectedNetwork && !initialized) {
-      store.emit(new FetchDefaultNetwork(() => {
-      }, () => {
-        onError()
-      }))
-    }
-  }, [])
+  }, [initialized])
 
   return selectedNetwork;
 }
@@ -62,11 +65,10 @@ export const useSelectedNetwork = (_selectedNetwork = null, onError = () => {con
 
 export const useNetworkCenter = () => {
   const selectedNetwork = useSelectedNetwork();
-  const [center, setCenter] = useState([0,0])
+  const [center, setCenter] = useState([0, 0])
   useEffect(() => {
     // @ts-ignore
-    if(selectedNetwork?.exploreSettings?.center)
-    {
+    if (selectedNetwork?.exploreSettings?.center) {
       // @ts-ignore
       setCenter(() => selectedNetwork.exploreSettings.center)
     }
