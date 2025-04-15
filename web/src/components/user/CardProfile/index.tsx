@@ -20,22 +20,23 @@ export default function CardProfile({ user, showAdminOptions = false}) {
   
   return (
     <>
+  
 
         <div className="card-profile__container-avatar-content">
-
-            <CardSubmenu>
-              {user?.role == Role.admin && 
-                 <AdminOptions/>
-               }
-              {showAdminOptions && 
-                <>
-                  <ProfileAdminOptions user={user} />
-                </>
-              }
-              {user?.username == sessionUser?.username &&
-               <GeneralOptions />
-              }
-            </CardSubmenu>
+              <CardSubmenu extraClass="card-profile__submenu" >
+                {user?.role == Role.admin && 
+                    <AdminOptions/>
+                  }
+                {showAdminOptions && 
+                  <>
+                    <ProfileAdminOptions user={user} />
+                  </>
+                }
+                {user?.username == sessionUser?.username &&
+                  <GeneralOptions />
+                }
+              </CardSubmenu>
+            
 
             <figure className="card-profile__avatar-container avatar">
 
@@ -51,9 +52,10 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             
               <div className="card-profile__avatar-container-name">
 
-                {user?.role == Role.admin && <div className="card-profile__role hashtag hashtag--blue">Admin</div>}
-                <div className="card-profile__name">{user.name} </div>
+                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="card-profile__role hashtag hashtag--blue">Admin</div>} </div> 
+                
                 <span className="card-profile__username">{ user.username }</span>
+
               </div>
 
               {/* {t('user.created_date')}: {readableTimeLeftToDate(user.created_at)} */}
@@ -63,11 +65,12 @@ export default function CardProfile({ user, showAdminOptions = false}) {
         </div>
         <div className="card-profile__data">
 
-          <div className="card-profile__tags grid-one__column-mid-element">
-           <div className="hashtag">{t('user.tags')}</div> 
-          </div>
+
           <div className="card-profile__description">
             {user.description}
+          </div>
+          <div className="card-profile__tags grid-one__column-mid-element">
+           <div className="hashtag">{t('user.tags')}</div> 
           </div>
 
         </div>

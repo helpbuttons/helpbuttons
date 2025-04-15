@@ -23,7 +23,7 @@ $avatar-margin: $padding-big;
 .card-profile__description {
   font-size: $font-size-general;
   font-weight: $font-weight-regular;
-  margin-top: $margin-xsmall;
+  margin-top: $margin-small;
   margin-bottom: $margin-xxsmall 0;
 
   color: $color-gray;
@@ -33,7 +33,7 @@ $avatar-margin: $padding-big;
 
 .card-profile__tags {
 
-  padding-top: $padding-small;
+  padding-top: $margin-small;
 
 }
 
@@ -43,8 +43,10 @@ $avatar-margin: $padding-big;
   height: auto;
   margin-left: 0;
   background-size: contain;
-  margin: $margin-small auto;
+  margin: 0 auto 0 auto;
   margin-bottom: 0;
+  overflow: auto;
+  
   font-weight: $font-weight-bold;
   border-top: $border-style-basic;
   border-bottom: $border-style-basic;
@@ -258,7 +260,19 @@ $avatar-margin: $padding-big;
 
 .card-profile__submenu {
 
-  // margin-top: 0;
+  .card-button__submenu {
+
+    margin-top: 0;
+    padding-top: 0;
+    padding-right: 0;
+
+  }
+
+  .card-button__dropdown-container {
+
+    top: 2rem;
+
+  }
 
 }
 
@@ -287,6 +301,7 @@ $avatar-margin: $padding-big;
   .card-profile__avatar-container-name {
     max-width: 300px;
     flex-direction: row;
+    gap: $margin-xsmall;
   }
 
   .card-profile__username {
