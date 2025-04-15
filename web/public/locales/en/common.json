@@ -299,7 +299,7 @@
     "username": "Username",
     "usernameWillBe": "Your username will be ",
     "usernameExplain": "The username is what will identify you in this network and others",
-    "usernameCreateExplain": "Create your username. The username is what will identify you in this network and others",
+    "usernameCreateExplain": "Create your username. The username is your alias used to identify you.",
     "usernamePlaceHolder": "Type a unique name",
     "password": "Password",
     "passwordExplain": "Create your password, 8 characters minimum.",
