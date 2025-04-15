@@ -233,7 +233,7 @@
     "unpinSuccess": "Sucess unpin",
     "tagsExplain": "Optionallly, write and press enter for each keyword that you want to add",
     "imagesLabel": "Upload the images you want",
-    "imagesExplain": "Maximum size 4Mb. Images will be displayed in a carrousel in your _helpbutton_ page",
+    "imagesExplain": "Images will be displayed in a carrousel in your _helpbutton_ page",
     "imagesText": "Upload Image",
     "whereLabel": "Choose place",
     "whereExplain": "Pick a location for your _helpbutton_",
