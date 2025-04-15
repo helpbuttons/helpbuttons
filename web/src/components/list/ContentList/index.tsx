@@ -13,6 +13,7 @@ import Loading from 'components/loading';
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { useGlobalStore } from 'state';
 import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
+import dconsole from 'shared/debugger';
 
 export default function ContentList({
   buttons,
@@ -25,13 +26,13 @@ export default function ContentList({
   const isLoadingButtons = useGlobalStore(
     (state: GlobalState) => state.explore.map.loading,
   );
-  const { endDivLoadMoreTrigger, noMoreToLoad, scrollIsLoading } =
+  const { endDivLoadMoreTrigger, noMoreToLoad } =
     useScroll(({ setNoMoreToLoad, setScrollIsLoading }) => {
       setScrollIsLoading(() => true);
       if (buttonsSlice < buttons.length) {
         setButtonsSlice(() => buttonsSlice + 2);
       } else {
-        setNoMoreToLoad(() => true);
+        // setNoMoreToLoad(() => true);
       }
       setScrollIsLoading(() => false);
     });
@@ -72,7 +73,7 @@ export default function ContentList({
           linkToPopup={linkToPopup}
         />
       ))}
-      {noMoreToLoad && <NoMoreToLoad />}
+      <NoMoreToLoad />
       {endDivLoadMoreTrigger}
     </>
   );

@@ -16,10 +16,10 @@ export function HeaderSearch({ toggleAdvancedFilters, pageName, exploreMapState,
   
   useEffect(() => {
     if(['Explore','Bulletin'].indexOf(pageName) > -1) {
-      setButtonCount(() => exploreMapState.boundsFilteredButtons.length)
+      setButtonCount(() => exploreMapState.listButtons.length)
     }
     
-  }, [exploreMapState.boundsFilteredButtons])
+  }, [exploreMapState.listButtons])
 
   const clearButton = useRef(null);
   const filtered = isFiltering()
