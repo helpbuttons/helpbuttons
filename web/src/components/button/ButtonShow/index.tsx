@@ -24,6 +24,8 @@ export function ButtonShow({button}) {
     }
   });
   const [showReplyFirstPost, toggleShowReplyFirstPost] =  useToggle(false);
+  const [isPrivateMessage, setPrivateMessage] = useToggle(false);
+
   const buttonTypes = useButtonTypes();
 
   return (
@@ -34,11 +36,13 @@ export function ButtonShow({button}) {
             button={button}
             buttonTypes={buttonTypes}
             showReplyFirstPost={showReplyFirstPost}
+            isprivateMessage={isPrivateMessage}
             toggleShowReplyFirstPost={toggleShowReplyFirstPost}
           />
           <Feed 
             button={button}
             showReplyFirstPost={showReplyFirstPost}
+            isprivateMessage={isPrivateMessage}
             toggleShowReplyFirstPost={toggleShowReplyFirstPost}
           />
         </>

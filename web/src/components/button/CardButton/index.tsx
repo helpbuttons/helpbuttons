@@ -324,7 +324,9 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
           contentAlignment={ContentAlignment.center}
           iconLeft={IconType.circle}
           iconLink={<IoMailOutline />}
-          onClick={toggleShowReplyFirstPost}
+          onClick={()=> {
+            toggleShowReplyFirstPost(true)
+          }}
         />
         <CardButtonSubmenu button={button} />
       </div>

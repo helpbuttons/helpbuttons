@@ -85,7 +85,10 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
             <CardButtonHeadActions
               button={button}
               isButtonOwner={isButtonOwner}
-              action={() => toggleShowReplyFirstPost(true)}
+              action={() => {
+                setPrivateMessage(true);
+                toggleShowReplyFirstPost(true);
+              } }
             />
           )}
           {!sessionUser && (
@@ -128,8 +131,8 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
               caption={t('button.publishComment')}
               iconLink={<IoAdd />}
               onClick={() => {
-                toggleShowReplyFirstPost(true);
                 setPrivateMessage(false);
+                toggleShowReplyFirstPost(true);
               }}
             />
           )}
