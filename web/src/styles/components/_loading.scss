@@ -2,6 +2,7 @@
 
 .loading__ {
     display: inline-block;
+    align-self: center;
     width: 2em;
     height: 2em;
     top: calc(50% - 1em);
@@ -14,6 +15,13 @@
     z-index: $z-index-06;
     margin: auto;
     position: relative;
+
+  }
+
+  .loading__wrapper {
+
+    width: 100%;
+    margin: auto;
 
   }
   

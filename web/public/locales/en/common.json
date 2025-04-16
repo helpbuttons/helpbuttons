@@ -431,8 +431,8 @@
   },
   "comment": {
     "delete": "Delete",
-    "private": "You're sending a private message. Only the destination user could see it.",
-    "public": "This comment is public, everyone could see it.",
+    "private": "You're sending a private message. Only the destination user will see it.",
+    "public": "This comment is public, everyone will see it.",
     "placeholderWrite": "Write a message in this post",
     "posted": "Comment posted",
     "sendPublic": "Answer",

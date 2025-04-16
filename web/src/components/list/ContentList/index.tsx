@@ -40,7 +40,7 @@ export default function ContentList({
     return (
       <>
         <div className="list__empty-message">
-          {isLoadingButtons && <Loading />}
+          {isLoadingButtons && <span className='loading__wrapper'><Loading /></span>}
           {!isLoadingButtons && (
             <>
               <div className="list__empty-message--prev">

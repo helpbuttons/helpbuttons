@@ -26,13 +26,17 @@ $cycle: 10;
   justify-content: center;
   align-items: flex-end;
   position: relative;
+  transform-origin: bottom center; /* Set the origin to bottom center */
+
+
 }
 
 
 
 .marker-button:hover {
   z-index: $z-index-02;
-  transform: scale(1.1); 
+  transform-origin: bottom center; /* Set the origin to bottom center */
+  transform: scale(1.1) 
 
 }
 

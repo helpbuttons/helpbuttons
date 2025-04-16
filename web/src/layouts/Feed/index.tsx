@@ -120,16 +120,14 @@ export default function Feed({ button }: { button: Button }) {
             </>
           )}
           {sessionUser && !isButtonOwner && (
-            <>
-                <Btn
-                  btnType={BtnType.submit}
-                  contentAlignment={ContentAlignment.left}
-                  iconLeft={IconType.svg}
-                  caption={t('button.publishComment')}
-                  iconLink={<IoAdd />}
-                  submit={true}
-                />
-            </>
+            <Btn
+              btnType={BtnType.submit}
+              contentAlignment={ContentAlignment.left}
+              iconLeft={IconType.svg}
+              caption={t('button.publishComment')}
+              iconLink={<IoAdd />}
+              submit={true}
+            />
           )}
       </div>
     
