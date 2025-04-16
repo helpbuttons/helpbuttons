@@ -36,7 +36,6 @@ export function ButtonShow({button}) {
             button={button}
             buttonTypes={buttonTypes}
             showReplyFirstPost={showReplyFirstPost}
-            isprivateMessage={isPrivateMessage}
             toggleShowReplyFirstPost={toggleShowReplyFirstPost}
           />
           <Feed 
