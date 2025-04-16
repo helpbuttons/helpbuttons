@@ -119,7 +119,6 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             <ContentList
               buttons={userButtons}
               buttonTypes={buttonTypes}
-              linkType={ButtonLinkType.MAINPOPUP}
             />
           </div>
     </>
