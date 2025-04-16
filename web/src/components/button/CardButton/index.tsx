@@ -73,11 +73,22 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
             className="card-button card-button__file"
             style={buttonColorStyle(buttonType.cssColor)}
           >
+
+            <div>
+              {/* <Btn
+              onClick={() => store.emit(new NextCurrentButton())}
+              caption="next"
+            ></Btn>
+            <Btn
+              onClick={() => store.emit(new PreviousCurrentButton())}
+              caption="previous"
+            ></Btn> */}
               <CardButtonHeadBig
                 button={button}
                 buttonTypes={buttonTypes}
                 toggleShowReplyFirstPost={toggleShowReplyFirstPost}
               />
+            </div>
           </div>
           <ImageGallery
             images={button?.images.map((image) => {
@@ -299,6 +310,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
     false,
   );
   const [showMap, setShowMap] = useState(false);
+  const [showHashtags, setShowHashtags] = useState(false);
 
   return (
     <>
@@ -347,10 +359,6 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
 
         <div className="card-button__title">
           {button.title}
-          <FollowButtonHeart
-            button={button}
-            sessionUser={sessionUser}
-          />
         </div>
         {/* <div className="card-button__hashtags-wrapper">
           {!showHashtags && 
@@ -365,9 +373,7 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
         <div className="card-button__paragraph">
           <TextFormatted text={button.description} />
         </div>
-        <div className="card-button__hashtags">
-          <TagsNav tags={button.tags} />
-        </div>
+
 
         <div className="card-button__bottom-properties">
           {customFields && customFields.length > 0 && (
@@ -483,8 +489,9 @@ export function ButtonOwnerPhone({ user, button }) {
           {user.showWassap &&
               <Btn
                 btnType={BtnType.corporative}
-                contentAlignment={ContentAlignment.center}
-                iconLeft={IconType.circle}
+                contentAlignment={ContentAlignment.left}
+                caption={t('button.whatsapp')}
+                iconLeft={IconType.svg}
                 iconLink={<IoLogoWhatsapp />}
                 onClick={() => jumpTo(`https://wa.me/+${phone}`)}
               />
@@ -591,24 +598,30 @@ function FollowButtonHeart({ button, sessionUser }) {
 
   if (isFollowingButton(button, sessionUser)) {
     return (
-      <Btn
-        btnType={BtnType.iconActions}
-        contentAlignment={ContentAlignment.center}
-        iconLink={<IoHeartOutline />}
-        iconLeft={IconType.circle}
-        onClick={() => followButton(button.id)}
-      />
+      <div className='card-button__follow-wrap'>
+        {t('button.followme')}
+        <Btn
+          btnType={BtnType.iconActions}
+          contentAlignment={ContentAlignment.center}
+          iconLink={<IoHeartOutline />}
+          iconLeft={IconType.circle}
+          onClick={() => followButton(button.id)}
+        />
+      </div>  
     );
   }
 
   return (
-    <Btn
-      btnType={BtnType.iconActions}
-      contentAlignment={ContentAlignment.center}
-      iconLink={<IoHeart />}
-      iconLeft={IconType.circle}
-      onClick={() => unFollowButton(button.id)}
-    />
+    <div className='card-button__follow-wrap'>
+      {t('button.following')}
+      <Btn
+        btnType={BtnType.iconActions}
+        contentAlignment={ContentAlignment.center}
+        iconLink={<IoHeart />}
+        iconLeft={IconType.circle}
+        onClick={() => unFollowButton(button.id)}
+      />
+    </div>  
   );
 }
 
