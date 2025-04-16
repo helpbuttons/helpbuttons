@@ -23,8 +23,9 @@ export function ButtonShow({button}) {
       // }
     }
   });
-
+  const [showReplyFirstPost, toggleShowReplyFirstPost] =  useToggle(false);
   const buttonTypes = useButtonTypes();
+
   return (
      <div {...handlers}> 
       {button && buttonTypes && (
@@ -32,8 +33,14 @@ export function ButtonShow({button}) {
           <CardButton
             button={button}
             buttonTypes={buttonTypes}
+            showReplyFirstPost={showReplyFirstPost}
+            toggleShowReplyFirstPost={toggleShowReplyFirstPost}
           />
-          <Feed button={button} />
+          <Feed 
+            button={button}
+            showReplyFirstPost={showReplyFirstPost}
+            toggleShowReplyFirstPost={toggleShowReplyFirstPost}
+          />
         </>
       )}
       {!(button && buttonTypes) && <Loading />}

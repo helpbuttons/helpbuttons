@@ -39,11 +39,12 @@ import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import router from 'next/router';
 import { IncomingMessage } from 'node:http';
 
-export default function Feed({ button }: { button: Button }) {
+export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPost  }: { button: Button, showReplyFirstPost: boolean, toggleShowReplyFirstPost: () => void }) {
   const [posts, setPosts] = useState(null);
-  const [showReplyFirstPost, toggleShowReplyFirstPost] =
-    useToggle(false);
   const [showNewPostForm, toggleShowNewPostForm] = useToggle(false);
+  const [isPrivateMessage, setPrivateMessage] = useToggle(false);
+  
+
   const sessionUser = useStore(
     store,
     (state: GlobalState) => state.sessionUser,
@@ -126,7 +127,10 @@ export default function Feed({ button }: { button: Button }) {
               iconLeft={IconType.svg}
               caption={t('button.publishComment')}
               iconLink={<IoAdd />}
-              submit={true}
+              onClick={() => {
+                toggleShowReplyFirstPost(true);
+                setPrivateMessage(false);
+              }}
             />
           )}
       </div>
@@ -145,6 +149,7 @@ export default function Feed({ button }: { button: Button }) {
               buttonId={button.id}
               showCompose={showReplyFirstPost && idx == 0}
               showReplyFirstPost={showReplyFirstPost}
+              isPrivateMessage={isPrivateMessage}
               isLast={idx == posts.length - 1}
             />
           ))}
@@ -171,7 +176,8 @@ export function FeedElement({
   buttonId,
   showCompose = false,
   isLast = false,
-  showReplyFirstPost = false
+  showReplyFirstPost = false,
+  isPrivateMessage = false
 }) {
   const [showComposePostReply, setShowComposePostReply] =
     useState(null);
@@ -185,7 +191,7 @@ export function FeedElement({
   useEffect(() => {
     if (showCompose) {
       let isPrivate = false;
-      if(showReplyFirstPost)
+      if(showReplyFirstPost && isPrivateMessage)
       {
         isPrivate = true;
       }

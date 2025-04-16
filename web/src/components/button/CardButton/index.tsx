@@ -53,7 +53,7 @@ import { FindAndSetMainPopupCurrentProfile, SetMainPopupCurrentButton, SetMainPo
 import React from 'react';
 import dconsole from 'shared/debugger';
 
-export default function CardButton({ button, buttonTypes }) {
+export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const [buttonType, setButtonType] = useState(null);
   useEffect(() => {
     setButtonType(() =>
@@ -86,6 +86,7 @@ export default function CardButton({ button, buttonTypes }) {
               <CardButtonHeadBig
                 button={button}
                 buttonTypes={buttonTypes}
+                toggleShowReplyFirstPost={toggleShowReplyFirstPost}
               />
             </div>
           </div>
@@ -297,7 +298,7 @@ function CardButtonSubmenu({ button }) {
     </CardSubmenu>
   );
 }
-export function CardButtonHeadBig({ button, buttonTypes }) {
+export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const { cssColor, caption, customFields, icon } = buttonTypes.find(
     (buttonType) => {
       return buttonType.name === button.type;
@@ -323,9 +324,7 @@ export function CardButtonHeadBig({ button, buttonTypes }) {
           contentAlignment={ContentAlignment.center}
           iconLeft={IconType.circle}
           iconLink={<IoMailOutline />}
-          onClick={() => {
-            setShowSubmenu(!showSubmenu);
-          }}
+          onClick={toggleShowReplyFirstPost}
         />
         <CardButtonSubmenu button={button} />
       </div>
