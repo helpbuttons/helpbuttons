@@ -101,7 +101,8 @@ export default function CardProfile({ user, showAdminOptions = false}) {
                 </div>
                 {user?.buttonCount?? 0}
               </div>
-              {/* <div className="card-profile__rate ">
+              {/* PENDING TO LINK LIST TO TABS
+               <div className="card-profile__rate ">
                 <div className="card-profile__rate-label">
                 {t('user.timesFollowed')} 
                 </div>
