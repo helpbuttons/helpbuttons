@@ -62,6 +62,13 @@ $text-line-height-xxsmall: 0.7rem;
 
     &:hover {
       border-bottom: 0;
+      padding-bottom: 1px;
     }
     
+}
+
+.highlight {
+
+  font-weight: $font-weight-bolder;
+  
 }

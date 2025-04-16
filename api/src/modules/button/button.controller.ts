@@ -208,7 +208,7 @@ export class ButtonController {
       })
     });
   }
-  
+
   @AllowGuest()
   @Get('monthCalendar/:month/:year')
   async monthCalendar(@Param('month') month: number,@Param('year') year: number) {
@@ -253,4 +253,22 @@ export class ButtonController {
     return this.buttonService.rss()
   }
 
+  @AllowGuest()
+  @AllowIfNetworkIsPublic()
+  @Get('pinned')
+  pinned() {
+    return this.buttonService.findByPin();
+  }
+
+  @OnlyAdmin()
+  @Get('pin/:buttonId')
+  pin(@Param('buttonId') buttonId: string) {
+    return this.buttonService.setPin(buttonId, true);
+  }
+
+  @OnlyAdmin()
+  @Get('unpin/:buttonId')
+  unpin(@Param('buttonId') buttonId: string) {
+    return this.buttonService.setPin(buttonId, false);
+  }
 }

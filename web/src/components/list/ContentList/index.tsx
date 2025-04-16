@@ -13,25 +13,26 @@ import Loading from 'components/loading';
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { useGlobalStore } from 'state';
 import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
+import dconsole from 'shared/debugger';
 
 export default function ContentList({
   buttons,
   buttonTypes,
   showMap = false,
-  linkToPopup = true,
+  linkType = null,
   ...props
 }) {
   const [buttonsSlice, setButtonsSlice] = useState(2);
   const isLoadingButtons = useGlobalStore(
     (state: GlobalState) => state.explore.map.loading,
   );
-  const { endDivLoadMoreTrigger, noMoreToLoad, scrollIsLoading } =
+  const { endDivLoadMoreTrigger, noMoreToLoad } =
     useScroll(({ setNoMoreToLoad, setScrollIsLoading }) => {
       setScrollIsLoading(() => true);
       if (buttonsSlice < buttons.length) {
         setButtonsSlice(() => buttonsSlice + 2);
       } else {
-        setNoMoreToLoad(() => true);
+        // setNoMoreToLoad(() => true);
       }
       setScrollIsLoading(() => false);
     });
@@ -69,10 +70,10 @@ export default function ContentList({
           key={i}
           buttonTypes={buttonTypes}
           showMap={showMap}
-          linkToPopup={linkToPopup}
+          linkType={linkType}
         />
       ))}
-      {noMoreToLoad && <NoMoreToLoad />}
+      <NoMoreToLoad />
       {endDivLoadMoreTrigger}
     </>
   );

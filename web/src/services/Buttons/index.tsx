@@ -86,4 +86,16 @@ export class ButtonService {
   public static embbed(page, take): Observable<any> {
     return httpService.get<any>(`buttons/embbed/${page}/${take}`);
   }
+
+  public static pinned(): Observable<any> {
+    return httpService.get<any>(`buttons/pinned`);
+  }
+
+  public static pin(buttonId): Observable<any> {
+    return httpService.get<any>(`buttons/pin/${buttonId}`);
+  }
+
+  public static unpin(buttonId): Observable<any> {
+    return httpService.get<any>(`buttons/unpin/${buttonId}`);
+  }
 }
