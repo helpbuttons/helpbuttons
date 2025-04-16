@@ -101,7 +101,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
                 </div>
                 {user?.buttonCount?? 0}
               </div>
-              <div className="card-profile__rate ">
+              {/* <div className="card-profile__rate ">
                 <div className="card-profile__rate-label">
                 {t('user.timesFollowed')} 
                 </div>
@@ -112,7 +112,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
                   {t('user.commentsAmount')} 
                 </div>
                   {user?.commentCount ?? 0}
-              </div>
+              </div> */}
 
           </figure>
           <div className="card-profile__button-list">
