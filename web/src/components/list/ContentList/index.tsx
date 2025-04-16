@@ -29,7 +29,7 @@ export default function ContentList({
   const { endDivLoadMoreTrigger, noMoreToLoad } =
     useScroll(({ setNoMoreToLoad, setScrollIsLoading }) => {
       setScrollIsLoading(() => true);
-      if (buttonsSlice < buttons.length) {
+      if (buttonsSlice < buttons?.length) {
         setButtonsSlice(() => buttonsSlice + 2);
       } else {
         // setNoMoreToLoad(() => true);
@@ -37,7 +37,7 @@ export default function ContentList({
       setScrollIsLoading(() => false);
     });
 
-  if (buttons.length < 1) {
+  if (buttons?.length < 1) {
     return (
       <>
         <div className="list__empty-message">
@@ -64,7 +64,7 @@ export default function ContentList({
 
   return (
     <>
-      {buttons.slice(0, buttonsSlice).map((btn, i) => (
+      {buttons?.slice(0, buttonsSlice).map((btn, i) => (
         <CardButtonList
           button={btn}
           key={i}

@@ -7,16 +7,42 @@ import UserAvatar from '../components';
 import { getHostname } from 'shared/sys.helper';
 import t from 'i18n';
 import { store, useGlobalStore } from "state";
-import { UpdateRole, isAdmin } from "state/Users";
+import { FindUserButtons, UpdateRole, isAdmin } from "state/Users";
 import { alertService } from "services/Alert";
 import router from "next/router";
 import { CardSubmenu, CardSubmenuOption } from "components/card/CardSubmenu";
 import { Role } from "shared/types/roles";
+import ContentList from "components/list/ContentList";
+import { useEffect, useState } from "react";
+import dconsole from "shared/debugger";
+import { ButtonLinkType } from "components/list/CardButtonList";
+import { useButtonTypes } from "shared/buttonTypes";
 
 
 export default function CardProfile({ user, showAdminOptions = false}) {
 
   const sessionUser = useGlobalStore((state) => state.sessionUser)
+  const [userButtons, setUserButtons] = useState(null);
+  const buttonTypes = useButtonTypes();
+
+
+  useEffect(() => {
+    // if user is admin... get more data!
+    if (user) {
+        if (user?.showButtons && !userButtons) {
+          dconsole.log('getting user btns');
+          dconsole.log(user.id );
+
+          store.emit(
+            new FindUserButtons(user?.id, (userButtons) =>
+              dconsole.log(userButtons),
+
+              // setUserButtons(userButtons),
+            ),
+          );
+        }
+      }
+    }, []);
   
   return (
     <>
@@ -96,6 +122,13 @@ export default function CardProfile({ user, showAdminOptions = false}) {
               </div>
 
           </figure>
+          <div className="card-profile__button-list">
+            <ContentList
+              buttons={userButtons}
+              buttonTypes={buttonTypes}
+              linkType={ButtonLinkType.MAINPOPUP}
+            />
+          </div>
     </>
   );
 }
