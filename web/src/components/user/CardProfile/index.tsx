@@ -53,7 +53,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
                 <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="card-profile__role hashtag hashtag--blue">Admin</div>} </div> 
                 
-                <div className="card-profile__username">{ user.username }</div>
+                <div className="card-profile__username">@{ user.username }</div>
                 
 
               </div>
