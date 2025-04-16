@@ -20,8 +20,6 @@ export default function CardProfile({ user, showAdminOptions = false}) {
   
   return (
     <>
-  
-
         <div className="card-profile__container-avatar-content">
               <CardSubmenu extraClass="card-profile__submenu" >
                 {user?.role == Role.admin && 
@@ -46,6 +44,7 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
               </div>
 
+
             </figure>
 
             <div className="card-profile__content">
@@ -54,7 +53,8 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
                 <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="card-profile__role hashtag hashtag--blue">Admin</div>} </div> 
                 
-                <span className="card-profile__username">{ user.username }</span>
+                <div className="card-profile__username">{ user.username }</div>
+                
 
               </div>
 

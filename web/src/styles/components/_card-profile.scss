@@ -16,7 +16,9 @@ $avatar-margin: $padding-big;
   flex-direction: row;
   gap: $padding-small;
   font-size: $font-size-general;
-  padding-bottom: $padding-medium;
+  max-width: inherit;
+  flex-wrap: wrap;
+  overflow: hidden;
 
 }
 
@@ -221,16 +223,15 @@ $avatar-margin: $padding-big;
   text-overflow: ellipsis;
   
   gap: $margin-xxxsmall;
-  max-width: 200px;
+  max-width: 45vw;
 }
 
 .card-profile__username {
   font-size: $font-size-small;
   font-weight: $font-weight-light;
   color: $color-gray;
-
   position: relative;
-  top: -15px;
+  align-self: flex-start;
 }
 
 .grid-one__column-mid-element {
@@ -276,9 +277,16 @@ $avatar-margin: $padding-big;
 
 }
 
-.card-profile__role {
+.card-profile__role  {
 
   margin: 0;
+  padding: $padding-xxsmall $padding-medium;
+  font-size: $font-size-small;
+
+  &:hover {
+    pointer-events: none;
+    background-color: $color-blue;
+  }
 
 }
 
