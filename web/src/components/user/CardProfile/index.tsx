@@ -27,20 +27,13 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
 
   useEffect(() => {
-    // if user is admin... get more data!
-    if (user) {
-        if (user?.showButtons && !userButtons) {
-          dconsole.log('getting user btns');
-          dconsole.log(user.id );
 
+    if (user && !userButtons) {
           store.emit(
             new FindUserButtons(user?.id, (userButtons) =>
-              dconsole.log(userButtons),
-
-              // setUserButtons(userButtons),
+              setUserButtons(userButtons),
             ),
           );
-        }
       }
     }, []);
   
@@ -104,15 +97,15 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
               <div className="card-profile__rate card-profile__rate--enabled">
                 <div className="card-profile__rate-label">
-                {t('user.timesFollowed')} 
-                </div>
-                {user?.followsCount ?? 0}
-              </div>
-              <div className="card-profile__rate">
-                <div className="card-profile__rate-label">
                 {t('user.helpbuttonsPublishedAmount')} 
                 </div>
                 {user?.buttonCount?? 0}
+              </div>
+              <div className="card-profile__rate ">
+                <div className="card-profile__rate-label">
+                {t('user.timesFollowed')} 
+                </div>
+                {user?.followsCount ?? 0}
               </div>
               <div className="card-profile__rate">
                 <div className="card-profile__rate-label">

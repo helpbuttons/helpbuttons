@@ -76,7 +76,6 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   // flex-grow: 1;
   flex-basis: 100%;
   padding-right: $padding-xsmall;
-  min-width: $card-button-list-width;
 
 }
 
@@ -251,6 +250,7 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   .list__element {
     width: 100%;
     flex-basis: 30%;
+    
     min-width: $card-button-list-width;
   }
 
