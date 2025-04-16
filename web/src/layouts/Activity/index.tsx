@@ -10,8 +10,14 @@ import { ActivityNotificationList } from 'components/feed/ActivityNotification/A
 import Accordion from 'elements/Accordion';
 import FieldMultiSelect from 'elements/Fields/FieldMultiSelect';
 import { IoList } from 'react-icons/io5';
+import { useActivities } from 'state/Activity';
 
 export default function ActivityLayout({ sessionUser }) {
+  const { notifications, messages } = useActivities();
+  const [countUnreadNotifications, setCountUnreadNotifications] =
+    useState(0);
+  const [countUnreadMessages, setCountUnreadMessages] =
+  useState(0);
   const buttonTypes = useButtonTypes();
   const [selectedButtonTypes, setSelectedButtonTypes] =
     useState(null);
@@ -29,6 +35,16 @@ export default function ActivityLayout({ sessionUser }) {
     );
   };
   useEffect(() => {
+    const countMessages = messages?.unread?.length > 0 ?  messages.unread.length : 0;
+    const countNotifications = notifications?.unread?.length > 0 ?  notifications.unread.length : 0;
+    setCountUnreadNotifications(
+      countNotifications
+    );
+    setCountUnreadMessages(
+      countMessages
+    );
+  }, [notifications, messages]);
+  useEffect(() => {
     if (buttonTypes && !selectedButtonTypes) {
       setSelectedButtonTypes(() => buttonTypes);
     }
@@ -45,7 +61,9 @@ export default function ActivityLayout({ sessionUser }) {
     <div className="feed__container">
       <div className="feed-selector feed-selector--list-toggle">
         <div className='feed-selector__toggle-button'>
+        {countUnreadNotifications > 0 && 
           <span className='notif-circle feed-selector__notif-circle'>1</span>
+        }
           <Btn
             caption={t('activities.messages')}
             btnType={BtnType.tab}
@@ -58,7 +76,9 @@ export default function ActivityLayout({ sessionUser }) {
           />
         </div>
         <div className='feed-selector__toggle-button'>
-          <span className='notif-circle feed-selector__notif-circle'>1</span>
+          {countUnreadMessages > 0 && 
+           <span className='notif-circle feed-selector__notif-circle'>1</span>
+          }
           <Btn
             caption={t('activities.notifications')}
             btnType={BtnType.tab}
