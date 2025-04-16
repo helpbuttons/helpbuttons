@@ -238,10 +238,7 @@ $button-file__container-max-width: $grid-max-width;
         overflow-y: auto;
         margin-left: auto;
         margin-right: auto;
-      }
-  .button-file__card-button {
-      }
-      
+      }  
 
 }
 
@@ -252,9 +249,11 @@ $button-file__container-max-width: $grid-max-width;
     .button-file__message-section {
 
       position: fixed;
-      width: 50%;
+      width: 600px;
+      min-width: 600px;
       top: auto;
-      left: calc(25%);
+      bottom: 10%;
+      left: calc(50% - 300px);
       border-radius: $border-radius-basic;
       height: max-content;
       margin-bottom: auto;
