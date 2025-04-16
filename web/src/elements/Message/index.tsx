@@ -28,9 +28,9 @@ export function TextFormatted({
   return (
     <>
       {!isLongText || isExpanded ? (
-        <p>{formatMessage(text)}</p>
+        <div>{formatMessage(text)}</div>
       ) : (
-        <>
+        <div>
           {formatMessage(text.slice(0, maxChars))}
           {text.length > maxChars ? '...' : ''}
           {(showExpandButton && isLongText) && (
@@ -41,7 +41,7 @@ export function TextFormatted({
               onClick={() => expand()}
             />
           )}
-        </>
+        </div>
       )}
     </>
   );
@@ -54,7 +54,7 @@ export function formatMessage(text) {
     if (aRef == null) return;
     aRef.current.innerHTML = content;
   }, [aRef, content]);
-  return <div ref={aRef} />;
+  return <span ref={aRef} />;
 }
 
 function linkify(text) {
