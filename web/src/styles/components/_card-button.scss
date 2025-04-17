@@ -40,6 +40,11 @@ $card-button-border-height: $border-general-height;
 
 .card-button__content,
 .card-button__content--small {
+  padding: $padding-big $padding-big $padding-medium $padding-big ;
+}
+
+
+.card-button__full-content{
   padding: $padding-huge $padding-huge;
 }
 
@@ -49,6 +54,16 @@ $card-button-border-height: $border-general-height;
   height: 100%;
   justify-content: space-between;
   width: 100%;
+}
+
+.card-button__head-actions {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  padding-top: $padding-huge;
+  padding-right: $padding-huge;
+  gap: $padding-small;
+  right: 0;
 }
 
 .card-button__header {
@@ -62,18 +77,33 @@ $card-button-border-height: $border-general-height;
 .card-button__author {
   display: flex;
   flex-flow: row nowrap;
-  align-items: center;
+  align-items: flex-start;
   gap: $padding-big;
-  padding:  $padding-medium $padding-big;
+  padding:  $padding-medium $padding-huge;
   justify-content: space-between;
-  border-top: 1px $color-ligth-gray solid;
+  border-top: $border-style-light;
+  max-width: $grid-max-width;
+  margin-right: auto;
 
 }
 
 .card-button__author-title {
 
   color: $color-gray;
-  font-size: $font-size-general;
+  font-size: $font-size-small;
+
+}
+
+.card-button__follow-wrap {
+
+  background-color: $color-ligth-gray;
+  font-size: $font-size-xsmall;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: $border-radius-semicircle;
+  padding: 0 $padding-medium;
+  padding-right: 0;
 
 }
 
@@ -92,6 +122,8 @@ $card-button-border-height: $border-general-height;
 
 .card-button__avatar {
   // flex: 0 1 12%;
+
+  align-self: center;
 
   & > button {
     border: none;
@@ -144,7 +176,8 @@ $card-button-border-height: $border-general-height;
 
 
 .card-button__actions {
-  padding: $padding-big;
+
+  padding: $padding-huge;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -152,6 +185,7 @@ $card-button-border-height: $border-general-height;
   background-color: $color-white;
   border-top: 1px dashed $color-ligth-gray;
   border-radius: 0 0 $border-radius-circle $border-radius-circle;
+
   span {
     align-items: center;
     padding-right: 1rem;
@@ -196,6 +230,7 @@ $card-button-border-height: $border-general-height;
   flex-direction: column;
   flex-grow: 1;
   justify-content: flex-end;
+  gap: $padding-xsmall;
 }
 
 .card-button__custom-fields-wrapper {
@@ -210,11 +245,9 @@ $card-button-border-height: $border-general-height;
   background-size: 100%;
   height: 100%;
   position: relative;
-  margin-top: $margin-xsmall;
   text-indent: -9999999px;
   width: 18px;
   display: flex;
-  gap: $padding-xxsmall;
 
   svg {
 
@@ -257,6 +290,7 @@ $card-button-border-height: $border-general-height;
   font-size: $font-size-general;
   font-weight: bold;
   text-transform: capitalize;
+  max-width: 300px;
   line-height: $text-line-height-small;
   color:  var(--button-color);
   display: -webkit-box;
@@ -282,9 +316,10 @@ $card-button-border-height: $border-general-height;
 }
 
 .card-button__name {
-  font-size: $font-size-small;
+  font-size: $font-size-general;
   text-overflow: ellipsis;
   //overflow-x: hidden;
+  margin-bottom: $padding-small;
   font-weight: bold;
   padding-top: 0;
   color: $color-black;
@@ -294,6 +329,7 @@ $card-button-border-height: $border-general-height;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
+
 
   a {
 
@@ -320,13 +356,13 @@ $card-button-border-height: $border-general-height;
   font-weight: $font-weight-bold;
   color: $color-black;
   font-size: $font-size-huge;
-  padding: $padding-big 0;
+  padding: $padding-big 0 $padding-xsmall 0;
+
   display: flex;
   flex-direction: row;
   align-items:flex-start;
   word-wrap: break-word;
   line-height: 1.3em;
-  margin-bottom: $margin-xsmall;
 
 
   word-break: break-word;
@@ -363,6 +399,47 @@ $card-button-border-height: $border-general-height;
   margin-left: 1rem;
 }
 
+.card-button__hashtags-wrapper {
+
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  height: auto;
+
+}
+
+.card-button__hashtags-wrapper--hr {
+
+  color: $color-gray;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: $font-size-small;
+  gap: $padding-big;
+
+  & hr {
+    border-top: $border-style-light;
+    background-color: $color-ligth-gray;
+    display: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+}
+
+.card-button__hashtags-wrapper--label {
+  flex-wrap: nowrap;
+  word-break: keep-all;
+  white-space: no-wrap;
+  min-width: max-content;
+  width: max-content;
+  font-size: $font-size-xsmall;
+}
+
 .card-button__hashtags {
 
   display: flex;
@@ -370,6 +447,8 @@ $card-button-border-height: $border-general-height;
   -webkit-box-orient:horizontal;
   overflow: scroll;
   color: $color-black;
+  flex-wrap: wrap;
+
     &:hover {
       // color: $hashtag-hover-color;
       // background: $color-black;
@@ -394,17 +473,17 @@ $card-button-border-height: $border-general-height;
   color: $card-button-paragraph-color;
   font-size: $font-size-general;
   white-space: pre-line;
+  padding-bottom: $padding-big;
   text-align: left;
   // height: 3rem;
   // overflow: hidden;
   flex-grow: 1;
   display: block;
-  margin: $margin-xxsmall 0  $margin-small 0;
+  margin: $margin-xxsmall 0  $margin-xxsmall 0;
 
   & p {
-    margin-top: 0;//Revise
-    line-height: 1em;
-    height: 2.5em;
+    margin-top: 0;
+    line-height: 1.5rem;
   }
 
   & a {
@@ -413,6 +492,11 @@ $card-button-border-height: $border-general-height;
   }
 }
 
+.card-button-list__paragraph--small-card {
+
+  padding-top: 0;
+
+}
 
 .card-button__paragraph:first-letter {
   text-transform: uppercase;
@@ -458,10 +542,9 @@ $card-button-border-height: $border-general-height;
   & img {
 
     max-width: 100%;
+    width: 100%;
     max-height: 400px;
-    width: auto;
-    height: auto;
-    object-fit: contain !important;
+    object-fit: cover !important;
     pointer-events: auto;
 
     &:hover{
@@ -522,8 +605,7 @@ $card-button-border-height: $border-general-height;
 .card-button__edit-icon {
   width: auto;
   height: 30px;
-  position: absolute;
-  right: $padding-xsmall;
+  position: relative;
 }
 
 .card-button__options-menu {
@@ -537,6 +619,7 @@ $card-button-border-height: $border-general-height;
   z-index: $z-index-01;
   right: $padding-xxsmall;
   top: 3rem;
+  width: max-content;
 }
 
 .card-button__dropdown-content {
@@ -732,14 +815,14 @@ $card-button-border-height: $border-general-height;
 
 
 .card-button__bottom-properties {
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex-wrap: wrap;
+  gap: $margin-xsmall;
   align-items: flex-start;
   overflow: visible;
-  gap: $margin-xxsmall;
-  margin-bottom: $margin-small;
 
 }
 
@@ -766,7 +849,7 @@ $card-button-border-height: $border-general-height;
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
-  background-color: $color-gray-transparent;
+  background-color: $color-dark-gray;
 }
 
 .card-button__gallery-zoom--close-btn {
@@ -804,6 +887,12 @@ $card-button-border-height: $border-general-height;
 
 }
 
+.card-button__image-gallery {
+
+  border-top: $border-style-light;
+
+}
+
 
 @media #{$breakpoints-medium} {
 
@@ -819,6 +908,30 @@ $card-button-border-height: $border-general-height;
 
   }
 
+  .card-button__head-actions {
+    
+    padding-top: $margin-medium;
+    padding-right: $margin-medium;
+    gap: $padding-big;
+    right: 0;
+  }
+
+  .card-button__title {
+
+    margin-bottom: $margin-xsmall;
+
+  }
+
+  .card-max-width {
+
+    max-width: $grid-max-width;
+
+
+  }
+
+
+
+
 }
 
 
@@ -830,6 +943,12 @@ $card-button-border-height: $border-general-height;
   .card-button__actions {
 
     padding: $padding-huge;
+
+  }
+
+  .card-button__author {
+
+    gap: $padding-huge;
 
   }
 
@@ -853,15 +972,9 @@ $card-button-border-height: $border-general-height;
 
   }
 
-  .card-button__submenu {
-
-    padding: $margin-medium;
-
-  }
-
   .card-button__full-content {
 
-    padding-bottom: $padding-small;
+    padding-bottom: $padding-huge;
 
   }
 
@@ -874,10 +987,10 @@ $card-button-border-height: $border-general-height;
 
   .card-button__image-wrapper {
 
-    max-width: 600px;
+    // max-width: 600px;
 
     img {
-      max-width: 1200px;
+      max-width: 800px;
       margin: auto;
     }
 
