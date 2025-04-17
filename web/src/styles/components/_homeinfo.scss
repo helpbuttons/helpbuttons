@@ -83,7 +83,7 @@ $info-content-head-margin-mobile: 71px;
 
   & .list__element {
 
-    width: $card-button-list-feat-width;
+    min-width: $card-button-list-feat-width;
 
   }
   
