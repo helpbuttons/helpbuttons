@@ -22,6 +22,9 @@ export const transformToMessage = (
     isOwner: false
   };
 
+  try{
+
+  
   // Interests MyButton All
   switch (activity.eventName) {
     case ActivityEventName.NewButton: {
@@ -164,6 +167,14 @@ export const transformToMessage = (
       );
       return activityOut;
     }
+  }
+
+  }catch(err)
+  {
+    console.log(activity)
+    console.trace()  
+    console.error(err)
+    return activityOut;
   }
 };
 
