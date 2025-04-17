@@ -8,6 +8,7 @@ import { HiglightHexagonFromButton, updateCurrentButton } from 'state/Explore';
 import { store } from 'state';
 import router from 'next/router';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { alertService } from 'services/Alert';
 
 export enum ButtonLinkType {
   EXPLORE,
@@ -20,6 +21,7 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkType 
   );
   if(!buttonType)
   {
+    alertService.error(`type of button not found '${button.type}'`)
     console.error(`type of button not found '${button.type}'`)
   }
   return (
