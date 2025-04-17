@@ -272,7 +272,6 @@
     "renewLink": "Renew your _helpbutton_",
     "createUpdate": "Publish Update",
     "authorTitle": "Published by ",
-    "sendComment":"Send message to {0}",
     "notFound": "Can't find your button, maybe it was deleted?",
     "pin": "Pin",
     "unpin": "Unpin",
@@ -289,7 +288,7 @@
     "seeHashtags":"See tags",
     "publishComment": "Publish comment",
     "placeHodlerCustomAddress": "Write the new name and select place on the map",
-    "sendPrivateMessage": "Send private message"
+    "sendPrivateMessage": "Send private message to {0}"
   },
   "user": {
     "login": "Write your credentials",
