@@ -165,7 +165,7 @@ export const transformToMessage = (
         activity.eventName +
           ' not found on activity.transform, maybe u need to add this notification type?',
       );
-      return activityOut;
+      return null;
     }
   }
 
@@ -174,7 +174,7 @@ export const transformToMessage = (
     console.log(activity)
     console.trace()  
     console.error(err)
-    return activityOut;
+    return null;
   }
 };
 
