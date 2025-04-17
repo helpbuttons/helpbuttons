@@ -318,7 +318,6 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
     false,
   );
   const [showMap, setShowMap] = useState(false);
-  const [showHashtags, setShowHashtags] = useState(false);
 
   return (
     <>
@@ -368,20 +367,10 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
         <div className="card-button__title">
           {button.title}
         </div>
-        {/* <div className="card-button__hashtags-wrapper">
-          {!showHashtags && 
-            <div             
-              onClick={() => setShowHashtags(() => !showHashtags)}
-              className="card-button__hashtags-wrapper--hr">
-                <hr></hr><span className="card-button__hashtags-wrapper--label">{t('button.seeHashtags')}</span>
-            </div>
-          }
-          {showHashtags && <TagsNav tags={button.tags} />}
-        </div> */}
+
         <div className="card-button__paragraph">
           <TextFormatted text={button.description} />
         </div>
-
 
         <div className="card-button__bottom-properties">
           {customFields && customFields.length > 0 && (
