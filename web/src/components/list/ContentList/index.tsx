@@ -9,7 +9,7 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { useScroll } from 'shared/helpers/scroll.helper';
 import { FindMoreReadMessages } from 'state/Activity';
 import { GlobalState, store } from 'state';
-import Loading from 'components/loading';
+import Loading, { LoadingWrapper } from 'components/loading';
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { useGlobalStore } from 'state';
 import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
@@ -41,7 +41,7 @@ export default function ContentList({
     return (
       <>
         <div className="list__empty-message">
-          {isLoadingButtons && <span className='loading__wrapper'><Loading /></span>}
+          {isLoadingButtons && <LoadingWrapper />}
           {!isLoadingButtons && (
             <>
               <div className="list__empty-message--prev">
