@@ -146,7 +146,16 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
   );
 }
 
-export function FeedHeader ({button, sessionUser, showNewPostForm, isButtonOwner, toggleShowReplyFirstPost, toggleShowNewPostForm, reloadPosts, setPrivateMessage}) {
+export function FeedHeader ({
+  button, 
+  sessionUser, 
+  showNewPostForm = false, 
+  isButtonOwner = false, 
+  toggleShowReplyFirstPost, 
+  toggleShowNewPostForm, 
+  reloadPosts, 
+  setPrivateMessage}) {
+
   return (
       <div className="feed-line">
           
