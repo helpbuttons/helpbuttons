@@ -17,9 +17,17 @@ import { useEffect, useState } from "react";
 import dconsole from "shared/debugger";
 import { ButtonLinkType } from "components/list/CardButtonList";
 import { useButtonTypes } from "shared/buttonTypes";
+import { ShowProfile } from "pages/p/[username]";
+import { set } from "immer/dist/internal";
 
+export enum displayListTypes {
+  INFO = 'info',
+  PUBLISHED = 'published',
+  FOLLOWED = 'followed',
+  COMMENTED = 'commented'
+}
 
-export default function CardProfile({ user, showAdminOptions = false}) {
+export default function CardProfile({ user, showAdminOptions = false, displayListType = null, setDisplayListType = null }) {
 
   const sessionUser = useGlobalStore((state) => state.sessionUser)
   const [userButtons, setUserButtons] = useState(null);
@@ -40,20 +48,12 @@ export default function CardProfile({ user, showAdminOptions = false}) {
   return (
     <>
         <div className="card-profile__container-avatar-content">
+            {showAdminOptions && 
               <CardSubmenu extraClass="card-profile__submenu" >
-                {user?.role == Role.admin && 
-                    <AdminOptions/>
-                  }
-                {showAdminOptions && 
-                  <>
                     <ProfileAdminOptions user={user} />
-                  </>
-                }
-                {user?.username == sessionUser?.username &&
-                  <GeneralOptions />
-                }
               </CardSubmenu>
-            
+            }
+
 
             <figure className="card-profile__avatar-container avatar">
 
@@ -82,49 +82,64 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             </div>
 
         </div>
-        <div className="card-profile__data">
+        <figure className={user?.showButtons ? "card-profile__rating" : "card-profile__rating disabled"} >
+              <div onClick={() => setDisplayListType(displayListTypes.INFO)}  className={displayListType == displayListTypes.INFO ? "card-profile__rate card-profile__rate--enabled" : "card-profile__rate "}>
+                <div className="card-profile__rate-label">
+                {t('user.profileInfo')} 
+                </div>
+              </div>
 
-
-          <div className="card-profile__description">
-            {user.description}
-          </div>
-          <div className="card-profile__tags grid-one__column-mid-element">
-           <div className="hashtag">{t('user.tags')}</div> 
-          </div>
-
-        </div>
-        <figure className="card-profile__rating">
-
-              <div className="card-profile__rate card-profile__rate--enabled">
+              <div onClick={() => setDisplayListType(displayListTypes.PUBLISHED)} className={displayListType == displayListTypes.PUBLISHED ? "card-profile__rate card-profile__rate--enabled" : "card-profile__rate"}>
                 <div className="card-profile__rate-label">
                 {t('user.helpbuttonsPublishedAmount')} 
                 </div>
-                {user?.buttonCount?? 0}
+                {user?.buttonCount ?? 0}
               </div>
-              {/* PENDING TO LINK LIST TO TABS
-               <div className="card-profile__rate ">
+              <div onClick={() => setDisplayListType(displayListTypes.FOLLOWED)} className={displayListType == displayListTypes.FOLLOWED ? "card-profile__rate card-profile__rate--enabled" : "card-profile__rate"}>
                 <div className="card-profile__rate-label">
                 {t('user.timesFollowed')} 
                 </div>
                 {user?.followsCount ?? 0}
               </div>
-              <div className="card-profile__rate">
+              <div onClick={() => setDisplayListType(displayListTypes.COMMENTED)} className={displayListType == displayListTypes.COMMENTED ? "card-profile__rate card-profile__rate--enabled" : "card-profile__rate "}>
                 <div className="card-profile__rate-label">
                   {t('user.commentsAmount')} 
                 </div>
                   {user?.commentCount ?? 0}
-              </div> */}
-
+              </div>
+      
+                   
           </figure>
-          <div className="card-profile__button-list">
-            <ContentList
-              buttons={userButtons}
-              buttonTypes={buttonTypes}
-            />
-          </div>
+
+          { displayListType == displayListTypes.INFO &&
+            <div className="card-profile__data">
+
+              <div className="card-profile__description">
+                {user.description}
+              </div>
+              <div className="card-profile__tags grid-one__column-mid-element">
+              <div className="hashtag">{t('user.tags')}</div> 
+              </div>
+
+            </div>
+          }
+
+          {displayListType != displayListTypes.INFO &&
+          
+            <div className="card-profile__button-list">
+              <ContentList
+                buttons={userButtons}
+                buttonTypes={buttonTypes}
+              />
+            </div>
+          
+          }
+
+
     </>
   );
 }
+
 
 function ProfileAdminOptions({ user }) {
   const updateRole = (userId, newRole) => {
@@ -187,42 +202,4 @@ function ProfileAdminOptions({ user }) {
 
 
   return <>{user && getOptions(user)}</>;
-}
-
-
-function AdminOptions() {
-  return (
-    <>
-          <CardSubmenuOption
-            onClick={() => {
-              router.push('/Configuration');
-            }}
-            label={t('configuration.title')}
-          />
-          <CardSubmenuOption
-            onClick={() => {
-              router.push('/Configuration/Moderation');
-            }}
-            label={t('configuration.moderation')}
-          />
-    </>
-  );
-}
-
-function GeneralOptions() {
-  return (
-    <>
-          <CardSubmenuOption
-            onClick={() => {
-              router.push('/ProfileEdit');
-            }}
-            label={t('user.editProfile')}
-          />
-          <CardSubmenuOption
-            onClick={() => router.push('/Logout')}
-            label={t('user.logout')}
-          />
-          
-    </>
-  );
 }

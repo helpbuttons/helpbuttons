@@ -12,7 +12,7 @@ import t from 'i18n';
 import { useButtonTypes } from 'shared/buttonTypes';
 import { NextPageContext } from 'next';
 import { setMetadata } from 'services/ServerProps';
-import CardProfile from 'components/user/CardProfile';
+import CardProfile, { displayListTypes } from 'components/user/CardProfile';
 import ContentList from 'components/list/ContentList';
 import { useMetadataTitle } from 'state/Metadata';
 import dconsole from 'shared/debugger';
@@ -53,6 +53,7 @@ export default function p(props) {
   );
 }
 
+
 export function ShowProfile({
   userProfile,
   sessionUser,
@@ -60,6 +61,10 @@ export function ShowProfile({
   const [userButtons, setUserButtons] = useState(null);
 
   const [extraFields, setExtraFields] = useState([]);
+
+
+  const [displayListType, setDisplayListType] = useState(displayListTypes.INFO);
+
   useEffect(() => {
     // if user is admin... get more data!
     if (userProfile) {
@@ -112,6 +117,8 @@ export function ShowProfile({
         <CardProfile
           user={userProfile}
           showAdminOptions={sessionUser?.role == Role.admin}
+          displayListType={displayListType}
+          setDisplayListType={setDisplayListType}
         />
       )}
       {userProfile?.showButtons &&

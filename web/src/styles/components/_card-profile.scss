@@ -43,10 +43,8 @@ $avatar-margin: $padding-big;
   display: flex;
   width: auto;
   height: auto;
-  margin-left: 0;
   background-size: contain;
-  margin: 0 auto 0 auto;
-  margin-bottom: 0;
+  margin: 10px auto 0 auto;
   overflow: auto;
   
   font-weight: $font-weight-bold;
@@ -79,6 +77,7 @@ $avatar-margin: $padding-big;
 .card-profile__rate--enabled {
 
   font-weight: $font-weight-bolder;
+  background-color: $color-ligth-gray;
   color: $color-black;
 }
 
@@ -347,7 +346,6 @@ $avatar-margin: $padding-big;
 
   .card-profile__rating {
     
-    margin-bottom: 10px;
     & svg {
       width: 20px;
 

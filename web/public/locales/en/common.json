@@ -293,6 +293,7 @@
     "updateProfile": "Complete/Edit Profile",
     "profileView": "Your profile",
     "otherProfileView": "User",
+    "profileInfo": "Personal Info",
     "email": "Email",
     "emailExplain": "This is your login email and where you'll receive notifications",
     "emailPlaceHolder": "email@example.tld",
