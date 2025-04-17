@@ -78,7 +78,7 @@ $card-button-border-height: $border-general-height;
   display: flex;
   flex-flow: row nowrap;
   align-items: flex-start;
-  gap: $padding-huge;
+  gap: $padding-big;
   padding:  $padding-medium $padding-huge;
   justify-content: space-between;
   border-top: $border-style-light;
@@ -943,6 +943,12 @@ $card-button-border-height: $border-general-height;
   .card-button__actions {
 
     padding: $padding-huge;
+
+  }
+
+  .card-button__author {
+
+    gap: $padding-huge;
 
   }
 
