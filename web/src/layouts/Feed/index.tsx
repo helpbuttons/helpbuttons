@@ -102,40 +102,17 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
           )}
         </>
       </div>
-      <div className="feed-line">
-        
-        {t('feed.messages')}
-        {sessionUser && isButtonOwner && (
-            <>
-              <ComposePost
-                referer={{ button: button.id }}
-                onCancel={() => {
-                  reloadPosts();
-                  toggleShowReplyFirstPost(() => false);
-                }}
-                onCreate={() => {
-                  reloadPosts();
-                }}
-                show={showNewPostForm}
-                setShow={() => {toggleShowNewPostForm(true)}}
-              />
-           
-            </>
-          )}
-          {sessionUser && !isButtonOwner && (
-            <Btn
-              btnType={BtnType.submit}
-              contentAlignment={ContentAlignment.left}
-              iconLeft={IconType.svg}
-              caption={t('button.publishComment')}
-              iconLink={<IoAdd />}
-              onClick={() => {
-                setPrivateMessage(false);
-                toggleShowReplyFirstPost(true);
-              }}
-            />
-          )}
-      </div>
+
+      <FeedHeader 
+        button={button} 
+        sessionUser={sessionUser} 
+        showNewPostForm={showNewPostForm} 
+        isButtonOwner={isButtonOwner} 
+        toggleShowReplyFirstPost={toggleShowReplyFirstPost} 
+        toggleShowNewPostForm={toggleShowNewPostForm} 
+        reloadPosts={reloadPosts} 
+        setPrivateMessage={setPrivateMessage}
+      />
     
       <div className="feed-section">
        
@@ -165,6 +142,45 @@ export default function Feed({ button,showReplyFirstPost, toggleShowReplyFirstPo
             </>
           ))}
       </div>
+    </div>
+  );
+}
+
+export function FeedHeader ({button, sessionUser, showNewPostForm, isButtonOwner, toggleShowReplyFirstPost, toggleShowNewPostForm, reloadPosts, setPrivateMessage}) {
+  return (
+      <div className="feed-line">
+          
+      {t('feed.messages')}
+      {sessionUser && isButtonOwner && (
+          <>
+            <ComposePost
+              referer={{ button: button.id }}
+              onCancel={() => {
+                reloadPosts();
+                toggleShowReplyFirstPost(() => false);
+              }}
+              onCreate={() => {
+                reloadPosts();
+              }}
+              show={showNewPostForm}
+              setShow={() => {toggleShowNewPostForm(true)}}
+            />
+        
+          </>
+        )}
+        {sessionUser && !isButtonOwner && (
+          <Btn
+            btnType={BtnType.submit}
+            contentAlignment={ContentAlignment.left}
+            iconLeft={IconType.svg}
+            caption={t('button.publishComment')}
+            iconLink={<IoAdd />}
+            onClick={() => {
+              setPrivateMessage(false);
+              toggleShowReplyFirstPost(true);
+            }}
+          />
+        )}
     </div>
   );
 }

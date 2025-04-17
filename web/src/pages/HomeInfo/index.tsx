@@ -214,8 +214,8 @@ function NavigatorCoordsButton() {
     useState(null);
   return (<>{navigatorCoordinates && (
     <div className="homeinfo-card">
-      <div className="homeinfo- homeinfo-card__header">
-        <h3 className="homeinfo- homeinfo-card__header-title">
+      <div className="homeinfo-card__header">
+        <h3 className="homeinfo-card__header-title">
           {t('homeinfo.locationDetected')}
           <a
             href={`/Explore?lat=${navigatorCoordinates.latitude}&lng=${navigatorCoordinates.longitude}&zoom=13`}
