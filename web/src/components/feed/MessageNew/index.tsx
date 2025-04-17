@@ -1,5 +1,6 @@
 import Loading from 'components/loading';
 import Btn, { BtnType, ContentAlignment, IconType } from 'elements/Btn';
+import { FieldCheckbox } from 'elements/Fields/FieldCheckbox';
 import FieldImageUploads from 'elements/Fields/FieldImagesUpload';
 import { FieldTextArea } from 'elements/Fields/FieldTextArea';
 import Form from 'elements/Form';
@@ -98,7 +99,7 @@ export default function MessageNew({
           </div>
           <Btn
               submit={true}
-              btnType={BtnType.corporative}
+              btnType={BtnType.submit}
               caption={t("comment.send")}
               iconLink={<IoPaperPlaneOutline />}
               iconLeft={IconType.svg}

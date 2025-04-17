@@ -5,7 +5,7 @@ $message-min-width: 50px;
 $message-me-after-top: 1rem solid $color-corporative;
 $message-me-after-lateral: .75rem solid transparent;
 $message-padding-big: $padding-big;
-$message-you-margin-left:40px;
+$message-you-margin-left: $margin-xbig;
 
 .message {
   border-radius: $message-border-radius;
@@ -21,7 +21,7 @@ $message-you-margin-left:40px;
     background: $color-white;
     border-radius: $message-border-radius-semicircle $message-border-radius-semicircle 0 $message-border-radius-semicircle;
     margin-left: auto;
-    margin-right: $margin-small;
+    margin-right: $message-you-margin-left;
     padding-bottom: 0;
 
     .message__hour {
@@ -101,13 +101,12 @@ $message-you-margin-left:40px;
 
 .message--you {
 
-  background-color: $color-ligth-gray;
+  background-color: $color-white;
   margin-right: auto;
   margin-left: $message-you-margin-left;
   min-width: 50%;
   border-radius: $message-border-radius-semicircle $message-border-radius-semicircle $message-border-radius-semicircle 0;
   margin-bottom: $margin-xsmall;
-  color: $color-black;
 
 
 
@@ -141,7 +140,7 @@ $message-you-margin-left:40px;
 
 .message--others {
 
-  background-color: $color-ligth-gray;
+  background-color: $color-white;
   min-width: 50%;
   border-radius: $message-border-radius-semicircle $message-border-radius-semicircle 0 $message-border-radius-semicircle ;
   margin-bottom: $margin-xsmall;
