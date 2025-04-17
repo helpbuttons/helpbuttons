@@ -79,10 +79,11 @@ $info-content-head-margin-mobile: 71px;
 .homeinfo__section--featured {
   display: flex;
   flex-direction: row;
+  overflow-x: auto;
 
   & .list__element {
 
-    min-width: $card-button-list-width;
+    width: $card-button-list-feat-width;
 
   }
   
