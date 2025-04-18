@@ -63,6 +63,8 @@ $info-content-head-margin-mobile: 71px;
 
 
 .homeinfo-card {
+  max-width: -webkit-fill-available;
+  max-width: -moz-available;
   border-radius: $border-radius-basic;
   background-color: $color-white;
   padding: $padding-big;
@@ -80,6 +82,9 @@ $info-content-head-margin-mobile: 71px;
   display: flex;
   flex-direction: row;
   overflow-x: auto;
+  overflow-y: hidden;
+  width: inherit;
+  
 
   & .list__element {
 
