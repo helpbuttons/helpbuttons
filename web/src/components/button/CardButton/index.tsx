@@ -99,7 +99,6 @@ export default function CardButton({ button, buttonTypes, toggleShowReplyFirstPo
 
           <CardButtonAuthorSection
             button={button}
-            buttonTypes={buttonTypes}
           />
         </>
       )}
@@ -306,6 +305,23 @@ function CardButtonSubmenu({ button }) {
     </CardSubmenu>
   );
 }
+
+function SendMessageButton({toggleShowReplyFirstPost, sessionUser})
+{
+  if(!sessionUser)
+  {
+    return ;
+  }
+  return <Btn
+          btnType={BtnType.smallCircle}
+          contentAlignment={ContentAlignment.center}
+          iconLeft={IconType.circle}
+          iconLink={<IoMailOutline />}
+          onClick={()=> {
+            toggleShowReplyFirstPost(true)
+        }}
+        />
+}
 export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPost }) {
   const { cssColor, caption, customFields, icon } = buttonTypes.find(
     (buttonType) => {
@@ -326,15 +342,8 @@ export function CardButtonHeadBig({ button, buttonTypes, toggleShowReplyFirstPos
           button={button}
           sessionUser={sessionUser}
         />
-        <Btn
-          btnType={BtnType.smallCircle}
-          contentAlignment={ContentAlignment.center}
-          iconLeft={IconType.circle}
-          iconLink={<IoMailOutline />}
-          onClick={()=> {
-            toggleShowReplyFirstPost(true)
-          }}
-        />
+        <SendMessageButton toggleShowReplyFirstPost={toggleShowReplyFirstPost} sessionUser={sessionUser}/>
+        
         <CardButtonSubmenu button={button} />
       </div>
       <ExpiringAlert
@@ -538,22 +547,10 @@ export function CardButtonHeadActions({
   );
 }
 
-export function CardButtonAuthorSection({ button, buttonTypes }) {
-  const { cssColor, caption, customFields } = buttonTypes.find(
-    (buttonType) => {
-      return buttonType.name === button.type;
-    },
-  );
-  const sessionUser = useRef(
-    store,
-    (state: GlobalState) => state.sessionUser,
-    false,
-  );
-  const [showMap, setShowMap] = useState(false);
+export function CardButtonAuthorSection({ button }) {
 
   const onClick = (e) => {
     e.preventDefault()
-    dconsole.log('this goes for dev test.. make sure it works..')
     store.emit(new SetMainPopupCurrentProfile(button.owner))
   }
   return (
