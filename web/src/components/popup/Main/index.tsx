@@ -71,7 +71,7 @@ export default function MainPopup({pageName}) {
         )}
          {(currentButton && popupPage == MainPopupPage.BUTTON && allowedCurrentButton.indexOf(pageName) > -1 ) && (
           <Picker
-            headerText={currentButton.title}
+            headerText={null}
             closeAction={() => {closePopup()}}
             extraClass={'picker__content--nopadding'}
           >
