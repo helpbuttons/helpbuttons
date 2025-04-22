@@ -604,9 +604,10 @@ $card-button-border-height: $border-general-height;
 // }
 
 .card-button__edit-icon {
-  width: auto;
-  height: 30px;
-  position: relative;
+    width: auto;
+    height: 30px;
+    position: absolute;
+    right: 4px;
 }
 
 .card-button__options-menu {
