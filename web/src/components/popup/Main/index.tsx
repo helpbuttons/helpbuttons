@@ -69,7 +69,7 @@ export default function MainPopup({pageName}) {
             <ShowProfile userProfile={mainPopupUserProfile} sessionUser={sessionUser}/>
           </Picker>
         )}
-         {(popupPage == MainPopupPage.BUTTON && allowedCurrentButton.indexOf(pageName) > -1 ) && (
+         {(currentButton && popupPage == MainPopupPage.BUTTON && allowedCurrentButton.indexOf(pageName) > -1 ) && (
           <Picker
             headerText={currentButton.title}
             closeAction={() => {closePopup()}}

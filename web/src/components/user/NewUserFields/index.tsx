@@ -5,7 +5,7 @@ import FieldText from 'elements/Fields/FieldText';
 import t from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { GlobalState, store } from 'state';
+import { GlobalState, store, useGlobalStore } from 'state';
 import { useEffect, useState } from 'react';
 import { Network } from 'shared/entities/network.entity';
 import { getHostname } from 'shared/sys.helper';
@@ -33,16 +33,14 @@ export default function NewUserFields({
     }
   }, []);
 
+  const signupTags = useGlobalStore((state: GlobalState) => state.signupTags);
+  
   const router = useRouter();
   const params: URLSearchParams = new URLSearchParams(router.query);
   useEffect(() => {
-    if (router?.query) {
-      const follow = params.get('follow');
-      if (follow) {
-        setValue('tags', [params.get('follow')]);
-      }
-    }
-  }, [router]);
+    setValue('tags', signupTags);  
+  }, [signupTags]);
+  
   const name = watch('name');
   useEffect(() => {
     const nameToUsername = (name) => {

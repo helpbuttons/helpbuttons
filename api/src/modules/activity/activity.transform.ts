@@ -22,6 +22,9 @@ export const transformToMessage = (
     isOwner: false
   };
 
+  try{
+
+  
   // Interests MyButton All
   switch (activity.eventName) {
     case ActivityEventName.NewButton: {
@@ -162,8 +165,16 @@ export const transformToMessage = (
         activity.eventName +
           ' not found on activity.transform, maybe u need to add this notification type?',
       );
-      return activityOut;
+      return null;
     }
+  }
+
+  }catch(err)
+  {
+    console.log(activity)
+    console.trace()  
+    console.error(err)
+    return null;
   }
 };
 

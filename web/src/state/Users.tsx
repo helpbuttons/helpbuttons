@@ -164,3 +164,13 @@ export class GetPhone implements WatchEvent {
     );
   }
 }
+
+
+export class SetSignupTags implements UpdateEvent{
+  public constructor(private tags: string[]) {}
+  public update(state: GlobalState) {
+    return produce(state, (newState) => {
+      newState.signupTags = this.tags;
+    });
+  }
+}
