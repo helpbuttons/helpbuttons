@@ -48,8 +48,6 @@ $avatar-margin: $padding-big;
   overflow: auto;
   
   font-weight: $font-weight-bold;
-  border-top: $border-style-basic;
-  border-bottom: $border-style-basic;
 
   & svg {
     width: 1rem;
@@ -63,7 +61,13 @@ $avatar-margin: $padding-big;
   justify-content: center;
   align-items: center;
   padding: $padding-medium $padding-medium;
+  border-radius:  $border-radius-basic $border-radius-basic 0 0;
   color: $color-gray;
+  background-color: $color-ligth-gray;
+  border: none;
+  color: $color-gray;
+  border-bottom: $border-style-basic;
+  margin-right: $padding-xxsmall;
 
   &:hover {
 
@@ -77,14 +81,17 @@ $avatar-margin: $padding-big;
 .card-profile__rate--enabled {
 
   font-weight: $font-weight-bolder;
-  background-color: $color-ligth-gray;
+  background-color: $color-white;
+  border: $border-style-basic;
   color: $color-black;
+  border-bottom: $color-white;
 }
 
 .card-profile__rate-label {
 
   font-size: $font-size-small;
   padding-right: $padding-medium;
+  text-wrap: nowrap;
 
 
 
