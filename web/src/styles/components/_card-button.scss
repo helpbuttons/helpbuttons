@@ -605,8 +605,7 @@ $card-button-border-height: $border-general-height;
 .card-button__edit-icon {
     width: auto;
     height: 30px;
-    position: absolute;
-    right: 4px;
+    position: relative;
 }
 
 .card-button__options-menu {
