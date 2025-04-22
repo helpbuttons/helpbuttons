@@ -48,6 +48,7 @@ export default function CardProfile({ user, showAdminOptions = false, displayLis
   return (
     <>
         <div className="card-profile__container-avatar-content">
+          
             {showAdminOptions && 
               <CardSubmenu extraClass="card-profile__submenu" >
                     <ProfileAdminOptions user={user} />
