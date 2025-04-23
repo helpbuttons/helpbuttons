@@ -458,7 +458,8 @@ export class ActivityService {
             message: comment.message,
             createdAt: activity.created_at,
             read: activity.read,
-            id: comment.id.toString(),
+            messageId: comment.id.toString(),
+            id: activity.id.toString(),
             excerpt: excerptMessage,
           };
         }

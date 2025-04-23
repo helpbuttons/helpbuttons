@@ -36,13 +36,6 @@ export class CreateButtonDto implements Partial<Button> {
   @IsArray({})
   tags: string[];
 
-  @ApiProperty({
-    type: String,
-    required: true,
-  })
-  @MinLength(3, {
-    message: 'button description is too short',
-  })
   description: string;
 
   @ApiProperty({
