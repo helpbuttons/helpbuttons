@@ -224,6 +224,8 @@ export class ButtonDelete implements WatchEvent, UpdateEvent {
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
       newState.explore.map.listButtons = []
+      newState.activities.messages.unread = []
+      newState.activities.messages.read = []
     });
   }
 }
