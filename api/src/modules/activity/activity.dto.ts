@@ -35,6 +35,7 @@ export class ActivityDtoOut {
     read: boolean;
     message: string;
     excerpt: string;
+    messageId: string;
   }
 
   export const ExcerptMaxChars = 60;

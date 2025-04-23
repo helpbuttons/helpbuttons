@@ -36,7 +36,7 @@ export function ActivityMessageCard({
   }, [buttonTypes, button]);
   const [markingAsRead, setMarkingAsRead] = useState(false);
 
-  const jumpToButtonMessage = (messageId, read) => {
+  const jumpToButtonMessage = (id, read, messageId) => {
     const showPopupButton = (buttonId) => 
     {
       store.emit(
@@ -49,7 +49,7 @@ export function ActivityMessageCard({
     if (!read) {
       setMarkingAsRead(() => true);
       store.emit(
-        new ActivityMarkAsRead(messageId, () => {
+        new ActivityMarkAsRead(id, () => {
           setMarkingAsRead(() => false);
           alertService.info(t('notificaction.markedAsRead'));
           const buttonId = message.button.id;
@@ -73,7 +73,7 @@ export function ActivityMessageCard({
         <Link
           href="#"
           onClick={() =>
-            jumpToButtonMessage(message.id, message.read)
+            jumpToButtonMessage(message.id, message.read, message.messageId)
           }
           className="card-notification card-notification--ribbon"
           // style={buttonColorStyle(buttonType?.cssColor)}
