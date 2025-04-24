@@ -105,7 +105,7 @@ export class UnsubscribeMails implements WatchEvent {
 
 }
 
-export class FindUserButtons implements WatchEvent {
+export class FindPublishedButtons implements WatchEvent {
   public constructor(
     private userId: string,
     private onResult,
@@ -120,7 +120,6 @@ export class FindUserButtons implements WatchEvent {
     )
   }
 }
-
 
 
 export function isAdmin(sessionUser)

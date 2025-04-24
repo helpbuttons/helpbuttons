@@ -379,9 +379,8 @@
     "iAccept": "I accept",
     "pleaseAcceptPrivacy": "Please accept our privacy policy",
     "errorRequestNewLoginToken": "",
-    "helpbuttonsPublishedAmount": "Published",
-    "timesFollowed": "Followed",
-    "commentsAmount": "Commented",
+    "buttonsPublished": "Published {0}",
+    "buttonFollowed": "Followed {0}",
     "signupSuccess": "Your signup was sucessful! Welcome to {0} ",
     "deletedAccount": "Your data was deleted sucessfuly!",
     "pleaseAcceptCookies": "You have to accept the usage of cookies if you wish to signup or login"

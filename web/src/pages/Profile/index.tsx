@@ -17,18 +17,14 @@ import router from 'next/router';
 import { useState } from 'react';
 
 export default function Profile() {
-
-  const [displayListType, setDisplayListType] = useState(displayListTypes.INFO);
   
   const sessionUser = useGlobalStore((state) => state.sessionUser)
   return (
     <>
           <Popup linkFwd="/Explore" title={t('user.profileView')}>
             <LoadabledComponent loading={!sessionUser}>
-              <CardProfile user={sessionUser} displayListType={displayListType} setDisplayListType={setDisplayListType}/>
-              {(sessionUser && !sessionUser.phone && sessionUser?.role == Role.admin) && 
-               <span style={{"color": "red"}}>{t('user.addSupport')}</span>
-              }
+              <CardProfile user={sessionUser}/>
+              
                 {sessionUser?.username == sessionUser?.username && (
                   <div className="card-profile__actions">
                     <Link href="/ProfileEdit">

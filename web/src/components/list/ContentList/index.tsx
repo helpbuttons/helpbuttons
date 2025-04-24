@@ -1,31 +1,27 @@
-///button marker over the map
 import React, { useState } from 'react';
-
 import router from 'next/router';
-
 import CardButtonList from 'components/list/CardButtonList';
 import t from 'i18n';
 import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { useScroll } from 'shared/helpers/scroll.helper';
-import { FindMoreReadMessages } from 'state/Activity';
-import { GlobalState, store } from 'state';
-import Loading, { LoadingWrapper } from 'components/loading';
+import { store } from 'state';
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
-import { useGlobalStore } from 'state';
 import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
 import dconsole from 'shared/debugger';
+import Loading from 'components/loading';
 
 export default function ContentList({
   buttons,
   buttonTypes,
   showMap = false,
   linkType = null,
-  ...props
+  showCreateNew = true,
+  isLoading = false,
+  showResetFiltersButton = false,
+  browseMapOnEmpty = true,
 }) {
   const [buttonsSlice, setButtonsSlice] = useState(2);
-  const isLoadingButtons = useGlobalStore(
-    (state: GlobalState) => state.explore.map.loading,
-  );
+  const _showResetFiltersButton = showResetFiltersButton ? isFiltering() : false;
   const { endDivLoadMoreTrigger, noMoreToLoad } =
     useScroll(({ setNoMoreToLoad, setScrollIsLoading }) => {
       setScrollIsLoading(() => true);
@@ -40,24 +36,10 @@ export default function ContentList({
   if (buttons?.length < 1) {
     return (
       <>
-        <div className="list__empty-message">
-          {isLoadingButtons && <LoadingWrapper />}
-          {!isLoadingButtons && (
-            <>
-              <div className="list__empty-message--prev">
-                {t('explore.noResults')}
-              </div>
-              <div className="list__empty-message--comment">
-                {t('explore.emptyList')}
-              </div>
-            </>
-          )}
-          <Btn
-            caption={t('explore.createEmpty')}
-            onClick={() => router.push('/ButtonNew')}
-            contentAlignment={ContentAlignment.center}
-          />
-        </div>
+        {isLoading && <Loading/>}
+        {!isLoading && 
+          <NoMoreToLoad isEmpty={true} showResetFiltersButton={_showResetFiltersButton} showCreateNew={showCreateNew}/>
+        }
       </>
     );
   }
@@ -73,20 +55,26 @@ export default function ContentList({
           linkType={linkType}
         />
       ))}
-      <NoMoreToLoad />
+      <NoMoreToLoad showResetFiltersButton={_showResetFiltersButton} showCreateNew={showCreateNew} browseMapOnEmpty={browseMapOnEmpty}/>
       {endDivLoadMoreTrigger}
     </>
   );
 }
 
-export function NoMoreToLoad() {
-  const filtered = isFiltering();
+export function NoMoreToLoad({isEmpty = false, showResetFiltersButton = false, showCreateNew = false, browseMapOnEmpty = true}) {
+  
   return (
     <div className="list__empty-message">
+      {isEmpty && 
+        <div className="list__empty-message--prev">
+            {t('explore.noResults')}
+        </div>
+      }
+      
       <div className="list__empty-message--comment">
-        {t('explore.emptyList')}
+        {browseMapOnEmpty ? t('explore.emptyList') : ''}
       </div>
-      {filtered && (
+      {showResetFiltersButton && (
         <Btn
           btnType={BtnType.splitIcon}
           caption={t('common.reset')}
@@ -97,29 +85,13 @@ export function NoMoreToLoad() {
           }}
         />
       )}
-      <Btn
-        caption={t('explore.createEmpty')}
-        onClick={() => router.push('/ButtonNew')}
-        contentAlignment={ContentAlignment.center}
-      />
-    </div>
-  );
-}
-
-export function EndListMessage() {
-  return (
-    <div className="list__empty-message">
-      <div className="list__empty-message--prev">
-        {t('explore.noResults')}
-      </div>
-      <div className="list__empty-message--comment">
-        {t('explore.emptyList')}
-      </div>
-      <Btn
-        caption={t('explore.createEmpty')}
-        onClick={() => router.push('/ButtonNew')}
-        contentAlignment={ContentAlignment.center}
-      />
+      {showCreateNew && 
+        <Btn
+          caption={t('explore.createEmpty')}
+          onClick={() => router.push('/ButtonNew')}
+          contentAlignment={ContentAlignment.center}
+        />
+      }
     </div>
   );
 }

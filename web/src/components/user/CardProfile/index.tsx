@@ -1,24 +1,15 @@
-//Profile Card with the the info displayed by the user in Profile page. It shows different options depending if it's other user profile or your profile when logged.
-import {  IoAddCircleOutline, IoChatbubbleOutline, IoHandLeftOutline, IoHeartOutline, IoPersonOutline, IoRibbonOutline } from "react-icons/io5";
-import { Link } from 'elements/Link';
-import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
-
 import UserAvatar from '../components';
-import { getHostname } from 'shared/sys.helper';
 import t from 'i18n';
 import { store, useGlobalStore } from "state";
-import { FindUserButtons, UpdateRole, isAdmin } from "state/Users";
+import { FindPublishedButtons, UpdateRole } from "state/Users";
 import { alertService } from "services/Alert";
 import router from "next/router";
 import { CardSubmenu, CardSubmenuOption } from "components/card/CardSubmenu";
 import { Role } from "shared/types/roles";
 import ContentList from "components/list/ContentList";
 import { useEffect, useState } from "react";
-import dconsole from "shared/debugger";
-import { ButtonLinkType } from "components/list/CardButtonList";
 import { useButtonTypes } from "shared/buttonTypes";
-import { ShowProfile } from "pages/p/[username]";
-import { set } from "immer/dist/internal";
+import { TagsNav } from 'elements/Fields/FieldTags';
 
 export enum displayListTypes {
   INFO = 'info',
@@ -27,120 +18,106 @@ export enum displayListTypes {
   COMMENTED = 'commented'
 }
 
-export default function CardProfile({ user, showAdminOptions = false, displayListType = null, setDisplayListType = null }) {
+export default function CardProfile({ user }) {
 
   const sessionUser = useGlobalStore((state) => state.sessionUser)
-  const [userButtons, setUserButtons] = useState(null);
   const buttonTypes = useButtonTypes();
 
-
-  useEffect(() => {
-
-    if (user && !userButtons) {
-          store.emit(
-            new FindUserButtons(user?.id, (userButtons) =>
-              setUserButtons(userButtons),
-            ),
-          );
-      }
-    }, []);
+  const [publishedButtons, setPublishedButtons] = useState(null);
+  const loadPublishedButtons = () => {
+    if (publishedButtons === null) {
+      store.emit(
+        new FindPublishedButtons(user?.id, (_userButtons) =>
+          setPublishedButtons(() => _userButtons),
+        ),
+      );
+    }
+  }
   
+  const publishedButtonsCount = publishedButtons ? publishedButtons.length.toString() : '...'
+  const ownProfile = sessionUser.id == user.id
+  const showAdminOptions = sessionUser?.role == Role.admin && !ownProfile
+  const showButtonTabs = user.showButtons || ownProfile
   return (
     <>
-        <div className="card-profile__container-avatar-content">
-          
-            {showAdminOptions && 
-              <CardSubmenu extraClass="card-profile__submenu" >
-                    <ProfileAdminOptions user={user} />
-              </CardSubmenu>
-            }
+      <div className="card-profile__container-avatar-content">
+
+        {showAdminOptions &&
+          <CardSubmenu extraClass="card-profile__submenu" >
+            <ProfileAdminOptions user={user} />
+          </CardSubmenu>
+        }
 
 
-            <figure className="card-profile__avatar-container avatar">
+        <figure className="card-profile__avatar-container avatar">
 
-              <div className="avatar-big">
+          <div className="avatar-big">
 
-                <UserAvatar user={user}/>
+            <UserAvatar user={user} />
 
-              </div>
+          </div>
 
 
-            </figure>
+        </figure>
 
-            <div className="card-profile__content">
-            
-              <div className="card-profile__avatar-container-name">
+        <div className="card-profile__content">
 
-                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="card-profile__role hashtag hashtag--blue">Admin</div>} </div> 
-                
-                <div className="card-profile__username">@{ user.username }</div>
-                
+          <div className="card-profile__avatar-container-name">
 
-              </div>
+            <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="card-profile__role hashtag hashtag--blue">Admin</div>} </div>
 
-              {/* {t('user.created_date')}: {readableTimeLeftToDate(user.created_at)} */}
-    
-            </div>
+            <div className="card-profile__username">@{user.username}</div>
+
+
+          </div>
+
+          {/* {t('user.created_date')}: {readableTimeLeftToDate(user.created_at)} */}
 
         </div>
-        <figure className={user?.showButtons ? "card-profile__rating" : "card-profile__rating disabled"} >
-              <div onClick={() => setDisplayListType(displayListTypes.INFO)}  className={displayListType == displayListTypes.INFO ? "card-profile__rate card-profile__rate--enabled" : "card-profile__rate "}>
-                <div className="card-profile__rate-label">
-                {t('user.profileInfo')} 
-                </div>
-              </div>
 
-              <div onClick={() => setDisplayListType(displayListTypes.PUBLISHED)} className={displayListType == displayListTypes.PUBLISHED ? "card-profile__rate card-profile__rate--enabled" : "card-profile__rate"}>
-                <div className="card-profile__rate-label">
-                {t('user.helpbuttonsPublishedAmount')} 
-                </div>
-                {user?.buttonCount ?? 0}
-              </div>
-              <div onClick={() => setDisplayListType(displayListTypes.FOLLOWED)} className={displayListType == displayListTypes.FOLLOWED ? "card-profile__rate card-profile__rate--enabled" : "card-profile__rate"}>
-                <div className="card-profile__rate-label">
-                {t('user.timesFollowed')} 
-                </div>
-                {user?.followsCount ?? 0}
-              </div>
-              <div onClick={() => setDisplayListType(displayListTypes.COMMENTED)} className={displayListType == displayListTypes.COMMENTED ? "card-profile__rate card-profile__rate--enabled" : "card-profile__rate "}>
-                <div className="card-profile__rate-label">
-                  {t('user.commentsAmount')} 
-                </div>
-                  {user?.commentCount ?? 0}
-              </div>
-      
-                   
-          </figure>
+      </div>
 
-          { displayListType == displayListTypes.INFO &&
-            <div className="card-profile__data">
-
-              <div className="card-profile__description">
-                {user.description}
-              </div>
-              <div className="card-profile__tags grid-one__column-mid-element">
-              <div className="hashtag">{t('user.tags')}</div> 
-              </div>
-
-            </div>
-          }
-
-          {displayListType != displayListTypes.INFO &&
-          
-            <div className="card-profile__button-list">
+      {showButtonTabs &&
+        <>
+          <Tabs defaultIndex={displayListTypes.INFO} onTabClick={console.log}>
+            <TabItem label={t('user.profileInfo')} index={displayListTypes.INFO}>
+              <PersonalInfo user={user}/>
+            </TabItem>
+            <TabItem label={t('user.buttonsPublished', [publishedButtonsCount])} onClick={loadPublishedButtons} index={displayListTypes.PUBLISHED}>
               <ContentList
-                buttons={userButtons}
+                buttons={publishedButtons}
                 buttonTypes={buttonTypes}
+                showCreateNew={ownProfile ? true : false}
+                isLoading={publishedButtons == null}
+                browseMapOnEmpty={false}
               />
-            </div>
-          
-          }
-
+            </TabItem>
+            {/* <TabItem label={t('user.buttonFollowed', ['2'])} onClick={loadFollowedButtons} index={displayListTypes.FOLLOWED}>
+              List of published buttons
+            </TabItem> */}
+          </Tabs>
+        </>
+      }
+      {!showButtonTabs && <PersonalInfo user={user}/>}
 
     </>
   );
 }
 
+function PersonalInfo({ user }) {
+  return (
+    <div className="card-profile__data">
+
+      <div className="card-profile__description">
+        {user.description}
+      </div>
+      <div className="card-profile__tags grid-one__column-mid-element">
+        <TagsNav tags={user.tags} />
+      </div>
+
+    </div>
+  )
+}
 
 function ProfileAdminOptions({ user }) {
   const updateRole = (userId, newRole) => {
@@ -203,4 +180,44 @@ function ProfileAdminOptions({ user }) {
 
 
   return <>{user && getOptions(user)}</>;
+}
+
+
+// Tabs.jsx
+function TabItem(props) {
+  return <div {...props} />;
+}
+
+function Tabs(props) {
+  const [bindIndex, setBindIndex] = useState(props.defaultIndex);
+  const changeTab = newIndex => {
+    if (typeof props.onTabClick === "function") props.onTabClick(newIndex);
+    setBindIndex(newIndex);
+  };
+  const items = props.children.filter(item => item.type.name === "TabItem");
+
+  return (
+    <div>
+      <div className="card-profile__rating">
+
+        {items.map(({ props: { index, label, onClick = () => { } } }) => (
+          <button key={index} onClick={() => { changeTab(index); onClick() }} className={bindIndex === index ? "card-profile__rate card-profile__rate--enabled" : "card-profile__rate "}>
+            <div className="card-profile__rate-label">
+              {label}
+            </div>
+          </button>
+        ))}
+      </div>
+      <div className="tab-view">
+        {items.map(({ props }) => (
+          <div
+            {...props}
+            className="tab-view_item"
+            key={props.index}
+            style={{ display: bindIndex === props.index ? "block" : "none" }}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
