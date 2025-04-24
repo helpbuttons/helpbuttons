@@ -355,13 +355,19 @@ $avatar-margin: $padding-big;
   }
 
   .card-profile__rating {
+
+    width: 100%;
     
     & svg {
       width: 20px;
 
     }
   }
+  .card-profile__rate {
 
+    width: 100%;
+    
+  }
 
 
   .card-profile__location {
