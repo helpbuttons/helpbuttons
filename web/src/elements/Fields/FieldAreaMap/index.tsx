@@ -8,7 +8,7 @@ import { NetworkMapConfigure } from 'components/map/Map/NetworkMapConfigure';
 import { BrowseType, HbMapTiles, maxZoom, minZoom } from 'components/map/Map/Map.consts';
 import { getBoundsHexFeatures, roundCoord, roundCoords } from 'shared/honeycomb.utils';
 import PickerField from 'components/picker/PickerField';
-import { IoSearchOutline } from 'react-icons/io5';
+import { IoLocationOutline, IoSearchOutline } from 'react-icons/io5';
 import dconsole from 'shared/debugger';
 import Slider from 'rc-slider';
 import LocationSearchBar, { LocationSearchBarSimple } from 'elements/LocationSearchBar';
@@ -32,7 +32,7 @@ export default function FieldAreaMap({
 
   const labelPicker = value?.zoom ? t('configuration.areaPicked',[roundCoord(value.center[0]),roundCoord(value.center[1]),value.zoom]) : label
   return (
-      <PickerField   iconLink ={<IoSearchOutline/>}    showPopup={showPopup} validationError={validationError} label={label} btnLabel={labelPicker} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
+      <PickerField   iconLink ={<IoLocationOutline/>}    showPopup={showPopup} validationError={validationError} label={label} btnLabel={labelPicker} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
         <FieldAreaMapSettings
             defaultExploreSettings={value}
             onChange={onChange}
