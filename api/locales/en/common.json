@@ -307,7 +307,7 @@
     "setNewPassword": "Set a new password",
     "dontChangePassword": "Don't change password",
     "logout": "Logout",
-    "deactivate": "Deactivate Account",
+    "Ban": "Ban account",
     "description": "Description",
     "descriptExplain": "Short description of waht you do or what you are",
     "loginLink": "You have an account",
@@ -584,11 +584,12 @@
     "adminCommunication": "Administrator communications",
     "adminCommunicationLabel": "Administrator communications",
     "adminCommunicationExplain": "Messages that you share here will be send to all admins or all users of the network",
-    "created": ""
+    "created": "",
+    "showEmail": "Show email"
   },
   "roles": {
     "blocked": "deactivated",
-    "admin": "administrator",
+    "administrator": "administrator",
     "registered": "registered",
     "guest": "guest"
   },

@@ -92,8 +92,20 @@ function ModerationUsersList() {
     );
   };
 
+  const [showEmail, setShowEmail] = useState(false);
+
   const [users, setUsers] = useState(null);
   const [page, setPage] = useState(0);
+
+  const getEmailPrefix = (email) => {
+    if (!email) return '';
+    const atIndex = 3;
+    let atIndex1 = email.indexOf('@');
+    if (atIndex1 >= 4) 
+      atIndex1 = 4 ;
+    const atIndex2 = email.length - 1;
+    return email.substring(0, atIndex1) +"***";
+  };
 
   useEffect(() => {
     store.emit(
@@ -112,29 +124,34 @@ function ModerationUsersList() {
       /> */}
       <div className='user-list__wrapper'>
         <table className='user-list__table'>
-          <thead className='user-list__table--header'>
-            <tr className='user-list__table--header--row'>
-              <th className='user-list__table--header--cell'>{t('user.email')}</th>
-              <th className='user-list__table--header--cell'>{t('user.name')}</th>
-              <th className='user-list__table--header--cell'>{t('moderation.role')}</th>
-              <th className='user-list__table--header--cell'>{t('moderation.verified')}</th>
-              <th className='user-list__table--header--cell'>{t('moderation.actions')}</th>
+          <thead className='user-list__table-header'>
+            <tr className='user-list__table-header-row'>
+              <th className='user-list__table-header-cell'>{t('user.email')}</th>
+              <th className='user-list__table-header-cell'>{t('user.name')}</th>
+              <th className='user-list__table-header-cell'>{t('moderation.role')}</th>
+              <th className='user-list__table-header-cell'>{t('moderation.verified')}</th>
+              <th className='user-list__table-header-cell'>{t('moderation.actions')}</th>
             </tr>
           </thead>
-          <tbody className='user-list__table--body--row'>
+          <tbody className='user-list__table-body-row'>
               {users.map((user, idx) => (
-                <tr className='user-list__table--body--cell' key={idx}>
-                  <td className='user-list__table--body--cell'><Link href={`/p/${user.username}`}>{user.email}</Link></td>
-                  <td className='user-list__table--body--cell'><Link href={`/p/${user.username}`}>{user.name}</Link></td>
-                  <td className='user-list__table--body--cell'>{t(`roles.${user.role}`)}</td>
-                  <td className='user-list__table--body--cell'>
+                <tr className='user-list__table-body-cell' key={idx}>
+
+                  <td className='user-list__table-body-cell--email'>
+
+                      <Link href={`/p/${user.username}`}>{getEmailPrefix(user.email)}</Link> 
+            
+                  </td>
+                  <td className='user-list__table-body-cell'><Link href={`/p/${user.username}`}>{user.username}</Link></td>
+                  <td className='user-list__table-body-cell'>{t(`roles.${user.role}`)}</td>
+                  <td className='user-list__table-body-cell'>
                     {user.verified ? (
                       <IoCheckmarkCircleOutline />
                     ) : (
                       <IoBanOutline />
                     )}
                   </td>
-                  <td className='user-list__table--body--cell'>
+                  <td className='user-list__table-body-cell'>
                     {user.role == Role.registered &&
                       <Btn
                         btnType={BtnType.small}
@@ -158,7 +175,7 @@ function ModerationUsersList() {
                       <Btn
                         btnType={BtnType.small}
                         borderColor={'orange'}
-                        caption={t('moderation.deactivate')}
+                        caption={t('moderation.block')}
                         iconLink={null}
                         onClick={() => updateRole(user.id, Role.blocked)}
                       />
@@ -241,73 +258,72 @@ function ModerationHelpButtonsList() {
       );
     }
   
+  function jumpTo(arg0: string) {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <>
       {buttons?.length > 0 ? (
-        <>
+        <div className='user-list__wrapper'>
           {/* <FieldText
             name="query"
             placeholder={t('common.search')}
             {...register('query')}
           /> */}
-          <table>
-            <thead>
-              <tr>
-                <th>{t('moderation.created_at')}</th>
-                <th>{t('button.titleLabel')}</th>
-                <th>{t('button.typeLabel')}</th>
-                <th>{t('button.tagsLabel')}</th>
-                <th>{t('button.whereLabel')}</th>
-                <th>{t('moderation.actions')}</th>
+         
+          <table className='user-list__table'>
+            <thead className='user-list__table-header'>
+              <tr className='user-list__table-header-row'>
+                <th className='user-list__table-header-cell'>{t('moderation.created_at')}</th>
+                <th className='user-list__table-header-cell'>{t('button.titleLabel')}</th>
+                <th className='user-list__table-header-cell'>{t('button.typeLabel')}</th>
+                <th className='user-list__table-header-cell'>{t('button.tagsLabel')}</th>
+                <th className='user-list__table-header-cell'>{t('button.whereLabel')}</th>
+                <th className='user-list__table-header-cell'>{t('moderation.actions')}</th>
               </tr>
             </thead>
             <tbody>
               {buttons.map((button, idx) => (
-                <tr>
-                  <td>{readableTimeLeftToDate(button.created_at)}</td>
-                  <td>{button.title}</td>
-                  <td>
+                <tr className='user-list__table-body-row'>
+                  <td className='user-list__table-body-cell'>{readableTimeLeftToDate(button.created_at)}</td>
+                  <td className='user-list__table-body-cell'>{button.title}</td>
+                  <td className='user-list__table-body-cell'>
                     <BtnButtonType buttonTypeName={button.type}/>
                   </td>
-                  <td><TagsNav tags={button.tags}/></td>
-                  <td>{button.address}</td>
-                  <td>
+                  <td className='user-list__table-body-cell'><TagsNav tags={button.tags}/></td>
+                  <td className='user-list__table-body-cell'>{button.address}</td>
+                  <td className='user-list__table-body-cell'>
                     {button.awaitingApproval == true && 
-                      <BtnCaption
-                        color={'green'}
-                        caption={t('moderation.confirm')}
-                        icon={null}
-                        onClick={() => approveButton(button.id)}
-                      />
+                          <Btn
+                          btnType={BtnType.small}
+    
+                          borderColor={'green'}
+                          caption={t('moderation.confirm')}
+                          iconLink={null}
+                          onClick={() => approveButton(button.id)}
+                        />
                     }
-                    <Link href={`/ButtonFile/${button.id}`}>
-                      <BtnCaption
-                        color={'green'}
-                        caption={t('moderation.preview')}
-                        icon={null}
-                        onClick={() => {}}
-                      />
-                    </Link>
-                    <Link href={`/ButtonEdit/${button.id}`}>
-                      <BtnCaption
-                        color={'orange'}
-                        caption={t('button.edit')}
-                        icon={null}
-                        onClick={() => dconsole.log('edit button')}
-                      />
-                    </Link>
-                    {/* <BtnCaption
-                      color={'red'}
-                      caption={t('moderation.remove')}
-                      icon={null}
-                      onClick={() => dconsole.log('remove button')}
-                    /> */}
+                    <Btn
+                      btnType={BtnType.small}
+                      borderColor={'green'}
+                      caption={t('moderation.preview')}
+                      iconLink={null}
+                      onClick={() => router.push(`/ButtonFile/${button.id}`)}
+                    />
+                    <Btn
+                      btnType={BtnType.small}
+                      borderColor={'orange'}
+                      caption={t('moderation.edit')}
+                      iconLink={null}
+                      onClick={() => router.push(`/ButtonEdit/${button.id}`)}
+                    />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </>
+        </div>
       ) : t('moderation.emptyButtonList')}
       <Pagination page={page} setPage={setPage} array={buttons} take={10}/>
 
