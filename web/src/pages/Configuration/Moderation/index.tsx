@@ -92,8 +92,6 @@ function ModerationUsersList() {
     );
   };
 
-  const [showEmail, setShowEmail] = useState(false);
-
   const [users, setUsers] = useState(null);
   const [page, setPage] = useState(0);
 
