@@ -133,9 +133,9 @@ function ModerationUsersList() {
               <th className='user-list__table-header-cell'>{t('moderation.actions')}</th>
             </tr>
           </thead>
-          <tbody className='user-list__table-body-row'>
+          <tbody className='user-list__table-body'>
               {users.map((user, idx) => (
-                <tr className='user-list__table-body-cell' key={idx}>
+                <tr className='user-list__table-body-row' key={idx}>
 
                   <td className='user-list__table-body-cell--email'>
 
