@@ -247,9 +247,6 @@ function ModerationHelpButtonsList() {
       );
     }
   
-  function jumpTo(arg0: string) {
-    throw new Error('Function not implemented.');
-  }
 
   return (
     <>
