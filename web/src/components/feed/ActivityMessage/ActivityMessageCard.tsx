@@ -14,8 +14,8 @@ import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import { ButtonTemplate } from 'shared/dtos/button.dto';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { ActivityMarkAsRead, SetFocusOnMessage } from 'state/Activity';
-import { FindButton, updateCurrentButton } from 'state/Explore';
-import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { FindButton } from 'state/Explore';
+import { SetMainPopupCurrentButton } from 'state/HomeInfo';
 
 export function ActivityMessageCard({
   message,
@@ -36,20 +36,19 @@ export function ActivityMessageCard({
   }, [buttonTypes, button]);
   const [markingAsRead, setMarkingAsRead] = useState(false);
 
-  const jumpToButtonMessage = (messageId, read) => {
+  const jumpToButtonMessage = (id, read, messageId) => {
     const showPopupButton = (buttonId) => 
     {
       store.emit(
         new FindButton(buttonId, (button) => {
-          store.emit(new updateCurrentButton(button));
-          store.emit(new SetMainPopup(MainPopupPage.BUTTON));
+          store.emit(new SetMainPopupCurrentButton(button));
         }),
       );
     }
     if (!read) {
       setMarkingAsRead(() => true);
       store.emit(
-        new ActivityMarkAsRead(messageId, () => {
+        new ActivityMarkAsRead(id, () => {
           setMarkingAsRead(() => false);
           alertService.info(t('notificaction.markedAsRead'));
           const buttonId = message.button.id;
@@ -73,7 +72,7 @@ export function ActivityMessageCard({
         <Link
           href="#"
           onClick={() =>
-            jumpToButtonMessage(message.id, message.read)
+            jumpToButtonMessage(message.id, message.read, message.messageId)
           }
           className="card-notification card-notification--ribbon"
           // style={buttonColorStyle(buttonType?.cssColor)}

@@ -1,6 +1,6 @@
 import { Picker } from "components/picker/Picker";
 import { GlobalState, store } from "state";
-import { MainPopupPage, SetMainPopup, SetMainPopupCurrentProfile } from "state/HomeInfo";
+import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton, SetMainPopupCurrentProfile } from "state/HomeInfo";
 import { useGlobalStore } from 'state';
 import Login from "../../../pages/Login";
 import Signup from "../../../pages/Signup";
@@ -9,18 +9,20 @@ import t from "i18n";
 import { ShareForm } from "components/share";
 import { FaqSections } from "pages/Faqs";
 import { ButtonShow } from "components/button/ButtonShow";
-import router from "next/router";
-import { useEffect } from "react";
 import { ShowProfile } from "pages/p/[username]";
 
 export default function MainPopup({pageName}) {
     const closePopup = () =>
+    {
       store.emit(new SetMainPopup(MainPopupPage.HIDE));
+    }
+      
 
     const sessionUser = useGlobalStore((state: GlobalState) => state.sessionUser);
     const popupPage: MainPopupPage = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupPage) 
     const currentButton = useGlobalStore((state: GlobalState) => state.explore.currentButton) 
     const mainPopupUserProfile = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupUserProfile) 
+    const mainPopupButton = useGlobalStore((state: GlobalState) => state.homeInfo.mainPopupButton) 
     const allowedCurrentButton = ['HomeInfo', 'Activity', '', '#']
     return (
       <>
@@ -64,19 +66,19 @@ export default function MainPopup({pageName}) {
         {(mainPopupUserProfile) && (
           <Picker
             headerText={t('user.otherProfileView')}
-            closeAction={() => {closePopup(); store.emit(new SetMainPopupCurrentProfile(null))}}
+            closeAction={() => {store.emit(new SetMainPopupCurrentProfile(null))}}
           >
             <ShowProfile userProfile={mainPopupUserProfile} sessionUser={sessionUser}/>
           </Picker>
         )}
-         {(popupPage == MainPopupPage.BUTTON && allowedCurrentButton.indexOf(pageName) > -1 ) && (
+         {(mainPopupButton && allowedCurrentButton.indexOf(pageName) > -1 ) && (
           <Picker
-            headerText={currentButton.title}
-            closeAction={() => {closePopup()}}
+            headerText={mainPopupButton.title}
+            closeAction={() => {store.emit(new SetMainPopupCurrentButton(null))}}
             extraClass={'picker__content--nopadding'}
           >
             {/* {pageName} */}
-            <ButtonShow button={currentButton}/>
+            <ButtonShow button={mainPopupButton}/>
           </Picker>
         )}
       </>

@@ -9,7 +9,7 @@ import Btn, { BtnType, ContentAlignment } from 'elements/Btn';
 import { useScroll } from 'shared/helpers/scroll.helper';
 import { FindMoreReadMessages } from 'state/Activity';
 import { GlobalState, store } from 'state';
-import Loading from 'components/loading';
+import Loading, { LoadingWrapper } from 'components/loading';
 import { ResetFilters, ToggleAdvancedFilters } from 'state/Explore';
 import { useGlobalStore } from 'state';
 import { isFiltering } from 'components/search/AdvancedFilters/filters.type';
@@ -29,7 +29,7 @@ export default function ContentList({
   const { endDivLoadMoreTrigger, noMoreToLoad } =
     useScroll(({ setNoMoreToLoad, setScrollIsLoading }) => {
       setScrollIsLoading(() => true);
-      if (buttonsSlice < buttons.length) {
+      if (buttonsSlice < buttons?.length) {
         setButtonsSlice(() => buttonsSlice + 2);
       } else {
         // setNoMoreToLoad(() => true);
@@ -37,11 +37,11 @@ export default function ContentList({
       setScrollIsLoading(() => false);
     });
 
-  if (buttons.length < 1) {
+  if (buttons?.length < 1) {
     return (
       <>
         <div className="list__empty-message">
-          {isLoadingButtons && <Loading />}
+          {isLoadingButtons && <LoadingWrapper />}
           {!isLoadingButtons && (
             <>
               <div className="list__empty-message--prev">
@@ -64,7 +64,7 @@ export default function ContentList({
 
   return (
     <>
-      {buttons.slice(0, buttonsSlice).map((btn, i) => (
+      {buttons?.slice(0, buttonsSlice).map((btn, i) => (
         <CardButtonList
           button={btn}
           key={i}

@@ -147,5 +147,4 @@ export class Button extends BaseEntity {
   @Expose()
   @Column({default: false})
   isCustomAddress: boolean;
-
 }

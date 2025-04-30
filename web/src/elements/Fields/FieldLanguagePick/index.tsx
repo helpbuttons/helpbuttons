@@ -18,6 +18,7 @@ export const FieldLanguagePick = ({ onChange, explain, defaultValue }) => {
         defaultSelected={defaultValue}
         onChange={onChange}
         label={t('user.pickLanguageLabel')}
+        explain={t('user.pickLanguageExplain')}
       />
     }</>
   )

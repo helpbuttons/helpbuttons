@@ -87,7 +87,6 @@ function NavBottom({ sessionUser, pageName }) {
 
         {!sessionUser && (
           <div
-            // href="/Signup"
             onClick={() =>
               store.emit(new SetMainPopup(MainPopupPage.SIGNUP))
             }

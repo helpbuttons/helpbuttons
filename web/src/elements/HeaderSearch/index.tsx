@@ -15,10 +15,7 @@ export function HeaderSearch({ toggleAdvancedFilters, pageName, exploreMapState,
   const [buttonCount, setButtonCount] = useState(selectedNetwork.buttonCount)
   
   useEffect(() => {
-    if(['Explore','Bulletin'].indexOf(pageName) > -1) {
-      setButtonCount(() => exploreMapState.listButtons.length)
-    }
-    
+      setButtonCount(() => exploreMapState.listButtons.length)    
   }, [exploreMapState.listButtons])
 
   const clearButton = useRef(null);

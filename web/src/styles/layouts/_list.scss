@@ -61,12 +61,13 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
 .list__content {
 
   display: flex;
-  padding: $padding-small $padding-small;
+  // padding: $padding-big $padding-big;
   background-color: $color-ligth-gray;
   z-index: $z-index-02;
   width: 100%;
   transition: $transition-default-slow;
   align-content: flex-start; /* Add this*/
+
 }
 
 
@@ -76,7 +77,6 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
   // flex-grow: 1;
   flex-basis: 100%;
   padding-right: $padding-xsmall;
-  min-width: $card-button-list-width;
 
 }
 
@@ -245,12 +245,14 @@ $list-order-tabs-nohover-bottom: calc($footer-height-mobile + $list-container-he
     overflow-y: auto;
     overflow-x: hidden;
     flex-wrap: wrap;
+    transition: none;
 
   }
 
   .list__element {
     width: 100%;
     flex-basis: 30%;
+    
     min-width: $card-button-list-width;
   }
 

@@ -4,9 +4,7 @@ import { GlobalState, store } from 'state';
 import { useEffect, useState } from 'react';
 import { useButtonTypes } from 'shared/buttonTypes';
 import {
-  ToggleAdvancedFilters,
   UpdateFiltersToFilterButtonType,
-  updateCurrentButton,
 } from 'state/Explore';
 import { useStore } from 'state';
 

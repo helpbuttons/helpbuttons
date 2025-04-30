@@ -27,6 +27,8 @@ import { FilterByLocationRadius } from './filter-by-location';
 import { FilterByDays } from './filter-by-days';
 import Accordion from 'elements/Accordion';
 import { IoBook, IoList } from 'react-icons/io5';
+import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { SetSignupTags } from 'state/Users';
 
 
 
@@ -114,17 +116,7 @@ export default function AdvancedFilters({
   useEffect(() => {
     reset(filters)
   }, [filters])
-
-  useEffect(() => {
-    const params = new URLSearchParams(router.query)
-    if(params.has('showFilters'))
-    {
-      store.emit(new ToggleAdvancedFilters(true))
-    }else{
-      store.emit(new ToggleAdvancedFilters(false))
-    }
-    
-  }, [])
+  
   const {onInputChange, inputKeyDown, input, remove, addTag} = useTagsList({
     tags,
     setTags : (tags) => {
@@ -275,17 +267,12 @@ function TagFollow({tags}) {
     (state: GlobalState) => state.sessionUser,
     false,
   );
-  const followTag = (tag) => {
-    if (!sessionUser) {
-      router.push(`/Signup?follow=${tag}`)
-      return;
-    }
-    store.emit(new FollowTag(tag, () => {alertService.success(t('buttonFilters.followTagSucess', [tag]))}));
-  }
 
   const followTags = (tags) => {
     if (!sessionUser) {
-      router.push(`/Signup?follow=${tags}`)
+      store.emit(new ToggleAdvancedFilters(false))
+      store.emit(new SetMainPopup(MainPopupPage.SIGNUP));
+      store.emit(new SetSignupTags(tags))
       return;
     }
     store.emit(new FollowTags(tags, () => {alertService.success(t('buttonFilters.followTagsSucess', [tags]))}));
@@ -298,6 +285,8 @@ function TagFollow({tags}) {
       setTagsToFollow(() => 
         _.difference(tags, sessionUser.tags)
       )
+    }else{
+      setTagsToFollow(() => tags)
     }
   }, [sessionUser, tags])
   return (
