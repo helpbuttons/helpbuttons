@@ -259,7 +259,7 @@ function MyApp({ Component, pageProps }) {
   });
 
   return <>
-    <MetadataSEO {...pageProps.metadata} nonce={nonce} />
+    <MetadataSEOFromStore {...pageProps.metadata} nonce={nonce} />
     {(function () {
 
       if (isSetup) {

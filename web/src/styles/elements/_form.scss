@@ -105,6 +105,19 @@ margin: $margin-medium 0;
 
 }
 
+.form__input--slider-value {
+
+  position: absolute;
+  bottom: 68px;
+  left: -20px;
+  font-weight: $font-weight-bolder;
+  padding: $padding-xxsmall $padding-small;
+  background-color: $color-white;
+  border-radius: $border-radius-circle;
+
+
+}
+
 .form__field-dropdown--input-location {
 
   display: flex;
