@@ -161,7 +161,6 @@ return (
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 pickedPosition={mapSettings.center}
-                explain={t('configuration.centerOfMap')}
               />
 
               <NetworkMapConfigure
@@ -175,23 +174,20 @@ return (
                 markerColor={markerColor}
               />
                <div className="form__field">
-                <div className="form__explain">{t('configuration.zoomLevel')}</div>
+                <div className="form__label">{t('configuration.zoomLevel')}</div>
                 <div className="form__input--slider">
-
-                <Slider
-                  min={minZoom}
-                  max={maxZoom}
-                  onChange={(newZoom) => {
-                    setZoom(newZoom)
-                    dconsole.log('change zoom in the map')
-                  }}
-                  value={mapSettings.zoom}
-                />
+                  <Slider
+                    min={minZoom}
+                    max={maxZoom}
+                    onChange={(newZoom) => {
+                      setZoom(newZoom)
+                      dconsole.log('change zoom in the map')
+                    }}
+                    value={mapSettings.zoom}
+                  />
                 </div>
-
-                {mapSettings.zoom}
+                <div className="form__input-subtitle--text form__input--slider-value">{mapSettings.zoom}</div>
               </div>
-
               <Btn
                 btnType={BtnType.submit}
                 caption={t('common.save')}
