@@ -8,6 +8,7 @@ import Loading from 'components/loading';
 import { useEffect } from 'react';
 import { FindButton, NextCurrentButton, PreviousCurrentButton, updateCurrentButton } from 'state/Explore';
 import { useSwipeable } from 'react-swipeable';
+import Footer from 'components/footer';
 
 
 export function ButtonShow({button}) {
@@ -44,6 +45,7 @@ export function ButtonShow({button}) {
             isprivateMessage={isPrivateMessage}
             toggleShowReplyFirstPost={toggleShowReplyFirstPost}
           />
+          <Footer />
         </>
       )}
       {!(button && buttonTypes) && <Loading />}
