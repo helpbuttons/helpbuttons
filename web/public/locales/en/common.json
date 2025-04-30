@@ -110,8 +110,8 @@
     "queryExplain": "Specify whatever you want to find",
     "queryPlaceHolder": "Type here the words",
     "followTag": "Notify me about",
-    "where": "Where ?",
-    "whereExplain": "Search the place you want or click the icon to check your location.",
+    "where": "Where do you search?",
+    "whereExplain": "Filter by distance to a specific location",
     "distance": "Search Distance",
     "allButtonTypes": "All types",
     "types": "Filter by _helpbuttons_ types",
@@ -504,7 +504,11 @@
     "nomeclaturePluralPlaceHolder": "",
     "setType": "Set _helpbutton_ type properties",
     "addType": "+ Create _helpbutton_ type",
-    "areaPicked": "Center: ({0},{1}) zoom: {2}"
+    "areaPicked": "Center: ({0},{1}) zoom: {2}",
+    "hideLocationByDefaultLabel": "Exact location protection",
+    "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
+    "hideLocationByDefaultText": "Hide exact location by default"
+
   },
   "configure": {
     "browsePins": "",
