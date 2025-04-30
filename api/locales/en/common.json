@@ -307,7 +307,7 @@
     "setNewPassword": "Set a new password",
     "dontChangePassword": "Don't change password",
     "logout": "Logout",
-    "Ban": "Ban account",
+    "ban": "ban account",
     "description": "Description",
     "descriptExplain": "Short description of waht you do or what you are",
     "loginLink": "You have an account",
