@@ -6,10 +6,17 @@ import Btn, {
 import t from 'i18n';
 import { useEffect, useState } from 'react';
 import { IoDownload } from 'react-icons/io5';
+import { store } from 'state';
+import { SetIsInstallable } from 'state/HomeInfo';
 
 export function InstallButton() {
   const [prompt, promptToInstall] = useAddToHomescreenPrompt();
-
+  useEffect(() => {
+    if(prompt)
+    {
+      store.emit(new SetIsInstallable())
+    }
+  }, [prompt])
   return (
     <>
       {prompt && (

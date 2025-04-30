@@ -1,4 +1,4 @@
-import { useStore } from 'state';
+import { useGlobalStore, useStore } from 'state';
 import { GlobalState, store } from 'state';
 import router from 'next/router';
 import t from 'i18n';
@@ -494,25 +494,36 @@ function HomeSloganCard({ selectedNetwork, config }) {
 
 
 function HomeInfoInstallCard({ selectedNetwork }) {
+  const hasNotificationPermissions = useGlobalStore(
+    (state: GlobalState) =>
+      state.activities.notificationsPermissionGranted,
+  );
+  const isInstallable = useGlobalStore(
+    (state: GlobalState) =>
+      state.homeInfo.isInstallable,
+  );
   return (
     <>
-      <div className="homeinfo-card">
-        <div className="homeinfo-card__header">
-          <h3 className="homeinfo-card__header-title">
-            {t('homeinfo.install', [
-              selectedNetwork?.name,
-            ])}
-          </h3>
+      {(isInstallable || hasNotificationPermissions) &&
+        <div className="homeinfo-card">
+          <div className="homeinfo-card__header">
+            <h3 className="homeinfo-card__header-title">
+              {t('homeinfo.install', [
+                selectedNetwork?.name,
+              ])}
+            </h3>
 
-          <div className="homeinfo-card__controls">
+            <div className="homeinfo-card__controls">
 
+            </div>
           </div>
-        </div>
-        <hr></hr>
-        <HomeInfoActionButton>
-          <InstallButton />
-          <DesktopNotificationsButton />
-        </HomeInfoActionButton></div></>)
+          <hr></hr>
+          <HomeInfoActionButton>
+            <InstallButton />
+            <DesktopNotificationsButton />
+          </HomeInfoActionButton></div>
+      }</>)
+
 }
 function HomeInfoExploreButton() {
   return (
