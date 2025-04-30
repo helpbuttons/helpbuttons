@@ -150,6 +150,7 @@ export class CreateButton implements WatchEvent, UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      dconsole.log('[CreateButton] update')
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
       newState.explore.map.listButtons = []
@@ -221,9 +222,12 @@ export class ButtonDelete implements WatchEvent, UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      dconsole.log('[ButtonDelete] update')
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
       newState.explore.map.listButtons = []
+      newState.activities.messages.unread = []
+      newState.activities.messages.read = []
     });
   }
 }
@@ -247,6 +251,7 @@ export class UpdateButton implements WatchEvent, UpdateEvent {
 
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      dconsole.log('[UpdateButton] update')
       newState.explore.map.boundsFilteredButtons = []
       newState.explore.map.cachedHexagons = []
       newState.explore.map.listButtons = []
@@ -291,7 +296,7 @@ export class updateCurrentButton implements UpdateEvent {
 
         newState.explore.settings.center = roundCoords([this.button.latitude, this.button.longitude])
         newState.explore.settings.zoom = maxZoom - 1
-
+        dconsole.log('[updateCurrentButton] update')
         newState.explore.map.boundsFilteredButtons = [this.button]
         
       } else if (!this.button) {
@@ -304,6 +309,7 @@ export class updateCurrentButton implements UpdateEvent {
         }
         
       }
+      console.log(`[updateCurrentButton] changing zoom to ${newState.explore.settings.zoom}`)
     });
   }
 }
@@ -315,8 +321,10 @@ export class UpdateFilters implements UpdateEvent {
       if (this.filters?.where.center) {
         const newZoom = getZoomFromRadius(this.filters.where.radius)
         newState.explore.settings.zoom = newZoom
+        console.log(`[UpdateFilters] changing zoom to ${newState.explore.settings.zoom}`)
         newState.explore.settings.center = this.filters.where.center
       }
+      
       let newFilters = this.filters;
       const words = this.filters.query.split(' ')
       const tagsFound = words.map((word) => {
@@ -454,6 +462,10 @@ export class UpdateBoundsFilteredButtons implements UpdateEvent, WatchEvent {
     return produce(state, (newState) => {
       newState.explore.map.boundsFilteredButtons =
         this.boundsFilteredButtons;
+      if(state.explore.currentButton)
+      {
+        newState.explore.map.boundsFilteredButtons = [state.explore.currentButton]
+      }
       newState.explore.map.listButtons = listButtonsFilteredByHexagon(state.explore.settings.hexagonClicked, this.boundsFilteredButtons)
       newState.explore.map.loading = false;
       newState.explore.map.initialized = true;
@@ -487,6 +499,7 @@ export class UpdateHexagonClicked implements UpdateEvent {
       newState.explore.settings.hexagonClicked = this.hexagonClicked;
       if (this.hexagonClicked) {
         newState.explore.map.showInstructions = false;
+        dconsole.log('[UpdateHexagonClicked] update')
         newState.explore.map.listButtons = listButtonsFilteredByHexagon(this.hexagonClicked, state.explore.map.boundsFilteredButtons)
         newState.explore.currentButton = null
         if (state.explore.settings.viewMode == ExploreViewMode.MAP) {

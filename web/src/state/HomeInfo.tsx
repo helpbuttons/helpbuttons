@@ -52,6 +52,7 @@ export class SetMainPopupCurrentProfile implements UpdateEvent {
   public constructor(private profile: User) {}
   public update(state: GlobalState) {
     return produce(state, (newState) => {
+      newState.homeInfo.mainPopupPage = MainPopupPage.HIDE
       newState.homeInfo.mainPopupUserProfile = this.profile;
     });
   }

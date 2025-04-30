@@ -11,7 +11,7 @@ import { FieldCheckbox } from '../FieldCheckbox';
 import PickerField from 'components/picker/PickerField';
 import { minZoom } from 'components/map/Map/Map.consts';
 import { useGeoReverse } from './location.helpers';
-import { IoSearchOutline } from 'react-icons/io5';
+import { IoLocation, IoLocationOutline, IoLocationSharp, IoSearchOutline } from 'react-icons/io5';
 import LocationSearchBar from 'elements/LocationSearchBar';
 import dconsole from 'shared/debugger';
 
@@ -107,7 +107,7 @@ export default function FieldLocation({
   }, [isCustomAddress])
 
   return <PickerField
-    iconLink={<IoSearchOutline />}
+    iconLink={<IoLocationOutline />}
     showPopup={showPopup}
     validationError={validationError}
     label={t('button.whereLabel')}

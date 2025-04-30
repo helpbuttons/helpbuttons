@@ -25,6 +25,7 @@ export interface GlobalState {
   activities: Activities;
   metadata: MetadataState;
   cacheValues: CacheValue[];
+  signupTags: string[];
   // newNotifications: NewNotification[]
 }
 
@@ -49,6 +50,7 @@ export const store = new Store<GlobalState>({
   activities: activitiesInitialState,
   metadata: metadataInitialState,
   cacheValues: [],
+  signupTags: []
 });
 
 export function useGlobalStore(localState) {
