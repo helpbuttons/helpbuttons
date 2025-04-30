@@ -4,6 +4,7 @@ import { LocationSearchBarSimple } from 'elements/LocationSearchBar';
 import t from 'i18n';
 import Slider from 'rc-slider';
 import { useState } from 'react';
+import { IoLocation, IoLocationOutline } from 'react-icons/io5';
 import { readableDistance } from 'shared/sys.helper';
 import { useNetworkCenter, useSelectedNetwork } from 'state/Networks';
 
@@ -67,6 +68,7 @@ export function FilterByLocationRadius({
       label={t('buttonFilters.where')}
       explain={t('buttonFilters.whereExplain')}
       title={t('buttonFilters.where')}
+      iconLink = {<IoLocationOutline/>}
       btnLabel={
         pickedAddress ? (
           <>
@@ -79,6 +81,7 @@ export function FilterByLocationRadius({
           t('buttonFilters.pickLocationLimits')
         )
       }
+
       showPopup={showPopup}
       openPopup={openPopup}
       closePopup={discardAndClose}

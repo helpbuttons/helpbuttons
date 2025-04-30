@@ -8,7 +8,7 @@ import { NetworkMapConfigure } from 'components/map/Map/NetworkMapConfigure';
 import { BrowseType, HbMapTiles, maxZoom, minZoom } from 'components/map/Map/Map.consts';
 import { getBoundsHexFeatures, roundCoord, roundCoords } from 'shared/honeycomb.utils';
 import PickerField from 'components/picker/PickerField';
-import { IoSearchOutline } from 'react-icons/io5';
+import { IoLocationOutline, IoSearchOutline } from 'react-icons/io5';
 import dconsole from 'shared/debugger';
 import Slider from 'rc-slider';
 import LocationSearchBar, { LocationSearchBarSimple } from 'elements/LocationSearchBar';
@@ -32,7 +32,7 @@ export default function FieldAreaMap({
 
   const labelPicker = value?.zoom ? t('configuration.areaPicked',[roundCoord(value.center[0]),roundCoord(value.center[1]),value.zoom]) : label
   return (
-      <PickerField   iconLink ={<IoSearchOutline/>}    showPopup={showPopup} validationError={validationError} label={label} btnLabel={labelPicker} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
+      <PickerField   iconLink ={<IoLocationOutline/>}    showPopup={showPopup} validationError={validationError} label={label} btnLabel={labelPicker} explain={explain} headerText={t('picker.headerText')} openPopup={openPopup} closePopup={closePopup}>
         <FieldAreaMapSettings
             defaultExploreSettings={value}
             onChange={onChange}
@@ -161,7 +161,6 @@ return (
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 pickedPosition={mapSettings.center}
-                explain={t('configuration.centerOfMap')}
               />
 
               <NetworkMapConfigure
@@ -175,23 +174,20 @@ return (
                 markerColor={markerColor}
               />
                <div className="form__field">
-                <div className="form__explain">{t('configuration.zoomLevel')}</div>
+                <div className="form__label">{t('configuration.zoomLevel')}</div>
                 <div className="form__input--slider">
-
-                <Slider
-                  min={minZoom}
-                  max={maxZoom}
-                  onChange={(newZoom) => {
-                    setZoom(newZoom)
-                    dconsole.log('change zoom in the map')
-                  }}
-                  value={mapSettings.zoom}
-                />
+                  <Slider
+                    min={minZoom}
+                    max={maxZoom}
+                    onChange={(newZoom) => {
+                      setZoom(newZoom)
+                      dconsole.log('change zoom in the map')
+                    }}
+                    value={mapSettings.zoom}
+                  />
                 </div>
-
-                {mapSettings.zoom}
+                <div className="form__input-subtitle--text form__input--slider-value">{mapSettings.zoom}</div>
               </div>
-
               <Btn
                 btnType={BtnType.submit}
                 caption={t('common.save')}

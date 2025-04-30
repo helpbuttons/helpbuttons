@@ -6,26 +6,54 @@ import Btn, {ContentAlignment, BtnType, IconType} from 'elements/Btn'
 import UserAvatar from '../components';
 import { getHostname } from 'shared/sys.helper';
 import t from 'i18n';
-import { store } from "state";
-import { UpdateRole, isAdmin } from "state/Users";
+import { store, useGlobalStore } from "state";
+import { FindUserButtons, UpdateRole, isAdmin } from "state/Users";
 import { alertService } from "services/Alert";
 import router from "next/router";
 import { CardSubmenu, CardSubmenuOption } from "components/card/CardSubmenu";
 import { Role } from "shared/types/roles";
+import ContentList from "components/list/ContentList";
+import { useEffect, useState } from "react";
+import dconsole from "shared/debugger";
+import { ButtonLinkType } from "components/list/CardButtonList";
+import { useButtonTypes } from "shared/buttonTypes";
 
 
 export default function CardProfile({ user, showAdminOptions = false}) {
 
+  const sessionUser = useGlobalStore((state) => state.sessionUser)
+  const [userButtons, setUserButtons] = useState(null);
+  const buttonTypes = useButtonTypes();
+
+
+  useEffect(() => {
+
+    if (user && !userButtons) {
+          store.emit(
+            new FindUserButtons(user?.id, (userButtons) =>
+              setUserButtons(userButtons),
+            ),
+          );
+      }
+    }, []);
+  
   return (
     <>
-
         <div className="card-profile__container-avatar-content">
-
-              {showAdminOptions && 
-
-                <ProfileAdminOptions user={user} />
-
-              }
+              <CardSubmenu extraClass="card-profile__submenu" >
+                {user?.role == Role.admin && 
+                    <AdminOptions/>
+                  }
+                {showAdminOptions && 
+                  <>
+                    <ProfileAdminOptions user={user} />
+                  </>
+                }
+                {user?.username == sessionUser?.username &&
+                  <GeneralOptions />
+                }
+              </CardSubmenu>
+            
 
             <figure className="card-profile__avatar-container avatar">
 
@@ -35,15 +63,18 @@ export default function CardProfile({ user, showAdminOptions = false}) {
 
               </div>
 
+
             </figure>
 
             <div className="card-profile__content">
             
               <div className="card-profile__avatar-container-name">
 
-                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="hashtag hashtag--blue">Admin</div>}</div>
-                <span className="card-profile__username">{ user.username }</span>
+                <div className="card-profile__name">{user.name} {user?.role == Role.admin && <div className="card-profile__role hashtag hashtag--blue">Admin</div>} </div> 
                 
+                <div className="card-profile__username">@{ user.username }</div>
+                
+
               </div>
 
               {/* {t('user.created_date')}: {readableTimeLeftToDate(user.created_at)} */}
@@ -51,41 +82,46 @@ export default function CardProfile({ user, showAdminOptions = false}) {
             </div>
 
         </div>
-          <figure className="card-profile__rating">
-
-                <div className="card-profile__rate">
-                  <div className="card-profile__rate-label">
-                  {t('user.timesFollowed')} 
-                  </div>
-                  {user?.followsCount ?? 0}
-                </div>
-                <div className="card-profile__rate">
-                  <div className="card-profile__rate-label">
-                  {t('user.helpbuttonsPublishedAmount')} 
-                  </div>
-                  {user?.buttonCount?? 0}
-                </div>
-                <div className="card-profile__rate">
-                  <div className="card-profile__rate-label">
-                    {t('user.commentsAmount')} 
-                  </div>
-                    {user?.commentCount ?? 0}
-                </div>
-
-            </figure>
-
         <div className="card-profile__data">
 
-            {/* TODO: 
-              - define what to do with tags
-              <div className="card-profile__tags grid-one__column-mid-element"> */}
-              {/* <div className="hashtag">{t('user.tags')}</div> */}
-            {/* </div> */}
-            <div className="card-profile__description">
-               {user.description}
-            </div>
+
+          <div className="card-profile__description">
+            {user.description}
+          </div>
+          <div className="card-profile__tags grid-one__column-mid-element">
+           <div className="hashtag">{t('user.tags')}</div> 
+          </div>
 
         </div>
+        <figure className="card-profile__rating">
+
+              <div className="card-profile__rate card-profile__rate--enabled">
+                <div className="card-profile__rate-label">
+                {t('user.helpbuttonsPublishedAmount')} 
+                </div>
+                {user?.buttonCount?? 0}
+              </div>
+              {/* PENDING TO LINK LIST TO TABS
+               <div className="card-profile__rate ">
+                <div className="card-profile__rate-label">
+                {t('user.timesFollowed')} 
+                </div>
+                {user?.followsCount ?? 0}
+              </div>
+              <div className="card-profile__rate">
+                <div className="card-profile__rate-label">
+                  {t('user.commentsAmount')} 
+                </div>
+                  {user?.commentCount ?? 0}
+              </div> */}
+
+          </figure>
+          <div className="card-profile__button-list">
+            <ContentList
+              buttons={userButtons}
+              buttonTypes={buttonTypes}
+            />
+          </div>
     </>
   );
 }
@@ -149,5 +185,44 @@ function ProfileAdminOptions({ user }) {
     }
   };
 
-  return <CardSubmenu>{user && getOptions(user)}</CardSubmenu>;
+
+  return <>{user && getOptions(user)}</>;
+}
+
+
+function AdminOptions() {
+  return (
+    <>
+          <CardSubmenuOption
+            onClick={() => {
+              router.push('/Configuration');
+            }}
+            label={t('configuration.title')}
+          />
+          <CardSubmenuOption
+            onClick={() => {
+              router.push('/Configuration/Moderation');
+            }}
+            label={t('configuration.moderation')}
+          />
+    </>
+  );
+}
+
+function GeneralOptions() {
+  return (
+    <>
+          <CardSubmenuOption
+            onClick={() => {
+              router.push('/ProfileEdit');
+            }}
+            label={t('user.editProfile')}
+          />
+          <CardSubmenuOption
+            onClick={() => router.push('/Logout')}
+            label={t('user.logout')}
+          />
+          
+    </>
+  );
 }
