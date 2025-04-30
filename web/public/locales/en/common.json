@@ -315,7 +315,7 @@
     "newPasswordPlaceHolder": "Your new password",
     "passwordMismatch": "passwords won't match",
     "loginButton": "ENTER",
-    "noAccount": "I don&apos;t have an account",
+    "noAccount": "I don't have an account",
     "tags": "Your interests",
     "editProfile": "Edit profile",
     "myHelpbuttons": "Your _helpbuttons_",
@@ -508,7 +508,6 @@
     "hideLocationByDefaultLabel": "Exact location protection",
     "hideLocationByDefaultExplain": "Protect exact location in _helpbuttons_ by showing a wide area, users can deactivate this individually.",
     "hideLocationByDefaultText": "Hide exact location by default"
-
   },
   "configure": {
     "browsePins": "",
