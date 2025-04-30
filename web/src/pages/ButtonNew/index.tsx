@@ -17,7 +17,7 @@ import Loading from 'components/loading';
 import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
 import { useMetadataTitle } from 'state/Metadata';
 import { useSelectedNetwork } from 'state/Networks';
-import { maxZoom } from 'components/map/Map/Map.consts';
+import { markerFocusZoom } from 'components/map/Map/Map.consts';
 
 export default function ButtonNew({ metadata }) {
   const selectedNetwork = useSelectedNetwork()
@@ -99,7 +99,7 @@ function ButtonNewForm({ selectedNetwork }) {
             router.push(`/Explore`);
           }else{
             store.emit(new UpdateCachedHexagons([]))
-            router.push(`/Explore/${maxZoom}/${buttonData.latitude}/${buttonData.longitude}/?btn=${buttonData.id}`);
+            router.push(`/Explore/${markerFocusZoom}/${buttonData.latitude}/${buttonData.longitude}/?btn=${buttonData.id}`);
             alertService.success(t('button.created'))
           }
         },

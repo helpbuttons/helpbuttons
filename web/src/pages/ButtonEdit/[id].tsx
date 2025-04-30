@@ -13,7 +13,7 @@ import { UpdateButtonDto } from 'shared/dtos/button.dto';
 import t from 'i18n';
 import { useRouter } from 'next/router';
 import { ErrorName } from 'shared/types/error.list';
-import { maxZoom } from 'components/map/Map/Map.consts';
+import { markerFocusZoom } from 'components/map/Map/Map.consts';
 
 export default function ButtonEdit() {
 
@@ -50,7 +50,7 @@ export default function ButtonEdit() {
   };
 
   const onSuccess = (data) => {
-    router.push(`/Explore/${maxZoom}/${data.latitude}/${data.longitude}?btn=${data.id}`);
+    router.push(`/Explore/${markerFocusZoom}/${data.latitude}/${data.longitude}?btn=${data.id}`);
   };
 
   const onError = (err) => {

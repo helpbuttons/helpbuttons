@@ -40,3 +40,4 @@ export const minZoom = 4;
 export const hexagonSizeZoom = 14;
 export const onMarkerPositionChangeZoomTo = 10;
 export const showMarkersZoom = maxZoom - 2;
+export const markerFocusZoom = 14;
