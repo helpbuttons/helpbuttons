@@ -330,7 +330,6 @@
     "setNewPassword": "Set a new password",
     "dontChangePassword": "Don't change password",
     "logout": "Logout",
-    "deactivate": "Deactivate Account",
     "description": "Description",
     "descriptExplain": "Short description of waht you do or what you are",
     "loginLink": "You have an account",
@@ -627,7 +626,7 @@
     "edit": "Edit"
   },
   "roles": {
-    "blocked": "Blocked",
+    "blocked": "blocked",
     "administrator": "administrator",
     "registered": "registered",
     "guest": "guest"

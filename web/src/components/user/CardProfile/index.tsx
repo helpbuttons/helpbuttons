@@ -133,7 +133,7 @@ function ProfileAdminOptions({ user }) {
               onClick={() => {
                 updateRole(user.id, Role.blocked);
               }}
-              label={t('moderation.deactivate')}
+              label={t('moderation.block')}
             />
           </>
         );

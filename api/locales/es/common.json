@@ -345,7 +345,7 @@
   "button": {
     "title": "Vista de _helpbutton_",
     "copy": "Copiar enlace",
-    "delete": "Finalizar",
+    "delete": "Borrar",
     "typeExplain": "Por favor elige qué tipo de _helpbutton_ te gustaría crear",
     "placeHolderTitle": "Escribe un nuevo título para tu _helpbutton_",
     "descriptionLabel": "Descripción",
@@ -395,7 +395,11 @@
     "notFound": "No puedo encontrar tu button, talvez fue borrado?",
     "invalidDates": "",
     "followErrorAlert": "",
-    "unfollowErrorAlert": ""
+    "unfollowErrorAlert": "",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "pinSuccess": "Pin satisfactorio",
+    "unpinSuccess":"Unpin satisfactorio"
   },
   "calendarOnce": {
     "label": "Una vez",
