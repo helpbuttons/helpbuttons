@@ -116,17 +116,7 @@ export default function AdvancedFilters({
   useEffect(() => {
     reset(filters)
   }, [filters])
-
-  useEffect(() => {
-    const params = new URLSearchParams(router.query)
-    if(params.has('showFilters'))
-    {
-      store.emit(new ToggleAdvancedFilters(true))
-    }else{
-      store.emit(new ToggleAdvancedFilters(false))
-    }
-    
-  }, [])
+  
   const {onInputChange, inputKeyDown, input, remove, addTag} = useTagsList({
     tags,
     setTags : (tags) => {

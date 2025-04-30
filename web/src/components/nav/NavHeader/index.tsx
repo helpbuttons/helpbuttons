@@ -18,8 +18,8 @@ function NavHeader({ selectedNetwork, pageName = '' }) {
 
   const toggleAdvancedFilters = () => {
     store.emit(new ToggleAdvancedFilters())
-    if(!(['Explore'].indexOf(pageName) > 0)){
-      router.push('/Explore?showFilters=true')
+    if(['Explore'].indexOf(pageName) < 0){
+      router.push('/Explore')
     }
   }
 

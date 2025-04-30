@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { GlobalState, store } from 'state';
 import { useStore } from 'state';
 
@@ -43,3 +44,18 @@ export const isEventAndIsExpired = (button) => {
   }
   return false;
 }
+export const useButtonType = (button,buttonTypes) => {
+  const [buttonType, setButtonType] = useState({cssColor: 'pink', caption: 'caption', name: 'name', customFields: [], icon: ''});
+  useEffect(() => {
+    if(buttonTypes && button)
+    {
+      setButtonType(() =>
+        buttonTypes.find(
+          (buttonType) => buttonType.name == button.type,
+        ),
+      );
+    }
+  }, [buttonTypes]);
+  return buttonType;
+}
+

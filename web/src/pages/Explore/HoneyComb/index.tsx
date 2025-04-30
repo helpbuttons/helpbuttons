@@ -190,12 +190,6 @@ function useExploreSettings({
   const handleUrl = () => {
     const params = new URLSearchParams(window.location.search);
 
-    let [zoom, lat, lng] = [null, null, null];
-    try {
-      [zoom, lat, lng] = Array.from(router.query.params);
-    } catch (err) {
-      store.emit(new RecenterExplore());
-    }
     const btnId = params.get('btn');
     const hex = params.get('hex');
 
@@ -258,20 +252,6 @@ function useExploreSettings({
           },
         ),
       );
-    }
-    if (lat && lng) {
-      let newUpdateSettings: Partial<ExploreSettings> = {
-        center: [lat, lng],
-      };
-      if (Number(zoom) > minZoom && Number(zoom) < maxZoom) {
-        newUpdateSettings = {
-          ...newUpdateSettings,
-          zoom: Number(zoom),
-        };
-      }
-
-      newUpdateSettings = { ...newUpdateSettings, urlUpdated: true };
-      store.emit(new UpdateExploreSettings(newUpdateSettings));
     }
   };
   useEffect(() => {

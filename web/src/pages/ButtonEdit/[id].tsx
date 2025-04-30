@@ -13,7 +13,7 @@ import { UpdateButtonDto } from 'shared/dtos/button.dto';
 import t from 'i18n';
 import { useRouter } from 'next/router';
 import { ErrorName } from 'shared/types/error.list';
-import dconsole from 'shared/debugger';
+import { maxZoom } from 'components/map/Map/Map.consts';
 
 export default function ButtonEdit() {
 
@@ -50,8 +50,7 @@ export default function ButtonEdit() {
   };
 
   const onSuccess = (data) => {
-
-    router.push(`/Explore?lat=${data.lat}&lng=${data.lng}&btn=${data.id}`);
+    router.push(`/Explore/${maxZoom}/${data.latitude}/${data.longitude}?btn=${data.id}`);
   };
 
   const onError = (err) => {
@@ -76,7 +75,6 @@ export default function ButtonEdit() {
       new FindButton(
         router.query.id as string,
         (buttonFetched) => {
-          store.emit(new updateCurrentButton(buttonFetched))
           setButton(buttonFetched);
           reset(buttonFetched);
         }

@@ -7,7 +7,7 @@ import { buttonColorStyle } from 'shared/buttonTypes';
 import { HiglightHexagonFromButton, updateCurrentButton } from 'state/Explore';
 import { store } from 'state';
 import router from 'next/router';
-import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { MainPopupPage, SetMainPopup, SetMainPopupCurrentButton } from 'state/HomeInfo';
 import { alertService } from 'services/Alert';
 
 export enum ButtonLinkType {
@@ -39,8 +39,7 @@ export default function CardButtonList({ buttonTypes, button, showMap, linkType 
             }else if(linkType == ButtonLinkType.IFRAME){
               window.open(`/ButtonFile/${button.id}`,'_blank')
             }else if(linkType == ButtonLinkType.MAINPOPUP){
-              store.emit(new updateCurrentButton(button));
-              store.emit(new SetMainPopup(MainPopupPage.BUTTON));
+              store.emit(new SetMainPopupCurrentButton(button));
             }else{
               router.push(`/ButtonFile/${button.id}`)
             }

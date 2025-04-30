@@ -14,8 +14,8 @@ import { ActivityMessageDto } from 'shared/dtos/activity.dto';
 import { ButtonTemplate } from 'shared/dtos/button.dto';
 import { PrivacyType } from 'shared/types/privacy.enum';
 import { ActivityMarkAsRead, SetFocusOnMessage } from 'state/Activity';
-import { FindButton, updateCurrentButton } from 'state/Explore';
-import { MainPopupPage, SetMainPopup } from 'state/HomeInfo';
+import { FindButton } from 'state/Explore';
+import { SetMainPopupCurrentButton } from 'state/HomeInfo';
 
 export function ActivityMessageCard({
   message,
@@ -41,8 +41,7 @@ export function ActivityMessageCard({
     {
       store.emit(
         new FindButton(buttonId, (button) => {
-          store.emit(new updateCurrentButton(button));
-          store.emit(new SetMainPopup(MainPopupPage.BUTTON));
+          store.emit(new SetMainPopupCurrentButton(button));
         }),
       );
     }

@@ -242,7 +242,6 @@ export function TagsNav({ tags }) {
             key={idx}
             onClick={() => {
               filterTag(tag);
-              store.emit(new updateCurrentButton(null));
               router.push('/Explore');
             }}
           >
